@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileHelperMaui.Views.TestPages.FindProblemPage"
+             xmlns:local="clr-namespace:MobileHelperMaui" 
+             xmlns:vm="clr-namespace:MobileHelper.ViewModels.TestViewModels"
+             Title="Детектор">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Margin="0">
+                <Frame Margin="15, 15, 15, 15">
+                    <StackLayout Margin="0">
+                        <Label
+                    Text="Описание"
+                    FontSize="18"
+                    Margin="5, 0, 0, 10"
+                    TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+
+                        <Label
+                    Margin="10, 0, 0, 10"
+                    Text="{Binding DescribtionText}"
+                    TextColor="{AppThemeBinding Light=black, Dark=white}"
+                    FontSize="16"/>
+
+                    </StackLayout>
+
+                    <Frame.Shadow>
+                        <Shadow 
+                        Opacity="0.65"
+                        Brush="Black"
+                        Offset="0, 0"
+                        Radius="20"/>
+                    </Frame.Shadow>
+
+                </Frame>
+
+                <Frame Margin="15, 10, 15, 15">
+                    <StackLayout Margin="0">
+                        <Label
+                    Text="Алгоритм"
+                    FontSize="18"
+                    Margin="5, 0, 0, 10"
+                    TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+
+                    <ListView 
+                        SelectionMode="None"
+                        SeparatorVisibility="None"
+                        HasUnevenRows="True"
+                        VerticalScrollBarVisibility="Never"
+                        ItemsSource="{Binding AlgorithmRows}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Label 
+                                    Margin="10, 0, 0, 0"
+                                    TextColor="{AppThemeBinding Light=black, Dark=white}"
+                                    Text="{Binding Row}"
+                                    FontSize="16">
+                                    </Label>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    </StackLayout>
+
+                    <Frame.Shadow>
+                        <Shadow 
+                        Opacity="0.65"
+                        Brush="Black"
+                        Offset="0, 0"
+                        Radius="20"/>
+                    </Frame.Shadow>
+
+                </Frame>
+
+                <Frame Margin="15, 10, 15, 15">
+                    <StackLayout Margin="0">
+                        <Label
+                    Text="Замечание"
+                    FontSize="18"
+                    Margin="5, 0, 0, 10"
+                    TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+
+                        <Label
+                    Margin="5, 0, 0, 10"
+                    Text="{Binding CommentText}"
+                    TextColor="{AppThemeBinding Light=black, Dark=white}"
+                    FontSize="16"/>
+
+                    </StackLayout>
+
+                    <Frame.Shadow>
+                        <Shadow 
+                        Opacity="0.65"
+                        Brush="Black"
+                        Offset="0, 0"
+                        Radius="20"/>
+                    </Frame.Shadow>
+
+                </Frame>
+
+                <Button 
+                Margin="10, 15, 10, 15"
+                Text="Начать"
+                FontSize="15"
+                BackgroundColor="{StaticResource Primary}"
+                CornerRadius="25"
+                WidthRequest="375"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Command="{Binding Continue}"
+                HeightRequest="40"/>
+            </StackLayout>
+        </ScrollView>
+
+    </ContentPage.Content>
+</ContentPage>
