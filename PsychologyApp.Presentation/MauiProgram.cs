@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.Compatibility.Platform.Android;
 using MobileHelperMaui;
+using MauiIcons.Material;
 using PsychologyApp.Presentation.Handlers;
 
 namespace PsychologyApp.Presentation
@@ -14,6 +15,8 @@ namespace PsychologyApp.Presentation
             MauiAppBuilder mauiAppBuilder = builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseMauiCommunityToolkitMediaElement()
+                .UseMaterialMauiIcons()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

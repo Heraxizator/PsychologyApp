@@ -13,7 +13,18 @@ namespace MobileHelper.ViewModels.PhysicsViewModels
 
             this.Navigation = navigation;
 
-            this.Continue = new Command(async () => await this.Navigation.PushAsync(new PhysicsSerchPage()));
+            this.Continue = new Command(async () =>
+            {
+                SetInit();
+
+                PhysicsSearchViewModel physicsSearchViewModel = new(this.Navigation);
+
+                PhysicsSerchPage physicsSerchPage = new(physicsSearchViewModel);
+
+                await this.Navigation.PushAsync(physicsSerchPage);
+            });
+
+            SetDone();
         }
 
         public StartPhysicsViewModel()

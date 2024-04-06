@@ -4,10 +4,18 @@ namespace MobileHelperMaui.Views.PhysicsPages;
 
 public partial class StartPhysicsPage : ContentPage
 {
+    private StartPhysicsViewModel viewModel;
     public StartPhysicsPage()
     {
         InitializeComponent();
 
-        this.BindingContext = new StartPhysicsViewModel(this.Navigation);
+        this.viewModel = new StartPhysicsViewModel(this.Navigation);
+
+        this.BindingContext = this.viewModel;
+    }
+
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        this.viewModel.SetDone();
     }
 }

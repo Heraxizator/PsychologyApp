@@ -57,15 +57,40 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Raw\001_Molitva.mp3" />
+	  <None Remove="Resources\Raw\002_Kafizma_1.mp3" />
+	  <None Remove="Resources\Raw\003_Kafizma_2.mp3" />
+	  <None Remove="Resources\Raw\004_Kafizma_3.mp3" />
+	  <None Remove="Resources\Raw\005_Kafizma_4.mp3" />
+	  <None Remove="Resources\Raw\006_Kafizma_5.mp3" />
+	  <None Remove="Resources\Raw\007_Kafizma_6.mp3" />
+	  <None Remove="Resources\Raw\008_Kafizma_7.mp3" />
+	  <None Remove="Resources\Raw\009_Kafizma_8.mp3" />
+	  <None Remove="Resources\Raw\010_Kafizma_9.mp3" />
+	  <None Remove="Resources\Raw\011_Kafizma_10.mp3" />
+	  <None Remove="Resources\Raw\012_Kafizma_11.mp3" />
+	  <None Remove="Resources\Raw\013_Kafizma_12.mp3" />
+	  <None Remove="Resources\Raw\014_Kafizma_13.mp3" />
+	  <None Remove="Resources\Raw\015_Kafizma_14.mp3" />
+	  <None Remove="Resources\Raw\016_Kafizma_15.mp3" />
+	  <None Remove="Resources\Raw\017_Kafizma_16.mp3" />
+	  <None Remove="Resources\Raw\018_Kafizma_17.mp3" />
+	  <None Remove="Resources\Raw\019_Kafizma_18.mp3" />
+	  <None Remove="Resources\Raw\020_Kafizma_19.mp3" />
+	  <None Remove="Resources\Raw\021_Kafizma_20.mp3" />
 	  <None Remove="Resources\Raw\Psyhosomatic.txt" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="AathifMahir.Maui.MauiIcons.Material" Version="2.1.5" />
 		<PackageReference Include="AutoMapper" Version="13.0.1" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="6.1.0" />
+		<PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="3.1.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.3" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Plugin.Maui.Audio" Version="2.1.0" />
+		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -88,6 +113,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Templates\ProgressbarView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Templates\RetryView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\TestPages\StandardTestPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

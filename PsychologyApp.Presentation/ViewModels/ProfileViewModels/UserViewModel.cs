@@ -21,6 +21,8 @@ namespace MobileHelper.ViewModels.ProfileViewModels
         public ObservableCollection<TechniqueItem> Techniques { get; set; }
         public ObservableCollection<Quots> Quots { get; set; }
 
+        private readonly Task Initialization;
+
         public UserViewModel(INavigation navigation)
         {
             this.Title = "Профиль";
@@ -33,28 +35,33 @@ namespace MobileHelper.ViewModels.ProfileViewModels
 
             this.Quots = new ObservableCollection<Quots>();
 
-            InitAsync();
+            Initialization = InitAsync();
         }
 
-        public async void InitAsync()
+        public async Task InitAsync()
         {
+            SetInit();
+
+            this.Techniques.Add(new TechniqueItem
+            {
+                Title = "BSFF",
+                Subtitle = "Методика депрограммирования подсознания"
+            });
+
             await this._service.SaveQuotsFromApi(1);
 
             IList<QuotDTO> quotDTOs = await this._service.GetQuotsList(2);
 
-            MapperConfiguration configuration = new(cfg => {
-                cfg.CreateMap<QuotDTO, Quots>();
-                cfg.CreateMap<Quots, QuotDTO>();
-            });
-
-            Mapper mapper = new(configuration);
-
-            IList<Quots> quots = mapper.Map<IList<Quots>>(quotDTOs);
-
-            foreach (Quots quot in quots)
+            foreach (QuotDTO quotDTO in quotDTOs)
             {
-                this.Quots.Add(quot);
-            } 
+                this.Quots.Add(new Quots()
+                {
+                    Text = quotDTO.Text,
+                    Author = quotDTO.Title
+                });
+            }
+
+            SetDone();
         }
 
         private void InitService()

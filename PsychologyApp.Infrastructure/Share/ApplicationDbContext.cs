@@ -54,6 +54,9 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         modelBuilder.Entity<Technique>()
             .HasKey(e => e.Id);
 
+        modelBuilder.Entity<Reason>()
+            .HasKey(e => e.Id);
+
         base.OnModelCreating(modelBuilder);
     }
 }

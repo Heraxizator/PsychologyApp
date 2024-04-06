@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="MobileHelperMaui.Views.ProfilePages.UserPage"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
              Title="Профиль">
 
     <ContentPage.Resources>
@@ -146,14 +147,27 @@
                         FontAttributes="Bold"
                         FontSize="18"/>
 
+                    <templates:ProgressbarView
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="CenterAndExpand"
+                        Margin="15, 50, 15, 0"
+                        IsVisible="{Binding IsInit}"
+                        IsLoading="True"
+                        ProgressText="Инициализация">
+                        <templates:ProgressbarView.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Cancel}"/>
+                        </templates:ProgressbarView.GestureRecognizers>
+                    </templates:ProgressbarView>
+                    
                     <ListView
+                        IsVisible="{Binding IsDone}"
                         Margin="15, 0, 15, 0"
-                    SelectionMode="None"
-                    HeightRequest="300"
-                    HasUnevenRows="True"
-                    VerticalScrollBarVisibility="Never"
-                    SeparatorVisibility="None"
-                    ItemsSource="{Binding Quots}">
+                        SelectionMode="None"
+                        HeightRequest="300"
+                        HasUnevenRows="True"
+                        VerticalScrollBarVisibility="Never"
+                        SeparatorVisibility="None"
+                        ItemsSource="{Binding Quots}">
 
                         <ListView.ItemTemplate>
                             <DataTemplate>

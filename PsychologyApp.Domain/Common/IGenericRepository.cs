@@ -8,15 +8,15 @@ namespace PsychologyApp.Domain.Common;
 
 public interface IGenericRepository<TEntity> where TEntity : class
 {
-    void Insert(TEntity item);
-    TEntity? FindById(long id);
-    IEnumerable<TEntity> Get();
-    IEnumerable<TEntity> Get(Func<TEntity, bool> predicate);
-    void Remove(TEntity item);
-    void Update(TEntity item);
-    void InsertOrUpdate(TEntity item);
-    void InsertRange(IEnumerable<TEntity> entities);
-    void RemoveRange(IEnumerable<TEntity> entities);
-    void UpdateRange(IEnumerable<TEntity> entities);
-    void InsertOrUpdateRange(IEnumerable<TEntity> entities);
+    Task InsertAsync(TEntity item);
+    Task<TEntity?> FindByIdAsync(long id);
+    Task<IEnumerable<TEntity>> GetAsync();
+    Task<IEnumerable<TEntity>> GetAsync(Func<TEntity, bool> predicate);
+    Task RemoveAsync(TEntity item);
+    Task UpdateAsync(TEntity item);
+    Task InsertOrUpdateAsync(TEntity item);
+    Task InsertRangeAsync(IEnumerable<TEntity> entities);
+    Task RemoveRangeAsync(IEnumerable<TEntity> entities);
+    Task UpdateRangeAsync(IEnumerable<TEntity> entities);
+    Task InsertOrUpdateRangeAsync(IEnumerable<TEntity> entities);
 }

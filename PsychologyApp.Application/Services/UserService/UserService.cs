@@ -25,7 +25,7 @@ public class UserService : IUserService
 
     public async Task IncrementCompletedCount()
     {
-        User? user = this._userRepository.Get(x => true).FirstOrDefault();
+        User? user = (await this._userRepository.GetAsync(x => true)).FirstOrDefault();
 
         if (user is null)
         {
@@ -34,14 +34,14 @@ public class UserService : IUserService
 
         user.IncrementTechniquesCompletedCount();
 
-        this._userRepository.Update(user);
+        await this._userRepository.UpdateAsync(user);
 
         await _unitOfWork.Commit();
     }
 
     public async Task SetSubscribersCount(int count)
     {
-        User? user = this._userRepository.Get(x => true).FirstOrDefault();
+        User? user = (await this._userRepository.GetAsync(x => true)).FirstOrDefault();
 
         if (user is null)
         {
@@ -50,14 +50,14 @@ public class UserService : IUserService
 
         user.SetSubscribersCount(count);
 
-        this._userRepository.Update(user);
+        await this._userRepository.UpdateAsync(user);
 
         await _unitOfWork.Commit();
     }
 
     public async Task SetUserInitials(string name, string surname, string patronymic)
     {
-        User? user = this._userRepository.Get(x => true).FirstOrDefault();
+        User? user = (await this._userRepository.GetAsync(x => true)).FirstOrDefault();
 
         if (user is null)
         {
@@ -66,7 +66,7 @@ public class UserService : IUserService
 
         user.SetUserInitials(name, surname, patronymic);
 
-        this._userRepository.Update(user);
+        await this._userRepository.UpdateAsync(user);
 
         await _unitOfWork.Commit();
     }
@@ -75,7 +75,7 @@ public class UserService : IUserService
     {
         User user = new(string.Empty, string.Empty, string.Empty, 0, 0);
 
-        this._userRepository.Insert(user);
+        await this._userRepository.InsertAsync(user);
 
         await this._unitOfWork.Commit();
     }

@@ -1,3 +1,4 @@
+using MobileHelper.ViewModels.CleanViewModels;
 using PsychologyApp.Presentation.Models;
 
 namespace MobileHelperMaui.Views.CleanPages;
@@ -7,6 +8,10 @@ public partial class MusicPlayerPage : ContentPage
 	public MusicPlayerPage()
 	{
 		InitializeComponent();
+
+        var viewModel = new MusicPlayerViewModel();
+
+        this.BindingContext = viewModel;
 	}
 
     private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)

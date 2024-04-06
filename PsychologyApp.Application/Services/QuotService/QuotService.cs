@@ -31,15 +31,14 @@ public class QuotService : IQuotService
     {
         Quot quot = _mapper.Map<Quot>(quotDTO);
 
-        _quotRepository.Insert(quot);
+        await _quotRepository.InsertAsync(quot);
 
         await _unitOfWork.Commit();
     }
 
     public async Task<IList<QuotDTO>> GetQuotsList(int count, bool readed = false)
     {
-        IList<Quot> quots = await Task.Run(
-            () => _quotRepository.Get(x => x.IsReaded == readed).ToList());
+        IList<Quot> quots = (await _quotRepository.GetAsync(x => x.IsReaded == readed)).TakeLast(count).ToList();
 
         IList<QuotDTO> quotDTOs = _mapper.Map<IList<QuotDTO>>(quots);
 
@@ -48,7 +47,7 @@ public class QuotService : IQuotService
 
     public async Task MarkQuotAsReaded(int quotId)
     {
-        Quot? quot = _quotRepository.FindById(quotId);
+        Quot? quot = await _quotRepository.FindByIdAsync(quotId);
 
         if (quot is null)
         {
@@ -57,7 +56,7 @@ public class QuotService : IQuotService
 
         quot.MarkAsReaded();
 
-        _quotRepository.Update(quot);
+        await _quotRepository.UpdateAsync(quot);
 
         await _unitOfWork.Commit();
     }
@@ -68,7 +67,7 @@ public class QuotService : IQuotService
 
         Quot quot = _mapper.Map<Quot>(quotDTO);
 
-        _quotRepository.InsertOrUpdate(quot);
+        await _quotRepository.InsertOrUpdateAsync(quot);
 
         await _unitOfWork.Commit();
     }

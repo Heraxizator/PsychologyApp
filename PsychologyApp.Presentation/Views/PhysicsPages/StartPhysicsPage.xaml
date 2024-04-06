@@ -3,125 +3,158 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileHelperMaui.Views.PhysicsPages.StartPhysicsPage"
              xmlns:vm="clr-namespace:MobileHelper.ViewModels.PhysicsViewModels"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             xmlns:controls="clr-namespace:MobileHelperMaui"
              Title="Психосоматик">
     <ContentPage.BindingContext>
         <vm:StartPhysicsViewModel/>
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout Margin="0">
 
-                <Frame Margin="15, 15, 15, 15">
-                    <StackLayout Margin="5">
-                        <Label
-                        Text="Пояснение"
-                        FontSize="18"
-                        Margin="10, 5, 5, 15"
-                        TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+        <ScrollView
+            VerticalScrollBarVisibility="Never">
 
-                        <Label
-                        Margin="15, 0, 0, 15"
-                        Text="Известно, что около половины всех болезней возникает на психической основе. Поэтому по любому физическому недомоганию можно определить то, что вас беспокоит, но не осознаётся."
-                        TextColor="{AppThemeBinding Light=black, Dark=white}"
-                        FontSize="16"/>
+            <StackLayout>
 
-                    </StackLayout>
+                <templates:ProgressbarView 
+            VerticalOptions="CenterAndExpand"
+            IsVisible="{Binding IsInit}"
+            IsLoading="{Binding IsInit}"
+            ProgressText="Инициализация">
+                <templates:ProgressbarView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Cancel}"/>
+                </templates:ProgressbarView.GestureRecognizers>
+            </templates:ProgressbarView>
 
-                    <Frame.Shadow>
-                        <Shadow 
-                        Opacity="0.65"
-                        Brush="Black"
-                        Offset="0, 0"
-                        Radius="20"/>
-                    </Frame.Shadow>
+            <StackLayout IsVisible="{Binding IsDone}">
+                <StackLayout Margin="0">
 
-                </Frame>
+                    <Frame Margin="15, 15, 15, 15">
+                        <StackLayout Margin="5">
+                            <Label
+                            Text="Пояснение"
+                            FontSize="18"
+                            Margin="10, 5, 5, 15"
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+
+                            <Label
+                            Margin="15, 0, 0, 15"
+                            Text="Известно, что около половины всех болезней возникает на психической основе. Поэтому по любому физическому недомоганию можно определить то, что вас беспокоит, но не осознаётся."
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"
+                            FontSize="16"/>
+
+                        </StackLayout>
+
+                        <Frame.Shadow>
+                            <Shadow 
+                            Opacity="0.65"
+                            Brush="Black"
+                            Offset="0, 0"
+                            Radius="20"/>
+                        </Frame.Shadow>
+
+                    </Frame>
 
 
-                <Frame Margin="15, 10, 15, 15">
-                    <StackLayout Margin="5">
-                        <Label
-                        Text="Описание"
-                        FontSize="18"
-                        Margin="10, 5, 5, 15"
-                        TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+                    <Frame Margin="15, 10, 15, 15">
+                        <StackLayout Margin="5">
+                            <Label
+                            Text="Описание"
+                            FontSize="18"
+                            Margin="10, 5, 5, 15"
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
-                        <Label
-                        Margin="15, 0, 0, 15"
-                        Text="Тест поможет вам в пару кликов найти эмоциональную причину любого вашего физического недомогания. Всё очень просто."
-                        TextColor="{AppThemeBinding Light=black, Dark=white}"
-                        FontSize="16"/>
+                            <Label
+                            Margin="15, 0, 0, 15"
+                            Text="Тест поможет вам в пару кликов найти эмоциональную причину любого вашего физического недомогания. Всё очень просто."
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"
+                            FontSize="16"/>
 
 
 
-                    </StackLayout>
+                        </StackLayout>
 
-                    <Frame.Shadow>
-                        <Shadow 
-                        Opacity="0.65"
-                        Brush="Black"
-                        Offset="0, 0"
-                        Radius="20"/>
-                    </Frame.Shadow>
+                        <Frame.Shadow>
+                            <Shadow 
+                            Opacity="0.65"
+                            Brush="Black"
+                            Offset="0, 0"
+                            Radius="20"/>
+                        </Frame.Shadow>
 
-                </Frame>
+                    </Frame>
 
-                <Frame Margin="15, 10, 15, 15">
-                    <StackLayout Margin="5">
-                        <Label
-                        Text="Алгоритм"
-                        FontSize="18"
-                        Margin="10, 5, 5, 15"
-                        TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+                    <Frame Margin="15, 10, 15, 15">
+                        <StackLayout Margin="5">
+                            <Label
+                            Text="Алгоритм"
+                            FontSize="18"
+                            Margin="10, 5, 5, 15"
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
-                        <Label 
-                        Margin="15, 0, 0, 10"
-                        TextColor="{AppThemeBinding Light=black, Dark=white}"
-                        FontSize="16">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="1. Назвать болезнь или часть тела, которая болит"/>
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
+                            <Label 
+                            Margin="15, 0, 0, 10"
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"
+                            FontSize="16">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="1. Назвать болезнь или часть тела, которая болит"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
 
-                        <Label 
-                        Margin="15, 0, 0, 10"
-                        TextColor="{AppThemeBinding Light=black, Dark=white}"
-                        FontSize="16">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="2. Узнать несколько возможных "/>
-                                    <Span Text="причин."/>
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
+                            <Label 
+                            Margin="15, 0, 0, 10"
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"
+                            FontSize="16">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="2. Узнать несколько возможных "/>
+                                        <Span Text="причин."/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
 
-                    </StackLayout>
+                        </StackLayout>
 
-                    <Frame.Shadow>
-                        <Shadow 
-                        Opacity="0.65"
-                        Brush="Black"
-                        Offset="0, 0"
-                        Radius="20"/>
-                    </Frame.Shadow>
+                        <Frame.Shadow>
+                            <Shadow 
+                            Opacity="0.65"
+                            Brush="Black"
+                            Offset="0, 0"
+                            Radius="20"/>
+                        </Frame.Shadow>
 
-                </Frame>
+                    </Frame>
 
-                <Button 
-                Margin="10, 15, 10, 15"
-                Text="Начать"
-                FontSize="15"
-                BackgroundColor="{StaticResource Primary}"
-                CornerRadius="25"
-                WidthRequest="375"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Command="{Binding Continue}"
-                HeightRequest="40"/>
+                    <Button 
+                    Margin="10, 15, 10, 15"
+                    Text="Начать"
+                    FontSize="15"
+                    BackgroundColor="{StaticResource Primary}"
+                    CornerRadius="25"
+                    WidthRequest="375"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Command="{Binding Continue}"
+                    HeightRequest="40"/>
+                </StackLayout>
+            </StackLayout>
+
+            <templates:RetryView
+            VerticalOptions="CenterAndExpand"
+            IsVisible="{Binding IsFail}"
+            FailedText="Не удалось загрузить"
+            RetryText="Попробовать ещё раз?">
+                <templates:RetryView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Reload}"/>
+                </templates:RetryView.GestureRecognizers>
+            </templates:RetryView>
+
+
             </StackLayout>
         </ScrollView>
+
     </ContentPage.Content>
 </ContentPage>

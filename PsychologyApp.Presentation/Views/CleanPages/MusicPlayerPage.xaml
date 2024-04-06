@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileHelperMaui.Views.CleanPages.MusicPlayerPage" 
              xmlns:vm="clr-namespace:MobileHelper.ViewModels.CleanViewModels"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             xmlns:controls="clr-namespace:MobileHelperMaui"
              Title="Очиститель">
     
     <ContentPage.BindingContext>
@@ -18,6 +20,7 @@
     <ContentPage.Content>
 
         <StackLayout Margin="10">
+
             <Frame Margin="5, 5, 5, 5" Padding="10" BorderColor="{StaticResource Accent}" CornerRadius="25">
                 <StackLayout>
                     <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Поиск" FontSize="15"/>
@@ -31,8 +34,47 @@
 
             </Frame>
 
+            <StackLayout 
+                IsVisible="{Binding IsCreated}"
+                Margin="0, 125">
+
+                <Label
+                    Text="Сборник молитв"
+                    TextColor="Black"
+                    FontSize="16"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"/>
+
+                <Label
+                    Margin="0, 5"
+                    Text="Загрузить"
+                    TextColor="{StaticResource Accent}"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"/>
+
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Start}"/>
+                </StackLayout.GestureRecognizers>
+                
+            </StackLayout>
+
+
+            <templates:ProgressbarView 
+            x:Name="Progress"
+            VerticalOptions="CenterAndExpand"
+            IsVisible="{Binding IsInit}"
+            IsLoading="{Binding IsInit}"
+            ProgressText="Инициализация">
+                <templates:ProgressbarView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Cancel}"/>
+                </templates:ProgressbarView.GestureRecognizers>
+            </templates:ProgressbarView>
+
             <ListView
             x:Name="Musics"
+            IsVisible="{Binding IsDone}"
             ItemTapped="ListView_ItemTapped"
             VerticalScrollBarVisibility="Never"
             HorizontalScrollBarVisibility="Never"
@@ -63,12 +105,14 @@
                                             Text="{Binding Description}"/>
                                         </StackLayout>
 
+                                        <!--
                                         <ActivityIndicator 
                                         IsVisible="{Binding Loading}"
                                         WidthRequest="50"
                                         HeightRequest="50"
                                         Color="{StaticResource Primary}"
                                         IsRunning="True"/>
+                                        -->
                                     </StackLayout>
                                     
                                     <Frame.Shadow>
@@ -79,6 +123,11 @@
                                         Radius="20"/>
                                     </Frame.Shadow>
                                 </Frame>
+
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ClickCommand}"/>
+                                </StackLayout.GestureRecognizers>
+                                
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

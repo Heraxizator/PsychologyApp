@@ -3,12 +3,14 @@ using PsychologyApp.Presentation.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Plugin.Maui.Audio;
 using System.Windows.Input;
 
 namespace MobileHelper.ViewModels.CleanViewModels
 {
     public class MusicPlayerViewModel : BaseViewModel
     {
+        private readonly AudioManager audioManager;
         public ObservableCollection<Audio> AllItems { get; set; }
         public ObservableCollection<Audio> SelectedItems { get; set; }
         private string search_text { get; set; }
@@ -17,76 +19,209 @@ namespace MobileHelper.ViewModels.CleanViewModels
         {
             this.Title = "Очиститель";
 
+            SetCreated();
+
             this.AllItems = new ObservableCollection<Audio>();
 
             this.SelectedItems = new ObservableCollection<Audio>();
 
+            this.Start = new Command(() =>
+            {
+                SetInit();
+
+                Task.Run(async () => await InitAsync());
+            });
+
+            this.SelectedItems.CollectionChanged += SelectedItems_CollectionChanged;
+
             this.SearchText = string.Empty;
 
-            //CrossMediaManager.Current.MediaItemFinished += OnFinish;
-
-            //CrossMediaManager.Current.MediaItemFailed += OnFailded;
-
-            Init();
+            this.audioManager = new AudioManager();
         }
 
-        private void Init()
+        private void SelectedItems_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            ObservableCollection<Audio> collection = new ObservableCollection<Audio>()
+            if (this.AllItems.Any()) 
+            {
+                SetDone();
+            }
+        }
+
+        private async Task InitAsync()
+        {
+            SetInit();
+
+            ObservableCollection<Audio> collection = new()
             {
                 new Audio
                 {
-                    Name = "Псалом 19",
-                    Description = "Любовь к Господу",
-                    File = "https://azbyka.ru/audio/audio1/Svjashhennoe_pisanie/psaltir_valaam/029-kafizma-3_019.mp3",
-                    Loading = false,
-                    ClickCommand = this.Execute
+                    Name = "Молитва",
+                    Description = "Андрей Смирнов",
+                    File = "001_Molitva.mp3",
+                    AudioPlayer = this.audioManager.CreatePlayer(
+                        await FileSystem.OpenAppPackageFileAsync("001_Molitva.mp3")),
+                    ClickCommand = new Command(() => ToExecute("001_Molitva.mp3"))
                 },
 
                 new Audio
                 {
-                    Name = "Псалом 22",
-                    Description = "Любовь к Господу",
-                    File = "https://azbyka.ru/audio/audio1/Svjashhennoe_pisanie/psaltir_valaam/032-kafizma-3_022.mp3",
-                    Loading = false,
-                    ClickCommand = this.Execute
+                    Name = "Кафизма 1",
+                    Description = " Псалмы 1-8",
+                    File = "002_Kafizma_1.mp3",
+                    AudioPlayer = this.audioManager.CreatePlayer(
+                        await FileSystem.OpenAppPackageFileAsync("002_Kafizma_1.mp3")),
+                    ClickCommand = new Command(() => ToExecute("002_Kafizma_1.mp3"))
                 },
 
                 new Audio
                 {
-                    Name = "Псалом 26",
-                    Description = "Любовь к Господу",
-                    File = "https://azbyka.ru/audio/audio1/Svjashhennoe_pisanie/psaltir_valaam/039-kafizma-4_026.mp3",
-                    Loading = false,
-                    ClickCommand = this.Execute
+                    Name = "Кафизма 2",
+                    Description = "Псалмы 9-16",
+                    File = "003_Kafizma_2.mp3",
+                    AudioPlayer = this.audioManager.CreatePlayer(
+                        await FileSystem.OpenAppPackageFileAsync("003_Kafizma_2.mp3")),
+                    ClickCommand = new Command(() => ToExecute("003_Kafizma_2.mp3"))
                 },
 
                 new Audio
                 {
-                    Name = "Псалом 33",
-                    Description = "Любовь к Господу",
-                    File = "https://azbyka.ru/audio/audio1/Svjashhennoe_pisanie/psaltir_valaam/049-kafizma-5_033.mp3",
-                    Loading = false
+                    Name = "Кафизма 3",
+                    Description = "Псалмы 17-23",
+                    File = "004_Kafizma_3.mp3",
+                    AudioPlayer = this.audioManager.CreatePlayer(
+                        await FileSystem.OpenAppPackageFileAsync("004_Kafizma_3.mp3")),
+                    ClickCommand = new Command(() => ToExecute("004_Kafizma_3.mp3"))
                 },
 
                 new Audio
                 {
-                    Name = "Псалом 50",
-                    Description = "Очищение от бесов",
-                    File = "https://azbyka.ru/audio/audio1/Svjashhennoe_pisanie/psaltir_valaam/072-kafizma-7_050.mp3",
-                    Loading = false,
-                    ClickCommand = this.Execute
-
+                    Name = "Кафизма 4",
+                    Description = "Псалмы 24-31",
+                    File = "005_Kafizma_4.mp3",
+                    AudioPlayer = this.audioManager.CreatePlayer(
+                        await FileSystem.OpenAppPackageFileAsync("005_Kafizma_4.mp3")),
+                    ClickCommand = new Command(() => ToExecute("005_Kafizma_4.mp3"))
                 },
 
                 new Audio
                 {
-                    Name = "Псалом 90",
-                    Description = "Господи, помилуй",
-                    File = "https://azbyka.ru/audio/audio1/Svjashhennoe_pisanie/psaltir_valaam/127-kafizma-12_090.mp3",
-                    Loading = false,
-                    ClickCommand = this.Execute
+                    Name = "Кафизма 5",
+                    Description = "Псалмы 32-36",
+                    File = "006_Kafizma_5.mp3",
+                    AudioPlayer = this.audioManager.CreatePlayer(
+                        await FileSystem.OpenAppPackageFileAsync("006_Kafizma_5.mp3")),
+                    ClickCommand = new Command(() => ToExecute("006_Kafizma_5.mp3"))
                 },
+
+                new Audio
+                {
+                    Name = "Кафизма 1",
+                    Description = " Псалмы 1-8",
+                    File = "002_Kafizma_1.mp3",
+                    AudioPlayer = this.audioManager.CreatePlayer(
+                        await FileSystem.OpenAppPackageFileAsync("002_Kafizma_1.mp3")),
+                    ClickCommand = new Command(() => ToExecute("002_Kafizma_1.mp3"))
+                },
+
+                new Audio
+                {
+                    Name = "Кафизма 2",
+                    Description = "Псалмы 9-16",
+                    File = "003_Kafizma_2.mp3",
+                    AudioPlayer = this.audioManager.CreatePlayer(
+                        await FileSystem.OpenAppPackageFileAsync("003_Kafizma_2.mp3")),
+                    ClickCommand = new Command(() => ToExecute("003_Kafizma_2.mp3"))
+                },
+
+                new Audio
+                {
+                    Name = "Кафизма 3",
+                    Description = "Псалмы 17-23",
+                    File = "004_Kafizma_3.mp3",
+                    AudioPlayer = this.audioManager.CreatePlayer(
+                        await FileSystem.OpenAppPackageFileAsync("004_Kafizma_3.mp3")),
+                    ClickCommand = new Command(() => ToExecute("004_Kafizma_3.mp3"))
+                },
+
+                new Audio
+                {
+                    Name = "Кафизма 4",
+                    Description = "Псалмы 24-31",
+                    File = "005_Kafizma_4.mp3",
+                    AudioPlayer = this.audioManager.CreatePlayer(
+                        await FileSystem.OpenAppPackageFileAsync("005_Kafizma_4.mp3")),
+                    ClickCommand = new Command(() => ToExecute("005_Kafizma_4.mp3"))
+                },
+
+                new Audio
+                {
+                    Name = "Кафизма 5",
+                    Description = "Псалмы 32-36",
+                    File = "006_Kafizma_5.mp3",
+                    AudioPlayer = this.audioManager.CreatePlayer(
+                        await FileSystem.OpenAppPackageFileAsync("006_Kafizma_5.mp3")),
+                    ClickCommand = new Command(() => ToExecute("006_Kafizma_5.mp3"))
+                },
+                new Audio
+                {
+                    Name = "Молитва",
+                    Description = "Андрей Смирнов",
+                    File = "001_Molitva.mp3",
+                    AudioPlayer = this.audioManager.CreatePlayer(
+                        await FileSystem.OpenAppPackageFileAsync("001_Molitva.mp3")),
+                    ClickCommand = new Command(() => ToExecute("001_Molitva.mp3"))
+                },
+
+                new Audio
+                {
+                    Name = "Кафизма 1",
+                    Description = " Псалмы 1-8",
+                    File = "002_Kafizma_1.mp3",
+                    AudioPlayer = this.audioManager.CreatePlayer(
+                        await FileSystem.OpenAppPackageFileAsync("002_Kafizma_1.mp3")),
+                    ClickCommand = new Command(() => ToExecute("002_Kafizma_1.mp3"))
+                },
+
+                new Audio
+                {
+                    Name = "Кафизма 2",
+                    Description = "Псалмы 9-16",
+                    File = "003_Kafizma_2.mp3",
+                    AudioPlayer = this.audioManager.CreatePlayer(
+                        await FileSystem.OpenAppPackageFileAsync("003_Kafizma_2.mp3")),
+                    ClickCommand = new Command(() => ToExecute("003_Kafizma_2.mp3"))
+                },
+
+                new Audio
+                {
+                    Name = "Кафизма 3",
+                    Description = "Псалмы 17-23",
+                    File = "004_Kafizma_3.mp3",
+                    AudioPlayer = this.audioManager.CreatePlayer(
+                        await FileSystem.OpenAppPackageFileAsync("004_Kafizma_3.mp3")),
+                    ClickCommand = new Command(() => ToExecute("004_Kafizma_3.mp3"))
+                },
+
+                new Audio
+                {
+                    Name = "Кафизма 4",
+                    Description = "Псалмы 24-31",
+                    File = "005_Kafizma_4.mp3",
+                    AudioPlayer = this.audioManager.CreatePlayer(
+                        await FileSystem.OpenAppPackageFileAsync("005_Kafizma_4.mp3")),
+                    ClickCommand = new Command(() => ToExecute("005_Kafizma_4.mp3"))
+                },
+
+                new Audio
+                {
+                    Name = "Кафизма 5",
+                    Description = "Псалмы 32-36",
+                    File = "006_Kafizma_5.mp3",
+                    AudioPlayer = this.audioManager.CreatePlayer(
+                        await FileSystem.OpenAppPackageFileAsync("006_Kafizma_5.mp3")),
+                    ClickCommand = new Command(() => ToExecute("006_Kafizma_5.mp3"))
+                },
+
             };
 
             InitItems(collection);
@@ -102,28 +237,16 @@ namespace MobileHelper.ViewModels.CleanViewModels
             }
         }
 
-        public ICommand Execute => new Command<string>(file => ToExecute(file));
-
         private void HideAll()
         {
             for (int i = 0; i < this.SelectedItems.Count; i++)
             {
                 Audio element = this.SelectedItems.ElementAt(i);
 
-                element.Loading = false;
+                element.AudioPlayer?.Stop();
 
                 this.SelectedItems[i] = element;
             }
-        }
-
-        private void OnFinish(object sender, EventArgs e)
-        {
-            HideAll();
-        }
-
-        private void OnFailded(object sender, EventArgs e)
-        {
-            DialogService.ShowAsync("Mobile Helper", "Не удалось загрузить аудио");
         }
 
         private void ToSearch(string input)
@@ -139,9 +262,9 @@ namespace MobileHelper.ViewModels.CleanViewModels
 
             foreach (Audio item in this.AllItems)
             {
-                string name = item.Name.ToUpper();
+                string? name = item.Name?.ToUpper();
 
-                string describtion = item.Description.ToUpper();
+                string? describtion = item.Description?.ToUpper();
 
                 if (name.Contains(target) || describtion.Contains(target))
                 {
@@ -158,27 +281,12 @@ namespace MobileHelper.ViewModels.CleanViewModels
 
             int index = this.SelectedItems.IndexOf(item);
 
-            if (item.Playing)
+            if (!item.IsPlaying)
             {
-                item.Loading = false;
-
-                item.Playing = false;
-
-                this.SelectedItems[index] = item;
-
-                //_ = CrossMediaManager.Current.Stop();
+                item.AudioPlayer.Play();
             }
 
-            else
-            {
-                item.Loading = true;
-
-                item.Playing = true;
-
-                this.SelectedItems[index] = item;
-
-                //_ = CrossMediaManager.Current.Play(file);
-            }
+            item.IsPlaying = !item.IsPlaying;
         }
 
         public string SearchText

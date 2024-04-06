@@ -5,19 +5,17 @@ namespace MobileHelperMaui.Views.PhysicsPages;
 public partial class PhysicsSerchPage : ContentPage
 {
     PhysicsSearchViewModel ViewModel { get; set; }
-    public PhysicsSerchPage()
+    public PhysicsSerchPage(PhysicsSearchViewModel vm)
     {
         InitializeComponent();
 
-        BindingContext = new PhysicsSearchViewModel(Navigation);
+        this.ViewModel = vm;
 
-        ViewModel = BindingContext as PhysicsSearchViewModel;
+        this.BindingContext = vm;
     }
 
-    private void LocalEntry_TextChanged(object sender, TextChangedEventArgs e)
+    private void Button_Clicked(object sender, EventArgs e)
     {
-        var text = e.NewTextValue;
-
-        ViewModel.ExecuteSearch(text);
+        this.ViewModel.ExecuteSearch(Search.Text);
     }
 }

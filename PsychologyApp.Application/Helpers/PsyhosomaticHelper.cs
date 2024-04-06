@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PsychologyApp.Application.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,50 +7,42 @@ using System.Threading.Tasks;
 
 namespace PsychologyApp.Application.Helpers
 {
-    public static class PsyhosomaticHelper
+    public class PsyhosomaticHelper
     {
-        public static async Task<IList<PsychosomaticObject>> GetPsyhosomaticData()
+        public async Task<IList<ReasonDTO>> GetPsyhosomaticData()
         {
-            List<PsychosomaticObject> psychosomaticObjects = new();
+            List<ReasonDTO> psychosomaticObjects = new();
 
-            using Stream fileStream = await FileSystem.Current.OpenAppPackageFileAsync("Psyhosomatic.txt");
-
-            using StreamReader streamReader = new(fileStream);
-
-            string? line = streamReader?.ReadLine();
-
-            while ((line = streamReader?.ReadLine()) != null) 
+            await Task.Run(async () =>
             {
-                string[] cols = line.Split('\t');
+                using Stream fileStream = await FileSystem.Current.OpenAppPackageFileAsync("Psyhosomatic.txt");
 
-                string? problemText = cols[0].ToString();
+                using StreamReader streamReader = new(fileStream);
 
-                string? problemReason = cols[1].ToString();
+                string? line = streamReader?.ReadLine();
 
-                string? problemSolution = cols[2].ToString();
-
-                PsychosomaticObject psychosomaticObject = new()
+                while ((line = streamReader?.ReadLine()) != null && streamReader?.EndOfStream is false)
                 {
-                    ProblemText = problemText,
-                    ProblemReason = problemReason,
-                    ProblemSolution = problemSolution
-                };
+                    string[] cols = line.Split('\t');
 
-                psychosomaticObjects.Add(psychosomaticObject);
-            }
+                    string? problemText = cols[0].ToString();
 
+                    string? problemReason = cols[1].ToString();
+
+                    string? problemSolution = cols[2].ToString();
+
+                    ReasonDTO psychosomaticObject = new()
+                    {
+                        Title = problemText,
+                        Subtitle = problemReason,
+                        Solution = problemSolution
+                    };
+
+                    psychosomaticObjects.Add(psychosomaticObject);
+                }
+            });
+            
             return psychosomaticObjects;
         }
-
-        #region Objects
-
-        public class PsychosomaticObject
-        {
-            public string? ProblemText { get; set; }
-            public string? ProblemReason { get; set; }
-            public string? ProblemSolution { get; set; }
-        }
-
-        #endregion
     }
 }

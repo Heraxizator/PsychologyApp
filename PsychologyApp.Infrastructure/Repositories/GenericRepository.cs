@@ -21,56 +21,56 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         this._dbSet = context.Set<TEntity>();
     }
 
-    public IEnumerable<TEntity> Get()
+    public async Task<IEnumerable<TEntity>> GetAsync()
     {
-        return this._dbSet.AsNoTracking().ToList();
+        return await this._dbSet.AsNoTracking().ToListAsync();
     }
 
-    public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate)
+    public async Task<IEnumerable<TEntity>> GetAsync(Func<TEntity, bool> predicate)
     {
-        return this._dbSet.AsNoTracking().Where(predicate).ToList();
+        return (await this._dbSet.AsNoTracking().ToListAsync()).Where(predicate).ToList();
     }
-    public TEntity? FindById(long id)
+    public async Task<TEntity?> FindByIdAsync(long id)
     {
-        return this._dbSet.Find(id);
+        return await this._dbSet.FindAsync(id);
     }
 
-    public void Update(TEntity item)
+    public async Task UpdateAsync(TEntity item)
     {
         this._context.Update(item);
     }
 
-    public void Remove(TEntity item)
+    public async Task RemoveAsync(TEntity item)
     {
         this._dbSet.Remove(item);
     }
 
-    public void Insert(TEntity item)
+    public async Task InsertAsync(TEntity item)
     {
-        this._dbSet.Add(item);
+        await this._dbSet.AddAsync(item);
     }
 
-    public void InsertOrUpdate(TEntity item)
+    public async Task InsertOrUpdateAsync(TEntity item)
     {
         this._dbSet.Update(item);
     }
 
-    public void InsertRange(IEnumerable<TEntity> entities)
+    public async Task InsertRangeAsync(IEnumerable<TEntity> entities)
     {
-        this._dbSet.AddRange(entities);
+        await this._dbSet.AddRangeAsync(entities);
     }
 
-    public void RemoveRange(IEnumerable<TEntity> entities)
+    public async Task RemoveRangeAsync(IEnumerable<TEntity> entities)
     {
         this._dbSet.RemoveRange(entities);
     }
 
-    public void UpdateRange(IEnumerable<TEntity> entities)
+    public async Task UpdateRangeAsync(IEnumerable<TEntity> entities)
     {
         this._context.UpdateRange(entities);
     }
 
-    public void InsertOrUpdateRange(IEnumerable<TEntity> entities)
+    public async Task InsertOrUpdateRangeAsync(IEnumerable<TEntity> entities)
     {
         this._dbSet.UpdateRange(entities);
     }

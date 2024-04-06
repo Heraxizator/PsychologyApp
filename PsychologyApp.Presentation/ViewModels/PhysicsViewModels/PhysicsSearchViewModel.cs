@@ -1,116 +1,185 @@
-﻿using PsychologyApp.Application.Helpers;
+﻿using AutoMapper;
+using MvvmHelpers;
+using PsychologyApp.Application.Helpers;
+using PsychologyApp.Application.Models;
+using PsychologyApp.Application.Services.ReasonService;
+using PsychologyApp.Infrastructure.Repositories;
+using PsychologyApp.Infrastructure.Share;
+using PsychologyApp.Infrastructure.Uow;
 using PsychologyApp.Presentation.Models;
 using PsychologyApp.Presentation.ViewModels;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using static PsychologyApp.Application.Helpers.PsyhosomaticHelper;
+using BaseViewModel = PsychologyApp.Presentation.ViewModels.BaseViewModel;
 
 namespace MobileHelper.ViewModels.PhysicsViewModels
 {
     public class PhysicsSearchViewModel : BaseViewModel
     {
-        public List<Reason> Reasons { get; set; }
-        public ObservableCollection<Reason> Results { get; set; }
-        private bool _empty { get; set; }
-        private bool _full { get; set; }
-        public enum State
-        {
-            Empty,
-            Full
-        }
+        private ReasonService _service;
+
+        public List<ReasonDTO> Reasons { get; set; }
+        public ObservableRangeCollection<ReasonDTO> Results { get; set; }
+
+        private Dictionary<char, List<ReasonDTO>> keyValuePairs { get; set; }
+
+        private readonly Task Initialization;
 
         public PhysicsSearchViewModel(INavigation navigation)
         {
             this.Title = "Поиск";
 
+            InitService();
+
+            this.Reasons = new List<ReasonDTO>();
+
+            this.Results = new ObservableRangeCollection<ReasonDTO>();
+
+            this.keyValuePairs = new Dictionary<char, List<ReasonDTO>>();
+
             this.Navigation = navigation;
 
-            this.Reasons = new List<Reason>();
+            this.Reload = new Command(async () => await ReloadAsync());
 
-            Task.WhenAll
-            (
-                InitAsync()
-            );
+            this.Cancel = new Command(() => SetFail());
 
-            this.Results = new ObservableCollection<Reason>(this.Reasons.Take(100));
+            this.Initialization = InitAsync();
+        }
+
+        private void ConfigureState()
+        {
+            if (this.Reasons.Any() && this.Results.Any())
+            {
+                SetDone();
+                return;
+            }
+
+            SetFail();
+        }
+
+        private async Task ReloadAsync()
+        {
+            this.Reasons.Clear();
+
+            this.Results.Clear();
+
+            await InitAsync();
+        }
+
+        private async Task PrepareReasons()
+        {
+            await this._service.SaveReasonsIfEmpty();
+
+            IList<ReasonDTO> reasonDTOs = await this._service.GetReasons(1000);
+
+            this.Reasons.AddRange(reasonDTOs);
+        }
+
+        private void PreapreDictionary()
+        {
+            foreach (ReasonDTO reason in this.Reasons)
+            {
+                char? symvol = reason.Title?.FirstOrDefault();
+
+                if (symvol is null)
+                {
+                    continue;
+                }
+
+                symvol = char.ToLower((char)symvol);
+
+                if (this.keyValuePairs.ContainsKey((char)symvol) is false)
+                {
+                    this.keyValuePairs.Add((char)symvol, new List<ReasonDTO>());
+                }
+
+                this.keyValuePairs[(char)symvol].Add(reason);
+            }
+        }
+
+        private void PrepareResults()
+        {
+            IEnumerable<ReasonDTO> source = this.Reasons.Take(100);
+
+            this.Results.AddRange(source);
         }
 
         private async Task InitAsync()
         {
-            IList<PsychosomaticObject> psychosomaticObjects = await PsyhosomaticHelper.GetPsyhosomaticData();
-
-            foreach (PsychosomaticObject psychosomaticObject in psychosomaticObjects)
+            await Task.Run(async () =>
             {
-                this.Reasons.Add(new Reason() 
-                {
-                    Header = psychosomaticObject.ProblemText,
-                    Describtion = psychosomaticObject.ProblemReason 
-                });
-            }
+                await PrepareReasons();
+
+                PreapreDictionary();
+
+                PrepareResults();
+            });
+            
+            ConfigureState();
         }
 
-        private void SetDefault()
+        private void InitService()
         {
-            this.IsEmpty = false;
-            this.IsFull = false;
-        }
+            ApplicationDbContext context = new();
 
-        private void SetState(State state)
-        {
-            SetDefault();
+            UnitOfWork unitOfWork = new(context);
 
-            switch (state)
+            GenericRepository<PsychologyApp.Domain.Entities.Reason> repository = new(context);
+
+            MapperConfiguration configuration = new(cfg =>
             {
-                case State.Empty:
-                    this.IsEmpty = true;
-                    this.IsFull = false;
-                    break;
+                cfg.CreateMap<ReasonDTO, PsychologyApp.Domain.Entities.Reason>();
+                cfg.CreateMap<PsychologyApp.Domain.Entities.Reason, ReasonDTO>();
+            });
 
-                case State.Full:
-                    this.IsEmpty = false;
-                    this.IsFull = true;
-                    break;
-            }
+            Mapper mapper = new(configuration);
+
+            this._service = new ReasonService(repository, unitOfWork, mapper);
         }
 
         public void ExecuteSearch(string input)
         {
+            SetInit();
+
             this.Results.Clear();
+
+            if (string.IsNullOrEmpty(input))
+            {
+                ConfigureState();
+                return;
+            }
 
             string text = input.ToLower();
 
-            List<Reason> search = (from x in this.Reasons 
-                         where !string.IsNullOrEmpty(x.Header) && x.Header.Contains(text)
-                         select x).ToList();
+            char? symvol = text.FirstOrDefault();
 
-            foreach (Reason item in search)
+            if (symvol is null)
             {
-                this.Results.Add(item);
+                ConfigureState();
+                return;
             }
-            
+
+            symvol = char.ToLower((char)symvol);
+
+            if (this.keyValuePairs.ContainsKey((char)symvol) is false)
+            {
+                ConfigureState();
+                return;
+            }
+
+            IEnumerable<ReasonDTO> range = this.keyValuePairs[(char)symvol];
+
+            IEnumerable<ReasonDTO> source = range
+                .Where(x => x.Title?.Length >= text.Length && x.Title.ToLower().Contains(text));
+
+            this.Results.AddRange(source);
+
+            ConfigureState();
         }
 
         public PhysicsSearchViewModel() { }
 
-        public bool IsEmpty
-        {
-            get => this._empty;
-            set
-            {
-                this._empty = value;
-                OnPropertyChanged(nameof(this.IsEmpty));
-            }
-        }
-
-        public bool IsFull
-        {
-            get => this._full;
-            set
-            {
-                this._full = value;
-                OnPropertyChanged(nameof(this.IsFull));
-            }
-        }
     }
 }

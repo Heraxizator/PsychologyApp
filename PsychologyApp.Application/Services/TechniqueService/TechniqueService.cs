@@ -28,7 +28,7 @@ public class TechniqueService : ITechniqueService
     {
         Technique technique = _mapper.Map<Technique>(techniqueDTO);
 
-        _techniqueRepository.Insert(technique);
+        await _techniqueRepository.InsertAsync(technique);
 
         await _unitOfWork.Commit();
     }
@@ -37,15 +37,14 @@ public class TechniqueService : ITechniqueService
     {
         Technique technique = _mapper.Map<Technique>(techniqueDTO);
 
-        _techniqueRepository.Remove(technique);
+        await _techniqueRepository.RemoveAsync(technique);
 
         await _unitOfWork.Commit();
     }
 
     public async Task<TechniqueDTO> GetTechniqueById(int id)
     {
-        Technique? technique = await Task.Run(
-            () => this._techniqueRepository.FindById(id));
+        Technique? technique = await this._techniqueRepository.FindByIdAsync(id);
 
         TechniqueDTO? techniqueDTO = this._mapper.Map<TechniqueDTO>(technique);
 
@@ -54,8 +53,7 @@ public class TechniqueService : ITechniqueService
 
     public async Task<IList<TechniqueDTO>> GetTechniquesList(int count)
     {
-        IList<Technique> techniques = await Task.Run(
-            () => _techniqueRepository.Get(x => true).Take(count).ToList());
+        IList<Technique> techniques = (await _techniqueRepository.GetAsync(x => true)).Take(count).ToList();
 
         IList<TechniqueDTO> techniqueDTOs = _mapper.Map<IList<TechniqueDTO>>(techniques);
 
@@ -64,7 +62,7 @@ public class TechniqueService : ITechniqueService
 
     public async Task MarkTechniqueAsCompleted(int id)
     {
-        Technique? technique = _techniqueRepository.FindById(id);
+        Technique? technique = await _techniqueRepository.FindByIdAsync(id);
 
         if (technique is null)
         {
@@ -73,7 +71,7 @@ public class TechniqueService : ITechniqueService
 
         technique.MarkAsCompleted();
 
-        _techniqueRepository.Update(technique);
+        await _techniqueRepository.UpdateAsync(technique);
 
         await _unitOfWork.Commit();
     }
@@ -82,7 +80,7 @@ public class TechniqueService : ITechniqueService
     {
         Technique technique = _mapper.Map<Technique>(techniqueDTO);
 
-        _techniqueRepository.Update(technique);
+        await _techniqueRepository.UpdateAsync(technique);
 
         await _unitOfWork.Commit();
     }
