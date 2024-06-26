@@ -385,10 +385,10 @@
         <Setter Property="Shell.TitleColor" Value="Black" />
         <Setter Property="Shell.DisabledColor" Value="{StaticResource Secondary}" />
         <Setter Property="Shell.UnselectedColor" Value="Black" />
-        <Setter Property="Shell.NavBarHasShadow" Value="True" />
+        <Setter Property="Shell.NavBarHasShadow" Value="False" />
         <Setter Property="Shell.TabBarBackgroundColor" Value="White" />
         <Setter Property="Shell.TabBarForegroundColor" Value="Black" />
-        <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource Primary}" />
+        <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource Black}" />
         <Setter Property="Shell.TabBarUnselectedColor" Value="Black" />
     </Style>
 
@@ -402,7 +402,7 @@
         <Setter Property="BarBackgroundColor" Value="White" />
         <Setter Property="BarTextColor" Value="Black" />
         <Setter Property="UnselectedTabColor" Value="Black" />
-        <Setter Property="SelectedTabColor" Value="{StaticResource Primary}" />
+        <Setter Property="SelectedTabColor" Value="{StaticResource Black}" />
     </Style>
 
 </ResourceDictionary>

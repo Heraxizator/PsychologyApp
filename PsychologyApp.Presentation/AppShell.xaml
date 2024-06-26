@@ -1,30 +1,45 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PsychologyApp.Presentation.AppShell"
-             xmlns:views="clr-namespace:MobileHelperMaui.Views"
-             xmlns:abouts="clr-namespace:MobileHelperMaui.Views.AboutPages"
-             xmlns:settings="clr-namespace:MobileHelperMaui.Views.SettingsPages"
-             Shell.ForegroundColor="Black">
+<Shell  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        x:Class="PsychologyApp.Presentation.AppShell"
+        xmlns:views="clr-namespace:MobileHelperMaui.Views"
+        xmlns:tests="clr-namespace:MobileHelperMaui.Views.TestPages"
+        xmlns:physics="clr-namespace:MobileHelperMaui.Views.PhysicsPages"
+        xmlns:cleans="clr-namespace:MobileHelperMaui.Views.CleanPages"
+        xmlns:forms="clr-namespace:MobileHelperMaui.Views.ReviewPages"
+        xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+        xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+        Shell.ForegroundColor="Black">
 
-    <FlyoutItem Title="Техники"
-        Icon="technique.png">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
-        </Tab>
-    </FlyoutItem>
+    <Shell.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="White" StatusBarStyle="DarkContent"/>
+    </Shell.Behaviors>
 
-    <FlyoutItem Title="О приложении"
-            Icon="icon_about.png">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate abouts:InfoPage}" />
+    <TabBar>
+        <Tab Title="Практик"
+            Icon="{mi:Material Icon=Psychology}">
+            <ShellContent ContentTemplate="{DataTemplate views:TechniquesPage}" />
         </Tab>
-    </FlyoutItem>
 
-    <FlyoutItem Title="Настройки"
-            Icon="icon_about.png">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate settings:SettingsPage}" />
+        <Tab Title="Детектор"
+            Icon="{mi:Material Icon=FindReplace}">
+            <ShellContent ContentTemplate="{DataTemplate tests:TestsListPage}" />
         </Tab>
-    </FlyoutItem>
+
+        <Tab Title="Соматик"
+            Icon="{mi:Material Icon=MedicalServices}">
+            <ShellContent ContentTemplate="{DataTemplate physics:StartPhysicsPage}" />
+        </Tab>
+
+        <Tab Title="Очиститель"
+            Icon="{mi:Material Icon=CleaningServices}">
+            <ShellContent ContentTemplate="{DataTemplate cleans:MusicPlayerPage}"/>
+        </Tab>
+
+        <Tab Title="Отзовик"
+            Icon="{mi:Material Icon=HelpCenter}">
+            <ShellContent ContentTemplate="{DataTemplate forms:FormPage}"/>
+        </Tab>
+
+    </TabBar>
 </Shell>

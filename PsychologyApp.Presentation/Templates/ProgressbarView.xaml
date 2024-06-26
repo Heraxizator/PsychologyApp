@@ -8,23 +8,23 @@
             <StackLayout>
                 <ActivityIndicator
                     IsRunning="{TemplateBinding IsLoading}"
-                    WidthRequest="75"
-                    HeightRequest="75"
-                    Color="{StaticResource Primary}"/>
+                    Color="{StaticResource Secondary}"/>
 
                 <Label
                     Text="{TemplateBinding ProgressText}"
                     HorizontalOptions="CenterAndExpand"
                     VerticalOptions="CenterAndExpand"
-                    TextColor="Black"
-                    FontSize="16"/>
+                    TextColor="{StaticResource Black}"
+                    FontSize="14"/>
 
                 <Label 
+                    Margin="0, 3, 0, 0"
+                    FontAttributes="Bold"
                     Text="Отмена"
                     HorizontalOptions="CenterAndExpand"
                     VerticalOptions="CenterAndExpand"
-                    TextColor="{StaticResource Primary}"
-                    FontSize="15">
+                    TextColor="{StaticResource Secondary}"
+                    FontSize="14">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{TemplateBinding CancelCommand}"/>
                     </Label.GestureRecognizers>

@@ -8,7 +8,7 @@ namespace PsychologyApp.Presentation
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new AppShell();
         }
     }
 }

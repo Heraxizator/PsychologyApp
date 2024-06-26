@@ -1,9 +1,12 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls.Compatibility.Platform.Android;
 using MobileHelperMaui;
 using MauiIcons.Material;
 using PsychologyApp.Presentation.Handlers;
+
+#if ANDROID
+using Microsoft.Maui.Controls.Compatibility.Platform.Android;
+# endif
 
 namespace PsychologyApp.Presentation
 {

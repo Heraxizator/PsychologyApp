@@ -11,10 +11,10 @@ namespace PsychologyApp.Application.Helpers
     {
         public async Task<IList<ReasonDTO>> GetPsyhosomaticData()
         {
-            List<ReasonDTO> psychosomaticObjects = new();
-
-            await Task.Run(async () =>
+            return await Task.Run(async () =>
             {
+                List<ReasonDTO> psychosomaticObjects = new();
+
                 using Stream fileStream = await FileSystem.Current.OpenAppPackageFileAsync("Psyhosomatic.txt");
 
                 using StreamReader streamReader = new(fileStream);
@@ -40,9 +40,9 @@ namespace PsychologyApp.Application.Helpers
 
                     psychosomaticObjects.Add(psychosomaticObject);
                 }
+
+                return psychosomaticObjects;
             });
-            
-            return psychosomaticObjects;
         }
     }
 }

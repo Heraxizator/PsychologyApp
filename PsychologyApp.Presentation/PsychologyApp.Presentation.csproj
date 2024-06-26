@@ -82,7 +82,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AathifMahir.Maui.MauiIcons.Material" Version="2.1.5" />
+		<PackageReference Include="AathifMahir.Maui.MauiIcons.Material" Version="3.0.0" />
 		<PackageReference Include="AutoMapper" Version="13.0.1" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="6.1.0" />
 		<PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="3.1.0" />
