@@ -23,56 +23,56 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
 
     public async Task<IEnumerable<TEntity>> GetAsync()
     {
-        return await this._dbSet.AsNoTracking().ToListAsync();
+        return await Task.Run(() => this._dbSet.AsNoTracking().ToList());
     }
 
     public async Task<IEnumerable<TEntity>> GetAsync(Func<TEntity, bool> predicate)
     {
-        return (await this._dbSet.AsNoTracking().ToListAsync()).Where(predicate).ToList();
+        return await Task.Run(() => this._dbSet.AsNoTracking().ToList().Where(predicate).ToList());
     }
     public async Task<TEntity?> FindByIdAsync(long id)
     {
-        return await this._dbSet.FindAsync(id);
+        return await Task.Run(() => this._dbSet.Find(id));
     }
 
     public async Task UpdateAsync(TEntity item)
     {
-        this._context.Update(item);
+        await Task.Run(() => this._context.Update(item));
     }
 
     public async Task RemoveAsync(TEntity item)
     {
-        this._dbSet.Remove(item);
+        await Task.Run(() => this._dbSet.Remove(item));
     }
 
     public async Task InsertAsync(TEntity item)
     {
-        await this._dbSet.AddAsync(item);
+        await Task.Run(() => this._dbSet.AddAsync(item));
     }
 
     public async Task InsertOrUpdateAsync(TEntity item)
     {
-        this._dbSet.Update(item);
+        await Task.Run(() => this._dbSet.Update(item));
     }
 
     public async Task InsertRangeAsync(IEnumerable<TEntity> entities)
     {
-        await this._dbSet.AddRangeAsync(entities);
+        await Task.Run(() => this._dbSet.AddRange(entities));
     }
 
     public async Task RemoveRangeAsync(IEnumerable<TEntity> entities)
     {
-        this._dbSet.RemoveRange(entities);
+        await Task.Run(() => this._dbSet.RemoveRange(entities));
     }
 
     public async Task UpdateRangeAsync(IEnumerable<TEntity> entities)
     {
-        this._context.UpdateRange(entities);
+        await Task.Run(() => this._context.UpdateRange(entities));
     }
 
     public async Task InsertOrUpdateRangeAsync(IEnumerable<TEntity> entities)
     {
-        this._dbSet.UpdateRange(entities);
+        await Task.Run(() => this._dbSet.UpdateRange(entities));
     }
 
     public IEnumerable<TEntity> GetWithInclude(params Expression<Func<TEntity, object>>[] includeProperties)
@@ -94,3 +94,4 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
             .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
     }
 }
+
