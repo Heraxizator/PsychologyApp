@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileHelperMaui.Views.TechniquePages.ComparisonPage" 
              xmlns:vm="clr-namespace:MobileHelper.ViewModels.TechniqueViewModels"
+             xmlns:local="clr-namespace:MobileHelperMaui" 
              Title="Техника">
     
     <ContentPage.BindingContext>
@@ -23,48 +24,54 @@
         <ScrollView VerticalScrollBarVisibility="Never">
             <StackLayout Margin="0, 0, 0, 0">
                 <Frame Padding="10" Margin="15, 15, 15, 15">
-                    <StackLayout Margin="5">
-                        <Label
-                    Text="Алгоритм"
-                    FontSize="18"
-                    Margin="10, 5, 5, 15"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+                    <StackLayout Margin="5, 5, 15, 5">
+                        <local:JustifiedLabel
+                            JustifyText="True"
+                            Text="Алгоритм"
+                            FontSize="18"
+                            Margin="10, 5, 5, 15"
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
-                        <Label 
-                    Margin="15, 0, 0, 10"
-                    Text="1. Назвать проблему"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"
-                    FontSize="16"/>
+                        <local:JustifiedLabel
+                            JustifyText="True"
+                            Margin="15, 0, 0, 10"
+                            Text="1. Назвать проблему"
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"
+                            FontSize="16"/>
 
-                        <Label 
-                    Margin="15, 0, 5, 10"
-                    Text="2. Определить то, что важно в прошлом"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"
-                    FontSize="16"/>
+                        <local:JustifiedLabel
+                            JustifyText="True"
+                            Margin="15, 0, 5, 10"
+                            Text="2. Определить то, что важно в прошлом"
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"
+                            FontSize="16"/>
 
-                        <Label 
-                    Margin="15, 0, 0, 10"
-                    Text="3. Определить то, что важно в настоящем"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"
-                    FontSize="16"/>
+                        <local:JustifiedLabel 
+                            JustifyText="True"
+                            Margin="15, 0, 0, 10"
+                            Text="3. Определить то, что важно в настоящем"
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"
+                            FontSize="16"/>
 
-                        <Label 
-                    Margin="15, 0, 0, 10"
-                    Text="4. Определить то, что важно в будущем"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"
-                    FontSize="16"/>
+                        <local:JustifiedLabel
+                            JustifyText="True"
+                            Margin="15, 0, 0, 10"
+                            Text="4. Определить то, что важно в будущем"
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"
+                            FontSize="16"/>
 
-                        <Label 
-                    Margin="15, 0, 0, 15"
-                    Text="5. Сравнить то, что важно в трёх временах"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"
-                    FontSize="16"/>
+                        <local:JustifiedLabel
+                            JustifyText="True"
+                            Margin="15, 0, 0, 15"
+                            Text="5. Сравнить то, что важно в трёх временах"
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"
+                            FontSize="16"/>
 
                     </StackLayout>
 
                     <Frame.Shadow>
                         <Shadow 
-                        Opacity="0.65"
+                        Opacity="0.35"
                         Brush="Black"
                         Offset="0, 0"
                         Radius="20"/>
@@ -136,7 +143,7 @@
 
                     <Frame.Shadow>
                         <Shadow 
-                        Opacity="0.65"
+                        Opacity="0.35"
                         Brush="Black"
                         Offset="0, 0"
                         Radius="20"/>
@@ -153,7 +160,7 @@
                 HorizontalOptions="CenterAndExpand"
                 VerticalOptions="Center"
                 Command="{Binding Finish}"
-                WidthRequest="375"
+                WidthRequest="350"
                 HeightRequest="40"/>
             </StackLayout>
         </ScrollView>

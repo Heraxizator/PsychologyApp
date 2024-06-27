@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="MobileHelperMaui.Views.ProfilePages.UserPage"
              xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              Title="Профиль">
 
     <ContentPage.Resources>
@@ -13,21 +14,18 @@
 
     <ContentPage.Content>
 
-        <ScrollView VerticalScrollBarVisibility="Never">
-            <StackLayout Margin="0, 15, 0, 15">
-                <StackLayout>
-                    <StackLayout Margin="15, 0, 15, 0" Orientation="Horizontal">
+        <StackLayout Margin="0, 15, 0, 15">
+            <StackLayout>
+                <StackLayout Margin="15, 0, 15, 0" Orientation="Horizontal">
 
-                        <Ellipse
-                    Margin="5, 0, 0, 0"
-                    WidthRequest="50"
-                    HeightRequest="50"
-                    BackgroundColor="{StaticResource Gray}">
+                    <Label
+                            Text="{mi:Material Icon=AccountCircle, IconSize=50}"
+                            Margin="0, 0, 0, 0"
+                            TextColor="{StaticResource Gray}"/>
 
-                        </Ellipse>
 
-                        <StackLayout Margin="10, 0, 10, 0">
-                            <Label 
+                    <StackLayout Margin="5, 0, 10, 0">
+                        <Label 
                         TextColor="{StaticResource Gray}"
                         FontAttributes="Bold"
                         FontSize="19"
@@ -35,53 +33,53 @@
                         Margin="0"
                         Text="Пользователь"/>
 
-                            <Label 
+                        <Label 
                         Text="Стандартный"
                         Padding="0"
                         Margin="0"
                         TextColor="Black"
                         FontSize="16"/>
 
-                        </StackLayout>
-
                     </StackLayout>
 
                 </StackLayout>
 
-                <StackLayout 
+            </StackLayout>
+
+            <StackLayout 
             Margin="0, 5, 0, 0"
             HorizontalOptions="Center"
             Orientation="Horizontal">
-                    <StackLayout Margin="15, 10, 15, 10">
-                        <Label 
-                    TextColor="Black"
-                    FontSize="16"
-                    HorizontalTextAlignment="Center"
-                    Text="3"/>
-                        <Label 
-                    Text="Пройдено техник"
-                    FontSize="16"
-                    TextColor="Black"/>
-
-                    </StackLayout>
-
-                    <StackLayout Margin="15, 10, 15, 10">
-                        <Label 
+                <StackLayout Margin="15, 10, 15, 10">
+                    <Label 
                     TextColor="Black"
                     FontSize="16"
                     HorizontalTextAlignment="Center"
                     Text="0"/>
-                        <Label 
+                    <Label 
+                    Text="Пройдено техник"
+                    FontSize="16"
+                    TextColor="Black"/>
+
+                </StackLayout>
+
+                <StackLayout Margin="15, 10, 15, 10">
+                    <Label 
+                    TextColor="Black"
+                    FontSize="16"
+                    HorizontalTextAlignment="Center"
+                    Text="0"/>
+                    <Label 
                     Text="Подписчиков"
                     FontSize="16"
                     TextColor="Black"/>
 
-                    </StackLayout>
-
                 </StackLayout>
 
-                <StackLayout Margin="0, 10, 0, 5">
-                    <Label 
+            </StackLayout>
+
+            <StackLayout Margin="0, 10, 0, 5">
+                <Label 
                         Margin="15, 0, 15, 0"
                         Text="Советуем пройти"
                         FontSize="18"
@@ -89,77 +87,77 @@
                         FontAttributes="Bold"
                         HorizontalOptions="Start"/>
 
-                    <CollectionView 
+                <CollectionView 
                         Margin="15, 0, 0, 0"
                         VerticalOptions="CenterAndExpand"
                         HorizontalScrollBarVisibility="Never"
                         HeightRequest="150"
                         ItemsSource="{Binding Techniques}">
 
-                        <CollectionView.ItemsLayout>
-                            <LinearItemsLayout Orientation="Horizontal" />
-                        </CollectionView.ItemsLayout>
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
 
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <StackLayout>
-                                    <Frame
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+                                <Frame
                                         Padding="10"
                                         HeightRequest="130"
                                         WidthRequest="250">
 
-                                        <StackLayout Margin="10, 5, 5, 5">
-                                            <Label 
+                                    <StackLayout Margin="10, 5, 5, 5">
+                                        <Label 
                                             Text="{Binding Title}"
                                             FontAttributes="Bold"
                                             TextColor="{Binding Gray}"
                                             FontSize="18"/>
 
-                                            <Label
+                                        <Label
                                             Text="{Binding Subtitle}"
                                             TextColor="Black"
                                             FontSize="16"/>
 
-                                        </StackLayout>
+                                    </StackLayout>
 
-                                        <Frame.Shadow>
-                                            <Shadow 
-                                            Opacity="0.65"
+                                    <Frame.Shadow>
+                                        <Shadow 
+                                            Opacity="0.35"
                                             Brush="Black"
                                             Offset="0, 0"
                                             Radius="20"/>
-                                        </Frame.Shadow>
+                                    </Frame.Shadow>
 
-                                    </Frame>
-                                </StackLayout>
-                                
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
+                                </Frame>
+                            </StackLayout>
 
-                    </CollectionView>
-                </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
 
-                <StackLayout Margin="0, 5, 0, 5">
-                    <Label 
+                </CollectionView>
+            </StackLayout>
+
+            <StackLayout Margin="0, 5, 0, 5">
+                <Label 
                         Margin="15, 0, 15, 0"
                         Text="Лучшие цитаты"
                         TextColor="{StaticResource Gray}"
                         FontAttributes="Bold"
                         FontSize="18"/>
 
-                    <templates:ProgressbarView
+                <templates:ProgressbarView
                         HorizontalOptions="CenterAndExpand"
                         VerticalOptions="CenterAndExpand"
-                        Margin="15, 50, 15, 0"
+                        Margin="15, 75, 15, 0"
                         IsVisible="{Binding IsInit}"
                         IsLoading="True"
                         ProgressText="Инициализация">
-                        <templates:ProgressbarView.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Cancel}"/>
-                        </templates:ProgressbarView.GestureRecognizers>
-                    </templates:ProgressbarView>
-                    
-                    <ListView
+                    <templates:ProgressbarView.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Cancel}"/>
+                    </templates:ProgressbarView.GestureRecognizers>
+                </templates:ProgressbarView>
+
+                <ListView
                         IsVisible="{Binding IsDone}"
                         Margin="15, 0, 15, 0"
                         SelectionMode="None"
@@ -169,45 +167,44 @@
                         SeparatorVisibility="None"
                         ItemsSource="{Binding Quots}">
 
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <StackLayout>
-                                        <Frame Padding="10">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Frame Padding="10">
 
-                                            <StackLayout Margin="10, 5, 50, 5">
-                                                <Label 
+                                        <StackLayout Margin="10, 5, 50, 5">
+                                            <Label 
                                                 Text="{Binding Author}"
                                                 FontAttributes="Bold"
                                                 TextColor="{Binding Gray}"
                                                 FontSize="18"/>
 
-                                                <Label
+                                            <Label
                                                 Text="{Binding Text}"
                                                 TextColor="Black"
                                                 FontSize="16"/>
 
-                                            </StackLayout>
+                                        </StackLayout>
 
-                                            <Frame.Shadow>
-                                                <Shadow 
-                                                Opacity="0.65"
+                                        <Frame.Shadow>
+                                            <Shadow 
+                                                Opacity="0.35"
                                                 Brush="Black"
                                                 Offset="0, 0"
                                                 Radius="20"/>
-                                            </Frame.Shadow>
+                                        </Frame.Shadow>
 
-                                        </Frame>
-                                    </StackLayout>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-
-                </StackLayout>
+                                    </Frame>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
 
             </StackLayout>
-        </ScrollView>
+
+        </StackLayout>
 
     </ContentPage.Content>
 </ContentPage>

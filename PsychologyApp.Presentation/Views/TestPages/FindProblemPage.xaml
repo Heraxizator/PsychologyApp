@@ -32,7 +32,7 @@
 
                     <Frame.Shadow>
                         <Shadow 
-                        Opacity="0.65"
+                        Opacity="0.35"
                         Brush="Black"
                         Offset="0, 0"
                         Radius="20"/>
@@ -72,7 +72,7 @@
 
                     <Frame.Shadow>
                         <Shadow 
-                        Opacity="0.65"
+                        Opacity="0.35"
                         Brush="Black"
                         Offset="0, 0"
                         Radius="20"/>
@@ -98,7 +98,7 @@
 
                     <Frame.Shadow>
                         <Shadow 
-                        Opacity="0.65"
+                        Opacity="0.35"
                         Brush="Black"
                         Offset="0, 0"
                         Radius="20"/>
@@ -112,7 +112,7 @@
                 FontSize="15"
                 BackgroundColor="{StaticResource Primary}"
                 CornerRadius="25"
-                WidthRequest="375"
+                WidthRequest="350"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 Command="{Binding Continue}"

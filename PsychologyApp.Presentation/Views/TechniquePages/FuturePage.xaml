@@ -46,7 +46,7 @@
 
                 <Frame.Shadow>
                     <Shadow 
-                    Opacity="0.65"
+                    Opacity="0.35"
                     Brush="Black"
                     Offset="0, 0"
                     Radius="20"/>
@@ -59,7 +59,7 @@
                     <Label
                     Text="Форма"
                     FontSize="18"
-                    Margin="5, 10, 5, 10"
+                    Margin="0, 0, 0, 10"
                     TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
                     <Frame BackgroundColor="{AppThemeBinding Light=white, Dark=#444444}" Margin="5, 5, 5, 5" Padding="10" BorderColor="{StaticResource Accent}" CornerRadius="25">
@@ -96,7 +96,7 @@
 
                 <Frame.Shadow>
                     <Shadow 
-                    Opacity="0.65"
+                    Opacity="0.35"
                     Brush="Black"
                     Offset="0, 0"
                     Radius="20"/>
@@ -110,7 +110,7 @@
                 FontSize="15"
                 BackgroundColor="{StaticResource Primary}"
                 CornerRadius="25"
-                WidthRequest="375"
+                WidthRequest="350"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 Command="{Binding Finish}"

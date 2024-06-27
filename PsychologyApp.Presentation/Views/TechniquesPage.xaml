@@ -85,20 +85,20 @@
                                         />
 
                                         <StackLayout Margin="5, 0, 0, 0">
-                                            <Label 
-                                            Text="{Binding Title}"
-                                            FontSize="18"
-                                            FontAttributes="Bold"
-                                            TextColor="{AppThemeBinding Light={StaticResource Gray}, Dark=white}"
-                                            />
-                                            <Label
-       
-                                            WidthRequest="250"
-                                            Text="{Binding Subtitle}"
-                                            Margin="0, 5, 0, 0"
-                                            FontSize="15"
-                                            MaxLines="3"
-                                            TextColor="{AppThemeBinding Light={StaticResource Gray}, Dark=white}"/>
+                                            <local:JustifiedLabel
+                                                JustifyText="True"
+                                                Text="{Binding Title}"
+                                                FontSize="18"
+                                                FontAttributes="Bold"
+                                                TextColor="{AppThemeBinding Light={StaticResource Gray}, Dark=white}"/>
+                                            <local:JustifiedLabel
+                                                JustifyText="True"
+                                                WidthRequest="250"
+                                                Text="{Binding Subtitle}"
+                                                Margin="0, 5, 0, 0"
+                                                FontSize="15"
+                                                MaxLines="3"
+                                                TextColor="{AppThemeBinding Light={StaticResource Gray}, Dark=white}"/>
                                         </StackLayout>
 
                                     </StackLayout>
@@ -124,7 +124,7 @@
 
                                 <Frame.Shadow>
                                     <Shadow 
-                                    Opacity="0.65"
+                                    Opacity="0.35"
                                     Brush="Black"
                                     Offset="0, 0"
                                     Radius="20"/>

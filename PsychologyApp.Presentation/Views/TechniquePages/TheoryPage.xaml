@@ -17,20 +17,12 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <StackLayout Margin="5, 10, 5, 5">
-            <Label
-            Text="Описание"
-            FontSize="19"
-            TextColor="{AppThemeBinding Light=black, Dark=white}"
-            Margin="0, 5, 0, 10"
-            HorizontalOptions="CenterAndExpand"
-            HorizontalTextAlignment="Center"/>
 
-            <Label
-            Text="{Binding Text}"
-            FontSize="18"
-            TextColor="{AppThemeBinding Light=black, Dark=white}"
-            Margin="15, 5, 15, 10"/>
-        </StackLayout>
+        <local:JustifiedLabel
+                JustifyText="True"
+                Text="{Binding Text}"
+                FontSize="18"
+                TextColor="{AppThemeBinding Light=black, Dark=white}"
+                Margin="15, 5, 15, 10"/>
     </ContentPage.Content>
 </ContentPage>

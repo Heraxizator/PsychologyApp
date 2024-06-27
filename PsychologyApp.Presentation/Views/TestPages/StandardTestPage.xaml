@@ -185,17 +185,18 @@
                         <Frame Margin="15, 10, 15, 15">
                             <StackLayout Margin="5">
 
-                                <Label
-                            Margin="5, 0, 5, 5"
-                            Text="Это стандартная версия теста Люшера. Она может более точно оценить настроение, чем альтернативная."
-                            TextColor="{AppThemeBinding Light=black, Dark=white}"
-                            FontSize="16"/>
+                                <controls:JustifiedLabel
+                                    JustifyText="True"
+                                    Margin="5, 0, 5, 5"
+                                    Text="Это стандартная версия теста Люшера. Она может более точно оценить настроение, чем альтернативная."
+                                    TextColor="{AppThemeBinding Light=black, Dark=white}"
+                                    FontSize="16"/>
 
                             </StackLayout>
 
                             <Frame.Shadow>
                                 <Shadow 
-                            Opacity="0.65"
+                            Opacity="0.35"
                             Brush="Black"
                             Offset="0, 0"
                             Radius="20"/>
@@ -266,7 +267,7 @@
                             FontSize="15"
                             BackgroundColor="{StaticResource Gray}"
                             CornerRadius="25"
-                            WidthRequest="375"
+                            WidthRequest="350"
                             HorizontalOptions="Center"
                             VerticalOptions="Center"
                             Command="{Binding Restart}"

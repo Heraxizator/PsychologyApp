@@ -187,7 +187,8 @@
                         <Frame Margin="15, 10, 15, 15">
                             <StackLayout Margin="5">
 
-                                <Label
+                                <local:JustifiedLabel
+                                    JustifyText="True"
                                 Margin="5, 0, 5, 5"
                                 Text="Это альтернативная версия теста Люшера. Она менее точная, но более простая, быстрая и лёгкая. Всё делается буквально в два клика."
                                 TextColor="{AppThemeBinding Light=black, Dark=white}"
@@ -197,7 +198,7 @@
 
                             <Frame.Shadow>
                                 <Shadow 
-                                Opacity="0.65"
+                                Opacity="0.35"
                                 Brush="Black"
                                 Offset="0, 0"
                                 Radius="20"/>
@@ -263,7 +264,7 @@
 
                             <Frame.Shadow>
                                 <Shadow 
-                                Opacity="0.65"
+                                Opacity="0.35"
                                 Brush="Black"
                                 Offset="0, 0"
                                 Radius="20"/>
@@ -318,7 +319,7 @@
 
                             <Frame.Shadow>
                                 <Shadow 
-                                Opacity="0.65"
+                                Opacity="0.35"
                                 Brush="Black"
                                 Offset="0, 0"
                                 Radius="20"/>
@@ -332,7 +333,7 @@
                         FontSize="15"
                         BackgroundColor="{StaticResource Gray}"
                         CornerRadius="25"
-                        WidthRequest="375"
+                        WidthRequest="350"
                         HorizontalOptions="Center"
                         VerticalOptions="Center"
                         Command="{Binding Restart}"
