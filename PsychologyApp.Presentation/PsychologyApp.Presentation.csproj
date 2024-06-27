@@ -57,6 +57,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Helpers\**" />
+	  <Compile Remove="Renderers\**" />
+	  <EmbeddedResource Remove="Helpers\**" />
+	  <EmbeddedResource Remove="Renderers\**" />
+	  <MauiCss Remove="Helpers\**" />
+	  <MauiCss Remove="Renderers\**" />
+	  <MauiXaml Remove="Helpers\**" />
+	  <MauiXaml Remove="Renderers\**" />
+	  <None Remove="Helpers\**" />
+	  <None Remove="Renderers\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\Raw\001_Molitva.mp3" />
 	  <None Remove="Resources\Raw\002_Kafizma_1.mp3" />
 	  <None Remove="Resources\Raw\003_Kafizma_2.mp3" />
@@ -94,13 +107,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\PsychologyApp.Application\PsychologyApp.Application.csproj" />
+	  <ProjectReference Include="..\Psychology.Somatic.Application\Psychology.Somatic.Application.csproj" />
+	  <ProjectReference Include="..\PsychologyApp.Cleaner.Application\PsychologyApp.Cleaner.Application.csproj" />
+	  <ProjectReference Include="..\PsychologyApp.Detector.Application\PsychologyApp.Detector.Application.csproj" />
 	  <ProjectReference Include="..\PsychologyApp.Infrastructure\PsychologyApp.Infrastructure.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Helpers\" />
-	  <Folder Include="Renderers\" />
+	  <ProjectReference Include="..\PsychologyApp.Practic.Application\PsychologyApp.Practic.Application.csproj" />
+	  <ProjectReference Include="..\PsychologyApp.Reviewer.Application\PsychologyApp.Reviewer.Application.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

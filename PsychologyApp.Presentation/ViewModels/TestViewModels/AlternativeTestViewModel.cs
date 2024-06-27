@@ -1,5 +1,5 @@
 ﻿using Microsoft.Maui.Controls.PlatformConfiguration;
-using PsychologyApp.Domain.ValueObjects;
+using PsychologyApp.Detector.Domain.Colour.ValueObjects;
 using PsychologyApp.Presentation.ViewModels;
 using PsychologyApp.Presentation.ViewModels.TestViewModels;
 using System.Windows.Input;

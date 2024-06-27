@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using MobileHelperMaui.Services;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.QuotService;
 using PsychologyApp.Domain.Entities;
@@ -48,7 +47,7 @@ namespace MobileHelper.ViewModels.ProfileViewModels
                 Subtitle = "Методика депрограммирования подсознания"
             });
 
-            await this._service.SaveQuotsFromApi(1);
+            await this._service.SaveQuotFromApi();
 
             IList<QuotDTO> quotDTOs = await this._service.GetQuotsList(2);
 

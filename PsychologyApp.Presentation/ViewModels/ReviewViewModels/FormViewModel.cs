@@ -1,4 +1,6 @@
-﻿using PsychologyApp.Presentation.ViewModels;
+﻿using PsychologyApp.Presentation.ServiceLocator;
+using PsychologyApp.Presentation.ServiceLocator.Dialog;
+using PsychologyApp.Presentation.ViewModels;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -36,11 +38,11 @@ namespace MobileHelper.ViewModels.ReviewViewModels
             }
             catch (FeatureNotSupportedException)
             {
-                DialogService.ShowAsync("Mobile Helper", "Отправка СМС не поддерживается");
+                ServiceLocator.Instance.GetService<IDialogService>().ShowAsync("Предупреждение", "Отправка СМС не поддерживается");
             }
             catch (Exception)
             {
-                DialogService.ShowAsync("Mobile Helper", "Ошибка при отправке СМС");
+                ServiceLocator.Instance.GetService<IDialogService>().ShowAsync("Предупреждение", "Ошибка при отправке СМС");
             }
         }
 

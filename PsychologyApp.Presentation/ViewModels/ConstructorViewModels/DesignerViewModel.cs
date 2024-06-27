@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
-using MobileHelperMaui.Services;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.TechniqueService;
 using PsychologyApp.Domain.Entities;
 using PsychologyApp.Infrastructure.Repositories;
 using PsychologyApp.Infrastructure.Share;
 using PsychologyApp.Infrastructure.Uow;
+using PsychologyApp.Presentation.ServiceLocator.Dialog;
+using PsychologyApp.Presentation.ServiceLocator;
 using PsychologyApp.Presentation.ViewModels;
 using System.Windows.Input;
 
@@ -103,7 +104,7 @@ namespace MobileHelper.ViewModels.ConstructorViewModels
         {
             if (!MediaPicker.IsCaptureSupported)
             {
-                this.DialogService.ShowAsync("Ошибка", "Камера не поддерживается на вашем устройстве");
+                ServiceLocator.Instance.GetService<IDialogService>().ShowAsync("Ошибка", "Камера не поддерживается на вашем устройстве");
                 return;
             }
 
@@ -119,15 +120,15 @@ namespace MobileHelper.ViewModels.ConstructorViewModels
 
             catch (FeatureNotSupportedException)
             {
-                this.DialogService.ShowAsync("Ошибка", "Камера не поддерживается на вашем устройстве");
+                ServiceLocator.Instance.GetService<IDialogService>().ShowAsync("Ошибка", "Камера не поддерживается на вашем устройстве");
             }
             catch (PermissionException)
             {
-                this.DialogService.ShowAsync("Ошибка", "Приложению не предоставлено разрешение на использование камеры");
+                ServiceLocator.Instance.GetService<IDialogService>().ShowAsync("Ошибка", "Приложению не предоставлено разрешение на использование камеры");
             }
             catch (Exception)
             {
-                this.DialogService.ShowAsync("Ошибка", "Не удалось применить камеру. Напишите в техническую поддержку");
+                ServiceLocator.Instance.GetService<IDialogService>().ShowAsync("Ошибка", "Не удалось применить камеру. Напишите в техническую поддержку");
             }
         }
 
@@ -145,15 +146,15 @@ namespace MobileHelper.ViewModels.ConstructorViewModels
 
             catch (FeatureNotSupportedException)
             {
-                this.DialogService.ShowAsync("Ошибка", "Галерея не поддерживается на вашем устройстве");
+                ServiceLocator.Instance.GetService<IDialogService>().ShowAsync("Ошибка", "Галерея не поддерживается на вашем устройстве");
             }
             catch (PermissionException)
             {
-                this.DialogService.ShowAsync("Ошибка", "Приложению не предоставлено разрешение на использование галереи");
+                ServiceLocator.Instance.GetService<IDialogService>().ShowAsync("Ошибка", "Приложению не предоставлено разрешение на использование галереи");
             }
             catch (Exception)
             {
-                this.DialogService.ShowAsync("Ошибка", "Не удалось применить галерею. Напишите в техническую поддержку");
+                ServiceLocator.Instance.GetService<IDialogService>().ShowAsync("Ошибка", "Не удалось применить галерею. Напишите в техническую поддержку");
             }
         }
 
@@ -217,7 +218,7 @@ namespace MobileHelper.ViewModels.ConstructorViewModels
 
             else
             {
-                this.DialogService.ShowAsync("Ошибка", "Необходимо заполнить все поля");
+                ServiceLocator.Instance.GetService<IDialogService>().ShowAsync("Ошибка", "Необходимо заполнить все поля");
             }
         }
 

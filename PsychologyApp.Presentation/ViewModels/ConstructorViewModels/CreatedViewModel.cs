@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using MobileHelperMaui.Services;
 using MobileHelperMaui.Views.TechniquePages.ConstructorPages;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.TechniqueService;
@@ -8,6 +7,8 @@ using PsychologyApp.Infrastructure.Repositories;
 using PsychologyApp.Infrastructure.Share;
 using PsychologyApp.Infrastructure.Uow;
 using PsychologyApp.Presentation.Models;
+using PsychologyApp.Presentation.ServiceLocator;
+using PsychologyApp.Presentation.ServiceLocator.Dialog;
 using PsychologyApp.Presentation.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -65,7 +66,7 @@ namespace MobileHelper.ViewModels.ConstructorViewModels
         [Obsolete]
         private async void ToRemove(object obj)
         {
-            bool result = await DialogService.AskAsync(null, "Вы уверены, что хотите удалить свою технику", "Да", "Нет");
+            bool result = await ServiceLocator.Instance.GetService<IDialogService>().AskAsync(null, "Вы уверены, что хотите удалить свою технику", "Да", "Нет");
 
             if (result)
             {
@@ -85,13 +86,13 @@ namespace MobileHelper.ViewModels.ConstructorViewModels
 
             if (item == null)
             {
-                this.DialogService.ShowAsync("Ошибка", "Не удалось загрузить технику");
+                ServiceLocator.Instance.GetService<IDialogService>().ShowAsync("Ошибка", "Не удалось загрузить технику");
                 return;
             }
 
             if (string.IsNullOrEmpty(item.Algorithm))
             {
-                this.DialogService.ShowAsync("Ошибка", "Алгоритм не найден");
+                ServiceLocator.Instance.GetService<IDialogService>().ShowAsync("Ошибка", "Алгоритм не найден");
                 return;
             }
 

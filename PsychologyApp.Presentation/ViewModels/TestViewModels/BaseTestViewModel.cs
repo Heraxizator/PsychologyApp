@@ -1,4 +1,4 @@
-﻿using PsychologyApp.Domain.ValueObjects;
+﻿using PsychologyApp.Detector.Domain.Colour.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

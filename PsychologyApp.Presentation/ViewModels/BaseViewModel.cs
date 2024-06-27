@@ -1,6 +1,4 @@
-﻿using MobileHelperMaui.Services.Implementations;
-using MobileHelperMaui.Services.Interfaces;
-using MobileHelperMaui.Views.TechniquePages;
+﻿using MobileHelperMaui.Views.TechniquePages;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -10,7 +8,6 @@ namespace PsychologyApp.Presentation.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDialog DialogService = new DialogService();
         public INavigation? Navigation { get; set; }
         public ICommand? Finish { get; set; }
         public ICommand? Theory { get; set; }

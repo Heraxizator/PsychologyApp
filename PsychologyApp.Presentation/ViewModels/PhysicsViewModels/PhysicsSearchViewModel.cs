@@ -11,7 +11,6 @@ using PsychologyApp.Presentation.ViewModels;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using static PsychologyApp.Application.Helpers.PsyhosomaticHelper;
 using BaseViewModel = PsychologyApp.Presentation.ViewModels.BaseViewModel;
 
 namespace MobileHelper.ViewModels.PhysicsViewModels

@@ -1,11 +1,11 @@
-﻿using MobileHelperMaui.Services.Implementations;
+﻿using PsychologyApp.Presentation.ServiceLocator;
+using PsychologyApp.Presentation.ServiceLocator.Dialog;
 using PsychologyApp.Presentation.ViewModels;
 
 namespace MobileHelper.ViewModels.SettingsViewModels
 {
     public class SettingsViewModel : BaseViewModel
     {
-        private DialogService dialog { get; set; }
         public string theme { get; set; }
         public string color { get; set; }
         public string form { get; set; }
@@ -20,12 +20,11 @@ namespace MobileHelper.ViewModels.SettingsViewModels
             this.Title = "Настройки";
             this.Navigation = navigation;
             this.Finish = new Command(ToEnd);
-            this.dialog = DependencyService.Get<DialogService>();
         }
 
         private void ToEnd(object obj)
         {
-            this.dialog.ShowAsync("Mobile Helper", "Изменения будут применены при следующем запуске приложения");
+            ServiceLocator.Instance.GetService<IDialogService>().ShowAsync("Предупреждение", "Изменения будут применены при следующем запуске приложения");
 
             Preferences.Set("Theme", this.Theme);
             Preferences.Set("Color", this.Color);

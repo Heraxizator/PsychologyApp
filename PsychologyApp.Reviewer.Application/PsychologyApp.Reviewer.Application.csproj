@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
@@ -19,28 +19,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <AndroidResource Remove="Migrations\**" />
-	  <Compile Remove="Migrations\**" />
-	  <EmbeddedResource Remove="Migrations\**" />
-	  <MauiCss Remove="Migrations\**" />
-	  <MauiXaml Remove="Migrations\**" />
-	  <None Remove="Migrations\**" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.3" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\PsychologyApp.Cleaner.Domain\PsychologyApp.Cleaner.Domain.csproj" />
-	  <ProjectReference Include="..\PsychologyApp.Common.Domain\PsychologyApp.Common.Domain.csproj" />
-	  <ProjectReference Include="..\PsychologyApp.Detector.Domain\PsychologyApp.Detector.Domain.csproj" />
-	  <ProjectReference Include="..\PsychologyApp.Practic.Domain\PsychologyApp.Practic.Domain.csproj" />
+	  <ProjectReference Include="..\PsychologyApp.Common.Application\PsychologyApp.Common.Application.csproj" />
+	  <ProjectReference Include="..\PsychologyApp.Infrastructure\PsychologyApp.Infrastructure.csproj" />
 	  <ProjectReference Include="..\PsychologyApp.Reviewer.Domain\PsychologyApp.Reviewer.Domain.csproj" />
-	  <ProjectReference Include="..\PsychologyApp.Somatic.Domain\PsychologyApp.Somatic.Domain.csproj" />
 	</ItemGroup>
 
 </Project>
