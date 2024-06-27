@@ -11,6 +11,8 @@ public partial class TechniquesPage : ContentPage
     {
         InitializeComponent();
 
+        Application.Current.UserAppTheme = AppTheme.Light;
+
         this.BindingContext = new TechniquesViewModel(this.Navigation);
 
         this.viewModel = this.BindingContext as TechniquesViewModel;
