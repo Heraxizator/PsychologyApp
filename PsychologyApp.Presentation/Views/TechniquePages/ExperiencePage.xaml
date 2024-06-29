@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileHelperMaui.Views.TechniquePages.ExperiencePage"
              xmlns:vm="clr-namespace:MobileHelper.ViewModels.TechniqueViewModels"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
              Title="Техника">
     
     <ContentPage.BindingContext>

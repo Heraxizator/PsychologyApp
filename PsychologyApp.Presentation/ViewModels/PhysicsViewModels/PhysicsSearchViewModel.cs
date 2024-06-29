@@ -180,5 +180,18 @@ namespace MobileHelper.ViewModels.PhysicsViewModels
 
         public PhysicsSearchViewModel() { }
 
+        private string _search_text;
+        public string SearchText
+        {
+            get => this._search_text;
+            set
+            {
+                if (this._search_text != value)
+                {
+                    this._search_text = value;
+                    OnPropertyChanged(nameof(SearchText));
+                }
+            }
+        }
     }
 }

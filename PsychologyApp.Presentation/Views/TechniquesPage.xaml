@@ -92,9 +92,10 @@
                                                 FontAttributes="Bold"
                                                 TextColor="{AppThemeBinding Light={StaticResource Gray}, Dark=white}"/>
                                             <Label
-                                                WidthRequest="250"
+                                                WidthRequest="255"
+                                                LineBreakMode="WordWrap"
                                                 Text="{Binding Subtitle}"
-                                                Margin="0, 5, 0, 5"
+                                                Margin="0, 5, 0, 0"
                                                 FontSize="15"
                                                 MaxLines="3"
                                                 TextColor="{AppThemeBinding Light={StaticResource Gray}, Dark=white}"/>

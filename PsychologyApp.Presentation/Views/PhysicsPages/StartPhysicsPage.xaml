@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:MobileHelper.ViewModels.PhysicsViewModels"
              xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
              xmlns:controls="clr-namespace:MobileHelperMaui"
+             xmlns:local="clr-namespace:MobileHelperMaui"
              Title="Психосоматик">
     <ContentPage.BindingContext>
         <vm:StartPhysicsViewModel/>
@@ -30,62 +31,17 @@
             <StackLayout IsVisible="{Binding IsDone}">
                 <StackLayout Margin="0">
 
-                    <Frame Margin="15, 15, 15, 15">
-                        <StackLayout Margin="5">
-                            <Label
-                            Text="Пояснение"
-                            FontSize="18"
-                            Margin="10, 5, 5, 15"
-                            TextColor="{AppThemeBinding Light=black, Dark=white}"/>
-
-                            <Label
-                            Margin="15, 0, 0, 15"
-                            Text="Известно, что около половины всех болезней возникает на психической основе. Поэтому по любому физическому недомоганию можно определить то, что вас беспокоит, но не осознаётся."
-                            TextColor="{AppThemeBinding Light=black, Dark=white}"
-                            FontSize="16"/>
-
-                        </StackLayout>
-
-                        <Frame.Shadow>
-                            <Shadow 
-                            Opacity="0.35"
-                            Brush="Black"
-                            Offset="0, 0"
-                            Radius="20"/>
-                        </Frame.Shadow>
-
-                    </Frame>
+                        <templates:TextBoxView
+                        HeaderText="Пояснение"
+                        BodyText="Известно, что около половины всех болезней возникает на психической основе. Поэтому по любому физическому недомоганию можно определить то, что вас беспокоит, но не осознаётся."/>
 
 
-                    <Frame Margin="15, 10, 15, 15">
-                        <StackLayout Margin="5">
-                            <Label
-                            Text="Описание"
-                            FontSize="18"
-                            Margin="10, 5, 5, 15"
-                            TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+                        <templates:TextBoxView
+                            HeaderText="Описание"
+                            BodyText="Тест поможет вам в пару кликов найти эмоциональную причину любого вашего физического недомогания. Всё очень просто."/>
 
-                            <Label
-                            Margin="15, 0, 0, 15"
-                            Text="Тест поможет вам в пару кликов найти эмоциональную причину любого вашего физического недомогания. Всё очень просто."
-                            TextColor="{AppThemeBinding Light=black, Dark=white}"
-                            FontSize="16"/>
-
-
-
-                        </StackLayout>
-
-                        <Frame.Shadow>
-                            <Shadow 
-                            Opacity="0.35"
-                            Brush="Black"
-                            Offset="0, 0"
-                            Radius="20"/>
-                        </Frame.Shadow>
-
-                    </Frame>
-
-                    <Frame Margin="15, 10, 15, 15">
+                    
+                        <Frame Margin="15, 10, 15, 15">
                         <StackLayout Margin="5">
                             <Label
                             Text="Алгоритм"

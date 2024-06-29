@@ -4,6 +4,7 @@
              x:Class="MobileHelperMaui.Views.ReviewPages.FormPage"
              xmlns:reviewviewmodels="clr-namespace:MobileHelper.ViewModels.ReviewViewModels" 
              xmlns:local="clr-namespace:MobileHelperMaui"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
              Title="Отзовик">
     
     <ContentPage.BindingContext>
@@ -18,32 +19,10 @@
 
     <ContentPage.Content>
         <StackLayout Margin="0">
-            <Frame Margin="15, 15, 15, 15">
-                <StackLayout Margin="5">
-                    <Label
-                    Text="Пояснение"
-                    FontSize="18"
-                    Margin="10, 5, 5, 15"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
-                    <local:JustifiedLabel
-                        JustifyText="True"
-                        Margin="15, 0, 0, 15"
-                        Text="Вы можете сообщить о проблеме или предложить свои идеи о том, как сделать приложение ещё лучше. Служба поддержки получит ваше сообщение."
-                        TextColor="{AppThemeBinding Light=black, Dark=white}"
-                        FontSize="16"/>
-
-                </StackLayout>
-
-                <Frame.Shadow>
-                    <Shadow 
-                    Opacity="0.35"
-                    Brush="Black"
-                    Offset="0, 0"
-                    Radius="20"/>
-                </Frame.Shadow>
-
-            </Frame>
+            <templates:TextBoxView
+                HeaderText="Пояснение"
+                BodyText="Вы можете сообщить о проблеме или предложить свои идеи о том, как сделать приложение ещё лучше. Служба поддержки получит ваше сообщение."/>
 
             <Frame Margin="15, 10, 15, 15">
                 <StackLayout>
@@ -53,20 +32,10 @@
                     Margin="0, 0, 5, 15"
                     TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
-                    <Frame BackgroundColor="{AppThemeBinding Light=white, Dark=#444444}" Margin="5, 5, 5, 5" Padding="10" BorderColor="{StaticResource Accent}" CornerRadius="25">
-                        <StackLayout>
-                            <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Сообщение" FontSize="15"/>
-                            <Entry
-                                MaxLength="20"
-                                PlaceholderColor="{StaticResource Accent}"
-                                Placeholder="Приложение вылетает на странице X"
-                                FontSize="15"
-                                Text="{Binding MessageText}"
-                                TextColor="{AppThemeBinding Light=black, Dark=white}"
-                                VerticalTextAlignment="Center"/>
-                        </StackLayout>
-
-                    </Frame>
+                    <templates:TextEntryView
+                        TitleText="Сообщение"
+                        PlaceholderText="Приложение вылетает на странице X"
+                        BodyText="{Binding MessageText}"/>
 
                     <Button 
                         Margin="10, 15, 10, 0"

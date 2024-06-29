@@ -16,6 +16,6 @@ public partial class PhysicsSerchPage : ContentPage
 
     private void Button_Clicked(object sender, EventArgs e)
     {
-        this.ViewModel.ExecuteSearch(Search.Text);
+        this.ViewModel.ExecuteSearch(this.ViewModel.SearchText);
     }
 }

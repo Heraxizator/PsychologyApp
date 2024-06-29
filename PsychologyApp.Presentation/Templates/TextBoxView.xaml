@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:local="clr-namespace:MobileHelperMaui"
+             x:Class="PsychologyApp.Presentation.Templates.TextBoxView">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <Frame Margin="15, 15, 15, 15">
+                <StackLayout Margin="5">
+                    <Label
+                        Text="{TemplateBinding HeaderText}"
+                        FontSize="18"
+                        Margin="10, 5, 5, 15"
+                        TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+
+                    <local:JustifiedLabel
+                        JustifyText="True"
+                        Margin="15, 0, 0, 15"
+                        Text="{TemplateBinding BodyText}"
+                        TextColor="{AppThemeBinding Light=black, Dark=white}"
+                        FontSize="16"/>
+
+                </StackLayout>
+
+                <Frame.Shadow>
+                    <Shadow 
+                        Opacity="0.35"
+                        Brush="Black"
+                        Offset="0, 0"
+                        Radius="20"/>
+                </Frame.Shadow>
+
+            </Frame>
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+
+
+</ContentView>

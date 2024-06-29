@@ -8,6 +8,8 @@ namespace PsychologyApp.Presentation
         public AppShell()
         {
             InitializeComponent();
+
+            InitServices();
         }
 
         private void InitServices()

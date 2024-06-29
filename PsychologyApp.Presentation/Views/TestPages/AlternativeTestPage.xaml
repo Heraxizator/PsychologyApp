@@ -4,6 +4,7 @@
              x:Class="MobileHelperMaui.Views.TestPages.AlternativeTestPage"
              xmlns:local="clr-namespace:MobileHelperMaui" 
              xmlns:vm="clr-namespace:MobileHelper.ViewModels.TestViewModels"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
              Title="Детектор">
 
     <ContentPage.Resources>

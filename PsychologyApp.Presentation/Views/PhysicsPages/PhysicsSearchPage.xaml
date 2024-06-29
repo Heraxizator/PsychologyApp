@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:MobileHelper.ViewModels.PhysicsViewModels"
              xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
              xmlns:controls="clr-namespace:MobileHelperMaui"
+             xmlns:local="clr-namespace:MobileHelperMaui"
              Title="Психосоматик">
 
     <ContentPage.Resources>
@@ -27,24 +28,10 @@
         VerticalOptions="FillAndExpand" 
         HorizontalOptions="FillAndExpand">
 
-        <Frame 
-        Margin="5, 15, 5, 15" 
-        Padding="10" 
-        BorderColor="{StaticResource Accent}" 
-        CornerRadius="25">
-            <StackLayout>
-                <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Проблема" FontSize="15"/>
-                <Entry
-            x:Name="Search"
-            PlaceholderColor="{StaticResource Accent}"
-            Placeholder="Болезнь"
-            FontSize="15"
-            Text="{Binding Name}"
-            TextColor="{AppThemeBinding Light=black, Dark=white}"
-            VerticalTextAlignment="Center"/>
-            </StackLayout>
-
-        </Frame>
+        <templates:TextEntryView
+            TitleText="Проблема"
+            PlaceholderText="Болезнь"
+            BodyText="{Binding SearchText}"/>
 
         <ScrollView
             VerticalOptions="FillAndExpand"

@@ -4,6 +4,7 @@
              x:Class="MobileHelperMaui.Views.TestPages.FindProblemPage"
              xmlns:local="clr-namespace:MobileHelperMaui" 
              xmlns:vm="clr-namespace:MobileHelper.ViewModels.TestViewModels"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
              Title="Детектор">
 
     <ContentPage.Resources>
@@ -14,31 +15,10 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Margin="0">
-                <Frame Margin="15, 15, 15, 15">
-                    <StackLayout Margin="0">
-                        <Label
-                    Text="Описание"
-                    FontSize="18"
-                    Margin="5, 0, 0, 10"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
-                        <Label
-                    Margin="10, 0, 0, 10"
-                    Text="{Binding DescribtionText}"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"
-                    FontSize="16"/>
-
-                    </StackLayout>
-
-                    <Frame.Shadow>
-                        <Shadow 
-                        Opacity="0.35"
-                        Brush="Black"
-                        Offset="0, 0"
-                        Radius="20"/>
-                    </Frame.Shadow>
-
-                </Frame>
+                <templates:TextBoxView
+                    HeaderText="Описание"
+                    BodyText="{Binding DescribtionText}"/>
 
                 <Frame Margin="15, 10, 15, 15">
                     <StackLayout Margin="0">

@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:MobileHelper.ViewModels.CleanViewModels"
              xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
              xmlns:controls="clr-namespace:MobileHelperMaui"
+             xmlns:local="clr-namespace:MobileHelperMaui"
              Title="Очиститель">
     
     <ContentPage.BindingContext>
@@ -25,18 +26,9 @@
 
         <StackLayout Margin="10">
 
-            <Frame Margin="5, 5, 5, 5" Padding="10" BorderColor="{StaticResource Accent}" CornerRadius="25">
-                <StackLayout>
-                    <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Поиск" FontSize="15"/>
-                    <Entry
-                    PlaceholderColor="{StaticResource Accent}"
-                    Placeholder="Название"
-                    FontSize="15"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"
-                    VerticalTextAlignment="Center"/>
-                </StackLayout>
-
-            </Frame>
+            <templates:TextEntryView 
+                TitleText="Поиск"
+                PlaceholderText="Название"/>
 
             <StackLayout 
                 IsVisible="{Binding IsCreated}"
@@ -70,7 +62,7 @@
             VerticalOptions="CenterAndExpand"
             IsVisible="{Binding IsInit}"
             IsLoading="{Binding IsInit}"
-            ProgressText="Инициализация">
+            ProgressText="Поиск молитв">
                 <templates:ProgressbarView.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding Cancel}"/>
                 </templates:ProgressbarView.GestureRecognizers>
