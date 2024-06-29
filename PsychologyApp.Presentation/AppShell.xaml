@@ -30,17 +30,17 @@
 
         <ShellContent 
                 Title="Соматик"
-                Icon="{mi:Material Icon=MedicalServices}"
+                Icon="{mi:Material Icon=Bookmarks}"
                 ContentTemplate="{DataTemplate physics:StartPhysicsPage}" />
         
         <ShellContent 
                 Title="Очиститель"
-                Icon="{mi:Material Icon=CleaningServices}"
+                Icon="{mi:Material Icon=Clear}"
                 ContentTemplate="{DataTemplate cleans:MusicPlayerPage}"/>
         
         <ShellContent
                 Title="Отзовик"
-                Icon="{mi:Material Icon=HelpCenter}"
+                Icon="{mi:Material Icon=LiveHelp}"
                 ContentTemplate="{DataTemplate forms:FormPage}"/>
     
 
