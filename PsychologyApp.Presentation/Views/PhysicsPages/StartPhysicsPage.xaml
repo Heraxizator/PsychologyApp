@@ -22,7 +22,7 @@
             VerticalOptions="CenterAndExpand"
             IsVisible="{Binding IsInit}"
             IsLoading="{Binding IsInit}"
-            ProgressText="Инициализация">
+            ProgressText="Поиск причин">
                 <templates:ProgressbarView.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding Cancel}"/>
                 </templates:ProgressbarView.GestureRecognizers>

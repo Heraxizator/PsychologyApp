@@ -18,19 +18,12 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Найти"/>
-    </ContentPage.ToolbarItems>
-    
     <ContentPage.Content>
 
-        <StackLayout Margin="10">
-
-            <templates:TextEntryView 
-                TitleText="Поиск"
-                PlaceholderText="Название"/>
+        <StackLayout VerticalOptions="FillAndExpand" Margin="10">
 
             <StackLayout 
+                VerticalOptions="CenterAndExpand"
                 IsVisible="{Binding IsCreated}"
                 Margin="0, 125">
 
@@ -69,6 +62,7 @@
             </templates:ProgressbarView>
 
             <ListView
+                VerticalOptions="FillAndExpand"
             x:Name="Musics"
             IsVisible="{Binding IsDone}"
             ItemTapped="ListView_ItemTapped"
@@ -130,9 +124,9 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <StackLayout>
+            <StackLayout VerticalOptions="End">
 
-                <StackLayout Margin="15, 0, 10, 0" Orientation="Horizontal">
+                <StackLayout VerticalOptions="End" Margin="15, 0, 10, 0" Orientation="Horizontal">
                     <Image 
                     WidthRequest="35"
                     HeightRequest="35"

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Views.ProfilePages.OptionsPage"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.ProfileViewModels"
+             Title="Параметры">
+
+    <StackLayout Margin="15, 5">
+        <StackLayout Padding="0, 0, 0, 15">
+            <Label 
+                Margin="0, 0, 0, 5"
+                FontSize="16"
+                TextColor="Black"
+                Text="О приложении"/>
+            <Label
+                FontSize="15"
+                TextColor="{StaticResource Gray}"
+                Text="Что оно собой представляет"/>
+
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding OpenAboutPageCommand}"/>
+            </StackLayout.GestureRecognizers>
+
+        </StackLayout>
+
+        <StackLayout Padding="0, 0, 0, 15">
+            <Label 
+                Margin="0, 0, 0, 5"
+                FontSize="16"
+                TextColor="Black"
+                Text="Донаты"/>
+            <Label
+                FontSize="15"
+                TextColor="{StaticResource Gray}"
+                Text="Поддержать автора"/>
+
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding OpenDonatePageCommand}"/>
+            </StackLayout.GestureRecognizers>
+
+        </StackLayout>
+
+        <StackLayout Padding="0, 0, 0, 15">
+            <Label 
+                Margin="0, 0, 0, 5"
+                FontSize="16"
+                TextColor="Black"
+                Text="Настройка"/>
+            <Label
+                FontSize="15"
+                TextColor="{StaticResource Gray}"
+                Text="Тема, цвет, шрифт..."/>
+
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding OpenSettingsPageCommand}"/>
+            </StackLayout.GestureRecognizers>
+
+        </StackLayout>
+
+    </StackLayout>
+</ContentPage>

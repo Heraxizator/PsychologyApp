@@ -7,9 +7,11 @@ using PsychologyApp.Infrastructure.Share;
 using PsychologyApp.Infrastructure.Uow;
 using PsychologyApp.Presentation.Models;
 using PsychologyApp.Presentation.ViewModels;
+using PsychologyApp.Presentation.Views.ProfilePages;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Input;
 
 namespace MobileHelper.ViewModels.ProfileViewModels
 {
@@ -17,6 +19,7 @@ namespace MobileHelper.ViewModels.ProfileViewModels
     {
         private QuotService _service;
 
+        public ICommand OpenOptionsCommand { get; set; }
         public ObservableCollection<TechniqueItem> Techniques { get; set; }
         public ObservableCollection<Quots> Quots { get; set; }
 
@@ -33,6 +36,8 @@ namespace MobileHelper.ViewModels.ProfileViewModels
             this.Techniques = new ObservableCollection<TechniqueItem>();
 
             this.Quots = new ObservableCollection<Quots>();
+
+            this.OpenOptionsCommand = new Command(() => this.Navigation.PushAsync(new OptionsPage(), false));
 
             Initialization = InitAsync();
         }

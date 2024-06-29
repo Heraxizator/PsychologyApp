@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileHelperMaui.Views.SettingsPages.SettingsPage"
              xmlns:vm="clr-namespace:MobileHelper.ViewModels.SettingsViewModels"
-             Title="SettingsPage">
+             Title="Настройки">
     
     <ContentPage.BindingContext>
         <vm:SettingsViewModel />
@@ -19,7 +19,7 @@
     <ContentPage.Content>
         <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
             <StackLayout Margin="5">
-                <Frame Margin="0, 5, 0, 0" CornerRadius="25">
+                <Frame Margin="10, 5, 10, 10" CornerRadius="25">
                     <StackLayout>
                         <Label
                     Text="Дизайн"
@@ -132,9 +132,17 @@
                         </Grid>
                     </StackLayout>
 
+                    <Frame.Shadow>
+                        <Shadow 
+                            Opacity="0.35"
+                            Brush="Black"
+                            Offset="0, 0"
+                            Radius="20"/>
+                    </Frame.Shadow>
+
                 </Frame>
 
-                <Frame Margin="0, 0, 0, 0" CornerRadius="25">
+                <Frame Margin="15, 10, 15, 10" CornerRadius="25">
                     <StackLayout>
                         <Label
                     Text="Шрифт"
@@ -204,6 +212,14 @@
                         </Grid>
                     </StackLayout>
 
+                    <Frame.Shadow>
+                        <Shadow 
+                            Opacity="0.35"
+                            Brush="Black"
+                            Offset="0, 0"
+                            Radius="20"/>
+                    </Frame.Shadow>
+
                 </Frame>
 
                 <Button 
@@ -212,7 +228,7 @@
                 FontSize="15"
                 BackgroundColor="{StaticResource Primary}"
                 CornerRadius="25"
-                WidthRequest="400"
+                WidthRequest="350"
                 HorizontalOptions="Center"
                 VerticalOptions="End"
                 Command="{Binding Finish}"

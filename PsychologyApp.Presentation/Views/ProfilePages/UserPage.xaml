@@ -13,6 +13,10 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Параметры" Command="{Binding OpenOptionsCommand}"/>
+    </ContentPage.ToolbarItems>
+    
     <ContentPage.Content>
 
         <StackLayout Margin="0, 15, 0, 15">

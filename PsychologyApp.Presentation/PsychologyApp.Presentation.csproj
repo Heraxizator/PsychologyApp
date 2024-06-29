@@ -40,8 +40,8 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android34.0|AnyCPU'">
 	  <RunAOTCompilation>False</RunAOTCompilation>
-	  <AndroidUseAapt2>False</AndroidUseAapt2>
-	  <EnableLLVM>False</EnableLLVM>
+	  <AndroidUseAapt2>True</AndroidUseAapt2>
+	  <EnableLLVM>True</EnableLLVM>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android34.0|AnyCPU'">
@@ -50,7 +50,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		 <MauiIcon Include="Resources\AppIcon\logo.svg" TintColor="#96d1ff" Color="#FFFFFF" />
+		 <MauiIcon Include="Resources\AppIcon\logo.svg" TintColor="#0085FF" Color="#FFFFFF" />
 		
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\AppIcon\logo.svg" Color="#FFFFFF" TintColor="#96d1ff" BaseSize="512, 512" />
@@ -141,6 +141,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Templates\TextEntryView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ProfilePages\OptionsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\TestPages\StandardTestPage.xaml">
