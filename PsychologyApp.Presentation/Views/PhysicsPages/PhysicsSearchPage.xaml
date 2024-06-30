@@ -28,10 +28,24 @@
         VerticalOptions="FillAndExpand" 
         HorizontalOptions="FillAndExpand">
 
-        <templates:TextEntryView
-            TitleText="Проблема"
-            PlaceholderText="Болезнь"
-            BodyText="{Binding SearchText}"/>
+        <Frame 
+        Margin="5, 15, 5, 15" 
+        Padding="10" 
+        BorderColor="{StaticResource Accent}" 
+        CornerRadius="25">
+            <StackLayout>
+                <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Проблема" FontSize="15"/>
+                <Entry
+            x:Name="Search"
+            PlaceholderColor="{StaticResource Accent}"
+            Placeholder="Болезнь"
+            FontSize="15"
+            Text="{Binding SearchText}"
+            TextColor="{AppThemeBinding Light=black, Dark=white}"
+            VerticalTextAlignment="Center"/>
+            </StackLayout>
+
+        </Frame>
 
         <ScrollView
             VerticalOptions="FillAndExpand"

@@ -35,9 +35,9 @@ namespace PsychologyApp.Presentation.ViewModels.TestViewModels
                             "2. Выбрать самый не приятный цвет"
                         },
                         "Нельзя выбирать любимые цвета. Тест измеряет эмоциональное состояние на сейчас.",
-                        () => this.Navigation.PushAsync(new AlternativeTestPage())
+                        () => this.Navigation.PushAsync(new AlternativeTestPage(), false)
 
-                    )))
+                    ), false))
                 },
 
                 new()
@@ -52,9 +52,9 @@ namespace PsychologyApp.Presentation.ViewModels.TestViewModels
                             "2. Повторить шаг под номером 1"
                         },
                         "Нельзя выбирать любимые цвета. Тест измеряет эмоциональное состояние на сейчас.",
-                        () => this.Navigation.PushAsync(new StandardTestPage())
+                        () => this.Navigation.PushAsync(new StandardTestPage(), false)
 
-                    )))
+                    ), false))
                 }
             };
         }

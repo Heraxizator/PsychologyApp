@@ -40,9 +40,17 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         await Task.Run(() => this._context.Update(item));
     }
 
-    public async Task RemoveAsync(TEntity item)
+    public async Task RemoveAsync(long id)
     {
-        await Task.Run(() => this._dbSet.Remove(item));
+        await Task.Run(() =>
+        {
+            TEntity? element = this._dbSet.Find(id);
+
+            if (element is not null)
+            {
+                this._dbSet.Remove(element);
+            }
+        });
     }
 
     public async Task InsertAsync(TEntity item)

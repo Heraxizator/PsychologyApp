@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace PsychologyApp.Application.Models;
 
-public class TechniqueDTO : BaseDTO
+public struct TechniqueDTO
 {
+    public long TechniqueId { get; set; }
     public string? Number { get; set; }
     public string? Date { get; set; }
     public string? Header { get; set; }

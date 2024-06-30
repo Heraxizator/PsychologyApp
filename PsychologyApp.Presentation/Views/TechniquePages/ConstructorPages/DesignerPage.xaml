@@ -29,25 +29,61 @@
                     Margin="10, 5, 5, 15"
                     TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
-                        <templates:TextEntryView
-                            TitleText="Название"
-                            PlaceholderText="Крутилка Славинского"
-                            BodyText="{Binding Name}"/>
+                        <Frame BackgroundColor="{AppThemeBinding Light=white, Dark=#444444}" Margin="5, 5, 5, 5" Padding="10" BorderColor="{StaticResource Accent}" CornerRadius="25">
+                            <StackLayout>
+                                <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Название" FontSize="15"/>
+                                <Entry
+                                PlaceholderColor="{StaticResource Accent}"
+                                Placeholder="Крутилка Славинского"
+                                FontSize="15"
+                                Text="{Binding Name}"
+                                TextColor="{AppThemeBinding Light=black, Dark=white}"
+                                VerticalTextAlignment="Center"/>
+                            </StackLayout>
 
-                        <templates:TextEntryView
-                            TitleText="Описание"
-                            PlaceholderText="Метод мгновенной нейтрализации..."
-                            BodyText="{Binding Description}"/>
+                        </Frame>
 
-                        <templates:TextEntryView
-                            TitleText="Тема"
-                            PlaceholderText="Эпизоды"
-                            BodyText="{Binding Theme}"/>
+                        <Frame BackgroundColor="{AppThemeBinding Light=white, Dark=#444444}" Margin="5, 5, 5, 5" Padding="10" BorderColor="{StaticResource Accent}" CornerRadius="25">
+                            <StackLayout>
+                                <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Описание" FontSize="15"/>
+                                <Entry
+                                PlaceholderColor="{StaticResource Accent}"
+                                Placeholder="Метод мгновенной нейтрализации..."
+                                FontSize="15"
+                                Text="{Binding Description}"
+                                TextColor="{AppThemeBinding Light=black, Dark=white}"
+                                VerticalTextAlignment="Center"/>
+                            </StackLayout>
 
-                        <templates:TextEntryView
-                            TitleText="Автор"
-                            PlaceholderText="Живорад Славинский"
-                            BodyText="{Binding Author}"/>
+                        </Frame>
+
+                        <Frame BackgroundColor="{AppThemeBinding Light=white, Dark=#444444}" Margin="5, 5, 5, 5" Padding="10" BorderColor="{StaticResource Accent}" CornerRadius="25">
+                            <StackLayout>
+                                <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Тема" FontSize="15"/>
+                                <Entry
+                                PlaceholderColor="{StaticResource Accent}"
+                                Placeholder="Эпизоды"
+                                FontSize="15"
+                                Text="{Binding Theme}"
+                                TextColor="{AppThemeBinding Light=black, Dark=white}"
+                                VerticalTextAlignment="Center"/>
+                            </StackLayout>
+
+                        </Frame>
+
+                        <Frame BackgroundColor="{AppThemeBinding Light=white, Dark=#444444}" Margin="5, 5, 5, 15" Padding="10" BorderColor="{StaticResource Accent}" CornerRadius="25">
+                            <StackLayout>
+                                <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Автор" FontSize="15"/>
+                                <Entry
+                                PlaceholderColor="{StaticResource Accent}"
+                                Placeholder="Живорад Славинский"
+                                FontSize="15"
+                                Text="{Binding Author}"
+                                TextColor="{AppThemeBinding Light=black, Dark=white}"
+                                VerticalTextAlignment="Center"/>
+                            </StackLayout>
+
+                        </Frame>
   
                     </StackLayout>
 

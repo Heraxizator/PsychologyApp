@@ -5,11 +5,14 @@ namespace MobileHelperMaui.Views.CleanPages;
 
 public partial class MusicPlayerPage : ContentPage
 {
+    private MusicPlayerViewModel ViewModel;
 	public MusicPlayerPage()
 	{
 		InitializeComponent();
 
         var viewModel = new MusicPlayerViewModel();
+
+        this.ViewModel = viewModel;
 
         this.BindingContext = viewModel;
 	}
@@ -20,19 +23,6 @@ public partial class MusicPlayerPage : ContentPage
 
         string file = item.File;
 
-        /*
-
-        if (CrossMediaManager.Current.IsPlaying())
-        {
-            _ = CrossMediaManager.Current.Stop();
-        }
-
-        else
-        {
-            _ = CrossMediaManager.Current.Play(file);
-
-        }
-
-        */
+        this.ViewModel.ToExecute(file);
     }
 }

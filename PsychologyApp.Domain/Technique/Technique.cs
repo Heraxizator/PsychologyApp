@@ -1,6 +1,7 @@
 ﻿using PsychologyApp.Domain.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,9 @@ public class Technique : BaseAuditableEntity
         this.Author = author;
         this.IsCompleted = isCompleted;
     }
+
+    [Key]
+    public long TechniqueId { get; private init; }
 
     public string? Number { get; private set; }
     public string? Date {  get; private set; }

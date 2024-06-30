@@ -22,10 +22,6 @@ namespace MobileHelper.ViewModels.PhysicsViewModels
         public List<ReasonDTO> Reasons { get; set; }
         public ObservableRangeCollection<ReasonDTO> Results { get; set; }
 
-        private Dictionary<char, List<ReasonDTO>> keyValuePairs { get; set; }
-
-        private readonly Task Initialization;
-
         public PhysicsSearchViewModel(INavigation navigation)
         {
             this.Title = "Поиск";
@@ -36,15 +32,13 @@ namespace MobileHelper.ViewModels.PhysicsViewModels
 
             this.Results = new ObservableRangeCollection<ReasonDTO>();
 
-            this.keyValuePairs = new Dictionary<char, List<ReasonDTO>>();
-
             this.Navigation = navigation;
 
             this.Reload = new Command(async () => await ReloadAsync());
 
             this.Cancel = new Command(() => SetFail());
 
-            this.Initialization = InitAsync();
+            Init();
         }
 
         private void ConfigureState()
@@ -64,7 +58,7 @@ namespace MobileHelper.ViewModels.PhysicsViewModels
 
             this.Results.Clear();
 
-            await InitAsync();
+            Init();
         }
 
         private async Task PrepareReasons()
@@ -76,28 +70,6 @@ namespace MobileHelper.ViewModels.PhysicsViewModels
             this.Reasons.AddRange(reasonDTOs);
         }
 
-        private void PreapreDictionary()
-        {
-            foreach (ReasonDTO reason in this.Reasons)
-            {
-                char? symvol = reason.Title?.FirstOrDefault();
-
-                if (symvol is null)
-                {
-                    continue;
-                }
-
-                symvol = char.ToLower((char)symvol);
-
-                if (this.keyValuePairs.ContainsKey((char)symvol) is false)
-                {
-                    this.keyValuePairs.Add((char)symvol, new List<ReasonDTO>());
-                }
-
-                this.keyValuePairs[(char)symvol].Add(reason);
-            }
-        }
-
         private void PrepareResults()
         {
             IEnumerable<ReasonDTO> source = this.Reasons.Take(100);
@@ -105,15 +77,13 @@ namespace MobileHelper.ViewModels.PhysicsViewModels
             this.Results.AddRange(source);
         }
 
-        private async Task InitAsync()
+        private async void Init()
         {
             await Task.Run(async () =>
             {
                 await PrepareReasons();
 
-                PreapreDictionary();
-
-                PrepareResults();
+                await Application.Current.Dispatcher.DispatchAsync(() => PrepareResults());
             });
             
             ConfigureState();
@@ -152,25 +122,7 @@ namespace MobileHelper.ViewModels.PhysicsViewModels
 
             string text = input.ToLower();
 
-            char? symvol = text.FirstOrDefault();
-
-            if (symvol is null)
-            {
-                ConfigureState();
-                return;
-            }
-
-            symvol = char.ToLower((char)symvol);
-
-            if (this.keyValuePairs.ContainsKey((char)symvol) is false)
-            {
-                ConfigureState();
-                return;
-            }
-
-            IEnumerable<ReasonDTO> range = this.keyValuePairs[(char)symvol];
-
-            IEnumerable<ReasonDTO> source = range
+            IEnumerable<ReasonDTO> source = this.Reasons
                 .Where(x => x.Title?.Length >= text.Length && x.Title.ToLower().Contains(text));
 
             this.Results.AddRange(source);

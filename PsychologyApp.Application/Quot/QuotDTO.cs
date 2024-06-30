@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace PsychologyApp.Application.Models;
 
-public class QuotDTO : BaseDTO
-{
+public struct QuotDTO 
+{ 
+    public long QuotId {  get; set; }
     public string? Title { get; set; }
     public string? Text { get; set; }
     public string? Theme { get; set; }

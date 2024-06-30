@@ -4,7 +4,7 @@ namespace MobileHelperMaui.Views.TechniquePages.ConstructorPages;
 
 public partial class CreatedPage : ContentPage
 {
-    public CreatedPage(int id)
+    public CreatedPage(long id)
     {
         InitializeComponent();
         this.BindingContext = new CreatedViewModel(this.Navigation, id);

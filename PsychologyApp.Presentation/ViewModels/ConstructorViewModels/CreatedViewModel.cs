@@ -25,12 +25,12 @@ namespace MobileHelper.ViewModels.ConstructorViewModels
         public ICommand Remove { get; set; }
         public ICommand Edit { get; set; }
         public ObservableCollection<Items> Elements { get; set; }
-        private int currentId { get; set; }
+        private long currentId { get; set; }
 
         public CreatedViewModel() { }
 
         [Obsolete]
-        public CreatedViewModel(INavigation navigation, int id)
+        public CreatedViewModel(INavigation navigation, long id)
         {
             this.Title = "Техника";
 
@@ -76,7 +76,7 @@ namespace MobileHelper.ViewModels.ConstructorViewModels
 
                 MessagingCenter.Send<object, TechniqueDTO>(this, "remove", item);
 
-                _ = this.Navigation.PopToRootAsync(false);
+                await this.Navigation.PopToRootAsync(false);
             }
         }
 
@@ -84,7 +84,7 @@ namespace MobileHelper.ViewModels.ConstructorViewModels
         {
             TechniqueDTO item = await this._service.GetTechniqueById(this.currentId);
 
-            if (item == null)
+            if (item.TechniqueId <= 0)
             {
                 ServiceLocator.Instance.GetService<IDialogService>().ShowAsync("Ошибка", "Не удалось загрузить технику");
                 return;

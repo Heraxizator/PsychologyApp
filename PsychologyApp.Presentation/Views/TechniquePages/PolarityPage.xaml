@@ -69,16 +69,35 @@
                     Margin="5, 0, 5, 5"
                     TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
-                        <templates:TextEntryView
-                            TitleText="Первая полярность"
-                            PlaceholderText="Невроз"
-                            BodyText="{Binding positive}"/>
+                        <Frame BackgroundColor="{AppThemeBinding Light=white, Dark=#444444}" Margin="5, 5, 5, 5" Padding="10" BorderColor="{StaticResource Accent}" CornerRadius="25">
+                            <StackLayout>
+                                <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Первая полярность" FontSize="15"/>
+                                <Entry
+                                MaxLength="20"
+                                PlaceholderColor="{StaticResource Accent}"
+                                Placeholder="Невроз"
+                                FontSize="15"
+                                Text="{Binding Positive}"
+                                TextColor="{AppThemeBinding Light=black, Dark=white}"
+                                VerticalTextAlignment="Center"/>
+                            </StackLayout>
 
+                        </Frame>
 
-                        <templates:TextEntryView
-                            TitleText="Вторая полярность"
-                            PlaceholderText="Покой"
-                            BodyText="{Binding Negative}"/>
+                        <Frame BackgroundColor="{AppThemeBinding Light=white, Dark=#444444}" Margin="5, 5, 5, 5" Padding="10" BorderColor="{StaticResource Accent}" CornerRadius="25">
+                            <StackLayout>
+                                <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Вторая полярность" FontSize="15"/>
+                                <Entry
+                                MaxLength="20"
+                                PlaceholderColor="{StaticResource Accent}"
+                                Placeholder="Покой"
+                                Text="{Binding Negative}"
+                                FontSize="15"
+                                TextColor="{AppThemeBinding Light=black, Dark=white}"
+                                VerticalTextAlignment="Center"/>
+                            </StackLayout>
+
+                        </Frame>
 
                         <Button 
                         Margin="10, 15, 10, 0"

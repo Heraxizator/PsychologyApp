@@ -7,7 +7,7 @@ namespace PsychologyApp.Presentation.Models
 {
     public class TechniqueItem
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string? Number { get; set; }
         public string? Date { get; set; }
         public string? Image { get; set; }

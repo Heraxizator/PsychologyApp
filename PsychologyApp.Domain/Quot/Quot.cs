@@ -1,6 +1,7 @@
 ﻿using PsychologyApp.Domain.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,9 @@ public class Quot : BaseAuditableEntity
         this.Theme = theme;
         this.IsReaded = isReaded;
     }
+
+    [Key]
+    public long QuotId { get; private init; }
 
     public string? Title { get; private set; }
     public string? Text { get; private set; }

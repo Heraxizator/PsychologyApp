@@ -14,8 +14,6 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     private readonly string _dbPath;
     public ApplicationDbContext()
     {
-        //this.Database.EnsureDeleted();
-
         Environment.SpecialFolder folder = Environment.SpecialFolder.LocalApplicationData;
         string path = Environment.GetFolderPath(folder);
         this._dbPath = Path.Join(path, "local.db");
@@ -35,6 +33,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<Quot> QuotsTable { get; set; }
     public DbSet<User> UsersTable { get; set; }
     public DbSet<Technique> TechniquesTable { get; set; }
+    public DbSet<Reason> ReasonsTable { get; set; }
 
     #endregion
 
@@ -45,18 +44,6 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Quot>()
-            .HasKey(e => e.Id);
-
-        modelBuilder.Entity<User>()
-            .HasKey(e => e.Id);
-
-        modelBuilder.Entity<Technique>()
-            .HasKey(e => e.Id);
-
-        modelBuilder.Entity<Reason>()
-            .HasKey(e => e.Id);
-
         base.OnModelCreating(modelBuilder);
     }
 }

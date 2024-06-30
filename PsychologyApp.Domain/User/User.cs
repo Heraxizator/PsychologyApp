@@ -1,6 +1,7 @@
 ﻿using PsychologyApp.Domain.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,9 @@ public class User : BaseAuditableEntity
         this.TechniquesCompletedCount = techniquesCompletedCount;
         this.SubscribersCount = subscribersCount;
     }
+
+    [Key]
+    public long UserId { get; private init; }
 
     public string? UserName { get; private set; }
     public string? UserSurname { get; private set; }

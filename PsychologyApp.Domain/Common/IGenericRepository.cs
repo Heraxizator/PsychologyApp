@@ -12,7 +12,7 @@ public interface IGenericRepository<TEntity> where TEntity : class
     Task<TEntity?> FindByIdAsync(long id);
     Task<IEnumerable<TEntity>> GetAsync();
     Task<IEnumerable<TEntity>> GetAsync(Func<TEntity, bool> predicate);
-    Task RemoveAsync(TEntity item);
+    Task RemoveAsync(long id);
     Task UpdateAsync(TEntity item);
     Task InsertOrUpdateAsync(TEntity item);
     Task InsertRangeAsync(IEnumerable<TEntity> entities);

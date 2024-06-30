@@ -289,31 +289,7 @@ namespace MobileHelper.ViewModels.CleanViewModels
             }
         }
 
-        private void ToSearch(string input)
-        {
-            if (this.SelectedItems == null)
-            {
-                return;
-            }
-
-            this.SelectedItems.Clear();
-
-            string target = input.ToUpper();
-
-            foreach (Audio item in this.AllItems)
-            {
-                string? name = item.Name?.ToUpper();
-
-                string? describtion = item.Description?.ToUpper();
-
-                if (name.Contains(target) || describtion.Contains(target))
-                {
-                    this.SelectedItems.Add(item);
-                }
-            }
-        }
-
-        private void ToExecute(string file)
+        public void ToExecute(string file)
         {
             HideAll();
 
@@ -337,7 +313,6 @@ namespace MobileHelper.ViewModels.CleanViewModels
                 if (this.search_text != value)
                 {
                     this.search_text = value;
-                    ToSearch(this.search_text);
                     OnPropertyChanged(nameof(this.SearchText));
                 }
             }

@@ -17,7 +17,7 @@
                 <Label
                     Text="{mi:Material Icon=School}"
                     FontSize="30"
-                    TextColor="{StaticResource Accent}"
+                    TextColor="{StaticResource Gray}"
                     HorizontalOptions="CenterAndExpand"
                     VerticalOptions="CenterAndExpand"/>
 

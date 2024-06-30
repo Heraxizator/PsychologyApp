@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace PsychologyApp.Application.Models;
 
-public class UserDTO : BaseDTO
+public struct UserDTO
 {
+    public long UserId { get; set; }
     public string? UserName { get; set; }
     public string? UserSurname { get; set; }
     public string? UserPatronymic { get; set; }

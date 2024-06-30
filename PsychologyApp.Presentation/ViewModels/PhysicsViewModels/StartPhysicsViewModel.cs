@@ -21,7 +21,7 @@ namespace MobileHelper.ViewModels.PhysicsViewModels
 
                 PhysicsSerchPage physicsSerchPage = new(physicsSearchViewModel);
 
-                await this.Navigation.PushAsync(physicsSerchPage);
+                await this.Navigation.PushAsync(physicsSerchPage, false);
             });
 
             SetDone();

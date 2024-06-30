@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MobileHelperMaui.Views.TechniquePages;
 using MobileHelperMaui.Views.TechniquePages.ConstructorPages;
+using MvvmHelpers;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.TechniqueService;
 using PsychologyApp.Domain.Entities;
@@ -11,6 +12,7 @@ using PsychologyApp.Presentation.Models;
 using PsychologyApp.Presentation.ViewModels;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using BaseViewModel = PsychologyApp.Presentation.ViewModels.BaseViewModel;
 
 namespace MobileHelper.ViewModels.TechniqueViewModels
 {
@@ -18,8 +20,10 @@ namespace MobileHelper.ViewModels.TechniqueViewModels
     {
         private TechniqueService _service;
 
-        public ObservableCollection<TechniqueItem> Techniques { get; set; }
+        public ObservableRangeCollection<TechniqueItem> Techniques { get; set; }
         public ICommand ConstructorTapped { get; set; }
+
+        private static Task? Initialization { get; set; }
 
         public TechniquesViewModel() { }
 
@@ -31,29 +35,30 @@ namespace MobileHelper.ViewModels.TechniqueViewModels
 
             UnitService();
 
-            this.Techniques = new ObservableCollection<TechniqueItem>();
+            this.Techniques = new ObservableRangeCollection<TechniqueItem>();
 
-            this.ConstructorTapped = new Command((object obj) => this.Navigation.PushAsync(new DesignerPage(-1), false));
+            this.ConstructorTapped = new Command(
+                (object obj) => this.Navigation.PushAsync(new DesignerPage(-1), false));
 
-            InitAsync();
+            Initialization = InitAsync();
 
             SetObservers();
         }
 
-        public async void InitAsync()
+        public async Task InitAsync()
         {
             IEnumerable<TechniqueItem> source = GetTechniqueItems();
 
-            foreach (TechniqueItem item in source)
-            {
-                this.Techniques.Add(item);
-            }
+            this.Techniques.AddRange(source);
 
-            IList<TechniqueDTO> list = await this._service.GetTechniquesList(int.MaxValue);
+            IEnumerable<TechniqueDTO> list = 
+                await this._service.GetTechniquesList(int.MaxValue);
 
             foreach (TechniqueDTO item in list)
             {
-                this.Techniques.Add(ParseFromDB(item));
+                TechniqueItem techniqueItem = ParseFromDB(item);
+
+                this.Techniques.Add(techniqueItem);
             }
         }
 
@@ -78,20 +83,25 @@ namespace MobileHelper.ViewModels.TechniqueViewModels
 
         private void SetObservers()
         {
-            MessagingCenter.Subscribe<object, TechniqueDTO>(this, "add", (sender, item) => this.Techniques.Add(ParseFromDB(item)));
-
-            MessagingCenter.Subscribe<object, TechniqueDTO>(this, "remove", (sender, item) =>
+            MessagingCenter.Subscribe<object, TechniqueDTO>(this, "add", async (sender, item) =>
             {
                 this.Techniques.Clear();
 
-                InitAsync();
+                await InitAsync();
             });
 
-            MessagingCenter.Subscribe<object, TechniqueDTO>(this, "change", (sender, item) =>
+            MessagingCenter.Subscribe<object, TechniqueDTO>(this, "remove", async (sender, item) =>
             {
                 this.Techniques.Clear();
 
-                InitAsync();
+                await InitAsync();
+            });
+
+            MessagingCenter.Subscribe<object, TechniqueDTO>(this, "change", async (sender, item) =>
+            {
+                this.Techniques.Clear();
+
+                await InitAsync();
             });
         }
 
@@ -197,7 +207,7 @@ namespace MobileHelper.ViewModels.TechniqueViewModels
         {
             return new TechniqueItem
             {
-                Id = item.Id,
+                Id = item.TechniqueId,
                 Number = "Техника №" + (this.Techniques.Count + 1),
                 Date = item.Date,
                 Image = item.Image,
@@ -205,8 +215,9 @@ namespace MobileHelper.ViewModels.TechniqueViewModels
                 Subtitle = item.Describtion,
                 Theme = item.Subject,
                 Author = item.Author,
+                Active = true,
                 TapCommand = new Command(
-                    async () => await this.Navigation.PushAsync(new CreatedPage(item.Id), false))
+                    async () => await this.Navigation.PushAsync(new CreatedPage(item.TechniqueId), false))
             };
         }
 

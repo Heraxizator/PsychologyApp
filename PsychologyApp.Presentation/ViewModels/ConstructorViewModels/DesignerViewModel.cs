@@ -26,12 +26,12 @@ namespace MobileHelper.ViewModels.ConstructorViewModels
         private string? _algorithm_string { get; set; }
         private string? _path_string { get; set; }
         private string? _aim_string { get; set; }
-        private int currentId { get; set; }
+        private long currentId { get; set; }
 
         public DesignerViewModel() { }
 
         [Obsolete]
-        public DesignerViewModel(INavigation navigation, int id)
+        public DesignerViewModel(INavigation navigation, long id)
         {
             this.currentId = id;
 
@@ -163,7 +163,7 @@ namespace MobileHelper.ViewModels.ConstructorViewModels
         {
             TechniqueDTO item = new()
             {
-                Id = this.currentId,
+                TechniqueId = this.currentId,
                 Header = this.Name,
                 Describtion = this.Description,
                 Subject = this.Theme,
@@ -184,7 +184,7 @@ namespace MobileHelper.ViewModels.ConstructorViewModels
                 Console.WriteLine(e.Message);
             }
 
-            _ = this.Navigation.PopToRootAsync(false);
+            await this.Navigation.PopToRootAsync(false);
             
         }
 
@@ -196,18 +196,18 @@ namespace MobileHelper.ViewModels.ConstructorViewModels
             {
                 string date = DateTime.Now.ToString().Split(' ').First();
 
-                TechniqueBuilder builder = new();
-
-                TechniqueDTO technique = builder
-                    .SetIdentifier(-1)
-                    .SetTitle(this.Name)
-                    .SetSubtitle(this.Description)
-                    .SetTheme(this.Theme)
-                    .SetImage(this.Path)
-                    .SetAuthor(this.Author)
-                    .SetAlgorithm(this.Algorithm)
-                    .SetDate(date)
-                    .Build();
+                TechniqueDTO technique = new()
+                {
+                    TechniqueId = -1,
+                    Number = Guid.NewGuid().ToString(),
+                    Header = this.Name,
+                    Describtion = this.Title,
+                    Subject = this.Theme,
+                    Image = this.Path,
+                    Author = this.Author,
+                    Algorithm = this.Algorithm,
+                    Date = date
+                };
 
                 await this._service.AddNewTechnique(technique);
 
@@ -221,70 +221,6 @@ namespace MobileHelper.ViewModels.ConstructorViewModels
                 ServiceLocator.Instance.GetService<IDialogService>().ShowAsync("Ошибка", "Необходимо заполнить все поля");
             }
         }
-
-        #region Fluent Builder
-        public class TechniqueBuilder
-        {
-            private readonly TechniqueDTO techniqueDB;
-
-            public TechniqueBuilder()
-            {
-                this.techniqueDB = new TechniqueDTO();
-            }
-
-            public TechniqueBuilder SetIdentifier(int identifier)
-            {
-                this.techniqueDB.Id = identifier;
-                return this;
-            }
-
-            public TechniqueBuilder SetDate(string date)
-            {
-                this.techniqueDB.Date = date;
-                return this;
-            }
-            public TechniqueBuilder SetTitle(string title)
-            {
-                this.techniqueDB.Header = title;
-                return this;
-            }
-            public TechniqueBuilder SetSubtitle(string subtitle)
-            {
-                this.techniqueDB.Describtion = subtitle;
-                return this;
-            }
-
-            public TechniqueBuilder SetTheme(string theme)
-            {
-                this.techniqueDB.Subject = theme;
-                return this;
-            }
-
-            public TechniqueBuilder SetAuthor(string author)
-            {
-                this.techniqueDB.Author = author;
-                return this;
-            }
-
-            public TechniqueBuilder SetAlgorithm(string algorithm)
-            {
-                this.techniqueDB.Algorithm = algorithm;
-                return this;
-            }
-
-            public TechniqueBuilder SetImage(string image)
-            {
-                this.techniqueDB.Image = image;
-                return this;
-            }
-
-            public TechniqueDTO Build()
-            {
-                return this.techniqueDB;
-            }
-        }
-
-        #endregion
 
         #region Public Properties
 

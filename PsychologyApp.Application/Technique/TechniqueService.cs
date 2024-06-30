@@ -37,30 +37,31 @@ public class TechniqueService : ITechniqueService
     {
         Technique technique = _mapper.Map<Technique>(techniqueDTO);
 
-        await _techniqueRepository.RemoveAsync(technique);
+        await _techniqueRepository.RemoveAsync(technique.TechniqueId);
 
         await _unitOfWork.Commit();
     }
 
-    public async Task<TechniqueDTO> GetTechniqueById(int id)
+    public async Task<TechniqueDTO> GetTechniqueById(long id)
     {
         Technique? technique = await this._techniqueRepository.FindByIdAsync(id);
 
-        TechniqueDTO? techniqueDTO = this._mapper.Map<TechniqueDTO>(technique);
+        TechniqueDTO techniqueDTO = this._mapper.Map<TechniqueDTO>(technique);
 
         return techniqueDTO;
     }
 
     public async Task<IList<TechniqueDTO>> GetTechniquesList(int count)
     {
-        IList<Technique> techniques = (await _techniqueRepository.GetAsync(x => true)).Take(count).ToList();
+        IList<Technique> techniques = await Task.Run(async () => 
+            (await _techniqueRepository.GetAsync(x => true)).Take(count).ToList());
 
         IList<TechniqueDTO> techniqueDTOs = _mapper.Map<IList<TechniqueDTO>>(techniques);
 
         return techniqueDTOs;
     }
 
-    public async Task MarkTechniqueAsCompleted(int id)
+    public async Task MarkTechniqueAsCompleted(long id)
     {
         Technique? technique = await _techniqueRepository.FindByIdAsync(id);
 
