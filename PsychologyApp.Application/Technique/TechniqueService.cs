@@ -24,8 +24,11 @@ public class TechniqueService : ITechniqueService
         _mapper = mapper;
     }
 
-    public async Task AddNewTechnique(TechniqueDTO techniqueDTO)
+    public async Task AddNewTechnique(TechniqueDTO techniqueDTO, int cancelTimeout = 3000)
     {
+        CancellationTokenSource cancellationTokenSource = new();
+        cancellationTokenSource.CancelAfter(cancelTimeout);
+
         Technique technique = _mapper.Map<Technique>(techniqueDTO);
 
         await _techniqueRepository.InsertAsync(technique);
@@ -33,8 +36,11 @@ public class TechniqueService : ITechniqueService
         await _unitOfWork.Commit();
     }
 
-    public async Task DeleteTechnique(TechniqueDTO techniqueDTO)
+    public async Task DeleteTechnique(TechniqueDTO techniqueDTO, int cancelTimeout = 3000)
     {
+        CancellationTokenSource cancellationTokenSource = new();
+        cancellationTokenSource.CancelAfter(cancelTimeout);
+
         Technique technique = _mapper.Map<Technique>(techniqueDTO);
 
         await _techniqueRepository.RemoveAsync(technique.TechniqueId);
@@ -42,8 +48,11 @@ public class TechniqueService : ITechniqueService
         await _unitOfWork.Commit();
     }
 
-    public async Task<TechniqueDTO> GetTechniqueById(long id)
+    public async Task<TechniqueDTO> GetTechniqueById(long id, int cancelTimeout = 3000)
     {
+        CancellationTokenSource cancellationTokenSource = new();
+        cancellationTokenSource.CancelAfter(cancelTimeout);
+
         Technique? technique = await this._techniqueRepository.FindByIdAsync(id);
 
         TechniqueDTO techniqueDTO = this._mapper.Map<TechniqueDTO>(technique);
@@ -51,8 +60,11 @@ public class TechniqueService : ITechniqueService
         return techniqueDTO;
     }
 
-    public async Task<IList<TechniqueDTO>> GetTechniquesList(int count)
+    public async Task<IList<TechniqueDTO>> GetTechniquesList(int count, int cancelTimeout = 3000)
     {
+        CancellationTokenSource cancellationTokenSource = new();
+        cancellationTokenSource.CancelAfter(cancelTimeout);
+
         IList<Technique> techniques = await Task.Run(async () => 
             (await _techniqueRepository.GetAsync(x => true)).Take(count).ToList());
 
@@ -61,8 +73,11 @@ public class TechniqueService : ITechniqueService
         return techniqueDTOs;
     }
 
-    public async Task MarkTechniqueAsCompleted(long id)
+    public async Task MarkTechniqueAsCompleted(long id, int cancelTimeout = 3000)
     {
+        CancellationTokenSource cancellationTokenSource = new();
+        cancellationTokenSource.CancelAfter(cancelTimeout);
+
         Technique? technique = await _techniqueRepository.FindByIdAsync(id);
 
         if (technique is null)
@@ -77,8 +92,11 @@ public class TechniqueService : ITechniqueService
         await _unitOfWork.Commit();
     }
 
-    public async Task UpdateTechnique(TechniqueDTO techniqueDTO)
+    public async Task UpdateTechnique(TechniqueDTO techniqueDTO, int cancelTimeout = 3000)
     {
+        CancellationTokenSource cancellationTokenSource = new();
+        cancellationTokenSource.CancelAfter(cancelTimeout);
+
         Technique technique = _mapper.Map<Technique>(techniqueDTO);
 
         await _techniqueRepository.UpdateAsync(technique);

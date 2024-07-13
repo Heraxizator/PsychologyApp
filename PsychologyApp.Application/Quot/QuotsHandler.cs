@@ -15,8 +15,11 @@ namespace PsychologyApp.Application.ApiHandlers;
 
 public static class QuotsHandler
 {
-    public static async Task<QuotDTO> GetQuotsFromApi()
+    public static async Task<QuotDTO> GetQuotsFromApi(int cancelTimeout = 3000)
     {
+        CancellationTokenSource cancellationTokenSource = new();
+        cancellationTokenSource.CancelAfter(cancelTimeout);
+
         HttpClient httpClient = new();
 
         HttpResponseMessage response = await httpClient.GetAsync(Constants.QuotApiUrl);

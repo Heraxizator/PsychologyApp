@@ -23,8 +23,11 @@ public class UserService : IUserService
         this._mapper = mapper;
     }
 
-    public async Task IncrementCompletedCount()
+    public async Task IncrementCompletedCount(int cancelTimeout = 3000)
     {
+        CancellationTokenSource cancellationTokenSource = new();
+        cancellationTokenSource.CancelAfter(cancelTimeout);
+
         User? user = (await this._userRepository.GetAsync(x => true)).FirstOrDefault();
 
         if (user is null)
@@ -39,8 +42,11 @@ public class UserService : IUserService
         await _unitOfWork.Commit();
     }
 
-    public async Task SetSubscribersCount(int count)
+    public async Task SetSubscribersCount(int count, int cancelTimeout = 3000)
     {
+        CancellationTokenSource cancellationTokenSource = new();
+        cancellationTokenSource.CancelAfter(cancelTimeout);
+
         User? user = (await this._userRepository.GetAsync(x => true)).FirstOrDefault();
 
         if (user is null)
@@ -55,8 +61,11 @@ public class UserService : IUserService
         await _unitOfWork.Commit();
     }
 
-    public async Task SetUserInitials(string name, string surname, string patronymic)
+    public async Task SetUserInitials(string name, string surname, string patronymic, int cancelTimeout = 3000)
     {
+        CancellationTokenSource cancellationTokenSource = new();
+        cancellationTokenSource.CancelAfter(cancelTimeout);
+
         User? user = (await this._userRepository.GetAsync(x => true)).FirstOrDefault();
 
         if (user is null)
@@ -71,8 +80,11 @@ public class UserService : IUserService
         await _unitOfWork.Commit();
     }
 
-    public async Task UnitLocalUser()
+    public async Task UnitLocalUser(int cancelTimeout = 3000)
     {
+        CancellationTokenSource cancellationTokenSource = new();
+        cancellationTokenSource.CancelAfter(cancelTimeout);
+
         User user = new(string.Empty, string.Empty, string.Empty, 0, 0);
 
         await this._userRepository.InsertAsync(user);

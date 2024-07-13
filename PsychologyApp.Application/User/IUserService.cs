@@ -9,8 +9,8 @@ namespace PsychologyApp.Application.Services.UserService;
 
 public interface IUserService : IAppService
 {
-    public Task UnitLocalUser();
-    public Task IncrementCompletedCount();
-    public Task SetSubscribersCount(int count);
-    public Task SetUserInitials(string name, string surname, string patronymic);
+    public Task UnitLocalUser(int cancelTimeout);
+    public Task IncrementCompletedCount(int cancelTimeout);
+    public Task SetSubscribersCount(int count, int cancelTimeout);
+    public Task SetUserInitials(string name, string surname, string patronymic, int cancelTimeout);
 }

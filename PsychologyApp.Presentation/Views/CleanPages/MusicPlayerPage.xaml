@@ -140,13 +140,14 @@
                 </StackLayout>
 
                 <Frame Margin="15, 15, 15, 15">
-                    <StackLayout Margin="5">
+                    <StackLayout Margin="0">
 
-                        <Label
-                        Margin="5, 0, 5, 15"
-                        Text="Это сборник сильных молитв, который поможет вам очиститься от негатива. Нужен хороший интернет."
-                        TextColor="{AppThemeBinding Light=black, Dark=white}"
-                        FontSize="16"/>
+                        <controls:JustifiedLabel
+                            JustifyText="True"
+                            Margin="5, 0, 5, 15"
+                            Text="Это сборник сильных молитв, который поможет вам очиститься от негатива. Нужен хороший интернет."
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"
+                            FontSize="16"/>
 
                     </StackLayout>
 

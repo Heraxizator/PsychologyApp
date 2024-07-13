@@ -10,10 +10,10 @@ namespace PsychologyApp.Application.Services.TechniqueService;
 
 public interface ITechniqueService : IAppService
 {
-    public Task<IList<TechniqueDTO>> GetTechniquesList(int count);
-    public Task<TechniqueDTO> GetTechniqueById(long id);
-    public Task AddNewTechnique(TechniqueDTO techniqueDTO);
-    public Task DeleteTechnique(TechniqueDTO techniqueDTO);
-    public Task UpdateTechnique(TechniqueDTO techniqueDTO);
-    public Task MarkTechniqueAsCompleted(long id);
+    public Task<IList<TechniqueDTO>> GetTechniquesList(int count, int cancelTimeout);
+    public Task<TechniqueDTO> GetTechniqueById(long id, int cancelTimeout);
+    public Task AddNewTechnique(TechniqueDTO techniqueDTO, int cancelTimeout);
+    public Task DeleteTechnique(TechniqueDTO techniqueDTO, int cancelTimeout);
+    public Task UpdateTechnique(TechniqueDTO techniqueDTO, int cancelTimeout);
+    public Task MarkTechniqueAsCompleted(long id, int cancelTimeout);
 }

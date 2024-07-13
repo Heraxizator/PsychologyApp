@@ -27,8 +27,11 @@ public class QuotService : IQuotService
         _mapper = mapper;
     }
 
-    public async Task AddNewQuot(QuotDTO quotDTO)
+    public async Task AddNewQuot(QuotDTO quotDTO, int cancelTimeout = 3000)
     {
+        CancellationTokenSource cancellationTokenSource = new();
+        cancellationTokenSource.CancelAfter(cancelTimeout);
+
         Quot quot = _mapper.Map<Quot>(quotDTO);
 
         await _quotRepository.InsertAsync(quot);
@@ -36,8 +39,11 @@ public class QuotService : IQuotService
         await _unitOfWork.Commit();
     }
 
-    public async Task<IList<QuotDTO>> GetQuotsList(int count, bool readed = false)
+    public async Task<IList<QuotDTO>> GetQuotsList(int count, bool readed = false, int cancelTimeout = 3000)
     {
+        CancellationTokenSource cancellationTokenSource = new();
+        cancellationTokenSource.CancelAfter(cancelTimeout);
+
         IList<Quot> quots = (await _quotRepository.GetAsync(x => x.IsReaded == readed)).TakeLast(count).ToList();
 
         IList<QuotDTO> quotDTOs = _mapper.Map<IList<QuotDTO>>(quots);
@@ -45,8 +51,11 @@ public class QuotService : IQuotService
         return quotDTOs;
     }
 
-    public async Task MarkQuotAsReaded(int quotId)
+    public async Task MarkQuotAsReaded(int quotId, int cancelTimeout = 3000)
     {
+        CancellationTokenSource cancellationTokenSource = new();
+        cancellationTokenSource.CancelAfter(cancelTimeout);
+
         Quot? quot = await _quotRepository.FindByIdAsync(quotId);
 
         if (quot is null)
@@ -61,8 +70,11 @@ public class QuotService : IQuotService
         await _unitOfWork.Commit();
     }
 
-    public async Task SaveQuotFromApi()
+    public async Task SaveQuotFromApi(int cancelTimeout = 3000)
     {
+        CancellationTokenSource cancellationTokenSource = new();
+        cancellationTokenSource.CancelAfter(cancelTimeout);
+
         QuotDTO quotDTO = await QuotsHandler.GetQuotsFromApi();
 
         Quot quot = _mapper.Map<Quot>(quotDTO);

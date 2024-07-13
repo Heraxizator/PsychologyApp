@@ -24,8 +24,11 @@ namespace PsychologyApp.Application.Services.ReasonService
             this._mapper = mapper;
         }
 
-        public async Task<IList<ReasonDTO>> GetReasons(int count)
+        public async Task<IList<ReasonDTO>> GetReasons(int count, int cancelTimeout = 5000)
         {
+            CancellationTokenSource cancellationTokenSource = new();
+            cancellationTokenSource.CancelAfter(cancelTimeout);
+
             IList<Reason> reasons = (await this._reasonRepository.GetAsync(x => true)).Take(count).ToList();
 
             IList<ReasonDTO> reasonDTOs = this._mapper.Map<IList<ReasonDTO>>(reasons);
@@ -33,8 +36,11 @@ namespace PsychologyApp.Application.Services.ReasonService
             return reasonDTOs;
         }
 
-        public async Task SaveReasonsIfEmpty()
+        public async Task SaveReasonsIfEmpty(int cancelTimeout = 5000)
         {
+            CancellationTokenSource cancellationTokenSource = new();
+            cancellationTokenSource.CancelAfter(cancelTimeout);
+
             ReasonHelper psyhosomaticHelper = new();
 
             int count = (await this._reasonRepository.GetAsync(x => true)).Count();

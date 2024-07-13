@@ -1,16 +1,10 @@
 ﻿using AutoMapper;
 using MvvmHelpers;
-using PsychologyApp.Application.Helpers;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.ReasonService;
 using PsychologyApp.Infrastructure.Repositories;
 using PsychologyApp.Infrastructure.Share;
 using PsychologyApp.Infrastructure.Uow;
-using PsychologyApp.Presentation.Models;
-using PsychologyApp.Presentation.ViewModels;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using BaseViewModel = PsychologyApp.Presentation.ViewModels.BaseViewModel;
 
 namespace MobileHelper.ViewModels.PhysicsViewModels
@@ -34,7 +28,7 @@ namespace MobileHelper.ViewModels.PhysicsViewModels
 
             this.Navigation = navigation;
 
-            this.Reload = new Command(async () => await ReloadAsync());
+            this.Reload = new Command(() => ReloadAsync());
 
             this.Cancel = new Command(() => SetFail());
 
@@ -52,7 +46,7 @@ namespace MobileHelper.ViewModels.PhysicsViewModels
             SetFail();
         }
 
-        private async Task ReloadAsync()
+        private void ReloadAsync()
         {
             this.Reasons.Clear();
 
@@ -72,7 +66,7 @@ namespace MobileHelper.ViewModels.PhysicsViewModels
 
         private void PrepareResults()
         {
-            IEnumerable<ReasonDTO> source = this.Reasons.Take(100);
+            IEnumerable<ReasonDTO> source = this.Reasons.Take(30);
 
             this.Results.AddRange(source);
         }
@@ -83,9 +77,9 @@ namespace MobileHelper.ViewModels.PhysicsViewModels
             {
                 await PrepareReasons();
 
-                await Application.Current.Dispatcher.DispatchAsync(() => PrepareResults());
+                PrepareResults();
             });
-            
+
             ConfigureState();
         }
 
@@ -141,7 +135,7 @@ namespace MobileHelper.ViewModels.PhysicsViewModels
                 if (this._search_text != value)
                 {
                     this._search_text = value;
-                    OnPropertyChanged(nameof(SearchText));
+                    OnPropertyChanged(nameof(this.SearchText));
                 }
             }
         }

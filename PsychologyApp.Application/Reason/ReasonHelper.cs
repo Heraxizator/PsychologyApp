@@ -9,8 +9,11 @@ namespace PsychologyApp.Application.Helpers
 {
     public class ReasonHelper
     {
-        public async Task<IList<ReasonDTO>> GetPsyhosomaticData()
+        public async Task<IList<ReasonDTO>> GetPsyhosomaticData(int cancelTimeout = 5000)
         {
+            CancellationTokenSource cancellationTokenSource = new();
+            cancellationTokenSource.CancelAfter(cancelTimeout);
+
             return await Task.Run(async () =>
             {
                 List<ReasonDTO> psychosomaticObjects = new();
