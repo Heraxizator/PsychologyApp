@@ -22,9 +22,9 @@ public static class QuotsHandler
 
         HttpClient httpClient = new();
 
-        HttpResponseMessage response = await httpClient.GetAsync(Constants.QuotApiUrl);
+        HttpResponseMessage response = await httpClient.GetAsync(Constants.QuotApiUrl, cancellationTokenSource.Token);
 
-        if (!response.IsSuccessStatusCode)
+        if (response.IsSuccessStatusCode is false)
         {
             throw new QuotApiLoadException("Не удалось получить данные от Quots API");
         }
