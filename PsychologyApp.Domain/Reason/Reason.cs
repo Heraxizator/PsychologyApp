@@ -1,4 +1,5 @@
-﻿using PsychologyApp.Domain.Common;
+﻿using PsychologyApp.Domain.Base;
+using PsychologyApp.Domain.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,21 +9,27 @@ using System.Threading.Tasks;
 
 namespace PsychologyApp.Domain.Entities;
 
-public class Reason : BaseAuditableEntity
+public class Reason : Entity
 {
-    public Reason() { }
-
-    public Reason(string? title, string? subtitle, string? solution)
-    {
-        this.Title = title;
-        this.Subtitle = subtitle;
-        this.Solution = solution;
-    }
-
     [Key]
-    public long ReasonId { get; private init; }
+    public long ReasonId { get; private init; } = default!;
+    public string? Title { get; private set; } = default!;
+    public string? Subtitle { get; private set; } = default!;
+    public string? Solution { get; private set; } = default!;
 
-    public string? Title { get; private set; }
-    public string? Subtitle { get; private set; }
-    public string? Solution { get; private set; }
+    public static Reason Create(string title, string subtitle, string solution)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(title);
+        ArgumentException.ThrowIfNullOrWhiteSpace(subtitle);
+        ArgumentException.ThrowIfNullOrWhiteSpace(solution);
+
+        Reason reason = new Reason
+        {
+            Title = title,
+            Subtitle = subtitle,
+            Solution = solution
+        };
+
+        return reason;
+    }
 }

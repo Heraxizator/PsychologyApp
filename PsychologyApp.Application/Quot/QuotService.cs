@@ -1,86 +1,42 @@
-﻿using AutoMapper;
-using PsychologyApp.Application.ApiHandlers;
-using PsychologyApp.Application.Exceptions;
+﻿using PsychologyApp.Application.Exceptions;
 using PsychologyApp.Application.Models;
-using PsychologyApp.Domain.Common;
-using PsychologyApp.Domain.Constants;
+using PsychologyApp.Application.Services.QuotService;
 using PsychologyApp.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+using PsychologyApp.Infrastructure.Data.Context;
 
-namespace PsychologyApp.Application.Services.QuotService;
+namespace PsychologyApp.Application;
 
-public class QuotService : IQuotService
+public sealed class QuotService : IQuotService
 {
-    private readonly IGenericRepository<Quot> _quotRepository;
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly Mapper _mapper;
-
-    public QuotService(IGenericRepository<Quot> quotRepository, IUnitOfWork unitOfWork, Mapper mapper)
+    public async Task AddNewQuot(QuotDTO quotDTO, int cancelTimeout = 5000)
     {
-        _quotRepository = quotRepository;
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
+        using CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
+        cancellationTokenSource.Token.ThrowIfCancellationRequested();
+
+        Quot quot = QuotMapper.GetQuot(quotDTO);
+
+        await Database.QuotRepository.AddAsync(quot);
     }
 
-    public async Task AddNewQuot(QuotDTO quotDTO, int cancelTimeout = 3000)
+    public async Task<IEnumerable<QuotDTO>> GetQuotsList(int count, bool readed = false, int cancelTimeout = 5000)
     {
-        CancellationTokenSource cancellationTokenSource = new();
-        cancellationTokenSource.CancelAfter(cancelTimeout);
+        using CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
+        cancellationTokenSource.Token.ThrowIfCancellationRequested();
 
-        Quot quot = _mapper.Map<Quot>(quotDTO);
+        IEnumerable<Quot> quots = (await Database.QuotRepository.GetAllAsync()).Where(x => x.IsReaded is false).TakeLast(count);
 
-        await _quotRepository.InsertAsync(quot);
-
-        await _unitOfWork.Commit();
+        return quots.Select(QuotMapper.GetQuotDTO);
     }
 
-    public async Task<IList<QuotDTO>> GetQuotsList(int count, bool readed = false, int cancelTimeout = 3000)
+    public async Task MarkQuotAsReaded(int quotId, int cancelTimeout = 5000)
     {
-        CancellationTokenSource cancellationTokenSource = new();
-        cancellationTokenSource.CancelAfter(cancelTimeout);
+        CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
+        cancellationTokenSource.Token.ThrowIfCancellationRequested();
 
-        IList<Quot> quots = (await _quotRepository.GetAsync(x => x.IsReaded == readed)).TakeLast(count).ToList();
-
-        IList<QuotDTO> quotDTOs = _mapper.Map<IList<QuotDTO>>(quots);
-
-        return quotDTOs;
-    }
-
-    public async Task MarkQuotAsReaded(int quotId, int cancelTimeout = 3000)
-    {
-        CancellationTokenSource cancellationTokenSource = new();
-        cancellationTokenSource.CancelAfter(cancelTimeout);
-
-        Quot? quot = await _quotRepository.FindByIdAsync(quotId);
-
-        if (quot is null)
-        {
-            throw new QuotNotFoundException($"Цитата с идентификатром {quotId} не найдена");
-        }
+        Quot? quot = await Database.QuotRepository.GetByIdAsync(quotId) ?? throw new QuotNotFoundException($"Цитата с идентификатром {quotId} не найдена");
 
         quot.MarkAsReaded();
 
-        await _quotRepository.UpdateAsync(quot);
-
-        await _unitOfWork.Commit();
-    }
-
-    public async Task SaveQuotFromApi(int cancelTimeout = 3000)
-    {
-        CancellationTokenSource cancellationTokenSource = new();
-        cancellationTokenSource.CancelAfter(cancelTimeout);
-
-        QuotDTO quotDTO = await QuotsHandler.GetQuotsFromApi();
-
-        Quot quot = _mapper.Map<Quot>(quotDTO);
-
-        await _quotRepository.InsertOrUpdateAsync(quot);
-
-        await _unitOfWork.Commit();
+        await Database.QuotRepository.EditAsync(quot);
     }
 }

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Core.Views;
-using PsychologyApp.Presentation.ServiceLocator;
+using PsychologyApp.Presentation.Base.ServiceLocator.Toast;
 
-namespace PsychologyApp.Presentation.ServiceLocator
+namespace PsychologyApp.Presentation.Base.ServiceLocatorж
 {
     internal class ToastService : IToastService
     {

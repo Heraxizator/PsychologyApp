@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileHelperMaui.Views.TechniquePages.ComparisonPage" 
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Technique.Comparison"
+             xmlns:local="clr-namespace:PsychologyApp.Presentation.Technique" 
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             Title="Техника">
+    
+    <ContentPage.BindingContext>
+        <vm:ComparisonViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Теория" Command="{Binding Theory}" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <StackLayout Margin="0, 0, 0, 0">
+                <Frame Padding="10" Margin="15, 15, 15, 15">
+                    <StackLayout Margin="5, 5, 15, 5">
+                        <Label
+                            Text="Алгоритм"
+                            FontSize="18"
+                            Margin="10, 5, 5, 15"
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+
+                        <Label
+                            Margin="15, 0, 0, 10"
+                            Text="1. Назвать проблему"
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"
+                            FontSize="16"/>
+
+                        <Label
+                            Margin="15, 0, 5, 10"
+                            Text="2. Определить то, что важно в прошлом"
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"
+                            FontSize="16"/>
+
+                        <Label 
+                            Margin="15, 0, 0, 10"
+                            Text="3. Определить то, что важно в настоящем"
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"
+                            FontSize="16"/>
+
+                        <Label
+                            Margin="15, 0, 0, 10"
+                            Text="4. Определить то, что важно в будущем"
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"
+                            FontSize="16"/>
+
+                        <Label
+                            Margin="15, 0, 0, 15"
+                            Text="5. Сравнить то, что важно в трёх временах"
+                            TextColor="{AppThemeBinding Light=black, Dark=white}"
+                            FontSize="16"/>
+
+                    </StackLayout>
+
+                    <Frame.Shadow>
+                        <Shadow 
+                        Opacity="0.35"
+                        Brush="Black"
+                        Offset="0, 0"
+                        Radius="20"/>
+                    </Frame.Shadow>
+
+                </Frame>
+
+                <Frame Padding="10" Margin="15, 5, 15, 15">
+                    <StackLayout>
+                        <Label
+                    Text="Форма"
+                    FontSize="18"
+                    Margin="10, 10, 5, 15"
+                    TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+
+                        <templates:TextEntryView
+                            TitleText="Проблема"
+                            PlaceholderText="У меня нет работы"/>
+
+                        <templates:TextEntryView
+                            TitleText="Прошлое"
+                            PlaceholderText="Хорошо учиться"/>
+
+                        <templates:TextEntryView
+                            TitleText="Настоящее"
+                            PlaceholderText="Найти работу"/>
+
+                        <templates:TextEntryView
+                            TitleText="Будущее"
+                            PlaceholderText="Сохранить работу"/>
+
+                    </StackLayout>
+
+                    <Frame.Shadow>
+                        <Shadow 
+                        Opacity="0.35"
+                        Brush="Black"
+                        Offset="0, 0"
+                        Radius="20"/>
+                    </Frame.Shadow>
+
+                </Frame>
+
+                <Button 
+                Margin="0, 15, 0, 15"
+                Text="Завершить"
+                FontSize="15"
+                BackgroundColor="{StaticResource Primary}"
+                CornerRadius="25"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Center"
+                Command="{Binding Finish}"
+                WidthRequest="350"
+                HeightRequest="40"/>
+            </StackLayout>
+        </ScrollView>
+
+    </ContentPage.Content>
+    
+</ContentPage>

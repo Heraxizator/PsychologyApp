@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PsychologyApp.Presentation.ServiceLocator.Dialog
+namespace PsychologyApp.Presentation.Base.ServiceLocator.Dialog
 {
     internal class DialogService : IDialogService
     {

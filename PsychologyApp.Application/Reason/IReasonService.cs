@@ -10,7 +10,6 @@ namespace PsychologyApp.Application.Services.ReasonService
 {
     public interface IReasonService : IAppService
     {
-        public Task SaveReasonsIfEmpty(int cancelTimeout);
-        public Task<IList<ReasonDTO>> GetReasons(int count, int cancelTimeout);
+        public Task<IEnumerable<ReasonDTO>> GetReasons(int count, int cancelTimeout);
     }
 }

@@ -1,4 +1,5 @@
-﻿using PsychologyApp.Domain.Common;
+﻿using PsychologyApp.Domain.Base;
+using PsychologyApp.Domain.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,69 +9,85 @@ using System.Threading.Tasks;
 
 namespace PsychologyApp.Domain.Entities;
 
-public class Technique : BaseAuditableEntity
+public class Technique : Entity
 {
-    public Technique()
-    {
-
-    }
-
-    public Technique(string? number, string? date, string? header, string? describtion, string? subject, string? author, bool isCompleted)
-    {
-        this.Number = number;
-        this.Date = date;
-        this.Header = header;
-        this.Describtion = describtion;
-        this.Subject = subject;
-        this.Author = author;
-        this.IsCompleted = isCompleted;
-    }
-
     [Key]
-    public long TechniqueId { get; private init; }
-
-    public string? Number { get; private set; }
-    public string? Date {  get; private set; }
-    public string? Header {  get; private set; }
-    public string? Describtion {  get; private set; }
-    public string? Subject { get; private set; }
-    public string? Author { get; private set; }
-    public string? Algorithm {  get; private set; }
-    public string? Image { get; private set; }
+    public long TechniqueId { get; private init; } = default!;
+    public string Number { get; private set; } = default!;
+    public string Date {  get; private set; } = default!;
+    public string Header {  get; private set; } = default!;
+    public string Describtion {  get; private set; } = default!;
+    public string Subject { get; private set; } = default!;
+    public string Author { get; private set; } = default!;
+    public string Algorithm {  get; private set; } = default!;
+    public string? Image { get; private set; } = default!;
     public bool IsCompleted {  get; private set; }
+
+    public static Technique Create(string number, string date, string header, string describtion, string subject, string author, string algorithm, string image)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(number);
+        ArgumentException.ThrowIfNullOrWhiteSpace(date);
+        ArgumentException.ThrowIfNullOrWhiteSpace(header);
+        ArgumentException.ThrowIfNullOrWhiteSpace(describtion);
+        ArgumentException.ThrowIfNullOrWhiteSpace(subject);
+        ArgumentException.ThrowIfNullOrWhiteSpace(author);
+        ArgumentException.ThrowIfNullOrWhiteSpace(algorithm);
+
+        Technique technique = new Technique
+        {
+            Number = number,
+            Date = date,
+            Header = header,
+            Describtion = describtion,
+            Subject = subject,
+            Author = author,
+            Algorithm = algorithm,
+            Image = image,
+            IsCompleted = false
+        };
+
+        return technique;
+    }
 
     public void SetNumber(string number)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(number);
         this.Number = number;
     }
 
     public void SetDate(string date)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(date);
         this.Date = date;
     }
 
     public void SetHeader(string header)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(header);
         this.Header = header;
     }
 
     public void SetDescribtion(string describtion)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(describtion);
         this.Describtion = describtion;
     }
 
     public void SetAlgorithm(string algorithm)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(algorithm);
         this.Algorithm = algorithm;
     }
 
     public void SetAuthor(string author)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(author);
         this.Author = author;
     }
 
     public void SetSubject(string subject)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(subject);
         this.Subject = subject;
     }
 

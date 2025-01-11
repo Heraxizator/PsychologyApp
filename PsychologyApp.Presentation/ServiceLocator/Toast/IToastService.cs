@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PsychologyApp.Presentation.ServiceLocator
+namespace PsychologyApp.Presentation.Base.ServiceLocator.Toast
 {
     internal interface IToastService
     {

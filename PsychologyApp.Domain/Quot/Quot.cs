@@ -1,4 +1,5 @@
-﻿using PsychologyApp.Domain.Common;
+﻿using PsychologyApp.Domain.Base;
+using PsychologyApp.Domain.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,33 +9,41 @@ using System.Threading.Tasks;
 
 namespace PsychologyApp.Domain.Entities;
 
-public class Quot : BaseAuditableEntity
+public class Quot : Entity
 {
-    public Quot()
-    {
-    }
-
-    public Quot(string? title, string? text, string? theme, bool isReaded)
-    {
-        this.Title = title;
-        this.Text = text;
-        this.Theme = theme;
-        this.IsReaded = isReaded;
-    }
-
     [Key]
-    public long QuotId { get; private init; }
+    public long QuotId { get; private init; } = default!;
+    public string Title { get; private set; } = default!;
+    public string Text { get; private set; } = default!;
+    public string? Theme { get; private set; } = default!;
+    public bool IsReaded { get; private set; } = default!;
 
-    public string? Title { get; private set; }
-    public string? Text { get; private set; }
-    public string? Theme { get; private set; }
-    public bool IsReaded {  get; private set; }
+    public static Quot Create(string title, string text, string? theme, bool isReaded)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(title);
+        ArgumentException.ThrowIfNullOrWhiteSpace(text);
 
-    public void SetContent(string? title, string? text, string? theme) 
-    { 
+        Quot quot = new Quot
+        {
+            Title = title,
+            Text = text,
+            Theme = theme,
+            IsReaded = isReaded
+        };
+
+        return quot;
+    }
+
+    public void EditTitle(string title) 
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(title);
         this.Title = title;
+    }
+
+    public void EditText(string text)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(text);
         this.Text = text;
-        this.Theme = theme;
     }
 
     public void MarkAsReaded()

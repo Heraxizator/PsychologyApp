@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileHelperMaui.Views.PhysicsPages.PhysicsSerchPage"
+             xmlns:vm="clr-namespace:MobileHelper.ViewModels.PhysicsViewModels"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             Title="Психосоматик">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <vm:PhysicsSearchViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Найти" Clicked="Button_Clicked"/>
+    </ContentPage.ToolbarItems>
+    
+    <StackLayout 
+        IsVisible="True"
+        Margin="10, 0, 10, 0"
+        VerticalOptions="FillAndExpand" 
+        HorizontalOptions="FillAndExpand">
+
+        <Frame 
+        Margin="5, 15, 5, 15" 
+        Padding="10" 
+        BorderColor="{StaticResource Accent}" 
+        CornerRadius="25">
+            <StackLayout>
+                <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Проблема" FontSize="15"/>
+                <Entry
+            x:Name="Search"
+            PlaceholderColor="{StaticResource Accent}"
+            Placeholder="Болезнь"
+            FontSize="15"
+            Text="{Binding SearchText}"
+            TextColor="{AppThemeBinding Light=black, Dark=white}"
+            VerticalTextAlignment="Center"/>
+            </StackLayout>
+
+        </Frame>
+
+        <ScrollView
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            VerticalScrollBarVisibility="Never">
+
+        <StackLayout>
+           
+            <templates:ProgressbarView 
+                VerticalOptions="CenterAndExpand"
+                IsVisible="{Binding IsInit}"
+                IsLoading="True"
+                ProgressText="Поиск">
+                <templates:ProgressbarView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Cancel}"/>
+                </templates:ProgressbarView.GestureRecognizers>
+            </templates:ProgressbarView>
+
+            <templates:RetryView
+                VerticalOptions="CenterAndExpand"
+                IsVisible="{Binding IsFail}"
+                FailedText="Не удалось найти"
+                RetryText="Попробуйте изменить запрос">
+            </templates:RetryView>
+
+            <ListView
+                IsVisible="{Binding IsDone}"
+                HasUnevenRows="True"
+                SeparatorVisibility="None"
+                SelectionMode="None"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                VerticalScrollBarVisibility="Never"
+                ItemsSource="{Binding Results}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Frame Padding="10">
+                                        <StackLayout>
+                                            <Label 
+                                            Text="{Binding Title}"
+                                            Margin="5, 0, 0, 0"
+                                            FontSize="14"
+                                            TextColor="{AppThemeBinding Light=black, Dark=white}"
+                                            Padding="0"
+                                            HorizontalOptions="Start" />
+
+                                            <Label
+                                            Margin="5, 0, 5, 10"
+                                            FontSize="14"
+                                            HorizontalTextAlignment="Justify"
+                                            TextColor="{AppThemeBinding Light=gray, Dark=white}"
+                                            Text="{Binding Subtitle}"/>
+
+                                        </StackLayout>
+
+                                        <Frame.Shadow>
+                                            <Shadow 
+                                            Opacity="0.35"
+                                            Brush="Black"
+                                            Offset="0, 0"
+                                            Radius="20"/>
+                                        </Frame.Shadow>
+                                    </Frame>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        <!--
+            <templates:RetryView
+                VerticalOptions="CenterAndExpand"
+                IsVisible="{Binding IsFail}"
+                FailedText="Не удалось загрузить"
+                RetryText="Попробовать ещё раз?">
+                <templates:RetryView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Reload}"/>
+                </templates:RetryView.GestureRecognizers>
+            </templates:RetryView>
+            -->
+
+    </ScrollView>
+    </StackLayout>
+</ContentPage>

@@ -1,5 +1,6 @@
-﻿using PsychologyApp.Presentation.ServiceLocator;
-using PsychologyApp.Presentation.ServiceLocator.Dialog;
+﻿using PsychologyApp.Presentation.Base.ServiceLocator.Dialog;
+using PsychologyApp.Presentation.Base.ServiceLocator.Toast;
+using PsychologyApp.Presentation.Base.ServiceLocatorж;
 
 namespace PsychologyApp.Presentation
 {
@@ -14,8 +15,8 @@ namespace PsychologyApp.Presentation
 
         private void InitServices()
         {
-            ServiceLocator.ServiceLocator.Instance.Register<IToastService>(new ToastService());
-            ServiceLocator.ServiceLocator.Instance.Register<IDialogService>(new DialogService());
+            Base.ServiceLocator.ServiceLocator.Instance.Register<IToastService>(new ToastService());
+            Base.ServiceLocator.ServiceLocator.Instance.Register<IDialogService>(new DialogService());
         }
     }
 }

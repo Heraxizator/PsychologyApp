@@ -1,8 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
-using MobileHelperMaui;
 using MauiIcons.Material;
-using PsychologyApp.Presentation.Handlers;
+using PsychologyApp.Presentation.Base.Controls;
 
 #if ANDROID
 using Microsoft.Maui.Controls.Compatibility.Platform.Android;
@@ -18,7 +17,6 @@ namespace PsychologyApp.Presentation
             MauiAppBuilder mauiAppBuilder = builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
-                .UseMauiCommunityToolkitMediaElement()
                 .UseMaterialMauiIcons()
                 .ConfigureFonts(fonts =>
                 {
@@ -28,9 +26,7 @@ namespace PsychologyApp.Presentation
 
             .ConfigureMauiHandlers(handlers =>
              {
-#if ANDROID
-                 handlers.AddHandler(typeof(JustifiedLabel), typeof(JustifiedLabelHandler));
-#endif
+
              });
 
             Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("MyCustomization", (handler, view) =>

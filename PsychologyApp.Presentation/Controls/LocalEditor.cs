@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MobileHelperMaui
+namespace PsychologyApp.Presentation.Base.Controls
 {
     public class LocalEditor : Editor
     {

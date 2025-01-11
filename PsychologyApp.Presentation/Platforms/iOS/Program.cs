@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace PsychologyApp.Presentation
+namespace PsychologyApp.Presentation.Base.Platforms.iOS
 {
     public class Program
     {

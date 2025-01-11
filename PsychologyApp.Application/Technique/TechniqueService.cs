@@ -1,84 +1,59 @@
-﻿using AutoMapper;
-using PsychologyApp.Application.Exceptions;
+﻿using PsychologyApp.Application.Exceptions;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Domain.Common;
 using PsychologyApp.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PsychologyApp.Infrastructure.Data.Context;
 
 namespace PsychologyApp.Application.Services.TechniqueService;
 
-public class TechniqueService : ITechniqueService
+public sealed class TechniqueService : ITechniqueService
 {
-    private readonly IGenericRepository<Technique> _techniqueRepository;
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly Mapper _mapper;
-
-    public TechniqueService(IGenericRepository<Technique> techniqueRepository, IUnitOfWork unitOfWork, Mapper mapper)
+    public async Task AddNewTechnique(TechniqueDTO techniqueDTO, int cancelTimeout = 5000)
     {
-        _techniqueRepository = techniqueRepository;
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
+        CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
+        cancellationTokenSource.Token.ThrowIfCancellationRequested();
+
+        Technique technique = TechniqueMapper.GetTechnique(techniqueDTO);
+
+        await Database.TechniqueRepository.AddAsync(technique);
     }
 
-    public async Task AddNewTechnique(TechniqueDTO techniqueDTO, int cancelTimeout = 3000)
+    public async Task DeleteTechnique(TechniqueDTO techniqueDTO, int cancelTimeout = 5000)
     {
-        CancellationTokenSource cancellationTokenSource = new();
-        cancellationTokenSource.CancelAfter(cancelTimeout);
+        CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
+        cancellationTokenSource.Token.ThrowIfCancellationRequested();
 
-        Technique technique = _mapper.Map<Technique>(techniqueDTO);
+        Technique technique = TechniqueMapper.GetTechnique(techniqueDTO);
 
-        await _techniqueRepository.InsertAsync(technique);
-
-        await _unitOfWork.Commit();
+        await Database.TechniqueRepository.DeleteAsync(technique);
     }
 
-    public async Task DeleteTechnique(TechniqueDTO techniqueDTO, int cancelTimeout = 3000)
+    public async Task<TechniqueDTO> GetTechniqueById(long id, int cancelTimeout = 5000)
     {
-        CancellationTokenSource cancellationTokenSource = new();
-        cancellationTokenSource.CancelAfter(cancelTimeout);
+        CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
+        cancellationTokenSource.Token.ThrowIfCancellationRequested();
 
-        Technique technique = _mapper.Map<Technique>(techniqueDTO);
+        Technique? technique = await Database.TechniqueRepository.GetByIdAsync(id);
 
-        await _techniqueRepository.RemoveAsync(technique.TechniqueId);
-
-        await _unitOfWork.Commit();
+        return TechniqueMapper.GetTechniqueDTO(technique);
     }
 
-    public async Task<TechniqueDTO> GetTechniqueById(long id, int cancelTimeout = 3000)
+    public async Task<IEnumerable<TechniqueDTO>> GetTechniquesList(int count, int cancelTimeout = 5000)
     {
-        CancellationTokenSource cancellationTokenSource = new();
-        cancellationTokenSource.CancelAfter(cancelTimeout);
+        CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
+        cancellationTokenSource.Token.ThrowIfCancellationRequested();
 
-        Technique? technique = await this._techniqueRepository.FindByIdAsync(id);
+        IEnumerable<Technique> techniques = (await Database.TechniqueRepository.GetAllAsync()).Take(count);
 
-        TechniqueDTO techniqueDTO = this._mapper.Map<TechniqueDTO>(technique);
-
-        return techniqueDTO;
+        return techniques.Select(TechniqueMapper.GetTechniqueDTO);
     }
 
-    public async Task<IList<TechniqueDTO>> GetTechniquesList(int count, int cancelTimeout = 3000)
+    public async Task MarkTechniqueAsCompleted(long id, int cancelTimeout = 5000)
     {
-        CancellationTokenSource cancellationTokenSource = new();
-        cancellationTokenSource.CancelAfter(cancelTimeout);
+        CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
+        cancellationTokenSource.Token.ThrowIfCancellationRequested();
 
-        IList<Technique> techniques = await Task.Run(async () => 
-            (await _techniqueRepository.GetAsync(x => true)).Take(count).ToList());
-
-        IList<TechniqueDTO> techniqueDTOs = _mapper.Map<IList<TechniqueDTO>>(techniques);
-
-        return techniqueDTOs;
-    }
-
-    public async Task MarkTechniqueAsCompleted(long id, int cancelTimeout = 3000)
-    {
-        CancellationTokenSource cancellationTokenSource = new();
-        cancellationTokenSource.CancelAfter(cancelTimeout);
-
-        Technique? technique = await _techniqueRepository.FindByIdAsync(id);
+        Technique? technique = await Database.TechniqueRepository.GetByIdAsync(id);
 
         if (technique is null)
         {
@@ -87,20 +62,16 @@ public class TechniqueService : ITechniqueService
 
         technique.MarkAsCompleted();
 
-        await _techniqueRepository.UpdateAsync(technique);
-
-        await _unitOfWork.Commit();
+        await Database.TechniqueRepository.EditAsync(technique);
     }
 
-    public async Task UpdateTechnique(TechniqueDTO techniqueDTO, int cancelTimeout = 3000)
+    public async Task UpdateTechnique(TechniqueDTO techniqueDTO, int cancelTimeout = 5000)
     {
-        CancellationTokenSource cancellationTokenSource = new();
-        cancellationTokenSource.CancelAfter(cancelTimeout);
+        CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
+        cancellationTokenSource.Token.ThrowIfCancellationRequested();
 
-        Technique technique = _mapper.Map<Technique>(techniqueDTO);
+        Technique technique = TechniqueMapper.GetTechnique(techniqueDTO);
 
-        await _techniqueRepository.UpdateAsync(technique);
-
-        await _unitOfWork.Commit();
+        await Database.TechniqueRepository.EditAsync(technique);
     }
 }

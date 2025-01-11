@@ -1,62 +1,18 @@
-﻿using AutoMapper;
-using PsychologyApp.Application.Helpers;
-using PsychologyApp.Application.Models;
-using PsychologyApp.Domain.Common;
+﻿using PsychologyApp.Application.Models;
 using PsychologyApp.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PsychologyApp.Infrastructure.Data.Context;
 
-namespace PsychologyApp.Application.Services.ReasonService
+namespace PsychologyApp.Application.Services.ReasonService;
+
+public sealed class ReasonService : IReasonService
 {
-    public class ReasonService : IReasonService
+    public async Task<IEnumerable<ReasonDTO>> GetReasons(int count, int cancelTimeout = 5000)
     {
-        private readonly IGenericRepository<Reason> _reasonRepository;
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly Mapper _mapper;
+        CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
+        cancellationTokenSource.Token.ThrowIfCancellationRequested();
 
-        public ReasonService(IGenericRepository<Reason> reasonRepository, IUnitOfWork unitOfWork, Mapper mapper)
-        {
-            this._reasonRepository = reasonRepository;
-            this._unitOfWork = unitOfWork;
-            this._mapper = mapper;
-        }
+        IEnumerable<Reason> reasons = (await Database.ReasonRepository.GetAllAsync()).Take(count).ToList();
 
-        public async Task<IList<ReasonDTO>> GetReasons(int count, int cancelTimeout = 5000)
-        {
-            CancellationTokenSource cancellationTokenSource = new();
-            cancellationTokenSource.CancelAfter(cancelTimeout);
-
-            IList<Reason> reasons = (await this._reasonRepository.GetAsync(x => true)).Take(count).ToList();
-
-            IList<ReasonDTO> reasonDTOs = this._mapper.Map<IList<ReasonDTO>>(reasons);
-
-            return reasonDTOs;
-        }
-
-        public async Task SaveReasonsIfEmpty(int cancelTimeout = 5000)
-        {
-            CancellationTokenSource cancellationTokenSource = new();
-            cancellationTokenSource.CancelAfter(cancelTimeout);
-
-            ReasonHelper psyhosomaticHelper = new();
-
-            int count = (await this._reasonRepository.GetAsync(x => true)).Count();
-
-            if (count > 0)
-            {
-                return;
-            }
-
-            IList<ReasonDTO> reasonDTOs = await psyhosomaticHelper.GetPsyhosomaticData();
-
-            IList<Reason> reasons = this._mapper.Map<IList<Reason>>(reasonDTOs);
-
-            await this._reasonRepository.InsertRangeAsync(reasons);
-
-            await this._unitOfWork.Commit();
-        }
+        return reasons.Select(ReasonMapper.GetReasonDTO);
     }
 }

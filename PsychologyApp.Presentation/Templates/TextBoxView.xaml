@@ -2,7 +2,6 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
-             xmlns:local="clr-namespace:MobileHelperMaui"
              x:Class="PsychologyApp.Presentation.Templates.TextBoxView">
 
     <ContentView.Resources>
@@ -21,8 +20,8 @@
                         Margin="10, 5, 5, 15"
                         TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
-                    <local:JustifiedLabel
-                        JustifyText="True"
+                    <Label
+                        HorizontalTextAlignment="Justify"
                         Margin="15, 0, 0, 15"
                         Text="{TemplateBinding BodyText}"
                         TextColor="{AppThemeBinding Light=black, Dark=white}"
