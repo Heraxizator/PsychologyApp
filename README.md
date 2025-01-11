@@ -1,6 +1,6 @@
 # 📲 Мобильный тренажёр подсознания
 
-Приложение разработано на Net 9, NET MAUI и Dapper.
+Приложение разработано на NET 9, NET MAUI и Dapper.
 
 В нём применяются такие паттерны, как MVVM, Fluent Builder, Mapper, Repository, Value Object, Specification, Transaction Script а также такие принципы, как SOLID, DRY, YAGNI, KISS, GRASP.
 
