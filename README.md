@@ -1,40 +1,12 @@
-# Psychology App
-This repository contains the Psychology App. This app allows you to solve many mental problems.
+# 📲 Мобильный тренажёр подсознания
 
-The technologies used in this application are:
+Приложение разработано на Net 9, Net MAUI и Dapper.
 
-<pre>
-NET MAUI
-<br>Domain Driven Design
-<br>Dapper and SQLite
-<br>Async/await
-<br>MVVM
-<br>CollectionView
-<br>Navigation Component
-</pre>
+В нём применяются такие паттерны, как MVVM, Fluent Builder, Mapper, Repository, Value Object, Specification, Transaction Script а также такие принципы, как SOLID, DRY, YAGNI, KISS, GRASP.
 
-## Screenshots
+Приложение представляет  собой список простых,  но  в тоже время мощных техник, которые помогут вам     справиться      с         такими проблемами,  как  стресс,    страх, сомнения,    навязчивые     мысли, ограничивающие   убеждения   и деструктивные   установки.   Все методики  являются общеизвестными и проверены временем. Некоторые взяты из НЛП или трудов Живорада Славинского. Эти инструменты позволят вам сэкономить много времени, сил и денег. Они не потребуют глубоких знаний в области психологии и программирования подсознания. Желаем успеха в проработках!
 
-<table>
-  <thead>
-    <tr>
-      <th>SplashScreenFragment</th>
-      <th>HomePageFragment</th>
-      <th>AddTaskFragment</th>
-      <th>TaskDetailFragment</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><img src="https://github.com/tariksafakutuk/Android-To-Do-List-App/assets/58528205/ff238883-d375-40e5-9724-f53a9e9cbc50" alt="" style="width:180px;"/></td>
-      <td><img src="https://github.com/tariksafakutuk/Android-To-Do-List-App/assets/58528205/8dd06ff3-e17b-4819-a23b-301d9a42b681" alt="" style="width:180px;"/></td>
-      <td><img src="https://github.com/tariksafakutuk/Android-To-Do-List-App/assets/58528205/2accbed6-2320-40ac-963e-f4be02f86b33" alt="" style="width:180px;"/></td>
-      <td><img src="https://github.com/tariksafakutuk/Android-To-Do-List-App/assets/58528205/097dfb11-d22f-487f-a519-390c836b7d7d" alt="" style="width:180px;"/></td>
-    </tr>
-  </tbody>
-</table>
+### Кликните, чтобы посмотреть подробности https://clck.ru/37HzYu
 
-## Author
-***Maxim Sukhikh***
-
-**"If found helpful please press a ⭐."**
+- Если вам понравился мой проект, поддержите или поделитесь идеями!
+- Если вы столкнулись с проблемами или обнаружили баг, пожалуйста, воспользуйтесь разделом issue!
