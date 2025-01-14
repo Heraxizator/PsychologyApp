@@ -12,7 +12,7 @@ namespace PsychologyApp.Infrastructure.Data.Repositories.Reasons;
 
 public sealed class ReasonRepository : BaseRepository<Reason>, IReasonRepository
 {
-    private SqliteConnection _connection;
+    private readonly SqliteConnection _connection;
     public ReasonRepository(SqliteConnection connection) : base(connection)
     {
         _connection = connection;
@@ -20,6 +20,6 @@ public sealed class ReasonRepository : BaseRepository<Reason>, IReasonRepository
 
     public async Task<IEnumerable<Reason>> GetByTitle(string title)
     {
-        return await _connection.QueryAsync<Reason>($"SELECT * FROM {nameof(Reason)} WHERE {nameof(Reason.Title)}");
+        return await _connection.QueryAsync<Reason>($"SELECT * FROM Reasons WHERE Title = {title}");
     }
 }

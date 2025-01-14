@@ -21,9 +21,9 @@ public class ApplicationDbContext : DbContext
     }
 
     #region Tables
-    public DbSet<Quot> Quot { get; set; }
-    public DbSet<Technique> Technique { get; set; }
-    public DbSet<Reason> Reason { get; set; }
+    public DbSet<Quot> Quots { get; set; }
+    public DbSet<Technique> Techniques { get; set; }
+    public DbSet<Reason> Reasons { get; set; }
     #endregion
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)

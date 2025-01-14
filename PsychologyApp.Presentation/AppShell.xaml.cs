@@ -1,4 +1,5 @@
-﻿using PsychologyApp.Presentation.Base.ServiceLocator.Dialog;
+﻿using PsychologyApp.Infrastructure.Data.Context;
+using PsychologyApp.Presentation.Base.ServiceLocator.Dialog;
 using PsychologyApp.Presentation.Base.ServiceLocator.Toast;
 using PsychologyApp.Presentation.Base.ServiceLocatorж;
 
@@ -11,6 +12,8 @@ namespace PsychologyApp.Presentation
             InitializeComponent();
 
             InitServices();
+
+            Database.CreateTables();
         }
 
         private void InitServices()

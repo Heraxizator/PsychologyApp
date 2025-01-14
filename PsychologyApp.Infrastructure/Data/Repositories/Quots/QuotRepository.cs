@@ -12,7 +12,7 @@ namespace PsychologyApp.Infrastructure.Data.Repositories.Quots;
 
 public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
 {
-    private SqliteConnection _connection;
+    private readonly SqliteConnection _connection;
 
     public QuotRepository(SqliteConnection connection) : base(connection)
     {
@@ -21,11 +21,11 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
 
     public async Task<IEnumerable<Quot>> GetByThemeAsync(string theme)
     {
-        return await _connection.QueryAsync<Quot>($"SELECT * FROM {nameof(Quot)} WHERE {nameof(Quot.Theme)} = {theme}");
+        return await _connection.QueryAsync<Quot>($"SELECT * FROM Quots WHERE Theme = {theme}");
     }
 
     public async Task<IEnumerable<Quot>> GetByTitleAsync(string title)
     {
-        return await _connection.QueryAsync<Quot>($"SELECT * FROM {nameof(Quot)} WHERE {nameof(Quot.Title)} = {title}");
+        return await _connection.QueryAsync<Quot>($"SELECT * FROM Quots WHERE Title = {title}");
     }
 }

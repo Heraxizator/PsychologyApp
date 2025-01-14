@@ -22,7 +22,7 @@
     <CollectionView
         Margin="5, 0, 5, 5"
         ItemsSource="{Binding Techniques}"
-        SelectionMode="None"
+        SelectionMode="Single"
         VerticalScrollBarVisibility="Never"
         HorizontalScrollBarVisibility="Never">
 
@@ -116,15 +116,7 @@
                         </StackLayout>
 
                     </StackLayout>
-
-                    <Frame.Shadow>
-                        <Shadow 
-                            Opacity="0.35"
-                            Brush="Black"
-                            Offset="0, 0"
-                            Radius="20"/>
-                    </Frame.Shadow>
-
+                    
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding TapCommand}"/>
                     </Frame.GestureRecognizers>

@@ -14,7 +14,7 @@ namespace PsychologyApp.Infrastructure.Data.Context;
 
 public static class Database
 {
-    private static readonly SqliteConnection _connection = new(ApplicationDbContext.GetPathDB());
+    private static readonly SqliteConnection _connection = new($"Data Source={ApplicationDbContext.GetPathDB()}");
 
     #region Repositories
     public static readonly QuotRepository QuotRepository = new(_connection);
@@ -25,6 +25,11 @@ public static class Database
     #endregion
 
     static Database()
+    {
+        
+    }
+
+    public static void CreateTables()
     {
         ApplicationDbContext context = new();
 
