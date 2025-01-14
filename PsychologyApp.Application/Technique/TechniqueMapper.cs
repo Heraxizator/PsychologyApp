@@ -19,6 +19,7 @@ public static class TechniqueMapper
     {
         return new TechniqueDTO
         {
+            TechniqueId = technique.TechniqueId,
             Number = technique.Number,
             Date = technique.Date,
             Header = technique.Header,
