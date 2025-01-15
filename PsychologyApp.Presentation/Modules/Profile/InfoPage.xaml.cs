@@ -6,4 +6,10 @@ public partial class InfoPage : ContentPage
 	{
 		InitializeComponent();
 	}
+
+	private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+	{
+		await Navigation.PopAsync(false);
+
+	}
 }

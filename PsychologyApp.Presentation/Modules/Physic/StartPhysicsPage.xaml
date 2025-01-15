@@ -4,8 +4,8 @@
              x:Class="MobileHelperMaui.Views.PhysicsPages.StartPhysicsPage"
              xmlns:vm="clr-namespace:MobileHelper.ViewModels.PhysicsViewModels"
              xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
-             xmlns:controls="clr-namespace:MobileHelperMaui"
-             xmlns:local="clr-namespace:MobileHelperMaui"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             Shell.NavBarIsVisible="True"
              Title="Психосоматик">
     <ContentPage.BindingContext>
         <vm:StartPhysicsViewModel/>
@@ -42,47 +42,39 @@
 
                     
                         <Frame Margin="15, 10, 15, 15">
-                        <StackLayout Margin="5">
-                            <Label
+                            <StackLayout Margin="5">
+                                <Label
                             Text="Алгоритм"
                             FontSize="18"
                             Margin="10, 5, 5, 15"
                             TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
-                            <Label 
+                                <Label 
                             Margin="15, 0, 0, 10"
                             TextColor="{AppThemeBinding Light=black, Dark=white}"
                             FontSize="16">
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="1. Назвать болезнь или часть тела, которая болит"/>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="1. Назвать болезнь или часть тела, которая болит"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
 
-                            <Label 
+                                <Label 
                             Margin="15, 0, 0, 10"
                             TextColor="{AppThemeBinding Light=black, Dark=white}"
                             FontSize="16">
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="2. Узнать несколько возможных "/>
-                                        <Span Text="причин."/>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="2. Узнать несколько возможных "/>
+                                            <Span Text="причин."/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
 
-                        </StackLayout>
+                            </StackLayout>
 
-                        <Frame.Shadow>
-                            <Shadow 
-                            Opacity="0.35"
-                            Brush="Black"
-                            Offset="0, 0"
-                            Radius="20"/>
-                        </Frame.Shadow>
-
-                    </Frame>
+                        </Frame>
 
                     <Button 
                     Margin="10, 15, 10, 15"

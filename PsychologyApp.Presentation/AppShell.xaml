@@ -10,6 +10,8 @@
         xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
         xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
         Shell.TabBarForegroundColor="{StaticResource Primary}"
+        NavigationPage.HasNavigationBar="False"
+        Shell.NavBarIsVisible="False"
         Shell.ForegroundColor="Black">
 
     <Shell.Behaviors>

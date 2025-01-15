@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileHelperMaui.Views.ReviewPages.FormPage"
              xmlns:reviewviewmodels="clr-namespace:MobileHelper.ViewModels.ReviewViewModels" 
-             xmlns:local="clr-namespace:MobileHelperMaui"
              xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             Shell.NavBarIsVisible="True"
              Title="Отзовик">
     
     <ContentPage.BindingContext>
@@ -60,14 +60,6 @@
                         HorizontalOptions="Center"
                         VerticalOptions="Center"/>
                 </StackLayout>
-
-                <Frame.Shadow>
-                    <Shadow 
-                    Opacity="0.35"
-                    Brush="Black"
-                    Offset="0, 0"
-                    Radius="20"/>
-                </Frame.Shadow>
 
             </Frame>
 

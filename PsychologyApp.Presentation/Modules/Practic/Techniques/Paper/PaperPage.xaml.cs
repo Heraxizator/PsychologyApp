@@ -29,4 +29,9 @@ public partial class PaperPage : ContentPage
 
         vm.Delete.Execute(item);
     }
+
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PopAsync(false);
+    }
 }

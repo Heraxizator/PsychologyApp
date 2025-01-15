@@ -17,16 +17,12 @@ public static class QuotHandler
     {
         CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
 
-        HttpClient httpClient = new();
+        string jsonResult = await HttpExtention.GetAsync(Constants.QuotApiUrl, cancelTimeout);
 
-        HttpResponseMessage response = await httpClient.GetAsync(Constants.QuotApiUrl, cancellationTokenSource.Token);
-
-        if (response.IsSuccessStatusCode is false)
+        if (string.IsNullOrEmpty(jsonResult) is true)
         {
             throw new QuotApiLoadException("Не удалось получить данные от Quots API");
         }
-
-        string jsonResult = await HttpExtention.GetAsync(Constants.QuotApiUrl, cancelTimeout);
 
         QuotAPI? quotAPI = JsonSerializer.Deserialize<QuotAPI>(jsonResult);
 
@@ -35,7 +31,7 @@ public static class QuotHandler
             return false;
         }
 
-        long quotId = await Database.QuotRepository.AddAsync(Quot.Create(quotAPI.QuoteAuthor!, quotAPI.QuoteText!, quotAPI.QuoteAuthor, false));
+        long quotId = await Database.QuotRepository.AddAsync(Quot.Create(quotAPI.QuoteAuthor!, quotAPI.QuoteText!, quotAPI.QuoteAuthor!, false));
 
         return quotId > 0;
     }

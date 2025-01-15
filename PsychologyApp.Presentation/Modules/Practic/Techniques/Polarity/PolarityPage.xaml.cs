@@ -28,4 +28,9 @@ public partial class PolarityPage : ContentPage
 
         Polarities.ScrollTo(vm!.Polarity, ScrollToPosition.MakeVisible, true);
     }
+
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PopAsync(false);
+    }
 }

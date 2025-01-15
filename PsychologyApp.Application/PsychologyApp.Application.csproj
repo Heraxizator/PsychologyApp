@@ -20,7 +20,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\PsychologyApp.Domain2\PsychologyApp.Domain.csproj" />
+	  <ProjectReference Include="..\PsychologyApp.Domain\PsychologyApp.Domain.csproj" />
 	  <ProjectReference Include="..\PsychologyApp.Infrastructure\PsychologyApp.Infrastructure.csproj" />
 	</ItemGroup>
 

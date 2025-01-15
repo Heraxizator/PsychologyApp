@@ -18,4 +18,9 @@ public partial class PhysicsSerchPage : ContentPage
     {
         this.ViewModel.ExecuteSearch(this.ViewModel.SearchText);
     }
+
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PopAsync(false);
+    }
 }

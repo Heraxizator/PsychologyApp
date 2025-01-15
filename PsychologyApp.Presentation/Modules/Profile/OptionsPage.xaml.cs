@@ -12,4 +12,9 @@ public partial class OptionsPage : ContentPage
 
 		this.BindingContext = viewModel;
 	}
+
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+		await Navigation.PopAsync(false);
+    }
 }

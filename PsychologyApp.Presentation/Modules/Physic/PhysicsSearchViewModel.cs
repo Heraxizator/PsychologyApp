@@ -9,6 +9,7 @@ namespace MobileHelper.ViewModels.PhysicsViewModels;
 
 public class PhysicsSearchViewModel : BaseViewModel
 {
+    private static Task? Initialization = default;
     private readonly ReasonService _reasonService = new();
 
     public List<ReasonDTO> Reasons { get; private set; } = [];
@@ -26,12 +27,14 @@ public class PhysicsSearchViewModel : BaseViewModel
 
         this.Cancel = new Command(() => SetFail());
 
-        Init();
+        Initialization = InitAsync();
+
+        ConfigureState();
     }
 
     private void ConfigureState()
     {
-        if (this.Reasons.Any() && this.Results.Any())
+        if (this.Reasons.Any() || this.Results.Any())
         {
             SetDone();
             return;
@@ -40,20 +43,20 @@ public class PhysicsSearchViewModel : BaseViewModel
         SetFail();
     }
 
-    private void ReloadAsync()
+    private async void ReloadAsync()
     {
         this.Reasons.Clear();
 
         this.Results.Clear();
 
-        Init();
+        await InitAsync();
     }
 
     private async Task PrepareReasons()
     {
         await ReasonHelper.SavePsyhosomaticData();
 
-        IEnumerable<ReasonDTO> reasonDTOs = await this._reasonService.GetReasons(1000, 10000);
+        IEnumerable<ReasonDTO> reasonDTOs = await this._reasonService.GetReasons(1000, 15000);
 
         this.Reasons.AddRange(reasonDTOs);
     }
@@ -65,16 +68,11 @@ public class PhysicsSearchViewModel : BaseViewModel
         this.Results.AddRange(source);
     }
 
-    private async void Init()
+    private async Task InitAsync()
     {
-        await Task.Run(async () =>
-        {
-            await PrepareReasons();
+        await PrepareReasons();
 
-            PrepareResults();
-        });
-
-        ConfigureState();
+        PrepareResults();
     }
 
     public void ExecuteSearch(string input)

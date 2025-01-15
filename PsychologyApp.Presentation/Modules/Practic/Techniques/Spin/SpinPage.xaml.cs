@@ -10,4 +10,9 @@ public partial class SpinPage : ContentPage
 
         this.BindingContext = new SpinViewModel(this.Navigation);
     }
+
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PopAsync(false);
+    }
 }

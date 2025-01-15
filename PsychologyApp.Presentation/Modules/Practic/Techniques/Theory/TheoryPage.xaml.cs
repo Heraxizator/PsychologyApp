@@ -10,4 +10,9 @@ public partial class TheoryPage : ContentPage
 
         this.BindingContext = new TheoryViewModel(content);
     }
+
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PopAsync(false);
+    }
 }

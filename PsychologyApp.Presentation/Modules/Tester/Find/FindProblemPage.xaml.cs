@@ -10,4 +10,9 @@ public partial class FindProblemPage : ContentPage
 
 		this.BindingContext = new FindProblemViewModel(this.Navigation, describtion, algorithm, comment, action);
 	}
+
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+		await Navigation.PopAsync(false);
+    }
 }

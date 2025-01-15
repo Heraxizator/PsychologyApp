@@ -11,4 +11,9 @@ public partial class ComparisonPage : ContentPage
 
 		this.BindingContext = new ComparisonViewModel(this.Navigation);
 	}
+
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+		await Navigation.PopAsync(false);
+    }
 }

@@ -9,4 +9,9 @@ public partial class CreatedPage : ContentPage
         InitializeComponent();
         this.BindingContext = new CreatedViewModel(this.Navigation, id);
     }
+
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PopAsync(false);
+    }
 }

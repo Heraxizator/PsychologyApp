@@ -10,4 +10,9 @@ public partial class ExperiencePage : ContentPage
 
         this.BindingContext = new ExperienceViewModel(this.Navigation);
     }
+
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PopAsync(false);
+    }
 }

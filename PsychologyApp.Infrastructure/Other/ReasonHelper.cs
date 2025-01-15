@@ -40,9 +40,14 @@ public static class ReasonHelper
 
                 string? problemSolution = cols[2].ToString();
 
-                Reason reason = Reason.Create(problemText, problemReason, problemSolution);
+                try
+                {
+                    Reason reason = Reason.Create(problemText, problemReason, problemSolution);
 
-                psychosomaticObjects.Add(reason);
+                    psychosomaticObjects.Add(reason);
+                }
+
+                catch (Exception) { }
             }
 
             return await Database.ReasonRepository.AddRangeAsync(psychosomaticObjects);

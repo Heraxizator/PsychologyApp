@@ -4,6 +4,7 @@
              x:Class="MobileHelperMaui.Views.PhysicsPages.PhysicsSerchPage"
              xmlns:vm="clr-namespace:MobileHelper.ViewModels.PhysicsViewModels"
              xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              Title="Психосоматик">
 
     <ContentPage.Resources>
@@ -25,6 +26,31 @@
         Margin="10, 0, 10, 0"
         VerticalOptions="FillAndExpand" 
         HorizontalOptions="FillAndExpand">
+
+        <StackLayout
+            Margin="25, 10, 25, 10"
+            Orientation="Horizontal">
+
+            <Label
+                Margin="0, 0, 0, 0"
+                VerticalOptions="CenterAndExpand"
+                Text="{mi:Material Icon=KeyboardArrowLeft, IconSize=25}"
+                TextColor="{StaticResource Primary}">
+
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                </Label.GestureRecognizers>
+
+            </Label>
+
+            <Label
+                Text="Психосоматика"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand"
+                TextColor="Black"
+                FontSize="19"/>
+
+        </StackLayout>
 
         <Frame 
         Margin="5, 15, 5, 15" 
@@ -69,22 +95,19 @@
                 RetryText="Попробуйте изменить запрос">
             </templates:RetryView>
 
-            <ListView
+            <CollectionView
                 IsVisible="{Binding IsDone}"
-                HasUnevenRows="True"
-                SeparatorVisibility="None"
                 SelectionMode="None"
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand"
                 VerticalScrollBarVisibility="Never"
                 ItemsSource="{Binding Results}">
-                    <ListView.ItemTemplate>
+                    <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell>
-                                <Grid>
-                                    <Frame Padding="10">
-                                        <StackLayout>
-                                            <Label 
+                            <Grid>
+                                <Frame Padding="10">
+                                    <StackLayout>
+                                        <Label 
                                             Text="{Binding Title}"
                                             Margin="5, 0, 0, 0"
                                             FontSize="14"
@@ -92,28 +115,41 @@
                                             Padding="0"
                                             HorizontalOptions="Start" />
 
-                                            <Label
+                                        <Label
                                             Margin="5, 0, 5, 10"
                                             FontSize="14"
                                             HorizontalTextAlignment="Justify"
                                             TextColor="{AppThemeBinding Light=gray, Dark=white}"
                                             Text="{Binding Subtitle}"/>
 
-                                        </StackLayout>
-
-                                        <Frame.Shadow>
-                                            <Shadow 
-                                            Opacity="0.35"
-                                            Brush="Black"
-                                            Offset="0, 0"
-                                            Radius="20"/>
-                                        </Frame.Shadow>
-                                    </Frame>
-                                </Grid>
-                            </ViewCell>
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </CollectionView.ItemTemplate>
+
+                    <CollectionView.EmptyView>
+
+                        <StackLayout
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="CenterAndExpand">
+
+                            <templates:RetryView
+                                VerticalOptions="CenterAndExpand"
+                                IsVisible="True"
+                                FailedText="Не удалось загрузить"
+                                RetryText="Попробовать ещё раз?">
+                                <templates:RetryView.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Reload}"/>
+                                </templates:RetryView.GestureRecognizers>
+                            </templates:RetryView>
+
+                        </StackLayout>
+                        
+                    </CollectionView.EmptyView>
+                
+                </CollectionView>
+           
             </StackLayout>
         <!--
             <templates:RetryView

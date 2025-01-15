@@ -10,4 +10,9 @@ public partial class UserPage : ContentPage
 
         this.BindingContext = new UserViewModel(this.Navigation);
     }
+
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PopAsync(false);
+    }
 }

@@ -9,4 +9,9 @@ public partial class DesignerPage : ContentPage
 		InitializeComponent();
         this.BindingContext = new DesignerViewModel(this.Navigation, id);
     }
+
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PopAsync(false);
+    }
 }

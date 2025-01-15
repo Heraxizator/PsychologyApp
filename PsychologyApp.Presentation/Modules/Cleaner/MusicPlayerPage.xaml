@@ -4,6 +4,7 @@
              x:Class="MobileHelperMaui.Views.CleanPages.MusicPlayerPage" 
              xmlns:vm="clr-namespace:MobileHelper.ViewModels.CleanViewModels"
              xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             Shell.NavBarIsVisible="True"
              Title="Очиститель">
     
     <ContentPage.BindingContext>

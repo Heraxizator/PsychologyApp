@@ -10,4 +10,9 @@ public partial class HackPage : ContentPage
 
         this.BindingContext = new HackViewModel(this.Navigation);
     }
+
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PopAsync(false);
+    }
 }

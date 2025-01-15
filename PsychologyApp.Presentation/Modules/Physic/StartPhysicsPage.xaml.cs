@@ -18,4 +18,9 @@ public partial class StartPhysicsPage : ContentPage
     {
         this.viewModel.SetDone();
     }
+
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PopAsync(false);
+    }
 }

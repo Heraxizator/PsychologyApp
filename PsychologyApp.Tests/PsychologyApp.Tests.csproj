@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PsychologyApp.Domain2\PsychologyApp.Domain.csproj" />
+    <ProjectReference Include="..\PsychologyApp.Domain\PsychologyApp.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

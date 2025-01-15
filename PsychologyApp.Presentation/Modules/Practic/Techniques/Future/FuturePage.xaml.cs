@@ -10,4 +10,9 @@ public partial class FuturePage : ContentPage
 
         this.BindingContext = new FutureViewModel(this.Navigation);
     }
+
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PopAsync(false);
+    }
 }
