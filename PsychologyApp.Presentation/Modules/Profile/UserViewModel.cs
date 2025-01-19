@@ -18,6 +18,8 @@ public class UserViewModel : BaseViewModel
     private readonly QuotService _quotService = new();
 
     public ICommand OpenOptionsCommand { get; set; } = default!;
+    public ICommand ReloadQuotsCommand { get; set; } = default!;
+
     public ObservableCollection<TechniqueItem> Techniques { get; private set; } = [];
     public ObservableCollection<Quots> Quots { get; private set; } = [];
 
@@ -31,32 +33,70 @@ public class UserViewModel : BaseViewModel
 
         this.OpenOptionsCommand = new Command(() => navigation.PushAsync(new OptionsPage(), false));
 
-        Initialization = InitAsync();
-    }
+        this.ReloadQuotsCommand = new Command(async () => await InitAsync());
 
-    public async Task InitAsync()
-    {
         SetInit();
 
+        Initialization = InitAsync();
+
+        SetDone();
+    }
+
+    public async Task InitAsync(int cancelTimeout = 10000)
+    {
+        try
+        {
+            using CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
+            cancellationTokenSource.Token.ThrowIfCancellationRequested();
+
+            InitTechniques();
+            InitQuots();
+
+            await InitQuotsAsync();
+        }
+        
+        catch (Exception e)
+        {
+            SetDone();
+        }
+    }
+
+    private void InitTechniques()
+    {
         this.Techniques.Add(new TechniqueItem
         {
             Title = "BSFF",
             Subtitle = "Методика депрограммирования подсознания"
         });
+    }
 
-        await QuotHandler.GetQuotsFromApi(10000);
+    private void InitQuots()
+    {
+        this.Quots.Add(new Quots()
+        {
+            Text = "Лето, урожай, война.",
+            Author = "Латинская пословица"
+        });
+    }
 
-        IEnumerable<QuotDTO> quotDTOs = await _quotService.GetQuotsList(2);
+    private async Task InitQuotsAsync(int cancelTimeout = 10000)
+    {
+        await QuotHandler.GetQuotsFromApi(cancelTimeout);
+
+        IEnumerable<QuotDTO> quotDTOs = await _quotService.GetQuotsList(2, false, cancelTimeout);
 
         foreach (QuotDTO quotDTO in quotDTOs)
         {
+            if (string.IsNullOrEmpty(quotDTO.Text) || string.IsNullOrEmpty(quotDTO.Title))
+            {
+                continue;
+            }
+
             this.Quots.Add(new Quots()
             {
                 Text = quotDTO.Text,
                 Author = quotDTO.Title
             });
         }
-
-        SetDone();
     }
 }

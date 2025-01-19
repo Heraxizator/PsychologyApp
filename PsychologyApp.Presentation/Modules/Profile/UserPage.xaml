@@ -44,10 +44,10 @@
                     FontSize="19"/>
 
                 <Label
-                    Text="{mi:Material Icon=MoreHoriz, IconSize=27}"
+                    Text="{mi:Material Icon=MoreHoriz, IconSize=25}"
                     VerticalOptions="CenterAndExpand"
-                    FontSize="17"
-                    TextColor="{StaticResource Primary}">
+                    FontSize="20"
+                    TextColor="{StaticResource Black}">
 
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding OpenOptionsCommand}"/>
@@ -193,43 +193,58 @@
                     </templates:ProgressbarView.GestureRecognizers>
                 </templates:ProgressbarView>
 
-                <ListView
+                <CollectionView
                         IsVisible="{Binding IsDone}"
                         Margin="15, 0, 15, 0"
                         SelectionMode="None"
                         HeightRequest="300"
-                        HasUnevenRows="True"
                         VerticalScrollBarVisibility="Never"
-                        SeparatorVisibility="None"
                         ItemsSource="{Binding Quots}">
 
-                    <ListView.ItemTemplate>
+                    <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell>
-                                <StackLayout>
-                                    <Frame HasShadow="True" Padding="10">
+                            <StackLayout>
+                                <Frame HasShadow="True" Padding="10">
 
-                                        <StackLayout Margin="10, 5, 15, 5">
-                                            <Label 
+                                    <StackLayout Margin="10, 5, 15, 5">
+                                        <Label 
                                                 Text="{Binding Author}"
                                                 FontAttributes="Bold"
                                                 TextColor="{Binding Gray}"
                                                 FontSize="18"/>
 
-                                            <Label
+                                        <Label
                                                 HorizontalTextAlignment="Justify"
                                                 Text="{Binding Text}"
                                                 TextColor="Black"
                                                 FontSize="16"/>
 
-                                        </StackLayout>
+                                    </StackLayout>
 
-                                    </Frame>
-                                </StackLayout>
-                            </ViewCell>
+                                </Frame>
+                            </StackLayout>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </CollectionView.ItemTemplate>
+
+                    <CollectionView.EmptyView>
+                        <StackLayout
+                            HorizontalOptions="FillAndExpand">
+
+                            <templates:RetryView
+                                VerticalOptions="CenterAndExpand"
+                                IsVisible="True"
+                                FailedText="Цитаты не найдены"
+                                RetryText="Попробовать ещё раз?">
+                                <templates:RetryView.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ReloadCommand}"/>
+                                </templates:RetryView.GestureRecognizers>
+                            </templates:RetryView>
+
+                        </StackLayout>
+                        
+                    </CollectionView.EmptyView>
+                    
+                </CollectionView>
 
             </StackLayout>
 

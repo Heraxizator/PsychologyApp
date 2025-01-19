@@ -101,84 +101,57 @@
                     Margin="5, 0, 5, 5"
                     TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
-                        <Frame BackgroundColor="{AppThemeBinding Light=white, Dark=#444444}" Margin="5, 5, 5, 5" Padding="10" BorderColor="{StaticResource Accent}" CornerRadius="25">
-                            <StackLayout>
-                                <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Первая полярность" FontSize="15"/>
-                                <Entry
-                                MaxLength="20"
-                                PlaceholderColor="{StaticResource Accent}"
-                                Placeholder="Невроз"
-                                FontSize="15"
-                                Text="{Binding Positive}"
-                                TextColor="{AppThemeBinding Light=black, Dark=white}"
-                                VerticalTextAlignment="Center"/>
-                            </StackLayout>
+                        <templates:TextEntryView
+                            TitleText="Первая полярность"
+                            PlaceholderText="Невроз"
+                            BodyText="{Binding Negative}"/>
 
-                        </Frame>
+                        <templates:TextEntryView
+                            TitleText="Вторая полярность"
+                            PlaceholderText="Покой"
+                            BodyText="{Binding Positive}"/>
 
-                        <Frame BackgroundColor="{AppThemeBinding Light=white, Dark=#444444}" Margin="5, 5, 5, 5" Padding="10" BorderColor="{StaticResource Accent}" CornerRadius="25">
-                            <StackLayout>
-                                <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Вторая полярность" FontSize="15"/>
-                                <Entry
-                                MaxLength="20"
-                                PlaceholderColor="{StaticResource Accent}"
-                                Placeholder="Покой"
-                                Text="{Binding Negative}"
-                                FontSize="15"
-                                TextColor="{AppThemeBinding Light=black, Dark=white}"
-                                VerticalTextAlignment="Center"/>
-                            </StackLayout>
 
-                        </Frame>
+                        <templates:ButtonView
+                            Margin="0, 5, 0, 0"
+                            BodyText="Добавить">
 
-                        <Button 
-                        Margin="10, 15, 10, 0"
-                        Text="Добавить"
-                        FontSize="15"
-                        TextColor="White"
-                        BackgroundColor="{StaticResource Accent}"
-                        CornerRadius="25"
-                        WidthRequest="300"
-                        HeightRequest="40"
-                        Clicked="Button_Clicked"
-                        Command="{Binding Add}"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"/>
+                            <templates:ButtonView.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"/>
+                            </templates:ButtonView.GestureRecognizers>
+
+                        </templates:ButtonView>
 
                     </StackLayout>
 
                 </Frame>
 
-                <ListView
+                <CollectionView
                 x:Name="Polarities"
                 IsVisible="{Binding IsFull}"
                 Margin="0, 0, 0, 5"
-                RowHeight="120"
                 HeightRequest="120"
-                SeparatorVisibility="None"
                 SelectionMode="None"
                 ItemsSource="{Binding polarities}"
                 VerticalScrollBarVisibility="Never"
-                HorizontalScrollBarVisibility="Never"
-        >
+                HorizontalScrollBarVisibility="Never">
 
-                    <ListView.ItemTemplate>
+                    <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell>
-                                <StackLayout>
+                            <StackLayout>
 
-                                    <Frame Padding="10">
+                                <Frame Padding="10">
 
-                                        <StackLayout>
-                                            <StackLayout Orientation="Horizontal">
-                                                <Label 
+                                    <StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label 
                                                Text="{Binding Id}"
                                                Margin="5, 0, 0, 0"
                                                FontSize="14"
                                                TextColor="Black"
                                                HorizontalOptions="Start" />
 
-                                                <ImageButton 
+                                            <ImageButton 
                                                 Source="close.png"
                                                 Opacity="0.6"
                                                 WidthRequest="15"
@@ -188,26 +161,26 @@
                                                 Clicked="ImageButton_Clicked"
                                                 HorizontalOptions="EndAndExpand"/>
 
-                                            </StackLayout>
+                                        </StackLayout>
 
-                                            <StackLayout
+                                        <StackLayout
                                             Margin="0, 10, 0, 0"
                                             Orientation="Horizontal">
-                                                <Label 
+                                            <Label 
                                                 Margin="20, 0, 0, 0"
                                                 WidthRequest="150"
                                                 Text="{Binding Positive}"
                                                 TextColor="Black"
                                                 HorizontalOptions="Start"
                                                 FontSize="19"/>
-                                                <Image 
+                                            <Image 
                                                 Source="minus.png"
                                                 Opacity="0.6"
                                                 WidthRequest="40"
                                                 HeightRequest="40"
                                                 HorizontalOptions="CenterAndExpand"
                                                 />
-                                                <Label 
+                                            <Label 
                                                 Margin="0, 0, 20, 0"
                                                 Text="{Binding Negative}"
                                                 WidthRequest="150"
@@ -215,28 +188,26 @@
                                                 TextColor="Black"
                                                 FontSize="19"/>
 
-                                            </StackLayout>
                                         </StackLayout>
+                                    </StackLayout>
 
-                                    </Frame>
-                                </StackLayout>
-                            </ViewCell>
+                                </Frame>
+                            </StackLayout>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
+                    </CollectionView.ItemTemplate>
 
-                </ListView>
+                </CollectionView>
 
-                <Button 
-                Margin="10, 15, 10, 5"
-                Text="Завершить"
-                FontSize="15"
-                BackgroundColor="{StaticResource Primary}"
-                CornerRadius="25"
-                WidthRequest="350"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Command="{Binding Finish}"
-                HeightRequest="40"/>
+                <templates:ButtonView
+                    Margin="15, 5, 15, 20"
+                    BodyText="Завершить">
+
+                    <templates:ButtonView.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Finish}"/>
+                    </templates:ButtonView.GestureRecognizers>
+
+                </templates:ButtonView>
+                
             </StackLayout>
         </ScrollView>
 

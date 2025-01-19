@@ -66,6 +66,7 @@
             FontSize="15"
             Text="{Binding SearchText}"
             TextColor="{AppThemeBinding Light=black, Dark=white}"
+                    TextChanged="Search_TextChanged"
             VerticalTextAlignment="Center"/>
             </StackLayout>
 
@@ -76,26 +77,26 @@
             HorizontalOptions="FillAndExpand"
             VerticalScrollBarVisibility="Never">
 
-        <StackLayout>
-           
-            <templates:ProgressbarView 
+            <StackLayout>
+
+                <templates:ProgressbarView 
                 VerticalOptions="CenterAndExpand"
                 IsVisible="{Binding IsInit}"
                 IsLoading="True"
                 ProgressText="Поиск">
-                <templates:ProgressbarView.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding Cancel}"/>
-                </templates:ProgressbarView.GestureRecognizers>
-            </templates:ProgressbarView>
+                    <templates:ProgressbarView.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Cancel}"/>
+                    </templates:ProgressbarView.GestureRecognizers>
+                </templates:ProgressbarView>
 
-            <templates:RetryView
+                <templates:RetryView
                 VerticalOptions="CenterAndExpand"
                 IsVisible="{Binding IsFail}"
                 FailedText="Не удалось найти"
                 RetryText="Попробуйте изменить запрос">
-            </templates:RetryView>
+                </templates:RetryView>
 
-            <CollectionView
+                <CollectionView
                 IsVisible="{Binding IsDone}"
                 SelectionMode="None"
                 VerticalOptions="FillAndExpand"
@@ -145,24 +146,13 @@
                             </templates:RetryView>
 
                         </StackLayout>
-                        
-                    </CollectionView.EmptyView>
-                
-                </CollectionView>
-           
-            </StackLayout>
-        <!--
-            <templates:RetryView
-                VerticalOptions="CenterAndExpand"
-                IsVisible="{Binding IsFail}"
-                FailedText="Не удалось загрузить"
-                RetryText="Попробовать ещё раз?">
-                <templates:RetryView.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding Reload}"/>
-                </templates:RetryView.GestureRecognizers>
-            </templates:RetryView>
-            -->
 
-    </ScrollView>
+                    </CollectionView.EmptyView>
+
+                </CollectionView>
+
+            </StackLayout>
+
+        </ScrollView>
     </StackLayout>
 </ContentPage>

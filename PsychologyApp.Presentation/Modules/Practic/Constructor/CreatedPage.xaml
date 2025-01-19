@@ -4,6 +4,7 @@
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              x:Class="MobileHelperMaui.Views.TechniquePages.ConstructorPages.CreatedPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Technique.Constructor"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
              Title="Техника">
 
     <ContentPage.BindingContext>
@@ -20,6 +21,10 @@
         <ToolbarItem Text="Изменить" Command="{Binding Edit}" />
         <ToolbarItem Text="Удалить" Command="{Binding Remove}" />
     </ContentPage.ToolbarItems>
+
+    <ScrollView
+        VerticalOptions="FillAndExpand"
+        VerticalScrollBarVisibility="Never">
 
     <StackLayout>
 
@@ -47,10 +52,10 @@
                 FontSize="19"/>
 
             <Label
-                Text="{mi:Material Icon=Edit, IconSize=20}"
+                Text="{mi:Material Icon=Edit, IconSize=22}"
                 Margin="0, 0, 15, 0"
                 TextColor="{StaticResource Primary}"
-                FontSize="17">
+                FontSize="20">
 
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding Edit}"/>
@@ -59,9 +64,9 @@
             </Label>
 
             <Label
-                Text="{mi:Material Icon=DeleteOutline, IconSize=20}"
+                Text="{mi:Material Icon=DeleteOutline, IconSize=22}"
                 TextColor="{StaticResource Primary}"
-                FontSize="17">
+                FontSize="20">
 
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding Remove}"/>
@@ -80,39 +85,34 @@
                     Margin="10, 5, 5, 15"
                     TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
-                    <ListView 
+                    <CollectionView
                     Margin="0, 0, 0, 5"
                     ItemsSource="{Binding Elements}"
-                    SeparatorVisibility="None"
                     SelectionMode="None">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
+                        <CollectionView.ItemTemplate>
+                                <DataTemplate>
                                     <Label 
                                     Margin="15, 0, 0, 10"
                                     Text="{Binding Text}"
                                     TextColor="{AppThemeBinding Light=black, Dark=white}"
                                     FontSize="16"/>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                                </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </StackLayout>
 
             </Frame>
 
-            <Button 
-                Margin="10, 15, 10, 15"
-                Text="Завершить"
-                FontSize="15"
-                TextColor="White"
-                BackgroundColor="{StaticResource Primary}"
-                CornerRadius="25"
-                WidthRequest="350"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Command="{Binding Finish}"
-                HeightRequest="40"/>
+            <templates:ButtonView
+                Margin="15, 5, 15, 20"
+                BodyText="Завершить">
+
+                <templates:ButtonView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Finish}"/>
+                </templates:ButtonView.GestureRecognizers>
+
+            </templates:ButtonView>
         </StackLayout>
     </StackLayout>
+    </ScrollView>
 </ContentPage>

@@ -17,12 +17,15 @@ public partial class MusicPlayerPage : ContentPage
         this.BindingContext = viewModel;
 	}
 
-    private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+    private async void Musics_ItemTapped(object sender, ItemTappedEventArgs e)
     {
-        Audio item = e.Item as Audio;
+        Audio? audio = e.Item as Audio;
 
-        string file = item.File;
+        if (audio is null)
+        {
+            return;
+        }
 
-        this.ViewModel.ToExecute(file);
+        await ViewModel.PlayAudioAsync(audio.URL!);
     }
 }

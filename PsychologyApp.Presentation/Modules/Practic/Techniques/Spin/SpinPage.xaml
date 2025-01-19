@@ -21,7 +21,7 @@
         <ToolbarItem Text="Теория" Command="{Binding Theory}" />
     </ContentPage.ToolbarItems>
 
-    <ContentPage.Content>
+    <ScrollView>
         <StackLayout Margin="0">
 
             <StackLayout
@@ -131,18 +131,16 @@
 
             </Frame>
 
-            <Button 
-                Margin="0, 15, 0, 5"
-                Text="Завершить"
-                FontSize="15"
-                TextColor="White"
-                BackgroundColor="{StaticResource Primary}"
-                CornerRadius="25"
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="Center"
-                Command="{Binding Finish}"
-                WidthRequest="350"
-                HeightRequest="40"/>
+            <templates:ButtonView
+                Margin="15, 5, 15, 20"
+                BodyText="Завершить">
+
+                <templates:ButtonView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Finish}"/>
+                </templates:ButtonView.GestureRecognizers>
+                
+            </templates:ButtonView>
+            
         </StackLayout>
-    </ContentPage.Content>
+    </ScrollView>
 </ContentPage>

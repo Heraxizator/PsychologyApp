@@ -20,7 +20,7 @@
 
     <StackLayout>
 
-        <ScrollView Margin="0, 0, 0, 0" VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never">
+        <ScrollView VerticalOptions="FillAndExpand" Margin="0, 0, 0, 0" VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never">
             <StackLayout Margin="0">
 
                 <StackLayout
@@ -56,66 +56,30 @@
                     Margin="10, 5, 5, 15"
                     TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
-                        <Frame BackgroundColor="{AppThemeBinding Light=white, Dark=#444444}" Margin="5, 5, 5, 5" Padding="10" BorderColor="{StaticResource Accent}" CornerRadius="25">
-                            <StackLayout>
-                                <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Название" FontSize="15"/>
-                                <Entry
-                                PlaceholderColor="{StaticResource Accent}"
-                                Placeholder="Крутилка Славинского"
-                                FontSize="15"
-                                Text="{Binding Name}"
-                                TextColor="{AppThemeBinding Light=black, Dark=white}"
-                                VerticalTextAlignment="Center"/>
-                            </StackLayout>
+                        <templates:TextEntryView
+                            TitleText="Название"
+                            PlaceholderText="Крутилка Славинского"
+                            BodyText="{Binding Name}"/>
 
-                        </Frame>
+                        <templates:TextEntryView
+                            TitleText="Описание"
+                            PlaceholderText="Метод мгновенной нейтрализации..."
+                            BodyText="{Binding Description}"/>
 
-                        <Frame BackgroundColor="{AppThemeBinding Light=white, Dark=#444444}" Margin="5, 5, 5, 5" Padding="10" BorderColor="{StaticResource Accent}" CornerRadius="25">
-                            <StackLayout>
-                                <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Описание" FontSize="15"/>
-                                <Entry
-                                PlaceholderColor="{StaticResource Accent}"
-                                Placeholder="Метод мгновенной нейтрализации..."
-                                FontSize="15"
-                                Text="{Binding Description}"
-                                TextColor="{AppThemeBinding Light=black, Dark=white}"
-                                VerticalTextAlignment="Center"/>
-                            </StackLayout>
+                        <templates:TextEntryView
+                            TitleText="Тема"
+                            PlaceholderText="Эпизоды"
+                            BodyText="{Binding Theme}"/>
 
-                        </Frame>
-
-                        <Frame BackgroundColor="{AppThemeBinding Light=white, Dark=#444444}" Margin="5, 5, 5, 5" Padding="10" BorderColor="{StaticResource Accent}" CornerRadius="25">
-                            <StackLayout>
-                                <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Тема" FontSize="15"/>
-                                <Entry
-                                PlaceholderColor="{StaticResource Accent}"
-                                Placeholder="Эпизоды"
-                                FontSize="15"
-                                Text="{Binding Theme}"
-                                TextColor="{AppThemeBinding Light=black, Dark=white}"
-                                VerticalTextAlignment="Center"/>
-                            </StackLayout>
-
-                        </Frame>
-
-                        <Frame BackgroundColor="{AppThemeBinding Light=white, Dark=#444444}" Margin="5, 5, 5, 15" Padding="10" BorderColor="{StaticResource Accent}" CornerRadius="25">
-                            <StackLayout>
-                                <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Автор" FontSize="15"/>
-                                <Entry
-                                PlaceholderColor="{StaticResource Accent}"
-                                Placeholder="Живорад Славинский"
-                                FontSize="15"
-                                Text="{Binding Author}"
-                                TextColor="{AppThemeBinding Light=black, Dark=white}"
-                                VerticalTextAlignment="Center"/>
-                            </StackLayout>
-
-                        </Frame>
+                        <templates:TextEntryView
+                            TitleText="Автор"
+                            PlaceholderText="Живорад Славинский"
+                            BodyText="{Binding Author}"/>
 
                     </StackLayout>
 
                 </Frame>
-
+                
                 <Frame HasShadow="True" Margin="15, 10, 15, 15">
                     <StackLayout>
                         <Label
@@ -124,20 +88,10 @@
                         Margin="5, 0, 0, 10"
                         TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
-                        <Frame BackgroundColor="{AppThemeBinding Light=white, Dark=#444444}" Margin="10, 5, 10, 15" Padding="10" BorderColor="{StaticResource Accent}" CornerRadius="25">
-                            <StackLayout>
-                                <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Список действий" FontSize="15"/>
-
-                                <Editor 
-                                HeightRequest="160"
-                                TextColor="{AppThemeBinding Light=black, Dark=white}"
-                                Text="{Binding Algorithm}"
-                                MaxLength="300"/>
-
-
-                            </StackLayout>
-
-                        </Frame>
+                        <templates:TextEditorView
+                            TitleText="Список действий"
+                            BodyText="{Binding Algorithm}"/>
+                        
                     </StackLayout>
 
                 </Frame>
@@ -151,7 +105,8 @@
                         TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
 
-                        <Image   
+                        <Image  
+                            Margin="0, 10, 0, 10"
                         WidthRequest="150"
                         HeightRequest="150"
                         HorizontalOptions="Center"
@@ -168,49 +123,38 @@
                         HorizontalOptions="Center"/>
                     -->
 
-                        <Button 
-                        Margin="10, 20, 10, 10"
-                        Text="Галерея"
-                        FontSize="15"
-                        TextColor="White"
-                        Command="{Binding OpenGallery}"
-                        BackgroundColor="{StaticResource Accent}"
-                        CornerRadius="25"
-                        WidthRequest="300"
-                        HeightRequest="40"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"/>
+                        <templates:ButtonView
+                            Margin="0, 10, 0, -5"
+                            BodyText="Галерея">
 
-                        <Button 
-                        Margin="10, 2, 10, 15"
-                        Text="Камера"
-                        FontSize="15"
-                        TextColor="White"
-                        Command="{Binding OpenCamera}"
-                        BackgroundColor="{StaticResource Accent}"
-                        CornerRadius="25"
-                        WidthRequest="300"
-                        HeightRequest="40"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"/>
+                            <templates:ButtonView.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenGallery}"/>
+                            </templates:ButtonView.GestureRecognizers>
+                            
+                        </templates:ButtonView>
+
+                        <templates:ButtonView
+                            BodyText="Камера">
+
+                            <templates:ButtonView.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenCamera}"/>
+                            </templates:ButtonView.GestureRecognizers>
+
+                        </templates:ButtonView>
 
                     </StackLayout>
 
                 </Frame>
 
-                <Button 
-                Margin="10, 15, 10, 15"
-                Text="{Binding Aim}"
-                FontSize="15"
-                BackgroundColor="{StaticResource Primary}"
-                Command="{Binding ExecuteTechnique}"
-                CornerRadius="25"
-                WidthRequest="350"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                HeightRequest="40"/>
+                <templates:ButtonView
+                    Margin="15, 5, 15, 20"
+                    BodyText="{Binding Aim}">
 
+                    <templates:ButtonView.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ExecuteTechnique}"/>
+                    </templates:ButtonView.GestureRecognizers>
 
+                </templates:ButtonView>
             </StackLayout>
         </ScrollView>
 

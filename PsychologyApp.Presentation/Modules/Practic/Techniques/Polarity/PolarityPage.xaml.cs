@@ -22,15 +22,15 @@ public partial class PolarityPage : ContentPage
         vm!.Delete.Execute(item);
     }
 
-    private void Button_Clicked(object sender, EventArgs e)
-    {
-        PolarityViewModel? vm = BindingContext as PolarityViewModel;
-
-        Polarities.ScrollTo(vm!.Polarity, ScrollToPosition.MakeVisible, true);
-    }
-
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
         await Navigation.PopAsync(false);
+    }
+
+    private void TapGestureRecognizer_Tapped_1(object sender, TappedEventArgs e)
+    {
+        PolarityViewModel? vm = BindingContext as PolarityViewModel;
+
+        //Polarities.ScrollTo(vm!.Polarity, ScrollToPosition.MakeVisible, true);
     }
 }

@@ -129,6 +129,7 @@
                             PlaceholderText="Найти работу"/>
 
                             <templates:TextEntryView
+                                Margin="0, 0, 0, 10"
                             TitleText="Будущее"
                             PlaceholderText="Сохранить работу"/>
 
@@ -136,18 +137,17 @@
 
                     </Frame>
 
-                <Button 
-                Margin="0, 15, 0, 15"
-                Text="Завершить"
-                FontSize="15"
-                BackgroundColor="{StaticResource Primary}"
-                CornerRadius="25"
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="Center"
-                Command="{Binding Finish}"
-                WidthRequest="350"
-                HeightRequest="40"/>
-            </StackLayout>
+                    <templates:ButtonView
+                        Margin="15, 5, 15, 20"
+                        BodyText="Завершить">
+
+                        <templates:ButtonView.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Finish}"/>
+                        </templates:ButtonView.GestureRecognizers>
+
+                    </templates:ButtonView>
+                    
+                </StackLayout>
                 </StackLayout>
         </ScrollView>
 

@@ -64,7 +64,7 @@
                 VerticalOptions="FillAndExpand"
             x:Name="Musics"
             IsVisible="{Binding IsDone}"
-            ItemTapped="ListView_ItemTapped"
+            ItemTapped="Musics_ItemTapped"
             VerticalScrollBarVisibility="Never"
             HorizontalScrollBarVisibility="Never"
             SeparatorVisibility="None"

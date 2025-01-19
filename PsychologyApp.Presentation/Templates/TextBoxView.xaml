@@ -12,17 +12,17 @@
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Frame Margin="15, 15, 15, 15">
-                <StackLayout Margin="5">
+            <Frame Margin="15">
+                <StackLayout>
                     <Label
                         Text="{TemplateBinding HeaderText}"
                         FontSize="18"
-                        Margin="10, 5, 5, 15"
+                        Margin="10, 5, 10, 15"
                         TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
                     <Label
                         HorizontalTextAlignment="Justify"
-                        Margin="15, 0, 0, 15"
+                        Margin="15, 0, 15, 15"
                         Text="{TemplateBinding BodyText}"
                         TextColor="{AppThemeBinding Light=black, Dark=white}"
                         FontSize="16"/>

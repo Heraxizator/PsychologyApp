@@ -3,6 +3,8 @@ using MobileHelperMaui.Views.TechniquePages.ConstructorPages;
 using MvvmHelpers;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.TechniqueService;
+using PsychologyApp.Presentation.Base.ServiceLocator;
+using PsychologyApp.Presentation.Base.ServiceLocator.Toast;
 using System.Windows.Input;
 using BaseViewModel = PsychologyApp.Presentation.ViewModels.BaseViewModel;
 
@@ -32,11 +34,19 @@ public class TechniquesViewModel : BaseViewModel
 
     public async Task InitAsync(INavigation navigation, int cancelTimeout)
     {
-        IEnumerable<TechniqueItem> staticSource = GetTechniqueItems(navigation);
-        Techniques.AddRange(staticSource);
+        try
+        {
+            IEnumerable<TechniqueItem> staticSource = GetTechniqueItems(navigation);
+            Techniques.AddRange(staticSource);
 
-        IEnumerable<TechniqueDTO> dynamicSource = await _techniqueService.GetTechniquesList(int.MaxValue, cancelTimeout);
-        Techniques.AddRange(dynamicSource.Select(x => ParseFromDB(navigation, x)));
+            IEnumerable<TechniqueDTO> dynamicSource = await _techniqueService.GetTechniquesList(int.MaxValue, cancelTimeout);
+            Techniques.AddRange(dynamicSource.Select(x => ParseFromDB(navigation, x)));
+        }
+        
+        catch (Exception e)
+        {
+            ServiceLocator.Instance.GetService<IToastService>().ShortToast("Ошибка при инициализации");
+        }
     }
 
     private void SetObservers(INavigation navigation)
@@ -166,7 +176,7 @@ public class TechniquesViewModel : BaseViewModel
         return new TechniqueItem
         {
             Id = item.TechniqueId,
-            Number = "Техника №" + (Techniques.Count + 1),
+            Number = $"Своя техника №{item.TechniqueId}",
             Date = item.Date,
             Image = item.Image,
             Title = item.Header,

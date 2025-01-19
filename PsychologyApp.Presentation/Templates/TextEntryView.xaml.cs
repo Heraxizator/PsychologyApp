@@ -26,7 +26,7 @@ public partial class TextEntryView : ContentView
     }
 
     public static readonly BindableProperty BodyTextProperty =
-        BindableProperty.Create(nameof(BodyText), typeof(string), typeof(RetryView), string.Empty);
+        BindableProperty.Create(nameof(BodyText), typeof(string), typeof(RetryView), string.Empty, BindingMode.TwoWay);
 
     public string BodyText
     {

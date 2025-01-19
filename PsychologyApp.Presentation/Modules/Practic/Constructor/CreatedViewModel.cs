@@ -28,7 +28,7 @@ public class CreatedViewModel : BaseViewModel
     {
         Title = "Техника";
 
-        Finish = new Command(ToFinish);
+        Finish = new Command(async () => await navigation.PopAsync(false));
         Theory = new Command(ToTheory);
         Remove = new Command(() => ToRemove(navigation));
         Edit = new Command(() => ToEdit(navigation));
@@ -41,11 +41,6 @@ public class CreatedViewModel : BaseViewModel
     private async void ToEdit(INavigation navigation)
     {
         await navigation.PushAsync(new DesignerPage(currentId), false);
-    }
-
-    private async void ToFinish(INavigation navigation)
-    {
-        await navigation.PopAsync(false);
     }
 
     private async void ToRemove(INavigation navigation)

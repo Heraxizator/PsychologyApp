@@ -23,4 +23,9 @@ public partial class PhysicsSerchPage : ContentPage
     {
         await Navigation.PopAsync(false);
     }
+
+    private void Search_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        this.ViewModel.ExecuteSearch(e.NewTextValue);
+    }
 }
