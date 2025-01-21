@@ -26,7 +26,7 @@ public class Technique : Entity
     public string? Image { get; private set; } = default!;
     public bool IsCompleted {  get; private set; }
 
-    public static Technique Create(string number, string date, string header, string describtion, string subject, string author, string algorithm, string image)
+    public static Technique Create(long id, string number, string date, string header, string describtion, string subject, string author, string algorithm, string image)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(number);
         ArgumentException.ThrowIfNullOrWhiteSpace(date);
@@ -38,6 +38,7 @@ public class Technique : Entity
 
         Technique technique = new Technique
         {
+            TechniqueId = id,
             Number = number,
             Date = date,
             Header = header,

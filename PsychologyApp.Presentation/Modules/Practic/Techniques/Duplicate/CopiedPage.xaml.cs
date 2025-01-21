@@ -3,12 +3,12 @@ using PsychologyApp.Presentation.Models;
 
 namespace MobileHelperMaui.Views.TechniquePages;
 
-public partial class PaperPage : ContentPage
+public partial class CopiedPage : ContentPage
 {
-    public PaperPage()
+    public CopiedPage()
     {
         InitializeComponent();
-        BindingContext = new PaperViewModel(Navigation);
+        BindingContext = new CopiedViewModel(Navigation);
     }
 
     private void Button_Clicked(object sender, EventArgs e)

@@ -32,7 +32,7 @@
                     <VisualState x:Name="Selected">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor"
-                                        Value="{StaticResource Secondary}" />
+                                        Value="Transparent" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>

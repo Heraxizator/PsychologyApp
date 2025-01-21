@@ -4,28 +4,23 @@ using System.Collections.ObjectModel;
 
 namespace MobileHelperMaui.ViewModels.TechniqueViewModels;
 
-public class PaperViewModel : BaseViewModel
+public class CopiedViewModel : BaseViewModel
 {
     public ObservableCollection<Paper> PapersObservableCollection { get; private set; } = [];
     public Command AddCommand { get; private set; } = default!;
 
-    public PaperViewModel() { }
+    public CopiedViewModel() { }
 
-    public PaperViewModel(INavigation navigation, bool doClear = true)
+    public CopiedViewModel(INavigation navigation, bool doClear = true)
     {
         this.Navigation = navigation;
 
         this.Title = "Техника";
-        this.Info = "Учёные провели эксперимент и выявили одну замечательную закономерность: если взять лист бумаги, записать свои негативные мысли и выбросить этот лист, то тот негатив потеряют какое-либо значение для человека и перестанет его беспокоить. Но для такой практики совершенно необязательно тратить бумагу. Можно просто воспользоваться текстовым редактором на следующей странице. Техника проста до безобразия!";
-        
+        this.Info = "Учёные провели эксперимент и выявили одну замечательную закономерность: если взять то желание, которое имеет слишком большой эмоциональный заряд, записать его на бумаге и много раз повторить, то напряжение ослабнет и станет спокойнее. Тривиально, но это работает!";
+
         this.Finish = new Command(ToFinish);
         this.Theory = new Command(ToTheory);
         this.AddCommand = new Command(ToAdd);
-    }
-
-    private void ClearInput()
-    {
-        this.Text = string.Empty;
     }
 
     private void SetCollection(bool visible)
@@ -42,17 +37,13 @@ public class PaperViewModel : BaseViewModel
 
         SetCollection(true);
 
-        Paper item = new() 
-        { 
+        Paper item = new()
+        {
             Id = "Карточка №" + (this.PapersObservableCollection.Count + 1),
-            Text = this.Text 
+            Text = this.Text
         };
 
         this.PapersObservableCollection.Add(item);
-
-        ClearInput();
-        
-
     }
 
     public Command<Paper> DeleteCommand => new((item) =>
@@ -96,3 +87,4 @@ public class PaperViewModel : BaseViewModel
         }
     }
 }
+

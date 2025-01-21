@@ -22,7 +22,7 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <ScrollView VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never">
+        <ScrollView x:Name="Scroll" VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never">
             <StackLayout Margin="0">
 
                 <StackLayout
@@ -63,7 +63,7 @@
 
                 </StackLayout>
 
-                <Frame Margin="15, 15, 15, 15">
+                <Frame x:Name="Algorithm" Margin="15, 15, 15, 15">
                     <StackLayout Margin="5">
                         <Label
                     Text="Алгоритм"
@@ -117,7 +117,7 @@
                             BodyText="Добавить">
 
                             <templates:ButtonView.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"/>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1" Command="{Binding Add}"/>
                             </templates:ButtonView.GestureRecognizers>
 
                         </templates:ButtonView>
@@ -130,57 +130,55 @@
                 x:Name="Polarities"
                 IsVisible="{Binding IsFull}"
                 Margin="0, 0, 0, 5"
-                HeightRequest="120"
-                SelectionMode="None"
+                SelectionMode="Single"
+                    SelectionChanged="Polarities_SelectionChanged"
                 ItemsSource="{Binding polarities}"
                 VerticalScrollBarVisibility="Never"
                 HorizontalScrollBarVisibility="Never">
 
                     <CollectionView.ItemTemplate>
+
                         <DataTemplate>
-                            <StackLayout>
 
-                                <Frame Padding="10">
 
-                                    <StackLayout>
-                                        <StackLayout Orientation="Horizontal">
-                                            <Label 
+                            <Frame Padding="10">
+
+                                <StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label 
                                                Text="{Binding Id}"
                                                Margin="5, 0, 0, 0"
                                                FontSize="14"
                                                TextColor="Black"
                                                HorizontalOptions="Start" />
 
-                                            <ImageButton 
-                                                Source="close.png"
-                                                Opacity="0.6"
-                                                WidthRequest="15"
-                                                HeightRequest="15"
-                                                Margin="0, 0, 5, 0"
-                                                BackgroundColor="Transparent"
-                                                Clicked="ImageButton_Clicked"
-                                                HorizontalOptions="EndAndExpand"/>
+                                        <Label
+                                                TextColor="{StaticResource Gray}"
+                                                HorizontalOptions="EndAndExpand"
+                                                Text="{mi:Material Icon=Close, IconSize=25}">
 
-                                        </StackLayout>
+                                        </Label>
 
-                                        <StackLayout
+                                    </StackLayout>
+
+                                    <StackLayout
                                             Margin="0, 10, 0, 0"
                                             Orientation="Horizontal">
-                                            <Label 
+                                        <Label 
                                                 Margin="20, 0, 0, 0"
                                                 WidthRequest="150"
                                                 Text="{Binding Positive}"
                                                 TextColor="Black"
                                                 HorizontalOptions="Start"
                                                 FontSize="19"/>
-                                            <Image 
+                                        <Image 
                                                 Source="minus.png"
                                                 Opacity="0.6"
                                                 WidthRequest="40"
                                                 HeightRequest="40"
                                                 HorizontalOptions="CenterAndExpand"
                                                 />
-                                            <Label 
+                                        <Label 
                                                 Margin="0, 0, 20, 0"
                                                 Text="{Binding Negative}"
                                                 WidthRequest="150"
@@ -188,26 +186,17 @@
                                                 TextColor="Black"
                                                 FontSize="19"/>
 
-                                        </StackLayout>
                                     </StackLayout>
+                                </StackLayout>
 
-                                </Frame>
-                            </StackLayout>
+                            </Frame>
+
                         </DataTemplate>
+
                     </CollectionView.ItemTemplate>
 
                 </CollectionView>
 
-                <templates:ButtonView
-                    Margin="15, 5, 15, 20"
-                    BodyText="Завершить">
-
-                    <templates:ButtonView.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding Finish}"/>
-                    </templates:ButtonView.GestureRecognizers>
-
-                </templates:ButtonView>
-                
             </StackLayout>
         </ScrollView>
 

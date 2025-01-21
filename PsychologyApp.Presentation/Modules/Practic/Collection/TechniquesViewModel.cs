@@ -165,6 +165,32 @@ public class TechniquesViewModel : BaseViewModel
                 Author = "Филипп Славинский",
                 Active = true,
                 TapCommand = new Command(async () => await navigation.PushAsync(new ExperiencePage(), false))
+            },
+
+            new TechniqueItem
+            {
+                Number = "Техника №8",
+                Date="21.01.2025",
+                Image = image,
+                Title = "Повторение и понижение",
+                Subtitle = "Понижение важности за 30 секунд",
+                Theme = "Важность",
+                Author = "НЛП",
+                Active = true,
+                TapCommand = new Command(async () => await navigation.PushAsync(new CopiedPage(), false))
+            },
+
+            new TechniqueItem
+            {
+                Number = "Техника №9",
+                Date="21.01.2025",
+                Image = image,
+                Title = "Запасной план",
+                Subtitle = "Понижение важности за 60 секунд",
+                Theme = "Важность",
+                Author = "НЛП",
+                Active = true,
+                TapCommand = new Command(async () => await navigation.PushAsync(new ExtendPage(), false))
             }
         ];
 

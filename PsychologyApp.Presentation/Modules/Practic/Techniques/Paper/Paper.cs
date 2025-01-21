@@ -1,8 +1,7 @@
-﻿namespace PsychologyApp.Presentation.Models
+﻿namespace PsychologyApp.Presentation.Models;
+
+public class Paper
 {
-    public class Paper
-    {
-        public string Id { get; set; }
-        public string Text { get; set; }
-    }
+    public string? Id { get; set; }
+    public string? Text { get; set; }
 }

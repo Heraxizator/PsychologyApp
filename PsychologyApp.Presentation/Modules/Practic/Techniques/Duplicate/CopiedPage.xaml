@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MobileHelperMaui.Views.TechniquePages.PaperPage"
+             x:Class="MobileHelperMaui.Views.TechniquePages.CopiedPage"
              xmlns:vm="clr-namespace:MobileHelperMaui.ViewModels.TechniqueViewModels"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
              Title="Техника">
-    
+
     <ContentPage.BindingContext>
-        <vm:PaperViewModel />
+        <vm:CopiedViewModel />
     </ContentPage.BindingContext>
 
     <ContentPage.Resources>
@@ -41,7 +41,7 @@
                 </Label>
 
                 <Label
-                        Text="Лист бумаги"
+                        Text="Повторитель"
                         HorizontalOptions="CenterAndExpand"
                         VerticalOptions="CenterAndExpand"
                         TextColor="Black"
@@ -72,19 +72,13 @@
 
                     <Label 
                     Margin="15, 0, 0, 10"
-                    Text="1. Выписать негатив на карточку"
+                    Text="1. Выписать то, что вас беспокоит"
                     TextColor="{AppThemeBinding Light=black, Dark=white}"
                     FontSize="16"/>
 
                     <Label 
                     Margin="15, 0, 5, 10"
-                    Text="2. Повторить это много раз"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"
-                    FontSize="16"/>
-
-                    <Label 
-                    Margin="15, 0, 0, 15"
-                    Text="3. Удалить все карточки"
+                    Text="2. Дублировать это до тех пор, пока не станет легче"
                     TextColor="{AppThemeBinding Light=black, Dark=white}"
                     FontSize="16"/>
 
@@ -101,13 +95,13 @@
                     TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
                     <templates:TextEntryView
-                        TitleText="Негативная мысль"
+                        TitleText="Беспокойство"
                         BodyText="{Binding Text}"
-                        PlaceholderText="Мне не хочется жить"/>
+                        PlaceholderText="Я очень хочу уволиться"/>
 
                     <templates:ButtonView
                         Margin="5, 5, 5, 0"
-                        BodyText="Добавить">
+                        BodyText="Повторить">
 
                         <templates:ButtonView.GestureRecognizers>
                             <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_2" Command="{Binding AddCommand}"/>

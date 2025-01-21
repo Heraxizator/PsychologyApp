@@ -11,17 +11,6 @@ public partial class PolarityPage : ContentPage
         BindingContext = new PolarityViewModel(Navigation);
     }
 
-    private void ImageButton_Clicked(object sender, EventArgs e)
-    {
-        ImageButton? button = sender as ImageButton;
-
-        Polarity? item = button!.BindingContext as Polarity;
-
-        PolarityViewModel? vm = BindingContext as PolarityViewModel;
-
-        vm!.Delete.Execute(item);
-    }
-
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
         await Navigation.PopAsync(false);
@@ -31,6 +20,17 @@ public partial class PolarityPage : ContentPage
     {
         PolarityViewModel? vm = BindingContext as PolarityViewModel;
 
-        //Polarities.ScrollTo(vm!.Polarity, ScrollToPosition.MakeVisible, true);
+        Polarities.ScrollTo(vm.polarities.Count -1, -1, ScrollToPosition.End, false);
+
+        Algorithm.IsVisible = false;
+    }
+
+    private void Polarities_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        PolarityViewModel? vm = BindingContext as PolarityViewModel;
+
+        vm!.Delete.Execute(e.CurrentSelection.FirstOrDefault());
+
+        Polarities.SelectedItem = null;
     }
 }

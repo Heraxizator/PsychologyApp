@@ -12,7 +12,7 @@ public static class TechniqueMapper
 {
     public static Technique GetTechnique(TechniqueDTO techniqueDTO)
     {
-        return Technique.Create(techniqueDTO.Number!, techniqueDTO.Date!, techniqueDTO.Header!, techniqueDTO.Describtion!, techniqueDTO.Subject!, techniqueDTO.Author!, techniqueDTO.Algorithm!, techniqueDTO.Image!);
+        return Technique.Create(techniqueDTO.TechniqueId, techniqueDTO.Number!, techniqueDTO.Date!, techniqueDTO.Header!, techniqueDTO.Describtion!, techniqueDTO.Subject!, techniqueDTO.Author!, techniqueDTO.Algorithm!, techniqueDTO.Image!);
     }
 
     public static TechniqueDTO GetTechniqueDTO(Technique technique)

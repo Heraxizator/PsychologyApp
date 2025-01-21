@@ -29,7 +29,13 @@ public class PolarityViewModel : BaseViewModel
 
     public Command<Polarity> Delete => new((item) =>
     {
-        _ = polarities.Remove(item);
+        if (item is null)
+        {
+            return;
+        }
+
+        polarities.Remove(item);
+
         if (polarities.Count == 0)
         {
             IsFull = false;
