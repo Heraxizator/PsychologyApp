@@ -20,17 +20,18 @@ public partial class PolarityPage : ContentPage
     {
         PolarityViewModel? vm = BindingContext as PolarityViewModel;
 
-        Polarities.ScrollTo(vm.polarities.Count -1, -1, ScrollToPosition.End, false);
+        if (vm!.polarities.Any() is false)
+        {
+            return;
+        }
+
+        //Polarities.ScrollTo(vm!.polarities.LastOrDefault(), ScrollToPosition.End, false);
 
         Algorithm.IsVisible = false;
     }
 
-    private void Polarities_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void Polarities_ItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
-        PolarityViewModel? vm = BindingContext as PolarityViewModel;
-
-        vm!.Delete.Execute(e.CurrentSelection.FirstOrDefault());
-
         Polarities.SelectedItem = null;
     }
 }

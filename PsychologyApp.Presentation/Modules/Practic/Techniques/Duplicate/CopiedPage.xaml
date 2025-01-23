@@ -117,20 +117,17 @@
                 x:Name="Papers"
                 IsVisible="{Binding IsFull}"
                 Margin="5, 10, 5, 0"
-                SelectionMode="Single"
-                SelectionChanged="Papers_SelectionChanged"
+                SelectionMode="None"
                 ItemsSource="{Binding PapersObservableCollection}"
                 VerticalScrollBarVisibility="Never"
                 HorizontalScrollBarVisibility="Never">
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout>
-                            <Frame>
-
-                                <StackLayout Padding="0">
-                                    <StackLayout Padding="0" Orientation="Horizontal">
-                                        <Label 
+                        <Frame>
+                            <StackLayout Padding="0">
+                                <StackLayout Padding="0" Orientation="Horizontal">
+                                    <Label 
                                                Text="{Binding Id}"
                                                Margin="5, 0, 0, 0"
                                                FontSize="14"
@@ -138,25 +135,16 @@
                                                Padding="0"
                                                HorizontalOptions="Start" />
 
-                                        <Label
-                                            TextColor="{StaticResource Gray}"
-                                            HorizontalOptions="EndAndExpand"
-                                            Text="{mi:Material Icon=Close, IconSize=25}">
+                                </StackLayout>
 
-                                        </Label>
-
-                                    </StackLayout>
-
-                                    <Label 
+                                <Label 
                                             Margin="5, 0, 5, 0"
                                             FontSize="14"
                                             TextColor="{AppThemeBinding Light=gray, Dark=white}"
                                             Text="{Binding Text}"/>
 
-                                </StackLayout>
-
-                            </Frame>
-                        </StackLayout>
+                            </StackLayout>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
 

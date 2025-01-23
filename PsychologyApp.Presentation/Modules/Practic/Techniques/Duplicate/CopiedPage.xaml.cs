@@ -15,7 +15,12 @@ public partial class CopiedPage : ContentPage
     {
         var vm = BindingContext as PaperViewModel;
 
-        //Papers.ScrollTo(vm.Paper, ScrollToPosition.MakeVisible, true);
+        if (vm!.PapersObservableCollection.Any() is false)
+        {
+            return;
+        }
+
+        //Papers.ScrollTo(vm!.PapersObservableCollection.LastOrDefault(), ScrollToPosition.End, false);
     }
 
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
@@ -28,12 +33,8 @@ public partial class CopiedPage : ContentPage
         Algorithm.IsVisible = false;
     }
 
-    private void Papers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void Papers_ItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
-        var vm = BindingContext as PaperViewModel;
-
-        vm.DeleteCommand.Execute(e.CurrentSelection.FirstOrDefault());
-
         Papers.SelectedItem = null;
     }
 }

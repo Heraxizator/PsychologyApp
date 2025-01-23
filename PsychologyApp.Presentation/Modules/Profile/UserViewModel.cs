@@ -50,9 +50,13 @@ public class UserViewModel : BaseViewModel
             cancellationTokenSource.Token.ThrowIfCancellationRequested();
 
             InitTechniques();
-            InitQuots();
 
             await InitQuotsAsync();
+
+            if (this.Quots.Any() is false)
+            {
+                InitQuots();
+            }
         }
         
         catch (Exception e)

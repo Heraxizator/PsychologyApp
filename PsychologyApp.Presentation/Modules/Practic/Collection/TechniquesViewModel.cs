@@ -146,10 +146,10 @@ public class TechniquesViewModel : BaseViewModel
                 Number = "Техника №6",
                 Date="30.01.2023",
                 Image = image,
-                Title = "Протокол Руби",
-                Subtitle = "Ликвидация любых привязанностей, зависимостей и привычек",
-                Theme = "Обработчик",
-                Author = "Турбо-Суслик",
+                Title = "Белое Пятно",
+                Subtitle = "Метод нейтрализации воспоминаний",
+                Theme = "Эпизоды",
+                Author = "НЛП",
                 Active = true,
                 TapCommand = new Command(async () => await navigation.PushAsync(new HackPage(), false))
             },
@@ -172,8 +172,8 @@ public class TechniquesViewModel : BaseViewModel
                 Number = "Техника №8",
                 Date="21.01.2025",
                 Image = image,
-                Title = "Повторение и понижение",
-                Subtitle = "Понижение важности за 30 секунд",
+                Title = "Повтори Это",
+                Subtitle = "Простой метод понижения важности",
                 Theme = "Важность",
                 Author = "НЛП",
                 Active = true,
@@ -191,7 +191,33 @@ public class TechniquesViewModel : BaseViewModel
                 Author = "НЛП",
                 Active = true,
                 TapCommand = new Command(async () => await navigation.PushAsync(new ExtendPage(), false))
-            }
+            },
+
+            new TechniqueItem
+            {
+                Number = "Техника №10",
+                Date="22.01.2025",
+                Image = image,
+                Title = "Уменьши Это",
+                Subtitle = "Простой метод понижения важности",
+                Theme = "Важность",
+                Author = "НЛП",
+                Active = true,
+                TapCommand = new Command(async () => await navigation.PushAsync(new ResizePage(), false))
+            },
+
+            new TechniqueItem
+            {
+                Number = "Техника №11",
+                Date="22.01.2025",
+                Image = image,
+                Title = "Проверь Это",
+                Subtitle = "Простой метод понижения важности",
+                Theme = "Важность",
+                Author = "НЛП",
+                Active = true,
+                TapCommand = new Command(async () => await navigation.PushAsync(new CheckPage(), false))
+            },
         ];
 
         return items;

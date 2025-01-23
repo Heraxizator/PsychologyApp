@@ -1,6 +1,7 @@
 ﻿using MobileHelperMaui.Views.AboutPages;
 using MobileHelperMaui.Views.SettingsPages;
 using PsychologyApp.Presentation.Base.ServiceLocator.Dialog;
+using PsychologyApp.Presentation.Modules.Profile;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +22,9 @@ public class OptionsViewModel : BaseViewModel
     {
         this.Navigation = navigation;
 
-        if (this.Navigation is null)
-        {
-            Base.ServiceLocator.ServiceLocator.Instance.GetService<IDialogService>().ShowAsync("Ошибка", "this.Navigation имеет значение null");
-            return;
-        }
-
         this.OpenAboutPageCommand = new Command(() => this.Navigation.PushAsync(new InfoPage(), false));
+
+        this.OpenDonatePageCommand = new Command(() => this.Navigation.PushAsync(new DonatePage(), false));
 
         this.OpenSettingsPageCommand = new Command(() => this.Navigation.PushAsync(new SettingsPage(), false));
     }

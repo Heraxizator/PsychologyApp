@@ -18,6 +18,8 @@
     
     <ContentPage.Content>
 
+        <ScrollView VerticalScrollBarVisibility="Never">
+            
         <StackLayout Margin="0, 15, 0, 15">
 
             <StackLayout
@@ -230,15 +232,17 @@
                         <StackLayout
                             HorizontalOptions="FillAndExpand">
 
-                            <templates:RetryView
+                            <templates:ProgressbarView
+                                HorizontalOptions="CenterAndExpand"
                                 VerticalOptions="CenterAndExpand"
-                                IsVisible="True"
-                                FailedText="Цитаты не найдены"
-                                RetryText="Попробовать ещё раз?">
-                                <templates:RetryView.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding ReloadCommand}"/>
-                                </templates:RetryView.GestureRecognizers>
-                            </templates:RetryView>
+                                Margin="15, 75, 15, 0"
+                                IsVisible="{Binding IsInit}"
+                                IsLoading="True"
+                                ProgressText="Поиск цитат">
+                                <templates:ProgressbarView.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Cancel}"/>
+                                </templates:ProgressbarView.GestureRecognizers>
+                            </templates:ProgressbarView>
 
                         </StackLayout>
                         
@@ -250,5 +254,6 @@
 
         </StackLayout>
 
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

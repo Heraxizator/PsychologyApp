@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MobileHelperMaui.Views.TechniquePages.HackPage"
+             x:Class="MobileHelperMaui.Views.TechniquePages.CheckPage"
              xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
              xmlns:vm="clr-namespace:MobileHelper.ViewModels.TechniqueViewModels"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              Title="Техника">
-    
+
     <ContentPage.BindingContext>
-        <vm:HackViewModel />
+        <vm:CheckViewModel />
     </ContentPage.BindingContext>
 
     <ContentPage.Resources>
@@ -42,7 +42,7 @@
                     </Label>
 
                     <Label
-                        Text="Повтори Это"
+                        Text="Проверь Это"
                         HorizontalOptions="CenterAndExpand"
                         VerticalOptions="CenterAndExpand"
                         TextColor="Black"
@@ -73,19 +73,19 @@
 
                         <Label 
                     Margin="15, 0, 0, 10"
-                    Text="1. Найти то воспоминание, которое беспокоит"
+                    Text="1. Найти то, что вас беспокоит"
                     TextColor="{AppThemeBinding Light=black, Dark=white}"
                     FontSize="16"/>
 
                         <Label 
                     Margin="15, 0, 0, 15"
-                    Text="2. Представить его как фото"
+                    Text="2. А стоит ли это вашего внимания?"
                     TextColor="{AppThemeBinding Light=black, Dark=white}"
                     FontSize="16"/>
 
                         <Label 
                     Margin="15, 0, 0, 15"
-                    Text="3. Делать его всё светлее и светлее"
+                    Text="3. Сделать вывод"
                     TextColor="{AppThemeBinding Light=black, Dark=white}"
                     FontSize="16"/>
 
@@ -97,9 +97,9 @@
                 Margin="15, 5, 15, 20"
                 BodyText="Завершить">
 
-                <templates:ButtonView.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding Finish}"/>
-                </templates:ButtonView.GestureRecognizers>
+                    <templates:ButtonView.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Finish}"/>
+                    </templates:ButtonView.GestureRecognizers>
 
                 </templates:ButtonView>
 
@@ -107,5 +107,5 @@
         </ScrollView>
 
     </ContentPage.Content>
-                            
+
 </ContentPage>

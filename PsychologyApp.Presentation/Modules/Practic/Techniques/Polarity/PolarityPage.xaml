@@ -130,8 +130,7 @@
                 x:Name="Polarities"
                 IsVisible="{Binding IsFull}"
                 Margin="0, 0, 0, 5"
-                SelectionMode="Single"
-                    SelectionChanged="Polarities_SelectionChanged"
+                SelectionMode="None"
                 ItemsSource="{Binding polarities}"
                 VerticalScrollBarVisibility="Never"
                 HorizontalScrollBarVisibility="Never">
@@ -139,10 +138,7 @@
                     <CollectionView.ItemTemplate>
 
                         <DataTemplate>
-
-
-                            <Frame Padding="10">
-
+                            <Frame>
                                 <StackLayout>
                                     <StackLayout Orientation="Horizontal">
                                         <Label 
@@ -151,13 +147,6 @@
                                                FontSize="14"
                                                TextColor="Black"
                                                HorizontalOptions="Start" />
-
-                                        <Label
-                                                TextColor="{StaticResource Gray}"
-                                                HorizontalOptions="EndAndExpand"
-                                                Text="{mi:Material Icon=Close, IconSize=25}">
-
-                                        </Label>
 
                                     </StackLayout>
 
@@ -188,9 +177,7 @@
 
                                     </StackLayout>
                                 </StackLayout>
-
                             </Frame>
-
                         </DataTemplate>
 
                     </CollectionView.ItemTemplate>

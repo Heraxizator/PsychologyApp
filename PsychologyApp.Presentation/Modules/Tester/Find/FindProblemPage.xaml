@@ -53,25 +53,23 @@
                     Margin="5, 0, 0, 10"
                     TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
-                        <ListView 
+                        <CollectionView 
                         SelectionMode="None"
-                        SeparatorVisibility="None"
-                        HasUnevenRows="True"
                         VerticalScrollBarVisibility="Never"
                         ItemsSource="{Binding AlgorithmRows}">
-                            <ListView.ItemTemplate>
+                            <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <ViewCell>
-                                        <Label 
+                                    <Label 
+                                            HorizontalTextAlignment="Justify"
                                     Margin="10, 0, 0, 0"
                                     TextColor="{AppThemeBinding Light=black, Dark=white}"
                                     Text="{Binding Row}"
                                     FontSize="16">
-                                        </Label>
-                                    </ViewCell>
+                                    </Label>
                                 </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                            </CollectionView.ItemTemplate>
+
+                        </CollectionView>
 
                     </StackLayout>
 
@@ -87,6 +85,7 @@
 
                         <Label
                     Margin="5, 0, 0, 10"
+                            HorizontalTextAlignment="Justify"
                     Text="{Binding CommentText}"
                     TextColor="{AppThemeBinding Light=black, Dark=white}"
                     FontSize="16"/>
@@ -95,17 +94,16 @@
 
                 </Frame>
 
-                <Button 
-                Margin="10, 15, 10, 15"
-                Text="Начать"
-                FontSize="15"
-                BackgroundColor="{StaticResource Primary}"
-                CornerRadius="25"
-                WidthRequest="350"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Command="{Binding Continue}"
-                HeightRequest="40"/>
+                <templates:ButtonView
+                    Margin="10, 15, 10, 25"
+                    BodyText="Начать">
+
+                    <templates:ButtonView.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Continue}"/>
+                    </templates:ButtonView.GestureRecognizers>
+
+                </templates:ButtonView>
+
             </StackLayout>
         </ScrollView>
 
