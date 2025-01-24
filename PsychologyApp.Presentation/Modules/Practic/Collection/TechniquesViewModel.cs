@@ -81,7 +81,7 @@ public class TechniquesViewModel : BaseViewModel
         [
             new TechniqueItem
             {
-                Number = "Техника №1",
+                Number = "Метод №1",
                 Date="26.01.2023",
                 Image = image,
                 Title = "Крутилка",
@@ -94,7 +94,7 @@ public class TechniquesViewModel : BaseViewModel
 
             new TechniqueItem
             {
-                Number = "Техника №2",
+                Number = "Метод №2",
                 Date="26.01.2023",
                 Image = image,
                 Title = "Сравнение важностей",
@@ -106,7 +106,7 @@ public class TechniquesViewModel : BaseViewModel
             },
             new TechniqueItem
             {
-                Number = "Техника №3",
+                Number = "Метод №3",
                 Date="26.01.2023",
                 Image = image,
                 Title = "Полярности",
@@ -118,7 +118,7 @@ public class TechniquesViewModel : BaseViewModel
             },
             new TechniqueItem
             {
-                Number = "Техника №4",
+                Number = "Метод №4",
                 Date="26.01.2023",
                 Image = image,
                 Title = "Лист бумаги",
@@ -130,7 +130,7 @@ public class TechniquesViewModel : BaseViewModel
             },
             new TechniqueItem
             {
-                Number = "Техника №5",
+                Number = "Метод №5",
                 Date="30.01.2023",
                 Image = image,
                 Title = "50 лет спустя",
@@ -143,7 +143,7 @@ public class TechniquesViewModel : BaseViewModel
 
             new TechniqueItem
             {
-                Number = "Техника №6",
+                Number = "Метод №6",
                 Date="30.01.2023",
                 Image = image,
                 Title = "Белое Пятно",
@@ -156,7 +156,7 @@ public class TechniquesViewModel : BaseViewModel
 
             new TechniqueItem
             {
-                Number = "Техника №7",
+                Number = "Метод №7",
                 Date="08.02.2023",
                 Image = image,
                 Title = "Модификация опыта",
@@ -169,7 +169,7 @@ public class TechniquesViewModel : BaseViewModel
 
             new TechniqueItem
             {
-                Number = "Техника №8",
+                Number = "Метод №8",
                 Date="21.01.2025",
                 Image = image,
                 Title = "Повтори Это",
@@ -182,7 +182,7 @@ public class TechniquesViewModel : BaseViewModel
 
             new TechniqueItem
             {
-                Number = "Техника №9",
+                Number = "Метод №9",
                 Date="21.01.2025",
                 Image = image,
                 Title = "Запасной план",
@@ -195,7 +195,7 @@ public class TechniquesViewModel : BaseViewModel
 
             new TechniqueItem
             {
-                Number = "Техника №10",
+                Number = "Метод №10",
                 Date="22.01.2025",
                 Image = image,
                 Title = "Уменьши Это",
@@ -208,7 +208,7 @@ public class TechniquesViewModel : BaseViewModel
 
             new TechniqueItem
             {
-                Number = "Техника №11",
+                Number = "Метод №11",
                 Date="22.01.2025",
                 Image = image,
                 Title = "Проверь Это",

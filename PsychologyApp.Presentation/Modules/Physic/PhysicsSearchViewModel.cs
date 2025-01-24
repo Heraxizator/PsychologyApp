@@ -77,24 +77,33 @@ public class PhysicsSearchViewModel : BaseViewModel
 
     public void ExecuteSearch(string input)
     {
-        SetInit();
-
-        this.Results.Clear();
-
-        if (string.IsNullOrEmpty(input))
+        Task.Run(() =>
         {
-            ConfigureState();
-            return;
-        }
+            Application.Current.Dispatcher.Dispatch(() =>
+            {
+                SetInit();
 
-        string text = input.ToLower();
+                this.Results.Clear();
 
-        IEnumerable<ReasonDTO> source = this.Reasons
-            .Where(x => x.Title?.Length >= text.Length && x.Title.ToLower().Contains(text));
+                if (string.IsNullOrEmpty(input))
+                {
+                    ConfigureState();
+                    return;
+                }
+            });
 
-        this.Results.AddRange(source);
+            string text = input.ToLower();
 
-        ConfigureState();
+            IEnumerable<ReasonDTO> source = this.Reasons
+                .Where(x => x.Title?.Length >= text.Length && x.Title.ToLower().Contains(text));
+
+            Application.Current.Dispatcher.Dispatch(() =>
+            {
+                this.Results.AddRange(source);
+
+                ConfigureState();
+            });
+        });
     }
 
     public PhysicsSearchViewModel() { }

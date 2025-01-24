@@ -51,7 +51,14 @@ public class UserViewModel : BaseViewModel
 
             InitTechniques();
 
-            await InitQuotsAsync();
+            await InitQuotsAsync(cancelTimeout);
+
+            await GetQuotsAsync(cancelTimeout);
+            
+            if (this.Quots.Any() is false)
+            {
+                await InitQuotsAsync(cancelTimeout);
+            }
 
             if (this.Quots.Any() is false)
             {
@@ -85,8 +92,6 @@ public class UserViewModel : BaseViewModel
 
     private async Task InitQuotsAsync(int cancelTimeout = 10000)
     {
-        await QuotHandler.GetQuotsFromApi(cancelTimeout);
-
         IEnumerable<QuotDTO> quotDTOs = await _quotService.GetQuotsList(2, false, cancelTimeout);
 
         foreach (QuotDTO quotDTO in quotDTOs)
@@ -102,5 +107,10 @@ public class UserViewModel : BaseViewModel
                 Author = quotDTO.Title
             });
         }
+    }
+
+    private Task GetQuotsAsync(int cancelTimeout = 10000)
+    {
+        return QuotHandler.GetQuotsFromApi(cancelTimeout);
     }
 }

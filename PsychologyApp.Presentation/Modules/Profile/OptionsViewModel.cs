@@ -16,7 +16,7 @@ public class OptionsViewModel : BaseViewModel
 {
     public ICommand? OpenAboutPageCommand { get; private set; } = default!;
     public ICommand? OpenDonatePageCommand { get; private set; } = default!;
-    public ICommand? OpenSettingsPageCommand { get; private set; } = default!;
+    //public ICommand? OpenSettingsPageCommand { get; private set; } = default!;
 
     public OptionsViewModel(INavigation navigation)
     {
@@ -26,6 +26,6 @@ public class OptionsViewModel : BaseViewModel
 
         this.OpenDonatePageCommand = new Command(() => this.Navigation.PushAsync(new DonatePage(), false));
 
-        this.OpenSettingsPageCommand = new Command(() => this.Navigation.PushAsync(new SettingsPage(), false));
+        //this.OpenSettingsPageCommand = new Command(() => this.Navigation.PushAsync(new SettingsPage(), false));
     }
 }
