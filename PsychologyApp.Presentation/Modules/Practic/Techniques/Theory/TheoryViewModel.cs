@@ -4,13 +4,11 @@ namespace MobileHelper.ViewModels.TechniqueViewModels
 {
     public class TheoryViewModel : BaseViewModel
     {
-        private string text { get; set; }
-        public TheoryViewModel()
-        {
+        private string text { get; set; } = default!;
 
-        }
+        public TheoryViewModel() { }
 
-        public TheoryViewModel(string content)
+        public TheoryViewModel(INavigation navigation, string content)
         {
             this.Title = "Теория";
             this.Text = content;

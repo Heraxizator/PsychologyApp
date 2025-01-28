@@ -102,7 +102,7 @@
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand"
                 VerticalScrollBarVisibility="Never"
-                ItemsSource="{Binding Results}">
+                ItemsSource="{Binding ResultsObservableCollection}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid>

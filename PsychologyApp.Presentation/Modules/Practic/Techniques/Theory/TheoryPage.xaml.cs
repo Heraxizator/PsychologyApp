@@ -8,7 +8,7 @@ public partial class TheoryPage : ContentPage
     {
         InitializeComponent();
 
-        this.BindingContext = new TheoryViewModel(content);
+        this.BindingContext = new TheoryViewModel(Navigation, content);
     }
 
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)

@@ -76,17 +76,16 @@
 
                         </Frame>
 
-                    <Button 
-                    Margin="10, 15, 10, 15"
-                    Text="Начать"
-                    FontSize="15"
-                    BackgroundColor="{StaticResource Primary}"
-                    CornerRadius="25"
-                    WidthRequest="350"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    Command="{Binding Continue}"
-                    HeightRequest="40"/>
+                        <templates:ButtonView
+                            Margin="10, 15, 10, 15"
+                            BodyText="Начать">
+
+                            <templates:ButtonView.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Continue}"/>
+                            </templates:ButtonView.GestureRecognizers>
+
+                        </templates:ButtonView>
+
                 </StackLayout>
             </StackLayout>
 

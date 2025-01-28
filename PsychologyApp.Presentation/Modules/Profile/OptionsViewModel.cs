@@ -20,11 +20,11 @@ public class OptionsViewModel : BaseViewModel
 
     public OptionsViewModel(INavigation navigation)
     {
-        this.Navigation = navigation;
+        Navigation = navigation;
 
-        this.OpenAboutPageCommand = new Command(() => this.Navigation.PushAsync(new InfoPage(), false));
+        this.OpenAboutPageCommand = new Command(() => Navigation.PushAsync(new InfoPage(), false));
 
-        this.OpenDonatePageCommand = new Command(() => this.Navigation.PushAsync(new DonatePage(), false));
+        this.OpenDonatePageCommand = new Command(() => Navigation.PushAsync(new DonatePage(), false));
 
         //this.OpenSettingsPageCommand = new Command(() => this.Navigation.PushAsync(new SettingsPage(), false));
     }

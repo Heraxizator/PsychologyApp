@@ -7,6 +7,9 @@ namespace MobileHelper.ViewModels.TestViewModels;
 public class FindProblemViewModel : BaseViewModel
 {
     public ICommand Continue { get; private set; } = default!;
+    public ICommand Finish { get; private set; } = default!;
+
+
     private readonly Action _nextPageTappedAction = default!;
 
     public FindProblemViewModel() { }
@@ -34,6 +37,8 @@ public class FindProblemViewModel : BaseViewModel
         _nextPageTappedAction = action;
 
         Continue = new Command(ToContinue);
+
+        Finish = new Command(async () => await Navigation.PopAsync(false));
     }
 
     private void ToContinue(object obj)

@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using Dapper;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using PsychologyApp.Domain.Common;
 using PsychologyApp.Infrastructure.Data.Repositories.Quots;
@@ -26,7 +27,7 @@ public static class Database
 
     static Database()
     {
-        
+
     }
 
     public static void CreateTables()
@@ -36,5 +37,14 @@ public static class Database
         context.Database.EnsureCreated();
 
         context.Database.CloseConnection();
+    }
+
+    public static void ConfigureSQLite()
+    {
+        _connection.Open();
+
+        _connection.Execute("PRAGMA synchronous=OFF;");
+
+        _connection.Execute("PRAGMA journal_mode=OFF;");
     }
 }

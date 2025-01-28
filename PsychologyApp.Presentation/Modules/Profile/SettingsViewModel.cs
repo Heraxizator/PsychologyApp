@@ -11,8 +11,10 @@ public class SettingsViewModel : BaseViewModel
     public SettingsViewModel(INavigation navigation)
     {
         this.Title = "Настройки";
-        this.Navigation = navigation;
-        this.Finish = new Command(ToEnd);
+
+        Navigation = navigation;
+
+        Finish = new Command(ToEnd);
     }
 
     private void ToEnd(object obj)

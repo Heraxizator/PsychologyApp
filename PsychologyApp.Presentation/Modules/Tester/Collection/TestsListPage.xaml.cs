@@ -8,10 +8,7 @@ public partial class TestsListPage : ContentPage
 	{
 		InitializeComponent();
 
-        TestsListViewModel vm = new()
-        {
-            Navigation = this.Navigation
-        };
+		TestsListViewModel vm = new(Navigation);
 
         this.BindingContext = vm;
 	}

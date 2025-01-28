@@ -25,6 +25,10 @@ public class DesignerViewModel : BaseViewModel
     {
         currentId = id;
 
+        Navigation = navigation;
+
+        Finish = new Command(ToFinish);
+
         Path = "technique.png";
         Title = "Конструктор";
 

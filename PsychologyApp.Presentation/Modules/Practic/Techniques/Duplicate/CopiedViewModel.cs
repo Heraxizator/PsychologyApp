@@ -13,13 +13,12 @@ public class CopiedViewModel : BaseViewModel
 
     public CopiedViewModel(INavigation navigation, bool doClear = true)
     {
-        this.Navigation = navigation;
+        Navigation = navigation;
 
         this.Title = "Техника";
-        this.Info = "Учёные провели эксперимент и выявили одну замечательную закономерность: если взять то желание, которое имеет слишком большой эмоциональный заряд, записать его на бумаге и много раз повторить, то напряжение ослабнет и станет спокойнее. Тривиально, но это работает!";
 
-        this.Finish = new Command(ToFinish);
-        this.Theory = new Command(ToTheory);
+        Info = "Учёные провели эксперимент и выявили одну замечательную закономерность: если взять то желание, которое имеет слишком большой эмоциональный заряд, записать его на бумаге и много раз повторить, то напряжение ослабнет и станет спокойнее. Тривиально, но это работает!";
+
         this.AddCommand = new Command(ToAdd);
     }
 

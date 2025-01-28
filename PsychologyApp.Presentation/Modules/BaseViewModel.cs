@@ -8,13 +8,15 @@ namespace PsychologyApp.Presentation.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public INavigation? Navigation { get; set; }
-        public ICommand? Finish { get; set; }
-        public ICommand? Theory { get; set; }
-        public ICommand? Cancel { get; set; }
-        public ICommand? Reload { get; set; }
-        public ICommand? Start { get; set; }
-        public string? Info { get; set; }
+        public static INavigation Navigation { get; protected set; } = default!;
+
+        public ICommand Finish { get; protected set; } = new Command(ToFinish);
+        public ICommand Theory { get; protected set; } = new Command(ToTheory);
+        public ICommand? Cancel { get; protected set; }
+        public ICommand? Reload { get; protected set; }
+        public ICommand? Start { get; protected set; }
+        public static string? Info { get; protected set; }
+
 
         private string title = string.Empty;
         public string Title
@@ -23,14 +25,14 @@ namespace PsychologyApp.Presentation.ViewModels
             set => SetProperty(ref this.title, value);
         }
 
-        public async void ToTheory(object obj)
+        public static async void ToTheory(object obj)
         {
-            await this.Navigation.PushAsync(new TheoryPage(this.Info), false);
+            await Navigation.PushAsync(new TheoryPage(Info), false);
         }
 
-        public async void ToFinish(object obj)
+        public static async void ToFinish(object obj)
         {
-            _ = await this.Navigation.PopAsync(false);
+            _ = await Navigation.PopAsync(false);
         }
 
         protected bool SetProperty<T>(ref T backingStore, T value,

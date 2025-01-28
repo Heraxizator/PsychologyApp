@@ -12,17 +12,17 @@ public class StartPhysicsViewModel : BaseViewModel
     {
         this.Title = "Психосоматик";
 
-        this.Navigation = navigation;
+        Navigation = navigation;
 
         this.Continue = new Command(async () =>
         {
             SetInit();
 
-            PhysicsSearchViewModel physicsSearchViewModel = new(this.Navigation);
+            PhysicsSearchViewModel physicsSearchViewModel = new(Navigation);
 
             PhysicsSerchPage physicsSerchPage = new(physicsSearchViewModel);
 
-            await this.Navigation.PushAsync(physicsSerchPage, false);
+            await Navigation.PushAsync(physicsSerchPage, false);
         });
 
         SetDone();

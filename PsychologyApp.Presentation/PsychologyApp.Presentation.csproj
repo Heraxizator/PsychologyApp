@@ -23,7 +23,7 @@
 		<ApplicationTitle>Psychology App</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.psychologyapp.presentation</ApplicationId>
+		<ApplicationId>com.subconscious.psychologyapp</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -47,7 +47,6 @@
 	  <EnableLLVM>True</EnableLLVM>
 	  <IsPublishable>False</IsPublishable>
 	  <Debugger>Xamarin</Debugger>
-	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
@@ -55,6 +54,8 @@
 	  <IsPublishable>False</IsPublishable>
 	  <Debugger>Xamarin</Debugger>
 	  <TrimMode>link</TrimMode>
+	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-maccatalyst|AnyCPU'">
@@ -85,6 +86,7 @@
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <RunAOTCompilation>False</RunAOTCompilation>
 	  <TrimMode>link</TrimMode>
+	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -145,6 +147,9 @@
 	  <Compile Update="Modules\Tester\Find\FindProblemPage.xaml.cs">
 	    <DependentUpon>FindProblemPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Templates\NavigationBarSimpleView.xaml.cs">
+	    <DependentUpon>NavigationBarSimpleView.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -167,6 +172,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Templates\ButtonView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Templates\NavigationBarExtendedView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Templates\NavigationBarSimpleView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Templates\ProgressbarView.xaml">

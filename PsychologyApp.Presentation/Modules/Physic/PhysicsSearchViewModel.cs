@@ -12,16 +12,12 @@ public class PhysicsSearchViewModel : BaseViewModel
     private static Task? Initialization = default;
     private readonly ReasonService _reasonService = new();
 
-    public List<ReasonDTO> Reasons { get; private set; } = [];
-    public ObservableRangeCollection<ReasonDTO> Results { get; private set; } = [];
+    public List<ReasonDTO> ReasonsList { get; private set; } = [];
+    public ObservableRangeCollection<ReasonDTO> ResultsObservableCollection { get; private set; } = [];
 
     public PhysicsSearchViewModel(INavigation navigation)
     {
         this.Title = "Поиск";
-
-        this.Reasons = new List<ReasonDTO>();
-
-        this.Results = new ObservableRangeCollection<ReasonDTO>();
 
         this.Reload = new Command(() => ReloadAsync());
 
@@ -34,7 +30,7 @@ public class PhysicsSearchViewModel : BaseViewModel
 
     private void ConfigureState()
     {
-        if (this.Reasons.Any() || this.Results.Any())
+        if (IfEmpty() is true)
         {
             SetDone();
             return;
@@ -43,66 +39,58 @@ public class PhysicsSearchViewModel : BaseViewModel
         SetFail();
     }
 
+    private bool IfEmpty()
+    {
+        return (this.ReasonsList.Any() || this.ResultsObservableCollection.Any());
+    }
+
     private async void ReloadAsync()
     {
-        this.Reasons.Clear();
-
-        this.Results.Clear();
+        this.ReasonsList.Clear();
+        this.ResultsObservableCollection.Clear();
 
         await InitAsync();
     }
 
-    private async Task PrepareReasons()
+    private async Task InitAsync()
     {
         await ReasonHelper.SavePsyhosomaticData();
 
         IEnumerable<ReasonDTO> reasonDTOs = await this._reasonService.GetReasons(1000, 15000);
 
-        this.Reasons.AddRange(reasonDTOs);
+        this.ReasonsList.AddRange(reasonDTOs);
+
+        IEnumerable<ReasonDTO> source = this.ReasonsList.Take(50);
+
+        this.ResultsObservableCollection.AddRange(source);
     }
 
-    private void PrepareResults()
+    public async void ExecuteSearch(string input)
     {
-        IEnumerable<ReasonDTO> source = this.Reasons.Take(30);
-
-        this.Results.AddRange(source);
-    }
-
-    private async Task InitAsync()
-    {
-        await PrepareReasons();
-
-        PrepareResults();
-    }
-
-    public void ExecuteSearch(string input)
-    {
-        Task.Run(() =>
+        if (string.IsNullOrEmpty(input))
         {
-            Application.Current.Dispatcher.Dispatch(() =>
-            {
-                SetInit();
+            ConfigureState();
+            return;
+        }
 
-                this.Results.Clear();
+        SetInit();
 
-                if (string.IsNullOrEmpty(input))
-                {
-                    ConfigureState();
-                    return;
-                }
-            });
+        this.ResultsObservableCollection.Clear();
 
+        await Task.Run(() =>
+        {
             string text = input.ToLower();
 
-            IEnumerable<ReasonDTO> source = this.Reasons
+            IEnumerable<ReasonDTO> source = this.ReasonsList
                 .Where(x => x.Title?.Length >= text.Length && x.Title.ToLower().Contains(text));
 
             Application.Current.Dispatcher.Dispatch(() =>
             {
-                this.Results.AddRange(source);
+                this.ResultsObservableCollection.AddRange(source);
 
                 ConfigureState();
             });
+
         });
     }
 

@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using MauiIcons.Material;
-using PsychologyApp.Presentation.Base.Controls;
 
 #if ANDROID
 using Microsoft.Maui.Controls.Compatibility.Platform.Android;
+using PsychologyApp.Presentation.Platforms.Android.Renderers;
 # endif
 
 namespace PsychologyApp.Presentation
@@ -26,7 +26,9 @@ namespace PsychologyApp.Presentation
 
             .ConfigureMauiHandlers(handlers =>
              {
-
+#if ANDROID
+                 handlers.AddHandler(typeof(Frame), typeof(ShadowFrameRenderer));
+#endif
              });
 
             Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("MyCustomization", (handler, view) =>

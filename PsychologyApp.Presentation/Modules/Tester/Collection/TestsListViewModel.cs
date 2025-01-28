@@ -11,8 +11,10 @@ public class TestsListViewModel : BaseViewModel
 {
     public ObservableCollection<TestItem> TestItemCollection { get; private set; } = [];
 
-    public TestsListViewModel()
+    public TestsListViewModel(INavigation navigation)
     {
+        Navigation = navigation;
+
         Init();
     }
 
