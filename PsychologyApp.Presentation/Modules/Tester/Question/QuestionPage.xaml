@@ -2,11 +2,17 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Modules.Tester.QuestionPage"
-             xmlns:vm="clr-namespace:MobileHelper.ViewModels.TestViewModels"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Modules.Tester"
              xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons">
 
+    <AbsoluteLayout 
+        HorizontalOptions="FillAndExpand" 
+        VerticalOptions="FillAndExpand">
+
     <CollectionView
+            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+            AbsoluteLayout.LayoutFlags="All"
             Margin="10"
             x:DataType="vm:QuestionViewModel"
             ItemsSource="{Binding Questions}">
@@ -68,6 +74,7 @@
                                 <DataTemplate x:DataType="vm:Answer">
 
                                     <StackLayout 
+                                        HorizontalOptions="FillAndExpand"
                                             Orientation="Horizontal">
 
                                         <CheckBox 
@@ -76,8 +83,8 @@
 
                                         <Label 
                                                 VerticalOptions="Center"
+                                                HorizontalOptions="FillAndExpand"
                                                 HorizontalTextAlignment="Justify"
-                                                WidthRequest="250"
                                                 Text="{Binding Text}"/>
 
                                     </StackLayout>
@@ -108,5 +115,7 @@
         </CollectionView.Footer>
         
     </CollectionView>
+
+    </AbsoluteLayout>
 
 </ContentPage>

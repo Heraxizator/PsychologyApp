@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileHelperMaui.Views.TestPages.TestsListPage"
              Shell.NavBarIsVisible="True"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Modules.Tester.Collection"
              Title="Детектор">
 
     <ContentPage.Resources>
@@ -11,38 +12,37 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <StackLayout>
-        <ListView
+    <AbsoluteLayout 
+        VerticalOptions="FillAndExpand" 
+        HorizontalOptions="FillAndExpand">
+        
+        <CollectionView
+            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+            AbsoluteLayout.LayoutFlags="All"
+            x:Name="coll_view"
             Margin="20, 20, 15, 5"
             HorizontalOptions="CenterAndExpand"
-            VerticalOptions="CenterAndExpand"
+            VerticalOptions="StartAndExpand"
             VerticalScrollBarVisibility="Never"
-            SelectionMode="None"
-            HasUnevenRows="True"
-            SeparatorVisibility="None"
+            SelectionMode="Single"
+            SelectionChanged="CollectionView_SelectionChanged"
             ItemsSource="{Binding TestItemCollection}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout Padding="0, 0, 0, 15">
-                            <Label 
-                                Margin="0, 0, 0, 5"
-                                FontSize="16"
-                                TextColor="Black"
-                                Text="{Binding Title}"/>
-                            <Label
-                                FontSize="15"
-                                TextColor="{StaticResource Gray}"
-                                Text="{Binding Subtitle}"/>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:TestItem">
+                    <StackLayout Padding="0, 0, 0, 15">
+                        <Label 
+                            Margin="0, 0, 0, 5"
+                            FontSize="16"
+                            TextColor="Black"
+                            Text="{Binding Title}"/>
+                        <Label
+                            FontSize="15"
+                            TextColor="{StaticResource Gray}"
+                            Text="{Binding Subtitle}"/>
 
-                            <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ItemTappedCommand}"/>
-                            </StackLayout.GestureRecognizers>
-                            
-                        </StackLayout>
-                    </ViewCell>
+                    </StackLayout>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </StackLayout>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </AbsoluteLayout>
 </ContentPage>

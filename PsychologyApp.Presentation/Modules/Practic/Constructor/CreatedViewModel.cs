@@ -26,7 +26,8 @@ public class CreatedViewModel : BaseViewModel
 
     public CreatedViewModel(INavigation navigation, long id)
     {
-        Title = "Техника";
+        this.ModuleName = "Практик";
+        this.PageName = "Своя техника";
 
         Finish = new Command(async () => await navigation.PopAsync(false));
         Theory = new Command(ToTheory);

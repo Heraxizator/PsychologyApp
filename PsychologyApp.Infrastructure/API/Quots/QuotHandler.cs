@@ -31,7 +31,7 @@ public static class QuotHandler
             return false;
         }
 
-        long quotId = await Database.QuotRepository.AddAsync(Quot.Create(quotAPI.QuoteAuthor!, quotAPI.QuoteText!, quotAPI.QuoteAuthor!, false));
+        long quotId = await Database.QuotRepository.AddAsync(Quot.Create(quotAPI.QuoteAuthor!, quotAPI.QuoteText!, quotAPI.QuoteAuthor!, false), cancelTimeout);
 
         return quotId > 0;
     }

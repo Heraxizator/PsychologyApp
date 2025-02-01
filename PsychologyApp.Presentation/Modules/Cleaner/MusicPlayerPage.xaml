@@ -19,7 +19,15 @@
 
     <ContentPage.Content>
 
-        <StackLayout VerticalOptions="FillAndExpand" Margin="10">
+        <AbsoluteLayout 
+            VerticalOptions="FillAndExpand" 
+            HorizontalOptions="FillAndExpand">
+            
+        <StackLayout 
+            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+            AbsoluteLayout.LayoutFlags="All"
+            VerticalOptions="FillAndExpand"
+            Margin="10">
 
             <StackLayout 
                 VerticalOptions="CenterAndExpand"
@@ -161,5 +169,6 @@
             </StackLayout>
 
         </StackLayout>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace PsychologyApp.Application.Helpers;
 
-public static class ReasonHelper
+public static class ReasonExtension
 {
-    public static async Task<bool> SavePsyhosomaticData(int cancelTimeout = 15000)
+    public static async Task<bool> SavePsyhosomaticData(int cancelTimeout = 25000)
     {
         CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
         cancellationTokenSource.Token.ThrowIfCancellationRequested();
 
-        if ((await Database.ReasonRepository.GetAllAsync()).Any() is true)
+        if ((await Database.ReasonRepository.GetAllAsync(cancelTimeout)).Any() is true)
         {
             return true;
         }
@@ -50,7 +50,7 @@ public static class ReasonHelper
                 catch (Exception) { }
             }
 
-            return await Database.ReasonRepository.AddRangeAsync(psychosomaticObjects);
+            return await Database.ReasonRepository.AddRangeAsync(psychosomaticObjects, cancelTimeout);
         });
     }
 }

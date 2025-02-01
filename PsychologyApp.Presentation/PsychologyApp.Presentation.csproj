@@ -26,8 +26,8 @@
 		<ApplicationId>com.subconscious.psychologyapp</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-		<ApplicationVersion>1</ApplicationVersion>
+		<ApplicationDisplayVersion>1.1</ApplicationDisplayVersion>
+		<ApplicationVersion>2</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
@@ -53,9 +53,10 @@
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
 	  <IsPublishable>False</IsPublishable>
 	  <Debugger>Xamarin</Debugger>
-	  <TrimMode>link</TrimMode>
+	  <TrimMode>copyused</TrimMode>
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
-	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	  <AndroidPackageFormat>aab</AndroidPackageFormat>
+	  <PublishTrimmed>False</PublishTrimmed>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-maccatalyst|AnyCPU'">
@@ -83,10 +84,11 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
-	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	  <AndroidPackageFormat>aab</AndroidPackageFormat>
 	  <RunAOTCompilation>False</RunAOTCompilation>
-	  <TrimMode>link</TrimMode>
+	  <TrimMode>copyused</TrimMode>
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+	  <PublishTrimmed>False</PublishTrimmed>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -131,8 +133,20 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
-		<PackageReference Include="Plugin.Maui.Audio" Version="3.0.1" />
 		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
+	
+		<TrimmerRootAssembly Include="CommunityToolkit.Maui" RootMode="All" />
+		
+		<TrimmerRootAssembly Include="System.Text.Json" RootMode="All" />
+		
+		<TrimmerRootAssembly Include="Microsoft.EntityFrameworkCore" RootMode="All" />
+		<TrimmerRootAssembly Include="Microsoft.EntityFrameworkCore.Sqlite" RootMode="All" />
+		
+		<TrimmerRootAssembly Include="PsychologyApp.Presentation" RootMode="All" />
+		<TrimmerRootAssembly Include="PsychologyApp.Domain" RootMode="All" />
+		<TrimmerRootAssembly Include="PsychologyApp.Infrastructure" RootMode="All" />
+		<TrimmerRootAssembly Include="PsychologyApp.Application" RootMode="All" />
+	
 	</ItemGroup>
 
 	<ItemGroup>

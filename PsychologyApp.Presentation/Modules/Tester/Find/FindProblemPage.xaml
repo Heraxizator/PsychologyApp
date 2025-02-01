@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:MobileHelper.ViewModels.TestViewModels"
              xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             x:DataType="vm:FindProblemViewModel"
              Title="Детектор">
 
     <ContentPage.Resources>
@@ -13,81 +14,108 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout Margin="0">
 
-                <templates:NavigationBarSimpleView
-                    x:DataType="vm:FindProblemViewModel"
-                    TitleText="Поиск проблемы"
-                    BackCommand="{Binding Finish}"
-                    BackText="Назад">
-                </templates:NavigationBarSimpleView>
+        <AbsoluteLayout
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand">
 
-                <templates:TextBoxView
+            <ScrollView
+            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+            AbsoluteLayout.LayoutFlags="All">
+                <StackLayout Margin="0">
+
+                    <StackLayout
+                    Margin="25, 10, 25, 10"
+                    Orientation="Horizontal">
+
+                        <Label
+                        Margin="0, 0, 0, 0"
+                        VerticalOptions="CenterAndExpand"
+                        FontSize="16"
+                        Text="{mi:Material Icon=KeyboardArrowLeft, IconSize=25}"
+                        TextColor="{StaticResource Primary}">
+
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1" Command="{Binding Finish}"/>
+                            </Label.GestureRecognizers>
+
+                        </Label>
+
+                        <Label
+                        Text="Поиск проблемы"
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="CenterAndExpand"
+                        TextColor="Black"
+                        FontSize="19"/>
+
+                    </StackLayout>
+
+                    <templates:TextBoxView
                     HeaderText="Описание"
                     BodyText="{Binding DescribtionText}"/>
 
-                <Frame Margin="15, 10, 15, 15">
-                    <StackLayout Margin="0">
-                        <Label
+                    <Frame Margin="15, 10, 15, 15">
+                        <StackLayout Margin="0">
+                            <Label
                     Text="Алгоритм"
                     FontSize="18"
                     Margin="5, 0, 0, 10"
                     TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
-                        <CollectionView 
+                            <CollectionView 
                         SelectionMode="None"
                         VerticalScrollBarVisibility="Never"
                         ItemsSource="{Binding AlgorithmRows}">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Label 
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="vm:AlgorithmItem">
+                                        <Label 
                                             HorizontalTextAlignment="Justify"
                                     Margin="10, 0, 0, 0"
                                     TextColor="{AppThemeBinding Light=black, Dark=white}"
                                     Text="{Binding Row}"
                                     FontSize="16">
-                                    </Label>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
+                                        </Label>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
 
-                        </CollectionView>
+                            </CollectionView>
 
-                    </StackLayout>
+                        </StackLayout>
 
-                </Frame>
+                    </Frame>
 
-                <Frame Margin="15, 10, 15, 15">
-                    <StackLayout Margin="0">
-                        <Label
+                    <Frame Margin="15, 10, 15, 15">
+                        <StackLayout Margin="0">
+                            <Label
                     Text="Замечание"
                     FontSize="18"
                     Margin="5, 0, 0, 10"
                     TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 
-                        <Label
+                            <Label
                     Margin="5, 0, 0, 10"
                             HorizontalTextAlignment="Justify"
                     Text="{Binding CommentText}"
                     TextColor="{AppThemeBinding Light=black, Dark=white}"
                     FontSize="16"/>
 
-                    </StackLayout>
+                        </StackLayout>
 
-                </Frame>
+                    </Frame>
 
-                <templates:ButtonView
+                    <templates:ButtonView
                     Margin="10, 15, 10, 25"
                     BodyText="Начать">
 
-                    <templates:ButtonView.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding Continue}"/>
-                    </templates:ButtonView.GestureRecognizers>
+                        <templates:ButtonView.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Continue}"/>
+                        </templates:ButtonView.GestureRecognizers>
 
-                </templates:ButtonView>
+                    </templates:ButtonView>
 
-            </StackLayout>
-        </ScrollView>
-
+                </StackLayout>
+            </ScrollView>
+        </AbsoluteLayout>
+        
     </ContentPage.Content>
 </ContentPage>

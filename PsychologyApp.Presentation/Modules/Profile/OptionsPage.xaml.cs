@@ -4,17 +4,17 @@ namespace PsychologyApp.Presentation.Views.ProfilePages;
 
 public partial class OptionsPage : ContentPage
 {
-	public OptionsPage()
-	{
-		InitializeComponent();
+    public OptionsPage()
+    {
+        InitializeComponent();
 
-		OptionsViewModel viewModel = new(this.Navigation);
+        OptionsViewModel viewModel = new(Navigation);
 
-		this.BindingContext = viewModel;
-	}
+        BindingContext = viewModel;
+    }
 
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
-		await Navigation.PopAsync(false);
+        _ = await Navigation.PopAsync(false);
     }
 }

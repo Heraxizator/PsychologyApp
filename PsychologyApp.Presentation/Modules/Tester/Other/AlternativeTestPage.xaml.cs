@@ -4,15 +4,15 @@ namespace MobileHelperMaui.Views.TestPages;
 
 public partial class AlternativeTestPage : ContentPage
 {
-	public AlternativeTestPage()
-	{
-		InitializeComponent();
+    public AlternativeTestPage()
+    {
+        InitializeComponent();
 
-		this.BindingContext = new AlternativeTestViewModel(this.Navigation);
-	}
+        BindingContext = new AlternativeTestViewModel(Navigation);
+    }
 
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
-		await Navigation.PopAsync(false);
+        _ = await Navigation.PopAsync(false);
     }
 }

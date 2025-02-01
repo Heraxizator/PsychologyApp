@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MobileHelper.ViewModels.TestViewModels;
+﻿
+namespace PsychologyApp.Presentation.Modules.Tester;
 
 public class Question
 {

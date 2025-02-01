@@ -18,43 +18,43 @@ public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : clas
         _connection = connection;
     }
 
-    public async Task<long> AddAsync(TEntity entity)
+    public async Task<long> AddAsync(TEntity entity, int cancelTimeout)
     {
-        return await _connection.InsertAsync(entity);
+        return await _connection.InsertAsync(entity, null, cancelTimeout);
     }
 
-    public async Task<bool> AddRangeAsync(IEnumerable<TEntity> entities)
+    public async Task<bool> AddRangeAsync(IEnumerable<TEntity> entities, int cancelTimeout)
     {
-        return await _connection.InsertAsync(entities) > 0;
+        return await _connection.InsertAsync(entities, null, cancelTimeout) > 0;
     }
 
-    public async Task<bool> DeleteAsync(TEntity entity)
+    public async Task<bool> DeleteAsync(TEntity entity, int cancelTimeout)
     {
-        return await _connection.DeleteAsync(entity);
+        return await _connection.DeleteAsync(entity, null, cancelTimeout);
     }
 
-    public async Task<bool> DeleteRangeAsync(IEnumerable<TEntity> entities)
+    public async Task<bool> DeleteRangeAsync(IEnumerable<TEntity> entities, int cancelTimeout)
     {
-        return await _connection.DeleteAsync(entities);
+        return await _connection.DeleteAsync(entities, null, cancelTimeout);
     }
 
-    public async Task<bool> EditAsync(TEntity entity)
+    public async Task<bool> EditAsync(TEntity entity, int cancelTimeout)
     {
-        return await _connection.UpdateAsync(entity);
+        return await _connection.UpdateAsync(entity, null, cancelTimeout);
     }
 
-    public async Task<bool> EditRangeAsync(IEnumerable<TEntity> entities)
+    public async Task<bool> EditRangeAsync(IEnumerable<TEntity> entities, int cancelTimeout)
     {
-        return await _connection.UpdateAsync(entities);
+        return await _connection.UpdateAsync(entities, null, cancelTimeout);
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync()
+    public async Task<IEnumerable<TEntity>> GetAllAsync(int cancelTimeout)
     {
-        return await _connection.GetAllAsync<TEntity>();
+        return await _connection.GetAllAsync<TEntity>(null, cancelTimeout);
     }
 
-    public async Task<TEntity> GetByIdAsync(long id)
+    public async Task<TEntity> GetByIdAsync(long id, int cancelTimeout)
     {
-        return await _connection.GetAsync<TEntity>(id);
+        return await _connection.GetAsync<TEntity>(id, null, cancelTimeout);
     }
 }

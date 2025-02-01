@@ -4,15 +4,15 @@ namespace MobileHelperMaui.Views.ProfilePages;
 
 public partial class UserPage : ContentPage
 {
-	public UserPage()
-	{
-		InitializeComponent();
+    public UserPage()
+    {
+        InitializeComponent();
 
-        this.BindingContext = new UserViewModel(this.Navigation);
+        BindingContext = new UserViewModel(Navigation);
     }
 
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
-        await Navigation.PopAsync(false);
+        _ = await Navigation.PopAsync(false);
     }
 }

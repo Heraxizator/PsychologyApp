@@ -17,7 +17,8 @@ public class PhysicsSearchViewModel : BaseViewModel
 
     public PhysicsSearchViewModel(INavigation navigation)
     {
-        this.Title = "Поиск";
+        this.ModuleName = "Психосоматик";
+        this.PageName = "Поисковик";
 
         this.Reload = new Command(() => ReloadAsync());
 
@@ -54,7 +55,7 @@ public class PhysicsSearchViewModel : BaseViewModel
 
     private async Task InitAsync()
     {
-        await ReasonHelper.SavePsyhosomaticData();
+        await ReasonExtension.SavePsyhosomaticData();
 
         IEnumerable<ReasonDTO> reasonDTOs = await this._reasonService.GetReasons(1000, 15000);
 

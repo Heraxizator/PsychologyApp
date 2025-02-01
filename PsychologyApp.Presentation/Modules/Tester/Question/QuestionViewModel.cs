@@ -2,16 +2,10 @@
 using PsychologyApp.Presentation.Base.ServiceLocator;
 using PsychologyApp.Presentation.Base.ServiceLocator.Dialog;
 using PsychologyApp.Presentation.Base.ServiceLocator.Toast;
-using PsychologyApp.Presentation.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using BaseViewModel = PsychologyApp.Presentation.ViewModels.BaseViewModel;
 
-namespace MobileHelper.ViewModels.TestViewModels;
+namespace PsychologyApp.Presentation.Modules.Tester;
 
 public class QuestionViewModel : BaseViewModel
 {
@@ -39,7 +33,7 @@ public class QuestionViewModel : BaseViewModel
             return;
         }
 
-        int questionBalls = new int();
+        int questionBalls = new();
 
         for (int index = 0; index < Questions.Count; index++)
         {

@@ -10,7 +10,8 @@ public class StartPhysicsViewModel : BaseViewModel
 
     public StartPhysicsViewModel(INavigation navigation)
     {
-        this.Title = "Психосоматик";
+        this.ModuleName = "Психосоматик";
+        this.PageName = "О психосоматике";
 
         Navigation = navigation;
 

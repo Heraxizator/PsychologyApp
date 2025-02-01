@@ -12,7 +12,7 @@ public class TechniqueTests
     [Fact]
     public void BuildShouldThrowExceptionIfNumberIsNotSet()
     {
-        var action = () => Technique.Create(string.Empty, "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        var action = () => Technique.Create(-1, string.Empty, "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         Assert.Throws<ArgumentException>(action);
     }
@@ -20,7 +20,7 @@ public class TechniqueTests
     [Fact]
     public void BuildShouldThrowExceptionIfDateIsNotSet()
     {
-        var action = () => Technique.Create("Any Number", string.Empty, "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        var action = () => Technique.Create(-1, "Any Number", string.Empty, "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         Assert.Throws<ArgumentException>(action);
     }
@@ -28,7 +28,7 @@ public class TechniqueTests
     [Fact]
     public void BuildShouldThrowExceptionIfHeaderIsNotSet()
     {
-        var action = () => Technique.Create("Any Number", "Any Date", string.Empty, "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        var action = () => Technique.Create(-1, "Any Number", "Any Date", string.Empty, "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         Assert.Throws<ArgumentException>(action);
     }
@@ -36,7 +36,7 @@ public class TechniqueTests
     [Fact]
     public void BuildShouldThrowExceptionIfDescribtionIsNotSet()
     {
-        var action = () => Technique.Create("Any Number", "Any Date", "Any Header", string.Empty, "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        var action = () => Technique.Create(-1, "Any Number", "Any Date", "Any Header", string.Empty, "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         Assert.Throws<ArgumentException>(action);
     }
@@ -44,7 +44,7 @@ public class TechniqueTests
     [Fact]
     public void BuildShouldThrowExceptionIfSubjectIsNotSet()
     {
-        var action = () => Technique.Create("Any Number", "Any Date", "Any Header", "Any Describtion", string.Empty, "Any Author", "Any Algorithm", "Any Image");
+        var action = () => Technique.Create(-1, "Any Number", "Any Date", "Any Header", "Any Describtion", string.Empty, "Any Author", "Any Algorithm", "Any Image");
 
         Assert.Throws<ArgumentException>(action);
     }
@@ -52,7 +52,7 @@ public class TechniqueTests
     [Fact]
     public void BuildShouldThrowExceptionIfAuthorIsNotSet()
     {
-        var action = () => Technique.Create("Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", string.Empty, "Any Algorithm", "Any Image");
+        var action = () => Technique.Create(-1, "Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", string.Empty, "Any Algorithm", "Any Image");
 
         Assert.Throws<ArgumentException>(action);
     }
@@ -60,7 +60,7 @@ public class TechniqueTests
     [Fact]
     public void BuildShouldThrowExceptionIfAlgorithmIsNotSet()
     {
-        var action = () => Technique.Create("Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        var action = () => Technique.Create(-1, "Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         Assert.Throws<ArgumentException>(action);
     }
@@ -68,7 +68,7 @@ public class TechniqueTests
     [Fact]
     public void BuildShouldCreateIfEveryPropertyIsSet()
     {
-        var action = () => Technique.Create("Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        var action = () => Technique.Create(-1, "Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         Assert.Throws<ArgumentException>(action);
     }
@@ -76,7 +76,7 @@ public class TechniqueTests
     [Fact]
     public void SetNumberThrowsExceptionIfValueIsNotSet()
     {
-        Technique technique = Technique.Create("Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        Technique technique = Technique.Create(-1, "Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         var action = () => technique.SetNumber(string.Empty);
 
@@ -86,7 +86,7 @@ public class TechniqueTests
     [Fact]
     public void SetNumberIsSuccessfulIfValueIsSet()
     {
-        Technique technique = Technique.Create("Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        Technique technique = Technique.Create(-1, "Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         technique.SetNumber("Any Number");
 
@@ -96,7 +96,7 @@ public class TechniqueTests
     [Fact]
     public void SetDateThrowsExceptionIfValueIsNotSet()
     {
-        Technique technique = Technique.Create("Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        Technique technique = Technique.Create(-1, "Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         var action = () => technique.SetDate(string.Empty);
 
@@ -106,7 +106,7 @@ public class TechniqueTests
     [Fact]
     public void SetDateIsSuccessfulIfValueIsSet()
     {
-        Technique technique = Technique.Create("Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        Technique technique = Technique.Create(-1, "Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         technique.SetDate("Any Date");
 
@@ -116,7 +116,7 @@ public class TechniqueTests
     [Fact]
     public void SetHeaderThrowsExceptionIfValueIsNotSet()
     {
-        Technique technique = Technique.Create("Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        Technique technique = Technique.Create(-1, "Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         var action = () => technique.SetHeader(string.Empty);
 
@@ -126,7 +126,7 @@ public class TechniqueTests
     [Fact]
     public void SetHeaderIsSuccessfulIfValueIsSet()
     {
-        Technique technique = Technique.Create("Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        Technique technique = Technique.Create(-1, "Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         technique.SetNumber("Any Number");
 
@@ -136,7 +136,7 @@ public class TechniqueTests
     [Fact]
     public void SetDescribtionThrowsExceptionIfValueIsNotSet()
     {
-        Technique technique = Technique.Create("Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        Technique technique = Technique.Create(-1, "Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         var action = () => technique.SetDescribtion(string.Empty);
 
@@ -146,7 +146,7 @@ public class TechniqueTests
     [Fact]
     public void SetDescribtionIsSuccessfulIfValueIsSet()
     {
-        Technique technique = Technique.Create("Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        Technique technique = Technique.Create(-1, "Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         technique.SetDescribtion("Any Describtion");
 
@@ -156,7 +156,7 @@ public class TechniqueTests
     [Fact]
     public void SetSubjectThrowsExceptionIfValueIsNotSet()
     {
-        Technique technique = Technique.Create("Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        Technique technique = Technique.Create(-1, "Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         var action = () => technique.SetSubject(string.Empty);
 
@@ -166,7 +166,7 @@ public class TechniqueTests
     [Fact]
     public void SetSubjectIsSuccessfulIfValueIsSet()
     {
-        Technique technique = Technique.Create("Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        Technique technique = Technique.Create(-1, "Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         technique.SetSubject("Any Subject");
 
@@ -176,7 +176,7 @@ public class TechniqueTests
     [Fact]
     public void SetAuthorThrowsExceptionIfValueIsNotSet()
     {
-        Technique technique = Technique.Create("Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        Technique technique = Technique.Create(-1, "Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         var action = () => technique.SetAuthor(string.Empty);
 
@@ -186,7 +186,7 @@ public class TechniqueTests
     [Fact]
     public void SetAuthorIsSuccessfulIfValueIsSet()
     {
-        Technique technique = Technique.Create("Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        Technique technique = Technique.Create(-1, "Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         technique.SetAuthor("Any Number");
 
@@ -196,7 +196,7 @@ public class TechniqueTests
     [Fact]
     public void SetAlgorithmThrowsExceptionIfValueIsNotSet()
     {
-        Technique technique = Technique.Create("Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        Technique technique = Technique.Create(-1, "Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         var action = () => technique.SetAlgorithm(string.Empty);
 
@@ -206,7 +206,7 @@ public class TechniqueTests
     [Fact]
     public void SetAlgorithmIsSuccessfulIfValueIsSet()
     {
-        Technique technique = Technique.Create("Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
+        Technique technique = Technique.Create(-1, "Any Number", "Any Date", "Any Header", "Any Describtion", "Any Subject", "Any Author", "Any Algorithm", "Any Image");
 
         technique.SetAlgorithm("Any Algorithm");
 

@@ -7,7 +7,7 @@ namespace MobileHelper.ViewModels.TestViewModels;
 public class FindProblemViewModel : BaseViewModel
 {
     public ICommand Continue { get; private set; } = default!;
-    public ICommand Finish { get; private set; } = default!;
+    public new ICommand Finish { get; private set; } = default!;
 
 
     private readonly Action _nextPageTappedAction = default!;
@@ -16,7 +16,8 @@ public class FindProblemViewModel : BaseViewModel
 
     public FindProblemViewModel(INavigation navigation, string? describtion, List<string> algorithm, string? comment, Action action)
     {
-        Title = "Детектор";
+        ModuleName = "Детектор";
+        PageName = "О детекторе";
 
         Navigation = navigation;
 
@@ -79,10 +80,10 @@ public class FindProblemViewModel : BaseViewModel
         }
     }
 
-    public class AlgorithmItem
-    {
-        public string? Row { get; set; }
-    }
-
     #endregion
+}
+
+public class AlgorithmItem
+{
+    public string? Row { get; set; }
 }

@@ -20,8 +20,14 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Найти" Clicked="Button_Clicked"/>
     </ContentPage.ToolbarItems>
-    
+
+    <AbsoluteLayout 
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
+        
     <StackLayout 
+        AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+        AbsoluteLayout.LayoutFlags="All"
         IsVisible="True"
         Margin="10, 0, 10, 0"
         VerticalOptions="FillAndExpand" 
@@ -155,4 +161,5 @@
 
         </ScrollView>
     </StackLayout>
+    </AbsoluteLayout>
 </ContentPage>

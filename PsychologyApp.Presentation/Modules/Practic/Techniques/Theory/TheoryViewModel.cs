@@ -1,30 +1,30 @@
 ﻿using PsychologyApp.Presentation.ViewModels;
 
-namespace MobileHelper.ViewModels.TechniqueViewModels
+namespace MobileHelper.ViewModels.TechniqueViewModels;
+
+public class TheoryViewModel : BaseViewModel
 {
-    public class TheoryViewModel : BaseViewModel
+    private string text { get; set; } = default!;
+
+    public TheoryViewModel() { }
+
+    public TheoryViewModel(INavigation navigation, string content)
     {
-        private string text { get; set; } = default!;
+        ModuleName = "Практик";
+        PageName = "Теория";
 
-        public TheoryViewModel() { }
+        Text = content;
+    }
 
-        public TheoryViewModel(INavigation navigation, string content)
+    public string Text
+    {
+        get => text;
+        set
         {
-            this.Title = "Теория";
-            this.Text = content;
-
-        }
-
-        public string Text
-        {
-            get => this.text;
-            set
+            if (text != value)
             {
-                if (this.text != value)
-                {
-                    this.text = value;
-                    OnPropertyChanged(nameof(this.Text));
-                }
+                text = value;
+                OnPropertyChanged(nameof(Text));
             }
         }
     }

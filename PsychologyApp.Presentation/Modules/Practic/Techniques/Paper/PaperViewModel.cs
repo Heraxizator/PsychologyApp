@@ -15,41 +15,43 @@ public class PaperViewModel : BaseViewModel
     {
         Navigation = navigation;
 
-        this.Title = "Техника";
+        ModuleName = "Практик";
+        PageName = "Лист Бумаги";
+
         Info = "Учёные провели эксперимент и выявили одну замечательную закономерность: если взять лист бумаги, записать свои негативные мысли и выбросить этот лист, то тот негатив потеряют какое-либо значение для человека и перестанет его беспокоить. Но для такой практики совершенно необязательно тратить бумагу. Можно просто воспользоваться текстовым редактором на следующей странице. Техника проста до безобразия!";
-        
-        this.AddCommand = new Command(ToAdd);
+
+        AddCommand = new Command(ToAdd);
     }
 
     private void ClearInput()
     {
-        this.Text = string.Empty;
+        Text = string.Empty;
     }
 
     private void SetCollection(bool visible)
     {
-        this.IsFull = visible;
+        IsFull = visible;
     }
 
     private void ToAdd(object obj)
     {
-        if (string.IsNullOrWhiteSpace(this.Text) is true)
+        if (string.IsNullOrWhiteSpace(Text) is true)
         {
             return;
         }
 
         SetCollection(true);
 
-        Paper item = new() 
-        { 
-            Id = "Карточка №" + (this.PapersObservableCollection.Count + 1),
-            Text = this.Text 
+        Paper item = new()
+        {
+            Id = "Карточка №" + (PapersObservableCollection.Count + 1),
+            Text = Text
         };
 
-        this.PapersObservableCollection.Add(item);
+        PapersObservableCollection.Add(item);
 
         ClearInput();
-        
+
 
     }
 
@@ -60,22 +62,22 @@ public class PaperViewModel : BaseViewModel
             return;
         }
 
-        this.PapersObservableCollection.Remove(item);
+        _ = PapersObservableCollection.Remove(item);
 
-        SetCollection(this.PapersObservableCollection.Any());
+        SetCollection(PapersObservableCollection.Any());
     });
 
 
     private string text = default!;
     public string Text
     {
-        get => this.text;
+        get => text;
         set
         {
-            if (this.text != value)
+            if (text != value)
             {
-                this.text = value;
-                OnPropertyChanged(nameof(this.Text));
+                text = value;
+                OnPropertyChanged(nameof(Text));
             }
         }
     }
@@ -83,13 +85,13 @@ public class PaperViewModel : BaseViewModel
     private bool isFull = default!;
     public bool IsFull
     {
-        get => this.isFull;
+        get => isFull;
         set
         {
-            if (this.isFull != value)
+            if (isFull != value)
             {
-                this.isFull = value;
-                OnPropertyChanged(nameof(this.IsFull));
+                isFull = value;
+                OnPropertyChanged(nameof(IsFull));
             }
         }
     }

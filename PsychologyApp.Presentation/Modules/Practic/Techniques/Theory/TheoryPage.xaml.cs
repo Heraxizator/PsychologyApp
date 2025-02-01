@@ -8,11 +8,11 @@ public partial class TheoryPage : ContentPage
     {
         InitializeComponent();
 
-        this.BindingContext = new TheoryViewModel(Navigation, content);
+        BindingContext = new TheoryViewModel(Navigation, content);
     }
 
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
-        await Navigation.PopAsync(false);
+        _ = await Navigation.PopAsync(false);
     }
 }

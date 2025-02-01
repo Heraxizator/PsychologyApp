@@ -10,7 +10,7 @@ public class ApplicationDbContext : DbContext
         Environment.SpecialFolder folder = Environment.SpecialFolder.LocalApplicationData;
         string folderPath = Environment.GetFolderPath(folder);
 
-        return Path.Join(folderPath, "local.db");
+        return Path.Join(folderPath, "mentalfire3.db");
     }
 
     public ApplicationDbContext() { }
@@ -24,6 +24,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Quot> Quots { get; set; }
     public DbSet<Technique> Techniques { get; set; }
     public DbSet<Reason> Reasons { get; set; }
+    public DbSet<Statistic> Statistics { get; set; }
     #endregion
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)

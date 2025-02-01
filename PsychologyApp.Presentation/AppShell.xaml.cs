@@ -5,31 +5,42 @@ using PsychologyApp.Presentation.Base.ServiceLocator.Dialog;
 using PsychologyApp.Presentation.Base.ServiceLocator.Toast;
 using PsychologyApp.Presentation.Base.ServiceLocatorж;
 
-namespace PsychologyApp.Presentation
+namespace PsychologyApp.Presentation;
+
+public partial class AppShell : Shell
 {
-    public partial class AppShell : Shell
+    public AppShell()
     {
-        public AppShell()
+        InitializeComponent();
+
+        InitServices();
+
+        ConfigureMigrations();
+
+        Database.ConfigureSQLite();
+
+        _ = Task.Run(async () =>
         {
-            InitializeComponent();
+            _ = await ReasonExtension.SavePsyhosomaticData(15000);
+            _ = await QuotHandler.GetQuotsFromApi(15000);
+        });
+    }
 
-            InitServices();
+    private void InitServices()
+    {
+        Base.ServiceLocator.ServiceLocator.Instance.Register<IToastService>(new ToastService());
+        Base.ServiceLocator.ServiceLocator.Instance.Register<IDialogService>(new DialogService());
+    }
 
-            Database.CreateTables();
+    private void ConfigureMigrations()
+    {
+        string currentVersionString = $"{AppInfo.Current.VersionString}";
 
-            Database.ConfigureSQLite();
-
-            Task.Run(async () =>
-            {
-                await ReasonHelper.SavePsyhosomaticData(15000);
-                await QuotHandler.GetQuotsFromApi(15000);
-            });
-        }
-
-        private void InitServices()
+        if (Preferences.Default.ContainsKey(currentVersionString) is false)
         {
-            Base.ServiceLocator.ServiceLocator.Instance.Register<IToastService>(new ToastService());
-            Base.ServiceLocator.ServiceLocator.Instance.Register<IDialogService>(new DialogService());
+            Database.ReCreateTables();
+
+            Preferences.Default.Set(currentVersionString, true);
         }
     }
 }

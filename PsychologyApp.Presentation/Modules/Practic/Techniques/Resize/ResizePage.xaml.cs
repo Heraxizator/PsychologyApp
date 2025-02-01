@@ -1,19 +1,37 @@
-using MobileHelper.ViewModels.TechniqueViewModels;
-using PsychologyApp.Presentation.Technique.Comparison;
+using PsychologyApp.Application;
+using PsychologyApp.Application.Models;
+using PsychologyApp.Presentation.Modules.Practic.Techniques.Resize;
 
 namespace MobileHelperMaui.Views.TechniquePages;
 
 public partial class ResizePage : ContentPage
 {
+    private readonly ResizeViewModel ViewModel = default!;
+    private DateTime DateBegin = default!;
     public ResizePage()
     {
         InitializeComponent();
 
-        this.BindingContext = new ResizeViewModel(this.Navigation);
+        ViewModel = new ResizeViewModel(Navigation);
+        BindingContext = ViewModel;
     }
 
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
-        await Navigation.PopAsync(false);
+        _ = await Navigation.PopAsync(false);
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        DateBegin = DateTime.Now;
+    }
+
+    protected override async void OnDisappearing()
+    {
+        StatisticService statisticService = new();
+
+        await statisticService.AddSingleAsync(new StatisticDTO { ModuleName = ViewModel.ModuleName, PageName = ViewModel.PageName, DateTime = DateTime.Now, SecondsDuration = DateBegin.Subtract(DateTime.Now).Seconds }, 3000);
     }
 }

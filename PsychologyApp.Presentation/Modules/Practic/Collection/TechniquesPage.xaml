@@ -20,7 +20,13 @@
         <ToolbarItem Text="Профиль" Clicked="ToolbarItem_Clicked"/>
     </ContentPage.ToolbarItems>
 
+    <AbsoluteLayout
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+
     <CollectionView
+        AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+        AbsoluteLayout.LayoutFlags="All"
         Margin="5, 0, 5, 5"
         ItemsSource="{Binding Techniques}"
         SelectionMode="Single"
@@ -47,7 +53,7 @@
                     HorizontalOptions="End"
                     VerticalOptions="Center"
                     Command="{Binding ConstructorTapped}"
-                    HeightRequest="40"/>
+                    HeightRequest="35"/>
             </StackLayout>
 
         </CollectionView.Header>
@@ -82,14 +88,13 @@
                                 HeightRequest="85"
                                 Source="{Binding Image}"/>
 
-                            <StackLayout Margin="5, 0, 0, 0">
+                            <StackLayout HorizontalOptions="FillAndExpand" Margin="5, 0, 0, 0">
                                 <Label
                                     Text="{Binding Title}"
                                     FontSize="18"
                                     FontAttributes="Bold"
                                     TextColor="{AppThemeBinding Light={StaticResource Gray}, Dark=white}"/>
                                 <Label
-                                    WidthRequest="255"
                                     LineBreakMode="WordWrap"
                                     Text="{Binding Subtitle}"
                                     Margin="0, 5, 0, 0"
@@ -127,4 +132,6 @@
         </CollectionView.ItemTemplate>
 
     </CollectionView>
+
+    </AbsoluteLayout>
 </ContentPage>

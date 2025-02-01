@@ -10,7 +10,8 @@ public class SettingsViewModel : BaseViewModel
 
     public SettingsViewModel(INavigation navigation)
     {
-        this.Title = "Настройки";
+        ModuleName = "Практик";
+        PageName = "Настройки";
 
         Navigation = navigation;
 
@@ -21,24 +22,24 @@ public class SettingsViewModel : BaseViewModel
     {
         ServiceLocator.Instance.GetService<IDialogService>().ShowAsync("Предупреждение", "Изменения будут применены при следующем запуске приложения");
 
-        Preferences.Set("Theme", this.Theme);
-        Preferences.Set("Color", this.Color);
-        Preferences.Set("Form", this.Form);
-        Preferences.Set("Size", this.Size);
-        Preferences.Set("IsBold", this.IsThick);
+        Preferences.Set("Theme", Theme);
+        Preferences.Set("Color", Color);
+        Preferences.Set("Form", Form);
+        Preferences.Set("Size", Size);
+        Preferences.Set("IsBold", IsThick);
 
     }
 
     public string theme { get; private set; } = default!;
     public string Theme
     {
-        get => this.theme;
+        get => theme;
         set
         {
-            if (this.theme != value)
+            if (theme != value)
             {
-                this.theme = value;
-                OnPropertyChanged(nameof(this.Theme));
+                theme = value;
+                OnPropertyChanged(nameof(Theme));
             }
         }
     }
@@ -46,13 +47,13 @@ public class SettingsViewModel : BaseViewModel
     public string color { get; private set; } = default!;
     public string Color
     {
-        get => this.color;
+        get => color;
         set
         {
-            if (this.color != value)
+            if (color != value)
             {
-                this.color = value;
-                OnPropertyChanged(nameof(this.Color));
+                color = value;
+                OnPropertyChanged(nameof(Color));
             }
         }
     }
@@ -60,13 +61,13 @@ public class SettingsViewModel : BaseViewModel
     public string form { get; private set; } = default!;
     public string Form
     {
-        get => this.form;
+        get => form;
         set
         {
-            if (this.form != value)
+            if (form != value)
             {
-                this.form = value;
-                OnPropertyChanged(nameof(this.Form));
+                form = value;
+                OnPropertyChanged(nameof(Form));
             }
         }
     }
@@ -74,13 +75,13 @@ public class SettingsViewModel : BaseViewModel
     public string size { get; private set; } = default!;
     public string Size
     {
-        get => this.size;
+        get => size;
         set
         {
-            if (this.size != value)
+            if (size != value)
             {
-                this.size = value;
-                OnPropertyChanged(nameof(this.Size));
+                size = value;
+                OnPropertyChanged(nameof(Size));
             }
         }
     }
@@ -88,13 +89,13 @@ public class SettingsViewModel : BaseViewModel
     public bool isThick { get; private set; } = default!;
     public bool IsThick
     {
-        get => this.isThick;
+        get => isThick;
         set
         {
-            if (this.isThick != value)
+            if (isThick != value)
             {
-                this.isThick = value;
-                OnPropertyChanged(nameof(this.IsThick));
+                isThick = value;
+                OnPropertyChanged(nameof(IsThick));
             }
         }
     }

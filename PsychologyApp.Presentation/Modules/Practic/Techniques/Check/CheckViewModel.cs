@@ -1,6 +1,6 @@
 ﻿using PsychologyApp.Presentation.ViewModels;
 
-namespace MobileHelper.ViewModels.TechniqueViewModels;
+namespace PsychologyApp.Presentation.Modules.Practic.Techniques.Check;
 
 public class CheckViewModel : BaseViewModel
 {
@@ -11,10 +11,14 @@ public class CheckViewModel : BaseViewModel
 
     public CheckViewModel(INavigation navigation)
     {
-        Title = "Техника";
+        ModuleName = "Практик";
+        PageName = "Проверь Это";
+
         Info = "Известно, что избыток внимания часто ведёт к избытку важности. Попробуйте меньше думать о том, что вас беспокоит. И, возможно, это сработает.";
+
         Finish = new Command(ToFinish);
         Theory = new Command(ToTheory);
+
         Navigation = navigation;
     }
 }

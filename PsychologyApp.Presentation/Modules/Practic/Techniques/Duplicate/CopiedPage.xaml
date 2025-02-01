@@ -25,7 +25,7 @@
         <StackLayout VerticalOptions="FillAndExpand" Margin="0">
 
             <templates:NavigationBarExtendedView
-                TitleText="Повторитель"
+                TitleText="Повтори Это"
                 BackCommand="{Binding Finish}"
                 ExtensionText="Теория"
                 ExtensionCommand="{Binding Theory}"/>

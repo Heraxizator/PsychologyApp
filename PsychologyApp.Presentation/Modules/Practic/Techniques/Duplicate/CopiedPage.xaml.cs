@@ -1,19 +1,24 @@
 using MobileHelperMaui.ViewModels.TechniqueViewModels;
-using PsychologyApp.Presentation.Models;
+using PsychologyApp.Application;
+using PsychologyApp.Application.Models;
 
 namespace MobileHelperMaui.Views.TechniquePages;
 
 public partial class CopiedPage : ContentPage
 {
+    private readonly CopiedViewModel ViewModel = default!;
+    private DateTime DateBegin = default!;
     public CopiedPage()
     {
         InitializeComponent();
-        BindingContext = new CopiedViewModel(Navigation);
+
+        ViewModel = new CopiedViewModel(Navigation);
+        BindingContext = ViewModel;
     }
 
     private void Button_Clicked(object sender, EventArgs e)
     {
-        var vm = BindingContext as PaperViewModel;
+        PaperViewModel? vm = BindingContext as PaperViewModel;
 
         if (vm!.PapersObservableCollection.Any() is false)
         {
@@ -25,7 +30,7 @@ public partial class CopiedPage : ContentPage
 
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
-        await Navigation.PopAsync(false);
+        _ = await Navigation.PopAsync(false);
     }
 
     private void TapGestureRecognizer_Tapped_2(object sender, TappedEventArgs e)
@@ -36,5 +41,19 @@ public partial class CopiedPage : ContentPage
     private void Papers_ItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
         Papers.SelectedItem = null;
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        DateBegin = DateTime.Now;
+    }
+
+    protected override async void OnDisappearing()
+    {
+        StatisticService statisticService = new();
+
+        await statisticService.AddSingleAsync(new StatisticDTO { ModuleName = ViewModel.ModuleName, PageName = ViewModel.PageName, DateTime = DateTime.Now, SecondsDuration = DateBegin.Subtract(DateTime.Now).Seconds }, 3000);
     }
 }

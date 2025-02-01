@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileHelperMaui.Views.TechniquePages.CheckPage"
              xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
-             xmlns:vm="clr-namespace:MobileHelper.ViewModels.TechniqueViewModels"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Modules.Practic.Techniques.Check"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              Title="Техника">
 

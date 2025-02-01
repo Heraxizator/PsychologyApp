@@ -4,6 +4,10 @@
              x:Class="MobileHelperMaui.Views.ProfilePages.UserPage"
              xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:vm="clr-namespace:MobileHelper.ViewModels.ProfileViewModels"
+             xmlns:technique="clr-namespace:PsychologyApp.Presentation.Technique"
+             xmlns:quots="clr-namespace:PsychologyApp.Presentation.Modules.Profile"
+             x:DataType="vm:UserViewModel"
              Title="Профиль">
 
     <ContentPage.Resources>
@@ -16,9 +20,14 @@
         <ToolbarItem Text="Параметры" Command="{Binding OpenOptionsCommand}"/>
     </ContentPage.ToolbarItems>
     
-    <ContentPage.Content>
+    <AbsoluteLayout 
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
 
-        <ScrollView VerticalScrollBarVisibility="Never">
+        <ScrollView 
+            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+            AbsoluteLayout.LayoutFlags="All"
+            VerticalScrollBarVisibility="Never">
             
         <StackLayout Margin="0, 15, 0, 15">
 
@@ -91,7 +100,7 @@
             </StackLayout>
 
             <StackLayout 
-            Margin="0, 15, 0, 10"
+            Margin="0, 25, 15, 20"
             HorizontalOptions="Center"
             Orientation="Horizontal">
                 <StackLayout Margin="15, 10, 15, 10">
@@ -99,7 +108,7 @@
                     TextColor="Black"
                     FontSize="16"
                     HorizontalTextAlignment="Center"
-                    Text="0"/>
+                    Text="{Binding TechniquesCompletedCount}"/>
                     <Label 
                     Text="Пройдено техник"
                     FontSize="16"
@@ -143,7 +152,7 @@
                     </CollectionView.ItemsLayout>
 
                     <CollectionView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="technique:TechniqueItem">
                             <StackLayout>
                                 <Frame
                                     HasShadow="True"
@@ -204,7 +213,7 @@
                         ItemsSource="{Binding Quots}">
 
                     <CollectionView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="quots:Quots">
                             <StackLayout>
                                 <Frame HasShadow="True" Padding="10">
 
@@ -255,5 +264,5 @@
         </StackLayout>
 
         </ScrollView>
-    </ContentPage.Content>
+    </AbsoluteLayout>
 </ContentPage>

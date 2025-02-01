@@ -22,7 +22,8 @@ public class TechniquesViewModel : BaseViewModel
 
     public TechniquesViewModel(INavigation navigation)
     {
-        Title = "Список техник";
+        this.ModuleName = "Практик";
+        this.PageName = "Список техник";
 
         ConstructorTapped = new Command(
             (obj) => navigation.PushAsync(new DesignerPage(-1), false));

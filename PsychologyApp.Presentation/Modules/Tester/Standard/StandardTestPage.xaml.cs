@@ -1,18 +1,18 @@
-using PsychologyApp.Presentation.ViewModels.TestViewModels;
+using PsychologyApp.Presentation.Modules.Tester.Standard;
 
 namespace PsychologyApp.Presentation.Views.TestPages;
 
 public partial class StandardTestPage : ContentPage
 {
-	public StandardTestPage()
-	{
-		InitializeComponent();
+    public StandardTestPage()
+    {
+        InitializeComponent();
 
-		this.BindingContext = new StandardTestViewModel(this.Navigation);
-	}
+        BindingContext = new StandardTestViewModel(Navigation);
+    }
 
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
-		await Navigation.PopAsync(false);
+        _ = await Navigation.PopAsync(false);
     }
 }

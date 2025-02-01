@@ -1,4 +1,6 @@
 ﻿using MobileHelperMaui.Views.TechniquePages;
+using PsychologyApp.Application;
+using PsychologyApp.Application.Models;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -18,11 +20,18 @@ namespace PsychologyApp.Presentation.ViewModels
         public static string? Info { get; protected set; }
 
 
-        private string title = string.Empty;
-        public string Title
+        private string _module_name = string.Empty;
+        public string ModuleName
         {
-            get => this.title;
-            set => SetProperty(ref this.title, value);
+            get => _module_name;
+            set => SetProperty(ref _module_name, value);
+        }
+
+        private string _page_name = string.Empty;
+        public string PageName
+        {
+            get => _page_name;
+            set => SetProperty(ref _page_name, value);
         }
 
         public static async void ToTheory(object obj)
@@ -32,7 +41,7 @@ namespace PsychologyApp.Presentation.ViewModels
 
         public static async void ToFinish(object obj)
         {
-            _ = await Navigation.PopAsync(false);
+            await Navigation.PopAsync(false);
         }
 
         protected bool SetProperty<T>(ref T backingStore, T value,

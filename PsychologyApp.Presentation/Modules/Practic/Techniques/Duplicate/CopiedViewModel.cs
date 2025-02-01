@@ -15,21 +15,22 @@ public class CopiedViewModel : BaseViewModel
     {
         Navigation = navigation;
 
-        this.Title = "Техника";
+        ModuleName = "Практик";
+        PageName = "Повтори Это";
 
         Info = "Учёные провели эксперимент и выявили одну замечательную закономерность: если взять то желание, которое имеет слишком большой эмоциональный заряд, записать его на бумаге и много раз повторить, то напряжение ослабнет и станет спокойнее. Тривиально, но это работает!";
 
-        this.AddCommand = new Command(ToAdd);
+        AddCommand = new Command(ToAdd);
     }
 
     private void SetCollection(bool visible)
     {
-        this.IsFull = visible;
+        IsFull = visible;
     }
 
     private void ToAdd(object obj)
     {
-        if (string.IsNullOrWhiteSpace(this.Text) is true)
+        if (string.IsNullOrWhiteSpace(Text) is true)
         {
             return;
         }
@@ -38,11 +39,11 @@ public class CopiedViewModel : BaseViewModel
 
         Paper item = new()
         {
-            Id = "Карточка №" + (this.PapersObservableCollection.Count + 1),
-            Text = this.Text
+            Id = "Карточка №" + (PapersObservableCollection.Count + 1),
+            Text = Text
         };
 
-        this.PapersObservableCollection.Add(item);
+        PapersObservableCollection.Add(item);
     }
 
     public Command<Paper> DeleteCommand => new((item) =>
@@ -52,22 +53,22 @@ public class CopiedViewModel : BaseViewModel
             return;
         }
 
-        this.PapersObservableCollection.Remove(item);
+        _ = PapersObservableCollection.Remove(item);
 
-        SetCollection(this.PapersObservableCollection.Any());
+        SetCollection(PapersObservableCollection.Any());
     });
 
 
     private string text = default!;
     public string Text
     {
-        get => this.text;
+        get => text;
         set
         {
-            if (this.text != value)
+            if (text != value)
             {
-                this.text = value;
-                OnPropertyChanged(nameof(this.Text));
+                text = value;
+                OnPropertyChanged(nameof(Text));
             }
         }
     }
@@ -75,13 +76,13 @@ public class CopiedViewModel : BaseViewModel
     private bool isFull = default!;
     public bool IsFull
     {
-        get => this.isFull;
+        get => isFull;
         set
         {
-            if (this.isFull != value)
+            if (isFull != value)
             {
-                this.isFull = value;
-                OnPropertyChanged(nameof(this.IsFull));
+                isFull = value;
+                OnPropertyChanged(nameof(IsFull));
             }
         }
     }

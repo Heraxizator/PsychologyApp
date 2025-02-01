@@ -3,7 +3,7 @@ using PsychologyApp.Presentation.ViewModels;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-namespace PsychologyApp.Presentation.Technique;
+namespace PsychologyApp.Presentation.Modules.Practic.Techniques;
 
 public class PolarityViewModel : BaseViewModel
 {
@@ -17,7 +17,10 @@ public class PolarityViewModel : BaseViewModel
 
     public PolarityViewModel(INavigation navigation)
     {
-        Title = "Техника";
+
+        ModuleName = "Практик";
+        PageName = "Полярности";
+
         Info = "Любой внутренний конфликт связан с борьбой двух противоположных мотивов, желаний, убеждений или целей. По сути причиной многих духовных проблем являются дуальности. Поэтому работа с полярностями - ещё один путь к освобождению от того, что беспокоит. Но, как правило, далеко не одна пара дуальностей создаёт внутренний конфликт. Их может быть несколько. По этой причине рекомендуется рассматривать побольше возможных пар, связанных с проблемой.";
         IsFull = false;
         Navigation = navigation;
@@ -34,7 +37,7 @@ public class PolarityViewModel : BaseViewModel
             return;
         }
 
-        polarities.Remove(item);
+        _ = polarities.Remove(item);
 
         if (polarities.Count == 0)
         {

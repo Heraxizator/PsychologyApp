@@ -2,14 +2,14 @@ namespace MobileHelperMaui.Views.AboutPages;
 
 public partial class InfoPage : ContentPage
 {
-	public InfoPage()
-	{
-		InitializeComponent();
-	}
+    public InfoPage()
+    {
+        InitializeComponent();
+    }
 
-	private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
-	{
-		await Navigation.PopAsync(false);
+    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+        _ = await Navigation.PopAsync(false);
 
-	}
+    }
 }

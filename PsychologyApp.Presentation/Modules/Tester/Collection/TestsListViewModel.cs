@@ -3,7 +3,6 @@ using MobileHelperMaui.Views.TestPages;
 using PsychologyApp.Presentation.ViewModels;
 using PsychologyApp.Presentation.Views.TestPages;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Modules.Tester.Collection;
 
@@ -26,24 +25,23 @@ public class TestsListViewModel : BaseViewModel
             {
                 Title = "Опросник Бека",
                 Subtitle = "Тест на депрессию",
-                ItemTappedCommand = new Command(() => Navigation!.PushAsync(new FindProblemPage(
-                    "Тест поможет вам за 5 минут определить ваш уровень депрессии.",
-                    [
+                Description = "Тест поможет вам за 5 минут определить ваш уровень депрессии.",
+                Algorithm =
+                [
                         "1. В этом опроснике содержатся группы утверждений. Внимательно прочитайте каждую группу утверждений",
                         "2. Затем определите в каждой группе одно утверждение, которое лучше всего соответствует тому, как Вы себя чувствовали НА ЭТОЙ НЕДЕЛЕ И СЕГОДНЯ",
                         "3. Поставьте галочку около выбранного утверждения",
                         "4. Если несколько утверждений из одной группы кажутся Вам одинаково хорошо подходящими, то поставьте галочки около каждого из них",
-                    ],
-                    "Прежде, чем сделать свой выбор, убедитесь, что Вы прочли Все утверждения в каждой группе",
-                    () => Navigation.PushAsync(new QuestionPage(
-                        new List<Question>() 
-                        {
-                            new Question() 
+                ],
+                Comment = "Прежде, чем сделать свой выбор, убедитесь, что Вы прочли Все утверждения в каждой группе",
+                Action = async () => await Navigation.PushAsync(new QuestionPage(
+                        [
+                            new Question()
                             {
                                 Number = 1,
-                                Answers = new List<Answer>() 
-                                {
-                                    new Answer 
+                                Answers =
+                                [
+                                    new Answer
                                     {
                                         Ball = 0,
                                         Text = "Я не чувствую себя расстроенным, печальным.",
@@ -70,14 +68,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Я настолько расстроен и несчастлив, что не могу это выдержать.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 2,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -105,14 +103,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Мое будущее безнадежно, и ничто не может измениться к лучшему.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 3,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -140,14 +138,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Я чувствую, что как личность я - полный неудачник.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 4,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -175,14 +173,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Я полностью не удовлетворен жизнью. и мне все надоело.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 5,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -210,14 +208,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Я постоянно испытываю чувство вины.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 6,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -245,14 +243,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Я чувствую себя уже наказанным.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 7,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -280,14 +278,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Я себя ненавижу.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 8,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -315,14 +313,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Я виню себя во всем плохом, что происходит.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 9,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -350,14 +348,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Я бы убил себя, если бы представился случай.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 10,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -385,14 +383,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Раньше я мог плакать, а сейчас не могу, даже если мне хочется.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 11,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -420,14 +418,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Я стал равнодушен к вещам, которые меня раньше раздражали.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 12,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -455,14 +453,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Я полностью утратил интерес к другим людям.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 13,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -490,14 +488,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Я больше не могу принимать решения.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 14,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -525,14 +523,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Я знаю, что выгляжу безобразно.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 15,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -560,14 +558,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Я совсем не могу выполнять никакую работу.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 16,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -595,14 +593,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Я просыпаюсь на несколько часов раньше обычного и больше не могу заснуть.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 17,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -630,14 +628,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Я не могу ничего делать из-за усталости.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 18,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -665,14 +663,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "У меня вообще нет аппетита.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 19,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -700,14 +698,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Я потерял более 7 кr.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 20,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -735,14 +733,14 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Я настолько обеспокоен своим физическим состоянием, что больше ни о чем не могу думать.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
                             new Question()
                             {
                                 Number = 21,
-                                Answers = new List<Answer>()
-                                {
+                                Answers =
+                                [
                                     new Answer
                                     {
                                         Ball = 0,
@@ -770,12 +768,12 @@ public class TestsListViewModel : BaseViewModel
                                         Text = "Я полностью утратил сексуальный интерес.",
                                         Selected = false
                                     }
-                                }
+                                ]
                             },
 
-                        },
+                        ],
 
-                        (int ball) => 
+                        (int ball) =>
                         {
                             if (ball <= 9)
                             {
@@ -792,62 +790,56 @@ public class TestsListViewModel : BaseViewModel
                                 return "16-19 - умеренная депрессия";
                             }
 
-                            else if (ball <= 29)
-                            {
-                                return "20-29 - выраженная депрессия (средней тяжести)";
+                            else                             {
+return ball <= 29 ? "20-29 - выраженная депрессия (средней тяжести)" : "30-63 – тяжелая депрессия";
                             }
+                        })
 
-                            else
-                            {
-                                return "30-63 – тяжелая депрессия";
-                            }
-                        }), false)
-
-                ), false))
+                )
             },
 
             new()
             {
                 Title = "Краткий тест Люшера",
                 Subtitle = "Альтернативная версия",
-                ItemTappedCommand = new Command(() => Navigation!.PushAsync(new FindProblemPage(
-                    "Тест поможет вам за пару кликов выявить то, что беспокоит, но остаётся неявным. Просто выберите две цветные карточки.",
-                    [
-                        "1. Выбрать самый приятный цвет",
-                        "2. Выбрать самый не приятный цвет"
-                    ],
-                    "Нельзя выбирать любимые цвета. Тест измеряет эмоциональное состояние на сейчас.",
-                    () => Navigation.PushAsync(new AlternativeTestPage(), false)
-
-                ), false))
+                Description = "Тест поможет вам за пару кликов выявить то, что беспокоит, но остаётся неявным. Просто выберите две цветные карточки.",
+                Action = async () => await Navigation.PushAsync(new AlternativeTestPage(), false),
+                Algorithm =
+                [
+                    "1. Выбрать самый приятный цвет",
+                    "2. Выбрать самый не приятный цвет"
+                ],
+                Comment = "Нельзя выбирать любимые цвета. Тест измеряет эмоциональное состояние на сейчас.",
             },
 
             new()
             {
                 Title = "Полный тест Люшера",
                 Subtitle = "Стандартная версия",
-                ItemTappedCommand = new Command(() => Navigation!.PushAsync(new FindProblemPage(
-                    "Тест поможет вам за пару кликов выявить то, что беспокоит, но остаётся неявным. Просто выбирайте карточки в приятной для вас последовательности..",
-                    [
+                Description = "Тест поможет вам за пару кликов выявить то, что беспокоит, но остаётся неявным. Просто выбирайте карточки в приятной для вас последовательности..",
+                Action = async () => await Navigation.PushAsync(new StandardTestPage(), false),
+                Algorithm =
+                [
                         "1. Выбрать наиболее приятный цвет",
                         "2. Повторить шаг под номером 1"
-                    ],
-                    "Нельзя выбирать любимые цвета. Тест измеряет эмоциональное состояние на сейчас.",
-                    () => Navigation.PushAsync(new StandardTestPage(), false)
+                ],
+                Comment = "Нельзя выбирать любимые цвета. Тест измеряет эмоциональное состояние на сейчас.",
 
-                ), false))
             }
         ];
     }
 
-    #region Objects
+}
 
-    public class TestItem
-    {
-        public string? Title { get; set; }
-        public string? Subtitle { get; set; }
-        public ICommand? ItemTappedCommand { get; set; }
+#region Objects
+public class TestItem
+{
+    public string Title { get; set; } = default!;
+    public string Subtitle { get; set; } = default!;
+    public string Description { get; set; } = default!;
+    public string Comment { get; set; } = default!;
+    public List<string> Algorithm { get; set; } = default!;
+    public Action Action { get; set; } = default!;
 
-        #endregion
-    }
+    #endregion
 }

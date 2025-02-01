@@ -16,9 +16,9 @@ public class Reason : Entity
     [Dapper.Contrib.Extensions.Key]
 
     public long ReasonId { get; private init; } = default!;
-    public string? Title { get; private set; } = default!;
-    public string? Subtitle { get; private set; } = default!;
-    public string? Solution { get; private set; } = default!;
+    public string Title { get; private set; } = default!;
+    public string Subtitle { get; private set; } = default!;
+    public string Solution { get; private set; } = default!;
 
     public static Reason Create(string title, string subtitle, string solution)
     {

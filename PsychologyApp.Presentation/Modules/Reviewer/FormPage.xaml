@@ -17,8 +17,13 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ContentPage.Content>
-        <StackLayout Margin="0">
+    <AbsoluteLayout 
+        VerticalOptions="FillAndExpand" 
+        HorizontalOptions="FillAndExpand">
+        <StackLayout 
+            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+            AbsoluteLayout.LayoutFlags="All"
+            Margin="0">
 
             <templates:TextBoxView
                 HeaderText="Пояснение"
@@ -52,5 +57,5 @@
             </Frame>
 
         </StackLayout>
-    </ContentPage.Content>
+    </AbsoluteLayout>
 </ContentPage>

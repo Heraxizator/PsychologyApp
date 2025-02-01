@@ -2,7 +2,6 @@
 using PsychologyApp.Presentation.Base.ServiceLocator.Dialog;
 using PsychologyApp.Presentation.ViewModels;
 using System.Windows.Input;
-using System.Xml.Linq;
 
 namespace MobileHelper.ViewModels.ReviewViewModels;
 
@@ -14,7 +13,8 @@ public class FormViewModel : BaseViewModel
 
     public FormViewModel()
     {
-        Title = "Отзовик";
+        ModuleName = "Отзовик";
+        PageName = "Отзыв";
 
         Send = new Command(async () =>
         {

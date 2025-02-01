@@ -6,6 +6,7 @@ public class InfoViewModel : BaseViewModel
 {
     public InfoViewModel()
     {
-        this.Title = "О приложении";
+        ModuleName = "Практик";
+        PageName = "О приложении";
     }
 }

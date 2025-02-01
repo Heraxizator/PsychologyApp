@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PsychologyApp.Presentation.Models
+namespace PsychologyApp.Presentation.Modules.Profile;
+
+public class Quots
 {
-    public class Quots
-    {
-        public string Author { get; set; }
-        public string Text { get; set; }
-    }
+    public required string Author { get; set; }
+    public required string Text { get; set; }
 }

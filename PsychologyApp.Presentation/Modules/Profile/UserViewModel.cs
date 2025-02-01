@@ -1,13 +1,11 @@
 ﻿using PsychologyApp.Application;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Infrastructure.API.Quots;
-using PsychologyApp.Presentation.Models;
+using PsychologyApp.Presentation.Modules.Profile;
 using PsychologyApp.Presentation.Technique;
 using PsychologyApp.Presentation.ViewModels;
 using PsychologyApp.Presentation.Views.ProfilePages;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Input;
 
 namespace MobileHelper.ViewModels.ProfileViewModels;
@@ -15,25 +13,28 @@ namespace MobileHelper.ViewModels.ProfileViewModels;
 public class UserViewModel : BaseViewModel
 {
     private static Task? Initialization = default;
-    private readonly QuotService _quotService = new();
 
-    public ICommand OpenOptionsCommand { get; set; } = default!;
-    public ICommand ReloadQuotsCommand { get; set; } = default!;
+    private readonly QuotService _quotService = new();
+    private readonly StatisticService _statisticService = new();
+
+    public ICommand OpenOptionsCommand { get; private set; } = default!;
+    public ICommand ReloadQuotsCommand { get; private set; } = default!;
 
     public ObservableCollection<TechniqueItem> Techniques { get; private set; } = [];
     public ObservableCollection<Quots> Quots { get; private set; } = [];
 
     public UserViewModel(INavigation navigation)
     {
-        this.Title = "Профиль";
+        ModuleName = "Практик";
+        PageName = "Профиль";
 
-        this.Techniques = new ObservableCollection<TechniqueItem>();
+        Techniques = [];
 
-        this.Quots = new ObservableCollection<Quots>();
+        Quots = [];
 
-        this.OpenOptionsCommand = new Command(() => navigation.PushAsync(new OptionsPage(), false));
+        OpenOptionsCommand = new Command(() => navigation.PushAsync(new OptionsPage(), false));
 
-        this.ReloadQuotsCommand = new Command(async () => await InitAsync());
+        ReloadQuotsCommand = new Command(async () => await InitAsync());
 
         SetInit();
 
@@ -46,27 +47,26 @@ public class UserViewModel : BaseViewModel
     {
         try
         {
-            using CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
-            cancellationTokenSource.Token.ThrowIfCancellationRequested();
-
             InitTechniques();
 
             await InitQuotsAsync(cancelTimeout);
 
             await GetQuotsAsync(cancelTimeout);
-            
-            if (this.Quots.Any() is false)
+
+            if (Quots.Any() is false)
             {
                 await InitQuotsAsync(cancelTimeout);
             }
 
-            if (this.Quots.Any() is false)
+            if (Quots.Any() is false)
             {
                 InitQuots();
             }
+
+            await SetCompletedTechniquesCountAsync(cancelTimeout);
         }
-        
-        catch (Exception e)
+
+        catch (Exception)
         {
             SetDone();
         }
@@ -74,7 +74,7 @@ public class UserViewModel : BaseViewModel
 
     private void InitTechniques()
     {
-        this.Techniques.Add(new TechniqueItem
+        Techniques.Add(new TechniqueItem
         {
             Title = "BSFF",
             Subtitle = "Методика депрограммирования подсознания"
@@ -83,7 +83,7 @@ public class UserViewModel : BaseViewModel
 
     private void InitQuots()
     {
-        this.Quots.Add(new Quots()
+        Quots.Add(new Quots()
         {
             Text = "Лето, урожай, война.",
             Author = "Латинская пословица"
@@ -101,7 +101,7 @@ public class UserViewModel : BaseViewModel
                 continue;
             }
 
-            this.Quots.Add(new Quots()
+            Quots.Add(new Quots()
             {
                 Text = quotDTO.Text,
                 Author = quotDTO.Title
@@ -112,5 +112,24 @@ public class UserViewModel : BaseViewModel
     private Task GetQuotsAsync(int cancelTimeout = 10000)
     {
         return QuotHandler.GetQuotsFromApi(cancelTimeout);
+    }
+
+    private async Task SetCompletedTechniquesCountAsync(int cancelTimeout = 5000)
+    {
+        TechniquesCompletedCount = (await _statisticService.CountPageCompletedAsync(cancelTimeout)).ToString();
+    }
+
+    private string _techniques_completed_count = "0";
+    public string TechniquesCompletedCount
+    {
+        get => _techniques_completed_count;
+        set
+        {
+            if (_techniques_completed_count != value)
+            {
+                _techniques_completed_count = value;
+                OnPropertyChanged(nameof(TechniquesCompletedCount));
+            }
+        }
     }
 }

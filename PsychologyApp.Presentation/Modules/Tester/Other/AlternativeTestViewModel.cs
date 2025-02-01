@@ -13,7 +13,8 @@ public class AlternativeTestViewModel : BaseTestViewModel
 
     public AlternativeTestViewModel(INavigation navigation)
     {
-        Title = "Тест";
+        ModuleName = "Детектор";
+        PageName = "Краткий тест Люшера";
 
         Finish = new Command(ToFinish);
         Restart = new Command(ToRestart);

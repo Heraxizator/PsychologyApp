@@ -12,7 +12,8 @@ public class MusicPlayerViewModel : BaseViewModel
 
     public MusicPlayerViewModel()
     {
-        Title = "Очиститель";
+        this.ModuleName = "Очиститель";
+        this.PageName = "Молитвы";
 
         SetCreated();
 

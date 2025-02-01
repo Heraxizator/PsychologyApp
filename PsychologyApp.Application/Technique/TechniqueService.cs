@@ -10,50 +10,35 @@ public sealed class TechniqueService : ITechniqueService
 {
     public async Task AddNewTechnique(TechniqueDTO techniqueDTO, int cancelTimeout = 5000)
     {
-        CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
-        cancellationTokenSource.Token.ThrowIfCancellationRequested();
-
         Technique technique = TechniqueMapper.GetTechnique(techniqueDTO);
 
-        await Database.TechniqueRepository.AddAsync(technique);
+        await Database.TechniqueRepository.AddAsync(technique, cancelTimeout);
     }
 
     public async Task DeleteTechnique(TechniqueDTO techniqueDTO, int cancelTimeout = 5000)
     {
-        CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
-        cancellationTokenSource.Token.ThrowIfCancellationRequested();
-
         Technique technique = TechniqueMapper.GetTechnique(techniqueDTO);
 
-        await Database.TechniqueRepository.DeleteAsync(technique);
+        await Database.TechniqueRepository.DeleteAsync(technique, cancelTimeout);
     }
 
     public async Task<TechniqueDTO> GetTechniqueById(long id, int cancelTimeout = 5000)
     {
-        CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
-        cancellationTokenSource.Token.ThrowIfCancellationRequested();
-
-        Technique? technique = await Database.TechniqueRepository.GetByIdAsync(id);
+        Technique? technique = await Database.TechniqueRepository.GetByIdAsync(id, cancelTimeout);
 
         return TechniqueMapper.GetTechniqueDTO(technique);
     }
 
     public async Task<IEnumerable<TechniqueDTO>> GetTechniquesList(int count, int cancelTimeout = 5000)
     {
-        CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
-        cancellationTokenSource.Token.ThrowIfCancellationRequested();
-
-        IEnumerable<Technique> techniques = (await Database.TechniqueRepository.GetAllAsync()).Take(count);
+        IEnumerable<Technique> techniques = (await Database.TechniqueRepository.GetAllAsync(cancelTimeout)).Take(count);
 
         return techniques.Select(TechniqueMapper.GetTechniqueDTO);
     }
 
     public async Task MarkTechniqueAsCompleted(long id, int cancelTimeout = 5000)
     {
-        CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
-        cancellationTokenSource.Token.ThrowIfCancellationRequested();
-
-        Technique? technique = await Database.TechniqueRepository.GetByIdAsync(id);
+        Technique? technique = await Database.TechniqueRepository.GetByIdAsync(id, cancelTimeout);
 
         if (technique is null)
         {
@@ -62,16 +47,13 @@ public sealed class TechniqueService : ITechniqueService
 
         technique.MarkAsCompleted();
 
-        await Database.TechniqueRepository.EditAsync(technique);
+        await Database.TechniqueRepository.EditAsync(technique, cancelTimeout);
     }
 
     public async Task UpdateTechnique(TechniqueDTO techniqueDTO, int cancelTimeout = 5000)
     {
-        CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
-        cancellationTokenSource.Token.ThrowIfCancellationRequested();
-
         Technique technique = TechniqueMapper.GetTechnique(techniqueDTO);
 
-        await Database.TechniqueRepository.EditAsync(technique);
+        await Database.TechniqueRepository.EditAsync(technique, cancelTimeout);
     }
 }

@@ -23,6 +23,9 @@ public class DesignerViewModel : BaseViewModel
     [Obsolete]
     public DesignerViewModel(INavigation navigation, long id)
     {
+        this.ModuleName = "Практик";
+        this.PageName = "Конструктор";
+
         currentId = id;
 
         Navigation = navigation;
@@ -30,7 +33,6 @@ public class DesignerViewModel : BaseViewModel
         Finish = new Command(ToFinish);
 
         Path = "technique.png";
-        Title = "Конструктор";
 
         OpenCamera = new Command(ToOpenCamera);
         OpenGallery = new Command(ToOpenGallery);
@@ -174,7 +176,7 @@ public class DesignerViewModel : BaseViewModel
                 TechniqueId = -1,
                 Number = Guid.NewGuid().ToString(),
                 Header = Name,
-                Describtion = Title,
+                Describtion = Description,
                 Subject = Theme,
                 Image = Path,
                 Author = Author,
