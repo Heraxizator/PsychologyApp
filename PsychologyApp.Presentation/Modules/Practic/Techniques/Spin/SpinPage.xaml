@@ -6,109 +6,47 @@
              xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              Title="Техника">
-    
+
     <ContentPage.BindingContext>
         <vm:SpinViewModel />
     </ContentPage.BindingContext>
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Color x:Key="Accent">#96d1ff</Color>
-        </ResourceDictionary>
-    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Теория" Command="{Binding Theory}" />
     </ContentPage.ToolbarItems>
 
-    <ScrollView>
-        <StackLayout Margin="0">
+    <StackLayout 
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
 
-            <templates:NavigationBarExtendedView
-                TitleText="Крутилка"
-                BackCommand="{Binding Finish}"
-                ExtensionText="Теория"
-                ExtensionCommand="{Binding Theory}"/>
+        <templates:NavigationBarExtendedView
+            TitleText="Крутилка"
+            BackCommand="{Binding Finish}"
+            ExtensionText="Теория"
+            ExtensionCommand="{Binding Theory}"/>
+        
+        <ScrollView VerticalOptions="FillAndExpand">
+            <StackLayout Margin="10, 0, 10, 0">
 
-            <Frame Padding="10" Margin="15, 15, 15, 15">
-                <StackLayout Margin="5">
-                    <Label
-                    Text="Алгоритм"
-                    FontSize="18"
-                    Margin="10, 5, 5, 15"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+                <templates:AlgorithmBoxView
+                    TitleText="Алгоритм"
+                    BodySource="{Binding Algorithm}"/>
 
-                    <Label 
-                    Margin="15, 0, 0, 10"
-                    Text="1. Найти эпизод, который беспокоит"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"
-                    FontSize="16"/>
+                <templates:EntryBoxView
+                    TitleText="Форма"
+                    BodySource="{Binding Entries}"/>
 
-                    <Label 
-                    Margin="15, 0, 0, 10"
-                    Text="2. Определить ключевое чувство"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"
-                    FontSize="16"/>
+                <templates:ButtonView
+                    Margin="0, 5, 0, 0"
+                    BodyText="Завершить">
 
-                    <Label 
-                    Margin="15, 0, 0, 15"
-                    Text="3. Оценить чувство по 10-балльной шкале"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"
-                    FontSize="16"/>
-
-                </StackLayout>
-
-            </Frame>
-
-            <Frame Padding="10" Margin="15, 10, 15, 15">
-                <StackLayout>
-                    <Label
-                    
-                    Text="Форма"
-                    FontSize="18"
-                    Margin="10, 5, 5, 15"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"/>
-
-                    <templates:TextEntryView
-                        TitleText="Эпизод"
-                        PlaceholderText="Я потерял друга"/>
-
-                    <templates:TextEntryView
-                        TitleText="Чувство"
-                        PlaceholderText="Жажда мести"/>
-
-                    <StackLayout HorizontalOptions="Center" Margin="5, 15, 5, 15" Orientation="Horizontal">
-                        <Label 
-                        Text="0"
-                        TextColor="{AppThemeBinding Light=black, Dark=white}"/>
-
-                        <Slider 
-                        MinimumTrackColor="{StaticResource Accent}"
-                        MaximumTrackColor="{StaticResource Gray}"
-                        ThumbColor="{StaticResource Accent}"
-                        WidthRequest="300"
-                        Minimum="0" Maximum="10" />
-
-                        <Label 
-                        Text="10"
-                        TextColor="{AppThemeBinding Light=black, Dark=white}"/>
-                    </StackLayout>
-
-
-                </StackLayout>
-
-            </Frame>
-
-            <templates:ButtonView
-                Margin="15, 5, 15, 20"
-                BodyText="Завершить">
-
-                <templates:ButtonView.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding Finish}"/>
-                </templates:ButtonView.GestureRecognizers>
+                    <templates:ButtonView.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Finish}"/>
+                    </templates:ButtonView.GestureRecognizers>
                 
-            </templates:ButtonView>
+                </templates:ButtonView>
             
-        </StackLayout>
-    </ScrollView>
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
 </ContentPage>

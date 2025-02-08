@@ -14,4 +14,5 @@ public struct QuotDTO
     public string? Text { get; set; }
     public string? Theme { get; set; }
     public bool IsReaded { get; set; }
+    public bool IsFavourite {  get; set; }
 }

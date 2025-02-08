@@ -13,6 +13,6 @@ public partial class AlternativeTestPage : ContentPage
 
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
-        _ = await Navigation.PopAsync(false);
+        await Navigation.PopToRootAsync(false);
     }
 }

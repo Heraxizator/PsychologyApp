@@ -15,8 +15,6 @@ public static class QuotHandler
 {
     public static async Task<bool> GetQuotsFromApi(int cancelTimeout = 15000)
     {
-        CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
-
         string jsonResult = await HttpExtention.GetAsync(Constants.QuotApiUrl, cancelTimeout);
 
         if (string.IsNullOrEmpty(jsonResult) is true)
@@ -31,7 +29,7 @@ public static class QuotHandler
             return false;
         }
 
-        long quotId = await Database.QuotRepository.AddAsync(Quot.Create(quotAPI.QuoteAuthor!, quotAPI.QuoteText!, quotAPI.QuoteAuthor!, false), cancelTimeout);
+        long quotId = await Database.QuotRepository.AddAsync(Quot.Create(quotAPI.QuoteAuthor!, quotAPI.QuoteText!, quotAPI.QuoteAuthor!, false, false), cancelTimeout);
 
         return quotId > 0;
     }

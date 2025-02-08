@@ -23,7 +23,7 @@
 
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Margin="0">
+            <StackLayout Margin="10, 0, 10, 0">
 
                 <templates:NavigationBarExtendedView
                     TitleText="Белое пятно"
@@ -31,38 +31,12 @@
                     ExtensionText="Теория"
                     ExtensionCommand="{Binding Theory}"/>
 
-                <Frame Margin="15, 15, 15, 15">
-                    <StackLayout Margin="5">
-                        <Label
-                    Text="Алгоритм"
-                    FontSize="18"
-                    Margin="10, 5, 5, 15"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"/>
-
-                        <Label 
-                    Margin="15, 0, 0, 10"
-                    Text="1. Найти то воспоминание, которое беспокоит"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"
-                    FontSize="16"/>
-
-                        <Label 
-                    Margin="15, 0, 0, 15"
-                    Text="2. Представить его как фото"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"
-                    FontSize="16"/>
-
-                        <Label 
-                    Margin="15, 0, 0, 15"
-                    Text="3. Делать его всё светлее и светлее"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"
-                    FontSize="16"/>
-
-                    </StackLayout>
-
-                </Frame>
+                <templates:AlgorithmBoxView
+                    TitleText="Алгоритм"
+                    BodySource="{Binding Algorithm}"/>
 
                 <templates:ButtonView
-                Margin="15, 5, 15, 20"
+                Margin="0, 5, 0, 10"
                 BodyText="Завершить">
 
                 <templates:ButtonView.GestureRecognizers>

@@ -22,25 +22,6 @@ public partial class PolarityPage : ContentPage
         _ = await Navigation.PopAsync(false);
     }
 
-    private void TapGestureRecognizer_Tapped_1(object sender, TappedEventArgs e)
-    {
-        PolarityViewModel? vm = BindingContext as PolarityViewModel;
-
-        if (vm!.polarities.Any() is false)
-        {
-            return;
-        }
-
-        //Polarities.ScrollTo(vm!.polarities.LastOrDefault(), ScrollToPosition.End, false);
-
-        Algorithm.IsVisible = false;
-    }
-
-    private void Polarities_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-    {
-        Polarities.SelectedItem = null;
-    }
-
     protected override void OnAppearing()
     {
         base.OnAppearing();

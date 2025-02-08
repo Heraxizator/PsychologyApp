@@ -92,7 +92,7 @@ public class UserViewModel : BaseViewModel
 
     private async Task InitQuotsAsync(int cancelTimeout = 10000)
     {
-        IEnumerable<QuotDTO> quotDTOs = await _quotService.GetQuotsList(2, false, cancelTimeout);
+        IEnumerable<QuotDTO> quotDTOs = await _quotService.GetAllAsync(2, cancelTimeout);
 
         foreach (QuotDTO quotDTO in quotDTOs)
         {

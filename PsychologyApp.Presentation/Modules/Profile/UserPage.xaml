@@ -19,25 +19,25 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Параметры" Command="{Binding OpenOptionsCommand}"/>
     </ContentPage.ToolbarItems>
-    
+
     <AbsoluteLayout 
         VerticalOptions="FillAndExpand"
         HorizontalOptions="FillAndExpand">
 
-        <ScrollView 
+        <StackLayout 
             AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
             AbsoluteLayout.LayoutFlags="All"
-            VerticalScrollBarVisibility="Never">
-            
-        <StackLayout Margin="0, 15, 0, 15">
+            Margin="0, 15, 0, 15">
 
             <StackLayout
-                Margin="25, 10, 25, 25"
+                Margin="25, 0, 25, 0"
+                HorizontalOptions="FillAndExpand"
                 Orientation="Horizontal">
 
                 <Label
-                    Margin="0, 0, 0, 0"
+                    Margin="0, 0, 10, 0"
                     VerticalOptions="CenterAndExpand"
+                    FontSize="16"
                     Text="{mi:Material Icon=KeyboardArrowLeft, IconSize=25}"
                     TextColor="{StaticResource Primary}">
 
@@ -47,56 +47,58 @@
 
                 </Label>
 
-                <Label
-                    Text="Профиль пользователя"
-                    HorizontalOptions="CenterAndExpand"
+                <StackLayout 
+                    HorizontalOptions="FillAndExpand"
                     VerticalOptions="CenterAndExpand"
-                    TextColor="Black"
-                    FontSize="19"/>
-
-                <Label
-                    Text="{mi:Material Icon=MoreHoriz, IconSize=25}"
-                    VerticalOptions="CenterAndExpand"
-                    FontSize="20"
-                    TextColor="{StaticResource Black}">
-
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding OpenOptionsCommand}"/>
-                    </Label.GestureRecognizers>
-                    
-                </Label>
-
-            </StackLayout>
-
-            <StackLayout>
-                <StackLayout Margin="15, 0, 15, 0" Orientation="Horizontal">
+                    Orientation="Horizontal">
 
                     <Label
-                            Text="{mi:Material Icon=AccountCircle, IconSize=50}"
-                            Margin="0, 0, 0, 0"
-                            TextColor="{StaticResource Gray}"/>
+                        VerticalOptions="CenterAndExpand"
+                        Text="{mi:Material Icon=AccountCircle, IconSize=35}"
+                        Margin="15, 0, 0, 0"
+                        TextColor="#AAAAAA"/>
 
-
-                    <StackLayout Margin="5, 0, 10, 0">
+                    <StackLayout 
+                        VerticalOptions="CenterAndExpand"
+                        Margin="5, 0, 10, 0">
                         <Label 
-                        TextColor="{StaticResource Gray}"
-                        FontAttributes="Bold"
-                        FontSize="19"
-                        Padding="0"
-                        Margin="0"
-                        Text="Пользователь"/>
+                            TextColor="#DE000000"
+                            FontFamily="RobotoMedium"
+                            FontSize="14"
+                            Text="Пользователь"/>
 
                         <Label 
-                        Text="Стандартный"
-                        Padding="0"
-                        Margin="0"
-                        TextColor="Black"
-                        FontSize="16"/>
+                            Text="Стандартный"
+                            Padding="0"
+                            Margin="0"
+                            FontFamily="RobotoRegular"
+                            TextColor="#DE000000"
+                            FontSize="14"/>
 
                     </StackLayout>
 
                 </StackLayout>
 
+                <StackLayout
+                    HorizontalOptions="EndAndExpand">
+
+                    <Label
+                        Text="Параметры"
+                        Margin="10, 0, 0, 0"
+                        VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="EndAndExpand"
+                        FontFamily="RobotoMedium"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="14">
+
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenOptionsCommand}"/>
+                        </Label.GestureRecognizers>
+
+                    </Label>
+
+                </StackLayout>
+                
             </StackLayout>
 
             <StackLayout 
@@ -105,27 +107,27 @@
             Orientation="Horizontal">
                 <StackLayout Margin="15, 10, 15, 10">
                     <Label 
-                    TextColor="Black"
+                    TextColor="#DE000000"
                     FontSize="16"
                     HorizontalTextAlignment="Center"
                     Text="{Binding TechniquesCompletedCount}"/>
                     <Label 
                     Text="Пройдено техник"
                     FontSize="16"
-                    TextColor="Black"/>
+                    TextColor="#DE000000"/>
 
                 </StackLayout>
 
                 <StackLayout Margin="15, 10, 15, 10">
                     <Label 
-                    TextColor="Black"
+                    TextColor="#DE000000"
                     FontSize="16"
                     HorizontalTextAlignment="Center"
                     Text="0"/>
                     <Label 
                     Text="Подписчиков"
                     FontSize="16"
-                    TextColor="Black"/>
+                    TextColor="#DE000000"/>
 
                 </StackLayout>
 
@@ -133,18 +135,17 @@
 
             <StackLayout Margin="0, 10, 0, 5">
                 <Label 
-                        Margin="15, 0, 15, 0"
+                        Margin="15, 0, 15, 5"
                         Text="Советуем пройти"
-                        FontSize="18"
-                        TextColor="{StaticResource Gray}"
-                        FontAttributes="Bold"
+                        FontSize="16"
+                        FontFamily="RobotoMedium"
+                        TextColor="#DE000000"
                         HorizontalOptions="Start"/>
 
                 <CollectionView 
                         Margin="15, 0, 0, 0"
                         VerticalOptions="CenterAndExpand"
                         HorizontalScrollBarVisibility="Never"
-                        HeightRequest="150"
                         ItemsSource="{Binding Techniques}">
 
                     <CollectionView.ItemsLayout>
@@ -157,21 +158,21 @@
                                 <Frame
                                     HasShadow="True"
                                         Padding="10"
-                                        HeightRequest="130"
                                         WidthRequest="250">
 
                                     <StackLayout Margin="10, 5, 5, 5">
                                         <Label 
                                             Text="{Binding Title}"
-                                            FontAttributes="Bold"
-                                            TextColor="{Binding Gray}"
-                                            FontSize="18"/>
+                                            TextColor="#DE000000"
+                                            FontFamily="RobotoMedium"
+                                            FontSize="15"/>
 
                                         <Label
                                             HorizontalTextAlignment="Justify"
                                             Text="{Binding Subtitle}"
-                                            TextColor="Black"
-                                            FontSize="16"/>
+                                            FontFamily="RobotoRegular"
+                                            TextColor="#DE000000"
+                                            FontSize="14"/>
 
                                     </StackLayout>
 
@@ -186,11 +187,11 @@
 
             <StackLayout Margin="0, 5, 0, 5">
                 <Label 
-                        Margin="15, 0, 15, 0"
+                        Margin="15, 0, 15, 5"
                         Text="Лучшие цитаты"
-                        TextColor="{StaticResource Gray}"
-                        FontAttributes="Bold"
-                        FontSize="18"/>
+                        TextColor="#DE000000"
+                        FontFamily="RobotoMedium"
+                        FontSize="16"/>
 
                 <templates:ProgressbarView
                         HorizontalOptions="CenterAndExpand"
@@ -208,7 +209,6 @@
                         IsVisible="{Binding IsDone}"
                         Margin="15, 0, 15, 0"
                         SelectionMode="None"
-                        HeightRequest="300"
                         VerticalScrollBarVisibility="Never"
                         ItemsSource="{Binding Quots}">
 
@@ -217,18 +217,19 @@
                             <StackLayout>
                                 <Frame HasShadow="True" Padding="10">
 
-                                    <StackLayout Margin="10, 5, 15, 5">
+                                    <StackLayout Margin="10, 5, 15, 10">
                                         <Label 
-                                                Text="{Binding Author}"
-                                                FontAttributes="Bold"
-                                                TextColor="{Binding Gray}"
-                                                FontSize="18"/>
+                                            Text="{Binding Author}"
+                                            TextColor="#DE000000"
+                                            FontFamily="RobotoMedium"
+                                            FontSize="15"/>
 
                                         <Label
-                                                HorizontalTextAlignment="Justify"
-                                                Text="{Binding Text}"
-                                                TextColor="Black"
-                                                FontSize="16"/>
+                                            HorizontalTextAlignment="Justify"
+                                            Text="{Binding Text}"
+                                            FontFamily="RobotoRegular"
+                                            TextColor="#DE000000"
+                                            FontSize="14"/>
 
                                     </StackLayout>
 
@@ -254,15 +255,13 @@
                             </templates:ProgressbarView>
 
                         </StackLayout>
-                        
+
                     </CollectionView.EmptyView>
-                    
+
                 </CollectionView>
 
             </StackLayout>
 
         </StackLayout>
-
-        </ScrollView>
     </AbsoluteLayout>
 </ContentPage>

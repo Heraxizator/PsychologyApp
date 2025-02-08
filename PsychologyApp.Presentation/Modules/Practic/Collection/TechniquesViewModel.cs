@@ -76,17 +76,17 @@ public class TechniquesViewModel : BaseViewModel
 
     private IEnumerable<TechniqueItem> GetTechniqueItems(INavigation navigation)
     {
-        string image = "technique.png";
+        string image = "method.png";
 
         List<TechniqueItem> items =
         [
             new TechniqueItem
             {
-                Number = "Метод №1",
+                Number = "Техника №1",
                 Date="26.01.2023",
                 Image = image,
                 Title = "Крутилка",
-                Subtitle = "Метод мгновенной нейтрализации травм и шоков",
+                Subtitle = "Техника мгновенной нейтрализации травм и шоков",
                 Theme = "Эпизоды",
                 Author = "Живорад Славинский",
                 Active = true,
@@ -95,7 +95,7 @@ public class TechniquesViewModel : BaseViewModel
 
             new TechniqueItem
             {
-                Number = "Метод №2",
+                Number = "Техника №2",
                 Date="26.01.2023",
                 Image = image,
                 Title = "Сравнение важностей",
@@ -107,7 +107,7 @@ public class TechniquesViewModel : BaseViewModel
             },
             new TechniqueItem
             {
-                Number = "Метод №3",
+                Number = "Техника №3",
                 Date="26.01.2023",
                 Image = image,
                 Title = "Полярности",
@@ -119,7 +119,7 @@ public class TechniquesViewModel : BaseViewModel
             },
             new TechniqueItem
             {
-                Number = "Метод №4",
+                Number = "Техника №4",
                 Date="26.01.2023",
                 Image = image,
                 Title = "Лист бумаги",
@@ -131,7 +131,7 @@ public class TechniquesViewModel : BaseViewModel
             },
             new TechniqueItem
             {
-                Number = "Метод №5",
+                Number = "Техника №5",
                 Date="30.01.2023",
                 Image = image,
                 Title = "50 лет спустя",
@@ -144,11 +144,11 @@ public class TechniquesViewModel : BaseViewModel
 
             new TechniqueItem
             {
-                Number = "Метод №6",
+                Number = "Техника №6",
                 Date="30.01.2023",
                 Image = image,
                 Title = "Белое Пятно",
-                Subtitle = "Метод нейтрализации воспоминаний",
+                Subtitle = "Техника нейтрализации воспоминаний",
                 Theme = "Эпизоды",
                 Author = "НЛП",
                 Active = true,
@@ -157,7 +157,7 @@ public class TechniquesViewModel : BaseViewModel
 
             new TechniqueItem
             {
-                Number = "Метод №7",
+                Number = "Техника №7",
                 Date="08.02.2023",
                 Image = image,
                 Title = "Модификация опыта",
@@ -170,11 +170,11 @@ public class TechniquesViewModel : BaseViewModel
 
             new TechniqueItem
             {
-                Number = "Метод №8",
+                Number = "Техника №8",
                 Date="21.01.2025",
                 Image = image,
                 Title = "Повтори Это",
-                Subtitle = "Простой метод понижения важности",
+                Subtitle = "Простой Техника понижения важности",
                 Theme = "Важность",
                 Author = "НЛП",
                 Active = true,
@@ -183,7 +183,7 @@ public class TechniquesViewModel : BaseViewModel
 
             new TechniqueItem
             {
-                Number = "Метод №9",
+                Number = "Техника №9",
                 Date="21.01.2025",
                 Image = image,
                 Title = "Запасной план",
@@ -196,11 +196,11 @@ public class TechniquesViewModel : BaseViewModel
 
             new TechniqueItem
             {
-                Number = "Метод №10",
+                Number = "Техника №10",
                 Date="22.01.2025",
                 Image = image,
                 Title = "Уменьши Это",
-                Subtitle = "Простой метод понижения важности",
+                Subtitle = "Простой Техника понижения важности",
                 Theme = "Важность",
                 Author = "НЛП",
                 Active = true,
@@ -209,11 +209,11 @@ public class TechniquesViewModel : BaseViewModel
 
             new TechniqueItem
             {
-                Number = "Метод №11",
+                Number = "Техника №11",
                 Date="22.01.2025",
                 Image = image,
                 Title = "Проверь Это",
-                Subtitle = "Простой метод понижения важности",
+                Subtitle = "Простой Техника понижения важности",
                 Theme = "Важность",
                 Author = "НЛП",
                 Active = true,

@@ -25,7 +25,6 @@
                     Text="{TemplateBinding BodyText}"
                     TextColor="White"
                     FontSize="18"/>
-
             </Border>
             
         </ControlTemplate>

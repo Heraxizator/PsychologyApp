@@ -1,5 +1,6 @@
 ﻿using PsychologyApp.Application.Common;
 using PsychologyApp.Application.Models;
+using PsychologyApp.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,9 @@ namespace PsychologyApp.Application.Services.QuotService;
 
 public interface IQuotService : IAppService
 {
-    public Task<IEnumerable<QuotDTO>> GetQuotsList(int count, bool readed = false, int cancelTimeout = 3000);
-    public Task AddNewQuot(QuotDTO quotDTO, int cancelTimeout);
-    public Task MarkQuotAsReaded(int quotId, int cancelTimeout);
+    public Task<IEnumerable<QuotDTO>> GetAllAsync(int count, int timeout);
+    public Task<QuotDTO> GetByIdAsync(long id, int timeout);
+    public Task AddAsync(QuotDTO quotDTO, int cancelTimeout);
+    public Task MarkQuotAsReadedAsync(long quotId, int cancelTimeout);
+    public Task MarkAsFavouriteAsync(long quotId, bool isFavourite, int cancelTimeout);
 }

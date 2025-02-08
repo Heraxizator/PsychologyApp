@@ -26,8 +26,8 @@
 		<ApplicationId>com.subconscious.psychologyapp</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.1</ApplicationDisplayVersion>
-		<ApplicationVersion>2</ApplicationVersion>
+		<ApplicationDisplayVersion>1.2</ApplicationDisplayVersion>
+		<ApplicationVersion>3</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
@@ -55,7 +55,7 @@
 	  <Debugger>Xamarin</Debugger>
 	  <TrimMode>copyused</TrimMode>
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
-	  <AndroidPackageFormat>aab</AndroidPackageFormat>
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <PublishTrimmed>False</PublishTrimmed>
 	</PropertyGroup>
 
@@ -84,11 +84,12 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
-	  <AndroidPackageFormat>aab</AndroidPackageFormat>
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <RunAOTCompilation>False</RunAOTCompilation>
 	  <TrimMode>copyused</TrimMode>
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
 	  <PublishTrimmed>False</PublishTrimmed>
+	  <DebugSymbols>True</DebugSymbols>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -167,6 +168,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Modules\Motivator\QuotePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Modules\Practic\Techniques\Check\CheckPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -185,7 +189,13 @@
 	  <MauiXaml Update="Modules\Tester\Question\QuestionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Templates\AlgorithmBoxView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Templates\ButtonView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Templates\EntryBoxView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Templates\NavigationBarExtendedView.xaml">
@@ -216,6 +226,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Modules\Tester\Collection\TestsListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Templates\TextItemView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

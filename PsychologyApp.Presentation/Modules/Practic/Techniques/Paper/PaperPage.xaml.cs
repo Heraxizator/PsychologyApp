@@ -34,11 +34,6 @@ public partial class PaperPage : ContentPage
         _ = await Navigation.PopAsync(false);
     }
 
-    private void TapGestureRecognizer_Tapped_2(object sender, TappedEventArgs e)
-    {
-        Algorithm.IsVisible = false;
-    }
-
     protected override void OnAppearing()
     {
         base.OnAppearing();

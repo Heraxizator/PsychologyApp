@@ -1,3 +1,5 @@
+using System.Windows.Input;
+
 namespace PsychologyApp.Presentation.Templates;
 
 public partial class NavigationBarSimpleView : ContentView
@@ -26,11 +28,11 @@ public partial class NavigationBarSimpleView : ContentView
     }
 
     public static readonly BindableProperty BackCommandProperty =
-        BindableProperty.Create(nameof(BackCommand), typeof(Command), typeof(NavigationBarSimpleView), default, BindingMode.TwoWay);
+        BindableProperty.Create(nameof(BackCommand), typeof(ICommand), typeof(NavigationBarSimpleView), default, BindingMode.TwoWay);
 
-    public Command BackCommand
+    public ICommand BackCommand
     {
-        get => (Command)GetValue(BackCommandProperty);
+        get => (ICommand)GetValue(BackCommandProperty);
         set => SetValue(BackCommandProperty, value);
     }
 }

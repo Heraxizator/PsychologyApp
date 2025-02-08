@@ -20,23 +20,27 @@
 
     <StackLayout>
 
-        <ScrollView VerticalOptions="FillAndExpand" Margin="0, 0, 0, 0" VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never">
-            <StackLayout Margin="0">
+        <ScrollView 
+            VerticalOptions="FillAndExpand" 
+            VerticalScrollBarVisibility="Never"
+            HorizontalScrollBarVisibility="Never">
+            <StackLayout Margin="10, 0, 10, 0">
 
                 <templates:NavigationBarSimpleView
                     TitleText="Создание техники"
                     BackText="Назад"
                     BackCommand="{Binding Finish}"/>
 
-                <Frame HasShadow="True" Margin="15, 15, 15, 15">
+                <Frame HasShadow="True" Margin="10, 15, 10, 15">
                     <StackLayout Margin="0">
                         <Label
-                    Text="Описание"
-                    FontSize="18"
-                    Margin="10, 5, 5, 15"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+                            Text="Описание"
+                            FontFamily="RobotoMedium"
+                            FontSize="16"
+                            TextColor="#DE000000"/>
 
                         <templates:TextEntryView
+                            Margin="0, 5, 0, 0"
                             TitleText="Название"
                             PlaceholderText="Крутилка Славинского"
                             BodyText="{Binding Name}"/>
@@ -60,15 +64,16 @@
 
                 </Frame>
                 
-                <Frame HasShadow="True" Margin="15, 10, 15, 15">
+                <Frame HasShadow="True" Margin="10, 10, 10, 15">
                     <StackLayout>
                         <Label
-                        Text="Алгоритм"
-                        FontSize="18"
-                        Margin="5, 0, 0, 10"
-                        TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+                            Text="Алгоритм"
+                            FontFamily="RobotoMedium"
+                            FontSize="16"
+                            TextColor="#DE000000"/>
 
                         <templates:TextEditorView
+                            Margin="0, 5, 0, 0"
                             TitleText="Список действий"
                             BodyText="{Binding Algorithm}"/>
                         
@@ -79,18 +84,18 @@
                 <Frame HasShadow="True" Margin="15, 10, 15, 15">
                     <StackLayout>
                         <Label
-                        Text="Изображение"
-                        FontSize="18"
-                        Margin="5, 0, 0, 15"
-                        TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+                            Text="Изображение"
+                            FontSize="16"
+                            FontFamily="RobotoMedium"
+                            TextColor="#DE000000"/>
 
 
                         <Image  
-                            Margin="0, 10, 0, 10"
-                        WidthRequest="150"
-                        HeightRequest="150"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"
+                            Margin="0, 15, 0, 15"
+                        WidthRequest="100"
+                        HeightRequest="100"
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="CenterAndExpand"
                         Source="{Binding Path}"/>
 
                         <!--
@@ -104,7 +109,7 @@
                     -->
 
                         <templates:ButtonView
-                            Margin="0, 10, 0, -5"
+                            Margin="0, 0, 0, -5"
                             BodyText="Галерея">
 
                             <templates:ButtonView.GestureRecognizers>
@@ -127,7 +132,7 @@
                 </Frame>
 
                 <templates:ButtonView
-                    Margin="15, 5, 15, 20"
+                    Margin="0, 5, 0, 10"
                     BodyText="{Binding Aim}">
 
                     <templates:ButtonView.GestureRecognizers>

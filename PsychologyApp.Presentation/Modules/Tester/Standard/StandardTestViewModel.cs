@@ -1,6 +1,7 @@
 ﻿using PsychologyApp.Detector.Domain.Colour.ValueObjects;
 using PsychologyApp.Presentation.ViewModels.TestViewModels;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Modules.Tester.Standard;
 
@@ -10,12 +11,13 @@ public class StandardTestViewModel : BaseTestViewModel
 
     public StandardTestViewModel() { }
 
+
     public StandardTestViewModel(INavigation navigation)
     {
+        Navigation = navigation;
+
         ModuleName = "Детектор";
         PageName = "Стандартный тест Люшера";
-
-        Navigation = navigation;
 
         Finish = new Command(ToFinish);
         Restart = new Command(ToRestart);
@@ -153,14 +155,11 @@ public class StandardTestViewModel : BaseTestViewModel
 
     #endregion
 
-    #region Objects
+}
 
-    public class ResultItem
-    {
-        public string? PropertyName { get; set; }
-        public string? PropertyValue { get; set; }
-        public string? PropertyText { get; set; }
-    }
-
-    #endregion
+public class ResultItem
+{
+    public string? PropertyName { get; set; }
+    public string? PropertyValue { get; set; }
+    public string? PropertyText { get; set; }
 }

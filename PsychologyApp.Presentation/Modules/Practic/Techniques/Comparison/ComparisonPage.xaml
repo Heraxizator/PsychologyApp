@@ -23,101 +23,43 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <ScrollView VerticalScrollBarVisibility="Never">
 
-            <StackLayout>
+        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 
-                <templates:NavigationBarExtendedView
-                    TitleText="Сравнение важностей"
-                    BackCommand="{Binding Finish}"
-                    ExtensionText="Теория"
-                    ExtensionCommand="{Binding Theory}"/>
+            <templates:NavigationBarExtendedView
+                TitleText="Сравнение важностей"
+                BackCommand="{Binding Finish}"
+                ExtensionText="Теория"
+                ExtensionCommand="{Binding Theory}"/>
+            
+            <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
 
-                <StackLayout Margin="0, 0, 0, 0">
-                <Frame Padding="10" Margin="15, 15, 15, 15">
-                        <StackLayout Margin="5, 5, 15, 5">
-                            <Label
-                            Text="Алгоритм"
-                            FontSize="18"
-                            Margin="10, 5, 5, 15"
-                            TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+                <StackLayout>
 
-                            <Label
-                            Margin="15, 0, 0, 10"
-                            Text="1. Назвать проблему"
-                            TextColor="{AppThemeBinding Light=black, Dark=white}"
-                            FontSize="16"/>
+                    <StackLayout Margin="10, 0, 10, 0">
 
-                            <Label
-                            Margin="15, 0, 5, 10"
-                            Text="2. Определить то, что важно в прошлом"
-                            TextColor="{AppThemeBinding Light=black, Dark=white}"
-                            FontSize="16"/>
+                        <templates:AlgorithmBoxView
+                            TitleText="Алгоритм"
+                            BodySource="{Binding Algorithm}"/>
 
-                            <Label 
-                            Margin="15, 0, 0, 10"
-                            Text="3. Определить то, что важно в настоящем"
-                            TextColor="{AppThemeBinding Light=black, Dark=white}"
-                            FontSize="16"/>
+                        <templates:EntryBoxView
+                            TitleText="Форма"
+                            BodySource="{Binding Entries}"/>
 
-                            <Label
-                            Margin="15, 0, 0, 10"
-                            Text="4. Определить то, что важно в будущем"
-                            TextColor="{AppThemeBinding Light=black, Dark=white}"
-                            FontSize="16"/>
+                        <templates:ButtonView
+                            Margin="0, 5, 0, 10"
+                            BodyText="Завершить">
 
-                            <Label
-                            Margin="15, 0, 0, 15"
-                            Text="5. Сравнить то, что важно в трёх временах"
-                            TextColor="{AppThemeBinding Light=black, Dark=white}"
-                            FontSize="16"/>
+                            <templates:ButtonView.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Finish}"/>
+                            </templates:ButtonView.GestureRecognizers>
 
-                        </StackLayout>
-
-                    </Frame>
-
-                <Frame Padding="10" Margin="15, 5, 15, 15">
-                        <StackLayout>
-                            <Label
-                    Text="Форма"
-                    FontSize="18"
-                    Margin="10, 10, 5, 15"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"/>
-
-                            <templates:TextEntryView
-                            TitleText="Проблема"
-                            PlaceholderText="У меня нет работы"/>
-
-                            <templates:TextEntryView
-                            TitleText="Прошлое"
-                            PlaceholderText="Хорошо учиться"/>
-
-                            <templates:TextEntryView
-                            TitleText="Настоящее"
-                            PlaceholderText="Найти работу"/>
-
-                            <templates:TextEntryView
-                                Margin="0, 0, 0, 10"
-                            TitleText="Будущее"
-                            PlaceholderText="Сохранить работу"/>
-
-                        </StackLayout>
-
-                    </Frame>
-
-                    <templates:ButtonView
-                        Margin="15, 5, 15, 20"
-                        BodyText="Завершить">
-
-                        <templates:ButtonView.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Finish}"/>
-                        </templates:ButtonView.GestureRecognizers>
-
-                    </templates:ButtonView>
+                        </templates:ButtonView>
                     
-                </StackLayout>
-                </StackLayout>
-        </ScrollView>
+                    </StackLayout>
+                    </StackLayout>
+            </ScrollView>
+        </StackLayout>
 
     </ContentPage.Content>
     

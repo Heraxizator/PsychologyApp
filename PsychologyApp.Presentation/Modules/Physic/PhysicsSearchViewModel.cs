@@ -3,6 +3,7 @@ using PsychologyApp.Application.Helpers;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.ReasonService;
 using PsychologyApp.Infrastructure.Data.Context;
+using System.Windows.Input;
 using BaseViewModel = PsychologyApp.Presentation.ViewModels.BaseViewModel;
 
 namespace MobileHelper.ViewModels.PhysicsViewModels;
@@ -20,29 +21,11 @@ public class PhysicsSearchViewModel : BaseViewModel
         this.ModuleName = "Психосоматик";
         this.PageName = "Поисковик";
 
-        this.Reload = new Command(() => ReloadAsync());
+        this.Reload = new Command(ReloadAsync);
 
-        this.Cancel = new Command(() => SetFail());
+        this.Cancel = new Command(SetFail);
 
         Initialization = InitAsync();
-
-        ConfigureState();
-    }
-
-    private void ConfigureState()
-    {
-        if (IfEmpty() is true)
-        {
-            SetDone();
-            return;
-        }
-
-        SetFail();
-    }
-
-    private bool IfEmpty()
-    {
-        return (this.ReasonsList.Any() || this.ResultsObservableCollection.Any());
     }
 
     private async void ReloadAsync()
@@ -61,16 +44,13 @@ public class PhysicsSearchViewModel : BaseViewModel
 
         this.ReasonsList.AddRange(reasonDTOs);
 
-        IEnumerable<ReasonDTO> source = this.ReasonsList.Take(50);
-
-        this.ResultsObservableCollection.AddRange(source);
+        this.ResultsObservableCollection.AddRange(reasonDTOs.Take(50));
     }
 
     public async void ExecuteSearch(string input)
     {
         if (string.IsNullOrEmpty(input))
         {
-            ConfigureState();
             return;
         }
 
@@ -88,8 +68,6 @@ public class PhysicsSearchViewModel : BaseViewModel
             Application.Current.Dispatcher.Dispatch(() =>
             {
                 this.ResultsObservableCollection.AddRange(source);
-
-                ConfigureState();
             });
 
         });
@@ -106,6 +84,9 @@ public class PhysicsSearchViewModel : BaseViewModel
             if (this._search_text != value)
             {
                 this._search_text = value;
+
+                ExecuteSearch(this._search_text ?? string.Empty);
+
                 OnPropertyChanged(nameof(this.SearchText));
             }
         }

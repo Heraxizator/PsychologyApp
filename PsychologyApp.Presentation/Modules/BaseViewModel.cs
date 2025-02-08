@@ -1,6 +1,7 @@
 ﻿using MobileHelperMaui.Views.TechniquePages;
 using PsychologyApp.Application;
 using PsychologyApp.Application.Models;
+using PsychologyApp.Presentation.Templates;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -33,6 +34,10 @@ namespace PsychologyApp.Presentation.ViewModels
             get => _page_name;
             set => SetProperty(ref _page_name, value);
         }
+
+        public List<string> Algorithm { get; protected set; } = [];
+
+        public List<EntryItem> Entries { get; protected set; } = [];
 
         public static async void ToTheory(object obj)
         {

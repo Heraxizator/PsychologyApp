@@ -12,44 +12,23 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <StackLayout>
+    <StackLayout Margin="10, 0, 10, 0">
 
-        <StackLayout
-            Margin="25, 10, 25, 10"
-            Orientation="Horizontal">
+        <templates:NavigationBarSimpleView
+            TitleText="Пожертвования"/>
 
-            <Label
-                Margin="0, 0, 0, 0"
-                VerticalOptions="CenterAndExpand"
-                Text="{mi:Material Icon=KeyboardArrowLeft, IconSize=25}"
-                TextColor="{StaticResource Primary}">
+        <templates:TextBoxView
+            HeaderText="Подробнее"
+            BodyText="Наш проект существует исключительно на пожертвования. Мы не размещаем рекламу и не оказываем платных услуг. Пожертвования используются на работу программистов и дизайнеров.">
 
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-                </Label.GestureRecognizers>
-
-            </Label>
-
-            <Label
-                Text="Пожертвования"
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="CenterAndExpand"
-                TextColor="Black"
-                FontSize="19"/>
-
-        </StackLayout>
-
-        <Frame Margin="15">
-            <Label
-                HorizontalTextAlignment="Justify"
-                Text="Наш проект существует исключительно на пожертвования. Мы не размещаем рекламу и не оказываем платных услуг. Пожертвования используются на работу программистов и дизайнеров."
-                FontSize="18"
-                TextColor="{AppThemeBinding Light=black, Dark=white}"
-                Margin="5"/>
-        </Frame>
+            <templates:TextBoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+            </templates:TextBoxView.GestureRecognizers>
+            
+        </templates:TextBoxView>
 
         <templates:ButtonView
-            Margin="15, 5, 15, 20"
+            Margin="0, 5, 0, 10"
             BodyText="Пожертвовать">
 
             <templates:ButtonView.GestureRecognizers>

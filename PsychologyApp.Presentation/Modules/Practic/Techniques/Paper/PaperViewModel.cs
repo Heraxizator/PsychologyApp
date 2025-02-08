@@ -1,4 +1,5 @@
 ﻿using PsychologyApp.Presentation.Models;
+using PsychologyApp.Presentation.Templates;
 using PsychologyApp.Presentation.ViewModels;
 using System.Collections.ObjectModel;
 
@@ -17,6 +18,22 @@ public class PaperViewModel : BaseViewModel
 
         ModuleName = "Практик";
         PageName = "Лист Бумаги";
+
+        Algorithm =
+        [
+            "1. Выписать негатив на карточку",
+            "2. Повторить это много раз",
+            "3. Удалить все карточки"
+        ];
+
+        Entries =
+        [
+            new EntryItem
+            {
+                Title = "Негативная мысль",
+                Placeholder = "Мне не хочется жить"
+            },
+        ];
 
         Info = "Учёные провели эксперимент и выявили одну замечательную закономерность: если взять лист бумаги, записать свои негативные мысли и выбросить этот лист, то тот негатив потеряют какое-либо значение для человека и перестанет его беспокоить. Но для такой практики совершенно необязательно тратить бумагу. Можно просто воспользоваться текстовым редактором на следующей странице. Техника проста до безобразия!";
 

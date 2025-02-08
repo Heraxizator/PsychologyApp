@@ -14,7 +14,7 @@
                     Text="{TemplateBinding ProgressText}"
                     HorizontalOptions="CenterAndExpand"
                     VerticalOptions="CenterAndExpand"
-                    TextColor="{StaticResource Black}"
+                    TextColor="#DE000000"
                     FontSize="14"/>
 
                 <Label 
@@ -33,10 +33,4 @@
         </ControlTemplate>
     </ContentView.ControlTemplate>
     
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
 </ContentView>

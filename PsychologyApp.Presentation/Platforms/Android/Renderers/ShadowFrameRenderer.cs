@@ -12,7 +12,7 @@ public class ShadowFrameRenderer : FrameRenderer
 {
     public ShadowFrameRenderer(Context context) : base(context)
     {
-        Elevation = 10;
-        Radius = 15;
+        Radius = 20;
+        Elevation = 20;
     }
 }

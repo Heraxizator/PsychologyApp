@@ -1,5 +1,6 @@
 ﻿using PsychologyApp.Detector.Domain.Colour.ValueObjects;
 using PsychologyApp.Presentation.ViewModels.TestViewModels;
+using System.Windows.Input;
 
 namespace MobileHelper.ViewModels.TestViewModels;
 
@@ -13,10 +14,11 @@ public class AlternativeTestViewModel : BaseTestViewModel
 
     public AlternativeTestViewModel(INavigation navigation)
     {
+        Navigation = navigation;
+
         ModuleName = "Детектор";
         PageName = "Краткий тест Люшера";
 
-        Finish = new Command(ToFinish);
         Restart = new Command(ToRestart);
         BlackHandler = new Command(ToBlackHandler);
         RedHandler = new Command(ToRedHandler);

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             x:Class="PsychologyApp.Presentation.Templates.EntryBoxView">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+
+            <Frame>
+                <StackLayout>
+                    <Label
+                        Text="Форма"
+                        FontSize="18"
+                        TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+
+                    <StackLayout
+                        Margin="0, 5, 0, 0"
+                        BindableLayout.ItemsSource="{TemplateBinding BodySource}">
+
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="templates:EntryItem">
+                                <templates:TextEntryView
+                                    TitleText="{Binding Title}"
+                                    BodyText="{Binding Text}"
+                                    PlaceholderText="{Binding Placeholder}"/>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+
+                    </StackLayout>
+
+                </StackLayout>
+
+            </Frame>
+
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+
+
+</ContentView>

@@ -32,7 +32,7 @@ public partial class NavigationBarExtendedView : ContentView
 
     public ICommand BackCommand
     {
-        get => (Command)GetValue(BackCommandProperty);
+        get => (ICommand)GetValue(BackCommandProperty);
         set => SetValue(BackCommandProperty, value);
     }
 
@@ -52,5 +52,14 @@ public partial class NavigationBarExtendedView : ContentView
     {
         get => (ICommand)GetValue(ExtensionCommandProperty);
         set => SetValue(ExtensionCommandProperty, value);
+    }
+
+    public static readonly BindableProperty ExtensionEnabledProperty =
+        BindableProperty.Create(nameof(ExtensionText), typeof(bool), typeof(NavigationBarExtendedView), true);
+
+    public bool ExtensionEnabled
+    {
+        get => (bool)GetValue(ExtensionEnabledProperty);
+        set => SetValue(ExtensionEnabledProperty, value);
     }
 }

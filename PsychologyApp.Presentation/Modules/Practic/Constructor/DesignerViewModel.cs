@@ -30,9 +30,9 @@ public class DesignerViewModel : BaseViewModel
 
         Navigation = navigation;
 
-        Finish = new Command(ToFinish);
+        Finish = new Command(async () => await navigation.PopAsync(false));
 
-        Path = "technique.png";
+        Path = "method.png";
 
         OpenCamera = new Command(ToOpenCamera);
         OpenGallery = new Command(ToOpenGallery);
@@ -148,7 +148,9 @@ public class DesignerViewModel : BaseViewModel
                 Subject = Theme,
                 Author = Author,
                 Algorithm = Algorithm,
-                Image = Path
+                Image = Path,
+                Number = Guid.NewGuid().ToString(),
+                Date = GetTechniqueDate()
             };
 
             await _techniqueService.UpdateTechnique(item);
@@ -169,8 +171,6 @@ public class DesignerViewModel : BaseViewModel
     {
         try
         {
-            string techniqueDate = DateTime.Now.ToString().Split(' ').First();
-
             TechniqueDTO technique = new()
             {
                 TechniqueId = -1,
@@ -181,7 +181,7 @@ public class DesignerViewModel : BaseViewModel
                 Image = Path,
                 Author = Author,
                 Algorithm = Algorithm,
-                Date = techniqueDate
+                Date = GetTechniqueDate()
             };
 
             await _techniqueService.AddNewTechnique(technique);
@@ -195,6 +195,11 @@ public class DesignerViewModel : BaseViewModel
         {
             ServiceLocator.Instance.GetService<IDialogService>().ShowAsync("Ошибка", "Убедитесь, что все поля заполнены");
         }
+    }
+
+    private static string GetTechniqueDate()
+    {
+        return DateTime.Now.ToString().Split(' ').First();
     }
 
     #region Public Properties

@@ -14,16 +14,9 @@
         <ControlTemplate>
             <StackLayout>
 
-                <Label
-                    Text="{mi:Material Icon=School}"
-                    FontSize="30"
-                    TextColor="{StaticResource Gray}"
-                    HorizontalOptions="CenterAndExpand"
-                    VerticalOptions="CenterAndExpand"/>
-
                 <Label 
                     Text="{TemplateBinding FailedText}"
-                    TextColor="Black"
+                    TextColor="#DE000000"
                     FontSize="16"
                     VerticalOptions="Center" 
                     HorizontalOptions="Center" />

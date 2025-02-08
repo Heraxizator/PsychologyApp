@@ -33,131 +33,78 @@
         VerticalOptions="FillAndExpand" 
         HorizontalOptions="FillAndExpand">
 
-        <StackLayout
-            Margin="25, 10, 25, 10"
-            Orientation="Horizontal">
+            <templates:NavigationBarSimpleView
+            TitleText="Психосоматика"
+            BackCommand="{Binding Finish}"/>
 
-            <Label
-                Margin="0, 0, 0, 0"
-                VerticalOptions="CenterAndExpand"
-                Text="{mi:Material Icon=KeyboardArrowLeft, IconSize=25}"
-                TextColor="{StaticResource Primary}">
+            <templates:TextEntryView
+            PlaceholderText="Болезнь"
+            BodyText="{Binding SearchText}"
+            TitleText="Проблема"/>
 
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-                </Label.GestureRecognizers>
-
-            </Label>
-
-            <Label
-                Text="Психосоматика"
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="CenterAndExpand"
-                TextColor="Black"
-                FontSize="19"/>
-
-        </StackLayout>
-
-        <Frame 
-        Margin="5, 15, 5, 15" 
-        Padding="10" 
-        BorderColor="{StaticResource Accent}" 
-        CornerRadius="25">
-            <StackLayout>
-                <Label TextColor="{AppThemeBinding Light=black, Dark=white}" Padding="0" Text="Проблема" FontSize="15"/>
-                <Entry
-            x:Name="Search"
-            PlaceholderColor="{StaticResource Accent}"
-            Placeholder="Болезнь"
-            FontSize="15"
-            Text="{Binding SearchText}"
-            TextColor="{AppThemeBinding Light=black, Dark=white}"
-                    TextChanged="Search_TextChanged"
-            VerticalTextAlignment="Center"/>
-            </StackLayout>
-
-        </Frame>
-
-        <ScrollView
+            <ScrollView
             VerticalOptions="FillAndExpand"
             HorizontalOptions="FillAndExpand"
             VerticalScrollBarVisibility="Never">
 
-            <StackLayout>
+                <StackLayout>
 
-                <templates:ProgressbarView 
-                VerticalOptions="CenterAndExpand"
-                IsVisible="{Binding IsInit}"
-                IsLoading="True"
-                ProgressText="Поиск">
-                    <templates:ProgressbarView.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding Cancel}"/>
-                    </templates:ProgressbarView.GestureRecognizers>
-                </templates:ProgressbarView>
-
-                <templates:RetryView
-                VerticalOptions="CenterAndExpand"
-                IsVisible="{Binding IsFail}"
-                FailedText="Не удалось найти"
-                RetryText="Попробуйте изменить запрос">
-                </templates:RetryView>
-
-                <CollectionView
-                IsVisible="{Binding IsDone}"
+                    <CollectionView
                 SelectionMode="None"
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand"
                 VerticalScrollBarVisibility="Never"
                 ItemsSource="{Binding ResultsObservableCollection}">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
+                            <DataTemplate>
                                 <Frame Padding="10">
-                                    <StackLayout>
+                                    <StackLayout Margin="5, 0, 5, 0">
                                         <Label 
                                             Text="{Binding Title}"
-                                            Margin="5, 0, 0, 0"
                                             FontSize="14"
-                                            TextColor="{AppThemeBinding Light=black, Dark=white}"
+                                            FontFamily="RobotoMedium"
+                                            TextColor="#DE000000"
                                             Padding="0"
                                             HorizontalOptions="Start" />
 
                                         <Label
-                                            Margin="5, 0, 5, 10"
+                                            Margin="0, 5, 0, 0"
                                             FontSize="14"
                                             HorizontalTextAlignment="Justify"
-                                            TextColor="{AppThemeBinding Light=gray, Dark=white}"
+                                            TextColor="#DE000000"
                                             Text="{Binding Subtitle}"/>
 
                                     </StackLayout>
                                 </Frame>
-                            </Grid>
-                        </DataTemplate>
+                            </DataTemplate>
                     </CollectionView.ItemTemplate>
 
                     <CollectionView.EmptyView>
 
-                        <StackLayout
+                            <StackLayout
                             HorizontalOptions="CenterAndExpand"
                             VerticalOptions="CenterAndExpand">
 
-                            <templates:RetryView
-                                VerticalOptions="CenterAndExpand"
-                                IsVisible="True"
-                                FailedText="Не удалось загрузить"
-                                RetryText="Попробовать ещё раз?">
-                                <templates:RetryView.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Reload}"/>
-                                </templates:RetryView.GestureRecognizers>
-                            </templates:RetryView>
+                                <Label
+                                    FontFamily="RobotoMedium"
+                                    TextColor="#DE000000"
+                                    FontSize="14"
+                                    Text="Введите запрос"/>
 
-                        </StackLayout>
+                                <Label
+                                    FontFamily="RobotoRegular"
+                                    TextColor="#DE000000"
+                                    FontSize="14"
+                                    Text="Болезнь или часть тела"/>
+
+                            </StackLayout>
 
                     </CollectionView.EmptyView>
 
                 </CollectionView>
 
-            </StackLayout>
+
+                </StackLayout>
 
         </ScrollView>
     </StackLayout>

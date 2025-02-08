@@ -1,4 +1,5 @@
 ﻿using PsychologyApp.Presentation.Models;
+using PsychologyApp.Presentation.Templates;
 using PsychologyApp.Presentation.ViewModels;
 using System.Collections.ObjectModel;
 
@@ -17,6 +18,21 @@ public class CopiedViewModel : BaseViewModel
 
         ModuleName = "Практик";
         PageName = "Повтори Это";
+
+        Algorithm =
+        [
+            "1. Выписать то, что вас беспокоит",
+            "2. Дублировать это до тех пор, пока не станет легче"
+        ];
+
+        Entries =
+        [
+            new EntryItem
+            {
+                Title = "Беспокойство",
+                Placeholder = "Я очень хочу уволиться"
+            },
+        ];
 
         Info = "Учёные провели эксперимент и выявили одну замечательную закономерность: если взять то желание, которое имеет слишком большой эмоциональный заряд, записать его на бумаге и много раз повторить, то напряжение ослабнет и станет спокойнее. Тривиально, но это работает!";
 

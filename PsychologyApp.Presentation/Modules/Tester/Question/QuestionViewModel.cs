@@ -11,14 +11,17 @@ public class QuestionViewModel : BaseViewModel
 {
     public ObservableRangeCollection<Question> Questions { get; private set; } = [];
     public ICommand ConfirmCommand { get; private set; } = default!;
+    public readonly bool IsSingleAnswer = default!;
 
     private Func<int, string> Analyzer { get; set; } = default!;
 
-    public QuestionViewModel(INavigation navigation, List<Question> questions, Func<int, string> analyzer)
+    public QuestionViewModel(INavigation navigation, List<Question> questions, Func<int, string> analyzer, bool singleAnswer)
     {
         Navigation = navigation;
 
         Analyzer = analyzer;
+
+        IsSingleAnswer = singleAnswer;
 
         Questions.AddRange(questions);
 
@@ -27,7 +30,7 @@ public class QuestionViewModel : BaseViewModel
 
     private async Task CalculateAnswersAsync()
     {
-        if (Questions.All(x => x.Answers.Any(x => x.Selected is true) is false))
+        if (Questions.All(x => x.Answers.Any(x => x.Selected is true)) is false)
         {
             ServiceLocator.Instance.GetService<IToastService>().LongToast("Нужно ответить на все вопросы");
             return;

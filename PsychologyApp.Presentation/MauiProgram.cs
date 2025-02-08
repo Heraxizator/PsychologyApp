@@ -20,8 +20,9 @@ namespace PsychologyApp.Presentation
                 .UseMaterialMauiIcons()
                 .ConfigureFonts(fonts =>
                 {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("Roboto-Medium.ttf", "RobotoMedium");
+                    fonts.AddFont("Roboto-Regular.ttf", "RobotoRegular");
+                    fonts.AddFont("Roboto-SemiBold.ttf", "RobotoSemiBold");              
                 })
 
             .ConfigureMauiHandlers(handlers =>

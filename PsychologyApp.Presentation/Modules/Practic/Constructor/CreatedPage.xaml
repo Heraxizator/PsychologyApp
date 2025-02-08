@@ -29,13 +29,14 @@
     <StackLayout>
 
         <StackLayout
-            Margin="25, 10, 25, 10"
+            Margin="20, 15, 20, 15"
             Orientation="Horizontal">
 
             <Label
                 Margin="0, 0, 0, 0"
                 VerticalOptions="CenterAndExpand"
-                Text="{mi:Material Icon=KeyboardArrowLeft, IconSize=25}"
+                FontSize="21"
+                Text="{mi:Material Icon=KeyboardArrowLeft}"
                 TextColor="{StaticResource Primary}">
 
                 <Label.GestureRecognizers>
@@ -46,13 +47,15 @@
 
             <Label
                 Text="Своя техника"
+                Margin="0, 0, 10, 0"
                 HorizontalOptions="CenterAndExpand"
                 VerticalOptions="CenterAndExpand"
-                TextColor="Black"
-                FontSize="19"/>
+                FontFamily="RobotoSemiBold"
+                TextColor="#DE000000"
+                FontSize="17"/>
 
             <Label
-                Text="{mi:Material Icon=Edit, IconSize=22}"
+                Text="{mi:Material Icon=Edit}"
                 Margin="0, 0, 15, 0"
                 TextColor="{StaticResource Primary}"
                 FontSize="20">
@@ -64,7 +67,7 @@
             </Label>
 
             <Label
-                Text="{mi:Material Icon=DeleteOutline, IconSize=22}"
+                Text="{mi:Material Icon=DeleteOutline}"
                 TextColor="{StaticResource Primary}"
                 FontSize="20">
 
@@ -76,35 +79,14 @@
 
         </StackLayout>
 
-        <StackLayout Margin="0">
-            <Frame HasShadow="True" MinimumHeightRequest="500" Margin="15, 15, 15, 15">
-                <StackLayout Margin="5">
-                    <Label
-                    Text="Алгоритм"
-                    FontSize="18"
-                    Margin="10, 5, 5, 15"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+        <StackLayout Margin="10, 0, 10, 0">
 
-                    <CollectionView
-                    Margin="0, 0, 0, 5"
-                    ItemsSource="{Binding Elements}"
-                    SelectionMode="None">
-                        <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <Label 
-                                    Margin="15, 0, 0, 10"
-                                    Text="{Binding Text}"
-                                    TextColor="{AppThemeBinding Light=black, Dark=white}"
-                                    FontSize="16"/>
-                                </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </StackLayout>
+                <templates:AlgorithmBoxView
+                TitleText="Алгоритм"
+                BodySource="{Binding Algorithm}"/>
 
-            </Frame>
-
-            <templates:ButtonView
-                Margin="15, 5, 15, 20"
+                <templates:ButtonView
+                Margin="5, 5, 5, 10"
                 BodyText="Завершить">
 
                 <templates:ButtonView.GestureRecognizers>

@@ -19,7 +19,6 @@ public class CreatedViewModel : BaseViewModel
     public ICommand Remove { get; private set; } = default!;
     public ICommand Edit { get; private set; } = default!;
 
-    public ObservableCollection<Items> Elements { get; private set; } = [];
     private long currentId { get; set; }
 
     public CreatedViewModel() { }
@@ -80,10 +79,7 @@ public class CreatedViewModel : BaseViewModel
 
         foreach (string action in actions)
         {
-            Elements.Add(new Items
-            {
-                Text = action
-            });
+            Algorithm.Add(action);
         }
     }
 }

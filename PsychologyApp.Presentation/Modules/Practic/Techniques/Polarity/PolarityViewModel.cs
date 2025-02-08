@@ -1,4 +1,5 @@
 ﻿using PsychologyApp.Presentation.Models;
+using PsychologyApp.Presentation.Templates;
 using PsychologyApp.Presentation.ViewModels;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -20,6 +21,27 @@ public class PolarityViewModel : BaseViewModel
 
         ModuleName = "Практик";
         PageName = "Полярности";
+
+        Algorithm =
+        [
+            "1. Найти то, что важно",
+            "2. Найти то, что противоположно",
+            "3. Повторить п.1 и п.2 много раз"
+        ];
+
+        Entries =
+        [
+            new EntryItem
+            {
+                Title = "Первая полярность",
+                Placeholder = "Депрессия"
+            },
+
+            new EntryItem {
+                Title = "Вторая полярность",
+                Placeholder = "Эйфория"
+            }
+        ];
 
         Info = "Любой внутренний конфликт связан с борьбой двух противоположных мотивов, желаний, убеждений или целей. По сути причиной многих духовных проблем являются дуальности. Поэтому работа с полярностями - ещё один путь к освобождению от того, что беспокоит. Но, как правило, далеко не одна пара дуальностей создаёт внутренний конфликт. Их может быть несколько. По этой причине рекомендуется рассматривать побольше возможных пар, связанных с проблемой.";
         IsFull = false;

@@ -22,7 +22,7 @@
                 AbsoluteLayout.LayoutFlags="All"
             VerticalScrollBarVisibility="Never">
 
-            <StackLayout>
+            <StackLayout Margin="10, 0, 10, 0">
 
                 <templates:ProgressbarView 
             VerticalOptions="CenterAndExpand"
@@ -47,18 +47,18 @@
                             BodyText="Тест поможет вам в пару кликов найти эмоциональную причину любого вашего физического недомогания. Всё очень просто."/>
 
                     
-                        <Frame Margin="15, 10, 15, 15">
+                        <Frame Margin="10, 10, 10, 10">
                             <StackLayout Margin="0">
                                 <Label
                             Text="Алгоритм"
-                            FontSize="18"
-                            Margin="10, 5, 5, 15"
-                            TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+                            FontSize="16"
+                                    FontFamily="RobotoMedium"
+                            TextColor="#DE000000"/>
 
                                 <Label 
-                            Margin="15, 0, 0, 10"
-                            TextColor="{AppThemeBinding Light=black, Dark=white}"
-                            FontSize="16">
+                            Margin="0, 5, 0, 0"
+                            TextColor="#DE000000"
+                            FontSize="14">
                                     <Label.FormattedText>
                                         <FormattedString>
                                             <Span Text="1. Назвать болезнь или часть тела, которая болит"/>
@@ -67,9 +67,9 @@
                                 </Label>
 
                                 <Label 
-                            Margin="15, 0, 0, 10"
-                            TextColor="{AppThemeBinding Light=black, Dark=white}"
-                            FontSize="16">
+                            Margin="0, 5, 0, 0"
+                            TextColor="#DE000000"
+                            FontSize="14">
                                     <Label.FormattedText>
                                         <FormattedString>
                                             <Span Text="2. Узнать несколько возможных "/>
@@ -83,7 +83,7 @@
                         </Frame>
 
                         <templates:ButtonView
-                            Margin="10, 15, 10, 15"
+                            Margin="0, 5, 0, 10"
                             BodyText="Начать">
 
                             <templates:ButtonView.GestureRecognizers>

@@ -4,15 +4,18 @@ namespace PsychologyApp.Presentation.Modules.Tester;
 
 public partial class QuestionPage : ContentPage
 {
-    public QuestionPage(List<Question> questions, Func<int, string> analyzer)
+    private QuestionViewModel ViewModel;
+    public QuestionPage(List<Question> questions, Func<int, string> analyzer, bool singleAnswer)
     {
         InitializeComponent();
 
-        BindingContext = new QuestionViewModel(Navigation, questions, analyzer);
+        ViewModel = new QuestionViewModel(Navigation, questions, analyzer, singleAnswer);
+
+        BindingContext = ViewModel;
     }
 
     private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
-        _ = await Navigation.PopAsync(false);
+        await Navigation.PopToRootAsync(false);
     }
 }

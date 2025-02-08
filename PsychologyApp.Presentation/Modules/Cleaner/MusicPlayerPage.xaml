@@ -27,16 +27,16 @@
             AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
             AbsoluteLayout.LayoutFlags="All"
             VerticalOptions="FillAndExpand"
-            Margin="10">
+            Margin="10, 0, 10, 0">
 
             <StackLayout 
                 VerticalOptions="CenterAndExpand"
                 IsVisible="{Binding IsCreated}"
-                Margin="0, 125">
+                Margin="0, 0">
 
                 <Label
                     Text="Сборник молитв"
-                    TextColor="Black"
+                    TextColor="#DE000000"
                     FontSize="16"
                     HorizontalOptions="CenterAndExpand"
                     VerticalOptions="CenterAndExpand"/>
@@ -78,7 +78,6 @@
             SeparatorVisibility="None"
             SelectionMode="None"
             HasUnevenRows="True"
-            RowHeight="150"
             ItemsSource="{Binding SelectedItems}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -88,18 +87,19 @@
                                     <StackLayout Orientation="Horizontal">
                                         <Image
                                         Margin="0, 0, 5, 0"
-                                        WidthRequest="50"
-                                        HeightRequest="50"
+                                        WidthRequest="45"
+                                        HeightRequest="45"
                                         Source="music.png"/>
                                         <StackLayout>
                                             <Label 
-                                            TextColor="Black"
-                                            FontSize="18"
-                                            Text="{Binding Name}"/>
+                                                FontFamily="RobotoMedium"
+                                                TextColor="#DE000000"
+                                                FontSize="16"
+                                                Text="{Binding Name}"/>
                                             <Label 
-                                            TextColor="{StaticResource Gray}"
-                                            FontSize="16"
-                                            Text="{Binding Description}"/>
+                                                TextColor="#DE000000"
+                                                FontSize="16"
+                                                Text="{Binding Description}"/>
                                         </StackLayout>
 
                                         <!--
@@ -112,13 +112,6 @@
                                         -->
                                     </StackLayout>
                                     
-                                    <Frame.Shadow>
-                                        <Shadow 
-                                        Opacity="0.35"
-                                        Brush="Black"
-                                        Offset="0, 0"
-                                        Radius="20"/>
-                                    </Frame.Shadow>
                                 </Frame>
 
                                 <StackLayout.GestureRecognizers>
@@ -131,44 +124,12 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <StackLayout VerticalOptions="End">
+                <templates:TextBoxView
+                    Margin="0, 0, 0, 10"
+                HeaderText="Подробнее"
+                BodyText="Это сборник сильных молитв, который поможет вам очиститься от негатива. Нужен хороший интернет."/>
 
-                <StackLayout VerticalOptions="End" Margin="15, 0, 10, 0" Orientation="Horizontal">
-                    <Image 
-                    WidthRequest="35"
-                    HeightRequest="35"
-                    Source="icon_about.png"/>
-                    <Label 
-                    Text="Подробнее"
-                    FontSize="18"
-                    TextColor="Black"
-                    HorizontalOptions="Start"
-                    VerticalOptions="Center"/>
-                </StackLayout>
-
-                <Frame Margin="15, 15, 15, 15">
-                    <StackLayout Margin="0">
-
-                        <Label
-                            HorizontalTextAlignment="Justify"
-                            Margin="5, 0, 5, 15"
-                            Text="Это сборник сильных молитв, который поможет вам очиститься от негатива. Нужен хороший интернет."
-                            TextColor="{AppThemeBinding Light=black, Dark=white}"
-                            FontSize="16"/>
-
-                    </StackLayout>
-
-                    <Frame.Shadow>
-                        <Shadow 
-                        Opacity="0.35"
-                        Brush="Black"
-                        Offset="0, 0"
-                        Radius="20"/>
-                    </Frame.Shadow>
-                </Frame>
             </StackLayout>
-
-        </StackLayout>
         </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

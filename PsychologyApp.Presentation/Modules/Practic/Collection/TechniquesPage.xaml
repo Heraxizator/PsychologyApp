@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileHelperMaui.Views.TechniquesPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Technique.Main"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              Shell.NavBarIsVisible="True"
              Title="Главная">
 
@@ -35,95 +36,134 @@
 
         <CollectionView.Header>
 
-            <StackLayout Padding="10" Margin="0, 0, 0, 5" Orientation="Horizontal">
+            <StackLayout Margin="10, 0, 10, 10" Orientation="Horizontal">
                 <Label
                     Text="Мои техники"
-                    FontSize="19"
+                    FontSize="18"
+                    FontFamily="RobotoMedium"
                     HorizontalOptions="StartAndExpand"
                     VerticalOptions="Center"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"/>
-                <Button 
-                    Text="Создать"
-                    FontSize="13"
-                    FontAttributes="Bold"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark=white}"
-                    TextColor="{AppThemeBinding Light=white, Dark=black}"
-                    CornerRadius="25"
-                    WidthRequest="150"
-                    HorizontalOptions="End"
-                    VerticalOptions="Center"
-                    Command="{Binding ConstructorTapped}"
-                    HeightRequest="35"/>
+                    TextColor="#DE000000"/>
+
+                    <Border
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        StrokeShape="RoundRectangle 35"
+                        WidthRequest="125"
+                        HeightRequest="35"
+                        BackgroundColor="{StaticResource Primary}"
+                        Stroke="Transparent"
+                        StrokeThickness="0">
+
+                        <Label
+                            FontFamily="RobotoMedium"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            TextColor="White"
+                            FontSize="14"
+                            Text="СОЗДАТЬ"/>
+
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ConstructorTapped}"/>
+                        </Border.GestureRecognizers>
+                        
+                    </Border>
+                    
             </StackLayout>
 
         </CollectionView.Header>
 
         <CollectionView.ItemTemplate>
             <DataTemplate>
-                <Frame
+                    <Frame
                     HasShadow="True"
                     Padding="10"
                     IsVisible="{Binding Active}">
 
-                    <StackLayout>
-                        <StackLayout Orientation="Horizontal">
-                            <Label 
-                                Text="{Binding Number}"
-                                Margin="5, 0, 0, 0"
-                                FontSize="14"
-                                TextColor="{AppThemeBinding Light=black, Dark=white}"
-                                HorizontalOptions="Start"/>
+                        <Grid Margin="5, 0, 5, 0">
 
-                            <Label 
-                                Text="{Binding Date}"
-                                Margin="0, 0, 5, 0"
-                                FontSize="15"
-                                HorizontalOptions="EndAndExpand"
-                                TextColor="{AppThemeBinding Light={StaticResource Gray}, Dark=white}"/>
-                        </StackLayout>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
-                        <StackLayout Margin="5" Orientation="Horizontal">
-                            <Image 
-                                WidthRequest="85"
-                                HeightRequest="85"
-                                Source="{Binding Image}"/>
 
-                            <StackLayout HorizontalOptions="FillAndExpand" Margin="5, 0, 0, 0">
-                                <Label
-                                    Text="{Binding Title}"
-                                    FontSize="18"
-                                    FontAttributes="Bold"
-                                    TextColor="{AppThemeBinding Light={StaticResource Gray}, Dark=white}"/>
-                                <Label
-                                    LineBreakMode="WordWrap"
-                                    Text="{Binding Subtitle}"
-                                    Margin="0, 5, 0, 0"
+                            <StackLayout
+                                Grid.Row="0"
+                                Orientation="Horizontal">
+                                <Label 
+                                    Text="{Binding Number}"
                                     FontSize="15"
-                                    MaxLines="3"
-                                    TextColor="{AppThemeBinding Light={StaticResource Gray}, Dark=white}"/>
+                                    FontFamily="RobotoMedium"
+                                    TextColor="#DE000000"
+                                    HorizontalOptions="Start"/>
+
+                                <Label 
+                                    Text="{Binding Date}"
+                                    FontSize="14"
+                                    FontFamily="RobotoMedium"
+                                    HorizontalOptions="EndAndExpand"
+                                    TextColor="#AAAAAA"/>
                             </StackLayout>
 
-                        </StackLayout>
 
-                        <StackLayout Margin="0" Orientation="Horizontal">
-                            <Label 
-                                Text="{Binding Theme}"
-                                Margin="5, 0, 0, 0"
-                                FontSize="15"
-                                TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark=white}"
-                                HorizontalOptions="Start"/>
 
-                            <Label 
-                                Text="{Binding Author}"
-                                Margin="0, 0, 5, 0"
-                                FontSize="14"
-                                HorizontalOptions="EndAndExpand"
-                                TextColor="{AppThemeBinding Light=black, Dark=white}"/>
-                        </StackLayout>
+                            <StackLayout 
+                                Grid.Row="1"
+                                Padding="0, 15, 0, 15"
+                                Orientation="Horizontal">
 
-                    </StackLayout>
-                    
-                    <Frame.GestureRecognizers>
+
+                                <Image
+                                    Margin="0, 0, 5, 0"
+                                    WidthRequest="65"
+                                    HeightRequest="65"
+                                    Source="{Binding Image}"/>
+
+                                <StackLayout VerticalOptions="FillAndExpand"
+                                             HorizontalOptions="FillAndExpand"
+                                             Margin="5, 0, 0, 0">
+                                    <Label
+                                        Text="{Binding Title}"
+                                        FontSize="15"
+                                        FontFamily="RobotoMedium"
+                                        TextColor="#DE000000"/>
+
+                                    <Label
+                                        Margin="0, 2, 0, 0"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding Subtitle}"
+                                        FontFamily="RobotoRegular"
+                                        FontSize="14"
+                                        MaxLines="2"
+                                        TextColor="#DE000000"/>
+                                </StackLayout>
+
+                            </StackLayout>
+
+                            <StackLayout 
+                                Grid.Row="2"
+                                Margin="0" 
+                                Orientation="Horizontal">
+                                <Label 
+                                    Text="{Binding Theme}"
+                                    FontSize="15"
+                                    FontFamily="RobotoSemiBold"
+                                    TextColor="{StaticResource Primary}"
+                                    HorizontalOptions="Start"/>
+
+                                <Label 
+                                    Text="{Binding Author}"
+                                    FontSize="14"
+                                    FontFamily="RobotoMedium"
+                                    HorizontalOptions="EndAndExpand"
+                                    TextColor="#DE000000"/>
+                            </StackLayout>
+
+                        </Grid>
+
+                        <Frame.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding TapCommand}"/>
                     </Frame.GestureRecognizers>
                 </Frame>

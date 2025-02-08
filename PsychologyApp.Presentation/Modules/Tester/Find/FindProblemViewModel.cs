@@ -1,5 +1,6 @@
 ﻿using PsychologyApp.Presentation.ViewModels;
 using System.Collections.ObjectModel;
+using System.Security.Cryptography;
 using System.Windows.Input;
 
 namespace MobileHelper.ViewModels.TestViewModels;
@@ -7,8 +8,7 @@ namespace MobileHelper.ViewModels.TestViewModels;
 public class FindProblemViewModel : BaseViewModel
 {
     public ICommand Continue { get; private set; } = default!;
-    public new ICommand Finish { get; private set; } = default!;
-
+    public ObservableCollection<AlgorithmRow> AlgorithmRows { get; private set; } = [];
 
     private readonly Action _nextPageTappedAction = default!;
 
@@ -23,28 +23,26 @@ public class FindProblemViewModel : BaseViewModel
 
         DescribtionText = describtion;
 
-        AlgorithmRows = [];
-
-        foreach (string row in algorithm)
-        {
-            AlgorithmRows.Add
-            (
-                new AlgorithmItem { Row = row }
-            );
-        }
+        InitAlgorithmRows(algorithm);
 
         CommentText = comment;
 
         _nextPageTappedAction = action;
 
         Continue = new Command(ToContinue);
-
-        Finish = new Command(async () => await Navigation.PopAsync(false));
     }
 
-    private void ToContinue(object obj)
+    private void InitAlgorithmRows(List<string> algorithmRows)
     {
-        _ = _nextPageTappedAction.DynamicInvoke();
+        foreach (string algorithmRow in algorithmRows)
+        {
+            AlgorithmRows.Add(new AlgorithmRow { Text = algorithmRow });
+        }
+    }
+
+    public void ToContinue()
+    {
+        _nextPageTappedAction.Invoke();
     }
 
     #region Public Properties
@@ -64,8 +62,6 @@ public class FindProblemViewModel : BaseViewModel
         }
     }
 
-    public ObservableCollection<AlgorithmItem> AlgorithmRows { get; private set; } = [];
-
     private string? _comment_text;
     public string? CommentText
     {
@@ -83,7 +79,7 @@ public class FindProblemViewModel : BaseViewModel
     #endregion
 }
 
-public class AlgorithmItem
+public class AlgorithmRow
 {
-    public string? Row { get; set; }
+    public string Text { get; set; } = default!;
 }

@@ -33,16 +33,6 @@ public partial class CopiedPage : ContentPage
         _ = await Navigation.PopAsync(false);
     }
 
-    private void TapGestureRecognizer_Tapped_2(object sender, TappedEventArgs e)
-    {
-        Algorithm.IsVisible = false;
-    }
-
-    private void Papers_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-    {
-        Papers.SelectedItem = null;
-    }
-
     protected override void OnAppearing()
     {
         base.OnAppearing();

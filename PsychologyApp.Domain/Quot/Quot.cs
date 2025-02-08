@@ -20,19 +20,19 @@ public class Quot : Entity
     public string Text { get; private set; } = default!;
     public string Theme { get; private set; } = default!;
     public bool IsReaded { get; private set; } = default!;
+    public bool IsFavourite {  get; private set; } = default!;
 
-    public static Quot Create(string title, string text, string theme, bool isReaded)
+    public static Quot Create(string title, string text, string theme, bool isReaded, bool isFavourite)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(title);
         ArgumentException.ThrowIfNullOrWhiteSpace(text);
-        ArgumentException.ThrowIfNullOrWhiteSpace(theme);
 
         Quot quot = new Quot
         {
             Title = title,
             Text = text,
             Theme = theme,
-            IsReaded = isReaded
+            IsReaded = isReaded,
+            IsFavourite = isFavourite
         };
 
         return quot;
@@ -53,6 +53,11 @@ public class Quot : Entity
     public void MarkAsReaded()
     {
         this.IsReaded = true;
+    }
+
+    public void SetFavourite(bool isFavourite)
+    {
+        this.IsFavourite = isFavourite;
     }
 }
 

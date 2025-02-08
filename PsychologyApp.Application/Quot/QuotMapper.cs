@@ -18,12 +18,13 @@ public static class QuotMapper
             Title = quot.Title,
             Text = quot.Text,
             Theme = quot.Theme,
-            IsReaded = quot.IsReaded
+            IsReaded = quot.IsReaded,
+            IsFavourite = quot.IsFavourite
         };
     }
 
     public static Quot GetQuot(QuotDTO quotDTO)
     {
-        return Quot.Create(quotDTO.Title!, quotDTO.Text!, quotDTO.Theme, quotDTO.IsReaded);
+        return Quot.Create(quotDTO.Title!, quotDTO.Text!, quotDTO.Theme!, quotDTO.IsReaded, quotDTO.IsFavourite);
     }
 }

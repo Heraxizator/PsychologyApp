@@ -22,7 +22,7 @@
     </ContentPage.ToolbarItems>
 
     <ScrollView VerticalScrollBarVisibility="Never" VerticalOptions="FillAndExpand">
-        <StackLayout VerticalOptions="FillAndExpand" Margin="0">
+        <StackLayout VerticalOptions="FillAndExpand" Margin="10, 0, 10, 0">
 
             <templates:NavigationBarExtendedView
                 TitleText="Повтори Это"
@@ -30,49 +30,30 @@
                 ExtensionText="Теория"
                 ExtensionCommand="{Binding Theory}"/>
 
-            <Frame x:Name="Algorithm" Margin="15, 15, 15, 15">
-                <StackLayout Margin="5">
+            <templates:AlgorithmBoxView
+                TitleText="Алгоритм"
+                BodySource="{Binding Algorithm}"/>
+
+            <Frame Margin="10, 10, 10, 0">
+                <StackLayout>
                     <Label
-                    Text="Алгоритм"
-                    FontSize="18"
-                    Margin="10, 5, 5, 15"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"/>
-
-                    <Label 
-                    Margin="15, 0, 0, 10"
-                    Text="1. Выписать то, что вас беспокоит"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"
-                    FontSize="16"/>
-
-                    <Label 
-                    Margin="15, 0, 5, 10"
-                    Text="2. Дублировать это до тех пор, пока не станет легче"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"
-                    FontSize="16"/>
-
-                </StackLayout>
-
-            </Frame>
-
-            <Frame Margin="15, 10, 15, 0">
-                <StackLayout Margin="0, 0, 0, 0">
-                    <Label
-                    Text="Форма"
-                    FontSize="18"
-                    Margin="5, 0, 5, 15"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+                        Text="Форма"
+                        FontFamily="RobotoMedium"
+                        TextColor="#DE000000"
+                        FontSize="16"/>
 
                     <templates:TextEntryView
+                        Margin="0, 5, 0, 0"
                         TitleText="Беспокойство"
                         BodyText="{Binding Text}"
                         PlaceholderText="Я очень хочу уволиться"/>
 
                     <templates:ButtonView
-                        Margin="5, 5, 5, 0"
+
                         BodyText="Повторить">
 
                         <templates:ButtonView.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_2" Command="{Binding AddCommand}"/>
+                            <TapGestureRecognizer Command="{Binding AddCommand}"/>
                         </templates:ButtonView.GestureRecognizers>
 
                     </templates:ButtonView>
@@ -80,43 +61,39 @@
                 </StackLayout>
             </Frame>
 
-            <CollectionView
+            <StackLayout
                     VerticalOptions="FillAndExpand"
                 x:Name="Papers"
                 IsVisible="{Binding IsFull}"
-                Margin="5, 10, 5, 0"
-                SelectionMode="None"
-                ItemsSource="{Binding PapersObservableCollection}"
-                VerticalScrollBarVisibility="Never"
-                HorizontalScrollBarVisibility="Never">
+                Margin="0, 15, 0, 0"
+                BindableLayout.ItemsSource="{Binding PapersObservableCollection}">
 
-                <CollectionView.ItemTemplate>
+                <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <Frame>
                             <StackLayout Padding="0">
                                 <StackLayout Padding="0" Orientation="Horizontal">
                                     <Label 
-                                               Text="{Binding Id}"
-                                               Margin="5, 0, 0, 0"
-                                               FontSize="14"
-                                               TextColor="{AppThemeBinding Light=black, Dark=white}"
-                                               Padding="0"
-                                               HorizontalOptions="Start" />
+                                        Text="{Binding Id}"
+                                        FontSize="14"
+                                        TextColor="#DE000000"
+                                        Padding="0"
+                                        HorizontalOptions="Start" />
 
                                 </StackLayout>
 
                                 <Label 
-                                            Margin="5, 0, 5, 0"
-                                            FontSize="14"
-                                            TextColor="{AppThemeBinding Light=gray, Dark=white}"
-                                            Text="{Binding Text}"/>
+                                    FontSize="14"
+                                    TextColor="#DE000000"
+                                    HorizontalOptions="FillAndExpand"
+                                    Text="{Binding Text}"/>
 
                             </StackLayout>
                         </Frame>
                     </DataTemplate>
-                </CollectionView.ItemTemplate>
+                </BindableLayout.ItemTemplate>
 
-            </CollectionView>
+            </StackLayout>
 
         </StackLayout>
     </ScrollView>

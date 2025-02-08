@@ -6,7 +6,7 @@
         xmlns:tests="clr-namespace:MobileHelperMaui.Views.TestPages"
         xmlns:physics="clr-namespace:MobileHelperMaui.Views.PhysicsPages"
         xmlns:cleans="clr-namespace:MobileHelperMaui.Views.CleanPages"
-        xmlns:forms="clr-namespace:MobileHelperMaui.Views.ReviewPages"
+        xmlns:forms="clr-namespace:PsychologyApp.Presentation.Modules.Motivator"
         xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
         xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
         Shell.TabBarForegroundColor="{StaticResource Primary}"
@@ -32,18 +32,18 @@
 
         <ShellContent 
                 Title="Соматик"
-                Icon="{mi:Material Icon=Bookmarks}"
+                Icon="{mi:Material Icon=MedicalServices}"
                 ContentTemplate="{DataTemplate physics:StartPhysicsPage}" />
         
         <ShellContent 
                 Title="Очиститель"
-                Icon="{mi:Material Icon=Clear}"
+                Icon="{mi:Material Icon=LibraryMusic}"
                 ContentTemplate="{DataTemplate cleans:MusicPlayerPage}"/>
         
         <ShellContent
-                Title="Отзовик"
-                Icon="{mi:Material Icon=LiveHelp}"
-                ContentTemplate="{DataTemplate forms:FormPage}"/>
+                Title="Мотиватор"
+                Icon="{mi:Material Icon=Book}"
+                ContentTemplate="{DataTemplate forms:QuotePage}"/>
     
 
     </TabBar>

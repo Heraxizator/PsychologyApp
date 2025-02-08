@@ -10,6 +10,7 @@ namespace PsychologyApp.Presentation.ViewModels.TestViewModels
 {
     public abstract class BaseTestViewModel : BaseViewModel
     {
+
         protected readonly List<(ColourValue, ColourMeaning)> _colourSelectedItems = new();
 
         public ICommand? Restart { get; set; }

@@ -22,7 +22,7 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <StackLayout Margin="0">
+        <StackLayout Margin="10, 0, 10, 0">
 
             <templates:NavigationBarExtendedView
                 TitleText="50 лет спустя"
@@ -30,46 +30,32 @@
                 ExtensionText="Теория"
                 ExtensionCommand="{Binding Theory}"/>
 
-            <Frame Margin="15, 15, 15, 15">
-                <StackLayout Margin="5">
-                    <Label
-                    Text="Алгоритм"
-                    FontSize="18"
-                    Margin="10, 5, 5, 15"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+            <templates:AlgorithmBoxView
+                TitleText="Алгоритм"
+                BodySource="{Binding Algorithm}"/>
+            
 
-                    <Label 
-                    Margin="15, 0, 0, 10"
-                    Text="1. Сформулировать проблему"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"
-                    FontSize="16"/>
-
-                    <Label 
-                    Margin="15, 0, 0, 15"
-                    Text="2. Оценить её важность спустя 50 лет"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"
-                    FontSize="16"/>
-
-                </StackLayout>
-
-            </Frame>
-
-            <Frame Margin="15, 10, 15, 15">
-                <StackLayout Margin="10, 0, 10, 0">
+            <Frame Margin="10, 10, 10, 15">
+                <StackLayout>
                     <Label
                     Text="Форма"
-                    FontSize="18"
-                    Margin="0, 0, 0, 10"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+                        
+                    FontSize="16"
+                    TextColor="#DE000000"/>
 
                     <templates:TextEntryView
+                        Margin="0, 5, 0, 0"
                         TitleText="Проблема"
                         PlaceholderText="Меня уволили"/>
 
-                    <StackLayout HorizontalOptions="Center" Margin="5, 15, 5, 15" Orientation="Horizontal">
+                    <StackLayout 
+                        HorizontalOptions="Center" 
+                        Margin="15, 15, 15, 0" 
+                        Orientation="Horizontal">
+                        
                         <Label 
                         Text="0"
-                        TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+                        TextColor="#DE000000"/>
 
                         <Slider 
                             HorizontalOptions="CenterAndExpand"
@@ -81,7 +67,7 @@
 
                         <Label 
                         Text="10"
-                        TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+                        TextColor="#DE000000"/>
                     </StackLayout>
 
                 </StackLayout>
@@ -89,7 +75,7 @@
             </Frame>
 
             <templates:ButtonView
-                Margin="15, 5, 15, 20"
+                Margin="0, 5, 0, 10"
                 BodyText="Завершить">
 
                 <templates:ButtonView.GestureRecognizers>

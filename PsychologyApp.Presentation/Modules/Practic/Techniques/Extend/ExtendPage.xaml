@@ -33,62 +33,19 @@
                     ExtensionText="Теория"
                     ExtensionCommand="{Binding Theory}"/>
 
-                <StackLayout Margin="0, 0, 0, 0">
-                    <Frame Padding="10" Margin="15, 15, 15, 15">
-                        <StackLayout Margin="5, 5, 15, 5">
-                            <Label
-                            Text="Алгоритм"
-                            FontSize="18"
-                            Margin="10, 5, 5, 15"
-                            TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+                <StackLayout Margin="10, 0, 10, 0">
 
-                            <Label
-                            Margin="15, 0, 0, 10"
-                            Text="1. Назвать проблему"
-                            TextColor="{AppThemeBinding Light=black, Dark=white}"
-                            FontSize="16"/>
+                    <templates:AlgorithmBoxView
+                        TitleText="Алгоритм"
+                        BodySource="{Binding Algorithm}"/>
 
-                            <Label
-                            Margin="15, 0, 5, 10"
-                            Text="2. Найти альтернативы"
-                            TextColor="{AppThemeBinding Light=black, Dark=white}"
-                            FontSize="16"/>
 
-                        </StackLayout>
-
-                    </Frame>
-
-                    <Frame Padding="10" Margin="15, 5, 15, 15">
-                        <StackLayout>
-                            <Label
-                    Text="Форма"
-                    FontSize="18"
-                    Margin="10, 10, 5, 15"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}"/>
-
-                            <templates:TextEntryView
-                            TitleText="Проблема"
-                            PlaceholderText="Проблема"/>
-
-                            <templates:TextEntryView
-                            TitleText="Альтернатива 1"
-                            PlaceholderText="Альтернатива 1"/>
-
-                            <templates:TextEntryView
-                            TitleText="Альтернатива 2"
-                            PlaceholderText="Альтернатива 2"/>
-
-                            <templates:TextEntryView
-                                Margin="0, 0, 0, 10"
-                            TitleText="Альтернатива 3"
-                            PlaceholderText="Альтернатива 3"/>
-
-                        </StackLayout>
-
-                    </Frame>
+                    <templates:EntryBoxView
+                        TitleText="Форма"
+                        BodySource="{Binding Entries}"/>
 
                     <templates:ButtonView
-                        Margin="15, 5, 15, 20"
+                        Margin="0, 5, 0, 10"
                         BodyText="Завершить">
 
                         <templates:ButtonView.GestureRecognizers>
