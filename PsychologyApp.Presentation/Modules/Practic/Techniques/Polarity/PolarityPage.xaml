@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileHelperMaui.Views.TechniquePages.PolarityPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Modules.Practic.Techniques"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             Title="Техника">
+    
+    <ContentPage.BindingContext>
+        <vm:PolarityViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Теория" Command="{Binding Theory}" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+
+        <StackLayout 
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand">
+
+            <templates:NavigationBarExtendedView
+                TitleText="Полярности"
+                BackCommand="{Binding Finish}"
+                ExtensionText="Теория"
+                ExtensionCommand="{Binding Theory}"/>
+            
+        <ScrollView 
+            VerticalOptions="FillAndExpand" 
+            x:Name="Scroll" 
+            VerticalScrollBarVisibility="Never" 
+            HorizontalScrollBarVisibility="Never">
+            <StackLayout 
+                Margin="10, 0, 10, 0">
+
+                <templates:AlgorithmBoxView
+                    TitleText="Алгоритм"
+                    BodySource="{Binding Algorithm}"/>
+
+                <Frame Margin="10, 10, 10, 10">
+                    <StackLayout Margin="0, 0, 0, 0">
+                        <Label
+                            Text="Форма"
+                            FontSize="16"
+                            FontFamily="RobotoMedium"
+                            TextColor="#DE000000"/>
+
+                        <templates:TextEntryView
+                            TitleText="Первая полярность"
+                            PlaceholderText="Невроз"
+                            BodyText="{Binding Negative}"/>
+
+                        <templates:TextEntryView
+                            TitleText="Вторая полярность"
+                            PlaceholderText="Покой"
+                            BodyText="{Binding Positive}"/>
+
+
+                        <templates:ButtonView
+                            Margin="0, 5, 0, 0"
+                            BodyText="Добавить">
+
+                            <templates:ButtonView.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Add}"/>
+                            </templates:ButtonView.GestureRecognizers>
+
+                        </templates:ButtonView>
+
+                    </StackLayout>
+
+                </Frame>
+
+                <StackLayout
+                x:Name="Polarities"
+                IsVisible="{Binding IsFull}"
+                Margin="0, 0, 0, 5"
+                BindableLayout.ItemsSource="{Binding polarities}">
+
+                    <BindableLayout.ItemTemplate>
+
+                        <DataTemplate>
+                            <Frame>
+                                <StackLayout>
+                                    <StackLayout 
+                                        Orientation="Horizontal">
+                                        <Label 
+                                               Text="{Binding Id}"
+                                               Margin="0, 0, 0, 0"
+                                               FontSize="14"
+                                               TextColor="#DE000000"
+                                               HorizontalOptions="Start" />
+
+                                    </StackLayout>
+
+                                    <StackLayout
+                                            Margin="0, 10, 0, 0"
+                                            Orientation="Horizontal">
+                                        <Label 
+                                            Text="{Binding Positive}"
+                                            TextColor="#DE000000"
+                                            HorizontalOptions="Start"
+                                            FontSize="16"/>
+
+                                        <Label
+                                            FontSize="32"
+                                            TextColor="#DE000000"
+                                            HorizontalOptions="CenterAndExpand"
+                                            Text="{mi:Material Icon=Remove}"/>
+
+                                        <Label 
+                                            Text="{Binding Negative}"
+                                            HorizontalTextAlignment="End"
+                                            TextColor="#DE000000"
+                                            FontSize="16"/>
+
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+
+                    </BindableLayout.ItemTemplate>
+
+                </StackLayout>
+
+            </StackLayout>
+        </ScrollView>
+
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>

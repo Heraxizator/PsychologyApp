@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileHelperMaui.Views.TechniquePages.HackPage"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Modules.Practic.Techniques.Hack"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             Title="Техника">
+    
+    <ContentPage.BindingContext>
+        <vm:HackViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Теория" Command="{Binding Theory}" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Margin="10, 0, 10, 0">
+
+                <templates:NavigationBarExtendedView
+                    TitleText="Белое пятно"
+                    BackCommand="{Binding Finish}"
+                    ExtensionText="Теория"
+                    ExtensionCommand="{Binding Theory}"/>
+
+                <templates:AlgorithmBoxView
+                    TitleText="Алгоритм"
+                    BodySource="{Binding Algorithm}"/>
+
+                <templates:ButtonView
+                Margin="0, 5, 0, 10"
+                BodyText="Завершить">
+
+                <templates:ButtonView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Finish}"/>
+                </templates:ButtonView.GestureRecognizers>
+
+                </templates:ButtonView>
+
+            </StackLayout>
+        </ScrollView>
+
+    </ContentPage.Content>
+                            
+</ContentPage>

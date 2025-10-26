@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             x:Class="PsychologyApp.Presentation.Templates.AlgorithmBoxView">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+
+            <Frame HasShadow="True">
+                <StackLayout>
+                    <Label
+                        Text="{TemplateBinding TitleText}"
+                        FontSize="16"
+                        FontFamily="RobotoMedium"
+                        TextColor="#DE000000"/>
+                    <StackLayout
+                        Margin="0, 5, 0, 0"
+                        BindableLayout.ItemsSource="{TemplateBinding BodySource}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Label 
+                                    Margin="0, 0, 0, 3"
+                                    HorizontalTextAlignment="Justify"
+                                    HorizontalOptions="FillAndExpand"
+                                    TextColor="#DE000000"
+                                    FontFamily="RobotoRegular"
+                                    Text="{Binding .}"
+                                    FontSize="14">
+                                </Label>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+
+                    </StackLayout>
+
+                </StackLayout>
+
+            </Frame>
+
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+
+
+</ContentView>

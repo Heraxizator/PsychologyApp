@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileHelperMaui.Views.CleanPages.MusicPlayerPage" 
+             xmlns:vm="clr-namespace:MobileHelper.ViewModels.CleanViewModels"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             Shell.NavBarIsVisible="True"
+             Title="Очиститель">
+    
+    <ContentPage.BindingContext>
+        <vm:MusicPlayerViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+
+        <AbsoluteLayout 
+            VerticalOptions="FillAndExpand" 
+            HorizontalOptions="FillAndExpand">
+            
+        <StackLayout 
+            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+            AbsoluteLayout.LayoutFlags="All"
+            VerticalOptions="FillAndExpand"
+            Margin="10, 0, 10, 0">
+
+            <StackLayout 
+                VerticalOptions="CenterAndExpand"
+                IsVisible="{Binding IsCreated}"
+                Margin="0, 0">
+
+                <Label
+                    Text="Сборник молитв"
+                    TextColor="#DE000000"
+                    FontSize="16"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"/>
+
+                <Label
+                    Margin="0, 5"
+                    Text="Загрузить"
+                    TextColor="{StaticResource Accent}"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"/>
+
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Start}"/>
+                </StackLayout.GestureRecognizers>
+                
+            </StackLayout>
+
+
+            <templates:ProgressbarView 
+            x:Name="Progress"
+            VerticalOptions="CenterAndExpand"
+            IsVisible="{Binding IsInit}"
+            IsLoading="{Binding IsInit}"
+            ProgressText="Поиск молитв">
+                <templates:ProgressbarView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Cancel}"/>
+                </templates:ProgressbarView.GestureRecognizers>
+            </templates:ProgressbarView>
+
+            <ListView
+                VerticalOptions="FillAndExpand"
+            x:Name="Musics"
+            IsVisible="{Binding IsDone}"
+            ItemTapped="Musics_ItemTapped"
+            VerticalScrollBarVisibility="Never"
+            HorizontalScrollBarVisibility="Never"
+            SeparatorVisibility="None"
+            SelectionMode="None"
+            HasUnevenRows="True"
+            ItemsSource="{Binding SelectedItems}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Frame Padding="10">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image
+                                        Margin="0, 0, 5, 0"
+                                        WidthRequest="45"
+                                        HeightRequest="45"
+                                        Source="music.png"/>
+                                        <StackLayout>
+                                            <Label 
+                                                FontFamily="RobotoMedium"
+                                                TextColor="#DE000000"
+                                                FontSize="16"
+                                                Text="{Binding Name}"/>
+                                            <Label 
+                                                TextColor="#DE000000"
+                                                FontSize="16"
+                                                Text="{Binding Description}"/>
+                                        </StackLayout>
+
+                                        <!--
+                                        <ActivityIndicator 
+                                        IsVisible="{Binding Loading}"
+                                        WidthRequest="50"
+                                        HeightRequest="50"
+                                        Color="{StaticResource Primary}"
+                                        IsRunning="True"/>
+                                        -->
+                                    </StackLayout>
+                                    
+                                </Frame>
+
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ClickCommand}"/>
+                                </StackLayout.GestureRecognizers>
+                                
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+                <templates:TextBoxView
+                    Margin="0, 0, 0, 10"
+                HeaderText="Подробнее"
+                BodyText="Это сборник сильных молитв, который поможет вам очиститься от негатива. Нужен хороший интернет."/>
+
+            </StackLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

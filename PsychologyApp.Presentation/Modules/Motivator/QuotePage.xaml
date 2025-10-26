@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Modules.Motivator.QuotePage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Modules.Motivator"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             x:DataType="vm:QuoteViewModel"
+             Shell.NavBarIsVisible="True"
+             x:Name="page"
+             Title="Мотиватор">
+
+    <StackLayout VerticalOptions="FillAndExpand">
+        <CollectionView
+            IsVisible="{Binding IsDone}"
+        Margin="0, -5, 0, -5"
+        x:Name="coll_view"
+        HorizontalScrollBarVisibility="Never"
+        VerticalOptions="FillAndExpand"
+        Scrolled="CollectionView_Scrolled"
+        ItemsSource="{Binding QuotesObservableCollection}">
+
+        <CollectionView.ItemsLayout>
+            <LinearItemsLayout 
+                SnapPointsAlignment="Center" 
+                SnapPointsType="None" 
+                Orientation="Vertical" />
+        </CollectionView.ItemsLayout>
+
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="vm:QuoteItem">
+                <Grid
+                    Margin="20, 25, 20, 25"
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="CenterAndExpand">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        FontSize="18"
+                        FontFamily="RobotoRegular"
+                        HorizontalOptions="CenterAndExpand"
+                        HorizontalTextAlignment="Justify"
+                        TextColor="#DE000000"
+                        Text="{Binding Text}"/>
+
+                        <Label 
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="0, 5, 0, 0"
+                        FontSize="16"
+                        HorizontalOptions="CenterAndExpand"
+                        FontFamily="RobotoSemiBold"
+                        Text="{Binding Author}"
+                        TextColor="#DE000000">
+                            <Label.Triggers>
+                                <DataTrigger 
+                                    TargetType="Label"
+                                    Binding="{Binding Author}"
+                                    Value="">
+
+                                    <Setter
+                                        Property="Text"
+                                        Value="Пословица"/>
+
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+
+                    <Grid 
+                        Grid.Row="2"
+                        Margin="0, 15, 0, 0"
+                        ColumnSpacing="20"
+                        HorizontalOptions="CenterAndExpand">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label
+                            Grid.Column="0"
+                            HorizontalOptions="CenterAndExpand"
+                            FontSize="19"
+                            TextColor="#DE000000"
+                            Text="{mi:Material Icon=FavoriteBorder}">
+
+                            <Label.Triggers>
+                                <DataTrigger 
+                                    TargetType="Label"
+                                    Binding="{Binding IsFavourite, Mode=TwoWay}"
+                                    Value="True">
+
+                                    <Setter
+                                        Property="TextColor"
+                                        Value="{StaticResource Primary}"/>
+
+                                </DataTrigger>
+                            </Label.Triggers>
+
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding LikeCommand}" CommandParameter="{Binding .}"/>
+                            </Label.GestureRecognizers>
+                            
+                        </Label>
+
+                        <Label
+                            Grid.Column="1"
+                            HorizontalOptions="CenterAndExpand"
+                            FontSize="19"
+                            TextColor="#DE000000"
+                            Text="{mi:Material Icon=ContentCopy}">
+
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CopyCommand}" CommandParameter="{Binding .}"/>
+                            </Label.GestureRecognizers>
+
+                        </Label>
+
+                        <Label
+                            Grid.Column="2"
+                            HorizontalOptions="CenterAndExpand"
+                            FontSize="19"
+                            TextColor="#DE000000"
+                            Text="{mi:Material Icon=Share}">
+
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ShareCommand}"/>
+                            </Label.GestureRecognizers>
+                            
+                        </Label>
+
+                    </Grid>
+
+                </Grid>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+
+            <CollectionView.EmptyView>
+                <templates:ProgressbarView 
+                    VerticalOptions="CenterAndExpand"
+                    IsLoading="True"
+                    ProgressText="Поиск цитат">
+                </templates:ProgressbarView>
+            </CollectionView.EmptyView>
+        
+    </CollectionView>
+
+        <StackLayout
+            IsVisible="{Binding IsFail}"
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="CenterAndExpand">
+
+            <Label
+                HorizontalOptions="CenterAndExpand"
+                FontFamily="RobotoMedium"
+                TextColor="#DE000000"
+                FontSize="14"
+                Text="Ошибка при загрузке"/>
+
+            <Label
+                HorizontalOptions="CenterAndExpand"
+                FontFamily="RobotoRegular"
+                TextColor="#DE000000"
+                FontSize="14"
+                Text="Проверьте подключение к сети Интернет"/>
+
+        </StackLayout>
+
+        <templates:ProgressbarView 
+            VerticalOptions="CenterAndExpand"
+            IsVisible="{Binding IsInit}"
+            IsLoading="True"
+            ProgressText="Поиск причин">
+        </templates:ProgressbarView>
+
+    </StackLayout>
+
+</ContentPage>

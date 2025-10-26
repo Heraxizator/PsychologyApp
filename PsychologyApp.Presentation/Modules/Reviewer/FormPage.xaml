@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileHelperMaui.Views.ReviewPages.FormPage"
+             xmlns:reviewviewmodels="clr-namespace:MobileHelper.ViewModels.ReviewViewModels" 
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             Shell.NavBarIsVisible="True"
+             Title="Отзовик">
+    
+    <ContentPage.BindingContext>
+        <reviewviewmodels:FormViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <AbsoluteLayout 
+        VerticalOptions="FillAndExpand" 
+        HorizontalOptions="FillAndExpand">
+        <StackLayout 
+            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+            AbsoluteLayout.LayoutFlags="All"
+            Margin="10, 0, 10, 0">
+
+            <templates:TextBoxView
+                HeaderText="Пояснение"
+                BodyText="Вы можете сообщить о проблеме или предложить свои идеи о том, как сделать приложение ещё лучше. Служба поддержки получит ваше сообщение."/>
+
+            <Frame Margin="10, 10, 10, 15">
+                <StackLayout>
+                    <Label
+                        Text="Форма"
+                        FontFamily="RobotoMedium"
+                        FontSize="16"
+                        TextColor="#DE000000"/>
+
+                    <templates:TextEditorView
+                        Margin="0, 5, 0, 0"
+                        PlaceholderText="Проблема на странице X"
+                        BodyText="{Binding MessageText}"
+                        TitleText="Сообщение"/>
+
+                    <templates:ButtonView
+                        Margin="0, 5, 0, 0"
+                        BodyText="Отправить">
+
+                        <templates:ButtonView.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Send}"/>
+                        </templates:ButtonView.GestureRecognizers>
+                        
+                    </templates:ButtonView>
+                    
+                </StackLayout>
+
+            </Frame>
+
+        </StackLayout>
+    </AbsoluteLayout>
+</ContentPage>

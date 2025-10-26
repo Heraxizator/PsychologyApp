@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileHelperMaui.Views.TechniquePages.SpinPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Modules.Practic.Techniques.Spin"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             Title="Техника">
+
+    <ContentPage.BindingContext>
+        <vm:SpinViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Теория" Command="{Binding Theory}" />
+    </ContentPage.ToolbarItems>
+
+    <StackLayout 
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+
+        <templates:NavigationBarExtendedView
+            TitleText="Крутилка"
+            BackCommand="{Binding Finish}"
+            ExtensionText="Теория"
+            ExtensionCommand="{Binding Theory}"/>
+        
+        <ScrollView VerticalOptions="FillAndExpand">
+            <StackLayout Margin="10, 0, 10, 0">
+
+                <templates:AlgorithmBoxView
+                    TitleText="Алгоритм"
+                    BodySource="{Binding Algorithm}"/>
+
+                <templates:EntryBoxView
+                    TitleText="Форма"
+                    BodySource="{Binding Entries}"/>
+
+                <templates:ButtonView
+                    Margin="0, 5, 0, 0"
+                    BodyText="Завершить">
+
+                    <templates:ButtonView.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Finish}"/>
+                    </templates:ButtonView.GestureRecognizers>
+                
+                </templates:ButtonView>
+            
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
+</ContentPage>

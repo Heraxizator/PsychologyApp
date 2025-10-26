@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             x:Class="MobileHelperMaui.Views.TechniquePages.ConstructorPages.DesignerPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Modules.Practic.Constructor"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             Title="Техника">
+    
+    <ContentPage.BindingContext>
+        <vm:DesignerViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout>
+
+        <ScrollView 
+            VerticalOptions="FillAndExpand" 
+            VerticalScrollBarVisibility="Never"
+            HorizontalScrollBarVisibility="Never">
+            <StackLayout Margin="10, 0, 10, 0">
+
+                <templates:NavigationBarSimpleView
+                    TitleText="Создание техники"
+                    BackText="Назад"
+                    BackCommand="{Binding Finish}"/>
+
+                <Frame HasShadow="True" Margin="10, 15, 10, 15">
+                    <StackLayout Margin="0">
+                        <Label
+                            Text="Описание"
+                            FontFamily="RobotoMedium"
+                            FontSize="16"
+                            TextColor="#DE000000"/>
+
+                        <templates:TextEntryView
+                            Margin="0, 5, 0, 0"
+                            TitleText="Название"
+                            PlaceholderText="Крутилка Славинского"
+                            BodyText="{Binding Name}"/>
+
+                        <templates:TextEntryView
+                            TitleText="Описание"
+                            PlaceholderText="Метод мгновенной нейтрализации..."
+                            BodyText="{Binding Description}"/>
+
+                        <templates:TextEntryView
+                            TitleText="Тема"
+                            PlaceholderText="Эпизоды"
+                            BodyText="{Binding Theme}"/>
+
+                        <templates:TextEntryView
+                            TitleText="Автор"
+                            PlaceholderText="Живорад Славинский"
+                            BodyText="{Binding Author}"/>
+
+                    </StackLayout>
+
+                </Frame>
+
+                <Frame HasShadow="True" Margin="10, 10, 10, 15">
+                    <StackLayout>
+                        <Label
+                            Text="Алгоритм"
+                            FontFamily="RobotoMedium"
+                            FontSize="16"
+                            TextColor="#DE000000"/>
+
+                        <templates:TextEntryView
+                            Margin="0, 5, 0, 0"
+                            TitleText="Список действий"
+                            BodyText="{Binding Actions}"/>
+
+                    </StackLayout>
+
+                </Frame>
+
+                <templates:ButtonView
+                    Margin="0, 5, 0, 10"
+                    BodyText="Сохранить">
+
+                    <templates:ButtonView.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"/>
+                    </templates:ButtonView.GestureRecognizers>
+
+                </templates:ButtonView>
+
+            </StackLayout>
+        </ScrollView>
+
+    </StackLayout>
+</ContentPage>

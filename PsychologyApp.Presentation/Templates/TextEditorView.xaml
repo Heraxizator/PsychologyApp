@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             x:Class="PsychologyApp.Presentation.Templates.TextEditorView">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <Border 
+                StrokeShape="RoundRectangle 30"
+                VerticalOptions="FillAndExpand"
+                BackgroundColor="White"
+                Stroke="{StaticResource Accent}">
+                <StackLayout 
+                    Margin="15, 5, 15, 0"
+                    HeightRequest="90"
+                    VerticalOptions="FillAndExpand">
+                    <Label 
+                        TextColor="#DE000000"
+                        Padding="0"
+                        FontFamily="RobotoRegular"
+                        Text="{TemplateBinding TitleText}"
+                        FontSize="14"/>
+                    <Editor
+                        Margin="0, -10, 0, -10"
+                        VerticalOptions="StartAndExpand"
+                        PlaceholderColor="{StaticResource Accent}"
+                        Placeholder="{TemplateBinding PlaceholderText}"
+                        FontSize="14"
+                        FontFamily="RobotoRegular"
+                        MaxLength="1000"
+                        Text="{TemplateBinding BodyText, Mode=TwoWay}"
+                        TextColor="#DE000000"
+                        VerticalTextAlignment="Center"/>
+                </StackLayout>
+
+            </Border>
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+
+
+</ContentView>

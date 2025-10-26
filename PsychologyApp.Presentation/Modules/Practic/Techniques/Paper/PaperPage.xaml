@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileHelperMaui.Views.TechniquePages.PaperPage"
+             xmlns:vm="clr-namespace:MobileHelperMaui.ViewModels.TechniqueViewModels"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             Title="Техника">
+    
+    <ContentPage.BindingContext>
+        <vm:PaperViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Теория" Command="{Binding Theory}" />
+    </ContentPage.ToolbarItems>
+
+    <StackLayout 
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+
+        <templates:NavigationBarExtendedView
+            TitleText="Лист бумаги"
+            BackCommand="{Binding Finish}"
+            ExtensionText="Теория"
+            ExtensionCommand="{Binding Theory}"/>
+        
+        <ScrollView 
+        VerticalScrollBarVisibility="Never" 
+        VerticalOptions="FillAndExpand">
+            <StackLayout VerticalOptions="FillAndExpand" Margin="10, 0, 10, 0">
+                
+                <templates:AlgorithmBoxView
+                TitleText="Алгоритм"
+                BodySource="{Binding Algorithm}"/>
+
+            <Frame Margin="10, 10, 10, 0">
+                <StackLayout>
+                    <Label
+                        Text="Форма"
+                        FontFamily="RobotoMedium"
+                        FontSize="16"
+                        TextColor="#DE000000"/>
+
+                    <templates:TextEntryView
+                        Margin="0, 5, 0, 0"
+                        TitleText="Негативная мысль"
+                        BodyText="{Binding Text}"
+                        PlaceholderText="Мне не хочется жить"/>
+
+                    <templates:ButtonView
+                        Margin="5, 5, 5, 0"
+                        BodyText="Добавить">
+
+                        <templates:ButtonView.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AddCommand}"/>
+                        </templates:ButtonView.GestureRecognizers>
+
+                    </templates:ButtonView>
+
+                </StackLayout>
+            </Frame>
+
+            <StackLayout
+                Margin="0, 15, 0, 0"
+                VerticalOptions="FillAndExpand"
+                x:Name="Papers"
+                IsVisible="{Binding IsFull}"
+                BindableLayout.ItemsSource="{Binding PapersObservableCollection}">
+
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Frame>
+                            <StackLayout Padding="0">
+                                <StackLayout Padding="0" Orientation="Horizontal">
+                                    <Label 
+                                        Text="{Binding Id}"
+                                        FontSize="14"
+                                        TextColor="#DE000000"
+                                        Padding="0"
+                                        HorizontalOptions="Start" />
+
+                                </StackLayout>
+
+                                <Label 
+                                    FontSize="14"
+                                    TextColor="#DE000000"
+                                    Text="{Binding Text}"/>
+
+                            </StackLayout>
+
+                        </Frame>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+
+            </StackLayout>
+
+        </StackLayout>
+    </ScrollView>
+    </StackLayout>
+</ContentPage>

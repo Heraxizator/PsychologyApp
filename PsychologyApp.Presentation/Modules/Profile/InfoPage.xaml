@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileHelperMaui.Views.AboutPages.InfoPage"
+             xmlns:vm="clr-namespace:MobileHelper.ViewModels.AboutViewModels"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             Title="О приложении">
+
+    <ContentPage.BindingContext>
+        <vm:InfoViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+        <StackLayout>
+
+        <templates:NavigationBarSimpleView
+                BackCommand="{Binding Finish}"
+                TitleText="О приложении"/>
+
+        <Label
+                HorizontalTextAlignment="Justify"
+                Text="Приложение представляет собой список простых, но в тоже время мощных техник, которые помогут вам справиться с такими проблемами, как стресс, страх, сомнения, навязчивые мысли, ограничивающие убеждения и деструктивные установки. Все методики являются общеизвестными и проверены временем. Некоторые взяты из НЛП или трудов Живорада Славинского. Эти инструменты позволят вам сэкономить много времени, сил и денег. Они не потребуют глубоких знаний в области психологии и программирования подсознания. Желаем успеха в проработках!"
+                FontSize="16"
+                TextColor="#DE000000"
+                Margin="25, 10, 25, 15"/>
+
+        </StackLayout>
+
+</ContentPage>

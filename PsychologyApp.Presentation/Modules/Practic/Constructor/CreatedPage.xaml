@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             x:Class="MobileHelperMaui.Views.TechniquePages.ConstructorPages.CreatedPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Technique.Constructor"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             Title="Техника">
+
+    <ContentPage.BindingContext>
+        <vm:CreatedViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Изменить" Command="{Binding Edit}" />
+        <ToolbarItem Text="Удалить" Command="{Binding Remove}" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView
+        VerticalOptions="FillAndExpand"
+        VerticalScrollBarVisibility="Never">
+
+    <StackLayout>
+
+        <StackLayout
+            Margin="20, 15, 20, 15"
+            Orientation="Horizontal">
+
+            <Label
+                Margin="0, 0, 0, 0"
+                VerticalOptions="CenterAndExpand"
+                FontSize="21"
+                Text="{mi:Material Icon=KeyboardArrowLeft}"
+                TextColor="{StaticResource Primary}">
+
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                </Label.GestureRecognizers>
+
+            </Label>
+
+            <Label
+                Text="Своя техника"
+                Margin="0, 0, 10, 0"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand"
+                FontFamily="RobotoSemiBold"
+                TextColor="#DE000000"
+                FontSize="17"/>
+
+            <Label
+                Text="{mi:Material Icon=Edit}"
+                Margin="0, 0, 15, 0"
+                TextColor="{StaticResource Primary}"
+                FontSize="20">
+
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Edit}"/>
+                </Label.GestureRecognizers>
+                
+            </Label>
+
+            <Label
+                Text="{mi:Material Icon=DeleteOutline}"
+                TextColor="{StaticResource Primary}"
+                FontSize="20">
+
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Remove}"/>
+                </Label.GestureRecognizers>
+
+            </Label>
+
+        </StackLayout>
+
+        <StackLayout Margin="10, 0, 10, 0">
+
+                <templates:AlgorithmBoxView
+                TitleText="Алгоритм"
+                BodySource="{Binding Algorithm}"/>
+
+                <templates:ButtonView
+                Margin="5, 5, 5, 10"
+                BodyText="Завершить">
+
+                <templates:ButtonView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Finish}"/>
+                </templates:ButtonView.GestureRecognizers>
+
+            </templates:ButtonView>
+        </StackLayout>
+    </StackLayout>
+    </ScrollView>
+</ContentPage>

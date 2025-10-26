@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileHelperMaui.Views.PhysicsPages.StartPhysicsPage"
+             xmlns:vm="clr-namespace:MobileHelper.ViewModels.PhysicsViewModels"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             Shell.NavBarIsVisible="True"
+             Title="Психосоматик">
+    <ContentPage.BindingContext>
+        <vm:StartPhysicsViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+
+        <AbsoluteLayout 
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand">
+            
+            <ScrollView
+                AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                AbsoluteLayout.LayoutFlags="All"
+            VerticalScrollBarVisibility="Never">
+
+            <StackLayout Margin="10, 0, 10, 0">
+
+                <templates:ProgressbarView 
+            VerticalOptions="CenterAndExpand"
+            IsVisible="{Binding IsInit}"
+            IsLoading="{Binding IsInit}"
+            ProgressText="Поиск причин">
+                <templates:ProgressbarView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Cancel}"/>
+                </templates:ProgressbarView.GestureRecognizers>
+            </templates:ProgressbarView>
+
+            <StackLayout IsVisible="{Binding IsDone}">
+                <StackLayout Margin="0">
+
+                        <templates:TextBoxView
+                        HeaderText="Пояснение"
+                        BodyText="Известно, что около половины всех болезней возникает на психической основе. Поэтому по любому физическому недомоганию можно определить то, что вас беспокоит, но не осознаётся."/>
+
+
+                        <templates:TextBoxView
+                            HeaderText="Описание"
+                            BodyText="Тест поможет вам в пару кликов найти эмоциональную причину любого вашего физического недомогания. Всё очень просто."/>
+
+                    
+                        <Frame Margin="10, 10, 10, 10">
+                            <StackLayout Margin="0">
+                                <Label
+                            Text="Алгоритм"
+                            FontSize="16"
+                                    FontFamily="RobotoMedium"
+                            TextColor="#DE000000"/>
+
+                                <Label 
+                            Margin="0, 5, 0, 0"
+                            TextColor="#DE000000"
+                            FontSize="14">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="1. Назвать болезнь или часть тела, которая болит"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                <Label 
+                            Margin="0, 5, 0, 0"
+                            TextColor="#DE000000"
+                            FontSize="14">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="2. Узнать несколько возможных "/>
+                                            <Span Text="причин."/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                            </StackLayout>
+
+                        </Frame>
+
+                        <templates:ButtonView
+                            Margin="0, 5, 0, 10"
+                            BodyText="Начать">
+
+                            <templates:ButtonView.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"/>
+                            </templates:ButtonView.GestureRecognizers>
+
+                        </templates:ButtonView>
+
+                </StackLayout>
+            </StackLayout>
+
+            <templates:RetryView
+            VerticalOptions="CenterAndExpand"
+            IsVisible="{Binding IsFail}"
+            FailedText="Не удалось загрузить"
+            RetryText="Попробовать ещё раз?">
+                <templates:RetryView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Reload}"/>
+                </templates:RetryView.GestureRecognizers>
+            </templates:RetryView>
+
+
+            </StackLayout>
+        </ScrollView>
+        </AbsoluteLayout>
+
+    </ContentPage.Content>
+</ContentPage>

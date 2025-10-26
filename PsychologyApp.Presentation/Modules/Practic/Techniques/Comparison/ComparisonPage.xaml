@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileHelperMaui.Views.TechniquePages.ComparisonPage" 
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Modules.Practic.Techniques.Comparison"
+             xmlns:local="clr-namespace:PsychologyApp.Presentation.Technique" 
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             Title="Техника">
+    
+    <ContentPage.BindingContext>
+        <vm:ComparisonViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Теория" Command="{Binding Theory}" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+
+        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+
+            <templates:NavigationBarExtendedView
+                TitleText="Сравнение важностей"
+                BackCommand="{Binding Finish}"
+                ExtensionText="Теория"
+                ExtensionCommand="{Binding Theory}"/>
+            
+            <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
+
+                <StackLayout>
+
+                    <StackLayout Margin="10, 0, 10, 0">
+
+                        <templates:AlgorithmBoxView
+                            TitleText="Алгоритм"
+                            BodySource="{Binding Algorithm}"/>
+
+                        <templates:EntryBoxView
+                            TitleText="Форма"
+                            BodySource="{Binding Entries}"/>
+
+                        <templates:ButtonView
+                            Margin="0, 5, 0, 10"
+                            BodyText="Завершить">
+
+                            <templates:ButtonView.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Finish}"/>
+                            </templates:ButtonView.GestureRecognizers>
+
+                        </templates:ButtonView>
+                    
+                    </StackLayout>
+                    </StackLayout>
+            </ScrollView>
+        </StackLayout>
+
+    </ContentPage.Content>
+    
+</ContentPage>
