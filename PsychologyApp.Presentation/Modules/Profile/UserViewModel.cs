@@ -49,25 +49,15 @@ public class UserViewModel : BaseViewModel
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
                 SetInit();
+                InitQuots();
+                InitTechniques();
             });
 
-            InitTechniques();
-
-            await InitQuotsAsync(cancelTimeout);
+            await SetCompletedTechniquesCountAsync(cancelTimeout);
 
             await GetQuotsAsync(cancelTimeout);
 
-            if (Quots.Any() is false)
-            {
-                await InitQuotsAsync(cancelTimeout);
-            }
-
-            if (Quots.Any() is false)
-            {
-                InitQuots();
-            }
-
-            await SetCompletedTechniquesCountAsync(cancelTimeout);
+            await InitQuotsAsync(cancelTimeout);
 
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
@@ -79,7 +69,7 @@ public class UserViewModel : BaseViewModel
         {
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
-                SetFail();
+                SetDone();
             });
 
             Console.WriteLine(e.Message);

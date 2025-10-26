@@ -37,12 +37,11 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 		<PublishTrimmed>False</PublishTrimmed>
 	
-		<RuntimeIdentifiers Condition="$(TargetFramework.Contains('-android'))">android-arm;android-arm64;</RuntimeIdentifiers>
+		<RuntimeIdentifiers Condition="$(TargetFramework.Contains('-android'))">android-arm;android-arm64;android-x64;android-x86;</RuntimeIdentifiers>
 	
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
-	  <RunAOTCompilation>False</RunAOTCompilation>
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
 	  <EnableLLVM>True</EnableLLVM>
 	  <IsPublishable>False</IsPublishable>
@@ -53,10 +52,12 @@
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
 	  <IsPublishable>False</IsPublishable>
 	  <Debugger>Xamarin</Debugger>
-	  <TrimMode>copyused</TrimMode>
+	  <TrimMode>link</TrimMode>
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	  <PublishTrimmed>False</PublishTrimmed>
+	  <PublishTrimmed>True</PublishTrimmed>
+	  <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
+	  <RunAOTCompilation>False</RunAOTCompilation>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-maccatalyst|AnyCPU'">
@@ -86,10 +87,12 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <RunAOTCompilation>False</RunAOTCompilation>
-	  <TrimMode>copyused</TrimMode>
+	  <TrimMode>link</TrimMode>
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
-	  <PublishTrimmed>False</PublishTrimmed>
+	  <PublishTrimmed>True</PublishTrimmed>
 	  <DebugSymbols>True</DebugSymbols>
+	  <AndroidLinkTool>r8</AndroidLinkTool>
+	  <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
 	</PropertyGroup>
 
 	<ItemGroup>

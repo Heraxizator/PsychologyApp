@@ -246,7 +246,6 @@
                                 HorizontalOptions="CenterAndExpand"
                                 VerticalOptions="CenterAndExpand"
                                 Margin="15, 75, 15, 0"
-                                IsVisible="{Binding IsInit}"
                                 IsLoading="True"
                                 ProgressText="Поиск цитат">
                                 <templates:ProgressbarView.GestureRecognizers>
