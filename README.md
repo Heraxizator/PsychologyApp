@@ -19,7 +19,7 @@
 
 ## 🚀 Установка приложения
 
-- RU Store: https://play.google.com/store/apps/details?id=com.subconscious.psychologyapp
+- RU Store: https://www.rustore.ru/catalog/app/com.subconscious.psychologyapp
 - Google Play: https://play.google.com/store/apps/details?id=com.subconscious.psychologyapp
 
 ---
