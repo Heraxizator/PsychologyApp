@@ -19,7 +19,7 @@
 
 ## 🔧 Полезные команды
 
-### Клонирование репозитория
+### Загрука проекта
 ```bash
 git clone https://github.com/Heraxizator/PsychologyApp  # Загрузить проект
 ```
