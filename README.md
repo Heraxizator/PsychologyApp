@@ -17,6 +17,20 @@
 
 ---
 
+## 🔧 Полезные команды
+
+### Быстрый старт
+```bash
+git clone https://github.com/Heraxizator/PsychologyApp  # Загрузить проект
+```
+
+### Сборка и очистка
+```bash
+dotnet build src/App/App.csproj     # Собрать проект
+dotnet clean src/App/App.csproj     # Очистить проект
+dotnet restore src/App/App.csproj   # Восстановить зависимости
+```
+
 ## 🚀 Установка приложения
 
 - RU Store: https://www.rustore.ru/catalog/app/com.subconscious.psychologyapp
