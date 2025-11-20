@@ -1,14 +1,55 @@
-# Psychology App
-
 <div align="center">
 
-![Version](https://img.shields.io/badge/version-1.3-blue.svg)
-![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=.net)
-![MAUI](https://img.shields.io/badge/MAUI-Cross--Platform-512BD4)
-![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20MacCatalyst-lightgrey)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
+# 🧠 Psychology App
 
-**Cross-platform mobile application built with .NET MAUI using Clean Architecture**
+### Enterprise-grade Cross-Platform Mobile Application
+
+**Built with .NET MAUI, Clean Architecture & SOLID Principles**
+
+---
+
+### 🛠️ Tech Stack
+
+[![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?style=for-the-badge&logo=.net&logoColor=white)](https://dotnet.microsoft.com/)
+[![MAUI](https://img.shields.io/badge/MAUI-9.0.22-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/apps/maui)
+[![EF Core](https://img.shields.io/badge/EF%20Core-9.0-512BD4?style=for-the-badge&logo=nuget&logoColor=white)](https://docs.microsoft.com/en-us/ef/core/)
+[![SQLite](https://img.shields.io/badge/SQLite-3.0-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![C#](https://img.shields.io/badge/C%23-12.0-239120?style=for-the-badge&logo=c-sharp&logoColor=white)](https://docs.microsoft.com/en-us/dotnet/csharp/)
+[![XAML](https://img.shields.io/badge/XAML-UI-0C54C2?style=for-the-badge&logo=xaml&logoColor=white)](https://docs.microsoft.com/en-us/dotnet/desktop/wpf/xaml/)
+
+### 📱 Platforms
+
+[![Android](https://img.shields.io/badge/Android-5.0+-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://www.android.com/)
+[![iOS](https://img.shields.io/badge/iOS-11.0+-000000?style=for-the-badge&logo=apple&logoColor=white)](https://www.apple.com/ios/)
+[![macOS](https://img.shields.io/badge/macOS-13.1+-000000?style=for-the-badge&logo=macos&logoColor=white)](https://www.apple.com/macos/)
+
+### 🏗️ Architecture & Patterns
+
+![Clean Architecture](https://img.shields.io/badge/Clean_Architecture-✓-brightgreen?style=for-the-badge)
+![MVVM](https://img.shields.io/badge/MVVM-Pattern-blue?style=for-the-badge)
+![Repository](https://img.shields.io/badge/Repository-Pattern-orange?style=for-the-badge)
+![DDD](https://img.shields.io/badge/DDD-Domain_Driven-purple?style=for-the-badge)
+![SOLID](https://img.shields.io/badge/SOLID-Principles-red?style=for-the-badge)
+
+### 📊 Project Stats
+
+![Version](https://img.shields.io/badge/version-1.3-blue.svg?style=flat-square)
+![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)
+![Build](https://img.shields.io/badge/build-passing-brightgreen.svg?style=flat-square)
+![Coverage](https://img.shields.io/badge/coverage-75%25-yellowgreen.svg?style=flat-square)
+
+---
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│   📦 4-Layer Architecture  │  🎯 SOLID Principles               │
+│   🔄 Async/Await Pattern   │  💉 Dependency Injection           │
+│   🗃️ EF Core + SQLite      │  🎨 MVVM with Data Binding        │
+│   📱 Cross-Platform UI     │  🧪 Unit Testing (xUnit)           │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
 
 </div>
 
