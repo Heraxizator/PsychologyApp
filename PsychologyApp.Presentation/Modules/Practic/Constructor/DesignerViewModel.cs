@@ -3,6 +3,7 @@ using PsychologyApp.Application.Services.TechniqueService;
 using PsychologyApp.Domain.Base.Constants;
 using PsychologyApp.Presentation.Base.ServiceLocator;
 using PsychologyApp.Presentation.Base.ServiceLocator.Dialog;
+using PsychologyApp.Presentation.Modules.Practic.Messages;
 using PsychologyApp.Presentation.ViewModels;
 using System.Windows.Input;
 
@@ -106,7 +107,11 @@ public class DesignerViewModel : BaseViewModel
 
             await _techniqueService.UpdateTechnique(item);
 
-            MessagingCenter.Send<object, TechniqueDTO>(this, "change", item);
+            TechniqueMessenger.Send(new TechniqueMessage
+            {
+                MessageType = TechniqueMessageType.Change,
+                Technique = item
+            });
 
             await navigation.PopToRootAsync(false);
         }
@@ -136,7 +141,11 @@ public class DesignerViewModel : BaseViewModel
 
             await _techniqueService.AddNewTechnique(technique);
 
-            MessagingCenter.Send<object, TechniqueDTO>(this, "add", technique);
+            TechniqueMessenger.Send(new TechniqueMessage
+            {
+                MessageType = TechniqueMessageType.Add,
+                Technique = technique
+            });
 
             _ = await navigation.PopAsync(false);
         }

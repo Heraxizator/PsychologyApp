@@ -5,6 +5,7 @@ using PsychologyApp.Domain.Base.Constants;
 using PsychologyApp.Infrastructure.Data.Context;
 using PsychologyApp.Presentation.Base.ServiceLocator;
 using PsychologyApp.Presentation.Base.ServiceLocator.Dialog;
+using PsychologyApp.Presentation.Modules.Practic.Messages;
 using PsychologyApp.Presentation.Models;
 using PsychologyApp.Presentation.ViewModels;
 using System.Collections.ObjectModel;
@@ -64,7 +65,11 @@ public class CreatedViewModel : BaseViewModel
 
                 await _techniqueService.DeleteTechnique(techniqueDTO);
 
-                MessagingCenter.Send<object, TechniqueDTO>(this, "remove", techniqueDTO);
+                TechniqueMessenger.Send(new TechniqueMessage
+                {
+                    MessageType = TechniqueMessageType.Remove,
+                    Technique = techniqueDTO
+                });
 
                 await navigation.PopToRootAsync(false);
             }
