@@ -5,6 +5,7 @@ using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.TechniqueService;
 using PsychologyApp.Presentation.Base.ServiceLocator;
 using PsychologyApp.Presentation.Base.ServiceLocator.Toast;
+using PsychologyApp.Presentation.Modules.Practic.Messages;
 using System.Windows.Input;
 using BaseViewModel = PsychologyApp.Presentation.ViewModels.BaseViewModel;
 
@@ -52,25 +53,15 @@ public class TechniquesViewModel : BaseViewModel
 
     private void SetObservers(INavigation navigation)
     {
-        MessagingCenter.Subscribe<object, TechniqueDTO>(this, "add", async (sender, item) =>
+        TechniqueMessenger.Subscribe(this, async (message) =>
         {
-            Techniques.Clear();
-
-            await InitAsync(navigation, 10000);
-        });
-
-        MessagingCenter.Subscribe<object, TechniqueDTO>(this, "remove", async (sender, item) =>
-        {
-            Techniques.Clear();
-
-            await InitAsync(navigation, 10000);
-        });
-
-        MessagingCenter.Subscribe<object, TechniqueDTO>(this, "change", async (sender, item) =>
-        {
-            Techniques.Clear();
-
-            await InitAsync(navigation, 10000);
+            if (message.MessageType == TechniqueMessageType.Add ||
+                message.MessageType == TechniqueMessageType.Remove ||
+                message.MessageType == TechniqueMessageType.Change)
+            {
+                Techniques.Clear();
+                await InitAsync(navigation, 10000);
+            }
         });
     }
 
