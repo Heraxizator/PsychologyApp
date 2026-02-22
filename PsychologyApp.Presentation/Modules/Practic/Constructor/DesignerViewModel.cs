@@ -1,8 +1,6 @@
 ﻿using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.TechniqueService;
 using PsychologyApp.Domain.Base.Constants;
-using PsychologyApp.Presentation.Base.ServiceLocator;
-using PsychologyApp.Presentation.Base.ServiceLocator.Dialog;
 using PsychologyApp.Presentation.Modules.Practic.Messages;
 using PsychologyApp.Presentation.ViewModels;
 using System.Windows.Input;

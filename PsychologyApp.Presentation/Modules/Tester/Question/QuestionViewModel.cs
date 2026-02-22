@@ -1,7 +1,6 @@
 ﻿using MvvmHelpers;
-using PsychologyApp.Presentation.Base.ServiceLocator;
 using PsychologyApp.Presentation.Base.ServiceLocator.Dialog;
-using PsychologyApp.Presentation.Base.ServiceLocator.Toast;
+using PsychologyApp.Presentation.Base.ServiceLocator;
 using System.Windows.Input;
 using BaseViewModel = PsychologyApp.Presentation.ViewModels.BaseViewModel;
 
@@ -14,10 +13,14 @@ public class QuestionViewModel : BaseViewModel
     public readonly bool IsSingleAnswer = default!;
 
     private Func<int, string> Analyzer { get; set; } = default!;
+    private readonly IToastService _toastService;
+    private readonly IDialogService _dialogService;
 
-    public QuestionViewModel(INavigation navigation, List<Question> questions, Func<int, string> analyzer, bool singleAnswer)
+    public QuestionViewModel(INavigation navigation, List<Question> questions, Func<int, string> analyzer, bool singleAnswer, IToastService toastService, IDialogService dialogService)
     {
         Navigation = navigation;
+        _toastService = toastService;
+        _dialogService = dialogService;
 
         Analyzer = analyzer;
 
@@ -32,7 +35,7 @@ public class QuestionViewModel : BaseViewModel
     {
         if (Questions.All(x => x.Answers.Any(x => x.Selected is true)) is false)
         {
-            ServiceLocator.Instance.GetService<IToastService>().LongToast("Нужно ответить на все вопросы");
+            _toastService.LongToast("Нужно ответить на все вопросы");
             return;
         }
 
@@ -43,7 +46,7 @@ public class QuestionViewModel : BaseViewModel
             questionBalls += Questions[index].Answers.Where(x => x.Selected is true).Sum(x => x.Ball);
         }
 
-        bool finishSelected = await ServiceLocator.Instance.GetService<IDialogService>().AskAsync($"Ваш результат: {questionBalls}", ConfigureResultByBalls(questionBalls), "Завершить", "Повторить");
+        bool finishSelected = await _dialogService.AskAsync($"Ваш результат: {questionBalls}", ConfigureResultByBalls(questionBalls), "Завершить", "Повторить");
 
         await ConfigureEndAsync(finishSelected);
     }

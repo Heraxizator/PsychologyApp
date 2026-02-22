@@ -4,9 +4,6 @@ using PsychologyApp.Application.Services.QuotService;
 using PsychologyApp.Application.Services.ReasonService;
 using PsychologyApp.Infrastructure.API.Quots;
 using PsychologyApp.Infrastructure.Data.Context;
-using PsychologyApp.Presentation.Base.ServiceLocator.Dialog;
-using PsychologyApp.Presentation.Base.ServiceLocator.Toast;
-using PsychologyApp.Presentation.Base.ServiceLocatorж;
 
 namespace PsychologyApp.Presentation;
 
@@ -19,8 +16,6 @@ public partial class AppShell : Shell
         try
         {
             InitializeComponent();
-
-            InitServices();
 
             ConfigureMigrations();
 
@@ -37,12 +32,6 @@ public partial class AppShell : Shell
         {
             Console.WriteLine(e.Message);
         }
-    }
-
-    private void InitServices()
-    {
-        Base.ServiceLocator.ServiceLocator.Instance.Register<IToastService>(new ToastService());
-        Base.ServiceLocator.ServiceLocator.Instance.Register<IDialogService>(new DialogService());
     }
 
     private void ConfigureMigrations()

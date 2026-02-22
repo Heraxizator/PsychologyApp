@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PsychologyApp.Presentation.Base.ServiceLocator.Dialog
 {
-    internal interface IDialogService
+    public interface IDialogService
     {
         public void ShowAsync(string title, string message);
         public Task<bool> AskAsync(string title, string message, string accept, string cancel);

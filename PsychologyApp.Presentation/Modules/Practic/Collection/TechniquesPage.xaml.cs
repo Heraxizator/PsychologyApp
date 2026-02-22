@@ -1,6 +1,8 @@
 using MobileHelperMaui.ViewModels.TechniqueViewModels;
 using MobileHelperMaui.Views.ProfilePages;
 using PsychologyApp.Presentation.Technique.Main;
+using PsychologyApp.Presentation.Base.ServiceLocator;
+using Microsoft.Maui.Controls;
 
 namespace MobileHelperMaui.Views;
 
@@ -11,9 +13,12 @@ public partial class TechniquesPage : ContentPage
     {
         InitializeComponent();
 
-        Application.Current.UserAppTheme = AppTheme.Light;
+        Microsoft.Maui.Controls.Application.Current.UserAppTheme = AppTheme.Light;
 
-        this.BindingContext = new TechniquesViewModel(this.Navigation);
+        var toastService = Microsoft.Maui.Controls.Application.Current?.Handler?.MauiContext?.Services.GetService<IToastService>() 
+            ?? throw new InvalidOperationException("IToastService not registered");
+
+        this.BindingContext = new TechniquesViewModel(this.Navigation, toastService);
 
         this.viewModel = this.BindingContext as TechniquesViewModel;
     }

@@ -3,7 +3,6 @@ using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.TechniqueService;
 using PsychologyApp.Domain.Base.Constants;
 using PsychologyApp.Infrastructure.Data.Context;
-using PsychologyApp.Presentation.Base.ServiceLocator;
 using PsychologyApp.Presentation.Base.ServiceLocator.Dialog;
 using PsychologyApp.Presentation.Modules.Practic.Messages;
 using PsychologyApp.Presentation.Models;
@@ -17,17 +16,19 @@ public class CreatedViewModel : BaseViewModel
 {
     private readonly long _techniqueId;
     private readonly TechniqueService _techniqueService = new();
+    private readonly IDialogService _dialogService;
 
     public ICommand Remove { get; private set; } = default!;
     public ICommand Edit { get; private set; } = default!;
 
     public CreatedViewModel() { }
 
-    public CreatedViewModel(INavigation navigation, long techniqueId)
+    public CreatedViewModel(INavigation navigation, long techniqueId, IDialogService dialogService)
     {
         try
         {
             _techniqueId = techniqueId;
+            _dialogService = dialogService;
 
             this.ModuleName = "Практик";
             this.PageName = "Своя техника";
@@ -57,7 +58,7 @@ public class CreatedViewModel : BaseViewModel
     {
         try
         {
-            bool isConfirmed = await ServiceLocator.Instance.GetService<IDialogService>().AskAsync(null, "Вы уверены, что хотите удалить свою технику", "Да", "Нет");
+            bool isConfirmed = await _dialogService.AskAsync(null, "Вы уверены, что хотите удалить свою технику", "Да", "Нет");
 
             if (isConfirmed is true)
             {

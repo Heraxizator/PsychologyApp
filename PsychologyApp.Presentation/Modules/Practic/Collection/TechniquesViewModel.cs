@@ -4,7 +4,6 @@ using MvvmHelpers;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.TechniqueService;
 using PsychologyApp.Presentation.Base.ServiceLocator;
-using PsychologyApp.Presentation.Base.ServiceLocator.Toast;
 using PsychologyApp.Presentation.Modules.Practic.Messages;
 using System.Windows.Input;
 using BaseViewModel = PsychologyApp.Presentation.ViewModels.BaseViewModel;
@@ -15,14 +14,16 @@ public class TechniquesViewModel : BaseViewModel
 {
     private static Task? Initialization = default;
     private readonly TechniqueService _techniqueService = new();
+    private readonly IToastService _toastService;
 
     public ObservableRangeCollection<TechniqueItem> Techniques { get; private set; } = [];
     public ICommand ConstructorTapped { get; private set; } = default!;
 
     public TechniquesViewModel() { }
 
-    public TechniquesViewModel(INavigation navigation)
+    public TechniquesViewModel(INavigation navigation, IToastService toastService)
     {
+        _toastService = toastService;
         this.ModuleName = "Практик";
         this.PageName = "Список техник";
 
@@ -47,7 +48,7 @@ public class TechniquesViewModel : BaseViewModel
         
         catch (Exception e)
         {
-            ServiceLocator.Instance.GetService<IToastService>().ShortToast("Ошибка при инициализации");
+            _toastService.ShortToast("Ошибка при инициализации");
         }
     }
 

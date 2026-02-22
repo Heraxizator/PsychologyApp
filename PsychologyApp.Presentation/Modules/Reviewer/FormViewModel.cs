@@ -1,5 +1,4 @@
-﻿using PsychologyApp.Presentation.Base.ServiceLocator;
-using PsychologyApp.Presentation.Base.ServiceLocator.Dialog;
+﻿using PsychologyApp.Presentation.Base.ServiceLocator.Dialog;
 using PsychologyApp.Presentation.ViewModels;
 using System.Windows.Input;
 
@@ -10,9 +9,11 @@ public class FormViewModel : BaseViewModel
     public ICommand Send { get; private set; } = default!;
 
     private const string recipient_number = "89142107907";
+    private readonly IDialogService _dialogService;
 
-    public FormViewModel()
+    public FormViewModel(IDialogService dialogService)
     {
+        _dialogService = dialogService;
         ModuleName = "Отзовик";
         PageName = "Отзыв";
 
@@ -37,12 +38,12 @@ public class FormViewModel : BaseViewModel
 
         catch (FeatureNotSupportedException)
         {
-            ServiceLocator.Instance.GetService<IDialogService>().ShowAsync(null, "Отправка СМС не поддерживается");
+            _dialogService.ShowAsync(null, "Отправка СМС не поддерживается");
         }
 
         catch (Exception)
         {
-            ServiceLocator.Instance.GetService<IDialogService>().ShowAsync(null, "Ошибка при отправке СМС");
+            _dialogService.ShowAsync(null, "Ошибка при отправке СМС");
         }
     }
 

@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PsychologyApp.Presentation.Base.ServiceLocator.Toast
+namespace PsychologyApp.Presentation.Base.ServiceLocator;
+
+public interface IToastService
 {
-    internal interface IToastService
-    {
-        public void LongToast(string message);
-        public void ShortToast(string message);
-    }
+    public void LongToast(string message);
+    public void ShortToast(string message);
 }
