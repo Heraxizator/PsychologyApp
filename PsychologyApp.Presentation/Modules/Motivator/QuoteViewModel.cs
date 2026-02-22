@@ -4,8 +4,6 @@ using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.QuotService;
 using PsychologyApp.Domain.Base.Constants;
 using PsychologyApp.Infrastructure.API.Quots;
-using PsychologyApp.Presentation.Base.ServiceLocator;
-using PsychologyApp.Presentation.Base.ServiceLocator.Toast;
 using System.Windows.Input;
 using BaseViewModel = PsychologyApp.Presentation.ViewModels.BaseViewModel;
 

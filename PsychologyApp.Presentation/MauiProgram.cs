@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using MauiIcons.Material;
+using PsychologyApp.Presentation.Base.ServiceLocator.Dialog;
+using PsychologyApp.Presentation.Base.ServiceLocator;
 
 #if ANDROID
 using Microsoft.Maui.Controls.Compatibility.Platform.Android;
@@ -61,6 +63,10 @@ namespace PsychologyApp.Presentation
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
+
+            // Register services
+            builder.Services.AddSingleton<IToastService, ToastService>();
+            builder.Services.AddSingleton<IDialogService, DialogService>();
 
             return builder.Build();
         }

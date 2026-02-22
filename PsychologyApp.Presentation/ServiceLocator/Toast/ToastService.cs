@@ -7,24 +7,23 @@ using System.Threading.Tasks;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Core.Views;
-using PsychologyApp.Presentation.Base.ServiceLocator.Toast;
+using PsychologyApp.Presentation.Base.ServiceLocator;
 
-namespace PsychologyApp.Presentation.Base.ServiceLocatorж
+namespace PsychologyApp.Presentation.Base.ServiceLocator;
+
+public class ToastService : IToastService
 {
-    internal class ToastService : IToastService
+    public void LongToast(string message)
     {
-        public void LongToast(string message)
-        {
-            IToast toast = Toast.Make(message, ToastDuration.Long);
+        IToast toast = Toast.Make(message, ToastDuration.Long);
 
-            toast.Show();
-        }
+        toast.Show();
+    }
 
-        public void ShortToast(string message)
-        {
-            IToast toast = Toast.Make(message, ToastDuration.Short);
+    public void ShortToast(string message)
+    {
+        IToast toast = Toast.Make(message, ToastDuration.Short);
 
-            toast.Show();
-        }
+        toast.Show();
     }
 }

@@ -1,15 +1,17 @@
-﻿using PsychologyApp.Presentation.Base.ServiceLocator;
-using PsychologyApp.Presentation.Base.ServiceLocator.Dialog;
+﻿using PsychologyApp.Presentation.Base.ServiceLocator.Dialog;
 using PsychologyApp.Presentation.ViewModels;
 
 namespace MobileHelper.ViewModels.SettingsViewModels;
 
 public class SettingsViewModel : BaseViewModel
 {
+    private readonly IDialogService _dialogService;
+
     public SettingsViewModel() { }
 
-    public SettingsViewModel(INavigation navigation)
+    public SettingsViewModel(INavigation navigation, IDialogService dialogService)
     {
+        _dialogService = dialogService;
         ModuleName = "Практик";
         PageName = "Настройки";
 
@@ -20,7 +22,7 @@ public class SettingsViewModel : BaseViewModel
 
     private void ToEnd(object obj)
     {
-        ServiceLocator.Instance.GetService<IDialogService>().ShowAsync("Предупреждение", "Изменения будут применены при следующем запуске приложения");
+        _dialogService.ShowAsync("Предупреждение", "Изменения будут применены при следующем запуске приложения");
 
         Preferences.Set("Theme", Theme);
         Preferences.Set("Color", Color);
