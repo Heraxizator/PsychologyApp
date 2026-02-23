@@ -16,35 +16,29 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <Color x:Key="Accent">#96d1ff</Color>
-            <Color x:Key="TelegramUserMessageBg">#0085FF</Color>
-            <Color x:Key="TelegramAIMessageBg">#FFFFFF</Color>
-            <Color x:Key="TelegramChatBackground">#E5E5E5</Color>
-            <Color x:Key="TelegramInputBackground">#FFFFFF</Color>
-            <Color x:Key="TelegramUserMessageText">#FFFFFF</Color>
-            <Color x:Key="TelegramAIMessageText">#000000</Color>
-            <Color x:Key="TelegramTimestampColor">#999999</Color>
-            <Color x:Key="TelegramAvatarBg">#0085FF</Color>
+            <Color x:Key="TechniqueTextColor">#DE000000</Color>
+            <Color x:Key="TechniqueGrayColor">#AAAAAA</Color>
             
             <local:BoolToColorConverter x:Key="BoolToColorConverter" />
             <local:InvertedBoolConverter x:Key="InvertedBoolConverter" />
             
-            <!-- Telegram стиль для сообщений пользователя (справа) -->
-            <Style x:Key="TelegramUserMessageStyle" TargetType="Frame">
-                <Setter Property="HasShadow" Value="False" />
+            <!-- Стиль для сообщений пользователя в стиле техник (справа) -->
+            <Style x:Key="UserMessageStyle" TargetType="Frame">
+                <Setter Property="HasShadow" Value="True" />
                 <Setter Property="CornerRadius" Value="12" />
-                <Setter Property="Padding" Value="12, 8, 10, 8" />
-                <Setter Property="Margin" Value="50, 2, 8, 2" />
-                <Setter Property="BackgroundColor" Value="{StaticResource TelegramUserMessageBg}" />
+                <Setter Property="Padding" Value="12, 10, 12, 10" />
+                <Setter Property="Margin" Value="50, 4, 8, 4" />
+                <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
                 <Setter Property="BorderColor" Value="Transparent" />
             </Style>
             
-            <!-- Telegram стиль для сообщений AI (слева) -->
-            <Style x:Key="TelegramAIMessageStyle" TargetType="Frame">
-                <Setter Property="HasShadow" Value="False" />
+            <!-- Стиль для сообщений AI в стиле техник (слева) -->
+            <Style x:Key="AIMessageStyle" TargetType="Frame">
+                <Setter Property="HasShadow" Value="True" />
                 <Setter Property="CornerRadius" Value="12" />
-                <Setter Property="Padding" Value="12, 8, 10, 8" />
-                <Setter Property="Margin" Value="8, 2, 50, 2" />
-                <Setter Property="BackgroundColor" Value="{StaticResource TelegramAIMessageBg}" />
+                <Setter Property="Padding" Value="12, 10, 12, 10" />
+                <Setter Property="Margin" Value="8, 4, 50, 4" />
+                <Setter Property="BackgroundColor" Value="{StaticResource White}" />
                 <Setter Property="BorderColor" Value="Transparent" />
             </Style>
         </ResourceDictionary>
@@ -52,7 +46,7 @@
 
     <Grid RowDefinitions="Auto,*" 
           VerticalOptions="FillAndExpand"
-          BackgroundColor="{StaticResource TelegramChatBackground}">
+          BackgroundColor="{StaticResource White}">
 
         <!-- Navigation Bar -->
         <templates:NavigationBarExtendedView
@@ -75,28 +69,30 @@
                 <StackLayout 
                     x:Name="MessagesContainer"
                     Spacing="0"
-                    Padding="8, 8, 8, 8"
+                    Padding="10, 10, 10, 10"
                     BindableLayout.ItemsSource="{Binding Messages}">
                     
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
                             <Grid>
-                                <!-- Сообщение пользователя (Telegram стиль - справа) -->
+                                <!-- Сообщение пользователя в стиле техник (справа) -->
                                 <Grid 
                                     IsVisible="{Binding IsUser}"
                                     ColumnDefinitions="*,Auto"
-                                    Margin="50, 2, 8, 2">
+                                    Margin="50, 4, 8, 4"
+                                    VerticalOptions="Start">
                                     
                                     <Frame 
                                         Grid.Column="1"
-                                        Style="{StaticResource TelegramUserMessageStyle}">
+                                        Style="{StaticResource UserMessageStyle}"
+                                        VerticalOptions="Start">
                                         <Grid RowDefinitions="Auto,Auto">
                                             <Label 
                                                 Grid.Row="0"
                                                 Text="{Binding Text}"
                                                 FontSize="15"
                                                 FontFamily="RobotoRegular"
-                                                TextColor="{StaticResource TelegramUserMessageText}"
+                                                TextColor="White"
                                                 LineBreakMode="WordWrap"
                                                 Margin="0, 0, 0, 4"/>
                                             
@@ -119,20 +115,21 @@
                                     </Frame>
                                 </Grid>
                                 
-                                <!-- Сообщение AI (Telegram стиль - слева) -->
+                                <!-- Сообщение AI в стиле техник (слева) -->
                                 <Grid 
                                     IsVisible="{Binding IsUser, Converter={StaticResource InvertedBoolConverter}}"
                                     ColumnDefinitions="Auto,*"
-                                    Margin="8, 2, 50, 2">
+                                    Margin="8, 4, 50, 4"
+                                    VerticalOptions="Start">
                                     
-                                    <!-- Аватар AI (Telegram стиль) -->
+                                    <!-- Аватар AI в стиле техник -->
                                     <Frame 
                                         Grid.Column="0"
                                         WidthRequest="32"
                                         HeightRequest="32"
-                                        HasShadow="False"
+                                        HasShadow="True"
                                         BorderColor="Transparent"
-                                        BackgroundColor="{StaticResource TelegramAvatarBg}"
+                                        BackgroundColor="{StaticResource Primary}"
                                         CornerRadius="16"
                                         Padding="0"
                                         Margin="0, 0, 6, 0"
@@ -148,14 +145,15 @@
                                     
                                     <Frame 
                                         Grid.Column="1"
-                                        Style="{StaticResource TelegramAIMessageStyle}">
+                                        Style="{StaticResource AIMessageStyle}"
+                                        VerticalOptions="Start">
                                         <Grid RowDefinitions="Auto,Auto">
                                             <Label 
                                                 Grid.Row="0"
                                                 Text="{Binding Text}"
                                                 FontSize="15"
                                                 FontFamily="RobotoRegular"
-                                                TextColor="{StaticResource TelegramAIMessageText}"
+                                                TextColor="{StaticResource TechniqueTextColor}"
                                                 LineBreakMode="WordWrap"
                                                 Margin="0, 0, 0, 4"/>
                                             
@@ -170,8 +168,8 @@
                                                     Text="{Binding Timestamp, StringFormat='{0:HH:mm}'}"
                                                     FontSize="12"
                                                     FontFamily="RobotoRegular"
-                                                    TextColor="{StaticResource TelegramTimestampColor}"
-                                                    Opacity="0.7"
+                                                    TextColor="{StaticResource TechniqueGrayColor}"
+                                                    Opacity="0.8"
                                                     VerticalOptions="End"/>
                                             </Grid>
                                         </Grid>
@@ -183,7 +181,7 @@
                 </StackLayout>
             </ScrollView>
 
-            <!-- Индикатор загрузки в стиле Telegram -->
+            <!-- Индикатор загрузки в стиле техник -->
             <Grid 
                 Grid.Row="0"
                 IsVisible="{Binding IsLoading}"
@@ -198,42 +196,44 @@
                     Margin="0, 0, 0, 80"/>
             </Grid>
 
-            <!-- Поле ввода в стиле Telegram -->
+            <!-- Поле ввода в стиле техник -->
             <Grid 
                 Grid.Row="1"
                 RowDefinitions="Auto"
-                BackgroundColor="{StaticResource TelegramInputBackground}"
-                Padding="8, 8, 8, 8">
+                BackgroundColor="{StaticResource White}"
+                Padding="10, 10, 10, 10">
                 
                 <Grid 
                     ColumnDefinitions="*,Auto"
                     ColumnSpacing="8"
                     VerticalOptions="Center">
                     
-                    <!-- Поле ввода Telegram стиль -->
-                    <Frame 
+                    <!-- Поле ввода в стиле техник -->
+                    <Frame
                         Grid.Column="0"
-                        HasShadow="False"
+                        HasShadow="True"
                         BorderColor="Transparent"
-                        BackgroundColor="{StaticResource Gray100}"
-                        CornerRadius="20"
+                        BackgroundColor="{StaticResource White}"
+                        CornerRadius="25"
                         Padding="16, 10">
                         <Entry 
+                            x:Name="MessageEntry"
                             Text="{Binding UserMessage}"
                             Placeholder="Сообщение"
                             FontSize="15"
                             FontFamily="RobotoRegular"
-                            PlaceholderColor="{StaticResource Gray400}"
-                            TextColor="{StaticResource Gray900}"
+                            PlaceholderColor="{StaticResource TechniqueGrayColor}"
+                            TextColor="{StaticResource TechniqueTextColor}"
                             BackgroundColor="Transparent"
+                            Keyboard="Text"
                             ReturnCommand="{Binding SendMessageCommand}"
                             ClearButtonVisibility="Never"/>
                     </Frame>
                     
-                    <!-- Кнопка отправки Telegram стиль -->
+                    <!-- Кнопка отправки в стиле техник -->
                     <Frame 
                         Grid.Column="1"
-                        HasShadow="False"
+                        HasShadow="True"
                         BorderColor="Transparent"
                         BackgroundColor="{StaticResource Primary}"
                         CornerRadius="20"

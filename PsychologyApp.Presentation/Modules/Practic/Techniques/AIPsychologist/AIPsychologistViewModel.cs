@@ -190,11 +190,16 @@ public class AIPsychologistViewModel : BaseViewModel
 
     private void AddUserMessage(string text)
     {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return;
+        }
+
         MainThread.BeginInvokeOnMainThread(() =>
         {
             Messages.Add(new ChatMessage
             {
-                Text = text,
+                Text = text.Trim(),
                 IsUser = true,
                 Timestamp = DateTime.Now
             });
@@ -203,11 +208,16 @@ public class AIPsychologistViewModel : BaseViewModel
 
     private void AddAIMessage(string text)
     {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return;
+        }
+
         MainThread.BeginInvokeOnMainThread(() =>
         {
             Messages.Add(new ChatMessage
             {
-                Text = text,
+                Text = text.Trim(),
                 IsUser = false,
                 Timestamp = DateTime.Now
             });
@@ -216,11 +226,16 @@ public class AIPsychologistViewModel : BaseViewModel
 
     private void AddSystemMessage(string text)
     {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return;
+        }
+
         MainThread.BeginInvokeOnMainThread(() =>
         {
             Messages.Add(new ChatMessage
             {
-                Text = text,
+                Text = text.Trim(),
                 IsUser = false,
                 Timestamp = DateTime.Now
             });
