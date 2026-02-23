@@ -10,6 +10,8 @@
         xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
         xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
         Shell.TabBarForegroundColor="{StaticResource Primary}"
+        Shell.TabBarTitleColor="{StaticResource Primary}"
+        Shell.TabBarUnselectedColor="{StaticResource Gray400}"
         NavigationPage.HasNavigationBar="False"
         Shell.NavBarIsVisible="False"
         Shell.ForegroundColor="Black">
@@ -22,27 +24,27 @@
 
         <ShellContent 
                 Title="Практик" 
-                Icon="{mi:Material Icon=Psychology}" 
+                Icon="{mi:Material Icon=AutoAwesome}" 
                 ContentTemplate="{DataTemplate views:TechniquesPage}" />
 
         <ShellContent 
                 Title="Детектор"
-                Icon="{mi:Material Icon=Radar}"
+                Icon="{mi:Material Icon=Insights}"
                 ContentTemplate="{DataTemplate tests:TestsListPage}" />
 
         <ShellContent 
                 Title="Соматик"
-                Icon="{mi:Material Icon=MedicalServices}"
+                Icon="{mi:Material Icon=Favorite}"
                 ContentTemplate="{DataTemplate physics:StartPhysicsPage}" />
         
         <ShellContent 
                 Title="Очиститель"
-                Icon="{mi:Material Icon=LibraryMusic}"
+                Icon="{mi:Material Icon=Headphones}"
                 ContentTemplate="{DataTemplate cleans:MusicPlayerPage}"/>
         
         <ShellContent
                 Title="Мотиватор"
-                Icon="{mi:Material Icon=Book}"
+                Icon="{mi:Material Icon=Lightbulb}"
                 ContentTemplate="{DataTemplate forms:QuotePage}"/>
     
 
