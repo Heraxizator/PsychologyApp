@@ -10,7 +10,7 @@ namespace PsychologyApp.Presentation.Modules.Practic.Techniques.AIPsychologist;
 public class AIPsychologistViewModel : BaseViewModel
 {
     private const string OpenRouterApiKey = "openrouter_api_key";
-    private const string DefaultOpenRouterApiKey = "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"; // Пользователь должен ввести свой ключ
+    private const string DefaultOpenRouterApiKey = "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"; // Пользователь должен ввести свой ключ
 
     private IAIPsychologistProvider? _aiProvider;
 
