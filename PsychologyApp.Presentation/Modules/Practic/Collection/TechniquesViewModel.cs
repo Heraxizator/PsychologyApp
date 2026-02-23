@@ -74,6 +74,18 @@ public class TechniquesViewModel : BaseViewModel
         [
             new TechniqueItem
             {
+                Number = "Техника №0",
+                Date="01.01.2025",
+                Image = image,
+                Title = "ИИ-психолог",
+                Subtitle = "Чат с локальной AI-моделью для психологической поддержки",
+                Theme = "ИИ",
+                Author = "TinyLlama",
+                Active = true,
+                TapCommand = new Command(async () => await navigation.PushAsync(new AIPsychologistPage(), false))
+            },
+            new TechniqueItem
+            {
                 Number = "Техника №1",
                 Date="26.01.2023",
                 Image = image,

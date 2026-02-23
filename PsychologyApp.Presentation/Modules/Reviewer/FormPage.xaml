@@ -7,9 +7,6 @@
              Shell.NavBarIsVisible="True"
              Title="Отзовик">
     
-    <ContentPage.BindingContext>
-        <reviewviewmodels:FormViewModel/>
-    </ContentPage.BindingContext>
 
     <ContentPage.Resources>
         <ResourceDictionary>
