@@ -97,4 +97,39 @@
   <style name="scrollViewTheme">
     <item name="scrollViewStyle">@style/scrollViewScrollBars</item>
   </style>
+
+  <!-- Премиальный стиль для BottomNavigationView (TabBar) -->
+  <style name="Widget.Design.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
+    <item name="itemIconTint">@color/bottom_navigation_item_tint</item>
+    <item name="itemTextColor">@color/bottom_navigation_item_tint</item>
+    <!-- Премиальная глубокая тень для дорогого вида -->
+    <item name="android:elevation">16dp</item>
+    <item name="android:background">@color/tab_bar_background</item>
+    <!-- Премиальный ripple эффект -->
+    <item name="itemRippleColor">@color/bottom_navigation_ripple</item>
+    <item name="itemTextAppearanceActive">@style/BottomNavigationView.Active.TextAppearance</item>
+    <item name="itemTextAppearanceInactive">@style/BottomNavigationView.Inactive.TextAppearance</item>
+    <!-- Премиальные отступы и размеры -->
+    <item name="itemPaddingTop">14dp</item>
+    <item name="itemPaddingBottom">14dp</item>
+    <item name="itemIconSize">20dp</item>
+  </style>
+  
+  <!-- Премиальный стиль для активного текста таба -->
+  <style name="BottomNavigationView.Active.TextAppearance" parent="TextAppearance.Design.Tab">
+    <item name="android:textSize">11sp</item>
+    <item name="android:textStyle">bold</item>
+    <item name="android:textColor">#0085FF</item>
+    <item name="android:letterSpacing">0.02</item>
+    <item name="textAllCaps">false</item>
+  </style>
+  
+  <!-- Премиальный стиль для неактивного текста таба -->
+  <style name="BottomNavigationView.Inactive.TextAppearance" parent="TextAppearance.Design.Tab">
+    <item name="android:textSize">11sp</item>
+    <item name="android:textStyle">normal</item>
+    <item name="android:textColor">#919191</item>
+    <item name="android:letterSpacing">0.02</item>
+    <item name="textAllCaps">false</item>
+  </style>
 </resources>

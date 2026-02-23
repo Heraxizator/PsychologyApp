@@ -399,13 +399,14 @@
         <Setter Property="Shell.BackgroundColor" Value="White" />
         <Setter Property="Shell.ForegroundColor" Value="White" />
         <Setter Property="Shell.TitleColor" Value="{StaticResource Gray900}" />
-        <Setter Property="Shell.DisabledColor" Value="{StaticResource Secondary}" />
-        <Setter Property="Shell.UnselectedColor" Value="{StaticResource Gray900}" />
+        <Setter Property="Shell.DisabledColor" Value="{StaticResource Gray300}" />
+        <Setter Property="Shell.UnselectedColor" Value="{StaticResource Gray500}" />
         <Setter Property="Shell.NavBarHasShadow" Value="False" />
+        <!-- Премиальные стили для TabBar -->
         <Setter Property="Shell.TabBarBackgroundColor" Value="White" />
-        <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource Gray900}" />
+        <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource Primary}" />
         <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource Primary}" />
-        <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource Gray900}" />
+        <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource Gray500}" />
     </Style>
     
 
@@ -417,8 +418,8 @@
 
     <Style TargetType="TabbedPage">
         <Setter Property="BarBackgroundColor" Value="White" />
-        <Setter Property="BarTextColor" Value="{StaticResource Gray900}" />
-        <Setter Property="UnselectedTabColor" Value="{StaticResource Gray900}" />
+        <Setter Property="BarTextColor" Value="{StaticResource Primary}" />
+        <Setter Property="UnselectedTabColor" Value="{StaticResource Gray500}" />
         <Setter Property="SelectedTabColor" Value="{StaticResource Primary}" />
     </Style>
 
