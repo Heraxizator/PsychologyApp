@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileHelperMaui.Views.TechniquePages.AIPsychologistPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Modules.Practic.Techniques.AIPsychologist"
+             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:local="clr-namespace:PsychologyApp.Presentation.Modules.Practic.Techniques.AIPsychologist"
+             Title="ИИ-психолог">
+    
+    <ContentPage.BindingContext>
+        <vm:AIPsychologistViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+            <local:BoolToColorConverter x:Key="BoolToColorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout 
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+
+        <templates:NavigationBarExtendedView
+            TitleText="ИИ-психолог"
+            BackCommand="{Binding Finish}"/>
+
+        <Grid RowDefinitions="*,Auto" 
+              VerticalOptions="FillAndExpand"
+              Margin="10, 0, 10, 10">
+
+            <!-- Chat Messages Area -->
+            <ScrollView 
+                Grid.Row="0"
+                x:Name="ChatScrollView"
+                VerticalScrollBarVisibility="Never"
+                VerticalOptions="FillAndExpand">
+                
+                <StackLayout 
+                    x:Name="MessagesContainer"
+                    Spacing="10"
+                    Padding="5, 10, 5, 10"
+                    BindableLayout.ItemsSource="{Binding Messages}">
+                    
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Frame 
+                                HasShadow="True"
+                                Padding="12"
+                                Margin="0, 5, 0, 5"
+                                BackgroundColor="{Binding IsUser, Converter={StaticResource BoolToColorConverter}}">
+                                
+                                <StackLayout>
+                                    <Label 
+                                        FontSize="12"
+                                        FontFamily="RobotoMedium"
+                                        TextColor="#888888"
+                                        Margin="0, 0, 0, 5">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsUser}" Value="True">
+                                                <Setter Property="Text" Value="Вы" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsUser}" Value="False">
+                                                <Setter Property="Text" Value="ИИ-психолог" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    
+                                    <Label 
+                                        Text="{Binding Text}"
+                                        FontSize="14"
+                                        FontFamily="RobotoRegular"
+                                        TextColor="#DE000000"
+                                        LineBreakMode="WordWrap"/>
+                                    
+                                    <Label 
+                                        Text="{Binding Timestamp, StringFormat='{0:HH:mm}'}"
+                                        FontSize="10"
+                                        FontFamily="RobotoRegular"
+                                        TextColor="#AAAAAA"
+                                        HorizontalOptions="End"
+                                        Margin="0, 5, 0, 0"/>
+                                </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </ScrollView>
+
+            <!-- Loading Indicator -->
+            <ActivityIndicator 
+                Grid.Row="0"
+                IsRunning="{Binding IsLoading}"
+                IsVisible="{Binding IsLoading}"
+                Color="{StaticResource Primary}"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"/>
+
+            <!-- Input Area -->
+            <Grid 
+                Grid.Row="1"
+                ColumnDefinitions="*,Auto"
+                RowSpacing="0"
+                ColumnSpacing="10"
+                Margin="0, 10, 0, 0">
+                
+                <Entry 
+                    Grid.Column="0"
+                    Text="{Binding UserMessage}"
+                    Placeholder="Введите ваше сообщение..."
+                    FontSize="14"
+                    FontFamily="RobotoRegular"
+                    PlaceholderColor="#AAAAAA"
+                    TextColor="#DE000000"
+                    BackgroundColor="#F5F5F5"
+                    ReturnCommand="{Binding SendMessageCommand}"/>
+                
+                <Button 
+                    Grid.Column="1"
+                    Text="Отправить"
+                    Command="{Binding SendMessageCommand}"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White"
+                    FontFamily="RobotoMedium"
+                    FontSize="14"
+                    Padding="20, 10"
+                    IsEnabled="{Binding IsNotLoading}"/>
+            </Grid>
+        </Grid>
+    </StackLayout>
+</ContentPage>
