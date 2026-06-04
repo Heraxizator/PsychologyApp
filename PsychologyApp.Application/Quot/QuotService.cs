@@ -26,7 +26,8 @@ public sealed class QuotService : IQuotService
 
     public async Task<QuotDTO> GetByIdAsync(long id, int timeout)
     {
-        Quot quot = await Database.QuotRepository.GetByIdAsync(id, timeout);
+        Quot quot = await Database.QuotRepository.GetByIdAsync(id, timeout)
+            ?? throw new QuotNotFoundException($"Цитата с идентификатром {id} не найдена");
 
         return QuotMapper.GetQuotDTO(quot);
     }

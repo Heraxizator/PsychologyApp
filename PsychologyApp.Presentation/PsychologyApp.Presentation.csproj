@@ -145,17 +145,12 @@
 		<PackageReference Include="AathifMahir.Maui.MauiIcons.Material" Version="5.0.0" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="14.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.41" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.3" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.3" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.3" />
 		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
 	
 		<TrimmerRootAssembly Include="CommunityToolkit.Maui" RootMode="All" />
 		
 		<TrimmerRootAssembly Include="System.Text.Json" RootMode="All" />
-		
-		<TrimmerRootAssembly Include="Microsoft.EntityFrameworkCore" RootMode="All" />
-		<TrimmerRootAssembly Include="Microsoft.EntityFrameworkCore.Sqlite" RootMode="All" />
 		
 		<TrimmerRootAssembly Include="PsychologyApp.Presentation" RootMode="All" />
 		<TrimmerRootAssembly Include="PsychologyApp.Domain" RootMode="All" />

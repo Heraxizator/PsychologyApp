@@ -24,7 +24,8 @@ public sealed class TechniqueService : ITechniqueService
 
     public async Task<TechniqueDTO> GetTechniqueById(long id, int cancelTimeout = 5000)
     {
-        Technique? technique = await Database.TechniqueRepository.GetByIdAsync(id, cancelTimeout);
+        Technique? technique = await Database.TechniqueRepository.GetByIdAsync(id, cancelTimeout)
+            ?? throw new TechniqueNotFoundException($"Техника с идентификатором {id} не найдена");
 
         return TechniqueMapper.GetTechniqueDTO(technique);
     }

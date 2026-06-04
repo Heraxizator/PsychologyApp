@@ -1,65 +1,39 @@
 ﻿using Dapper;
 using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using PsychologyApp.Domain.Common;
 using PsychologyApp.Infrastructure.Data.Repositories.Quots;
 using PsychologyApp.Infrastructure.Data.Repositories.Reasons;
 using PsychologyApp.Infrastructure.Data.Repositories.Statistics;
 using PsychologyApp.Infrastructure.Data.Repositories.Techniques;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PsychologyApp.Infrastructure.Data.Context;
 
 public static class Database
 {
-    private static readonly SqliteConnection _connection = new($"Data Source={ApplicationDbContext.GetPathDB()}");
+    private static readonly SqliteConnection _connection = new($"Data Source={SqlitePaths.GetDatabasePath()}");
 
-    #region Repositories
     public static readonly QuotRepository QuotRepository = new(_connection);
-
     public static readonly ReasonRepository ReasonRepository = new(_connection);
-
     public static readonly TechniqueRepository TechniqueRepository = new(_connection);
-
     public static readonly StatisticRepository StatisticRepository = new(_connection);
-    #endregion
 
-    static Database()
+    public static async Task CreateTablesAsync(int commandTimeout = 0)
     {
-
+        await SqliteSchema.CreateTablesAsync(_connection, commandTimeout);
     }
 
-    public static void CreateTables()
+    public static async Task DeleteTablesAsync(int commandTimeout = 0)
     {
-        ApplicationDbContext context = new();
-
-        context.Database.EnsureCreated();
-
-        context.Database.CloseConnection();
+        await SqliteSchema.DropTablesAsync(_connection, commandTimeout);
     }
 
-    public static void DeleteTables()
+    public static async Task ReCreateTablesAsync(int commandTimeout = 0)
     {
-        ApplicationDbContext context = new();
+        await _connection.CloseAsync();
 
-        context.Database.EnsureDeleted();
+        SqliteSchema.DeleteDatabaseFile();
 
-        context.Database.CloseConnection();
-    }
-
-    public static void ReCreateTables()
-    {
-        ApplicationDbContext context = new();
-
-        context.Database.EnsureDeleted();
-
-        context.Database.EnsureCreated();
-
-        context.Database.CloseConnection();
+        await _connection.OpenAsync();
+        await SqliteSchema.CreateTablesAsync(_connection, commandTimeout);
     }
 
     public static void ConfigureSQLite()
@@ -67,7 +41,14 @@ public static class Database
         _connection.Open();
 
         _connection.Execute("PRAGMA synchronous=OFF;");
-
         _connection.Execute("PRAGMA journal_mode=OFF;");
+
+        SqliteSchema.CreateTablesAsync(_connection).GetAwaiter().GetResult();
     }
+
+    public static void CreateTables() => CreateTablesAsync().GetAwaiter().GetResult();
+
+    public static void DeleteTables() => DeleteTablesAsync().GetAwaiter().GetResult();
+
+    public static void ReCreateTables() => ReCreateTablesAsync().GetAwaiter().GetResult();
 }

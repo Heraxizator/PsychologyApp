@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using MobileHelper.ViewModels.TestViewModels;
+﻿using MobileHelper.ViewModels.TestViewModels;
 using MobileHelperMaui.Views.TestPages;
 using PsychologyApp.Presentation.ViewModels;
 using PsychologyApp.Presentation.Views.TestPages;

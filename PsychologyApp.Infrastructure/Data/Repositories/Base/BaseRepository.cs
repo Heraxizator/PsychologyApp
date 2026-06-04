@@ -1,60 +1,104 @@
-﻿using Microsoft.Data.Sqlite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dapper.Contrib;
-using Dapper.Contrib.Extensions;
+﻿using Dapper;
+using Microsoft.Data.Sqlite;
+using PsychologyApp.Infrastructure.Data.Sql;
 
 namespace PsychologyApp.Infrastructure.Data.Repositories.Base;
 
-public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class, new()
+public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
 {
     private readonly SqliteConnection _connection;
+    private readonly EntitySqlMap _sql;
 
-    protected BaseRepository(SqliteConnection connection)
+    protected BaseRepository(SqliteConnection connection, EntitySqlMap sql)
     {
         _connection = connection;
+        _sql = sql;
     }
+
+    protected SqliteConnection Connection => _connection;
 
     public async Task<long> AddAsync(TEntity entity, int cancelTimeout)
     {
-        return await _connection.InsertAsync(entity, null, cancelTimeout);
+        await _connection.ExecuteAsync(_sql.InsertSql, entity, commandTimeout: cancelTimeout);
+        return await _connection.ExecuteScalarAsync<long>("SELECT last_insert_rowid();", commandTimeout: cancelTimeout);
     }
 
     public async Task<bool> AddRangeAsync(IEnumerable<TEntity> entities, int cancelTimeout)
     {
-        return await _connection.InsertAsync(entities, null, cancelTimeout) > 0;
+        using SqliteTransaction transaction = _connection.BeginTransaction();
+        int affected = 0;
+
+        foreach (TEntity entity in entities)
+        {
+            affected += await _connection.ExecuteAsync(
+                _sql.InsertSql,
+                entity,
+                transaction,
+                commandTimeout: cancelTimeout);
+        }
+
+        transaction.Commit();
+        return affected > 0;
     }
 
     public async Task<bool> DeleteAsync(TEntity entity, int cancelTimeout)
     {
-        return await _connection.DeleteAsync(entity, null, cancelTimeout);
+        int affected = await _connection.ExecuteAsync(_sql.DeleteSql, entity, commandTimeout: cancelTimeout);
+        return affected > 0;
     }
 
     public async Task<bool> DeleteRangeAsync(IEnumerable<TEntity> entities, int cancelTimeout)
     {
-        return await _connection.DeleteAsync(entities, null, cancelTimeout);
+        using SqliteTransaction transaction = _connection.BeginTransaction();
+        int affected = 0;
+
+        foreach (TEntity entity in entities)
+        {
+            affected += await _connection.ExecuteAsync(
+                _sql.DeleteSql,
+                entity,
+                transaction,
+                commandTimeout: cancelTimeout);
+        }
+
+        transaction.Commit();
+        return affected > 0;
     }
 
     public async Task<bool> EditAsync(TEntity entity, int cancelTimeout)
     {
-        return await _connection.UpdateAsync(entity, null, cancelTimeout);
+        int affected = await _connection.ExecuteAsync(_sql.UpdateSql, entity, commandTimeout: cancelTimeout);
+        return affected > 0;
     }
 
     public async Task<bool> EditRangeAsync(IEnumerable<TEntity> entities, int cancelTimeout)
     {
-        return await _connection.UpdateAsync(entities, null, cancelTimeout);
+        using SqliteTransaction transaction = _connection.BeginTransaction();
+        int affected = 0;
+
+        foreach (TEntity entity in entities)
+        {
+            affected += await _connection.ExecuteAsync(
+                _sql.UpdateSql,
+                entity,
+                transaction,
+                commandTimeout: cancelTimeout);
+        }
+
+        transaction.Commit();
+        return affected > 0;
     }
 
     public async Task<IEnumerable<TEntity>> GetAllAsync(int cancelTimeout)
     {
-        return await _connection.GetAllAsync<TEntity>(null, cancelTimeout);
+        return await _connection.QueryAsync<TEntity>(_sql.SelectAllSql, commandTimeout: cancelTimeout);
     }
 
-    public async Task<TEntity> GetByIdAsync(long id, int cancelTimeout)
+    public async Task<TEntity?> GetByIdAsync(long id, int cancelTimeout)
     {
-        return await _connection.GetAsync<TEntity>(id, null, cancelTimeout);
+        return await _connection.QuerySingleOrDefaultAsync<TEntity>(
+            _sql.SelectByKeySql,
+            new { id },
+            commandTimeout: cancelTimeout);
     }
 }
