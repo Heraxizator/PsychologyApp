@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
-
-namespace MobileHelper.ViewModels
+﻿namespace MobileHelper.ViewModels
 {
     public class MainViewModel
     {
