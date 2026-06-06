@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.Models;
 using PsychologyApp.Presentation.Modules.Practice.Techniques;
 using PsychologyApp.Presentation.Services;
@@ -13,6 +14,11 @@ public class PolarityViewModel : BaseViewModel
     public Command<Polarity> Delete { get; private set; } = default!;
     public ObservableCollection<Polarity> polarities { get; private set; } = [];
 
+    public string FirstPolarityLabel => AppStrings.FirstPolarityLabel;
+    public string SecondPolarityLabel => AppStrings.SecondPolarityLabel;
+    public string NegativePlaceholder => AppStrings.PolarityNegativePlaceholder;
+    public string PositivePlaceholder => AppStrings.PolarityPositivePlaceholder;
+
     public PolarityViewModel(INavigationService navigationService)
     {
         ApplyTechnique(TechniqueId.Polarity);
@@ -20,6 +26,14 @@ public class PolarityViewModel : BaseViewModel
         BindNavigation(navigationService.Navigation, navigationService);
         Add = new Command(ToAdd);
         Delete = new Command<Polarity>(DeleteItem);
+    }
+
+    protected override void OnTechniqueContentChanged()
+    {
+        OnPropertyChanged(nameof(FirstPolarityLabel));
+        OnPropertyChanged(nameof(SecondPolarityLabel));
+        OnPropertyChanged(nameof(NegativePlaceholder));
+        OnPropertyChanged(nameof(PositivePlaceholder));
     }
 
     private void DeleteItem(Polarity item)
@@ -46,7 +60,7 @@ public class PolarityViewModel : BaseViewModel
         IsFull = true;
         Polarity item = new()
         {
-            Id = "Полюс №" + (polarities.Count + 1),
+            Id = AppStrings.PoleNumber(polarities.Count + 1),
             Positive = Positive,
             Negative = Negative
         };

@@ -12,6 +12,16 @@ public class OptionsViewModel : BaseViewModel
     public ICommand OpenSettingsPageCommand { get; private set; } = default!;
     public ICommand BackCommand { get; private set; } = default!;
 
+    public string PageTitle => AppStrings.OptionsTitle;
+    public string SettingsTitle => AppStrings.OptionsSettingsTitle;
+    public string SettingsSubtitle => AppStrings.OptionsSettingsSubtitle;
+    public string AboutTitle => AppStrings.OptionsAboutTitle;
+    public string AboutSubtitle => AppStrings.OptionsAboutSubtitle;
+    public string FeedbackTitle => AppStrings.OptionsFeedbackTitle;
+    public string FeedbackSubtitle => AppStrings.OptionsFeedbackSubtitle;
+    public string DonateTitle => AppStrings.OptionsDonateTitle;
+    public string DonateSubtitle => AppStrings.OptionsDonateSubtitle;
+
     public OptionsViewModel(INavigation navigation, INavigationService navigationService)
     {
         BindNavigation(navigation);
@@ -21,5 +31,20 @@ public class OptionsViewModel : BaseViewModel
         OpenFeedbackPageCommand = new AsyncCommand(() => navigationService.GoToFormAsync());
         OpenSettingsPageCommand = new AsyncCommand(() => navigationService.GoToSettingsAsync());
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
+
+        UserPreferences.Changed += OnPreferencesChanged;
+    }
+
+    private void OnPreferencesChanged()
+    {
+        OnPropertyChanged(nameof(PageTitle));
+        OnPropertyChanged(nameof(SettingsTitle));
+        OnPropertyChanged(nameof(SettingsSubtitle));
+        OnPropertyChanged(nameof(AboutTitle));
+        OnPropertyChanged(nameof(AboutSubtitle));
+        OnPropertyChanged(nameof(FeedbackTitle));
+        OnPropertyChanged(nameof(FeedbackSubtitle));
+        OnPropertyChanged(nameof(DonateTitle));
+        OnPropertyChanged(nameof(DonateSubtitle));
     }
 }

@@ -6,9 +6,9 @@ Design tokens, reusable components, and layouts used by module pages.
 
 ```
 Resources/Styles/
-  Colors.xaml       — palette (Primary, Secondary, grays)
-  Typography.xaml   — TextPrimary, SectionTitleStyle, BodyStyle, Nav*
-  Components.xaml   — CardFrameStyle, PrimaryAction*, CompactPrimary*
+  Colors.xaml       — palette (Primary, Secondary, Surface*, InputBackground*)
+  Typography.xaml   — TextPrimaryLight/Dark, SectionTitleStyle, BodyStyle, Nav*, UiCornerRadius
+  Components.xaml   — CardFrameStyle, PrimaryAction* (uses DynamicResource UiCornerRadiusShape)
 UI/Components/      — ContentView + ControlTemplate building blocks
 Controls/           — TechniquePageShell and other layouts
 Ui/Techniques/Bodies/ — technique-specific form bodies
@@ -47,7 +47,7 @@ xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
 
 1. **Before writing inline XAML**, search `UI/Components/` for an existing block.
 2. **Add a new component** only when the same pattern repeats ≥3 times.
-3. **Use typography tokens** (`SectionTitleStyle`, `BodyStyle`) — avoid `#DE000000` and ad-hoc `FontSize`.
+3. **Use typography tokens** (`SectionTitleStyle`, `BodyStyle`) and `AppThemeBinding` for text (`TextPrimaryLight` / `TextPrimaryDark`) — avoid hardcoded `black`/`white`.
 4. **Bind commands** on components (`TapCommand`, `RetryCommand`) — not page-level gesture wrappers.
 5. **Run `dotnet build`** after adding or migrating a component.
 

@@ -27,6 +27,11 @@ public class TechniquesViewModel : BaseViewModel
     public ICommand ConstructorTapped { get; private set; } = default!;
     public ICommand OpenProfileCommand { get; private set; } = default!;
 
+    public string PageTitle => AppStrings.PracticeHomeTitle;
+    public string MyTechniquesLabel => AppStrings.PracticeMyTechniques;
+    public string CreateButtonText => AppStrings.PracticeCreate;
+    public string ProfileToolbarText => AppStrings.ProfileTitle;
+
     public TechniquesViewModel(
         INavigation navigation,
         ITechniqueService techniqueService,
@@ -40,12 +45,22 @@ public class TechniquesViewModel : BaseViewModel
         _techniqueMessenger = techniqueMessenger;
         _navigationService = navigationServiceFactory(navigation);
         _settings = settings;
-        ModuleName = "Практик";
-        PageName = "Список техник";
+        ModuleName = AppStrings.ShellTabPractice;
+        PageName = AppStrings.PracticeTechniquesList;
 
         ConstructorTapped = new AsyncCommand(() => _navigationService.GoToDesignerAsync(-1));
         OpenProfileCommand = new AsyncCommand(() => _navigationService.GoToUserProfileAsync());
         _techniqueMessenger.Subscribe(this, message => OnTechniqueMessageAsync(message).FireAndForget());
+        UserPreferences.Changed += OnPreferencesChanged;
+        InitializeAsync().FireAndForget();
+    }
+
+    private void OnPreferencesChanged()
+    {
+        OnPropertyChanged(nameof(PageTitle));
+        OnPropertyChanged(nameof(MyTechniquesLabel));
+        OnPropertyChanged(nameof(CreateButtonText));
+        OnPropertyChanged(nameof(ProfileToolbarText));
         InitializeAsync().FireAndForget();
     }
 
@@ -86,14 +101,14 @@ public class TechniquesViewModel : BaseViewModel
         }
         catch
         {
-            _toastService.ShortToast("Ошибка при инициализации");
+            _toastService.ShortToast(AppStrings.PracticeInitError);
         }
     }
 
     private IEnumerable<TechniqueItem> BuildStaticItems()
     {
         const string image = "method.png";
-        return TechniqueListCatalog.BuiltIn.Select(entry => new TechniqueItem
+        return TechniqueListCatalog.GetBuiltIn().Select(entry => new TechniqueItem
         {
             Number = entry.Number,
             Date = entry.Date,
@@ -110,7 +125,7 @@ public class TechniquesViewModel : BaseViewModel
     private TechniqueItem ParseFromDb(TechniqueDTO item) => new()
     {
         Id = item.TechniqueId,
-        Number = $"Своя техника №{item.TechniqueId}",
+        Number = AppStrings.PracticeCustomTechniqueNumber(item.TechniqueId),
         Date = item.Date,
         Image = item.Image,
         Title = item.Header,

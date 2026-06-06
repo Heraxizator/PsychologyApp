@@ -5,18 +5,19 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.About"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
-             Title="О приложении">
+             x:DataType="vm:InfoViewModel"
+             Title="{Binding PageTitle}">
 <StackLayout>
 
         <ui:NavigationBarSimpleView
                 BackCommand="{Binding BackCommand}"
-                TitleText="О приложении"/>
+                TitleText="{Binding PageTitle}"/>
 
         <Label
                 HorizontalTextAlignment="Justify"
-                Text="Приложение представляет собой список простых, но в тоже время мощных техник, которые помогут вам справиться с такими проблемами, как стресс, страх, сомнения, навязчивые мысли, ограничивающие убеждения и деструктивные установки. Все методики являются общеизвестными и проверены временем. Некоторые взяты из НЛП или трудов Живорада Славинского. Эти инструменты позволят вам сэкономить много времени, сил и денег. Они не потребуют глубоких знаний в области психологии и программирования подсознания. Желаем успеха в проработках!"
+                Text="{Binding AboutBody}"
                 FontSize="16"
-                TextColor="{StaticResource TextPrimary}"
+                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                 Margin="25, 10, 25, 15"/>
 
         </StackLayout>

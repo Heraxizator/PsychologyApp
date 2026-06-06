@@ -8,7 +8,7 @@
              x:DataType="vm:QuoteViewModel"
              Shell.NavBarIsVisible="True"
              x:Name="page"
-             Title="Мотиватор">
+             Title="{Binding PageTitle}">
 
     <AbsoluteLayout VerticalOptions="FillAndExpand">
         <StackLayout
@@ -48,7 +48,7 @@
                     <ui:ProgressBarView
                         VerticalOptions="CenterAndExpand"
                         IsLoading="True"
-                        ProgressText="Поиск цитат" />
+                        ProgressText="{Binding QuotesSearchingText}" />
                 </CollectionView.EmptyView>
 
             </CollectionView>
@@ -57,15 +57,15 @@
                 VerticalOptions="CenterAndExpand"
                 IsVisible="{Binding IsInit}"
                 IsLoading="True"
-                ProgressText="Загрузка цитат" />
+                ProgressText="{Binding QuotesLoadingText}" />
         </StackLayout>
 
         <ui:RetryView
             AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
             AbsoluteLayout.LayoutFlags="PositionProportional"
             IsVisible="{Binding IsFail}"
-            FailedText="Ошибка при загрузке"
-            RetryText="Попробовать ещё раз?"
+            FailedText="{Binding LoadErrorText}"
+            RetryText="{Binding RetryText}"
             RetryCommand="{Binding Reload}" />
     </AbsoluteLayout>
 

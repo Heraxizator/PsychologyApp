@@ -5,20 +5,20 @@
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              x:DataType="profile:DonateViewModel"
              xmlns:profile="clr-namespace:PsychologyApp.Presentation.Modules.Profile"
-             Title="Пожертвования">
+             Title="{Binding PageTitle}">
 
     <StackLayout Margin="10, 0, 10, 0">
         <ui:NavigationBarSimpleView
-            TitleText="Пожертвования"
+            TitleText="{Binding PageTitle}"
             BackCommand="{Binding BackCommand}" />
 
         <ui:TextBoxView
-            HeaderText="Подробнее"
-            BodyText="Наш проект существует исключительно на пожертвования. Мы не размещаем рекламу и не оказываем платных услуг. Пожертвования используются на работу программистов и дизайнеров." />
+            HeaderText="{Binding MoreInfoHeader}"
+            BodyText="{Binding MoreInfoBody}" />
 
         <ui:ButtonView
             Margin="0, 5, 0, 10"
-            BodyText="Пожертвовать"
+            BodyText="{Binding DonateButtonText}"
             TapCommand="{Binding DonateCommand}" />
     </StackLayout>
 </ContentPage>

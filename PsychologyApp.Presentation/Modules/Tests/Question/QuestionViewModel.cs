@@ -16,6 +16,10 @@ public class QuestionViewModel : BaseViewModel
     public ICommand BackCommand { get; private set; } = default!;
     public readonly bool IsSingleAnswer = default!;
 
+    public string PageTitle => AppStrings.TestsQuestionnaireTitle;
+    public string QuestionPrefix => AppStrings.TestsQuestionPrefix;
+    public string FinishButtonText => AppStrings.TestsFinishButton;
+
     private Func<int, string> Analyzer { get; set; } = default!;
     private readonly IToastService _toastService;
     private readonly IDialogService _dialogService;
@@ -39,13 +43,21 @@ public class QuestionViewModel : BaseViewModel
 
         ConfirmCommand = new AsyncCommand(CalculateAnswersAsync);
         BackCommand = new AsyncCommand(GoToRootAsync);
+        UserPreferences.Changed += OnPreferencesChanged;
+    }
+
+    private void OnPreferencesChanged()
+    {
+        OnPropertyChanged(nameof(PageTitle));
+        OnPropertyChanged(nameof(QuestionPrefix));
+        OnPropertyChanged(nameof(FinishButtonText));
     }
 
     private async Task CalculateAnswersAsync()
     {
         if (Questions.All(x => x.Answers.Any(x => x.Selected is true)) is false)
         {
-            _toastService.LongToast("Нужно ответить на все вопросы");
+            _toastService.LongToast(AppStrings.TestsAnswerAllToast);
             return;
         }
 
@@ -57,10 +69,10 @@ public class QuestionViewModel : BaseViewModel
         }
 
         bool finishSelected = await _dialogService.AskAsync(
-            $"Ваш результат: {questionBalls}",
+            AppStrings.TestsResultTitle(questionBalls),
             ConfigureResultByBalls(questionBalls),
-            "Завершить",
-            "Продолжить");
+            AppStrings.TestsFinishButton,
+            AppStrings.TestsContinueButton);
 
         await ConfigureEndAsync(finishSelected);
     }

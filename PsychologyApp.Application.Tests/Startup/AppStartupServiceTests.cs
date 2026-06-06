@@ -3,7 +3,6 @@ using Microsoft.Extensions.Options;
 using Moq;
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Configuration;
-using PsychologyApp.Application.Exceptions;
 using PsychologyApp.Application.Services.QuotService;
 using PsychologyApp.Application.Startup;
 using Xunit;
@@ -19,7 +18,7 @@ public class AppStartupServiceTests
         var quotService = new Mock<IQuotService>();
         quotService
             .Setup(s => s.LoadSingleAsync(It.IsAny<CancellationToken>()))
-            .ThrowsAsync(new QuotApiLoadException("offline"));
+            .ThrowsAsync(new InvalidOperationException("catalog empty"));
 
         var service = new AppStartupService(
             databaseInitializer.Object,

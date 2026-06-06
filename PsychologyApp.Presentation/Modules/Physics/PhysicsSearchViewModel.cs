@@ -22,6 +22,16 @@ public class PhysicsSearchViewModel : BaseViewModel
     public List<ReasonDTO> ReasonsList { get; private set; } = [];
     public ObservableRangeCollection<ReasonDTO> ResultsObservableCollection { get; private set; } = [];
 
+    public string PageTitle => AppStrings.PhysicsSearchTitle;
+    public string SearchToolbarText => AppStrings.PhysicsSearchToolbar;
+    public string ProblemLabel => AppStrings.PhysicsProblemLabel;
+    public string IllnessPlaceholder => AppStrings.PhysicsIllnessPlaceholder;
+    public string EmptySearchHint => AppStrings.PhysicsEmptySearchHint;
+    public string EmptySearchSubhint => AppStrings.PhysicsEmptySearchSubhint;
+    public string LoadingText => AppStrings.PhysicsLoadingText;
+    public string FailedText => AppStrings.LoadFailed;
+    public string RetryText => AppStrings.RetryQuestion;
+
     public ICommand SearchCommand { get; private set; } = default!;
 
     public PhysicsSearchViewModel(
@@ -35,13 +45,14 @@ public class PhysicsSearchViewModel : BaseViewModel
             _reasonService = reasonService;
             _logger = logger;
             _settings = settings;
-            ModuleName = "Психосоматик";
-            PageName = "Поисковик";
+            ModuleName = AppStrings.PhysicsTitle;
+            PageName = AppStrings.PhysicsSearchPage;
 
             BindNavigation(navigation);
             Reload = new AsyncCommand(ReloadAsync);
-            Cancel = new Command(SetFail);
+            Cancel = new Command(CancelProgress);
             SearchCommand = new Command(() => ExecuteSearch(SearchText));
+            UserPreferences.Changed += OnPreferencesChanged;
 
             InitAsync().FireAndForget();
         }
@@ -50,6 +61,20 @@ public class PhysicsSearchViewModel : BaseViewModel
             _logger.LogError(e, "PhysicsSearchViewModel initialization failed.");
             SetFail();
         }
+    }
+
+    private void OnPreferencesChanged()
+    {
+        OnPropertyChanged(nameof(PageTitle));
+        OnPropertyChanged(nameof(SearchToolbarText));
+        OnPropertyChanged(nameof(ProblemLabel));
+        OnPropertyChanged(nameof(IllnessPlaceholder));
+        OnPropertyChanged(nameof(EmptySearchHint));
+        OnPropertyChanged(nameof(EmptySearchSubhint));
+        OnPropertyChanged(nameof(LoadingText));
+        OnPropertyChanged(nameof(FailedText));
+        OnPropertyChanged(nameof(RetryText));
+        ReloadAsync().FireAndForget();
     }
 
     private async Task ReloadAsync()
@@ -78,13 +103,10 @@ public class PhysicsSearchViewModel : BaseViewModel
             await MainThread.InvokeOnMainThreadAsync(SetInit);
 
             using CancellationTokenSource timeoutSource = OperationCancellation.CreateLargeTimeoutSource(_settings);
-            IEnumerable<ReasonDTO> reasonDTOs = await _reasonService.GetReasonsAsync(0, 10000, timeoutSource.Token);
+            CancellationToken cancellationToken = timeoutSource.Token;
 
-            await MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                ReasonsList.AddRange(reasonDTOs);
-                ResultsObservableCollection.AddRange(reasonDTOs.Take(50));
-            });
+            IEnumerable<ReasonDTO> reasons = await _reasonService.GetReasonsAsync(0, 10_000, cancellationToken);
+            ReasonsList = reasons.ToList();
 
             await MainThread.InvokeOnMainThreadAsync(SetDone);
         }
@@ -95,69 +117,52 @@ public class PhysicsSearchViewModel : BaseViewModel
         }
     }
 
-    public void ExecuteSearch(string? input) => DebouncedSearchAsync(input).FireAndForget();
+    private string _searchText = string.Empty;
+    public string SearchText
+    {
+        get => _searchText;
+        set
+        {
+            if (_searchText != value)
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
+                DebouncedSearch(value);
+            }
+        }
+    }
 
-    private async Task DebouncedSearchAsync(string? input)
+    private void DebouncedSearch(string searchText)
     {
         _searchDebounceCts?.Cancel();
-        _searchDebounceCts?.Dispose();
         _searchDebounceCts = new CancellationTokenSource();
         CancellationToken token = _searchDebounceCts.Token;
 
-        try
+        Task.Run(async () =>
         {
-            await Task.Delay(SearchDebounceMs, token);
-            await ExecuteSearchAsync(input);
-        }
-        catch (OperationCanceledException)
-        {
-        }
+            try
+            {
+                await Task.Delay(SearchDebounceMs, token);
+                await MainThread.InvokeOnMainThreadAsync(() => ExecuteSearch(searchText));
+            }
+            catch (TaskCanceledException)
+            {
+            }
+        }, token);
     }
 
-    public async Task ExecuteSearchAsync(string? input)
+    private void ExecuteSearch(string searchText)
     {
-        try
+        if (string.IsNullOrWhiteSpace(searchText))
         {
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                return;
-            }
-
-            SetInit();
-
-            string text = input.ToLower();
-            IEnumerable<ReasonDTO> source = await Task.Run(() =>
-                ReasonsList.Where(x => x.Title?.Length >= text.Length && x.Title.ToLower().Contains(text)), CancellationToken.None);
-
-            await MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                ResultsObservableCollection.Clear();
-                ResultsObservableCollection.AddRange(source);
-            });
-
-            SetDone();
+            ResultsObservableCollection.Clear();
+            return;
         }
-        catch (Exception e)
-        {
-            SetFail();
-            _logger.LogError(e, "Physics search failed.");
-        }
-    }
 
-    private string? _search_text;
-    public string? SearchText
-    {
-        get => _search_text;
-        set
-        {
-            if (_search_text == value)
-            {
-                return;
-            }
+        List<ReasonDTO> filtered = ReasonsList
+            .Where(reason => reason.Title.Contains(searchText, StringComparison.OrdinalIgnoreCase))
+            .ToList();
 
-            _search_text = value;
-            ExecuteSearch(_search_text ?? string.Empty);
-            OnPropertyChanged(nameof(SearchText));
-        }
+        ResultsObservableCollection.ReplaceRange(filtered);
     }
 }

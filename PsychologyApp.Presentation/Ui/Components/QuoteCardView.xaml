@@ -36,7 +36,7 @@
                             Binding="{TemplateBinding Author}"
                             TargetType="Label"
                             Value="">
-                            <Setter Property="Text" Value="Пословица" />
+                            <Setter Property="Text" Value="{TemplateBinding DefaultAuthorText}" />
                         </DataTrigger>
                     </Label.Triggers>
                 </Label>
@@ -55,7 +55,7 @@
                         FontSize="19"
                         Style="{StaticResource BodyStyle}"
                         Text="{mi:Material Icon=FavoriteBorder}"
-                        SemanticProperties.Description="Добавить в избранное">
+                        SemanticProperties.Description="{TemplateBinding FavoriteHint}">
                         <Label.Triggers>
                             <DataTrigger
                                 Binding="{TemplateBinding IsFavourite}"
@@ -73,7 +73,7 @@
                         FontSize="19"
                         Style="{StaticResource BodyStyle}"
                         Text="{mi:Material Icon=ContentCopy}"
-                        SemanticProperties.Description="Копировать цитату">
+                        SemanticProperties.Description="{TemplateBinding CopyHint}">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{TemplateBinding CopyCommand}" />
                         </Label.GestureRecognizers>
@@ -83,7 +83,7 @@
                         FontSize="19"
                         Style="{StaticResource BodyStyle}"
                         Text="{mi:Material Icon=Share}"
-                        SemanticProperties.Description="Поделиться цитатой">
+                        SemanticProperties.Description="{TemplateBinding ShareHint}">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{TemplateBinding ShareCommand}" />
                         </Label.GestureRecognizers>

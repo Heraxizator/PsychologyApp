@@ -13,32 +13,36 @@
         Shell.TabBarTitleColor="{StaticResource Primary}"
         Shell.TabBarUnselectedColor="{StaticResource Gray400}"
         NavigationPage.HasNavigationBar="False"
-        Shell.NavBarIsVisible="False"
-        Shell.ForegroundColor="Black">
+        Shell.NavBarIsVisible="False">
 
     <Shell.Behaviors>
-        <mct:StatusBarBehavior StatusBarColor="White" StatusBarStyle="DarkContent"/>
+        <mct:StatusBarBehavior x:Name="StatusBar" StatusBarColor="White" StatusBarStyle="DarkContent"/>
     </Shell.Behaviors>
 
     <TabBar>
 
         <ShellContent 
+                x:Name="PracticeTab"
                 Title="Практик" 
                 Icon="{mi:Material Icon=AutoAwesome}" />
 
         <ShellContent 
+                x:Name="DetectorTab"
                 Title="Детектор"
                 Icon="{mi:Material Icon=Insights}" />
 
         <ShellContent 
+                x:Name="SomaticTab"
                 Title="Соматик"
                 Icon="{mi:Material Icon=Favorite}" />
         
         <ShellContent 
+                x:Name="CleanerTab"
                 Title="Очиститель"
                 Icon="{mi:Material Icon=Headphones}"/>
         
         <ShellContent
+                x:Name="MotivatorTab"
                 Title="Мотиватор"
                 Icon="{mi:Material Icon=Lightbulb}"/>
     

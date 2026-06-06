@@ -23,7 +23,7 @@
                         Binding="{TemplateBinding IsCompact}"
                         TargetType="Border"
                         Value="True">
-                        <Setter Property="StrokeShape" Value="RoundRectangle 35" />
+                        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
                         <Setter Property="WidthRequest" Value="125" />
                         <Setter Property="HeightRequest" Value="35" />
                         <Setter Property="VerticalOptions" Value="Center" />

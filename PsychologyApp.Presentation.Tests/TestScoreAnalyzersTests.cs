@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.Modules.Tests.Collection;
 using Xunit;
 
@@ -5,6 +6,11 @@ namespace PsychologyApp.Presentation.Tests;
 
 public sealed class TestScoreAnalyzersTests
 {
+    public TestScoreAnalyzersTests()
+    {
+        AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
+    }
+
     [Theory]
     [InlineData("heck_hess", 24, "0-24")]
     [InlineData("heck_hess", 25, "25-40")]

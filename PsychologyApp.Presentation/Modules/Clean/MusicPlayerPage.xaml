@@ -4,8 +4,9 @@
              x:Class="PsychologyApp.Presentation.Views.Clean.MusicPlayerPage" 
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Clean"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             x:DataType="vm:MusicPlayerViewModel"
              Shell.NavBarIsVisible="True"
-             Title="Очиститель">
+             Title="{Binding PageTitle}">
 <ContentPage.Content>
 
         <AbsoluteLayout 
@@ -24,15 +25,15 @@
                 Margin="0, 0">
 
                 <Label
-                    Text="Сборник молитв"
-                    TextColor="{StaticResource TextPrimary}"
+                    Text="{Binding PrayerCollectionLabel}"
+                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                     FontSize="16"
                     HorizontalOptions="CenterAndExpand"
                     VerticalOptions="CenterAndExpand"/>
 
                 <Label
                     Margin="0, 5"
-                    Text="Загрузить"
+                    Text="{Binding LoadLabel}"
                     TextColor="{StaticResource Secondary}"
                     FontSize="16"
                     FontAttributes="Bold"
@@ -51,7 +52,7 @@
             VerticalOptions="CenterAndExpand"
             IsVisible="{Binding IsInit}"
             IsLoading="{Binding IsInit}"
-            ProgressText="Поиск молитв">
+            ProgressText="{Binding SearchingPrayersText}">
                 <ui:ProgressBarView.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding Cancel}"/>
                 </ui:ProgressBarView.GestureRecognizers>
@@ -75,8 +76,8 @@
                                     HeightRequest="45"
                                     Source="music.png"/>
                                 <VerticalStackLayout Grid.Column="1">
-                                    <Label FontFamily="RobotoMedium" TextColor="{StaticResource TextPrimary}" FontSize="16" Text="{Binding Name}"/>
-                                    <Label TextColor="{StaticResource TextPrimary}" FontSize="16" Text="{Binding Description}"/>
+                                    <Label FontFamily="RobotoMedium" TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" FontSize="16" Text="{Binding Name}"/>
+                                    <Label TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" FontSize="16" Text="{Binding Description}"/>
                                 </VerticalStackLayout>
                             </Grid>
                             <Border.GestureRecognizers>
@@ -89,8 +90,8 @@
 
                 <ui:TextBoxView
                     Margin="0, 0, 0, 10"
-                HeaderText="Подробнее"
-                BodyText="Это сборник сильных молитв, который поможет вам очиститься от негатива. Нужен хороший интернет."/>
+                HeaderText="{Binding MoreInfoHeader}"
+                BodyText="{Binding MoreInfoBody}"/>
 
             </StackLayout>
 
@@ -98,8 +99,8 @@
                 AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
                 AbsoluteLayout.LayoutFlags="PositionProportional"
                 IsVisible="{Binding IsFail}"
-                FailedText="Не удалось загрузить"
-                RetryText="Попробовать ещё раз?"
+                FailedText="{Binding LoadFailedText}"
+                RetryText="{Binding RetryText}"
                 RetryCommand="{Binding Start}" />
         </AbsoluteLayout>
     </ContentPage.Content>

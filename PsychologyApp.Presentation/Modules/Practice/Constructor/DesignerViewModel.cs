@@ -22,6 +22,22 @@ public class DesignerViewModel : BaseViewModel
 
     public ICommand ExecuteTechnique { get; private set; } = default!;
 
+    public string PageTitle => AppStrings.TechniqueTitle;
+    public string DesignTitle => AppStrings.PracticeDesignTitle;
+    public string BackText => AppStrings.Back;
+    public string DescriptionSection => AppStrings.TestsDescriptionHeader;
+    public string NameFieldLabel => AppStrings.NameLabel;
+    public string DescriptionFieldLabel => AppStrings.TestsDescriptionHeader;
+    public string ThemeFieldLabel => AppStrings.ThemeLabel;
+    public string AuthorFieldLabel => AppStrings.AuthorLabel;
+    public string AlgorithmSection => AppStrings.TechniqueAlgorithm;
+    public string ActionsFieldLabel => AppStrings.ActionsListLabel;
+    public string SaveButtonText => AppStrings.Save;
+    public string NamePlaceholder => AppStrings.DesignerNamePlaceholder;
+    public string DescriptionPlaceholder => AppStrings.DesignerDescriptionPlaceholder;
+    public string ThemePlaceholder => AppStrings.DesignerThemePlaceholder;
+    public string AuthorPlaceholder => AppStrings.DesignerAuthorPlaceholder;
+
     public DesignerViewModel(
         INavigation navigation,
         long techniqueId,
@@ -42,12 +58,13 @@ public class DesignerViewModel : BaseViewModel
 
             Path = "method.png";
 
-            ModuleName = "Практик";
-            PageName = "Конструктор";
+            ModuleName = AppStrings.ShellTabPractice;
+            PageName = AppStrings.PracticeConstructor;
 
             BindNavigation(navigation, _navigationService);
 
             ExecuteTechnique = new AsyncCommand(ExecuteOperationAsync);
+            UserPreferences.Changed += OnPreferencesChanged;
 
             InitAsync().FireAndForget();
         }
@@ -56,6 +73,25 @@ public class DesignerViewModel : BaseViewModel
         {
             _logger.LogError(e, "DesignerViewModel initialization failed.");
         }
+    }
+
+    private void OnPreferencesChanged()
+    {
+        OnPropertyChanged(nameof(PageTitle));
+        OnPropertyChanged(nameof(DesignTitle));
+        OnPropertyChanged(nameof(BackText));
+        OnPropertyChanged(nameof(DescriptionSection));
+        OnPropertyChanged(nameof(NameFieldLabel));
+        OnPropertyChanged(nameof(DescriptionFieldLabel));
+        OnPropertyChanged(nameof(ThemeFieldLabel));
+        OnPropertyChanged(nameof(AuthorFieldLabel));
+        OnPropertyChanged(nameof(AlgorithmSection));
+        OnPropertyChanged(nameof(ActionsFieldLabel));
+        OnPropertyChanged(nameof(SaveButtonText));
+        OnPropertyChanged(nameof(NamePlaceholder));
+        OnPropertyChanged(nameof(DescriptionPlaceholder));
+        OnPropertyChanged(nameof(ThemePlaceholder));
+        OnPropertyChanged(nameof(AuthorPlaceholder));
     }
 
     private async Task ExecuteOperationAsync()

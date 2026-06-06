@@ -10,7 +10,7 @@
             <Frame>
                 <StackLayout>
                     <Label
-                        Text="Форма"
+                        Text="{TemplateBinding TitleText}"
                         FontSize="18"
                         TextColor="{AppThemeBinding Light=black, Dark=white}"/>
 

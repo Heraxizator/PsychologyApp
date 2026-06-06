@@ -7,13 +7,23 @@ namespace PsychologyApp.Presentation.ViewModels.About;
 
 public class InfoViewModel : BaseViewModel
 {
+    public string PageTitle => AppStrings.OptionsAboutTitle;
+    public string AboutBody => AppStrings.InfoAboutBody;
+
     public InfoViewModel(INavigation navigation, INavigationService navigationService)
     {
-        ModuleName = "Практик";
-        PageName = "О приложении";
+        ModuleName = AppStrings.ShellTabPractice;
+        PageName = AppStrings.OptionsAboutTitle;
         BindNavigation(navigation);
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
+        UserPreferences.Changed += OnPreferencesChanged;
     }
 
     public ICommand BackCommand { get; }
+
+    private void OnPreferencesChanged()
+    {
+        OnPropertyChanged(nameof(PageTitle));
+        OnPropertyChanged(nameof(AboutBody));
+    }
 }

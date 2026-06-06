@@ -5,11 +5,12 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Technique.Main"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              xmlns:technique="clr-namespace:PsychologyApp.Presentation.Technique"
+             x:DataType="vm:TechniquesViewModel"
              Shell.NavBarIsVisible="True"
-             Title="Главная">
+             Title="{Binding PageTitle}">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Профиль" Command="{Binding OpenProfileCommand}" />
+        <ToolbarItem Text="{Binding ProfileToolbarText}" Command="{Binding OpenProfileCommand}" />
     </ContentPage.ToolbarItems>
 
     <AbsoluteLayout
@@ -28,7 +29,7 @@
             <CollectionView.Header>
                 <StackLayout Margin="10,0,10,10" Orientation="Horizontal">
                     <Label
-                        Text="Мои техники"
+                        Text="{Binding MyTechniquesLabel}"
                         FontSize="18"
                         Style="{StaticResource SectionTitleStyle}"
                         HorizontalOptions="StartAndExpand"
@@ -36,7 +37,7 @@
                     <ui:ButtonView
                         Variant="Primary"
                         IsCompact="True"
-                        BodyText="СОЗДАТЬ"
+                        BodyText="{Binding CreateButtonText}"
                         TapCommand="{Binding ConstructorTapped}" />
                 </StackLayout>
             </CollectionView.Header>

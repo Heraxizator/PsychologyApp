@@ -48,9 +48,6 @@ public static class MauiProgram
 
         builder.Services.AddPsychologyAppCore(settings =>
         {
-            settings.QuotApiUrl = string.IsNullOrWhiteSpace(settings.QuotApiUrl)
-                ? Constants.QuotApiUrl
-                : settings.QuotApiUrl;
             settings.ReviewEmailAddress = string.IsNullOrWhiteSpace(settings.ReviewEmailAddress)
                 ? Constants.ReviewEmailAdress
                 : settings.ReviewEmailAddress;
@@ -61,6 +58,9 @@ public static class MauiProgram
 
         builder.Services.AddSingleton<MauiReasonContentProvider>();
         builder.Services.AddCachedReasonContentProvider<MauiReasonContentProvider>();
+        builder.Services.AddSingleton<MauiQuotContentProvider>();
+        builder.Services.AddCachedQuotContentProvider<MauiQuotContentProvider>();
+        builder.Services.AddSingleton<ContentCacheInvalidator>();
         builder.Services.AddPsychologyAppPresentation();
         builder.Services.AddSingleton<AppShell>();
 

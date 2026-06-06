@@ -16,8 +16,19 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddCachedReasonContentProvider<TInner>(this IServiceCollection services)
         where TInner : class, IReasonContentProvider
     {
-        services.AddSingleton<IReasonContentProvider>(sp =>
+        services.AddSingleton<CachedReasonContentProvider>(sp =>
             new CachedReasonContentProvider(sp.GetRequiredService<TInner>()));
+        services.AddSingleton<IReasonContentProvider>(sp => sp.GetRequiredService<CachedReasonContentProvider>());
+
+        return services;
+    }
+
+    public static IServiceCollection AddCachedQuotContentProvider<TInner>(this IServiceCollection services)
+        where TInner : class, IQuotContentProvider
+    {
+        services.AddSingleton<CachedQuotContentProvider>(sp =>
+            new CachedQuotContentProvider(sp.GetRequiredService<TInner>()));
+        services.AddSingleton<IQuotContentProvider>(sp => sp.GetRequiredService<CachedQuotContentProvider>());
 
         return services;
     }

@@ -6,16 +6,16 @@
 <ContentView.ControlTemplate>
         <ControlTemplate>
             <Border 
-                StrokeShape="RoundRectangle 30"
+                StrokeShape="{DynamicResource UiCornerRadiusShape}"
                 VerticalOptions="FillAndExpand"
-                BackgroundColor="White"
+                BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}"
                 Stroke="{StaticResource Secondary}">
                 <StackLayout 
                     Margin="15, 5, 15, 0"
                     HeightRequest="90"
                     VerticalOptions="FillAndExpand">
                     <Label 
-                        TextColor="{StaticResource TextPrimary}"
+                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                         Padding="0"
                         FontFamily="RobotoRegular"
                         Text="{TemplateBinding TitleText}"
@@ -29,7 +29,7 @@
                         FontFamily="RobotoRegular"
                         MaxLength="1000"
                         Text="{TemplateBinding BodyText, Mode=TwoWay}"
-                        TextColor="{StaticResource TextPrimary}"
+                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                         VerticalTextAlignment="Center"/>
                 </StackLayout>
 

@@ -14,6 +14,13 @@ public class BaseViewModel : INotifyPropertyChanged
     protected INavigation? Navigation { get; private set; }
     protected INavigationService? NavigationService { get; private set; }
     protected string? TheoryInfo { get; set; }
+    private TechniqueId? _appliedTechniqueId;
+    private bool _preferencesSubscribed;
+
+    public string TechniquePageTitle => AppStrings.TechniqueTitle;
+    public string TheoryToolbarText => AppStrings.TechniqueTheory;
+    public string FormSectionTitle => AppStrings.FormLabel;
+    public string AddButtonText => AppStrings.Add;
 
     public ICommand Finish { get; protected set; } = new Command(() => { });
     public ICommand Theory { get; protected set; } = new Command(() => { });
@@ -54,6 +61,25 @@ public class BaseViewModel : INotifyPropertyChanged
             string content = TheoryInfo ?? string.Empty;
             navigationService.GoToTheoryAsync(content).FireAndForget();
         });
+
+        if (!_preferencesSubscribed)
+        {
+            UserPreferences.Changed += OnUiPreferencesChanged;
+            _preferencesSubscribed = true;
+        }
+    }
+
+    private void OnUiPreferencesChanged()
+    {
+        OnPropertyChanged(nameof(TechniquePageTitle));
+        OnPropertyChanged(nameof(TheoryToolbarText));
+        OnPropertyChanged(nameof(FormSectionTitle));
+        OnPropertyChanged(nameof(AddButtonText));
+
+        if (_appliedTechniqueId is TechniqueId techniqueId)
+        {
+            ApplyTechniqueCore(techniqueId);
+        }
     }
 
     protected Task GoBackAsync() =>
@@ -63,6 +89,12 @@ public class BaseViewModel : INotifyPropertyChanged
         NavigationService?.GoToRootAsync() ?? Navigation!.PopToRootAsync(false);
 
     protected void ApplyTechnique(TechniqueId id)
+    {
+        _appliedTechniqueId = id;
+        ApplyTechniqueCore(id);
+    }
+
+    private void ApplyTechniqueCore(TechniqueId id)
     {
         TechniqueDefinition def = TechniqueCatalog.Get(id);
         ModuleName = def.ModuleName;
@@ -75,6 +107,12 @@ public class BaseViewModel : INotifyPropertyChanged
             Entries.Clear();
             Entries.AddRange(def.Entries);
         }
+
+        OnTechniqueContentChanged();
+    }
+
+    protected virtual void OnTechniqueContentChanged()
+    {
     }
 
     protected bool SetProperty<T>(ref T backingStore, T value,
@@ -204,5 +242,13 @@ public class BaseViewModel : INotifyPropertyChanged
     {
         SetDefault();
         IsCreated = true;
+    }
+
+    protected void CancelProgress()
+    {
+        if (IsInit)
+        {
+            SetDone();
+        }
     }
 }

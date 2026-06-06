@@ -6,15 +6,15 @@
     <StackLayout>
         <Frame Margin="10,10,10,0">
             <StackLayout>
-                <Label Text="Форма" Style="{StaticResource SectionTitleStyle}" />
+                <Label Text="{Binding FormSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
                 <ui:TextEntryView
                     Margin="0,5,0,0"
-                    TitleText="Негативная мысль"
+                    TitleText="{Binding ThoughtFieldLabel}"
                     BodyText="{Binding Text}"
-                    PlaceholderText="Мне не дают покоя мысли" />
+                    PlaceholderText="{Binding ThoughtPlaceholder}" />
                 <ui:ButtonView
                     Margin="5,5,5,0"
-                    BodyText="Добавить"
+                    BodyText="{Binding AddButtonText}"
                     TapCommand="{Binding AddCommand}" />
             </StackLayout>
         </Frame>

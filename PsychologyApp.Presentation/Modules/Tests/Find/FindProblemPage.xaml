@@ -5,20 +5,20 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Tests"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              x:DataType="vm:FindProblemViewModel"
-             Title="Поиск проблемы">
+             Title="{Binding PageTitle}">
 
     <StackLayout VerticalOptions="FillAndExpand">
         <ui:NavigationBarSimpleView
-            TitleText="О прохождении"
+            TitleText="{Binding PageTitle}"
             BackCommand="{Binding BackCommand}" />
 
         <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
             <StackLayout Margin="10,10,10,0">
                 <ui:TextBoxView
-                    HeaderText="Описание"
+                    HeaderText="{Binding DescriptionHeader}"
                     BodyText="{Binding DescriptionText}" />
 
-                <ui:AlgorithmBoxView TitleText="Алгоритм">
+                <ui:AlgorithmBoxView TitleText="{Binding AlgorithmHeader}">
                     <ui:AlgorithmBoxView.ItemsSource>
                         <Binding Path="AlgorithmRows" />
                     </ui:AlgorithmBoxView.ItemsSource>
@@ -30,12 +30,12 @@
                 </ui:AlgorithmBoxView>
 
                 <ui:TextBoxView
-                    HeaderText="Замечание"
+                    HeaderText="{Binding NoteHeader}"
                     BodyText="{Binding CommentText}" />
 
                 <ui:ButtonView
                     Margin="0,5,0,0"
-                    BodyText="Начать"
+                    BodyText="{Binding StartButtonText}"
                     TapCommand="{Binding Continue}" />
             </StackLayout>
         </ScrollView>

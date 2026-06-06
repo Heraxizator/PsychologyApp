@@ -4,8 +4,9 @@
              x:Class="PsychologyApp.Presentation.Views.Review.FormPage"
              xmlns:reviewviewmodels="clr-namespace:PsychologyApp.Presentation.ViewModels.Review" 
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             x:DataType="reviewviewmodels:FormViewModel"
              Shell.NavBarIsVisible="True"
-             Title="Отзовик">
+             Title="{Binding PageTitle}">
 <AbsoluteLayout 
         VerticalOptions="FillAndExpand" 
         HorizontalOptions="FillAndExpand">
@@ -15,22 +16,22 @@
             Margin="10, 0, 10, 0">
 
             <ui:TextBoxView
-                HeaderText="Пояснение"
-                BodyText="Вы можете сообщить о проблеме или предложить свои идеи о том, как сделать приложение ещё лучше. Служба поддержки получит ваше сообщение."/>
+                HeaderText="{Binding ExplanationHeader}"
+                BodyText="{Binding ExplanationBody}"/>
 
             <Frame Margin="10, 10, 10, 15">
                 <StackLayout>
-                    <Label Text="Форма" Style="{StaticResource SectionTitleStyle}" />
+                    <Label Text="{Binding FormSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
 
                     <ui:TextEditorView
                         Margin="0, 5, 0, 0"
-                        PlaceholderText="Проблема на странице X"
+                        PlaceholderText="{Binding MessagePlaceholder}"
                         BodyText="{Binding MessageText}"
-                        TitleText="Сообщение"/>
+                        TitleText="{Binding MessageFieldLabel}"/>
 
                     <ui:ButtonView
                         Margin="0, 5, 0, 0"
-                        BodyText="Отправить"
+                        BodyText="{Binding SendButtonText}"
                         TapCommand="{Binding Send}" />
                     
                 </StackLayout>

@@ -1,119 +1,210 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+
              x:Class="PsychologyApp.Presentation.Views.Physics.PhysicsSearchPage"
+             x:Name="PageRoot"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Physics"
+
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
-             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
-             Title="Психосоматик">
+
+             x:DataType="vm:PhysicsSearchViewModel"
+
+             Title="{Binding PageTitle}">
+
 <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Найти" Command="{Binding SearchCommand}"/>
+
+        <ToolbarItem Text="{Binding SearchToolbarText}" Command="{Binding SearchCommand}"/>
+
     </ContentPage.ToolbarItems>
 
+
+
     <AbsoluteLayout 
+
         HorizontalOptions="FillAndExpand"
+
         VerticalOptions="FillAndExpand">
+
         
+
     <StackLayout 
+
         AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+
         AbsoluteLayout.LayoutFlags="All"
+
         IsVisible="True"
+
         Margin="10, 0, 10, 0"
+
         VerticalOptions="FillAndExpand" 
+
         HorizontalOptions="FillAndExpand">
 
+
+
             <ui:NavigationBarSimpleView
-            TitleText="Психосоматика"
+
+            TitleText="{Binding PageTitle}"
+
             BackCommand="{Binding Finish}"/>
 
+
+
             <ui:TextEntryView
-            PlaceholderText="Болезнь"
+
+            PlaceholderText="{Binding IllnessPlaceholder}"
+
             BodyText="{Binding SearchText}"
-            TitleText="Проблема"/>
+
+            TitleText="{Binding ProblemLabel}"/>
+
+
 
             <ScrollView
+
             VerticalOptions="FillAndExpand"
+
             HorizontalOptions="FillAndExpand"
+
             VerticalScrollBarVisibility="Never">
+
+
 
                 <StackLayout>
 
+
+
                     <CollectionView
+
                         IsVisible="{Binding IsDone}"
+
                 SelectionMode="None"
+
                 VerticalOptions="FillAndExpand"
+
                 HorizontalOptions="FillAndExpand"
+
                 VerticalScrollBarVisibility="Never"
+
                 ItemsSource="{Binding ResultsObservableCollection}">
+
                         <CollectionView.ItemTemplate>
+
                             <DataTemplate>
+
                                 <Frame Padding="10">
-                                    <StackLayout Margin="5, 0, 5, 0">
-                                        <Label 
-                                            Text="{Binding Title}"
-                                            FontSize="14"
-                                            FontFamily="RobotoMedium"
-                                            TextColor="{StaticResource TextPrimary}"
-                                            Padding="0"
-                                            HorizontalOptions="Start" />
 
-                                        <Label
-                                            Margin="0, 5, 0, 0"
-                                            FontSize="14"
-                                            HorizontalTextAlignment="Justify"
-                                            TextColor="{StaticResource TextPrimary}"
-                                            Text="{Binding Subtitle}"/>
+                                    <ui:TextItemView
 
-                                    </StackLayout>
+                                        TitleText="{Binding Title}"
+
+                                        BodyText="{Binding Subtitle}" />
+
                                 </Frame>
+
                             </DataTemplate>
+
                         </CollectionView.ItemTemplate>
+
+
 
                         <CollectionView.EmptyView>
 
+
+
                             <StackLayout
+
                             HorizontalOptions="CenterAndExpand"
+
                             VerticalOptions="CenterAndExpand">
 
-                                <Label
-                                    FontFamily="RobotoMedium"
-                                    TextColor="{StaticResource TextPrimary}"
-                                    FontSize="14"
-                                    Text="Введите запрос"/>
+
 
                                 <Label
-                                    FontFamily="RobotoRegular"
-                                    TextColor="{StaticResource TextPrimary}"
+
+                                    FontFamily="RobotoMedium"
+
+                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+
                                     FontSize="14"
-                                    Text="Болезнь или часть тела"/>
+
+                                    Text="{Binding EmptySearchHint, Source={x:Reference PageRoot}, Path=BindingContext}"/>
+
+
+
+                                <Label
+
+                                    FontFamily="RobotoRegular"
+
+                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+
+                                    FontSize="14"
+
+                                    Text="{Binding EmptySearchSubhint, Source={x:Reference PageRoot}, Path=BindingContext}"/>
+
+
 
                             </StackLayout>
 
+
+
                         </CollectionView.EmptyView>
+
+
 
                     </CollectionView>
 
+
+
                     <ui:ProgressBarView 
+
                         VerticalOptions="CenterAndExpand"
+
                         IsVisible="{Binding IsInit}"
+
                         IsLoading="{Binding IsInit}"
-                        ProgressText="Поиск причин">
+
+                        ProgressText="{Binding LoadingText}">
+
                         <ui:ProgressBarView.GestureRecognizers>
+
                             <TapGestureRecognizer Command="{Binding Cancel}"/>
+
                         </ui:ProgressBarView.GestureRecognizers>
+
                     </ui:ProgressBarView>
+
+
 
                 </StackLayout>
 
+
+
         </ScrollView>
+
     </StackLayout>
 
+
+
         <ui:RetryView
+
             AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
+
             AbsoluteLayout.LayoutFlags="PositionProportional"
+
             IsVisible="{Binding IsFail}"
-            FailedText="Не удалось загрузить"
-            RetryText="Попробовать ещё раз?"
+
+            FailedText="{Binding FailedText}"
+
+            RetryText="{Binding RetryText}"
+
             RetryCommand="{Binding Reload}" />
+
     </AbsoluteLayout>
+
 </ContentPage>
+

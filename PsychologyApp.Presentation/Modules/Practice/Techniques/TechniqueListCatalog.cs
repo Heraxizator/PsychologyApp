@@ -11,7 +11,7 @@ public sealed record TechniqueListEntry(
 
 public static class TechniqueListCatalog
 {
-    public static IReadOnlyList<TechniqueListEntry> BuiltIn { get; } =
+    public static IReadOnlyList<TechniqueListEntry> GetBuiltIn() =>
         Enum.GetValues<TechniqueId>()
             .Select(id =>
             {

@@ -14,15 +14,35 @@ public class FormViewModel : BaseViewModel
     private readonly IDialogService _dialogService;
     private readonly AppSettings _settings;
 
+    public string PageTitle => AppStrings.ReviewTitle;
+    public string ExplanationHeader => AppStrings.PhysicsExplanationHeader;
+    public string ExplanationBody => AppStrings.ReviewExplanation;
+    public string FormSectionTitle => AppStrings.FormLabel;
+    public string MessageFieldLabel => AppStrings.MessageLabel;
+    public string MessagePlaceholder => AppStrings.ReviewMessagePlaceholder;
+    public string SendButtonText => AppStrings.Send;
+
     public FormViewModel(IDialogService dialogService, IOptions<AppSettings> settings)
     {
         _dialogService = dialogService;
         _settings = settings.Value;
-        ModuleName = "Отзовик";
-        PageName = "Отзыв";
+        ModuleName = AppStrings.ReviewTitle;
+        PageName = AppStrings.ReviewPage;
         MessageText = string.Empty;
 
         Send = new AsyncCommand(SendAsync);
+        UserPreferences.Changed += OnPreferencesChanged;
+    }
+
+    private void OnPreferencesChanged()
+    {
+        OnPropertyChanged(nameof(PageTitle));
+        OnPropertyChanged(nameof(ExplanationHeader));
+        OnPropertyChanged(nameof(ExplanationBody));
+        OnPropertyChanged(nameof(FormSectionTitle));
+        OnPropertyChanged(nameof(MessageFieldLabel));
+        OnPropertyChanged(nameof(MessagePlaceholder));
+        OnPropertyChanged(nameof(SendButtonText));
     }
 
     private async Task SendAsync()
@@ -34,7 +54,7 @@ public class FormViewModel : BaseViewModel
 
         if (string.IsNullOrWhiteSpace(_settings.ReviewSmsRecipient))
         {
-            await _dialogService.ShowAsync(null, "Получатель SMS не настроен");
+            await _dialogService.ShowAsync(null, AppStrings.ReviewSmsRecipientMissing);
             return;
         }
 
@@ -50,11 +70,11 @@ public class FormViewModel : BaseViewModel
         }
         catch (FeatureNotSupportedException)
         {
-            await _dialogService.ShowAsync(null, "Отправка СМС не поддерживается");
+            await _dialogService.ShowAsync(null, AppStrings.ReviewSmsNotSupported);
         }
         catch (Exception ex)
         {
-            await _dialogService.ShowAsync(null, $"Ошибка при отправке СМС: {ex.Message}");
+            await _dialogService.ShowAsync(null, AppStrings.ReviewSmsError(ex.Message));
         }
     }
 

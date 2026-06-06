@@ -20,6 +20,8 @@ public sealed class CachedReasonContentProvider(IReasonContentProvider innerProv
             .ToList();
     }
 
+    public void Invalidate() => _cache = null;
+
     private async Task<IReadOnlyList<Reason>> EnsureCacheAsync(CancellationToken cancellationToken)
     {
         if (_cache is not null)

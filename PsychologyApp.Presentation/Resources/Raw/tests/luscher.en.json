@@ -1,0 +1,24 @@
+[
+  {
+    "title": "Brief Lüscher Test",
+    "subtitle": "Alternative version",
+    "description": "This test helps you reveal what troubles you but stays implicit—in just a few taps. Simply choose two color cards.",
+    "algorithm": [
+      "1. Choose the most pleasant color",
+      "2. Choose the least pleasant color"
+    ],
+    "comment": "Do not pick favorite colors. The test measures your current emotional state.",
+    "navigationTarget": "AlternativeTestPage"
+  },
+  {
+    "title": "Full Lüscher Test",
+    "subtitle": "Standard version",
+    "description": "This test helps you reveal what troubles you but stays implicit—in just a few taps. Choose cards in an order that feels pleasant to you.",
+    "algorithm": [
+      "1. Choose the most pleasant color",
+      "2. Repeat step 1"
+    ],
+    "comment": "Do not pick favorite colors. The test measures your current emotional state.",
+    "navigationTarget": "StandardTestPage"
+  }
+]

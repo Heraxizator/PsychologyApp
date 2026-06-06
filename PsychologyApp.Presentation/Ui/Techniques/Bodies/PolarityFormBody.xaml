@@ -7,12 +7,12 @@
     <StackLayout>
         <Frame Margin="10,10,10,10">
             <StackLayout>
-                <Label Text="Форма" Style="{StaticResource SectionTitleStyle}" />
-                <ui:TextEntryView TitleText="Первая полярность" PlaceholderText="Невроз" BodyText="{Binding Negative}" />
-                <ui:TextEntryView TitleText="Вторая полярность" PlaceholderText="Покой" BodyText="{Binding Positive}" />
+                <Label Text="{Binding FormSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
+                <ui:TextEntryView TitleText="{Binding FirstPolarityLabel}" PlaceholderText="{Binding NegativePlaceholder}" BodyText="{Binding Negative}" />
+                <ui:TextEntryView TitleText="{Binding SecondPolarityLabel}" PlaceholderText="{Binding PositivePlaceholder}" BodyText="{Binding Positive}" />
                 <ui:ButtonView
                     Margin="0,5,0,0"
-                    BodyText="Добавить"
+                    BodyText="{Binding AddButtonText}"
                     TapCommand="{Binding Add}" />
             </StackLayout>
         </Frame>
@@ -26,7 +26,7 @@
                                 <Label Text="{Binding Positive}" Style="{StaticResource BodyStyle}" />
                                 <Label
                                     FontSize="32"
-                                    TextColor="{StaticResource TextPrimary}"
+                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                                     HorizontalOptions="CenterAndExpand"
                                     Text="{mi:Material Icon=Remove}" />
                                 <Label
