@@ -1,17 +1,14 @@
-﻿using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;
-using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific.AppCompat;
-using Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;
-using MobileHelperMaui.Views;
+﻿using PsychologyApp.Presentation.Infrastructure;
 
-namespace PsychologyApp.Presentation
+namespace PsychologyApp.Presentation;
+
+public partial class App : Microsoft.Maui.Controls.Application
 {
-    public partial class App : Microsoft.Maui.Controls.Application
+    public App(AppShell appShell)
     {
-        public App()
-        {
-            InitializeComponent();
-
-            MainPage = new AppShell();
-        }
+        InitializeComponent();
+        UserPreferences.ApplyTheme();
+        GlobalExceptionHandler.Attach(this);
+        MainPage = appShell;
     }
 }

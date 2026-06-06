@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace PsychologyApp.Application.Exceptions;
 
-namespace PsychologyApp.Application.Exceptions
+public sealed class TechniqueNotFoundException : NotFoundException
 {
-    public class TechniqueNotFoundException : Exception
+    public TechniqueNotFoundException(string message) : base(message)
     {
-        public TechniqueNotFoundException(string? message) : base(message)
-        {
-        }
     }
 }

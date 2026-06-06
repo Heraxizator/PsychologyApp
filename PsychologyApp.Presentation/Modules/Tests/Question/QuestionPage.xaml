@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Views.Tests.QuestionPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Tests"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             x:DataType="vm:QuestionViewModel"
+             Title="Опросник"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons">
+
+    <StackLayout
+        HorizontalOptions="FillAndExpand" 
+        VerticalOptions="FillAndExpand">
+
+        <ui:NavigationBarSimpleView
+            TitleText="Опросник"
+            BackCommand="{Binding BackCommand}" />
+
+        <CollectionView
+            VerticalOptions="FillAndExpand"
+            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+            AbsoluteLayout.LayoutFlags="All"
+            Margin="10, 5, 10, 0"
+            ItemsSource="{Binding Questions}">
+
+            <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Frame 
+                    x:DataType="vm:Question"
+                    HasShadow="True">
+
+                        <StackLayout>
+
+                            <Label
+                                Margin="0, 0, 0, 10"
+                                TextColor="{StaticResource Primary}"
+                                FontFamily="RobotoSemiBold"
+                                FontSize="16">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Вопрос "/>
+                                        <Span Text="{Binding Number}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Grid
+                                x:DataType="vm:QuestionViewModel"
+                                IsVisible="{Binding IsSingleAnswer}">
+
+                                <Label
+                                    x:DataType="vm:Question"
+                                    Text="{Binding Context}"
+                                    HorizontalTextAlignment="Justify"
+                                    Margin="0, 0, 5, 5"
+                                    FontFamily="RobotoRegular"
+                                    TextColor="{StaticResource TextPrimary}"
+                                    FontSize="14"/>
+                            </Grid>
+
+                            <StackLayout
+                                x:DataType="vm:Question"
+                                BindableLayout.ItemsSource="{Binding Answers}">
+
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="vm:Answer">
+
+                                        <Grid>
+
+                                            <StackLayout
+                                                x:Name="MultipleStack"
+                                                HorizontalOptions="FillAndExpand"
+                                                Orientation="Horizontal">
+
+                                                <CheckBox 
+                                                    VerticalOptions="Center"
+                                                    IsChecked="{Binding Selected}"/>
+
+                                                <Label 
+                                                    VerticalOptions="Center"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    TextColor="{StaticResource TextPrimary}"
+                                                    FontSize="14"
+                                                    HorizontalTextAlignment="Justify"
+                                                    Text="{Binding Text}"/>
+
+                                                <StackLayout.Triggers>
+                                                    <DataTrigger
+                                                        TargetType="StackLayout"
+                                                        Binding="{Binding Source={x:Reference SingleStack}, Path=IsVisible}"
+                                                        Value="True">
+                                                        <Setter 
+                                                            Property="IsVisible"
+                                                            Value="False"/>
+                                                    </DataTrigger>
+                                                </StackLayout.Triggers>
+                                            </StackLayout>
+
+                                            <StackLayout
+                                                x:Name="SingleStack"
+                                                x:DataType="vm:QuestionViewModel"
+                                                IsVisible="{Binding IsSingleAnswer}"
+                                                HorizontalOptions="FillAndExpand"
+                                                Orientation="Horizontal">
+
+                                                <RadioButton
+                                                    x:DataType="vm:Answer"
+                                                    Content="{Binding Text}"
+                                                    GroupName="{Binding Number}"
+                                                    TextColor="{StaticResource TextPrimary}"
+                                                    BorderColor="{StaticResource Primary}"
+                                                    IsChecked="{Binding Selected}"/>
+
+                                            </StackLayout>
+                                            
+                                        </Grid>
+                                        
+                                        
+
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+
+        <CollectionView.Footer>
+
+            <ui:ButtonView
+                Margin="15, 5, 15, 20"
+                BodyText="Завершить"
+                TapCommand="{Binding ConfirmCommand}" />
+
+        </CollectionView.Footer>
+        
+    </CollectionView>
+
+    </StackLayout>
+
+</ContentPage>

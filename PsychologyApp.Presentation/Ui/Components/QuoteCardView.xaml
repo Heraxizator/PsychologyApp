@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             x:Class="PsychologyApp.Presentation.UI.Components.QuoteCardView">
+
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <Grid
+                Margin="20,25,20,25"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label
+                    Grid.Row="0"
+                    FontSize="18"
+                    FontFamily="RobotoRegular"
+                    HorizontalOptions="CenterAndExpand"
+                    HorizontalTextAlignment="Justify"
+                    Style="{StaticResource BodyStyle}"
+                    Text="{TemplateBinding Text}" />
+                <Label
+                    Grid.Row="1"
+                    Margin="0,5,0,0"
+                    FontSize="16"
+                    HorizontalOptions="CenterAndExpand"
+                    FontFamily="RobotoSemiBold"
+                    Text="{TemplateBinding Author}"
+                    Style="{StaticResource BodyStyle}">
+                    <Label.Triggers>
+                        <DataTrigger
+                            Binding="{TemplateBinding Author}"
+                            TargetType="Label"
+                            Value="">
+                            <Setter Property="Text" Value="Пословица" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+                <Grid
+                    Grid.Row="2"
+                    Margin="0,15,0,0"
+                    ColumnSpacing="20"
+                    HorizontalOptions="CenterAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Column="0"
+                        FontSize="19"
+                        Style="{StaticResource BodyStyle}"
+                        Text="{mi:Material Icon=FavoriteBorder}"
+                        SemanticProperties.Description="Добавить в избранное">
+                        <Label.Triggers>
+                            <DataTrigger
+                                Binding="{TemplateBinding IsFavourite}"
+                                TargetType="Label"
+                                Value="True">
+                                <Setter Property="TextColor" Value="{StaticResource Primary}" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{TemplateBinding LikeCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label
+                        Grid.Column="1"
+                        FontSize="19"
+                        Style="{StaticResource BodyStyle}"
+                        Text="{mi:Material Icon=ContentCopy}"
+                        SemanticProperties.Description="Копировать цитату">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{TemplateBinding CopyCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label
+                        Grid.Column="2"
+                        FontSize="19"
+                        Style="{StaticResource BodyStyle}"
+                        Text="{mi:Material Icon=Share}"
+                        SemanticProperties.Description="Поделиться цитатой">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{TemplateBinding ShareCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+            </Grid>
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+
+</ContentView>

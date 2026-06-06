@@ -2,11 +2,11 @@
 <Shell  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
         x:Class="PsychologyApp.Presentation.AppShell"
-        xmlns:views="clr-namespace:MobileHelperMaui.Views"
-        xmlns:tests="clr-namespace:MobileHelperMaui.Views.TestPages"
-        xmlns:physics="clr-namespace:MobileHelperMaui.Views.PhysicsPages"
-        xmlns:cleans="clr-namespace:MobileHelperMaui.Views.CleanPages"
-        xmlns:forms="clr-namespace:PsychologyApp.Presentation.Modules.Motivator"
+        xmlns:views="clr-namespace:PsychologyApp.Presentation.Views"
+        xmlns:tests="clr-namespace:PsychologyApp.Presentation.Views.Tests"
+        xmlns:physics="clr-namespace:PsychologyApp.Presentation.Views.Physics"
+        xmlns:cleans="clr-namespace:PsychologyApp.Presentation.Views.Clean"
+        xmlns:forms="clr-namespace:PsychologyApp.Presentation.Views.Motivator"
         xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
         xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
         Shell.TabBarForegroundColor="{StaticResource Primary}"
@@ -24,28 +24,23 @@
 
         <ShellContent 
                 Title="Практик" 
-                Icon="{mi:Material Icon=AutoAwesome}" 
-                ContentTemplate="{DataTemplate views:TechniquesPage}" />
+                Icon="{mi:Material Icon=AutoAwesome}" />
 
         <ShellContent 
                 Title="Детектор"
-                Icon="{mi:Material Icon=Insights}"
-                ContentTemplate="{DataTemplate tests:TestsListPage}" />
+                Icon="{mi:Material Icon=Insights}" />
 
         <ShellContent 
                 Title="Соматик"
-                Icon="{mi:Material Icon=Favorite}"
-                ContentTemplate="{DataTemplate physics:StartPhysicsPage}" />
+                Icon="{mi:Material Icon=Favorite}" />
         
         <ShellContent 
                 Title="Очиститель"
-                Icon="{mi:Material Icon=Headphones}"
-                ContentTemplate="{DataTemplate cleans:MusicPlayerPage}"/>
+                Icon="{mi:Material Icon=Headphones}"/>
         
         <ShellContent
                 Title="Мотиватор"
-                Icon="{mi:Material Icon=Lightbulb}"
-                ContentTemplate="{DataTemplate forms:QuotePage}"/>
+                Icon="{mi:Material Icon=Lightbulb}"/>
     
 
     </TabBar>

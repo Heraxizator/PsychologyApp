@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RootNamespace>PsychologyApp.Presentation.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.41" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PsychologyApp.Application\PsychologyApp.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\PsychologyApp.Presentation\Modules\Practice\Techniques\TechniqueCatalog.cs" Link="TechniqueCatalog.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Modules\Practice\Techniques\TechniqueListCatalog.cs" Link="TechniqueListCatalog.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\UI\Components\EntryItem.cs" Link="EntryItem.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Modules\Tests\Collection\TestScoreAnalyzers.cs" Link="TestScoreAnalyzers.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Infrastructure\AsyncCommand.cs" Link="AsyncCommand.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Infrastructure\AsyncCommandExtensions.cs" Link="AsyncCommandExtensions.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Infrastructure\UserPreferences.cs" Link="UserPreferences.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Modules\BaseViewModel.cs" Link="BaseViewModel.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Modules\Review\FormViewModel.cs" Link="FormViewModel.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Modules\Tests\Question\QuestionViewModel.cs" Link="QuestionViewModel.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Modules\Tests\Question\Question.cs" Link="Question.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Modules\Tests\Question\Answer.cs" Link="Answer.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Modules\Tests\Find\FindProblemViewModel.cs" Link="FindProblemViewModel.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Services\Dialogs\IDialogService.cs" Link="IDialogService.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Services\Toasts\IToastService.cs" Link="IToastService.cs" />
+  </ItemGroup>
+
+</Project>

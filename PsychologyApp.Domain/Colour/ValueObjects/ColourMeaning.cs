@@ -1,5 +1,5 @@
 ﻿using PsychologyApp.Domain.Common;
-using PsychologyApp.Domain.Enums;
+using PsychologyApp.Domain.Colour.Enums;
 using PsychologyApp.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PsychologyApp.Detector.Domain.Colour.ValueObjects;
+namespace PsychologyApp.Domain.Colour.ValueObjects;
 
 public class ColourMeaning : ValueObject
 {

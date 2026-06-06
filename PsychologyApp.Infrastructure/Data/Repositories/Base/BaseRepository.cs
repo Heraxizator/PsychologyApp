@@ -1,104 +1,105 @@
 ﻿using Dapper;
 using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Options;
+using PsychologyApp.Application.Abstractions.Persistence;
+using PsychologyApp.Application.Configuration;
+using PsychologyApp.Application.Exceptions;
+using PsychologyApp.Infrastructure.Data.Context;
 using PsychologyApp.Infrastructure.Data.Sql;
 
 namespace PsychologyApp.Infrastructure.Data.Repositories.Base;
 
-public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
+public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
 {
-    private readonly SqliteConnection _connection;
+    private readonly IDbConnectionFactory _connectionFactory;
     private readonly EntitySqlMap _sql;
+    private readonly int _commandTimeoutSeconds;
 
-    protected BaseRepository(SqliteConnection connection, EntitySqlMap sql)
+    protected BaseRepository(
+        IDbConnectionFactory connectionFactory,
+        EntitySqlMap sql,
+        IOptions<AppSettings> settings)
     {
-        _connection = connection;
+        _connectionFactory = connectionFactory;
         _sql = sql;
+        _commandTimeoutSeconds = settings.Value.DbCommandTimeoutSeconds > 0
+            ? settings.Value.DbCommandTimeoutSeconds
+            : 30;
     }
 
-    protected SqliteConnection Connection => _connection;
-
-    public async Task<long> AddAsync(TEntity entity, int cancelTimeout)
+    protected async Task<SqliteConnection> OpenConnectionAsync(CancellationToken cancellationToken = default)
     {
-        await _connection.ExecuteAsync(_sql.InsertSql, entity, commandTimeout: cancelTimeout);
-        return await _connection.ExecuteScalarAsync<long>("SELECT last_insert_rowid();", commandTimeout: cancelTimeout);
+        var connection = (SqliteConnection)await _connectionFactory.CreateOpenConnectionAsync(cancellationToken);
+        await SqliteSchema.ConfigureConnectionAsync(connection, cancellationToken);
+        return connection;
     }
 
-    public async Task<bool> AddRangeAsync(IEnumerable<TEntity> entities, int cancelTimeout)
+    public async Task<long> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        using SqliteTransaction transaction = _connection.BeginTransaction();
-        int affected = 0;
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteTransaction transaction = (SqliteTransaction)await connection.BeginTransactionAsync(cancellationToken);
 
-        foreach (TEntity entity in entities)
+        try
         {
-            affected += await _connection.ExecuteAsync(
+            await connection.ExecuteAsync(
                 _sql.InsertSql,
                 entity,
                 transaction,
-                commandTimeout: cancelTimeout);
+                commandTimeout: _commandTimeoutSeconds);
+            long id = await connection.ExecuteScalarAsync<long>(
+                "SELECT last_insert_rowid();",
+                transaction: transaction,
+                commandTimeout: _commandTimeoutSeconds);
+
+            await transaction.CommitAsync(cancellationToken);
+            return id;
         }
-
-        transaction.Commit();
-        return affected > 0;
-    }
-
-    public async Task<bool> DeleteAsync(TEntity entity, int cancelTimeout)
-    {
-        int affected = await _connection.ExecuteAsync(_sql.DeleteSql, entity, commandTimeout: cancelTimeout);
-        return affected > 0;
-    }
-
-    public async Task<bool> DeleteRangeAsync(IEnumerable<TEntity> entities, int cancelTimeout)
-    {
-        using SqliteTransaction transaction = _connection.BeginTransaction();
-        int affected = 0;
-
-        foreach (TEntity entity in entities)
+        catch
         {
-            affected += await _connection.ExecuteAsync(
-                _sql.DeleteSql,
-                entity,
-                transaction,
-                commandTimeout: cancelTimeout);
+            await transaction.RollbackAsync(cancellationToken);
+            throw;
         }
-
-        transaction.Commit();
-        return affected > 0;
     }
 
-    public async Task<bool> EditAsync(TEntity entity, int cancelTimeout)
+    public async Task<bool> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        int affected = await _connection.ExecuteAsync(_sql.UpdateSql, entity, commandTimeout: cancelTimeout);
-        return affected > 0;
-    }
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        int affected = await connection.ExecuteAsync(
+            _sql.DeleteSql,
+            entity,
+            commandTimeout: _commandTimeoutSeconds);
 
-    public async Task<bool> EditRangeAsync(IEnumerable<TEntity> entities, int cancelTimeout)
-    {
-        using SqliteTransaction transaction = _connection.BeginTransaction();
-        int affected = 0;
-
-        foreach (TEntity entity in entities)
+        if (affected == 0)
         {
-            affected += await _connection.ExecuteAsync(
-                _sql.UpdateSql,
-                entity,
-                transaction,
-                commandTimeout: cancelTimeout);
+            throw new PersistenceException($"Entity of type {typeof(TEntity).Name} was not deleted because no rows were affected.");
         }
 
-        transaction.Commit();
-        return affected > 0;
+        return true;
     }
 
-    public async Task<IEnumerable<TEntity>> GetAllAsync(int cancelTimeout)
+    public async Task<bool> EditAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        return await _connection.QueryAsync<TEntity>(_sql.SelectAllSql, commandTimeout: cancelTimeout);
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        int affected = await connection.ExecuteAsync(
+            _sql.UpdateSql,
+            entity,
+            commandTimeout: _commandTimeoutSeconds);
+
+        if (affected == 0)
+        {
+            throw new PersistenceException($"Entity of type {typeof(TEntity).Name} was not updated because no rows were affected.");
+        }
+
+        return true;
     }
 
-    public async Task<TEntity?> GetByIdAsync(long id, int cancelTimeout)
+    public async Task<TEntity?> GetByIdAsync(long id, CancellationToken cancellationToken = default)
     {
-        return await _connection.QuerySingleOrDefaultAsync<TEntity>(
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        return await connection.QuerySingleOrDefaultAsync<TEntity>(
             _sql.SelectByKeySql,
             new { id },
-            commandTimeout: cancelTimeout);
+            commandTimeout: _commandTimeoutSeconds);
     }
+
 }

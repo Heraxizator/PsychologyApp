@@ -15,6 +15,11 @@ public class Statistic : Entity
         ArgumentException.ThrowIfNullOrWhiteSpace(moduleName);
         ArgumentException.ThrowIfNullOrWhiteSpace(pageName);
 
+        if (secondsDuration < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(secondsDuration), "Duration cannot be negative.");
+        }
+
         return new Statistic
         {
             ModuleName = moduleName,
@@ -22,5 +27,11 @@ public class Statistic : Entity
             DateTime = dateTime,
             SecondsDuration = secondsDuration
         };
+    }
+
+    public static Statistic CreateWithDuration(string moduleName, string pageName, DateTime startedAt, DateTime endedAt)
+    {
+        long seconds = (long)Math.Max(0, (endedAt - startedAt).TotalSeconds);
+        return Create(moduleName, pageName, endedAt, seconds);
     }
 }

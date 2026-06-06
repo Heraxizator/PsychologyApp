@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Views.TechniquesPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Technique.Main"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:technique="clr-namespace:PsychologyApp.Presentation.Technique"
+             Shell.NavBarIsVisible="True"
+             Title="Главная">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Профиль" Command="{Binding OpenProfileCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <AbsoluteLayout
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+
+        <CollectionView
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            Margin="5,0,5,5"
+            ItemsSource="{Binding Techniques}"
+            SelectionMode="Single"
+            VerticalScrollBarVisibility="Never"
+            HorizontalScrollBarVisibility="Never">
+
+            <CollectionView.Header>
+                <StackLayout Margin="10,0,10,10" Orientation="Horizontal">
+                    <Label
+                        Text="Мои техники"
+                        FontSize="18"
+                        Style="{StaticResource SectionTitleStyle}"
+                        HorizontalOptions="StartAndExpand"
+                        VerticalOptions="Center" />
+                    <ui:ButtonView
+                        Variant="Primary"
+                        IsCompact="True"
+                        BodyText="СОЗДАТЬ"
+                        TapCommand="{Binding ConstructorTapped}" />
+                </StackLayout>
+            </CollectionView.Header>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="technique:TechniqueItem">
+                    <ui:TechniqueListCardView
+                        Number="{Binding Number}"
+                        Date="{Binding Date}"
+                        Image="{Binding Image}"
+                        Title="{Binding Title}"
+                        Subtitle="{Binding Subtitle}"
+                        Theme="{Binding Theme}"
+                        Author="{Binding Author}"
+                        Active="{Binding Active}"
+                        TapCommand="{Binding TapCommand}" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+    </AbsoluteLayout>
+</ContentPage>

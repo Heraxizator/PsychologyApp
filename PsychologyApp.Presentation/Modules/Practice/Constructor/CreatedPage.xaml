@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             x:Class="PsychologyApp.Presentation.Views.TechniquePages.ConstructorPages.CreatedPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Practice.Constructor"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             Title="Техника">
+<ContentPage.ToolbarItems>
+        <ToolbarItem Text="Изменить" Command="{Binding Edit}" />
+        <ToolbarItem Text="Удалить" Command="{Binding Remove}" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView
+        VerticalOptions="FillAndExpand"
+        VerticalScrollBarVisibility="Never">
+
+    <StackLayout>
+
+        <ui:NavigationBarSimpleView
+            TitleText="Своя техника"
+            BackCommand="{Binding Finish}" />
+
+        <StackLayout Margin="10, 0, 10, 0">
+
+                <ui:AlgorithmBoxView
+                TitleText="Алгоритм"
+                BodySource="{Binding Algorithm}"/>
+
+                <ui:ButtonView
+                Margin="5, 5, 5, 10"
+                BodyText="Завершить"
+                TapCommand="{Binding Finish}" />
+        </StackLayout>
+    </StackLayout>
+    </ScrollView>
+</ContentPage>

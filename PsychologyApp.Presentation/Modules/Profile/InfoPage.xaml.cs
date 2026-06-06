@@ -1,15 +1,13 @@
-namespace MobileHelperMaui.Views.AboutPages;
+using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.Services.Factories;
+
+namespace PsychologyApp.Presentation.Views.About;
 
 public partial class InfoPage : ContentPage
 {
-    public InfoPage()
+    public InfoPage(IPageViewModelActivator pageViewModelActivator, IInfoViewModelFactory infoViewModelFactory)
     {
         InitializeComponent();
-    }
-
-    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
-    {
-        _ = await Navigation.PopAsync(false);
-
+        this.ActivateViewModel(pageViewModelActivator, nav => infoViewModelFactory.Create(nav));
     }
 }

@@ -1,42 +1,18 @@
-﻿using PsychologyApp.Application.Models;
+﻿using PsychologyApp.Application.Abstractions.Persistence;
+using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.Statistic;
-using PsychologyApp.Domain.Entities;
-using PsychologyApp.Infrastructure.Data.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DomainStatistic = PsychologyApp.Domain.Entities.Statistic;
 
-namespace PsychologyApp.Application;
+namespace PsychologyApp.Application.Services.Statistic;
 
-public sealed class StatisticService : IStatisitcService
+public sealed class StatisticService(IStatisticRepository statisticRepository) : IStatisticService
 {
-    public async Task AddSingleAsync(StatisticDTO statisticDTO, int cancelTimeout)
+    public async Task AddSingleAsync(StatisticDTO statisticDTO, CancellationToken cancellationToken = default)
     {
-        Statistic statistic = StatisticMapper.GetStatistic(statisticDTO);
-
-        await Database.StatisticRepository.AddAsync(statistic, cancelTimeout);
+        DomainStatistic statistic = StatisticMapper.GetStatistic(statisticDTO);
+        await statisticRepository.AddAsync(statistic, cancellationToken);
     }
 
-    public async Task<long> CountPageCompletedAsync(int cancelTimeout)
-    {
-        IEnumerable<Statistic> statistics = await Database.StatisticRepository.GetAllAsync(cancelTimeout);
-
-        return statistics.DistinctBy(x => x.PageName).Count();
-    }
-
-    public async Task<long> CountPageFactsAsync(string pageName, int cancelTimeout)
-    {
-        IEnumerable<Statistic> statistics = await Database.StatisticRepository.GetAllAsync(cancelTimeout);
-
-        return statistics.Where(x => x.PageName == pageName).Count();
-    }
-
-    public async Task<IEnumerable<StatisticDTO>> GetAllAsync(int cancelTimeout)
-    {
-        IEnumerable<Statistic> statistics = await Database.StatisticRepository.GetAllAsync(cancelTimeout);
-
-        return statistics.Select(StatisticMapper.GetStatisticDTO);
-    }
+    public async Task<long> CountPageCompletedAsync(CancellationToken cancellationToken = default) =>
+        await statisticRepository.CountDistinctPagesAsync(cancellationToken);
 }

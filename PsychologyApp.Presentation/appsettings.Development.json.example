@@ -1,0 +1,6 @@
+{
+  "AppSettings": {
+    "ReviewEmailAddress": "your-email@example.com",
+    "ReviewSmsRecipient": "89000000000"
+  }
+}

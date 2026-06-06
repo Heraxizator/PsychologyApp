@@ -1,17 +1,15 @@
-﻿using PsychologyApp.Application.Helpers;
+﻿using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Models;
+using PsychologyApp.Application.Services.ReasonService;
 using PsychologyApp.Domain.Entities;
-using PsychologyApp.Infrastructure.Data.Context;
 
 namespace PsychologyApp.Application.Services.ReasonService;
 
-public sealed class ReasonService : IReasonService
+public sealed class ReasonService(IReasonContentProvider reasonContentProvider) : IReasonService
 {
-    public async Task<IEnumerable<ReasonDTO>> GetReasonsAsync(int page, int perInPage, int cancelTimeout = 15000)
+    public async Task<IEnumerable<ReasonDTO>> GetReasonsAsync(int page, int perInPage, CancellationToken cancellationToken = default)
     {
-        using CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
-        IEnumerable<Reason> reasons = await ReasonExtension.LoadReasonsAsync(cancellationTokenSource.Token);
-
-        return reasons.Skip(page).Take(perInPage).Select(ReasonMapper.GetReasonDTO);
+        IReadOnlyList<Reason> reasons = await reasonContentProvider.GetPageAsync(page, perInPage, cancellationToken);
+        return reasons.Select(ReasonMapper.GetReasonDTO);
     }
 }

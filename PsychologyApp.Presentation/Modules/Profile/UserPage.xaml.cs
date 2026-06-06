@@ -1,18 +1,13 @@
-using MobileHelper.ViewModels.ProfileViewModels;
+using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.Services.Factories;
 
-namespace MobileHelperMaui.Views.ProfilePages;
+namespace PsychologyApp.Presentation.Views.Profile;
 
 public partial class UserPage : ContentPage
 {
-    public UserPage()
+    public UserPage(IPageViewModelActivator pageViewModelActivator, IUserViewModelFactory userViewModelFactory)
     {
         InitializeComponent();
-
-        BindingContext = new UserViewModel(Navigation);
-    }
-
-    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
-    {
-        _ = await Navigation.PopAsync(false);
+        this.ActivateViewModel(pageViewModelActivator, nav => userViewModelFactory.Create(nav));
     }
 }

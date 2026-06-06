@@ -37,7 +37,15 @@ public class Quot : Entity
         Text = text;
     }
 
-    public void MarkAsReaded() => IsReaded = true;
+    public void MarkAsReaded()
+    {
+        if (IsReaded)
+        {
+            return;
+        }
+
+        IsReaded = true;
+    }
 
     public void SetFavourite(bool isFavourite) => IsFavourite = isFavourite;
 }

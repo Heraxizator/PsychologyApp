@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PsychologyApp.Detector.Domain.Colour.ValueObjects;
+namespace PsychologyApp.Domain.Colour.ValueObjects;
 
 public class ColourValue : ValueObject
 {

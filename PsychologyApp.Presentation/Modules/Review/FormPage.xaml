@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Views.Review.FormPage"
+             xmlns:reviewviewmodels="clr-namespace:PsychologyApp.Presentation.ViewModels.Review" 
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             Shell.NavBarIsVisible="True"
+             Title="Отзовик">
+<AbsoluteLayout 
+        VerticalOptions="FillAndExpand" 
+        HorizontalOptions="FillAndExpand">
+        <StackLayout 
+            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+            AbsoluteLayout.LayoutFlags="All"
+            Margin="10, 0, 10, 0">
+
+            <ui:TextBoxView
+                HeaderText="Пояснение"
+                BodyText="Вы можете сообщить о проблеме или предложить свои идеи о том, как сделать приложение ещё лучше. Служба поддержки получит ваше сообщение."/>
+
+            <Frame Margin="10, 10, 10, 15">
+                <StackLayout>
+                    <Label Text="Форма" Style="{StaticResource SectionTitleStyle}" />
+
+                    <ui:TextEditorView
+                        Margin="0, 5, 0, 0"
+                        PlaceholderText="Проблема на странице X"
+                        BodyText="{Binding MessageText}"
+                        TitleText="Сообщение"/>
+
+                    <ui:ButtonView
+                        Margin="0, 5, 0, 0"
+                        BodyText="Отправить"
+                        TapCommand="{Binding Send}" />
+                    
+                </StackLayout>
+
+            </Frame>
+
+        </StackLayout>
+    </AbsoluteLayout>
+</ContentPage>

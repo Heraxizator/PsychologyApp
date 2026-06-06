@@ -1,0 +1,88 @@
+using PsychologyApp.Presentation.Infrastructure;
+using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.ViewModels;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+
+namespace PsychologyApp.Presentation.ViewModels.Tests;
+
+public class FindProblemViewModel : BaseViewModel
+{
+    public ICommand Continue { get; private set; } = default!;
+    public ICommand BackCommand { get; private set; } = default!;
+    public ObservableCollection<AlgorithmRow> AlgorithmRows { get; private set; } = [];
+
+    private readonly Action _nextPageTappedAction = default!;
+
+    public FindProblemViewModel() { }
+
+    public FindProblemViewModel(
+        INavigation navigation,
+        INavigationService navigationService,
+        string? description,
+        List<string> algorithm,
+        string? comment,
+        Action action)
+    {
+        ModuleName = "Детектор";
+        PageName = "О прохождении";
+
+        BindNavigation(navigation, navigationService);
+
+        DescriptionText = description;
+        InitAlgorithmRows(algorithm);
+        CommentText = comment;
+
+        _nextPageTappedAction = action;
+
+        Continue = new AsyncCommand(() =>
+        {
+            ToContinue();
+            return Task.CompletedTask;
+        });
+        BackCommand = new AsyncCommand(GoToRootAsync);
+    }
+
+    private void InitAlgorithmRows(List<string> algorithmRows)
+    {
+        foreach (string algorithmRow in algorithmRows)
+        {
+            AlgorithmRows.Add(new AlgorithmRow { Text = algorithmRow });
+        }
+    }
+
+    public void ToContinue() => _nextPageTappedAction.Invoke();
+
+    private string? _descriptionText;
+    public string? DescriptionText
+    {
+        get => _descriptionText;
+        set
+        {
+            if (_descriptionText != value)
+            {
+                _descriptionText = value;
+                OnPropertyChanged(nameof(DescriptionText));
+            }
+        }
+    }
+
+    private string? _comment_text;
+    public string? CommentText
+    {
+        get => _comment_text;
+        set
+        {
+            if (_comment_text != value)
+            {
+                _comment_text = value;
+                OnPropertyChanged(nameof(CommentText));
+            }
+        }
+    }
+}
+
+public class AlgorithmRow
+{
+    public string Text { get; set; } = default!;
+}

@@ -1,14 +1,13 @@
-namespace MobileHelperMaui.Views.SettingsPages;
+using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.Services.Factories;
+
+namespace PsychologyApp.Presentation.Views.Settings;
 
 public partial class SettingsPage : ContentPage
 {
-    public SettingsPage()
+    public SettingsPage(IPageViewModelActivator pageViewModelActivator, ISettingsViewModelFactory settingsViewModelFactory)
     {
         InitializeComponent();
-    }
-
-    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
-    {
-        _ = await Navigation.PopAsync(false);
+        this.ActivateViewModel(pageViewModelActivator, nav => settingsViewModelFactory.Create(nav));
     }
 }

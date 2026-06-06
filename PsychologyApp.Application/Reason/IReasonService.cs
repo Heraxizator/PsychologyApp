@@ -1,15 +1,8 @@
-﻿using PsychologyApp.Application.Common;
-using PsychologyApp.Application.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PsychologyApp.Application.Models;
 
-namespace PsychologyApp.Application.Services.ReasonService
+namespace PsychologyApp.Application.Services.ReasonService;
+
+public interface IReasonService
 {
-    public interface IReasonService : IAppService
-    {
-        public Task<IEnumerable<ReasonDTO>> GetReasonsAsync(int page, int perInPage, int cancelTimeout);
-    }
+    Task<IEnumerable<ReasonDTO>> GetReasonsAsync(int page, int perInPage, CancellationToken cancellationToken = default);
 }

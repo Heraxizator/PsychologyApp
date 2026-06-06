@@ -1,20 +1,13 @@
-using PsychologyApp.Presentation.ViewModels.ProfileViewModels;
+using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.Services.Factories;
 
-namespace PsychologyApp.Presentation.Views.ProfilePages;
+namespace PsychologyApp.Presentation.Views.Profile;
 
 public partial class OptionsPage : ContentPage
 {
-    public OptionsPage()
+    public OptionsPage(IPageViewModelActivator pageViewModelActivator, IOptionsViewModelFactory optionsViewModelFactory)
     {
         InitializeComponent();
-
-        OptionsViewModel viewModel = new(Navigation);
-
-        BindingContext = viewModel;
-    }
-
-    private async void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
-    {
-        _ = await Navigation.PopAsync(false);
+        BindingContext = this.ActivateViewModel(pageViewModelActivator, nav => optionsViewModelFactory.Create(nav));
     }
 }

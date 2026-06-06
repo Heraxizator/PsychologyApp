@@ -1,60 +1,63 @@
-﻿using PsychologyApp.Application.Exceptions;
+﻿using PsychologyApp.Application.Abstractions.Persistence;
+using PsychologyApp.Application.Exceptions;
 using PsychologyApp.Application.Models;
-using PsychologyApp.Domain.Common;
+using PsychologyApp.Application.Services.TechniqueService;
 using PsychologyApp.Domain.Entities;
-using PsychologyApp.Infrastructure.Data.Context;
 
 namespace PsychologyApp.Application.Services.TechniqueService;
 
-public sealed class TechniqueService : ITechniqueService
+public sealed class TechniqueService(ITechniqueRepository techniqueRepository) : ITechniqueService
 {
-    public async Task AddNewTechnique(TechniqueDTO techniqueDTO, int cancelTimeout = 5000)
+    public async Task AddNewTechniqueAsync(TechniqueDTO techniqueDTO, CancellationToken cancellationToken = default)
     {
         Technique technique = TechniqueMapper.GetTechnique(techniqueDTO);
-
-        await Database.TechniqueRepository.AddAsync(technique, cancelTimeout);
+        await techniqueRepository.AddAsync(technique, cancellationToken);
     }
 
-    public async Task DeleteTechnique(TechniqueDTO techniqueDTO, int cancelTimeout = 5000)
+    public async Task DeleteTechniqueAsync(TechniqueDTO techniqueDTO, CancellationToken cancellationToken = default)
     {
         Technique technique = TechniqueMapper.GetTechnique(techniqueDTO);
-
-        await Database.TechniqueRepository.DeleteAsync(technique, cancelTimeout);
+        await techniqueRepository.DeleteAsync(technique, cancellationToken);
     }
 
-    public async Task<TechniqueDTO> GetTechniqueById(long id, int cancelTimeout = 5000)
+    public async Task<TechniqueDTO> GetTechniqueByIdAsync(long id, CancellationToken cancellationToken = default)
     {
-        Technique? technique = await Database.TechniqueRepository.GetByIdAsync(id, cancelTimeout)
+        Technique? technique = await techniqueRepository.GetByIdAsync(id, cancellationToken)
             ?? throw new TechniqueNotFoundException($"Техника с идентификатором {id} не найдена");
 
         return TechniqueMapper.GetTechniqueDTO(technique);
     }
 
-    public async Task<IEnumerable<TechniqueDTO>> GetTechniquesList(int count, int cancelTimeout = 5000)
+    public async Task<IEnumerable<TechniqueDTO>> GetTechniquesListAsync(int count, CancellationToken cancellationToken = default)
     {
-        IEnumerable<Technique> techniques = (await Database.TechniqueRepository.GetAllAsync(cancelTimeout)).Take(count);
-
+        IEnumerable<Technique> techniques = await techniqueRepository.GetLatestAsync(count, cancellationToken);
         return techniques.Select(TechniqueMapper.GetTechniqueDTO);
     }
 
-    public async Task MarkTechniqueAsCompleted(long id, int cancelTimeout = 5000)
+    public async Task MarkTechniqueAsCompletedAsync(long id, CancellationToken cancellationToken = default)
     {
-        Technique? technique = await Database.TechniqueRepository.GetByIdAsync(id, cancelTimeout);
-
-        if (technique is null)
-        {
-            throw new TechniqueNotFoundException($"Техника с идентификатором {id} не найдена");
-        }
+        Technique? technique = await techniqueRepository.GetByIdAsync(id, cancellationToken)
+            ?? throw new TechniqueNotFoundException($"Техника с идентификатором {id} не найдена");
 
         technique.MarkAsCompleted();
-
-        await Database.TechniqueRepository.EditAsync(technique, cancelTimeout);
+        await techniqueRepository.EditAsync(technique, cancellationToken);
     }
 
-    public async Task UpdateTechnique(TechniqueDTO techniqueDTO, int cancelTimeout = 5000)
+    public async Task UpdateTechniqueAsync(TechniqueDTO techniqueDTO, CancellationToken cancellationToken = default)
     {
-        Technique technique = TechniqueMapper.GetTechnique(techniqueDTO);
+        Technique technique = await techniqueRepository.GetByIdAsync(techniqueDTO.TechniqueId, cancellationToken)
+            ?? throw new TechniqueNotFoundException($"Техника с идентификатором {techniqueDTO.TechniqueId} не найдена");
 
-        await Database.TechniqueRepository.EditAsync(technique, cancelTimeout);
+        technique.ApplyContent(
+            techniqueDTO.Number!,
+            techniqueDTO.Date!,
+            techniqueDTO.Header!,
+            techniqueDTO.Describtion!,
+            techniqueDTO.Subject!,
+            techniqueDTO.Author!,
+            techniqueDTO.Actions!,
+            techniqueDTO.Image);
+
+        await techniqueRepository.EditAsync(technique, cancellationToken);
     }
 }

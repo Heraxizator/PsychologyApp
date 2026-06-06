@@ -50,26 +50,6 @@ internal static class EntitySqlMaps
         SelectByKeySql = "SELECT * FROM Quots WHERE QuotId = @id;",
     };
 
-    internal static readonly EntitySqlMap Reason = new()
-    {
-        Table = "Reasons",
-        KeyColumn = "ReasonId",
-        InsertSql = """
-            INSERT INTO Reasons (Title, Subtitle, Solution)
-            VALUES (@Title, @Subtitle, @Solution);
-            """,
-        UpdateSql = """
-            UPDATE Reasons SET
-                Title = @Title,
-                Subtitle = @Subtitle,
-                Solution = @Solution
-            WHERE ReasonId = @ReasonId;
-            """,
-        DeleteSql = "DELETE FROM Reasons WHERE ReasonId = @ReasonId;",
-        SelectAllSql = "SELECT * FROM Reasons;",
-        SelectByKeySql = "SELECT * FROM Reasons WHERE ReasonId = @id;",
-    };
-
     internal static readonly EntitySqlMap Statistic = new()
     {
         Table = "Statistics",

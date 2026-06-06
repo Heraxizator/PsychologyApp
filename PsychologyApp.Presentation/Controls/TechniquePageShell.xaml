@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             x:Class="PsychologyApp.Presentation.Controls.TechniquePageShell"
+             x:Name="Root">
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+        <StackLayout Margin="10,0,10,0">
+            <ui:NavigationBarExtendedView
+                TitleText="{Binding Source={x:Reference Root}, Path=TitleText}"
+                BackCommand="{Binding Source={x:Reference Root}, Path=BackCommand}"
+                ExtensionText="Теория"
+                ExtensionCommand="{Binding Source={x:Reference Root}, Path=TheoryCommand}" />
+
+            <ui:AlgorithmBoxView
+                TitleText="Алгоритм"
+                BodySource="{Binding Source={x:Reference Root}, Path=Algorithm}" />
+
+            <ContentPresenter Content="{Binding Source={x:Reference Root}, Path=BodyContent}" />
+
+            <ui:ButtonView
+                Margin="0,5,0,10"
+                BodyText="Завершить"
+                TapCommand="{Binding Source={x:Reference Root}, Path=FinishCommand}" />
+        </StackLayout>
+    </ScrollView>
+</ContentView>

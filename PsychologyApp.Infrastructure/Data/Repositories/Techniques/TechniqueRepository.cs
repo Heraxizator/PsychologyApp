@@ -1,5 +1,8 @@
 ﻿using Dapper;
 using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Options;
+using PsychologyApp.Application.Abstractions.Persistence;
+using PsychologyApp.Application.Configuration;
 using PsychologyApp.Domain.Entities;
 using PsychologyApp.Infrastructure.Data.Repositories.Base;
 using PsychologyApp.Infrastructure.Data.Sql;
@@ -8,23 +11,22 @@ namespace PsychologyApp.Infrastructure.Data.Repositories.Techniques;
 
 public sealed class TechniqueRepository : BaseRepository<Technique>, ITechniqueRepository
 {
-    public TechniqueRepository(SqliteConnection connection)
-        : base(connection, EntitySqlMaps.Technique)
+    private readonly int _commandTimeoutSeconds;
+
+    public TechniqueRepository(IDbConnectionFactory connectionFactory, IOptions<AppSettings> settings)
+        : base(connectionFactory, EntitySqlMaps.Technique, settings)
     {
+        _commandTimeoutSeconds = settings.Value.DbCommandTimeoutSeconds > 0
+            ? settings.Value.DbCommandTimeoutSeconds
+            : 30;
     }
 
-    public Task<IEnumerable<Technique>> GetByAuthorAsync(string author) =>
-        Connection.QueryAsync<Technique>(
-            "SELECT * FROM Techniques WHERE Author = @author;",
-            new { author });
-
-    public Task<IEnumerable<Technique>> GetByHeaderAsync(string header) =>
-        Connection.QueryAsync<Technique>(
-            "SELECT * FROM Techniques WHERE Header = @header;",
-            new { header });
-
-    public Task<IEnumerable<Technique>> GetBySubjectAsync(string subject) =>
-        Connection.QueryAsync<Technique>(
-            "SELECT * FROM Techniques WHERE Subject = @subject;",
-            new { subject });
+    public async Task<IEnumerable<Technique>> GetLatestAsync(int count, CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        return await connection.QueryAsync<Technique>(
+            "SELECT * FROM Techniques ORDER BY TechniqueId DESC LIMIT @count;",
+            new { count },
+            commandTimeout: _commandTimeoutSeconds);
+    }
 }

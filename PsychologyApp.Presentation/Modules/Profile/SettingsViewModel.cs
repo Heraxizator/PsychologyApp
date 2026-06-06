@@ -1,38 +1,54 @@
-﻿using PsychologyApp.Presentation.Base.ServiceLocator.Dialog;
+using PsychologyApp.Presentation.Services.Dialogs;
+using PsychologyApp.Presentation.Infrastructure;
+using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.ViewModels;
 
-namespace MobileHelper.ViewModels.SettingsViewModels;
+namespace PsychologyApp.Presentation.ViewModels.Settings;
 
 public class SettingsViewModel : BaseViewModel
 {
     private readonly IDialogService _dialogService;
+    private readonly INavigationService _navigationService;
 
-    public SettingsViewModel() { }
-
-    public SettingsViewModel(INavigation navigation, IDialogService dialogService)
+    public SettingsViewModel(INavigation navigation, IDialogService dialogService, INavigationService navigationService)
     {
         _dialogService = dialogService;
+        _navigationService = navigationService;
         ModuleName = "Практик";
         PageName = "Настройки";
 
-        Navigation = navigation;
+        BindNavigation(navigation);
+        LoadFromPreferences();
 
-        Finish = new Command(ToEnd);
+        Finish = new AsyncCommand(ToEndAsync);
     }
 
-    private void ToEnd(object obj)
+    private void LoadFromPreferences()
     {
-        _dialogService.ShowAsync("Предупреждение", "Изменения будут применены при следующем запуске приложения");
-
-        Preferences.Set("Theme", Theme);
-        Preferences.Set("Color", Color);
-        Preferences.Set("Form", Form);
-        Preferences.Set("Size", Size);
-        Preferences.Set("IsBold", IsThick);
-
+        UserPreferencesState state = UserPreferences.Load();
+        Theme = state.Theme;
+        Color = state.Color;
+        Form = state.Form;
+        Size = state.Size;
+        IsThick = state.IsBold;
     }
 
-    public string theme { get; private set; } = default!;
+    private async Task ToEndAsync()
+    {
+        UserPreferences.Save(new UserPreferencesState
+        {
+            Theme = Theme,
+            Color = Color,
+            Form = Form,
+            Size = Size,
+            IsBold = IsThick
+        });
+
+        await _dialogService.ShowAsync("Информация", "Настройки будут применены при следующем запуске приложения");
+        await _navigationService.GoBackAsync();
+    }
+
+    public string theme { get; private set; } = UserPreferences.DefaultTheme;
     public string Theme
     {
         get => theme;
@@ -46,7 +62,7 @@ public class SettingsViewModel : BaseViewModel
         }
     }
 
-    public string color { get; private set; } = default!;
+    public string color { get; private set; } = UserPreferences.DefaultColor;
     public string Color
     {
         get => color;
@@ -60,7 +76,7 @@ public class SettingsViewModel : BaseViewModel
         }
     }
 
-    public string form { get; private set; } = default!;
+    public string form { get; private set; } = UserPreferences.DefaultForm;
     public string Form
     {
         get => form;
@@ -74,7 +90,7 @@ public class SettingsViewModel : BaseViewModel
         }
     }
 
-    public string size { get; private set; } = default!;
+    public string size { get; private set; } = UserPreferences.DefaultSize;
     public string Size
     {
         get => size;
@@ -88,7 +104,7 @@ public class SettingsViewModel : BaseViewModel
         }
     }
 
-    public bool isThick { get; private set; } = default!;
+    public bool isThick;
     public bool IsThick
     {
         get => isThick;
