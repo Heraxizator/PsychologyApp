@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             x:Class="PsychologyApp.Presentation.UI.Components.NavigationBarSimpleView">
+
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <StackLayout Margin="0,15,0,15" Orientation="Horizontal">
+                <Label
+                    Style="{StaticResource NavBackIconStyle}"
+                    Text="{mi:Material Icon=KeyboardArrowLeft}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{TemplateBinding BackCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label
+                    Text="{TemplateBinding TitleText}"
+                    Style="{StaticResource NavTitleStyle}"
+                    HorizontalOptions="CenterAndExpand" />
+            </StackLayout>
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+
+</ContentView>

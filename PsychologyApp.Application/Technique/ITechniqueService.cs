@@ -1,19 +1,13 @@
-﻿using PsychologyApp.Application.Common;
-using PsychologyApp.Application.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PsychologyApp.Application.Models;
 
 namespace PsychologyApp.Application.Services.TechniqueService;
 
-public interface ITechniqueService : IAppService
+public interface ITechniqueService
 {
-    public Task<IEnumerable<TechniqueDTO>> GetTechniquesList(int count, int cancelTimeout);
-    public Task<TechniqueDTO> GetTechniqueById(long id, int cancelTimeout);
-    public Task AddNewTechnique(TechniqueDTO techniqueDTO, int cancelTimeout);
-    public Task DeleteTechnique(TechniqueDTO techniqueDTO, int cancelTimeout);
-    public Task UpdateTechnique(TechniqueDTO techniqueDTO, int cancelTimeout);
-    public Task MarkTechniqueAsCompleted(long id, int cancelTimeout);
+    Task<IEnumerable<TechniqueDTO>> GetTechniquesListAsync(int count, CancellationToken cancellationToken = default);
+    Task<TechniqueDTO> GetTechniqueByIdAsync(long id, CancellationToken cancellationToken = default);
+    Task AddNewTechniqueAsync(TechniqueDTO techniqueDTO, CancellationToken cancellationToken = default);
+    Task DeleteTechniqueAsync(TechniqueDTO techniqueDTO, CancellationToken cancellationToken = default);
+    Task UpdateTechniqueAsync(TechniqueDTO techniqueDTO, CancellationToken cancellationToken = default);
+    Task MarkTechniqueAsCompletedAsync(long id, CancellationToken cancellationToken = default);
 }

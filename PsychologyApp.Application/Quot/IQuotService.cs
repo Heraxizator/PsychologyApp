@@ -1,20 +1,13 @@
-﻿using PsychologyApp.Application.Common;
-using PsychologyApp.Application.Models;
-using PsychologyApp.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PsychologyApp.Application.Models;
 
 namespace PsychologyApp.Application.Services.QuotService;
 
-public interface IQuotService : IAppService
+public interface IQuotService
 {
-    public Task<IEnumerable<QuotDTO>> GetAllAsync(int count, int cancelTimeout);
-    public Task<QuotDTO> GetByIdAsync(long id, int cancelTimeout);
-    public Task AddSingleAsync(QuotDTO quotDTO, int cancelTimeout);
-    public Task LoadSingleAsync(int cancelTimeout);
-    public Task MarkAsReadedAsync(long quotId, int cancelTimeout);
-    public Task MarkAsFavouriteAsync(long quotId, bool isFavourite, int cancelTimeout);
+    Task<IEnumerable<QuotDTO>> GetAllAsync(int count, CancellationToken cancellationToken = default);
+    Task<QuotDTO> GetByIdAsync(long id, CancellationToken cancellationToken = default);
+    Task AddSingleAsync(QuotDTO quotDTO, CancellationToken cancellationToken = default);
+    Task LoadSingleAsync(CancellationToken cancellationToken = default);
+    Task MarkAsReadedAsync(long quotId, CancellationToken cancellationToken = default);
+    Task MarkAsFavouriteAsync(long quotId, bool isFavourite, CancellationToken cancellationToken = default);
 }

@@ -1,4 +1,8 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using Dapper;
+using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Options;
+using PsychologyApp.Application.Abstractions.Persistence;
+using PsychologyApp.Application.Configuration;
 using PsychologyApp.Domain.Entities;
 using PsychologyApp.Infrastructure.Data.Repositories.Base;
 using PsychologyApp.Infrastructure.Data.Sql;
@@ -7,8 +11,39 @@ namespace PsychologyApp.Infrastructure.Data.Repositories.Statistics;
 
 public sealed class StatisticRepository : BaseRepository<Statistic>, IStatisticRepository
 {
-    public StatisticRepository(SqliteConnection connection)
-        : base(connection, EntitySqlMaps.Statistic)
+    private readonly int _commandTimeoutSeconds;
+
+    public StatisticRepository(IDbConnectionFactory connectionFactory, IOptions<AppSettings> settings)
+        : base(connectionFactory, EntitySqlMaps.Statistic, settings)
     {
+        _commandTimeoutSeconds = settings.Value.DbCommandTimeoutSeconds > 0
+            ? settings.Value.DbCommandTimeoutSeconds
+            : 30;
+    }
+
+    public async Task<long> CountDistinctPagesAsync(CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        return await connection.ExecuteScalarAsync<long>(
+            "SELECT COUNT(DISTINCT PageName) FROM Statistics;",
+            commandTimeout: _commandTimeoutSeconds);
+    }
+
+    public async Task<long> CountByPageNameAsync(string pageName, CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        return await connection.ExecuteScalarAsync<long>(
+            "SELECT COUNT(*) FROM Statistics WHERE PageName = @pageName;",
+            new { pageName },
+            commandTimeout: _commandTimeoutSeconds);
+    }
+
+    public async Task<IEnumerable<Statistic>> GetRecentAsync(int limit, CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        return await connection.QueryAsync<Statistic>(
+            "SELECT * FROM Statistics ORDER BY StatisticId DESC LIMIT @limit;",
+            new { limit },
+            commandTimeout: _commandTimeoutSeconds);
     }
 }

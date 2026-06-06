@@ -1,78 +1,88 @@
-﻿using PsychologyApp.Application;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using PsychologyApp.Application;
+using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
-using PsychologyApp.Domain.Base.Constants;
-using PsychologyApp.Infrastructure.API.Quots;
+using PsychologyApp.Application.Services.QuotService;
+using PsychologyApp.Application.Services.Statistic;
+using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.Modules.Profile;
 using PsychologyApp.Presentation.Technique;
 using PsychologyApp.Presentation.ViewModels;
-using PsychologyApp.Presentation.Views.ProfilePages;
+using PsychologyApp.Presentation.Services;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-namespace MobileHelper.ViewModels.ProfileViewModels;
+namespace PsychologyApp.Presentation.ViewModels.Profile;
 
 public class UserViewModel : BaseViewModel
 {
-    private readonly QuotService _quotService = new();
-    private readonly StatisticService _statisticService = new();
+    private readonly IQuotService _quotService;
+    private readonly IStatisticService _statisticService;
+    private readonly ILogger<UserViewModel> _logger;
+    private readonly IOptions<AppSettings> _settings;
 
     public ICommand OpenOptionsCommand { get; private set; } = default!;
-    public ICommand ReloadQuotsCommand { get; private set; } = default!;
+    public ICommand ReloadQuotesCommand { get; private set; } = default!;
 
     public ObservableCollection<TechniqueItem> Techniques { get; private set; } = [];
-    public ObservableCollection<Quots> Quots { get; private set; } = [];
+    public ObservableCollection<QuoteItem> Quotes { get; private set; } = [];
 
-    public UserViewModel(INavigation navigation)
+    public UserViewModel(
+        INavigation navigation,
+        IQuotService quotService,
+        IStatisticService statisticService,
+        ILogger<UserViewModel> logger,
+        IOptions<AppSettings> settings,
+        INavigationService navigationService)
     {
         try
         {
-            this.ModuleName = "Практик";
-            this.PageName = "Профиль";
+            _quotService = quotService;
+            _statisticService = statisticService;
+            _logger = logger;
+            _settings = settings;
+            ModuleName = "Практик";
+            PageName = "Профиль";
 
-            this.OpenOptionsCommand = new Command(() => navigation.PushAsync(new OptionsPage(), false));
-            this.ReloadQuotsCommand = new Command(async () => await InitAsync(Constants.MiddleBaseTimeout));
+            BindNavigation(navigation);
 
-            Task.Run(async () => await InitAsync(Constants.MiddleBaseTimeout));
+            OpenOptionsCommand = new AsyncCommand(() => navigationService.GoToOptionsAsync());
+            ReloadQuotesCommand = new AsyncCommand(InitAsync);
+
+            InitAsync().FireAndForget();
         }
-        
         catch (Exception e)
         {
             SetFail();
-            Console.WriteLine(e.Message);
+            _logger.LogError(e, "UserViewModel initialization failed.");
         }
     }
 
-    public async Task InitAsync(int cancelTimeout)
+    public async Task InitAsync()
     {
         try
         {
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
                 SetInit();
-                InitQuots();
+                InitQuotes();
                 InitTechniques();
             });
 
-            await SetCompletedTechniquesCountAsync(cancelTimeout);
+            using CancellationTokenSource timeoutSource = OperationCancellation.CreateMiddleTimeoutSource(_settings);
+            CancellationToken cancellationToken = timeoutSource.Token;
 
-            await GetQuotsAsync(cancelTimeout);
+            await SetCompletedTechniquesCountAsync(cancellationToken);
+            await GetQuotesAsync(cancellationToken);
+            await InitQuotesAsync(cancellationToken);
 
-            await InitQuotsAsync(cancelTimeout);
-
-            await MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                SetDone();
-            });
+            await MainThread.InvokeOnMainThreadAsync(SetDone);
         }
-
         catch (Exception e)
         {
-            await MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                SetDone();
-            });
-
-            Console.WriteLine(e.Message);
+            await MainThread.InvokeOnMainThreadAsync(SetFail);
+            _logger.LogError(e, "UserViewModel init failed.");
         }
     }
 
@@ -86,14 +96,13 @@ public class UserViewModel : BaseViewModel
                 Subtitle = "Методика депрограммирования подсознания"
             });
         });
-        
     }
 
-    private void InitQuots()
+    private void InitQuotes()
     {
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            Quots.Add(new Quots()
+            Quotes.Add(new QuoteItem
             {
                 Text = "Лето, урожай, война.",
                 Author = "Латинская пословица"
@@ -101,11 +110,11 @@ public class UserViewModel : BaseViewModel
         });
     }
 
-    private async Task InitQuotsAsync(int cancelTimeout)
+    private async Task InitQuotesAsync(CancellationToken cancellationToken)
     {
         try
         {
-            IEnumerable<QuotDTO> quotDTOs = await _quotService.GetAllAsync(2, cancelTimeout);
+            IEnumerable<QuotDTO> quotDTOs = await _quotService.GetAllAsync(2, cancellationToken);
 
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
@@ -116,7 +125,7 @@ public class UserViewModel : BaseViewModel
                         continue;
                     }
 
-                    Quots.Add(new Quots()
+                    Quotes.Add(new QuoteItem
                     {
                         Text = quotDTO.Text,
                         Author = quotDTO.Title
@@ -124,43 +133,31 @@ public class UserViewModel : BaseViewModel
                 }
             });
         }
-        
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            _logger.LogError(e, "Failed to load profile quotes.");
         }
     }
 
-    private Task GetQuotsAsync(int cancelTimeout)
-    {
-        return _quotService.LoadSingleAsync(cancelTimeout);
-    }
+    private Task GetQuotesAsync(CancellationToken cancellationToken) =>
+        _quotService.LoadSingleAsync(cancellationToken);
 
-    private async Task SetCompletedTechniquesCountAsync(int cancelTimeout)
+    private async Task SetCompletedTechniquesCountAsync(CancellationToken cancellationToken)
     {
         try
         {
-            TechniquesCompletedCount = (await _statisticService.CountPageCompletedAsync(cancelTimeout)).ToString();
+            TechniquesCompletedCount = (await _statisticService.CountPageCompletedAsync(cancellationToken)).ToString();
         }
-
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            _logger.LogError(e, "Failed to count completed techniques.");
         }
-        
     }
 
     private string _techniques_completed_count = "0";
     public string TechniquesCompletedCount
     {
         get => _techniques_completed_count;
-        set
-        {
-            if (_techniques_completed_count != value)
-            {
-                _techniques_completed_count = value;
-                OnPropertyChanged(nameof(TechniquesCompletedCount));
-            }
-        }
+        set => SetProperty(ref _techniques_completed_count, value);
     }
 }

@@ -1,69 +1,39 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PsychologyApp.Presentation.Views.ProfilePages.OptionsPage"
-             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
-             xmlns:templates="clr-namespace:PsychologyApp.Presentation.Templates"
-             xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.ProfileViewModels"
+             x:Class="PsychologyApp.Presentation.Views.Profile.OptionsPage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Profile"
              x:DataType="vm:OptionsViewModel"
              Title="Параметры">
 
     <StackLayout>
+        <ui:NavigationBarSimpleView
+            TitleText="Параметры"
+            BackCommand="{Binding BackCommand}" />
 
-        <StackLayout
-            Margin="0, 15, 0, 15"
-            Orientation="Horizontal">
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <StackLayout Margin="10,0,10,10">
+                <ui:SettingsLinkCardView
+                    Title="Настройки"
+                    Subtitle="Тема, цвет и параметры отображения"
+                    TapCommand="{Binding OpenSettingsPageCommand}" />
 
-            <Label
-                Margin="20, 0, 0, 0"
-                VerticalOptions="CenterAndExpand"
-                FontSize="21"
-                Text="{mi:Material Icon=KeyboardArrowLeft}"
-                TextColor="{StaticResource Primary}">
+                <ui:SettingsLinkCardView
+                    Title="О приложении"
+                    Subtitle="Информация о приложении"
+                    TapCommand="{Binding OpenAboutPageCommand}" />
 
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-                </Label.GestureRecognizers>
+                <ui:SettingsLinkCardView
+                    Title="Обратная связь"
+                    Subtitle="Сообщить о проблеме или предложить идею"
+                    TapCommand="{Binding OpenFeedbackPageCommand}" />
 
-            </Label>
-
-            <Label
-                Text="Параметры"
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="CenterAndExpand"
-                FontFamily="RobotoSemiBold"
-                TextColor="#DE000000"
-                FontSize="17"/>
-
-        </StackLayout>
-
-        <StackLayout
-            Margin="15, 0, 15, 0">
-
-            <templates:TextItemView
-                Margin="0, 5, 0, 5"
-                TitleText="О приложении"
-                BodyText="Что оно собой представляет">
-
-                <templates:TextItemView.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding OpenAboutPageCommand}"/>
-                </templates:TextItemView.GestureRecognizers>
-                
-            </templates:TextItemView>
-
-            <templates:TextItemView
-                Margin="0, 5, 0, 5"
-                TitleText="Донаты"
-                BodyText="Поддержать автора">
-
-                <templates:TextItemView.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding OpenDonatePageCommand}"/>
-                </templates:TextItemView.GestureRecognizers>
-
-            </templates:TextItemView>
-
-        </StackLayout>
-        
-
+                <ui:SettingsLinkCardView
+                    Title="Поддержать проект"
+                    Subtitle="Помочь развитию приложения"
+                    TapCommand="{Binding OpenDonatePageCommand}" />
+            </StackLayout>
+        </ScrollView>
     </StackLayout>
 </ContentPage>

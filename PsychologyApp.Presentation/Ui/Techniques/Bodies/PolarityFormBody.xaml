@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             x:Class="PsychologyApp.Presentation.Ui.Techniques.Bodies.PolarityFormBody">
+    <StackLayout>
+        <Frame Margin="10,10,10,10">
+            <StackLayout>
+                <Label Text="Форма" Style="{StaticResource SectionTitleStyle}" />
+                <ui:TextEntryView TitleText="Первая полярность" PlaceholderText="Невроз" BodyText="{Binding Negative}" />
+                <ui:TextEntryView TitleText="Вторая полярность" PlaceholderText="Покой" BodyText="{Binding Positive}" />
+                <ui:ButtonView
+                    Margin="0,5,0,0"
+                    BodyText="Добавить"
+                    TapCommand="{Binding Add}" />
+            </StackLayout>
+        </Frame>
+        <StackLayout IsVisible="{Binding IsFull}" Margin="0,0,0,5" BindableLayout.ItemsSource="{Binding polarities}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Frame>
+                        <StackLayout>
+                            <Label Text="{Binding Id}" Style="{StaticResource BodyStyle}" />
+                            <StackLayout Margin="0,10,0,0" Orientation="Horizontal">
+                                <Label Text="{Binding Positive}" Style="{StaticResource BodyStyle}" />
+                                <Label
+                                    FontSize="32"
+                                    TextColor="{StaticResource TextPrimary}"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="{mi:Material Icon=Remove}" />
+                                <Label
+                                    Text="{Binding Negative}"
+                                    HorizontalTextAlignment="End"
+                                    Style="{StaticResource BodyStyle}" />
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </StackLayout>
+    </StackLayout>
+</ContentView>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             x:Class="PsychologyApp.Presentation.UI.Components.TextItemView">
+<ContentView.ControlTemplate>
+        <ControlTemplate>
+
+            <StackLayout>
+                <Label
+                    Text="{TemplateBinding TitleText}"
+                    Style="{StaticResource SectionTitleStyle}"/>
+                <Label
+                    Text="{TemplateBinding BodyText}"
+                    Style="{StaticResource BodyStyle}"/>
+            </StackLayout>
+
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+
+
+</ContentView>

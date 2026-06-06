@@ -1,61 +1,55 @@
-﻿using PsychologyApp.Application.Exceptions;
+﻿using PsychologyApp.Application.Abstractions.Integration;
+using PsychologyApp.Application.Abstractions.Persistence;
+using PsychologyApp.Application.Exceptions;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.QuotService;
 using PsychologyApp.Domain.Entities;
-using PsychologyApp.Infrastructure.API.Quots;
-using PsychologyApp.Infrastructure.Data.Context;
-using System.Threading;
 
-namespace PsychologyApp.Application;
+namespace PsychologyApp.Application.Services.QuotService;
 
-public sealed class QuotService : IQuotService
+public sealed class QuotService(IQuotRepository quotRepository, IQuotApiClient quotApiClient) : IQuotService
 {
-    public async Task AddSingleAsync(QuotDTO quotDTO, int cancelTimeout)
+    public async Task AddSingleAsync(QuotDTO quotDTO, CancellationToken cancellationToken = default)
     {
         Quot quot = QuotMapper.GetQuot(quotDTO);
-
-        await Database.QuotRepository.AddAsync(quot, cancelTimeout);
+        await quotRepository.AddAsync(quot, cancellationToken);
     }
 
-    public async Task<IEnumerable<QuotDTO>> GetAllAsync(int count, int timeout)
+    public async Task<IEnumerable<QuotDTO>> GetAllAsync(int count, CancellationToken cancellationToken = default)
     {
-        IEnumerable<Quot> quots = (await Database.QuotRepository.GetAllAsync(timeout)).Where(x => x.IsReaded is false).TakeLast(count);
-
+        IEnumerable<Quot> quots = await quotRepository.GetUnreadLatestAsync(count, cancellationToken);
         return quots.Select(QuotMapper.GetQuotDTO);
     }
 
-    public async Task<QuotDTO> GetByIdAsync(long id, int timeout)
+    public async Task<QuotDTO> GetByIdAsync(long id, CancellationToken cancellationToken = default)
     {
-        Quot quot = await Database.QuotRepository.GetByIdAsync(id, timeout)
+        Quot quot = await quotRepository.GetByIdAsync(id, cancellationToken)
             ?? throw new QuotNotFoundException($"Цитата с идентификатром {id} не найдена");
 
         return QuotMapper.GetQuotDTO(quot);
     }
 
-    public async Task LoadSingleAsync(int cancelTimeout)
+    public async Task LoadSingleAsync(CancellationToken cancellationToken = default)
     {
-        using CancellationTokenSource cancellationTokenSource = new(cancelTimeout);
-
-        Quot quot = await QuotHandler.GetSingleQuotFromApi(cancellationTokenSource.Token);
-
-        await Database.QuotRepository.AddAsync(quot, cancelTimeout);
+        Quot quot = await quotApiClient.FetchRandomQuotAsync(cancellationToken);
+        await quotRepository.AddAsync(quot, cancellationToken);
     }
 
-    public async Task MarkAsFavouriteAsync(long quotId, bool isFavourite, int cancelTimeout)
+    public async Task MarkAsFavouriteAsync(long quotId, bool isFavourite, CancellationToken cancellationToken = default)
     {
-        Quot quot = await Database.QuotRepository.GetByIdAsync(quotId, cancelTimeout) ?? throw new QuotNotFoundException($"Цитата с идентификатром {quotId} не найдена");
+        Quot quot = await quotRepository.GetByIdAsync(quotId, cancellationToken)
+            ?? throw new QuotNotFoundException($"Цитата с идентификатром {quotId} не найдена");
 
         quot.SetFavourite(isFavourite);
-
-        await Database.QuotRepository.EditAsync(quot, cancelTimeout);
+        await quotRepository.EditAsync(quot, cancellationToken);
     }
 
-    public async Task MarkAsReadedAsync(long quotId, int cancelTimeout = 5000)
+    public async Task MarkAsReadedAsync(long quotId, CancellationToken cancellationToken = default)
     {
-        Quot? quot = await Database.QuotRepository.GetByIdAsync(quotId, cancelTimeout) ?? throw new QuotNotFoundException($"Цитата с идентификатром {quotId} не найдена");
+        Quot quot = await quotRepository.GetByIdAsync(quotId, cancellationToken)
+            ?? throw new QuotNotFoundException($"Цитата с идентификатором {quotId} не найдена");
 
         quot.MarkAsReaded();
-
-        await Database.QuotRepository.EditAsync(quot, cancelTimeout);
+        await quotRepository.EditAsync(quot, cancellationToken);
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PsychologyApp.Domain.Enums;
+namespace PsychologyApp.Domain.Colour.Enums;
 
 public enum ColourMeaningType
 {

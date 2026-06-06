@@ -15,6 +15,7 @@
 		<OutputType>Exe</OutputType>
 		<RootNamespace>PsychologyApp.Presentation</RootNamespace>
 		<UseMaui>true</UseMaui>
+		<UseMaterial3 Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">false</UseMaterial3>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
@@ -41,64 +42,59 @@
 	
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
 	  <EnableLLVM>True</EnableLLVM>
 	  <IsPublishable>False</IsPublishable>
 	  <Debugger>Xamarin</Debugger>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
 	  <IsPublishable>False</IsPublishable>
 	  <Debugger>Xamarin</Debugger>
 	  <TrimMode>link</TrimMode>
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	  <PublishTrimmed>True</PublishTrimmed>
+	  <PublishTrimmed>False</PublishTrimmed>
 	  <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
 	  <RunAOTCompilation>False</RunAOTCompilation>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-maccatalyst|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-maccatalyst|AnyCPU'">
 	  <IsPublishable>False</IsPublishable>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|AnyCPU'">
 	  <IsPublishable>False</IsPublishable>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-windows10.0.19041.0|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows10.0.19041.0|AnyCPU'">
 	  <IsPublishable>False</IsPublishable>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-maccatalyst|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-maccatalyst|AnyCPU'">
 	  <IsPublishable>False</IsPublishable>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-ios|AnyCPU'">
 	  <IsPublishable>False</IsPublishable>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-windows10.0.19041.0|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows10.0.19041.0|AnyCPU'">
 	  <IsPublishable>False</IsPublishable>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
-	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	  <RunAOTCompilation>False</RunAOTCompilation>
-	  <TrimMode>link</TrimMode>
-	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
-	  <PublishTrimmed>True</PublishTrimmed>
-	  <DebugSymbols>True</DebugSymbols>
-	  <AndroidLinkTool>r8</AndroidLinkTool>
-	  <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
-	</PropertyGroup>
-
+	<!-- Release Android: verify trim/AOT on device before enabling in production. -->
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
 	  <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
+	  <PublishTrimmed>True</PublishTrimmed>
+	  <TrimMode>link</TrimMode>
+	  <RunAOTCompilation>True</RunAOTCompilation>
+	  <DebugSymbols>True</DebugSymbols>
+	  <AndroidLinkTool>r8</AndroidLinkTool>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
@@ -125,15 +121,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Helpers\**" />
 	  <Compile Remove="Renderers\**" />
-	  <EmbeddedResource Remove="Helpers\**" />
 	  <EmbeddedResource Remove="Renderers\**" />
-	  <MauiCss Remove="Helpers\**" />
 	  <MauiCss Remove="Renderers\**" />
-	  <MauiXaml Remove="Helpers\**" />
 	  <MauiXaml Remove="Renderers\**" />
-	  <None Remove="Helpers\**" />
 	  <None Remove="Renderers\**" />
 	</ItemGroup>
 
@@ -142,9 +133,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<EmbeddedResource Include="appsettings.json" />
 		<PackageReference Include="AathifMahir.Maui.MauiIcons.Material" Version="5.0.0" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="14.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.41" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.3" />
 		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
 	
@@ -153,25 +146,22 @@
 		<TrimmerRootAssembly Include="System.Text.Json" RootMode="All" />
 		
 		<TrimmerRootAssembly Include="PsychologyApp.Presentation" RootMode="All" />
-		<TrimmerRootAssembly Include="PsychologyApp.Domain" RootMode="All" />
-		<TrimmerRootAssembly Include="PsychologyApp.Infrastructure" RootMode="All" />
-		<TrimmerRootAssembly Include="PsychologyApp.Application" RootMode="All" />
 	
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\PsychologyApp.Application\PsychologyApp.Application.csproj" />
-	  <ProjectReference Include="..\PsychologyApp.Infrastructure\PsychologyApp.Infrastructure.csproj" />
+	  <ProjectReference Include="..\PsychologyApp.Bootstrap\PsychologyApp.Bootstrap.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Modules\Tester\Other\AlternativeTestPage.xaml.cs">
+	  <Compile Update="Modules\Tests\Other\AlternativeTestPage.xaml.cs">
 	    <DependentUpon>AlternativeTestPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Modules\Tester\Find\FindProblemPage.xaml.cs">
+	  <Compile Update="Modules\Tests\Find\FindProblemPage.xaml.cs">
 	    <DependentUpon>FindProblemPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Templates\NavigationBarSimpleView.xaml.cs">
+	  <Compile Update="UI\Components\NavigationBarSimpleView.xaml.cs">
 	    <DependentUpon>NavigationBarSimpleView.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
@@ -180,64 +170,70 @@
 	  <MauiXaml Update="Modules\Motivator\QuotePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Modules\Practic\Techniques\Check\CheckPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Modules\Practic\Techniques\Duplicate\CopiedPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Modules\Practic\Techniques\Extend\ExtendPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Modules\Practic\Techniques\Resize\ResizePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Modules\Profile\DonatePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Modules\Tester\Question\QuestionPage.xaml">
+	  <MauiXaml Update="Modules\Tests\Question\QuestionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Templates\AlgorithmBoxView.xaml">
+	  <MauiXaml Update="UI\Components\AlgorithmBoxView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Templates\ButtonView.xaml">
+	  <MauiXaml Update="UI\Components\ButtonView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Templates\EntryBoxView.xaml">
+	  <MauiXaml Update="UI\Components\EntryBoxView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Templates\NavigationBarExtendedView.xaml">
+	  <MauiXaml Update="UI\Components\NavigationBarExtendedView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Templates\NavigationBarSimpleView.xaml">
+	  <MauiXaml Update="UI\Components\NavigationBarSimpleView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Templates\ProgressbarView.xaml">
+	  <MauiXaml Update="UI\Components\ProgressBarView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Templates\RetryView.xaml">
+	  <MauiXaml Update="UI\Components\RetryView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Templates\TextBoxView.xaml">
+	  <MauiXaml Update="UI\Components\TextBoxView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Templates\TextEditorView.xaml">
+	  <MauiXaml Update="UI\Components\TextEditorView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Templates\TextEntryView.xaml">
+	  <MauiXaml Update="UI\Components\TextEntryView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Modules\Profile\OptionsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Modules\Tester\Standard\StandardTestPage.xaml">
+	  <MauiXaml Update="Modules\Tests\Standard\StandardTestPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Modules\Tester\Collection\TestsListPage.xaml">
+	  <MauiXaml Update="Modules\Tests\Collection\TestsListPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Templates\TextItemView.xaml">
+	  <MauiXaml Update="UI\Components\TextItemView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="UI\Components\SettingsLinkCardView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="UI\Components\SettingPickerRowView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="UI\Components\SettingSwitchRowView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="UI\Components\TechniqueListCardView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="UI\Components\QuoteCardView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="UI\Components\ListEntryCardView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

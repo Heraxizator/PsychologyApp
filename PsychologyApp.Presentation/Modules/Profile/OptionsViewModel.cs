@@ -1,23 +1,25 @@
-﻿using MobileHelperMaui.Views.AboutPages;
-using PsychologyApp.Presentation.Modules.Profile;
+using PsychologyApp.Presentation.Infrastructure;
+using PsychologyApp.Presentation.Services;
 using System.Windows.Input;
 
-namespace PsychologyApp.Presentation.ViewModels.ProfileViewModels;
+namespace PsychologyApp.Presentation.ViewModels.Profile;
 
 public class OptionsViewModel : BaseViewModel
 {
-    public ICommand? OpenAboutPageCommand { get; private set; } = default!;
-    public ICommand? OpenDonatePageCommand { get; private set; } = default!;
-    //public ICommand? OpenSettingsPageCommand { get; private set; } = default!;
+    public ICommand OpenAboutPageCommand { get; private set; } = default!;
+    public ICommand OpenDonatePageCommand { get; private set; } = default!;
+    public ICommand OpenFeedbackPageCommand { get; private set; } = default!;
+    public ICommand OpenSettingsPageCommand { get; private set; } = default!;
+    public ICommand BackCommand { get; private set; } = default!;
 
-    public OptionsViewModel(INavigation navigation)
+    public OptionsViewModel(INavigation navigation, INavigationService navigationService)
     {
-        Navigation = navigation;
+        BindNavigation(navigation);
 
-        OpenAboutPageCommand = new Command(() => Navigation.PushAsync(new InfoPage(), false));
-
-        OpenDonatePageCommand = new Command(() => Navigation.PushAsync(new DonatePage(), false));
-
-        //this.OpenSettingsPageCommand = new Command(() => this.Navigation.PushAsync(new SettingsPage(), false));
+        OpenAboutPageCommand = new AsyncCommand(() => navigationService.GoToInfoAsync());
+        OpenDonatePageCommand = new AsyncCommand(() => navigationService.GoToDonateAsync());
+        OpenFeedbackPageCommand = new AsyncCommand(() => navigationService.GoToFormAsync());
+        OpenSettingsPageCommand = new AsyncCommand(() => navigationService.GoToSettingsAsync());
+        BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
     }
 }

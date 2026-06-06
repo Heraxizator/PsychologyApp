@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Views.Physics.StartPhysicsPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Physics"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             Shell.NavBarIsVisible="True"
+             Title="Психосоматик">
+
+    <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <ScrollView
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"
+            VerticalScrollBarVisibility="Never">
+            <StackLayout Margin="10,0,10,0">
+                <ui:ProgressBarView
+                    VerticalOptions="CenterAndExpand"
+                    IsVisible="{Binding IsInit}"
+                    IsLoading="{Binding IsInit}"
+                    ProgressText="Поиск причин"
+                    CancelCommand="{Binding Cancel}" />
+
+                <StackLayout IsVisible="{Binding IsDone}">
+                    <ui:TextBoxView
+                        HeaderText="Пояснение"
+                        BodyText="Известно, что около половины всех болезней возникает на психической основе. Поэтому по любому физическому недомоганию можно определить то, что вас беспокоит, но не осознаётся." />
+
+                    <ui:TextBoxView
+                        HeaderText="Описание"
+                        BodyText="Тест поможет вам в пару кликов найти эмоциональную причину любого вашего физического недомогания. Всё очень просто." />
+
+                    <ui:AlgorithmBoxView
+                        TitleText="Алгоритм"
+                        BodySource="{Binding AlgorithmSteps}" />
+
+                    <ui:ButtonView
+                        Margin="0,5,0,10"
+                        BodyText="Начать"
+                        TapCommand="{Binding StartCommand}" />
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+
+        <ui:RetryView
+            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            IsVisible="{Binding IsFail}"
+            FailedText="Не удалось загрузить"
+            RetryText="Попробовать ещё раз?"
+            RetryCommand="{Binding Reload}" />
+    </AbsoluteLayout>
+</ContentPage>

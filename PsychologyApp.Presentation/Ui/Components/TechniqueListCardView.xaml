@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.UI.Components.TechniqueListCardView">
+
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <Frame HasShadow="True" Padding="10" IsVisible="{TemplateBinding Active}">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
+                </Frame.GestureRecognizers>
+                <Grid Margin="5,0,5,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackLayout Grid.Row="0" Orientation="Horizontal">
+                        <Label
+                            Text="{TemplateBinding Number}"
+                            Style="{StaticResource SectionTitleStyle}"
+                            HorizontalOptions="Start" />
+                        <Label
+                            Text="{TemplateBinding Date}"
+                            FontSize="14"
+                            FontFamily="RobotoMedium"
+                            HorizontalOptions="EndAndExpand"
+                            TextColor="#AAAAAA" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="1"
+                        Padding="0,15,0,15"
+                        Orientation="Horizontal">
+                        <Image
+                            Margin="0,0,5,0"
+                            WidthRequest="65"
+                            HeightRequest="65"
+                            Source="{TemplateBinding Image}" />
+                        <StackLayout
+                            VerticalOptions="FillAndExpand"
+                            HorizontalOptions="FillAndExpand"
+                            Margin="5,0,0,0">
+                            <Label Text="{TemplateBinding Title}" Style="{StaticResource SectionTitleStyle}" />
+                            <Label
+                                Margin="0,2,0,0"
+                                LineBreakMode="WordWrap"
+                                Text="{TemplateBinding Subtitle}"
+                                Style="{StaticResource BodyStyle}"
+                                MaxLines="2" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout Grid.Row="2" Orientation="Horizontal">
+                        <Label
+                            Text="{TemplateBinding Theme}"
+                            FontSize="15"
+                            FontFamily="RobotoSemiBold"
+                            TextColor="{StaticResource Primary}"
+                            HorizontalOptions="Start" />
+                        <Label
+                            Text="{TemplateBinding Author}"
+                            FontSize="14"
+                            FontFamily="RobotoMedium"
+                            HorizontalOptions="EndAndExpand"
+                            Style="{StaticResource BodyStyle}" />
+                    </StackLayout>
+                </Grid>
+            </Frame>
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+
+</ContentView>

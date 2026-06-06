@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  build-test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - run: dotnet restore PsychologyApp.sln
+      - run: dotnet build PsychologyApp.sln -c Debug
+      - run: dotnet test PsychologyApp.sln -c Debug --no-build --collect:"XPlat Code Coverage" --results-directory ./TestResults -- DataCollectionRunSettings.DataCollectors.datacollector.Configuration.Format=cobertura
+      - name: Install ReportGenerator
+        run: dotnet tool install -g dotnet-reportgenerator-globaltool
+      - name: Coverage summary
+        run: reportgenerator "-reports:TestResults/**/coverage.cobertura.xml" "-targetdir:CoverageReport" "-reporttypes:TextSummary"
+      - name: Enforce minimum line coverage
+        shell: pwsh
+        run: |
+          $summary = Get-Content CoverageReport/Summary.txt -Raw
+          if ($summary -match 'Line coverage:\s*([\d\.]+)%') {
+            $rate = [double]$Matches[1]
+            if ($rate -lt 60) { throw "Line coverage $rate% is below 60% threshold." }
+          } else {
+            throw "Could not parse coverage summary from CoverageReport/Summary.txt."
+          }
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: CoverageReport
+      - run: dotnet build PsychologyApp.Presentation/PsychologyApp.Presentation.csproj -f net10.0-ios
+      - run: dotnet build PsychologyApp.Presentation/PsychologyApp.Presentation.csproj -f net10.0-android
+      - run: dotnet build PsychologyApp.Presentation/PsychologyApp.Presentation.csproj -f net10.0-android -c Release -p:PublishTrimmed=true

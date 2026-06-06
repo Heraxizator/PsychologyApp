@@ -176,7 +176,7 @@
     </Style>
 
     <Style TargetType="Label">
-        <Setter Property="TextColor" Value="#DE000000" />
+        <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="RobotoRegular" />
         <Setter Property="FontSize" Value="14" />
@@ -186,7 +186,7 @@
                     <VisualState x:Name="Normal" />
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="TextColor" Value="#DE000000" />
+                            <Setter Property="TextColor" Value="{StaticResource TextPrimary}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>

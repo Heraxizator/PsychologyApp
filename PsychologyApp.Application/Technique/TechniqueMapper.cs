@@ -27,7 +27,8 @@ public static class TechniqueMapper
             Subject = technique.Subject,
             Author = technique.Author,
             Actions = technique.Algorithm,
-            Image = technique.Image
+            Image = technique.Image,
+            IsCompleted = technique.IsCompleted
         };
     }
 }

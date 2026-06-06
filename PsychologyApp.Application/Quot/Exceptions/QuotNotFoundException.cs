@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace PsychologyApp.Application.Exceptions;
 
-namespace PsychologyApp.Application.Exceptions
+public sealed class QuotNotFoundException : NotFoundException
 {
-    public class QuotNotFoundException : Exception
+    public QuotNotFoundException(string message) : base(message)
     {
-        public QuotNotFoundException(string? message) : base(message)
-        {
-        }
     }
 }

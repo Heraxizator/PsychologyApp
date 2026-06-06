@@ -82,5 +82,19 @@ public class Technique : Entity
         Subject = subject;
     }
 
+    public void SetImage(string? image) => Image = image;
+
+    public void ApplyContent(string number, string date, string header, string describtion, string subject, string author, string algorithm, string? image)
+    {
+        SetNumber(number);
+        SetDate(date);
+        SetHeader(header);
+        SetDescribtion(describtion);
+        SetSubject(subject);
+        SetAuthor(author);
+        SetAlgorithm(algorithm);
+        SetImage(image);
+    }
+
     public void MarkAsCompleted() => IsCompleted = true;
 }

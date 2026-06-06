@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             x:Class="PsychologyApp.Presentation.Ui.Techniques.Bodies.PaperFormBody">
+    <StackLayout>
+        <Frame Margin="10,10,10,0">
+            <StackLayout>
+                <Label Text="Форма" Style="{StaticResource SectionTitleStyle}" />
+                <ui:TextEntryView
+                    Margin="0,5,0,0"
+                    TitleText="Негативная мысль"
+                    BodyText="{Binding Text}"
+                    PlaceholderText="Мне не дают покоя мысли" />
+                <ui:ButtonView
+                    Margin="5,5,5,0"
+                    BodyText="Добавить"
+                    TapCommand="{Binding AddCommand}" />
+            </StackLayout>
+        </Frame>
+        <StackLayout
+            Margin="0,15,0,0"
+            IsVisible="{Binding IsFull}"
+            BindableLayout.ItemsSource="{Binding PapersObservableCollection}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <ui:ListEntryCardView
+                        Title="{Binding Id}"
+                        Body="{Binding Text}" />
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </StackLayout>
+    </StackLayout>
+</ContentView>

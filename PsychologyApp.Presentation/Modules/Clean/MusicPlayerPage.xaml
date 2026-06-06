@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Views.Clean.MusicPlayerPage" 
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Clean"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             Shell.NavBarIsVisible="True"
+             Title="Очиститель">
+<ContentPage.Content>
+
+        <AbsoluteLayout 
+            VerticalOptions="FillAndExpand" 
+            HorizontalOptions="FillAndExpand">
+            
+        <StackLayout 
+            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+            AbsoluteLayout.LayoutFlags="All"
+            VerticalOptions="FillAndExpand"
+            Margin="10, 0, 10, 0">
+
+            <StackLayout 
+                VerticalOptions="CenterAndExpand"
+                IsVisible="{Binding IsCreated}"
+                Margin="0, 0">
+
+                <Label
+                    Text="Сборник молитв"
+                    TextColor="{StaticResource TextPrimary}"
+                    FontSize="16"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"/>
+
+                <Label
+                    Margin="0, 5"
+                    Text="Загрузить"
+                    TextColor="{StaticResource Secondary}"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"/>
+
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Start}"/>
+                </StackLayout.GestureRecognizers>
+                
+            </StackLayout>
+
+
+            <ui:ProgressBarView 
+            x:Name="Progress"
+            VerticalOptions="CenterAndExpand"
+            IsVisible="{Binding IsInit}"
+            IsLoading="{Binding IsInit}"
+            ProgressText="Поиск молитв">
+                <ui:ProgressBarView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Cancel}"/>
+                </ui:ProgressBarView.GestureRecognizers>
+            </ui:ProgressBarView>
+
+            <CollectionView
+                x:Name="Musics"
+                IsVisible="{Binding IsDone}"
+                VerticalScrollBarVisibility="Never"
+                ItemsSource="{Binding SelectedItems}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="10" Margin="0,4">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                <Image
+                                    Grid.Column="0"
+                                    WidthRequest="45"
+                                    HeightRequest="45"
+                                    Source="music.png"/>
+                                <VerticalStackLayout Grid.Column="1">
+                                    <Label FontFamily="RobotoMedium" TextColor="{StaticResource TextPrimary}" FontSize="16" Text="{Binding Name}"/>
+                                    <Label TextColor="{StaticResource TextPrimary}" FontSize="16" Text="{Binding Description}"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ClickCommand}"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+                <ui:TextBoxView
+                    Margin="0, 0, 0, 10"
+                HeaderText="Подробнее"
+                BodyText="Это сборник сильных молитв, который поможет вам очиститься от негатива. Нужен хороший интернет."/>
+
+            </StackLayout>
+
+            <ui:RetryView
+                AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                IsVisible="{Binding IsFail}"
+                FailedText="Не удалось загрузить"
+                RetryText="Попробовать ещё раз?"
+                RetryCommand="{Binding Start}" />
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

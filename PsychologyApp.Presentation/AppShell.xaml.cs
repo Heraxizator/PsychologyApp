@@ -1,48 +1,67 @@
-﻿using PsychologyApp.Application;
-using PsychologyApp.Application.Helpers;
-using PsychologyApp.Application.Services.QuotService;
-using PsychologyApp.Application.Services.ReasonService;
-using PsychologyApp.Infrastructure.API.Quots;
-using PsychologyApp.Infrastructure.Data.Context;
+﻿using Microsoft.Extensions.Logging;
+using PsychologyApp.Application.Abstractions.Startup;
+using PsychologyApp.Presentation.Infrastructure;
+using PsychologyApp.Presentation.Services;
 
 namespace PsychologyApp.Presentation;
 
 public partial class AppShell : Shell
 {
-    private readonly IQuotService _quotService = new QuotService();
-    private readonly IReasonService _reasonService = new ReasonService();
-    public AppShell()
+    public AppShell(IPageFactory pageFactory)
     {
-        try
+        InitializeComponent();
+        ConfigureTabContent(pageFactory);
+        _ = InitializeAppAsync();
+    }
+
+    private void ConfigureTabContent(IPageFactory pageFactory)
+    {
+        if (Items.FirstOrDefault() is not TabBar tabBar)
         {
-            InitializeComponent();
-
-            ConfigureMigrations();
-
-            Database.ConfigureSQLite();
-
-            _ = Task.Run(async () =>
-            {
-                await _quotService.LoadSingleAsync(5000);
-                await _quotService.LoadSingleAsync(5000);
-            });
+            return;
         }
-        
-        catch (Exception e)
+
+        ContentPage[] pages =
+        [
+            pageFactory.CreateTechniquesPage(),
+            pageFactory.CreateTestsListPage(),
+            pageFactory.CreateStartPhysicsPage(),
+            pageFactory.CreateMusicPlayerPage(),
+            pageFactory.CreateQuotePage(),
+        ];
+
+        for (int index = 0; index < tabBar.Items.Count && index < pages.Length; index++)
         {
-            Console.WriteLine(e.Message);
+            if (tabBar.Items[index].CurrentItem is ShellContent shellContent)
+            {
+                shellContent.Content = pages[index];
+            }
         }
     }
 
-    private void ConfigureMigrations()
+    private static async Task InitializeAppAsync()
     {
-        string currentVersionString = $"{AppInfo.Current.VersionString}";
+        IAppStartupService startup = MauiServiceProvider.GetRequired<IAppStartupService>();
+        ILogger<AppShell> logger = MauiServiceProvider.GetRequired<ILogger<AppShell>>();
 
-        if (Preferences.Default.ContainsKey(currentVersionString) is false)
+        try
         {
-            Database.ReCreateTables();
-
-            Preferences.Default.Set(currentVersionString, true);
+            await startup.InitializeAsync();
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Application startup failed.");
+            await MainThread.InvokeOnMainThreadAsync(async () =>
+            {
+                if (Microsoft.Maui.Controls.Application.Current?.Windows.Count > 0
+                    && Microsoft.Maui.Controls.Application.Current.Windows[0].Page is not null)
+                {
+                    await Microsoft.Maui.Controls.Application.Current.Windows[0].Page!.DisplayAlert(
+                        "Ошибка запуска",
+                        "Не удалось инициализировать приложение. Перезапустите приложение.",
+                        "OK");
+                }
+            });
         }
     }
 }

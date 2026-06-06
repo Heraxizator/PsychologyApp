@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Views.Tests.FindProblemPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Tests"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             x:DataType="vm:FindProblemViewModel"
+             Title="Поиск проблемы">
+
+    <StackLayout VerticalOptions="FillAndExpand">
+        <ui:NavigationBarSimpleView
+            TitleText="О прохождении"
+            BackCommand="{Binding BackCommand}" />
+
+        <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
+            <StackLayout Margin="10,10,10,0">
+                <ui:TextBoxView
+                    HeaderText="Описание"
+                    BodyText="{Binding DescriptionText}" />
+
+                <ui:AlgorithmBoxView TitleText="Алгоритм">
+                    <ui:AlgorithmBoxView.ItemsSource>
+                        <Binding Path="AlgorithmRows" />
+                    </ui:AlgorithmBoxView.ItemsSource>
+                    <ui:AlgorithmBoxView.ItemTemplate>
+                        <DataTemplate x:DataType="vm:AlgorithmRow">
+                            <Label Text="{Binding Text}" Style="{StaticResource BodyStyle}" Margin="0,0,0,3" />
+                        </DataTemplate>
+                    </ui:AlgorithmBoxView.ItemTemplate>
+                </ui:AlgorithmBoxView>
+
+                <ui:TextBoxView
+                    HeaderText="Замечание"
+                    BodyText="{Binding CommentText}" />
+
+                <ui:ButtonView
+                    Margin="0,5,0,0"
+                    BodyText="Начать"
+                    TapCommand="{Binding Continue}" />
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
+</ContentPage>
