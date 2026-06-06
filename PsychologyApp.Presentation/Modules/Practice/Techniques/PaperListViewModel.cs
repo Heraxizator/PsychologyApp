@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.Models;
 using PsychologyApp.Presentation.Modules.Practice.Techniques;
 using PsychologyApp.Presentation.Services;
@@ -14,6 +15,11 @@ public class PaperListViewModel : BaseViewModel
     public Command AddCommand { get; private set; } = default!;
     public Command<Paper> DeleteCommand { get; private set; } = default!;
 
+    public string ThoughtFieldLabel => Entries.Count > 0 ? Entries[0].Title ?? string.Empty : string.Empty;
+    public string ThoughtPlaceholder => Entries.Count > 0 ? Entries[0].Placeholder ?? string.Empty : string.Empty;
+    public string RepeatButtonText => AppStrings.Repeat;
+    public string ConcernFieldLabel => AppStrings.ConcernLabel;
+
     public PaperListViewModel(
         INavigationService navigationService,
         TechniqueId techniqueId,
@@ -24,6 +30,14 @@ public class PaperListViewModel : BaseViewModel
         ApplyTechnique(techniqueId);
         AddCommand = new Command(ToAdd);
         DeleteCommand = new Command<Paper>(DeleteItem);
+    }
+
+    protected override void OnTechniqueContentChanged()
+    {
+        OnPropertyChanged(nameof(ThoughtFieldLabel));
+        OnPropertyChanged(nameof(ThoughtPlaceholder));
+        OnPropertyChanged(nameof(RepeatButtonText));
+        OnPropertyChanged(nameof(ConcernFieldLabel));
     }
 
     private void SetCollection(bool visible) => IsFull = visible;
@@ -38,7 +52,7 @@ public class PaperListViewModel : BaseViewModel
         SetCollection(true);
         PapersObservableCollection.Add(new Paper
         {
-            Id = "Запись №" + (PapersObservableCollection.Count + 1),
+            Id = AppStrings.RecordNumber(PapersObservableCollection.Count + 1),
             Text = Text
         });
 

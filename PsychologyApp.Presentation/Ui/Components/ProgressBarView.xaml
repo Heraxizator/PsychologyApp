@@ -16,7 +16,7 @@
                 <Label
                     Margin="0,3,0,0"
                     FontAttributes="Bold"
-                    Text="Отмена"
+                    Text="{TemplateBinding CancelText}"
                     HorizontalOptions="Center"
                     TextColor="{StaticResource Secondary}"
                     FontSize="14">

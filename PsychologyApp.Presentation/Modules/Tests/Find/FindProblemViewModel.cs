@@ -12,6 +12,12 @@ public class FindProblemViewModel : BaseViewModel
     public ICommand BackCommand { get; private set; } = default!;
     public ObservableCollection<AlgorithmRow> AlgorithmRows { get; private set; } = [];
 
+    public string PageTitle => AppStrings.TestsAboutPassageTitle;
+    public string DescriptionHeader => AppStrings.TestsDescriptionHeader;
+    public string AlgorithmHeader => AppStrings.TestsAlgorithmHeader;
+    public string NoteHeader => AppStrings.TestsNoteHeader;
+    public string StartButtonText => AppStrings.TestsStartButton;
+
     private readonly Action _nextPageTappedAction = default!;
 
     public FindProblemViewModel() { }
@@ -24,8 +30,8 @@ public class FindProblemViewModel : BaseViewModel
         string? comment,
         Action action)
     {
-        ModuleName = "Детектор";
-        PageName = "О прохождении";
+        ModuleName = AppStrings.TestsDetectorTitle;
+        PageName = AppStrings.TestsAboutPassageTitle;
 
         BindNavigation(navigation, navigationService);
 
@@ -41,6 +47,16 @@ public class FindProblemViewModel : BaseViewModel
             return Task.CompletedTask;
         });
         BackCommand = new AsyncCommand(GoToRootAsync);
+        UserPreferences.Changed += OnPreferencesChanged;
+    }
+
+    private void OnPreferencesChanged()
+    {
+        OnPropertyChanged(nameof(PageTitle));
+        OnPropertyChanged(nameof(DescriptionHeader));
+        OnPropertyChanged(nameof(AlgorithmHeader));
+        OnPropertyChanged(nameof(NoteHeader));
+        OnPropertyChanged(nameof(StartButtonText));
     }
 
     private void InitAlgorithmRows(List<string> algorithmRows)

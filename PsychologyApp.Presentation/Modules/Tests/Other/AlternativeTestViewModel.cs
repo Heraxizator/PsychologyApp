@@ -1,4 +1,6 @@
+using PsychologyApp.Domain.Colour.Enums;
 using PsychologyApp.Domain.Colour.ValueObjects;
+using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.ViewModels.Tests;
 using System.Windows.Input;
 
@@ -6,8 +8,12 @@ namespace PsychologyApp.Presentation.ViewModels.Tests;
 
 public class AlternativeTestViewModel : BaseTestViewModel
 {
-    private const string FirstInstruction = "Выберите самый приятный для вас цвет";
-    private const string SecondInstruction = "Из оставшихся выберите самый неприятный для вас цвет";
+    public string PageTitle => AppStrings.TestsBriefTitle;
+    public string MoreInfoHeader => AppStrings.TestsMoreInfo;
+    public string MoreInfoBody => AppStrings.TestsBriefDescription;
+    public string RestartButtonText => AppStrings.TestsRestart;
+    public string FirstColorLabel => AppStrings.TestsFirstColor;
+    public string SecondColorLabel => AppStrings.TestsSecondColor;
 
     public AlternativeTestViewModel() { }
 
@@ -15,8 +21,9 @@ public class AlternativeTestViewModel : BaseTestViewModel
     {
         BindNavigation(navigation);
 
-        ModuleName = "Детектор";
-        PageName = "Краткий тест Люшера";
+        ModuleName = AppStrings.TestsDetectorTitle;
+        PageName = AppStrings.TestsBriefTitle;
+        UserPreferences.Changed += OnPreferencesChanged;
 
         Restart = new Command(ToRestart);
         BlackHandler = new Command(ToBlackHandler);
@@ -33,9 +40,44 @@ public class AlternativeTestViewModel : BaseTestViewModel
 
     private void ToRestart(object obj) => Init();
 
+    private void OnPreferencesChanged()
+    {
+        OnPropertyChanged(nameof(PageTitle));
+        OnPropertyChanged(nameof(MoreInfoHeader));
+        OnPropertyChanged(nameof(MoreInfoBody));
+        OnPropertyChanged(nameof(RestartButtonText));
+        OnPropertyChanged(nameof(FirstColorLabel));
+        OnPropertyChanged(nameof(SecondColorLabel));
+        CurrentInstruction = _colourSelectedItems.Count == 0
+            ? AppStrings.TestsLuscherFirstInstruction
+            : AppStrings.TestsLuscherSecondInstruction;
+        RefreshResultText();
+    }
+
+    private void RefreshResultText()
+    {
+        if (_colourSelectedItems.Count == 0)
+        {
+            return;
+        }
+
+        (ColourValue colour, _) = _colourSelectedItems[0];
+        FirstResult = ColourStrings.GetExplanation(colour, ColourMeaningType.Wanted);
+        FirstName = ColourStrings.GetColorName(colour);
+
+        if (_colourSelectedItems.Count < 2)
+        {
+            return;
+        }
+
+        (ColourValue secondColour, _) = _colourSelectedItems[1];
+        SecondResult = ColourStrings.GetExplanation(secondColour, ColourMeaningType.Unwanted);
+        SecondName = ColourStrings.GetColorName(secondColour);
+    }
+
     private void Init()
     {
-        CurrentInstruction = FirstInstruction;
+        CurrentInstruction = AppStrings.TestsLuscherFirstInstruction;
         _colourSelectedItems.Clear();
         SetColorsVisibility();
         SetStart();
@@ -46,17 +88,17 @@ public class AlternativeTestViewModel : BaseTestViewModel
         if (_colourSelectedItems.Count == 0)
         {
             _colourSelectedItems.Add((colourValue, colourMeaningVoted));
-            CurrentInstruction = SecondInstruction;
-            FirstResult = colourMeaningVoted.Explaination;
+            CurrentInstruction = AppStrings.TestsLuscherSecondInstruction;
+            FirstResult = ColourStrings.GetExplanation(colourValue, ColourMeaningType.Wanted);
             FirstColor = Color.FromArgb(colourValue.Code);
-            FirstName = colourValue.ToString();
+            FirstName = ColourStrings.GetColorName(colourValue);
         }
         else
         {
             _colourSelectedItems.Add((colourValue, colourMeaningUnvoted));
-            SecondResult = colourMeaningUnvoted.Explaination;
+            SecondResult = ColourStrings.GetExplanation(colourValue, ColourMeaningType.Unwanted);
             SecondColor = Color.FromArgb(colourValue.Code);
-            SecondName = colourValue.ToString();
+            SecondName = ColourStrings.GetColorName(colourValue);
             SetFinish();
         }
     }

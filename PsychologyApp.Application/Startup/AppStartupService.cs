@@ -24,7 +24,7 @@ public sealed class AppStartupService(
             timeoutSource.CancelAfter(settings.Value.MiddleTimeoutMs);
             await quotService.LoadSingleAsync(timeoutSource.Token);
         }
-        catch (Exception ex) when (ex is QuotApiLoadException or HttpRequestException or OperationCanceledException)
+        catch (Exception ex) when (ex is InvalidOperationException or OperationCanceledException)
         {
             logger.LogWarning(ex, "Preload quotes failed; app can continue.");
         }

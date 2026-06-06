@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Infrastructure;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.UI.Components;
@@ -7,6 +8,18 @@ public partial class QuoteCardView : ContentView
     public QuoteCardView()
     {
         InitializeComponent();
+        ApplyLocalization();
+        UserPreferences.Changed += OnPreferencesChanged;
+    }
+
+    private void OnPreferencesChanged() => ApplyLocalization();
+
+    private void ApplyLocalization()
+    {
+        DefaultAuthorText = AppStrings.ProverbLabel;
+        FavoriteHint = AppStrings.QuoteAddFavoriteHint;
+        CopyHint = AppStrings.QuoteCopyHint;
+        ShareHint = AppStrings.QuoteShareHint;
     }
 
     public static readonly BindableProperty TextProperty =
@@ -61,5 +74,41 @@ public partial class QuoteCardView : ContentView
     {
         get => (ICommand?)GetValue(CopyCommandProperty);
         set => SetValue(CopyCommandProperty, value);
+    }
+
+    public static readonly BindableProperty DefaultAuthorTextProperty =
+        BindableProperty.Create(nameof(DefaultAuthorText), typeof(string), typeof(QuoteCardView), string.Empty);
+
+    public string DefaultAuthorText
+    {
+        get => (string)GetValue(DefaultAuthorTextProperty);
+        set => SetValue(DefaultAuthorTextProperty, value);
+    }
+
+    public static readonly BindableProperty FavoriteHintProperty =
+        BindableProperty.Create(nameof(FavoriteHint), typeof(string), typeof(QuoteCardView), string.Empty);
+
+    public string FavoriteHint
+    {
+        get => (string)GetValue(FavoriteHintProperty);
+        set => SetValue(FavoriteHintProperty, value);
+    }
+
+    public static readonly BindableProperty CopyHintProperty =
+        BindableProperty.Create(nameof(CopyHint), typeof(string), typeof(QuoteCardView), string.Empty);
+
+    public string CopyHint
+    {
+        get => (string)GetValue(CopyHintProperty);
+        set => SetValue(CopyHintProperty, value);
+    }
+
+    public static readonly BindableProperty ShareHintProperty =
+        BindableProperty.Create(nameof(ShareHint), typeof(string), typeof(QuoteCardView), string.Empty);
+
+    public string ShareHint
+    {
+        get => (string)GetValue(ShareHintProperty);
+        set => SetValue(ShareHintProperty, value);
     }
 }

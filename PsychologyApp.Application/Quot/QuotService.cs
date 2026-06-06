@@ -7,7 +7,7 @@ using PsychologyApp.Domain.Entities;
 
 namespace PsychologyApp.Application.Services.QuotService;
 
-public sealed class QuotService(IQuotRepository quotRepository, IQuotApiClient quotApiClient) : IQuotService
+public sealed class QuotService(IQuotRepository quotRepository, IQuotContentProvider quotContentProvider) : IQuotService
 {
     public async Task AddSingleAsync(QuotDTO quotDTO, CancellationToken cancellationToken = default)
     {
@@ -31,7 +31,14 @@ public sealed class QuotService(IQuotRepository quotRepository, IQuotApiClient q
 
     public async Task LoadSingleAsync(CancellationToken cancellationToken = default)
     {
-        Quot quot = await quotApiClient.FetchRandomQuotAsync(cancellationToken);
+        IReadOnlyList<QuotSeed> seeds = await quotContentProvider.LoadAllAsync(cancellationToken);
+        if (seeds.Count == 0)
+        {
+            throw new InvalidOperationException("Embedded quote catalog is empty.");
+        }
+
+        QuotSeed seed = seeds[Random.Shared.Next(seeds.Count)];
+        Quot quot = Quot.Create(seed.Author, seed.Text, seed.Theme, isReaded: false, isFavourite: false);
         await quotRepository.AddAsync(quot, cancellationToken);
     }
 

@@ -6,7 +6,19 @@ namespace PsychologyApp.Presentation.Infrastructure;
 public sealed class MauiReasonContentProvider : IReasonContentProvider
 {
     private readonly SemaphoreSlim _gate = new(1, 1);
+    private string? _loadedAsset;
     private IReadOnlyList<Reason>? _cache;
+
+    public MauiReasonContentProvider()
+    {
+        UserPreferences.Changed += InvalidateCache;
+    }
+
+    private void InvalidateCache()
+    {
+        _cache = null;
+        _loadedAsset = null;
+    }
 
     public async Task<IEnumerable<Reason>> LoadReasonsAsync(CancellationToken cancellationToken = default) =>
         await EnsureCacheAsync(cancellationToken);
@@ -22,7 +34,8 @@ public sealed class MauiReasonContentProvider : IReasonContentProvider
 
     private async Task<IReadOnlyList<Reason>> EnsureCacheAsync(CancellationToken cancellationToken)
     {
-        if (_cache is not null)
+        string assetPath = ContentAssets.PsychosomaticFile;
+        if (_cache is not null && _loadedAsset == assetPath)
         {
             return _cache;
         }
@@ -30,14 +43,14 @@ public sealed class MauiReasonContentProvider : IReasonContentProvider
         await _gate.WaitAsync(cancellationToken);
         try
         {
-            if (_cache is not null)
+            if (_cache is not null && _loadedAsset == assetPath)
             {
                 return _cache;
             }
 
             List<Reason> reasons = [];
 
-            await using Stream fileStream = await FileSystem.OpenAppPackageFileAsync("Psyhosomatic.txt");
+            await using Stream fileStream = await FileSystem.OpenAppPackageFileAsync(assetPath);
             using StreamReader reader = new(fileStream);
 
             while (await reader.ReadLineAsync(cancellationToken) is { } line)
@@ -63,6 +76,7 @@ public sealed class MauiReasonContentProvider : IReasonContentProvider
             }
 
             _cache = reasons;
+            _loadedAsset = assetPath;
             return _cache;
         }
         finally

@@ -7,7 +7,7 @@ public partial class App : Microsoft.Maui.Controls.Application
     public App(AppShell appShell)
     {
         InitializeComponent();
-        UserPreferences.ApplyTheme();
+        UserPreferences.ApplyAll();
         GlobalExceptionHandler.Attach(this);
         MainPage = appShell;
     }

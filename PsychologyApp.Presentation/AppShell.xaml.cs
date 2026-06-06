@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui.Behaviors;
+using CommunityToolkit.Maui.Core;
+using Microsoft.Extensions.Logging;
 using PsychologyApp.Application.Abstractions.Startup;
 using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.Services;
@@ -11,7 +13,34 @@ public partial class AppShell : Shell
     {
         InitializeComponent();
         ConfigureTabContent(pageFactory);
+        ApplyLocalization();
+        UserPreferences.Changed += OnPreferencesChanged;
         _ = InitializeAppAsync();
+    }
+
+    public void ApplyChrome(bool isDark)
+    {
+        StatusBarBehavior? statusBar = Behaviors.OfType<StatusBarBehavior>().FirstOrDefault();
+        if (statusBar is not null)
+        {
+            statusBar.StatusBarColor = isDark ? Colors.Black : Colors.White;
+            statusBar.StatusBarStyle = isDark ? StatusBarStyle.LightContent : StatusBarStyle.DarkContent;
+        }
+    }
+
+    private void OnPreferencesChanged()
+    {
+        ApplyLocalization();
+    }
+
+    public void ApplyLocalization()
+    {
+        PracticeTab.Title = AppStrings.ShellTabPractice;
+        DetectorTab.Title = AppStrings.ShellTabDetector;
+        SomaticTab.Title = AppStrings.ShellTabSomatic;
+        CleanerTab.Title = AppStrings.ShellTabCleaner;
+        MotivatorTab.Title = AppStrings.ShellTabMotivator;
+        ApplyChrome(UserPreferences.IsDarkTheme(UserPreferences.Load().Theme));
     }
 
     private void ConfigureTabContent(IPageFactory pageFactory)
@@ -57,8 +86,8 @@ public partial class AppShell : Shell
                     && Microsoft.Maui.Controls.Application.Current.Windows[0].Page is not null)
                 {
                     await Microsoft.Maui.Controls.Application.Current.Windows[0].Page!.DisplayAlert(
-                        "Ошибка запуска",
-                        "Не удалось инициализировать приложение. Перезапустите приложение.",
+                        AppStrings.StartupErrorTitle,
+                        AppStrings.StartupErrorMessage,
                         "OK");
                 }
             });

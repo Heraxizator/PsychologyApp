@@ -5,82 +5,71 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Settings"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              x:DataType="vm:SettingsViewModel"
-             Title="Настройки">
-
-    <ContentPage.Resources>
-        <x:Array x:Key="ThemeItems" Type="{x:Type x:String}">
-            <x:String>Тёмная</x:String>
-            <x:String>Светлая</x:String>
-        </x:Array>
-        <x:Array x:Key="ColorItems" Type="{x:Type x:String}">
-            <x:String>Синий</x:String>
-            <x:String>Красный</x:String>
-            <x:String>Желтый</x:String>
-            <x:String>Зелёный</x:String>
-        </x:Array>
-        <x:Array x:Key="FormItems" Type="{x:Type x:String}">
-            <x:String>С закруглением</x:String>
-            <x:String>Без закругления</x:String>
-        </x:Array>
-        <x:Array x:Key="SizeItems" Type="{x:Type x:String}">
-            <x:String>Большой</x:String>
-            <x:String>Средний</x:String>
-            <x:String>Малый</x:String>
-        </x:Array>
-    </ContentPage.Resources>
+             Title="{Binding PageTitle}">
 
     <ContentPage.Content>
         <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
             <StackLayout Margin="5">
 
                 <ui:NavigationBarSimpleView
-                    TitleText="Настройки"
+                    TitleText="{Binding PageTitle}"
                     BackCommand="{Binding Finish}" />
 
-                <Frame Margin="10,5,10,10" CornerRadius="25">
+                <Frame
+                    Margin="10,5,10,10"
+                    CornerRadius="25"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
                     <StackLayout>
                         <Label
-                            Text="Дизайн"
+                            Text="{Binding DesignSectionTitle}"
                             FontSize="18"
                             Margin="10,5,5,10"
-                            TextColor="{AppThemeBinding Light=black, Dark=white}" />
+                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
 
                         <StackLayout Margin="25,0,25,10">
                             <ui:SettingPickerRowView
-                                LabelText="Тема"
-                                PickerTitle="Варианты"
-                                ItemsSource="{StaticResource ThemeItems}"
+                                LabelText="{Binding LanguageLabel}"
+                                PickerTitle="{Binding LanguagePickerTitle}"
+                                ItemsSource="{Binding LanguageOptions}"
+                                SelectedItem="{Binding Language}" />
+                            <ui:SettingPickerRowView
+                                LabelText="{Binding ThemeLabel}"
+                                PickerTitle="{Binding ThemePickerTitle}"
+                                ItemsSource="{Binding ThemeOptions}"
                                 SelectedItem="{Binding Theme}" />
                             <ui:SettingPickerRowView
-                                LabelText="Цвет"
-                                PickerTitle="Цвета"
-                                ItemsSource="{StaticResource ColorItems}"
+                                LabelText="{Binding ColorLabel}"
+                                PickerTitle="{Binding ColorPickerTitle}"
+                                ItemsSource="{Binding ColorOptions}"
                                 SelectedItem="{Binding Color}" />
                             <ui:SettingPickerRowView
-                                LabelText="Форма"
-                                PickerTitle="Формы"
-                                ItemsSource="{StaticResource FormItems}"
+                                LabelText="{Binding FormLabel}"
+                                PickerTitle="{Binding FormPickerTitle}"
+                                ItemsSource="{Binding FormOptions}"
                                 SelectedItem="{Binding Form}" />
                         </StackLayout>
                     </StackLayout>
                 </Frame>
 
-                <Frame Margin="15,10,15,10" CornerRadius="25">
+                <Frame
+                    Margin="15,10,15,10"
+                    CornerRadius="25"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
                     <StackLayout>
                         <Label
-                            Text="Шрифт"
+                            Text="{Binding FontSectionTitle}"
                             FontSize="18"
                             Margin="10,5,5,10"
-                            TextColor="{AppThemeBinding Light=black, Dark=white}" />
+                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
 
                         <StackLayout Margin="25,0,25,10">
                             <ui:SettingPickerRowView
-                                LabelText="Размер"
-                                PickerTitle="Размеры"
-                                ItemsSource="{StaticResource SizeItems}"
+                                LabelText="{Binding SizeLabel}"
+                                PickerTitle="{Binding SizePickerTitle}"
+                                ItemsSource="{Binding SizeOptions}"
                                 SelectedItem="{Binding Size}" />
                             <ui:SettingSwitchRowView
-                                LabelText="Жирный"
+                                LabelText="{Binding BoldLabel}"
                                 IsToggled="{Binding IsThick}" />
                         </StackLayout>
                     </StackLayout>
@@ -88,7 +77,7 @@
 
                 <Button
                     Margin="10,15,10,15"
-                    Text="Применить"
+                    Text="{Binding ApplyButtonText}"
                     FontSize="15"
                     BackgroundColor="{StaticResource Primary}"
                     CornerRadius="25"

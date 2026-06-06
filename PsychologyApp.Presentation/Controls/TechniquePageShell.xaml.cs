@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Windows.Input;
+using PsychologyApp.Presentation.Infrastructure;
 
 namespace PsychologyApp.Presentation.Controls;
 
@@ -22,6 +23,15 @@ public partial class TechniquePageShell : ContentView
 
     public static readonly BindableProperty BodyContentProperty =
         BindableProperty.Create(nameof(BodyContent), typeof(View), typeof(TechniquePageShell));
+
+    public static readonly BindableProperty TheoryTextProperty =
+        BindableProperty.Create(nameof(TheoryText), typeof(string), typeof(TechniquePageShell), string.Empty);
+
+    public static readonly BindableProperty AlgorithmTitleTextProperty =
+        BindableProperty.Create(nameof(AlgorithmTitleText), typeof(string), typeof(TechniquePageShell), string.Empty);
+
+    public static readonly BindableProperty FinishTextProperty =
+        BindableProperty.Create(nameof(FinishText), typeof(string), typeof(TechniquePageShell), string.Empty);
 
     public string TitleText
     {
@@ -59,5 +69,40 @@ public partial class TechniquePageShell : ContentView
         set => SetValue(BodyContentProperty, value);
     }
 
-    public TechniquePageShell() => InitializeComponent();
+    public string TheoryText
+    {
+        get => (string)GetValue(TheoryTextProperty);
+        set => SetValue(TheoryTextProperty, value);
+    }
+
+    public string AlgorithmTitleText
+    {
+        get => (string)GetValue(AlgorithmTitleTextProperty);
+        set => SetValue(AlgorithmTitleTextProperty, value);
+    }
+
+    public string FinishText
+    {
+        get => (string)GetValue(FinishTextProperty);
+        set => SetValue(FinishTextProperty, value);
+    }
+
+    public TechniquePageShell()
+    {
+        InitializeComponent();
+        ApplyLocalization();
+        UserPreferences.Changed += OnPreferencesChanged;
+    }
+
+    private void OnPreferencesChanged()
+    {
+        ApplyLocalization();
+    }
+
+    private void ApplyLocalization()
+    {
+        TheoryText = AppStrings.TechniqueTheory;
+        AlgorithmTitleText = AppStrings.TechniqueAlgorithm;
+        FinishText = AppStrings.TechniqueFinish;
+    }
 }

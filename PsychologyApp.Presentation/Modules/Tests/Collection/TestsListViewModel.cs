@@ -11,6 +11,8 @@ public class TestsListViewModel : BaseViewModel
 {
     private readonly INavigationService _navigationService;
 
+    public string PageTitle => AppStrings.TestsDetectorTitle;
+
     public ObservableCollection<TestItem> TestItemCollection { get; private set; } = [];
 
     private TestItem? _selectedTestItem;
@@ -35,6 +37,13 @@ public class TestsListViewModel : BaseViewModel
     {
         _navigationService = navigationService;
         BindNavigation(navigation, navigationService);
+        UserPreferences.Changed += OnPreferencesChanged;
+        InitAsync().FireAndForget();
+    }
+
+    private void OnPreferencesChanged()
+    {
+        OnPropertyChanged(nameof(PageTitle));
         InitAsync().FireAndForget();
     }
 
@@ -63,4 +72,3 @@ public class TestsListViewModel : BaseViewModel
         }
     }
 }
-

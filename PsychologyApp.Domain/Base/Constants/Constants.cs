@@ -8,7 +8,6 @@ namespace PsychologyApp.Domain.Base.Constants;
 
 public class Constants
 {
-    public const string QuotApiUrl = "https://api.forismatic.com/api/1.0/?method=getQuote&format=json";
     /// <summary>Fallback only; prefer <see cref="PsychologyApp.Application.Configuration.AppSettings.ReviewEmailAddress"/> from appsettings.</summary>
     public const string ReviewEmailAdress = "";
     public const int SmallBaseTimeout = 5000;

@@ -1,0 +1,184 @@
+﻿{
+  "title": "Beck Inventory",
+  "subtitle": "Depression screening",
+  "description": "This questionnaire helps estimate your depression level in about five minutes.",
+  "algorithm": [
+    "1. This questionnaire contains groups of statements. Read each group carefully.",
+    "2. In each group, choose the one statement that best describes how you felt THIS WEEK AND TODAY.",
+    "3. Check the statement you selected.",
+    "4. If several statements in one group seem equally fitting, you may check more than one."
+  ],
+  "comment": "Before choosing, make sure you have read all statements in each group.",
+  "analyzerId": "beck",
+  "singleAnswer": false,
+  "questions": [
+    {
+      "answers": [
+        { "ball": 0, "text": "I do not feel sad." },
+        { "ball": 1, "text": "I feel sad." },
+        { "ball": 2, "text": "I am sad all the time and cannot snap out of it." },
+        { "ball": 3, "text": "I am so sad and unhappy that I cannot stand it." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "I am not discouraged about my future." },
+        { "ball": 1, "text": "I feel discouraged about my future." },
+        { "ball": 2, "text": "I feel I have nothing to look forward to." },
+        { "ball": 3, "text": "I feel my future is hopeless and that things cannot improve." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "I do not feel like a failure." },
+        { "ball": 1, "text": "I feel I have failed more than the average person." },
+        { "ball": 2, "text": "As I look back on my life, I see a lot of failures." },
+        { "ball": 3, "text": "I feel I am a complete failure as a person." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "I get as much satisfaction from things as I used to." },
+        { "ball": 1, "text": "I do not enjoy things the way I used to." },
+        { "ball": 2, "text": "I do not get real satisfaction out of anything anymore." },
+        { "ball": 3, "text": "I am dissatisfied or bored with everything." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "I do not feel particularly guilty." },
+        { "ball": 1, "text": "I feel guilty over many things I have done or should have done." },
+        { "ball": 2, "text": "I feel quite guilty most of the time." },
+        { "ball": 3, "text": "I feel guilty all of the time." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "I do not feel I am being punished." },
+        { "ball": 1, "text": "I feel I may be punished." },
+        { "ball": 2, "text": "I expect to be punished." },
+        { "ball": 3, "text": "I feel I am being punished." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "I do not feel disappointed in myself." },
+        { "ball": 1, "text": "I am disappointed in myself." },
+        { "ball": 2, "text": "I am disgusted with myself." },
+        { "ball": 3, "text": "I hate myself." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "I do not feel I am any worse than anybody else." },
+        { "ball": 1, "text": "I am critical of myself for my weaknesses or mistakes." },
+        { "ball": 2, "text": "I blame myself all the time for my faults." },
+        { "ball": 3, "text": "I blame myself for everything bad that happens." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "I do not have any thoughts of killing myself." },
+        { "ball": 1, "text": "I have thoughts of killing myself, but I would not carry them out." },
+        { "ball": 2, "text": "I would like to kill myself." },
+        { "ball": 3, "text": "I would kill myself if I had the chance." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "I do not cry any more than usual." },
+        { "ball": 1, "text": "I cry more than I used to." },
+        { "ball": 2, "text": "I cry over every little thing." },
+        { "ball": 3, "text": "I feel like crying but I cannot." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "I am no more irritated by things than I ever was." },
+        { "ball": 1, "text": "I am slightly more irritated now than usual." },
+        { "ball": 2, "text": "I am quite annoyed or irritated a good deal of the time." },
+        { "ball": 3, "text": "I feel irritated all the time." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "I have not lost interest in other people." },
+        { "ball": 1, "text": "I am less interested in other people than I used to be." },
+        { "ball": 2, "text": "I have lost most of my interest in other people." },
+        { "ball": 3, "text": "I have lost all of my interest in other people." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "I make decisions about as well as I ever could." },
+        { "ball": 1, "text": "I put off making decisions more than I used to." },
+        { "ball": 2, "text": "I have more difficulty making decisions than before." },
+        { "ball": 3, "text": "I cannot make decisions at all anymore." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "I do not feel I look any worse than I used to." },
+        { "ball": 1, "text": "I am worried that I am looking old or unattractive." },
+        { "ball": 2, "text": "I feel there are permanent changes in my appearance that make me look unattractive." },
+        { "ball": 3, "text": "I believe I look ugly." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "I can work about as well as before." },
+        { "ball": 1, "text": "It takes extra effort to get started at doing something." },
+        { "ball": 2, "text": "I have to push myself very hard to do anything." },
+        { "ball": 3, "text": "I cannot do any work at all." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "I can sleep as well as usual." },
+        { "ball": 1, "text": "I do not sleep as well as I used to." },
+        { "ball": 2, "text": "I wake up 1–2 hours earlier than usual and find it hard to get back to sleep." },
+        { "ball": 3, "text": "I wake up several hours earlier than I used to and cannot get back to sleep." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "I do not get more tired than usual." },
+        { "ball": 1, "text": "I get tired more easily than I used to." },
+        { "ball": 2, "text": "I get tired from doing almost anything." },
+        { "ball": 3, "text": "I am too tired to do anything." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "My appetite is no worse than usual." },
+        { "ball": 1, "text": "My appetite is not as good as it used to be." },
+        { "ball": 2, "text": "My appetite is much worse now." },
+        { "ball": 3, "text": "I have no appetite at all anymore." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "I have not lost much weight, if any, lately." },
+        { "ball": 1, "text": "I have lost more than 2 kg (about 5 lb)." },
+        { "ball": 2, "text": "I have lost more than 5 kg (about 10 lb)." },
+        { "ball": 3, "text": "I have lost more than 7 kg (about 15 lb)." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "I am no more worried about my health than usual." },
+        { "ball": 1, "text": "I am worried about physical problems such as aches, stomach upset, or constipation." },
+        { "ball": 2, "text": "I am very worried about physical problems and find it hard to think of much else." },
+        { "ball": 3, "text": "I am so worried about my physical problems that I cannot think of anything else." }
+      ]
+    },
+    {
+      "answers": [
+        { "ball": 0, "text": "I have not noticed any recent change in my interest in sex." },
+        { "ball": 1, "text": "I am less interested in sex than I used to be." },
+        { "ball": 2, "text": "I am much less interested in sex now." },
+        { "ball": 3, "text": "I have lost interest in sex completely." }
+      ]
+    }
+  ]
+}

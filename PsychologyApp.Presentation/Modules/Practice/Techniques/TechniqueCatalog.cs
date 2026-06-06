@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.UI.Components;
 
 namespace PsychologyApp.Presentation.Modules.Practice.Techniques;
@@ -118,7 +119,11 @@ public static class TechniqueCatalog
             TechniqueUiKind.None, "Техника №11", "22.01.2025", "Проверь Это", "Простая техника понижения важности", "Важность", "НЛП")
     };
 
-    public static IReadOnlyList<TechniqueDefinition> All { get; } = Definitions.Values.ToList();
+    public static IReadOnlyList<TechniqueDefinition> All =>
+        IsEnglish ? TechniqueCatalogEnglish.Definitions.Values.ToList() : Definitions.Values.ToList();
 
-    public static TechniqueDefinition Get(TechniqueId id) => Definitions[id];
+    public static TechniqueDefinition Get(TechniqueId id) =>
+        IsEnglish ? TechniqueCatalogEnglish.Definitions[id] : Definitions[id];
+
+    private static bool IsEnglish => UserPreferences.IsEnglish(AppStrings.Language);
 }

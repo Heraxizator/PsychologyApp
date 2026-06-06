@@ -5,7 +5,8 @@
              Shell.NavBarIsVisible="True"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Tests"
-             Title="Детектор">
+             x:DataType="vm:TestsListViewModel"
+             Title="{Binding PageTitle}">
 <AbsoluteLayout 
         VerticalOptions="FillAndExpand" 
         HorizontalOptions="FillAndExpand">

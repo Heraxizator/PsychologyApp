@@ -10,19 +10,40 @@ namespace PsychologyApp.Application.Tests.Quot;
 public class QuotServiceTests
 {
     [Fact]
-    public async Task LoadSingleAsync_FetchesAndPersistsQuot()
+    public async Task LoadSingleAsync_LoadsFromProviderAndPersistsQuot()
     {
-        var quot = DomainQuot.Create("Author", "Text", "Theme", false, false);
-        var repository = new Mock<IQuotRepository>();
-        var api = new Mock<IQuotApiClient>();
-        api.Setup(a => a.FetchRandomQuotAsync(It.IsAny<CancellationToken>())).ReturnsAsync(quot);
+        IReadOnlyList<QuotSeed> seeds =
+        [
+            new QuotSeed("Seneca", "Luck is what happens when preparation meets opportunity.", "wisdom")
+        ];
 
-        var service = new QuotService(repository.Object, api.Object);
+        var repository = new Mock<IQuotRepository>();
+        var provider = new Mock<IQuotContentProvider>();
+        provider.Setup(p => p.LoadAllAsync(It.IsAny<CancellationToken>())).ReturnsAsync(seeds);
+
+        var service = new QuotService(repository.Object, provider.Object);
 
         await service.LoadSingleAsync();
 
-        api.Verify(a => a.FetchRandomQuotAsync(It.IsAny<CancellationToken>()), Times.Once);
-        repository.Verify(r => r.AddAsync(quot, It.IsAny<CancellationToken>()), Times.Once);
+        provider.Verify(p => p.LoadAllAsync(It.IsAny<CancellationToken>()), Times.Once);
+        repository.Verify(
+            r => r.AddAsync(
+                It.Is<DomainQuot>(q => q.Text == seeds[0].Text && q.Title == seeds[0].Author),
+                It.IsAny<CancellationToken>()),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task LoadSingleAsync_WhenCatalogEmpty_Throws()
+    {
+        var repository = new Mock<IQuotRepository>();
+        var provider = new Mock<IQuotContentProvider>();
+        provider.Setup(p => p.LoadAllAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Array.Empty<QuotSeed>());
+
+        var service = new QuotService(repository.Object, provider.Object);
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() => service.LoadSingleAsync());
     }
 
     [Fact]
@@ -33,7 +54,7 @@ public class QuotServiceTests
         repository.Setup(r => r.GetByIdAsync(1, It.IsAny<CancellationToken>())).ReturnsAsync(quot);
         repository.Setup(r => r.EditAsync(quot, It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
-        var service = new QuotService(repository.Object, Mock.Of<IQuotApiClient>());
+        var service = new QuotService(repository.Object, Mock.Of<IQuotContentProvider>());
 
         await service.MarkAsFavouriteAsync(1, true);
 
@@ -49,7 +70,7 @@ public class QuotServiceTests
         repository.Setup(r => r.EditAsync(quot, It.IsAny<CancellationToken>()))
             .ThrowsAsync(new PsychologyApp.Application.Exceptions.PersistenceException("not updated"));
 
-        var service = new QuotService(repository.Object, Mock.Of<IQuotApiClient>());
+        var service = new QuotService(repository.Object, Mock.Of<IQuotContentProvider>());
 
         await Assert.ThrowsAsync<PsychologyApp.Application.Exceptions.PersistenceException>(
             () => service.MarkAsFavouriteAsync(1, true));

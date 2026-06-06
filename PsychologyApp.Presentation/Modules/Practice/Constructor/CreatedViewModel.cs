@@ -25,6 +25,13 @@ public class CreatedViewModel : BaseViewModel
     public ICommand Remove { get; private set; } = default!;
     public ICommand Edit { get; private set; } = default!;
 
+    public string PageTitle => AppStrings.TechniqueTitle;
+    public string CustomTechniqueTitle => AppStrings.PracticeCustomTechnique;
+    public string AlgorithmTitle => AppStrings.TechniqueAlgorithm;
+    public string FinishButtonText => AppStrings.TechniqueFinish;
+    public string EditToolbarText => AppStrings.Edit;
+    public string RemoveToolbarText => AppStrings.Remove;
+
     public CreatedViewModel(
         INavigation navigation,
         long techniqueId,
@@ -45,12 +52,13 @@ public class CreatedViewModel : BaseViewModel
             _settings = settings;
             _navigationService = navigationService;
 
-            ModuleName = "Практик";
-            PageName = "Своя техника";
+            ModuleName = AppStrings.ShellTabPractice;
+            PageName = AppStrings.PracticeCustomTechnique;
 
             BindNavigation(navigation, _navigationService);
             Remove = new AsyncCommand(() => ToRemoveAsync());
             Edit = new AsyncCommand(() => ToEditAsync());
+            UserPreferences.Changed += OnPreferencesChanged;
 
             InitAsync().FireAndForget();
         }
@@ -61,6 +69,16 @@ public class CreatedViewModel : BaseViewModel
         }
     }
 
+    private void OnPreferencesChanged()
+    {
+        OnPropertyChanged(nameof(PageTitle));
+        OnPropertyChanged(nameof(CustomTechniqueTitle));
+        OnPropertyChanged(nameof(AlgorithmTitle));
+        OnPropertyChanged(nameof(FinishButtonText));
+        OnPropertyChanged(nameof(EditToolbarText));
+        OnPropertyChanged(nameof(RemoveToolbarText));
+    }
+
     private Task ToEditAsync() =>
         _navigationService.GoToDesignerAsync(_techniqueId);
 
@@ -68,7 +86,11 @@ public class CreatedViewModel : BaseViewModel
     {
         try
         {
-            bool isConfirmed = await _dialogService.AskAsync(null, "Вы уверены, что хотите удалить свою технику", "Да", "Нет");
+            bool isConfirmed = await _dialogService.AskAsync(
+                null,
+                AppStrings.PracticeDeleteConfirm,
+                AppStrings.Yes,
+                AppStrings.No);
 
             if (!isConfirmed)
             {

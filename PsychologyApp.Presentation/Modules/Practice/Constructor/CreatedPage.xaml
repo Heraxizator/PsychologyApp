@@ -5,10 +5,11 @@
              x:Class="PsychologyApp.Presentation.Views.TechniquePages.ConstructorPages.CreatedPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Practice.Constructor"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
-             Title="Техника">
+             x:DataType="vm:CreatedViewModel"
+             Title="{Binding PageTitle}">
 <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Изменить" Command="{Binding Edit}" />
-        <ToolbarItem Text="Удалить" Command="{Binding Remove}" />
+        <ToolbarItem Text="{Binding EditToolbarText}" Command="{Binding Edit}" />
+        <ToolbarItem Text="{Binding RemoveToolbarText}" Command="{Binding Remove}" />
     </ContentPage.ToolbarItems>
 
     <ScrollView
@@ -18,18 +19,18 @@
     <StackLayout>
 
         <ui:NavigationBarSimpleView
-            TitleText="Своя техника"
+            TitleText="{Binding CustomTechniqueTitle}"
             BackCommand="{Binding Finish}" />
 
         <StackLayout Margin="10, 0, 10, 0">
 
                 <ui:AlgorithmBoxView
-                TitleText="Алгоритм"
+                TitleText="{Binding AlgorithmTitle}"
                 BodySource="{Binding Algorithm}"/>
 
                 <ui:ButtonView
                 Margin="5, 5, 5, 10"
-                BodyText="Завершить"
+                BodyText="{Binding FinishButtonText}"
                 TapCommand="{Binding Finish}" />
         </StackLayout>
     </StackLayout>

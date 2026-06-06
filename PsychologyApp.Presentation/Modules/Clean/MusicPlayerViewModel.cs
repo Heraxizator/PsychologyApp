@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.Modules.Clean;
 using PsychologyApp.Presentation.ViewModels;
@@ -8,25 +9,54 @@ namespace PsychologyApp.Presentation.ViewModels.Clean;
 
 public class MusicPlayerViewModel : BaseViewModel
 {
+    private readonly ILogger<MusicPlayerViewModel> _logger;
+
     public ObservableCollection<Audio> AllItems { get; private set; } = [];
     public ObservableCollection<Audio> SelectedItems { get; private set; } = [];
-    private string search_text = default!;
+    private string search_text = string.Empty;
 
-    public MusicPlayerViewModel()
+    public string PageTitle => AppStrings.ShellTabCleaner;
+    public string PrayerCollectionLabel => AppStrings.CleanerPrayerCollection;
+    public string LoadLabel => AppStrings.CleanerLoad;
+    public string SearchingPrayersText => AppStrings.CleanerSearchingPrayers;
+    public string MoreInfoHeader => AppStrings.TestsMoreInfo;
+    public string MoreInfoBody => AppStrings.CleanerMoreInfoBody;
+    public string LoadFailedText => AppStrings.LoadFailed;
+    public string RetryText => AppStrings.RetryQuestion;
+
+    public MusicPlayerViewModel(ILogger<MusicPlayerViewModel> logger)
     {
-        this.ModuleName = "Очиститель";
-        this.PageName = "Молитвы";
+        _logger = logger;
+        ModuleName = AppStrings.ShellTabCleaner;
+        PageName = AppStrings.CleanerPrayersPage;
 
         SetCreated();
 
-        Start = new AsyncCommand(async () =>
-        {
-            SetInit();
-            Init();
-            await Task.CompletedTask;
-        });
-
+        Start = new AsyncCommand(LoadPlaylistAsync);
         SelectedItems.CollectionChanged += SelectedItems_CollectionChanged;
+        UserPreferences.Changed += OnPreferencesChanged;
+    }
+
+    private void OnPreferencesChanged()
+    {
+        OnPropertyChanged(nameof(PageTitle));
+        OnPropertyChanged(nameof(PrayerCollectionLabel));
+        OnPropertyChanged(nameof(LoadLabel));
+        OnPropertyChanged(nameof(SearchingPrayersText));
+        OnPropertyChanged(nameof(MoreInfoHeader));
+        OnPropertyChanged(nameof(MoreInfoBody));
+        OnPropertyChanged(nameof(LoadFailedText));
+        OnPropertyChanged(nameof(RetryText));
+
+        if (IsDone && SelectedItems.Count > 0)
+        {
+            ObservableCollection<Audio> localized = MusicPlaylist.CreateDefault();
+            for (int i = 0; i < SelectedItems.Count && i < localized.Count; i++)
+            {
+                SelectedItems[i].Name = localized[i].Name;
+                SelectedItems[i].Description = localized[i].Description;
+            }
+        }
     }
 
     private void SelectedItems_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -37,87 +67,45 @@ public class MusicPlayerViewModel : BaseViewModel
         }
     }
 
-    private void Init()
+    private async Task LoadPlaylistAsync()
     {
         try
         {
-            ObservableCollection<Audio> collection =
-            [
-                new Audio
-                {
-                    Name = "Псалом 50",
-                    Description = "Читается 3 раза в течение суток",
-                    URL = "https://azbyka.ru/audio/audio1/molitvoslov/psalmy/psalom-50.mp3",
-                    ClickCommand = new AsyncCommand(() => PlayAudioAsync("https://azbyka.ru/audio/audio1/molitvoslov/psalmy/psalom-50.mp3"))
-                },
+            SetInit();
+            await Task.Yield();
 
-                new Audio
-                {
-                    Name = "Отче Наш",
-                    Description = "Основная молитва",
-                    URL = "https://azbyka.ru/audio/audio1/molitvoslov/gospodu/otche_nash.mp3",
-                    ClickCommand = new AsyncCommand(() => PlayAudioAsync("https://azbyka.ru/audio/audio1/molitvoslov/gospodu/otche_nash.mp3"))
-                },
-
-                new Audio
-                {
-                    Name = "Иисусова Молитва",
-                    Description = "Основная молитва",
-                    URL = "https://azbyka.ru/audio/audio1/molitvoslov/iisusova_molitva_svyato_elizavetinskij_monastyr.mp3",
-                    ClickCommand = new AsyncCommand(() => PlayAudioAsync("https://azbyka.ru/audio/audio1/molitvoslov/iisusova_molitva_svyato_elizavetinskij_monastyr.mp3"))
-                },
-
-                new Audio
-                {
-                    Name = "Царю небесный",
-                    Description = "Основная молитва",
-                    URL = "https://azbyka.ru/wp-content/uploads/2015/08/tsaryu-nebesnyy.mp3",
-                    ClickCommand = new AsyncCommand(() => PlayAudioAsync("https://azbyka.ru/wp-content/uploads/2015/08/tsaryu-nebesnyy.mp3"))
-                },
-
-                new Audio
-                {
-                    Name = "Славословие",
-                    Description = "Основная молитва",
-                    URL = "https://azbyka.ru/audio/audio1/molitvoslov/velikoe.mp3",
-                    ClickCommand = new AsyncCommand(() => PlayAudioAsync("https://azbyka.ru/audio/audio1/molitvoslov/velikoe.mp3"))
-                },
-            ];
+            ObservableCollection<Audio> collection = MusicPlaylist.CreateDefault();
+            foreach (Audio item in collection)
+            {
+                item.ClickCommand = new AsyncCommand(() => PlayAudioAsync(item.URL));
+            }
 
             InitItems(collection);
         }
-        
-        catch (Exception e)
+        catch (Exception ex)
         {
-            SetDone();
+            _logger.LogError(ex, "Failed to load music playlist.");
+            SetFail();
         }
     }
 
     private void InitItems(ObservableCollection<Audio> collection)
     {
+        SelectedItems.Clear();
+        AllItems.Clear();
+
         foreach (Audio item in collection)
         {
             SelectedItems.Add(item);
-
             AllItems.Add(item);
         }
     }
 
-    public Task PlayAudioAsync(string url)
-    {
-        return Launcher.OpenAsync(url);
-    }
+    public Task PlayAudioAsync(string url) => Launcher.OpenAsync(url);
 
     public string SearchText
     {
         get => search_text;
-        set
-        {
-            if (search_text != value)
-            {
-                search_text = value;
-                OnPropertyChanged(nameof(SearchText));
-            }
-        }
+        set => SetProperty(ref search_text, value);
     }
 }

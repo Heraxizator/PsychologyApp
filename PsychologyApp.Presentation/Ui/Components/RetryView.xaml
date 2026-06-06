@@ -9,7 +9,7 @@
 
                 <Label 
                     Text="{TemplateBinding FailedText}"
-                    TextColor="{StaticResource TextPrimary}"
+                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                     FontSize="16"
                     VerticalOptions="Center" 
                     HorizontalOptions="Center" />

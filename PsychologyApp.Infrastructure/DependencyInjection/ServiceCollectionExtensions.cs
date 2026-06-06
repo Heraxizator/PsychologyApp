@@ -1,9 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Configuration;
-using PsychologyApp.Infrastructure.API.Quots;
 using PsychologyApp.Infrastructure.Data.Context;
 using PsychologyApp.Infrastructure.Data.Repositories.Quots;
 using PsychologyApp.Infrastructure.Data.Repositories.Statistics;
@@ -24,22 +22,12 @@ public static class ServiceCollectionExtensions
             services.Configure(configureSettings);
         }
 
-        services.AddHttpClient(nameof(ForismaticQuotClient), (sp, client) =>
-        {
-            AppSettings settings = sp.GetRequiredService<IOptions<AppSettings>>().Value;
-            client.Timeout = TimeSpan.FromMilliseconds(
-                settings.MiddleTimeoutMs > 0 ? settings.MiddleTimeoutMs : 10_000);
-            client.DefaultRequestHeaders.UserAgent.ParseAdd("PsychologyApp/1.3");
-        });
-
         services.AddSingleton<IDbConnectionFactory, SqliteConnectionFactory>();
         services.AddSingleton<IDatabaseInitializer, SqliteDatabaseInitializer>();
 
         services.AddScoped<ITechniqueRepository, TechniqueRepository>();
         services.AddScoped<IQuotRepository, QuotRepository>();
         services.AddScoped<IStatisticRepository, StatisticRepository>();
-
-        services.AddScoped<IQuotApiClient, ForismaticQuotClient>();
 
         return services;
     }

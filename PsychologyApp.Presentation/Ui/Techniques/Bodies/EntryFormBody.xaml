@@ -4,6 +4,6 @@
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              x:Class="PsychologyApp.Presentation.Ui.Techniques.Bodies.EntryFormBody">
     <ui:EntryBoxView
-        TitleText="Форма"
+        TitleText="{Binding FormSectionTitle}"
         BodySource="{Binding Entries}" />
 </ContentView>

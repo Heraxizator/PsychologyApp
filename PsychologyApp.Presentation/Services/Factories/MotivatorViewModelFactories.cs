@@ -25,7 +25,7 @@ public interface IMusicPlayerViewModelFactory
     MusicPlayerViewModel Create();
 }
 
-public sealed class MusicPlayerViewModelFactory : IMusicPlayerViewModelFactory
+public sealed class MusicPlayerViewModelFactory(ILogger<MusicPlayerViewModel> logger) : IMusicPlayerViewModelFactory
 {
-    public MusicPlayerViewModel Create() => new();
+    public MusicPlayerViewModel Create() => new(logger);
 }

@@ -7,12 +7,12 @@
         <ControlTemplate>
             <Border 
                 StrokeThickness="1"
-                StrokeShape="RoundRectangle 25"
-                BackgroundColor="White"
+                StrokeShape="{DynamicResource UiCornerRadiusEntryShape}"
+                BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}"
                 Stroke="{StaticResource Secondary}">
                 <StackLayout Margin="15, 5, 15, 0" VerticalOptions="CenterAndExpand">
                     <Label 
-                        TextColor="{StaticResource TextPrimary}"
+                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                         Padding="0"
                         FontFamily="RobotoRegular"
                         Text="{TemplateBinding TitleText}"
@@ -25,7 +25,7 @@
                         Keyboard="Text"
                         Text="{TemplateBinding BodyText}"
                         FontFamily="RobotoRegular"
-                        TextColor="{StaticResource TextPrimary}"
+                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                         VerticalTextAlignment="Center"/>
                 </StackLayout>
 

@@ -1,4 +1,5 @@
 using Moq;
+using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.Services.Dialogs;
 using PsychologyApp.Presentation.Services.Toasts;
 using PsychologyApp.Presentation.Modules.Tests;
@@ -9,6 +10,11 @@ namespace PsychologyApp.Presentation.Tests;
 
 public sealed class QuestionViewModelTests
 {
+    public QuestionViewModelTests()
+    {
+        AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
+    }
+
     [Fact]
     public async Task ConfirmCommand_IncompleteAnswers_ShowsValidationToast()
     {
@@ -41,7 +47,7 @@ public sealed class QuestionViewModelTests
         viewModel.ConfirmCommand.Execute(null);
         await Task.Delay(50);
 
-        toast.Verify(t => t.LongToast("Нужно ответить на все вопросы"), Times.Once);
+        toast.Verify(t => t.LongToast(AppStrings.TestsAnswerAllToast), Times.Once);
         dialog.Verify(
             d => d.AskAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()),
             Times.Never);
@@ -91,7 +97,7 @@ public sealed class QuestionViewModelTests
         await Task.Delay(50);
 
         dialog.Verify(
-            d => d.AskAsync("Ваш результат: 5", "Score 5", "Завершить", "Продолжить"),
+            d => d.AskAsync(AppStrings.TestsResultTitle(5), "Score 5", AppStrings.TestsFinishButton, AppStrings.TestsContinueButton),
             Times.Once);
         navigation.Verify(n => n.PopToRootAsync(false), Times.Once);
     }

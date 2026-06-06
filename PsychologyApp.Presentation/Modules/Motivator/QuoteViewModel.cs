@@ -18,6 +18,12 @@ public class QuoteViewModel : BaseViewModel
     public ObservableRangeCollection<QuoteItem> QuotesObservableCollection { get; set; } = [];
     public ICommand LoadMoreQuotesCommand { get; private set; } = default!;
 
+    public string PageTitle => AppStrings.MotivatorTitle;
+    public string QuotesSearchingText => AppStrings.QuotesSearching;
+    public string QuotesLoadingText => AppStrings.QuotesLoading;
+    public string LoadErrorText => AppStrings.LoadError;
+    public string RetryText => AppStrings.RetryQuestion;
+
     private readonly IQuotService _quotService;
     private readonly ILogger<QuoteViewModel> _logger;
     private readonly IOptions<AppSettings> _settings;
@@ -35,8 +41,10 @@ public class QuoteViewModel : BaseViewModel
             _logger = logger;
             _settings = settings;
             BindNavigation(navigation);
+            Cancel = new Command(CancelProgress);
             LoadMoreQuotesCommand = new AsyncCommand(() => AddFreshQuotesAsync());
             Reload = new AsyncCommand(InitAsync);
+            UserPreferences.Changed += OnPreferencesChanged;
 
             InitAsync().FireAndForget();
         }
@@ -46,6 +54,15 @@ public class QuoteViewModel : BaseViewModel
             SetFail();
             _logger.LogError(e, "QuoteViewModel initialization failed.");
         }
+    }
+
+    private void OnPreferencesChanged()
+    {
+        OnPropertyChanged(nameof(PageTitle));
+        OnPropertyChanged(nameof(QuotesSearchingText));
+        OnPropertyChanged(nameof(QuotesLoadingText));
+        OnPropertyChanged(nameof(LoadErrorText));
+        OnPropertyChanged(nameof(RetryText));
     }
 
     private async Task InitAsync()
@@ -182,8 +199,8 @@ public class QuoteViewModel : BaseViewModel
     private ICommand CreateShareCommand(string? text, string? title) =>
         new AsyncCommand(() => Share.Default.RequestAsync(new ShareTextRequest
         {
-            Text = $"{text} ({title ?? "Неизвестный автор"})",
-            Title = "Цитата"
+            Text = $"{text} ({title ?? AppStrings.UnknownAuthor})",
+            Title = AppStrings.QuoteShareTitle
         }));
 
     private static ICommand CreateCopyCommand(QuoteItem quoteItem) =>

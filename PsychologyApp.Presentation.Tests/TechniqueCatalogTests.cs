@@ -27,9 +27,9 @@ public class TechniqueCatalogTests
     [Fact]
     public void ListCatalog_entries_align_with_catalog()
     {
-        Assert.Equal(TechniqueCatalog.All.Count, TechniqueListCatalog.BuiltIn.Count);
+        Assert.Equal(TechniqueCatalog.All.Count, TechniqueListCatalog.GetBuiltIn().Count);
 
-        foreach (TechniqueListEntry entry in TechniqueListCatalog.BuiltIn)
+        foreach (TechniqueListEntry entry in TechniqueListCatalog.GetBuiltIn())
         {
             TechniqueDefinition definition = TechniqueCatalog.Get(entry.TechniqueId);
             Assert.Equal(definition.ListTitle, entry.Title);

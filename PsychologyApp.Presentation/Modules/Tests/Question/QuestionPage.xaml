@@ -5,7 +5,7 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Tests"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              x:DataType="vm:QuestionViewModel"
-             Title="Опросник"
+             Title="{Binding PageTitle}"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons">
 
     <StackLayout
@@ -13,7 +13,7 @@
         VerticalOptions="FillAndExpand">
 
         <ui:NavigationBarSimpleView
-            TitleText="Опросник"
+            TitleText="{Binding PageTitle}"
             BackCommand="{Binding BackCommand}" />
 
         <CollectionView
@@ -38,7 +38,7 @@
                                 FontSize="16">
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="Вопрос "/>
+                                        <Span Text="{Binding QuestionPrefix, Source={RelativeSource AncestorType={x:Type vm:QuestionViewModel}}}"/>
                                         <Span Text="{Binding Number}"/>
                                     </FormattedString>
                                 </Label.FormattedText>
@@ -54,7 +54,7 @@
                                     HorizontalTextAlignment="Justify"
                                     Margin="0, 0, 5, 5"
                                     FontFamily="RobotoRegular"
-                                    TextColor="{StaticResource TextPrimary}"
+                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                                     FontSize="14"/>
                             </Grid>
 
@@ -79,7 +79,7 @@
                                                 <Label 
                                                     VerticalOptions="Center"
                                                     HorizontalOptions="FillAndExpand"
-                                                    TextColor="{StaticResource TextPrimary}"
+                                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                                                     FontSize="14"
                                                     HorizontalTextAlignment="Justify"
                                                     Text="{Binding Text}"/>
@@ -107,7 +107,7 @@
                                                     x:DataType="vm:Answer"
                                                     Content="{Binding Text}"
                                                     GroupName="{Binding Number}"
-                                                    TextColor="{StaticResource TextPrimary}"
+                                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                                                     BorderColor="{StaticResource Primary}"
                                                     IsChecked="{Binding Selected}"/>
 
@@ -129,7 +129,7 @@
 
             <ui:ButtonView
                 Margin="15, 5, 15, 20"
-                BodyText="Завершить"
+                BodyText="{Binding FinishButtonText}"
                 TapCommand="{Binding ConfirmCommand}" />
 
         </CollectionView.Footer>

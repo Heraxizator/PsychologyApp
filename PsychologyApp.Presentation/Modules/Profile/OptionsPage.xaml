@@ -5,33 +5,33 @@
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Profile"
              x:DataType="vm:OptionsViewModel"
-             Title="Параметры">
+             Title="{Binding PageTitle}">
 
     <StackLayout>
         <ui:NavigationBarSimpleView
-            TitleText="Параметры"
+            TitleText="{Binding PageTitle}"
             BackCommand="{Binding BackCommand}" />
 
         <ScrollView VerticalScrollBarVisibility="Never">
             <StackLayout Margin="10,0,10,10">
                 <ui:SettingsLinkCardView
-                    Title="Настройки"
-                    Subtitle="Тема, цвет и параметры отображения"
+                    Title="{Binding SettingsTitle}"
+                    Subtitle="{Binding SettingsSubtitle}"
                     TapCommand="{Binding OpenSettingsPageCommand}" />
 
                 <ui:SettingsLinkCardView
-                    Title="О приложении"
-                    Subtitle="Информация о приложении"
+                    Title="{Binding AboutTitle}"
+                    Subtitle="{Binding AboutSubtitle}"
                     TapCommand="{Binding OpenAboutPageCommand}" />
 
                 <ui:SettingsLinkCardView
-                    Title="Обратная связь"
-                    Subtitle="Сообщить о проблеме или предложить идею"
+                    Title="{Binding FeedbackTitle}"
+                    Subtitle="{Binding FeedbackSubtitle}"
                     TapCommand="{Binding OpenFeedbackPageCommand}" />
 
                 <ui:SettingsLinkCardView
-                    Title="Поддержать проект"
-                    Subtitle="Помочь развитию приложения"
+                    Title="{Binding DonateTitle}"
+                    Subtitle="{Binding DonateSubtitle}"
                     TapCommand="{Binding OpenDonatePageCommand}" />
             </StackLayout>
         </ScrollView>

@@ -4,8 +4,9 @@
              x:Class="PsychologyApp.Presentation.Views.Physics.StartPhysicsPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Physics"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             x:DataType="vm:StartPhysicsViewModel"
              Shell.NavBarIsVisible="True"
-             Title="Психосоматик">
+             Title="{Binding PageTitle}">
 
     <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
         <ScrollView
@@ -17,25 +18,25 @@
                     VerticalOptions="CenterAndExpand"
                     IsVisible="{Binding IsInit}"
                     IsLoading="{Binding IsInit}"
-                    ProgressText="Поиск причин"
+                    ProgressText="{Binding LoadingText}"
                     CancelCommand="{Binding Cancel}" />
 
                 <StackLayout IsVisible="{Binding IsDone}">
                     <ui:TextBoxView
-                        HeaderText="Пояснение"
-                        BodyText="Известно, что около половины всех болезней возникает на психической основе. Поэтому по любому физическому недомоганию можно определить то, что вас беспокоит, но не осознаётся." />
+                        HeaderText="{Binding ExplanationHeader}"
+                        BodyText="{Binding ExplanationBody}" />
 
                     <ui:TextBoxView
-                        HeaderText="Описание"
-                        BodyText="Тест поможет вам в пару кликов найти эмоциональную причину любого вашего физического недомогания. Всё очень просто." />
+                        HeaderText="{Binding DescriptionHeader}"
+                        BodyText="{Binding DescriptionBody}" />
 
                     <ui:AlgorithmBoxView
-                        TitleText="Алгоритм"
+                        TitleText="{Binding AlgorithmHeader}"
                         BodySource="{Binding AlgorithmSteps}" />
 
                     <ui:ButtonView
                         Margin="0,5,0,10"
-                        BodyText="Начать"
+                        BodyText="{Binding StartButtonText}"
                         TapCommand="{Binding StartCommand}" />
                 </StackLayout>
             </StackLayout>
@@ -45,8 +46,8 @@
             AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
             AbsoluteLayout.LayoutFlags="PositionProportional"
             IsVisible="{Binding IsFail}"
-            FailedText="Не удалось загрузить"
-            RetryText="Попробовать ещё раз?"
+            FailedText="{Binding FailedText}"
+            RetryText="{Binding RetryText}"
             RetryCommand="{Binding Reload}" />
     </AbsoluteLayout>
 </ContentPage>

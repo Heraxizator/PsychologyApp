@@ -24,12 +24,14 @@
 
   <ItemGroup>
     <Compile Include="..\PsychologyApp.Presentation\Modules\Practice\Techniques\TechniqueCatalog.cs" Link="TechniqueCatalog.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Modules\Practice\Techniques\TechniqueCatalog.English.cs" Link="TechniqueCatalog.English.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Modules\Practice\Techniques\TechniqueListCatalog.cs" Link="TechniqueListCatalog.cs" />
     <Compile Include="..\PsychologyApp.Presentation\UI\Components\EntryItem.cs" Link="EntryItem.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Modules\Tests\Collection\TestScoreAnalyzers.cs" Link="TestScoreAnalyzers.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Infrastructure\AsyncCommand.cs" Link="AsyncCommand.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Infrastructure\AsyncCommandExtensions.cs" Link="AsyncCommandExtensions.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Infrastructure\UserPreferences.cs" Link="UserPreferences.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Infrastructure\AppStrings.cs" Link="AppStrings.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Modules\BaseViewModel.cs" Link="BaseViewModel.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Modules\Review\FormViewModel.cs" Link="FormViewModel.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Modules\Tests\Question\QuestionViewModel.cs" Link="QuestionViewModel.cs" />

@@ -7,15 +7,29 @@ namespace PsychologyApp.Presentation.Modules.Profile;
 
 public sealed class DonateViewModel : BaseViewModel
 {
+    public string PageTitle => AppStrings.DonateTitle;
+    public string MoreInfoHeader => AppStrings.DonateMoreInfo;
+    public string MoreInfoBody => AppStrings.DonateBody;
+    public string DonateButtonText => AppStrings.DonateButton;
+
     public DonateViewModel(INavigation navigation, INavigationService navigationService)
     {
         BindNavigation(navigation);
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
         DonateCommand = new AsyncCommand(OpenDonatePageAsync);
+        UserPreferences.Changed += OnPreferencesChanged;
     }
 
     public ICommand BackCommand { get; }
     public ICommand DonateCommand { get; }
+
+    private void OnPreferencesChanged()
+    {
+        OnPropertyChanged(nameof(PageTitle));
+        OnPropertyChanged(nameof(MoreInfoHeader));
+        OnPropertyChanged(nameof(MoreInfoBody));
+        OnPropertyChanged(nameof(DonateButtonText));
+    }
 
     private static Task OpenDonatePageAsync() =>
         Browser.Default.OpenAsync("https://yoomoney.ru/fundraise/17UP5E1QFCU.250123");

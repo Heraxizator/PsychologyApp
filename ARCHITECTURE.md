@@ -214,12 +214,16 @@ Dead controls removed: `LocalFrame`, `LocalEditor`, `LocalEntry`, `ExtendedLabel
 - **Resolved renames:** `Practice` (not Practic), `Physics` (not Physic), `Clean` (not Cleaner)
 - **Legacy namespace debt:** `Technique.*`, `Modules.Practice.*` in Constructor — migrating to `ViewModels.Practice.Constructor`
 
-## Settings and `UserPreferences`
+## Settings, localization, and `UserPreferences`
 
-- Keys: `Theme`, `Color`, `Form`, `Size`, `IsBold` in `Presentation/Infrastructure/UserPreferences.cs`
-- `SettingsViewModel` loads prefs in ctor; `Finish` saves and navigates back after confirmation dialog
+- Keys: `Language`, `Theme`, `Color`, `Form`, `Size`, `IsBold` in `Presentation/Infrastructure/UserPreferences.cs`
+- Stored values use stable keys (`ru`/`en`, `light`/`dark`, `blue`/`red`/…) — legacy Russian/English display strings are normalized on load
+- `AppStrings` provides localized UI text for Shell, Options/Settings, Tests, Physics, technique shell, and startup errors
+- Embedded quotes: `IQuotContentProvider` → `MauiQuotContentProvider` reads `Resources/Raw/quotes/quotes.{ru|en}.json`; `QuotService.LoadSingleAsync` picks a random seed and persists to SQLite (no external API)
+- Localized content assets: `ContentAssets.Localized()` selects `*.en.json` / `Psyhosomatic.en.txt` when language is English
+- `ApplyAll()` at startup and on save: culture, `UserAppTheme`, accent colors, typography, corner-radius shapes, Shell/status-bar chrome; raises `UserPreferences.Changed`
+- `SettingsViewModel` loads prefs in ctor; `Finish` saves, calls `ApplyAll()`, shows confirmation, navigates back
 - `OptionsViewModel.OpenSettingsPageCommand` → `GoToSettingsAsync()`
-- `App` startup calls `UserPreferences.ApplyTheme()` (`UserAppTheme` from saved `Theme`; typography prefs saved for future use)
 
 ## Cross-cutting
 

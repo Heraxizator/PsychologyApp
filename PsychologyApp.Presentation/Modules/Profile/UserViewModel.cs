@@ -28,6 +28,18 @@ public class UserViewModel : BaseViewModel
     public ObservableCollection<TechniqueItem> Techniques { get; private set; } = [];
     public ObservableCollection<QuoteItem> Quotes { get; private set; } = [];
 
+    public string PageTitle => AppStrings.ProfileTitle;
+    public string OptionsLabel => AppStrings.OptionsTitle;
+    public string UserLabel => AppStrings.ProfileUserLabel;
+    public string StandardUserLabel => AppStrings.ProfileStandardUser;
+    public string TechniquesCompletedLabel => AppStrings.ProfileTechniquesCompleted;
+    public string FollowersLabel => AppStrings.ProfileFollowers;
+    public string RecommendedLabel => AppStrings.ProfileRecommended;
+    public string BestQuotesLabel => AppStrings.ProfileBestQuotes;
+    public string QuotesSearchingText => AppStrings.QuotesSearching;
+    public string LoadErrorText => AppStrings.LoadError;
+    public string RetryText => AppStrings.RetryQuestion;
+
     public UserViewModel(
         INavigation navigation,
         IQuotService quotService,
@@ -42,13 +54,15 @@ public class UserViewModel : BaseViewModel
             _statisticService = statisticService;
             _logger = logger;
             _settings = settings;
-            ModuleName = "Практик";
-            PageName = "Профиль";
+            ModuleName = AppStrings.ShellTabPractice;
+            PageName = AppStrings.ProfileTitle;
 
             BindNavigation(navigation);
+            Cancel = new Command(CancelProgress);
 
             OpenOptionsCommand = new AsyncCommand(() => navigationService.GoToOptionsAsync());
             ReloadQuotesCommand = new AsyncCommand(InitAsync);
+            UserPreferences.Changed += OnPreferencesChanged;
 
             InitAsync().FireAndForget();
         }
@@ -66,7 +80,6 @@ public class UserViewModel : BaseViewModel
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
                 SetInit();
-                InitQuotes();
                 InitTechniques();
             });
 
@@ -86,26 +99,31 @@ public class UserViewModel : BaseViewModel
         }
     }
 
+    private void OnPreferencesChanged()
+    {
+        OnPropertyChanged(nameof(PageTitle));
+        OnPropertyChanged(nameof(OptionsLabel));
+        OnPropertyChanged(nameof(UserLabel));
+        OnPropertyChanged(nameof(StandardUserLabel));
+        OnPropertyChanged(nameof(TechniquesCompletedLabel));
+        OnPropertyChanged(nameof(FollowersLabel));
+        OnPropertyChanged(nameof(RecommendedLabel));
+        OnPropertyChanged(nameof(BestQuotesLabel));
+        OnPropertyChanged(nameof(QuotesSearchingText));
+        OnPropertyChanged(nameof(LoadErrorText));
+        OnPropertyChanged(nameof(RetryText));
+        InitTechniques();
+    }
+
     private void InitTechniques()
     {
         MainThread.BeginInvokeOnMainThread(() =>
         {
+            Techniques.Clear();
             Techniques.Add(new TechniqueItem
             {
                 Title = "BSFF",
-                Subtitle = "Методика депрограммирования подсознания"
-            });
-        });
-    }
-
-    private void InitQuotes()
-    {
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            Quotes.Add(new QuoteItem
-            {
-                Text = "Лето, урожай, война.",
-                Author = "Латинская пословица"
+                Subtitle = AppStrings.ProfileBsffSubtitle
             });
         });
     }

@@ -5,7 +5,8 @@
              x:Class="PsychologyApp.Presentation.Views.TechniquePages.ConstructorPages.DesignerPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Practice.Constructor"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
-             Title="Техника">
+             x:DataType="vm:DesignerViewModel"
+             Title="{Binding PageTitle}">
 <StackLayout>
 
         <ScrollView 
@@ -15,37 +16,37 @@
             <StackLayout Margin="10, 0, 10, 0">
 
                 <ui:NavigationBarSimpleView
-                    TitleText="Создание техники"
-                    BackText="Назад"
+                    TitleText="{Binding DesignTitle}"
+                    BackText="{Binding BackText}"
                     BackCommand="{Binding Finish}"/>
 
                 <Frame HasShadow="True" Margin="10, 15, 10, 15">
                     <StackLayout Margin="0">
                         <Label
-                            Text="Описание"
+                            Text="{Binding DescriptionSection}"
                             FontFamily="RobotoMedium"
                             FontSize="16"
-                            TextColor="{StaticResource TextPrimary}"/>
+                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"/>
 
                         <ui:TextEntryView
                             Margin="0, 5, 0, 0"
-                            TitleText="Название"
-                            PlaceholderText="Крутилка Славинского"
+                            TitleText="{Binding NameFieldLabel}"
+                            PlaceholderText="{Binding NamePlaceholder}"
                             BodyText="{Binding Name}"/>
 
                         <ui:TextEntryView
-                            TitleText="Описание"
-                            PlaceholderText="Метод мгновенной нейтрализации..."
+                            TitleText="{Binding DescriptionFieldLabel}"
+                            PlaceholderText="{Binding DescriptionPlaceholder}"
                             BodyText="{Binding Description}"/>
 
                         <ui:TextEntryView
-                            TitleText="Тема"
-                            PlaceholderText="Эпизоды"
+                            TitleText="{Binding ThemeFieldLabel}"
+                            PlaceholderText="{Binding ThemePlaceholder}"
                             BodyText="{Binding Theme}"/>
 
                         <ui:TextEntryView
-                            TitleText="Автор"
-                            PlaceholderText="Живорад Славинский"
+                            TitleText="{Binding AuthorFieldLabel}"
+                            PlaceholderText="{Binding AuthorPlaceholder}"
                             BodyText="{Binding Author}"/>
 
                     </StackLayout>
@@ -55,14 +56,14 @@
                 <Frame HasShadow="True" Margin="10, 10, 10, 15">
                     <StackLayout>
                         <Label
-                            Text="Алгоритм"
+                            Text="{Binding AlgorithmSection}"
                             FontFamily="RobotoMedium"
                             FontSize="16"
-                            TextColor="{StaticResource TextPrimary}"/>
+                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"/>
 
                         <ui:TextEntryView
                             Margin="0, 5, 0, 0"
-                            TitleText="Список действий"
+                            TitleText="{Binding ActionsFieldLabel}"
                             BodyText="{Binding Actions}"/>
 
                     </StackLayout>
@@ -71,7 +72,7 @@
 
                 <ui:ButtonView
                     Margin="0, 5, 0, 10"
-                    BodyText="Сохранить"
+                    BodyText="{Binding SaveButtonText}"
                     TapCommand="{Binding ExecuteTechnique}" />
 
             </StackLayout>
