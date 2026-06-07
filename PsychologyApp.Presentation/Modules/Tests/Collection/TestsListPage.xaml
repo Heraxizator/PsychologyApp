@@ -9,13 +9,11 @@
              xmlns:tests="clr-namespace:PsychologyApp.Presentation.Modules.Tests.Collection"
              x:DataType="vm:TestsListViewModel"
              Title="{Binding PageTitle}">
-    <AbsoluteLayout
+    <Grid
         VerticalOptions="FillAndExpand"
         HorizontalOptions="FillAndExpand">
 
         <CollectionView
-            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
-            AbsoluteLayout.LayoutFlags="All"
             x:Name="TestsCollectionView"
             Margin="{StaticResource LayoutTabPageMarginThickness}"
             HorizontalOptions="FillAndExpand"
@@ -61,8 +59,8 @@
 
         <ui:ProgressBarView
             x:Name="LoadingProgress"
-            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
-            AbsoluteLayout.LayoutFlags="PositionProportional"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
             IsVisible="{Binding IsLoadingOverlayVisible}"
             IsLoading="{Binding IsLoadingOverlayVisible}"
             ProgressText="{Binding LoadingText}">
@@ -72,11 +70,11 @@
         </ui:ProgressBarView>
 
         <ui:RetryView
-            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
-            AbsoluteLayout.LayoutFlags="PositionProportional"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
             IsVisible="{Binding IsFail}"
             FailedText="{Binding FailedText}"
             RetryText="{Binding RetryText}"
             RetryCommand="{Binding Reload}" />
-    </AbsoluteLayout>
+    </Grid>
 </ContentPage>

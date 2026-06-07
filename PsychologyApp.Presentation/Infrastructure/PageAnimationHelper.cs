@@ -81,11 +81,10 @@ public sealed class PageAnimationHelper : IDisposable
 
         ResetCancellation();
 
-        if (_viewModel.IsInit && _introView is not null && !_introDismissed)
+        if (_viewModel.IsInit && _introView is not null && !_introDismissed && _introView.IsVisible)
         {
             _introDismissed = true;
             await UiAnimations.SafeHideAsync(_introView, cancellationToken: _cts!.Token);
-            await UiAnimations.SafeRevealPremiumAsync(_loadingView, allowHidden: true, cancellationToken: _cts!.Token);
             return;
         }
 
@@ -93,19 +92,14 @@ public sealed class PageAnimationHelper : IDisposable
         {
             _contentRevealed = true;
 
-            if (_loadingView is not null)
+            if (_contentView is not null && _contentView.IsVisible)
             {
-                await UiAnimations.SafeHideAsync(_loadingView, cancellationToken: _cts!.Token);
+                await UiAnimations.SafeRevealPremiumAsync(_contentView, cancellationToken: _cts!.Token);
             }
 
-            if (_contentView is not null)
+            if (_staggerLayout is not null && _staggerLayout.IsVisible)
             {
-                await UiAnimations.SafeRevealPremiumAsync(_contentView, allowHidden: true, cancellationToken: _cts!.Token);
-            }
-
-            if (_staggerLayout is not null)
-            {
-                await UiAnimations.RevealChildrenStaggeredAsync(_staggerLayout, cancellationToken: _cts!.Token, allowHidden: true);
+                await UiAnimations.RevealChildrenStaggeredAsync(_staggerLayout, cancellationToken: _cts!.Token);
             }
         }
         else if (_viewModel.IsInit)
@@ -114,13 +108,15 @@ public sealed class PageAnimationHelper : IDisposable
 
             if (_contentView is not null)
             {
-                await UiAnimations.SafeHideAsync(_contentView, cancellationToken: _cts!.Token);
+                UiAnimations.ResetVisualState(_contentView);
             }
         }
         else if (_viewModel.IsCreated)
         {
             _contentRevealed = false;
             _introDismissed = false;
+            UiAnimations.ResetVisualState(_introView);
+            UiAnimations.ResetVisualState(_contentView);
         }
     }
 
