@@ -7,11 +7,15 @@
              x:DataType="vm:QuestionViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}"
-             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons">
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Infrastructure.Behaviors">
 
     <StackLayout
         HorizontalOptions="FillAndExpand" 
         VerticalOptions="FillAndExpand">
+        <StackLayout.Behaviors>
+            <behaviors:RevealOnAppearingBehavior />
+        </StackLayout.Behaviors>
 
         <ui:NavigationBarSimpleView
             TitleText="{Binding PageTitle}"
@@ -30,12 +34,15 @@
                     x:DataType="vm:Question"
                     Style="{StaticResource BrandCardStyle}"
                     Margin="0,0,0,8">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior />
+                    </Border.Behaviors>
 
                         <StackLayout>
 
                             <Label
                                 Margin="0,0,0,10"
-                                TextColor="{StaticResource Primary}"
+                                TextColor="{DynamicResource Primary}"
                                 Style="{StaticResource SectionTitleStyle}">
                                 <Label.FormattedText>
                                     <FormattedString>
@@ -106,7 +113,7 @@
                                                     Content="{Binding Text}"
                                                     GroupName="{Binding Number}"
                                                     TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                                                    BorderColor="{StaticResource Primary}"
+                                                    BorderColor="{DynamicResource Primary}"
                                                     IsChecked="{Binding Selected}"/>
 
                                             </StackLayout>

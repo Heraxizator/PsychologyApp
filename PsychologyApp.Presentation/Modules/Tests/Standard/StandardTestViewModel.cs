@@ -31,7 +31,6 @@ public class StandardTestViewModel : BaseTestViewModel
         BindNavigation(navigation);
         ModuleName = AppStrings.TestsDetectorTitle;
         PageName = AppStrings.TestsStandardTitle;
-        UserPreferences.Changed += OnPreferencesChanged;
 
         Restart = new Command(ToRestart);
         BlackHandler = new Command(ToBlackHandler);
@@ -48,13 +47,14 @@ public class StandardTestViewModel : BaseTestViewModel
 
     private void ToRestart(object obj) => Init();
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
-        OnPropertyChanged(nameof(PageTitle));
-        OnPropertyChanged(nameof(ColorInstruction));
-        OnPropertyChanged(nameof(MoreInfoHeader));
-        OnPropertyChanged(nameof(MoreInfoBody));
-        OnPropertyChanged(nameof(RestartButtonText));
+        Notify(
+            nameof(PageTitle),
+            nameof(ColorInstruction),
+            nameof(MoreInfoHeader),
+            nameof(MoreInfoBody),
+            nameof(RestartButtonText));
         RefreshResultLabels();
     }
 

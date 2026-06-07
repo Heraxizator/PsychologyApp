@@ -5,10 +5,14 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.About"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Infrastructure.Behaviors"
              x:DataType="vm:InfoViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+        <StackLayout.Behaviors>
+            <behaviors:RevealOnAppearingBehavior />
+        </StackLayout.Behaviors>
 
         <ui:NavigationBarSimpleView
                 BackCommand="{Binding BackCommand}"

@@ -8,6 +8,7 @@ namespace PsychologyApp.Presentation.Views;
 public partial class TechniquesPage : ContentPage
 {
     private TechniquesViewModel? _viewModel;
+    private PageAnimationHelper? _animationHelper;
 
     public TechniquesPage(
         IPageViewModelActivator pageViewModelActivator,
@@ -15,11 +16,13 @@ public partial class TechniquesPage : ContentPage
     {
         InitializeComponent();
         _viewModel = this.ActivateViewModel(pageViewModelActivator, nav => techniquesViewModelFactory.Create(nav));
+        _animationHelper = new PageAnimationHelper(_viewModel, LoadingProgress, TechniquesCollectionView);
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        _animationHelper?.TryRevealAsync();
         _viewModel?.TryOpenPendingTechniqueAsync().FireAndForget();
     }
 
@@ -27,5 +30,15 @@ public partial class TechniquesPage : ContentPage
     {
         _viewModel?.Unsubscribe();
         base.OnDisappearing();
+    }
+
+    protected override void OnHandlerChanged()
+    {
+        base.OnHandlerChanged();
+        if (Handler is null)
+        {
+            _animationHelper?.Dispose();
+            _animationHelper = null;
+        }
     }
 }

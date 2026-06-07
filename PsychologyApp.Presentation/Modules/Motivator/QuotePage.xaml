@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Motivator"
              xmlns:profile="clr-namespace:PsychologyApp.Presentation.Modules.Profile"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Infrastructure.Behaviors"
              x:DataType="vm:QuoteViewModel"
              Shell.NavBarIsVisible="True"
              x:Name="page"
@@ -17,13 +18,17 @@
             VerticalOptions="FillAndExpand">
             <CollectionView
                 IsVisible="{Binding IsDone}"
-                Margin="{StaticResource LayoutPageMarginThickness}"
+                Margin="{StaticResource LayoutTabPageMarginThickness}"
                 x:Name="QuotesCollectionView"
                 HorizontalScrollBarVisibility="Never"
+                VerticalScrollBarVisibility="Never"
                 VerticalOptions="FillAndExpand"
                 RemainingItemsThreshold="2"
                 RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
                 ItemsSource="{Binding QuotesObservableCollection}">
+                <CollectionView.Behaviors>
+                    <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
+                </CollectionView.Behaviors>
 
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout
@@ -40,7 +45,11 @@
                             IsFavourite="{Binding IsFavourite, Mode=TwoWay}"
                             LikeCommand="{Binding LikeCommand}"
                             CopyCommand="{Binding CopyCommand}"
-                            ShareCommand="{Binding ShareCommand}" />
+                            ShareCommand="{Binding ShareCommand}">
+                            <ui:QuoteCardView.Behaviors>
+                                <behaviors:ListItemRevealBehavior />
+                            </ui:QuoteCardView.Behaviors>
+                        </ui:QuoteCardView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
 
@@ -54,6 +63,7 @@
             </CollectionView>
 
             <ui:ProgressBarView
+                x:Name="LoadingProgress"
                 VerticalOptions="CenterAndExpand"
                 IsVisible="{Binding IsInit}"
                 IsLoading="True"

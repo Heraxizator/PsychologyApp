@@ -14,7 +14,7 @@
                 WidthRequest="40"
                 HeightRequest="40"
                 StrokeThickness="0"
-                BackgroundColor="{StaticResource PrimaryTint}"
+                BackgroundColor="{DynamicResource PrimaryTint}"
                 VerticalOptions="Center">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="20" />
@@ -22,7 +22,7 @@
                 <Label
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
-                    TextColor="{StaticResource Primary}"
+                    TextColor="{DynamicResource Primary}"
                     Text="{mi:Material Icon=PlayArrow}" />
             </Border>
             <VerticalStackLayout

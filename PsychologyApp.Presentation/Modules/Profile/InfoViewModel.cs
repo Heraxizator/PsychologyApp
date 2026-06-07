@@ -16,14 +16,12 @@ public class InfoViewModel : BaseViewModel
         PageName = AppStrings.OptionsAboutTitle;
         BindNavigation(navigation);
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
-        UserPreferences.Changed += OnPreferencesChanged;
     }
 
     public ICommand BackCommand { get; }
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
-        OnPropertyChanged(nameof(PageTitle));
-        OnPropertyChanged(nameof(AboutBody));
+        Notify(nameof(PageTitle), nameof(AboutBody));
     }
 }

@@ -18,8 +18,8 @@ public interface INavigationService
     Task GoToFormAsync();
     Task GoToSettingsAsync();
     Task GoToPhysicsSearchAsync();
-    Task GoToTheoryAsync(string content);
-    Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Action action);
+    Task GoToTheoryAsync(string content, TechniqueId? techniqueId = null);
+    Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Action action, string? testId = null);
     Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer);
     Task GoToStandardTestAsync();
     Task GoToAlternativeTestAsync();

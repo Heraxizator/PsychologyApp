@@ -33,23 +33,23 @@ public class StartPhysicsViewModel : BaseViewModel
 
             BindNavigation(navigation);
             StartCommand = new AsyncCommand(() => navigationService.GoToPhysicsSearchAsync());
-            UserPreferences.Changed += OnPreferencesChanged;
             SetDone();
         }
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
-        OnPropertyChanged(nameof(PageTitle));
-        OnPropertyChanged(nameof(ExplanationHeader));
-        OnPropertyChanged(nameof(ExplanationBody));
-        OnPropertyChanged(nameof(DescriptionHeader));
-        OnPropertyChanged(nameof(DescriptionBody));
-        OnPropertyChanged(nameof(AlgorithmHeader));
-        OnPropertyChanged(nameof(StartButtonText));
-        OnPropertyChanged(nameof(LoadingText));
-        OnPropertyChanged(nameof(FailedText));
-        OnPropertyChanged(nameof(RetryText));
-        OnPropertyChanged(nameof(AlgorithmSteps));
+        Notify(
+            nameof(PageTitle),
+            nameof(ExplanationHeader),
+            nameof(ExplanationBody),
+            nameof(DescriptionHeader),
+            nameof(DescriptionBody),
+            nameof(AlgorithmHeader),
+            nameof(StartButtonText),
+            nameof(LoadingText),
+            nameof(FailedText),
+            nameof(RetryText),
+            nameof(AlgorithmSteps));
     }
 
     public StartPhysicsViewModel() { }

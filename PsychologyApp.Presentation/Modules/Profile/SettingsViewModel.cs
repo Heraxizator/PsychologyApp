@@ -22,7 +22,6 @@ public class SettingsViewModel : BaseViewModel
         RefreshLocalizedCollections();
 
         Finish = new AsyncCommand(ToEndAsync);
-        UserPreferences.Changed += OnPreferencesChanged;
     }
 
     public string PageTitle => AppStrings.SettingsTitle;
@@ -94,7 +93,7 @@ public class SettingsViewModel : BaseViewModel
         OnPropertyChanged(nameof(SizePickerTitle));
     }
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
         RefreshLocalizedCollections();
     }

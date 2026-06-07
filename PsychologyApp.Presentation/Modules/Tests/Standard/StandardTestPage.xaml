@@ -7,8 +7,12 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Tests"
              x:DataType="vm:StandardTestViewModel"
              Shell.NavBarIsVisible="False"
-             Title="{Binding PageTitle}">
+             Title="{Binding PageTitle}"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Infrastructure.Behaviors">
 <StackLayout VerticalOptions="FillAndExpand">
+        <StackLayout.Behaviors>
+            <behaviors:RevealOnAppearingBehavior />
+        </StackLayout.Behaviors>
 
         <ui:NavigationBarSimpleView
             TitleText="{Binding PageTitle}"
@@ -16,7 +20,7 @@
 
         <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
             <StackLayout>
-                <StackLayout IsVisible="{Binding IsStart}">
+                <StackLayout x:Name="StartSection" IsVisible="{Binding IsStart}">
                     <StackLayout Margin="{StaticResource LayoutPageMarginThickness}">
                         <Label
                             HorizontalTextAlignment="Center"
@@ -29,7 +33,7 @@
                         <BoxView 
                     Margin="30, 0, 30, 5"
                     HeightRequest="3"
-                    Color="{StaticResource Primary}"/>
+                    Color="{DynamicResource Primary}"/>
 
                         <FlexLayout JustifyContent="Center">
 
@@ -162,7 +166,7 @@
                         <BoxView 
                         Margin="30, 10, 30, 0"
                         HeightRequest="3"
-                        Color="{StaticResource Primary}"/>
+                        Color="{DynamicResource Primary}"/>
 
                     </StackLayout>
 
@@ -173,7 +177,8 @@
 
                 </StackLayout>
 
-                <StackLayout 
+                <StackLayout
+                x:Name="FinishSection"
                 IsVisible="{Binding IsFinish}">
 
                     <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
@@ -185,6 +190,9 @@
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="vm:ResultItem">
                                     <Border Style="{StaticResource BrandCardStyle}">
+                                        <Border.Behaviors>
+                                            <behaviors:ListItemRevealBehavior />
+                                        </Border.Behaviors>
                                         <VerticalStackLayout Spacing="8">
                                             <Label LineBreakMode="WordWrap">
                                                 <Label.FormattedText>

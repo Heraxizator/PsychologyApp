@@ -7,7 +7,7 @@
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0,0,0,8">
+            <Border Style="{StaticResource ListCardItemStyle}">
                 <StackLayout Spacing="8">
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{TemplateBinding ToggleExpandCommand}" />
@@ -15,7 +15,10 @@
                     <ui:TextItemView
                         TitleText="{TemplateBinding Title}"
                         BodyText="{TemplateBinding Subtitle}" />
-                    <StackLayout IsVisible="{TemplateBinding IsExpanded}" Spacing="6">
+                    <StackLayout
+                        StyleId="ExpandedSection"
+                        IsVisible="False"
+                        Spacing="6">
                         <Label
                             Style="{StaticResource SectionTitleStyle}"
                             FontSize="14"

@@ -4,6 +4,7 @@
              x:Class="PsychologyApp.Presentation.Views.Tests.TestsListPage"
              Shell.NavBarIsVisible="True"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Infrastructure.Behaviors"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Tests"
              xmlns:tests="clr-namespace:PsychologyApp.Presentation.Modules.Tests.Collection"
              x:DataType="vm:TestsListViewModel"
@@ -16,13 +17,16 @@
             AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
             AbsoluteLayout.LayoutFlags="All"
             x:Name="TestsCollectionView"
-            Margin="{StaticResource LayoutPageMarginThickness}"
+            Margin="{StaticResource LayoutTabPageMarginThickness}"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand"
             VerticalScrollBarVisibility="Never"
             IsVisible="{Binding IsDone}"
             SelectionMode="None"
             ItemsSource="{Binding TestItemCollection}">
+            <CollectionView.Behaviors>
+                <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
+            </CollectionView.Behaviors>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="tests:TestItem">
                     <ui:TestListCardView
@@ -31,7 +35,11 @@
                         Subtitle="{Binding Subtitle}"
                         LastResultText="{Binding LastResultSummary}"
                         HasLastResult="{Binding HasLastResult}"
-                        TapCommand="{Binding TapCommand}" />
+                        TapCommand="{Binding TapCommand}">
+                        <ui:TestListCardView.Behaviors>
+                            <behaviors:ListItemRevealBehavior />
+                        </ui:TestListCardView.Behaviors>
+                    </ui:TestListCardView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
             <CollectionView.EmptyView>
@@ -52,6 +60,7 @@
         </CollectionView>
 
         <ui:ProgressBarView
+            x:Name="LoadingProgress"
             AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
             AbsoluteLayout.LayoutFlags="PositionProportional"
             IsVisible="{Binding IsInit}"

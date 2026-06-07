@@ -54,14 +54,11 @@ public class QuestionViewModel : BaseViewModel
 
         ConfirmCommand = new AsyncCommand(CalculateAnswersAsync);
         BackCommand = new AsyncCommand(GoToRootAsync);
-        UserPreferences.Changed += OnPreferencesChanged;
     }
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
-        OnPropertyChanged(nameof(PageTitle));
-        OnPropertyChanged(nameof(QuestionPrefix));
-        OnPropertyChanged(nameof(FinishButtonText));
+        Notify(nameof(PageTitle), nameof(QuestionPrefix), nameof(FinishButtonText));
     }
 
     private async Task CalculateAnswersAsync()

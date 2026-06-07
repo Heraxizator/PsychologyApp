@@ -3,12 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Views.Profile.OptionsPage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Infrastructure.Behaviors"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Profile"
              x:DataType="vm:OptionsViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
     <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+        <StackLayout.Behaviors>
+            <behaviors:StaggerChildrenBehavior />
+        </StackLayout.Behaviors>
         <ui:NavigationBarSimpleView
             TitleText="{Binding PageTitle}"
             BackCommand="{Binding BackCommand}" />

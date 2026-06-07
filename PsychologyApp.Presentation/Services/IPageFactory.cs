@@ -27,8 +27,8 @@ public interface IPageFactory
     FormPage CreateFormPage();
     SettingsPage CreateSettingsPage();
     Views.Physics.PhysicsSearchPage CreatePhysicsSearchPage();
-    TheoryPage CreateTheoryPage(string content);
-    FindProblemPage CreateFindProblemPage(string? description, List<string> algorithm, string? comment, Action action);
+    TheoryPage CreateTheoryPage(string content, TechniqueId? techniqueId = null);
+    FindProblemPage CreateFindProblemPage(string? description, List<string> algorithm, string? comment, Action action, string? testId = null);
     QuestionPage CreateQuestionPage(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, Modules.Tests.Collection.TestSessionInfo? session = null);
     StandardTestPage CreateStandardTestPage();
     AlternativeTestPage CreateAlternativeTestPage();

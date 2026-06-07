@@ -4,6 +4,7 @@
              x:Class="PsychologyApp.Presentation.Views.TechniquesPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Technique.Main"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Infrastructure.Behaviors"
              xmlns:technique="clr-namespace:PsychologyApp.Presentation.Technique"
              x:DataType="vm:TechniquesViewModel"
              Shell.NavBarIsVisible="True"
@@ -18,39 +19,51 @@
         HorizontalOptions="FillAndExpand">
 
         <CollectionView
+            x:Name="TechniquesCollectionView"
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
-            Margin="{StaticResource LayoutPageMarginThickness}"
+            Margin="{StaticResource LayoutTabPageMarginThickness}"
             ItemsSource="{Binding Techniques}"
+            IsVisible="{Binding IsDone}"
             SelectionMode="Single"
             VerticalScrollBarVisibility="Never"
             HorizontalScrollBarVisibility="Never">
+            <CollectionView.Behaviors>
+                <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
+            </CollectionView.Behaviors>
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="4" />
+            </CollectionView.ItemsLayout>
 
             <CollectionView.Header>
                 <StackLayout Spacing="{StaticResource LayoutSpacing}">
-                    <Label Text="{Binding TodayForYouLabel}" Style="{StaticResource SectionTitleStyle}" />
-                    <Border Style="{StaticResource TodayBannerStyle}">
-                        <VerticalStackLayout Spacing="8">
-                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                                <Label
-                                    Grid.Column="0"
-                                    Text="{Binding TodayTechniqueTitle}"
-                                    Style="{StaticResource SectionTitleStyle}"
-                                    VerticalOptions="Center" />
-                                <ui:ButtonView
-                                    Grid.Column="1"
-                                    IsCompact="True"
-                                    VerticalOptions="Center"
-                                    BodyText="{Binding TodayStartPracticeText}"
-                                    TapCommand="{Binding StartTodayPracticeCommand}" />
-                            </Grid>
-                            <Label
-                                Text="{Binding StreakDisplay}"
-                                Style="{StaticResource CaptionStyle}"
-                                TextColor="{StaticResource Primary}"
-                                IsVisible="{Binding HasStreak}" />
-                        </VerticalStackLayout>
-                    </Border>
+                    <StackLayout.Behaviors>
+                        <behaviors:StaggerChildrenBehavior />
+                    </StackLayout.Behaviors>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <Label
+                            Grid.Column="0"
+                            Text="{Binding TodayForYouLabel}"
+                            Style="{StaticResource SectionTitleStyle}"
+                            VerticalOptions="Center" />
+                        <ui:ButtonView
+                            Grid.Column="1"
+                            IsCompact="True"
+                            VerticalOptions="Center"
+                            BodyText="{Binding TodayStartPracticeText}"
+                            TapCommand="{Binding StartTodayPracticeCommand}" />
+                    </Grid>
+                    <ui:TechniqueListCardView
+                        Number="{Binding TodayTechniqueItem.Number}"
+                        Date="{Binding TodayTechniqueItem.Date}"
+                        Image="{Binding TodayTechniqueItem.Image}"
+                        Title="{Binding TodayTechniqueItem.Title}"
+                        Subtitle="{Binding TodayTechniqueItem.Subtitle}"
+                        Theme="{Binding TodayTechniqueItem.Theme}"
+                        Author="{Binding TodayTechniqueItem.Author}"
+                        Active="{Binding TodayTechniqueItem.Active}"
+                        TapCommand="{Binding TodayTechniqueItem.TapCommand}" />
                     <StackLayout
                         Orientation="Horizontal"
                         Margin="0,0,0,12">
@@ -79,7 +92,11 @@
                         Theme="{Binding Theme}"
                         Author="{Binding Author}"
                         Active="{Binding Active}"
-                        TapCommand="{Binding TapCommand}" />
+                        TapCommand="{Binding TapCommand}">
+                        <ui:TechniqueListCardView.Behaviors>
+                            <behaviors:ListItemRevealBehavior />
+                        </ui:TechniqueListCardView.Behaviors>
+                    </ui:TechniqueListCardView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
 
@@ -91,6 +108,26 @@
             </CollectionView.EmptyView>
 
         </CollectionView>
+
+        <ui:ProgressBarView
+            x:Name="LoadingProgress"
+            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            IsVisible="{Binding IsInit}"
+            IsLoading="{Binding IsInit}"
+            ProgressText="{Binding LoadingText}">
+            <ui:ProgressBarView.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Cancel}" />
+            </ui:ProgressBarView.GestureRecognizers>
+        </ui:ProgressBarView>
+
+        <ui:RetryView
+            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            IsVisible="{Binding IsFail}"
+            FailedText="{Binding FailedText}"
+            RetryText="{Binding RetryText}"
+            RetryCommand="{Binding Reload}" />
 
     </AbsoluteLayout>
 </ContentPage>

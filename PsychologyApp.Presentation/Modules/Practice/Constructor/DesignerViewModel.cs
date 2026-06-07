@@ -64,8 +64,6 @@ public class DesignerViewModel : BaseViewModel
             BindNavigation(navigation, _navigationService);
 
             ExecuteTechnique = new AsyncCommand(ExecuteOperationAsync);
-            UserPreferences.Changed += OnPreferencesChanged;
-
             InitAsync().FireAndForget();
         }
 
@@ -75,23 +73,24 @@ public class DesignerViewModel : BaseViewModel
         }
     }
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
-        OnPropertyChanged(nameof(PageTitle));
-        OnPropertyChanged(nameof(DesignTitle));
-        OnPropertyChanged(nameof(BackText));
-        OnPropertyChanged(nameof(DescriptionSection));
-        OnPropertyChanged(nameof(NameFieldLabel));
-        OnPropertyChanged(nameof(DescriptionFieldLabel));
-        OnPropertyChanged(nameof(ThemeFieldLabel));
-        OnPropertyChanged(nameof(AuthorFieldLabel));
-        OnPropertyChanged(nameof(AlgorithmSection));
-        OnPropertyChanged(nameof(ActionsFieldLabel));
-        OnPropertyChanged(nameof(SaveButtonText));
-        OnPropertyChanged(nameof(NamePlaceholder));
-        OnPropertyChanged(nameof(DescriptionPlaceholder));
-        OnPropertyChanged(nameof(ThemePlaceholder));
-        OnPropertyChanged(nameof(AuthorPlaceholder));
+        Notify(
+            nameof(PageTitle),
+            nameof(DesignTitle),
+            nameof(BackText),
+            nameof(DescriptionSection),
+            nameof(NameFieldLabel),
+            nameof(DescriptionFieldLabel),
+            nameof(ThemeFieldLabel),
+            nameof(AuthorFieldLabel),
+            nameof(AlgorithmSection),
+            nameof(ActionsFieldLabel),
+            nameof(SaveButtonText),
+            nameof(NamePlaceholder),
+            nameof(DescriptionPlaceholder),
+            nameof(ThemePlaceholder),
+            nameof(AuthorPlaceholder));
     }
 
     private async Task ExecuteOperationAsync()

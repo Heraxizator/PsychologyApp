@@ -6,7 +6,11 @@
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Grid Margin="0,0,0,12" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+            <Grid
+                Margin="{StaticResource NavBarBottomMargin}"
+                ColumnDefinitions="44,*,44"
+                ColumnSpacing="8"
+                MinimumHeightRequest="44">
                 <Label
                     Grid.Column="0"
                     Style="{StaticResource NavBackIconStyle}"

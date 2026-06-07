@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Infrastructure;
 using System.Collections;
 using System.Windows.Input;
 
@@ -5,9 +6,64 @@ namespace PsychologyApp.Presentation.UI.Components;
 
 public partial class PhysicsReasonCardView : ContentView
 {
+    private StackLayout? _expandedSection;
+    private bool _isAnimatingExpand;
+
     public PhysicsReasonCardView()
     {
         InitializeComponent();
+        Loaded += OnLoaded;
+        VisualElementPressFeedback.AttachToTemplateRoot(this);
+    }
+
+    private void OnLoaded(object? sender, EventArgs e)
+    {
+        _expandedSection = this.GetVisualTreeDescendants()
+            .OfType<StackLayout>()
+            .FirstOrDefault(layout => layout.StyleId == "ExpandedSection");
+
+        if (_expandedSection is not null)
+        {
+            _expandedSection.IsVisible = IsExpanded;
+            _expandedSection.Opacity = IsExpanded ? 1 : 0;
+        }
+    }
+
+    protected override async void OnPropertyChanged(string? propertyName = null)
+    {
+        base.OnPropertyChanged(propertyName);
+
+        if (propertyName != nameof(IsExpanded) || _expandedSection is null || _isAnimatingExpand)
+        {
+            return;
+        }
+
+        _isAnimatingExpand = true;
+        try
+        {
+            if (IsExpanded)
+            {
+                _expandedSection.IsVisible = true;
+                _expandedSection.Opacity = 0;
+                _expandedSection.TranslationY = -UiAnimations.SlideOffset;
+                await Task.WhenAll(
+                    _expandedSection.FadeToAsync(1, UiAnimations.MicroDuration, UiAnimations.StandardEasing),
+                    _expandedSection.TranslateToAsync(0, 0, UiAnimations.MicroDuration, UiAnimations.StandardEasing));
+            }
+            else
+            {
+                await Task.WhenAll(
+                    _expandedSection.FadeToAsync(0, UiAnimations.MicroDuration, UiAnimations.StandardEasing),
+                    _expandedSection.TranslateToAsync(0, -UiAnimations.SlideOffset, UiAnimations.MicroDuration, UiAnimations.StandardEasing));
+                _expandedSection.IsVisible = false;
+                _expandedSection.Opacity = 1;
+                _expandedSection.TranslationY = 0;
+            }
+        }
+        finally
+        {
+            _isAnimatingExpand = false;
+        }
     }
 
     public static readonly BindableProperty TitleProperty =

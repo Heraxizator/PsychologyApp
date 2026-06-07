@@ -15,7 +15,11 @@ public class BaseViewModel : INotifyPropertyChanged
     protected INavigationService? NavigationService { get; private set; }
     protected string? TheoryInfo { get; set; }
     private TechniqueId? _appliedTechniqueId;
-    private bool _preferencesSubscribed;
+
+    protected BaseViewModel()
+    {
+        UserPreferences.Changed += HandlePreferencesChanged;
+    }
 
     public string TechniquePageTitle => AppStrings.TechniqueTitle;
     public string TheoryToolbarText => AppStrings.TechniqueTheory;
@@ -59,26 +63,40 @@ public class BaseViewModel : INotifyPropertyChanged
             }
 
             string content = TheoryInfo ?? string.Empty;
-            navigationService.GoToTheoryAsync(content).FireAndForget();
+            navigationService.GoToTheoryAsync(content, _appliedTechniqueId).FireAndForget();
         });
 
-        if (!_preferencesSubscribed)
-        {
-            UserPreferences.Changed += OnUiPreferencesChanged;
-            _preferencesSubscribed = true;
-        }
+    }
+
+    private void HandlePreferencesChanged()
+    {
+        OnUiPreferencesChanged();
+        RefreshLocalizedProperties();
     }
 
     private void OnUiPreferencesChanged()
     {
-        OnPropertyChanged(nameof(TechniquePageTitle));
-        OnPropertyChanged(nameof(TheoryToolbarText));
-        OnPropertyChanged(nameof(FormSectionTitle));
-        OnPropertyChanged(nameof(AddButtonText));
+        Notify(
+            nameof(TechniquePageTitle),
+            nameof(TheoryToolbarText),
+            nameof(FormSectionTitle),
+            nameof(AddButtonText));
 
         if (_appliedTechniqueId is TechniqueId techniqueId)
         {
             ApplyTechniqueCore(techniqueId);
+        }
+    }
+
+    protected virtual void RefreshLocalizedProperties()
+    {
+    }
+
+    protected void Notify(params string[] propertyNames)
+    {
+        foreach (string propertyName in propertyNames)
+        {
+            OnPropertyChanged(propertyName);
         }
     }
 

@@ -1,13 +1,26 @@
+using PsychologyApp.Presentation.Infrastructure;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.UI.Components;
 
 public partial class NavigationBarSimpleView : ContentView
 {
-	public NavigationBarSimpleView()
-	{
-		InitializeComponent();
-	}
+    public NavigationBarSimpleView()
+    {
+        InitializeComponent();
+        Loaded += OnLoaded;
+    }
+
+    private void OnLoaded(object? sender, EventArgs e)
+    {
+        foreach (Label label in this.GetVisualTreeDescendants().OfType<Label>())
+        {
+            if (label.GestureRecognizers.OfType<TapGestureRecognizer>().Any())
+            {
+                VisualElementPressFeedback.Attach(label);
+            }
+        }
+    }
 
     public static readonly BindableProperty TitleTextProperty =
         BindableProperty.Create(nameof(TitleText), typeof(string), typeof(NavigationBarSimpleView), string.Empty);

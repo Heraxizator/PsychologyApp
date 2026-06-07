@@ -49,7 +49,11 @@ public static class GlobalExceptionHandler
         {
             ILogger logger = MauiServiceProvider.GetRequired<ILoggerFactory>()
                 .CreateLogger(typeof(GlobalExceptionHandler));
-            logger.LogError(exception, message);
+            logger.LogError(
+                exception,
+                "{Message}. Type={ExceptionType}",
+                message,
+                exception.GetType().Name);
         }
         catch
         {

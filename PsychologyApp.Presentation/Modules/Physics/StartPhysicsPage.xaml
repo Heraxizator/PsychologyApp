@@ -4,6 +4,7 @@
              x:Class="PsychologyApp.Presentation.Views.Physics.StartPhysicsPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Physics"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Infrastructure.Behaviors"
              x:DataType="vm:StartPhysicsViewModel"
              Shell.NavBarIsVisible="True"
              Title="{Binding PageTitle}">
@@ -13,14 +14,18 @@
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
             VerticalScrollBarVisibility="Never">
-            <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+            <StackLayout Margin="{StaticResource LayoutTabPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
                 <ui:ProgressBarView
+                    x:Name="LoadingProgress"
                     IsVisible="{Binding IsInit}"
                     IsLoading="{Binding IsInit}"
                     ProgressText="{Binding LoadingText}"
                     CancelCommand="{Binding Cancel}" />
 
-                <StackLayout IsVisible="{Binding IsDone}" Spacing="12">
+                <StackLayout x:Name="ContentStack" IsVisible="{Binding IsDone}" Spacing="12">
+                    <StackLayout.Behaviors>
+                        <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
+                    </StackLayout.Behaviors>
                     <ui:TextBoxView
                         HeaderText="{Binding ExplanationHeader}"
                         BodyText="{Binding ExplanationBody}" />

@@ -5,7 +5,7 @@
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Border Style="{StaticResource BrandCardStyle}" IsVisible="{TemplateBinding Active}">
+            <Border Style="{StaticResource ListCardItemStyle}" IsVisible="{TemplateBinding Active}">
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
                 </Border.GestureRecognizers>
@@ -52,7 +52,7 @@
                             Text="{TemplateBinding Theme}"
                             Style="{StaticResource BodyStyle}"
                             FontFamily="{StaticResource SemiBoldFontFamily}"
-                            TextColor="{StaticResource Primary}"
+                            TextColor="{DynamicResource Primary}"
                             HorizontalOptions="Start" />
                         <Label
                             Text="{TemplateBinding Author}"

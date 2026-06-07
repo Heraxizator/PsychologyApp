@@ -8,6 +8,10 @@ using PsychologyApp.Presentation.Modules.Practice.Techniques;
 using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.Services.Factories;
 using PsychologyApp.Presentation.Technique.Main;
+using PsychologyApp.Presentation.ViewModels.Clean;
+using PsychologyApp.Presentation.ViewModels.Motivator;
+using PsychologyApp.Presentation.ViewModels.Physics;
+using PsychologyApp.Presentation.ViewModels.Tests;
 
 namespace PsychologyApp.Presentation;
 
@@ -41,6 +45,7 @@ public partial class AppShell : Shell
     private void OnPreferencesChanged()
     {
         ApplyLocalization();
+        RefreshShellTabPageTitles();
     }
 
     public void ApplyLocalization()
@@ -52,6 +57,38 @@ public partial class AppShell : Shell
         MotivatorTab.Title = AppStrings.ShellTabMotivatorShort;
         ApplyTabBarChrome();
         ApplyStatusBarChrome(UserPreferences.IsDarkTheme(UserPreferences.Load().Theme));
+    }
+
+    private void RefreshShellTabPageTitles()
+    {
+        UpdateTabPageTitle(PracticeTab);
+        UpdateTabPageTitle(DetectorTab);
+        UpdateTabPageTitle(SomaticTab);
+        UpdateTabPageTitle(CleanerTab);
+        UpdateTabPageTitle(MotivatorTab);
+    }
+
+    private static void UpdateTabPageTitle(ShellContent tab)
+    {
+        if (tab.Content is not ContentPage page)
+        {
+            return;
+        }
+
+        string? title = page.BindingContext switch
+        {
+            TechniquesViewModel techniques => techniques.PageTitle,
+            ViewModels.Tests.TestsListViewModel tests => tests.PageTitle,
+            ViewModels.Physics.StartPhysicsViewModel physics => physics.PageTitle,
+            ViewModels.Clean.MusicPlayerViewModel music => music.PageTitle,
+            ViewModels.Motivator.QuoteViewModel quotes => quotes.PageTitle,
+            _ => null
+        };
+
+        if (!string.IsNullOrWhiteSpace(title))
+        {
+            page.Title = title;
+        }
     }
 
     private void ApplyTabBarChrome()

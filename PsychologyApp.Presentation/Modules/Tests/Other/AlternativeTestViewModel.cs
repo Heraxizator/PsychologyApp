@@ -27,7 +27,6 @@ public class AlternativeTestViewModel : BaseTestViewModel
 
         ModuleName = AppStrings.TestsDetectorTitle;
         PageName = AppStrings.TestsBriefTitle;
-        UserPreferences.Changed += OnPreferencesChanged;
 
         Restart = new Command(ToRestart);
         BlackHandler = new Command(ToBlackHandler);
@@ -44,14 +43,15 @@ public class AlternativeTestViewModel : BaseTestViewModel
 
     private void ToRestart(object obj) => Init();
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
-        OnPropertyChanged(nameof(PageTitle));
-        OnPropertyChanged(nameof(MoreInfoHeader));
-        OnPropertyChanged(nameof(MoreInfoBody));
-        OnPropertyChanged(nameof(RestartButtonText));
-        OnPropertyChanged(nameof(FirstColorLabel));
-        OnPropertyChanged(nameof(SecondColorLabel));
+        Notify(
+            nameof(PageTitle),
+            nameof(MoreInfoHeader),
+            nameof(MoreInfoBody),
+            nameof(RestartButtonText),
+            nameof(FirstColorLabel),
+            nameof(SecondColorLabel));
         CurrentInstruction = _colourSelectedItems.Count == 0
             ? AppStrings.TestsLuscherFirstInstruction
             : AppStrings.TestsLuscherSecondInstruction;

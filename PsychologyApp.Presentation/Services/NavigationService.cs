@@ -21,8 +21,8 @@ public interface INavigationService
     Task GoToFormAsync();
     Task GoToSettingsAsync();
     Task GoToPhysicsSearchAsync();
-    Task GoToTheoryAsync(string content);
-    Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Action action);
+    Task GoToTheoryAsync(string content, TechniqueId? techniqueId = null);
+    Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Action action, string? testId = null);
     Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null);
     Task GoToStandardTestAsync();
     Task GoToAlternativeTestAsync();
@@ -68,11 +68,11 @@ public sealed class MauiNavigationService(INavigation navigation, IPageFactory p
     public Task GoToPhysicsSearchAsync() =>
         navigation.PushAsync(pageFactory.CreatePhysicsSearchPage(), false);
 
-    public Task GoToTheoryAsync(string content) =>
-        navigation.PushAsync(pageFactory.CreateTheoryPage(content), false);
+    public Task GoToTheoryAsync(string content, TechniqueId? techniqueId = null) =>
+        navigation.PushAsync(pageFactory.CreateTheoryPage(content, techniqueId), false);
 
-    public Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Action action) =>
-        navigation.PushAsync(pageFactory.CreateFindProblemPage(description, algorithm, comment, action), false);
+    public Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Action action, string? testId = null) =>
+        navigation.PushAsync(pageFactory.CreateFindProblemPage(description, algorithm, comment, action, testId), false);
 
     public Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null) =>
         navigation.PushAsync(pageFactory.CreateQuestionPage(questions, scoreAnalyzer, singleAnswer, session), true);

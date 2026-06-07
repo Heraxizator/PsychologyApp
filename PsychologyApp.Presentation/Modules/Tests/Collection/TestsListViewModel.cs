@@ -31,18 +31,18 @@ public class TestsListViewModel : BaseViewModel
         _userProgressService = userProgressService;
         BindNavigation(navigation, navigationService);
         Reload = new AsyncCommand(InitAsync);
-        UserPreferences.Changed += OnPreferencesChanged;
         InitAsync().FireAndForget();
     }
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
-        OnPropertyChanged(nameof(PageTitle));
-        OnPropertyChanged(nameof(EmptyTitle));
-        OnPropertyChanged(nameof(EmptyBody));
-        OnPropertyChanged(nameof(LoadingText));
-        OnPropertyChanged(nameof(FailedText));
-        OnPropertyChanged(nameof(RetryText));
+        Notify(
+            nameof(PageTitle),
+            nameof(EmptyTitle),
+            nameof(EmptyBody),
+            nameof(LoadingText),
+            nameof(FailedText),
+            nameof(RetryText));
         InitAsync().FireAndForget();
     }
 
@@ -51,7 +51,8 @@ public class TestsListViewModel : BaseViewModel
             testItem.Description,
             testItem.Algorithm,
             testItem.Comment,
-            testItem.Action);
+            testItem.Action,
+            testItem.TestId);
 
     public async Task InitAsync()
     {

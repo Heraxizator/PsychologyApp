@@ -6,31 +6,43 @@
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <StackLayout Margin="0,0,0,12" Orientation="Horizontal">
+            <Grid
+                Margin="{StaticResource NavBarBottomMargin}"
+                ColumnDefinitions="44,*,Auto"
+                ColumnSpacing="8"
+                MinimumHeightRequest="44">
                 <Label
+                    Grid.Column="0"
                     Style="{StaticResource NavBackIconStyle}"
-                    HorizontalOptions="StartAndExpand"
                     Text="{mi:Material Icon=KeyboardArrowLeft}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{TemplateBinding BackCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
                 <Label
+                    Grid.Column="1"
                     Text="{TemplateBinding TitleText}"
-                    Style="{StaticResource NavTitleStyle}" />
+                    Style="{StaticResource NavTitleStyle}"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    LineBreakMode="TailTruncation"
+                    MaxLines="1" />
                 <Label
+                    Grid.Column="2"
                     IsVisible="{TemplateBinding ExtensionEnabled}"
                     Text="{TemplateBinding ExtensionText}"
-                    Margin="10,0,0,0"
-                    HorizontalOptions="EndAndExpand"
+                    HorizontalOptions="End"
+                    HorizontalTextAlignment="End"
+                    LineBreakMode="TailTruncation"
+                    MaxLines="1"
                     FontFamily="{StaticResource MediumFontFamily}"
-                    TextColor="{StaticResource Primary}"
+                    TextColor="{DynamicResource Primary}"
                     FontSize="{StaticResource BodyFontSize}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{TemplateBinding ExtensionCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
-            </StackLayout>
+            </Grid>
         </ControlTemplate>
     </ContentView.ControlTemplate>
 

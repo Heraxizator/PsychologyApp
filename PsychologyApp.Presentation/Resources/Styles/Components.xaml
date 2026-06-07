@@ -12,19 +12,26 @@
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource SurfaceDark}}" />
     </Style>
 
+    <Shadow
+        x:Key="BrandCardShadow"
+        Brush="#400085FF"
+        Offset="0,4"
+        Radius="8"
+        Opacity="0.2" />
+
     <!-- dvgups card: white, rounded-2xl, blue-tinted shadow -->
     <Style x:Key="BrandCardStyle" TargetType="Border">
-        <Setter Property="Margin" Value="0,0,0,12" />
+        <Setter Property="Margin" Value="4,4,4,12" />
         <Setter Property="Padding" Value="20" />
         <Setter Property="Stroke" Value="Transparent" />
         <Setter Property="StrokeThickness" Value="0" />
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource SurfaceDark}}" />
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusShape}" />
-        <Setter Property="Shadow">
-            <Setter.Value>
-                <Shadow Brush="#400085FF" Offset="0,0" Radius="10" Opacity="0.25" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Shadow" Value="{StaticResource BrandCardShadow}" />
+    </Style>
+
+    <Style x:Key="ListCardItemStyle" TargetType="Border" BasedOn="{StaticResource BrandCardStyle}">
+        <Setter Property="Margin" Value="4,4,4,12" />
     </Style>
 
     <!-- dvgups page panel: single white container on #FAFAFA -->
@@ -35,11 +42,7 @@
         <Setter Property="StrokeThickness" Value="0" />
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource SurfaceDark}}" />
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusShape}" />
-        <Setter Property="Shadow">
-            <Setter.Value>
-                <Shadow Brush="#400085FF" Offset="0,0" Radius="10" Opacity="0.25" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Shadow" Value="{StaticResource BrandCardShadow}" />
     </Style>
 
     <Style x:Key="CardBorderStyle" TargetType="Border" BasedOn="{StaticResource BrandCardStyle}" />
@@ -49,7 +52,7 @@
         <Setter Property="Padding" Value="16,12" />
         <Setter Property="MinimumHeightRequest" Value="44" />
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
-        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
         <Setter Property="Stroke" Value="Transparent" />
         <Setter Property="StrokeThickness" Value="0" />
     </Style>
@@ -71,7 +74,7 @@
         <Setter Property="MinimumHeightRequest" Value="44" />
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="Stroke" Value="{StaticResource Primary}" />
+        <Setter Property="Stroke" Value="{DynamicResource Primary}" />
         <Setter Property="StrokeThickness" Value="1.5" />
     </Style>
 
@@ -80,7 +83,7 @@
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="VerticalTextAlignment" Value="Center" />
-        <Setter Property="TextColor" Value="{StaticResource Primary}" />
+        <Setter Property="TextColor" Value="{DynamicResource Primary}" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontFamily" Value="{StaticResource MediumFontFamily}" />
         <Setter Property="LineBreakMode" Value="NoWrap" />
@@ -89,7 +92,7 @@
     <Style x:Key="CompactPrimaryBorderStyle" TargetType="Border">
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
-        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
         <Setter Property="Stroke" Value="Transparent" />
         <Setter Property="StrokeThickness" Value="0" />
         <Setter Property="MinimumHeightRequest" Value="36" />
@@ -110,7 +113,7 @@
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="Stroke" Value="{StaticResource Primary}" />
+        <Setter Property="Stroke" Value="{DynamicResource Primary}" />
         <Setter Property="StrokeThickness" Value="1.5" />
         <Setter Property="MinimumHeightRequest" Value="36" />
         <Setter Property="VerticalOptions" Value="Center" />
@@ -120,7 +123,7 @@
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="VerticalTextAlignment" Value="Center" />
-        <Setter Property="TextColor" Value="{StaticResource Primary}" />
+        <Setter Property="TextColor" Value="{DynamicResource Primary}" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontFamily" Value="{StaticResource MediumFontFamily}" />
         <Setter Property="LineBreakMode" Value="NoWrap" />
@@ -149,20 +152,34 @@
         <Setter Property="MinimumHeightRequest" Value="44" />
     </Style>
 
-    <Style x:Key="MusicListRowStyle" TargetType="Border">
-        <Setter Property="Margin" Value="0,0,0,8" />
+    <Style x:Key="MusicListRowStyle" TargetType="Border" BasedOn="{StaticResource ListCardItemStyle}">
         <Setter Property="Padding" Value="12,14" />
-        <Setter Property="StrokeThickness" Value="1" />
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource SurfaceDark}}" />
-        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}" />
     </Style>
 
-    <Style x:Key="TodayBannerStyle" TargetType="Border">
+    <Style x:Key="ProfileTechniqueCardStyle" TargetType="Border" BasedOn="{StaticResource ListCardItemStyle}">
         <Setter Property="Padding" Value="12" />
-        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="WidthRequest" Value="228" />
+        <Setter Property="MinimumHeightRequest" Value="112" />
+        <Setter Property="Margin" Value="4,4,8,12" />
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
-        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryTint}" />
+    </Style>
+
+    <Style x:Key="ProfileAvatarBorderStyle" TargetType="Border">
+        <Setter Property="WidthRequest" Value="56" />
+        <Setter Property="HeightRequest" Value="56" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryTint}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 28" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="TodayBannerStyle" TargetType="Border" BasedOn="{StaticResource ListCardItemStyle}">
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="Margin" Value="4,4,4,12" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
     </Style>
 
     <Style x:Key="InputEditorStyle" TargetType="Editor">

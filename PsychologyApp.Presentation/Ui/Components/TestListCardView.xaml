@@ -17,7 +17,7 @@
                         Text="{TemplateBinding LastResultText}"
                         Style="{StaticResource CaptionStyle}"
                         FontFamily="{StaticResource MediumFontFamily}"
-                        TextColor="{StaticResource Primary}" />
+                        TextColor="{DynamicResource Primary}" />
                 </StackLayout>
             </Border>
         </ControlTemplate>
