@@ -3,20 +3,35 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:system="clr-namespace:System;assembly=netstandard">
+    xmlns:system="clr-namespace:System;assembly=netstandard"
+    xmlns:shapes="clr-namespace:Microsoft.Maui.Controls.Shapes;assembly=Microsoft.Maui.Controls">
 
-    <Color x:Key="TextPrimaryLight">#DE000000</Color>
-    <Color x:Key="TextPrimaryDark">#EEEEEE</Color>
-
-    <system:Double x:Key="SectionTitleFontSize">16</system:Double>
+    <system:Double x:Key="PageTitleFontSize">20</system:Double>
+    <system:Double x:Key="SectionTitleFontSize">18</system:Double>
     <system:Double x:Key="BodyFontSize">14</system:Double>
-    <system:Double x:Key="NavTitleFontSize">17</system:Double>
-    <x:String x:Key="BodyFontFamily">RobotoRegular</x:String>
-    <system:Double x:Key="UiCornerRadius">30</system:Double>
+    <system:Double x:Key="CaptionFontSize">14</system:Double>
+    <system:Double x:Key="NavTitleFontSize">18</system:Double>
+    <system:Double x:Key="UiCornerRadius">16</system:Double>
+    <system:Double x:Key="UiButtonCornerRadius">8</system:Double>
+    <system:Double x:Key="LayoutSpacing">20</system:Double>
+    <system:Double x:Key="LayoutPageMargin">20</system:Double>
+    <x:String x:Key="BodyFontFamily">InterRegular</x:String>
+    <x:String x:Key="MediumFontFamily">InterMedium</x:String>
+    <x:String x:Key="SemiBoldFontFamily">InterSemiBold</x:String>
+
+    <shapes:RoundRectangle x:Key="UiCornerRadiusShape" CornerRadius="16" />
+    <shapes:RoundRectangle x:Key="UiCornerRadiusCompactShape" CornerRadius="8" />
+    <shapes:RoundRectangle x:Key="UiCornerRadiusEntryShape" CornerRadius="8" />
+
+    <Style x:Key="PageTitleStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="{DynamicResource PageTitleFontSize}" />
+        <Setter Property="FontFamily" Value="{StaticResource SemiBoldFontFamily}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+    </Style>
 
     <Style x:Key="SectionTitleStyle" TargetType="Label">
         <Setter Property="FontSize" Value="{DynamicResource SectionTitleFontSize}" />
-        <Setter Property="FontFamily" Value="RobotoMedium" />
+        <Setter Property="FontFamily" Value="{StaticResource SemiBoldFontFamily}" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
     </Style>
 
@@ -24,21 +39,27 @@
         <Setter Property="FontSize" Value="{DynamicResource BodyFontSize}" />
         <Setter Property="FontFamily" Value="{DynamicResource BodyFontFamily}" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
-        <Setter Property="HorizontalTextAlignment" Value="Justify" />
+        <Setter Property="HorizontalTextAlignment" Value="Start" />
+    </Style>
+
+    <Style x:Key="CaptionStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="{DynamicResource CaptionFontSize}" />
+        <Setter Property="FontFamily" Value="{DynamicResource BodyFontFamily}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
     </Style>
 
     <Style x:Key="NavTitleStyle" TargetType="Label">
         <Setter Property="FontSize" Value="{DynamicResource NavTitleFontSize}" />
-        <Setter Property="FontFamily" Value="RobotoSemiBold" />
+        <Setter Property="FontFamily" Value="{StaticResource SemiBoldFontFamily}" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
         <Setter Property="VerticalOptions" Value="Center" />
     </Style>
 
     <Style x:Key="NavBackIconStyle" TargetType="Label">
-        <Setter Property="FontSize" Value="21" />
+        <Setter Property="FontSize" Value="24" />
         <Setter Property="TextColor" Value="{StaticResource Primary}" />
         <Setter Property="VerticalOptions" Value="Center" />
-        <Setter Property="Margin" Value="20,0,0,0" />
+        <Setter Property="Margin" Value="0,0,0,0" />
     </Style>
 
 </ResourceDictionary>

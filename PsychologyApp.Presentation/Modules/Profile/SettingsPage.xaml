@@ -8,86 +8,56 @@
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
-    <ContentPage.Content>
-        <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
-            <StackLayout Margin="5">
+    <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
+        <StackLayout Margin="20,0,20,20" Spacing="20">
 
-                <ui:NavigationBarSimpleView
-                    TitleText="{Binding PageTitle}"
-                    BackCommand="{Binding Finish}" />
+            <ui:NavigationBarSimpleView
+                TitleText="{Binding PageTitle}"
+                BackCommand="{Binding Finish}" />
 
-                <Frame
-                    Margin="10,5,10,10"
-                    CornerRadius="25"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
-                    <StackLayout>
-                        <Label
-                            Text="{Binding DesignSectionTitle}"
-                            FontSize="18"
-                            Margin="10,5,5,10"
-                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <StackLayout Spacing="8">
+                    <Label Text="{Binding DesignSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <ui:SettingPickerRowView
+                        LabelText="{Binding LanguageLabel}"
+                        PickerTitle="{Binding LanguagePickerTitle}"
+                        ItemsSource="{Binding LanguageOptions}"
+                        SelectedItem="{Binding Language}" />
+                    <ui:SettingPickerRowView
+                        LabelText="{Binding ThemeLabel}"
+                        PickerTitle="{Binding ThemePickerTitle}"
+                        ItemsSource="{Binding ThemeOptions}"
+                        SelectedItem="{Binding Theme}" />
+                    <ui:SettingPickerRowView
+                        LabelText="{Binding ColorLabel}"
+                        PickerTitle="{Binding ColorPickerTitle}"
+                        ItemsSource="{Binding ColorOptions}"
+                        SelectedItem="{Binding Color}" />
+                    <ui:SettingPickerRowView
+                        LabelText="{Binding FormLabel}"
+                        PickerTitle="{Binding FormPickerTitle}"
+                        ItemsSource="{Binding FormOptions}"
+                        SelectedItem="{Binding Form}" />
+                </StackLayout>
+            </Border>
 
-                        <StackLayout Margin="25,0,25,10">
-                            <ui:SettingPickerRowView
-                                LabelText="{Binding LanguageLabel}"
-                                PickerTitle="{Binding LanguagePickerTitle}"
-                                ItemsSource="{Binding LanguageOptions}"
-                                SelectedItem="{Binding Language}" />
-                            <ui:SettingPickerRowView
-                                LabelText="{Binding ThemeLabel}"
-                                PickerTitle="{Binding ThemePickerTitle}"
-                                ItemsSource="{Binding ThemeOptions}"
-                                SelectedItem="{Binding Theme}" />
-                            <ui:SettingPickerRowView
-                                LabelText="{Binding ColorLabel}"
-                                PickerTitle="{Binding ColorPickerTitle}"
-                                ItemsSource="{Binding ColorOptions}"
-                                SelectedItem="{Binding Color}" />
-                            <ui:SettingPickerRowView
-                                LabelText="{Binding FormLabel}"
-                                PickerTitle="{Binding FormPickerTitle}"
-                                ItemsSource="{Binding FormOptions}"
-                                SelectedItem="{Binding Form}" />
-                        </StackLayout>
-                    </StackLayout>
-                </Frame>
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <StackLayout Spacing="8">
+                    <Label Text="{Binding FontSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <ui:SettingPickerRowView
+                        LabelText="{Binding SizeLabel}"
+                        PickerTitle="{Binding SizePickerTitle}"
+                        ItemsSource="{Binding SizeOptions}"
+                        SelectedItem="{Binding Size}" />
+                    <ui:SettingSwitchRowView
+                        LabelText="{Binding BoldLabel}"
+                        IsToggled="{Binding IsThick}" />
+                </StackLayout>
+            </Border>
 
-                <Frame
-                    Margin="15,10,15,10"
-                    CornerRadius="25"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
-                    <StackLayout>
-                        <Label
-                            Text="{Binding FontSectionTitle}"
-                            FontSize="18"
-                            Margin="10,5,5,10"
-                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
-
-                        <StackLayout Margin="25,0,25,10">
-                            <ui:SettingPickerRowView
-                                LabelText="{Binding SizeLabel}"
-                                PickerTitle="{Binding SizePickerTitle}"
-                                ItemsSource="{Binding SizeOptions}"
-                                SelectedItem="{Binding Size}" />
-                            <ui:SettingSwitchRowView
-                                LabelText="{Binding BoldLabel}"
-                                IsToggled="{Binding IsThick}" />
-                        </StackLayout>
-                    </StackLayout>
-                </Frame>
-
-                <Button
-                    Margin="10,15,10,15"
-                    Text="{Binding ApplyButtonText}"
-                    FontSize="15"
-                    BackgroundColor="{StaticResource Primary}"
-                    CornerRadius="25"
-                    WidthRequest="350"
-                    HorizontalOptions="Center"
-                    VerticalOptions="End"
-                    Command="{Binding Finish}"
-                    HeightRequest="40" />
-            </StackLayout>
-        </ScrollView>
-    </ContentPage.Content>
+            <ui:ButtonView
+                BodyText="{Binding ApplyButtonText}"
+                TapCommand="{Binding Finish}" />
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

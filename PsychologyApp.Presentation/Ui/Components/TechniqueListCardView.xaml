@@ -23,7 +23,7 @@
                         <Label
                             Text="{TemplateBinding Date}"
                             FontSize="14"
-                            FontFamily="RobotoMedium"
+                            FontFamily="InterMedium"
                             HorizontalOptions="EndAndExpand"
                             TextColor="{StaticResource Gray}" />
                     </StackLayout>
@@ -53,13 +53,13 @@
                         <Label
                             Text="{TemplateBinding Theme}"
                             FontSize="15"
-                            FontFamily="RobotoSemiBold"
+                            FontFamily="InterSemiBold"
                             TextColor="{StaticResource Primary}"
                             HorizontalOptions="Start" />
                         <Label
                             Text="{TemplateBinding Author}"
                             FontSize="14"
-                            FontFamily="RobotoMedium"
+                            FontFamily="InterMedium"
                             HorizontalOptions="EndAndExpand"
                             Style="{StaticResource BodyStyle}" />
                     </StackLayout>

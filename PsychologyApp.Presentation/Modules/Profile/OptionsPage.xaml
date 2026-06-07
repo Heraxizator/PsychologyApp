@@ -14,7 +14,7 @@
             BackCommand="{Binding BackCommand}" />
 
         <ScrollView VerticalScrollBarVisibility="Never">
-            <StackLayout Margin="10,0,10,10">
+            <StackLayout Margin="20,0,20,20">
                 <ui:SettingsLinkCardView
                     Title="{Binding SettingsTitle}"
                     Subtitle="{Binding SettingsSubtitle}"

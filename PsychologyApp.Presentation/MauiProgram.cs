@@ -21,9 +21,9 @@ public static class MauiProgram
             .UseMaterialMauiIcons()
             .ConfigureFonts(fonts =>
             {
-                fonts.AddFont("Roboto-Medium.ttf", "RobotoMedium");
-                fonts.AddFont("Roboto-Regular.ttf", "RobotoRegular");
-                fonts.AddFont("Roboto-SemiBold.ttf", "RobotoSemiBold");
+                fonts.AddFont("Inter-Regular.ttf", "InterRegular");
+                fonts.AddFont("Inter-Medium.ttf", "InterMedium");
+                fonts.AddFont("Inter-SemiBold.ttf", "InterSemiBold");
             });
 
         ConfigureHandlers();

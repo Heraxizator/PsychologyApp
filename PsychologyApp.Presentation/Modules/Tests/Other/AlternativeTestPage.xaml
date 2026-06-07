@@ -18,16 +18,11 @@
             <StackLayout>
 
                 <StackLayout IsVisible="{Binding IsStart}">
-                    <StackLayout Margin="15, 25, 15, 0">
-
+                    <StackLayout Margin="16,16,16,0">
                         <Label
                             HorizontalTextAlignment="Center"
-                            Margin="15, 0, 0, 10"
                             Text="{Binding CurrentInstruction}"
-                            FontFamily="RobotoMedium"
-                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                            FontSize="16"/>
-
+                            Style="{StaticResource SectionTitleStyle}" />
                     </StackLayout>
 
                     <StackLayout Margin="0, 5, 0, 15">
@@ -219,18 +214,9 @@
                         HeightRequest="3"
                         Color="{StaticResource Gray}"/>
 
-                        <Frame Margin="15, 15, 15, 5">
-                            <StackLayout Margin="5">
-
-                                <Label
-                                Margin="5, 0, 0, 5"
-                                Text="{Binding FirstResult}"
-                                TextColor="{AppThemeBinding Light=black, Dark=white}"
-                                FontSize="16"/>
-
-                            </StackLayout>
-
-                        </Frame>
+                        <Border Style="{StaticResource BrandCardStyle}" Margin="16,8,16,8">
+                            <Label Text="{Binding FirstResult}" Style="{StaticResource BodyStyle}" />
+                        </Border>
 
                         <Label
                         Text="{Binding SecondColorLabel}"
@@ -267,17 +253,9 @@
                         HeightRequest="3"
                         Color="{StaticResource Gray}"/>
 
-                        <Frame Margin="15, 15, 15, 5">
-                            <StackLayout Margin="0">
-
-                                <Label
-                                Margin="5, 0, 0, 5"
-                                Text="{Binding SecondResult}"
-                                TextColor="{AppThemeBinding Light=black, Dark=white}"
-                                FontSize="16"/>
-                            </StackLayout>
-
-                        </Frame>
+                        <Border Style="{StaticResource BrandCardStyle}" Margin="16,8,16,8">
+                            <Label Text="{Binding SecondResult}" Style="{StaticResource BodyStyle}" />
+                        </Border>
 
                         <Button 
                         Margin="10, 20, 10, 15"

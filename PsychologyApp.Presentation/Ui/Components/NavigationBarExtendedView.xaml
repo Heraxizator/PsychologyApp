@@ -23,7 +23,7 @@
                     Text="{TemplateBinding ExtensionText}"
                     Margin="10,0,20,0"
                     HorizontalOptions="EndAndExpand"
-                    FontFamily="RobotoMedium"
+                    FontFamily="InterMedium"
                     TextColor="{StaticResource Primary}"
                     FontSize="15">
                     <Label.GestureRecognizers>

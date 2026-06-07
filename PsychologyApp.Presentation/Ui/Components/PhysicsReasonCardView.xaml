@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:physics="clr-namespace:PsychologyApp.Presentation.Modules.Physics"
+             x:Class="PsychologyApp.Presentation.UI.Components.PhysicsReasonCardView">
+
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0,0,0,8">
+                <StackLayout Spacing="8">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{TemplateBinding ToggleExpandCommand}" />
+                    </StackLayout.GestureRecognizers>
+                    <ui:TextItemView
+                        TitleText="{TemplateBinding Title}"
+                        BodyText="{TemplateBinding Subtitle}" />
+                    <StackLayout IsVisible="{TemplateBinding IsExpanded}" Spacing="6">
+                        <Label
+                            Style="{StaticResource SectionTitleStyle}"
+                            FontSize="14"
+                            Text="{TemplateBinding SolutionHeader}" />
+                        <Label
+                            Style="{StaticResource BodyStyle}"
+                            Text="{TemplateBinding Solution}" />
+                        <Label
+                            Style="{StaticResource SectionTitleStyle}"
+                            FontSize="14"
+                            Text="{TemplateBinding RecommendedPracticesLabel}" />
+                        <StackLayout BindableLayout.ItemsSource="{TemplateBinding SuggestedTechniques}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="physics:PhysicsTechniqueSuggestion">
+                                    <ui:ButtonView
+                                        Margin="0,4,0,0"
+                                        Variant="Secondary"
+                                        IsCompact="True"
+                                        BodyText="{Binding Title}"
+                                        TapCommand="{Binding OpenCommand}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+            </Border>
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+
+</ContentView>

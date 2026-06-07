@@ -4,25 +4,19 @@
              x:Class="PsychologyApp.Presentation.Views.TechniquePages.TheoryPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.TechniqueViewModels"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
-             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              x:DataType="vm:TheoryViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
-<ContentPage.Content>
 
-        <StackLayout>
-
+    <ScrollView VerticalScrollBarVisibility="Never">
+        <StackLayout Margin="20,0,20,20" Spacing="20">
             <ui:NavigationBarSimpleView
                 TitleText="{Binding PageTitle}"
                 BackText="{Binding BackText}"
-                BackCommand="{Binding Finish}"/>
-
-            <Label
-                HorizontalTextAlignment="Justify"
-                Text="{Binding Text}"
-                FontSize="18"
-                TextColor="{AppThemeBinding Light=black, Dark=white}"
-                Margin="15, 5, 15, 10"/>
+                BackCommand="{Binding Finish}" />
+            <ui:TextBoxView
+                HeaderText="{Binding PageTitle}"
+                BodyText="{Binding Text}" />
         </StackLayout>
-    </ContentPage.Content>
+    </ScrollView>
 </ContentPage>

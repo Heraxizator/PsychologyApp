@@ -1,107 +1,88 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PsychologyApp.Presentation.Views.Clean.MusicPlayerPage" 
+             x:Class="PsychologyApp.Presentation.Views.Clean.MusicPlayerPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Clean"
+             xmlns:clean="clr-namespace:PsychologyApp.Presentation.Modules.Clean"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              x:DataType="vm:MusicPlayerViewModel"
              Shell.NavBarIsVisible="True"
              Title="{Binding PageTitle}">
-<ContentPage.Content>
 
-        <AbsoluteLayout 
-            VerticalOptions="FillAndExpand" 
-            HorizontalOptions="FillAndExpand">
-            
-        <StackLayout 
+    <AbsoluteLayout
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+
+        <Grid
             AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
             AbsoluteLayout.LayoutFlags="All"
-            VerticalOptions="FillAndExpand"
-            Margin="10, 0, 10, 0">
-
-            <StackLayout 
-                VerticalOptions="CenterAndExpand"
-                IsVisible="{Binding IsCreated}"
-                Margin="0, 0">
-
-                <Label
-                    Text="{Binding PrayerCollectionLabel}"
-                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                    FontSize="16"
-                    HorizontalOptions="CenterAndExpand"
-                    VerticalOptions="CenterAndExpand"/>
-
-                <Label
-                    Margin="0, 5"
-                    Text="{Binding LoadLabel}"
-                    TextColor="{StaticResource Secondary}"
-                    FontSize="16"
-                    FontAttributes="Bold"
-                    HorizontalOptions="CenterAndExpand"
-                    VerticalOptions="CenterAndExpand"/>
-
-                <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding Start}"/>
-                </StackLayout.GestureRecognizers>
-                
-            </StackLayout>
-
-
-            <ui:ProgressBarView 
-            x:Name="Progress"
-            VerticalOptions="CenterAndExpand"
-            IsVisible="{Binding IsInit}"
-            IsLoading="{Binding IsInit}"
-            ProgressText="{Binding SearchingPrayersText}">
-                <ui:ProgressBarView.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding Cancel}"/>
-                </ui:ProgressBarView.GestureRecognizers>
-            </ui:ProgressBarView>
+            Margin="10, 0, 10, 0"
+            RowDefinitions="*,Auto">
 
             <CollectionView
+                Grid.Row="0"
                 x:Name="Musics"
                 IsVisible="{Binding IsDone}"
+                VerticalOptions="FillAndExpand"
                 VerticalScrollBarVisibility="Never"
                 ItemsSource="{Binding SelectedItems}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Border Padding="10" Margin="0,4">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="8" />
-                            </Border.StrokeShape>
-                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                                <Image
-                                    Grid.Column="0"
-                                    WidthRequest="45"
-                                    HeightRequest="45"
-                                    Source="music.png"/>
-                                <VerticalStackLayout Grid.Column="1">
-                                    <Label FontFamily="RobotoMedium" TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" FontSize="16" Text="{Binding Name}"/>
-                                    <Label TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" FontSize="16" Text="{Binding Description}"/>
-                                </VerticalStackLayout>
-                            </Grid>
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ClickCommand}"/>
-                            </Border.GestureRecognizers>
-                        </Border>
+                    <DataTemplate x:DataType="clean:Audio">
+                        <ui:MusicListCardView
+                            Title="{Binding Name}"
+                            Subtitle="{Binding Description}"
+                            TapCommand="{Binding ClickCommand}" />
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-                <ui:TextBoxView
-                    Margin="0, 0, 0, 10"
+            <ui:TextBoxView
+                Grid.Row="1"
+                Margin="0,8,0,10"
+                IsVisible="{Binding IsDone}"
                 HeaderText="{Binding MoreInfoHeader}"
-                BodyText="{Binding MoreInfoBody}"/>
+                BodyText="{Binding MoreInfoBody}" />
+        </Grid>
 
-            </StackLayout>
+        <StackLayout
+            AbsoluteLayout.LayoutBounds="0.5,0.4,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            IsVisible="{Binding IsCreated}"
+            Padding="24">
+            <Label
+                Text="{Binding PrayerCollectionLabel}"
+                Style="{StaticResource SectionTitleStyle}"
+                HorizontalTextAlignment="Center" />
+            <Label
+                Margin="0,12,0,0"
+                Text="{Binding LoadLabel}"
+                TextColor="{StaticResource Primary}"
+                FontSize="16"
+                FontAttributes="Bold"
+                HorizontalTextAlignment="Center" />
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Start}" />
+            </StackLayout.GestureRecognizers>
+        </StackLayout>
 
-            <ui:RetryView
-                AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
-                AbsoluteLayout.LayoutFlags="PositionProportional"
-                IsVisible="{Binding IsFail}"
-                FailedText="{Binding LoadFailedText}"
-                RetryText="{Binding RetryText}"
-                RetryCommand="{Binding Start}" />
-        </AbsoluteLayout>
-    </ContentPage.Content>
+        <ui:ProgressBarView
+            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            x:Name="Progress"
+            IsVisible="{Binding IsInit}"
+            IsLoading="{Binding IsInit}"
+            ProgressText="{Binding SearchingPrayersText}">
+            <ui:ProgressBarView.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Cancel}" />
+            </ui:ProgressBarView.GestureRecognizers>
+        </ui:ProgressBarView>
+
+        <ui:RetryView
+            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            IsVisible="{Binding IsFail}"
+            FailedText="{Binding LoadFailedText}"
+            RetryText="{Binding RetryText}"
+            RetryCommand="{Binding Start}" />
+    </AbsoluteLayout>
 </ContentPage>

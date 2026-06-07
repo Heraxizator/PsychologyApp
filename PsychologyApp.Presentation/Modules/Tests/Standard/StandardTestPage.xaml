@@ -17,16 +17,11 @@
         <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
             <StackLayout>
                 <StackLayout IsVisible="{Binding IsStart}">
-                    <StackLayout Margin="15, 25, 15, 0">
-
+                    <StackLayout Margin="16,16,16,0">
                         <Label
                             HorizontalTextAlignment="Center"
-                            Margin="15, 0, 0, 10"
                             Text="{Binding ColorInstruction}"
-                            FontFamily="RobotoMedium"
-                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                            FontSize="16"/>
-
+                            Style="{StaticResource SectionTitleStyle}" />
                     </StackLayout>
 
                     <StackLayout Margin="0, 5, 0, 15">
@@ -197,18 +192,18 @@
                                                         FontSize="16"
                                                         Text="{Binding PropertyName}"
                                                         TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                                                        FontFamily="RobotoSemiBold"/>
+                                                        FontFamily="InterSemiBold"/>
                                                     <Span
                                                         FontSize="16"
                                                         Text=": "
                                                         TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                                                        FontFamily="RobotoMedium"/>
+                                                        FontFamily="InterMedium"/>
 
                                                     <Span
                                                         FontSize="16"
                                                         Text="{Binding PropertyValue}"
                                                         TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                                                        FontFamily="RobotoSemiBold"/>
+                                                        FontFamily="InterSemiBold"/>
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>

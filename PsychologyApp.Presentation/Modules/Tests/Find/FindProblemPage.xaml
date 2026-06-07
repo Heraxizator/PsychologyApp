@@ -14,7 +14,7 @@
             BackCommand="{Binding BackCommand}" />
 
         <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
-            <StackLayout Margin="10,10,10,0">
+            <StackLayout Margin="20,0,20,20" Spacing="20">
                 <ui:TextBoxView
                     HeaderText="{Binding DescriptionHeader}"
                     BodyText="{Binding DescriptionText}" />

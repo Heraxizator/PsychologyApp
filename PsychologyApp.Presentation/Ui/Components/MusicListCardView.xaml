@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.UI.Components.MusicListCardView">
+
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0,0,0,4">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                    <Image
+                        Grid.Column="0"
+                        WidthRequest="45"
+                        HeightRequest="45"
+                        Source="music.png" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                        <Label Text="{TemplateBinding Title}" Style="{StaticResource SectionTitleStyle}" />
+                        <Label
+                            Text="{TemplateBinding Subtitle}"
+                            Style="{StaticResource BodyStyle}"
+                            MaxLines="2" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+
+</ContentView>

@@ -29,11 +29,11 @@
             <CollectionView.Header>
                 <StackLayout Margin="10,0,10,10" Spacing="10">
                     <Label Text="{Binding TodayForYouLabel}" Style="{StaticResource SectionTitleStyle}" />
-                    <Border Style="{StaticResource BrandCardStyle}" Padding="12" Margin="0">
+                    <Border Style="{StaticResource BrandCardStyle}" Padding="16" Margin="0" BackgroundColor="{StaticResource PrimaryTint}">
                         <StackLayout Spacing="8">
                             <Label Text="{Binding TodayRecommendedLabel}" Style="{StaticResource BodyStyle}" />
                             <Label Text="{Binding TodayTechniqueTitle}" Style="{StaticResource SectionTitleStyle}" />
-                            <Label Text="{Binding StreakDisplay}" TextColor="{StaticResource Primary}" FontFamily="RobotoMedium" />
+                            <Label Text="{Binding StreakDisplay}" TextColor="{StaticResource Primary}" FontFamily="InterMedium" />
                             <ui:ButtonView
                                 BodyText="{Binding TodayStartPracticeText}"
                                 TapCommand="{Binding StartTodayPracticeCommand}" />
@@ -50,13 +50,12 @@
                     <StackLayout Orientation="Horizontal">
                         <Label
                             Text="{Binding MyTechniquesLabel}"
-                            FontSize="18"
                             Style="{StaticResource SectionTitleStyle}"
                             HorizontalOptions="StartAndExpand"
                             VerticalOptions="Center" />
                         <ui:ButtonView
-                            Variant="Primary"
                             IsCompact="True"
+                            VerticalOptions="Center"
                             BodyText="{Binding CreateButtonText}"
                             TapCommand="{Binding ConstructorTapped}" />
                     </StackLayout>

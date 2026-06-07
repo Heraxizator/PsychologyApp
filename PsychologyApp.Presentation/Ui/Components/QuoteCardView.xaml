@@ -18,7 +18,7 @@
                 <Label
                     Grid.Row="0"
                     FontSize="18"
-                    FontFamily="RobotoRegular"
+                    FontFamily="InterRegular"
                     HorizontalOptions="CenterAndExpand"
                     HorizontalTextAlignment="Justify"
                     Style="{StaticResource BodyStyle}"
@@ -28,7 +28,7 @@
                     Margin="0,5,0,0"
                     FontSize="16"
                     HorizontalOptions="CenterAndExpand"
-                    FontFamily="RobotoSemiBold"
+                    FontFamily="InterSemiBold"
                     Text="{TemplateBinding Author}"
                     Style="{StaticResource BodyStyle}">
                     <Label.Triggers>

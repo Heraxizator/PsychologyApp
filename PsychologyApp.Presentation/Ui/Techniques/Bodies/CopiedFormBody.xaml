@@ -4,7 +4,7 @@
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              x:Class="PsychologyApp.Presentation.Ui.Techniques.Bodies.CopiedFormBody">
     <StackLayout>
-        <Frame Margin="10,10,10,0">
+        <Border Style="{StaticResource BrandCardStyle}" Margin="0,0,0,8">
             <StackLayout>
                 <Label Text="{Binding FormSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
                 <ui:TextEntryView
@@ -16,7 +16,7 @@
                     BodyText="{Binding RepeatButtonText}"
                     TapCommand="{Binding AddCommand}" />
             </StackLayout>
-        </Frame>
+        </Border>
         <StackLayout
             Margin="0,15,0,0"
             IsVisible="{Binding IsFull}"

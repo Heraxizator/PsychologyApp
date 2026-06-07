@@ -5,13 +5,32 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Style x:Key="CardFrameStyle" TargetType="Frame">
-        <Setter Property="HasShadow" Value="True" />
-        <Setter Property="Margin" Value="10" />
+        <Setter Property="HasShadow" Value="False" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="20" />
+        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource SurfaceDark}}" />
     </Style>
 
+    <!-- dvgups card: white, rounded-2xl, blue-tinted shadow -->
     <Style x:Key="BrandCardStyle" TargetType="Border">
-        <Setter Property="Margin" Value="10" />
-        <Setter Property="Padding" Value="16" />
+        <Setter Property="Margin" Value="0,0,0,12" />
+        <Setter Property="Padding" Value="20" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource SurfaceDark}}" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusShape}" />
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Brush="#400085FF" Offset="0,0" Radius="10" Opacity="0.25" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- dvgups page panel: single white container on #FAFAFA -->
+    <Style x:Key="BrandPanelStyle" TargetType="Border">
+        <Setter Property="Margin" Value="20" />
+        <Setter Property="Padding" Value="20" />
         <Setter Property="Stroke" Value="Transparent" />
         <Setter Property="StrokeThickness" Value="0" />
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource SurfaceDark}}" />
@@ -25,50 +44,90 @@
 
     <Style x:Key="CardBorderStyle" TargetType="Border" BasedOn="{StaticResource BrandCardStyle}" />
 
+    <!-- FILLED primary button (dvgups Button FILLED + PRIMARY) -->
     <Style x:Key="PrimaryActionBorderStyle" TargetType="Border">
-        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusShape}" />
-        <Setter Property="BackgroundColor" Value="{StaticResource Secondary}" />
-        <Setter Property="Stroke" Value="{StaticResource Secondary}" />
-        <Setter Property="StrokeThickness" Value="1" />
-    </Style>
-
-    <Style x:Key="PrimaryActionLabelStyle" TargetType="Label">
-        <Setter Property="Margin" Value="0,5,0,5" />
-        <Setter Property="HorizontalOptions" Value="Center" />
-        <Setter Property="TextColor" Value="White" />
-        <Setter Property="FontSize" Value="18" />
-    </Style>
-
-    <Style x:Key="CompactPrimaryBorderStyle" TargetType="Border">
+        <Setter Property="Padding" Value="16,12" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
         <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
         <Setter Property="Stroke" Value="Transparent" />
         <Setter Property="StrokeThickness" Value="0" />
-        <Setter Property="WidthRequest" Value="125" />
-        <Setter Property="HeightRequest" Value="35" />
+    </Style>
+
+    <Style x:Key="PrimaryActionLabelStyle" TargetType="Label">
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontFamily" Value="{StaticResource MediumFontFamily}" />
+        <Setter Property="LineBreakMode" Value="NoWrap" />
+    </Style>
+
+    <!-- OUTLINED secondary button (dvgups Button OUTLINED + SECONDARY) -->
+    <Style x:Key="OutlinedActionBorderStyle" TargetType="Border">
+        <Setter Property="Padding" Value="16,12" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="Stroke" Value="{StaticResource Primary}" />
+        <Setter Property="StrokeThickness" Value="1.5" />
+    </Style>
+
+    <Style x:Key="OutlinedActionLabelStyle" TargetType="Label">
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="TextColor" Value="{StaticResource Primary}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontFamily" Value="{StaticResource MediumFontFamily}" />
+        <Setter Property="LineBreakMode" Value="NoWrap" />
+    </Style>
+
+    <Style x:Key="CompactPrimaryBorderStyle" TargetType="Border">
+        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="MinimumHeightRequest" Value="36" />
         <Setter Property="VerticalOptions" Value="Center" />
     </Style>
 
     <Style x:Key="CompactPrimaryLabelStyle" TargetType="Label">
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
         <Setter Property="TextColor" Value="White" />
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="FontFamily" Value="RobotoMedium" />
+        <Setter Property="FontFamily" Value="{StaticResource MediumFontFamily}" />
+        <Setter Property="LineBreakMode" Value="NoWrap" />
     </Style>
 
-    <Style x:Key="CompactSecondaryBorderStyle" TargetType="Border">
-        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusShape}" />
-        <Setter Property="BackgroundColor" Value="{StaticResource Secondary}" />
-        <Setter Property="Stroke" Value="{StaticResource Secondary}" />
-        <Setter Property="StrokeThickness" Value="1" />
+    <Style x:Key="CompactOutlinedBorderStyle" TargetType="Border">
+        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="Stroke" Value="{StaticResource Primary}" />
+        <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="MinimumHeightRequest" Value="36" />
+        <Setter Property="VerticalOptions" Value="Center" />
     </Style>
 
-    <Style x:Key="CompactSecondaryLabelStyle" TargetType="Label">
-        <Setter Property="Margin" Value="0,3,0,3" />
+    <Style x:Key="CompactOutlinedLabelStyle" TargetType="Label">
         <Setter Property="HorizontalOptions" Value="Center" />
-        <Setter Property="TextColor" Value="White" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="TextColor" Value="{StaticResource Primary}" />
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontFamily" Value="{StaticResource MediumFontFamily}" />
+        <Setter Property="LineBreakMode" Value="NoWrap" />
     </Style>
+
+    <!-- Legacy aliases -->
+    <Style x:Key="CompactSecondaryBorderStyle" TargetType="Border" BasedOn="{StaticResource CompactOutlinedBorderStyle}" />
+    <Style x:Key="CompactSecondaryLabelStyle" TargetType="Label" BasedOn="{StaticResource CompactOutlinedLabelStyle}" />
 
 </ResourceDictionary>

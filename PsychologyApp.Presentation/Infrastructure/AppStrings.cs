@@ -213,6 +213,7 @@ public static class AppStrings
         "Create your first technique in the designer");
     public static string TestsEmptyTitle => T("Тесты загружаются", "Loading tests");
     public static string TestsEmptyBody => T("Подождите немного", "Please wait a moment");
+    public static string TestsLoadingText => T("Загрузка тестов", "Loading tests");
     public static string QuotesEmptyTitle => T("Цитаты не найдены", "No quotes found");
     public static string QuotesEmptyBody => T("Потяните вниз, чтобы обновить", "Pull down to refresh");
     public static string ProfileQuotesEmpty => T("Пока нет избранных цитат", "No favorite quotes yet");

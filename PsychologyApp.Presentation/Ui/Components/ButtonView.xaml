@@ -15,19 +15,23 @@
                     <DataTrigger
                         Binding="{TemplateBinding Variant}"
                         TargetType="Border"
-                        Value="Primary">
-                        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
-                        <Setter Property="Stroke" Value="Transparent" />
+                        Value="Secondary">
+                        <Setter Property="Style" Value="{StaticResource OutlinedActionBorderStyle}" />
                     </DataTrigger>
-                    <DataTrigger
-                        Binding="{TemplateBinding IsCompact}"
-                        TargetType="Border"
-                        Value="True">
-                        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
-                        <Setter Property="WidthRequest" Value="125" />
-                        <Setter Property="HeightRequest" Value="35" />
-                        <Setter Property="VerticalOptions" Value="Center" />
-                    </DataTrigger>
+                    <MultiTrigger TargetType="Border">
+                        <MultiTrigger.Conditions>
+                            <BindingCondition Binding="{TemplateBinding Variant}" Value="Primary" />
+                            <BindingCondition Binding="{TemplateBinding IsCompact}" Value="True" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Style" Value="{StaticResource CompactPrimaryBorderStyle}" />
+                    </MultiTrigger>
+                    <MultiTrigger TargetType="Border">
+                        <MultiTrigger.Conditions>
+                            <BindingCondition Binding="{TemplateBinding Variant}" Value="Secondary" />
+                            <BindingCondition Binding="{TemplateBinding IsCompact}" Value="True" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Style" Value="{StaticResource CompactOutlinedBorderStyle}" />
+                    </MultiTrigger>
                 </Border.Triggers>
                 <Label
                     x:Name="ActionLabel"
@@ -35,13 +39,25 @@
                     Text="{TemplateBinding BodyText}">
                     <Label.Triggers>
                         <DataTrigger
-                            Binding="{TemplateBinding IsCompact}"
+                            Binding="{TemplateBinding Variant}"
                             TargetType="Label"
-                            Value="True">
-                            <Setter Property="FontSize" Value="14" />
-                            <Setter Property="Margin" Value="0" />
-                            <Setter Property="FontFamily" Value="RobotoMedium" />
+                            Value="Secondary">
+                            <Setter Property="Style" Value="{StaticResource OutlinedActionLabelStyle}" />
                         </DataTrigger>
+                        <MultiTrigger TargetType="Label">
+                            <MultiTrigger.Conditions>
+                                <BindingCondition Binding="{TemplateBinding Variant}" Value="Primary" />
+                                <BindingCondition Binding="{TemplateBinding IsCompact}" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Style" Value="{StaticResource CompactPrimaryLabelStyle}" />
+                        </MultiTrigger>
+                        <MultiTrigger TargetType="Label">
+                            <MultiTrigger.Conditions>
+                                <BindingCondition Binding="{TemplateBinding Variant}" Value="Secondary" />
+                                <BindingCondition Binding="{TemplateBinding IsCompact}" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Style" Value="{StaticResource CompactOutlinedLabelStyle}" />
+                        </MultiTrigger>
                     </Label.Triggers>
                 </Label>
             </Border>
