@@ -8,7 +8,7 @@
             <StackLayout>
                 <ActivityIndicator
                     IsRunning="{TemplateBinding IsLoading}"
-                    Color="{StaticResource Secondary}" />
+                    Color="{StaticResource Primary}" />
                 <Label
                     Text="{TemplateBinding ProgressText}"
                     HorizontalOptions="Center"
@@ -18,7 +18,7 @@
                     FontAttributes="Bold"
                     Text="{TemplateBinding CancelText}"
                     HorizontalOptions="Center"
-                    TextColor="{StaticResource Secondary}"
+                    TextColor="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource Secondary}}"
                     FontSize="14">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{TemplateBinding CancelCommand}" />

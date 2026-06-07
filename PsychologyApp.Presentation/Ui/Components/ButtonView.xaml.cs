@@ -28,7 +28,7 @@ public partial class ButtonView : ContentView
     }
 
     public static readonly BindableProperty VariantProperty =
-        BindableProperty.Create(nameof(Variant), typeof(string), typeof(ButtonView), "Secondary");
+        BindableProperty.Create(nameof(Variant), typeof(string), typeof(ButtonView), "Primary");
 
     public string Variant
     {

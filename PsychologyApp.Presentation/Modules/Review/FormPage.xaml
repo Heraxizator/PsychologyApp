@@ -19,24 +19,18 @@
                 HeaderText="{Binding ExplanationHeader}"
                 BodyText="{Binding ExplanationBody}"/>
 
-            <Frame Margin="10, 10, 10, 15">
-                <StackLayout>
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0,8,0,16">
+                <StackLayout Spacing="8">
                     <Label Text="{Binding FormSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
-
                     <ui:TextEditorView
-                        Margin="0, 5, 0, 0"
                         PlaceholderText="{Binding MessagePlaceholder}"
                         BodyText="{Binding MessageText}"
-                        TitleText="{Binding MessageFieldLabel}"/>
-
+                        TitleText="{Binding MessageFieldLabel}" />
                     <ui:ButtonView
-                        Margin="0, 5, 0, 0"
                         BodyText="{Binding SendButtonText}"
                         TapCommand="{Binding Send}" />
-                    
                 </StackLayout>
-
-            </Frame>
+            </Border>
 
         </StackLayout>
     </AbsoluteLayout>

@@ -1,41 +1,31 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              x:Class="PsychologyApp.Presentation.UI.Components.TextEditorView">
-<ContentView.ControlTemplate>
+    <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Border 
-                StrokeShape="{DynamicResource UiCornerRadiusShape}"
-                VerticalOptions="FillAndExpand"
+            <Border
+                Padding="12,10"
+                StrokeThickness="1"
+                StrokeShape="{DynamicResource UiCornerRadiusEntryShape}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}"
-                Stroke="{StaticResource Secondary}">
-                <StackLayout 
-                    Margin="15, 5, 15, 0"
-                    HeightRequest="90"
-                    VerticalOptions="FillAndExpand">
-                    <Label 
-                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                        Padding="0"
-                        FontFamily="RobotoRegular"
+                Stroke="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource Gray600}}">
+                <VerticalStackLayout Spacing="4" MinimumHeightRequest="90">
+                    <Label
                         Text="{TemplateBinding TitleText}"
-                        FontSize="14"/>
+                        Style="{StaticResource CaptionStyle}" />
                     <Editor
-                        Margin="0, -10, 0, -10"
-                        VerticalOptions="StartAndExpand"
-                        PlaceholderColor="{StaticResource Secondary}"
+                        VerticalOptions="FillAndExpand"
+                        PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
                         Placeholder="{TemplateBinding PlaceholderText}"
                         FontSize="14"
-                        FontFamily="RobotoRegular"
+                        FontFamily="InterRegular"
                         MaxLength="1000"
                         Text="{TemplateBinding BodyText, Mode=TwoWay}"
                         TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                        VerticalTextAlignment="Center"/>
-                </StackLayout>
-
+                        BackgroundColor="Transparent" />
+                </VerticalStackLayout>
             </Border>
         </ControlTemplate>
     </ContentView.ControlTemplate>
-
-
 </ContentView>

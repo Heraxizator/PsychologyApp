@@ -16,7 +16,7 @@
 
                 <Label
                     Text="{TemplateBinding RetryText}"
-                    TextColor="{StaticResource Secondary}"
+                    TextColor="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={StaticResource Secondary}}"
                     FontSize="15"
                     VerticalOptions="CenterAndExpand"
                     HorizontalOptions="CenterAndExpand">

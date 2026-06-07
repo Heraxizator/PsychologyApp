@@ -13,29 +13,24 @@
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
             VerticalScrollBarVisibility="Never">
-            <StackLayout Margin="10,0,10,0">
+            <StackLayout Margin="20,0,20,20" Spacing="20">
                 <ui:ProgressBarView
-                    VerticalOptions="CenterAndExpand"
                     IsVisible="{Binding IsInit}"
                     IsLoading="{Binding IsInit}"
                     ProgressText="{Binding LoadingText}"
                     CancelCommand="{Binding Cancel}" />
 
-                <StackLayout IsVisible="{Binding IsDone}">
+                <StackLayout IsVisible="{Binding IsDone}" Spacing="12">
                     <ui:TextBoxView
                         HeaderText="{Binding ExplanationHeader}"
                         BodyText="{Binding ExplanationBody}" />
-
                     <ui:TextBoxView
                         HeaderText="{Binding DescriptionHeader}"
                         BodyText="{Binding DescriptionBody}" />
-
                     <ui:AlgorithmBoxView
                         TitleText="{Binding AlgorithmHeader}"
                         BodySource="{Binding AlgorithmSteps}" />
-
                     <ui:ButtonView
-                        Margin="0,5,0,10"
                         BodyText="{Binding StartButtonText}"
                         TapCommand="{Binding StartCommand}" />
                 </StackLayout>

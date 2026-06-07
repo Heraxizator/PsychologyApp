@@ -16,26 +16,11 @@ public class TestsListViewModel : BaseViewModel
     public string PageTitle => AppStrings.TestsDetectorTitle;
     public string EmptyTitle => AppStrings.TestsEmptyTitle;
     public string EmptyBody => AppStrings.TestsEmptyBody;
+    public string LoadingText => AppStrings.TestsLoadingText;
+    public string FailedText => AppStrings.LoadFailed;
+    public string RetryText => AppStrings.RetryQuestion;
 
     public ObservableCollection<TestItem> TestItemCollection { get; private set; } = [];
-
-    private TestItem? _selectedTestItem;
-    public TestItem? SelectedTestItem
-    {
-        get => _selectedTestItem;
-        set
-        {
-            if (!SetProperty(ref _selectedTestItem, value) || value is null)
-            {
-                return;
-            }
-
-            TestItem selected = value;
-            _selectedTestItem = null;
-            OnPropertyChanged(nameof(SelectedTestItem));
-            HandleSelectionAsync(selected).FireAndForget();
-        }
-    }
 
     public TestsListViewModel(
         INavigation navigation,
@@ -45,6 +30,7 @@ public class TestsListViewModel : BaseViewModel
         _navigationService = navigationService;
         _userProgressService = userProgressService;
         BindNavigation(navigation, navigationService);
+        Reload = new AsyncCommand(InitAsync);
         UserPreferences.Changed += OnPreferencesChanged;
         InitAsync().FireAndForget();
     }
@@ -54,6 +40,9 @@ public class TestsListViewModel : BaseViewModel
         OnPropertyChanged(nameof(PageTitle));
         OnPropertyChanged(nameof(EmptyTitle));
         OnPropertyChanged(nameof(EmptyBody));
+        OnPropertyChanged(nameof(LoadingText));
+        OnPropertyChanged(nameof(FailedText));
+        OnPropertyChanged(nameof(RetryText));
         InitAsync().FireAndForget();
     }
 
@@ -85,6 +74,9 @@ public class TestsListViewModel : BaseViewModel
                 {
                     item.LastResultSummary = AppStrings.TestLastResult(latest.Summary);
                 }
+
+                TestItem selected = item;
+                item.TapCommand = new AsyncCommand(() => HandleSelectionAsync(selected));
             }
 
             TestItemCollection = new ObservableCollection<TestItem>(items);

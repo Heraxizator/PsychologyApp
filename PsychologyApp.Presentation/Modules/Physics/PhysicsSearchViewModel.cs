@@ -21,7 +21,9 @@ public class PhysicsSearchViewModel : BaseViewModel
     private readonly ILogger<PhysicsSearchViewModel> _logger;
     private readonly IOptions<AppSettings> _settings;
     private readonly INavigationService _navigationService;
+    private readonly SemaphoreSlim _initGate = new(1, 1);
     private CancellationTokenSource? _searchDebounceCts;
+    private CancellationTokenSource? _initCts;
 
     public List<ReasonDTO> ReasonsList { get; private set; } = [];
     public ObservableRangeCollection<PhysicsReasonItem> ResultsObservableCollection { get; private set; } = [];
@@ -59,7 +61,7 @@ public class PhysicsSearchViewModel : BaseViewModel
 
             BindNavigation(navigation, navigationService);
             Reload = new AsyncCommand(ReloadAsync);
-            Cancel = new Command(CancelProgress);
+            Cancel = new Command(CancelInit);
             SearchCommand = new Command(() => ExecuteSearch(SearchText));
             UserPreferences.Changed += OnPreferencesChanged;
 
@@ -70,6 +72,12 @@ public class PhysicsSearchViewModel : BaseViewModel
             _logger.LogError(e, "PhysicsSearchViewModel initialization failed.");
             SetFail();
         }
+    }
+
+    private void CancelInit()
+    {
+        _initCts?.Cancel();
+        CancelProgress();
     }
 
     private void OnPreferencesChanged()
@@ -91,6 +99,7 @@ public class PhysicsSearchViewModel : BaseViewModel
 
     private async Task ReloadAsync()
     {
+        await _initGate.WaitAsync();
         try
         {
             await MainThread.InvokeOnMainThreadAsync(() =>
@@ -99,27 +108,28 @@ public class PhysicsSearchViewModel : BaseViewModel
                 ResultsObservableCollection.Clear();
             });
 
-            await InitAsync();
+            await InitCoreAsync();
         }
         catch (Exception e)
         {
             await MainThread.InvokeOnMainThreadAsync(SetFail);
             _logger.LogError(e, "Physics search reload failed.");
         }
+        finally
+        {
+            _initGate.Release();
+        }
     }
 
     private async Task InitAsync()
     {
+        await _initGate.WaitAsync();
         try
         {
-            await MainThread.InvokeOnMainThreadAsync(SetInit);
-
-            using CancellationTokenSource timeoutSource = OperationCancellation.CreateLargeTimeoutSource(_settings);
-            CancellationToken cancellationToken = timeoutSource.Token;
-
-            IEnumerable<ReasonDTO> reasons = await _reasonService.GetReasonsAsync(0, 10_000, cancellationToken);
-            ReasonsList = reasons.ToList();
-
+            await InitCoreAsync();
+        }
+        catch (OperationCanceledException)
+        {
             await MainThread.InvokeOnMainThreadAsync(SetDone);
         }
         catch (Exception e)
@@ -127,6 +137,32 @@ public class PhysicsSearchViewModel : BaseViewModel
             await MainThread.InvokeOnMainThreadAsync(SetFail);
             _logger.LogError(e, "Physics search init failed.");
         }
+        finally
+        {
+            _initGate.Release();
+        }
+    }
+
+    private async Task InitCoreAsync()
+    {
+        _initCts?.Cancel();
+        _initCts?.Dispose();
+        _initCts = OperationCancellation.CreateLargeTimeoutSource(_settings);
+        CancellationToken cancellationToken = _initCts.Token;
+
+        await MainThread.InvokeOnMainThreadAsync(SetInit);
+
+        IEnumerable<ReasonDTO> reasons = await _reasonService.GetReasonsAsync(0, 10_000, cancellationToken);
+        ReasonsList = reasons.ToList();
+
+        await MainThread.InvokeOnMainThreadAsync(() =>
+        {
+            SetDone();
+            if (!string.IsNullOrWhiteSpace(SearchText))
+            {
+                ExecuteSearch(SearchText);
+            }
+        });
     }
 
     private string _searchText = string.Empty;
@@ -185,11 +221,16 @@ public class PhysicsSearchViewModel : BaseViewModel
             .ToList();
 
         List<PhysicsReasonItem> filtered = ReasonsList
-            .Where(reason => reason.Title?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true)
+            .Where(MatchesSearch)
             .Select(dto => CreateItem(dto, suggestions))
             .ToList();
 
         ResultsObservableCollection.ReplaceRange(filtered);
+
+        bool MatchesSearch(ReasonDTO reason) =>
+            reason.Title?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true
+            || reason.Subtitle?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true
+            || reason.Solution?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true;
     }
 
     private PhysicsReasonItem CreateItem(ReasonDTO dto, IReadOnlyList<PhysicsTechniqueSuggestion> suggestions)

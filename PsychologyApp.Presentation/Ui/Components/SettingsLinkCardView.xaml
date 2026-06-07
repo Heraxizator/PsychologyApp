@@ -5,18 +5,15 @@
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Frame Margin="0,10,0,0">
-                <Frame.GestureRecognizers>
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0,0,0,10">
+                <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
-                </Frame.GestureRecognizers>
-                <StackLayout>
+                </Border.GestureRecognizers>
+                <StackLayout Spacing="6">
                     <Label Text="{TemplateBinding Title}" Style="{StaticResource SectionTitleStyle}" />
-                    <Label
-                        Margin="0,5,0,0"
-                        Text="{TemplateBinding Subtitle}"
-                        Style="{StaticResource BodyStyle}" />
+                    <Label Text="{TemplateBinding Subtitle}" Style="{StaticResource BodyStyle}" />
                 </StackLayout>
-            </Frame>
+            </Border>
         </ControlTemplate>
     </ContentView.ControlTemplate>
 

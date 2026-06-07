@@ -150,11 +150,13 @@ public static class UserPreferences
             return;
         }
 
-        (double section, double body) = ResolveFontSizes(NormalizeSizeKey(size));
+        (double pageTitle, double section, double body) = ResolveFontSizes(NormalizeSizeKey(size));
+        resources["PageTitleFontSize"] = pageTitle;
         resources["SectionTitleFontSize"] = section;
         resources["BodyFontSize"] = body;
-        resources["NavTitleFontSize"] = section + 1;
-        resources["BodyFontFamily"] = isBold ? "RobotoSemiBold" : "RobotoRegular";
+        resources["CaptionFontSize"] = body;
+        resources["NavTitleFontSize"] = section;
+        resources["BodyFontFamily"] = isBold ? "InterSemiBold" : "InterRegular";
     }
 
     public static void ApplyForm(string form)
@@ -164,7 +166,7 @@ public static class UserPreferences
             return;
         }
 
-        double radius = IsRoundedForm(form) ? 30 : 4;
+        double radius = IsRoundedForm(form) ? 16 : 4;
         SetCornerRadiusResources(resources, radius);
     }
 
@@ -298,23 +300,25 @@ public static class UserPreferences
             "red" => (Color.FromArgb("#E53935"), Color.FromArgb("#FFAB91"), Color.FromArgb("#C62828"), Color.FromArgb("#FFEBEE")),
             "yellow" => (Color.FromArgb("#F7B548"), Color.FromArgb("#FFE5B9"), Color.FromArgb("#E6A020"), Color.FromArgb("#FFF8E6")),
             "green" => (Color.FromArgb("#2E9E5B"), Color.FromArgb("#A8E6C1"), Color.FromArgb("#1F7A45"), Color.FromArgb("#EBF3F0")),
-            _ => (Color.FromArgb("#0085FF"), Color.FromArgb("#96d1ff"), Color.FromArgb("#006ACC"), Color.FromArgb("#E6F2FF"))
+            _ => (Color.FromArgb("#0085FF"), Color.FromArgb("#0085FF"), Color.FromArgb("#006ACC"), Color.FromArgb("#E6F2FF"))
         };
 
-    private static (double section, double body) ResolveFontSizes(string size) =>
+    private static (double pageTitle, double section, double body) ResolveFontSizes(string size) =>
         NormalizeSizeKey(size) switch
         {
-            "large" => (18, 16),
-            "small" => (14, 12),
-            _ => (16, 14)
+            "large" => (22, 20, 16),
+            "small" => (18, 16, 12),
+            _ => (20, 18, 14)
         };
 
     private static void SetCornerRadiusResources(ResourceDictionary resources, double radius)
     {
+        double buttonRadius = radius <= 4 ? 4 : 8;
         resources["UiCornerRadius"] = radius;
+        resources["UiButtonCornerRadius"] = buttonRadius;
         resources["UiCornerRadiusShape"] = new RoundRectangle { CornerRadius = radius };
-        resources["UiCornerRadiusCompactShape"] = new RoundRectangle { CornerRadius = radius <= 4 ? 9 : radius + 5 };
-        resources["UiCornerRadiusEntryShape"] = new RoundRectangle { CornerRadius = radius <= 4 ? 4 : Math.Min(radius, 25) };
+        resources["UiCornerRadiusCompactShape"] = new RoundRectangle { CornerRadius = buttonRadius };
+        resources["UiCornerRadiusEntryShape"] = new RoundRectangle { CornerRadius = buttonRadius };
     }
 }
 

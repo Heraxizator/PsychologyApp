@@ -1,5 +1,6 @@
 using PsychologyApp.Presentation.Modules.Tests;
 using PsychologyApp.Presentation.Services;
+using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Modules.Tests.Collection;
 
@@ -134,6 +135,7 @@ public class TestItem
     public string Comment { get; set; } = default!;
     public List<string> Algorithm { get; set; } = default!;
     public Action Action { get; set; } = default!;
+    public ICommand? TapCommand { get; set; }
     public string? LastResultSummary { get; set; }
     public bool HasLastResult => !string.IsNullOrWhiteSpace(LastResultSummary);
 

@@ -8,24 +8,24 @@
              Shell.NavBarIsVisible="False">
 
     <ScrollView>
-        <StackLayout Padding="24" Spacing="16">
+        <StackLayout Padding="20" Spacing="20">
             <StackLayout IsVisible="{Binding IsWelcomeStep}" Spacing="12">
-                <Label Text="{Binding WelcomeTitle}" Style="{StaticResource SectionTitleStyle}" FontSize="22" />
+                <Label Text="{Binding WelcomeTitle}" Style="{StaticResource PageTitleStyle}" />
                 <Label Text="{Binding WelcomeBody}" Style="{StaticResource BodyStyle}" />
                 <ui:ButtonView BodyText="{Binding NextLabel}" TapCommand="{Binding NextCommand}" />
             </StackLayout>
 
             <StackLayout IsVisible="{Binding IsConcernStep}" Spacing="12">
-                <Label Text="{Binding ConcernTitle}" Style="{StaticResource SectionTitleStyle}" FontSize="22" />
-                <ui:ButtonView BodyText="{Binding ConcernAnxiety}" TapCommand="{Binding SelectAnxietyCommand}" />
-                <ui:ButtonView BodyText="{Binding ConcernBody}" TapCommand="{Binding SelectBodyCommand}" />
-                <ui:ButtonView BodyText="{Binding ConcernMood}" TapCommand="{Binding SelectMoodCommand}" />
-                <ui:ButtonView BodyText="{Binding ConcernExplore}" TapCommand="{Binding SelectExploreCommand}" />
+                <Label Text="{Binding ConcernTitle}" Style="{StaticResource PageTitleStyle}" />
+                <ui:ButtonView Variant="Secondary" BodyText="{Binding ConcernAnxiety}" TapCommand="{Binding SelectAnxietyCommand}" />
+                <ui:ButtonView Variant="Secondary" BodyText="{Binding ConcernBody}" TapCommand="{Binding SelectBodyCommand}" />
+                <ui:ButtonView Variant="Secondary" BodyText="{Binding ConcernMood}" TapCommand="{Binding SelectMoodCommand}" />
+                <ui:ButtonView Variant="Secondary" BodyText="{Binding ConcernExplore}" TapCommand="{Binding SelectExploreCommand}" />
                 <ui:ButtonView BodyText="{Binding NextLabel}" TapCommand="{Binding NextCommand}" />
             </StackLayout>
 
             <StackLayout IsVisible="{Binding IsDisclaimerStep}" Spacing="12">
-                <Label Text="{Binding DisclaimerTitle}" Style="{StaticResource SectionTitleStyle}" FontSize="22" />
+                <Label Text="{Binding DisclaimerTitle}" Style="{StaticResource PageTitleStyle}" />
                 <Label Text="{Binding DisclaimerBody}" Style="{StaticResource BodyStyle}" />
                 <ui:ButtonView BodyText="{Binding StartLabel}" TapCommand="{Binding StartPracticeCommand}" />
                 <ui:ButtonView Variant="Secondary" BodyText="{Binding SkipLabel}" TapCommand="{Binding SkipCommand}" />

@@ -16,7 +16,7 @@
                         IsVisible="{TemplateBinding HasLastResult}"
                         Text="{TemplateBinding LastResultText}"
                         FontSize="13"
-                        FontFamily="RobotoMedium"
+                        FontFamily="InterMedium"
                         TextColor="{StaticResource Primary}" />
                 </StackLayout>
             </Border>

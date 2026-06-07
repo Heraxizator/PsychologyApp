@@ -1,83 +1,58 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              x:Class="PsychologyApp.Presentation.Views.TechniquePages.ConstructorPages.DesignerPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Practice.Constructor"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              x:DataType="vm:DesignerViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
-<StackLayout>
 
-        <ScrollView 
-            VerticalOptions="FillAndExpand" 
-            VerticalScrollBarVisibility="Never"
-            HorizontalScrollBarVisibility="Never">
-            <StackLayout Margin="10, 0, 10, 0">
+    <ScrollView
+        VerticalOptions="FillAndExpand"
+        VerticalScrollBarVisibility="Never"
+        HorizontalScrollBarVisibility="Never">
+        <StackLayout Margin="20,0,20,20" Spacing="20">
 
-                <ui:NavigationBarSimpleView
-                    TitleText="{Binding DesignTitle}"
-                    BackText="{Binding BackText}"
-                    BackCommand="{Binding Finish}"/>
+            <ui:NavigationBarSimpleView
+                TitleText="{Binding DesignTitle}"
+                BackText="{Binding BackText}"
+                BackCommand="{Binding Finish}" />
 
-                <Frame HasShadow="True" Margin="10, 15, 10, 15">
-                    <StackLayout Margin="0">
-                        <Label
-                            Text="{Binding DescriptionSection}"
-                            FontFamily="RobotoMedium"
-                            FontSize="16"
-                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"/>
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <StackLayout Spacing="8">
+                    <Label Text="{Binding DescriptionSection}" Style="{StaticResource SectionTitleStyle}" />
+                    <ui:TextEntryView
+                        TitleText="{Binding NameFieldLabel}"
+                        PlaceholderText="{Binding NamePlaceholder}"
+                        BodyText="{Binding Name}" />
+                    <ui:TextEntryView
+                        TitleText="{Binding DescriptionFieldLabel}"
+                        PlaceholderText="{Binding DescriptionPlaceholder}"
+                        BodyText="{Binding Description}" />
+                    <ui:TextEntryView
+                        TitleText="{Binding ThemeFieldLabel}"
+                        PlaceholderText="{Binding ThemePlaceholder}"
+                        BodyText="{Binding Theme}" />
+                    <ui:TextEntryView
+                        TitleText="{Binding AuthorFieldLabel}"
+                        PlaceholderText="{Binding AuthorPlaceholder}"
+                        BodyText="{Binding Author}" />
+                </StackLayout>
+            </Border>
 
-                        <ui:TextEntryView
-                            Margin="0, 5, 0, 0"
-                            TitleText="{Binding NameFieldLabel}"
-                            PlaceholderText="{Binding NamePlaceholder}"
-                            BodyText="{Binding Name}"/>
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <StackLayout Spacing="8">
+                    <Label Text="{Binding AlgorithmSection}" Style="{StaticResource SectionTitleStyle}" />
+                    <ui:TextEntryView
+                        TitleText="{Binding ActionsFieldLabel}"
+                        BodyText="{Binding Actions}" />
+                </StackLayout>
+            </Border>
 
-                        <ui:TextEntryView
-                            TitleText="{Binding DescriptionFieldLabel}"
-                            PlaceholderText="{Binding DescriptionPlaceholder}"
-                            BodyText="{Binding Description}"/>
-
-                        <ui:TextEntryView
-                            TitleText="{Binding ThemeFieldLabel}"
-                            PlaceholderText="{Binding ThemePlaceholder}"
-                            BodyText="{Binding Theme}"/>
-
-                        <ui:TextEntryView
-                            TitleText="{Binding AuthorFieldLabel}"
-                            PlaceholderText="{Binding AuthorPlaceholder}"
-                            BodyText="{Binding Author}"/>
-
-                    </StackLayout>
-
-                </Frame>
-
-                <Frame HasShadow="True" Margin="10, 10, 10, 15">
-                    <StackLayout>
-                        <Label
-                            Text="{Binding AlgorithmSection}"
-                            FontFamily="RobotoMedium"
-                            FontSize="16"
-                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"/>
-
-                        <ui:TextEntryView
-                            Margin="0, 5, 0, 0"
-                            TitleText="{Binding ActionsFieldLabel}"
-                            BodyText="{Binding Actions}"/>
-
-                    </StackLayout>
-
-                </Frame>
-
-                <ui:ButtonView
-                    Margin="0, 5, 0, 10"
-                    BodyText="{Binding SaveButtonText}"
-                    TapCommand="{Binding ExecuteTechnique}" />
-
-            </StackLayout>
-        </ScrollView>
-
-    </StackLayout>
+            <ui:ButtonView
+                BodyText="{Binding SaveButtonText}"
+                TapCommand="{Binding ExecuteTechnique}" />
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

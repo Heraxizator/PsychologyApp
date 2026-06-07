@@ -8,10 +8,10 @@
              xmlns:tests="clr-namespace:PsychologyApp.Presentation.Modules.Tests.Collection"
              x:DataType="vm:TestsListViewModel"
              Title="{Binding PageTitle}">
-<AbsoluteLayout 
-        VerticalOptions="FillAndExpand" 
+    <AbsoluteLayout
+        VerticalOptions="FillAndExpand"
         HorizontalOptions="FillAndExpand">
-        
+
         <CollectionView
             AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
             AbsoluteLayout.LayoutFlags="All"
@@ -20,8 +20,8 @@
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand"
             VerticalScrollBarVisibility="Never"
-            SelectionMode="Single"
-            SelectedItem="{Binding SelectedTestItem, Mode=TwoWay}"
+            IsVisible="{Binding IsDone}"
+            SelectionMode="None"
             ItemsSource="{Binding TestItemCollection}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="tests:TestItem">
@@ -30,7 +30,8 @@
                         Title="{Binding Title}"
                         Subtitle="{Binding Subtitle}"
                         LastResultText="{Binding LastResultSummary}"
-                        HasLastResult="{Binding HasLastResult}" />
+                        HasLastResult="{Binding HasLastResult}"
+                        TapCommand="{Binding TapCommand}" />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
             <CollectionView.EmptyView>
@@ -49,5 +50,24 @@
                 </StackLayout>
             </CollectionView.EmptyView>
         </CollectionView>
+
+        <ui:ProgressBarView
+            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            IsVisible="{Binding IsInit}"
+            IsLoading="{Binding IsInit}"
+            ProgressText="{Binding LoadingText}">
+            <ui:ProgressBarView.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Cancel}" />
+            </ui:ProgressBarView.GestureRecognizers>
+        </ui:ProgressBarView>
+
+        <ui:RetryView
+            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            IsVisible="{Binding IsFail}"
+            FailedText="{Binding FailedText}"
+            RetryText="{Binding RetryText}"
+            RetryCommand="{Binding Reload}" />
     </AbsoluteLayout>
 </ContentPage>

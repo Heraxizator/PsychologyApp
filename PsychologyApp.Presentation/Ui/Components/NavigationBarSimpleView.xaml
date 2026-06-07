@@ -6,8 +6,9 @@
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <StackLayout Margin="0,15,0,15" Orientation="Horizontal">
+            <Grid Margin="0,0,0,12" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
                 <Label
+                    Grid.Column="0"
                     Style="{StaticResource NavBackIconStyle}"
                     Text="{mi:Material Icon=KeyboardArrowLeft}">
                     <Label.GestureRecognizers>
@@ -15,10 +16,12 @@
                     </Label.GestureRecognizers>
                 </Label>
                 <Label
+                    Grid.Column="1"
                     Text="{TemplateBinding TitleText}"
                     Style="{StaticResource NavTitleStyle}"
-                    HorizontalOptions="CenterAndExpand" />
-            </StackLayout>
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center" />
+            </Grid>
         </ControlTemplate>
     </ContentView.ControlTemplate>
 
