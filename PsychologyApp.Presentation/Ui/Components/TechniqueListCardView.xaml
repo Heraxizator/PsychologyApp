@@ -9,7 +9,7 @@
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
                 </Border.GestureRecognizers>
-                <Grid Margin="5,0,5,0">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -22,10 +22,8 @@
                             HorizontalOptions="Start" />
                         <Label
                             Text="{TemplateBinding Date}"
-                            FontSize="14"
-                            FontFamily="InterMedium"
-                            HorizontalOptions="EndAndExpand"
-                            TextColor="{StaticResource Gray}" />
+                            Style="{StaticResource CaptionStyle}"
+                            HorizontalOptions="EndAndExpand" />
                     </StackLayout>
                     <StackLayout
                         Grid.Row="1"
@@ -52,16 +50,14 @@
                     <StackLayout Grid.Row="2" Orientation="Horizontal">
                         <Label
                             Text="{TemplateBinding Theme}"
-                            FontSize="15"
-                            FontFamily="InterSemiBold"
+                            Style="{StaticResource BodyStyle}"
+                            FontFamily="{StaticResource SemiBoldFontFamily}"
                             TextColor="{StaticResource Primary}"
                             HorizontalOptions="Start" />
                         <Label
                             Text="{TemplateBinding Author}"
-                            FontSize="14"
-                            FontFamily="InterMedium"
-                            HorizontalOptions="EndAndExpand"
-                            Style="{StaticResource BodyStyle}" />
+                            Style="{StaticResource CaptionStyle}"
+                            HorizontalOptions="EndAndExpand" />
                     </StackLayout>
                 </Grid>
             </Border>

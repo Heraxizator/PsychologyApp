@@ -34,6 +34,7 @@ public class PhysicsSearchViewModel : BaseViewModel
     public string IllnessPlaceholder => AppStrings.PhysicsIllnessPlaceholder;
     public string EmptySearchHint => AppStrings.PhysicsEmptySearchHint;
     public string EmptySearchSubhint => AppStrings.PhysicsEmptySearchSubhint;
+    public string NoResultsHint => AppStrings.PhysicsNoResultsHint;
     public string LoadingText => AppStrings.PhysicsLoadingText;
     public string FailedText => AppStrings.LoadFailed;
     public string RetryText => AppStrings.RetryQuestion;
@@ -42,6 +43,10 @@ public class PhysicsSearchViewModel : BaseViewModel
     public string TryPracticeLabel => AppStrings.PhysicsTryPractice;
 
     public ICommand SearchCommand { get; private set; } = default!;
+
+    public bool ShowSearchPlaceholder => IsDone && string.IsNullOrWhiteSpace(SearchText);
+
+    public bool IsSearchResultsVisible => IsDone && !string.IsNullOrWhiteSpace(SearchText);
 
     public PhysicsSearchViewModel(
         INavigation navigation,
@@ -88,6 +93,7 @@ public class PhysicsSearchViewModel : BaseViewModel
         OnPropertyChanged(nameof(IllnessPlaceholder));
         OnPropertyChanged(nameof(EmptySearchHint));
         OnPropertyChanged(nameof(EmptySearchSubhint));
+        OnPropertyChanged(nameof(NoResultsHint));
         OnPropertyChanged(nameof(LoadingText));
         OnPropertyChanged(nameof(FailedText));
         OnPropertyChanged(nameof(RetryText));
@@ -130,7 +136,11 @@ public class PhysicsSearchViewModel : BaseViewModel
         }
         catch (OperationCanceledException)
         {
-            await MainThread.InvokeOnMainThreadAsync(SetDone);
+            await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                SetDone();
+                NotifySearchPlaceholder();
+            });
         }
         catch (Exception e)
         {
@@ -152,12 +162,15 @@ public class PhysicsSearchViewModel : BaseViewModel
 
         await MainThread.InvokeOnMainThreadAsync(SetInit);
 
+        await AppReadiness.DatabaseReadyAsync.WaitAsync(cancellationToken);
+
         IEnumerable<ReasonDTO> reasons = await _reasonService.GetReasonsAsync(0, 10_000, cancellationToken);
         ReasonsList = reasons.ToList();
 
         await MainThread.InvokeOnMainThreadAsync(() =>
         {
             SetDone();
+            NotifySearchPlaceholder();
             if (!string.IsNullOrWhiteSpace(SearchText))
             {
                 ExecuteSearch(SearchText);
@@ -175,6 +188,7 @@ public class PhysicsSearchViewModel : BaseViewModel
             {
                 _searchText = value;
                 OnPropertyChanged(nameof(SearchText));
+                NotifySearchPlaceholder();
                 DebouncedSearch(value);
             }
         }
@@ -199,11 +213,18 @@ public class PhysicsSearchViewModel : BaseViewModel
         }, token);
     }
 
+    private void NotifySearchPlaceholder()
+    {
+        OnPropertyChanged(nameof(ShowSearchPlaceholder));
+        OnPropertyChanged(nameof(IsSearchResultsVisible));
+    }
+
     private void ExecuteSearch(string searchText)
     {
         if (string.IsNullOrWhiteSpace(searchText))
         {
             ResultsObservableCollection.Clear();
+            NotifySearchPlaceholder();
             return;
         }
 

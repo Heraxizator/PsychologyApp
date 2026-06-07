@@ -2,95 +2,71 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
-             x:Class="PsychologyApp.Presentation.UI.Components.QuoteCardView">
-
-    <ContentView.ControlTemplate>
-        <ControlTemplate>
+             x:Class="PsychologyApp.Presentation.UI.Components.QuoteCardView"
+             x:Name="Root">
+    <Border Style="{StaticResource BrandCardStyle}">
+        <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
+            <Label
+                HorizontalTextAlignment="Justify"
+                Style="{StaticResource BodyStyle}"
+                Text="{Binding Text, Source={x:Reference Root}}" />
+            <Label
+                Style="{StaticResource SectionTitleStyle}"
+                HorizontalTextAlignment="Center"
+                Text="{Binding Author, Source={x:Reference Root}}">
+                <Label.Triggers>
+                    <DataTrigger
+                        Binding="{Binding Author, Source={x:Reference Root}}"
+                        TargetType="Label"
+                        Value="">
+                        <Setter Property="Text" Value="{Binding DefaultAuthorText, Source={x:Reference Root}}" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
             <Grid
-                Margin="20,25,20,25"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+                ColumnSpacing="{StaticResource LayoutSpacing}"
+                HorizontalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
                 <Label
-                    Grid.Row="0"
-                    FontSize="18"
-                    FontFamily="InterRegular"
-                    HorizontalOptions="CenterAndExpand"
-                    HorizontalTextAlignment="Justify"
+                    Grid.Column="0"
                     Style="{StaticResource BodyStyle}"
-                    Text="{TemplateBinding Text}" />
-                <Label
-                    Grid.Row="1"
-                    Margin="0,5,0,0"
-                    FontSize="16"
-                    HorizontalOptions="CenterAndExpand"
-                    FontFamily="InterSemiBold"
-                    Text="{TemplateBinding Author}"
-                    Style="{StaticResource BodyStyle}">
+                    Text="{mi:Material Icon=FavoriteBorder}"
+                    SemanticProperties.Description="{Binding FavoriteHint, Source={x:Reference Root}}">
                     <Label.Triggers>
                         <DataTrigger
-                            Binding="{TemplateBinding Author}"
+                            Binding="{Binding IsFavourite, Source={x:Reference Root}}"
                             TargetType="Label"
-                            Value="">
-                            <Setter Property="Text" Value="{TemplateBinding DefaultAuthorText}" />
+                            Value="True">
+                            <Setter Property="TextColor" Value="{StaticResource Primary}" />
                         </DataTrigger>
                     </Label.Triggers>
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding LikeCommand, Source={x:Reference Root}}" />
+                    </Label.GestureRecognizers>
                 </Label>
-                <Grid
-                    Grid.Row="2"
-                    Margin="0,15,0,0"
-                    ColumnSpacing="20"
-                    HorizontalOptions="CenterAndExpand">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Label
-                        Grid.Column="0"
-                        FontSize="19"
-                        Style="{StaticResource BodyStyle}"
-                        Text="{mi:Material Icon=FavoriteBorder}"
-                        SemanticProperties.Description="{TemplateBinding FavoriteHint}">
-                        <Label.Triggers>
-                            <DataTrigger
-                                Binding="{TemplateBinding IsFavourite}"
-                                TargetType="Label"
-                                Value="True">
-                                <Setter Property="TextColor" Value="{StaticResource Primary}" />
-                            </DataTrigger>
-                        </Label.Triggers>
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{TemplateBinding LikeCommand}" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label
-                        Grid.Column="1"
-                        FontSize="19"
-                        Style="{StaticResource BodyStyle}"
-                        Text="{mi:Material Icon=ContentCopy}"
-                        SemanticProperties.Description="{TemplateBinding CopyHint}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{TemplateBinding CopyCommand}" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label
-                        Grid.Column="2"
-                        FontSize="19"
-                        Style="{StaticResource BodyStyle}"
-                        Text="{mi:Material Icon=Share}"
-                        SemanticProperties.Description="{TemplateBinding ShareHint}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{TemplateBinding ShareCommand}" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                </Grid>
+                <Label
+                    Grid.Column="1"
+                    Style="{StaticResource BodyStyle}"
+                    Text="{mi:Material Icon=ContentCopy}"
+                    SemanticProperties.Description="{Binding CopyHint, Source={x:Reference Root}}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CopyCommand, Source={x:Reference Root}}" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label
+                    Grid.Column="2"
+                    Style="{StaticResource BodyStyle}"
+                    Text="{mi:Material Icon=Share}"
+                    SemanticProperties.Description="{Binding ShareHint, Source={x:Reference Root}}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ShareCommand, Source={x:Reference Root}}" />
+                    </Label.GestureRecognizers>
+                </Label>
             </Grid>
-        </ControlTemplate>
-    </ContentView.ControlTemplate>
-
+        </VerticalStackLayout>
+    </Border>
 </ContentView>

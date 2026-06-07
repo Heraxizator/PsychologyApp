@@ -16,7 +16,7 @@
             AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
             AbsoluteLayout.LayoutFlags="All"
             x:Name="TestsCollectionView"
-            Margin="15, 15, 15, 5"
+            Margin="{StaticResource LayoutPageMarginThickness}"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand"
             VerticalScrollBarVisibility="Never"
@@ -36,7 +36,7 @@
             </CollectionView.ItemTemplate>
             <CollectionView.EmptyView>
                 <StackLayout
-                    Padding="24"
+                    Padding="{StaticResource LayoutEmptyPaddingThickness}"
                     HorizontalOptions="Center"
                     VerticalOptions="Center">
                     <Label

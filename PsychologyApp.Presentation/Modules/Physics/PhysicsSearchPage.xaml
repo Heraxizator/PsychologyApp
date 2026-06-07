@@ -21,7 +21,7 @@
         <Grid
             AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
             AbsoluteLayout.LayoutFlags="All"
-            Margin="10, 0, 10, 0"
+            Margin="{StaticResource LayoutPageMarginThickness}"
             RowDefinitions="Auto,Auto,*">
 
             <ui:NavigationBarSimpleView
@@ -36,9 +36,25 @@
                 BodyText="{Binding SearchText, Mode=TwoWay}"
                 TitleText="{Binding ProblemLabel}"/>
 
+            <StackLayout
+                Grid.Row="2"
+                IsVisible="{Binding ShowSearchPlaceholder}"
+                Padding="{StaticResource LayoutEmptyPaddingThickness}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+                <Label
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource SectionTitleStyle}"
+                    Text="{Binding EmptySearchHint}"/>
+                <Label
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource BodyStyle}"
+                    Text="{Binding EmptySearchSubhint}"/>
+            </StackLayout>
+
             <CollectionView
                 Grid.Row="2"
-                IsVisible="{Binding IsDone}"
+                IsVisible="{Binding IsSearchResultsVisible}"
                 SelectionMode="None"
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand"
@@ -60,17 +76,13 @@
 
                 <CollectionView.EmptyView>
                     <StackLayout
-                        Padding="24"
+                        Padding="{StaticResource LayoutEmptyPaddingThickness}"
                         HorizontalOptions="Center"
                         VerticalOptions="Center">
                         <Label
                             HorizontalTextAlignment="Center"
                             Style="{StaticResource SectionTitleStyle}"
-                            Text="{Binding EmptySearchHint, Source={x:Reference PageRoot}, Path=BindingContext}"/>
-                        <Label
-                            HorizontalTextAlignment="Center"
-                            Style="{StaticResource BodyStyle}"
-                            Text="{Binding EmptySearchSubhint, Source={x:Reference PageRoot}, Path=BindingContext}"/>
+                            Text="{Binding NoResultsHint}"/>
                     </StackLayout>
                 </CollectionView.EmptyView>
             </CollectionView>

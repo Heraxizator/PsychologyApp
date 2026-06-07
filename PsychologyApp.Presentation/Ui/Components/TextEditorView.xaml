@@ -1,31 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PsychologyApp.Presentation.UI.Components.TextEditorView">
-    <ContentView.ControlTemplate>
-        <ControlTemplate>
-            <Border
-                Padding="12,10"
-                StrokeThickness="1"
-                StrokeShape="{DynamicResource UiCornerRadiusEntryShape}"
-                BackgroundColor="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}"
-                Stroke="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource Gray600}}">
-                <VerticalStackLayout Spacing="4" MinimumHeightRequest="90">
-                    <Label
-                        Text="{TemplateBinding TitleText}"
-                        Style="{StaticResource CaptionStyle}" />
-                    <Editor
-                        VerticalOptions="FillAndExpand"
-                        PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                        Placeholder="{TemplateBinding PlaceholderText}"
-                        FontSize="14"
-                        FontFamily="InterRegular"
-                        MaxLength="1000"
-                        Text="{TemplateBinding BodyText, Mode=TwoWay}"
-                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                        BackgroundColor="Transparent" />
-                </VerticalStackLayout>
-            </Border>
-        </ControlTemplate>
-    </ContentView.ControlTemplate>
+             x:Class="PsychologyApp.Presentation.UI.Components.TextEditorView"
+             x:Name="Root">
+    <Border
+        x:Name="InputBorder"
+        Style="{StaticResource InputBorderStyle}">
+        <VerticalStackLayout Spacing="4" MinimumHeightRequest="90">
+            <Label
+                Text="{Binding TitleText, Source={x:Reference Root}}"
+                Style="{StaticResource CaptionStyle}" />
+            <Editor
+                x:Name="InputEditor"
+                Style="{StaticResource InputEditorStyle}"
+                MaxLength="1000"
+                Placeholder="{Binding PlaceholderText, Source={x:Reference Root}}"
+                Text="{Binding BodyText, Source={x:Reference Root}, Mode=TwoWay}"
+                VerticalOptions="FillAndExpand"
+                Focused="OnInputFocused"
+                Unfocused="OnInputUnfocused" />
+        </VerticalStackLayout>
+    </Border>
 </ContentView>

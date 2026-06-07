@@ -17,7 +17,7 @@
         <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
             <StackLayout>
                 <StackLayout IsVisible="{Binding IsStart}">
-                    <StackLayout Margin="16,16,16,0">
+                    <StackLayout Margin="{StaticResource LayoutPageMarginThickness}">
                         <Label
                             HorizontalTextAlignment="Center"
                             Text="{Binding ColorInstruction}"
@@ -176,7 +176,7 @@
                 <StackLayout 
                 IsVisible="{Binding IsFinish}">
 
-                    <StackLayout Margin="10, 0, 10, 0">
+                    <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
 
                         <CollectionView
                             SelectionMode="None"
@@ -184,54 +184,43 @@
                             ItemsSource="{Binding ResultItems}">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="vm:ResultItem">
-                                    <StackLayout Margin="15, 15, 15, 10">
-                                        <Label LineBreakMode="WordWrap">
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span 
-                                                        FontSize="16"
-                                                        Text="{Binding PropertyName}"
-                                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                                                        FontFamily="InterSemiBold"/>
-                                                    <Span
-                                                        FontSize="16"
-                                                        Text=": "
-                                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                                                        FontFamily="InterMedium"/>
-
-                                                    <Span
-                                                        FontSize="16"
-                                                        Text="{Binding PropertyValue}"
-                                                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                                                        FontFamily="InterSemiBold"/>
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                        </Label>
-
-                                        <Label
-                                            Margin="0, 10, 0, 0"
-                                            Text="{Binding PropertyText}"
-                                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                                            HorizontalTextAlignment="Justify"
-                                            FontSize="14"/>
-
-                                    </StackLayout>
+                                    <Border Style="{StaticResource BrandCardStyle}">
+                                        <VerticalStackLayout Spacing="8">
+                                            <Label LineBreakMode="WordWrap">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span
+                                                            Text="{Binding PropertyName}"
+                                                            FontFamily="{StaticResource SemiBoldFontFamily}"
+                                                            FontSize="{StaticResource SectionTitleFontSize}"
+                                                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                                        <Span
+                                                            Text=": "
+                                                            FontFamily="{StaticResource BodyFontFamily}"
+                                                            FontSize="{StaticResource BodyFontSize}"
+                                                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                                        <Span
+                                                            Text="{Binding PropertyValue}"
+                                                            FontFamily="{StaticResource SemiBoldFontFamily}"
+                                                            FontSize="{StaticResource SectionTitleFontSize}"
+                                                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <Label
+                                                Text="{Binding PropertyText}"
+                                                HorizontalTextAlignment="Justify"
+                                                Style="{StaticResource BodyStyle}" />
+                                        </VerticalStackLayout>
+                                    </Border>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
 
-                        <Button 
-                            Margin="10, 20, 10, 15"
-                            Text="{Binding RestartButtonText}"
-                            FontSize="15"
-                            BackgroundColor="{StaticResource Gray}"
-                            CornerRadius="25"
-                            WidthRequest="300"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"
-                            Command="{Binding Restart}"
-                            HeightRequest="40"/>
-                            
+                        <ui:ButtonView
+                            BodyText="{Binding RestartButtonText}"
+                            TapCommand="{Binding Restart}" />
+
                     </StackLayout>
 
                 </StackLayout>

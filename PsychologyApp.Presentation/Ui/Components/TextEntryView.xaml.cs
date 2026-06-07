@@ -1,13 +1,14 @@
+using PsychologyApp.Presentation.Infrastructure;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.UI.Components;
 
 public partial class TextEntryView : ContentView
 {
-	public TextEntryView()
-	{
-		InitializeComponent();
-	}
+    public TextEntryView()
+    {
+        InitializeComponent();
+    }
 
     public static readonly BindableProperty TitleTextProperty =
         BindableProperty.Create(nameof(TitleText), typeof(string), typeof(TextEntryView), string.Empty);
@@ -43,5 +44,19 @@ public partial class TextEntryView : ContentView
     {
         get => (ICommand)GetValue(ChangedCommandProperty);
         set => SetValue(ChangedCommandProperty, value);
+    }
+
+    private void OnInputFocused(object? sender, FocusEventArgs e) =>
+        InputFocusHelper.ApplyFocusedBorder(InputBorder);
+
+    private void OnInputUnfocused(object? sender, FocusEventArgs e) =>
+        InputFocusHelper.ApplyDefaultBorder(InputBorder);
+
+    private void OnInputTextChanged(object? sender, TextChangedEventArgs e)
+    {
+        if (ChangedCommand?.CanExecute(e.NewTextValue) == true)
+        {
+            ChangedCommand.Execute(e.NewTextValue);
+        }
     }
 }

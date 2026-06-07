@@ -15,6 +15,8 @@
     <system:Double x:Key="UiButtonCornerRadius">8</system:Double>
     <system:Double x:Key="LayoutSpacing">20</system:Double>
     <system:Double x:Key="LayoutPageMargin">20</system:Double>
+    <Thickness x:Key="LayoutPageMarginThickness">20,0,20,20</Thickness>
+    <Thickness x:Key="LayoutEmptyPaddingThickness">20</Thickness>
     <x:String x:Key="BodyFontFamily">InterRegular</x:String>
     <x:String x:Key="MediumFontFamily">InterMedium</x:String>
     <x:String x:Key="SemiBoldFontFamily">InterSemiBold</x:String>

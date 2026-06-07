@@ -130,4 +130,30 @@
     <Style x:Key="CompactSecondaryBorderStyle" TargetType="Border" BasedOn="{StaticResource CompactOutlinedBorderStyle}" />
     <Style x:Key="CompactSecondaryLabelStyle" TargetType="Label" BasedOn="{StaticResource CompactOutlinedLabelStyle}" />
 
+    <!-- dvgups InputField shell -->
+    <Style x:Key="InputBorderStyle" TargetType="Border">
+        <Setter Property="Padding" Value="12,10" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusEntryShape}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}" />
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}" />
+    </Style>
+
+    <Style x:Key="InputTextStyle" TargetType="Entry">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontSize" Value="{DynamicResource BodyFontSize}" />
+        <Setter Property="FontFamily" Value="{DynamicResource BodyFontFamily}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+        <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource InputPlaceholderLight}, Dark={StaticResource InputPlaceholderDark}}" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="InputEditorStyle" TargetType="Editor">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontSize" Value="{DynamicResource BodyFontSize}" />
+        <Setter Property="FontFamily" Value="{DynamicResource BodyFontFamily}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+        <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource InputPlaceholderLight}, Dark={StaticResource InputPlaceholderDark}}" />
+    </Style>
+
 </ResourceDictionary>
