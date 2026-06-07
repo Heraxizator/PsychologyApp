@@ -15,8 +15,8 @@
                     <Label
                         IsVisible="{TemplateBinding HasLastResult}"
                         Text="{TemplateBinding LastResultText}"
-                        FontSize="13"
-                        FontFamily="InterMedium"
+                        Style="{StaticResource CaptionStyle}"
+                        FontFamily="{StaticResource MediumFontFamily}"
                         TextColor="{StaticResource Primary}" />
                 </StackLayout>
             </Border>

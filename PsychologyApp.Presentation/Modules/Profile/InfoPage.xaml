@@ -8,7 +8,7 @@
              x:DataType="vm:InfoViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
-<StackLayout>
+<StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
 
         <ui:NavigationBarSimpleView
                 BackCommand="{Binding BackCommand}"
@@ -17,9 +17,7 @@
         <Label
                 HorizontalTextAlignment="Justify"
                 Text="{Binding AboutBody}"
-                FontSize="16"
-                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                Margin="25, 10, 25, 15"/>
+                Style="{StaticResource BodyStyle}" />
 
         </StackLayout>
 

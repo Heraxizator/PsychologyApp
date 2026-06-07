@@ -21,7 +21,7 @@
             VerticalOptions="FillAndExpand"
             AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
             AbsoluteLayout.LayoutFlags="All"
-            Margin="10, 5, 10, 0"
+            Margin="{StaticResource LayoutPageMarginThickness}"
             ItemsSource="{Binding Questions}">
 
             <CollectionView.ItemTemplate>
@@ -34,10 +34,9 @@
                         <StackLayout>
 
                             <Label
-                                Margin="0, 0, 0, 10"
+                                Margin="0,0,0,10"
                                 TextColor="{StaticResource Primary}"
-                                FontFamily="InterSemiBold"
-                                FontSize="16">
+                                Style="{StaticResource SectionTitleStyle}">
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span Text="{Binding QuestionPrefix, Source={RelativeSource AncestorType={x:Type vm:QuestionViewModel}}}"/>
@@ -54,10 +53,8 @@
                                     x:DataType="vm:Question"
                                     Text="{Binding Context}"
                                     HorizontalTextAlignment="Justify"
-                                    Margin="0, 0, 5, 5"
-                                    FontFamily="InterRegular"
-                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                                    FontSize="14"/>
+                                    Margin="0,0,5,5"
+                                    Style="{StaticResource BodyStyle}"/>
                             </Grid>
 
                             <StackLayout
@@ -81,8 +78,7 @@
                                                 <Label 
                                                     VerticalOptions="Center"
                                                     HorizontalOptions="FillAndExpand"
-                                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                                                    FontSize="14"
+                                                    Style="{StaticResource BodyStyle}"
                                                     HorizontalTextAlignment="Justify"
                                                     Text="{Binding Text}"/>
 
@@ -130,7 +126,7 @@
         <CollectionView.Footer>
 
             <ui:ButtonView
-                Margin="15, 5, 15, 20"
+                Margin="{StaticResource LayoutPageMarginThickness}"
                 BodyText="{Binding FinishButtonText}"
                 TapCommand="{Binding ConfirmCommand}" />
 

@@ -16,7 +16,7 @@
         <Grid
             AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
             AbsoluteLayout.LayoutFlags="All"
-            Margin="10, 0, 10, 0"
+            Margin="{StaticResource LayoutPageMarginThickness}"
             RowDefinitions="*,Auto">
 
             <CollectionView
@@ -48,7 +48,7 @@
             AbsoluteLayout.LayoutBounds="0.5,0.4,AutoSize,AutoSize"
             AbsoluteLayout.LayoutFlags="PositionProportional"
             IsVisible="{Binding IsCreated}"
-            Padding="24">
+            Padding="{StaticResource LayoutEmptyPaddingThickness}">
             <Label
                 Text="{Binding PrayerCollectionLabel}"
                 Style="{StaticResource SectionTitleStyle}"
@@ -56,9 +56,9 @@
             <Label
                 Margin="0,12,0,0"
                 Text="{Binding LoadLabel}"
+                Style="{StaticResource BodyStyle}"
                 TextColor="{StaticResource Primary}"
-                FontSize="16"
-                FontAttributes="Bold"
+                FontFamily="{StaticResource SemiBoldFontFamily}"
                 HorizontalTextAlignment="Center" />
             <StackLayout.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding Start}" />

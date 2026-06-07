@@ -282,6 +282,7 @@ public static class AppStrings
     public static string PhysicsIllnessPlaceholder => T("Болезнь", "Condition");
     public static string PhysicsEmptySearchHint => T("Введите запрос", "Enter a search term");
     public static string PhysicsEmptySearchSubhint => T("Болезнь или часть тела", "Illness or body part");
+    public static string PhysicsNoResultsHint => T("Ничего не найдено", "No results found");
     public static string PhysicsLoadingText => T("Поиск причин", "Searching causes");
     public static string LoadFailed => T("Не удалось загрузить", "Failed to load");
     public static string RetryQuestion => T("Попробовать ещё раз?", "Try again?");

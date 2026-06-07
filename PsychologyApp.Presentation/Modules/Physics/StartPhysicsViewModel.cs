@@ -31,10 +31,11 @@ public class StartPhysicsViewModel : BaseViewModel
         ModuleName = AppStrings.PhysicsTitle;
         PageName = AppStrings.PhysicsIntroPage;
 
-        BindNavigation(navigation);
-        StartCommand = new AsyncCommand(() => navigationService.GoToPhysicsSearchAsync());
-        UserPreferences.Changed += OnPreferencesChanged;
-    }
+            BindNavigation(navigation);
+            StartCommand = new AsyncCommand(() => navigationService.GoToPhysicsSearchAsync());
+            UserPreferences.Changed += OnPreferencesChanged;
+            SetDone();
+        }
 
     private void OnPreferencesChanged()
     {

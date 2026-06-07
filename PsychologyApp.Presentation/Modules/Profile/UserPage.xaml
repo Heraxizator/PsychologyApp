@@ -23,7 +23,7 @@
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
             VerticalScrollBarVisibility="Never">
-            <StackLayout Margin="20,0,20,20" Spacing="20">
+            <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
 
                 <ui:NavigationBarSimpleView
                     TitleText="{Binding PageTitle}"
@@ -35,7 +35,7 @@
                             Grid.Column="0"
                             VerticalOptions="Center"
                             Text="{mi:Material Icon=AccountCircle, IconSize=40}"
-                            TextColor="{StaticResource Gray}" />
+                            TextColor="{StaticResource TextSecondaryLight}" />
                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
                             <Label Style="{StaticResource PageTitleStyle}" Text="{Binding UserLabel}" />
                             <Label Style="{StaticResource BodyStyle}" Text="{Binding StandardUserLabel}" />
@@ -43,7 +43,7 @@
                     </Grid>
                 </Border>
 
-                <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="12">
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                     <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
                         <VerticalStackLayout Grid.Column="0" Spacing="4">
                             <Label

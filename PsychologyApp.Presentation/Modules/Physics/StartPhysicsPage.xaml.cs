@@ -18,9 +18,4 @@ public partial class StartPhysicsPage : ContentPage
 
         BindingContext = viewModel;
     }
-
-    protected override void OnNavigatedTo(NavigatedToEventArgs args)
-    {
-        viewModel.SetDone();
-    }
 }

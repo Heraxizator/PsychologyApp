@@ -8,7 +8,7 @@
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
-    <StackLayout Margin="10, 0, 10, 0">
+    <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
         <ui:NavigationBarSimpleView
             TitleText="{Binding PageTitle}"
             BackCommand="{Binding BackCommand}" />

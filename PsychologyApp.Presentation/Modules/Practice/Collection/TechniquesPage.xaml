@@ -20,20 +20,20 @@
         <CollectionView
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
-            Margin="5,0,5,5"
+            Margin="{StaticResource LayoutPageMarginThickness}"
             ItemsSource="{Binding Techniques}"
             SelectionMode="Single"
             VerticalScrollBarVisibility="Never"
             HorizontalScrollBarVisibility="Never">
 
             <CollectionView.Header>
-                <StackLayout Margin="10,0,10,10" Spacing="10">
+                <StackLayout Spacing="{StaticResource LayoutSpacing}">
                     <Label Text="{Binding TodayForYouLabel}" Style="{StaticResource SectionTitleStyle}" />
-                    <Border Style="{StaticResource BrandCardStyle}" Padding="16" Margin="0" BackgroundColor="{StaticResource PrimaryTint}">
+                    <Border Style="{StaticResource BrandCardStyle}" Margin="0" BackgroundColor="{StaticResource PrimaryTint}">
                         <StackLayout Spacing="8">
                             <Label Text="{Binding TodayRecommendedLabel}" Style="{StaticResource BodyStyle}" />
                             <Label Text="{Binding TodayTechniqueTitle}" Style="{StaticResource SectionTitleStyle}" />
-                            <Label Text="{Binding StreakDisplay}" TextColor="{StaticResource Primary}" FontFamily="InterMedium" />
+                            <Label Text="{Binding StreakDisplay}" TextColor="{StaticResource Primary}" FontFamily="{StaticResource MediumFontFamily}" />
                             <ui:ButtonView
                                 BodyText="{Binding TodayStartPracticeText}"
                                 TapCommand="{Binding StartTodayPracticeCommand}" />
@@ -78,7 +78,7 @@
             </CollectionView.ItemTemplate>
 
             <CollectionView.EmptyView>
-                <StackLayout Padding="24" HorizontalOptions="Center" VerticalOptions="Center">
+                <StackLayout Padding="{StaticResource LayoutEmptyPaddingThickness}" HorizontalOptions="Center" VerticalOptions="Center">
                     <Label HorizontalTextAlignment="Center" Style="{StaticResource SectionTitleStyle}" Text="{Binding PracticeEmptyTitle}" />
                     <Label HorizontalTextAlignment="Center" Style="{StaticResource BodyStyle}" Text="{Binding PracticeEmptyBody}" />
                 </StackLayout>

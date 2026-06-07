@@ -18,7 +18,7 @@
             <StackLayout>
 
                 <StackLayout IsVisible="{Binding IsStart}">
-                    <StackLayout Margin="16,16,16,0">
+                    <StackLayout Margin="{StaticResource LayoutPageMarginThickness}">
                         <Label
                             HorizontalTextAlignment="Center"
                             Text="{Binding CurrentInstruction}"
@@ -177,15 +177,13 @@
                 <StackLayout 
                     IsVisible="{Binding IsFinish}">
 
-                    <StackLayout Margin="5, 0, 5, 0">
+                    <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
 
                         <Label
                         Text="{Binding FirstColorLabel}"
-                        FontSize="19"
-                        Margin="10, 15, 5, 5"
+                        Style="{StaticResource SectionTitleStyle}"
                         HorizontalOptions="Center"
-                        FontAttributes="Bold"
-                        TextColor="{StaticResource Gray}"/>
+                        TextColor="{StaticResource TextSecondaryLight}"/>
 
                         <BoxView 
                         Margin="20, 10, 20, 10"
@@ -204,8 +202,7 @@
 
                             <Label 
                             Text="{Binding FirstName}"
-                            FontSize="18"
-                            TextColor="Black"
+                            Style="{StaticResource SectionTitleStyle}"
                             HorizontalOptions="Center"/>
                         </StackLayout>
 
@@ -214,17 +211,15 @@
                         HeightRequest="3"
                         Color="{StaticResource Gray}"/>
 
-                        <Border Style="{StaticResource BrandCardStyle}" Margin="16,8,16,8">
+                        <Border Style="{StaticResource BrandCardStyle}">
                             <Label Text="{Binding FirstResult}" Style="{StaticResource BodyStyle}" />
                         </Border>
 
                         <Label
                         Text="{Binding SecondColorLabel}"
-                        FontSize="19"
-                        Margin="10, 10, 5, 5"
+                        Style="{StaticResource SectionTitleStyle}"
                         HorizontalOptions="Center"
-                        FontAttributes="Bold"
-                        TextColor="{StaticResource Gray}"/>
+                        TextColor="{StaticResource TextSecondaryLight}"/>
 
                         <BoxView 
                         Margin="20, 10, 20, 10"
@@ -243,8 +238,7 @@
 
                             <Label 
                             Text="{Binding SecondName}"
-                            FontSize="18"
-                            TextColor="Black"
+                            Style="{StaticResource SectionTitleStyle}"
                             HorizontalOptions="Center"/>
                         </StackLayout>
 
@@ -253,21 +247,13 @@
                         HeightRequest="3"
                         Color="{StaticResource Gray}"/>
 
-                        <Border Style="{StaticResource BrandCardStyle}" Margin="16,8,16,8">
+                        <Border Style="{StaticResource BrandCardStyle}">
                             <Label Text="{Binding SecondResult}" Style="{StaticResource BodyStyle}" />
                         </Border>
 
-                        <Button 
-                        Margin="10, 20, 10, 15"
-                        Text="{Binding RestartButtonText}"
-                        FontSize="15"
-                        BackgroundColor="{StaticResource Gray}"
-                        CornerRadius="25"
-                        WidthRequest="300"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"
-                        Command="{Binding Restart}"
-                        HeightRequest="40"/>
+                        <ui:ButtonView
+                        BodyText="{Binding RestartButtonText}"
+                        TapCommand="{Binding Restart}" />
                     </StackLayout>
 
                 </StackLayout>
