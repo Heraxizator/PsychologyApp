@@ -44,6 +44,7 @@ public class TechniquesViewModel : BaseViewModel
     public string TodayStartPracticeText => AppStrings.TodayStartPractice;
     public string TodayMoodQuestion => AppStrings.TodayMoodQuestion;
     public string StreakDisplay => AppStrings.ProfileStreakCount(StreakDays);
+    public bool HasStreak => StreakDays > 0;
     public string PracticeEmptyTitle => AppStrings.PracticeEmptyTitle;
     public string PracticeEmptyBody => AppStrings.PracticeEmptyBody;
 
@@ -63,6 +64,7 @@ public class TechniquesViewModel : BaseViewModel
             if (SetProperty(ref _streakDays, value))
             {
                 OnPropertyChanged(nameof(StreakDisplay));
+                OnPropertyChanged(nameof(HasStreak));
             }
         }
     }

@@ -4,24 +4,22 @@
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              x:Class="PsychologyApp.Presentation.UI.Components.EntryBoxView"
              x:Name="Root">
-    <Border Style="{StaticResource BrandCardStyle}">
-        <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
-            <Label
-                Text="{Binding TitleText, Source={x:Reference Root}}"
-                Style="{StaticResource SectionTitleStyle}" />
+    <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
+        <Label
+            Text="{Binding TitleText, Source={x:Reference Root}}"
+            Style="{StaticResource SectionTitleStyle}" />
 
-            <VerticalStackLayout
-                Spacing="{StaticResource LayoutSpacing}"
-                BindableLayout.ItemsSource="{Binding BodySource, Source={x:Reference Root}}">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate x:DataType="ui:EntryItem">
-                        <ui:TextEntryView
-                            TitleText="{Binding Title}"
-                            BodyText="{Binding Text}"
-                            PlaceholderText="{Binding Placeholder}" />
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </VerticalStackLayout>
+        <VerticalStackLayout
+            Spacing="{StaticResource LayoutSpacing}"
+            BindableLayout.ItemsSource="{Binding BodySource, Source={x:Reference Root}}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="ui:EntryItem">
+                    <ui:TextEntryView
+                        TitleText="{Binding Title}"
+                        BodyText="{Binding Text, Mode=TwoWay}"
+                        PlaceholderText="{Binding Placeholder}" />
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
         </VerticalStackLayout>
-    </Border>
+    </VerticalStackLayout>
 </ContentView>
