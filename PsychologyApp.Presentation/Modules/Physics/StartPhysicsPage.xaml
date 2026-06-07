@@ -9,20 +9,14 @@
              Shell.NavBarIsVisible="True"
              Title="{Binding PageTitle}">
 
-    <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+    <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
         <ScrollView
-            AbsoluteLayout.LayoutBounds="0,0,1,1"
-            AbsoluteLayout.LayoutFlags="All"
+            IsVisible="{Binding IsDone}"
             VerticalScrollBarVisibility="Never">
-            <StackLayout Margin="{StaticResource LayoutTabPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
-                <ui:ProgressBarView
-                    x:Name="LoadingProgress"
-                    IsVisible="{Binding IsLoadingOverlayVisible}"
-                    IsLoading="{Binding IsLoadingOverlayVisible}"
-                    ProgressText="{Binding LoadingText}"
-                    CancelCommand="{Binding Cancel}" />
-
-                <StackLayout x:Name="ContentStack" IsVisible="{Binding IsDone}" Spacing="12">
+            <StackLayout
+                x:Name="ContentStack"
+                Margin="{StaticResource LayoutTabPageMarginThickness}"
+                Spacing="{StaticResource LayoutSpacing}">
                     <StackLayout.Behaviors>
                         <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
                     </StackLayout.Behaviors>
@@ -38,16 +32,24 @@
                     <ui:ButtonView
                         BodyText="{Binding StartButtonText}"
                         TapCommand="{Binding StartCommand}" />
-                </StackLayout>
             </StackLayout>
         </ScrollView>
 
+        <ui:ProgressBarView
+            x:Name="LoadingProgress"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsLoadingOverlayVisible}"
+            IsLoading="{Binding IsLoadingOverlayVisible}"
+            ProgressText="{Binding LoadingText}"
+            CancelCommand="{Binding Cancel}" />
+
         <ui:RetryView
-            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
-            AbsoluteLayout.LayoutFlags="PositionProportional"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
             IsVisible="{Binding IsFail}"
             FailedText="{Binding FailedText}"
             RetryText="{Binding RetryText}"
             RetryCommand="{Binding Reload}" />
-    </AbsoluteLayout>
+    </Grid>
 </ContentPage>

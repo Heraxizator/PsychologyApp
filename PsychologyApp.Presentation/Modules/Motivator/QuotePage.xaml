@@ -11,11 +11,8 @@
              x:Name="page"
              Title="{Binding PageTitle}">
 
-    <AbsoluteLayout VerticalOptions="FillAndExpand">
-        <Grid
-            AbsoluteLayout.LayoutBounds="0,0,1,1"
-            AbsoluteLayout.LayoutFlags="All"
-            Margin="{StaticResource LayoutTabPageMarginThickness}">
+    <Grid VerticalOptions="FillAndExpand">
+        <Grid Margin="{StaticResource LayoutTabPageMarginThickness}">
             <CollectionView
                 x:Name="QuotesCollectionView"
                 IsVisible="{Binding IsDone}"
@@ -70,12 +67,12 @@
         </Grid>
 
         <ui:RetryView
-            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
-            AbsoluteLayout.LayoutFlags="PositionProportional"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
             IsVisible="{Binding IsFail}"
             FailedText="{Binding LoadErrorText}"
             RetryText="{Binding RetryText}"
             RetryCommand="{Binding Reload}" />
-    </AbsoluteLayout>
+    </Grid>
 
 </ContentPage>

@@ -15,13 +15,12 @@
         <ToolbarItem Text="{Binding SearchToolbarText}" Command="{Binding SearchCommand}"/>
     </ContentPage.ToolbarItems>
 
-    <AbsoluteLayout
+    <Grid
         HorizontalOptions="FillAndExpand"
         VerticalOptions="FillAndExpand">
 
         <Grid
-            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
-            AbsoluteLayout.LayoutFlags="All"
+            IsVisible="{Binding IsDone}"
             Margin="{StaticResource LayoutPageMarginThickness}"
             RowDefinitions="Auto,Auto,*">
 
@@ -57,7 +56,7 @@
                 <ui:ProgressBarView
                     x:Name="SearchFilteringProgress"
                     IsVisible="{Binding IsSearchFilteringVisible}"
-                    IsLoading="True"
+                    IsLoading="{Binding IsSearchFilteringVisible}"
                     ProgressText="{Binding SearchFilteringText}"
                     VerticalOptions="Center"
                     HorizontalOptions="Center" />
@@ -110,8 +109,8 @@
 
         <ui:ProgressBarView
             x:Name="InitLoadingProgress"
-            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
-            AbsoluteLayout.LayoutFlags="PositionProportional"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
             IsVisible="{Binding IsLoadingOverlayVisible}"
             IsLoading="{Binding IsLoadingOverlayVisible}"
             ProgressText="{Binding LoadingText}">
@@ -121,11 +120,11 @@
         </ui:ProgressBarView>
 
         <ui:RetryView
-            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
-            AbsoluteLayout.LayoutFlags="PositionProportional"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
             IsVisible="{Binding IsFail}"
             FailedText="{Binding FailedText}"
             RetryText="{Binding RetryText}"
             RetryCommand="{Binding Reload}" />
-    </AbsoluteLayout>
+    </Grid>
 </ContentPage>

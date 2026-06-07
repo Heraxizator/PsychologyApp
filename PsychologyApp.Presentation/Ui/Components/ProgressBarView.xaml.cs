@@ -17,9 +17,15 @@ public partial class ProgressBarView : ContentView
     {
         base.OnPropertyChanged(propertyName);
 
-        if (propertyName == nameof(IsLoading) && IsLoading)
+        if (propertyName is nameof(IsVisible) or nameof(IsLoading))
         {
-            UiAnimations.SafeRevealPremiumAsync(this, allowHidden: true).FireAndForget();
+            if (!IsVisible || !IsLoading)
+            {
+                UiAnimations.ResetVisualState(this);
+                return;
+            }
+
+            UiAnimations.SafeRevealPremiumAsync(this).FireAndForget();
         }
     }
 

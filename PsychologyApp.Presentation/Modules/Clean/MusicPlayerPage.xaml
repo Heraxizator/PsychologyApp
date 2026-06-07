@@ -10,13 +10,12 @@
              Shell.NavBarIsVisible="True"
              Title="{Binding PageTitle}">
 
-    <AbsoluteLayout
+    <Grid
         VerticalOptions="FillAndExpand"
         HorizontalOptions="FillAndExpand">
 
         <Grid
-            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
-            AbsoluteLayout.LayoutFlags="All"
+            IsVisible="{Binding IsDone}"
             Margin="{StaticResource LayoutTabPageMarginThickness}"
             RowDefinitions="*,Auto">
             <Grid.Behaviors>
@@ -57,8 +56,8 @@
 
         <StackLayout
             x:Name="IntroPrompt"
-            AbsoluteLayout.LayoutBounds="0.5,0.4,AutoSize,AutoSize"
-            AbsoluteLayout.LayoutFlags="PositionProportional"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
             IsVisible="{Binding IsCreated}"
             Padding="{StaticResource LayoutEmptyPaddingThickness}">
             <Label
@@ -78,9 +77,9 @@
         </StackLayout>
 
         <ui:ProgressBarView
-            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
-            AbsoluteLayout.LayoutFlags="PositionProportional"
             x:Name="Progress"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
             IsVisible="{Binding IsLoadingOverlayVisible}"
             IsLoading="{Binding IsLoadingOverlayVisible}"
             ProgressText="{Binding SearchingPrayersText}">
@@ -90,11 +89,11 @@
         </ui:ProgressBarView>
 
         <ui:RetryView
-            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
-            AbsoluteLayout.LayoutFlags="PositionProportional"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
             IsVisible="{Binding IsFail}"
             FailedText="{Binding LoadFailedText}"
             RetryText="{Binding RetryText}"
             RetryCommand="{Binding Start}" />
-    </AbsoluteLayout>
+    </Grid>
 </ContentPage>

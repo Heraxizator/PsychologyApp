@@ -30,7 +30,6 @@ public static class UiAnimations
         view.Opacity = 0;
         view.TranslationY = 0;
         view.Scale = 1;
-        view.IsVisible = true;
     }
 
     public static void PrepareForPremiumReveal(VisualElement? view, double y = SlideOffset)
@@ -43,7 +42,6 @@ public static class UiAnimations
         view.Opacity = 0;
         view.Scale = RevealScaleFrom;
         view.TranslationY = y;
-        view.IsVisible = true;
     }
 
     public static void ResetVisualState(VisualElement? view)
