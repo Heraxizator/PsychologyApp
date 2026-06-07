@@ -9,6 +9,7 @@ using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.Modules.Practice.Messages;
 using PsychologyApp.Presentation.Modules.Practice.Techniques;
 using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.Technique;
 using PsychologyApp.Presentation.Technique.Main;
 using System.Windows.Input;
 using BaseViewModel = PsychologyApp.Presentation.ViewModels.BaseViewModel;
@@ -40,19 +41,21 @@ public class TechniquesViewModel : BaseViewModel
     public string CreateButtonText => AppStrings.PracticeCreate;
     public string ProfileToolbarText => AppStrings.ProfileTitle;
     public string TodayForYouLabel => AppStrings.TodayForYou;
-    public string TodayRecommendedLabel => AppStrings.TodayRecommended;
     public string TodayStartPracticeText => AppStrings.TodayStartPractice;
     public string TodayMoodQuestion => AppStrings.TodayMoodQuestion;
     public string StreakDisplay => AppStrings.ProfileStreakCount(StreakDays);
     public bool HasStreak => StreakDays > 0;
     public string PracticeEmptyTitle => AppStrings.PracticeEmptyTitle;
     public string PracticeEmptyBody => AppStrings.PracticeEmptyBody;
+    public string LoadingText => AppStrings.PracticeLoadingText;
+    public string FailedText => AppStrings.LoadFailed;
+    public string RetryText => AppStrings.RetryQuestion;
 
-    private string _todayTechniqueTitle = string.Empty;
-    public string TodayTechniqueTitle
+    private TechniqueItem? _todayTechniqueItem;
+    public TechniqueItem? TodayTechniqueItem
     {
-        get => _todayTechniqueTitle;
-        set => SetProperty(ref _todayTechniqueTitle, value);
+        get => _todayTechniqueItem;
+        private set => SetProperty(ref _todayTechniqueItem, value);
     }
 
     private int _streakDays;
@@ -65,6 +68,7 @@ public class TechniquesViewModel : BaseViewModel
             {
                 OnPropertyChanged(nameof(StreakDisplay));
                 OnPropertyChanged(nameof(HasStreak));
+                UpdateTodayRecommendation();
             }
         }
     }
@@ -98,24 +102,30 @@ public class TechniquesViewModel : BaseViewModel
         RecordMood4Command = new AsyncCommand(() => RecordMoodAsync(4));
         RecordMood5Command = new AsyncCommand(() => RecordMoodAsync(5));
 
+        Cancel = new Command(CancelProgress);
+        Reload = new AsyncCommand(InitializeAsync);
+
         _techniqueMessenger.Subscribe(this, message => OnTechniqueMessageAsync(message).FireAndForget());
-        UserPreferences.Changed += OnPreferencesChanged;
+        SetInit();
         InitializeAsync().FireAndForget();
     }
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
-        OnPropertyChanged(nameof(PageTitle));
-        OnPropertyChanged(nameof(MyTechniquesLabel));
-        OnPropertyChanged(nameof(CreateButtonText));
-        OnPropertyChanged(nameof(ProfileToolbarText));
-        OnPropertyChanged(nameof(TodayForYouLabel));
-        OnPropertyChanged(nameof(TodayRecommendedLabel));
-        OnPropertyChanged(nameof(TodayStartPracticeText));
-        OnPropertyChanged(nameof(TodayMoodQuestion));
-        OnPropertyChanged(nameof(StreakDisplay));
-        OnPropertyChanged(nameof(PracticeEmptyTitle));
-        OnPropertyChanged(nameof(PracticeEmptyBody));
+        Notify(
+            nameof(PageTitle),
+            nameof(MyTechniquesLabel),
+            nameof(CreateButtonText),
+            nameof(ProfileToolbarText),
+            nameof(TodayForYouLabel),
+            nameof(TodayStartPracticeText),
+            nameof(TodayMoodQuestion),
+            nameof(StreakDisplay),
+            nameof(PracticeEmptyTitle),
+            nameof(PracticeEmptyBody),
+            nameof(LoadingText),
+            nameof(FailedText),
+            nameof(RetryText));
         UpdateTodayRecommendation();
         InitializeAsync().FireAndForget();
     }
@@ -150,18 +160,31 @@ public class TechniquesViewModel : BaseViewModel
     {
         try
         {
+            await MainThread.InvokeOnMainThreadAsync(SetInit);
+
             await AppReadiness.DatabaseReadyAsync.WaitAsync(cancellationToken);
 
             StreakDays = await _userProgressService.GetStreakDaysAsync(cancellationToken);
-            UpdateTodayRecommendation();
-
-            Techniques.Clear();
-            Techniques.AddRange(await BuildStaticItemsAsync(cancellationToken));
+            IEnumerable<TechniqueItem> staticItems = await BuildStaticItemsAsync(cancellationToken);
             IEnumerable<TechniqueDTO> dynamicSource = await _techniqueService.GetTechniquesListAsync(500, cancellationToken);
-            Techniques.AddRange(dynamicSource.Select(ParseFromDb));
+
+            await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                UpdateTodayRecommendation();
+                ApplyTodayTechniqueDateFromList(staticItems);
+                Techniques.Clear();
+                Techniques.AddRange(staticItems);
+                Techniques.AddRange(dynamicSource.Select(ParseFromDb));
+                SetDone();
+            });
+        }
+        catch (OperationCanceledException)
+        {
+            await MainThread.InvokeOnMainThreadAsync(CancelProgress);
         }
         catch
         {
+            await MainThread.InvokeOnMainThreadAsync(SetFail);
             _toastService.ShortToast(AppStrings.PracticeInitError);
         }
     }
@@ -170,7 +193,35 @@ public class TechniquesViewModel : BaseViewModel
     {
         string concern = UserPreferences.Load().OnboardingConcern;
         _todayTechniqueId = OnboardingRecommendation.ResolveTechnique(concern);
-        TodayTechniqueTitle = TechniqueCatalog.Get(_todayTechniqueId).PageName;
+        TechniqueDefinition definition = TechniqueCatalog.Get(_todayTechniqueId);
+        TodayTechniqueItem = new TechniqueItem
+        {
+            Number = definition.ListNumber,
+            Date = HasStreak ? StreakDisplay : definition.ListDate,
+            Image = "method.png",
+            Title = definition.ListTitle,
+            Subtitle = definition.ListSubtitle,
+            Theme = definition.Theme,
+            Author = definition.Author,
+            Active = true,
+            TapCommand = new AsyncCommand(() => _navigationService.GoToTechniqueAsync(_todayTechniqueId))
+        };
+    }
+
+    private void ApplyTodayTechniqueDateFromList(IEnumerable<TechniqueItem> staticItems)
+    {
+        if (TodayTechniqueItem is null || HasStreak)
+        {
+            return;
+        }
+
+        TechniqueListEntry entry = TechniqueListCatalog.GetBuiltIn().First(e => e.TechniqueId == _todayTechniqueId);
+        TechniqueItem? match = staticItems.FirstOrDefault(item => item.Number == entry.Number);
+        if (match is not null)
+        {
+            TodayTechniqueItem.Date = match.Date;
+            OnPropertyChanged(nameof(TodayTechniqueItem));
+        }
     }
 
     private async Task<IEnumerable<TechniqueItem>> BuildStaticItemsAsync(CancellationToken cancellationToken)

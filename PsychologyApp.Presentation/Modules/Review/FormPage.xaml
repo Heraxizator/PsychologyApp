@@ -4,6 +4,7 @@
              x:Class="PsychologyApp.Presentation.Views.Review.FormPage"
              xmlns:reviewviewmodels="clr-namespace:PsychologyApp.Presentation.ViewModels.Review" 
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Infrastructure.Behaviors"
              x:DataType="reviewviewmodels:FormViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
@@ -14,6 +15,9 @@
             AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
             AbsoluteLayout.LayoutFlags="All"
             Margin="10, 0, 10, 0">
+            <StackLayout.Behaviors>
+                <behaviors:StaggerChildrenBehavior />
+            </StackLayout.Behaviors>
 
             <ui:TextBoxView
                 HeaderText="{Binding ExplanationHeader}"

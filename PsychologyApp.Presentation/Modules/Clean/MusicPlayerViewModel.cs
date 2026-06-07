@@ -34,19 +34,19 @@ public class MusicPlayerViewModel : BaseViewModel
 
         Start = new AsyncCommand(LoadPlaylistAsync);
         SelectedItems.CollectionChanged += SelectedItems_CollectionChanged;
-        UserPreferences.Changed += OnPreferencesChanged;
     }
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
-        OnPropertyChanged(nameof(PageTitle));
-        OnPropertyChanged(nameof(PrayerCollectionLabel));
-        OnPropertyChanged(nameof(LoadLabel));
-        OnPropertyChanged(nameof(SearchingPrayersText));
-        OnPropertyChanged(nameof(MoreInfoHeader));
-        OnPropertyChanged(nameof(MoreInfoBody));
-        OnPropertyChanged(nameof(LoadFailedText));
-        OnPropertyChanged(nameof(RetryText));
+        Notify(
+            nameof(PageTitle),
+            nameof(PrayerCollectionLabel),
+            nameof(LoadLabel),
+            nameof(SearchingPrayersText),
+            nameof(MoreInfoHeader),
+            nameof(MoreInfoBody),
+            nameof(LoadFailedText),
+            nameof(RetryText));
 
         if (IsDone && SelectedItems.Count > 0)
         {

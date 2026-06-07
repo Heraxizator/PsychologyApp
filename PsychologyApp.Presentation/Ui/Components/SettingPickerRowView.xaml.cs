@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Infrastructure;
 using System.Collections;
 
 namespace PsychologyApp.Presentation.UI.Components;
@@ -7,6 +8,7 @@ public partial class SettingPickerRowView : ContentView
     public SettingPickerRowView()
     {
         InitializeComponent();
+        Loaded += (_, _) => VisualElementPressFeedback.Attach(this);
     }
 
     public static readonly BindableProperty LabelTextProperty =

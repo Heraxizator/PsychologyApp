@@ -4,6 +4,7 @@
              x:Class="PsychologyApp.Presentation.Views.TechniquePages.ConstructorPages.CreatedPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Practice.Constructor"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Infrastructure.Behaviors"
              x:DataType="vm:CreatedViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
@@ -15,6 +16,9 @@
 
     <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
         <StackLayout Margin="20,0,20,20" Spacing="20">
+            <StackLayout.Behaviors>
+                <behaviors:RevealOnAppearingBehavior />
+            </StackLayout.Behaviors>
             <ui:NavigationBarSimpleView
                 TitleText="{Binding CustomTechniqueTitle}"
                 BackCommand="{Binding Finish}" />

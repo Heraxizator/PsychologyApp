@@ -3,12 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Modules.Profile.DonatePage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Infrastructure.Behaviors"
              x:DataType="profile:DonateViewModel"
              xmlns:profile="clr-namespace:PsychologyApp.Presentation.Modules.Profile"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
     <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+        <StackLayout.Behaviors>
+            <behaviors:RevealOnAppearingBehavior />
+        </StackLayout.Behaviors>
         <ui:NavigationBarSimpleView
             TitleText="{Binding PageTitle}"
             BackCommand="{Binding BackCommand}" />

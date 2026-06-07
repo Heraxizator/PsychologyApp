@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MvvmHelpers;
@@ -16,6 +17,7 @@ namespace PsychologyApp.Presentation.ViewModels.Physics;
 public class PhysicsSearchViewModel : BaseViewModel
 {
     private const int SearchDebounceMs = 300;
+    private const int SearchResultsPageSize = 20;
 
     private readonly IReasonService _reasonService;
     private readonly ILogger<PhysicsSearchViewModel> _logger;
@@ -36,6 +38,7 @@ public class PhysicsSearchViewModel : BaseViewModel
     public string EmptySearchSubhint => AppStrings.PhysicsEmptySearchSubhint;
     public string NoResultsHint => AppStrings.PhysicsNoResultsHint;
     public string LoadingText => AppStrings.PhysicsLoadingText;
+    public string SearchFilteringText => AppStrings.PhysicsSearchFilteringText;
     public string FailedText => AppStrings.LoadFailed;
     public string RetryText => AppStrings.RetryQuestion;
     public string SolutionHeader => AppStrings.PhysicsSolutionHeader;
@@ -43,10 +46,31 @@ public class PhysicsSearchViewModel : BaseViewModel
     public string TryPracticeLabel => AppStrings.PhysicsTryPractice;
 
     public ICommand SearchCommand { get; private set; } = default!;
+    public ICommand LoadMoreSearchResultsCommand { get; private set; } = default!;
 
-    public bool ShowSearchPlaceholder => IsDone && string.IsNullOrWhiteSpace(SearchText);
+    private List<PhysicsReasonItem> _searchMatches = [];
+    private int _loadedSearchCount;
 
-    public bool IsSearchResultsVisible => IsDone && !string.IsNullOrWhiteSpace(SearchText);
+    private bool _isSearching;
+
+    public bool IsSearching
+    {
+        get => _isSearching;
+        private set
+        {
+            if (_isSearching != value)
+            {
+                _isSearching = value;
+                OnPropertyChanged(nameof(IsSearching));
+                UpdateSearchUiState();
+            }
+        }
+    }
+
+    public bool IsSearchEmptyPromptVisible => _isSearchEmptyPromptVisible;
+    public bool IsSearchFilteringVisible => _isSearchFilteringVisible;
+    public bool IsSearchResultsListVisible => _isSearchResultsListVisible;
+    public bool IsSearchNoResultsVisible => _isSearchNoResultsVisible;
 
     public PhysicsSearchViewModel(
         INavigation navigation,
@@ -68,7 +92,9 @@ public class PhysicsSearchViewModel : BaseViewModel
             Reload = new AsyncCommand(ReloadAsync);
             Cancel = new Command(CancelInit);
             SearchCommand = new Command(() => ExecuteSearch(SearchText));
-            UserPreferences.Changed += OnPreferencesChanged;
+            LoadMoreSearchResultsCommand = new Command(LoadMoreSearchResults);
+            ResultsObservableCollection.CollectionChanged += (_, _) => UpdateSearchUiState();
+            PropertyChanged += OnSelfPropertyChanged;
 
             InitAsync().FireAndForget();
         }
@@ -79,27 +105,37 @@ public class PhysicsSearchViewModel : BaseViewModel
         }
     }
 
+    private void OnSelfPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName is nameof(IsDone) or nameof(IsInit) or nameof(IsFail))
+        {
+            UpdateSearchUiState();
+        }
+    }
+
     private void CancelInit()
     {
         _initCts?.Cancel();
         CancelProgress();
     }
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
-        OnPropertyChanged(nameof(PageTitle));
-        OnPropertyChanged(nameof(SearchToolbarText));
-        OnPropertyChanged(nameof(ProblemLabel));
-        OnPropertyChanged(nameof(IllnessPlaceholder));
-        OnPropertyChanged(nameof(EmptySearchHint));
-        OnPropertyChanged(nameof(EmptySearchSubhint));
-        OnPropertyChanged(nameof(NoResultsHint));
-        OnPropertyChanged(nameof(LoadingText));
-        OnPropertyChanged(nameof(FailedText));
-        OnPropertyChanged(nameof(RetryText));
-        OnPropertyChanged(nameof(SolutionHeader));
-        OnPropertyChanged(nameof(RecommendedPracticesLabel));
-        OnPropertyChanged(nameof(TryPracticeLabel));
+        Notify(
+            nameof(PageTitle),
+            nameof(SearchToolbarText),
+            nameof(ProblemLabel),
+            nameof(IllnessPlaceholder),
+            nameof(EmptySearchHint),
+            nameof(EmptySearchSubhint),
+            nameof(NoResultsHint),
+            nameof(LoadingText),
+            nameof(SearchFilteringText),
+            nameof(FailedText),
+            nameof(RetryText),
+            nameof(SolutionHeader),
+            nameof(RecommendedPracticesLabel),
+            nameof(TryPracticeLabel));
         ReloadAsync().FireAndForget();
     }
 
@@ -139,7 +175,7 @@ public class PhysicsSearchViewModel : BaseViewModel
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
                 SetDone();
-                NotifySearchPlaceholder();
+                UpdateSearchUiState();
             });
         }
         catch (Exception e)
@@ -170,10 +206,11 @@ public class PhysicsSearchViewModel : BaseViewModel
         await MainThread.InvokeOnMainThreadAsync(() =>
         {
             SetDone();
-            NotifySearchPlaceholder();
+            UpdateSearchUiState();
             if (!string.IsNullOrWhiteSpace(SearchText))
             {
-                ExecuteSearch(SearchText);
+                IsSearching = true;
+                RunSearchAsync(SearchText, cancellationToken).FireAndForget();
             }
         });
     }
@@ -188,7 +225,7 @@ public class PhysicsSearchViewModel : BaseViewModel
             {
                 _searchText = value;
                 OnPropertyChanged(nameof(SearchText));
-                NotifySearchPlaceholder();
+                UpdateSearchUiState();
                 DebouncedSearch(value);
             }
         }
@@ -197,15 +234,24 @@ public class PhysicsSearchViewModel : BaseViewModel
     private void DebouncedSearch(string searchText)
     {
         _searchDebounceCts?.Cancel();
+        _searchDebounceCts?.Dispose();
         _searchDebounceCts = new CancellationTokenSource();
         CancellationToken token = _searchDebounceCts.Token;
+
+        if (string.IsNullOrWhiteSpace(searchText))
+        {
+            MainThread.BeginInvokeOnMainThread(ClearSearchResults);
+            return;
+        }
+
+        MainThread.BeginInvokeOnMainThread(() => IsSearching = true);
 
         Task.Run(async () =>
         {
             try
             {
                 await Task.Delay(SearchDebounceMs, token);
-                await MainThread.InvokeOnMainThreadAsync(() => ExecuteSearch(searchText));
+                await RunSearchAsync(searchText, token);
             }
             catch (TaskCanceledException)
             {
@@ -213,21 +259,56 @@ public class PhysicsSearchViewModel : BaseViewModel
         }, token);
     }
 
-    private void NotifySearchPlaceholder()
+    private void UpdateSearchUiState()
     {
-        OnPropertyChanged(nameof(ShowSearchPlaceholder));
-        OnPropertyChanged(nameof(IsSearchResultsVisible));
+        bool hasText = !string.IsNullOrWhiteSpace(SearchText);
+        bool hasResults = ResultsObservableCollection.Count > 0;
+
+        SetSearchUiFlag(ref _isSearchEmptyPromptVisible, IsDone && !hasText && !IsSearching, nameof(IsSearchEmptyPromptVisible));
+        SetSearchUiFlag(ref _isSearchFilteringVisible, IsDone && hasText && IsSearching, nameof(IsSearchFilteringVisible));
+        SetSearchUiFlag(ref _isSearchResultsListVisible, IsDone && hasText && !IsSearching && hasResults, nameof(IsSearchResultsListVisible));
+        SetSearchUiFlag(ref _isSearchNoResultsVisible, IsDone && hasText && !IsSearching && !hasResults, nameof(IsSearchNoResultsVisible));
+    }
+
+    private bool _isSearchEmptyPromptVisible;
+    private bool _isSearchFilteringVisible;
+    private bool _isSearchResultsListVisible;
+    private bool _isSearchNoResultsVisible;
+
+    private void SetSearchUiFlag(ref bool field, bool value, string propertyName)
+    {
+        if (field == value)
+        {
+            return;
+        }
+
+        field = value;
+        OnPropertyChanged(propertyName);
     }
 
     private void ExecuteSearch(string searchText)
     {
         if (string.IsNullOrWhiteSpace(searchText))
         {
-            ResultsObservableCollection.Clear();
-            NotifySearchPlaceholder();
+            ClearSearchResults();
             return;
         }
 
+        IsSearching = true;
+        RunSearchAsync(searchText, CancellationToken.None).FireAndForget();
+    }
+
+    private void ClearSearchResults()
+    {
+        _searchMatches = [];
+        _loadedSearchCount = 0;
+        ResultsObservableCollection.Clear();
+        IsSearching = false;
+        UpdateSearchUiState();
+    }
+
+    private async Task RunSearchAsync(string searchText, CancellationToken cancellationToken)
+    {
         IReadOnlyList<TechniqueId> techniqueIds = SomaticTechniqueMap.RecommendForQuery(searchText);
         List<PhysicsTechniqueSuggestion> suggestions = techniqueIds
             .Select(id =>
@@ -241,31 +322,58 @@ public class PhysicsSearchViewModel : BaseViewModel
             })
             .ToList();
 
-        List<PhysicsReasonItem> filtered = ReasonsList
-            .Where(MatchesSearch)
-            .Select(dto => CreateItem(dto, suggestions))
+        List<PhysicsReasonItem> matches = await Task.Run(() =>
+            ReasonsList
+                .Where(reason => MatchesSearch(reason, searchText))
+                .Select(dto => CreateItem(dto, suggestions))
+                .ToList(), cancellationToken);
+
+        await MainThread.InvokeOnMainThreadAsync(() =>
+        {
+            if (cancellationToken.IsCancellationRequested || !string.Equals(_searchText, searchText, StringComparison.Ordinal))
+            {
+                return;
+            }
+
+            _searchMatches = matches;
+            _loadedSearchCount = 0;
+            ResultsObservableCollection.ReplaceRange(_searchMatches.Take(SearchResultsPageSize).ToList());
+            _loadedSearchCount = ResultsObservableCollection.Count;
+            IsSearching = false;
+            UpdateSearchUiState();
+        });
+    }
+
+    private void LoadMoreSearchResults()
+    {
+        if (_loadedSearchCount >= _searchMatches.Count)
+        {
+            return;
+        }
+
+        List<PhysicsReasonItem> nextPage = _searchMatches
+            .Skip(_loadedSearchCount)
+            .Take(SearchResultsPageSize)
             .ToList();
 
-        ResultsObservableCollection.ReplaceRange(filtered);
+        if (nextPage.Count == 0)
+        {
+            return;
+        }
 
-        bool MatchesSearch(ReasonDTO reason) =>
-            reason.Title?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true
-            || reason.Subtitle?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true
-            || reason.Solution?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true;
+        ResultsObservableCollection.AddRange(nextPage);
+        _loadedSearchCount += nextPage.Count;
     }
+
+    private static bool MatchesSearch(ReasonDTO reason, string searchText) =>
+        reason.Title?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true
+        || reason.Subtitle?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true
+        || reason.Solution?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true;
 
     private PhysicsReasonItem CreateItem(ReasonDTO dto, IReadOnlyList<PhysicsTechniqueSuggestion> suggestions)
     {
         PhysicsReasonItem item = PhysicsReasonItem.FromDto(dto, suggestions);
-        item.ToggleExpandCommand = new Command(() =>
-        {
-            item.IsExpanded = !item.IsExpanded;
-            int index = ResultsObservableCollection.IndexOf(item);
-            if (index >= 0)
-            {
-                ResultsObservableCollection[index] = item;
-            }
-        });
+        item.ToggleExpandCommand = new Command(() => item.IsExpanded = !item.IsExpanded);
         return item;
     }
 }

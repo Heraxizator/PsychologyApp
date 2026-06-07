@@ -4,11 +4,15 @@
              x:Class="PsychologyApp.Presentation.Views.Tests.FindProblemPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Tests"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Infrastructure.Behaviors"
              x:DataType="vm:FindProblemViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
     <StackLayout VerticalOptions="FillAndExpand">
+        <StackLayout.Behaviors>
+            <behaviors:StaggerChildrenBehavior />
+        </StackLayout.Behaviors>
         <ui:NavigationBarSimpleView
             TitleText="{Binding PageTitle}"
             BackCommand="{Binding BackCommand}" />
@@ -25,7 +29,11 @@
                     </ui:AlgorithmBoxView.ItemsSource>
                     <ui:AlgorithmBoxView.ItemTemplate>
                         <DataTemplate x:DataType="vm:AlgorithmRow">
-                            <Label Text="{Binding Text}" Style="{StaticResource BodyStyle}" Margin="0,0,0,3" />
+                            <Label Text="{Binding Text}" Style="{StaticResource BodyStyle}" Margin="0,0,0,3">
+                                <Label.Behaviors>
+                                    <behaviors:ListItemRevealBehavior />
+                                </Label.Behaviors>
+                            </Label>
                         </DataTemplate>
                     </ui:AlgorithmBoxView.ItemTemplate>
                 </ui:AlgorithmBoxView>

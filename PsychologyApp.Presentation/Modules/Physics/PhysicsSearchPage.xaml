@@ -6,6 +6,7 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Physics"
              xmlns:physics="clr-namespace:PsychologyApp.Presentation.Modules.Physics"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Infrastructure.Behaviors"
              x:DataType="vm:PhysicsSearchViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
@@ -36,59 +37,79 @@
                 BodyText="{Binding SearchText, Mode=TwoWay}"
                 TitleText="{Binding ProblemLabel}"/>
 
-            <StackLayout
-                Grid.Row="2"
-                IsVisible="{Binding ShowSearchPlaceholder}"
-                Padding="{StaticResource LayoutEmptyPaddingThickness}"
-                HorizontalOptions="Center"
-                VerticalOptions="Center">
-                <Label
-                    HorizontalTextAlignment="Center"
-                    Style="{StaticResource SectionTitleStyle}"
-                    Text="{Binding EmptySearchHint}"/>
-                <Label
-                    HorizontalTextAlignment="Center"
-                    Style="{StaticResource BodyStyle}"
-                    Text="{Binding EmptySearchSubhint}"/>
-            </StackLayout>
+            <Grid Grid.Row="2">
+                <StackLayout
+                    x:Name="SearchEmptyPrompt"
+                    IsVisible="{Binding IsSearchEmptyPromptVisible}"
+                    Padding="{StaticResource LayoutEmptyPaddingThickness}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource SectionTitleStyle}"
+                        Text="{Binding EmptySearchHint}"/>
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource BodyStyle}"
+                        Text="{Binding EmptySearchSubhint}"/>
+                </StackLayout>
 
-            <CollectionView
-                Grid.Row="2"
-                IsVisible="{Binding IsSearchResultsVisible}"
-                SelectionMode="None"
-                VerticalOptions="FillAndExpand"
-                HorizontalOptions="FillAndExpand"
-                VerticalScrollBarVisibility="Never"
-                ItemsSource="{Binding ResultsObservableCollection}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="physics:PhysicsReasonItem">
-                        <ui:PhysicsReasonCardView
-                            Title="{Binding Title}"
-                            Subtitle="{Binding Subtitle}"
-                            Solution="{Binding Solution}"
-                            IsExpanded="{Binding IsExpanded}"
-                            ToggleExpandCommand="{Binding ToggleExpandCommand}"
-                            SuggestedTechniques="{Binding SuggestedTechniques}"
-                            SolutionHeader="{Binding SolutionHeader, Source={x:Reference PageRoot}, Path=BindingContext}"
-                            RecommendedPracticesLabel="{Binding RecommendedPracticesLabel, Source={x:Reference PageRoot}, Path=BindingContext}" />
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
+                <ui:ProgressBarView
+                    x:Name="SearchFilteringProgress"
+                    IsVisible="{Binding IsSearchFilteringVisible}"
+                    IsLoading="True"
+                    ProgressText="{Binding SearchFilteringText}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center" />
 
-                <CollectionView.EmptyView>
-                    <StackLayout
-                        Padding="{StaticResource LayoutEmptyPaddingThickness}"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center">
-                        <Label
-                            HorizontalTextAlignment="Center"
-                            Style="{StaticResource SectionTitleStyle}"
-                            Text="{Binding NoResultsHint}"/>
-                    </StackLayout>
-                </CollectionView.EmptyView>
-            </CollectionView>
+                <StackLayout
+                    x:Name="SearchNoResults"
+                    IsVisible="{Binding IsSearchNoResultsVisible}"
+                    Padding="{StaticResource LayoutEmptyPaddingThickness}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource SectionTitleStyle}"
+                        Text="{Binding NoResultsHint}"/>
+                </StackLayout>
+
+                <CollectionView
+                    x:Name="SearchResultsCollectionView"
+                    IsVisible="{Binding IsSearchResultsListVisible}"
+                    SelectionMode="None"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalScrollBarVisibility="Never"
+                    RemainingItemsThreshold="5"
+                    RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
+                    ItemsSource="{Binding ResultsObservableCollection}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="4" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="physics:PhysicsReasonItem">
+                            <ui:PhysicsReasonCardView
+                                Title="{Binding Title}"
+                                Subtitle="{Binding Subtitle}"
+                                Solution="{Binding Solution}"
+                                IsExpanded="{Binding IsExpanded}"
+                                ToggleExpandCommand="{Binding ToggleExpandCommand}"
+                                SuggestedTechniques="{Binding SuggestedTechniques}"
+                                SolutionHeader="{Binding SolutionHeader, Source={x:Reference PageRoot}, Path=BindingContext}"
+                                RecommendedPracticesLabel="{Binding RecommendedPracticesLabel, Source={x:Reference PageRoot}, Path=BindingContext}">
+                                <ui:PhysicsReasonCardView.Behaviors>
+                                    <behaviors:ListItemRevealBehavior />
+                                </ui:PhysicsReasonCardView.Behaviors>
+                            </ui:PhysicsReasonCardView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
         </Grid>
 
         <ui:ProgressBarView
+            x:Name="InitLoadingProgress"
             AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
             AbsoluteLayout.LayoutFlags="PositionProportional"
             IsVisible="{Binding IsInit}"

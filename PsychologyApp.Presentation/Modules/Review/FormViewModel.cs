@@ -31,18 +31,18 @@ public class FormViewModel : BaseViewModel
         MessageText = string.Empty;
 
         Send = new AsyncCommand(SendAsync);
-        UserPreferences.Changed += OnPreferencesChanged;
     }
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
-        OnPropertyChanged(nameof(PageTitle));
-        OnPropertyChanged(nameof(ExplanationHeader));
-        OnPropertyChanged(nameof(ExplanationBody));
-        OnPropertyChanged(nameof(FormSectionTitle));
-        OnPropertyChanged(nameof(MessageFieldLabel));
-        OnPropertyChanged(nameof(MessagePlaceholder));
-        OnPropertyChanged(nameof(SendButtonText));
+        Notify(
+            nameof(PageTitle),
+            nameof(ExplanationHeader),
+            nameof(ExplanationBody),
+            nameof(FormSectionTitle),
+            nameof(MessageFieldLabel),
+            nameof(MessagePlaceholder),
+            nameof(SendButtonText));
     }
 
     private async Task SendAsync()

@@ -1,4 +1,5 @@
 using PsychologyApp.Presentation.Infrastructure;
+using PsychologyApp.Presentation.Modules.Tests.Collection;
 using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.ViewModels;
 using System.Collections.ObjectModel;
@@ -6,7 +7,7 @@ using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.ViewModels.Tests;
 
-public class FindProblemViewModel : BaseViewModel
+public partial class FindProblemViewModel : BaseViewModel
 {
     public ICommand Continue { get; private set; } = default!;
     public ICommand BackCommand { get; private set; } = default!;
@@ -18,6 +19,8 @@ public class FindProblemViewModel : BaseViewModel
     public string NoteHeader => AppStrings.TestsNoteHeader;
     public string StartButtonText => AppStrings.TestsStartButton;
 
+    private readonly INavigationService _navigationService;
+    private readonly string? _testId;
     private readonly Action _nextPageTappedAction = default!;
 
     public FindProblemViewModel() { }
@@ -28,8 +31,11 @@ public class FindProblemViewModel : BaseViewModel
         string? description,
         List<string> algorithm,
         string? comment,
-        Action action)
+        Action action,
+        string? testId = null)
     {
+        _navigationService = navigationService;
+        _testId = testId;
         ModuleName = AppStrings.TestsDetectorTitle;
         PageName = AppStrings.TestsAboutPassageTitle;
 
@@ -47,17 +53,21 @@ public class FindProblemViewModel : BaseViewModel
             return Task.CompletedTask;
         });
         BackCommand = new AsyncCommand(GoToRootAsync);
-        UserPreferences.Changed += OnPreferencesChanged;
     }
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
-        OnPropertyChanged(nameof(PageTitle));
-        OnPropertyChanged(nameof(DescriptionHeader));
-        OnPropertyChanged(nameof(AlgorithmHeader));
-        OnPropertyChanged(nameof(NoteHeader));
-        OnPropertyChanged(nameof(StartButtonText));
+        Notify(
+            nameof(PageTitle),
+            nameof(DescriptionHeader),
+            nameof(AlgorithmHeader),
+            nameof(NoteHeader),
+            nameof(StartButtonText));
+
+        ReloadLocalizedTestContent();
     }
+
+    partial void ReloadLocalizedTestContent();
 
     private void InitAlgorithmRows(List<string> algorithmRows)
     {

@@ -227,6 +227,9 @@
 	  <MauiXaml Update="UI\Components\TechniqueListCardView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="UI\Components\ProfileTechniqueCardView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="UI\Components\QuoteCardView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

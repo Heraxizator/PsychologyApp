@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Clean"
              xmlns:clean="clr-namespace:PsychologyApp.Presentation.Modules.Clean"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Infrastructure.Behaviors"
              x:DataType="vm:MusicPlayerViewModel"
              Shell.NavBarIsVisible="True"
              Title="{Binding PageTitle}">
@@ -16,8 +17,11 @@
         <Grid
             AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
             AbsoluteLayout.LayoutFlags="All"
-            Margin="{StaticResource LayoutPageMarginThickness}"
+            Margin="{StaticResource LayoutTabPageMarginThickness}"
             RowDefinitions="*,Auto">
+            <Grid.Behaviors>
+                <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
+            </Grid.Behaviors>
 
             <CollectionView
                 Grid.Row="0"
@@ -26,12 +30,19 @@
                 VerticalOptions="FillAndExpand"
                 VerticalScrollBarVisibility="Never"
                 ItemsSource="{Binding SelectedItems}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="4" />
+                </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="clean:Audio">
                         <ui:MusicListCardView
                             Title="{Binding Name}"
                             Subtitle="{Binding Description}"
-                            TapCommand="{Binding ClickCommand}" />
+                            TapCommand="{Binding ClickCommand}">
+                            <ui:MusicListCardView.Behaviors>
+                                <behaviors:ListItemRevealBehavior />
+                            </ui:MusicListCardView.Behaviors>
+                        </ui:MusicListCardView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
@@ -45,6 +56,7 @@
         </Grid>
 
         <StackLayout
+            x:Name="IntroPrompt"
             AbsoluteLayout.LayoutBounds="0.5,0.4,AutoSize,AutoSize"
             AbsoluteLayout.LayoutFlags="PositionProportional"
             IsVisible="{Binding IsCreated}"
@@ -57,7 +69,7 @@
                 Margin="0,12,0,0"
                 Text="{Binding LoadLabel}"
                 Style="{StaticResource BodyStyle}"
-                TextColor="{StaticResource Primary}"
+                TextColor="{DynamicResource Primary}"
                 FontFamily="{StaticResource SemiBoldFontFamily}"
                 HorizontalTextAlignment="Center" />
             <StackLayout.GestureRecognizers>

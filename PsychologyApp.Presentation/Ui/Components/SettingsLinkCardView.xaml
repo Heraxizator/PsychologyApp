@@ -5,7 +5,7 @@
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0,0,0,10">
+            <Border Style="{StaticResource BrandCardStyle}">
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
                 </Border.GestureRecognizers>

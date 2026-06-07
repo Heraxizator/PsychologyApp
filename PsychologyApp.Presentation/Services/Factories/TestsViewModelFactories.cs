@@ -86,7 +86,8 @@ public interface IFindProblemViewModelFactory
         string? description,
         List<string> algorithm,
         string? comment,
-        Action action);
+        Action action,
+        string? testId = null);
 }
 
 public sealed class FindProblemViewModelFactory(Func<INavigation, INavigationService> navigationServiceFactory) : IFindProblemViewModelFactory
@@ -96,17 +97,18 @@ public sealed class FindProblemViewModelFactory(Func<INavigation, INavigationSer
         string? description,
         List<string> algorithm,
         string? comment,
-        Action action) =>
-        new(navigation, navigationServiceFactory(navigation), description, algorithm, comment, action);
+        Action action,
+        string? testId = null) =>
+        new(navigation, navigationServiceFactory(navigation), description, algorithm, comment, action, testId);
 }
 
 public interface ITheoryViewModelFactory
 {
-    TheoryViewModel Create(INavigation navigation, string content);
+    TheoryViewModel Create(INavigation navigation, string content, TechniqueId? techniqueId = null);
 }
 
 public sealed class TheoryViewModelFactory : ITheoryViewModelFactory
 {
-    public TheoryViewModel Create(INavigation navigation, string content) =>
-        new(navigation, content);
+    public TheoryViewModel Create(INavigation navigation, string content, TechniqueId? techniqueId = null) =>
+        new(navigation, content, techniqueId);
 }

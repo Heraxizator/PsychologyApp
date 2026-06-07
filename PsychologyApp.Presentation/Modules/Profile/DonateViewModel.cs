@@ -17,18 +17,14 @@ public sealed class DonateViewModel : BaseViewModel
         BindNavigation(navigation);
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
         DonateCommand = new AsyncCommand(OpenDonatePageAsync);
-        UserPreferences.Changed += OnPreferencesChanged;
     }
 
     public ICommand BackCommand { get; }
     public ICommand DonateCommand { get; }
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
-        OnPropertyChanged(nameof(PageTitle));
-        OnPropertyChanged(nameof(MoreInfoHeader));
-        OnPropertyChanged(nameof(MoreInfoBody));
-        OnPropertyChanged(nameof(DonateButtonText));
+        Notify(nameof(PageTitle), nameof(MoreInfoHeader), nameof(MoreInfoBody), nameof(DonateButtonText));
     }
 
     private static Task OpenDonatePageAsync() =>

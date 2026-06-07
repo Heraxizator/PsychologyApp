@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Infrastructure;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.UI.Components;
@@ -7,6 +8,7 @@ public partial class SettingsLinkCardView : ContentView
     public SettingsLinkCardView()
     {
         InitializeComponent();
+        VisualElementPressFeedback.AttachToTemplateRoot(this);
     }
 
     public static readonly BindableProperty TitleProperty =

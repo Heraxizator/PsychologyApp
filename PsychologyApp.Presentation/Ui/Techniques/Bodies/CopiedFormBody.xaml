@@ -2,6 +2,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Infrastructure.Behaviors"
              x:Class="PsychologyApp.Presentation.Ui.Techniques.Bodies.CopiedFormBody">
     <StackLayout>
         <Border Style="{StaticResource BrandCardStyle}" Margin="0,0,0,8">
@@ -18,6 +19,7 @@
             </StackLayout>
         </Border>
         <StackLayout
+            x:Name="PaperItemsStack"
             Margin="0,15,0,0"
             IsVisible="{Binding IsFull}"
             BindableLayout.ItemsSource="{Binding PapersObservableCollection}">
@@ -25,7 +27,11 @@
                 <DataTemplate>
                     <ui:ListEntryCardView
                         Title="{Binding Id}"
-                        Body="{Binding Text}" />
+                        Body="{Binding Text}">
+                        <ui:ListEntryCardView.Behaviors>
+                            <behaviors:ListItemRevealBehavior />
+                        </ui:ListEntryCardView.Behaviors>
+                    </ui:ListEntryCardView>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </StackLayout>

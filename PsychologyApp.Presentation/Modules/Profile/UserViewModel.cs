@@ -25,6 +25,7 @@ public class UserViewModel : BaseViewModel
 
     public ICommand OpenOptionsCommand { get; private set; } = default!;
     public ICommand OpenSettingsCommand { get; private set; } = default!;
+    public ICommand OpenDonateCommand { get; private set; } = default!;
     public ICommand ReloadQuotesCommand { get; private set; } = default!;
 
     public ObservableCollection<TechniqueItem> Techniques { get; private set; } = [];
@@ -32,8 +33,10 @@ public class UserViewModel : BaseViewModel
 
     public string PageTitle => AppStrings.ProfileTitle;
     public string OptionsLabel => AppStrings.OptionsTitle;
-    public string SettingsCardTitle => AppStrings.OptionsTitle;
+    public string SettingsCardTitle => AppStrings.OptionsSettingsTitle;
     public string SettingsCardSubtitle => AppStrings.ProfileSettingsCardSubtitle;
+    public string DonateTitle => AppStrings.OptionsDonateTitle;
+    public string DonateSubtitle => AppStrings.OptionsDonateSubtitle;
     public string UserLabel => AppStrings.ProfileUserLabel;
     public string StandardUserLabel => AppStrings.ProfileStandardUser;
     public string TechniquesCompletedLabel => AppStrings.ProfileTechniquesCompleted;
@@ -67,8 +70,8 @@ public class UserViewModel : BaseViewModel
 
             OpenOptionsCommand = new AsyncCommand(() => navigationService.GoToOptionsAsync());
             OpenSettingsCommand = new AsyncCommand(() => navigationService.GoToSettingsAsync());
+            OpenDonateCommand = new AsyncCommand(() => navigationService.GoToDonateAsync());
             ReloadQuotesCommand = new AsyncCommand(InitAsync);
-            UserPreferences.Changed += OnPreferencesChanged;
 
             InitAsync().FireAndForget();
         }
@@ -107,23 +110,27 @@ public class UserViewModel : BaseViewModel
         }
     }
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
-        OnPropertyChanged(nameof(PageTitle));
-        OnPropertyChanged(nameof(OptionsLabel));
-        OnPropertyChanged(nameof(SettingsCardTitle));
-        OnPropertyChanged(nameof(SettingsCardSubtitle));
-        OnPropertyChanged(nameof(UserLabel));
-        OnPropertyChanged(nameof(StandardUserLabel));
-        OnPropertyChanged(nameof(TechniquesCompletedLabel));
-        OnPropertyChanged(nameof(TestsCompletedLabel));
-        OnPropertyChanged(nameof(StreakLabel));
-        OnPropertyChanged(nameof(RecommendedLabel));
-        OnPropertyChanged(nameof(BestQuotesLabel));
-        OnPropertyChanged(nameof(QuotesEmptyText));
-        OnPropertyChanged(nameof(LoadErrorText));
-        OnPropertyChanged(nameof(RetryText));
+        Notify(
+            nameof(PageTitle),
+            nameof(OptionsLabel),
+            nameof(SettingsCardTitle),
+            nameof(SettingsCardSubtitle),
+            nameof(DonateTitle),
+            nameof(DonateSubtitle),
+            nameof(UserLabel),
+            nameof(StandardUserLabel),
+            nameof(TechniquesCompletedLabel),
+            nameof(TestsCompletedLabel),
+            nameof(StreakLabel),
+            nameof(RecommendedLabel),
+            nameof(BestQuotesLabel),
+            nameof(QuotesEmptyText),
+            nameof(LoadErrorText),
+            nameof(RetryText));
         InitTechniques();
+        InitAsync().FireAndForget();
     }
 
     private void InitTechniques()
@@ -131,12 +138,40 @@ public class UserViewModel : BaseViewModel
         MainThread.BeginInvokeOnMainThread(() =>
         {
             Techniques.Clear();
-            TechniqueDefinition spin = TechniqueCatalog.Get(TechniqueId.Spin);
-            Techniques.Add(new TechniqueItem
+
+            string concern = UserPreferences.Load().OnboardingConcern;
+            TechniqueId recommendedId = OnboardingRecommendation.ResolveTechnique(concern);
+            TechniqueId[] featuredIds =
+            [
+                recommendedId,
+                TechniqueId.Spin,
+                TechniqueId.Paper,
+                TechniqueId.Polarity
+            ];
+
+            const string image = "method.png";
+            HashSet<TechniqueId> added = [];
+
+            foreach (TechniqueId techniqueId in featuredIds)
             {
-                Title = spin.PageName,
-                Subtitle = spin.ModuleName
-            });
+                if (!added.Add(techniqueId))
+                {
+                    continue;
+                }
+
+                TechniqueDefinition definition = TechniqueCatalog.Get(techniqueId);
+                Techniques.Add(new TechniqueItem
+                {
+                    Image = image,
+                    Title = definition.PageName,
+                    Subtitle = definition.ListSubtitle,
+                    Theme = definition.Theme,
+                    Active = true,
+                    TapCommand = NavigationService is null
+                        ? null
+                        : new AsyncCommand(() => NavigationService.GoToTechniqueAsync(techniqueId))
+                });
+            }
         });
     }
 

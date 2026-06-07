@@ -7,7 +7,7 @@ public class TechniqueUiKindTests
 {
     [Theory]
     [InlineData(TechniqueId.Spin, TechniqueUiKind.Entry)]
-    [InlineData(TechniqueId.Hack, TechniqueUiKind.None)]
+    [InlineData(TechniqueId.Hack, TechniqueUiKind.Entry)]
     [InlineData(TechniqueId.Paper, TechniqueUiKind.Paper)]
     [InlineData(TechniqueId.Polarity, TechniqueUiKind.Polarity)]
     [InlineData(TechniqueId.Copied, TechniqueUiKind.Copied)]

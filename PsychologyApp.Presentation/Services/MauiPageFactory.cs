@@ -63,11 +63,11 @@ public sealed class MauiPageFactory(
     public PhysicsSearchPage CreatePhysicsSearchPage() =>
         new(pageViewModelActivator, physicsSearchViewModelFactory);
 
-    public TheoryPage CreateTheoryPage(string content) =>
-        testPageFactory.CreateTheoryPage(content);
+    public TheoryPage CreateTheoryPage(string content, TechniqueId? techniqueId = null) =>
+        testPageFactory.CreateTheoryPage(content, techniqueId);
 
-    public FindProblemPage CreateFindProblemPage(string? description, List<string> algorithm, string? comment, Action action) =>
-        testPageFactory.CreateFindProblemPage(description, algorithm, comment, action);
+    public FindProblemPage CreateFindProblemPage(string? description, List<string> algorithm, string? comment, Action action, string? testId = null) =>
+        testPageFactory.CreateFindProblemPage(description, algorithm, comment, action, testId);
 
     public QuestionPage CreateQuestionPage(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, Modules.Tests.Collection.TestSessionInfo? session = null) =>
         testPageFactory.CreateQuestionPage(questions, scoreAnalyzer, singleAnswer, session);

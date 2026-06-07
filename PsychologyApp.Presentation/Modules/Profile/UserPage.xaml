@@ -7,6 +7,7 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Profile"
              xmlns:technique="clr-namespace:PsychologyApp.Presentation.Technique"
              xmlns:quotes="clr-namespace:PsychologyApp.Presentation.Modules.Profile"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Infrastructure.Behaviors"
              x:DataType="vm:UserViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
@@ -19,26 +20,36 @@
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
             VerticalScrollBarVisibility="Never">
-            <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+            <StackLayout
+                x:Name="ProfileContent"
+                Margin="{StaticResource LayoutPageMarginThickness}"
+                Spacing="{StaticResource LayoutSpacing}">
 
-                <ui:NavigationBarExtendedView
+                <ui:NavigationBarSimpleView
                     TitleText="{Binding PageTitle}"
-                    BackCommand="{Binding Finish}"
-                    ExtensionText="{Binding OptionsLabel}"
-                    ExtensionCommand="{Binding OpenOptionsCommand}" />
+                    BackCommand="{Binding Finish}" />
 
                 <ui:SettingsLinkCardView
                     Title="{Binding SettingsCardTitle}"
                     Subtitle="{Binding SettingsCardSubtitle}"
                     TapCommand="{Binding OpenSettingsCommand}" />
 
+                <ui:SettingsLinkCardView
+                    Title="{Binding DonateTitle}"
+                    Subtitle="{Binding DonateSubtitle}"
+                    TapCommand="{Binding OpenDonateCommand}" />
+
                 <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                        <Label
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                        <Border
                             Grid.Column="0"
-                            VerticalOptions="Center"
-                            Text="{mi:Material Icon=AccountCircle, IconSize=40}"
-                            TextColor="{StaticResource TextSecondaryLight}" />
+                            Style="{StaticResource ProfileAvatarBorderStyle}">
+                            <Label
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                Text="{mi:Material Icon=Person, IconSize=30}"
+                                TextColor="{DynamicResource Primary}" />
+                        </Border>
                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
                             <Label Style="{StaticResource PageTitleStyle}" Text="{Binding UserLabel}" />
                             <Label Style="{StaticResource BodyStyle}" Text="{Binding StandardUserLabel}" />
@@ -84,19 +95,20 @@
                 <Label Text="{Binding RecommendedLabel}" Style="{StaticResource SectionTitleStyle}" />
 
                 <CollectionView
-                    HeightRequest="120"
+                    HeightRequest="156"
                     HorizontalScrollBarVisibility="Never"
                     ItemsSource="{Binding Techniques}">
                     <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="4" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="technique:TechniqueItem">
-                            <Border Style="{StaticResource BrandCardStyle}" WidthRequest="240" Margin="0">
-                                <ui:TextItemView
-                                    TitleText="{Binding Title}"
-                                    BodyText="{Binding Subtitle}" />
-                            </Border>
+                            <ui:ProfileTechniqueCardView
+                                Image="{Binding Image}"
+                                Title="{Binding Title}"
+                                Subtitle="{Binding Subtitle}"
+                                Theme="{Binding Theme}"
+                                TapCommand="{Binding TapCommand}" />
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
@@ -104,6 +116,7 @@
                 <Label Text="{Binding BestQuotesLabel}" Style="{StaticResource SectionTitleStyle}" />
 
                 <ui:ProgressBarView
+                    x:Name="QuotesLoading"
                     IsVisible="{Binding IsInit}"
                     IsLoading="True"
                     ProgressText="{Binding QuotesSearchingText}">
@@ -113,6 +126,7 @@
                 </ui:ProgressBarView>
 
                 <CollectionView
+                    x:Name="QuotesCollection"
                     IsVisible="{Binding IsDone}"
                     SelectionMode="None"
                     VerticalScrollBarVisibility="Never"
@@ -120,6 +134,9 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="quotes:QuoteItem">
                             <Border Style="{StaticResource BrandCardStyle}" Margin="0,0,0,8">
+                                <Border.Behaviors>
+                                    <behaviors:ListItemRevealBehavior />
+                                </Border.Behaviors>
                                 <ui:TextItemView
                                     TitleText="{Binding Author}"
                                     BodyText="{Binding Text}" />

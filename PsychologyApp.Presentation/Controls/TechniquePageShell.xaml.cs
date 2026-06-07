@@ -95,7 +95,7 @@ public partial class TechniquePageShell : ContentView
     {
         InitializeComponent();
         ApplyLocalization();
-        UserPreferences.Changed += OnPreferencesChanged;
+        UserPreferences.Changed += ApplyLocalization;
     }
 
     protected override void OnBindingContextChanged()
@@ -106,10 +106,28 @@ public partial class TechniquePageShell : ContentView
 
     private static void OnBodyContentChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        if (bindable is TechniquePageShell shell && newValue is View)
+        if (bindable is not TechniquePageShell shell)
         {
-            shell.SyncBodyBindingContext();
+            return;
         }
+
+        shell.UpdateBodyHost(oldValue as View, newValue as View);
+    }
+
+    private void UpdateBodyHost(View? oldBody, View? newBody)
+    {
+        if (oldBody is not null)
+        {
+            BodyHost.Children.Remove(oldBody);
+        }
+
+        if (newBody is null)
+        {
+            return;
+        }
+
+        newBody.BindingContext = BindingContext;
+        BodyHost.Children.Add(newBody);
     }
 
     private void SyncBodyBindingContext()
@@ -118,11 +136,6 @@ public partial class TechniquePageShell : ContentView
         {
             BodyContent.BindingContext = BindingContext;
         }
-    }
-
-    private void OnPreferencesChanged()
-    {
-        ApplyLocalization();
     }
 
     private void ApplyLocalization()

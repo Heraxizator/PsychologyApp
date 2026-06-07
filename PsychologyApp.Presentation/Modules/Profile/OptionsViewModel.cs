@@ -32,19 +32,19 @@ public class OptionsViewModel : BaseViewModel
         OpenSettingsPageCommand = new AsyncCommand(() => navigationService.GoToSettingsAsync());
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
 
-        UserPreferences.Changed += OnPreferencesChanged;
     }
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
-        OnPropertyChanged(nameof(PageTitle));
-        OnPropertyChanged(nameof(SettingsTitle));
-        OnPropertyChanged(nameof(SettingsSubtitle));
-        OnPropertyChanged(nameof(AboutTitle));
-        OnPropertyChanged(nameof(AboutSubtitle));
-        OnPropertyChanged(nameof(FeedbackTitle));
-        OnPropertyChanged(nameof(FeedbackSubtitle));
-        OnPropertyChanged(nameof(DonateTitle));
-        OnPropertyChanged(nameof(DonateSubtitle));
+        Notify(
+            nameof(PageTitle),
+            nameof(SettingsTitle),
+            nameof(SettingsSubtitle),
+            nameof(AboutTitle),
+            nameof(AboutSubtitle),
+            nameof(FeedbackTitle),
+            nameof(FeedbackSubtitle),
+            nameof(DonateTitle),
+            nameof(DonateSubtitle));
     }
 }

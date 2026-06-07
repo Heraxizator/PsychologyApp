@@ -64,8 +64,6 @@ public class CreatedViewModel : BaseViewModel
             Finish = new AsyncCommand(CompleteSessionAsync);
             Remove = new AsyncCommand(() => ToRemoveAsync());
             Edit = new AsyncCommand(() => ToEditAsync());
-            UserPreferences.Changed += OnPreferencesChanged;
-
             InitAsync().FireAndForget();
         }
         catch (Exception e)
@@ -75,14 +73,15 @@ public class CreatedViewModel : BaseViewModel
         }
     }
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
-        OnPropertyChanged(nameof(PageTitle));
-        OnPropertyChanged(nameof(CustomTechniqueTitle));
-        OnPropertyChanged(nameof(AlgorithmTitle));
-        OnPropertyChanged(nameof(FinishButtonText));
-        OnPropertyChanged(nameof(EditToolbarText));
-        OnPropertyChanged(nameof(RemoveToolbarText));
+        Notify(
+            nameof(PageTitle),
+            nameof(CustomTechniqueTitle),
+            nameof(AlgorithmTitle),
+            nameof(FinishButtonText),
+            nameof(EditToolbarText),
+            nameof(RemoveToolbarText));
     }
 
     private Task ToEditAsync() =>

@@ -4,6 +4,7 @@
              x:Class="PsychologyApp.Presentation.Views.TechniquePages.ConstructorPages.DesignerPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Practice.Constructor"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Infrastructure.Behaviors"
              x:DataType="vm:DesignerViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
@@ -13,6 +14,9 @@
         VerticalScrollBarVisibility="Never"
         HorizontalScrollBarVisibility="Never">
         <StackLayout Margin="20,0,20,20" Spacing="20">
+            <StackLayout.Behaviors>
+                <behaviors:StaggerChildrenBehavior />
+            </StackLayout.Behaviors>
 
             <ui:NavigationBarSimpleView
                 TitleText="{Binding DesignTitle}"

@@ -46,7 +46,6 @@ public class QuoteViewModel : BaseViewModel
             Cancel = new Command(CancelProgress);
             LoadMoreQuotesCommand = new AsyncCommand(() => AddFreshQuotesAsync());
             Reload = new AsyncCommand(InitAsync);
-            UserPreferences.Changed += OnPreferencesChanged;
 
             InitAsync().FireAndForget();
         }
@@ -58,15 +57,17 @@ public class QuoteViewModel : BaseViewModel
         }
     }
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
-        OnPropertyChanged(nameof(PageTitle));
-        OnPropertyChanged(nameof(QuotesSearchingText));
-        OnPropertyChanged(nameof(QuotesLoadingText));
-        OnPropertyChanged(nameof(QuotesEmptyTitle));
-        OnPropertyChanged(nameof(QuotesEmptyBody));
-        OnPropertyChanged(nameof(LoadErrorText));
-        OnPropertyChanged(nameof(RetryText));
+        Notify(
+            nameof(PageTitle),
+            nameof(QuotesSearchingText),
+            nameof(QuotesLoadingText),
+            nameof(QuotesEmptyTitle),
+            nameof(QuotesEmptyBody),
+            nameof(LoadErrorText),
+            nameof(RetryText));
+        InitAsync().FireAndForget();
     }
 
     private async Task InitAsync()

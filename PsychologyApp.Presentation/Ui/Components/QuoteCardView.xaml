@@ -4,7 +4,7 @@
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              x:Class="PsychologyApp.Presentation.UI.Components.QuoteCardView"
              x:Name="Root">
-    <Border Style="{StaticResource BrandCardStyle}">
+    <Border Style="{StaticResource ListCardItemStyle}">
         <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
             <Label
                 HorizontalTextAlignment="Justify"
@@ -41,7 +41,7 @@
                             Binding="{Binding IsFavourite, Source={x:Reference Root}}"
                             TargetType="Label"
                             Value="True">
-                            <Setter Property="TextColor" Value="{StaticResource Primary}" />
+                            <Setter Property="TextColor" Value="{DynamicResource Primary}" />
                         </DataTrigger>
                     </Label.Triggers>
                     <Label.GestureRecognizers>

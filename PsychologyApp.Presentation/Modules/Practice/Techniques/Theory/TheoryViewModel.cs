@@ -1,31 +1,37 @@
 using PsychologyApp.Presentation.Infrastructure;
+using PsychologyApp.Presentation.Modules.Practice.Techniques;
 using PsychologyApp.Presentation.ViewModels;
 
 namespace PsychologyApp.Presentation.ViewModels.TechniqueViewModels;
 
 public class TheoryViewModel : BaseViewModel
 {
-    private string text { get; set; } = default!;
+    private readonly TechniqueId? _techniqueId;
+    private string text = string.Empty;
 
     public string PageTitle => AppStrings.TechniqueTheory;
     public string BackText => AppStrings.Back;
 
     public TheoryViewModel() { }
 
-    public TheoryViewModel(INavigation navigation, string content)
+    public TheoryViewModel(INavigation navigation, string content, TechniqueId? techniqueId = null)
     {
+        _techniqueId = techniqueId;
         ModuleName = AppStrings.ShellTabPractice;
         PageName = AppStrings.TechniqueTheory;
 
         BindNavigation(navigation);
         Text = content;
-        UserPreferences.Changed += OnPreferencesChanged;
     }
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
-        OnPropertyChanged(nameof(PageTitle));
-        OnPropertyChanged(nameof(BackText));
+        Notify(nameof(PageTitle), nameof(BackText));
+
+        if (_techniqueId is TechniqueId techniqueId)
+        {
+            Text = TechniqueCatalog.Get(techniqueId).TheoryInfo;
+        }
     }
 
     public string Text

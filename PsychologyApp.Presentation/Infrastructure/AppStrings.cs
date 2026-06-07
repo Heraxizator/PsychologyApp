@@ -83,9 +83,10 @@ public static class AppStrings
 
     public static string PracticeHomeTitle => T("Главная", "Home");
     public static string PracticeMyTechniques => T("Мои техники", "My techniques");
-    public static string PracticeCreate => T("СОЗДАТЬ", "CREATE");
+    public static string PracticeCreate => T("Создать", "Create");
     public static string PracticeTechniquesList => T("Список техник", "Techniques list");
     public static string PracticeInitError => T("Ошибка при инициализации", "Initialization failed");
+    public static string PracticeLoadingText => T("Загрузка практик", "Loading practices");
     public static string PracticeCustomTechniqueNumber(long id) =>
         T($"Своя техника №{id}", $"Custom technique #{id}");
     public static string PracticeDesignTitle => T("Создание техники", "Create technique");
@@ -285,6 +286,7 @@ public static class AppStrings
     public static string PhysicsEmptySearchSubhint => T("Болезнь или часть тела", "Illness or body part");
     public static string PhysicsNoResultsHint => T("Ничего не найдено", "No results found");
     public static string PhysicsLoadingText => T("Поиск причин", "Searching causes");
+    public static string PhysicsSearchFilteringText => T("Подбор результатов", "Filtering results");
     public static string LoadFailed => T("Не удалось загрузить", "Failed to load");
     public static string RetryQuestion => T("Попробовать ещё раз?", "Try again?");
     public static string LoadError => T("Ошибка при загрузке", "Failed to load");

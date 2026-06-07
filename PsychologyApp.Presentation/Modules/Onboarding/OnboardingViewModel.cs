@@ -71,23 +71,23 @@ public class OnboardingViewModel : BaseViewModel
         SelectMoodCommand = new Command(() => SelectedConcern = "mood");
         SelectExploreCommand = new Command(() => SelectedConcern = "explore");
         StartPracticeCommand = new AsyncCommand(StartPracticeAsync);
-        UserPreferences.Changed += OnPreferencesChanged;
     }
 
-    private void OnPreferencesChanged()
+    protected override void RefreshLocalizedProperties()
     {
-        OnPropertyChanged(nameof(WelcomeTitle));
-        OnPropertyChanged(nameof(WelcomeBody));
-        OnPropertyChanged(nameof(ConcernTitle));
-        OnPropertyChanged(nameof(DisclaimerTitle));
-        OnPropertyChanged(nameof(DisclaimerBody));
-        OnPropertyChanged(nameof(StartLabel));
-        OnPropertyChanged(nameof(SkipLabel));
-        OnPropertyChanged(nameof(NextLabel));
-        OnPropertyChanged(nameof(ConcernAnxiety));
-        OnPropertyChanged(nameof(ConcernBody));
-        OnPropertyChanged(nameof(ConcernMood));
-        OnPropertyChanged(nameof(ConcernExplore));
+        Notify(
+            nameof(WelcomeTitle),
+            nameof(WelcomeBody),
+            nameof(ConcernTitle),
+            nameof(DisclaimerTitle),
+            nameof(DisclaimerBody),
+            nameof(StartLabel),
+            nameof(SkipLabel),
+            nameof(NextLabel),
+            nameof(ConcernAnxiety),
+            nameof(ConcernBody),
+            nameof(ConcernMood),
+            nameof(ConcernExplore));
     }
 
     private async Task StartPracticeAsync()

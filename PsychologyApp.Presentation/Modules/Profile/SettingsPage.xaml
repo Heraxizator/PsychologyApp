@@ -4,12 +4,16 @@
              x:Class="PsychologyApp.Presentation.Views.Settings.SettingsPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Settings"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Infrastructure.Behaviors"
              x:DataType="vm:SettingsViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
     <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
         <StackLayout Margin="20,0,20,20" Spacing="20">
+            <StackLayout.Behaviors>
+                <behaviors:StaggerChildrenBehavior />
+            </StackLayout.Behaviors>
 
             <ui:NavigationBarSimpleView
                 TitleText="{Binding PageTitle}"

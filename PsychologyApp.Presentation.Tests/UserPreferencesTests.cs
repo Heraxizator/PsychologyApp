@@ -125,6 +125,20 @@ public sealed class UserPreferencesTests
     }
 
     [Fact]
+    public void ApplyAccentColor_DoesNotThrowWhenResourcesUnavailable()
+    {
+        Exception? exception = Record.Exception(() => UserPreferences.ApplyAccentColor("red"));
+        Assert.Null(exception);
+    }
+
+    [Fact]
+    public void ApplyTypography_DoesNotThrowWhenResourcesUnavailable()
+    {
+        Exception? exception = Record.Exception(() => UserPreferences.ApplyTypography("large", true));
+        Assert.Null(exception);
+    }
+
+    [Fact]
     public void State_RoundTripsThroughCopy()
     {
         UserPreferencesState original = new()

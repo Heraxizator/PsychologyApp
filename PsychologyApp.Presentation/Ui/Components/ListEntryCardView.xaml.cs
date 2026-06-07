@@ -1,3 +1,5 @@
+using PsychologyApp.Presentation.Infrastructure;
+
 namespace PsychologyApp.Presentation.UI.Components;
 
 public partial class ListEntryCardView : ContentView
@@ -5,6 +7,7 @@ public partial class ListEntryCardView : ContentView
     public ListEntryCardView()
     {
         InitializeComponent();
+        VisualElementPressFeedback.AttachToTemplateRoot(this);
     }
 
     public static readonly BindableProperty TitleProperty =

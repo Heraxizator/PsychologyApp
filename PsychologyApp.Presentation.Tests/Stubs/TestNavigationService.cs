@@ -32,9 +32,9 @@ internal sealed class TestNavigationService(INavigation navigation) : INavigatio
 
     public Task GoToPhysicsSearchAsync() => Task.CompletedTask;
 
-    public Task GoToTheoryAsync(string content) => Task.CompletedTask;
+    public Task GoToTheoryAsync(string content, TechniqueId? techniqueId = null) => Task.CompletedTask;
 
-    public Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Action action) =>
+    public Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Action action, string? testId = null) =>
         Task.CompletedTask;
 
     public Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer) =>

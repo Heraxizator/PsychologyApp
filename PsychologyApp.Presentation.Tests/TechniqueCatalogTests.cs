@@ -9,7 +9,7 @@ public class TechniqueCatalogTests
     [InlineData(TechniqueId.Spin, TechniqueUiKind.Entry, "Крутилка")]
     [InlineData(TechniqueId.Polarity, TechniqueUiKind.Polarity, "Полярности")]
     [InlineData(TechniqueId.Paper, TechniqueUiKind.Paper, "Лист бумаги")]
-    [InlineData(TechniqueId.Hack, TechniqueUiKind.None, "Белое пятно")]
+    [InlineData(TechniqueId.Hack, TechniqueUiKind.Entry, "Белое пятно")]
     [InlineData(TechniqueId.Copied, TechniqueUiKind.Copied, "Повтори это")]
     public void Get_returns_expected_ui_kind_and_page_name(TechniqueId id, TechniqueUiKind kind, string pageName)
     {

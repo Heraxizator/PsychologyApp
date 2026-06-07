@@ -8,11 +8,21 @@ public partial class QuoteCardView : ContentView
     public QuoteCardView()
     {
         InitializeComponent();
+        LocalizedContentView.SubscribePreferences(this, ApplyLocalization);
         ApplyLocalization();
-        UserPreferences.Changed += OnPreferencesChanged;
+        Loaded += OnLoaded;
     }
 
-    private void OnPreferencesChanged() => ApplyLocalization();
+    private void OnLoaded(object? sender, EventArgs e)
+    {
+        foreach (Label label in this.GetVisualTreeDescendants().OfType<Label>())
+        {
+            if (label.GestureRecognizers.OfType<TapGestureRecognizer>().Any())
+            {
+                VisualElementPressFeedback.Attach(label);
+            }
+        }
+    }
 
     private void ApplyLocalization()
     {
@@ -41,7 +51,7 @@ public partial class QuoteCardView : ContentView
     }
 
     public static readonly BindableProperty IsFavouriteProperty =
-        BindableProperty.Create(nameof(IsFavourite), typeof(bool), typeof(QuoteCardView), false, BindingMode.TwoWay);
+        BindableProperty.Create(nameof(IsFavourite), typeof(bool), typeof(QuoteCardView), false);
 
     public bool IsFavourite
     {
@@ -58,15 +68,6 @@ public partial class QuoteCardView : ContentView
         set => SetValue(LikeCommandProperty, value);
     }
 
-    public static readonly BindableProperty ShareCommandProperty =
-        BindableProperty.Create(nameof(ShareCommand), typeof(ICommand), typeof(QuoteCardView), null);
-
-    public ICommand? ShareCommand
-    {
-        get => (ICommand?)GetValue(ShareCommandProperty);
-        set => SetValue(ShareCommandProperty, value);
-    }
-
     public static readonly BindableProperty CopyCommandProperty =
         BindableProperty.Create(nameof(CopyCommand), typeof(ICommand), typeof(QuoteCardView), null);
 
@@ -74,6 +75,15 @@ public partial class QuoteCardView : ContentView
     {
         get => (ICommand?)GetValue(CopyCommandProperty);
         set => SetValue(CopyCommandProperty, value);
+    }
+
+    public static readonly BindableProperty ShareCommandProperty =
+        BindableProperty.Create(nameof(ShareCommand), typeof(ICommand), typeof(QuoteCardView), null);
+
+    public ICommand? ShareCommand
+    {
+        get => (ICommand?)GetValue(ShareCommandProperty);
+        set => SetValue(ShareCommandProperty, value);
     }
 
     public static readonly BindableProperty DefaultAuthorTextProperty =
