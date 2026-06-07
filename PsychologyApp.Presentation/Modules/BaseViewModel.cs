@@ -183,6 +183,7 @@ public class BaseViewModel : INotifyPropertyChanged
             {
                 _init_visibility = value;
                 OnPropertyChanged(nameof(IsInit));
+                OnPropertyChanged(nameof(IsLoadingOverlayVisible));
             }
         }
     }
@@ -197,9 +198,12 @@ public class BaseViewModel : INotifyPropertyChanged
             {
                 _done_visibility = value;
                 OnPropertyChanged(nameof(IsDone));
+                OnPropertyChanged(nameof(IsLoadingOverlayVisible));
             }
         }
     }
+
+    public bool IsLoadingOverlayVisible => IsInit && !IsDone;
 
     protected string _progress_text = string.Empty;
     public string ProgressText

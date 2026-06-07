@@ -107,4 +107,20 @@ public class UiAnimationsTests
         await task;
         Assert.True(task.IsCompletedSuccessfully);
     }
+
+    [Fact]
+    public async Task HideAsync_WithNullView_CompletesWithoutException()
+    {
+        Task task = UiAnimations.HideAsync(null);
+        await task;
+        Assert.True(task.IsCompletedSuccessfully);
+    }
+
+    [Fact]
+    public async Task SafeHideAsync_WithNullView_CompletesWithoutException()
+    {
+        Task task = UiAnimations.SafeHideAsync(null);
+        await task;
+        Assert.True(task.IsCompletedSuccessfully);
+    }
 }

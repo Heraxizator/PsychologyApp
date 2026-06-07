@@ -29,16 +29,6 @@
                     TitleText="{Binding PageTitle}"
                     BackCommand="{Binding Finish}" />
 
-                <ui:SettingsLinkCardView
-                    Title="{Binding SettingsCardTitle}"
-                    Subtitle="{Binding SettingsCardSubtitle}"
-                    TapCommand="{Binding OpenSettingsCommand}" />
-
-                <ui:SettingsLinkCardView
-                    Title="{Binding DonateTitle}"
-                    Subtitle="{Binding DonateSubtitle}"
-                    TapCommand="{Binding OpenDonateCommand}" />
-
                 <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
                         <Border
@@ -92,6 +82,16 @@
                     </Grid>
                 </Border>
 
+                <ui:SettingsLinkCardView
+                    Title="{Binding SettingsCardTitle}"
+                    Subtitle="{Binding SettingsCardSubtitle}"
+                    TapCommand="{Binding OpenSettingsCommand}" />
+
+                <ui:SettingsLinkCardView
+                    Title="{Binding DonateTitle}"
+                    Subtitle="{Binding DonateSubtitle}"
+                    TapCommand="{Binding OpenDonateCommand}" />
+
                 <Label Text="{Binding RecommendedLabel}" Style="{StaticResource SectionTitleStyle}" />
 
                 <CollectionView
@@ -115,42 +115,44 @@
 
                 <Label Text="{Binding BestQuotesLabel}" Style="{StaticResource SectionTitleStyle}" />
 
-                <ui:ProgressBarView
-                    x:Name="QuotesLoading"
-                    IsVisible="{Binding IsInit}"
-                    IsLoading="True"
-                    ProgressText="{Binding QuotesSearchingText}">
-                    <ui:ProgressBarView.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding Cancel}" />
-                    </ui:ProgressBarView.GestureRecognizers>
-                </ui:ProgressBarView>
+                <Grid>
+                    <ui:ProgressBarView
+                        x:Name="QuotesLoading"
+                        IsVisible="{Binding IsQuotesLoading}"
+                        IsLoading="{Binding IsQuotesLoading}"
+                        ProgressText="{Binding QuotesLoadingText}">
+                        <ui:ProgressBarView.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CancelQuotesCommand}" />
+                        </ui:ProgressBarView.GestureRecognizers>
+                    </ui:ProgressBarView>
 
-                <CollectionView
-                    x:Name="QuotesCollection"
-                    IsVisible="{Binding IsDone}"
-                    SelectionMode="None"
-                    VerticalScrollBarVisibility="Never"
-                    ItemsSource="{Binding Quotes}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="quotes:QuoteItem">
-                            <Border Style="{StaticResource BrandCardStyle}" Margin="0,0,0,8">
-                                <Border.Behaviors>
-                                    <behaviors:ListItemRevealBehavior />
-                                </Border.Behaviors>
-                                <ui:TextItemView
-                                    TitleText="{Binding Author}"
-                                    BodyText="{Binding Text}" />
-                            </Border>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                    <CollectionView.EmptyView>
-                        <Label
-                            Margin="0,24,0,0"
-                            HorizontalTextAlignment="Center"
-                            Style="{StaticResource BodyStyle}"
-                            Text="{Binding QuotesEmptyText}" />
-                    </CollectionView.EmptyView>
-                </CollectionView>
+                    <CollectionView
+                        x:Name="QuotesCollection"
+                        IsVisible="{Binding IsQuotesReady}"
+                        SelectionMode="None"
+                        VerticalScrollBarVisibility="Never"
+                        ItemsSource="{Binding Quotes}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="quotes:QuoteItem">
+                                <Border Style="{StaticResource BrandCardStyle}" Margin="0,0,0,8">
+                                    <Border.Behaviors>
+                                        <behaviors:ListItemRevealBehavior />
+                                    </Border.Behaviors>
+                                    <ui:TextItemView
+                                        TitleText="{Binding Author}"
+                                        BodyText="{Binding Text}" />
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        <CollectionView.EmptyView>
+                            <Label
+                                Margin="0,24,0,0"
+                                HorizontalTextAlignment="Center"
+                                Style="{StaticResource BodyStyle}"
+                                Text="{Binding QuotesEmptyText}" />
+                        </CollectionView.EmptyView>
+                    </CollectionView>
+                </Grid>
 
             </StackLayout>
         </ScrollView>
@@ -158,7 +160,7 @@
         <ui:RetryView
             AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
             AbsoluteLayout.LayoutFlags="PositionProportional"
-            IsVisible="{Binding IsFail}"
+            IsVisible="{Binding IsQuotesFailed}"
             FailedText="{Binding LoadErrorText}"
             RetryText="{Binding RetryText}"
             RetryCommand="{Binding ReloadQuotesCommand}" />
