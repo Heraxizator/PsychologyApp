@@ -1,17 +1,24 @@
+using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.Models;
 using PsychologyApp.Presentation.Modules.Practice.Techniques;
 using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.ViewModels;
 using System.Collections.ObjectModel;
+using System.Text.Json;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Modules.Practice.Techniques;
 
 public class PolarityViewModel : BaseViewModel
 {
+    private readonly IUserProgressService _userProgressService;
+    private readonly DateTime _sessionStartedAt = DateTime.UtcNow;
+
     public ICommand Add { get; private set; } = default!;
     public Command<Polarity> Delete { get; private set; } = default!;
+    public ICommand BackCommand { get; private set; } = default!;
+    public ICommand CompleteCommand { get; private set; } = default!;
     public ObservableCollection<Polarity> polarities { get; private set; } = [];
 
     public string FirstPolarityLabel => AppStrings.FirstPolarityLabel;
@@ -19,13 +26,18 @@ public class PolarityViewModel : BaseViewModel
     public string NegativePlaceholder => AppStrings.PolarityNegativePlaceholder;
     public string PositivePlaceholder => AppStrings.PolarityPositivePlaceholder;
 
-    public PolarityViewModel(INavigationService navigationService)
+    public PolarityViewModel(INavigationService navigationService, IUserProgressService userProgressService)
     {
+        _userProgressService = userProgressService;
         ApplyTechnique(TechniqueId.Polarity);
         IsFull = false;
         BindNavigation(navigationService.Navigation, navigationService);
         Add = new Command(ToAdd);
         Delete = new Command<Polarity>(DeleteItem);
+        BackCommand = new AsyncCommand(GoBackAsync);
+        CompleteCommand = new AsyncCommand(CompleteSessionAsync);
+        Finish = CompleteCommand;
+        LoadDraftAsync().FireAndForget();
     }
 
     protected override void OnTechniqueContentChanged()
@@ -34,6 +46,53 @@ public class PolarityViewModel : BaseViewModel
         OnPropertyChanged(nameof(SecondPolarityLabel));
         OnPropertyChanged(nameof(NegativePlaceholder));
         OnPropertyChanged(nameof(PositivePlaceholder));
+    }
+
+    private async Task LoadDraftAsync()
+    {
+        PolarityDraft? draft = await SessionDraftStore.LoadAsync<PolarityDraft>(_userProgressService, TechniqueId.Polarity.ToString());
+        if (draft?.Items is null)
+        {
+            return;
+        }
+
+        await MainThread.InvokeOnMainThreadAsync(() =>
+        {
+            foreach (PolarityDraftItem item in draft.Items)
+            {
+                polarities.Add(new Polarity
+                {
+                    Id = item.Id,
+                    Positive = item.Positive,
+                    Negative = item.Negative
+                });
+            }
+
+            IsFull = polarities.Count > 0;
+        });
+    }
+
+    private Task SaveDraftAsync() =>
+        SessionDraftStore.SaveAsync(_userProgressService, TechniqueId.Polarity.ToString(), new PolarityDraft
+        {
+            Items = polarities.Select(p => new PolarityDraftItem
+            {
+                Id = p.Id,
+                Positive = p.Positive,
+                Negative = p.Negative
+            }).ToList()
+        });
+
+    private async Task CompleteSessionAsync()
+    {
+        int durationSeconds = Math.Max(0, (int)(DateTime.UtcNow - _sessionStartedAt).TotalSeconds);
+        await _userProgressService.RecordTechniqueCompletionAsync(
+            TechniqueId.Polarity.ToString(),
+            ModuleName,
+            PageName,
+            durationSeconds);
+        await _userProgressService.DeleteSessionDraftAsync(TechniqueId.Polarity.ToString());
+        await GoBackAsync();
     }
 
     private void DeleteItem(Polarity item)
@@ -48,6 +107,8 @@ public class PolarityViewModel : BaseViewModel
         {
             IsFull = false;
         }
+
+        SaveDraftAsync().FireAndForget();
     }
 
     private void ToAdd(object obj)
@@ -68,6 +129,7 @@ public class PolarityViewModel : BaseViewModel
         Polarity = item;
         Negative = string.Empty;
         Positive = string.Empty;
+        SaveDraftAsync().FireAndForget();
     }
 
     private string positive = string.Empty;
@@ -96,5 +158,17 @@ public class PolarityViewModel : BaseViewModel
     {
         get => polarity;
         set => SetProperty(ref polarity, value);
+    }
+
+    private sealed class PolarityDraft
+    {
+        public List<PolarityDraftItem> Items { get; set; } = [];
+    }
+
+    private sealed class PolarityDraftItem
+    {
+        public string? Id { get; set; }
+        public string? Positive { get; set; }
+        public string? Negative { get; set; }
     }
 }

@@ -6,6 +6,7 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Practice.Constructor"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              x:DataType="vm:CreatedViewModel"
+             Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 <ContentPage.ToolbarItems>
         <ToolbarItem Text="{Binding EditToolbarText}" Command="{Binding Edit}" />

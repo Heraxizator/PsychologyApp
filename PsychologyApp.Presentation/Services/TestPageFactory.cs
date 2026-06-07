@@ -11,7 +11,7 @@ public interface ITestPageFactory
     TestsListPage CreateTestsListPage();
     TheoryPage CreateTheoryPage(string content);
     FindProblemPage CreateFindProblemPage(string? description, List<string> algorithm, string? comment, Action action);
-    QuestionPage CreateQuestionPage(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer);
+    QuestionPage CreateQuestionPage(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null);
     StandardTestPage CreateStandardTestPage();
     AlternativeTestPage CreateAlternativeTestPage();
 }
@@ -34,8 +34,8 @@ public sealed class TestPageFactory(
     public FindProblemPage CreateFindProblemPage(string? description, List<string> algorithm, string? comment, Action action) =>
         new(findProblemViewModelFactory, description, algorithm, comment, action);
 
-    public QuestionPage CreateQuestionPage(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer) =>
-        new(questionViewModelFactory, questions, scoreAnalyzer, singleAnswer);
+    public QuestionPage CreateQuestionPage(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null) =>
+        new(questionViewModelFactory, questions, scoreAnalyzer, singleAnswer, session);
 
     public StandardTestPage CreateStandardTestPage() =>
         new(pageViewModelActivator, standardTestViewModelFactory);

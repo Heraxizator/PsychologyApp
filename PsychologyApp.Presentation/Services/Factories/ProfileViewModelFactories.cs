@@ -2,7 +2,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Services.QuotService;
-using PsychologyApp.Application.Services.Statistic;
+using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Services.Dialogs;
 using PsychologyApp.Presentation.Modules.Profile;
 using PsychologyApp.Presentation.ViewModels.Review;
@@ -19,13 +19,13 @@ public interface IUserViewModelFactory
 
 public sealed class UserViewModelFactory(
     IQuotService quotService,
-    IStatisticService statisticService,
+    IUserProgressService userProgressService,
     ILogger<UserViewModel> logger,
     IOptions<AppSettings> settings,
     Func<INavigation, INavigationService> navigationServiceFactory) : IUserViewModelFactory
 {
     public UserViewModel Create(INavigation navigation) =>
-        new(navigation, quotService, statisticService, logger, settings, navigationServiceFactory(navigation));
+        new(navigation, quotService, userProgressService, logger, settings, navigationServiceFactory(navigation));
 }
 
 public interface IOptionsViewModelFactory

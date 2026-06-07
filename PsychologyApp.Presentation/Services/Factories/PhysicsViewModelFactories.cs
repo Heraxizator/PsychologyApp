@@ -14,10 +14,11 @@ public interface IPhysicsSearchViewModelFactory
 public sealed class PhysicsSearchViewModelFactory(
     IReasonService reasonService,
     ILogger<PhysicsSearchViewModel> logger,
-    IOptions<AppSettings> settings) : IPhysicsSearchViewModelFactory
+    IOptions<AppSettings> settings,
+    Func<INavigation, INavigationService> navigationServiceFactory) : IPhysicsSearchViewModelFactory
 {
     public PhysicsSearchViewModel Create(INavigation navigation) =>
-        new(navigation, reasonService, logger, settings);
+        new(navigation, reasonService, logger, settings, navigationServiceFactory(navigation));
 }
 
 public interface IStartPhysicsViewModelFactory

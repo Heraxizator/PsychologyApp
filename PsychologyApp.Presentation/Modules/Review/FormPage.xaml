@@ -5,7 +5,7 @@
              xmlns:reviewviewmodels="clr-namespace:PsychologyApp.Presentation.ViewModels.Review" 
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              x:DataType="reviewviewmodels:FormViewModel"
-             Shell.NavBarIsVisible="True"
+             Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 <AbsoluteLayout 
         VerticalOptions="FillAndExpand" 

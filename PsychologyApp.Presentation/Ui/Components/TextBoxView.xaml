@@ -5,7 +5,7 @@
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Frame Style="{StaticResource CardFrameStyle}">
+            <Border Style="{StaticResource BrandCardStyle}">
                 <StackLayout Margin="0">
                     <Label
                         Text="{TemplateBinding HeaderText}"
@@ -15,7 +15,7 @@
                         Text="{TemplateBinding BodyText}"
                         Style="{StaticResource BodyStyle}" />
                 </StackLayout>
-            </Frame>
+            </Border>
         </ControlTemplate>
     </ContentView.ControlTemplate>
 

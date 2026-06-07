@@ -30,6 +30,12 @@ public static class AppStrings
     public static string ShellTabCleaner => T("Очиститель", "Cleaner");
     public static string ShellTabMotivator => T("Мотиватор", "Motivator");
 
+    public static string ShellTabPracticeShort => T("Практик", "Practice");
+    public static string ShellTabDetectorShort => T("Тесты", "Tests");
+    public static string ShellTabSomaticShort => T("Тело", "Body");
+    public static string ShellTabCleanerShort => T("Звук", "Audio");
+    public static string ShellTabMotivatorShort => T("Цитаты", "Quotes");
+
     public static string OptionsTitle => T("Параметры", "Options");
     public static string OptionsSettingsTitle => T("Настройки", "Settings");
     public static string OptionsSettingsSubtitle => T("Тема, цвет и параметры отображения", "Theme, color, and display options");
@@ -199,6 +205,58 @@ public static class AppStrings
         T($"{value} из {total}", $"{value} of {total}");
     public static string Yes => T("Да", "Yes");
     public static string No => T("Нет", "No");
+    public static string Ok => T("OK", "OK");
+
+    public static string PracticeEmptyTitle => T("Пока нет техник", "No techniques yet");
+    public static string PracticeEmptyBody => T(
+        "Создайте свою первую технику в конструкторе",
+        "Create your first technique in the designer");
+    public static string TestsEmptyTitle => T("Тесты загружаются", "Loading tests");
+    public static string TestsEmptyBody => T("Подождите немного", "Please wait a moment");
+    public static string QuotesEmptyTitle => T("Цитаты не найдены", "No quotes found");
+    public static string QuotesEmptyBody => T("Потяните вниз, чтобы обновить", "Pull down to refresh");
+    public static string ProfileQuotesEmpty => T("Пока нет избранных цитат", "No favorite quotes yet");
+
+    public static string PhysicsSolutionHeader => T("Что делать", "What to do");
+    public static string PhysicsRecommendedPractices => T("Практики, которые могут помочь", "Practices that may help");
+    public static string PhysicsTryPractice => T("Попробовать практику", "Try a practice");
+
+    public static string ProfileTestsCompleted => T("Пройдено тестов", "Tests completed");
+    public static string ProfileStreakDays => T("Дней подряд", "Day streak");
+    public static string ProfileStreakCount(int days) => T($"{days} дн.", $"{days} days");
+
+    public static string TodayForYou => T("Сегодня для вас", "Today for you");
+    public static string TodayRecommended => T("Рекомендуемая практика", "Recommended practice");
+    public static string TodayStartPractice => T("Начать", "Start");
+    public static string TodayMoodQuestion => T("Как настроение?", "How are you feeling?");
+    public static string TodayMoodSaved => T("Настроение сохранено", "Mood saved");
+    public static string TechniqueContinueBadge => T("Продолжить", "Continue");
+    public static string TechniqueLastPractice(string date) => T($"Последняя практика: {date}", $"Last practice: {date}");
+
+    public static string TestLastResult(string summary) => T($"Последний результат: {summary}", $"Last result: {summary}");
+    public static string TestTryTechnique => T("Попробовать технику", "Try a technique");
+    public static string TestResultImproved => T("Лучше прошлого раза", "Better than last time");
+    public static string TestResultWorse => T("Хуже прошлого раза", "Worse than last time");
+    public static string TestResultSame => T("Как в прошлый раз", "Same as last time");
+
+    public static string OnboardingWelcomeTitle => T("Добро пожаловать", "Welcome");
+    public static string OnboardingWelcomeBody => T(
+        "Короткие практики, тесты и психосоматика — офлайн и без осуждения",
+        "Short practices, tests, and psychosomatic insights — offline and judgment-free");
+    public static string OnboardingConcernTitle => T("Что вас беспокоит?", "What troubles you?");
+    public static string OnboardingConcernAnxiety => T("Тревога", "Anxiety");
+    public static string OnboardingConcernBody => T("Тело / симптомы", "Body / symptoms");
+    public static string OnboardingConcernMood => T("Настроение", "Mood");
+    public static string OnboardingConcernExplore => T("Просто попробовать", "Just exploring");
+    public static string OnboardingDisclaimerTitle => T("Важно", "Important");
+    public static string OnboardingDisclaimerBody => T(
+        "Приложение не заменяет профессиональную помощь. При тяжёлых состояниях обратитесь к специалисту.",
+        "This app does not replace professional care. Seek a specialist for severe conditions.");
+    public static string OnboardingStart => T("Начать практику", "Start a practice");
+    public static string OnboardingSkip => T("Пропустить", "Skip");
+    public static string OnboardingNext => T("Далее", "Next");
+
+    public static string QuoteShareFooter => T("PsychologyApp", "PsychologyApp");
 
     public static string PhysicsTitle => T("Психосоматик", "Psychosomatic");
     public static string PhysicsIntroPage => T("С введением", "Introduction");

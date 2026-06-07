@@ -8,6 +8,7 @@
              xmlns:technique="clr-namespace:PsychologyApp.Presentation.Technique"
              xmlns:quotes="clr-namespace:PsychologyApp.Presentation.Modules.Profile"
              x:DataType="vm:UserViewModel"
+             Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
     <ContentPage.ToolbarItems>
@@ -42,7 +43,7 @@
                         VerticalOptions="CenterAndExpand"
                         Text="{mi:Material Icon=AccountCircle, IconSize=35}"
                         Margin="15,0,0,0"
-                        TextColor="#AAAAAA" />
+                        TextColor="{StaticResource Gray}" />
 
                     <StackLayout
                         VerticalOptions="CenterAndExpand"
@@ -91,11 +92,21 @@
                     <Label
                         Style="{StaticResource SectionTitleStyle}"
                         HorizontalTextAlignment="Center"
-                        Text="0" />
+                        Text="{Binding TestsCompletedCount}" />
                     <Label
                         Style="{StaticResource BodyStyle}"
                         HorizontalTextAlignment="Center"
-                        Text="{Binding FollowersLabel}" />
+                        Text="{Binding TestsCompletedLabel}" />
+                </StackLayout>
+                <StackLayout Margin="15,10,15,10">
+                    <Label
+                        Style="{StaticResource SectionTitleStyle}"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding StreakCount}" />
+                    <Label
+                        Style="{StaticResource BodyStyle}"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding StreakLabel}" />
                 </StackLayout>
             </StackLayout>
 
@@ -165,16 +176,11 @@
                     </CollectionView.ItemTemplate>
 
                     <CollectionView.EmptyView>
-                        <ui:ProgressBarView
-                            HorizontalOptions="CenterAndExpand"
-                            VerticalOptions="CenterAndExpand"
-                            Margin="15,75,15,0"
-                            IsLoading="True"
-                            ProgressText="{Binding QuotesSearchingText}">
-                            <ui:ProgressBarView.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Cancel}" />
-                            </ui:ProgressBarView.GestureRecognizers>
-                        </ui:ProgressBarView>
+                        <Label
+                            Margin="15,40,15,0"
+                            HorizontalTextAlignment="Center"
+                            Style="{StaticResource BodyStyle}"
+                            Text="{Binding QuotesEmptyText}" />
                     </CollectionView.EmptyView>
 
                 </CollectionView>

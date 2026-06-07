@@ -12,7 +12,7 @@
                     <Label
                         Text="{TemplateBinding TitleText}"
                         FontSize="18"
-                        TextColor="{AppThemeBinding Light=black, Dark=white}"/>
+                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"/>
 
                     <StackLayout
                         Margin="0, 5, 0, 0"

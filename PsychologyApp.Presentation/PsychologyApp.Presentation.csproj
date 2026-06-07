@@ -59,6 +59,8 @@
 	  <PublishTrimmed>False</PublishTrimmed>
 	  <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
 	  <RunAOTCompilation>False</RunAOTCompilation>
+	  <!-- Disable fast deployment: avoids XA0129 push failures to .__override__ on device. -->
+	  <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-maccatalyst|AnyCPU'">
@@ -95,11 +97,6 @@
 	  <RunAOTCompilation>True</RunAOTCompilation>
 	  <DebugSymbols>True</DebugSymbols>
 	  <AndroidLinkTool>r8</AndroidLinkTool>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
-	  <AndroidUseAapt2>True</AndroidUseAapt2>
-	  <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
 	</PropertyGroup>
 
 	<ItemGroup>

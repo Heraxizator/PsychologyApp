@@ -1,210 +1,131 @@
 <?xml version="1.0" encoding="utf-8" ?>
-
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-
              x:Class="PsychologyApp.Presentation.Views.Physics.PhysicsSearchPage"
              x:Name="PageRoot"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Physics"
-
+             xmlns:physics="clr-namespace:PsychologyApp.Presentation.Modules.Physics"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
-
              x:DataType="vm:PhysicsSearchViewModel"
-
+             Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
-<ContentPage.ToolbarItems>
-
+    <ContentPage.ToolbarItems>
         <ToolbarItem Text="{Binding SearchToolbarText}" Command="{Binding SearchCommand}"/>
-
     </ContentPage.ToolbarItems>
 
-
-
-    <AbsoluteLayout 
-
+    <AbsoluteLayout
         HorizontalOptions="FillAndExpand"
-
         VerticalOptions="FillAndExpand">
 
-        
-
-    <StackLayout 
-
-        AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
-
-        AbsoluteLayout.LayoutFlags="All"
-
-        IsVisible="True"
-
-        Margin="10, 0, 10, 0"
-
-        VerticalOptions="FillAndExpand" 
-
-        HorizontalOptions="FillAndExpand">
-
-
+        <StackLayout
+            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+            AbsoluteLayout.LayoutFlags="All"
+            Margin="10, 0, 10, 0"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand">
 
             <ui:NavigationBarSimpleView
-
-            TitleText="{Binding PageTitle}"
-
-            BackCommand="{Binding Finish}"/>
-
-
+                TitleText="{Binding PageTitle}"
+                BackCommand="{Binding Finish}"/>
 
             <ui:TextEntryView
-
-            PlaceholderText="{Binding IllnessPlaceholder}"
-
-            BodyText="{Binding SearchText}"
-
-            TitleText="{Binding ProblemLabel}"/>
-
-
+                PlaceholderText="{Binding IllnessPlaceholder}"
+                BodyText="{Binding SearchText}"
+                TitleText="{Binding ProblemLabel}"/>
 
             <ScrollView
-
-            VerticalOptions="FillAndExpand"
-
-            HorizontalOptions="FillAndExpand"
-
-            VerticalScrollBarVisibility="Never">
-
-
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                VerticalScrollBarVisibility="Never">
 
                 <StackLayout>
 
-
-
                     <CollectionView
-
                         IsVisible="{Binding IsDone}"
-
-                SelectionMode="None"
-
-                VerticalOptions="FillAndExpand"
-
-                HorizontalOptions="FillAndExpand"
-
-                VerticalScrollBarVisibility="Never"
-
-                ItemsSource="{Binding ResultsObservableCollection}">
-
+                        SelectionMode="None"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalScrollBarVisibility="Never"
+                        ItemsSource="{Binding ResultsObservableCollection}">
                         <CollectionView.ItemTemplate>
-
-                            <DataTemplate>
-
-                                <Frame Padding="10">
-
-                                    <ui:TextItemView
-
-                                        TitleText="{Binding Title}"
-
-                                        BodyText="{Binding Subtitle}" />
-
+                            <DataTemplate x:DataType="physics:PhysicsReasonItem">
+                                <Frame Padding="10" Margin="0,0,0,8">
+                                    <StackLayout Spacing="8">
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ToggleExpandCommand}" />
+                                        </StackLayout.GestureRecognizers>
+                                        <ui:TextItemView
+                                            TitleText="{Binding Title}"
+                                            BodyText="{Binding Subtitle}" />
+                                        <StackLayout IsVisible="{Binding IsExpanded}" Spacing="6">
+                                            <Label
+                                                Style="{StaticResource SectionTitleStyle}"
+                                                FontSize="14"
+                                                Text="{Binding SolutionHeader, Source={x:Reference PageRoot}, Path=BindingContext}" />
+                                            <Label
+                                                Style="{StaticResource BodyStyle}"
+                                                Text="{Binding Solution}" />
+                                            <Label
+                                                Style="{StaticResource SectionTitleStyle}"
+                                                FontSize="14"
+                                                Text="{Binding RecommendedPracticesLabel, Source={x:Reference PageRoot}, Path=BindingContext}" />
+                                            <StackLayout BindableLayout.ItemsSource="{Binding SuggestedTechniques}">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate x:DataType="physics:PhysicsTechniqueSuggestion">
+                                                        <ui:ButtonView
+                                                            Margin="0,4,0,0"
+                                                            Variant="Secondary"
+                                                            IsCompact="True"
+                                                            BodyText="{Binding Title}"
+                                                            TapCommand="{Binding OpenCommand}" />
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </StackLayout>
                                 </Frame>
-
                             </DataTemplate>
-
                         </CollectionView.ItemTemplate>
 
-
-
                         <CollectionView.EmptyView>
-
-
-
                             <StackLayout
-
-                            HorizontalOptions="CenterAndExpand"
-
-                            VerticalOptions="CenterAndExpand">
-
-
-
+                                HorizontalOptions="CenterAndExpand"
+                                VerticalOptions="CenterAndExpand">
                                 <Label
-
                                     FontFamily="RobotoMedium"
-
                                     TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-
                                     FontSize="14"
-
                                     Text="{Binding EmptySearchHint, Source={x:Reference PageRoot}, Path=BindingContext}"/>
-
-
-
                                 <Label
-
                                     FontFamily="RobotoRegular"
-
                                     TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-
                                     FontSize="14"
-
                                     Text="{Binding EmptySearchSubhint, Source={x:Reference PageRoot}, Path=BindingContext}"/>
-
-
-
                             </StackLayout>
-
-
-
                         </CollectionView.EmptyView>
-
-
-
                     </CollectionView>
 
-
-
-                    <ui:ProgressBarView 
-
+                    <ui:ProgressBarView
                         VerticalOptions="CenterAndExpand"
-
                         IsVisible="{Binding IsInit}"
-
                         IsLoading="{Binding IsInit}"
-
                         ProgressText="{Binding LoadingText}">
-
                         <ui:ProgressBarView.GestureRecognizers>
-
                             <TapGestureRecognizer Command="{Binding Cancel}"/>
-
                         </ui:ProgressBarView.GestureRecognizers>
-
                     </ui:ProgressBarView>
 
-
-
                 </StackLayout>
-
-
-
-        </ScrollView>
-
-    </StackLayout>
-
-
+            </ScrollView>
+        </StackLayout>
 
         <ui:RetryView
-
             AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
-
             AbsoluteLayout.LayoutFlags="PositionProportional"
-
             IsVisible="{Binding IsFail}"
-
             FailedText="{Binding FailedText}"
-
             RetryText="{Binding RetryText}"
-
             RetryCommand="{Binding Reload}" />
-
     </AbsoluteLayout>
-
 </ContentPage>
-

@@ -28,6 +28,7 @@
     <Compile Include="..\PsychologyApp.Presentation\Modules\Practice\Techniques\TechniqueListCatalog.cs" Link="TechniqueListCatalog.cs" />
     <Compile Include="..\PsychologyApp.Presentation\UI\Components\EntryItem.cs" Link="EntryItem.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Modules\Tests\Collection\TestScoreAnalyzers.cs" Link="TestScoreAnalyzers.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Modules\Tests\Collection\TestSessionInfo.cs" Link="TestSessionInfo.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Infrastructure\AsyncCommand.cs" Link="AsyncCommand.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Infrastructure\AsyncCommandExtensions.cs" Link="AsyncCommandExtensions.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Infrastructure\UserPreferences.cs" Link="UserPreferences.cs" />

@@ -5,6 +5,7 @@
              Shell.NavBarIsVisible="True"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Tests"
+             xmlns:tests="clr-namespace:PsychologyApp.Presentation.Modules.Tests.Collection"
              x:DataType="vm:TestsListViewModel"
              Title="{Binding PageTitle}">
 <AbsoluteLayout 
@@ -15,21 +16,38 @@
             AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
             AbsoluteLayout.LayoutFlags="All"
             x:Name="TestsCollectionView"
-            Margin="20, 20, 15, 5"
-            HorizontalOptions="CenterAndExpand"
-            VerticalOptions="StartAndExpand"
+            Margin="15, 15, 15, 5"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
             VerticalScrollBarVisibility="Never"
             SelectionMode="Single"
             SelectedItem="{Binding SelectedTestItem, Mode=TwoWay}"
             ItemsSource="{Binding TestItemCollection}">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="vm:TestItem">
-                    <ui:TextItemView
-                        Padding="0, 0, 0, 15"
-                        TitleText="{Binding Title}"
-                        BodyText="{Binding Subtitle}"/>
+                <DataTemplate x:DataType="tests:TestItem">
+                    <ui:TestListCardView
+                        Margin="0,0,0,10"
+                        Title="{Binding Title}"
+                        Subtitle="{Binding Subtitle}"
+                        LastResultText="{Binding LastResultSummary}"
+                        HasLastResult="{Binding HasLastResult}" />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <StackLayout
+                    Padding="24"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource SectionTitleStyle}"
+                        Text="{Binding EmptyTitle}" />
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource BodyStyle}"
+                        Text="{Binding EmptyBody}" />
+                </StackLayout>
+            </CollectionView.EmptyView>
         </CollectionView>
     </AbsoluteLayout>
 </ContentPage>

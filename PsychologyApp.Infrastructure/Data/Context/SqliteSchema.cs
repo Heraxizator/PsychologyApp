@@ -5,7 +5,7 @@ namespace PsychologyApp.Infrastructure.Data.Context;
 
 public static class SqliteSchema
 {
-    public const int CurrentVersion = 3;
+    public const int CurrentVersion = 4;
 
     private static readonly string[] DropTablesSql =
     [
@@ -51,7 +51,72 @@ public static class SqliteSchema
         if (version < 3)
         {
             await ApplyMigrationAsync(connection, 3, MigrateToVersion3Async, cancellationToken);
+            version = 3;
         }
+
+        if (version < 4)
+        {
+            await ApplyMigrationAsync(connection, 4, MigrateToVersion4Async, cancellationToken);
+        }
+    }
+
+    private static async Task MigrateToVersion4Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)
+    {
+        await connection.ExecuteAsync(
+            """
+            CREATE TABLE IF NOT EXISTS TestResults (
+                TestResultId INTEGER PRIMARY KEY AUTOINCREMENT,
+                TestId TEXT NOT NULL,
+                Score INTEGER,
+                Summary TEXT NOT NULL,
+                DetailJson TEXT,
+                CompletedAt TEXT NOT NULL
+            );
+            """,
+            transaction: transaction);
+
+        await connection.ExecuteAsync(
+            """
+            CREATE TABLE IF NOT EXISTS Completions (
+                CompletionId INTEGER PRIMARY KEY AUTOINCREMENT,
+                CompletionKind TEXT NOT NULL,
+                ItemKey TEXT NOT NULL,
+                ModuleName TEXT NOT NULL,
+                PageName TEXT NOT NULL,
+                CompletedAt TEXT NOT NULL,
+                DurationSeconds INTEGER NOT NULL DEFAULT 0
+            );
+            """,
+            transaction: transaction);
+
+        await connection.ExecuteAsync(
+            """
+            CREATE TABLE IF NOT EXISTS SessionDrafts (
+                TechniqueKey TEXT NOT NULL PRIMARY KEY,
+                PayloadJson TEXT NOT NULL,
+                UpdatedAt TEXT NOT NULL
+            );
+            """,
+            transaction: transaction);
+
+        await connection.ExecuteAsync(
+            """
+            CREATE TABLE IF NOT EXISTS MoodEntries (
+                MoodEntryId INTEGER PRIMARY KEY AUTOINCREMENT,
+                MoodLevel INTEGER NOT NULL,
+                Note TEXT,
+                RecordedAt TEXT NOT NULL
+            );
+            """,
+            transaction: transaction);
+
+        await connection.ExecuteAsync(
+            "CREATE INDEX IF NOT EXISTS IX_TestResults_TestId ON TestResults (TestId);",
+            transaction: transaction);
+
+        await connection.ExecuteAsync(
+            "CREATE INDEX IF NOT EXISTS IX_Completions_CompletedAt ON Completions (CompletedAt);",
+            transaction: transaction);
     }
 
     private static async Task ApplyMigrationAsync(

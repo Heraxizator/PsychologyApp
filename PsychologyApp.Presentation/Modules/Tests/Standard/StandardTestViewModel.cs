@@ -1,5 +1,6 @@
 ﻿using PsychologyApp.Domain.Colour;
 using PsychologyApp.Domain.Colour.ValueObjects;
+using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.ViewModels.Tests;
 using System.Collections.ObjectModel;
@@ -20,10 +21,13 @@ public class StandardTestViewModel : BaseTestViewModel
     public string MoreInfoBody => AppStrings.TestsStandardDescription;
     public string RestartButtonText => AppStrings.TestsRestart;
 
+    private readonly IUserProgressService? _userProgressService;
+
     public StandardTestViewModel() { }
 
-    public StandardTestViewModel(INavigation navigation)
+    public StandardTestViewModel(INavigation navigation, IUserProgressService? userProgressService = null)
     {
+        _userProgressService = userProgressService;
         BindNavigation(navigation);
         ModuleName = AppStrings.TestsDetectorTitle;
         PageName = AppStrings.TestsStandardTitle;
@@ -102,7 +106,19 @@ public class StandardTestViewModel : BaseTestViewModel
             });
 
             SetFinish();
+            PersistResultAsync(_lastCoValue, _lastBkValue).FireAndForget();
         }
+    }
+
+    private async Task PersistResultAsync(int coValue, double bkValue)
+    {
+        if (_userProgressService is null)
+        {
+            return;
+        }
+
+        string summary = $"{AppStrings.TestsCoLabel}: {coValue}; {AppStrings.TestsBkLabel}: {Math.Round(bkValue, 2)}";
+        await _userProgressService.SaveTestResultAsync("luscher_standard", coValue, summary);
     }
 }
 

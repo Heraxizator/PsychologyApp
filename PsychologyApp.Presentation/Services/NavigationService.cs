@@ -1,5 +1,6 @@
 using PsychologyApp.Presentation.Modules.Practice.Techniques;
 using PsychologyApp.Presentation.Modules.Tests;
+using PsychologyApp.Presentation.Modules.Tests.Collection;
 using PsychologyApp.Presentation.Views.TechniquePages;
 using PsychologyApp.Presentation.Views.TechniquePages.ConstructorPages;
 
@@ -22,7 +23,7 @@ public interface INavigationService
     Task GoToPhysicsSearchAsync();
     Task GoToTheoryAsync(string content);
     Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Action action);
-    Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer);
+    Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null);
     Task GoToStandardTestAsync();
     Task GoToAlternativeTestAsync();
 }
@@ -32,13 +33,13 @@ public sealed class MauiNavigationService(INavigation navigation, IPageFactory p
     public INavigation Navigation => navigation;
 
     public Task GoBackAsync() =>
-        navigation.PopAsync(false);
+        navigation.PopAsync(true);
 
     public Task GoToRootAsync() =>
-        navigation.PopToRootAsync(false);
+        navigation.PopToRootAsync(true);
 
     public Task GoToTechniqueAsync(TechniqueId techniqueId) =>
-        navigation.PushAsync(pageFactory.CreateTechniqueSessionPage(techniqueId), false);
+        navigation.PushAsync(pageFactory.CreateTechniqueSessionPage(techniqueId), true);
 
     public Task GoToCreatedAsync(long techniqueId) =>
         navigation.PushAsync(pageFactory.CreateCreatedPage(techniqueId), false);
@@ -47,7 +48,7 @@ public sealed class MauiNavigationService(INavigation navigation, IPageFactory p
         navigation.PushAsync(pageFactory.CreateDesignerPage(techniqueId), false);
 
     public Task GoToUserProfileAsync() =>
-        navigation.PushAsync(pageFactory.CreateUserPage(), false);
+        navigation.PushAsync(pageFactory.CreateUserPage(), true);
 
     public Task GoToOptionsAsync() =>
         navigation.PushAsync(pageFactory.CreateOptionsPage(), false);
@@ -73,8 +74,8 @@ public sealed class MauiNavigationService(INavigation navigation, IPageFactory p
     public Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Action action) =>
         navigation.PushAsync(pageFactory.CreateFindProblemPage(description, algorithm, comment, action), false);
 
-    public Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer) =>
-        navigation.PushAsync(pageFactory.CreateQuestionPage(questions, scoreAnalyzer, singleAnswer), false);
+    public Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null) =>
+        navigation.PushAsync(pageFactory.CreateQuestionPage(questions, scoreAnalyzer, singleAnswer, session), true);
 
     public Task GoToStandardTestAsync() =>
         navigation.PushAsync(pageFactory.CreateStandardTestPage(), false);

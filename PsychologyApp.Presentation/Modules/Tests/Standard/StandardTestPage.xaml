@@ -6,6 +6,7 @@
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Tests"
              x:DataType="vm:StandardTestViewModel"
+             Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 <StackLayout VerticalOptions="FillAndExpand">
 

@@ -392,7 +392,7 @@
 
     <Style TargetType="Page" ApplyToDerivedTypes="True">
         <Setter Property="Padding" Value="0"/>
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}" />
     </Style>
 
     <Style TargetType="Shell" ApplyToDerivedTypes="True">
@@ -400,13 +400,13 @@
         <Setter Property="Shell.ForegroundColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
         <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
         <Setter Property="Shell.DisabledColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
-        <Setter Property="Shell.UnselectedColor" Value="{StaticResource Gray500}" />
+        <Setter Property="Shell.UnselectedColor" Value="{StaticResource Gray400}" />
         <Setter Property="Shell.NavBarHasShadow" Value="False" />
         <!-- ??????????? ????? ??? TabBar -->
         <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray950}}" />
         <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource Primary}" />
         <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource Primary}" />
-        <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource Gray500}" />
+        <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource Gray400}" />
     </Style>
     
 

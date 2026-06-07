@@ -27,18 +27,39 @@
             HorizontalScrollBarVisibility="Never">
 
             <CollectionView.Header>
-                <StackLayout Margin="10,0,10,10" Orientation="Horizontal">
-                    <Label
-                        Text="{Binding MyTechniquesLabel}"
-                        FontSize="18"
-                        Style="{StaticResource SectionTitleStyle}"
-                        HorizontalOptions="StartAndExpand"
-                        VerticalOptions="Center" />
-                    <ui:ButtonView
-                        Variant="Primary"
-                        IsCompact="True"
-                        BodyText="{Binding CreateButtonText}"
-                        TapCommand="{Binding ConstructorTapped}" />
+                <StackLayout Margin="10,0,10,10" Spacing="10">
+                    <Label Text="{Binding TodayForYouLabel}" Style="{StaticResource SectionTitleStyle}" />
+                    <Border Style="{StaticResource BrandCardStyle}" Padding="12" Margin="0">
+                        <StackLayout Spacing="8">
+                            <Label Text="{Binding TodayRecommendedLabel}" Style="{StaticResource BodyStyle}" />
+                            <Label Text="{Binding TodayTechniqueTitle}" Style="{StaticResource SectionTitleStyle}" />
+                            <Label Text="{Binding StreakDisplay}" TextColor="{StaticResource Primary}" FontFamily="RobotoMedium" />
+                            <ui:ButtonView
+                                BodyText="{Binding TodayStartPracticeText}"
+                                TapCommand="{Binding StartTodayPracticeCommand}" />
+                            <Label Text="{Binding TodayMoodQuestion}" Style="{StaticResource BodyStyle}" />
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="8">
+                                <Button Text="😞" Command="{Binding RecordMood1Command}" BackgroundColor="Transparent" />
+                                <Button Text="😐" Command="{Binding RecordMood2Command}" BackgroundColor="Transparent" />
+                                <Button Text="🙂" Command="{Binding RecordMood3Command}" BackgroundColor="Transparent" />
+                                <Button Text="😊" Command="{Binding RecordMood4Command}" BackgroundColor="Transparent" />
+                                <Button Text="🤩" Command="{Binding RecordMood5Command}" BackgroundColor="Transparent" />
+                            </StackLayout>
+                        </StackLayout>
+                    </Border>
+                    <StackLayout Orientation="Horizontal">
+                        <Label
+                            Text="{Binding MyTechniquesLabel}"
+                            FontSize="18"
+                            Style="{StaticResource SectionTitleStyle}"
+                            HorizontalOptions="StartAndExpand"
+                            VerticalOptions="Center" />
+                        <ui:ButtonView
+                            Variant="Primary"
+                            IsCompact="True"
+                            BodyText="{Binding CreateButtonText}"
+                            TapCommand="{Binding ConstructorTapped}" />
+                    </StackLayout>
                 </StackLayout>
             </CollectionView.Header>
 
@@ -56,6 +77,13 @@
                         TapCommand="{Binding TapCommand}" />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+
+            <CollectionView.EmptyView>
+                <StackLayout Padding="24" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label HorizontalTextAlignment="Center" Style="{StaticResource SectionTitleStyle}" Text="{Binding PracticeEmptyTitle}" />
+                    <Label HorizontalTextAlignment="Center" Style="{StaticResource BodyStyle}" Text="{Binding PracticeEmptyBody}" />
+                </StackLayout>
+            </CollectionView.EmptyView>
 
         </CollectionView>
 

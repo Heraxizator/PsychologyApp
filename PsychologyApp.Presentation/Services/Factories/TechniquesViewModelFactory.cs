@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Services.TechniqueService;
+using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Services.Toasts;
 using PsychologyApp.Presentation.Modules.Practice.Messages;
 using PsychologyApp.Presentation.Technique.Main;
@@ -17,8 +18,9 @@ public sealed class TechniquesViewModelFactory(
     IToastService toastService,
     ITechniqueMessenger techniqueMessenger,
     Func<INavigation, INavigationService> navigationServiceFactory,
+    IUserProgressService userProgressService,
     IOptions<AppSettings> settings) : ITechniquesViewModelFactory
 {
     public TechniquesViewModel Create(INavigation navigation) =>
-        new(navigation, techniqueService, toastService, techniqueMessenger, navigationServiceFactory, settings);
+        new(navigation, techniqueService, toastService, techniqueMessenger, navigationServiceFactory, userProgressService, settings);
 }

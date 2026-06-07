@@ -1,5 +1,6 @@
 using System.Globalization;
 using Microsoft.Maui.Controls.Shapes;
+using PsychologyApp.Presentation.Modules.Practice.Techniques;
 
 namespace PsychologyApp.Presentation.Infrastructure;
 
@@ -11,6 +12,9 @@ public static class UserPreferences
     public const string FormKey = "Form";
     public const string SizeKey = "Size";
     public const string IsBoldKey = "IsBold";
+    public const string HasCompletedOnboardingKey = "HasCompletedOnboarding";
+    public const string OnboardingConcernKey = "OnboardingConcern";
+    public const string PendingTechniqueKey = "PendingTechnique";
 
     public const string DefaultLanguage = "ru";
     public const string DefaultTheme = "light";
@@ -29,7 +33,13 @@ public static class UserPreferences
             Color = NormalizeColorKey(Preferences.Get(ColorKey, DefaultColor)),
             Form = NormalizeFormKey(Preferences.Get(FormKey, DefaultForm)),
             Size = NormalizeSizeKey(Preferences.Get(SizeKey, DefaultSize)),
-            IsBold = Preferences.Get(IsBoldKey, false)
+            IsBold = Preferences.Get(IsBoldKey, false),
+            HasCompletedOnboarding = Preferences.ContainsKey(HasCompletedOnboardingKey)
+                ? Preferences.Get(HasCompletedOnboardingKey, false)
+                : Preferences.ContainsKey(LanguageKey)
+                  || Preferences.ContainsKey(ThemeKey)
+                  || Preferences.ContainsKey(ColorKey),
+            OnboardingConcern = Preferences.Get(OnboardingConcernKey, "explore")
         };
     }
 
@@ -41,6 +51,40 @@ public static class UserPreferences
         Preferences.Set(FormKey, NormalizeFormKey(state.Form));
         Preferences.Set(SizeKey, NormalizeSizeKey(state.Size));
         Preferences.Set(IsBoldKey, state.IsBold);
+        Preferences.Set(HasCompletedOnboardingKey, state.HasCompletedOnboarding);
+        Preferences.Set(OnboardingConcernKey, state.OnboardingConcern);
+    }
+
+    public static void SetPendingTechnique(TechniqueId techniqueId) =>
+        Preferences.Set(PendingTechniqueKey, techniqueId.ToString());
+
+    public static TechniqueId? ConsumePendingTechnique()
+    {
+        if (!Preferences.ContainsKey(PendingTechniqueKey))
+        {
+            return null;
+        }
+
+        string value = Preferences.Get(PendingTechniqueKey, string.Empty);
+        Preferences.Remove(PendingTechniqueKey);
+        return Enum.TryParse(value, out TechniqueId id) ? id : null;
+    }
+
+    public static void CompleteOnboarding(string concern)
+    {
+        UserPreferencesState current = Load();
+        Save(new UserPreferencesState
+        {
+            Language = current.Language,
+            Theme = current.Theme,
+            Color = current.Color,
+            Form = current.Form,
+            Size = current.Size,
+            IsBold = current.IsBold,
+            HasCompletedOnboarding = true,
+            OnboardingConcern = concern
+        });
+        Changed?.Invoke();
     }
 
     public static void ApplyAll()
@@ -92,9 +136,11 @@ public static class UserPreferences
             return;
         }
 
-        (Color primary, Color secondary) = ResolveAccentColors(NormalizeColorKey(color));
+        (Color primary, Color secondary, Color hover, Color tint) = ResolveAccentColors(NormalizeColorKey(color));
         resources["Primary"] = primary;
         resources["Secondary"] = secondary;
+        resources["PrimaryHover"] = hover;
+        resources["PrimaryTint"] = tint;
     }
 
     public static void ApplyTypography(string size, bool isBold)
@@ -246,13 +292,13 @@ public static class UserPreferences
     private static bool IsRoundedForm(string form) =>
         NormalizeFormKey(form) == "rounded";
 
-    private static (Color primary, Color secondary) ResolveAccentColors(string color) =>
+    private static (Color primary, Color secondary, Color hover, Color tint) ResolveAccentColors(string color) =>
         NormalizeColorKey(color) switch
         {
-            "red" => (Color.FromArgb("#E53935"), Color.FromArgb("#FFAB91")),
-            "yellow" => (Color.FromArgb("#F7B548"), Color.FromArgb("#FFE5B9")),
-            "green" => (Color.FromArgb("#2E9E5B"), Color.FromArgb("#A8E6C1")),
-            _ => (Color.FromArgb("#0085FF"), Color.FromArgb("#96d1ff"))
+            "red" => (Color.FromArgb("#E53935"), Color.FromArgb("#FFAB91"), Color.FromArgb("#C62828"), Color.FromArgb("#FFEBEE")),
+            "yellow" => (Color.FromArgb("#F7B548"), Color.FromArgb("#FFE5B9"), Color.FromArgb("#E6A020"), Color.FromArgb("#FFF8E6")),
+            "green" => (Color.FromArgb("#2E9E5B"), Color.FromArgb("#A8E6C1"), Color.FromArgb("#1F7A45"), Color.FromArgb("#EBF3F0")),
+            _ => (Color.FromArgb("#0085FF"), Color.FromArgb("#96d1ff"), Color.FromArgb("#006ACC"), Color.FromArgb("#E6F2FF"))
         };
 
     private static (double section, double body) ResolveFontSizes(string size) =>
@@ -280,4 +326,6 @@ public sealed class UserPreferencesState
     public string Form { get; init; } = UserPreferences.DefaultForm;
     public string Size { get; init; } = UserPreferences.DefaultSize;
     public bool IsBold { get; init; }
+    public bool HasCompletedOnboarding { get; init; }
+    public string OnboardingConcern { get; init; } = "explore";
 }

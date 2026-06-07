@@ -36,7 +36,26 @@ public class SqliteSchemaTests
         int indexCount = await connection.ExecuteScalarAsync<int>(
             "SELECT COUNT(*) FROM sqlite_master WHERE type='index' AND name='IX_Statistics_PageName';");
 
-        Assert.Equal(3, version);
+        Assert.Equal(4, version);
         Assert.Equal(1, indexCount);
     }
+
+    [Fact]
+    public async Task EnsureSchema_CreatesProgressTablesForVersion4()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+
+        await SqliteSchema.EnsureSchemaAsync(connection);
+
+        Assert.Equal(1, await TableExistsAsync(connection, "TestResults"));
+        Assert.Equal(1, await TableExistsAsync(connection, "Completions"));
+        Assert.Equal(1, await TableExistsAsync(connection, "SessionDrafts"));
+        Assert.Equal(1, await TableExistsAsync(connection, "MoodEntries"));
+    }
+
+    private static Task<int> TableExistsAsync(SqliteConnection connection, string tableName) =>
+        connection.ExecuteScalarAsync<int>(
+            "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name=@tableName;",
+            new { tableName });
 }

@@ -6,6 +6,7 @@
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              x:DataType="vm:InfoViewModel"
+             Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 <StackLayout>
 
