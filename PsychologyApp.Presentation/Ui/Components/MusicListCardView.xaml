@@ -1,30 +1,48 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PsychologyApp.Presentation.UI.Components.MusicListCardView">
-
-    <ContentView.ControlTemplate>
-        <ControlTemplate>
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0,0,0,4">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                    <Image
-                        Grid.Column="0"
-                        WidthRequest="45"
-                        HeightRequest="45"
-                        Source="music.png" />
-                    <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
-                        <Label Text="{TemplateBinding Title}" Style="{StaticResource SectionTitleStyle}" />
-                        <Label
-                            Text="{TemplateBinding Subtitle}"
-                            Style="{StaticResource BodyStyle}"
-                            MaxLines="2" />
-                    </VerticalStackLayout>
-                </Grid>
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             x:Class="PsychologyApp.Presentation.UI.Components.MusicListCardView"
+             x:Name="Root">
+    <Border Style="{StaticResource MusicListRowStyle}">
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding TapCommand, Source={x:Reference Root}}" />
+        </Border.GestureRecognizers>
+        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+            <Border
+                Grid.Column="0"
+                WidthRequest="40"
+                HeightRequest="40"
+                StrokeThickness="0"
+                BackgroundColor="{StaticResource PrimaryTint}"
+                VerticalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="20" />
+                </Border.StrokeShape>
+                <Label
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    TextColor="{StaticResource Primary}"
+                    Text="{mi:Material Icon=PlayArrow}" />
             </Border>
-        </ControlTemplate>
-    </ContentView.ControlTemplate>
-
+            <VerticalStackLayout
+                Grid.Column="1"
+                Spacing="4"
+                VerticalOptions="Center">
+                <Label
+                    Text="{Binding Title, Source={x:Reference Root}}"
+                    Style="{StaticResource BodyStyle}"
+                    FontFamily="{StaticResource SemiBoldFontFamily}" />
+                <Label
+                    Text="{Binding Subtitle, Source={x:Reference Root}}"
+                    Style="{StaticResource CaptionStyle}"
+                    MaxLines="2" />
+            </VerticalStackLayout>
+            <Label
+                Grid.Column="2"
+                VerticalOptions="Center"
+                TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                Text="{mi:Material Icon=KeyboardArrowRight}" />
+        </Grid>
+    </Border>
 </ContentView>

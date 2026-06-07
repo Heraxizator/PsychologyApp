@@ -9,10 +9,20 @@
         <VerticalStackLayout Spacing="4">
             <Label
                 Text="{Binding TitleText, Source={x:Reference Root}}"
-                Style="{StaticResource CaptionStyle}" />
+                Style="{StaticResource CaptionStyle}">
+                <Label.Triggers>
+                    <DataTrigger
+                        Binding="{Binding TitleText, Source={x:Reference Root}}"
+                        TargetType="Label"
+                        Value="">
+                        <Setter Property="IsVisible" Value="False" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
             <Entry
                 x:Name="InputEntry"
                 Style="{StaticResource InputTextStyle}"
+                MinimumHeightRequest="44"
                 Keyboard="Text"
                 Placeholder="{Binding PlaceholderText, Source={x:Reference Root}}"
                 Text="{Binding BodyText, Source={x:Reference Root}, Mode=TwoWay}"

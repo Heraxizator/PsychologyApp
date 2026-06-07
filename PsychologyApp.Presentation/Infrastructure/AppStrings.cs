@@ -39,6 +39,7 @@ public static class AppStrings
     public static string OptionsTitle => T("Параметры", "Options");
     public static string OptionsSettingsTitle => T("Настройки", "Settings");
     public static string OptionsSettingsSubtitle => T("Тема, цвет и параметры отображения", "Theme, color, and display options");
+    public static string ProfileSettingsCardSubtitle => T("Тема, язык, шрифт", "Theme, language, and font");
     public static string OptionsAboutTitle => T("О приложении", "About");
     public static string OptionsAboutSubtitle => T("Информация о приложении", "App information");
     public static string OptionsFeedbackTitle => T("Обратная связь", "Feedback");

@@ -146,6 +146,23 @@
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
         <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource InputPlaceholderLight}, Dark={StaticResource InputPlaceholderDark}}" />
         <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+    </Style>
+
+    <Style x:Key="MusicListRowStyle" TargetType="Border">
+        <Setter Property="Margin" Value="0,0,0,8" />
+        <Setter Property="Padding" Value="12,14" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource SurfaceDark}}" />
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}" />
+    </Style>
+
+    <Style x:Key="TodayBannerStyle" TargetType="Border">
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryTint}" />
     </Style>
 
     <Style x:Key="InputEditorStyle" TargetType="Editor">

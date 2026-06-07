@@ -106,6 +106,7 @@ public class BaseViewModel : INotifyPropertyChanged
         {
             Entries.Clear();
             Entries.AddRange(def.Entries);
+            OnPropertyChanged(nameof(Entries));
         }
 
         OnTechniqueContentChanged();

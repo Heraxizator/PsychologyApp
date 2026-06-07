@@ -29,25 +29,31 @@
             <CollectionView.Header>
                 <StackLayout Spacing="{StaticResource LayoutSpacing}">
                     <Label Text="{Binding TodayForYouLabel}" Style="{StaticResource SectionTitleStyle}" />
-                    <Border Style="{StaticResource BrandCardStyle}" Margin="0" BackgroundColor="{StaticResource PrimaryTint}">
-                        <StackLayout Spacing="8">
-                            <Label Text="{Binding TodayRecommendedLabel}" Style="{StaticResource BodyStyle}" />
-                            <Label Text="{Binding TodayTechniqueTitle}" Style="{StaticResource SectionTitleStyle}" />
-                            <Label Text="{Binding StreakDisplay}" TextColor="{StaticResource Primary}" FontFamily="{StaticResource MediumFontFamily}" />
-                            <ui:ButtonView
-                                BodyText="{Binding TodayStartPracticeText}"
-                                TapCommand="{Binding StartTodayPracticeCommand}" />
-                            <Label Text="{Binding TodayMoodQuestion}" Style="{StaticResource BodyStyle}" />
-                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="8">
-                                <Button Text="😞" Command="{Binding RecordMood1Command}" BackgroundColor="Transparent" />
-                                <Button Text="😐" Command="{Binding RecordMood2Command}" BackgroundColor="Transparent" />
-                                <Button Text="🙂" Command="{Binding RecordMood3Command}" BackgroundColor="Transparent" />
-                                <Button Text="😊" Command="{Binding RecordMood4Command}" BackgroundColor="Transparent" />
-                                <Button Text="🤩" Command="{Binding RecordMood5Command}" BackgroundColor="Transparent" />
-                            </StackLayout>
-                        </StackLayout>
+                    <Border Style="{StaticResource TodayBannerStyle}">
+                        <VerticalStackLayout Spacing="8">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                <Label
+                                    Grid.Column="0"
+                                    Text="{Binding TodayTechniqueTitle}"
+                                    Style="{StaticResource SectionTitleStyle}"
+                                    VerticalOptions="Center" />
+                                <ui:ButtonView
+                                    Grid.Column="1"
+                                    IsCompact="True"
+                                    VerticalOptions="Center"
+                                    BodyText="{Binding TodayStartPracticeText}"
+                                    TapCommand="{Binding StartTodayPracticeCommand}" />
+                            </Grid>
+                            <Label
+                                Text="{Binding StreakDisplay}"
+                                Style="{StaticResource CaptionStyle}"
+                                TextColor="{StaticResource Primary}"
+                                IsVisible="{Binding HasStreak}" />
+                        </VerticalStackLayout>
                     </Border>
-                    <StackLayout Orientation="Horizontal">
+                    <StackLayout
+                        Orientation="Horizontal"
+                        Margin="0,0,0,12">
                         <Label
                             Text="{Binding MyTechniquesLabel}"
                             Style="{StaticResource SectionTitleStyle}"

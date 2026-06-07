@@ -11,10 +11,6 @@
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="{Binding OptionsLabel}" Command="{Binding OpenOptionsCommand}" />
-    </ContentPage.ToolbarItems>
-
     <AbsoluteLayout
         VerticalOptions="FillAndExpand"
         HorizontalOptions="FillAndExpand">
@@ -25,9 +21,16 @@
             VerticalScrollBarVisibility="Never">
             <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
 
-                <ui:NavigationBarSimpleView
+                <ui:NavigationBarExtendedView
                     TitleText="{Binding PageTitle}"
-                    BackCommand="{Binding Finish}" />
+                    BackCommand="{Binding Finish}"
+                    ExtensionText="{Binding OptionsLabel}"
+                    ExtensionCommand="{Binding OpenOptionsCommand}" />
+
+                <ui:SettingsLinkCardView
+                    Title="{Binding SettingsCardTitle}"
+                    Subtitle="{Binding SettingsCardSubtitle}"
+                    TapCommand="{Binding OpenSettingsCommand}" />
 
                 <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">

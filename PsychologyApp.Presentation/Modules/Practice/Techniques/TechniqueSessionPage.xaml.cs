@@ -19,6 +19,8 @@ public partial class TechniqueSessionPage : ContentPage
         InitializeComponent();
         BaseViewModel viewModel = techniqueViewModelFactory.Create(techniqueId, Navigation);
         BindingContext = viewModel;
-        SessionShell.BodyContent = TechniqueBodyFactory.Create(TechniqueCatalog.Get(techniqueId).UiKind);
+        View body = TechniqueBodyFactory.Create(TechniqueCatalog.Get(techniqueId).UiKind);
+        body.BindingContext = viewModel;
+        SessionShell.BodyContent = body;
     }
 }

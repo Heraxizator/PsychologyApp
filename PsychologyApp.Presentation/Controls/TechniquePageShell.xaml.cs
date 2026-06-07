@@ -22,7 +22,11 @@ public partial class TechniquePageShell : ContentView
         BindableProperty.Create(nameof(FinishCommand), typeof(ICommand), typeof(TechniquePageShell));
 
     public static readonly BindableProperty BodyContentProperty =
-        BindableProperty.Create(nameof(BodyContent), typeof(View), typeof(TechniquePageShell));
+        BindableProperty.Create(
+            nameof(BodyContent),
+            typeof(View),
+            typeof(TechniquePageShell),
+            propertyChanged: OnBodyContentChanged);
 
     public static readonly BindableProperty TheoryTextProperty =
         BindableProperty.Create(nameof(TheoryText), typeof(string), typeof(TechniquePageShell), string.Empty);
@@ -92,6 +96,28 @@ public partial class TechniquePageShell : ContentView
         InitializeComponent();
         ApplyLocalization();
         UserPreferences.Changed += OnPreferencesChanged;
+    }
+
+    protected override void OnBindingContextChanged()
+    {
+        base.OnBindingContextChanged();
+        SyncBodyBindingContext();
+    }
+
+    private static void OnBodyContentChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is TechniquePageShell shell && newValue is View)
+        {
+            shell.SyncBodyBindingContext();
+        }
+    }
+
+    private void SyncBodyBindingContext()
+    {
+        if (BodyContent is not null)
+        {
+            BodyContent.BindingContext = BindingContext;
+        }
     }
 
     private void OnPreferencesChanged()

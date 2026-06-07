@@ -24,6 +24,7 @@ public class UserViewModel : BaseViewModel
     private readonly IOptions<AppSettings> _settings;
 
     public ICommand OpenOptionsCommand { get; private set; } = default!;
+    public ICommand OpenSettingsCommand { get; private set; } = default!;
     public ICommand ReloadQuotesCommand { get; private set; } = default!;
 
     public ObservableCollection<TechniqueItem> Techniques { get; private set; } = [];
@@ -31,6 +32,8 @@ public class UserViewModel : BaseViewModel
 
     public string PageTitle => AppStrings.ProfileTitle;
     public string OptionsLabel => AppStrings.OptionsTitle;
+    public string SettingsCardTitle => AppStrings.OptionsTitle;
+    public string SettingsCardSubtitle => AppStrings.ProfileSettingsCardSubtitle;
     public string UserLabel => AppStrings.ProfileUserLabel;
     public string StandardUserLabel => AppStrings.ProfileStandardUser;
     public string TechniquesCompletedLabel => AppStrings.ProfileTechniquesCompleted;
@@ -63,6 +66,7 @@ public class UserViewModel : BaseViewModel
             Cancel = new Command(CancelProgress);
 
             OpenOptionsCommand = new AsyncCommand(() => navigationService.GoToOptionsAsync());
+            OpenSettingsCommand = new AsyncCommand(() => navigationService.GoToSettingsAsync());
             ReloadQuotesCommand = new AsyncCommand(InitAsync);
             UserPreferences.Changed += OnPreferencesChanged;
 
@@ -107,6 +111,8 @@ public class UserViewModel : BaseViewModel
     {
         OnPropertyChanged(nameof(PageTitle));
         OnPropertyChanged(nameof(OptionsLabel));
+        OnPropertyChanged(nameof(SettingsCardTitle));
+        OnPropertyChanged(nameof(SettingsCardSubtitle));
         OnPropertyChanged(nameof(UserLabel));
         OnPropertyChanged(nameof(StandardUserLabel));
         OnPropertyChanged(nameof(TechniquesCompletedLabel));
