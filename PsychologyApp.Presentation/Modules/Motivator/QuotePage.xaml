@@ -45,10 +45,10 @@
                 </CollectionView.ItemTemplate>
 
                 <CollectionView.EmptyView>
-                    <ui:ProgressBarView
-                        VerticalOptions="CenterAndExpand"
-                        IsLoading="True"
-                        ProgressText="{Binding QuotesSearchingText}" />
+                    <StackLayout Padding="24" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label HorizontalTextAlignment="Center" Style="{StaticResource SectionTitleStyle}" Text="{Binding QuotesEmptyTitle}" />
+                        <Label HorizontalTextAlignment="Center" Style="{StaticResource BodyStyle}" Text="{Binding QuotesEmptyBody}" />
+                    </StackLayout>
                 </CollectionView.EmptyView>
 
             </CollectionView>

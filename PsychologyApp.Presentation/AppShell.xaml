@@ -1,51 +1,42 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Shell  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-        x:Class="PsychologyApp.Presentation.AppShell"
-        xmlns:views="clr-namespace:PsychologyApp.Presentation.Views"
-        xmlns:tests="clr-namespace:PsychologyApp.Presentation.Views.Tests"
-        xmlns:physics="clr-namespace:PsychologyApp.Presentation.Views.Physics"
-        xmlns:cleans="clr-namespace:PsychologyApp.Presentation.Views.Clean"
-        xmlns:forms="clr-namespace:PsychologyApp.Presentation.Views.Motivator"
-        xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
-        xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
-        Shell.TabBarForegroundColor="{StaticResource Primary}"
-        Shell.TabBarTitleColor="{StaticResource Primary}"
-        Shell.TabBarUnselectedColor="{StaticResource Gray400}"
-        NavigationPage.HasNavigationBar="False"
-        Shell.NavBarIsVisible="False">
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       x:Class="PsychologyApp.Presentation.AppShell"
+       xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+       xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+       NavigationPage.HasNavigationBar="False"
+       Shell.NavBarIsVisible="False">
 
     <Shell.Behaviors>
-        <mct:StatusBarBehavior x:Name="StatusBar" StatusBarColor="White" StatusBarStyle="DarkContent"/>
+        <mct:StatusBarBehavior x:Name="StatusBar" StatusBarColor="White" StatusBarStyle="DarkContent" />
     </Shell.Behaviors>
 
     <TabBar>
 
-        <ShellContent 
-                x:Name="PracticeTab"
-                Title="Практик" 
-                Icon="{mi:Material Icon=AutoAwesome}" />
-
-        <ShellContent 
-                x:Name="DetectorTab"
-                Title="Детектор"
-                Icon="{mi:Material Icon=Insights}" />
-
-        <ShellContent 
-                x:Name="SomaticTab"
-                Title="Соматик"
-                Icon="{mi:Material Icon=Favorite}" />
-        
-        <ShellContent 
-                x:Name="CleanerTab"
-                Title="Очиститель"
-                Icon="{mi:Material Icon=Headphones}"/>
-        
         <ShellContent
-                x:Name="MotivatorTab"
-                Title="Мотиватор"
-                Icon="{mi:Material Icon=Lightbulb}"/>
-    
+            x:Name="PracticeTab"
+            Title="Практик"
+            Icon="{mi:Material Icon=AutoAwesome}" />
+
+        <ShellContent
+            x:Name="DetectorTab"
+            Title="Тесты"
+            Icon="{mi:Material Icon=Insights}" />
+
+        <ShellContent
+            x:Name="SomaticTab"
+            Title="Тело"
+            Icon="{mi:Material Icon=Favorite}" />
+
+        <ShellContent
+            x:Name="CleanerTab"
+            Title="Звук"
+            Icon="{mi:Material Icon=Headphones}" />
+
+        <ShellContent
+            x:Name="MotivatorTab"
+            Title="Цитаты"
+            Icon="{mi:Material Icon=Lightbulb}" />
 
     </TabBar>
 </Shell>

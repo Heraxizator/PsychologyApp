@@ -69,8 +69,8 @@ public sealed class MauiPageFactory(
     public FindProblemPage CreateFindProblemPage(string? description, List<string> algorithm, string? comment, Action action) =>
         testPageFactory.CreateFindProblemPage(description, algorithm, comment, action);
 
-    public QuestionPage CreateQuestionPage(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer) =>
-        testPageFactory.CreateQuestionPage(questions, scoreAnalyzer, singleAnswer);
+    public QuestionPage CreateQuestionPage(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, Modules.Tests.Collection.TestSessionInfo? session = null) =>
+        testPageFactory.CreateQuestionPage(questions, scoreAnalyzer, singleAnswer, session);
 
     public StandardTestPage CreateStandardTestPage() =>
         testPageFactory.CreateStandardTestPage();

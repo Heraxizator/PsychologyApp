@@ -30,4 +30,12 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
             commandTimeout: _commandTimeoutSeconds);
     }
 
+    public async Task<IEnumerable<Quot>> GetFavouritesAsync(int count, CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        return await connection.QueryAsync<Quot>(
+            "SELECT * FROM Quots WHERE IsFavourite = 1 ORDER BY QuotId DESC LIMIT @count;",
+            new { count },
+            commandTimeout: _commandTimeoutSeconds);
+    }
 }

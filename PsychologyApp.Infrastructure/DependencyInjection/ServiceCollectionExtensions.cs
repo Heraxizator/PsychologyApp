@@ -6,6 +6,7 @@ using PsychologyApp.Infrastructure.Data.Context;
 using PsychologyApp.Infrastructure.Data.Repositories.Quots;
 using PsychologyApp.Infrastructure.Data.Repositories.Statistics;
 using PsychologyApp.Infrastructure.Data.Repositories.Techniques;
+using PsychologyApp.Infrastructure.Data.Repositories.UserProgress;
 using PsychologyApp.Infrastructure.Data.Sql;
 
 namespace PsychologyApp.Infrastructure.DependencyInjection;
@@ -25,9 +26,10 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IDbConnectionFactory, SqliteConnectionFactory>();
         services.AddSingleton<IDatabaseInitializer, SqliteDatabaseInitializer>();
 
-        services.AddScoped<ITechniqueRepository, TechniqueRepository>();
-        services.AddScoped<IQuotRepository, QuotRepository>();
-        services.AddScoped<IStatisticRepository, StatisticRepository>();
+        services.AddSingleton<ITechniqueRepository, TechniqueRepository>();
+        services.AddSingleton<IQuotRepository, QuotRepository>();
+        services.AddSingleton<IStatisticRepository, StatisticRepository>();
+        services.AddSingleton<IUserProgressRepository, UserProgressRepository>();
 
         return services;
     }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Modules.Onboarding.OnboardingPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Modules.Onboarding"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             x:DataType="vm:OnboardingViewModel"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <StackLayout Padding="24" Spacing="16">
+            <StackLayout IsVisible="{Binding IsWelcomeStep}" Spacing="12">
+                <Label Text="{Binding WelcomeTitle}" Style="{StaticResource SectionTitleStyle}" FontSize="22" />
+                <Label Text="{Binding WelcomeBody}" Style="{StaticResource BodyStyle}" />
+                <ui:ButtonView BodyText="{Binding NextLabel}" TapCommand="{Binding NextCommand}" />
+            </StackLayout>
+
+            <StackLayout IsVisible="{Binding IsConcernStep}" Spacing="12">
+                <Label Text="{Binding ConcernTitle}" Style="{StaticResource SectionTitleStyle}" FontSize="22" />
+                <ui:ButtonView BodyText="{Binding ConcernAnxiety}" TapCommand="{Binding SelectAnxietyCommand}" />
+                <ui:ButtonView BodyText="{Binding ConcernBody}" TapCommand="{Binding SelectBodyCommand}" />
+                <ui:ButtonView BodyText="{Binding ConcernMood}" TapCommand="{Binding SelectMoodCommand}" />
+                <ui:ButtonView BodyText="{Binding ConcernExplore}" TapCommand="{Binding SelectExploreCommand}" />
+                <ui:ButtonView BodyText="{Binding NextLabel}" TapCommand="{Binding NextCommand}" />
+            </StackLayout>
+
+            <StackLayout IsVisible="{Binding IsDisclaimerStep}" Spacing="12">
+                <Label Text="{Binding DisclaimerTitle}" Style="{StaticResource SectionTitleStyle}" FontSize="22" />
+                <Label Text="{Binding DisclaimerBody}" Style="{StaticResource BodyStyle}" />
+                <ui:ButtonView BodyText="{Binding StartLabel}" TapCommand="{Binding StartPracticeCommand}" />
+                <ui:ButtonView Variant="Secondary" BodyText="{Binding SkipLabel}" TapCommand="{Binding SkipCommand}" />
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

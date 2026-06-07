@@ -29,7 +29,7 @@ public interface IPageFactory
     Views.Physics.PhysicsSearchPage CreatePhysicsSearchPage();
     TheoryPage CreateTheoryPage(string content);
     FindProblemPage CreateFindProblemPage(string? description, List<string> algorithm, string? comment, Action action);
-    QuestionPage CreateQuestionPage(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer);
+    QuestionPage CreateQuestionPage(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, Modules.Tests.Collection.TestSessionInfo? session = null);
     StandardTestPage CreateStandardTestPage();
     AlternativeTestPage CreateAlternativeTestPage();
     CreatedPage CreateCreatedPage(long techniqueId);

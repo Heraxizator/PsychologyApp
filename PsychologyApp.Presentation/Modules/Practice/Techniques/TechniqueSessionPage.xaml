@@ -4,6 +4,7 @@
              x:Class="PsychologyApp.Presentation.Views.TechniquePages.TechniqueSessionPage"
              xmlns:techniques="clr-namespace:PsychologyApp.Presentation.Modules.Practice.Techniques"
              xmlns:controls="clr-namespace:PsychologyApp.Presentation.Controls"
+             Shell.NavBarIsVisible="False"
              Title="{Binding TechniquePageTitle}">
 
     <ContentPage.Behaviors>
@@ -18,7 +19,7 @@
         x:Name="SessionShell"
         TitleText="{Binding PageName}"
         Algorithm="{Binding Algorithm}"
-        BackCommand="{Binding Finish}"
+        BackCommand="{Binding BackCommand}"
         TheoryCommand="{Binding Theory}"
-        FinishCommand="{Binding Finish}" />
+        FinishCommand="{Binding CompleteCommand}" />
 </ContentPage>

@@ -41,6 +41,7 @@ public static class PresentationServiceCollectionExtensions
         services.AddSingleton<IDonateViewModelFactory, DonateViewModelFactory>();
         services.AddSingleton<IFormViewModelFactory, FormViewModelFactory>();
         services.AddSingleton<IMusicPlayerViewModelFactory, MusicPlayerViewModelFactory>();
+        services.AddSingleton<IOnboardingViewModelFactory, OnboardingViewModelFactory>();
 
         return services;
     }

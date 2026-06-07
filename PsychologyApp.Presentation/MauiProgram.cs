@@ -8,10 +8,6 @@ using PsychologyApp.Domain.Base.Constants;
 using PsychologyApp.Presentation.DependencyInjection;
 using PsychologyApp.Presentation.Infrastructure;
 
-#if ANDROID
-using PsychologyApp.Presentation.Platforms.Android.Renderers;
-#endif
-
 namespace PsychologyApp.Presentation;
 
 public static class MauiProgram
@@ -28,12 +24,6 @@ public static class MauiProgram
                 fonts.AddFont("Roboto-Medium.ttf", "RobotoMedium");
                 fonts.AddFont("Roboto-Regular.ttf", "RobotoRegular");
                 fonts.AddFont("Roboto-SemiBold.ttf", "RobotoSemiBold");
-            })
-            .ConfigureMauiHandlers(handlers =>
-            {
-#if ANDROID
-                handlers.AddHandler(typeof(Frame), typeof(ShadowFrameRenderer));
-#endif
             });
 
         ConfigureHandlers();
@@ -91,5 +81,6 @@ public static class MauiProgram
             handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
 #endif
         });
+
     }
 }

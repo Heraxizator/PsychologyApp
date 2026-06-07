@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.TechniqueService;
+using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Services.Dialogs;
 using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.Modules.Practice.Messages;
@@ -21,6 +22,8 @@ public class CreatedViewModel : BaseViewModel
     private readonly ILogger<CreatedViewModel> _logger;
     private readonly IOptions<AppSettings> _settings;
     private readonly INavigationService _navigationService;
+    private readonly IUserProgressService _userProgressService;
+    private readonly DateTime _sessionStartedAt = DateTime.UtcNow;
 
     public ICommand Remove { get; private set; } = default!;
     public ICommand Edit { get; private set; } = default!;
@@ -40,7 +43,8 @@ public class CreatedViewModel : BaseViewModel
         ITechniqueMessenger techniqueMessenger,
         ILogger<CreatedViewModel> logger,
         IOptions<AppSettings> settings,
-        INavigationService navigationService)
+        INavigationService navigationService,
+        IUserProgressService userProgressService)
     {
         try
         {
@@ -51,11 +55,13 @@ public class CreatedViewModel : BaseViewModel
             _logger = logger;
             _settings = settings;
             _navigationService = navigationService;
+            _userProgressService = userProgressService;
 
             ModuleName = AppStrings.ShellTabPractice;
             PageName = AppStrings.PracticeCustomTechnique;
 
             BindNavigation(navigation, _navigationService);
+            Finish = new AsyncCommand(CompleteSessionAsync);
             Remove = new AsyncCommand(() => ToRemoveAsync());
             Edit = new AsyncCommand(() => ToEditAsync());
             UserPreferences.Changed += OnPreferencesChanged;
@@ -138,5 +144,26 @@ public class CreatedViewModel : BaseViewModel
             await MainThread.InvokeOnMainThreadAsync(SetFail);
             _logger.LogError(e, "Failed to load custom technique.");
         }
+    }
+
+    private async Task CompleteSessionAsync()
+    {
+        try
+        {
+            using CancellationTokenSource timeoutSource = OperationCancellation.CreateSmallTimeoutSource(_settings);
+            await _techniqueService.MarkTechniqueAsCompletedAsync(_techniqueId, timeoutSource.Token);
+            int durationSeconds = Math.Max(0, (int)(DateTime.UtcNow - _sessionStartedAt).TotalSeconds);
+            await _userProgressService.RecordTechniqueCompletionAsync(
+                $"custom_{_techniqueId}",
+                ModuleName,
+                PageName,
+                durationSeconds);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Failed to mark custom technique as completed.");
+        }
+
+        await GoBackAsync();
     }
 }

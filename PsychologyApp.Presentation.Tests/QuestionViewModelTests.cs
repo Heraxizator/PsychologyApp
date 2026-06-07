@@ -1,4 +1,5 @@
 using Moq;
+using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.Services.Dialogs;
 using PsychologyApp.Presentation.Services.Toasts;
@@ -22,6 +23,7 @@ public sealed class QuestionViewModelTests
         var navigationService = new TestNavigationService(navigation.Object);
         var toast = new Mock<IToastService>();
         var dialog = new Mock<IDialogService>();
+        var progress = new Mock<IUserProgressService>();
 
         List<Question> questions =
         [
@@ -42,7 +44,8 @@ public sealed class QuestionViewModelTests
             singleAnswer: true,
             toast.Object,
             dialog.Object,
-            navigationService);
+            navigationService,
+            progress.Object);
 
         viewModel.ConfirmCommand.Execute(null);
         await Task.Delay(50);
@@ -60,6 +63,7 @@ public sealed class QuestionViewModelTests
         var navigationService = new TestNavigationService(navigation.Object);
         var toast = new Mock<IToastService>();
         var dialog = new Mock<IDialogService>();
+        var progress = new Mock<IUserProgressService>();
         dialog
             .Setup(d => d.AskAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(true);
@@ -91,7 +95,8 @@ public sealed class QuestionViewModelTests
             singleAnswer: true,
             toast.Object,
             dialog.Object,
-            navigationService);
+            navigationService,
+            progress.Object);
 
         viewModel.ConfirmCommand.Execute(null);
         await Task.Delay(50);
@@ -99,6 +104,6 @@ public sealed class QuestionViewModelTests
         dialog.Verify(
             d => d.AskAsync(AppStrings.TestsResultTitle(5), "Score 5", AppStrings.TestsFinishButton, AppStrings.TestsContinueButton),
             Times.Once);
-        navigation.Verify(n => n.PopToRootAsync(false), Times.Once);
+        navigation.Verify(n => n.PopToRootAsync(true), Times.Once);
     }
 }

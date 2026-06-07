@@ -5,6 +5,9 @@ using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.ReasonService;
 using PsychologyApp.Presentation.Infrastructure;
+using PsychologyApp.Presentation.Modules.Physics;
+using PsychologyApp.Presentation.Modules.Practice.Techniques;
+using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.ViewModels;
 using System.Windows.Input;
 
@@ -17,10 +20,11 @@ public class PhysicsSearchViewModel : BaseViewModel
     private readonly IReasonService _reasonService;
     private readonly ILogger<PhysicsSearchViewModel> _logger;
     private readonly IOptions<AppSettings> _settings;
+    private readonly INavigationService _navigationService;
     private CancellationTokenSource? _searchDebounceCts;
 
     public List<ReasonDTO> ReasonsList { get; private set; } = [];
-    public ObservableRangeCollection<ReasonDTO> ResultsObservableCollection { get; private set; } = [];
+    public ObservableRangeCollection<PhysicsReasonItem> ResultsObservableCollection { get; private set; } = [];
 
     public string PageTitle => AppStrings.PhysicsSearchTitle;
     public string SearchToolbarText => AppStrings.PhysicsSearchToolbar;
@@ -31,6 +35,9 @@ public class PhysicsSearchViewModel : BaseViewModel
     public string LoadingText => AppStrings.PhysicsLoadingText;
     public string FailedText => AppStrings.LoadFailed;
     public string RetryText => AppStrings.RetryQuestion;
+    public string SolutionHeader => AppStrings.PhysicsSolutionHeader;
+    public string RecommendedPracticesLabel => AppStrings.PhysicsRecommendedPractices;
+    public string TryPracticeLabel => AppStrings.PhysicsTryPractice;
 
     public ICommand SearchCommand { get; private set; } = default!;
 
@@ -38,17 +45,19 @@ public class PhysicsSearchViewModel : BaseViewModel
         INavigation navigation,
         IReasonService reasonService,
         ILogger<PhysicsSearchViewModel> logger,
-        IOptions<AppSettings> settings)
+        IOptions<AppSettings> settings,
+        INavigationService navigationService)
     {
         try
         {
             _reasonService = reasonService;
             _logger = logger;
             _settings = settings;
+            _navigationService = navigationService;
             ModuleName = AppStrings.PhysicsTitle;
             PageName = AppStrings.PhysicsSearchPage;
 
-            BindNavigation(navigation);
+            BindNavigation(navigation, navigationService);
             Reload = new AsyncCommand(ReloadAsync);
             Cancel = new Command(CancelProgress);
             SearchCommand = new Command(() => ExecuteSearch(SearchText));
@@ -74,6 +83,9 @@ public class PhysicsSearchViewModel : BaseViewModel
         OnPropertyChanged(nameof(LoadingText));
         OnPropertyChanged(nameof(FailedText));
         OnPropertyChanged(nameof(RetryText));
+        OnPropertyChanged(nameof(SolutionHeader));
+        OnPropertyChanged(nameof(RecommendedPracticesLabel));
+        OnPropertyChanged(nameof(TryPracticeLabel));
         ReloadAsync().FireAndForget();
     }
 
@@ -159,10 +171,39 @@ public class PhysicsSearchViewModel : BaseViewModel
             return;
         }
 
-        List<ReasonDTO> filtered = ReasonsList
-            .Where(reason => reason.Title.Contains(searchText, StringComparison.OrdinalIgnoreCase))
+        IReadOnlyList<TechniqueId> techniqueIds = SomaticTechniqueMap.RecommendForQuery(searchText);
+        List<PhysicsTechniqueSuggestion> suggestions = techniqueIds
+            .Select(id =>
+            {
+                TechniqueDefinition definition = TechniqueCatalog.Get(id);
+                return new PhysicsTechniqueSuggestion
+                {
+                    Title = definition.PageName,
+                    OpenCommand = new AsyncCommand(() => _navigationService.GoToTechniqueAsync(id))
+                };
+            })
+            .ToList();
+
+        List<PhysicsReasonItem> filtered = ReasonsList
+            .Where(reason => reason.Title?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true)
+            .Select(dto => CreateItem(dto, suggestions))
             .ToList();
 
         ResultsObservableCollection.ReplaceRange(filtered);
+    }
+
+    private PhysicsReasonItem CreateItem(ReasonDTO dto, IReadOnlyList<PhysicsTechniqueSuggestion> suggestions)
+    {
+        PhysicsReasonItem item = PhysicsReasonItem.FromDto(dto, suggestions);
+        item.ToggleExpandCommand = new Command(() =>
+        {
+            item.IsExpanded = !item.IsExpanded;
+            int index = ResultsObservableCollection.IndexOf(item);
+            if (index >= 0)
+            {
+                ResultsObservableCollection[index] = item;
+            }
+        });
+        return item;
     }
 }

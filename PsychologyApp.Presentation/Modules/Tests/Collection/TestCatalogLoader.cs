@@ -44,6 +44,12 @@ public static class TestCatalogLoader
 
         return definitions.Select(def => new TestItem
         {
+            TestId = def.NavigationTarget switch
+            {
+                "StandardTestPage" => "luscher_standard",
+                "AlternativeTestPage" => "luscher_brief",
+                _ => "luscher_brief"
+            },
             Title = def.Title,
             Subtitle = def.Subtitle,
             Description = def.Description,
@@ -76,6 +82,8 @@ public static class TestCatalogLoader
 
             items.Add(
                 TestItem.CreateBuilder()
+                    .SetTestId(definition.AnalyzerId)
+                    .SetAnalyzerId(definition.AnalyzerId)
                     .SetTitle(definition.Title)
                     .SetSubtitle(definition.Subtitle)
                     .SetDescription(definition.Description)
@@ -126,11 +134,13 @@ public static class TestCatalogLoader
             .ToList();
 
         return TestItem.CreateBuilder()
+            .SetTestId(definition.AnalyzerId)
+            .SetAnalyzerId(definition.AnalyzerId)
             .SetTitle(definition.Title)
             .SetSubtitle(definition.Subtitle)
             .SetDescription(definition.Description)
             .SetAlgorithm(definition.Algorithm)
-            .SetActionQuestions(navigationService, analyzer, questions, definition.SingleAnswer)
+            .SetActionQuestions(navigationService, analyzer, questions, definition.SingleAnswer, definition.AnalyzerId, definition.AnalyzerId)
             .SetComment(definition.Comment)
             .Build();
     }

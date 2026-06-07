@@ -10,7 +10,7 @@ internal sealed class TestNavigationService(INavigation navigation) : INavigatio
 
     public Task GoBackAsync() => navigation.PopAsync(false);
 
-    public Task GoToRootAsync() => navigation.PopToRootAsync(false);
+    public Task GoToRootAsync() => navigation.PopToRootAsync(true);
 
     public Task GoToTechniqueAsync(TechniqueId techniqueId) => Task.CompletedTask;
 

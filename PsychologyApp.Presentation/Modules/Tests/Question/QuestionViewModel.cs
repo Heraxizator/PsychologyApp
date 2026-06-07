@@ -1,5 +1,8 @@
 using MvvmHelpers;
+using PsychologyApp.Application.Services.UserProgress;
+using PsychologyApp.Presentation.Modules.Practice.Techniques;
 using PsychologyApp.Presentation.Modules.Tests;
+using PsychologyApp.Presentation.Modules.Tests.Collection;
 using PsychologyApp.Presentation.Services.Dialogs;
 using PsychologyApp.Presentation.Services.Toasts;
 using PsychologyApp.Presentation.Infrastructure;
@@ -23,6 +26,9 @@ public class QuestionViewModel : BaseViewModel
     private Func<int, string> Analyzer { get; set; } = default!;
     private readonly IToastService _toastService;
     private readonly IDialogService _dialogService;
+    private readonly IUserProgressService _userProgressService;
+    private readonly INavigationService _navigationService;
+    private readonly TestSessionInfo? _session;
 
     public QuestionViewModel(
         INavigation navigation,
@@ -31,11 +37,16 @@ public class QuestionViewModel : BaseViewModel
         bool singleAnswer,
         IToastService toastService,
         IDialogService dialogService,
-        INavigationService navigationService)
+        INavigationService navigationService,
+        IUserProgressService userProgressService,
+        TestSessionInfo? session = null)
     {
         BindNavigation(navigation, navigationService);
         _toastService = toastService;
         _dialogService = dialogService;
+        _navigationService = navigationService;
+        _userProgressService = userProgressService;
+        _session = session;
 
         Analyzer = analyzer;
         IsSingleAnswer = singleAnswer;
@@ -68,13 +79,41 @@ public class QuestionViewModel : BaseViewModel
             questionBalls += Questions[index].Answers.Where(x => x.Selected is true).Sum(x => x.Ball);
         }
 
+        string interpretation = ConfigureResultByBalls(questionBalls);
+        await SaveResultAsync(questionBalls, interpretation);
+
+        string message = interpretation;
+        TechniqueId? recommended = _session?.AnalyzerId is string analyzerId
+            ? TestScoreAnalyzers.RecommendTechnique(analyzerId, questionBalls)
+            : null;
+        if (recommended is TechniqueId techniqueId)
+        {
+            message += $"\n\n{AppStrings.TestTryTechnique}";
+        }
+
         bool finishSelected = await _dialogService.AskAsync(
             AppStrings.TestsResultTitle(questionBalls),
-            ConfigureResultByBalls(questionBalls),
+            message,
             AppStrings.TestsFinishButton,
-            AppStrings.TestsContinueButton);
+            recommended is not null ? AppStrings.TestTryTechnique : AppStrings.TestsContinueButton);
+
+        if (!finishSelected && recommended is TechniqueId technique)
+        {
+            await _navigationService.GoToTechniqueAsync(technique);
+            return;
+        }
 
         await ConfigureEndAsync(finishSelected);
+    }
+
+    private async Task SaveResultAsync(int score, string summary)
+    {
+        if (_session is null || string.IsNullOrWhiteSpace(_session.TestId))
+        {
+            return;
+        }
+
+        await _userProgressService.SaveTestResultAsync(_session.TestId, score, summary);
     }
 
     private async Task ConfigureEndAsync(bool isFinish)

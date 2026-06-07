@@ -1,7 +1,9 @@
+using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Services.Dialogs;
 using PsychologyApp.Presentation.Services.Toasts;
 using PsychologyApp.Presentation.Modules.Practice.Techniques;
 using PsychologyApp.Presentation.Modules.Tests;
+using PsychologyApp.Presentation.Modules.Tests.Collection;
 using PsychologyApp.Presentation.ViewModels.TechniqueViewModels;
 using PsychologyApp.Presentation.ViewModels.Tests;
 
@@ -12,10 +14,12 @@ public interface ITestsListViewModelFactory
     TestsListViewModel Create(INavigation navigation);
 }
 
-public sealed class TestsListViewModelFactory(Func<INavigation, INavigationService> navigationServiceFactory) : ITestsListViewModelFactory
+public sealed class TestsListViewModelFactory(
+    Func<INavigation, INavigationService> navigationServiceFactory,
+    IUserProgressService userProgressService) : ITestsListViewModelFactory
 {
     public TestsListViewModel Create(INavigation navigation) =>
-        new(navigation, navigationServiceFactory(navigation));
+        new(navigation, navigationServiceFactory(navigation), userProgressService);
 }
 
 public interface IStandardTestViewModelFactory
@@ -23,9 +27,9 @@ public interface IStandardTestViewModelFactory
     StandardTestViewModel Create(INavigation navigation);
 }
 
-public sealed class StandardTestViewModelFactory : IStandardTestViewModelFactory
+public sealed class StandardTestViewModelFactory(IUserProgressService userProgressService) : IStandardTestViewModelFactory
 {
-    public StandardTestViewModel Create(INavigation navigation) => new(navigation);
+    public StandardTestViewModel Create(INavigation navigation) => new(navigation, userProgressService);
 }
 
 public interface IAlternativeTestViewModelFactory
@@ -33,9 +37,9 @@ public interface IAlternativeTestViewModelFactory
     AlternativeTestViewModel Create(INavigation navigation);
 }
 
-public sealed class AlternativeTestViewModelFactory : IAlternativeTestViewModelFactory
+public sealed class AlternativeTestViewModelFactory(IUserProgressService userProgressService) : IAlternativeTestViewModelFactory
 {
-    public AlternativeTestViewModel Create(INavigation navigation) => new(navigation);
+    public AlternativeTestViewModel Create(INavigation navigation) => new(navigation, userProgressService);
 }
 
 public interface IQuestionViewModelFactory
@@ -44,20 +48,35 @@ public interface IQuestionViewModelFactory
         INavigation navigation,
         List<Question> questions,
         Func<int, string> analyzer,
-        bool singleAnswer);
+        bool singleAnswer,
+        TestSessionInfo? session = null);
 }
 
 public sealed class QuestionViewModelFactory(
     IToastService toastService,
     IDialogService dialogService,
+    IUserProgressService userProgressService,
     Func<INavigation, INavigationService> navigationServiceFactory) : IQuestionViewModelFactory
 {
     public QuestionViewModel Create(
         INavigation navigation,
         List<Question> questions,
         Func<int, string> analyzer,
-        bool singleAnswer) =>
-        new(navigation, questions, analyzer, singleAnswer, toastService, dialogService, navigationServiceFactory(navigation));
+        bool singleAnswer,
+        TestSessionInfo? session = null)
+    {
+        INavigationService navigationService = navigationServiceFactory(navigation);
+        return new(
+            navigation,
+            questions,
+            analyzer,
+            singleAnswer,
+            toastService,
+            dialogService,
+            navigationService,
+            userProgressService,
+            session);
+    }
 }
 
 public interface IFindProblemViewModelFactory

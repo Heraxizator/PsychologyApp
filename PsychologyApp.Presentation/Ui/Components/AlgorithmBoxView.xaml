@@ -5,7 +5,7 @@
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Frame Style="{StaticResource CardFrameStyle}">
+            <Border Style="{StaticResource BrandCardStyle}">
                 <StackLayout>
                     <Label
                         Text="{TemplateBinding TitleText}"
@@ -29,7 +29,7 @@
                         </BindableLayout.ItemTemplate>
                     </StackLayout>
                 </StackLayout>
-            </Frame>
+            </Border>
         </ControlTemplate>
     </ContentView.ControlTemplate>
 

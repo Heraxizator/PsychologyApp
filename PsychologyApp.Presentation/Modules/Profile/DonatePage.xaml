@@ -5,6 +5,7 @@
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              x:DataType="profile:DonateViewModel"
              xmlns:profile="clr-namespace:PsychologyApp.Presentation.Modules.Profile"
+             Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
     <StackLayout Margin="10, 0, 10, 0">

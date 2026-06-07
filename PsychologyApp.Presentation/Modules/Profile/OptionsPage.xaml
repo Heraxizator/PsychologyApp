@@ -5,6 +5,7 @@
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Profile"
              x:DataType="vm:OptionsViewModel"
+             Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
     <StackLayout>

@@ -5,10 +5,10 @@
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Frame HasShadow="True" Padding="10" IsVisible="{TemplateBinding Active}">
-                <Frame.GestureRecognizers>
+            <Border Style="{StaticResource BrandCardStyle}" IsVisible="{TemplateBinding Active}">
+                <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
-                </Frame.GestureRecognizers>
+                </Border.GestureRecognizers>
                 <Grid Margin="5,0,5,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -25,7 +25,7 @@
                             FontSize="14"
                             FontFamily="RobotoMedium"
                             HorizontalOptions="EndAndExpand"
-                            TextColor="#AAAAAA" />
+                            TextColor="{StaticResource Gray}" />
                     </StackLayout>
                     <StackLayout
                         Grid.Row="1"
@@ -64,7 +64,7 @@
                             Style="{StaticResource BodyStyle}" />
                     </StackLayout>
                 </Grid>
-            </Frame>
+            </Border>
         </ControlTemplate>
     </ContentView.ControlTemplate>
 

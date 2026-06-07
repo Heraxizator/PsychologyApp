@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Tests"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              x:DataType="vm:QuestionViewModel"
+             Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons">
 

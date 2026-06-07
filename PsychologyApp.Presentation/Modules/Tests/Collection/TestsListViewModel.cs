@@ -1,4 +1,5 @@
-﻿using PsychologyApp.Presentation.Infrastructure;
+﻿using PsychologyApp.Application.Services.UserProgress;
+using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.Modules.Tests.Collection;
 using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.ViewModels;
@@ -10,8 +11,11 @@ namespace PsychologyApp.Presentation.ViewModels.Tests;
 public class TestsListViewModel : BaseViewModel
 {
     private readonly INavigationService _navigationService;
+    private readonly IUserProgressService _userProgressService;
 
     public string PageTitle => AppStrings.TestsDetectorTitle;
+    public string EmptyTitle => AppStrings.TestsEmptyTitle;
+    public string EmptyBody => AppStrings.TestsEmptyBody;
 
     public ObservableCollection<TestItem> TestItemCollection { get; private set; } = [];
 
@@ -33,9 +37,13 @@ public class TestsListViewModel : BaseViewModel
         }
     }
 
-    public TestsListViewModel(INavigation navigation, INavigationService navigationService)
+    public TestsListViewModel(
+        INavigation navigation,
+        INavigationService navigationService,
+        IUserProgressService userProgressService)
     {
         _navigationService = navigationService;
+        _userProgressService = userProgressService;
         BindNavigation(navigation, navigationService);
         UserPreferences.Changed += OnPreferencesChanged;
         InitAsync().FireAndForget();
@@ -44,6 +52,8 @@ public class TestsListViewModel : BaseViewModel
     private void OnPreferencesChanged()
     {
         OnPropertyChanged(nameof(PageTitle));
+        OnPropertyChanged(nameof(EmptyTitle));
+        OnPropertyChanged(nameof(EmptyBody));
         InitAsync().FireAndForget();
     }
 
@@ -58,9 +68,25 @@ public class TestsListViewModel : BaseViewModel
     {
         try
         {
+            await AppReadiness.DatabaseReadyAsync;
+
             SetInit();
 
             IReadOnlyList<TestItem> items = await TestCatalogLoader.LoadAllAsync(_navigationService);
+            foreach (TestItem item in items)
+            {
+                if (string.IsNullOrWhiteSpace(item.TestId))
+                {
+                    continue;
+                }
+
+                var latest = await _userProgressService.GetLatestTestResultAsync(item.TestId);
+                if (latest is not null)
+                {
+                    item.LastResultSummary = AppStrings.TestLastResult(latest.Summary);
+                }
+            }
+
             TestItemCollection = new ObservableCollection<TestItem>(items);
             OnPropertyChanged(nameof(TestItemCollection));
 

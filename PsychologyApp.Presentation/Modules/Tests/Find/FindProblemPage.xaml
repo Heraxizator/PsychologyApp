@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Tests"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              x:DataType="vm:FindProblemViewModel"
+             Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
     <StackLayout VerticalOptions="FillAndExpand">

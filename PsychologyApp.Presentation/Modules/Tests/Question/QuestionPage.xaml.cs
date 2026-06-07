@@ -1,4 +1,5 @@
 using PsychologyApp.Presentation.Modules.Tests;
+using PsychologyApp.Presentation.Modules.Tests.Collection;
 using PsychologyApp.Presentation.Services.Factories;
 using PsychologyApp.Presentation.ViewModels.Tests;
 
@@ -10,9 +11,10 @@ public partial class QuestionPage : ContentPage
         IQuestionViewModelFactory questionViewModelFactory,
         List<Question> questions,
         Func<int, string> analyzer,
-        bool singleAnswer)
+        bool singleAnswer,
+        TestSessionInfo? session = null)
     {
         InitializeComponent();
-        BindingContext = questionViewModelFactory.Create(Navigation, questions, analyzer, singleAnswer);
+        BindingContext = questionViewModelFactory.Create(Navigation, questions, analyzer, singleAnswer, session);
     }
 }

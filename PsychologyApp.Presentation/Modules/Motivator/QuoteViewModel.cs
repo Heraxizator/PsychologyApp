@@ -21,6 +21,8 @@ public class QuoteViewModel : BaseViewModel
     public string PageTitle => AppStrings.MotivatorTitle;
     public string QuotesSearchingText => AppStrings.QuotesSearching;
     public string QuotesLoadingText => AppStrings.QuotesLoading;
+    public string QuotesEmptyTitle => AppStrings.QuotesEmptyTitle;
+    public string QuotesEmptyBody => AppStrings.QuotesEmptyBody;
     public string LoadErrorText => AppStrings.LoadError;
     public string RetryText => AppStrings.RetryQuestion;
 
@@ -61,6 +63,8 @@ public class QuoteViewModel : BaseViewModel
         OnPropertyChanged(nameof(PageTitle));
         OnPropertyChanged(nameof(QuotesSearchingText));
         OnPropertyChanged(nameof(QuotesLoadingText));
+        OnPropertyChanged(nameof(QuotesEmptyTitle));
+        OnPropertyChanged(nameof(QuotesEmptyBody));
         OnPropertyChanged(nameof(LoadErrorText));
         OnPropertyChanged(nameof(RetryText));
     }
@@ -69,6 +73,7 @@ public class QuoteViewModel : BaseViewModel
     {
         try
         {
+            await AppReadiness.DatabaseReadyAsync;
             await MainThread.InvokeOnMainThreadAsync(SetInit);
 
             using CancellationTokenSource timeoutSource = OperationCancellation.CreateMiddleTimeoutSource(_settings);
@@ -124,6 +129,10 @@ public class QuoteViewModel : BaseViewModel
                 quoteItem.LikeCommand = CreateLikeCommand(quoteItem);
                 quoteItem.CopyCommand = CreateCopyCommand(quoteItem);
                 QuotesObservableCollection.Add(quoteItem);
+                if (quotDTO.QuotId > 0 && !quotDTO.IsReaded)
+                {
+                    _quotService.MarkAsReadedAsync(quotDTO.QuotId, cancellationToken).FireAndForget();
+                }
             }
         });
     }
@@ -199,7 +208,7 @@ public class QuoteViewModel : BaseViewModel
     private ICommand CreateShareCommand(string? text, string? title) =>
         new AsyncCommand(() => Share.Default.RequestAsync(new ShareTextRequest
         {
-            Text = $"{text} ({title ?? AppStrings.UnknownAuthor})",
+            Text = QuoteShareFormatter.Format(text ?? string.Empty, title ?? AppStrings.UnknownAuthor),
             Title = AppStrings.QuoteShareTitle
         }));
 

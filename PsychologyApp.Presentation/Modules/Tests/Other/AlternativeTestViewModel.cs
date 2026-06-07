@@ -1,5 +1,6 @@
 using PsychologyApp.Domain.Colour.Enums;
 using PsychologyApp.Domain.Colour.ValueObjects;
+using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.ViewModels.Tests;
 using System.Windows.Input;
@@ -15,10 +16,13 @@ public class AlternativeTestViewModel : BaseTestViewModel
     public string FirstColorLabel => AppStrings.TestsFirstColor;
     public string SecondColorLabel => AppStrings.TestsSecondColor;
 
+    private readonly IUserProgressService? _userProgressService;
+
     public AlternativeTestViewModel() { }
 
-    public AlternativeTestViewModel(INavigation navigation)
+    public AlternativeTestViewModel(INavigation navigation, IUserProgressService? userProgressService = null)
     {
+        _userProgressService = userProgressService;
         BindNavigation(navigation);
 
         ModuleName = AppStrings.TestsDetectorTitle;
@@ -100,6 +104,18 @@ public class AlternativeTestViewModel : BaseTestViewModel
             SecondColor = Color.FromArgb(colourValue.Code);
             SecondName = ColourStrings.GetColorName(colourValue);
             SetFinish();
+            PersistResultAsync().FireAndForget();
         }
+    }
+
+    private async Task PersistResultAsync()
+    {
+        if (_userProgressService is null)
+        {
+            return;
+        }
+
+        string summary = $"{FirstName} / {SecondName}";
+        await _userProgressService.SaveTestResultAsync("luscher_brief", null, summary);
     }
 }

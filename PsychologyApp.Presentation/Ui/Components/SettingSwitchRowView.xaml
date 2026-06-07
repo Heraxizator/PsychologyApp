@@ -15,7 +15,7 @@
                     Text="{TemplateBinding LabelText}"
                     FontSize="15"
                     VerticalOptions="Center"
-                    TextColor="{AppThemeBinding Light=black, Dark=white}" />
+                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
                 <Switch
                     Grid.Column="1"
                     IsToggled="{TemplateBinding IsToggled, Mode=TwoWay}" />

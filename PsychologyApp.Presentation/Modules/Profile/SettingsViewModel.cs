@@ -102,6 +102,7 @@ public class SettingsViewModel : BaseViewModel
     private async Task ToEndAsync()
     {
         string language = UserPreferences.ParseLanguageKey(Language);
+        UserPreferencesState current = UserPreferences.Load();
 
         UserPreferences.Save(new UserPreferencesState
         {
@@ -110,7 +111,9 @@ public class SettingsViewModel : BaseViewModel
             Color = UserPreferences.ParseColorKey(Color),
             Form = UserPreferences.ParseFormKey(Form),
             Size = UserPreferences.ParseSizeKey(Size),
-            IsBold = IsThick
+            IsBold = IsThick,
+            HasCompletedOnboarding = current.HasCompletedOnboarding,
+            OnboardingConcern = current.OnboardingConcern
         });
 
         UserPreferences.ApplyAll();

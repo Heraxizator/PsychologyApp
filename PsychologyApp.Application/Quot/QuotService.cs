@@ -59,4 +59,10 @@ public sealed class QuotService(IQuotRepository quotRepository, IQuotContentProv
         quot.MarkAsReaded();
         await quotRepository.EditAsync(quot, cancellationToken);
     }
+
+    public async Task<IEnumerable<QuotDTO>> GetFavouritesAsync(int count, CancellationToken cancellationToken = default)
+    {
+        IEnumerable<Quot> quots = await quotRepository.GetFavouritesAsync(count, cancellationToken);
+        return quots.Select(QuotMapper.GetQuotDTO);
+    }
 }

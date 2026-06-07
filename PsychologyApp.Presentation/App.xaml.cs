@@ -4,11 +4,11 @@ namespace PsychologyApp.Presentation;
 
 public partial class App : Microsoft.Maui.Controls.Application
 {
-    public App(AppShell appShell)
+    public App(IServiceProvider services)
     {
         InitializeComponent();
         UserPreferences.ApplyAll();
         GlobalExceptionHandler.Attach(this);
-        MainPage = appShell;
+        MainPage = services.GetRequiredService<AppShell>();
     }
 }
