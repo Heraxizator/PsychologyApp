@@ -22,11 +22,15 @@ public class UserViewModel : BaseViewModel
     private readonly IUserProgressService _userProgressService;
     private readonly ILogger<UserViewModel> _logger;
     private readonly IOptions<AppSettings> _settings;
+    private CancellationTokenSource? _quotesLoadCts;
+    private bool _quotesLoadedOnce;
+    private int _initGeneration;
 
     public ICommand OpenOptionsCommand { get; private set; } = default!;
     public ICommand OpenSettingsCommand { get; private set; } = default!;
     public ICommand OpenDonateCommand { get; private set; } = default!;
     public ICommand ReloadQuotesCommand { get; private set; } = default!;
+    public ICommand CancelQuotesCommand { get; private set; } = default!;
 
     public ObservableCollection<TechniqueItem> Techniques { get; private set; } = [];
     public ObservableCollection<QuoteItem> Quotes { get; private set; } = [];
@@ -45,6 +49,8 @@ public class UserViewModel : BaseViewModel
     public string RecommendedLabel => AppStrings.ProfileRecommended;
     public string BestQuotesLabel => AppStrings.ProfileBestQuotes;
     public string QuotesEmptyText => AppStrings.ProfileQuotesEmpty;
+    public string QuotesSearchingText => AppStrings.QuotesSearching;
+    public string QuotesLoadingText => AppStrings.QuotesLoading;
     public string LoadErrorText => AppStrings.LoadError;
     public string RetryText => AppStrings.RetryQuestion;
 
@@ -66,32 +72,37 @@ public class UserViewModel : BaseViewModel
             PageName = AppStrings.ProfileTitle;
 
             BindNavigation(navigation, navigationService);
-            Cancel = new Command(CancelProgress);
 
             OpenOptionsCommand = new AsyncCommand(() => navigationService.GoToOptionsAsync());
             OpenSettingsCommand = new AsyncCommand(() => navigationService.GoToSettingsAsync());
             OpenDonateCommand = new AsyncCommand(() => navigationService.GoToDonateAsync());
-            ReloadQuotesCommand = new AsyncCommand(InitAsync);
+            ReloadQuotesCommand = new AsyncCommand(() => ReloadQuotesAsync());
+            CancelQuotesCommand = new Command(CancelQuotesLoading);
 
+            InitTechniques();
             InitAsync().FireAndForget();
         }
         catch (Exception e)
         {
-            SetFail();
+            SetQuotesFailed();
             _logger.LogError(e, "UserViewModel initialization failed.");
         }
     }
 
-    public async Task InitAsync()
+    public Task InitAsync(bool forceQuotesReload = false) =>
+        RefreshAsync(forceQuotesReload);
+
+    public Task RefreshAsync(bool forceQuotesReload = false)
+    {
+        int generation = Interlocked.Increment(ref _initGeneration);
+        return RefreshCoreAsync(generation, forceQuotesReload);
+    }
+
+    private async Task RefreshCoreAsync(int generation, bool forceQuotesReload)
     {
         try
         {
-            await MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                SetInit();
-                InitTechniques();
-                Quotes.Clear();
-            });
+            await MainThread.InvokeOnMainThreadAsync(InitTechniques);
 
             using CancellationTokenSource timeoutSource = OperationCancellation.CreateMiddleTimeoutSource(_settings);
             CancellationToken cancellationToken = timeoutSource.Token;
@@ -99,16 +110,29 @@ public class UserViewModel : BaseViewModel
             TechniquesCompletedCount = (await _userProgressService.CountTechniqueCompletionsAsync(cancellationToken)).ToString();
             TestsCompletedCount = (await _userProgressService.CountTestResultsAsync(cancellationToken)).ToString();
             StreakCount = AppStrings.ProfileStreakCount(await _userProgressService.GetStreakDaysAsync(cancellationToken));
-            await InitQuotesAsync(cancellationToken);
 
-            await MainThread.InvokeOnMainThreadAsync(SetDone);
+            if (generation != Volatile.Read(ref _initGeneration))
+            {
+                return;
+            }
+
+            if (UserQuotesRefreshPolicy.ShouldReload(_quotesLoadedOnce, forceQuotesReload))
+            {
+                await LoadQuotesAsync(generation, cancellationToken);
+            }
         }
         catch (Exception e)
         {
-            await MainThread.InvokeOnMainThreadAsync(SetFail);
-            _logger.LogError(e, "UserViewModel init failed.");
+            if (generation == Volatile.Read(ref _initGeneration))
+            {
+                await MainThread.InvokeOnMainThreadAsync(SetQuotesFailed);
+            }
+
+            _logger.LogError(e, "UserViewModel refresh failed.");
         }
     }
+
+    private Task ReloadQuotesAsync() => RefreshAsync(forceQuotesReload: true);
 
     protected override void RefreshLocalizedProperties()
     {
@@ -127,59 +151,35 @@ public class UserViewModel : BaseViewModel
             nameof(RecommendedLabel),
             nameof(BestQuotesLabel),
             nameof(QuotesEmptyText),
+            nameof(QuotesSearchingText),
+            nameof(QuotesLoadingText),
             nameof(LoadErrorText),
             nameof(RetryText));
         InitTechniques();
-        InitAsync().FireAndForget();
+        RefreshAsync(forceQuotesReload: false).FireAndForget();
     }
 
-    private void InitTechniques()
+    private async Task LoadQuotesAsync(int generation, CancellationToken outerToken)
     {
-        MainThread.BeginInvokeOnMainThread(() =>
+        _quotesLoadCts?.Cancel();
+        _quotesLoadCts?.Dispose();
+        _quotesLoadCts = CancellationTokenSource.CreateLinkedTokenSource(outerToken);
+
+        await MainThread.InvokeOnMainThreadAsync(() =>
         {
-            Techniques.Clear();
-
-            string concern = UserPreferences.Load().OnboardingConcern;
-            TechniqueId recommendedId = OnboardingRecommendation.ResolveTechnique(concern);
-            TechniqueId[] featuredIds =
-            [
-                recommendedId,
-                TechniqueId.Spin,
-                TechniqueId.Paper,
-                TechniqueId.Polarity
-            ];
-
-            const string image = "method.png";
-            HashSet<TechniqueId> added = [];
-
-            foreach (TechniqueId techniqueId in featuredIds)
-            {
-                if (!added.Add(techniqueId))
-                {
-                    continue;
-                }
-
-                TechniqueDefinition definition = TechniqueCatalog.Get(techniqueId);
-                Techniques.Add(new TechniqueItem
-                {
-                    Image = image,
-                    Title = definition.PageName,
-                    Subtitle = definition.ListSubtitle,
-                    Theme = definition.Theme,
-                    Active = true,
-                    TapCommand = NavigationService is null
-                        ? null
-                        : new AsyncCommand(() => NavigationService.GoToTechniqueAsync(techniqueId))
-                });
-            }
+            IsQuotesFailed = false;
+            IsQuotesReady = false;
+            IsQuotesLoading = true;
         });
-    }
 
-    private async Task InitQuotesAsync(CancellationToken cancellationToken)
-    {
         try
         {
-            IEnumerable<QuotDTO> quotDTOs = await _quotService.GetFavouritesAsync(5, cancellationToken);
+            IEnumerable<QuotDTO> quotDTOs = await _quotService.GetFavouritesAsync(5, _quotesLoadCts.Token);
+
+            if (generation != Volatile.Read(ref _initGeneration))
+            {
+                return;
+            }
 
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
@@ -197,12 +197,115 @@ public class UserViewModel : BaseViewModel
                         Author = quotDTO.Title
                     });
                 }
+
+                SetQuotesReady();
             });
+        }
+        catch (OperationCanceledException)
+        {
         }
         catch (Exception e)
         {
+            if (generation == Volatile.Read(ref _initGeneration))
+            {
+                await MainThread.InvokeOnMainThreadAsync(SetQuotesFailed);
+            }
+
             _logger.LogError(e, "Failed to load profile quotes.");
         }
+    }
+
+    private void CancelQuotesLoading()
+    {
+        _quotesLoadCts?.Cancel();
+
+        if (IsQuotesLoading)
+        {
+            if (_quotesLoadedOnce)
+            {
+                SetQuotesReady();
+            }
+            else
+            {
+                IsQuotesLoading = false;
+                IsQuotesReady = true;
+            }
+        }
+    }
+
+    private void SetQuotesReady()
+    {
+        IsQuotesFailed = false;
+        IsQuotesLoading = false;
+        IsQuotesReady = true;
+        _quotesLoadedOnce = true;
+    }
+
+    private void SetQuotesFailed()
+    {
+        IsQuotesLoading = false;
+        IsQuotesReady = false;
+        IsQuotesFailed = true;
+    }
+
+    private void InitTechniques()
+    {
+        Techniques.Clear();
+
+        string concern = UserPreferences.Load().OnboardingConcern;
+        TechniqueId recommendedId = OnboardingRecommendation.ResolveTechnique(concern);
+        TechniqueId[] featuredIds =
+        [
+            recommendedId,
+            TechniqueId.Spin,
+            TechniqueId.Paper,
+            TechniqueId.Polarity
+        ];
+
+        const string image = "method.png";
+        HashSet<TechniqueId> added = [];
+
+        foreach (TechniqueId techniqueId in featuredIds)
+        {
+            if (!added.Add(techniqueId))
+            {
+                continue;
+            }
+
+            TechniqueDefinition definition = TechniqueCatalog.Get(techniqueId);
+            Techniques.Add(new TechniqueItem
+            {
+                Image = image,
+                Title = definition.PageName,
+                Subtitle = definition.ListSubtitle,
+                Theme = definition.Theme,
+                Active = true,
+                TapCommand = NavigationService is null
+                    ? null
+                    : new AsyncCommand(() => NavigationService.GoToTechniqueAsync(techniqueId))
+            });
+        }
+    }
+
+    private bool _isQuotesLoading;
+    public bool IsQuotesLoading
+    {
+        get => _isQuotesLoading;
+        private set => SetProperty(ref _isQuotesLoading, value);
+    }
+
+    private bool _isQuotesReady;
+    public bool IsQuotesReady
+    {
+        get => _isQuotesReady;
+        private set => SetProperty(ref _isQuotesReady, value);
+    }
+
+    private bool _isQuotesFailed;
+    public bool IsQuotesFailed
+    {
+        get => _isQuotesFailed;
+        private set => SetProperty(ref _isQuotesFailed, value);
     }
 
     private string _techniques_completed_count = "0";

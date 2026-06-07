@@ -17,8 +17,8 @@
             <StackLayout Margin="{StaticResource LayoutTabPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
                 <ui:ProgressBarView
                     x:Name="LoadingProgress"
-                    IsVisible="{Binding IsInit}"
-                    IsLoading="{Binding IsInit}"
+                    IsVisible="{Binding IsLoadingOverlayVisible}"
+                    IsLoading="{Binding IsLoadingOverlayVisible}"
                     ProgressText="{Binding LoadingText}"
                     CancelCommand="{Binding Cancel}" />
 

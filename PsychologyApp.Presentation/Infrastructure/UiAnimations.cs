@@ -200,6 +200,41 @@ public static class UiAnimations
         ResetVisualState(view);
     }
 
+    public static async Task SafeHideAsync(
+        VisualElement? view,
+        uint duration = FastDuration,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            await HideAsync(view, duration, cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafeHideAsync skipped: {ex.GetType().Name}: {ex.Message}");
+            ResetVisualState(view);
+        }
+    }
+
+    public static async Task HideAsync(
+        VisualElement? view,
+        uint duration = FastDuration,
+        CancellationToken cancellationToken = default)
+    {
+        if (view is null || !view.IsVisible || !CanAnimate(view))
+        {
+            ResetVisualState(view);
+            return;
+        }
+
+        cancellationToken.ThrowIfCancellationRequested();
+        await view.FadeToAsync(0, duration, ExitEasing);
+        ResetVisualState(view);
+    }
+
     public static async Task CrossfadeAsync(
         VisualElement? hide,
         VisualElement? show,

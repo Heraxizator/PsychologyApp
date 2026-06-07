@@ -12,14 +12,13 @@
              Title="{Binding PageTitle}">
 
     <AbsoluteLayout VerticalOptions="FillAndExpand">
-        <StackLayout
+        <Grid
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"
-            VerticalOptions="FillAndExpand">
+            Margin="{StaticResource LayoutTabPageMarginThickness}">
             <CollectionView
-                IsVisible="{Binding IsDone}"
-                Margin="{StaticResource LayoutTabPageMarginThickness}"
                 x:Name="QuotesCollectionView"
+                IsVisible="{Binding IsDone}"
                 HorizontalScrollBarVisibility="Never"
                 VerticalScrollBarVisibility="Never"
                 VerticalOptions="FillAndExpand"
@@ -59,16 +58,16 @@
                         <Label HorizontalTextAlignment="Center" Style="{StaticResource BodyStyle}" Text="{Binding QuotesEmptyBody}" />
                     </StackLayout>
                 </CollectionView.EmptyView>
-
             </CollectionView>
 
             <ui:ProgressBarView
                 x:Name="LoadingProgress"
-                VerticalOptions="CenterAndExpand"
-                IsVisible="{Binding IsInit}"
-                IsLoading="True"
+                IsVisible="{Binding IsLoadingOverlayVisible}"
+                IsLoading="{Binding IsLoadingOverlayVisible}"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
                 ProgressText="{Binding QuotesLoadingText}" />
-        </StackLayout>
+        </Grid>
 
         <ui:RetryView
             AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"

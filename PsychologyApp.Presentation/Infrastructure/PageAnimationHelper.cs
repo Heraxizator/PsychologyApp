@@ -84,7 +84,8 @@ public sealed class PageAnimationHelper : IDisposable
         if (_viewModel.IsInit && _introView is not null && !_introDismissed)
         {
             _introDismissed = true;
-            await UiAnimations.CrossfadeAsync(_introView, _loadingView, cancellationToken: _cts!.Token, allowHidden: true);
+            await UiAnimations.SafeHideAsync(_introView, cancellationToken: _cts!.Token);
+            await UiAnimations.SafeRevealPremiumAsync(_loadingView, allowHidden: true, cancellationToken: _cts!.Token);
             return;
         }
 
@@ -92,13 +93,14 @@ public sealed class PageAnimationHelper : IDisposable
         {
             _contentRevealed = true;
 
-            if (_loadingView is not null && _contentView is not null)
+            if (_loadingView is not null)
             {
-                await UiAnimations.CrossfadeAsync(_loadingView, _contentView, cancellationToken: _cts!.Token, allowHidden: true);
+                await UiAnimations.SafeHideAsync(_loadingView, cancellationToken: _cts!.Token);
             }
-            else if (_contentView is not null)
+
+            if (_contentView is not null)
             {
-                await UiAnimations.SafeRevealAsync(_contentView, allowHidden: true, cancellationToken: _cts!.Token);
+                await UiAnimations.SafeRevealPremiumAsync(_contentView, allowHidden: true, cancellationToken: _cts!.Token);
             }
 
             if (_staggerLayout is not null)
@@ -109,6 +111,11 @@ public sealed class PageAnimationHelper : IDisposable
         else if (_viewModel.IsInit)
         {
             _contentRevealed = false;
+
+            if (_contentView is not null)
+            {
+                await UiAnimations.SafeHideAsync(_contentView, cancellationToken: _cts!.Token);
+            }
         }
         else if (_viewModel.IsCreated)
         {

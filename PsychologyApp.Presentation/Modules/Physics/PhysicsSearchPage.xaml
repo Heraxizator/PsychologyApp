@@ -112,8 +112,8 @@
             x:Name="InitLoadingProgress"
             AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
             AbsoluteLayout.LayoutFlags="PositionProportional"
-            IsVisible="{Binding IsInit}"
-            IsLoading="{Binding IsInit}"
+            IsVisible="{Binding IsLoadingOverlayVisible}"
+            IsLoading="{Binding IsLoadingOverlayVisible}"
             ProgressText="{Binding LoadingText}">
             <ui:ProgressBarView.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding Cancel}"/>

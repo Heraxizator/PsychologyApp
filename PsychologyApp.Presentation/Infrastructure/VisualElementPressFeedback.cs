@@ -4,6 +4,9 @@ public static class VisualElementPressFeedback
 {
     private const uint PressDuration = 80;
     private const uint ReleaseDuration = 120;
+    private const double PressOpacity = 0.88;
+    private const double PressScale = 0.96;
+    private const double PressTranslationY = 1;
 
     private static readonly HashSet<VisualElement> AnimatingViews = [];
 
@@ -22,17 +25,8 @@ public static class VisualElementPressFeedback
         target.GestureRecognizers.Add(pointer);
     }
 
-    public static void AttachToTemplateRoot(ContentView contentView, string borderStyleKey = "ListCardItemStyle")
-    {
-        contentView.Loaded += (_, _) =>
-        {
-            VisualElement? target = FindPressTarget(contentView);
-            if (target is not null)
-            {
-                Attach(target);
-            }
-        };
-    }
+    public static void AttachToTemplateRoot(ContentView contentView, string borderStyleKey = "ListCardItemStyle") =>
+        TemplatePressFeedback.Attach(contentView);
 
     private static async Task AnimatePressAsync(VisualElement target)
     {
@@ -43,7 +37,10 @@ public static class VisualElementPressFeedback
 
         try
         {
-            await target.ScaleToAsync(UiAnimations.PressScale, PressDuration, UiAnimations.EnterEasing);
+            await Task.WhenAll(
+                target.ScaleToAsync(PressScale, PressDuration, UiAnimations.EnterEasing),
+                target.FadeToAsync(PressOpacity, PressDuration, UiAnimations.EnterEasing),
+                target.TranslateToAsync(0, PressTranslationY, PressDuration, UiAnimations.EnterEasing));
         }
         finally
         {
@@ -55,17 +52,16 @@ public static class VisualElementPressFeedback
     {
         if (!UiAnimations.CanAnimate(target) || !AnimatingViews.Add(target))
         {
-            if (Math.Abs(target.Scale - 1) > 0.01)
-            {
-                target.Scale = 1;
-            }
-
+            ResetInstant(target);
             return;
         }
 
         try
         {
-            await target.ScaleToAsync(1, ReleaseDuration, UiAnimations.ReleaseEasing);
+            await Task.WhenAll(
+                target.ScaleToAsync(1, ReleaseDuration, UiAnimations.ReleaseEasing),
+                target.FadeToAsync(1, ReleaseDuration, UiAnimations.ReleaseEasing),
+                target.TranslateToAsync(0, 0, ReleaseDuration, UiAnimations.ReleaseEasing));
         }
         finally
         {
@@ -74,21 +70,13 @@ public static class VisualElementPressFeedback
         }
     }
 
-    private static VisualElement? FindPressTarget(VisualElement root)
+    private static void ResetInstant(VisualElement target)
     {
-        if (root is Border border)
+        if (Math.Abs(target.Scale - 1) > 0.01
+            || Math.Abs(target.Opacity - 1) > 0.01
+            || Math.Abs(target.TranslationY) > 0.01)
         {
-            return border;
+            UiAnimations.ResetVisualState(target);
         }
-
-        foreach (VisualElement child in root.GetVisualTreeDescendants().OfType<VisualElement>())
-        {
-            if (child is Border)
-            {
-                return child;
-            }
-        }
-
-        return root;
     }
 }

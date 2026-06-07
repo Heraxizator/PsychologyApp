@@ -8,7 +8,7 @@ public partial class SettingsLinkCardView : ContentView
     public SettingsLinkCardView()
     {
         InitializeComponent();
-        VisualElementPressFeedback.AttachToTemplateRoot(this);
+        TemplatePressFeedback.Attach(this);
     }
 
     public static readonly BindableProperty TitleProperty =

@@ -8,7 +8,7 @@ public partial class ButtonView : ContentView
     public ButtonView()
     {
         InitializeComponent();
-        VisualElementPressFeedback.AttachToTemplateRoot(this);
+        TemplatePressFeedback.Attach(this);
     }
 
     public static readonly BindableProperty BodyTextProperty =
