@@ -24,6 +24,9 @@
                 x:Name="ProfileContent"
                 Margin="{StaticResource LayoutPageMarginThickness}"
                 Spacing="{StaticResource LayoutSpacing}">
+                <StackLayout.Behaviors>
+                    <behaviors:StaggerChildrenBehavior />
+                </StackLayout.Behaviors>
 
                 <ui:NavigationBarSimpleView
                     TitleText="{Binding PageTitle}"

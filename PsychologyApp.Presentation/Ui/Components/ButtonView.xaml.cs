@@ -8,7 +8,13 @@ public partial class ButtonView : ContentView
     public ButtonView()
     {
         InitializeComponent();
-        TemplatePressFeedback.Attach(this);
+        TemplatePressFeedback.Attach(this, new PressFeedbackOptions
+        {
+            PressScale = () => Variant == "Secondary"
+                ? UiAnimations.PressScaleSecondary
+                : UiAnimations.PressScalePrimary,
+            HapticOnRelease = true
+        });
     }
 
     public static readonly BindableProperty BodyTextProperty =

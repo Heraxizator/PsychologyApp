@@ -61,6 +61,8 @@
 	  <RunAOTCompilation>False</RunAOTCompilation>
 	  <!-- Disable fast deployment: avoids XA0129 push failures to .__override__ on device. -->
 	  <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+	  <!-- Debug: arm64 for physical devices + x64 for Windows emulator; avoids all 4 ABIs (XAWAS7024). -->
+	  <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-maccatalyst|AnyCPU'">

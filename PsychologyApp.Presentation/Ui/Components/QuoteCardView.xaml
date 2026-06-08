@@ -32,6 +32,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Label
+                    x:Name="FavoriteActionLabel"
                     Grid.Column="0"
                     Style="{StaticResource BodyStyle}"
                     Text="{mi:Material Icon=FavoriteBorder}"

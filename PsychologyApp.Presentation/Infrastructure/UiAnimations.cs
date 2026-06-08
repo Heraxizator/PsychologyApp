@@ -7,7 +7,16 @@ public static class UiAnimations
     public const uint FastDuration = 120;
     public const uint StaggerDelay = 50;
     public const int StaggerCap = 10;
-    public const double PressScale = 0.97;
+    public const uint PressDuration = 80;
+    public const uint ReleaseDuration = 120;
+    public const double PressScale = 0.96;
+    public const double PressScalePrimary = 0.96;
+    public const double PressScaleSecondary = 0.98;
+    public const double PressOpacity = 0.88;
+    public const double PressTranslationY = 1;
+    public const double PulseScaleTo = 1.04;
+    public const double ShakeOffset = 4;
+    public const double FocusScale = 1.01;
     public const double SlideOffset = 14;
     public const double RevealScaleFrom = 0.96;
     public const double CrossfadeScaleFrom = 0.98;
@@ -19,6 +28,9 @@ public static class UiAnimations
 
     public static bool CanAnimate(VisualElement? view) =>
         view is not null && view.Handler is not null && view.Window is not null;
+
+    public static bool ShouldAnimate(VisualElement? view) =>
+        CanAnimate(view) && !ReduceMotion.IsEnabled;
 
     public static void PrepareForReveal(VisualElement? view)
     {
@@ -120,8 +132,14 @@ public static class UiAnimations
         bool allowHidden = false,
         CancellationToken cancellationToken = default)
     {
-        if (view is null || (!allowHidden && !view.IsVisible) || !CanAnimate(view))
+        if (view is null || (!allowHidden && !view.IsVisible))
         {
+            return;
+        }
+
+        if (!ShouldAnimate(view))
+        {
+            ResetVisualState(view);
             return;
         }
 
@@ -138,8 +156,14 @@ public static class UiAnimations
         bool allowHidden = false,
         CancellationToken cancellationToken = default)
     {
-        if (view is null || (!allowHidden && !view.IsVisible) || !CanAnimate(view))
+        if (view is null || (!allowHidden && !view.IsVisible))
         {
+            return;
+        }
+
+        if (!ShouldAnimate(view))
+        {
+            ResetVisualState(view);
             return;
         }
 
@@ -168,8 +192,14 @@ public static class UiAnimations
         bool allowHidden = false,
         CancellationToken cancellationToken = default)
     {
-        if (view is null || (!allowHidden && !view.IsVisible) || !CanAnimate(view))
+        if (view is null || (!allowHidden && !view.IsVisible))
         {
+            return;
+        }
+
+        if (!ShouldAnimate(view))
+        {
+            ResetVisualState(view);
             return;
         }
 
@@ -188,8 +218,9 @@ public static class UiAnimations
         double scale = PressScale,
         uint duration = MicroDuration)
     {
-        if (view is null || !CanAnimate(view))
+        if (view is null || !ShouldAnimate(view))
         {
+            ResetVisualState(view);
             return;
         }
 
@@ -197,6 +228,158 @@ public static class UiAnimations
         await view.ScaleToAsync(1, duration / 2, ReleaseEasing);
         ResetVisualState(view);
     }
+
+    public static async Task SafePulseAsync(
+        VisualElement? view,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            await PulseAsync(view, cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafePulseAsync skipped: {ex.GetType().Name}: {ex.Message}");
+            ResetVisualState(view);
+        }
+    }
+
+    public static async Task PulseAsync(
+        VisualElement? view,
+        CancellationToken cancellationToken = default)
+    {
+        if (view is null || !view.IsVisible)
+        {
+            return;
+        }
+
+        if (!ShouldAnimate(view))
+        {
+            ResetVisualState(view);
+            return;
+        }
+
+        cancellationToken.ThrowIfCancellationRequested();
+        await view.ScaleToAsync(PulseScaleTo, FastDuration, EnterEasing);
+        await view.ScaleToAsync(1, FastDuration, ReleaseEasing);
+        ResetVisualState(view);
+    }
+
+    public static async Task SafeShakeAsync(
+        VisualElement? view,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            await ShakeAsync(view, cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafeShakeAsync skipped: {ex.GetType().Name}: {ex.Message}");
+            ResetVisualState(view);
+        }
+    }
+
+    public static async Task ShakeAsync(
+        VisualElement? view,
+        CancellationToken cancellationToken = default)
+    {
+        if (view is null || !view.IsVisible)
+        {
+            return;
+        }
+
+        if (!ShouldAnimate(view))
+        {
+            ResetVisualState(view);
+            return;
+        }
+
+        cancellationToken.ThrowIfCancellationRequested();
+        double baseX = view.TranslationX;
+        await view.TranslateToAsync(baseX - ShakeOffset, view.TranslationY, FastDuration / 2, EnterEasing);
+        await view.TranslateToAsync(baseX + ShakeOffset, view.TranslationY, FastDuration / 2, EnterEasing);
+        await view.TranslateToAsync(baseX, view.TranslationY, FastDuration / 2, ReleaseEasing);
+        ResetVisualState(view);
+    }
+
+    public static async Task SafeFocusRingAsync(
+        Border? border,
+        bool focused,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            await FocusRingAsync(border, focused, cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafeFocusRingAsync skipped: {ex.GetType().Name}: {ex.Message}");
+            if (border is not null)
+            {
+                ApplyFocusBorderInstant(border, focused);
+                ResetVisualState(border);
+            }
+        }
+    }
+
+    public static async Task FocusRingAsync(
+        Border? border,
+        bool focused,
+        CancellationToken cancellationToken = default)
+    {
+        if (border is null)
+        {
+            return;
+        }
+
+        if (!ShouldAnimate(border))
+        {
+            ApplyFocusBorderInstant(border, focused);
+            ResetVisualState(border);
+            return;
+        }
+
+        cancellationToken.ThrowIfCancellationRequested();
+        ApplyFocusBorderInstant(border, focused);
+        double targetScale = focused ? FocusScale : 1;
+        await border.ScaleToAsync(targetScale, FastDuration, focused ? EnterEasing : ReleaseEasing);
+        if (!focused)
+        {
+            ResetVisualState(border);
+        }
+    }
+
+    private static void ApplyFocusBorderInstant(Border border, bool focused)
+    {
+        if (focused)
+        {
+            border.Stroke = GetFocusColor("Primary");
+            border.StrokeThickness = 1.5;
+        }
+        else
+        {
+            string key = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark
+                ? "InputBorderDark"
+                : "NeutralBorder";
+            border.Stroke = GetFocusColor(key);
+            border.StrokeThickness = 1;
+        }
+    }
+
+    private static Color GetFocusColor(string key) =>
+        Microsoft.Maui.Controls.Application.Current?.Resources[key] is Color color
+            ? color
+            : Colors.Transparent;
 
     public static async Task SafeHideAsync(
         VisualElement? view,
@@ -222,7 +405,13 @@ public static class UiAnimations
         uint duration = FastDuration,
         CancellationToken cancellationToken = default)
     {
-        if (view is null || !view.IsVisible || !CanAnimate(view))
+        if (view is null || !view.IsVisible)
+        {
+            ResetVisualState(view);
+            return;
+        }
+
+        if (!ShouldAnimate(view))
         {
             ResetVisualState(view);
             return;

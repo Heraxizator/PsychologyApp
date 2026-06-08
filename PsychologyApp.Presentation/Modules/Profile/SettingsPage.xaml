@@ -21,6 +21,9 @@
 
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                 <StackLayout Spacing="8">
+                    <StackLayout.Behaviors>
+                        <behaviors:StaggerChildrenBehavior />
+                    </StackLayout.Behaviors>
                     <Label Text="{Binding DesignSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
                     <ui:SettingPickerRowView
                         LabelText="{Binding LanguageLabel}"
@@ -47,6 +50,9 @@
 
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                 <StackLayout Spacing="8">
+                    <StackLayout.Behaviors>
+                        <behaviors:StaggerChildrenBehavior />
+                    </StackLayout.Behaviors>
                     <Label Text="{Binding FontSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
                     <ui:SettingPickerRowView
                         LabelText="{Binding SizeLabel}"

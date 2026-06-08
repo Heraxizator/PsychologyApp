@@ -12,7 +12,10 @@ public class UiAnimationsTests
         Assert.Equal(300u, UiAnimations.MediumDuration);
         Assert.Equal(120u, UiAnimations.FastDuration);
         Assert.Equal(50u, UiAnimations.StaggerDelay);
-        Assert.Equal(0.97, UiAnimations.PressScale);
+        Assert.Equal(0.96, UiAnimations.PressScale);
+        Assert.Equal(0.96, UiAnimations.PressScalePrimary);
+        Assert.Equal(0.98, UiAnimations.PressScaleSecondary);
+        Assert.Equal(1.04, UiAnimations.PulseScaleTo);
         Assert.Equal(14, UiAnimations.SlideOffset);
         Assert.Equal(10, UiAnimations.StaggerCap);
     }
@@ -120,6 +123,36 @@ public class UiAnimationsTests
     public async Task SafeHideAsync_WithNullView_CompletesWithoutException()
     {
         Task task = UiAnimations.SafeHideAsync(null);
+        await task;
+        Assert.True(task.IsCompletedSuccessfully);
+    }
+
+    [Fact]
+    public void ShouldAnimate_WithNullView_ReturnsFalse()
+    {
+        Assert.False(UiAnimations.ShouldAnimate(null));
+    }
+
+    [Fact]
+    public async Task SafePulseAsync_WithNullView_CompletesWithoutException()
+    {
+        Task task = UiAnimations.SafePulseAsync(null);
+        await task;
+        Assert.True(task.IsCompletedSuccessfully);
+    }
+
+    [Fact]
+    public async Task SafeShakeAsync_WithNullView_CompletesWithoutException()
+    {
+        Task task = UiAnimations.SafeShakeAsync(null);
+        await task;
+        Assert.True(task.IsCompletedSuccessfully);
+    }
+
+    [Fact]
+    public async Task SafeFocusRingAsync_WithNullBorder_CompletesWithoutException()
+    {
+        Task task = UiAnimations.SafeFocusRingAsync(null, true);
         await task;
         Assert.True(task.IsCompletedSuccessfully);
     }

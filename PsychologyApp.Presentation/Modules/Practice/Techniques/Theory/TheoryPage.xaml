@@ -12,7 +12,7 @@
     <ScrollView VerticalScrollBarVisibility="Never">
         <StackLayout Margin="20,0,20,20" Spacing="20">
             <StackLayout.Behaviors>
-                <behaviors:RevealOnAppearingBehavior />
+                <behaviors:StaggerChildrenBehavior />
             </StackLayout.Behaviors>
             <ui:NavigationBarSimpleView
                 TitleText="{Binding PageTitle}"
