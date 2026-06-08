@@ -8,7 +8,16 @@ public partial class SettingPickerRowView : ContentView
     public SettingPickerRowView()
     {
         InitializeComponent();
-        Loaded += (_, _) => VisualElementPressFeedback.Attach(this);
+        Loaded += OnLoaded;
+    }
+
+    private void OnLoaded(object? sender, EventArgs e)
+    {
+        Label? label = this.GetVisualTreeDescendants().OfType<Label>().FirstOrDefault();
+        if (label is not null)
+        {
+            VisualElementPressFeedback.Attach(label);
+        }
     }
 
     public static readonly BindableProperty LabelTextProperty =

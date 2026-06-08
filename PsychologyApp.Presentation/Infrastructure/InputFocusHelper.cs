@@ -2,13 +2,25 @@ namespace PsychologyApp.Presentation.Infrastructure;
 
 public static class InputFocusHelper
 {
-    public static void ApplyFocusedBorder(Border border)
+    public static void ApplyFocusedBorder(Border border) =>
+        ApplyFocusedBorderAsync(border).GetAwaiter().GetResult();
+
+    public static void ApplyDefaultBorder(Border border) =>
+        ApplyDefaultBorderAsync(border).GetAwaiter().GetResult();
+
+    public static Task ApplyFocusedBorderAsync(Border border) =>
+        UiAnimations.SafeFocusRingAsync(border, focused: true);
+
+    public static Task ApplyDefaultBorderAsync(Border border) =>
+        UiAnimations.SafeFocusRingAsync(border, focused: false);
+
+    internal static void ApplyFocusedBorderInstant(Border border)
     {
         border.Stroke = GetColor("Primary");
         border.StrokeThickness = 1.5;
     }
 
-    public static void ApplyDefaultBorder(Border border)
+    internal static void ApplyDefaultBorderInstant(Border border)
     {
         string key = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark
             ? "InputBorderDark"

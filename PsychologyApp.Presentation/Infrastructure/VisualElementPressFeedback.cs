@@ -1,18 +1,27 @@
+using Microsoft.Maui.Devices;
+using System.Runtime.CompilerServices;
+
 namespace PsychologyApp.Presentation.Infrastructure;
 
 public static class VisualElementPressFeedback
 {
-    private const uint PressDuration = 80;
-    private const uint ReleaseDuration = 120;
-    private const double PressOpacity = 0.88;
-    private const double PressScale = 0.96;
-    private const double PressTranslationY = 1;
-
     private static readonly HashSet<VisualElement> AnimatingViews = [];
+    private static readonly HashSet<VisualElement> AttachedViews = [];
+    private static readonly ConditionalWeakTable<VisualElement, PressFeedbackOptions> Options = new();
 
-    public static void Attach(VisualElement? view)
+    public static void Attach(VisualElement? view, PressFeedbackOptions? options = null)
     {
         if (view is not View target)
+        {
+            return;
+        }
+
+        if (options is not null)
+        {
+            Options.AddOrUpdate(target, options);
+        }
+
+        if (!AttachedViews.Add(target))
         {
             return;
         }
@@ -25,22 +34,30 @@ public static class VisualElementPressFeedback
         target.GestureRecognizers.Add(pointer);
     }
 
-    public static void AttachToTemplateRoot(ContentView contentView, string borderStyleKey = "ListCardItemStyle") =>
-        TemplatePressFeedback.Attach(contentView);
+    public static void AttachToTemplateRoot(ContentView contentView, PressFeedbackOptions? options = null) =>
+        TemplatePressFeedback.Attach(contentView, options);
+
+    private static PressFeedbackOptions GetOptions(VisualElement target) =>
+        Options.TryGetValue(target, out PressFeedbackOptions? options)
+            ? options
+            : new PressFeedbackOptions();
 
     private static async Task AnimatePressAsync(VisualElement target)
     {
-        if (!UiAnimations.CanAnimate(target) || !AnimatingViews.Add(target))
+        if (!UiAnimations.ShouldAnimate(target) || !AnimatingViews.Add(target))
         {
             return;
         }
 
+        PressFeedbackOptions opts = GetOptions(target);
+        double scale = opts.PressScale();
+
         try
         {
             await Task.WhenAll(
-                target.ScaleToAsync(PressScale, PressDuration, UiAnimations.EnterEasing),
-                target.FadeToAsync(PressOpacity, PressDuration, UiAnimations.EnterEasing),
-                target.TranslateToAsync(0, PressTranslationY, PressDuration, UiAnimations.EnterEasing));
+                target.ScaleToAsync(scale, UiAnimations.PressDuration, UiAnimations.EnterEasing),
+                target.FadeToAsync(UiAnimations.PressOpacity, UiAnimations.PressDuration, UiAnimations.EnterEasing),
+                target.TranslateToAsync(0, UiAnimations.PressTranslationY, UiAnimations.PressDuration, UiAnimations.EnterEasing));
         }
         finally
         {
@@ -50,23 +67,47 @@ public static class VisualElementPressFeedback
 
     private static async Task AnimateReleaseAsync(VisualElement target)
     {
-        if (!UiAnimations.CanAnimate(target) || !AnimatingViews.Add(target))
+        PressFeedbackOptions opts = GetOptions(target);
+
+        if (!UiAnimations.ShouldAnimate(target) || !AnimatingViews.Add(target))
         {
             ResetInstant(target);
+            if (opts.HapticOnRelease)
+            {
+                TryPerformHaptic();
+            }
+
             return;
         }
 
         try
         {
             await Task.WhenAll(
-                target.ScaleToAsync(1, ReleaseDuration, UiAnimations.ReleaseEasing),
-                target.FadeToAsync(1, ReleaseDuration, UiAnimations.ReleaseEasing),
-                target.TranslateToAsync(0, 0, ReleaseDuration, UiAnimations.ReleaseEasing));
+                target.ScaleToAsync(1, UiAnimations.ReleaseDuration, UiAnimations.ReleaseEasing),
+                target.FadeToAsync(1, UiAnimations.ReleaseDuration, UiAnimations.ReleaseEasing),
+                target.TranslateToAsync(0, 0, UiAnimations.ReleaseDuration, UiAnimations.ReleaseEasing));
         }
         finally
         {
             AnimatingViews.Remove(target);
             UiAnimations.ResetVisualState(target);
+
+            if (opts.HapticOnRelease)
+            {
+                TryPerformHaptic();
+            }
+        }
+    }
+
+    private static void TryPerformHaptic()
+    {
+        try
+        {
+            HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Haptic feedback skipped: {ex.GetType().Name}: {ex.Message}");
         }
     }
 

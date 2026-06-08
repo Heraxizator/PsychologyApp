@@ -1,4 +1,5 @@
 using PsychologyApp.Presentation.Infrastructure;
+using PsychologyApp.Presentation.Services;
 
 namespace PsychologyApp.Presentation.UI.Components;
 
@@ -37,8 +38,8 @@ public partial class TextEditorView : ContentView
     }
 
     private void OnInputFocused(object? sender, FocusEventArgs e) =>
-        InputFocusHelper.ApplyFocusedBorder(InputBorder);
+        InputFocusHelper.ApplyFocusedBorderAsync(InputBorder).FireAndForget();
 
     private void OnInputUnfocused(object? sender, FocusEventArgs e) =>
-        InputFocusHelper.ApplyDefaultBorder(InputBorder);
+        InputFocusHelper.ApplyDefaultBorderAsync(InputBorder).FireAndForget();
 }

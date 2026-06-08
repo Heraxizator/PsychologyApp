@@ -1,11 +1,19 @@
+using System.Runtime.CompilerServices;
+
 namespace PsychologyApp.Presentation.Infrastructure;
 
 public static class TemplatePressFeedback
 {
     private static readonly HashSet<VisualElement> AttachedTargets = [];
+    private static readonly ConditionalWeakTable<ContentView, PressFeedbackOptions> ContentViewOptions = new();
 
-    public static void Attach(ContentView contentView)
+    public static void Attach(ContentView contentView, PressFeedbackOptions? options = null)
     {
+        if (options is not null)
+        {
+            ContentViewOptions.AddOrUpdate(contentView, options);
+        }
+
         contentView.HandlerChanged += OnHandlerChanged;
         contentView.Loaded += OnLoaded;
 
@@ -39,7 +47,8 @@ public static class TemplatePressFeedback
             return;
         }
 
-        VisualElementPressFeedback.Attach(target);
+        ContentViewOptions.TryGetValue(contentView, out PressFeedbackOptions? options);
+        VisualElementPressFeedback.Attach(target, options);
     }
 
     private static VisualElement? FindPressTarget(VisualElement root)

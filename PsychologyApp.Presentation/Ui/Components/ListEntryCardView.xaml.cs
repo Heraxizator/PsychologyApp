@@ -7,7 +7,6 @@ public partial class ListEntryCardView : ContentView
     public ListEntryCardView()
     {
         InitializeComponent();
-        VisualElementPressFeedback.AttachToTemplateRoot(this);
     }
 
     public static readonly BindableProperty TitleProperty =

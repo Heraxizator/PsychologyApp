@@ -27,6 +27,7 @@ public static class MauiProgram
             });
 
         ConfigureHandlers();
+        ReduceMotion.Configure(ReduceMotionDetector.IsEnabled);
         builder.AddPsychologyAppConfiguration();
 
 #if DEBUG

@@ -11,7 +11,7 @@
              Title="{Binding PageTitle}">
 <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
         <StackLayout.Behaviors>
-            <behaviors:RevealOnAppearingBehavior />
+            <behaviors:StaggerChildrenBehavior />
         </StackLayout.Behaviors>
 
         <ui:NavigationBarSimpleView

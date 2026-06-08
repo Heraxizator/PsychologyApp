@@ -1,4 +1,5 @@
 using PsychologyApp.Presentation.Infrastructure;
+using PsychologyApp.Presentation.Services;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.UI.Components;
@@ -47,10 +48,10 @@ public partial class TextEntryView : ContentView
     }
 
     private void OnInputFocused(object? sender, FocusEventArgs e) =>
-        InputFocusHelper.ApplyFocusedBorder(InputBorder);
+        InputFocusHelper.ApplyFocusedBorderAsync(InputBorder).FireAndForget();
 
     private void OnInputUnfocused(object? sender, FocusEventArgs e) =>
-        InputFocusHelper.ApplyDefaultBorder(InputBorder);
+        InputFocusHelper.ApplyDefaultBorderAsync(InputBorder).FireAndForget();
 
     private void OnInputTextChanged(object? sender, TextChangedEventArgs e)
     {

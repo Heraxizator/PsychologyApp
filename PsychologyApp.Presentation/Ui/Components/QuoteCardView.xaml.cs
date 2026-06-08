@@ -5,6 +5,8 @@ namespace PsychologyApp.Presentation.UI.Components;
 
 public partial class QuoteCardView : ContentView
 {
+    private Label? _favoriteLabel;
+
     public QuoteCardView()
     {
         InitializeComponent();
@@ -21,6 +23,18 @@ public partial class QuoteCardView : ContentView
             {
                 VisualElementPressFeedback.Attach(label);
             }
+        }
+
+        _favoriteLabel = FavoriteActionLabel;
+    }
+
+    protected override void OnPropertyChanged(string? propertyName = null)
+    {
+        base.OnPropertyChanged(propertyName);
+
+        if (propertyName == nameof(IsFavourite))
+        {
+            UiAnimations.SafePulseAsync(_favoriteLabel ?? FavoriteActionLabel).FireAndForget();
         }
     }
 
