@@ -26,6 +26,8 @@ public interface INavigationService
     Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null);
     Task GoToStandardTestAsync();
     Task GoToAlternativeTestAsync();
+    Task GoToTestHistoryAsync(string testId, string testTitle);
+    Task GoToTestsListAsync();
 }
 
 public sealed class MauiNavigationService(INavigation navigation, IPageFactory pageFactory) : INavigationService
@@ -82,5 +84,11 @@ public sealed class MauiNavigationService(INavigation navigation, IPageFactory p
 
     public Task GoToAlternativeTestAsync() =>
         navigation.PushAsync(pageFactory.CreateAlternativeTestPage(), false);
+
+    public Task GoToTestHistoryAsync(string testId, string testTitle) =>
+        navigation.PushAsync(pageFactory.CreateTestHistoryPage(testId, testTitle), true);
+
+    public Task GoToTestsListAsync() =>
+        navigation.PushAsync(pageFactory.CreateTestsListPage(), true);
 }
 

@@ -55,4 +55,31 @@ public partial class TestListCardView : ContentView
         get => (ICommand?)GetValue(TapCommandProperty);
         set => SetValue(TapCommandProperty, value);
     }
+
+    public static readonly BindableProperty OpenHistoryCommandProperty =
+        BindableProperty.Create(nameof(OpenHistoryCommand), typeof(ICommand), typeof(TestListCardView), null);
+
+    public ICommand? OpenHistoryCommand
+    {
+        get => (ICommand?)GetValue(OpenHistoryCommandProperty);
+        set => SetValue(OpenHistoryCommandProperty, value);
+    }
+
+    public static readonly BindableProperty HasMultipleResultsProperty =
+        BindableProperty.Create(nameof(HasMultipleResults), typeof(bool), typeof(TestListCardView), false);
+
+    public bool HasMultipleResults
+    {
+        get => (bool)GetValue(HasMultipleResultsProperty);
+        set => SetValue(HasMultipleResultsProperty, value);
+    }
+
+    public static readonly BindableProperty HistoryLabelProperty =
+        BindableProperty.Create(nameof(HistoryLabel), typeof(string), typeof(TestListCardView), string.Empty);
+
+    public string HistoryLabel
+    {
+        get => (string)GetValue(HistoryLabelProperty);
+        set => SetValue(HistoryLabelProperty, value);
+    }
 }

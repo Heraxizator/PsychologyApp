@@ -7,6 +7,7 @@ using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.QuotService;
 using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.Modules.Profile;
+using PsychologyApp.Presentation.Services.Toasts;
 using PsychologyApp.Presentation.ViewModels;
 using System.Windows.Input;
 using BaseViewModel = PsychologyApp.Presentation.ViewModels.BaseViewModel;
@@ -29,19 +30,22 @@ public class QuoteViewModel : BaseViewModel
     private readonly IQuotService _quotService;
     private readonly ILogger<QuoteViewModel> _logger;
     private readonly IOptions<AppSettings> _settings;
+    private readonly IToastService _toastService;
     private readonly HashSet<string> _knownQuoteTexts = new(StringComparer.Ordinal);
 
     public QuoteViewModel(
         INavigation navigation,
         IQuotService quotService,
         ILogger<QuoteViewModel> logger,
-        IOptions<AppSettings> settings)
+        IOptions<AppSettings> settings,
+        IToastService toastService)
     {
         try
         {
             _quotService = quotService;
             _logger = logger;
             _settings = settings;
+            _toastService = toastService;
             BindNavigation(navigation);
             Cancel = new Command(CancelProgress);
             LoadMoreQuotesCommand = new AsyncCommand(() => AddFreshQuotesAsync());
@@ -213,6 +217,10 @@ public class QuoteViewModel : BaseViewModel
             Title = AppStrings.QuoteShareTitle
         }));
 
-    private static ICommand CreateCopyCommand(QuoteItem quoteItem) =>
-        new AsyncCommand(() => Clipboard.Default.SetTextAsync($"{quoteItem.Text} ({quoteItem.Author})"));
+    private ICommand CreateCopyCommand(QuoteItem quoteItem) =>
+        new AsyncCommand(async () =>
+        {
+            await Clipboard.Default.SetTextAsync($"{quoteItem.Text} ({quoteItem.Author})");
+            _toastService.ShortToast(AppStrings.QuoteCopied);
+        });
 }

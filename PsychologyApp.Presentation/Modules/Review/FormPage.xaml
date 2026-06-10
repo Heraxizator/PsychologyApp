@@ -27,6 +27,7 @@
                 <StackLayout Spacing="8">
                     <Label Text="{Binding FormSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
                     <ui:TextEditorView
+                        Variant="Plain"
                         PlaceholderText="{Binding MessagePlaceholder}"
                         BodyText="{Binding MessageText}"
                         TitleText="{Binding MessageFieldLabel}" />

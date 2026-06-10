@@ -23,4 +23,13 @@ public partial class TechniqueSessionPage : ContentPage
         body.BindingContext = viewModel;
         SessionShell.BodyContent = body;
     }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        if (BindingContext is TechniqueSessionViewModel sessionViewModel)
+        {
+            sessionViewModel.SaveEntryDraftIfNeeded();
+        }
+    }
 }

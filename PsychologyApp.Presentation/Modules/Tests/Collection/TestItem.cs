@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.Modules.Tests;
 using PsychologyApp.Presentation.Services;
 using System.Windows.Input;
@@ -138,6 +139,9 @@ public class TestItem
     public ICommand? TapCommand { get; set; }
     public string? LastResultSummary { get; set; }
     public bool HasLastResult => !string.IsNullOrWhiteSpace(LastResultSummary);
+    public bool HasMultipleResults { get; set; }
+    public string HistoryLabel => AppStrings.TestOpenHistory;
+    public ICommand? OpenHistoryCommand { get; set; }
 
     public static TestBuilder CreateBuilder() => new();
 }

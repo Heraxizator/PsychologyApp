@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Views;
 using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.Services.Factories;
 using PsychologyApp.Presentation.ViewModels.Clean;
@@ -14,8 +15,11 @@ public partial class MusicPlayerPage : ContentPage
         InitializeComponent();
 
         ViewModel = musicPlayerViewModelFactory.Create();
-
         BindingContext = ViewModel;
+
+        ViewModel.PlayAudioHandler = PlayUrlAsync;
+        ViewModel.TogglePlaybackHandler = TogglePlaybackAsync;
+
         _animationHelper = new PageAnimationHelper(ViewModel, Progress, Musics, introView: IntroPrompt);
     }
 
@@ -34,4 +38,31 @@ public partial class MusicPlayerPage : ContentPage
             _animationHelper = null;
         }
     }
+
+    private async Task PlayUrlAsync(string url)
+    {
+        string playbackUri = await MusicAudioCache.ResolvePlaybackUriAsync(url);
+        Player.Source = MediaSource.FromUri(playbackUri);
+        Player.Play();
+        ViewModel.SetPlaybackState(true);
+    }
+
+    private Task TogglePlaybackAsync()
+    {
+        if (ViewModel.IsPlaying)
+        {
+            Player.Pause();
+            ViewModel.SetPlaybackState(false);
+        }
+        else
+        {
+            Player.Play();
+            ViewModel.SetPlaybackState(true);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    private void OnMediaEnded(object? sender, EventArgs e) =>
+        ViewModel.SetPlaybackState(false);
 }

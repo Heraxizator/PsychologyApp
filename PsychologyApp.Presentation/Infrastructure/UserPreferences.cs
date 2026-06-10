@@ -166,7 +166,7 @@ public static class UserPreferences
             return;
         }
 
-        double radius = IsRoundedForm(form) ? 16 : 4;
+        double radius = IsRoundedForm(form) ? 12 : 4;
         SetCornerRadiusResources(resources, radius);
     }
 
@@ -314,11 +314,12 @@ public static class UserPreferences
     private static void SetCornerRadiusResources(ResourceDictionary resources, double radius)
     {
         double buttonRadius = radius <= 4 ? 4 : 8;
+        double entryRadius = radius;
         resources["UiCornerRadius"] = radius;
         resources["UiButtonCornerRadius"] = buttonRadius;
         resources["UiCornerRadiusShape"] = new RoundRectangle { CornerRadius = radius };
         resources["UiCornerRadiusCompactShape"] = new RoundRectangle { CornerRadius = buttonRadius };
-        resources["UiCornerRadiusEntryShape"] = new RoundRectangle { CornerRadius = buttonRadius };
+        resources["UiCornerRadiusEntryShape"] = new RoundRectangle { CornerRadius = entryRadius };
     }
 }
 

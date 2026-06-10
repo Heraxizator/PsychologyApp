@@ -1,4 +1,5 @@
-﻿using PsychologyApp.Application.Services.UserProgress;
+﻿using PsychologyApp.Application.Models;
+using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.Modules.Tests.Collection;
 using PsychologyApp.Presentation.Services;
@@ -76,8 +77,14 @@ public class TestsListViewModel : BaseViewModel
                     item.LastResultSummary = AppStrings.TestLastResult(latest.Summary);
                 }
 
+                IReadOnlyList<TestResultDTO> history =
+                    await _userProgressService.GetTestResultHistoryAsync(item.TestId, 2);
+                item.HasMultipleResults = history.Count > 1;
+
                 TestItem selected = item;
                 item.TapCommand = new AsyncCommand(() => HandleSelectionAsync(selected));
+                item.OpenHistoryCommand = new AsyncCommand(() =>
+                    _navigationService.GoToTestHistoryAsync(selected.TestId, selected.Title));
             }
 
             TestItemCollection = new ObservableCollection<TestItem>(items);

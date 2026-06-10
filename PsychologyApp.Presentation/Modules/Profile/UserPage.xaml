@@ -63,6 +63,9 @@
                                 Text="{Binding TechniquesCompletedLabel}" />
                         </VerticalStackLayout>
                         <VerticalStackLayout Grid.Column="1" Spacing="4">
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenTestsListCommand}" />
+                            </VerticalStackLayout.GestureRecognizers>
                             <Label
                                 Style="{StaticResource SectionTitleStyle}"
                                 HorizontalTextAlignment="Center"
@@ -83,6 +86,12 @@
                                 Text="{Binding StreakLabel}" />
                         </VerticalStackLayout>
                     </Grid>
+                    <Label
+                        Margin="0,8,0,0"
+                        IsVisible="{Binding HasLastPractice}"
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource CaptionStyle}"
+                        Text="{Binding LastPracticeDisplay}" />
                 </Border>
 
                 <ui:SettingsLinkCardView

@@ -22,6 +22,19 @@ public sealed class TestsListViewModelFactory(
         new(navigation, navigationServiceFactory(navigation), userProgressService);
 }
 
+public interface ITestHistoryViewModelFactory
+{
+    TestHistoryViewModel Create(INavigation navigation, string testId, string testTitle);
+}
+
+public sealed class TestHistoryViewModelFactory(
+    Func<INavigation, INavigationService> navigationServiceFactory,
+    IUserProgressService userProgressService) : ITestHistoryViewModelFactory
+{
+    public TestHistoryViewModel Create(INavigation navigation, string testId, string testTitle) =>
+        new(navigation, navigationServiceFactory(navigation), userProgressService, testId, testTitle);
+}
+
 public interface IStandardTestViewModelFactory
 {
     StandardTestViewModel Create(INavigation navigation);

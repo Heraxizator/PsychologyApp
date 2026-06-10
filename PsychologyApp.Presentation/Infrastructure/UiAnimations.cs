@@ -312,27 +312,38 @@ public static class UiAnimations
     public static async Task SafeFocusRingAsync(
         Border? border,
         bool focused,
+        CancellationToken cancellationToken = default) =>
+        await SafeInputFocusAsync(border, focused, cancellationToken);
+
+    public static async Task FocusRingAsync(
+        Border? border,
+        bool focused,
+        CancellationToken cancellationToken = default) =>
+        await InputFocusAsync(border, focused, cancellationToken);
+
+    public static async Task SafeInputFocusAsync(
+        Border? border,
+        bool focused,
         CancellationToken cancellationToken = default)
     {
         try
         {
-            await FocusRingAsync(border, focused, cancellationToken);
+            await InputFocusAsync(border, focused, cancellationToken);
         }
         catch (OperationCanceledException)
         {
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafeFocusRingAsync skipped: {ex.GetType().Name}: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafeInputFocusAsync skipped: {ex.GetType().Name}: {ex.Message}");
             if (border is not null)
             {
-                ApplyFocusBorderInstant(border, focused);
-                ResetVisualState(border);
+                ApplyInputFocusInstant(border, focused);
             }
         }
     }
 
-    public static async Task FocusRingAsync(
+    public static async Task InputFocusAsync(
         Border? border,
         bool focused,
         CancellationToken cancellationToken = default)
@@ -342,38 +353,41 @@ public static class UiAnimations
             return;
         }
 
-        if (!ShouldAnimate(border))
-        {
-            ApplyFocusBorderInstant(border, focused);
-            ResetVisualState(border);
-            return;
-        }
-
         cancellationToken.ThrowIfCancellationRequested();
-        ApplyFocusBorderInstant(border, focused);
-        double targetScale = focused ? FocusScale : 1;
-        await border.ScaleToAsync(targetScale, FastDuration, focused ? EnterEasing : ReleaseEasing);
-        if (!focused)
-        {
-            ResetVisualState(border);
-        }
+
+        ApplyInputFocusInstant(border, focused);
+        await Task.CompletedTask;
     }
 
-    private static void ApplyFocusBorderInstant(Border border, bool focused)
+    private static void ApplyInputFocusInstant(Border border, bool focused)
     {
-        if (focused)
-        {
-            border.Stroke = GetFocusColor("Primary");
-            border.StrokeThickness = 1.5;
-        }
-        else
-        {
-            string key = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark
-                ? "InputBorderDark"
-                : "NeutralBorder";
-            border.Stroke = GetFocusColor(key);
-            border.StrokeThickness = 1;
-        }
+        border.StrokeThickness = 1;
+        border.Stroke = focused ? GetFocusColor("Primary") : GetInputBorderColor();
+        border.BackgroundColor = focused ? GetInputFocusBackgroundColor() : GetInputBackgroundColor();
+    }
+
+    private static Color GetInputBorderColor()
+    {
+        string key = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark
+            ? "InputBorderDark"
+            : "NeutralBorder";
+        return GetFocusColor(key);
+    }
+
+    private static Color GetInputBackgroundColor()
+    {
+        string key = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark
+            ? "InputBackgroundDark"
+            : "InputBackgroundLight";
+        return GetFocusColor(key);
+    }
+
+    private static Color GetInputFocusBackgroundColor()
+    {
+        string key = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark
+            ? "InputFocusBackgroundDark"
+            : "InputFocusBackgroundLight";
+        return GetFocusColor(key);
     }
 
     private static Color GetFocusColor(string key) =>

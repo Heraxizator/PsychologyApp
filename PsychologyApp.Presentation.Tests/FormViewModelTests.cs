@@ -13,7 +13,7 @@ public sealed class FormViewModelTests
     public async Task Send_EmptyMessage_DoesNotOpenDialog()
     {
         var dialog = new Mock<IDialogService>();
-        var viewModel = CreateViewModel(dialog.Object, recipient: "+123");
+        var viewModel = CreateViewModel(dialog.Object, email: "a@b.com");
 
         viewModel.Send.Execute(null);
         await Task.Delay(50);
@@ -21,23 +21,28 @@ public sealed class FormViewModelTests
         dialog.Verify(d => d.ShowAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
     }
 
-    [Fact]
-    public async Task Send_MissingRecipient_ShowsConfigurationMessage()
+    [Theory]
+    [InlineData("a@b.com", "", FeedbackChannel.Email)]
+    [InlineData("", "+123", FeedbackChannel.Sms)]
+    [InlineData("", "", FeedbackChannel.Share)]
+    [InlineData("a@b.com", "+123", FeedbackChannel.Email)]
+    public void ResolveChannel_PrefersEmailThenSmsThenShare(string email, string sms, FeedbackChannel expected)
     {
-        var dialog = new Mock<IDialogService>();
-        var viewModel = CreateViewModel(dialog.Object, recipient: string.Empty);
-        viewModel.MessageText = "Feedback text";
+        var settings = new AppSettings
+        {
+            ReviewEmailAddress = email,
+            ReviewSmsRecipient = sms
+        };
 
-        viewModel.Send.Execute(null);
-        await Task.Delay(50);
-
-        dialog.Verify(
-            d => d.ShowAsync(null, "Получатель SMS не настроен"),
-            Times.Once);
+        Assert.Equal(expected, FormViewModel.ResolveChannel(settings));
     }
 
-    private static FormViewModel CreateViewModel(IDialogService dialogService, string recipient) =>
+    private static FormViewModel CreateViewModel(IDialogService dialogService, string email = "", string sms = "") =>
         new(
             dialogService,
-            Options.Create(new AppSettings { ReviewSmsRecipient = recipient }));
+            Options.Create(new AppSettings
+            {
+                ReviewEmailAddress = email,
+                ReviewSmsRecipient = sms
+            }));
 }

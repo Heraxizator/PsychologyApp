@@ -6,7 +6,9 @@ public interface IUserProgressRepository
 {
     Task SaveTestResultAsync(TestResultDTO result, CancellationToken cancellationToken = default);
     Task<TestResultDTO?> GetLatestTestResultAsync(string testId, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<TestResultDTO>> GetTestResultHistoryAsync(string testId, int limit, CancellationToken cancellationToken = default);
     Task<long> CountTestResultsAsync(CancellationToken cancellationToken = default);
+    Task<DateTime?> GetLastTechniqueCompletionDateAsync(CancellationToken cancellationToken = default);
 
     Task RecordCompletionAsync(CompletionDTO completion, CancellationToken cancellationToken = default);
     Task<long> CountTechniqueCompletionsAsync(CancellationToken cancellationToken = default);

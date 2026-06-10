@@ -3,6 +3,7 @@ using PsychologyApp.Domain.Colour.ValueObjects;
 using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.ViewModels.Tests;
+using System.Text.Json;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.ViewModels.Tests;
@@ -116,6 +117,11 @@ public class AlternativeTestViewModel : BaseTestViewModel
         }
 
         string summary = $"{FirstName} / {SecondName}";
-        await _userProgressService.SaveTestResultAsync("luscher_brief", null, summary);
+        string detailJson = JsonSerializer.Serialize(new
+        {
+            first = new { name = FirstName, text = FirstResult },
+            second = new { name = SecondName, text = SecondResult }
+        });
+        await _userProgressService.SaveTestResultAsync("luscher_brief", null, summary, detailJson);
     }
 }

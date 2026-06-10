@@ -33,6 +33,9 @@
                         Subtitle="{Binding Subtitle}"
                         LastResultText="{Binding LastResultSummary}"
                         HasLastResult="{Binding HasLastResult}"
+                        HasMultipleResults="{Binding HasMultipleResults}"
+                        HistoryLabel="{Binding HistoryLabel}"
+                        OpenHistoryCommand="{Binding OpenHistoryCommand}"
                         TapCommand="{Binding TapCommand}">
                         <ui:TestListCardView.Behaviors>
                             <behaviors:ListItemRevealBehavior />

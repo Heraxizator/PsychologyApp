@@ -20,6 +20,7 @@ public class UserViewModel : BaseViewModel
 {
     private readonly IQuotService _quotService;
     private readonly IUserProgressService _userProgressService;
+    private readonly INavigationService _navigationService;
     private readonly ILogger<UserViewModel> _logger;
     private readonly IOptions<AppSettings> _settings;
     private CancellationTokenSource? _quotesLoadCts;
@@ -31,6 +32,7 @@ public class UserViewModel : BaseViewModel
     public ICommand OpenDonateCommand { get; private set; } = default!;
     public ICommand ReloadQuotesCommand { get; private set; } = default!;
     public ICommand CancelQuotesCommand { get; private set; } = default!;
+    public ICommand OpenTestsListCommand { get; private set; } = default!;
 
     public ObservableCollection<TechniqueItem> Techniques { get; private set; } = [];
     public ObservableCollection<QuoteItem> Quotes { get; private set; } = [];
@@ -46,6 +48,8 @@ public class UserViewModel : BaseViewModel
     public string TechniquesCompletedLabel => AppStrings.ProfileTechniquesCompleted;
     public string TestsCompletedLabel => AppStrings.ProfileTestsCompleted;
     public string StreakLabel => AppStrings.ProfileStreakDays;
+    public string LastPracticeDisplay { get; private set; } = string.Empty;
+    public bool HasLastPractice => !string.IsNullOrWhiteSpace(LastPracticeDisplay);
     public string RecommendedLabel => AppStrings.ProfileRecommended;
     public string BestQuotesLabel => AppStrings.ProfileBestQuotes;
     public string QuotesEmptyText => AppStrings.ProfileQuotesEmpty;
@@ -66,6 +70,7 @@ public class UserViewModel : BaseViewModel
         {
             _quotService = quotService;
             _userProgressService = userProgressService;
+            _navigationService = navigationService;
             _logger = logger;
             _settings = settings;
             ModuleName = AppStrings.ShellTabPractice;
@@ -78,6 +83,7 @@ public class UserViewModel : BaseViewModel
             OpenDonateCommand = new AsyncCommand(() => navigationService.GoToDonateAsync());
             ReloadQuotesCommand = new AsyncCommand(() => ReloadQuotesAsync());
             CancelQuotesCommand = new Command(CancelQuotesLoading);
+            OpenTestsListCommand = new AsyncCommand(() => _navigationService.GoToTestsListAsync());
 
             InitTechniques();
             InitAsync().FireAndForget();
@@ -110,6 +116,12 @@ public class UserViewModel : BaseViewModel
             TechniquesCompletedCount = (await _userProgressService.CountTechniqueCompletionsAsync(cancellationToken)).ToString();
             TestsCompletedCount = (await _userProgressService.CountTestResultsAsync(cancellationToken)).ToString();
             StreakCount = AppStrings.ProfileStreakCount(await _userProgressService.GetStreakDaysAsync(cancellationToken));
+            DateTime? lastPractice = await _userProgressService.GetLastTechniqueCompletionDateAsync(cancellationToken);
+            LastPracticeDisplay = lastPractice is null
+                ? string.Empty
+                : AppStrings.ProfileLastPractice(lastPractice.Value.ToLocalTime().ToString("d"));
+            OnPropertyChanged(nameof(LastPracticeDisplay));
+            OnPropertyChanged(nameof(HasLastPractice));
 
             if (generation != Volatile.Read(ref _initGeneration))
             {
@@ -148,6 +160,8 @@ public class UserViewModel : BaseViewModel
             nameof(TechniquesCompletedLabel),
             nameof(TestsCompletedLabel),
             nameof(StreakLabel),
+            nameof(LastPracticeDisplay),
+            nameof(HasLastPractice),
             nameof(RecommendedLabel),
             nameof(BestQuotesLabel),
             nameof(QuotesEmptyText),

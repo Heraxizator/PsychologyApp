@@ -4,6 +4,7 @@ using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Infrastructure;
 using PsychologyApp.Presentation.ViewModels.Tests;
 using System.Collections.ObjectModel;
+using System.Text.Json;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.ViewModels.Tests;
@@ -118,7 +119,17 @@ public class StandardTestViewModel : BaseTestViewModel
         }
 
         string summary = $"{AppStrings.TestsCoLabel}: {coValue}; {AppStrings.TestsBkLabel}: {Math.Round(bkValue, 2)}";
-        await _userProgressService.SaveTestResultAsync("luscher_standard", coValue, summary);
+        string detailJson = JsonSerializer.Serialize(new
+        {
+            co = coValue,
+            bk = Math.Round(bkValue, 2),
+            colors = _colourSelectedItems.Select(item => new
+            {
+                code = item.Item1.Code,
+                name = ColourStrings.GetColorName(item.Item1)
+            }).ToList()
+        });
+        await _userProgressService.SaveTestResultAsync("luscher_standard", coValue, summary, detailJson);
     }
 }
 

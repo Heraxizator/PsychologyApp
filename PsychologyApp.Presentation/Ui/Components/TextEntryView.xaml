@@ -2,14 +2,27 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.UI.Components.TextEntryView"
-             x:Name="Root">
+             x:Name="Root"
+             HorizontalOptions="Fill">
     <Border
         x:Name="InputBorder"
         Style="{StaticResource InputBorderStyle}">
-        <VerticalStackLayout Spacing="4">
+        <Border.Triggers>
+            <DataTrigger
+                Binding="{Binding Variant, Source={x:Reference Root}}"
+                TargetType="Border"
+                Value="Plain">
+                <Setter Property="Stroke" Value="Transparent" />
+                <Setter Property="StrokeThickness" Value="0" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="Padding" Value="0" />
+            </DataTrigger>
+        </Border.Triggers>
+        <VerticalStackLayout Spacing="6">
             <Label
                 Text="{Binding TitleText, Source={x:Reference Root}}"
-                Style="{StaticResource CaptionStyle}">
+                Style="{StaticResource CaptionStyle}"
+                Margin="2,0,0,0">
                 <Label.Triggers>
                     <DataTrigger
                         Binding="{Binding TitleText, Source={x:Reference Root}}"
@@ -22,7 +35,6 @@
             <Entry
                 x:Name="InputEntry"
                 Style="{StaticResource InputTextStyle}"
-                MinimumHeightRequest="44"
                 Keyboard="Text"
                 Placeholder="{Binding PlaceholderText, Source={x:Reference Root}}"
                 Text="{Binding BodyText, Source={x:Reference Root}, Mode=TwoWay}"

@@ -71,6 +71,10 @@
                         HorizontalTextAlignment="Center"
                         Style="{StaticResource SectionTitleStyle}"
                         Text="{Binding NoResultsHint}"/>
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource BodyStyle}"
+                        Text="{Binding NoResultsSubhint}"/>
                 </StackLayout>
 
                 <CollectionView
@@ -89,8 +93,8 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="physics:PhysicsReasonItem">
                             <ui:PhysicsReasonCardView
-                                Title="{Binding Title}"
-                                Subtitle="{Binding Subtitle}"
+                                TitleFormatted="{Binding HighlightedTitle}"
+                                SubtitleFormatted="{Binding HighlightedSubtitle}"
                                 Solution="{Binding Solution}"
                                 IsExpanded="{Binding IsExpanded}"
                                 ToggleExpandCommand="{Binding ToggleExpandCommand}"
