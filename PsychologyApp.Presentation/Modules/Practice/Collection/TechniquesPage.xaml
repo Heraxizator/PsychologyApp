@@ -62,6 +62,23 @@
                         Author="{Binding TodayTechniqueItem.Author}"
                         Active="{Binding TodayTechniqueItem.Active}"
                         TapCommand="{Binding TodayTechniqueItem.TapCommand}" />
+                    <Border Style="{StaticResource BrandCardStyle}" Padding="12">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="{Binding TodayMoodQuestion}" Style="{StaticResource SectionTitleStyle}" />
+                            <Label
+                                IsVisible="{Binding HasTodayMood}"
+                                Text="{Binding TodayMoodDisplay}"
+                                Style="{StaticResource BodyStyle}"
+                                TextColor="{DynamicResource Primary}" />
+                            <Grid ColumnDefinitions="*,*,*,*,*" ColumnSpacing="6">
+                                <ui:ButtonView Grid.Column="0" IsCompact="True" BodyText="😞" TapCommand="{Binding RecordMood1Command}" />
+                                <ui:ButtonView Grid.Column="1" IsCompact="True" BodyText="😕" TapCommand="{Binding RecordMood2Command}" />
+                                <ui:ButtonView Grid.Column="2" IsCompact="True" BodyText="😐" TapCommand="{Binding RecordMood3Command}" />
+                                <ui:ButtonView Grid.Column="3" IsCompact="True" BodyText="🙂" TapCommand="{Binding RecordMood4Command}" />
+                                <ui:ButtonView Grid.Column="4" IsCompact="True" BodyText="😊" TapCommand="{Binding RecordMood5Command}" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
                     <StackLayout
                         Orientation="Horizontal"
                         Margin="0,0,0,12">

@@ -33,6 +33,9 @@ public sealed class MauiPageFactory(
     public TestsListPage CreateTestsListPage() =>
         testPageFactory.CreateTestsListPage();
 
+    public TestHistoryPage CreateTestHistoryPage(string testId, string testTitle) =>
+        testPageFactory.CreateTestHistoryPage(testId, testTitle);
+
     public StartPhysicsPage CreateStartPhysicsPage() =>
         new(pageViewModelActivator, startPhysicsViewModelFactory);
 

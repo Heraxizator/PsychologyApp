@@ -55,6 +55,39 @@ public sealed class UserProgressRepository : IUserProgressRepository
             commandTimeout: _commandTimeoutSeconds);
     }
 
+    public async Task<IReadOnlyList<TestResultDTO>> GetTestResultHistoryAsync(string testId, int limit, CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        IEnumerable<TestResultDTO> rows = await connection.QueryAsync<TestResultDTO>(
+            """
+            SELECT TestResultId, TestId, Score, Summary, DetailJson, CompletedAt
+            FROM TestResults
+            WHERE TestId = @testId
+            ORDER BY TestResultId DESC
+            LIMIT @limit;
+            """,
+            new { testId, limit },
+            commandTimeout: _commandTimeoutSeconds);
+
+        return rows.ToList();
+    }
+
+    public async Task<DateTime?> GetLastTechniqueCompletionDateAsync(CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        string? value = await connection.QuerySingleOrDefaultAsync<string>(
+            """
+            SELECT CompletedAt
+            FROM Completions
+            WHERE CompletionKind = 'technique'
+            ORDER BY CompletionId DESC
+            LIMIT 1;
+            """,
+            commandTimeout: _commandTimeoutSeconds);
+
+        return value is null ? null : DateTime.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
+    }
+
     public async Task<long> CountTestResultsAsync(CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);

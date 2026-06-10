@@ -12,12 +12,29 @@
                 <StackLayout Spacing="6">
                     <Label Text="{TemplateBinding Title}" Style="{StaticResource SectionTitleStyle}" />
                     <Label Text="{TemplateBinding Subtitle}" Style="{StaticResource BodyStyle}" MaxLines="2" />
-                    <Label
-                        IsVisible="{TemplateBinding HasLastResult}"
-                        Text="{TemplateBinding LastResultText}"
-                        Style="{StaticResource CaptionStyle}"
-                        FontFamily="{StaticResource MediumFontFamily}"
-                        TextColor="{DynamicResource Primary}" />
+                    <Grid ColumnDefinitions="*,Auto" IsVisible="{TemplateBinding HasLastResult}">
+                        <Label
+                            Grid.Column="0"
+                            Text="{TemplateBinding LastResultText}"
+                            Style="{StaticResource CaptionStyle}"
+                            FontFamily="{StaticResource MediumFontFamily}"
+                            TextColor="{DynamicResource Primary}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{TemplateBinding OpenHistoryCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label
+                            Grid.Column="1"
+                            IsVisible="{TemplateBinding HasMultipleResults}"
+                            Text="{TemplateBinding HistoryLabel}"
+                            Style="{StaticResource CaptionStyle}"
+                            TextColor="{DynamicResource Primary}"
+                            FontFamily="{StaticResource SemiBoldFontFamily}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{TemplateBinding OpenHistoryCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
                 </StackLayout>
             </Border>
         </ControlTemplate>

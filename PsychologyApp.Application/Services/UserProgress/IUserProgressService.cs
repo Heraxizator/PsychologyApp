@@ -6,7 +6,9 @@ public interface IUserProgressService
 {
     Task SaveTestResultAsync(string testId, int? score, string summary, string? detailJson = null, CancellationToken cancellationToken = default);
     Task<TestResultDTO?> GetLatestTestResultAsync(string testId, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<TestResultDTO>> GetTestResultHistoryAsync(string testId, int limit = 20, CancellationToken cancellationToken = default);
     Task<long> CountTestResultsAsync(CancellationToken cancellationToken = default);
+    Task<DateTime?> GetLastTechniqueCompletionDateAsync(CancellationToken cancellationToken = default);
 
     Task RecordTechniqueCompletionAsync(string itemKey, string moduleName, string pageName, int durationSeconds = 0, CancellationToken cancellationToken = default);
     Task<long> CountTechniqueCompletionsAsync(CancellationToken cancellationToken = default);

@@ -37,6 +37,7 @@ public class PhysicsSearchViewModel : BaseViewModel
     public string EmptySearchHint => AppStrings.PhysicsEmptySearchHint;
     public string EmptySearchSubhint => AppStrings.PhysicsEmptySearchSubhint;
     public string NoResultsHint => AppStrings.PhysicsNoResultsHint;
+    public string NoResultsSubhint => AppStrings.PhysicsNoResultsSubhint;
     public string LoadingText => AppStrings.PhysicsLoadingText;
     public string SearchFilteringText => AppStrings.PhysicsSearchFilteringText;
     public string FailedText => AppStrings.LoadFailed;
@@ -129,6 +130,7 @@ public class PhysicsSearchViewModel : BaseViewModel
             nameof(EmptySearchHint),
             nameof(EmptySearchSubhint),
             nameof(NoResultsHint),
+            nameof(NoResultsSubhint),
             nameof(LoadingText),
             nameof(SearchFilteringText),
             nameof(FailedText),
@@ -325,7 +327,10 @@ public class PhysicsSearchViewModel : BaseViewModel
         List<PhysicsReasonItem> matches = await Task.Run(() =>
             ReasonsList
                 .Where(reason => MatchesSearch(reason, searchText))
-                .Select(dto => CreateItem(dto, suggestions))
+                .Select(dto => (Reason: dto, Score: RankMatch(dto, searchText)))
+                .OrderByDescending(pair => pair.Score)
+                .ThenBy(pair => pair.Reason.Title, StringComparer.OrdinalIgnoreCase)
+                .Select(pair => CreateItem(pair.Reason, suggestions, searchText))
                 .ToList(), cancellationToken);
 
         await MainThread.InvokeOnMainThreadAsync(() =>
@@ -370,9 +375,24 @@ public class PhysicsSearchViewModel : BaseViewModel
         || reason.Subtitle?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true
         || reason.Solution?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true;
 
-    private PhysicsReasonItem CreateItem(ReasonDTO dto, IReadOnlyList<PhysicsTechniqueSuggestion> suggestions)
+    private static int RankMatch(ReasonDTO reason, string searchText)
     {
-        PhysicsReasonItem item = PhysicsReasonItem.FromDto(dto, suggestions);
+        if (reason.Title?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true)
+        {
+            return 3;
+        }
+
+        if (reason.Subtitle?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true)
+        {
+            return 2;
+        }
+
+        return reason.Solution?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true ? 1 : 0;
+    }
+
+    private PhysicsReasonItem CreateItem(ReasonDTO dto, IReadOnlyList<PhysicsTechniqueSuggestion> suggestions, string searchText)
+    {
+        PhysicsReasonItem item = PhysicsReasonItem.FromDto(dto, suggestions, searchText);
         item.ToggleExpandCommand = new Command(() => item.IsExpanded = !item.IsExpanded);
         return item;
     }

@@ -17,6 +17,7 @@ public interface IPageFactory
 {
     TechniquesPage CreateTechniquesPage();
     TestsListPage CreateTestsListPage();
+    TestHistoryPage CreateTestHistoryPage(string testId, string testTitle);
     Views.Physics.StartPhysicsPage CreateStartPhysicsPage();
     Views.Clean.MusicPlayerPage CreateMusicPlayerPage();
     QuotePage CreateQuotePage();

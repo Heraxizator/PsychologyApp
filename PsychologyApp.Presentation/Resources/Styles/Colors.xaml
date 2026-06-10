@@ -41,6 +41,8 @@
     <Color x:Key="SurfaceDark">#1E1E1E</Color>
     <Color x:Key="InputBackgroundLight">#FAFAFA</Color>
     <Color x:Key="InputBackgroundDark">#2A2A2A</Color>
+    <Color x:Key="InputFocusBackgroundLight">#F0F7FF</Color>
+    <Color x:Key="InputFocusBackgroundDark">#1A2A3D</Color>
     <Color x:Key="InputBorderDark">#404040</Color>
     <Color x:Key="InputPlaceholderLight">#999999</Color>
     <Color x:Key="InputPlaceholderDark">#AAAAAA</Color>

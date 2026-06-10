@@ -18,8 +18,14 @@ public sealed class UserProgressService(IUserProgressRepository repository) : IU
     public Task<TestResultDTO?> GetLatestTestResultAsync(string testId, CancellationToken cancellationToken = default) =>
         repository.GetLatestTestResultAsync(testId, cancellationToken);
 
+    public Task<IReadOnlyList<TestResultDTO>> GetTestResultHistoryAsync(string testId, int limit = 20, CancellationToken cancellationToken = default) =>
+        repository.GetTestResultHistoryAsync(testId, limit, cancellationToken);
+
     public Task<long> CountTestResultsAsync(CancellationToken cancellationToken = default) =>
         repository.CountTestResultsAsync(cancellationToken);
+
+    public Task<DateTime?> GetLastTechniqueCompletionDateAsync(CancellationToken cancellationToken = default) =>
+        repository.GetLastTechniqueCompletionDateAsync(cancellationToken);
 
     public Task RecordTechniqueCompletionAsync(string itemKey, string moduleName, string pageName, int durationSeconds = 0, CancellationToken cancellationToken = default) =>
         repository.RecordCompletionAsync(new CompletionDTO

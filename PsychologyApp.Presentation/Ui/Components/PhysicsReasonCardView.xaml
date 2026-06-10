@@ -12,9 +12,14 @@
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{TemplateBinding ToggleExpandCommand}" />
                     </StackLayout.GestureRecognizers>
-                    <ui:TextItemView
-                        TitleText="{TemplateBinding Title}"
-                        BodyText="{TemplateBinding Subtitle}" />
+                    <StackLayout Spacing="4">
+                        <Label
+                            FormattedText="{TemplateBinding TitleFormatted}"
+                            Style="{StaticResource SectionTitleStyle}" />
+                        <Label
+                            FormattedText="{TemplateBinding SubtitleFormatted}"
+                            Style="{StaticResource BodyStyle}" />
+                    </StackLayout>
                     <StackLayout
                         StyleId="ExpandedSection"
                         IsVisible="False"

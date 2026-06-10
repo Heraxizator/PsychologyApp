@@ -43,6 +43,8 @@ public class TechniquesViewModel : BaseViewModel
     public string TodayForYouLabel => AppStrings.TodayForYou;
     public string TodayStartPracticeText => AppStrings.TodayStartPractice;
     public string TodayMoodQuestion => AppStrings.TodayMoodQuestion;
+    public string TodayMoodDisplay { get; private set; } = string.Empty;
+    public bool HasTodayMood => !string.IsNullOrWhiteSpace(TodayMoodDisplay);
     public string StreakDisplay => AppStrings.ProfileStreakCount(StreakDays);
     public bool HasStreak => StreakDays > 0;
     public string PracticeEmptyTitle => AppStrings.PracticeEmptyTitle;
@@ -120,6 +122,8 @@ public class TechniquesViewModel : BaseViewModel
             nameof(TodayForYouLabel),
             nameof(TodayStartPracticeText),
             nameof(TodayMoodQuestion),
+            nameof(TodayMoodDisplay),
+            nameof(HasTodayMood),
             nameof(StreakDisplay),
             nameof(PracticeEmptyTitle),
             nameof(PracticeEmptyBody),
@@ -165,6 +169,7 @@ public class TechniquesViewModel : BaseViewModel
             await AppReadiness.DatabaseReadyAsync.WaitAsync(cancellationToken);
 
             StreakDays = await _userProgressService.GetStreakDaysAsync(cancellationToken);
+            await RefreshTodayMoodAsync(cancellationToken);
             IEnumerable<TechniqueItem> staticItems = await BuildStaticItemsAsync(cancellationToken);
             IEnumerable<TechniqueDTO> dynamicSource = await _techniqueService.GetTechniquesListAsync(500, cancellationToken);
 
@@ -267,10 +272,31 @@ public class TechniquesViewModel : BaseViewModel
         TapCommand = new AsyncCommand(() => _navigationService.GoToCreatedAsync(item.TechniqueId))
     };
 
+    private async Task RefreshTodayMoodAsync(CancellationToken cancellationToken = default)
+    {
+        IReadOnlyList<MoodEntryDTO> moods = await _userProgressService.GetRecentMoodsAsync(1, cancellationToken);
+        if (moods.Count == 0)
+        {
+            TodayMoodDisplay = string.Empty;
+        }
+        else
+        {
+            MoodEntryDTO latest = moods[0];
+            DateTime local = latest.RecordedAt.ToLocalTime();
+            TodayMoodDisplay = local.Date == DateTime.Today
+                ? AppStrings.TodayMoodLine(latest.MoodLevel, 5)
+                : string.Empty;
+        }
+
+        OnPropertyChanged(nameof(TodayMoodDisplay));
+        OnPropertyChanged(nameof(HasTodayMood));
+    }
+
     private async Task RecordMoodAsync(int moodLevel)
     {
         await _userProgressService.RecordMoodAsync(moodLevel);
         StreakDays = await _userProgressService.GetStreakDaysAsync();
+        await RefreshTodayMoodAsync();
         _toastService.ShortToast(AppStrings.TodayMoodSaved);
     }
 

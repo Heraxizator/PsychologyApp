@@ -110,6 +110,14 @@ public static class AppStrings
         "SMS is not supported on this device");
     public static string ReviewSmsError(string message) =>
         T($"Ошибка при отправке СМС: {message}", $"Failed to send SMS: {message}");
+    public static string ReviewEmailNotSupported => T(
+        "Отправка email не поддерживается",
+        "Email is not supported on this device");
+    public static string ReviewEmailError(string message) =>
+        T($"Ошибка при отправке email: {message}", $"Failed to send email: {message}");
+    public static string ReviewShareTitle => T("Отзыв о приложении", "App feedback");
+    public static string ReviewShareError(string message) =>
+        T($"Не удалось открыть меню отправки: {message}", $"Failed to open share menu: {message}");
 
     public static string DonateTitle => T("Пожертвования", "Donations");
     public static string DonateMoreInfo => T("Подробнее", "More info");
@@ -138,6 +146,9 @@ public static class AppStrings
     public static string CleanerJesusPrayer => T("Иисусова Молитва", "Jesus Prayer");
     public static string CleanerHeavenlyKing => T("Царю небесный", "Heavenly King");
     public static string CleanerDoxology => T("Славословие", "Doxology");
+    public static string CleanerSearchPlaceholder => T("Поиск молитвы", "Search prayers");
+    public static string CleanerNoPrayersFound => T("Ничего не найдено", "No prayers found");
+    public static string CleanerNowPlaying => T("Сейчас играет", "Now playing");
 
     public static string DesignerNamePlaceholder => T("Крутилка Славинского", "Slavinski spin technique");
     public static string DesignerDescriptionPlaceholder => T(
@@ -233,6 +244,29 @@ public static class AppStrings
     public static string TodayStartPractice => T("Начать", "Start");
     public static string TodayMoodQuestion => T("Как настроение?", "How are you feeling?");
     public static string TodayMoodSaved => T("Настроение сохранено", "Mood saved");
+    public static string TodayMoodLine(int level, int max) =>
+        T($"Сегодня: {MoodEmoji(level)} {level}/{max}", $"Today: {MoodEmoji(level)} {level}/{max}");
+    public static string QuoteCopied => T("Скопировано", "Copied");
+    public static string TestHistoryTitle => T("История результатов", "Result history");
+    public static string TestHistoryEmpty => T("Пока нет сохранённых результатов", "No saved results yet");
+    public static string TestHistoryEntry(string date, string summary) =>
+        T($"{date}: {summary}", $"{date}: {summary}");
+    public static string TestOpenHistory => T("История", "History");
+    public static string ProfileLastPractice(string date) =>
+        T($"Последняя практика: {date}", $"Last practice: {date}");
+    public static string PhysicsNoResultsSubhint => T(
+        "Попробуйте: плечо, шея, спина, живот, голова…",
+        "Try: shoulder, neck, back, stomach, head…");
+
+    private static string MoodEmoji(int level) => level switch
+    {
+        1 => "😞",
+        2 => "😕",
+        3 => "😐",
+        4 => "🙂",
+        5 => "😊",
+        _ => "😐"
+    };
     public static string TechniqueContinueBadge => T("Продолжить", "Continue");
     public static string TechniqueLastPractice(string date) => T($"Последняя практика: {date}", $"Last practice: {date}");
 

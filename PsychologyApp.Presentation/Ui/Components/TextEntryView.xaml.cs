@@ -11,6 +11,15 @@ public partial class TextEntryView : ContentView
         InitializeComponent();
     }
 
+    public static readonly BindableProperty VariantProperty =
+        BindableProperty.Create(nameof(Variant), typeof(string), typeof(TextEntryView), InputFieldChrome.VariantDefault);
+
+    public string Variant
+    {
+        get => (string)GetValue(VariantProperty);
+        set => SetValue(VariantProperty, value);
+    }
+
     public static readonly BindableProperty TitleTextProperty =
         BindableProperty.Create(nameof(TitleText), typeof(string), typeof(TextEntryView), string.Empty);
 
@@ -48,10 +57,10 @@ public partial class TextEntryView : ContentView
     }
 
     private void OnInputFocused(object? sender, FocusEventArgs e) =>
-        InputFocusHelper.ApplyFocusedBorderAsync(InputBorder).FireAndForget();
+        InputFieldChrome.ApplyFocusAsync(InputBorder, Variant).FireAndForget();
 
     private void OnInputUnfocused(object? sender, FocusEventArgs e) =>
-        InputFocusHelper.ApplyDefaultBorderAsync(InputBorder).FireAndForget();
+        InputFieldChrome.ApplyBlurAsync(InputBorder, Variant).FireAndForget();
 
     private void OnInputTextChanged(object? sender, TextChangedEventArgs e)
     {

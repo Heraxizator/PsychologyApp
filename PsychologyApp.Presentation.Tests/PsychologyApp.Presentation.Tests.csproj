@@ -33,6 +33,7 @@
     <Compile Include="..\PsychologyApp.Presentation\Infrastructure\AsyncCommandExtensions.cs" Link="AsyncCommandExtensions.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Infrastructure\UserPreferences.cs" Link="UserPreferences.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Infrastructure\AppStrings.cs" Link="AppStrings.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Infrastructure\EntryDraft.cs" Link="EntryDraft.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Infrastructure\UiAnimations.cs" Link="UiAnimations.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Infrastructure\ReduceMotion.cs" Link="ReduceMotion.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Infrastructure\UserQuotesRefreshPolicy.cs" Link="UserQuotesRefreshPolicy.cs" />

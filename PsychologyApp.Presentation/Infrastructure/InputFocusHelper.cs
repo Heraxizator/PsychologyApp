@@ -9,10 +9,10 @@ public static class InputFocusHelper
         ApplyDefaultBorderAsync(border).GetAwaiter().GetResult();
 
     public static Task ApplyFocusedBorderAsync(Border border) =>
-        UiAnimations.SafeFocusRingAsync(border, focused: true);
+        UiAnimations.SafeInputFocusAsync(border, focused: true);
 
     public static Task ApplyDefaultBorderAsync(Border border) =>
-        UiAnimations.SafeFocusRingAsync(border, focused: false);
+        UiAnimations.SafeInputFocusAsync(border, focused: false);
 
     internal static void ApplyFocusedBorderInstant(Border border)
     {

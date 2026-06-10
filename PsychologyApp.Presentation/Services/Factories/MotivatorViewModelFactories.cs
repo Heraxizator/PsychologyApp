@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Services.QuotService;
+using PsychologyApp.Presentation.Services.Toasts;
 using PsychologyApp.Presentation.ViewModels.Motivator;
 using PsychologyApp.Presentation.ViewModels.Clean;
 
@@ -15,9 +16,11 @@ public interface IQuoteViewModelFactory
 public sealed class QuoteViewModelFactory(
     IQuotService quotService,
     ILogger<QuoteViewModel> logger,
-    IOptions<AppSettings> settings) : IQuoteViewModelFactory
+    IOptions<AppSettings> settings,
+    IToastService toastService) : IQuoteViewModelFactory
 {
-    public QuoteViewModel Create(INavigation navigation) => new(navigation, quotService, logger, settings);
+    public QuoteViewModel Create(INavigation navigation) =>
+        new(navigation, quotService, logger, settings, toastService);
 }
 
 public interface IMusicPlayerViewModelFactory

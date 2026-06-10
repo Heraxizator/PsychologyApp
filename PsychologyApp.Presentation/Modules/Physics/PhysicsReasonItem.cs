@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using PsychologyApp.Application.Models;
+using PsychologyApp.Presentation.Infrastructure;
 
 namespace PsychologyApp.Presentation.Modules.Physics;
 
@@ -11,6 +12,8 @@ public sealed class PhysicsReasonItem : INotifyPropertyChanged
     public string? Title { get; init; }
     public string? Subtitle { get; init; }
     public string? Solution { get; init; }
+    public FormattedString? HighlightedTitle { get; init; }
+    public FormattedString? HighlightedSubtitle { get; init; }
 
     private bool _isExpanded;
     public bool IsExpanded
@@ -36,13 +39,18 @@ public sealed class PhysicsReasonItem : INotifyPropertyChanged
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-    public static PhysicsReasonItem FromDto(ReasonDTO dto, IReadOnlyList<PhysicsTechniqueSuggestion> suggestions) =>
+    public static PhysicsReasonItem FromDto(
+        ReasonDTO dto,
+        IReadOnlyList<PhysicsTechniqueSuggestion> suggestions,
+        string searchText) =>
         new()
         {
             ReasonId = dto.ReasonId,
             Title = dto.Title,
             Subtitle = dto.Subtitle,
             Solution = dto.Solution,
+            HighlightedTitle = SearchTextHighlighter.Build(dto.Title, searchText),
+            HighlightedSubtitle = SearchTextHighlighter.Build(dto.Subtitle, searchText),
             SuggestedTechniques = suggestions
         };
 }

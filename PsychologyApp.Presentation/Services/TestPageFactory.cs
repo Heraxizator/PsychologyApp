@@ -10,6 +10,7 @@ namespace PsychologyApp.Presentation.Services;
 public interface ITestPageFactory
 {
     TestsListPage CreateTestsListPage();
+    TestHistoryPage CreateTestHistoryPage(string testId, string testTitle);
     TheoryPage CreateTheoryPage(string content, TechniqueId? techniqueId = null);
     FindProblemPage CreateFindProblemPage(string? description, List<string> algorithm, string? comment, Action action, string? testId = null);
     QuestionPage CreateQuestionPage(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null);
@@ -20,6 +21,7 @@ public interface ITestPageFactory
 public sealed class TestPageFactory(
     IPageViewModelActivator pageViewModelActivator,
     ITestsListViewModelFactory testsListViewModelFactory,
+    ITestHistoryViewModelFactory testHistoryViewModelFactory,
     ITheoryViewModelFactory theoryViewModelFactory,
     IFindProblemViewModelFactory findProblemViewModelFactory,
     IQuestionViewModelFactory questionViewModelFactory,
@@ -28,6 +30,9 @@ public sealed class TestPageFactory(
 {
     public TestsListPage CreateTestsListPage() =>
         new(pageViewModelActivator, testsListViewModelFactory);
+
+    public TestHistoryPage CreateTestHistoryPage(string testId, string testTitle) =>
+        new(testHistoryViewModelFactory, testId, testTitle);
 
     public TheoryPage CreateTheoryPage(string content, TechniqueId? techniqueId = null) =>
         new(theoryViewModelFactory, content, techniqueId);

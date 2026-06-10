@@ -6,6 +6,7 @@
              xmlns:clean="clr-namespace:PsychologyApp.Presentation.Modules.Clean"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Infrastructure.Behaviors"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="vm:MusicPlayerViewModel"
              Shell.NavBarIsVisible="True"
              Title="{Binding PageTitle}">
@@ -17,18 +18,30 @@
         <Grid
             IsVisible="{Binding IsDone}"
             Margin="{StaticResource LayoutTabPageMarginThickness}"
-            RowDefinitions="*,Auto">
+            RowDefinitions="Auto,*,Auto,Auto">
             <Grid.Behaviors>
                 <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
             </Grid.Behaviors>
 
-            <CollectionView
+            <ui:TextEntryView
                 Grid.Row="0"
+                Margin="0,0,0,8"
+                PlaceholderText="{Binding SearchPlaceholder}"
+                BodyText="{Binding SearchText, Mode=TwoWay}" />
+
+            <CollectionView
+                Grid.Row="1"
                 x:Name="Musics"
-                IsVisible="{Binding IsDone}"
                 VerticalOptions="FillAndExpand"
                 VerticalScrollBarVisibility="Never"
-                ItemsSource="{Binding SelectedItems}">
+                ItemsSource="{Binding FilteredItems}">
+                <CollectionView.EmptyView>
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource BodyStyle}"
+                        Text="{Binding NoPrayersFoundText}"
+                        IsVisible="{Binding IsSearchEmptyVisible}" />
+                </CollectionView.EmptyView>
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="4" />
                 </CollectionView.ItemsLayout>
@@ -46,12 +59,37 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
+            <Border
+                Grid.Row="2"
+                Margin="0,8,0,8"
+                IsVisible="{Binding HasActiveTrack}"
+                Style="{StaticResource BrandCardStyle}"
+                Padding="12">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                        <Label Text="{Binding NowPlayingLabel}" Style="{StaticResource CaptionStyle}" />
+                        <Label Text="{Binding ActiveTrackTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    </VerticalStackLayout>
+                    <ui:ButtonView
+                        Grid.Column="1"
+                        IsCompact="True"
+                        BodyText="{Binding PlayPauseGlyph}"
+                        TapCommand="{Binding TogglePlayPauseCommand}" />
+                </Grid>
+            </Border>
+
             <ui:TextBoxView
-                Grid.Row="1"
-                Margin="0,8,0,10"
-                IsVisible="{Binding IsDone}"
+                Grid.Row="3"
+                Margin="0,0,0,10"
                 HeaderText="{Binding MoreInfoHeader}"
                 BodyText="{Binding MoreInfoBody}" />
+
+            <toolkit:MediaElement
+                x:Name="Player"
+                Grid.Row="3"
+                IsVisible="False"
+                ShouldAutoPlay="True"
+                MediaEnded="OnMediaEnded" />
         </Grid>
 
         <StackLayout

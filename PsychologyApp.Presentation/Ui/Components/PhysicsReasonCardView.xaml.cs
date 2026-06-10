@@ -66,22 +66,22 @@ public partial class PhysicsReasonCardView : ContentView
         }
     }
 
-    public static readonly BindableProperty TitleProperty =
-        BindableProperty.Create(nameof(Title), typeof(string), typeof(PhysicsReasonCardView), string.Empty);
+    public static readonly BindableProperty TitleFormattedProperty =
+        BindableProperty.Create(nameof(TitleFormatted), typeof(FormattedString), typeof(PhysicsReasonCardView), null);
 
-    public string Title
+    public FormattedString? TitleFormatted
     {
-        get => (string)GetValue(TitleProperty);
-        set => SetValue(TitleProperty, value);
+        get => (FormattedString?)GetValue(TitleFormattedProperty);
+        set => SetValue(TitleFormattedProperty, value);
     }
 
-    public static readonly BindableProperty SubtitleProperty =
-        BindableProperty.Create(nameof(Subtitle), typeof(string), typeof(PhysicsReasonCardView), string.Empty);
+    public static readonly BindableProperty SubtitleFormattedProperty =
+        BindableProperty.Create(nameof(SubtitleFormatted), typeof(FormattedString), typeof(PhysicsReasonCardView), null);
 
-    public string Subtitle
+    public FormattedString? SubtitleFormatted
     {
-        get => (string)GetValue(SubtitleProperty);
-        set => SetValue(SubtitleProperty, value);
+        get => (FormattedString?)GetValue(SubtitleFormattedProperty);
+        set => SetValue(SubtitleFormattedProperty, value);
     }
 
     public static readonly BindableProperty SolutionProperty =
