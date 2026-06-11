@@ -1,5 +1,5 @@
-using PsychologyApp.Presentation.Modules.Practice.Techniques;
-using PsychologyApp.Presentation.Modules.Tests;
+using PsychologyApp.Presentation.Models.Practice.Techniques;
+using PsychologyApp.Presentation.Models.Tests;
 
 namespace PsychologyApp.Presentation.Services;
 
@@ -20,7 +20,9 @@ public interface INavigationService
     Task GoToPhysicsSearchAsync();
     Task GoToTheoryAsync(string content, TechniqueId? techniqueId = null);
     Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Action action, string? testId = null);
-    Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer);
+    Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null);
     Task GoToStandardTestAsync();
     Task GoToAlternativeTestAsync();
+    Task GoToTestHistoryAsync(string testId, string testTitle);
+    Task GoToTestsListAsync();
 }

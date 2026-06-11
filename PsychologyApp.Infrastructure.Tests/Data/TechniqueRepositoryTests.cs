@@ -1,5 +1,6 @@
 using PsychologyApp.Application.Exceptions;
 using PsychologyApp.Domain.Entities;
+using PsychologyApp.Testing.Data;
 using PsychologyApp.Infrastructure.Data.Repositories.Techniques;
 using Xunit;
 
@@ -73,6 +74,16 @@ public class TechniqueRepositoryTests : IAsyncLifetime
         var missing = Technique.Create(999, "1", "2026-06-05", "Missing", "d", "s", "a", "alg", "img");
 
         await Assert.ThrowsAsync<PersistenceException>(() => _repository.EditAsync(missing));
+    }
+
+    [Fact]
+    public async Task GetByIdAsync_WhenCanceled_ThrowsOperationCanceledException()
+    {
+        using var cts = new CancellationTokenSource();
+        cts.Cancel();
+
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
+            _repository.GetByIdAsync(1, cts.Token));
     }
 
     [Fact]

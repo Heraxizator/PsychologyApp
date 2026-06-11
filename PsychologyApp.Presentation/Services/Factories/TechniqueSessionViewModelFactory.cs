@@ -4,11 +4,11 @@ using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Services.TechniqueService;
 using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Services.Dialogs;
-using PsychologyApp.Presentation.Modules.Practice.Messages;
-using PsychologyApp.Presentation.Modules.Practice.Techniques;
+using PsychologyApp.Presentation.Services.Practice;
+using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.ViewModels.Practice.Constructor;
 using PsychologyApp.Presentation.ViewModels;
-using PsychologyApp.Presentation.ViewModels.TechniqueViewModels;
+using PsychologyApp.Presentation.ViewModels.Practice.Techniques;
 
 namespace PsychologyApp.Presentation.Services.Factories;
 
@@ -24,10 +24,10 @@ public sealed class CreatedViewModelFactory(
     ILogger<CreatedViewModel> logger,
     IOptions<AppSettings> settings,
     IUserProgressService userProgressService,
-    Func<INavigation, INavigationService> navigationServiceFactory) : ICreatedViewModelFactory
+    Func<NavigationContext, INavigationService> navigationServiceFactory) : ICreatedViewModelFactory
 {
     public CreatedViewModel Create(INavigation navigation, long techniqueId) =>
-        new(navigation, techniqueId, dialogService, techniqueService, techniqueMessenger, logger, settings, navigationServiceFactory(navigation), userProgressService);
+        new(navigation, techniqueId, dialogService, techniqueService, techniqueMessenger, logger, settings, navigationServiceFactory(NavigationContext.From(navigation)), userProgressService);
 }
 
 public interface IDesignerViewModelFactory
@@ -40,10 +40,10 @@ public sealed class DesignerViewModelFactory(
     ITechniqueMessenger techniqueMessenger,
     ILogger<DesignerViewModel> logger,
     IOptions<AppSettings> settings,
-    Func<INavigation, INavigationService> navigationServiceFactory) : IDesignerViewModelFactory
+    Func<NavigationContext, INavigationService> navigationServiceFactory) : IDesignerViewModelFactory
 {
     public DesignerViewModel Create(INavigation navigation, long techniqueId) =>
-        new(navigation, techniqueId, techniqueService, techniqueMessenger, logger, settings, navigationServiceFactory(navigation));
+        new(navigation, techniqueId, techniqueService, techniqueMessenger, logger, settings, navigationServiceFactory(NavigationContext.From(navigation)));
 }
 
 public interface ITechniqueViewModelFactory
@@ -52,12 +52,12 @@ public interface ITechniqueViewModelFactory
 }
 
 public sealed class TechniqueViewModelFactory(
-    Func<INavigation, INavigationService> navigationServiceFactory,
+    Func<NavigationContext, INavigationService> navigationServiceFactory,
     IUserProgressService userProgressService) : ITechniqueViewModelFactory
 {
     public BaseViewModel Create(TechniqueId techniqueId, INavigation navigation)
     {
-        INavigationService navigationService = navigationServiceFactory(navigation);
+        INavigationService navigationService = navigationServiceFactory(NavigationContext.From(navigation));
         return techniqueId switch
         {
             TechniqueId.Paper => new PaperListViewModel(navigationService, TechniqueId.Paper, clearTextAfterAdd: true, userProgressService),

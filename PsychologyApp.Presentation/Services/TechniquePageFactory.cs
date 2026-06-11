@@ -1,9 +1,9 @@
 using PsychologyApp.Application.Abstractions.Analytics;
-using PsychologyApp.Presentation.Modules.Practice.Techniques;
+using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Services.Factories;
-using PsychologyApp.Presentation.Views;
-using PsychologyApp.Presentation.Views.TechniquePages;
-using PsychologyApp.Presentation.Views.TechniquePages.ConstructorPages;
+using PsychologyApp.Presentation.Views.Practice;
+using PsychologyApp.Presentation.Views.Practice.Techniques;
+using PsychologyApp.Presentation.Views.Practice.Constructor;
 
 namespace PsychologyApp.Presentation.Services;
 
@@ -21,8 +21,7 @@ public sealed class TechniquePageFactory(
     ICreatedViewModelFactory createdViewModelFactory,
     IDesignerViewModelFactory designerViewModelFactory,
     ITechniqueViewModelFactory techniqueViewModelFactory,
-    IPageAnalyticsService pageAnalyticsService,
-    Func<INavigation, INavigationService> navigationServiceFactory) : ITechniquePageFactory
+    IPageAnalyticsService pageAnalyticsService) : ITechniquePageFactory
 {
     public TechniquesPage CreateTechniquesPage() =>
         new(pageViewModelActivator, techniquesViewModelFactory);

@@ -20,7 +20,7 @@
 
 | Presentation | `PsychologyApp.Presentation` | MAUI UI, platform adapters, ViewModels |
 
-| Tests | `PsychologyApp.*.Tests` | Unit tests per layer |
+| Tests | `PsychologyApp.*.Tests`, `PsychologyApp.Testing` | Unit tests per layer; shared in-memory SQLite helpers; integration tests via Bootstrap |
 
 
 
@@ -66,9 +66,9 @@ ViewModels must not reference Infrastructure types. `MauiProgram` registers `Add
 
 
 
-- `MauiProgram` — MAUI host, fonts, handlers, logging; sets `MauiServiceProvider.Current` once after `Build()` for pre-handler startup only
+- `MauiProgram` — MAUI host, fonts, handlers, logging
 
-- `MauiServiceProvider` — static resolver **only** for `AppShell` and `GlobalExceptionHandler` (MAUI startup before `MauiContext`); all other code uses constructor injection
+- `GlobalExceptionHandler` — singleton registered in DI; `App` calls `Attach(this)` for unhandled exceptions and `AsyncCommand` errors
 
 - `IPageFactory` / `MauiPageFactory` — single entry point for constructing pages with constructor-injected dependencies
 
@@ -97,32 +97,38 @@ Collapsing into a single mega-factory would couple unrelated features. Current s
 
 ### Presentation layout
 
-| Folder | Namespaces |
-|--------|------------|
-| `Modules/Practice` | `Views.*`, `ViewModels.Practice.Constructor`, `Technique.Main`, technique session UI |
-| `Modules/Tests` | `Views.Tests`, `ViewModels.Tests` |
-| `Modules/Physics` | `Views.Physics`, `ViewModels.Physics` |
-| `Modules/Profile` | `Views.Profile`, `ViewModels.Profile`, `QuoteItem` |
-| `Modules/Motivator` | `Views.Motivator`, `ViewModels.Motivator` |
-| `Modules/Clean` | `Views.Clean`, `ViewModels.Clean` — audio player tab |
-| `Modules/Review` | `Views.Review`, `ViewModels.Review` — feedback form (`FormPage` from Options) |
+Physical folders mirror namespaces (`{Folder}/{Area}/…` → `PsychologyApp.Presentation.{Namespace}`):
 
-### Folder-to-namespace map (physical path may differ)
+| Folder | Role |
+|--------|------|
+| `Views/{Area}/` | MAUI pages (`*Page.xaml` + code-behind) |
+| `ViewModels/{Area}/` | ViewModels; `ViewModels/BaseViewModel.cs` — shared base |
+| `Models/{Area}/` | Presentation DTOs, JSON catalog loaders, technique registry |
+| `UI/Components/`, `UI/Techniques/` | Reusable XAML (`UI.Components`, `UI.Techniques`) |
+| `Controls/` | Composite layouts (`TechniquePageShell`) |
+| `Common/` | Shared MAUI helpers (namespace `PsychologyApp.Presentation.Common`); subfolders: `Preferences/`, `Localization/`, `Animation/`, `PressFeedback/`, `Formatting/`, `Infrastructure/`, `Behaviors/` |
+| `PsychologyApp.Presentation.Core` | net10.0 library: catalogs, test models, `AppStrings`, `EntryDraft` — referenced by Presentation and tests |
+| `Platform/` | MAUI content adapters (`MauiReasonContentProvider`, …) |
+| `Platforms/` | MAUI multi-target entry points (Android, iOS, MacCatalyst) |
+| `Services/` | Navigation, page/VM factories, dialogs, toasts, `Services/Practice` messenger |
 
-| Physical path | Namespace | Notes |
-|---------------|-----------|-------|
-| `Modules/Practice/Collection/TechniquesPage` | `Views.TechniquesPage` | Shell home tab |
-| `Modules/Practice/Collection/TechniquesViewModel` | `Technique.Main` | Legacy; target `ViewModels.Practice` |
-| `Modules/Practice/TechniqueItem.cs` | `Presentation.Technique` | List DTO for techniques |
-| `Modules/Profile/QuoteItem.cs` | `Modules.Profile` | Profile quote card model |
-| `Modules/Profile/InfoPage` | `Views.About` | Historical name |
-| `Modules/BaseViewModel.cs` | `ViewModels` | Shared VM base |
-| `Ui/Components/` | `UI.Components` | Disk folder `Ui/`, namespace `UI` (case) |
-| `Services/Dialogs`, `Services/Toasts` | `Services.Dialogs`, `Services.Toasts` | Not Service Locator — normal DI services |
+Feature areas under `Views` / `ViewModels` / `Models`: `Practice` (incl. `Techniques`, `Constructor`), `Tests`, `Physics`, `Profile`, `Motivator`, `Clean`, `Review`, `Onboarding`.
 
-Do not physically move `Modules/` → `Views/` in bulk without updating XAML `x:Class`, DI registrations, and Shell routes. Prefer new files in target namespaces; migrate incrementally.
+### Key paths
 
-Per-technique legacy `*Page.xaml` (Spin, Hack, …) removed; bodies live in `Ui/Techniques/Bodies`.
+| Path | Namespace | Notes |
+|------|-----------|-------|
+| `Views/Practice/TechniquesPage` | `Views.Practice` | Shell home tab |
+| `Views/Practice/Techniques/*` | `Views.Practice.Techniques` | Session, theory |
+| `Views/Practice/Constructor/*` | `Views.Practice.Constructor` | User technique builder |
+| `Models/Practice/Techniques/TechniqueCatalog*` | `Models.Practice.Techniques` | Registry + list metadata |
+| `UI/Techniques/TechniqueBodyFactory.cs` | `UI.Techniques` | Session body templates |
+| `Common/Behaviors/TechniqueSessionBehavior.cs` | `Common.Behaviors` | Session analytics |
+| `Services/Practice/*` | `Services.Practice` | `ITechniqueMessenger` |
+| `Models/Tests/*` | `Models.Tests` | Test catalog JSON, `Question`/`Answer` |
+| `UI/Components/` | `UI.Components` | Reusable XAML components |
+
+Per-technique legacy `*Page.xaml` (Spin, Hack, …) removed; bodies live in `UI/Techniques/Bodies`.
 
 ### UI layer (tokens → components → pages)
 
@@ -145,7 +151,7 @@ Dead controls removed: `LocalFrame`, `LocalEditor`, `LocalEntry`, `ExtendedLabel
 
 - `TechniqueSessionPage` + `TechniquePageShell` — one page for all built-in techniques
 
-- `TechniqueBodyFactory` + `Ui/Techniques/Bodies/*` — `Entry`, `Polarity`, `Paper`, `Copied`, `None` body templates
+- `TechniqueBodyFactory` + `UI/Techniques/Bodies/*` — `Entry`, `Polarity`, `Paper`, `Copied`, `None` body templates
 
 - `ITechniqueViewModelFactory` — `TechniqueSessionViewModel` for simple kinds; `PaperListViewModel` (Paper + Copied, `clearTextAfterAdd` flag) and `PolarityViewModel` for list-based bodies
 
@@ -153,7 +159,7 @@ Dead controls removed: `LocalFrame`, `LocalEditor`, `LocalEntry`, `ExtendedLabel
 
 
 
-## Tests module (`Modules/Tests`, namespaces `Views.Tests` / `ViewModels.Tests`)
+## Tests module (`Views/Tests`, `ViewModels/Tests`, `Models/Tests`)
 
 
 
@@ -196,6 +202,8 @@ Dead controls removed: `LocalFrame`, `LocalEditor`, `LocalEntry`, `ExtendedLabel
 ## Reason content
 
 - `IReasonContentProvider.GetPageAsync(page, pageSize)` — paginated slices; `CachedReasonContentProvider` and `MauiReasonContentProvider` cache full content once
+- `IReasonSearchService.LoadReasonsAsync` — loads via `IReasonContentProvider.LoadReasonsAsync` (full in-memory cache); `Search` ranks in Application layer
+- `NavigationContext` + `Func<NavigationContext, INavigationService>` — unified navigation resolution in ViewModel factories
 
 ## Presentation MVVM conventions (phase 3–4)
 
@@ -205,18 +213,20 @@ Dead controls removed: `LocalFrame`, `LocalEditor`, `LocalEntry`, `ExtendedLabel
 
 ## Naming conventions (phase 4)
 
-- **Physical folders:** `Modules/{Area}/` groups feature code; `Ui/` for reusable components; `Services/` for navigation and factories
+- **Physical folders:** `Views/`, `ViewModels/`, `Models/` per feature area; `UI/` for reusable components; `Services/` for navigation and factories
 - **Target namespaces:** `PsychologyApp.Presentation.Views.{Area}` for pages, `PsychologyApp.Presentation.ViewModels.{Area}` for ViewModels (folder path may differ until a later physical move)
 - **Backend vs UI terms (intentional split — do not unify):**
   - Domain/Application/Infrastructure/DB: `Quot`, `IQuotService`, `IQuotRepository`, table `Quots`, `IsReaded`, `QuotDTO`
   - Presentation UI: `QuotePage`, `QuoteViewModel`, `QuoteItem`, `QuoteCardView`
   - Mapping happens in ViewModels (`QuotDTO` → `QuoteItem`); renaming backend types would break SQL schema and API contracts
 - **Resolved renames:** `Practice` (not Practic), `Physics` (not Physic), `Clean` (not Cleaner)
-- **Legacy namespace debt:** `Technique.*`, `Modules.Practice.*` in Constructor — migrating to `ViewModels.Practice.Constructor`
+- **Presentation layout:** physical folders and namespaces are aligned (`Views.*`, `ViewModels.*`, `Models.*`)
 
 ## Settings, localization, and `UserPreferences`
 
-- Keys: `Language`, `Theme`, `Color`, `Form`, `Size`, `IsBold` in `Presentation/Infrastructure/UserPreferences.cs`
+- Keys: `Language`, `Theme`, `Color`, `Form`, `Size`, `IsBold` in `Presentation/Common/UserPreferences.cs`
+- MAUI port adapters: `Presentation/Platform/MauiReasonContentProvider`, `MauiQuotContentProvider`
+- Shell startup: `IShellStartupCoordinator` (DB init + onboarding)
 - Stored values use stable keys (`ru`/`en`, `light`/`dark`, `blue`/`red`/…) — legacy Russian/English display strings are normalized on load
 - `AppStrings` provides localized UI text for Shell, Options/Settings, Tests, Physics, technique shell, and startup errors
 - Embedded quotes: `IQuotContentProvider` → `MauiQuotContentProvider` reads `Resources/Raw/quotes/quotes.{ru|en}.json`; `QuotService.LoadSingleAsync` picks a random seed and persists to SQLite (no external API)
@@ -231,7 +241,19 @@ Dead controls removed: `LocalFrame`, `LocalEditor`, `LocalEntry`, `ExtendedLabel
 
 - `GlobalExceptionHandler` — `ILogger` + `IDialogService` on unhandled errors
 
-- CI: solution build, tests (including `PsychologyApp.Domain.Tests` and `PsychologyApp.Presentation.Tests`), iOS + Android Debug; coverage gate fails if summary is missing or below 60%
+- CI: Windows — full solution build, tests (Domain, Application, Infrastructure, Integration, Presentation), iOS + Android Debug; coverage gate fails if summary is missing or below 60%. Linux — `dotnet build` + `dotnet test` (catches case-sensitive path issues such as `UI/`)
+
+## Test projects
+
+| Project | Scope |
+|---------|--------|
+| `PsychologyApp.Domain.Tests` | Domain entities and value objects |
+| `PsychologyApp.Application.Tests` | Services with mocked ports |
+| `PsychologyApp.Infrastructure.Tests` | Repositories, SQLite schema, HTTP clients |
+| `PsychologyApp.Integration.Tests` | `AddPsychologyAppCore()` + in-memory SQLite end-to-end (service → repository → DB) |
+| `PsychologyApp.Presentation.Core` | Catalogs, test JSON models, `AppStrings`, `EntryDraft` (net10.0, no MAUI) |
+| `PsychologyApp.Presentation.Tests` | ViewModels and MAUI helpers via linked sources + `ProjectReference` to Core |
+| `PsychologyApp.Testing` | Shared `SharedMemoryConnectionFactory`, `IntegrationTestServiceCollection`, `FakeReasonContentProvider` |
 
 - Release Android trim smoke recommended on device
 

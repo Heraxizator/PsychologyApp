@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 root = Path(__file__).resolve().parents[1]
-path = root / "PsychologyApp.Presentation/Modules/Tester/Collection"
+path = root / "PsychologyApp.Presentation/Models/Tests"
 source = path / "TestsListCatalog.cs"
 if not source.exists():
     raise SystemExit(f"Source not found: {source}. Edit questionnaires.json manually.")

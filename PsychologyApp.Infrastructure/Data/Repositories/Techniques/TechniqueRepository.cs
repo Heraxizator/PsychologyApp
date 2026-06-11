@@ -1,9 +1,10 @@
-﻿using Dapper;
+using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Domain.Entities;
+using PsychologyApp.Infrastructure.Data;
 using PsychologyApp.Infrastructure.Data.Repositories.Base;
 using PsychologyApp.Infrastructure.Data.Sql;
 
@@ -24,9 +25,10 @@ public sealed class TechniqueRepository : BaseRepository<Technique>, ITechniqueR
     public async Task<IEnumerable<Technique>> GetLatestAsync(int count, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        return await connection.QueryAsync<Technique>(
+        return await connection.QueryAsync<Technique>(DapperCommandFactory.Create(
             "SELECT * FROM Techniques ORDER BY TechniqueId DESC LIMIT @count;",
             new { count },
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
     }
 }

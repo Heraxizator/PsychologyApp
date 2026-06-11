@@ -1,1 +1,2 @@
-global using PsychologyApp.Presentation.Infrastructure;
+global using PsychologyApp.Application.Models;
+global using PsychologyApp.Presentation.Common;

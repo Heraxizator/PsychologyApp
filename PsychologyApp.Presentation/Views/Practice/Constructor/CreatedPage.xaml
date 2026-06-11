@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Views.Practice.Constructor.CreatedPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Practice.Constructor"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Common.Behaviors"
+             x:DataType="vm:CreatedViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{Binding EditToolbarText}" Command="{Binding Edit}" />
+        <ToolbarItem Text="{Binding RemoveToolbarText}" Command="{Binding Remove}" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
+        <StackLayout Margin="20,0,20,20" Spacing="20">
+            <StackLayout.Behaviors>
+                <behaviors:RevealOnAppearingBehavior />
+            </StackLayout.Behaviors>
+            <ui:NavigationBarSimpleView
+                TitleText="{Binding CustomTechniqueTitle}"
+                BackCommand="{Binding Finish}" />
+            <ui:AlgorithmBoxView
+                TitleText="{Binding AlgorithmTitle}"
+                BodySource="{Binding Algorithm}" />
+            <ui:ButtonView
+                BodyText="{Binding FinishButtonText}"
+                TapCommand="{Binding Finish}" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

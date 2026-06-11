@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
+using PsychologyApp.Infrastructure.Data;
 using PsychologyApp.Infrastructure.Data.Context;
 
 namespace PsychologyApp.Infrastructure.Data.Repositories.UserProgress;
@@ -24,7 +25,7 @@ public sealed class UserProgressRepository : IUserProgressRepository
     public async Task SaveTestResultAsync(TestResultDTO result, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        await connection.ExecuteAsync(
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
             """
             INSERT INTO TestResults (TestId, Score, Summary, DetailJson, CompletedAt)
             VALUES (@TestId, @Score, @Summary, @DetailJson, @CompletedAt);
@@ -37,13 +38,14 @@ public sealed class UserProgressRepository : IUserProgressRepository
                 result.DetailJson,
                 CompletedAt = result.CompletedAt.ToString("O")
             },
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
     }
 
     public async Task<TestResultDTO?> GetLatestTestResultAsync(string testId, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        return await connection.QuerySingleOrDefaultAsync<TestResultDTO>(
+        return await connection.QuerySingleOrDefaultAsync<TestResultDTO>(DapperCommandFactory.Create(
             """
             SELECT TestResultId, TestId, Score, Summary, DetailJson, CompletedAt
             FROM TestResults
@@ -52,13 +54,14 @@ public sealed class UserProgressRepository : IUserProgressRepository
             LIMIT 1;
             """,
             new { testId },
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
     }
 
     public async Task<IReadOnlyList<TestResultDTO>> GetTestResultHistoryAsync(string testId, int limit, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        IEnumerable<TestResultDTO> rows = await connection.QueryAsync<TestResultDTO>(
+        IEnumerable<TestResultDTO> rows = await connection.QueryAsync<TestResultDTO>(DapperCommandFactory.Create(
             """
             SELECT TestResultId, TestId, Score, Summary, DetailJson, CompletedAt
             FROM TestResults
@@ -67,7 +70,8 @@ public sealed class UserProgressRepository : IUserProgressRepository
             LIMIT @limit;
             """,
             new { testId, limit },
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
 
         return rows.ToList();
     }
@@ -75,7 +79,7 @@ public sealed class UserProgressRepository : IUserProgressRepository
     public async Task<DateTime?> GetLastTechniqueCompletionDateAsync(CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        string? value = await connection.QuerySingleOrDefaultAsync<string>(
+        string? value = await connection.QuerySingleOrDefaultAsync<string>(DapperCommandFactory.Create(
             """
             SELECT CompletedAt
             FROM Completions
@@ -83,23 +87,27 @@ public sealed class UserProgressRepository : IUserProgressRepository
             ORDER BY CompletionId DESC
             LIMIT 1;
             """,
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
 
-        return value is null ? null : DateTime.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
+        return value is null
+            ? null
+            : DateTime.Parse(value, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.RoundtripKind);
     }
 
     public async Task<long> CountTestResultsAsync(CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        return await connection.ExecuteScalarAsync<long>(
+        return await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
             "SELECT COUNT(*) FROM TestResults;",
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
     }
 
     public async Task RecordCompletionAsync(CompletionDTO completion, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        await connection.ExecuteAsync(
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
             """
             INSERT INTO Completions (CompletionKind, ItemKey, ModuleName, PageName, CompletedAt, DurationSeconds)
             VALUES (@CompletionKind, @ItemKey, @ModuleName, @PageName, @CompletedAt, @DurationSeconds);
@@ -113,27 +121,30 @@ public sealed class UserProgressRepository : IUserProgressRepository
                 CompletedAt = completion.CompletedAt.ToString("O"),
                 completion.DurationSeconds
             },
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
     }
 
     public async Task<long> CountTechniqueCompletionsAsync(CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        return await connection.ExecuteScalarAsync<long>(
+        return await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
             "SELECT COUNT(*) FROM Completions WHERE CompletionKind = 'technique';",
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
     }
 
     public async Task<IReadOnlyList<DateOnly>> GetCompletionDatesAsync(CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        IEnumerable<string> rows = await connection.QueryAsync<string>(
+        IEnumerable<string> rows = await connection.QueryAsync<string>(DapperCommandFactory.Create(
             """
             SELECT DISTINCT substr(CompletedAt, 1, 10) AS Day
             FROM Completions
             ORDER BY Day DESC;
             """,
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
 
         return rows
             .Select(day => DateOnly.Parse(day, System.Globalization.CultureInfo.InvariantCulture))
@@ -143,7 +154,7 @@ public sealed class UserProgressRepository : IUserProgressRepository
     public async Task<DateTime?> GetLastCompletionForItemAsync(string itemKey, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        string? value = await connection.QuerySingleOrDefaultAsync<string>(
+        string? value = await connection.QuerySingleOrDefaultAsync<string>(DapperCommandFactory.Create(
             """
             SELECT CompletedAt
             FROM Completions
@@ -152,15 +163,18 @@ public sealed class UserProgressRepository : IUserProgressRepository
             LIMIT 1;
             """,
             new { itemKey },
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
 
-        return value is null ? null : DateTime.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
+        return value is null
+            ? null
+            : DateTime.Parse(value, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.RoundtripKind);
     }
 
     public async Task SaveSessionDraftAsync(string techniqueKey, string payloadJson, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        await connection.ExecuteAsync(
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
             """
             INSERT INTO SessionDrafts (TechniqueKey, PayloadJson, UpdatedAt)
             VALUES (@techniqueKey, @payloadJson, @updatedAt)
@@ -174,61 +188,81 @@ public sealed class UserProgressRepository : IUserProgressRepository
                 payloadJson,
                 updatedAt = DateTime.UtcNow.ToString("O")
             },
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
     }
 
     public async Task<string?> GetSessionDraftAsync(string techniqueKey, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        return await connection.QuerySingleOrDefaultAsync<string>(
+        return await connection.QuerySingleOrDefaultAsync<string>(DapperCommandFactory.Create(
             "SELECT PayloadJson FROM SessionDrafts WHERE TechniqueKey = @techniqueKey;",
             new { techniqueKey },
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
     }
 
     public async Task DeleteSessionDraftAsync(string techniqueKey, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        await connection.ExecuteAsync(
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
             "DELETE FROM SessionDrafts WHERE TechniqueKey = @techniqueKey;",
             new { techniqueKey },
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
     }
 
     public async Task RecordMoodAsync(MoodEntryDTO entry, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        await connection.ExecuteAsync(
-            """
-            INSERT INTO MoodEntries (MoodLevel, Note, RecordedAt)
-            VALUES (@MoodLevel, @Note, @RecordedAt);
-            """,
-            new
-            {
-                entry.MoodLevel,
-                entry.Note,
-                RecordedAt = entry.RecordedAt.ToString("O")
-            },
-            commandTimeout: _commandTimeoutSeconds);
+        await using SqliteTransaction transaction =
+            (SqliteTransaction)await connection.BeginTransactionAsync(cancellationToken);
 
-        await connection.ExecuteAsync(
-            """
-            INSERT INTO Completions (CompletionKind, ItemKey, ModuleName, PageName, CompletedAt, DurationSeconds)
-            VALUES ('mood', 'mood', @moduleName, @pageName, @completedAt, 0);
-            """,
-            new
-            {
-                moduleName = "Practice",
-                pageName = "Mood",
-                completedAt = entry.RecordedAt.ToString("O")
-            },
-            commandTimeout: _commandTimeoutSeconds);
+        try
+        {
+            await connection.ExecuteAsync(DapperCommandFactory.Create(
+                """
+                INSERT INTO MoodEntries (MoodLevel, Note, RecordedAt)
+                VALUES (@MoodLevel, @Note, @RecordedAt);
+                """,
+                new
+                {
+                    entry.MoodLevel,
+                    entry.Note,
+                    RecordedAt = entry.RecordedAt.ToString("O")
+                },
+                transaction,
+                _commandTimeoutSeconds,
+                cancellationToken));
+
+            await connection.ExecuteAsync(DapperCommandFactory.Create(
+                """
+                INSERT INTO Completions (CompletionKind, ItemKey, ModuleName, PageName, CompletedAt, DurationSeconds)
+                VALUES ('mood', 'mood', @moduleName, @pageName, @completedAt, 0);
+                """,
+                new
+                {
+                    moduleName = "Practice",
+                    pageName = "Mood",
+                    completedAt = entry.RecordedAt.ToString("O")
+                },
+                transaction,
+                _commandTimeoutSeconds,
+                cancellationToken));
+
+            await transaction.CommitAsync(cancellationToken);
+        }
+        catch
+        {
+            await transaction.RollbackAsync(cancellationToken);
+            throw;
+        }
     }
 
     public async Task<IReadOnlyList<MoodEntryDTO>> GetRecentMoodsAsync(int limit, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        IEnumerable<MoodEntryDTO> rows = await connection.QueryAsync<MoodEntryDTO>(
+        IEnumerable<MoodEntryDTO> rows = await connection.QueryAsync<MoodEntryDTO>(DapperCommandFactory.Create(
             """
             SELECT MoodEntryId, MoodLevel, Note, RecordedAt
             FROM MoodEntries
@@ -236,7 +270,8 @@ public sealed class UserProgressRepository : IUserProgressRepository
             LIMIT @limit;
             """,
             new { limit },
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
 
         return rows.ToList();
     }

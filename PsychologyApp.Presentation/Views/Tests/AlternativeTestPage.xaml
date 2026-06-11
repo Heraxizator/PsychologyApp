@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Views.Tests.AlternativeTestPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Tests"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             x:DataType="vm:AlternativeTestViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Common.Behaviors">
+<StackLayout VerticalOptions="FillAndExpand">
+        <StackLayout.Behaviors>
+            <behaviors:RevealOnAppearingBehavior />
+        </StackLayout.Behaviors>
+
+        <ui:NavigationBarSimpleView
+            TitleText="{Binding PageTitle}"
+            BackCommand="{Binding Finish}" />
+
+        <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
+            <StackLayout>
+
+                <StackLayout x:Name="StartSection" IsVisible="{Binding IsStart}">
+                    <StackLayout Margin="{StaticResource LayoutPageMarginThickness}">
+                        <Label
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding CurrentInstruction}"
+                            Style="{StaticResource SectionTitleStyle}" />
+                    </StackLayout>
+
+                    <StackLayout Margin="0, 5, 0, 15">
+
+                        <BoxView 
+                            Margin="30, 0, 30, 5"
+                            HeightRequest="3"
+                            Color="{DynamicResource Primary}"/>
+
+                        <FlexLayout JustifyContent="Center">
+
+                            <BoxView 
+                                IsVisible="{Binding IsRed}"
+                                Margin="10"
+                                WidthRequest="100"
+                                HeightRequest="100"
+                                CornerRadius="15"
+                                Grid.Column="1"
+                                Grid.Row="0"
+                                Color="Red"
+                                Opacity="0.9">
+                                <BoxView.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding RedHandler}"/>
+                                </BoxView.GestureRecognizers>
+                            </BoxView>
+
+                            <BoxView
+                                IsVisible="{Binding IsBrown}"
+                                Margin="10"
+                                WidthRequest="100"
+                                HeightRequest="100"
+                                CornerRadius="15"
+                                Grid.Column="2"
+                                Grid.Row="1"
+                                Color="Brown"
+                                Opacity="0.9">
+                                <BoxView.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding BrownHandler}"/>
+                                </BoxView.GestureRecognizers>
+                            </BoxView>
+
+                            <BoxView 
+                                IsVisible="{Binding IsYellow}"
+                                Margin="10"
+                                WidthRequest="100"
+                                HeightRequest="100"
+                                CornerRadius="15"
+                                Grid.Column="1"
+                                Grid.Row="1"
+                                Color="Yellow"
+                                Opacity="0.9">
+                                <BoxView.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding YellowHandler}"/>
+                                </BoxView.GestureRecognizers>
+                            </BoxView>
+
+                        </FlexLayout>
+
+                        <FlexLayout Margin="10, 0, 10, 0" JustifyContent="Center">
+
+                            <BoxView 
+                                IsVisible="{Binding IsGreen}"
+                                Margin="10"
+                                WidthRequest="100"
+                                HeightRequest="100"
+                                CornerRadius="15"
+                                Color="Green"
+                                Opacity="0.9">
+                                <BoxView.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GreenHandler}"/>
+                                </BoxView.GestureRecognizers>
+                            </BoxView>
+
+                            <BoxView 
+                                IsVisible="{Binding IsBlue}"
+                                Margin="10"
+                                WidthRequest="100"
+                                HeightRequest="100"
+                                CornerRadius="15"
+                                Grid.Column="2"
+                                Grid.Row="0"
+                                Color="Blue"
+                                Opacity="0.9">
+                                <BoxView.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding BlueHandler}"/>
+                                </BoxView.GestureRecognizers>
+                            </BoxView>
+
+                            <BoxView
+                                IsVisible="{Binding IsPurple}"
+                                Margin="10"
+                                WidthRequest="100"
+                                HeightRequest="100"
+                                CornerRadius="15"
+                                Grid.Column="0"
+                                Grid.Row="1"
+                                Color="Purple"
+                                Opacity="0.9">
+                                <BoxView.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding PurpleHandler}"/>
+                                </BoxView.GestureRecognizers>
+                            </BoxView>
+
+                        </FlexLayout>
+
+                        <FlexLayout JustifyContent="Center">
+
+                            <BoxView 
+                                IsVisible="{Binding IsGray}"
+                                Margin="10"
+                                WidthRequest="100"
+                                HeightRequest="100"
+                                CornerRadius="15"
+                                Color="Gray"
+                                Opacity="0.9">
+                                <BoxView.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GrayHandler}"/>
+                                </BoxView.GestureRecognizers>
+                            </BoxView>
+
+                            <BoxView
+                                IsVisible="{Binding IsBlack}"
+                                Margin="10"
+                                WidthRequest="100"
+                                HeightRequest="100"
+                                CornerRadius="15"
+                                Grid.Column="0"
+                                Grid.Row="1"
+                                Color="Black"
+                                Opacity="0.9">
+                                <BoxView.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding BlackHandler}"/>
+                                </BoxView.GestureRecognizers>
+                            </BoxView>
+
+                        </FlexLayout>
+
+                        <BoxView 
+                            Margin="30, 10, 30, 0"
+                            HeightRequest="3"
+                            Color="{DynamicResource Primary}"/>
+
+                    </StackLayout>
+
+                    <ui:TextBoxView
+                        Margin="0, -10, 0, 0"
+                        HeaderText="{Binding MoreInfoHeader}"
+                        BodyText="{Binding MoreInfoBody}"/>
+
+                </StackLayout>
+
+                <StackLayout
+                    x:Name="FinishSection"
+                    IsVisible="{Binding IsFinish}">
+
+                    <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+
+                        <Label
+                        Text="{Binding FirstColorLabel}"
+                        Style="{StaticResource SectionTitleStyle}"
+                        HorizontalOptions="Center"
+                        TextColor="{StaticResource TextSecondaryLight}"/>
+
+                        <BoxView 
+                        Margin="20, 10, 20, 10"
+                        HeightRequest="3"
+                        Color="{StaticResource Gray}"/>
+
+                        <StackLayout>
+                            <BoxView 
+                            Margin="10, 10, 10, 5"
+                            WidthRequest="200"
+                            HeightRequest="200"
+                            HorizontalOptions="Center"
+                            CornerRadius="30"
+                            Color="{Binding FirstColor}"
+                            Opacity="0.9"/>
+
+                            <Label 
+                            Text="{Binding FirstName}"
+                            Style="{StaticResource SectionTitleStyle}"
+                            HorizontalOptions="Center"/>
+                        </StackLayout>
+
+                        <BoxView 
+                        Margin="20, 10, 20, 0"
+                        HeightRequest="3"
+                        Color="{StaticResource Gray}"/>
+
+                        <Border Style="{StaticResource BrandCardStyle}">
+                            <Border.Behaviors>
+                                <behaviors:ListItemRevealBehavior />
+                            </Border.Behaviors>
+                            <Label Text="{Binding FirstResult}" Style="{StaticResource BodyStyle}" />
+                        </Border>
+
+                        <Label
+                        Text="{Binding SecondColorLabel}"
+                        Style="{StaticResource SectionTitleStyle}"
+                        HorizontalOptions="Center"
+                        TextColor="{StaticResource TextSecondaryLight}"/>
+
+                        <BoxView 
+                        Margin="20, 10, 20, 10"
+                        HeightRequest="3"
+                        Color="{StaticResource Gray}"/>
+
+                        <StackLayout>
+                            <BoxView 
+                            Margin="10, 10, 10, 5"
+                            WidthRequest="200"
+                            HeightRequest="200"
+                            HorizontalOptions="Center"
+                            CornerRadius="30"
+                            Color="{Binding SecondColor}"
+                            Opacity="0.9"/>
+
+                            <Label 
+                            Text="{Binding SecondName}"
+                            Style="{StaticResource SectionTitleStyle}"
+                            HorizontalOptions="Center"/>
+                        </StackLayout>
+
+                        <BoxView 
+                        Margin="20, 10, 20, 0"
+                        HeightRequest="3"
+                        Color="{StaticResource Gray}"/>
+
+                        <Border Style="{StaticResource BrandCardStyle}">
+                            <Border.Behaviors>
+                                <behaviors:ListItemRevealBehavior />
+                            </Border.Behaviors>
+                            <Label Text="{Binding SecondResult}" Style="{StaticResource BodyStyle}" />
+                        </Border>
+
+                        <ui:ButtonView
+                        BodyText="{Binding RestartButtonText}"
+                        TapCommand="{Binding Restart}" />
+                    </StackLayout>
+
+                </StackLayout>
+
+            </StackLayout>
+        </ScrollView>
+        
+    </StackLayout>
+</ContentPage>

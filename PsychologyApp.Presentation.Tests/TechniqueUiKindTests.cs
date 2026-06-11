@@ -1,4 +1,4 @@
-using PsychologyApp.Presentation.Modules.Practice.Techniques;
+using PsychologyApp.Presentation.Models.Practice.Techniques;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

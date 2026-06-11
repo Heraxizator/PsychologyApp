@@ -152,13 +152,14 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\PsychologyApp.Application\PsychologyApp.Application.csproj" />
 	  <ProjectReference Include="..\PsychologyApp.Bootstrap\PsychologyApp.Bootstrap.csproj" />
+	  <ProjectReference Include="..\PsychologyApp.Presentation.Core\PsychologyApp.Presentation.Core.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Modules\Tests\Other\AlternativeTestPage.xaml.cs">
+	  <Compile Update="Views\Tests\AlternativeTestPage.xaml.cs">
 	    <DependentUpon>AlternativeTestPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Modules\Tests\Find\FindProblemPage.xaml.cs">
+	  <Compile Update="Views\Tests\FindProblemPage.xaml.cs">
 	    <DependentUpon>FindProblemPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="UI\Components\NavigationBarSimpleView.xaml.cs">
@@ -167,13 +168,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Modules\Motivator\QuotePage.xaml">
+	  <MauiXaml Update="Views\Motivator\QuotePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Modules\Profile\DonatePage.xaml">
+	  <MauiXaml Update="Views\Profile\DonatePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Modules\Tests\Question\QuestionPage.xaml">
+	  <MauiXaml Update="Views\Tests\QuestionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="UI\Components\AlgorithmBoxView.xaml">
@@ -206,13 +207,13 @@
 	  <MauiXaml Update="UI\Components\TextEntryView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Modules\Profile\OptionsPage.xaml">
+	  <MauiXaml Update="Views\Profile\OptionsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Modules\Tests\Standard\StandardTestPage.xaml">
+	  <MauiXaml Update="Views\Tests\StandardTestPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Modules\Tests\Collection\TestsListPage.xaml">
+	  <MauiXaml Update="Views\Tests\TestsListPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="UI\Components\TextItemView.xaml">

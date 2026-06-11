@@ -1,9 +1,9 @@
 using Moq;
 using PsychologyApp.Application.Services.UserProgress;
-using PsychologyApp.Presentation.Infrastructure;
+using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Services.Dialogs;
 using PsychologyApp.Presentation.Services.Toasts;
-using PsychologyApp.Presentation.Modules.Tests;
+using PsychologyApp.Presentation.Models.Tests;
 using PsychologyApp.Presentation.ViewModels.Tests;
 using Xunit;
 

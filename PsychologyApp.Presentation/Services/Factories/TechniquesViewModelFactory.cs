@@ -3,8 +3,9 @@ using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Services.TechniqueService;
 using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Services.Toasts;
-using PsychologyApp.Presentation.Modules.Practice.Messages;
-using PsychologyApp.Presentation.Technique.Main;
+using PsychologyApp.Presentation.Services.Practice;
+using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.ViewModels.Practice;
 
 namespace PsychologyApp.Presentation.Services.Factories;
 
@@ -17,10 +18,17 @@ public sealed class TechniquesViewModelFactory(
     ITechniqueService techniqueService,
     IToastService toastService,
     ITechniqueMessenger techniqueMessenger,
-    Func<INavigation, INavigationService> navigationServiceFactory,
+    Func<NavigationContext, INavigationService> navigationServiceFactory,
     IUserProgressService userProgressService,
     IOptions<AppSettings> settings) : ITechniquesViewModelFactory
 {
     public TechniquesViewModel Create(INavigation navigation) =>
-        new(navigation, techniqueService, toastService, techniqueMessenger, navigationServiceFactory, userProgressService, settings);
+        new(
+            navigation,
+            techniqueService,
+            toastService,
+            techniqueMessenger,
+            navigationServiceFactory(NavigationContext.From(navigation)),
+            userProgressService,
+            settings);
 }

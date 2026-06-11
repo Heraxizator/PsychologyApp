@@ -1,9 +1,10 @@
-﻿using Dapper;
+using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Domain.Entities;
+using PsychologyApp.Infrastructure.Data;
 using PsychologyApp.Infrastructure.Data.Repositories.Base;
 using PsychologyApp.Infrastructure.Data.Sql;
 
@@ -24,26 +25,29 @@ public sealed class StatisticRepository : BaseRepository<Statistic>, IStatisticR
     public async Task<long> CountDistinctPagesAsync(CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        return await connection.ExecuteScalarAsync<long>(
+        return await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
             "SELECT COUNT(DISTINCT PageName) FROM Statistics;",
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
     }
 
     public async Task<long> CountByPageNameAsync(string pageName, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        return await connection.ExecuteScalarAsync<long>(
+        return await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
             "SELECT COUNT(*) FROM Statistics WHERE PageName = @pageName;",
             new { pageName },
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
     }
 
     public async Task<IEnumerable<Statistic>> GetRecentAsync(int limit, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        return await connection.QueryAsync<Statistic>(
+        return await connection.QueryAsync<Statistic>(DapperCommandFactory.Create(
             "SELECT * FROM Statistics ORDER BY StatisticId DESC LIMIT @limit;",
             new { limit },
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
     }
 }

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Views.Tests.TestsListPage"
+             Shell.NavBarIsVisible="True"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Common.Behaviors"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Tests"
+             xmlns:tests="clr-namespace:PsychologyApp.Presentation.Models.Tests"
+             x:DataType="vm:TestsListViewModel"
+             Title="{Binding PageTitle}">
+    <Grid
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+
+        <CollectionView
+            x:Name="TestsCollectionView"
+            Margin="{StaticResource LayoutTabPageMarginThickness}"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            VerticalScrollBarVisibility="Never"
+            IsVisible="{Binding IsDone}"
+            SelectionMode="None"
+            ItemsSource="{Binding TestItemCollection}">
+            <CollectionView.Behaviors>
+                <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
+            </CollectionView.Behaviors>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="tests:TestItem">
+                    <ui:TestListCardView
+                        Margin="0,0,0,10"
+                        Title="{Binding Title}"
+                        Subtitle="{Binding Subtitle}"
+                        LastResultText="{Binding LastResultSummary}"
+                        HasLastResult="{Binding HasLastResult}"
+                        HasMultipleResults="{Binding HasMultipleResults}"
+                        HistoryLabel="{Binding HistoryLabel}"
+                        OpenHistoryCommand="{Binding OpenHistoryCommand}"
+                        TapCommand="{Binding TapCommand}">
+                        <ui:TestListCardView.Behaviors>
+                            <behaviors:ListItemRevealBehavior />
+                        </ui:TestListCardView.Behaviors>
+                    </ui:TestListCardView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <StackLayout
+                    Padding="{StaticResource LayoutEmptyPaddingThickness}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource SectionTitleStyle}"
+                        Text="{Binding EmptyTitle}" />
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource BodyStyle}"
+                        Text="{Binding EmptyBody}" />
+                </StackLayout>
+            </CollectionView.EmptyView>
+        </CollectionView>
+
+        <ui:ProgressBarView
+            x:Name="LoadingProgress"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsLoadingOverlayVisible}"
+            IsLoading="{Binding IsLoadingOverlayVisible}"
+            ProgressText="{Binding LoadingText}">
+            <ui:ProgressBarView.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Cancel}" />
+            </ui:ProgressBarView.GestureRecognizers>
+        </ui:ProgressBarView>
+
+        <ui:RetryView
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsFail}"
+            FailedText="{Binding FailedText}"
+            RetryText="{Binding RetryText}"
+            RetryCommand="{Binding Reload}" />
+    </Grid>
+</ContentPage>

@@ -1,13 +1,12 @@
-﻿using CommunityToolkit.Maui.Behaviors;
+using CommunityToolkit.Maui.Behaviors;
 using CommunityToolkit.Maui.Core;
 using Microsoft.Extensions.Logging;
-using PsychologyApp.Application.Abstractions.Startup;
-using PsychologyApp.Presentation.Infrastructure;
-using PsychologyApp.Presentation.Modules.Onboarding;
-using PsychologyApp.Presentation.Modules.Practice.Techniques;
+using Microsoft.Maui.Devices;
+using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Services;
-using PsychologyApp.Presentation.Services.Factories;
-using PsychologyApp.Presentation.Technique.Main;
+using PsychologyApp.Presentation.Services.Shell;
+using PsychologyApp.Presentation.ViewModels.Practice;
 using PsychologyApp.Presentation.ViewModels.Clean;
 using PsychologyApp.Presentation.ViewModels.Motivator;
 using PsychologyApp.Presentation.ViewModels.Physics;
@@ -18,17 +17,55 @@ namespace PsychologyApp.Presentation;
 public partial class AppShell : Shell
 {
     private readonly IPageFactory _pageFactory;
+    private readonly IShellStartupCoordinator _startupCoordinator;
+    private readonly ILogger<AppShell> _logger;
     private bool _tabsConfigured;
 
-    public AppShell(IPageFactory pageFactory)
+    public AppShell(
+        IPageFactory pageFactory,
+        IShellStartupCoordinator startupCoordinator,
+        ILogger<AppShell> logger)
     {
         _pageFactory = pageFactory;
+        _startupCoordinator = startupCoordinator;
+        _logger = logger;
         InitializeComponent();
         ApplyLocalization();
         EnsureTabsConfigured();
         UserPreferences.Changed += OnPreferencesChanged;
         HandlerChanged += OnShellHandlerChanged;
+        Navigated += OnShellNavigated;
         _ = InitializeAppAsync();
+    }
+
+    private void OnShellNavigated(object? sender, ShellNavigatedEventArgs e)
+    {
+        if (e.Source != ShellNavigationSource.ShellItemChanged)
+        {
+            return;
+        }
+
+        if (!ReduceMotion.IsEnabled)
+        {
+            TryPerformTabHaptic();
+        }
+
+        if (CurrentPage is ContentPage { Content: View root })
+        {
+            UiAnimations.SafePulseAsync(root).FireAndForget();
+        }
+    }
+
+    private static void TryPerformTabHaptic()
+    {
+        try
+        {
+            HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Tab haptic skipped: {ex.GetType().Name}: {ex.Message}");
+        }
     }
 
     private void OnShellHandlerChanged(object? sender, EventArgs e)
@@ -78,10 +115,10 @@ public partial class AppShell : Shell
         string? title = page.BindingContext switch
         {
             TechniquesViewModel techniques => techniques.PageTitle,
-            ViewModels.Tests.TestsListViewModel tests => tests.PageTitle,
-            ViewModels.Physics.StartPhysicsViewModel physics => physics.PageTitle,
-            ViewModels.Clean.MusicPlayerViewModel music => music.PageTitle,
-            ViewModels.Motivator.QuoteViewModel quotes => quotes.PageTitle,
+            TestsListViewModel tests => tests.PageTitle,
+            StartPhysicsViewModel physics => physics.PageTitle,
+            MusicPlayerViewModel music => music.PageTitle,
+            QuoteViewModel quotes => quotes.PageTitle,
             _ => null
         };
 
@@ -129,8 +166,7 @@ public partial class AppShell : Shell
         }
         catch (Exception ex)
         {
-            MauiServiceProvider.GetRequired<ILogger<AppShell>>()
-                .LogDebug(ex, "Status bar chrome update skipped.");
+            _logger.LogDebug(ex, "Status bar chrome update skipped.");
         }
     }
 
@@ -177,70 +213,34 @@ public partial class AppShell : Shell
 
     private async Task InitializeAppAsync()
     {
-        IAppStartupService startup = MauiServiceProvider.GetRequired<IAppStartupService>();
-        ILogger<AppShell> logger = MauiServiceProvider.GetRequired<ILogger<AppShell>>();
-
         try
         {
-            await startup.InitializeAsync();
-            AppReadiness.SignalDatabaseReady();
+            await _startupCoordinator.InitializeAsync();
             await ShowOnboardingIfNeededAsync();
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Application startup failed.");
-            AppReadiness.SignalDatabaseFailed(ex);
-            await MainThread.InvokeOnMainThreadAsync(async () =>
-            {
-                if (Microsoft.Maui.Controls.Application.Current?.Windows.Count > 0
-                    && Microsoft.Maui.Controls.Application.Current.Windows[0].Page is not null)
-                {
-                    await Microsoft.Maui.Controls.Application.Current.Windows[0].Page!.DisplayAlert(
-                        AppStrings.StartupErrorTitle,
-                        AppStrings.StartupErrorMessage,
-                        AppStrings.Ok);
-                }
-            });
+            _logger.LogDebug(ex, "Shell startup completed with errors.");
         }
     }
 
     private async Task ShowOnboardingIfNeededAsync()
     {
-        if (UserPreferences.Load().HasCompletedOnboarding)
+        Page? currentPage = Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault()?.Page;
+        if (currentPage?.Navigation is not INavigation navigation)
         {
             return;
         }
 
-        try
+        await _startupCoordinator.ShowOnboardingIfNeededAsync(navigation, async techniqueId =>
         {
-            await Task.Delay(300);
-            await MainThread.InvokeOnMainThreadAsync(async () =>
+            if (techniqueId is TechniqueId id)
             {
-                Page? currentPage = Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault()?.Page;
-                if (currentPage?.Navigation is not INavigation navigation)
-                {
-                    return;
-                }
+                UserPreferences.SetPendingTechnique(id);
+                OpenPendingTechniqueIfNeeded();
+            }
 
-                IOnboardingViewModelFactory factory = MauiServiceProvider.GetRequired<IOnboardingViewModelFactory>();
-
-                OnboardingPage onboardingPage = new(factory, async techniqueId =>
-                {
-                    await navigation.PopModalAsync(true);
-                    if (techniqueId is TechniqueId id)
-                    {
-                        UserPreferences.SetPendingTechnique(id);
-                        OpenPendingTechniqueIfNeeded();
-                    }
-                });
-
-                await navigation.PushModalAsync(onboardingPage, true);
-            });
-        }
-        catch (Exception ex)
-        {
-            MauiServiceProvider.GetRequired<ILogger<AppShell>>()
-                .LogWarning(ex, "Onboarding presentation skipped.");
-        }
+            await Task.CompletedTask;
+        });
     }
 }

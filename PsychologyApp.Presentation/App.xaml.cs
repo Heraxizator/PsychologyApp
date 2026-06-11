@@ -1,14 +1,14 @@
-﻿using PsychologyApp.Presentation.Infrastructure;
+using PsychologyApp.Presentation.Common;
 
 namespace PsychologyApp.Presentation;
 
 public partial class App : Microsoft.Maui.Controls.Application
 {
-    public App(IServiceProvider services)
+    public App(IServiceProvider services, GlobalExceptionHandler exceptionHandler)
     {
         InitializeComponent();
         UserPreferences.ApplyAll();
-        GlobalExceptionHandler.Attach(this);
+        exceptionHandler.Attach(this);
         MainPage = services.GetRequiredService<AppShell>();
     }
 }

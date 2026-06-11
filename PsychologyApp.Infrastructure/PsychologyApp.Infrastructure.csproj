@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="PsychologyApp.Infrastructure.Tests" />
+    <InternalsVisibleTo Include="PsychologyApp.Testing" />
   </ItemGroup>
 
   <ItemGroup>

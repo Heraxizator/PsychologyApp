@@ -1,4 +1,5 @@
 using Dapper;
+using Microsoft.Data.Sqlite;
 using System.Data.Common;
 
 namespace PsychologyApp.Infrastructure.Data.Context;
@@ -17,10 +18,18 @@ public static class SqliteSchema
 
     public static async Task ConfigureConnectionAsync(DbConnection connection, CancellationToken cancellationToken = default)
     {
-        await connection.ExecuteAsync("PRAGMA journal_mode=WAL;", cancellationToken);
-        await connection.ExecuteAsync("PRAGMA synchronous=NORMAL;", cancellationToken);
+        if (SupportsWal(connection))
+        {
+            await connection.ExecuteAsync("PRAGMA journal_mode=WAL;", cancellationToken);
+            await connection.ExecuteAsync("PRAGMA synchronous=NORMAL;", cancellationToken);
+        }
+
         await connection.ExecuteAsync("PRAGMA busy_timeout=5000;", cancellationToken);
     }
+
+    private static bool SupportsWal(DbConnection connection) =>
+        connection is not SqliteConnection sqlite
+        || new SqliteConnectionStringBuilder(sqlite.ConnectionString).Mode != SqliteOpenMode.Memory;
 
     public static async Task EnsureSchemaAsync(DbConnection connection, CancellationToken cancellationToken = default)
     {

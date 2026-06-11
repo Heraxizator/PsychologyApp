@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Windows.Input;
-using PsychologyApp.Presentation.Infrastructure;
+using PsychologyApp.Presentation.Common;
 
 namespace PsychologyApp.Presentation.Controls;
 

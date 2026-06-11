@@ -1,9 +1,10 @@
-﻿using Dapper;
+using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Domain.Entities;
+using PsychologyApp.Infrastructure.Data;
 using PsychologyApp.Infrastructure.Data.Repositories.Base;
 using PsychologyApp.Infrastructure.Data.Sql;
 
@@ -24,18 +25,20 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
     public async Task<IEnumerable<Quot>> GetUnreadLatestAsync(int count, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        return await connection.QueryAsync<Quot>(
+        return await connection.QueryAsync<Quot>(DapperCommandFactory.Create(
             "SELECT * FROM Quots WHERE IsReaded = 0 ORDER BY QuotId DESC LIMIT @count;",
             new { count },
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
     }
 
     public async Task<IEnumerable<Quot>> GetFavouritesAsync(int count, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        return await connection.QueryAsync<Quot>(
+        return await connection.QueryAsync<Quot>(DapperCommandFactory.Create(
             "SELECT * FROM Quots WHERE IsFavourite = 1 ORDER BY QuotId DESC LIMIT @count;",
             new { count },
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
     }
 }

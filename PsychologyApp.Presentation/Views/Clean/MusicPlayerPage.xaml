@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Views.Clean.MusicPlayerPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Clean"
+             xmlns:clean="clr-namespace:PsychologyApp.Presentation.Models.Clean"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Common.Behaviors"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="vm:MusicPlayerViewModel"
+             Shell.NavBarIsVisible="True"
+             Title="{Binding PageTitle}">
+
+    <Grid
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+
+        <Grid
+            IsVisible="{Binding IsDone}"
+            Margin="{StaticResource LayoutTabPageMarginThickness}"
+            RowDefinitions="Auto,*,Auto,Auto">
+            <Grid.Behaviors>
+                <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
+            </Grid.Behaviors>
+
+            <ui:TextEntryView
+                Grid.Row="0"
+                Margin="0,0,0,8"
+                PlaceholderText="{Binding SearchPlaceholder}"
+                BodyText="{Binding SearchText, Mode=TwoWay}" />
+
+            <CollectionView
+                Grid.Row="1"
+                x:Name="Musics"
+                VerticalOptions="FillAndExpand"
+                VerticalScrollBarVisibility="Never"
+                ItemsSource="{Binding FilteredItems}">
+                <CollectionView.EmptyView>
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource BodyStyle}"
+                        Text="{Binding NoPrayersFoundText}"
+                        IsVisible="{Binding IsSearchEmptyVisible}" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="4" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="clean:Audio">
+                        <ui:MusicListCardView
+                            Title="{Binding Name}"
+                            Subtitle="{Binding Description}"
+                            TapCommand="{Binding ClickCommand}">
+                            <ui:MusicListCardView.Behaviors>
+                                <behaviors:ListItemRevealBehavior />
+                            </ui:MusicListCardView.Behaviors>
+                        </ui:MusicListCardView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Border
+                Grid.Row="2"
+                Margin="0,8,0,8"
+                IsVisible="{Binding HasActiveTrack}"
+                Style="{StaticResource BrandCardStyle}"
+                Padding="12">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                        <Label Text="{Binding NowPlayingLabel}" Style="{StaticResource CaptionStyle}" />
+                        <Label Text="{Binding ActiveTrackTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    </VerticalStackLayout>
+                    <ui:ButtonView
+                        Grid.Column="1"
+                        IsCompact="True"
+                        BodyText="{Binding PlayPauseGlyph}"
+                        TapCommand="{Binding TogglePlayPauseCommand}" />
+                </Grid>
+            </Border>
+
+            <ui:TextBoxView
+                Grid.Row="3"
+                Margin="0,0,0,10"
+                HeaderText="{Binding MoreInfoHeader}"
+                BodyText="{Binding MoreInfoBody}" />
+
+            <toolkit:MediaElement
+                x:Name="Player"
+                Grid.Row="3"
+                IsVisible="False"
+                ShouldAutoPlay="True"
+                MediaEnded="OnMediaEnded" />
+        </Grid>
+
+        <StackLayout
+            x:Name="IntroPrompt"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsCreated}"
+            Padding="{StaticResource LayoutEmptyPaddingThickness}">
+            <Label
+                Text="{Binding PrayerCollectionLabel}"
+                Style="{StaticResource SectionTitleStyle}"
+                HorizontalTextAlignment="Center" />
+            <Label
+                Margin="0,12,0,0"
+                Text="{Binding LoadLabel}"
+                Style="{StaticResource BodyStyle}"
+                TextColor="{DynamicResource Primary}"
+                FontFamily="{StaticResource SemiBoldFontFamily}"
+                HorizontalTextAlignment="Center" />
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Start}" />
+            </StackLayout.GestureRecognizers>
+        </StackLayout>
+
+        <ui:ProgressBarView
+            x:Name="Progress"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsLoadingOverlayVisible}"
+            IsLoading="{Binding IsLoadingOverlayVisible}"
+            ProgressText="{Binding SearchingPrayersText}">
+            <ui:ProgressBarView.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Cancel}" />
+            </ui:ProgressBarView.GestureRecognizers>
+        </ui:ProgressBarView>
+
+        <ui:RetryView
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsFail}"
+            FailedText="{Binding LoadFailedText}"
+            RetryText="{Binding RetryText}"
+            RetryCommand="{Binding Start}" />
+    </Grid>
+</ContentPage>

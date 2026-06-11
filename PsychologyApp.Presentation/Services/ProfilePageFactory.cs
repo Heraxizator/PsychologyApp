@@ -1,10 +1,6 @@
-using PsychologyApp.Presentation.Modules.Profile;
-using DonatePage = PsychologyApp.Presentation.Modules.Profile.DonatePage;
 using PsychologyApp.Presentation.Services.Factories;
-using PsychologyApp.Presentation.Views.About;
 using PsychologyApp.Presentation.Views.Profile;
 using PsychologyApp.Presentation.Views.Review;
-using PsychologyApp.Presentation.Views.Settings;
 
 namespace PsychologyApp.Presentation.Services;
 

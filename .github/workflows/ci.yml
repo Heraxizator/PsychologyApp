@@ -39,3 +39,40 @@ jobs:
       - run: dotnet build PsychologyApp.Presentation/PsychologyApp.Presentation.csproj -f net10.0-ios
       - run: dotnet build PsychologyApp.Presentation/PsychologyApp.Presentation.csproj -f net10.0-android
       - run: dotnet build PsychologyApp.Presentation/PsychologyApp.Presentation.csproj -f net10.0-android -c Release -p:PublishTrimmed=true
+
+  build-test-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Build core and test projects
+        run: |
+          dotnet restore PsychologyApp.sln
+          for proj in \
+            PsychologyApp.Domain/PsychologyApp.Domain.csproj \
+            PsychologyApp.Application/PsychologyApp.Application.csproj \
+            PsychologyApp.Infrastructure/PsychologyApp.Infrastructure.csproj \
+            PsychologyApp.Bootstrap/PsychologyApp.Bootstrap.csproj \
+            PsychologyApp.Testing/PsychologyApp.Testing.csproj \
+            PsychologyApp.Presentation.Core/PsychologyApp.Presentation.Core.csproj \
+            PsychologyApp.Domain.Tests/PsychologyApp.Domain.Tests.csproj \
+            PsychologyApp.Application.Tests/PsychologyApp.Application.Tests.csproj \
+            PsychologyApp.Infrastructure.Tests/PsychologyApp.Infrastructure.Tests.csproj \
+            PsychologyApp.Integration.Tests/PsychologyApp.Integration.Tests.csproj \
+            PsychologyApp.Presentation.Tests/PsychologyApp.Presentation.Tests.csproj
+          do
+            dotnet build "$proj" -c Debug --no-restore
+          done
+      - name: Run tests
+        run: |
+          for proj in \
+            PsychologyApp.Domain.Tests/PsychologyApp.Domain.Tests.csproj \
+            PsychologyApp.Application.Tests/PsychologyApp.Application.Tests.csproj \
+            PsychologyApp.Infrastructure.Tests/PsychologyApp.Infrastructure.Tests.csproj \
+            PsychologyApp.Integration.Tests/PsychologyApp.Integration.Tests.csproj \
+            PsychologyApp.Presentation.Tests/PsychologyApp.Presentation.Tests.csproj
+          do
+            dotnet test "$proj" -c Debug --no-build --verbosity minimal
+          done

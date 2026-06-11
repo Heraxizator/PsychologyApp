@@ -1,9 +1,10 @@
-﻿using Dapper;
+using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Exceptions;
+using PsychologyApp.Infrastructure.Data;
 using PsychologyApp.Infrastructure.Data.Context;
 using PsychologyApp.Infrastructure.Data.Sql;
 
@@ -41,15 +42,17 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEnti
 
         try
         {
-            await connection.ExecuteAsync(
+            await connection.ExecuteAsync(DapperCommandFactory.Create(
                 _sql.InsertSql,
                 entity,
                 transaction,
-                commandTimeout: _commandTimeoutSeconds);
-            long id = await connection.ExecuteScalarAsync<long>(
+                _commandTimeoutSeconds,
+                cancellationToken));
+            long id = await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
                 "SELECT last_insert_rowid();",
                 transaction: transaction,
-                commandTimeout: _commandTimeoutSeconds);
+                commandTimeout: _commandTimeoutSeconds,
+                cancellationToken: cancellationToken));
 
             await transaction.CommitAsync(cancellationToken);
             return id;
@@ -64,10 +67,11 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEnti
     public async Task<bool> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        int affected = await connection.ExecuteAsync(
+        int affected = await connection.ExecuteAsync(DapperCommandFactory.Create(
             _sql.DeleteSql,
             entity,
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
 
         if (affected == 0)
         {
@@ -80,10 +84,11 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEnti
     public async Task<bool> EditAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        int affected = await connection.ExecuteAsync(
+        int affected = await connection.ExecuteAsync(DapperCommandFactory.Create(
             _sql.UpdateSql,
             entity,
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
 
         if (affected == 0)
         {
@@ -96,10 +101,10 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEnti
     public async Task<TEntity?> GetByIdAsync(long id, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        return await connection.QuerySingleOrDefaultAsync<TEntity>(
+        return await connection.QuerySingleOrDefaultAsync<TEntity>(DapperCommandFactory.Create(
             _sql.SelectByKeySql,
             new { id },
-            commandTimeout: _commandTimeoutSeconds);
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
     }
-
 }

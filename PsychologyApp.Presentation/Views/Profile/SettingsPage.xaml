@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Views.Profile.SettingsPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Profile"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Common.Behaviors"
+             x:DataType="vm:SettingsViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}">
+
+    <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
+        <StackLayout Margin="20,0,20,20" Spacing="20">
+            <StackLayout.Behaviors>
+                <behaviors:StaggerChildrenBehavior />
+            </StackLayout.Behaviors>
+
+            <ui:NavigationBarSimpleView
+                TitleText="{Binding PageTitle}"
+                BackCommand="{Binding Finish}" />
+
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <StackLayout Spacing="8">
+                    <StackLayout.Behaviors>
+                        <behaviors:StaggerChildrenBehavior />
+                    </StackLayout.Behaviors>
+                    <Label Text="{Binding DesignSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <ui:SettingPickerRowView
+                        LabelText="{Binding LanguageLabel}"
+                        PickerTitle="{Binding LanguagePickerTitle}"
+                        ItemsSource="{Binding LanguageOptions}"
+                        SelectedItem="{Binding Language}" />
+                    <ui:SettingPickerRowView
+                        LabelText="{Binding ThemeLabel}"
+                        PickerTitle="{Binding ThemePickerTitle}"
+                        ItemsSource="{Binding ThemeOptions}"
+                        SelectedItem="{Binding Theme}" />
+                    <ui:SettingPickerRowView
+                        LabelText="{Binding ColorLabel}"
+                        PickerTitle="{Binding ColorPickerTitle}"
+                        ItemsSource="{Binding ColorOptions}"
+                        SelectedItem="{Binding Color}" />
+                    <ui:SettingPickerRowView
+                        LabelText="{Binding FormLabel}"
+                        PickerTitle="{Binding FormPickerTitle}"
+                        ItemsSource="{Binding FormOptions}"
+                        SelectedItem="{Binding Form}" />
+                </StackLayout>
+            </Border>
+
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <StackLayout Spacing="8">
+                    <StackLayout.Behaviors>
+                        <behaviors:StaggerChildrenBehavior />
+                    </StackLayout.Behaviors>
+                    <Label Text="{Binding FontSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <ui:SettingPickerRowView
+                        LabelText="{Binding SizeLabel}"
+                        PickerTitle="{Binding SizePickerTitle}"
+                        ItemsSource="{Binding SizeOptions}"
+                        SelectedItem="{Binding Size}" />
+                    <ui:SettingSwitchRowView
+                        LabelText="{Binding BoldLabel}"
+                        IsToggled="{Binding IsThick}" />
+                </StackLayout>
+            </Border>
+
+            <ui:ButtonView
+                BodyText="{Binding ApplyButtonText}"
+                TapCommand="{Binding Finish}" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
