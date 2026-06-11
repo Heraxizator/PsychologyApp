@@ -4,6 +4,7 @@ using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.Services.Dialogs;
 using PsychologyApp.Presentation.UI.Components;
 using PsychologyApp.Presentation.ViewModels;
 using System.Windows.Input;
@@ -16,6 +17,7 @@ public class TechniqueSessionViewModel : BaseViewModel
 
     private readonly TechniqueId _techniqueId;
     private readonly IUserProgressService _userProgressService;
+    private readonly IDialogService _dialogService;
     private readonly ITechniqueService? _techniqueService;
     private readonly DateTime _sessionStartedAt = DateTime.UtcNow;
     private CancellationTokenSource? _draftSaveCts;
@@ -30,10 +32,12 @@ public class TechniqueSessionViewModel : BaseViewModel
         TechniqueId techniqueId,
         INavigationService navigationService,
         IUserProgressService userProgressService,
+        IDialogService dialogService,
         ITechniqueService? techniqueService = null)
     {
         _techniqueId = techniqueId;
         _userProgressService = userProgressService;
+        _dialogService = dialogService;
         _techniqueService = techniqueService;
 
         ApplyTechnique(techniqueId);
@@ -190,6 +194,9 @@ public class TechniqueSessionViewModel : BaseViewModel
             durationSeconds);
         await _userProgressService.DeleteSessionDraftAsync(itemKey);
 
-        await GoBackAsync();
+        await PracticeCompletionNavigator.NavigateAfterCompletionAsync(
+            NavigationService!,
+            _dialogService,
+            _userProgressService);
     }
 }

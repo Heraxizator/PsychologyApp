@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Storage;
 using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Models.Clean;
 using PsychologyApp.Presentation.ViewModels;
@@ -10,30 +9,35 @@ namespace PsychologyApp.Presentation.ViewModels.Clean;
 
 public class MusicPlayerViewModel : BaseViewModel
 {
-    private const string PlaylistLoadedKey = "music_playlist_loaded";
-
     private readonly ILogger<MusicPlayerViewModel> _logger;
     private Audio? _activeTrack;
     private string search_text = string.Empty;
+    private bool _isPlaying;
+    private bool _isBuffering;
+    private string _positionDisplay = "0:00";
+    private string _durationDisplay = "0:00";
 
     public ObservableCollection<Audio> AllItems { get; } = [];
     public ObservableCollection<Audio> FilteredItems { get; } = [];
 
     public Func<string, Task>? PlayAudioHandler { get; set; }
     public Func<Task>? TogglePlaybackHandler { get; set; }
+    public Func<Task>? PrefetchHandler { get; set; }
     public ICommand TogglePlayPauseCommand { get; }
+    public ICommand PlayNextCommand { get; }
 
-    public string PageTitle => AppStrings.ShellTabCleaner;
-    public string PrayerCollectionLabel => AppStrings.CleanerPrayerCollection;
-    public string LoadLabel => AppStrings.CleanerLoad;
-    public string SearchingPrayersText => AppStrings.CleanerSearchingPrayers;
+    public string PageTitle => AppStrings.ShellTabCleanerShort;
     public string SearchPlaceholder => AppStrings.CleanerSearchPlaceholder;
     public string MoreInfoHeader => AppStrings.TestsMoreInfo;
     public string MoreInfoBody => AppStrings.CleanerMoreInfoBody;
-    public string LoadFailedText => AppStrings.LoadFailed;
-    public string RetryText => AppStrings.RetryQuestion;
     public string NoPrayersFoundText => AppStrings.CleanerNoPrayersFound;
     public string NowPlayingLabel => AppStrings.CleanerNowPlaying;
+    public string BufferingText => AppStrings.CleanerPreparingAudio;
+    public string OfflineBadgeText => AppStrings.CleanerOfflineBadge;
+    public string PlayNextButtonText => AppStrings.CleanerPlayNext;
+    public string ReplayButtonText => AppStrings.CleanerReplay;
+    public string LoadFailedText => AppStrings.LoadFailed;
+    public string RetryText => AppStrings.RetryQuestion;
 
     public Audio? ActiveTrack
     {
@@ -49,11 +53,13 @@ public class MusicPlayerViewModel : BaseViewModel
             OnPropertyChanged(nameof(ActiveTrack));
             OnPropertyChanged(nameof(HasActiveTrack));
             OnPropertyChanged(nameof(ActiveTrackTitle));
+            SyncActiveTrackFlags();
         }
     }
 
     public bool HasActiveTrack => ActiveTrack is not null;
     public string ActiveTrackTitle => ActiveTrack?.Name ?? string.Empty;
+    public bool ShowBufferingOverlay => IsBuffering && HasActiveTrack;
 
     public bool IsPlaying
     {
@@ -68,12 +74,37 @@ public class MusicPlayerViewModel : BaseViewModel
             _isPlaying = value;
             OnPropertyChanged(nameof(IsPlaying));
             OnPropertyChanged(nameof(PlayPauseGlyph));
+            SyncActiveTrackFlags();
         }
     }
 
-    private bool _isPlaying;
+    public bool IsBuffering
+    {
+        get => _isBuffering;
+        set
+        {
+            if (SetProperty(ref _isBuffering, value))
+            {
+                OnPropertyChanged(nameof(ShowBufferingOverlay));
+            }
+        }
+    }
 
     public string PlayPauseGlyph => IsPlaying ? "⏸" : "▶";
+
+    public string PositionDisplay
+    {
+        get => _positionDisplay;
+        set => SetProperty(ref _positionDisplay, value);
+    }
+
+    public string DurationDisplay
+    {
+        get => _durationDisplay;
+        set => SetProperty(ref _durationDisplay, value);
+    }
+
+    public string ProgressDisplay => $"{PositionDisplay} / {DurationDisplay}";
 
     public bool HasFilteredItems => FilteredItems.Count > 0;
     public bool IsSearchEmptyVisible => IsDone && !string.IsNullOrWhiteSpace(SearchText) && FilteredItems.Count == 0;
@@ -81,38 +112,35 @@ public class MusicPlayerViewModel : BaseViewModel
     public MusicPlayerViewModel(ILogger<MusicPlayerViewModel> logger)
     {
         _logger = logger;
-        ModuleName = AppStrings.ShellTabCleaner;
+        ModuleName = AppStrings.ShellTabCleanerShort;
         PageName = AppStrings.CleanerPrayersPage;
 
-        Start = new AsyncCommand(LoadPlaylistAsync);
-        Cancel = new Command(CancelProgress);
         TogglePlayPauseCommand = new AsyncCommand(TogglePlayPauseAsync);
+        PlayNextCommand = new AsyncCommand(PlayNextAsync);
+        Reload = new AsyncCommand(() =>
+        {
+            InitializePlaylist();
+            return Task.CompletedTask;
+        });
 
-        if (Preferences.Get(PlaylistLoadedKey, false))
-        {
-            LoadPlaylistAsync().FireAndForget();
-        }
-        else
-        {
-            SetCreated();
-        }
+        InitializePlaylist();
     }
 
     protected override void RefreshLocalizedProperties()
     {
         Notify(
             nameof(PageTitle),
-            nameof(PrayerCollectionLabel),
-            nameof(LoadLabel),
-            nameof(SearchingPrayersText),
             nameof(SearchPlaceholder),
             nameof(MoreInfoHeader),
             nameof(MoreInfoBody),
-            nameof(LoadFailedText),
-            nameof(RetryText),
             nameof(NoPrayersFoundText),
             nameof(NowPlayingLabel),
-            nameof(PlayPauseGlyph));
+            nameof(BufferingText),
+            nameof(OfflineBadgeText),
+            nameof(PlayNextButtonText),
+            nameof(ReplayButtonText),
+            nameof(PlayPauseGlyph),
+            nameof(ProgressDisplay));
 
         if (IsDone && AllItems.Count > 0)
         {
@@ -127,23 +155,33 @@ public class MusicPlayerViewModel : BaseViewModel
         }
     }
 
-    private async Task LoadPlaylistAsync()
+    public void InitializePlaylist()
     {
         try
         {
-            SetInit();
-            await Task.Yield();
-
-            ObservableCollection<Audio> collection = MusicPlaylist.CreateDefault();
-            InitItems(collection);
-            Preferences.Set(PlaylistLoadedKey, true);
+            InitItems(MusicPlaylist.CreateDefault());
             SetDone();
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to load music playlist.");
+            _logger.LogError(ex, "Failed to initialize music playlist.");
             SetFail();
         }
+    }
+
+    public void RefreshCacheFlags()
+    {
+        foreach (Audio item in AllItems)
+        {
+            item.IsCached = !string.IsNullOrWhiteSpace(item.URL) && MusicAudioCache.IsCached(item.URL);
+        }
+    }
+
+    public void UpdatePlaybackProgress(TimeSpan position, TimeSpan duration)
+    {
+        PositionDisplay = FormatTime(position);
+        DurationDisplay = FormatTime(duration);
+        OnPropertyChanged(nameof(ProgressDisplay));
     }
 
     private void InitItems(ObservableCollection<Audio> collection)
@@ -153,6 +191,7 @@ public class MusicPlayerViewModel : BaseViewModel
         foreach (Audio item in collection)
         {
             item.ClickCommand = new AsyncCommand(() => PlayTrackAsync(item));
+            item.IsCached = !string.IsNullOrWhiteSpace(item.URL) && MusicAudioCache.IsCached(item.URL);
             AllItems.Add(item);
         }
 
@@ -174,6 +213,18 @@ public class MusicPlayerViewModel : BaseViewModel
         }
     }
 
+    private async Task PlayNextAsync()
+    {
+        if (ActiveTrack is null || AllItems.Count == 0)
+        {
+            return;
+        }
+
+        int index = AllItems.IndexOf(ActiveTrack);
+        int nextIndex = index < 0 ? 0 : (index + 1) % AllItems.Count;
+        await PlayTrackAsync(AllItems[nextIndex]);
+    }
+
     private async Task TogglePlayPauseAsync()
     {
         if (TogglePlaybackHandler is not null)
@@ -183,6 +234,16 @@ public class MusicPlayerViewModel : BaseViewModel
     }
 
     public void SetPlaybackState(bool isPlaying) => IsPlaying = isPlaying;
+
+    public void SyncActiveTrackFlags()
+    {
+        foreach (Audio item in AllItems)
+        {
+            bool isActive = ReferenceEquals(item, ActiveTrack);
+            item.IsActive = isActive;
+            item.IsPlayingThis = isActive && IsPlaying;
+        }
+    }
 
     public string SearchText
     {
@@ -216,5 +277,15 @@ public class MusicPlayerViewModel : BaseViewModel
 
         OnPropertyChanged(nameof(HasFilteredItems));
         OnPropertyChanged(nameof(IsSearchEmptyVisible));
+    }
+
+    private static string FormatTime(TimeSpan time)
+    {
+        if (time.TotalHours >= 1)
+        {
+            return $"{(int)time.TotalHours}:{time.Minutes:D2}:{time.Seconds:D2}";
+        }
+
+        return $"{time.Minutes}:{time.Seconds:D2}";
     }
 }

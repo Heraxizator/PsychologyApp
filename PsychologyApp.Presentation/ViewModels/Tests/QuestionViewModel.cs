@@ -24,7 +24,6 @@ public class QuestionViewModel : BaseViewModel
 
     private Func<int, string> Analyzer { get; set; } = default!;
     private readonly IToastService _toastService;
-    private readonly IDialogService _dialogService;
     private readonly IUserProgressService _userProgressService;
     private readonly INavigationService _navigationService;
     private readonly TestSessionInfo? _session;
@@ -42,7 +41,7 @@ public class QuestionViewModel : BaseViewModel
     {
         BindNavigation(navigation, navigationService);
         _toastService = toastService;
-        _dialogService = dialogService;
+        _ = dialogService;
         _navigationService = navigationService;
         _userProgressService = userProgressService;
         _session = session;
@@ -52,7 +51,7 @@ public class QuestionViewModel : BaseViewModel
         Questions.AddRange(questions);
 
         ConfirmCommand = new AsyncCommand(CalculateAnswersAsync);
-        BackCommand = new AsyncCommand(GoToRootAsync);
+        BackCommand = new AsyncCommand(GoBackAsync);
     }
 
     protected override void RefreshLocalizedProperties()
@@ -78,28 +77,11 @@ public class QuestionViewModel : BaseViewModel
         string interpretation = ConfigureResultByBalls(questionBalls);
         await SaveResultAsync(questionBalls, interpretation);
 
-        string message = interpretation;
         TechniqueId? recommended = _session?.AnalyzerId is string analyzerId
             ? TestScoreAnalyzers.RecommendTechnique(analyzerId, questionBalls)
             : null;
-        if (recommended is TechniqueId techniqueId)
-        {
-            message += $"\n\n{AppStrings.TestTryTechnique}";
-        }
 
-        bool finishSelected = await _dialogService.AskAsync(
-            AppStrings.TestsResultTitle(questionBalls),
-            message,
-            AppStrings.TestsFinishButton,
-            recommended is not null ? AppStrings.TestTryTechnique : AppStrings.TestsContinueButton);
-
-        if (!finishSelected && recommended is TechniqueId technique)
-        {
-            await _navigationService.GoToTechniqueAsync(technique);
-            return;
-        }
-
-        await ConfigureEndAsync(finishSelected);
+        await _navigationService.GoToTestResultAsync(questionBalls, interpretation, recommended);
     }
 
     private async Task SaveResultAsync(int score, string summary)
@@ -110,18 +92,6 @@ public class QuestionViewModel : BaseViewModel
         }
 
         await _userProgressService.SaveTestResultAsync(_session.TestId, score, summary);
-    }
-
-    private async Task ConfigureEndAsync(bool isFinish)
-    {
-        if (isFinish)
-        {
-            await GoToRootAsync();
-        }
-        else
-        {
-            Array.ForEach(Questions.ToArray(), x => x.Answers.ForEach(x => x.Selected = false));
-        }
     }
 
     private string ConfigureResultByBalls(int ball) => Analyzer.Invoke(ball);

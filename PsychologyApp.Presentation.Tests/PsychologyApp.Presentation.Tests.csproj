@@ -41,6 +41,12 @@
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\BaseViewModel.cs" Link="BaseViewModel.cs" />
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\Review\FormViewModel.cs" Link="FormViewModel.cs" />
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\QuestionViewModel.cs" Link="QuestionViewModel.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\TestResultViewModel.cs" Link="TestResultViewModel.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Models\Tests\TestResultInfo.cs" Link="TestResultInfo.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Clean\MusicPlayerViewModel.cs" Link="MusicPlayerViewModel.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Models\Clean\MusicPlaylist.cs" Link="MusicPlaylist.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Models\Clean\Audio.cs" Link="Audio.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Common\Infrastructure\MusicAudioCache.cs" Link="MusicAudioCache.cs" />
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\FindProblemViewModel.cs" Link="FindProblemViewModel.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Common\Localization\ContentAssets.cs" Link="ContentAssets.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Common\Infrastructure\AppReadiness.cs" Link="AppReadiness.cs" />
@@ -57,6 +63,12 @@
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\FindProblemViewModel.Reload.cs" Link="FindProblemViewModel.Reload.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Services\Dialogs\IDialogService.cs" Link="IDialogService.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Services\Toasts\IToastService.cs" Link="IToastService.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Motivator\QuoteViewModel.cs" Link="QuoteViewModel.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Models\Profile\QuoteItem.cs" Link="QuoteItem.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Services\Quotes\IQuotesChangeNotifier.cs" Link="IQuotesChangeNotifier.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Common\Infrastructure\OperationCancellation.cs" Link="OperationCancellation.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Common\Formatting\QuoteShareFormatter.cs" Link="QuoteShareFormatter.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Common\Infrastructure\UiThread.cs" Link="UiThread.cs" />
   </ItemGroup>
 
 </Project>

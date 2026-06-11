@@ -12,6 +12,7 @@ public interface IUserProgressRepository
 
     Task RecordCompletionAsync(CompletionDTO completion, CancellationToken cancellationToken = default);
     Task<long> CountTechniqueCompletionsAsync(CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<CompletionDTO>> GetRecentTechniqueCompletionsAsync(int limit, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<DateOnly>> GetCompletionDatesAsync(CancellationToken cancellationToken = default);
     Task<DateTime?> GetLastCompletionForItemAsync(string itemKey, CancellationToken cancellationToken = default);
 

@@ -76,21 +76,24 @@ public class FormViewModel : BaseViewModel
             return;
         }
 
-        switch (ResolveChannel(_settings))
+        bool sent = ResolveChannel(_settings) switch
         {
-            case FeedbackChannel.Email:
-                await SendEmailAsync(MessageText, _settings.ReviewEmailAddress);
-                break;
-            case FeedbackChannel.Sms:
-                await SendSmsAsync(MessageText, _settings.ReviewSmsRecipient);
-                break;
-            case FeedbackChannel.Share:
-                await SendShareAsync(MessageText);
-                break;
+            FeedbackChannel.Email => await SendEmailAsync(MessageText, _settings.ReviewEmailAddress),
+            FeedbackChannel.Sms => await SendSmsAsync(MessageText, _settings.ReviewSmsRecipient),
+            FeedbackChannel.Share => await SendShareAsync(MessageText),
+            _ => false
+        };
+
+        if (!sent)
+        {
+            return;
         }
+
+        MessageText = string.Empty;
+        await _dialogService.ShowAsync(AppStrings.ReviewSentTitle, AppStrings.ReviewSentMessage);
     }
 
-    public async Task SendEmailAsync(string messageText, string recipient)
+    public async Task<bool> SendEmailAsync(string messageText, string recipient)
     {
         try
         {
@@ -100,35 +103,41 @@ public class FormViewModel : BaseViewModel
                 Body = messageText,
                 To = [recipient]
             });
+            return true;
         }
         catch (FeatureNotSupportedException)
         {
             await _dialogService.ShowAsync(null, AppStrings.ReviewEmailNotSupported);
+            return false;
         }
         catch (Exception ex)
         {
             await _dialogService.ShowAsync(null, AppStrings.ReviewEmailError(ex.Message));
+            return false;
         }
     }
 
-    public async Task SendSmsAsync(string messageText, string recipient)
+    public async Task<bool> SendSmsAsync(string messageText, string recipient)
     {
         try
         {
             SmsMessage message = new(messageText, [recipient]);
             await Sms.Default.ComposeAsync(message);
+            return true;
         }
         catch (FeatureNotSupportedException)
         {
             await _dialogService.ShowAsync(null, AppStrings.ReviewSmsNotSupported);
+            return false;
         }
         catch (Exception ex)
         {
             await _dialogService.ShowAsync(null, AppStrings.ReviewSmsError(ex.Message));
+            return false;
         }
     }
 
-    public async Task SendShareAsync(string messageText)
+    public async Task<bool> SendShareAsync(string messageText)
     {
         try
         {
@@ -137,10 +146,12 @@ public class FormViewModel : BaseViewModel
                 Title = AppStrings.ReviewShareTitle,
                 Text = messageText
             });
+            return true;
         }
         catch (Exception ex)
         {
             await _dialogService.ShowAsync(null, AppStrings.ReviewShareError(ex.Message));
+            return false;
         }
     }
 

@@ -2,6 +2,7 @@ using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Services.Dialogs;
 using PsychologyApp.Presentation.Services.Toasts;
 using PsychologyApp.Presentation.Services.Practice;
+using PsychologyApp.Presentation.Services.Quotes;
 using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.Services.Factories;
 using PsychologyApp.Presentation.Services.Shell;
@@ -22,8 +23,12 @@ public static class PresentationServiceCollectionExtensions
         services.AddSingleton<IPageFactory, MauiPageFactory>();
         services.AddSingleton<IShellStartupCoordinator, ShellStartupCoordinator>();
         services.AddSingleton<ITechniqueMessenger, TechniqueMessengerService>();
+        services.AddSingleton<IQuotesChangeNotifier, QuotesChangeNotifier>();
         services.AddSingleton<Func<NavigationContext, INavigationService>>(sp => context =>
-            context.NavigationService ?? new MauiNavigationService(context.Navigation, sp.GetRequiredService<IPageFactory>()));
+            context.NavigationService ?? new MauiNavigationService(
+                context.Navigation,
+                sp.GetRequiredService<IPageFactory>(),
+                sp.GetRequiredService<IShellStartupCoordinator>()));
 
         services.AddSingleton<ITechniquesViewModelFactory, TechniquesViewModelFactory>();
         services.AddSingleton<IUserViewModelFactory, UserViewModelFactory>();
@@ -36,6 +41,7 @@ public static class PresentationServiceCollectionExtensions
         services.AddSingleton<ITestsListViewModelFactory, TestsListViewModelFactory>();
         services.AddSingleton<ITestHistoryViewModelFactory, TestHistoryViewModelFactory>();
         services.AddSingleton<ILuscherTestViewModelFactory, LuscherTestViewModelFactory>();
+        services.AddSingleton<ITestResultViewModelFactory, TestResultViewModelFactory>();
         services.AddSingleton<IQuestionViewModelFactory, QuestionViewModelFactory>();
         services.AddSingleton<IFindProblemViewModelFactory, FindProblemViewModelFactory>();
         services.AddSingleton<ITheoryViewModelFactory, TheoryViewModelFactory>();

@@ -41,6 +41,9 @@ public sealed class UserProgressService(IUserProgressRepository repository) : IU
     public Task<long> CountTechniqueCompletionsAsync(CancellationToken cancellationToken = default) =>
         repository.CountTechniqueCompletionsAsync(cancellationToken);
 
+    public Task<IReadOnlyList<CompletionDTO>> GetRecentTechniqueCompletionsAsync(int limit = 20, CancellationToken cancellationToken = default) =>
+        repository.GetRecentTechniqueCompletionsAsync(limit, cancellationToken);
+
     public async Task<int> GetStreakDaysAsync(CancellationToken cancellationToken = default)
     {
         IReadOnlyList<DateOnly> dates = await repository.GetCompletionDatesAsync(cancellationToken);

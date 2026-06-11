@@ -16,6 +16,9 @@ namespace PsychologyApp.Presentation;
 
 public partial class AppShell : Shell
 {
+    public ShellContent TestsTab => DetectorTab;
+    public ShellContent QuotesTab => MotivatorTab;
+
     private readonly IPageFactory _pageFactory;
     private readonly IShellStartupCoordinator _startupCoordinator;
     private readonly ILogger<AppShell> _logger;

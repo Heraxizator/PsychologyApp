@@ -134,6 +134,24 @@ public sealed class UserProgressRepository : IUserProgressRepository
             cancellationToken: cancellationToken));
     }
 
+    public async Task<IReadOnlyList<CompletionDTO>> GetRecentTechniqueCompletionsAsync(int limit, CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        IEnumerable<CompletionDTO> rows = await connection.QueryAsync<CompletionDTO>(DapperCommandFactory.Create(
+            """
+            SELECT CompletionId, CompletionKind, ItemKey, ModuleName, PageName, CompletedAt, DurationSeconds
+            FROM Completions
+            WHERE CompletionKind = 'technique'
+            ORDER BY CompletionId DESC
+            LIMIT @limit;
+            """,
+            new { limit },
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
+
+        return rows.ToList();
+    }
+
     public async Task<IReadOnlyList<DateOnly>> GetCompletionDatesAsync(CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);

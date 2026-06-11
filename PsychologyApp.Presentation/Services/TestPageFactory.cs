@@ -16,6 +16,7 @@ public interface ITestPageFactory
     QuestionPage CreateQuestionPage(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null);
     StandardTestPage CreateStandardTestPage();
     AlternativeTestPage CreateAlternativeTestPage();
+    TestResultPage CreateTestResultPage(TestResultInfo result);
 }
 
 public sealed class TestPageFactory(
@@ -25,7 +26,8 @@ public sealed class TestPageFactory(
     ITheoryViewModelFactory theoryViewModelFactory,
     IFindProblemViewModelFactory findProblemViewModelFactory,
     IQuestionViewModelFactory questionViewModelFactory,
-    ILuscherTestViewModelFactory luscherTestViewModelFactory) : ITestPageFactory
+    ILuscherTestViewModelFactory luscherTestViewModelFactory,
+    ITestResultViewModelFactory testResultViewModelFactory) : ITestPageFactory
 {
     public TestsListPage CreateTestsListPage() =>
         new(pageViewModelActivator, testsListViewModelFactory);
@@ -47,4 +49,7 @@ public sealed class TestPageFactory(
 
     public AlternativeTestPage CreateAlternativeTestPage() =>
         new(pageViewModelActivator, luscherTestViewModelFactory);
+
+    public TestResultPage CreateTestResultPage(TestResultInfo result) =>
+        new(testResultViewModelFactory, result);
 }

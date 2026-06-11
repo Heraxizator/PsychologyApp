@@ -94,6 +94,26 @@
                         Text="{Binding LastPracticeDisplay}" />
                 </Border>
 
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{Binding PracticeHistoryTitle}" Style="{StaticResource SectionTitleStyle}" />
+                        <Label
+                            IsVisible="{Binding ShowPracticeHistoryEmpty}"
+                            Text="{Binding PracticeHistoryEmpty}"
+                            Style="{StaticResource BodyStyle}" />
+                        <VerticalStackLayout
+                            IsVisible="{Binding HasPracticeHistory}"
+                            BindableLayout.ItemsSource="{Binding PracticeHistory}"
+                            Spacing="4">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="quotes:PracticeHistoryItem">
+                                    <Label Text="{Binding DisplayText}" Style="{StaticResource BodyStyle}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
                 <ui:SettingsLinkCardView
                     Title="{Binding SettingsCardTitle}"
                     Subtitle="{Binding SettingsCardSubtitle}"
@@ -103,6 +123,16 @@
                     Title="{Binding DonateTitle}"
                     Subtitle="{Binding DonateSubtitle}"
                     TapCommand="{Binding OpenDonateCommand}" />
+
+                <ui:SettingsLinkCardView
+                    Title="{Binding FeedbackCardTitle}"
+                    Subtitle="{Binding FeedbackCardSubtitle}"
+                    TapCommand="{Binding OpenFeedbackCommand}" />
+
+                <ui:SettingsLinkCardView
+                    Title="{Binding InfoCardTitle}"
+                    Subtitle="{Binding InfoCardSubtitle}"
+                    TapCommand="{Binding OpenInfoCommand}" />
 
                 <Label Text="{Binding RecommendedLabel}" Style="{StaticResource SectionTitleStyle}" />
 
@@ -147,21 +177,49 @@
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="quotes:QuoteItem">
                                 <Border Style="{StaticResource BrandCardStyle}" Margin="0,0,0,8">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenQuotesTabCommand}" />
+                                    </Border.GestureRecognizers>
                                     <Border.Behaviors>
                                         <behaviors:ListItemRevealBehavior />
                                     </Border.Behaviors>
-                                    <ui:TextItemView
-                                        TitleText="{Binding Author}"
-                                        BodyText="{Binding Text}" />
+                                    <VerticalStackLayout Spacing="8">
+                                        <ui:TextItemView
+                                            TitleText="{Binding Author}"
+                                            BodyText="{Binding Text}" />
+                                        <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="16" HorizontalOptions="Start">
+                                            <Label
+                                                Grid.Column="0"
+                                                Style="{StaticResource BodyStyle}"
+                                                Text="📋">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding CopyCommand}" />
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                            <Label
+                                                Grid.Column="1"
+                                                Style="{StaticResource BodyStyle}"
+                                                Text="↗">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding ShareCommand}" />
+                                                </Label.GestureRecognizers>
+                                            </Label>
+                                        </Grid>
+                                    </VerticalStackLayout>
                                 </Border>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                         <CollectionView.EmptyView>
-                            <Label
-                                Margin="0,24,0,0"
-                                HorizontalTextAlignment="Center"
-                                Style="{StaticResource BodyStyle}"
-                                Text="{Binding QuotesEmptyText}" />
+                            <StackLayout Margin="0,24,0,0" Spacing="12" HorizontalOptions="Center">
+                                <Label
+                                    HorizontalTextAlignment="Center"
+                                    Style="{StaticResource BodyStyle}"
+                                    Text="{Binding QuotesEmptyText}" />
+                                <ui:ButtonView
+                                    IsCompact="True"
+                                    BodyText="{Binding GoToQuotesTabText}"
+                                    TapCommand="{Binding OpenQuotesTabCommand}" />
+                            </StackLayout>
                         </CollectionView.EmptyView>
                     </CollectionView>
                 </Grid>

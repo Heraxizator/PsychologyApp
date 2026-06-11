@@ -40,11 +40,13 @@
                         PickerTitle="{Binding ColorPickerTitle}"
                         ItemsSource="{Binding ColorOptions}"
                         SelectedItem="{Binding Color}" />
+                    <Label Text="{Binding ColorHelperText}" Style="{StaticResource CaptionStyle}" />
                     <ui:SettingPickerRowView
                         LabelText="{Binding FormLabel}"
                         PickerTitle="{Binding FormPickerTitle}"
                         ItemsSource="{Binding FormOptions}"
                         SelectedItem="{Binding Form}" />
+                    <Label Text="{Binding FormHelperText}" Style="{StaticResource CaptionStyle}" />
                 </StackLayout>
             </Border>
 
@@ -67,7 +69,12 @@
 
             <ui:ButtonView
                 BodyText="{Binding ApplyButtonText}"
-                TapCommand="{Binding Finish}" />
+                TapCommand="{Binding ApplyCommand}" />
+
+            <ui:ButtonView
+                Variant="Secondary"
+                BodyText="{Binding ReplayOnboardingText}"
+                TapCommand="{Binding ReplayOnboardingCommand}" />
         </StackLayout>
     </ScrollView>
 </ContentPage>

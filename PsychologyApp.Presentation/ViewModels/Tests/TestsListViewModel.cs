@@ -6,6 +6,7 @@ using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.Services.Tests;
 using PsychologyApp.Presentation.ViewModels;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using BaseViewModel = PsychologyApp.Presentation.ViewModels.BaseViewModel;
 
 namespace PsychologyApp.Presentation.ViewModels.Tests;
@@ -22,6 +23,9 @@ public class TestsListViewModel : BaseViewModel
     public string LoadingText => AppStrings.TestsLoadingText;
     public string FailedText => AppStrings.LoadFailed;
     public string RetryText => AppStrings.RetryQuestion;
+    public string ProfileToolbarText => AppStrings.ProfileTitle;
+
+    public ICommand OpenProfileCommand { get; }
 
     public ObservableCollection<TestItem> TestItemCollection { get; private set; } = [];
 
@@ -35,6 +39,7 @@ public class TestsListViewModel : BaseViewModel
         _userProgressService = userProgressService;
         _testCatalogService = testCatalogService;
         BindNavigation(navigation, navigationService);
+        OpenProfileCommand = new AsyncCommand(() => _navigationService.GoToUserProfileAsync());
         Reload = new AsyncCommand(InitAsync);
     }
 
@@ -46,7 +51,8 @@ public class TestsListViewModel : BaseViewModel
             nameof(EmptyBody),
             nameof(LoadingText),
             nameof(FailedText),
-            nameof(RetryText));
+            nameof(RetryText),
+            nameof(ProfileToolbarText));
         InitAsync().FireAndForget();
     }
 

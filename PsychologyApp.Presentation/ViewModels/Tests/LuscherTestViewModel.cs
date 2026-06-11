@@ -38,6 +38,10 @@ public class LuscherTestViewModel : BaseTestViewModel
 
     public string RestartButtonText => AppStrings.TestsRestart;
 
+    public string BackToListButtonText => AppStrings.TestsBackToList;
+
+    public ICommand BackToListCommand { get; private set; } = default!;
+
     public string FirstColorLabel => AppStrings.TestsFirstColor;
 
     public string SecondColorLabel => AppStrings.TestsSecondColor;
@@ -57,6 +61,7 @@ public class LuscherTestViewModel : BaseTestViewModel
         PageName = PageTitle;
 
         Restart = new Command(ToRestart);
+        BackToListCommand = new AsyncCommand(GoToRootAsync);
         BlackHandler = new Command(ToBlackHandler);
         RedHandler = new Command(ToRedHandler);
         BlueHandler = new Command(ToBlueHandler);
@@ -79,6 +84,7 @@ public class LuscherTestViewModel : BaseTestViewModel
             nameof(MoreInfoHeader),
             nameof(MoreInfoBody),
             nameof(RestartButtonText),
+            nameof(BackToListButtonText),
             nameof(FirstColorLabel),
             nameof(SecondColorLabel));
 

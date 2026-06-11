@@ -25,4 +25,8 @@ public interface INavigationService
     Task GoToAlternativeTestAsync();
     Task GoToTestHistoryAsync(string testId, string testTitle);
     Task GoToTestsListAsync();
+    Task GoToTestResultAsync(int score, string interpretation, TechniqueId? recommendedTechnique = null);
+    Task GoToTestsTabAsync();
+    Task GoToQuotesTabAsync();
+    Task ShowOnboardingAsync();
 }

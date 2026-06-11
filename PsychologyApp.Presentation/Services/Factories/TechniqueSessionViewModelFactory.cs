@@ -53,17 +53,18 @@ public interface ITechniqueViewModelFactory
 
 public sealed class TechniqueViewModelFactory(
     Func<NavigationContext, INavigationService> navigationServiceFactory,
-    IUserProgressService userProgressService) : ITechniqueViewModelFactory
+    IUserProgressService userProgressService,
+    IDialogService dialogService) : ITechniqueViewModelFactory
 {
     public BaseViewModel Create(TechniqueId techniqueId, INavigation navigation)
     {
         INavigationService navigationService = navigationServiceFactory(NavigationContext.From(navigation));
         return techniqueId switch
         {
-            TechniqueId.Paper => new PaperListViewModel(navigationService, TechniqueId.Paper, clearTextAfterAdd: true, userProgressService),
-            TechniqueId.Polarity => new PolarityViewModel(navigationService, userProgressService),
-            TechniqueId.Copied => new PaperListViewModel(navigationService, TechniqueId.Copied, clearTextAfterAdd: false, userProgressService),
-            _ => new TechniqueSessionViewModel(navigation, techniqueId, navigationService, userProgressService)
+            TechniqueId.Paper => new PaperListViewModel(navigationService, TechniqueId.Paper, clearTextAfterAdd: true, userProgressService, dialogService),
+            TechniqueId.Polarity => new PolarityViewModel(navigationService, userProgressService, dialogService),
+            TechniqueId.Copied => new PaperListViewModel(navigationService, TechniqueId.Copied, clearTextAfterAdd: false, userProgressService, dialogService),
+            _ => new TechniqueSessionViewModel(navigation, techniqueId, navigationService, userProgressService, dialogService)
         };
     }
 }

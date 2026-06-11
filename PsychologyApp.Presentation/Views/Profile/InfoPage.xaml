@@ -23,6 +23,11 @@
                 Text="{Binding AboutBody}"
                 Style="{StaticResource BodyStyle}" />
 
+        <Label
+                Text="{Binding AppVersionText}"
+                Style="{StaticResource CaptionStyle}"
+                TextColor="{DynamicResource Primary}" />
+
         </StackLayout>
 
 </ContentPage>

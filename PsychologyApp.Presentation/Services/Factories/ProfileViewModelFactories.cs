@@ -5,6 +5,8 @@ using PsychologyApp.Application.Services.QuotService;
 using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Services.Dialogs;
 using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.Services.Quotes;
+using PsychologyApp.Presentation.Services.Toasts;
 using PsychologyApp.Presentation.ViewModels.Review;
 using PsychologyApp.Presentation.ViewModels.Profile;
 
@@ -20,10 +22,20 @@ public sealed class UserViewModelFactory(
     IUserProgressService userProgressService,
     ILogger<UserViewModel> logger,
     IOptions<AppSettings> settings,
+    IQuotesChangeNotifier quotesChangeNotifier,
+    IToastService toastService,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : IUserViewModelFactory
 {
     public UserViewModel Create(INavigation navigation) =>
-        new(navigation, quotService, userProgressService, logger, settings, navigationServiceFactory(NavigationContext.From(navigation)));
+        new(
+            navigation,
+            quotService,
+            userProgressService,
+            logger,
+            settings,
+            navigationServiceFactory(NavigationContext.From(navigation)),
+            quotesChangeNotifier,
+            toastService);
 }
 
 public interface IOptionsViewModelFactory

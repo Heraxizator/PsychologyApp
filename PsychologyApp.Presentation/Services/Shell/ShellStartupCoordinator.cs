@@ -39,15 +39,22 @@ public sealed class ShellStartupCoordinator(
         }
     }
 
-    public async Task ShowOnboardingIfNeededAsync(
+    public Task ShowOnboardingIfNeededAsync(
         INavigation navigation,
         Func<TechniqueId?, Task> onTechniqueSelected)
     {
         if (UserPreferences.Load().HasCompletedOnboarding)
         {
-            return;
+            return Task.CompletedTask;
         }
 
+        return ShowOnboardingAsync(navigation, onTechniqueSelected);
+    }
+
+    public async Task ShowOnboardingAsync(
+        INavigation navigation,
+        Func<TechniqueId?, Task> onTechniqueSelected)
+    {
         try
         {
             await Task.Delay(300);

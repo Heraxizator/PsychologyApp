@@ -12,6 +12,7 @@ public interface IUserProgressService
 
     Task RecordTechniqueCompletionAsync(string itemKey, string moduleName, string pageName, int durationSeconds = 0, CancellationToken cancellationToken = default);
     Task<long> CountTechniqueCompletionsAsync(CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<CompletionDTO>> GetRecentTechniqueCompletionsAsync(int limit = 20, CancellationToken cancellationToken = default);
     Task<int> GetStreakDaysAsync(CancellationToken cancellationToken = default);
     Task<DateTime?> GetLastPracticeDateAsync(string itemKey, CancellationToken cancellationToken = default);
 

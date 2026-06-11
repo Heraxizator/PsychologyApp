@@ -8,6 +8,7 @@
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Common.Behaviors"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="vm:MusicPlayerViewModel"
+             x:Name="PageRoot"
              Shell.NavBarIsVisible="True"
              Title="{Binding PageTitle}">
 
@@ -50,6 +51,10 @@
                         <ui:MusicListCardView
                             Title="{Binding Name}"
                             Subtitle="{Binding Description}"
+                            IsActive="{Binding IsActive}"
+                            IsPlayingThis="{Binding IsPlayingThis}"
+                            ShowOfflineBadge="{Binding IsCached}"
+                            OfflineBadgeText="{Binding Source={x:Reference PageRoot}, Path=BindingContext.OfflineBadgeText}"
                             TapCommand="{Binding ClickCommand}">
                             <ui:MusicListCardView.Behaviors>
                                 <behaviors:ListItemRevealBehavior />
@@ -65,17 +70,30 @@
                 IsVisible="{Binding HasActiveTrack}"
                 Style="{StaticResource BrandCardStyle}"
                 Padding="12">
-                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                    <VerticalStackLayout Spacing="2" VerticalOptions="Center">
-                        <Label Text="{Binding NowPlayingLabel}" Style="{StaticResource CaptionStyle}" />
-                        <Label Text="{Binding ActiveTrackTitle}" Style="{StaticResource SectionTitleStyle}" />
-                    </VerticalStackLayout>
-                    <ui:ButtonView
-                        Grid.Column="1"
-                        IsCompact="True"
-                        BodyText="{Binding PlayPauseGlyph}"
-                        TapCommand="{Binding TogglePlayPauseCommand}" />
-                </Grid>
+                <VerticalStackLayout Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                            <Label Text="{Binding NowPlayingLabel}" Style="{StaticResource CaptionStyle}" />
+                            <Label Text="{Binding ActiveTrackTitle}" Style="{StaticResource SectionTitleStyle}" />
+                            <Label Text="{Binding ProgressDisplay}" Style="{StaticResource CaptionStyle}" />
+                        </VerticalStackLayout>
+                        <ui:ButtonView
+                            Grid.Column="1"
+                            IsCompact="True"
+                            BodyText="{Binding PlayNextButtonText}"
+                            TapCommand="{Binding PlayNextCommand}" />
+                        <ui:ButtonView
+                            Grid.Column="2"
+                            IsCompact="True"
+                            BodyText="{Binding PlayPauseGlyph}"
+                            TapCommand="{Binding TogglePlayPauseCommand}" />
+                    </Grid>
+                    <Label
+                        IsVisible="{Binding ShowBufferingOverlay}"
+                        Text="{Binding BufferingText}"
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{DynamicResource Primary}" />
+                </VerticalStackLayout>
             </Border>
 
             <ui:TextBoxView
@@ -89,42 +107,9 @@
                 Grid.Row="3"
                 IsVisible="False"
                 ShouldAutoPlay="True"
-                MediaEnded="OnMediaEnded" />
+                MediaEnded="OnMediaEnded"
+                MediaFailed="OnMediaFailed" />
         </Grid>
-
-        <StackLayout
-            x:Name="IntroPrompt"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"
-            IsVisible="{Binding IsCreated}"
-            Padding="{StaticResource LayoutEmptyPaddingThickness}">
-            <Label
-                Text="{Binding PrayerCollectionLabel}"
-                Style="{StaticResource SectionTitleStyle}"
-                HorizontalTextAlignment="Center" />
-            <Label
-                Margin="0,12,0,0"
-                Text="{Binding LoadLabel}"
-                Style="{StaticResource BodyStyle}"
-                TextColor="{DynamicResource Primary}"
-                FontFamily="{StaticResource SemiBoldFontFamily}"
-                HorizontalTextAlignment="Center" />
-            <StackLayout.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding Start}" />
-            </StackLayout.GestureRecognizers>
-        </StackLayout>
-
-        <ui:ProgressBarView
-            x:Name="Progress"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"
-            IsVisible="{Binding IsLoadingOverlayVisible}"
-            IsLoading="{Binding IsLoadingOverlayVisible}"
-            ProgressText="{Binding SearchingPrayersText}">
-            <ui:ProgressBarView.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding Cancel}" />
-            </ui:ProgressBarView.GestureRecognizers>
-        </ui:ProgressBarView>
 
         <ui:RetryView
             VerticalOptions="Center"
@@ -132,6 +117,6 @@
             IsVisible="{Binding IsFail}"
             FailedText="{Binding LoadFailedText}"
             RetryText="{Binding RetryText}"
-            RetryCommand="{Binding Start}" />
+            RetryCommand="{Binding Reload}" />
     </Grid>
 </ContentPage>

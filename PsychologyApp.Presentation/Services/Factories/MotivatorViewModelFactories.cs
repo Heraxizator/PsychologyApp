@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Services.QuotService;
 using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.Services.Quotes;
 using PsychologyApp.Presentation.Services.Toasts;
 using PsychologyApp.Presentation.ViewModels.Motivator;
 using PsychologyApp.Presentation.ViewModels.Clean;
@@ -19,10 +20,18 @@ public sealed class QuoteViewModelFactory(
     ILogger<QuoteViewModel> logger,
     IOptions<AppSettings> settings,
     IToastService toastService,
+    IQuotesChangeNotifier quotesChangeNotifier,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : IQuoteViewModelFactory
 {
     public QuoteViewModel Create(INavigation navigation) =>
-        new(navigation, navigationServiceFactory(NavigationContext.From(navigation)), quotService, logger, settings, toastService);
+        new(
+            navigation,
+            navigationServiceFactory(NavigationContext.From(navigation)),
+            quotService,
+            logger,
+            settings,
+            toastService,
+            quotesChangeNotifier);
 }
 
 public interface IMusicPlayerViewModelFactory

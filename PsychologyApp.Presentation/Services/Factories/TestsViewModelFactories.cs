@@ -65,6 +65,18 @@ public sealed class LuscherTestViewModelFactory(
             userProgressService);
 }
 
+public interface ITestResultViewModelFactory
+{
+    TestResultViewModel Create(INavigation navigation, TestResultInfo result);
+}
+
+public sealed class TestResultViewModelFactory(
+    Func<NavigationContext, INavigationService> navigationServiceFactory) : ITestResultViewModelFactory
+{
+    public TestResultViewModel Create(INavigation navigation, TestResultInfo result) =>
+        new(navigation, navigationServiceFactory(NavigationContext.From(navigation)), result);
+}
+
 public interface IQuestionViewModelFactory
 {
     QuestionViewModel Create(
