@@ -17,7 +17,7 @@ dotnet test PsychologyApp.sln
 ## PR checklist
 
 - [ ] No `new` for application services in Presentation
-- [ ] No direct `PsychologyApp.Infrastructure` usings in ViewModels (except `MauiServiceProvider`)
+- [ ] No direct `PsychologyApp.Infrastructure` usings in ViewModels
 - [ ] SQL uses parameters (`@name`), not string interpolation
 - [ ] Unit tests added or updated for changed behavior
 - [ ] `dotnet build` and `dotnet test` pass locally

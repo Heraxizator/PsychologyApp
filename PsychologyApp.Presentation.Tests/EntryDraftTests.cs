@@ -1,5 +1,5 @@
 using System.Text.Json;
-using PsychologyApp.Presentation.Infrastructure;
+using PsychologyApp.Presentation.Common;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

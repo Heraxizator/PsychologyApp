@@ -1,8 +1,8 @@
-using PsychologyApp.Presentation.Modules.Practice.Techniques;
-using PsychologyApp.Presentation.Modules.Tests;
+using PsychologyApp.Presentation.Models.Practice.Techniques;
+using PsychologyApp.Presentation.Models.Tests;
 using PsychologyApp.Presentation.Services.Factories;
-using PsychologyApp.Presentation.Modules.Tests.Collection;
-using PsychologyApp.Presentation.Views.TechniquePages;
+using PsychologyApp.Presentation.Models.Tests;
+using PsychologyApp.Presentation.Views.Practice.Techniques;
 using PsychologyApp.Presentation.Views.Tests;
 
 namespace PsychologyApp.Presentation.Services;

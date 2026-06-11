@@ -1,8 +1,10 @@
+using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Services.Dialogs;
 using PsychologyApp.Presentation.Services.Toasts;
-using PsychologyApp.Presentation.Modules.Practice.Messages;
+using PsychologyApp.Presentation.Services.Practice;
 using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.Services.Factories;
+using PsychologyApp.Presentation.Services.Shell;
 
 namespace PsychologyApp.Presentation.DependencyInjection;
 
@@ -12,14 +14,16 @@ public static class PresentationServiceCollectionExtensions
     {
         services.AddSingleton<IToastService, ToastService>();
         services.AddSingleton<IDialogService, DialogService>();
+        services.AddSingleton<GlobalExceptionHandler>();
         services.AddSingleton<IPageViewModelActivator, PageViewModelActivator>();
         services.AddSingleton<IProfilePageFactory, ProfilePageFactory>();
         services.AddSingleton<ITestPageFactory, TestPageFactory>();
         services.AddSingleton<ITechniquePageFactory, TechniquePageFactory>();
         services.AddSingleton<IPageFactory, MauiPageFactory>();
+        services.AddSingleton<IShellStartupCoordinator, ShellStartupCoordinator>();
         services.AddSingleton<ITechniqueMessenger, TechniqueMessengerService>();
-        services.AddSingleton<Func<INavigation, INavigationService>>(sp => navigation =>
-            new MauiNavigationService(navigation, sp.GetRequiredService<IPageFactory>()));
+        services.AddSingleton<Func<NavigationContext, INavigationService>>(sp => context =>
+            context.NavigationService ?? new MauiNavigationService(context.Navigation, sp.GetRequiredService<IPageFactory>()));
 
         services.AddSingleton<ITechniquesViewModelFactory, TechniquesViewModelFactory>();
         services.AddSingleton<IUserViewModelFactory, UserViewModelFactory>();
@@ -47,4 +51,4 @@ public static class PresentationServiceCollectionExtensions
         return services;
     }
 }
-
+

@@ -1,5 +1,5 @@
 using System.Reflection;
-using PsychologyApp.Presentation.Infrastructure;
+using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.ViewModels;
 using Xunit;
 

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Views.Profile.DonatePage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Common.Behaviors"
+             x:DataType="profile:DonateViewModel"
+             xmlns:profile="clr-namespace:PsychologyApp.Presentation.ViewModels.Profile"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}">
+
+    <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+        <StackLayout.Behaviors>
+            <behaviors:StaggerChildrenBehavior />
+        </StackLayout.Behaviors>
+        <ui:NavigationBarSimpleView
+            TitleText="{Binding PageTitle}"
+            BackCommand="{Binding BackCommand}" />
+
+        <ui:TextBoxView
+            HeaderText="{Binding MoreInfoHeader}"
+            BodyText="{Binding MoreInfoBody}" />
+
+        <ui:ButtonView
+            Margin="0, 5, 0, 10"
+            BodyText="{Binding DonateButtonText}"
+            TapCommand="{Binding DonateCommand}" />
+    </StackLayout>
+</ContentPage>

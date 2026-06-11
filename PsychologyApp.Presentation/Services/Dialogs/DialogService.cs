@@ -1,4 +1,4 @@
-using PsychologyApp.Presentation.Infrastructure;
+using PsychologyApp.Presentation.Common;
 
 namespace PsychologyApp.Presentation.Services.Dialogs;
 

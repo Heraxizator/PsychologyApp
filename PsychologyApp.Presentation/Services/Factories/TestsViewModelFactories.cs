@@ -1,10 +1,10 @@
 using PsychologyApp.Application.Services.UserProgress;
+using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.Services.Dialogs;
 using PsychologyApp.Presentation.Services.Toasts;
-using PsychologyApp.Presentation.Modules.Practice.Techniques;
-using PsychologyApp.Presentation.Modules.Tests;
-using PsychologyApp.Presentation.Modules.Tests.Collection;
-using PsychologyApp.Presentation.ViewModels.TechniqueViewModels;
+using PsychologyApp.Presentation.Models.Practice.Techniques;
+using PsychologyApp.Presentation.Models.Tests;
+using PsychologyApp.Presentation.ViewModels.Practice.Techniques;
 using PsychologyApp.Presentation.ViewModels.Tests;
 
 namespace PsychologyApp.Presentation.Services.Factories;
@@ -15,11 +15,11 @@ public interface ITestsListViewModelFactory
 }
 
 public sealed class TestsListViewModelFactory(
-    Func<INavigation, INavigationService> navigationServiceFactory,
+    Func<NavigationContext, INavigationService> navigationServiceFactory,
     IUserProgressService userProgressService) : ITestsListViewModelFactory
 {
     public TestsListViewModel Create(INavigation navigation) =>
-        new(navigation, navigationServiceFactory(navigation), userProgressService);
+        new(navigation, navigationServiceFactory(NavigationContext.From(navigation)), userProgressService);
 }
 
 public interface ITestHistoryViewModelFactory
@@ -28,11 +28,11 @@ public interface ITestHistoryViewModelFactory
 }
 
 public sealed class TestHistoryViewModelFactory(
-    Func<INavigation, INavigationService> navigationServiceFactory,
+    Func<NavigationContext, INavigationService> navigationServiceFactory,
     IUserProgressService userProgressService) : ITestHistoryViewModelFactory
 {
     public TestHistoryViewModel Create(INavigation navigation, string testId, string testTitle) =>
-        new(navigation, navigationServiceFactory(navigation), userProgressService, testId, testTitle);
+        new(navigation, navigationServiceFactory(NavigationContext.From(navigation)), userProgressService, testId, testTitle);
 }
 
 public interface IStandardTestViewModelFactory
@@ -40,9 +40,12 @@ public interface IStandardTestViewModelFactory
     StandardTestViewModel Create(INavigation navigation);
 }
 
-public sealed class StandardTestViewModelFactory(IUserProgressService userProgressService) : IStandardTestViewModelFactory
+public sealed class StandardTestViewModelFactory(
+    IUserProgressService userProgressService,
+    Func<NavigationContext, INavigationService> navigationServiceFactory) : IStandardTestViewModelFactory
 {
-    public StandardTestViewModel Create(INavigation navigation) => new(navigation, userProgressService);
+    public StandardTestViewModel Create(INavigation navigation) =>
+        new(navigation, navigationServiceFactory(NavigationContext.From(navigation)), userProgressService);
 }
 
 public interface IAlternativeTestViewModelFactory
@@ -50,9 +53,12 @@ public interface IAlternativeTestViewModelFactory
     AlternativeTestViewModel Create(INavigation navigation);
 }
 
-public sealed class AlternativeTestViewModelFactory(IUserProgressService userProgressService) : IAlternativeTestViewModelFactory
+public sealed class AlternativeTestViewModelFactory(
+    IUserProgressService userProgressService,
+    Func<NavigationContext, INavigationService> navigationServiceFactory) : IAlternativeTestViewModelFactory
 {
-    public AlternativeTestViewModel Create(INavigation navigation) => new(navigation, userProgressService);
+    public AlternativeTestViewModel Create(INavigation navigation) =>
+        new(navigation, navigationServiceFactory(NavigationContext.From(navigation)), userProgressService);
 }
 
 public interface IQuestionViewModelFactory
@@ -69,7 +75,7 @@ public sealed class QuestionViewModelFactory(
     IToastService toastService,
     IDialogService dialogService,
     IUserProgressService userProgressService,
-    Func<INavigation, INavigationService> navigationServiceFactory) : IQuestionViewModelFactory
+    Func<NavigationContext, INavigationService> navigationServiceFactory) : IQuestionViewModelFactory
 {
     public QuestionViewModel Create(
         INavigation navigation,
@@ -78,7 +84,7 @@ public sealed class QuestionViewModelFactory(
         bool singleAnswer,
         TestSessionInfo? session = null)
     {
-        INavigationService navigationService = navigationServiceFactory(navigation);
+        INavigationService navigationService = navigationServiceFactory(NavigationContext.From(navigation));
         return new(
             navigation,
             questions,
@@ -103,7 +109,7 @@ public interface IFindProblemViewModelFactory
         string? testId = null);
 }
 
-public sealed class FindProblemViewModelFactory(Func<INavigation, INavigationService> navigationServiceFactory) : IFindProblemViewModelFactory
+public sealed class FindProblemViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory) : IFindProblemViewModelFactory
 {
     public FindProblemViewModel Create(
         INavigation navigation,
@@ -112,7 +118,7 @@ public sealed class FindProblemViewModelFactory(Func<INavigation, INavigationSer
         string? comment,
         Action action,
         string? testId = null) =>
-        new(navigation, navigationServiceFactory(navigation), description, algorithm, comment, action, testId);
+        new(navigation, navigationServiceFactory(NavigationContext.From(navigation)), description, algorithm, comment, action, testId);
 }
 
 public interface ITheoryViewModelFactory
@@ -120,8 +126,8 @@ public interface ITheoryViewModelFactory
     TheoryViewModel Create(INavigation navigation, string content, TechniqueId? techniqueId = null);
 }
 
-public sealed class TheoryViewModelFactory : ITheoryViewModelFactory
+public sealed class TheoryViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory) : ITheoryViewModelFactory
 {
     public TheoryViewModel Create(INavigation navigation, string content, TechniqueId? techniqueId = null) =>
-        new(navigation, content, techniqueId);
+        new(navigation, navigationServiceFactory(NavigationContext.From(navigation)), content, techniqueId);
 }

@@ -1,5 +1,5 @@
-using PsychologyApp.Presentation.Modules.Practice.Techniques;
-using PsychologyApp.Presentation.Modules.Tests;
+using PsychologyApp.Presentation.Models.Practice.Techniques;
+using PsychologyApp.Presentation.Models.Tests;
 using PsychologyApp.Presentation.Services;
 
 namespace PsychologyApp.Presentation.Tests;
@@ -37,10 +37,14 @@ internal sealed class TestNavigationService(INavigation navigation) : INavigatio
     public Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Action action, string? testId = null) =>
         Task.CompletedTask;
 
-    public Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer) =>
+    public Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null) =>
         Task.CompletedTask;
 
     public Task GoToStandardTestAsync() => Task.CompletedTask;
 
     public Task GoToAlternativeTestAsync() => Task.CompletedTask;
+
+    public Task GoToTestHistoryAsync(string testId, string testTitle) => Task.CompletedTask;
+
+    public Task GoToTestsListAsync() => Task.CompletedTask;
 }

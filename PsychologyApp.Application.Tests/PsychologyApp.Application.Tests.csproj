@@ -17,6 +17,7 @@
     <ProjectReference Include="..\PsychologyApp.Application\PsychologyApp.Application.csproj" />
     <ProjectReference Include="..\PsychologyApp.Bootstrap\PsychologyApp.Bootstrap.csproj" />
     <ProjectReference Include="..\PsychologyApp.Domain\PsychologyApp.Domain.csproj" />
+    <ProjectReference Include="..\PsychologyApp.Testing\PsychologyApp.Testing.csproj" />
   </ItemGroup>
 
 </Project>

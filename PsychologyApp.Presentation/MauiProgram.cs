@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui;
 using MauiIcons.Material;
 using Microsoft.Extensions.Logging;
 using PsychologyApp.Application.Configuration;
@@ -6,7 +6,8 @@ using PsychologyApp.Application.DependencyInjection;
 using PsychologyApp.Bootstrap;
 using PsychologyApp.Domain.Base.Constants;
 using PsychologyApp.Presentation.DependencyInjection;
-using PsychologyApp.Presentation.Infrastructure;
+using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Platform;
 
 namespace PsychologyApp.Presentation;
 
@@ -56,9 +57,7 @@ public static class MauiProgram
         builder.Services.AddPsychologyAppPresentation();
         builder.Services.AddSingleton<AppShell>();
 
-        MauiApp app = builder.Build();
-        MauiServiceProvider.Current = app.Services;
-        return app;
+        return builder.Build();
     }
 
     private static void ConfigureHandlers()

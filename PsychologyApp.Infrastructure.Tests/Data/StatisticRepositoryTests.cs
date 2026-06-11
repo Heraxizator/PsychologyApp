@@ -1,4 +1,5 @@
 using PsychologyApp.Domain.Entities;
+using PsychologyApp.Testing.Data;
 using PsychologyApp.Infrastructure.Data.Repositories.Statistics;
 using Xunit;
 

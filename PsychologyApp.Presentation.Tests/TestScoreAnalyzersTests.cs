@@ -1,5 +1,5 @@
-using PsychologyApp.Presentation.Infrastructure;
-using PsychologyApp.Presentation.Modules.Tests.Collection;
+using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Models.Tests;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
