@@ -35,8 +35,7 @@ public static class PresentationServiceCollectionExtensions
         services.AddSingleton<ITechniqueViewModelFactory, TechniqueViewModelFactory>();
         services.AddSingleton<ITestsListViewModelFactory, TestsListViewModelFactory>();
         services.AddSingleton<ITestHistoryViewModelFactory, TestHistoryViewModelFactory>();
-        services.AddSingleton<IStandardTestViewModelFactory, StandardTestViewModelFactory>();
-        services.AddSingleton<IAlternativeTestViewModelFactory, AlternativeTestViewModelFactory>();
+        services.AddSingleton<ILuscherTestViewModelFactory, LuscherTestViewModelFactory>();
         services.AddSingleton<IQuestionViewModelFactory, QuestionViewModelFactory>();
         services.AddSingleton<IFindProblemViewModelFactory, FindProblemViewModelFactory>();
         services.AddSingleton<ITheoryViewModelFactory, TheoryViewModelFactory>();

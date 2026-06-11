@@ -5,7 +5,8 @@
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Tests"
-             x:DataType="vm:StandardTestViewModel"
+             xmlns:tests="clr-namespace:PsychologyApp.Presentation.Views.Tests"
+             x:DataType="vm:LuscherTestViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Common.Behaviors">
@@ -28,147 +29,7 @@
                             Style="{StaticResource SectionTitleStyle}" />
                     </StackLayout>
 
-                    <StackLayout Margin="0, 5, 0, 15">
-
-                        <BoxView 
-                    Margin="30, 0, 30, 5"
-                    HeightRequest="3"
-                    Color="{DynamicResource Primary}"/>
-
-                        <FlexLayout JustifyContent="Center">
-
-                            <BoxView 
-                        IsVisible="{Binding IsRed}"
-                        Margin="10"
-                        WidthRequest="100"
-                        HeightRequest="100"
-                        CornerRadius="15"
-                        Grid.Column="1"
-                        Grid.Row="0"
-                        Color="Red"
-                        Opacity="0.9">
-                                <BoxView.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding RedHandler}"/>
-                                </BoxView.GestureRecognizers>
-                            </BoxView>
-
-                            <BoxView
-                        IsVisible="{Binding IsBrown}"
-                        Margin="10"
-                        WidthRequest="100"
-                        HeightRequest="100"
-                        CornerRadius="15"
-                        Grid.Column="2"
-                        Grid.Row="1"
-                        Color="Brown"
-                        Opacity="0.9">
-                                <BoxView.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding BrownHandler}"/>
-                                </BoxView.GestureRecognizers>
-                            </BoxView>
-
-                            <BoxView 
-                        IsVisible="{Binding IsYellow}"
-                        Margin="10"
-                        WidthRequest="100"
-                        HeightRequest="100"
-                        CornerRadius="15"
-                        Grid.Column="1"
-                        Grid.Row="1"
-                        Color="Yellow"
-                        Opacity="0.9">
-                                <BoxView.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding YellowHandler}"/>
-                                </BoxView.GestureRecognizers>
-                            </BoxView>
-
-                        </FlexLayout>
-
-                        <FlexLayout Margin="10, 0, 10, 0" JustifyContent="Center">
-
-                            <BoxView 
-                        IsVisible="{Binding IsGreen}"
-                        Margin="10"
-                        WidthRequest="100"
-                        HeightRequest="100"
-                        CornerRadius="15"
-                        Color="Green"
-                        Opacity="0.9">
-                                <BoxView.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding GreenHandler}"/>
-                                </BoxView.GestureRecognizers>
-                            </BoxView>
-
-                            <BoxView 
-                        IsVisible="{Binding IsBlue}"
-                        Margin="10"
-                        WidthRequest="100"
-                        HeightRequest="100"
-                        CornerRadius="15"
-                        Grid.Column="2"
-                        Grid.Row="0"
-                        Color="Blue"
-                        Opacity="0.9">
-                                <BoxView.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding BlueHandler}"/>
-                                </BoxView.GestureRecognizers>
-                            </BoxView>
-
-                            <BoxView
-                        IsVisible="{Binding IsPurple}"
-                        Margin="10"
-                        WidthRequest="100"
-                        HeightRequest="100"
-                        CornerRadius="15"
-                        Grid.Column="0"
-                        Grid.Row="1"
-                        Color="Purple"
-                        Opacity="0.9">
-                                <BoxView.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding PurpleHandler}"/>
-                                </BoxView.GestureRecognizers>
-                            </BoxView>
-
-                        </FlexLayout>
-
-                        <FlexLayout JustifyContent="Center">
-
-                            <BoxView 
-                        IsVisible="{Binding IsGray}"
-                        Margin="10"
-                        WidthRequest="100"
-                        HeightRequest="100"
-                        CornerRadius="15"
-                        Color="Gray"
-                        Opacity="0.9">
-                                <BoxView.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding GrayHandler}"/>
-                                </BoxView.GestureRecognizers>
-                            </BoxView>
-
-                            <BoxView
-                        IsVisible="{Binding IsBlack}"
-                        Margin="10"
-                        WidthRequest="100"
-                        HeightRequest="100"
-                        CornerRadius="15"
-                        Grid.Column="0"
-                        Grid.Row="1"
-                        Color="Black"
-                        Opacity="0.9">
-                                <BoxView.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding BlackHandler}"/>
-                                </BoxView.GestureRecognizers>
-                            </BoxView>
-
-                        </FlexLayout>
-
-                        <BoxView 
-                        Margin="30, 10, 30, 0"
-                        HeightRequest="3"
-                        Color="{DynamicResource Primary}"/>
-
-                    </StackLayout>
+                    <tests:LuscherColorGridView />
 
                     <ui:TextBoxView
                         Margin="0, -10, 0, 0"

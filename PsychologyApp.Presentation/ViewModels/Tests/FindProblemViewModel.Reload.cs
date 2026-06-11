@@ -1,5 +1,6 @@
 using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Models.Tests;
+using PsychologyApp.Presentation.Services.Tests;
 
 namespace PsychologyApp.Presentation.ViewModels.Tests;
 
@@ -14,19 +15,15 @@ public partial class FindProblemViewModel
             return;
         }
 
-        IReadOnlyList<TestItem> items = await TestCatalogLoader.LoadAllAsync(_navigationService);
-        TestItem? item = items.FirstOrDefault(test => string.Equals(test.TestId, _testId, StringComparison.Ordinal));
-        if (item is null)
+        TestDefinition? definition = await _testCatalogService.GetByIdAsync(_testId);
+        if (definition is null)
         {
             return;
         }
 
-        await MainThread.InvokeOnMainThreadAsync(() =>
-        {
-            DescriptionText = item.Description;
-            CommentText = item.Comment;
-            AlgorithmRows.Clear();
-            InitAlgorithmRows(item.Algorithm);
-        });
+        DescriptionText = definition.Description;
+        CommentText = definition.Comment;
+        AlgorithmRows.Clear();
+        InitAlgorithmRows(definition.Algorithm.ToList());
     }
 }

@@ -23,6 +23,7 @@ public interface INavigationService
     Task GoToTheoryAsync(string content, TechniqueId? techniqueId = null);
     Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Action action, string? testId = null);
     Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null);
+    Task GoToLuscherTestAsync(LuscherMode mode);
     Task GoToStandardTestAsync();
     Task GoToAlternativeTestAsync();
     Task GoToTestHistoryAsync(string testId, string testTitle);
@@ -78,11 +79,18 @@ public sealed class MauiNavigationService(INavigation navigation, IPageFactory p
     public Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null) =>
         navigation.PushAsync(pageFactory.CreateQuestionPage(questions, scoreAnalyzer, singleAnswer, session), true);
 
+    public Task GoToLuscherTestAsync(LuscherMode mode) => mode switch
+    {
+        LuscherMode.Standard => navigation.PushAsync(pageFactory.CreateStandardTestPage(), false),
+        LuscherMode.Brief => navigation.PushAsync(pageFactory.CreateAlternativeTestPage(), false),
+        _ => navigation.PushAsync(pageFactory.CreateAlternativeTestPage(), false)
+    };
+
     public Task GoToStandardTestAsync() =>
-        navigation.PushAsync(pageFactory.CreateStandardTestPage(), false);
+        GoToLuscherTestAsync(LuscherMode.Standard);
 
     public Task GoToAlternativeTestAsync() =>
-        navigation.PushAsync(pageFactory.CreateAlternativeTestPage(), false);
+        GoToLuscherTestAsync(LuscherMode.Brief);
 
     public Task GoToTestHistoryAsync(string testId, string testTitle) =>
         navigation.PushAsync(pageFactory.CreateTestHistoryPage(testId, testTitle), true);

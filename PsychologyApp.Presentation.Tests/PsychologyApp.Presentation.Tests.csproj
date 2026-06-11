@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.3" />
     <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.41" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
@@ -20,7 +21,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PsychologyApp.Application\PsychologyApp.Application.csproj" />
+    <ProjectReference Include="..\PsychologyApp.Domain\PsychologyApp.Domain.csproj" />
     <ProjectReference Include="..\PsychologyApp.Presentation.Core\PsychologyApp.Presentation.Core.csproj" />
+    <ProjectReference Include="..\PsychologyApp.Testing\PsychologyApp.Testing.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,8 +43,17 @@
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\QuestionViewModel.cs" Link="QuestionViewModel.cs" />
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\FindProblemViewModel.cs" Link="FindProblemViewModel.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Common\Localization\ContentAssets.cs" Link="ContentAssets.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Models\Tests\TestCatalogLoader.cs" Link="TestCatalogLoader.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Common\Infrastructure\AppReadiness.cs" Link="AppReadiness.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Models\Tests\TestItem.cs" Link="TestItem.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Models\Tests\TestItemFactory.cs" Link="TestItemFactory.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Services\Tests\ITestCatalogService.cs" Link="ITestCatalogService.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Services\Tests\TestCatalogService.cs" Link="TestCatalogService.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Services\Tests\CachedTestCatalogService.cs" Link="CachedTestCatalogService.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\TestsListViewModel.cs" Link="TestsListViewModel.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\LuscherTestViewModel.cs" Link="LuscherTestViewModel.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\BaseTestViewModel.cs" Link="BaseTestViewModel.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Common\Localization\LuscherStrings.cs" Link="LuscherStrings.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Common\Localization\ColourStrings.cs" Link="ColourStrings.cs" />
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\FindProblemViewModel.Reload.cs" Link="FindProblemViewModel.Reload.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Services\Dialogs\IDialogService.cs" Link="IDialogService.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Services\Toasts\IToastService.cs" Link="IToastService.cs" />

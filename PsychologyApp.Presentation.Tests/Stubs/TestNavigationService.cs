@@ -4,7 +4,7 @@ using PsychologyApp.Presentation.Services;
 
 namespace PsychologyApp.Presentation.Tests;
 
-internal sealed class TestNavigationService(INavigation navigation) : INavigationService
+public class TestNavigationService(INavigation navigation) : INavigationService
 {
     public INavigation Navigation => navigation;
 
@@ -12,7 +12,7 @@ internal sealed class TestNavigationService(INavigation navigation) : INavigatio
 
     public Task GoToRootAsync() => navigation.PopToRootAsync(true);
 
-    public Task GoToTechniqueAsync(TechniqueId techniqueId) => Task.CompletedTask;
+    public virtual Task GoToTechniqueAsync(TechniqueId techniqueId) => Task.CompletedTask;
 
     public Task GoToCreatedAsync(long techniqueId) => Task.CompletedTask;
 
@@ -37,8 +37,10 @@ internal sealed class TestNavigationService(INavigation navigation) : INavigatio
     public Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Action action, string? testId = null) =>
         Task.CompletedTask;
 
-    public Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null) =>
+    public virtual Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null) =>
         Task.CompletedTask;
+
+    public Task GoToLuscherTestAsync(LuscherMode mode) => Task.CompletedTask;
 
     public Task GoToStandardTestAsync() => Task.CompletedTask;
 

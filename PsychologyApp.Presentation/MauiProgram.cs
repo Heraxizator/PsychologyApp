@@ -7,7 +7,9 @@ using PsychologyApp.Bootstrap;
 using PsychologyApp.Domain.Base.Constants;
 using PsychologyApp.Presentation.DependencyInjection;
 using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Abstractions;
 using PsychologyApp.Presentation.Platform;
+using PsychologyApp.Presentation.Services.Tests;
 
 namespace PsychologyApp.Presentation;
 
@@ -53,6 +55,11 @@ public static class MauiProgram
         builder.Services.AddCachedReasonContentProvider<MauiReasonContentProvider>();
         builder.Services.AddSingleton<MauiQuotContentProvider>();
         builder.Services.AddCachedQuotContentProvider<MauiQuotContentProvider>();
+        builder.Services.AddSingleton<MauiTestAssetReader>();
+        builder.Services.AddSingleton<ITestAssetReader>(sp => sp.GetRequiredService<MauiTestAssetReader>());
+        builder.Services.AddSingleton<TestCatalogService>();
+        builder.Services.AddSingleton<CachedTestCatalogService>();
+        builder.Services.AddSingleton<ITestCatalogService>(sp => sp.GetRequiredService<CachedTestCatalogService>());
         builder.Services.AddSingleton<ContentCacheInvalidator>();
         builder.Services.AddPsychologyAppPresentation();
         builder.Services.AddSingleton<AppShell>();

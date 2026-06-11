@@ -3,6 +3,7 @@ using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.Services.Tests;
 using BaseViewModel = PsychologyApp.Presentation.ViewModels.BaseViewModel;
 
 namespace PsychologyApp.Presentation.ViewModels.Tests;
@@ -16,10 +17,12 @@ public sealed class TestHistoryEntryItem
 public sealed class TestHistoryViewModel : BaseViewModel
 {
     private readonly IUserProgressService _userProgressService;
+    private readonly ITestCatalogService _testCatalogService;
     private readonly string _testId;
+    private string _testTitle;
 
     public ObservableRangeCollection<TestHistoryEntryItem> HistoryEntries { get; } = [];
-    public string PageTitle { get; }
+    public string PageTitle => $"{AppStrings.TestHistoryTitle}: {_testTitle}";
     public string EmptyText => AppStrings.TestHistoryEmpty;
     public string LoadingText => AppStrings.TestsLoadingText;
     public string FailedText => AppStrings.LoadFailed;
@@ -30,12 +33,14 @@ public sealed class TestHistoryViewModel : BaseViewModel
         INavigation navigation,
         INavigationService navigationService,
         IUserProgressService userProgressService,
+        ITestCatalogService testCatalogService,
         string testId,
         string testTitle)
     {
         _userProgressService = userProgressService;
+        _testCatalogService = testCatalogService;
         _testId = testId;
-        PageTitle = $"{AppStrings.TestHistoryTitle}: {testTitle}";
+        _testTitle = testTitle;
         ModuleName = AppStrings.TestsDetectorTitle;
         PageName = AppStrings.TestHistoryTitle;
 
@@ -44,12 +49,32 @@ public sealed class TestHistoryViewModel : BaseViewModel
         LoadAsync().FireAndForget();
     }
 
+    protected override void RefreshLocalizedProperties()
+    {
+        Notify(nameof(PageTitle), nameof(EmptyText), nameof(LoadingText), nameof(FailedText), nameof(RetryText));
+        RefreshTitleAsync().FireAndForget();
+    }
+
+    private async Task RefreshTitleAsync()
+    {
+        PsychologyApp.Presentation.Models.Tests.TestDefinition? definition =
+            await _testCatalogService.GetByIdAsync(_testId);
+        if (definition is null)
+        {
+            return;
+        }
+
+        _testTitle = definition.Title;
+        OnPropertyChanged(nameof(PageTitle));
+    }
+
     private async Task LoadAsync()
     {
         try
         {
             SetInit();
             await AppReadiness.DatabaseReadyAsync;
+            await RefreshTitleAsync();
 
             IReadOnlyList<TestResultDTO> history =
                 await _userProgressService.GetTestResultHistoryAsync(_testId, 50);
