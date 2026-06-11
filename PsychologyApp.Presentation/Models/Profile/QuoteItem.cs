@@ -12,4 +12,5 @@ public class QuoteItem
     public ICommand? LikeCommand { get; set; }
     public ICommand? ShareCommand { get; set; }
     public ICommand? CopyCommand { get; set; }
+    public ICommand? OpenQuotesTabCommand { get; set; }
 }

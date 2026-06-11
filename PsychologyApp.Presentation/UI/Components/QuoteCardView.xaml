@@ -35,14 +35,20 @@
                     x:Name="FavoriteActionLabel"
                     Grid.Column="0"
                     Style="{StaticResource BodyStyle}"
-                    Text="{mi:Material Icon=FavoriteBorder}"
                     SemanticProperties.Description="{Binding FavoriteHint, Source={x:Reference Root}}">
                     <Label.Triggers>
                         <DataTrigger
                             Binding="{Binding IsFavourite, Source={x:Reference Root}}"
                             TargetType="Label"
                             Value="True">
+                            <Setter Property="Text" Value="{mi:Material Icon=Favorite}" />
                             <Setter Property="TextColor" Value="{DynamicResource Primary}" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding IsFavourite, Source={x:Reference Root}}"
+                            TargetType="Label"
+                            Value="False">
+                            <Setter Property="Text" Value="{mi:Material Icon=FavoriteBorder}" />
                         </DataTrigger>
                     </Label.Triggers>
                     <Label.GestureRecognizers>

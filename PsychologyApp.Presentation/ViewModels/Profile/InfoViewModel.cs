@@ -9,6 +9,7 @@ public class InfoViewModel : BaseViewModel
 {
     public string PageTitle => AppStrings.OptionsAboutTitle;
     public string AboutBody => AppStrings.InfoAboutBody;
+    public string AppVersionText => AppStrings.InfoAppVersion(AppInfo.Current.VersionString);
 
     public InfoViewModel(INavigation navigation, INavigationService navigationService)
     {
@@ -22,6 +23,6 @@ public class InfoViewModel : BaseViewModel
 
     protected override void RefreshLocalizedProperties()
     {
-        Notify(nameof(PageTitle), nameof(AboutBody));
+        Notify(nameof(PageTitle), nameof(AboutBody), nameof(AppVersionText));
     }
 }

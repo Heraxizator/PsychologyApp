@@ -1,8 +1,8 @@
 using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
-using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.Services.Dialogs;
 using PsychologyApp.Presentation.ViewModels;
 using System.Collections.ObjectModel;
 
@@ -13,6 +13,7 @@ public class PaperListViewModel : BaseViewModel
     private readonly bool _clearTextAfterAdd;
     private readonly TechniqueId _techniqueId;
     private readonly IUserProgressService _userProgressService;
+    private readonly IDialogService _dialogService;
     private readonly DateTime _sessionStartedAt = DateTime.UtcNow;
 
     public ObservableCollection<Paper> PapersObservableCollection { get; private set; } = [];
@@ -30,11 +31,13 @@ public class PaperListViewModel : BaseViewModel
         INavigationService navigationService,
         TechniqueId techniqueId,
         bool clearTextAfterAdd,
-        IUserProgressService userProgressService)
+        IUserProgressService userProgressService,
+        IDialogService dialogService)
     {
         _techniqueId = techniqueId;
         _clearTextAfterAdd = clearTextAfterAdd;
         _userProgressService = userProgressService;
+        _dialogService = dialogService;
         BindNavigation(navigationService.Navigation, navigationService);
         ApplyTechnique(techniqueId);
         AddCommand = new Command(ToAdd);
@@ -95,7 +98,10 @@ public class PaperListViewModel : BaseViewModel
             PageName,
             durationSeconds);
         await _userProgressService.DeleteSessionDraftAsync(_techniqueId.ToString());
-        await GoBackAsync();
+        await PracticeCompletionNavigator.NavigateAfterCompletionAsync(
+            NavigationService!,
+            _dialogService,
+            _userProgressService);
     }
 
     private void SetCollection(bool visible) => IsFull = visible;

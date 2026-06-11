@@ -59,16 +59,13 @@ public sealed class QuestionViewModelTests
     }
 
     [Fact]
-    public async Task ConfirmCommand_CompleteAnswers_ShowsScoreDialog()
+    public async Task ConfirmCommand_CompleteAnswers_NavigatesToTestResult()
     {
         var navigation = new Mock<INavigation>();
-        var navigationService = new TestNavigationService(navigation.Object);
+        var trackingNavigation = new TestResultTrackingNavigationService(navigation.Object);
         var toast = new Mock<IToastService>();
         var dialog = new Mock<IDialogService>();
         var progress = new Mock<IUserProgressService>();
-        dialog
-            .Setup(d => d.AskAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-            .ReturnsAsync(true);
 
         List<Question> questions =
         [
@@ -97,16 +94,17 @@ public sealed class QuestionViewModelTests
             singleAnswer: true,
             toast.Object,
             dialog.Object,
-            navigationService,
+            trackingNavigation,
             progress.Object);
 
         viewModel.ConfirmCommand.Execute(null);
         await Task.Delay(50);
 
         dialog.Verify(
-            d => d.AskAsync(AppStrings.TestsResultTitle(5), "Score 5", AppStrings.TestsFinishButton, AppStrings.TestsContinueButton),
-            Times.Once);
-        navigation.Verify(n => n.PopToRootAsync(true), Times.Once);
+            d => d.AskAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()),
+            Times.Never);
+        Assert.Equal(5, trackingNavigation.LastScore);
+        Assert.Equal("Score 5", trackingNavigation.LastInterpretation);
     }
 
     [Fact]
@@ -149,16 +147,13 @@ public sealed class QuestionViewModelTests
     }
 
     [Fact]
-    public async Task ConfirmCommand_WithRecommendation_NavigatesToTechniqueWhenSelected()
+    public async Task ConfirmCommand_WithRecommendation_PassesTechniqueToResultPage()
     {
         var navigation = new Mock<INavigation>();
-        var trackingNavigation = new TechniqueTrackingNavigationService(navigation.Object);
+        var trackingNavigation = new TestResultTrackingNavigationService(navigation.Object);
         var toast = new Mock<IToastService>();
         var dialog = new Mock<IDialogService>();
         var progress = new Mock<IUserProgressService>();
-        dialog
-            .Setup(d => d.AskAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-            .ReturnsAsync(false);
 
         List<Question> questions =
         [
@@ -182,16 +177,20 @@ public sealed class QuestionViewModelTests
         viewModel.ConfirmCommand.Execute(null);
         await Task.Delay(50);
 
-        Assert.Equal(TechniqueId.Spin, trackingNavigation.LastTechniqueId);
+        Assert.Equal(TechniqueId.Spin, trackingNavigation.LastRecommendedTechnique);
     }
 
-    private sealed class TechniqueTrackingNavigationService(INavigation navigation) : TestNavigationService(navigation)
+    private sealed class TestResultTrackingNavigationService(INavigation navigation) : TestNavigationService(navigation)
     {
-        public TechniqueId? LastTechniqueId { get; private set; }
+        public int? LastScore { get; private set; }
+        public string? LastInterpretation { get; private set; }
+        public TechniqueId? LastRecommendedTechnique { get; private set; }
 
-        public override Task GoToTechniqueAsync(TechniqueId techniqueId)
+        public override Task GoToTestResultAsync(int score, string interpretation, TechniqueId? recommendedTechnique = null)
         {
-            LastTechniqueId = techniqueId;
+            LastScore = score;
+            LastInterpretation = interpretation;
+            LastRecommendedTechnique = recommendedTechnique;
             return Task.CompletedTask;
         }
     }

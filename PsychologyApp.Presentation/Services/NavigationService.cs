@@ -1,7 +1,7 @@
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Models.Tests;
-using PsychologyApp.Presentation.Views.Practice.Techniques;
-using PsychologyApp.Presentation.Views.Practice.Constructor;
+using AppShell = PsychologyApp.Presentation.AppShell;
+using PsychologyApp.Presentation.Services.Shell;
 
 namespace PsychologyApp.Presentation.Services;
 
@@ -28,9 +28,16 @@ public interface INavigationService
     Task GoToAlternativeTestAsync();
     Task GoToTestHistoryAsync(string testId, string testTitle);
     Task GoToTestsListAsync();
+    Task GoToTestResultAsync(int score, string interpretation, TechniqueId? recommendedTechnique = null);
+    Task GoToTestsTabAsync();
+    Task GoToQuotesTabAsync();
+    Task ShowOnboardingAsync();
 }
 
-public sealed class MauiNavigationService(INavigation navigation, IPageFactory pageFactory) : INavigationService
+public sealed class MauiNavigationService(
+    INavigation navigation,
+    IPageFactory pageFactory,
+    IShellStartupCoordinator shellStartupCoordinator) : INavigationService
 {
     public INavigation Navigation => navigation;
 
@@ -97,5 +104,48 @@ public sealed class MauiNavigationService(INavigation navigation, IPageFactory p
 
     public Task GoToTestsListAsync() =>
         navigation.PushAsync(pageFactory.CreateTestsListPage(), true);
+
+    public Task GoToTestResultAsync(int score, string interpretation, TechniqueId? recommendedTechnique = null) =>
+        navigation.PushAsync(
+            pageFactory.CreateTestResultPage(new TestResultInfo
+            {
+                Score = score,
+                Interpretation = interpretation,
+                RecommendedTechnique = recommendedTechnique
+            }),
+            true);
+
+    public Task GoToTestsTabAsync()
+    {
+        if (Microsoft.Maui.Controls.Shell.Current is AppShell appShell)
+        {
+            appShell.CurrentItem = appShell.TestsTab;
+        }
+
+        return Task.CompletedTask;
+    }
+
+    public Task GoToQuotesTabAsync()
+    {
+        if (Microsoft.Maui.Controls.Shell.Current is AppShell appShell)
+        {
+            appShell.CurrentItem = appShell.QuotesTab;
+        }
+
+        return Task.CompletedTask;
+    }
+
+    public Task ShowOnboardingAsync() =>
+        shellStartupCoordinator.ShowOnboardingAsync(
+            navigation,
+            techniqueId =>
+            {
+                if (techniqueId is null)
+                {
+                    return Task.CompletedTask;
+                }
+
+                return GoToTechniqueAsync(techniqueId.Value);
+            });
 }
 

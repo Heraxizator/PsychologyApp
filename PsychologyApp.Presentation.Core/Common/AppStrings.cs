@@ -53,6 +53,15 @@ public static class AppStrings
     public static string SettingsPickerLanguages => T("Языки", "Languages");
     public static string SettingsAppliedTitle => T("Информация", "Information");
     public static string SettingsAppliedMessage => T("Настройки применены", "Settings applied");
+    public static string SettingsFormHelper => T(
+        "Скругление углов карточек и полей ввода",
+        "Corner rounding for cards and input fields");
+    public static string SettingsColorHelper => T(
+        "Основной цвет кнопок и акцентов",
+        "Primary color for buttons and accents");
+    public static string SettingsReplayOnboarding => T(
+        "Пройти знакомство снова",
+        "Retake onboarding");
 
     public static string TechniqueTheory => T("Теория", "Theory");
     public static string TechniqueAlgorithm => T("Алгоритм", "Algorithm");
@@ -123,6 +132,13 @@ public static class AppStrings
     public static string CleanerPrayerCollection => T("Сборник молитв", "Prayer collection");
     public static string CleanerLoad => T("Загрузить", "Load");
     public static string CleanerSearchingPrayers => T("Поиск молитв", "Loading prayers");
+    public static string CleanerPreparingAudio => T("Подготовка аудио…", "Preparing audio…");
+    public static string CleanerPlaybackError => T(
+        "Не удалось воспроизвести аудио. Проверьте подключение к интернету.",
+        "Could not play audio. Check your internet connection.");
+    public static string CleanerOfflineBadge => T("Доступно офлайн", "Available offline");
+    public static string CleanerPlayNext => T("Далее", "Next");
+    public static string CleanerReplay => T("Сначала", "Replay");
     public static string CleanerMoreInfoBody => T(
         "Это сборник сильных молитв, который поможет вам очиститься от негатива. Нужен хороший интернет.",
         "A collection of powerful prayers to help you release negativity. A stable internet connection is required.");
@@ -166,7 +182,7 @@ public static class AppStrings
         "Не удалось инициализировать приложение. Перезапустите приложение.",
         "Failed to initialize the app. Please restart.");
 
-    public static string TestsDetectorTitle => T("Детектор", "Detector");
+    public static string TestsDetectorTitle => ShellTabDetectorShort;
     public static string TestsFindProblemTitle => T("Поиск проблемы", "Find a problem");
     public static string TestsAboutPassageTitle => T("О прохождении", "About this test");
     public static string TestsDescriptionHeader => T("Описание", "Description");
@@ -199,6 +215,11 @@ public static class AppStrings
         "This is the brief Lüscher test. Choose two colors — the most and least pleasant.");
     public static string TestsAnswerAllToast => T("Нужно ответить на все вопросы", "Please answer all questions");
     public static string TestsResultTitle(int score) => T($"Ваш результат: {score}", $"Your score: {score}");
+    public static string TestsResultPageTitle => T("Результат теста", "Test result");
+    public static string TestsBackToList => T("К списку тестов", "Back to tests");
+    public static string TestsResultRecommendationHint => T(
+        "На основе результата мы подобрали практику, которая может помочь",
+        "Based on your result, we picked a practice that may help");
     public static string TestsContinueButton => T("Продолжить", "Continue");
     public static string TestsCoLabel => T("Суммарное отклонение от аутогенной нормы (СО)", "Total deviation from autogenic norm (CO)");
     public static string TestsBkLabel => T("Вегетативный коэффициент (ВК)", "Vegetative coefficient (VC)");
@@ -213,11 +234,16 @@ public static class AppStrings
     public static string PracticeEmptyBody => T(
         "Создайте свою первую технику в конструкторе",
         "Create your first technique in the designer");
-    public static string TestsEmptyTitle => T("Тесты загружаются", "Loading tests");
-    public static string TestsEmptyBody => T("Подождите немного", "Please wait a moment");
+    public static string TestsEmptyTitle => T("Тесты пока недоступны", "Tests are not available yet");
+    public static string TestsEmptyBody => T(
+        "Попробуйте обновить список или вернитесь позже",
+        "Try refreshing the list or come back later");
     public static string TestsLoadingText => T("Загрузка тестов", "Loading tests");
     public static string QuotesEmptyTitle => T("Цитаты не найдены", "No quotes found");
-    public static string QuotesEmptyBody => T("Потяните вниз, чтобы обновить", "Pull down to refresh");
+    public static string QuotesEmptyBody => T(
+        "Нажмите «Обновить», чтобы загрузить цитаты снова",
+        "Tap Refresh to load quotes again");
+    public static string QuotesRefreshButton => T("Обновить", "Refresh");
     public static string ProfileQuotesEmpty => T("Пока нет избранных цитат", "No favorite quotes yet");
 
     public static string PhysicsSolutionHeader => T("Что делать", "What to do");
@@ -235,6 +261,24 @@ public static class AppStrings
     public static string TodayMoodSaved => T("Настроение сохранено", "Mood saved");
     public static string TodayMoodLine(int level, int max) =>
         T($"Сегодня: {MoodEmoji(level)} {level}/{max}", $"Today: {MoodEmoji(level)} {level}/{max}");
+    public static string MoodHistoryTitle => T("Настроение за 7 дней", "Mood over 7 days");
+    public static string MoodHistoryEntry(string date, int level, int max) =>
+        T($"{date}: {MoodEmoji(level)} {level}/{max}", $"{date}: {MoodEmoji(level)} {level}/{max}");
+    public static string PracticeCompletedTitle => T("Готово!", "Done!");
+    public static string PracticeCompletedBody(int streak) =>
+        T($"Отличная работа! Серия: {streak} дн.", $"Great job! Streak: {streak} days");
+    public static string PracticeGoHomeButton => T("На главную", "Go home");
+    public static string PracticeMoreButton => T("Ещё практика", "More practice");
+    public static string PracticeHistoryTitle => T("Недавние практики", "Recent practices");
+    public static string PracticeHistoryEmpty => T("Пока нет завершённых практик", "No completed practices yet");
+    public static string PracticeHistoryEntry(string date, string name) =>
+        T($"{date}: {name}", $"{date}: {name}");
+    public static string ReviewSentTitle => T("Спасибо!", "Thank you!");
+    public static string ReviewSentMessage => T(
+        "Сообщение отправлено. Мы ценим ваш отзыв.",
+        "Your message was sent. We appreciate your feedback.");
+    public static string InfoAppVersion(string version) =>
+        T($"Версия {version}", $"Version {version}");
     public static string QuoteCopied => T("Скопировано", "Copied");
     public static string TestHistoryTitle => T("История результатов", "Result history");
     public static string TestHistoryEmpty => T("Пока нет сохранённых результатов", "No saved results yet");
@@ -320,12 +364,22 @@ public static class AppStrings
     public static string ProfileTechniquesCompleted => T("Пройдено техник", "Techniques completed");
     public static string ProfileFollowers => T("Подписчиков", "Followers");
     public static string ProfileRecommended => T("Советуем пройти", "Recommended");
-    public static string ProfileBestQuotes => T("Лучшие цитаты", "Top quotes");
+    public static string ProfileBestQuotes => T("Избранные цитаты", "Favorite quotes");
+    public static string QuotesFavoriteAdded => T("Добавлено в избранное", "Added to favorites");
+    public static string QuotesFavoriteRemoved => T("Убрано из избранного", "Removed from favorites");
+    public static string QuotesGoToTab => T("Перейти к цитатам", "Go to quotes");
+    public static string QuotesFeedAll => T("Все", "All");
+    public static string QuotesFeedFavorites => T("Избранное", "Favorites");
+    public static string QuotesAllReadTitle => T("Вы всё прочитали", "You are all caught up");
+    public static string QuotesAllReadBody => T(
+        "Новых цитат пока нет. Откройте избранное или обновите позже.",
+        "No new quotes right now. Open favorites or try again later.");
+    public static string QuotesShowFavorites => T("Показать избранное", "Show favorites");
     public static string ProfileBsffSubtitle => T(
         "Методика депрограммирования подсознания",
         "Subconscious deprogramming method");
 
-    public static string MotivatorTitle => T("Мотиватор", "Motivator");
+    public static string MotivatorTitle => ShellTabMotivatorShort;
     public static string QuotesSearching => T("Поиск цитат", "Searching quotes");
     public static string QuotesLoading => T("Загрузка цитат", "Loading quotes");
     public static string QuoteShareTitle => T("Цитата", "Quote");

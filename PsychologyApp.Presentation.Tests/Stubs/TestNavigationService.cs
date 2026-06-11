@@ -49,4 +49,13 @@ public class TestNavigationService(INavigation navigation) : INavigationService
     public Task GoToTestHistoryAsync(string testId, string testTitle) => Task.CompletedTask;
 
     public Task GoToTestsListAsync() => Task.CompletedTask;
+
+    public virtual Task GoToTestResultAsync(int score, string interpretation, TechniqueId? recommendedTechnique = null) =>
+        Task.CompletedTask;
+
+    public Task GoToTestsTabAsync() => Task.CompletedTask;
+
+    public Task GoToQuotesTabAsync() => Task.CompletedTask;
+
+    public Task ShowOnboardingAsync() => Task.CompletedTask;
 }

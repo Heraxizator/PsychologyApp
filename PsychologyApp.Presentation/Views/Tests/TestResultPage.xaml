@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Views.Tests.TestResultPage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Common.Behaviors"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Tests"
+             x:DataType="vm:TestResultViewModel"
+             Shell.NavBarIsVisible="True"
+             Title="{Binding PageTitle}">
+    <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
+        <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+            <StackLayout.Behaviors>
+                <behaviors:StaggerChildrenBehavior />
+            </StackLayout.Behaviors>
+
+            <Border Style="{StaticResource BrandCardStyle}" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="{Binding ScoreTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <Label Text="{Binding Interpretation}" Style="{StaticResource BodyStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label
+                IsVisible="{Binding HasRecommendation}"
+                Text="{Binding RecommendationHint}"
+                Style="{StaticResource BodyStyle}"
+                TextColor="{DynamicResource Primary}" />
+
+            <ui:ButtonView
+                IsVisible="{Binding HasRecommendation}"
+                BodyText="{Binding TryTechniqueButtonText}"
+                TapCommand="{Binding TryTechniqueCommand}" />
+
+            <ui:ButtonView
+                BodyText="{Binding FinishButtonText}"
+                Variant="Secondary"
+                TapCommand="{Binding FinishCommand}" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

@@ -9,4 +9,8 @@ public interface IShellStartupCoordinator
     Task ShowOnboardingIfNeededAsync(
         INavigation navigation,
         Func<TechniqueId?, Task> onTechniqueSelected);
+
+    Task ShowOnboardingAsync(
+        INavigation navigation,
+        Func<TechniqueId?, Task> onTechniqueSelected);
 }

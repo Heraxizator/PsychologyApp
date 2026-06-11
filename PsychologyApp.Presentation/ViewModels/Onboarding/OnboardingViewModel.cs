@@ -24,6 +24,11 @@ public class OnboardingViewModel : BaseViewModel
     public string ConcernMood => AppStrings.OnboardingConcernMood;
     public string ConcernExplore => AppStrings.OnboardingConcernExplore;
 
+    public string ConcernAnxietyVariant => SelectedConcern == "anxiety" ? "Primary" : "Secondary";
+    public string ConcernBodyVariant => SelectedConcern == "body" ? "Primary" : "Secondary";
+    public string ConcernMoodVariant => SelectedConcern == "mood" ? "Primary" : "Secondary";
+    public string ConcernExploreVariant => SelectedConcern == "explore" ? "Primary" : "Secondary";
+
     public ICommand NextCommand { get; }
     public ICommand SkipCommand { get; }
     public ICommand SelectAnxietyCommand { get; }
@@ -55,7 +60,13 @@ public class OnboardingViewModel : BaseViewModel
     public string SelectedConcern
     {
         get => _selectedConcern;
-        set => SetProperty(ref _selectedConcern, value);
+        set
+        {
+            if (SetProperty(ref _selectedConcern, value))
+            {
+                NotifyConcernSelection();
+            }
+        }
     }
 
     public OnboardingViewModel(INavigation navigation, INavigationService navigationService, Func<TechniqueId?, Task> onCompleted)
@@ -88,6 +99,16 @@ public class OnboardingViewModel : BaseViewModel
             nameof(ConcernBody),
             nameof(ConcernMood),
             nameof(ConcernExplore));
+        NotifyConcernSelection();
+    }
+
+    private void NotifyConcernSelection()
+    {
+        Notify(
+            nameof(ConcernAnxietyVariant),
+            nameof(ConcernBodyVariant),
+            nameof(ConcernMoodVariant),
+            nameof(ConcernExploreVariant));
     }
 
     private async Task StartPracticeAsync()

@@ -5,13 +5,21 @@ namespace PsychologyApp.Presentation.Tests;
 
 public sealed class UserQuotesRefreshPolicyTests
 {
-    [Theory]
-    [InlineData(false, false, true)]
-    [InlineData(false, true, true)]
-    [InlineData(true, false, false)]
-    [InlineData(true, true, true)]
-    public void ShouldReload_ReturnsExpected(bool quotesLoadedOnce, bool forceReload, bool expected)
+    [Fact]
+    public void ShouldReload_ReturnsTrue_WhenNeverLoaded()
     {
-        Assert.Equal(expected, UserQuotesRefreshPolicy.ShouldReload(quotesLoadedOnce, forceReload));
+        Assert.True(UserQuotesRefreshPolicy.ShouldReload(quotesLoadedOnce: false, forceReload: false));
+    }
+
+    [Fact]
+    public void ShouldReload_ReturnsFalse_WhenAlreadyLoadedWithoutForce()
+    {
+        Assert.False(UserQuotesRefreshPolicy.ShouldReload(quotesLoadedOnce: true, forceReload: false));
+    }
+
+    [Fact]
+    public void ShouldReload_ReturnsTrue_WhenForceReloadRequested()
+    {
+        Assert.True(UserQuotesRefreshPolicy.ShouldReload(quotesLoadedOnce: true, forceReload: true));
     }
 }

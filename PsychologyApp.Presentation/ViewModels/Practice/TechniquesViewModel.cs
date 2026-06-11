@@ -35,6 +35,8 @@ public class TechniquesViewModel : BaseViewModel
     public ICommand RecordMood4Command { get; private set; } = default!;
     public ICommand RecordMood5Command { get; private set; } = default!;
 
+    public ObservableRangeCollection<MoodHistoryItem> MoodHistory { get; } = [];
+
     public string PageTitle => AppStrings.PracticeHomeTitle;
     public string MyTechniquesLabel => AppStrings.PracticeMyTechniques;
     public string CreateButtonText => AppStrings.PracticeCreate;
@@ -44,6 +46,8 @@ public class TechniquesViewModel : BaseViewModel
     public string TodayMoodQuestion => AppStrings.TodayMoodQuestion;
     public string TodayMoodDisplay { get; private set; } = string.Empty;
     public bool HasTodayMood => !string.IsNullOrWhiteSpace(TodayMoodDisplay);
+    public string MoodHistoryTitle => AppStrings.MoodHistoryTitle;
+    public bool HasMoodHistory => MoodHistory.Count > 0;
     public string StreakDisplay => AppStrings.ProfileStreakCount(StreakDays);
     public bool HasStreak => StreakDays > 0;
     public string PracticeEmptyTitle => AppStrings.PracticeEmptyTitle;
@@ -123,6 +127,8 @@ public class TechniquesViewModel : BaseViewModel
             nameof(TodayMoodQuestion),
             nameof(TodayMoodDisplay),
             nameof(HasTodayMood),
+            nameof(MoodHistoryTitle),
+            nameof(HasMoodHistory),
             nameof(StreakDisplay),
             nameof(PracticeEmptyTitle),
             nameof(PracticeEmptyBody),
@@ -169,6 +175,7 @@ public class TechniquesViewModel : BaseViewModel
 
             StreakDays = await _userProgressService.GetStreakDaysAsync(cancellationToken);
             await RefreshTodayMoodAsync(cancellationToken);
+            await RefreshMoodHistoryAsync(cancellationToken);
             IEnumerable<TechniqueItem> staticItems = await BuildStaticItemsAsync(cancellationToken);
             IEnumerable<TechniqueDTO> dynamicSource = await _techniqueService.GetTechniquesListAsync(500, cancellationToken);
 
@@ -291,11 +298,32 @@ public class TechniquesViewModel : BaseViewModel
         OnPropertyChanged(nameof(HasTodayMood));
     }
 
+    private async Task RefreshMoodHistoryAsync(CancellationToken cancellationToken = default)
+    {
+        IReadOnlyList<MoodEntryDTO> moods = await _userProgressService.GetRecentMoodsAsync(7, cancellationToken);
+
+        await MainThread.InvokeOnMainThreadAsync(() =>
+        {
+            MoodHistory.Clear();
+            foreach (MoodEntryDTO mood in moods)
+            {
+                string date = mood.RecordedAt.ToLocalTime().ToString("d");
+                MoodHistory.Add(new MoodHistoryItem
+                {
+                    DisplayText = AppStrings.MoodHistoryEntry(date, mood.MoodLevel, 5)
+                });
+            }
+
+            OnPropertyChanged(nameof(HasMoodHistory));
+        });
+    }
+
     private async Task RecordMoodAsync(int moodLevel)
     {
         await _userProgressService.RecordMoodAsync(moodLevel);
         StreakDays = await _userProgressService.GetStreakDaysAsync();
         await RefreshTodayMoodAsync();
+        await RefreshMoodHistoryAsync();
         _toastService.ShortToast(AppStrings.TodayMoodSaved);
     }
 

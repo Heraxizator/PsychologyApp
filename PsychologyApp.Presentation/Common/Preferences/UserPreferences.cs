@@ -89,6 +89,7 @@ public static class UserPreferences
 
     public static void ApplyAll()
     {
+        AppStrings.LanguageOverride = null;
         AppStrings.LanguageProvider = () => Load().Language;
         UserPreferencesState state = Load();
         ApplyLanguage(state.Language);
@@ -97,6 +98,33 @@ public static class UserPreferences
         ApplyTypography(state.Size, state.IsBold);
         ApplyForm(state.Form);
         Changed?.Invoke();
+    }
+
+    public static void ApplyPreview(UserPreferencesState state)
+    {
+        AppStrings.LanguageOverride = NormalizeLanguageKey(state.Language);
+        ApplyLanguage(state.Language);
+        ApplyTheme(state.Theme);
+        ApplyAccentColor(state.Color);
+        ApplyTypography(state.Size, state.IsBold);
+        ApplyForm(state.Form);
+        Changed?.Invoke();
+    }
+
+    public static void ResetOnboardingCompletion()
+    {
+        UserPreferencesState current = Load();
+        Save(new UserPreferencesState
+        {
+            Language = current.Language,
+            Theme = current.Theme,
+            Color = current.Color,
+            Form = current.Form,
+            Size = current.Size,
+            IsBold = current.IsBold,
+            HasCompletedOnboarding = false,
+            OnboardingConcern = current.OnboardingConcern
+        });
     }
 
     public static void ApplyTheme()

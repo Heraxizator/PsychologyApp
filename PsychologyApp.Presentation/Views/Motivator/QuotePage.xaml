@@ -11,62 +11,109 @@
              x:Name="page"
              Title="{Binding PageTitle}">
 
-    <Grid VerticalOptions="FillAndExpand">
-        <Grid Margin="{StaticResource LayoutTabPageMarginThickness}">
-            <CollectionView
-                x:Name="QuotesCollectionView"
-                IsVisible="{Binding IsDone}"
-                HorizontalScrollBarVisibility="Never"
-                VerticalScrollBarVisibility="Never"
-                VerticalOptions="FillAndExpand"
-                RemainingItemsThreshold="2"
-                RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
-                ItemsSource="{Binding QuotesObservableCollection}">
-                <CollectionView.Behaviors>
-                    <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
-                </CollectionView.Behaviors>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{Binding QuotesRefreshButton}" Command="{Binding Reload}" />
+    </ContentPage.ToolbarItems>
 
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout
-                        SnapPointsAlignment="Center"
-                        SnapPointsType="None"
-                        Orientation="Vertical" />
-                </CollectionView.ItemsLayout>
-
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="profile:QuoteItem">
-                        <ui:QuoteCardView
-                            Text="{Binding Text}"
-                            Author="{Binding Author}"
-                            IsFavourite="{Binding IsFavourite, Mode=TwoWay}"
-                            LikeCommand="{Binding LikeCommand}"
-                            CopyCommand="{Binding CopyCommand}"
-                            ShareCommand="{Binding ShareCommand}">
-                            <ui:QuoteCardView.Behaviors>
-                                <behaviors:ListItemRevealBehavior />
-                            </ui:QuoteCardView.Behaviors>
-                        </ui:QuoteCardView>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-
-                <CollectionView.EmptyView>
-                    <StackLayout Padding="{StaticResource LayoutEmptyPaddingThickness}" HorizontalOptions="Center" VerticalOptions="Center">
-                        <Label HorizontalTextAlignment="Center" Style="{StaticResource SectionTitleStyle}" Text="{Binding QuotesEmptyTitle}" />
-                        <Label HorizontalTextAlignment="Center" Style="{StaticResource BodyStyle}" Text="{Binding QuotesEmptyBody}" />
-                    </StackLayout>
-                </CollectionView.EmptyView>
-            </CollectionView>
-
-            <ui:ProgressBarView
-                x:Name="LoadingProgress"
-                IsVisible="{Binding IsLoadingOverlayVisible}"
-                IsLoading="{Binding IsLoadingOverlayVisible}"
-                VerticalOptions="Center"
-                HorizontalOptions="Center"
-                ProgressText="{Binding QuotesLoadingText}" />
+    <Grid VerticalOptions="FillAndExpand" RowDefinitions="Auto,*">
+        <Grid
+            Grid.Row="0"
+            Margin="{StaticResource LayoutTabPageMarginThickness}"
+            ColumnDefinitions="*,*"
+            ColumnSpacing="8">
+            <ui:ButtonView
+                Grid.Column="0"
+                IsCompact="True"
+                BodyText="{Binding FeedAllLabel}"
+                Variant="{Binding AllFeedVariant}"
+                TapCommand="{Binding ShowAllCommand}" />
+            <ui:ButtonView
+                Grid.Column="1"
+                IsCompact="True"
+                BodyText="{Binding FeedFavoritesLabel}"
+                Variant="{Binding FavoritesFeedVariant}"
+                TapCommand="{Binding ShowFavoritesCommand}" />
         </Grid>
 
+        <RefreshView
+            Grid.Row="1"
+            Command="{Binding Reload}"
+            IsRefreshing="{Binding IsLoadingOverlayVisible}">
+            <Grid Margin="{StaticResource LayoutTabPageMarginThickness}">
+                <CollectionView
+                    x:Name="QuotesCollectionView"
+                    IsVisible="{Binding IsDone}"
+                    HorizontalScrollBarVisibility="Never"
+                    VerticalScrollBarVisibility="Never"
+                    VerticalOptions="FillAndExpand"
+                    RemainingItemsThreshold="2"
+                    RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
+                    ItemsSource="{Binding QuotesObservableCollection}">
+                    <CollectionView.Behaviors>
+                        <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
+                    </CollectionView.Behaviors>
+
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout
+                            SnapPointsAlignment="Center"
+                            SnapPointsType="None"
+                            Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="profile:QuoteItem">
+                            <ui:QuoteCardView
+                                Text="{Binding Text}"
+                                Author="{Binding Author}"
+                                IsFavourite="{Binding IsFavourite, Mode=TwoWay}"
+                                LikeCommand="{Binding LikeCommand}"
+                                CopyCommand="{Binding CopyCommand}"
+                                ShareCommand="{Binding ShareCommand}">
+                                <ui:QuoteCardView.Behaviors>
+                                    <behaviors:ListItemRevealBehavior />
+                                </ui:QuoteCardView.Behaviors>
+                            </ui:QuoteCardView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                    <CollectionView.EmptyView>
+                        <StackLayout Padding="{StaticResource LayoutEmptyPaddingThickness}" HorizontalOptions="Center" VerticalOptions="Center" Spacing="12">
+                            <Label HorizontalTextAlignment="Center" Style="{StaticResource SectionTitleStyle}" Text="{Binding QuotesEmptyTitle}" />
+                            <Label HorizontalTextAlignment="Center" Style="{StaticResource BodyStyle}" Text="{Binding QuotesEmptyBody}" />
+                            <ui:ButtonView
+                                IsCompact="True"
+                                BodyText="{Binding QuotesRefreshButton}"
+                                TapCommand="{Binding Reload}" />
+                        </StackLayout>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+
+                <StackLayout
+                    IsVisible="{Binding ShowAllReadEmpty}"
+                    Padding="{StaticResource LayoutEmptyPaddingThickness}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Spacing="12">
+                    <Label HorizontalTextAlignment="Center" Style="{StaticResource SectionTitleStyle}" Text="{Binding AllReadTitle}" />
+                    <Label HorizontalTextAlignment="Center" Style="{StaticResource BodyStyle}" Text="{Binding AllReadBody}" />
+                    <ui:ButtonView
+                        IsCompact="True"
+                        BodyText="{Binding ShowFavoritesButtonText}"
+                        TapCommand="{Binding ShowFavoritesCommand}" />
+                </StackLayout>
+
+                <ui:ProgressBarView
+                    x:Name="LoadingProgress"
+                    IsVisible="{Binding IsLoadingOverlayVisible}"
+                    IsLoading="{Binding IsLoadingOverlayVisible}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    ProgressText="{Binding QuotesLoadingText}" />
+            </Grid>
+        </RefreshView>
+
         <ui:RetryView
+            Grid.Row="1"
             VerticalOptions="Center"
             HorizontalOptions="Center"
             IsVisible="{Binding IsFail}"

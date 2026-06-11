@@ -32,11 +32,6 @@
 
                     <tests:LuscherColorGridView />
 
-                    <ui:TextBoxView
-                        Margin="0, -10, 0, 0"
-                        HeaderText="{Binding MoreInfoHeader}"
-                        BodyText="{Binding MoreInfoBody}"/>
-
                 </StackLayout>
 
                 <StackLayout
@@ -124,8 +119,13 @@
                         </Border>
 
                         <ui:ButtonView
-                        BodyText="{Binding RestartButtonText}"
-                        TapCommand="{Binding Restart}" />
+                            BodyText="{Binding RestartButtonText}"
+                            TapCommand="{Binding Restart}" />
+
+                        <ui:ButtonView
+                            Variant="Secondary"
+                            BodyText="{Binding BackToListButtonText}"
+                            TapCommand="{Binding BackToListCommand}" />
                     </StackLayout>
 
                 </StackLayout>

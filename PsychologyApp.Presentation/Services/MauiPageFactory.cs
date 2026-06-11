@@ -1,6 +1,7 @@
 using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Views.Motivator;
 using PsychologyApp.Presentation.Services.Factories;
+using PsychologyApp.Presentation.Services.Toasts;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Models.Tests;
 using PsychologyApp.Presentation.Views.Practice;
@@ -22,7 +23,8 @@ public sealed class MauiPageFactory(
     IMusicPlayerViewModelFactory musicPlayerViewModelFactory,
     IQuoteViewModelFactory quoteViewModelFactory,
     IPageViewModelActivator pageViewModelActivator,
-    IPhysicsSearchViewModelFactory physicsSearchViewModelFactory) : IPageFactory
+    IPhysicsSearchViewModelFactory physicsSearchViewModelFactory,
+    IToastService toastService) : IPageFactory
 {
     public TechniquesPage CreateTechniquesPage() =>
         WithPressFeedback(techniquePageFactory.CreateTechniquesPage());
@@ -37,7 +39,7 @@ public sealed class MauiPageFactory(
         WithPressFeedback(new StartPhysicsPage(pageViewModelActivator, startPhysicsViewModelFactory));
 
     public MusicPlayerPage CreateMusicPlayerPage() =>
-        WithPressFeedback(new MusicPlayerPage(musicPlayerViewModelFactory));
+        WithPressFeedback(new MusicPlayerPage(musicPlayerViewModelFactory, toastService));
 
     public QuotePage CreateQuotePage() =>
         WithPressFeedback(new QuotePage(pageViewModelActivator, quoteViewModelFactory));
@@ -77,6 +79,9 @@ public sealed class MauiPageFactory(
 
     public AlternativeTestPage CreateAlternativeTestPage() =>
         WithPressFeedback(testPageFactory.CreateAlternativeTestPage());
+
+    public TestResultPage CreateTestResultPage(TestResultInfo result) =>
+        WithPressFeedback(testPageFactory.CreateTestResultPage(result));
 
     public CreatedPage CreateCreatedPage(long techniqueId) =>
         WithPressFeedback(techniquePageFactory.CreateCreatedPage(techniqueId));

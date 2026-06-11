@@ -10,6 +10,8 @@ using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Models.Practice;
 using PsychologyApp.Presentation.ViewModels;
 using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.Services.Quotes;
+using PsychologyApp.Presentation.Services.Toasts;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -22,6 +24,8 @@ public class UserViewModel : BaseViewModel
     private readonly IQuotService _quotService;
     private readonly IUserProgressService _userProgressService;
     private readonly INavigationService _navigationService;
+    private readonly IQuotesChangeNotifier _quotesChangeNotifier;
+    private readonly IToastService _toastService;
     private readonly ILogger<UserViewModel> _logger;
     private readonly IOptions<AppSettings> _settings;
     private CancellationTokenSource? _quotesLoadCts;
@@ -31,12 +35,16 @@ public class UserViewModel : BaseViewModel
     public ICommand OpenOptionsCommand { get; private set; } = default!;
     public ICommand OpenSettingsCommand { get; private set; } = default!;
     public ICommand OpenDonateCommand { get; private set; } = default!;
+    public ICommand OpenFeedbackCommand { get; private set; } = default!;
+    public ICommand OpenInfoCommand { get; private set; } = default!;
     public ICommand ReloadQuotesCommand { get; private set; } = default!;
     public ICommand CancelQuotesCommand { get; private set; } = default!;
     public ICommand OpenTestsListCommand { get; private set; } = default!;
+    public ICommand OpenQuotesTabCommand { get; private set; } = default!;
 
     public ObservableCollection<TechniqueItem> Techniques { get; private set; } = [];
     public ObservableCollection<QuoteItem> Quotes { get; private set; } = [];
+    public ObservableCollection<PracticeHistoryItem> PracticeHistory { get; private set; } = [];
 
     public string PageTitle => AppStrings.ProfileTitle;
     public string OptionsLabel => AppStrings.OptionsTitle;
@@ -44,6 +52,10 @@ public class UserViewModel : BaseViewModel
     public string SettingsCardSubtitle => AppStrings.ProfileSettingsCardSubtitle;
     public string DonateTitle => AppStrings.OptionsDonateTitle;
     public string DonateSubtitle => AppStrings.OptionsDonateSubtitle;
+    public string FeedbackCardTitle => AppStrings.OptionsFeedbackTitle;
+    public string FeedbackCardSubtitle => AppStrings.OptionsFeedbackSubtitle;
+    public string InfoCardTitle => AppStrings.OptionsAboutTitle;
+    public string InfoCardSubtitle => AppStrings.OptionsAboutSubtitle;
     public string UserLabel => AppStrings.ProfileUserLabel;
     public string StandardUserLabel => AppStrings.ProfileStandardUser;
     public string TechniquesCompletedLabel => AppStrings.ProfileTechniquesCompleted;
@@ -54,10 +66,17 @@ public class UserViewModel : BaseViewModel
     public string RecommendedLabel => AppStrings.ProfileRecommended;
     public string BestQuotesLabel => AppStrings.ProfileBestQuotes;
     public string QuotesEmptyText => AppStrings.ProfileQuotesEmpty;
+    public string GoToQuotesTabText => AppStrings.QuotesGoToTab;
+    public bool HasQuotes => Quotes.Count > 0;
+    public bool ShowQuotesEmptyCta => IsQuotesReady && !HasQuotes;
     public string QuotesSearchingText => AppStrings.QuotesSearching;
     public string QuotesLoadingText => AppStrings.QuotesLoading;
     public string LoadErrorText => AppStrings.LoadError;
     public string RetryText => AppStrings.RetryQuestion;
+    public string PracticeHistoryTitle => AppStrings.PracticeHistoryTitle;
+    public string PracticeHistoryEmpty => AppStrings.PracticeHistoryEmpty;
+    public bool HasPracticeHistory => PracticeHistory.Count > 0;
+    public bool ShowPracticeHistoryEmpty => !HasPracticeHistory;
 
     public UserViewModel(
         INavigation navigation,
@@ -65,15 +84,20 @@ public class UserViewModel : BaseViewModel
         IUserProgressService userProgressService,
         ILogger<UserViewModel> logger,
         IOptions<AppSettings> settings,
-        INavigationService navigationService)
+        INavigationService navigationService,
+        IQuotesChangeNotifier quotesChangeNotifier,
+        IToastService toastService)
     {
         try
         {
             _quotService = quotService;
             _userProgressService = userProgressService;
             _navigationService = navigationService;
+            _quotesChangeNotifier = quotesChangeNotifier;
+            _toastService = toastService;
             _logger = logger;
             _settings = settings;
+            _quotesChangeNotifier.FavoritesChanged += OnFavoritesChanged;
             ModuleName = AppStrings.ShellTabPractice;
             PageName = AppStrings.ProfileTitle;
 
@@ -82,9 +106,12 @@ public class UserViewModel : BaseViewModel
             OpenOptionsCommand = new AsyncCommand(() => navigationService.GoToOptionsAsync());
             OpenSettingsCommand = new AsyncCommand(() => navigationService.GoToSettingsAsync());
             OpenDonateCommand = new AsyncCommand(() => navigationService.GoToDonateAsync());
+            OpenFeedbackCommand = new AsyncCommand(() => navigationService.GoToFormAsync());
+            OpenInfoCommand = new AsyncCommand(() => navigationService.GoToInfoAsync());
             ReloadQuotesCommand = new AsyncCommand(() => ReloadQuotesAsync());
             CancelQuotesCommand = new Command(CancelQuotesLoading);
-            OpenTestsListCommand = new AsyncCommand(() => _navigationService.GoToTestsListAsync());
+            OpenTestsListCommand = new AsyncCommand(() => _navigationService.GoToTestsTabAsync());
+            OpenQuotesTabCommand = new AsyncCommand(() => _navigationService.GoToQuotesTabAsync());
 
             InitTechniques();
             InitAsync().FireAndForget();
@@ -123,6 +150,7 @@ public class UserViewModel : BaseViewModel
                 : AppStrings.ProfileLastPractice(lastPractice.Value.ToLocalTime().ToString("d"));
             OnPropertyChanged(nameof(LastPracticeDisplay));
             OnPropertyChanged(nameof(HasLastPractice));
+            await RefreshPracticeHistoryAsync(cancellationToken);
 
             if (generation != Volatile.Read(ref _initGeneration))
             {
@@ -156,6 +184,10 @@ public class UserViewModel : BaseViewModel
             nameof(SettingsCardSubtitle),
             nameof(DonateTitle),
             nameof(DonateSubtitle),
+            nameof(FeedbackCardTitle),
+            nameof(FeedbackCardSubtitle),
+            nameof(InfoCardTitle),
+            nameof(InfoCardSubtitle),
             nameof(UserLabel),
             nameof(StandardUserLabel),
             nameof(TechniquesCompletedLabel),
@@ -169,7 +201,14 @@ public class UserViewModel : BaseViewModel
             nameof(QuotesSearchingText),
             nameof(QuotesLoadingText),
             nameof(LoadErrorText),
-            nameof(RetryText));
+            nameof(RetryText),
+            nameof(PracticeHistoryTitle),
+            nameof(PracticeHistoryEmpty),
+            nameof(HasPracticeHistory),
+            nameof(ShowPracticeHistoryEmpty),
+            nameof(GoToQuotesTabText),
+            nameof(HasQuotes),
+            nameof(ShowQuotesEmptyCta));
         InitTechniques();
         RefreshAsync(forceQuotesReload: false).FireAndForget();
     }
@@ -206,13 +245,19 @@ public class UserViewModel : BaseViewModel
                         continue;
                     }
 
-                    Quotes.Add(new QuoteItem
+                    QuoteItem item = new()
                     {
                         Text = quotDTO.Text,
-                        Author = quotDTO.Title
-                    });
+                        Author = quotDTO.Title,
+                        ShareCommand = CreateShareCommand(quotDTO.Text, quotDTO.Title),
+                        CopyCommand = CreateCopyCommand(quotDTO.Text, quotDTO.Title),
+                        OpenQuotesTabCommand = OpenQuotesTabCommand
+                    };
+                    Quotes.Add(item);
                 }
 
+                OnPropertyChanged(nameof(HasQuotes));
+                OnPropertyChanged(nameof(ShowQuotesEmptyCta));
                 SetQuotesReady();
             });
         }
@@ -262,6 +307,47 @@ public class UserViewModel : BaseViewModel
         IsQuotesReady = false;
         IsQuotesFailed = true;
     }
+
+    private async Task RefreshPracticeHistoryAsync(CancellationToken cancellationToken)
+    {
+        IReadOnlyList<CompletionDTO> completions =
+            await _userProgressService.GetRecentTechniqueCompletionsAsync(10, cancellationToken);
+
+        await MainThread.InvokeOnMainThreadAsync(() =>
+        {
+            PracticeHistory = new ObservableCollection<PracticeHistoryItem>(
+                completions.Select(completion =>
+                {
+                    string date = completion.CompletedAt.ToLocalTime().ToString("g");
+                    string name = PracticeHistoryFormatter.ResolveName(completion);
+                    return new PracticeHistoryItem
+                    {
+                        DisplayText = AppStrings.PracticeHistoryEntry(date, name)
+                    };
+                }));
+
+            OnPropertyChanged(nameof(PracticeHistory));
+            OnPropertyChanged(nameof(HasPracticeHistory));
+            OnPropertyChanged(nameof(ShowPracticeHistoryEmpty));
+        });
+    }
+
+    private void OnFavoritesChanged() =>
+        RefreshAsync(forceQuotesReload: true).FireAndForget();
+
+    private ICommand CreateShareCommand(string text, string author) =>
+        new AsyncCommand(() => Share.Default.RequestAsync(new ShareTextRequest
+        {
+            Text = QuoteShareFormatter.Format(text, author),
+            Title = AppStrings.QuoteShareTitle
+        }));
+
+    private ICommand CreateCopyCommand(string text, string author) =>
+        new AsyncCommand(async () =>
+        {
+            await Clipboard.Default.SetTextAsync(QuoteShareFormatter.Format(text, author));
+            _toastService.ShortToast(AppStrings.QuoteCopied);
+        });
 
     private void InitTechniques()
     {

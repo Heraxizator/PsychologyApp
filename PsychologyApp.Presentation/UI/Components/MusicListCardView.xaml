@@ -4,7 +4,16 @@
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              x:Class="PsychologyApp.Presentation.UI.Components.MusicListCardView"
              x:Name="Root">
-    <Border Style="{StaticResource MusicListRowStyle}">
+    <Border x:Name="CardBorder" Style="{StaticResource MusicListRowStyle}">
+        <Border.Triggers>
+            <DataTrigger
+                Binding="{Binding IsActive, Source={x:Reference Root}}"
+                TargetType="Border"
+                Value="True">
+                <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                <Setter Property="StrokeThickness" Value="2" />
+            </DataTrigger>
+        </Border.Triggers>
         <Border.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding TapCommand, Source={x:Reference Root}}" />
         </Border.GestureRecognizers>
@@ -20,6 +29,7 @@
                     <RoundRectangle CornerRadius="20" />
                 </Border.StrokeShape>
                 <Label
+                    x:Name="PlayIcon"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     TextColor="{DynamicResource Primary}"
@@ -37,6 +47,11 @@
                     Text="{Binding Subtitle, Source={x:Reference Root}}"
                     Style="{StaticResource CaptionStyle}"
                     MaxLines="2" />
+                <Label
+                    IsVisible="{Binding ShowOfflineBadge, Source={x:Reference Root}}"
+                    Text="{Binding OfflineBadgeText, Source={x:Reference Root}}"
+                    Style="{StaticResource CaptionStyle}"
+                    TextColor="{DynamicResource Primary}" />
             </VerticalStackLayout>
             <Label
                 Grid.Column="2"

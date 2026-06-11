@@ -163,6 +163,9 @@ public class CreatedViewModel : BaseViewModel
             _logger.LogError(e, "Failed to mark custom technique as completed.");
         }
 
-        await GoBackAsync();
+        await PracticeCompletionNavigator.NavigateAfterCompletionAsync(
+            _navigationService,
+            _dialogService,
+            _userProgressService);
     }
 }

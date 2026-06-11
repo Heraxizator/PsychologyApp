@@ -2,6 +2,7 @@ using PsychologyApp.Presentation.Services.Dialogs;
 using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.ViewModels;
+using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.ViewModels.Profile;
 
@@ -9,6 +10,7 @@ public class SettingsViewModel : BaseViewModel
 {
     private readonly IDialogService _dialogService;
     private readonly INavigationService _navigationService;
+    private UserPreferencesState _savedState;
 
     public SettingsViewModel(INavigation navigation, IDialogService dialogService, INavigationService navigationService)
     {
@@ -18,11 +20,17 @@ public class SettingsViewModel : BaseViewModel
         PageName = AppStrings.SettingsTitle;
 
         BindNavigation(navigation, navigationService);
+        _savedState = UserPreferences.Load();
         LoadFromPreferences();
         RefreshLocalizedCollections();
 
-        Finish = new AsyncCommand(ToEndAsync);
+        Finish = new AsyncCommand(RevertAndGoBackAsync);
+        ApplyCommand = new AsyncCommand(ToEndAsync);
+        ReplayOnboardingCommand = new AsyncCommand(ReplayOnboardingAsync);
     }
+
+    public ICommand ApplyCommand { get; }
+    public ICommand ReplayOnboardingCommand { get; }
 
     public string PageTitle => AppStrings.SettingsTitle;
     public string DesignSectionTitle => AppStrings.SettingsDesignSection;
@@ -34,6 +42,9 @@ public class SettingsViewModel : BaseViewModel
     public string SizeLabel => AppStrings.SettingsSizeLabel;
     public string BoldLabel => AppStrings.SettingsBoldLabel;
     public string ApplyButtonText => AppStrings.SettingsApplyButton;
+    public string ReplayOnboardingText => AppStrings.SettingsReplayOnboarding;
+    public string FormHelperText => AppStrings.SettingsFormHelper;
+    public string ColorHelperText => AppStrings.SettingsColorHelper;
     public string LanguagePickerTitle => AppStrings.SettingsPickerLanguages;
     public string ThemePickerTitle => AppStrings.SettingsPickerOptions;
     public string ColorPickerTitle => AppStrings.SettingsPickerColors;
@@ -48,7 +59,7 @@ public class SettingsViewModel : BaseViewModel
 
     private void LoadFromPreferences()
     {
-        UserPreferencesState state = UserPreferences.Load();
+        UserPreferencesState state = _savedState;
         Language = UserPreferences.GetLanguageLabel(state.Language);
         Theme = UserPreferences.GetThemeLabel(state.Theme, state.Language);
         Color = UserPreferences.GetColorLabel(state.Color, state.Language);
@@ -56,6 +67,20 @@ public class SettingsViewModel : BaseViewModel
         Size = UserPreferences.GetSizeLabel(state.Size, state.Language);
         IsThick = state.IsBold;
     }
+
+    private UserPreferencesState BuildCurrentState() => new()
+    {
+        Language = UserPreferences.ParseLanguageKey(Language),
+        Theme = UserPreferences.ParseThemeKey(Theme),
+        Color = UserPreferences.ParseColorKey(Color),
+        Form = UserPreferences.ParseFormKey(Form),
+        Size = UserPreferences.ParseSizeKey(Size),
+        IsBold = IsThick,
+        HasCompletedOnboarding = _savedState.HasCompletedOnboarding,
+        OnboardingConcern = _savedState.OnboardingConcern
+    };
+
+    private void ApplyLivePreview() => UserPreferences.ApplyPreview(BuildCurrentState());
 
     private void RefreshLocalizedCollections()
     {
@@ -86,6 +111,9 @@ public class SettingsViewModel : BaseViewModel
         OnPropertyChanged(nameof(SizeLabel));
         OnPropertyChanged(nameof(BoldLabel));
         OnPropertyChanged(nameof(ApplyButtonText));
+        OnPropertyChanged(nameof(ReplayOnboardingText));
+        OnPropertyChanged(nameof(FormHelperText));
+        OnPropertyChanged(nameof(ColorHelperText));
         OnPropertyChanged(nameof(LanguagePickerTitle));
         OnPropertyChanged(nameof(ThemePickerTitle));
         OnPropertyChanged(nameof(ColorPickerTitle));
@@ -96,6 +124,12 @@ public class SettingsViewModel : BaseViewModel
     protected override void RefreshLocalizedProperties()
     {
         RefreshLocalizedCollections();
+    }
+
+    private async Task RevertAndGoBackAsync()
+    {
+        UserPreferences.ApplyAll();
+        await _navigationService.GoBackAsync();
     }
 
     private async Task ToEndAsync()
@@ -115,9 +149,16 @@ public class SettingsViewModel : BaseViewModel
             OnboardingConcern = current.OnboardingConcern
         });
 
+        _savedState = UserPreferences.Load();
         UserPreferences.ApplyAll();
         await _dialogService.ShowAsync(AppStrings.SettingsAppliedTitle, AppStrings.SettingsAppliedMessage);
         await _navigationService.GoBackAsync();
+    }
+
+    private async Task ReplayOnboardingAsync()
+    {
+        UserPreferences.ResetOnboardingCompletion();
+        await _navigationService.ShowOnboardingAsync();
     }
 
     public string language { get; private set; } = UserPreferences.GetLanguageLabel(UserPreferences.DefaultLanguage);
@@ -141,6 +182,7 @@ public class SettingsViewModel : BaseViewModel
                 Size = UserPreferences.GetSizeLabel(sizeKey, newLanguage);
                 RefreshLocalizedCollections();
                 OnPropertyChanged(nameof(Language));
+                ApplyLivePreview();
             }
         }
     }
@@ -155,6 +197,7 @@ public class SettingsViewModel : BaseViewModel
             {
                 theme = value;
                 OnPropertyChanged(nameof(Theme));
+                ApplyLivePreview();
             }
         }
     }
@@ -169,6 +212,7 @@ public class SettingsViewModel : BaseViewModel
             {
                 color = value;
                 OnPropertyChanged(nameof(Color));
+                ApplyLivePreview();
             }
         }
     }
@@ -183,6 +227,7 @@ public class SettingsViewModel : BaseViewModel
             {
                 form = value;
                 OnPropertyChanged(nameof(Form));
+                ApplyLivePreview();
             }
         }
     }
@@ -197,6 +242,7 @@ public class SettingsViewModel : BaseViewModel
             {
                 size = value;
                 OnPropertyChanged(nameof(Size));
+                ApplyLivePreview();
             }
         }
     }
@@ -211,6 +257,7 @@ public class SettingsViewModel : BaseViewModel
             {
                 isThick = value;
                 OnPropertyChanged(nameof(IsThick));
+                ApplyLivePreview();
             }
         }
     }

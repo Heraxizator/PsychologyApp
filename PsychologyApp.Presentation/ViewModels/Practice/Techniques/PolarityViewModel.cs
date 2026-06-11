@@ -1,8 +1,8 @@
 using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
-using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.Services.Dialogs;
 using PsychologyApp.Presentation.ViewModels;
 using System.Collections.ObjectModel;
 using System.Text.Json;
@@ -13,6 +13,7 @@ namespace PsychologyApp.Presentation.ViewModels.Practice.Techniques;
 public class PolarityViewModel : BaseViewModel
 {
     private readonly IUserProgressService _userProgressService;
+    private readonly IDialogService _dialogService;
     private readonly DateTime _sessionStartedAt = DateTime.UtcNow;
 
     public ICommand Add { get; private set; } = default!;
@@ -26,9 +27,13 @@ public class PolarityViewModel : BaseViewModel
     public string NegativePlaceholder => AppStrings.PolarityNegativePlaceholder;
     public string PositivePlaceholder => AppStrings.PolarityPositivePlaceholder;
 
-    public PolarityViewModel(INavigationService navigationService, IUserProgressService userProgressService)
+    public PolarityViewModel(
+        INavigationService navigationService,
+        IUserProgressService userProgressService,
+        IDialogService dialogService)
     {
         _userProgressService = userProgressService;
+        _dialogService = dialogService;
         ApplyTechnique(TechniqueId.Polarity);
         IsFull = false;
         BindNavigation(navigationService.Navigation, navigationService);
@@ -92,7 +97,10 @@ public class PolarityViewModel : BaseViewModel
             PageName,
             durationSeconds);
         await _userProgressService.DeleteSessionDraftAsync(TechniqueId.Polarity.ToString());
-        await GoBackAsync();
+        await PracticeCompletionNavigator.NavigateAfterCompletionAsync(
+            NavigationService!,
+            _dialogService,
+            _userProgressService);
     }
 
     private void DeleteItem(Polarity item)
