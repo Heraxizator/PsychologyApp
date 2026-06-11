@@ -3,6 +3,7 @@ using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Models.Tests;
 using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.Services.Tests;
 using PsychologyApp.Presentation.ViewModels;
 using System.Collections.ObjectModel;
 using BaseViewModel = PsychologyApp.Presentation.ViewModels.BaseViewModel;
@@ -13,6 +14,7 @@ public class TestsListViewModel : BaseViewModel
 {
     private readonly INavigationService _navigationService;
     private readonly IUserProgressService _userProgressService;
+    private readonly ITestCatalogService _testCatalogService;
 
     public string PageTitle => AppStrings.TestsDetectorTitle;
     public string EmptyTitle => AppStrings.TestsEmptyTitle;
@@ -26,13 +28,14 @@ public class TestsListViewModel : BaseViewModel
     public TestsListViewModel(
         INavigation navigation,
         INavigationService navigationService,
-        IUserProgressService userProgressService)
+        IUserProgressService userProgressService,
+        ITestCatalogService testCatalogService)
     {
         _navigationService = navigationService;
         _userProgressService = userProgressService;
+        _testCatalogService = testCatalogService;
         BindNavigation(navigation, navigationService);
         Reload = new AsyncCommand(InitAsync);
-        InitAsync().FireAndForget();
     }
 
     protected override void RefreshLocalizedProperties()
@@ -63,15 +66,19 @@ public class TestsListViewModel : BaseViewModel
 
             SetInit();
 
-            IReadOnlyList<TestItem> items = await TestCatalogLoader.LoadAllAsync(_navigationService);
-            foreach (TestItem item in items)
+            IReadOnlyList<TestDefinition> definitions = await _testCatalogService.GetCatalogAsync();
+            List<TestItem> items = [];
+
+            foreach (TestDefinition definition in definitions)
             {
-                if (string.IsNullOrWhiteSpace(item.TestId))
+                if (string.IsNullOrWhiteSpace(definition.TestId))
                 {
                     continue;
                 }
 
-                var latest = await _userProgressService.GetLatestTestResultAsync(item.TestId);
+                TestItem item = TestItemFactory.Create(definition, _navigationService);
+
+                TestResultDTO? latest = await _userProgressService.GetLatestTestResultAsync(item.TestId);
                 if (latest is not null)
                 {
                     item.LastResultSummary = AppStrings.TestLastResult(latest.Summary);
@@ -85,6 +92,8 @@ public class TestsListViewModel : BaseViewModel
                 item.TapCommand = new AsyncCommand(() => HandleSelectionAsync(selected));
                 item.OpenHistoryCommand = new AsyncCommand(() =>
                     _navigationService.GoToTestHistoryAsync(selected.TestId, selected.Title));
+
+                items.Add(item);
             }
 
             TestItemCollection = new ObservableCollection<TestItem>(items);

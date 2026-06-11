@@ -14,6 +14,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PsychologyApp.Bootstrap\PsychologyApp.Bootstrap.csproj" />
+    <ProjectReference Include="..\PsychologyApp.Presentation.Core\PsychologyApp.Presentation.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\PsychologyApp.Presentation\Abstractions\ITestAssetReader.cs" Link="ITestAssetReader.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,7 @@
 using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.Services.Dialogs;
+using PsychologyApp.Presentation.Services.Tests;
 using PsychologyApp.Presentation.Services.Toasts;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Models.Tests;
@@ -16,10 +17,15 @@ public interface ITestsListViewModelFactory
 
 public sealed class TestsListViewModelFactory(
     Func<NavigationContext, INavigationService> navigationServiceFactory,
-    IUserProgressService userProgressService) : ITestsListViewModelFactory
+    IUserProgressService userProgressService,
+    ITestCatalogService testCatalogService) : ITestsListViewModelFactory
 {
     public TestsListViewModel Create(INavigation navigation) =>
-        new(navigation, navigationServiceFactory(NavigationContext.From(navigation)), userProgressService);
+        new(
+            navigation,
+            navigationServiceFactory(NavigationContext.From(navigation)),
+            userProgressService,
+            testCatalogService);
 }
 
 public interface ITestHistoryViewModelFactory
@@ -29,36 +35,34 @@ public interface ITestHistoryViewModelFactory
 
 public sealed class TestHistoryViewModelFactory(
     Func<NavigationContext, INavigationService> navigationServiceFactory,
-    IUserProgressService userProgressService) : ITestHistoryViewModelFactory
+    IUserProgressService userProgressService,
+    ITestCatalogService testCatalogService) : ITestHistoryViewModelFactory
 {
     public TestHistoryViewModel Create(INavigation navigation, string testId, string testTitle) =>
-        new(navigation, navigationServiceFactory(NavigationContext.From(navigation)), userProgressService, testId, testTitle);
+        new(
+            navigation,
+            navigationServiceFactory(NavigationContext.From(navigation)),
+            userProgressService,
+            testCatalogService,
+            testId,
+            testTitle);
 }
 
-public interface IStandardTestViewModelFactory
+public interface ILuscherTestViewModelFactory
 {
-    StandardTestViewModel Create(INavigation navigation);
+    LuscherTestViewModel Create(INavigation navigation, LuscherMode mode);
 }
 
-public sealed class StandardTestViewModelFactory(
+public sealed class LuscherTestViewModelFactory(
     IUserProgressService userProgressService,
-    Func<NavigationContext, INavigationService> navigationServiceFactory) : IStandardTestViewModelFactory
+    Func<NavigationContext, INavigationService> navigationServiceFactory) : ILuscherTestViewModelFactory
 {
-    public StandardTestViewModel Create(INavigation navigation) =>
-        new(navigation, navigationServiceFactory(NavigationContext.From(navigation)), userProgressService);
-}
-
-public interface IAlternativeTestViewModelFactory
-{
-    AlternativeTestViewModel Create(INavigation navigation);
-}
-
-public sealed class AlternativeTestViewModelFactory(
-    IUserProgressService userProgressService,
-    Func<NavigationContext, INavigationService> navigationServiceFactory) : IAlternativeTestViewModelFactory
-{
-    public AlternativeTestViewModel Create(INavigation navigation) =>
-        new(navigation, navigationServiceFactory(NavigationContext.From(navigation)), userProgressService);
+    public LuscherTestViewModel Create(INavigation navigation, LuscherMode mode) =>
+        new(
+            mode,
+            navigation,
+            navigationServiceFactory(NavigationContext.From(navigation)),
+            userProgressService);
 }
 
 public interface IQuestionViewModelFactory
@@ -109,7 +113,9 @@ public interface IFindProblemViewModelFactory
         string? testId = null);
 }
 
-public sealed class FindProblemViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory) : IFindProblemViewModelFactory
+public sealed class FindProblemViewModelFactory(
+    Func<NavigationContext, INavigationService> navigationServiceFactory,
+    ITestCatalogService testCatalogService) : IFindProblemViewModelFactory
 {
     public FindProblemViewModel Create(
         INavigation navigation,
@@ -118,7 +124,15 @@ public sealed class FindProblemViewModelFactory(Func<NavigationContext, INavigat
         string? comment,
         Action action,
         string? testId = null) =>
-        new(navigation, navigationServiceFactory(NavigationContext.From(navigation)), description, algorithm, comment, action, testId);
+        new(
+            navigation,
+            navigationServiceFactory(NavigationContext.From(navigation)),
+            testCatalogService,
+            description,
+            algorithm,
+            comment,
+            action,
+            testId);
 }
 
 public interface ITheoryViewModelFactory

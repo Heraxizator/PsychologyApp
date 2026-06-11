@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Models.Tests;
 using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.Services.Factories;
 using PsychologyApp.Presentation.ViewModels.Tests;
@@ -8,14 +9,16 @@ namespace PsychologyApp.Presentation.Views.Tests;
 
 public partial class AlternativeTestPage : ContentPage
 {
-    private AlternativeTestViewModel? _viewModel;
+    private LuscherTestViewModel? _viewModel;
 
     public AlternativeTestPage(
         IPageViewModelActivator pageViewModelActivator,
-        IAlternativeTestViewModelFactory alternativeTestViewModelFactory)
+        ILuscherTestViewModelFactory luscherTestViewModelFactory)
     {
         InitializeComponent();
-        _viewModel = this.ActivateViewModel(pageViewModelActivator, nav => alternativeTestViewModelFactory.Create(nav));
+        _viewModel = this.ActivateViewModel(
+            pageViewModelActivator,
+            nav => luscherTestViewModelFactory.Create(nav, LuscherMode.Brief));
         _viewModel.PropertyChanged += OnViewModelPropertyChanged;
         Loaded += OnPageLoaded;
     }
@@ -38,11 +41,11 @@ public partial class AlternativeTestPage : ContentPage
             return;
         }
 
-        if (e.PropertyName == nameof(AlternativeTestViewModel.IsFinish) && _viewModel.IsFinish)
+        if (e.PropertyName == nameof(LuscherTestViewModel.IsFinish) && _viewModel.IsFinish)
         {
             UiStateAnimator.CrossfadeSectionsAsync(StartSection, FinishSection).FireAndForget();
         }
-        else if (e.PropertyName == nameof(AlternativeTestViewModel.IsStart) && _viewModel.IsStart)
+        else if (e.PropertyName == nameof(LuscherTestViewModel.IsStart) && _viewModel.IsStart)
         {
             UiStateAnimator.CrossfadeSectionsAsync(FinishSection, StartSection).FireAndForget();
         }

@@ -8,7 +8,7 @@
       "2. Выбрать самый не приятный цвет"
     ],
     "comment": "Нельзя выбирать любимые цвета. Тест измеряет эмоциональное состояние на сейчас.",
-    "navigationTarget": "AlternativeTestPage"
+    "navigationTarget": "brief"
   },
   {
     "title": "Полный тест Люшера",
@@ -19,6 +19,6 @@
       "2. Повторить шаг под номером 1"
     ],
     "comment": "Нельзя выбирать любимые цвета. Тест измеряет эмоциональное состояние на сейчас.",
-    "navigationTarget": "StandardTestPage"
+    "navigationTarget": "standard"
   }
 ]

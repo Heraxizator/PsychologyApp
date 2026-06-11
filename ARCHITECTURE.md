@@ -163,11 +163,17 @@ Dead controls removed: `LocalFrame`, `LocalEditor`, `LocalEntry`, `ExtendedLabel
 
 
 
-- `TestCatalogLoader` — all tests from `Resources/Raw/tests/*.json` (beck, luscher, questionnaires)
+- `ITestAssetReader` / `MauiTestAssetReader` — opens localized JSON from `Resources/Raw/tests/`
 
-- `TestScoreAnalyzers` — scoring functions referenced by `analyzerId` in JSON
+- `TestCatalogParser` + `TestDefinition` (Core) — pure JSON parsing; `CachedTestCatalogService` caches catalog per language and invalidates with `ContentCacheInvalidator`
 
-- `TestsListViewModel` — orchestration only; `ITestsListViewModelFactory` + activator on `TestsListPage`
+- `TestItemFactory` — maps `TestDefinition` to UI `TestItem` (navigation commands, question cloning)
+
+- `TestScoreAnalyzers` / `TestScoreRecommendation` — scoring and technique recommendation by `analyzerId`
+
+- `LuscherTestViewModel` + `LuscherColorGridView` — shared Lüscher UI (`LuscherMode.Standard` / `Brief`)
+
+- `TestsListViewModel` — loads catalog via `ITestCatalogService`, enriches with `IUserProgressService`; `ITestsListViewModelFactory` + activator on `TestsListPage`
 
 
 

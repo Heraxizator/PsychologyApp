@@ -1,6 +1,7 @@
 using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Models.Tests;
 using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.Services.Tests;
 using PsychologyApp.Presentation.ViewModels;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -20,6 +21,7 @@ public partial class FindProblemViewModel : BaseViewModel
     public string StartButtonText => AppStrings.TestsStartButton;
 
     private readonly INavigationService _navigationService;
+    private readonly ITestCatalogService _testCatalogService;
     private readonly string? _testId;
     private readonly Action _nextPageTappedAction = default!;
 
@@ -28,6 +30,7 @@ public partial class FindProblemViewModel : BaseViewModel
     public FindProblemViewModel(
         INavigation navigation,
         INavigationService navigationService,
+        ITestCatalogService testCatalogService,
         string? description,
         List<string> algorithm,
         string? comment,
@@ -35,6 +38,7 @@ public partial class FindProblemViewModel : BaseViewModel
         string? testId = null)
     {
         _navigationService = navigationService;
+        _testCatalogService = testCatalogService;
         _testId = testId;
         ModuleName = AppStrings.TestsDetectorTitle;
         PageName = AppStrings.TestsAboutPassageTitle;

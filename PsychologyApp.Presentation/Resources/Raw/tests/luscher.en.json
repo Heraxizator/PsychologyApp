@@ -8,7 +8,7 @@
       "2. Choose the least pleasant color"
     ],
     "comment": "Do not pick favorite colors. The test measures your current emotional state.",
-    "navigationTarget": "AlternativeTestPage"
+    "navigationTarget": "brief"
   },
   {
     "title": "Full Lüscher Test",
@@ -19,6 +19,6 @@
       "2. Repeat step 1"
     ],
     "comment": "Do not pick favorite colors. The test measures your current emotional state.",
-    "navigationTarget": "StandardTestPage"
+    "navigationTarget": "standard"
   }
 ]

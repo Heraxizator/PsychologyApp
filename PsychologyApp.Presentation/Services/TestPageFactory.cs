@@ -25,8 +25,7 @@ public sealed class TestPageFactory(
     ITheoryViewModelFactory theoryViewModelFactory,
     IFindProblemViewModelFactory findProblemViewModelFactory,
     IQuestionViewModelFactory questionViewModelFactory,
-    IStandardTestViewModelFactory standardTestViewModelFactory,
-    IAlternativeTestViewModelFactory alternativeTestViewModelFactory) : ITestPageFactory
+    ILuscherTestViewModelFactory luscherTestViewModelFactory) : ITestPageFactory
 {
     public TestsListPage CreateTestsListPage() =>
         new(pageViewModelActivator, testsListViewModelFactory);
@@ -44,8 +43,8 @@ public sealed class TestPageFactory(
         new(questionViewModelFactory, questions, scoreAnalyzer, singleAnswer, session);
 
     public StandardTestPage CreateStandardTestPage() =>
-        new(pageViewModelActivator, standardTestViewModelFactory);
+        new(pageViewModelActivator, luscherTestViewModelFactory);
 
     public AlternativeTestPage CreateAlternativeTestPage() =>
-        new(pageViewModelActivator, alternativeTestViewModelFactory);
+        new(pageViewModelActivator, luscherTestViewModelFactory);
 }
