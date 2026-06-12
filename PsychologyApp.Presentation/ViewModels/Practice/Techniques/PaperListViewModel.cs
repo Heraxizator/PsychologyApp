@@ -25,7 +25,9 @@ public class PaperListViewModel : BaseViewModel
     public string ThoughtFieldLabel => Entries.Count > 0 ? Entries[0].Title ?? string.Empty : string.Empty;
     public string ThoughtPlaceholder => Entries.Count > 0 ? Entries[0].Placeholder ?? string.Empty : string.Empty;
     public string RepeatButtonText => AppStrings.Repeat;
-    public string ConcernFieldLabel => AppStrings.ConcernLabel;
+    public string ConcernFieldLabel => Entries.Count > 0 && !string.IsNullOrWhiteSpace(Entries[0].Title)
+        ? Entries[0].Title
+        : AppStrings.ConcernLabel;
 
     public PaperListViewModel(
         INavigationService navigationService,

@@ -2,6 +2,7 @@ using Moq;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Models.Tests;
 using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Services.Tests;
 using PsychologyApp.Presentation.ViewModels.Tests;
 using Xunit;
 
@@ -9,6 +10,8 @@ namespace PsychologyApp.Presentation.Tests;
 
 public sealed class TestResultViewModelTests
 {
+    private readonly Mock<ITestCatalogService> _catalogService = new();
+
     public TestResultViewModelTests()
     {
         AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
@@ -23,6 +26,7 @@ public sealed class TestResultViewModelTests
         TestResultViewModel viewModel = new(
             navigation.Object,
             navigationService,
+            _catalogService.Object,
             new TestResultInfo { Score = 5, Interpretation = "Mild" });
 
         viewModel.FinishCommand.Execute(null);
@@ -40,11 +44,13 @@ public sealed class TestResultViewModelTests
         TestResultViewModel viewModel = new(
             navigation.Object,
             trackingNavigation,
+            _catalogService.Object,
             new TestResultInfo
             {
                 Score = 12,
                 Interpretation = "High",
-                RecommendedTechnique = TechniqueId.Spin
+                RecommendedTechnique = TechniqueId.Spin,
+                AnalyzerId = "beck"
             });
 
         viewModel.TryTechniqueCommand.Execute(null);
@@ -62,9 +68,31 @@ public sealed class TestResultViewModelTests
         TestResultViewModel viewModel = new(
             navigation.Object,
             navigationService,
+            _catalogService.Object,
             new TestResultInfo { Score = 3, Interpretation = "Low" });
 
         Assert.False(viewModel.HasRecommendation);
+    }
+
+    [Fact]
+    public void Recommendation_includes_technique_title_when_present()
+    {
+        var navigation = new Mock<INavigation>();
+        var navigationService = new TestNavigationService(navigation.Object);
+
+        TestResultViewModel viewModel = new(
+            navigation.Object,
+            navigationService,
+            _catalogService.Object,
+            new TestResultInfo
+            {
+                Score = 12,
+                Interpretation = "10-15",
+                RecommendedTechnique = TechniqueId.Spin,
+                AnalyzerId = "beck"
+            });
+
+        Assert.Contains("Крутилка", viewModel.RecommendedTechniqueTitle);
     }
 
     private sealed class TechniqueTrackingNavigationService(INavigation navigation) : TestNavigationService(navigation)

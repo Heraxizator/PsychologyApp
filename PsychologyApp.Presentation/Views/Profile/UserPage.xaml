@@ -12,21 +12,15 @@
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
-    <AbsoluteLayout
-        VerticalOptions="FillAndExpand"
-        HorizontalOptions="FillAndExpand">
-
-        <ScrollView
-            AbsoluteLayout.LayoutBounds="0,0,1,1"
-            AbsoluteLayout.LayoutFlags="All"
-            VerticalScrollBarVisibility="Never">
-            <StackLayout
+    <Grid VerticalOptions="FillAndExpand">
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout
                 x:Name="ProfileContent"
                 Margin="{StaticResource LayoutPageMarginThickness}"
                 Spacing="{StaticResource LayoutSpacing}">
-                <StackLayout.Behaviors>
+                <VerticalStackLayout.Behaviors>
                     <behaviors:StaggerChildrenBehavior />
-                </StackLayout.Behaviors>
+                </VerticalStackLayout.Behaviors>
 
                 <ui:NavigationBarSimpleView
                     TitleText="{Binding PageTitle}"
@@ -105,10 +99,12 @@
                         <VerticalStackLayout
                             IsVisible="{Binding HasPracticeHistory}"
                             BindableLayout.ItemsSource="{Binding PracticeHistory}"
-                            Spacing="4">
+                            Spacing="{StaticResource ListItemSpacing}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="quotes:PracticeHistoryItem">
-                                    <Label Text="{Binding DisplayText}" Style="{StaticResource BodyStyle}" />
+                                    <Border Style="{StaticResource ListEntryCardStyle}">
+                                        <Label Text="{Binding DisplayText}" Style="{StaticResource BodyStyle}" />
+                                    </Border>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
@@ -142,12 +138,13 @@
                     HorizontalScrollBarVisibility="Never"
                     ItemsSource="{Binding Techniques}">
                     <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="4" />
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="{StaticResource ListItemSpacing}" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="technique:TechniqueItem">
                             <ui:ProfileTechniqueCardView
                                 Image="{Binding Image}"
+                                IconName="{Binding IconName}"
                                 Title="{Binding Title}"
                                 Subtitle="{Binding Subtitle}"
                                 Theme="{Binding Theme}"
@@ -158,7 +155,7 @@
 
                 <Label Text="{Binding BestQuotesLabel}" Style="{StaticResource SectionTitleStyle}" />
 
-                <Grid>
+                <Grid MinimumHeightRequest="120">
                     <ui:ProgressBarView
                         x:Name="QuotesLoading"
                         IsVisible="{Binding IsQuotesLoading}"
@@ -175,43 +172,26 @@
                         SelectionMode="None"
                         VerticalScrollBarVisibility="Never"
                         ItemsSource="{Binding Quotes}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
+                        </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="quotes:QuoteItem">
-                                <Border Style="{StaticResource BrandCardStyle}" Margin="0,0,0,8">
-                                    <Border.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding OpenQuotesTabCommand}" />
-                                    </Border.GestureRecognizers>
-                                    <Border.Behaviors>
+                                <ui:QuoteCardView
+                                    Text="{Binding Text}"
+                                    Author="{Binding Author}"
+                                    IsFavourite="{Binding IsFavourite}"
+                                    LikeCommand="{Binding LikeCommand}"
+                                    CopyCommand="{Binding CopyCommand}"
+                                    ShareCommand="{Binding ShareCommand}">
+                                    <ui:QuoteCardView.Behaviors>
                                         <behaviors:ListItemRevealBehavior />
-                                    </Border.Behaviors>
-                                    <VerticalStackLayout Spacing="8">
-                                        <ui:TextItemView
-                                            TitleText="{Binding Author}"
-                                            BodyText="{Binding Text}" />
-                                        <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="16" HorizontalOptions="Start">
-                                            <Label
-                                                Grid.Column="0"
-                                                Style="{StaticResource BodyStyle}"
-                                                Text="📋">
-                                                <Label.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding CopyCommand}" />
-                                                </Label.GestureRecognizers>
-                                            </Label>
-                                            <Label
-                                                Grid.Column="1"
-                                                Style="{StaticResource BodyStyle}"
-                                                Text="↗">
-                                                <Label.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding ShareCommand}" />
-                                                </Label.GestureRecognizers>
-                                            </Label>
-                                        </Grid>
-                                    </VerticalStackLayout>
-                                </Border>
+                                    </ui:QuoteCardView.Behaviors>
+                                </ui:QuoteCardView>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                         <CollectionView.EmptyView>
-                            <StackLayout Margin="0,24,0,0" Spacing="12" HorizontalOptions="Center">
+                            <VerticalStackLayout Margin="0,24,0,0" Spacing="12" HorizontalOptions="Center">
                                 <Label
                                     HorizontalTextAlignment="Center"
                                     Style="{StaticResource BodyStyle}"
@@ -220,20 +200,20 @@
                                     IsCompact="True"
                                     BodyText="{Binding GoToQuotesTabText}"
                                     TapCommand="{Binding OpenQuotesTabCommand}" />
-                            </StackLayout>
+                            </VerticalStackLayout>
                         </CollectionView.EmptyView>
                     </CollectionView>
                 </Grid>
 
-            </StackLayout>
+            </VerticalStackLayout>
         </ScrollView>
 
         <ui:RetryView
-            AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
-            AbsoluteLayout.LayoutFlags="PositionProportional"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
             IsVisible="{Binding IsQuotesFailed}"
             FailedText="{Binding LoadErrorText}"
             RetryText="{Binding RetryText}"
             RetryCommand="{Binding ReloadQuotesCommand}" />
-    </AbsoluteLayout>
+    </Grid>
 </ContentPage>

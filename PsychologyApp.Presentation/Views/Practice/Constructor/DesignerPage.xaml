@@ -13,10 +13,10 @@
         VerticalOptions="FillAndExpand"
         VerticalScrollBarVisibility="Never"
         HorizontalScrollBarVisibility="Never">
-        <StackLayout Margin="20,0,20,20" Spacing="20">
-            <StackLayout.Behaviors>
+        <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+            <VerticalStackLayout.Behaviors>
                 <behaviors:StaggerChildrenBehavior />
-            </StackLayout.Behaviors>
+            </VerticalStackLayout.Behaviors>
 
             <ui:NavigationBarSimpleView
                 TitleText="{Binding DesignTitle}"
@@ -24,7 +24,7 @@
                 BackCommand="{Binding Finish}" />
 
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <StackLayout Spacing="8">
+                <VerticalStackLayout Spacing="8">
                     <Label Text="{Binding DescriptionSection}" Style="{StaticResource SectionTitleStyle}" />
                     <ui:TextEntryView
                         TitleText="{Binding NameFieldLabel}"
@@ -42,21 +42,21 @@
                         TitleText="{Binding AuthorFieldLabel}"
                         PlaceholderText="{Binding AuthorPlaceholder}"
                         BodyText="{Binding Author}" />
-                </StackLayout>
+                </VerticalStackLayout>
             </Border>
 
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <StackLayout Spacing="8">
+                <VerticalStackLayout Spacing="8">
                     <Label Text="{Binding AlgorithmSection}" Style="{StaticResource SectionTitleStyle}" />
                     <ui:TextEntryView
                         TitleText="{Binding ActionsFieldLabel}"
                         BodyText="{Binding Actions}" />
-                </StackLayout>
+                </VerticalStackLayout>
             </Border>
 
             <ui:ButtonView
                 BodyText="{Binding SaveButtonText}"
                 TapCommand="{Binding ExecuteTechnique}" />
-        </StackLayout>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

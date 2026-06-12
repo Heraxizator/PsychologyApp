@@ -64,13 +64,11 @@ public sealed class TestBuilder : ITestBuilder
     {
         TestItem.TestId = testId;
         TestItem.AnalyzerId = analyzerId;
-        TestItem.Action = () => navigationService
-            .GoToQuestionPageAsync(
-                questions,
-                scoreAnalyzer,
-                singleAnswer,
-                new TestSessionInfo { TestId = testId, AnalyzerId = analyzerId })
-            .FireAndForget();
+        TestItem.StartAsync = () => navigationService.GoToQuestionPageAsync(
+            questions,
+            scoreAnalyzer,
+            singleAnswer,
+            new TestSessionInfo { TestId = testId, AnalyzerId = analyzerId });
         return this;
     }
 
@@ -135,8 +133,10 @@ public class TestItem
     public string Description { get; set; } = default!;
     public string Comment { get; set; } = default!;
     public List<string> Algorithm { get; set; } = default!;
-    public Action Action { get; set; } = default!;
+    public Func<Task> StartAsync { get; set; } = () => Task.CompletedTask;
     public ICommand? TapCommand { get; set; }
+    public string? MetaText { get; set; }
+    public bool HasMetaText => !string.IsNullOrWhiteSpace(MetaText);
     public string? LastResultSummary { get; set; }
     public bool HasLastResult => !string.IsNullOrWhiteSpace(LastResultSummary);
     public bool HasMultipleResults { get; set; }

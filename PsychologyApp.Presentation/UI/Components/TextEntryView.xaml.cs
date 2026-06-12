@@ -9,6 +9,17 @@ public partial class TextEntryView : ContentView
     public TextEntryView()
     {
         InitializeComponent();
+        UpdateHintVisibility();
+    }
+
+    protected override void OnPropertyChanged(string? propertyName = null)
+    {
+        base.OnPropertyChanged(propertyName);
+
+        if (propertyName is nameof(BodyText) or nameof(PlaceholderText))
+        {
+            UpdateHintVisibility();
+        }
     }
 
     public static readonly BindableProperty VariantProperty =
@@ -59,8 +70,14 @@ public partial class TextEntryView : ContentView
     private void OnInputFocused(object? sender, FocusEventArgs e) =>
         InputFieldChrome.ApplyFocusAsync(InputBorder, Variant).FireAndForget();
 
-    private void OnInputUnfocused(object? sender, FocusEventArgs e) =>
+    private void OnInputUnfocused(object? sender, FocusEventArgs e)
+    {
         InputFieldChrome.ApplyBlurAsync(InputBorder, Variant).FireAndForget();
+        UpdateHintVisibility();
+    }
+
+    private void UpdateHintVisibility() =>
+        HintLabel.IsVisible = string.IsNullOrEmpty(BodyText) && !string.IsNullOrWhiteSpace(PlaceholderText);
 
     private void OnInputTextChanged(object? sender, TextChangedEventArgs e)
     {

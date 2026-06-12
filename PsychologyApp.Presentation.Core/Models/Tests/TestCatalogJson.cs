@@ -6,7 +6,10 @@ public sealed record JsonNavigationTestDefinition(
     string Description,
     List<string> Algorithm,
     string Comment,
-    string NavigationTarget);
+    string NavigationTarget,
+    int? EstimatedMinutes = null,
+    int? QuestionCount = null,
+    string? Construct = null);
 
 public sealed record JsonSimpleQuestionnaireDefinition(
     string Title,
@@ -18,7 +21,10 @@ public sealed record JsonSimpleQuestionnaireDefinition(
     List<string> Answers,
     List<int> Balls,
     List<string> Questions,
-    bool SingleAnswer);
+    bool SingleAnswer,
+    int? EstimatedMinutes = null,
+    int? QuestionCount = null,
+    string? Construct = null);
 
 public sealed record JsonAnswerDefinition(int Ball, string Text);
 
@@ -32,4 +38,7 @@ public sealed record JsonGroupedQuestionnaireDefinition(
     string Comment,
     string AnalyzerId,
     bool SingleAnswer,
-    List<JsonGroupedQuestionDefinition> Questions);
+    List<JsonGroupedQuestionDefinition> Questions,
+    int? EstimatedMinutes = null,
+    int? QuestionCount = null,
+    string? Construct = null);

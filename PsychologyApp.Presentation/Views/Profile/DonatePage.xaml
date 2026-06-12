@@ -9,10 +9,10 @@
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
-    <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
-        <StackLayout.Behaviors>
+    <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+        <VerticalStackLayout.Behaviors>
             <behaviors:StaggerChildrenBehavior />
-        </StackLayout.Behaviors>
+        </VerticalStackLayout.Behaviors>
         <ui:NavigationBarSimpleView
             TitleText="{Binding PageTitle}"
             BackCommand="{Binding BackCommand}" />
@@ -22,8 +22,7 @@
             BodyText="{Binding MoreInfoBody}" />
 
         <ui:ButtonView
-            Margin="0, 5, 0, 10"
             BodyText="{Binding DonateButtonText}"
             TapCommand="{Binding DonateCommand}" />
-    </StackLayout>
+    </VerticalStackLayout>
 </ContentPage>

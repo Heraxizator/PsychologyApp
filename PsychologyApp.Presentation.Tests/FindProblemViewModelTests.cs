@@ -9,7 +9,7 @@ namespace PsychologyApp.Presentation.Tests;
 public sealed class FindProblemViewModelTests
 {
     [Fact]
-    public void ToContinue_InvokesConfiguredAction()
+    public async Task Continue_InvokesConfiguredStartAsync()
     {
         bool invoked = false;
         FindProblemViewModel viewModel = new(
@@ -19,9 +19,14 @@ public sealed class FindProblemViewModelTests
             "Description",
             ["Step 1", "Step 2"],
             "Comment",
-            () => invoked = true);
+            () =>
+            {
+                invoked = true;
+                return Task.CompletedTask;
+            });
 
-        viewModel.ToContinue();
+        viewModel.Continue.Execute(null);
+        await Task.Delay(50);
 
         Assert.True(invoked);
     }
@@ -36,7 +41,7 @@ public sealed class FindProblemViewModelTests
             "Description",
             ["Alpha", "Beta"],
             null,
-            () => { });
+            () => Task.CompletedTask);
 
         Assert.Equal(2, viewModel.AlgorithmRows.Count);
         Assert.Equal("Alpha", viewModel.AlgorithmRows[0].Text);
@@ -65,7 +70,7 @@ public sealed class FindProblemViewModelTests
             "Old",
             ["Old step"],
             "Old comment",
-            () => { },
+            () => Task.CompletedTask,
             "beck");
 
         typeof(BaseViewModel).GetMethod(

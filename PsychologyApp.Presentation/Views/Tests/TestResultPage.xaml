@@ -9,23 +9,33 @@
              Shell.NavBarIsVisible="True"
              Title="{Binding PageTitle}">
     <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
-        <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
-            <StackLayout.Behaviors>
+        <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+            <VerticalStackLayout.Behaviors>
                 <behaviors:StaggerChildrenBehavior />
-            </StackLayout.Behaviors>
+            </VerticalStackLayout.Behaviors>
 
-            <Border Style="{StaticResource BrandCardStyle}" Padding="16">
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                 <VerticalStackLayout Spacing="12">
                     <Label Text="{Binding ScoreTitle}" Style="{StaticResource SectionTitleStyle}" />
                     <Label Text="{Binding Interpretation}" Style="{StaticResource BodyStyle}" />
+                    <Label
+                        IsVisible="{Binding HasInterpretationDetail}"
+                        Text="{Binding InterpretationDetail}"
+                        Style="{StaticResource BodyStyle}" />
                 </VerticalStackLayout>
             </Border>
 
-            <Label
+            <VerticalStackLayout
                 IsVisible="{Binding HasRecommendation}"
-                Text="{Binding RecommendationHint}"
-                Style="{StaticResource BodyStyle}"
-                TextColor="{DynamicResource Primary}" />
+                Spacing="{StaticResource ListItemSpacing}">
+                <Label
+                    Text="{Binding RecommendedTechniqueTitle}"
+                    Style="{StaticResource ListRowTitleStyle}"
+                    TextColor="{DynamicResource Primary}" />
+                <Label
+                    Text="{Binding RecommendationHint}"
+                    Style="{StaticResource BodyStyle}" />
+            </VerticalStackLayout>
 
             <ui:ButtonView
                 IsVisible="{Binding HasRecommendation}"
@@ -41,6 +51,6 @@
                 BodyText="{Binding FinishButtonText}"
                 Variant="Secondary"
                 TapCommand="{Binding FinishCommand}" />
-        </StackLayout>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

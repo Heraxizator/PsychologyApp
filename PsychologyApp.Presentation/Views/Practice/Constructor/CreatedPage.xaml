@@ -15,10 +15,10 @@
     </ContentPage.ToolbarItems>
 
     <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
-        <StackLayout Margin="20,0,20,20" Spacing="20">
-            <StackLayout.Behaviors>
+        <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+            <VerticalStackLayout.Behaviors>
                 <behaviors:RevealOnAppearingBehavior />
-            </StackLayout.Behaviors>
+            </VerticalStackLayout.Behaviors>
             <ui:NavigationBarSimpleView
                 TitleText="{Binding CustomTechniqueTitle}"
                 BackCommand="{Binding Finish}" />
@@ -28,6 +28,6 @@
             <ui:ButtonView
                 BodyText="{Binding FinishButtonText}"
                 TapCommand="{Binding Finish}" />
-        </StackLayout>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -24,8 +24,23 @@ public class PolarityViewModel : BaseViewModel
 
     public string FirstPolarityLabel => AppStrings.FirstPolarityLabel;
     public string SecondPolarityLabel => AppStrings.SecondPolarityLabel;
-    public string NegativePlaceholder => AppStrings.PolarityNegativePlaceholder;
-    public string PositivePlaceholder => AppStrings.PolarityPositivePlaceholder;
+    public string NegativePlaceholder
+    {
+        get
+        {
+            TechniqueDefinition definition = TechniqueCatalog.Get(TechniqueId.Polarity);
+            return definition.PolarityNegativePlaceholder ?? AppStrings.PolarityNegativePlaceholder;
+        }
+    }
+
+    public string PositivePlaceholder
+    {
+        get
+        {
+            TechniqueDefinition definition = TechniqueCatalog.Get(TechniqueId.Polarity);
+            return definition.PolarityPositivePlaceholder ?? AppStrings.PolarityPositivePlaceholder;
+        }
+    }
 
     public PolarityViewModel(
         INavigationService navigationService,
@@ -47,6 +62,8 @@ public class PolarityViewModel : BaseViewModel
 
     protected override void OnTechniqueContentChanged()
     {
+        OnPropertyChanged(nameof(NegativePlaceholder));
+        OnPropertyChanged(nameof(PositivePlaceholder));
         OnPropertyChanged(nameof(FirstPolarityLabel));
         OnPropertyChanged(nameof(SecondPolarityLabel));
         OnPropertyChanged(nameof(NegativePlaceholder));

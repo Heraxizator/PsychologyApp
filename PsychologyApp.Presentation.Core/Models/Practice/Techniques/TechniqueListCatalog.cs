@@ -9,7 +9,9 @@ public sealed record TechniqueListEntry(
     string Title,
     string Subtitle,
     string Theme,
-    string Author);
+    string Author,
+    int DurationMinutes,
+    string Icon);
 
 public static class TechniqueListCatalog
 {
@@ -25,7 +27,9 @@ public static class TechniqueListCatalog
                     d.ListTitle,
                     d.ListSubtitle,
                     d.Theme,
-                    d.Author);
+                    d.Author,
+                    d.ListDurationMinutes,
+                    d.ListIcon);
             })
             .ToList();
 }

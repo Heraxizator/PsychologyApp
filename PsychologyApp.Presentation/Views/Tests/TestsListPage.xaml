@@ -27,15 +27,18 @@
             IsVisible="{Binding IsDone}"
             SelectionMode="None"
             ItemsSource="{Binding TestItemCollection}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
+            </CollectionView.ItemsLayout>
             <CollectionView.Behaviors>
                 <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
             </CollectionView.Behaviors>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="tests:TestItem">
                     <ui:TestListCardView
-                        Margin="0,0,0,10"
                         Title="{Binding Title}"
                         Subtitle="{Binding Subtitle}"
+                        MetaText="{Binding MetaText}"
                         LastResultText="{Binding LastResultSummary}"
                         HasLastResult="{Binding HasLastResult}"
                         HasMultipleResults="{Binding HasMultipleResults}"

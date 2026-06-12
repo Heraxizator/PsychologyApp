@@ -32,11 +32,16 @@
                     </DataTrigger>
                 </Label.Triggers>
             </Label>
+            <Label
+                x:Name="HintLabel"
+                Text="{Binding PlaceholderText, Source={x:Reference Root}}"
+                Style="{StaticResource CaptionStyle}"
+                LineBreakMode="WordWrap"
+                Margin="2,0,0,0" />
             <Entry
                 x:Name="InputEntry"
                 Style="{StaticResource InputTextStyle}"
                 Keyboard="Text"
-                Placeholder="{Binding PlaceholderText, Source={x:Reference Root}}"
                 Text="{Binding BodyText, Source={x:Reference Root}, Mode=TwoWay}"
                 Focused="OnInputFocused"
                 Unfocused="OnInputUnfocused"

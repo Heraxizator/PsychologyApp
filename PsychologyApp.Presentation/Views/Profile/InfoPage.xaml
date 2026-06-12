@@ -3,31 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Views.Profile.InfoPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Profile"
-             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Common.Behaviors"
              x:DataType="vm:InfoViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
-<StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
-        <StackLayout.Behaviors>
+    <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+        <VerticalStackLayout.Behaviors>
             <behaviors:StaggerChildrenBehavior />
-        </StackLayout.Behaviors>
+        </VerticalStackLayout.Behaviors>
 
         <ui:NavigationBarSimpleView
-                BackCommand="{Binding BackCommand}"
-                TitleText="{Binding PageTitle}"/>
+            BackCommand="{Binding BackCommand}"
+            TitleText="{Binding PageTitle}" />
 
-        <Label
-                HorizontalTextAlignment="Justify"
-                Text="{Binding AboutBody}"
-                Style="{StaticResource BodyStyle}" />
-
-        <Label
-                Text="{Binding AppVersionText}"
-                Style="{StaticResource CaptionStyle}"
-                TextColor="{DynamicResource Primary}" />
-
-        </StackLayout>
-
+        <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+            <VerticalStackLayout Spacing="8">
+                <Label
+                    HorizontalTextAlignment="Justify"
+                    Text="{Binding AboutBody}"
+                    Style="{StaticResource BodyStyle}" />
+                <Label
+                    Text="{Binding AppVersionText}"
+                    Style="{StaticResource CaptionStyle}"
+                    TextColor="{DynamicResource Primary}" />
+            </VerticalStackLayout>
+        </Border>
+    </VerticalStackLayout>
 </ContentPage>

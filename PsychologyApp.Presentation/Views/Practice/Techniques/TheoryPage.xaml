@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Views.Practice.Techniques.TheoryPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Practice.Techniques"
+             xmlns:technique="clr-namespace:PsychologyApp.Presentation.Models.Practice.Techniques"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Common.Behaviors"
              x:DataType="vm:TheoryViewModel"
@@ -10,17 +11,31 @@
              Title="{Binding PageTitle}">
 
     <ScrollView VerticalScrollBarVisibility="Never">
-        <StackLayout Margin="20,0,20,20" Spacing="20">
-            <StackLayout.Behaviors>
+        <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+            <VerticalStackLayout.Behaviors>
                 <behaviors:StaggerChildrenBehavior />
-            </StackLayout.Behaviors>
+            </VerticalStackLayout.Behaviors>
             <ui:NavigationBarSimpleView
                 TitleText="{Binding PageTitle}"
                 BackText="{Binding BackText}"
                 BackCommand="{Binding Finish}" />
+            <VerticalStackLayout
+                IsVisible="{Binding HasSections}"
+                Spacing="{StaticResource ListItemSpacing}"
+                BindableLayout.ItemsSource="{Binding Sections}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="technique:TheorySection">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="{Binding Heading}" Style="{StaticResource SectionTitleStyle}" />
+                            <Label Text="{Binding Body}" Style="{StaticResource BodyStyle}" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
             <ui:TextBoxView
+                IsVisible="{Binding HasLegacyText}"
                 HeaderText="{Binding PageTitle}"
                 BodyText="{Binding Text}" />
-        </StackLayout>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

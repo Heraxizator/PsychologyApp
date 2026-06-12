@@ -7,7 +7,7 @@ namespace PsychologyApp.Presentation.Tests;
 public sealed class TestItemFactoryTests
 {
     [Fact]
-    public void Create_Questionnaire_StartActionNavigatesWithSession()
+    public async Task Create_Questionnaire_StartActionNavigatesWithSession()
     {
         var navigation = new Mock<INavigation>();
         var navigationService = new RecordingTestNavigationService(navigation.Object);
@@ -32,7 +32,7 @@ public sealed class TestItemFactoryTests
         };
 
         TestItem item = TestItemFactory.Create(definition, navigationService);
-        item.Action.Invoke();
+        await item.StartAsync();
 
         Assert.Equal("heck_hess", navigationService.LastSession?.TestId);
         Assert.Equal("heck_hess", navigationService.LastSession?.AnalyzerId);

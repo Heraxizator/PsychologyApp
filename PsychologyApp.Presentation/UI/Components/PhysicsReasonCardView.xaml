@@ -7,35 +7,33 @@
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Border Style="{StaticResource ListCardItemStyle}">
-                <StackLayout Spacing="8">
-                    <StackLayout.GestureRecognizers>
+            <Border Style="{StaticResource TechniqueListCardStyle}">
+                <VerticalStackLayout Spacing="8">
+                    <VerticalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{TemplateBinding ToggleExpandCommand}" />
-                    </StackLayout.GestureRecognizers>
-                    <StackLayout Spacing="4">
+                    </VerticalStackLayout.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4">
                         <Label
                             FormattedText="{TemplateBinding TitleFormatted}"
-                            Style="{StaticResource SectionTitleStyle}" />
+                            Style="{StaticResource ListRowTitleStyle}" />
                         <Label
                             FormattedText="{TemplateBinding SubtitleFormatted}"
-                            Style="{StaticResource BodyStyle}" />
-                    </StackLayout>
-                    <StackLayout
+                            Style="{StaticResource CaptionStyle}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout
                         StyleId="ExpandedSection"
                         IsVisible="False"
                         Spacing="6">
                         <Label
-                            Style="{StaticResource SectionTitleStyle}"
-                            FontSize="14"
+                            Style="{StaticResource ListRowTitleStyle}"
                             Text="{TemplateBinding SolutionHeader}" />
                         <Label
                             Style="{StaticResource BodyStyle}"
                             Text="{TemplateBinding Solution}" />
                         <Label
-                            Style="{StaticResource SectionTitleStyle}"
-                            FontSize="14"
+                            Style="{StaticResource ListRowTitleStyle}"
                             Text="{TemplateBinding RecommendedPracticesLabel}" />
-                        <StackLayout BindableLayout.ItemsSource="{TemplateBinding SuggestedTechniques}">
+                        <VerticalStackLayout BindableLayout.ItemsSource="{TemplateBinding SuggestedTechniques}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="physics:PhysicsTechniqueSuggestion">
                                     <ui:ButtonView
@@ -46,9 +44,9 @@
                                         TapCommand="{Binding OpenCommand}" />
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
-                        </StackLayout>
-                    </StackLayout>
-                </StackLayout>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
             </Border>
         </ControlTemplate>
     </ContentView.ControlTemplate>

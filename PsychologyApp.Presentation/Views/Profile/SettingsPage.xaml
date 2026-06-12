@@ -10,20 +10,20 @@
              Title="{Binding PageTitle}">
 
     <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
-        <StackLayout Margin="20,0,20,20" Spacing="20">
-            <StackLayout.Behaviors>
+        <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+            <VerticalStackLayout.Behaviors>
                 <behaviors:StaggerChildrenBehavior />
-            </StackLayout.Behaviors>
+            </VerticalStackLayout.Behaviors>
 
             <ui:NavigationBarSimpleView
                 TitleText="{Binding PageTitle}"
                 BackCommand="{Binding Finish}" />
 
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <StackLayout Spacing="8">
-                    <StackLayout.Behaviors>
+                <VerticalStackLayout Spacing="8">
+                    <VerticalStackLayout.Behaviors>
                         <behaviors:StaggerChildrenBehavior />
-                    </StackLayout.Behaviors>
+                    </VerticalStackLayout.Behaviors>
                     <Label Text="{Binding DesignSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
                     <ui:SettingPickerRowView
                         LabelText="{Binding LanguageLabel}"
@@ -47,14 +47,14 @@
                         ItemsSource="{Binding FormOptions}"
                         SelectedItem="{Binding Form}" />
                     <Label Text="{Binding FormHelperText}" Style="{StaticResource CaptionStyle}" />
-                </StackLayout>
+                </VerticalStackLayout>
             </Border>
 
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <StackLayout Spacing="8">
-                    <StackLayout.Behaviors>
+                <VerticalStackLayout Spacing="8">
+                    <VerticalStackLayout.Behaviors>
                         <behaviors:StaggerChildrenBehavior />
-                    </StackLayout.Behaviors>
+                    </VerticalStackLayout.Behaviors>
                     <Label Text="{Binding FontSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
                     <ui:SettingPickerRowView
                         LabelText="{Binding SizeLabel}"
@@ -64,7 +64,7 @@
                     <ui:SettingSwitchRowView
                         LabelText="{Binding BoldLabel}"
                         IsToggled="{Binding IsThick}" />
-                </StackLayout>
+                </VerticalStackLayout>
             </Border>
 
             <ui:ButtonView
@@ -75,6 +75,6 @@
                 Variant="Secondary"
                 BodyText="{Binding ReplayOnboardingText}"
                 TapCommand="{Binding ReplayOnboardingCommand}" />
-        </StackLayout>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

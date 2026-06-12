@@ -4,9 +4,12 @@ namespace PsychologyApp.Presentation.Common;
 
 public sealed class AsyncCommand : ICommand
 {
+    private static readonly TimeSpan MinInterval = TimeSpan.FromMilliseconds(450);
+
     private readonly Func<Task> _execute;
     private readonly Func<bool>? _canExecute;
-    private bool _isExecuting;
+    private int _isExecuting;
+    private long _nextAllowedUtcTicks;
 
     public AsyncCommand(Func<Task> execute, Func<bool>? canExecute = null)
     {
@@ -17,27 +20,36 @@ public sealed class AsyncCommand : ICommand
     public event EventHandler? CanExecuteChanged;
 
     public bool CanExecute(object? parameter) =>
-        !_isExecuting && (_canExecute?.Invoke() ?? true);
+        DateTime.UtcNow.Ticks >= Volatile.Read(ref _nextAllowedUtcTicks)
+        && Volatile.Read(ref _isExecuting) == 0
+        && (_canExecute?.Invoke() ?? true);
 
-    public void Execute(object? parameter) =>
-        ExecuteAsync().FireAndForget();
-
-    private async Task ExecuteAsync()
+    public void Execute(object? parameter)
     {
-        if (!CanExecute(null))
+        if (DateTime.UtcNow.Ticks < Volatile.Read(ref _nextAllowedUtcTicks))
         {
             return;
         }
 
+        if (Interlocked.CompareExchange(ref _isExecuting, 1, 0) != 0)
+        {
+            return;
+        }
+
+        _ = ExecuteCoreAsync();
+    }
+
+    private async Task ExecuteCoreAsync()
+    {
         try
         {
-            _isExecuting = true;
             RaiseCanExecuteChanged();
-            await _execute();
+            await _execute().ConfigureAwait(false);
         }
         finally
         {
-            _isExecuting = false;
+            Volatile.Write(ref _nextAllowedUtcTicks, DateTime.UtcNow.Add(MinInterval).Ticks);
+            Volatile.Write(ref _isExecuting, 0);
             RaiseCanExecuteChanged();
         }
     }

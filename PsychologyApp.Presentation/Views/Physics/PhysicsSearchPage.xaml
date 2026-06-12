@@ -88,7 +88,7 @@
                     RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
                     ItemsSource="{Binding ResultsObservableCollection}">
                     <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="4" />
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="physics:PhysicsReasonItem">

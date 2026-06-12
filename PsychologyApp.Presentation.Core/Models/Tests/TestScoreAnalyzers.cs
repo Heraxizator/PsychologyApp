@@ -15,6 +15,24 @@ public static class TestScoreAnalyzers
         _ => null
     };
 
+    public static Func<int, string>? ResolveDetail(string analyzerId) => analyzerId switch
+    {
+        "heck_hess" => AppStrings.HeckHessScoreDetail,
+        "haer" => AppStrings.HaerScoreDetail,
+        "pochebut" => AppStrings.PochebutScoreDetail,
+        "beck" => AppStrings.BeckScoreDetail,
+        _ => null
+    };
+
+    public static string? ResolveRecommendationReason(string? analyzerId, int score) => analyzerId switch
+    {
+        "beck" => AppStrings.TestRecommendationReasonBeck(score),
+        "heck_hess" => AppStrings.TestRecommendationReasonHeckHess(score),
+        "haer" => AppStrings.TestRecommendationReasonHaer(score),
+        "pochebut" => AppStrings.TestRecommendationReasonPochebut(score),
+        _ => null
+    };
+
     public static TechniqueId? RecommendTechnique(string? analyzerId, int score) =>
         TestScoreRecommendation.RecommendTechnique(analyzerId, score);
 }

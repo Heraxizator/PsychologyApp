@@ -165,6 +165,22 @@
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
     </Style>
 
+    <Style x:Key="TestListCardStyle" TargetType="Border" BasedOn="{StaticResource ListCardItemStyle}">
+        <Setter Property="Padding" Value="12,14" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
+    </Style>
+
+    <Style x:Key="QuoteListCardStyle" TargetType="Border" BasedOn="{StaticResource ListCardItemStyle}">
+        <Setter Property="Padding" Value="12,14" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
+    </Style>
+
+    <Style x:Key="ListEntryCardStyle" TargetType="Border" BasedOn="{StaticResource BrandCardStyle}">
+        <Setter Property="Margin" Value="0,0,0,8" />
+        <Setter Property="Padding" Value="{StaticResource ListEntryPadding}" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
+    </Style>
+
     <Style x:Key="ProfileTechniqueCardStyle" TargetType="Border" BasedOn="{StaticResource ListCardItemStyle}">
         <Setter Property="Padding" Value="12" />
         <Setter Property="WidthRequest" Value="228" />
@@ -184,10 +200,42 @@
         <Setter Property="HorizontalOptions" Value="Center" />
     </Style>
 
-    <Style x:Key="TodayBannerStyle" TargetType="Border" BasedOn="{StaticResource ListCardItemStyle}">
-        <Setter Property="Padding" Value="12" />
+    <Style x:Key="TodayBannerStyle" TargetType="Border" BasedOn="{StaticResource BrandCardStyle}">
+        <Setter Property="Padding" Value="16" />
         <Setter Property="Margin" Value="4,4,4,12" />
+    </Style>
+
+    <Style x:Key="TodayPracticeRowStyle" TargetType="Border" BasedOn="{StaticResource ListCardItemStyle}">
+        <Setter Property="Padding" Value="12,14" />
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
+    </Style>
+
+    <Style x:Key="MoodStripStyle" TargetType="Border">
+        <Setter Property="Padding" Value="12,10" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryTint}" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
+    </Style>
+
+    <Style x:Key="MoodChipStyle" TargetType="Border">
+        <Setter Property="WidthRequest" Value="44" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 22" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="MoodChipEmojiStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
     </Style>
 
     <Style x:Key="InputEditorStyle" TargetType="Editor">

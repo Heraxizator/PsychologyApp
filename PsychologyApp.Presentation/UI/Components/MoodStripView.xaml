@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.UI.Components.MoodStripView"
+             x:Name="Root">
+
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <Border Style="{StaticResource MoodStripStyle}">
+                <VerticalStackLayout Spacing="8">
+                    <Label
+                        Text="{TemplateBinding QuestionText}"
+                        Style="{StaticResource CaptionStyle}"
+                        HorizontalTextAlignment="Center" />
+                    <HorizontalStackLayout
+                        HorizontalOptions="Center"
+                        Spacing="8">
+                        <Border Style="{StaticResource MoodChipStyle}">
+                            <Border.Triggers>
+                                <DataTrigger
+                                    Binding="{TemplateBinding SelectedMoodLevel}"
+                                    TargetType="Border"
+                                    Value="1">
+                                    <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{TemplateBinding RecordMoodCommand}" CommandParameter="1" />
+                            </Border.GestureRecognizers>
+                            <Label Text="😞" Style="{StaticResource MoodChipEmojiStyle}" />
+                        </Border>
+                        <Border Style="{StaticResource MoodChipStyle}">
+                            <Border.Triggers>
+                                <DataTrigger
+                                    Binding="{TemplateBinding SelectedMoodLevel}"
+                                    TargetType="Border"
+                                    Value="2">
+                                    <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{TemplateBinding RecordMoodCommand}" CommandParameter="2" />
+                            </Border.GestureRecognizers>
+                            <Label Text="😕" Style="{StaticResource MoodChipEmojiStyle}" />
+                        </Border>
+                        <Border Style="{StaticResource MoodChipStyle}">
+                            <Border.Triggers>
+                                <DataTrigger
+                                    Binding="{TemplateBinding SelectedMoodLevel}"
+                                    TargetType="Border"
+                                    Value="3">
+                                    <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{TemplateBinding RecordMoodCommand}" CommandParameter="3" />
+                            </Border.GestureRecognizers>
+                            <Label Text="😐" Style="{StaticResource MoodChipEmojiStyle}" />
+                        </Border>
+                        <Border Style="{StaticResource MoodChipStyle}">
+                            <Border.Triggers>
+                                <DataTrigger
+                                    Binding="{TemplateBinding SelectedMoodLevel}"
+                                    TargetType="Border"
+                                    Value="4">
+                                    <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{TemplateBinding RecordMoodCommand}" CommandParameter="4" />
+                            </Border.GestureRecognizers>
+                            <Label Text="🙂" Style="{StaticResource MoodChipEmojiStyle}" />
+                        </Border>
+                        <Border Style="{StaticResource MoodChipStyle}">
+                            <Border.Triggers>
+                                <DataTrigger
+                                    Binding="{TemplateBinding SelectedMoodLevel}"
+                                    TargetType="Border"
+                                    Value="5">
+                                    <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{TemplateBinding RecordMoodCommand}" CommandParameter="5" />
+                            </Border.GestureRecognizers>
+                            <Label Text="😊" Style="{StaticResource MoodChipEmojiStyle}" />
+                        </Border>
+                    </HorizontalStackLayout>
+                    <Label
+                        IsVisible="{TemplateBinding HasTodayMood}"
+                        Text="{TemplateBinding TodayMoodDisplay}"
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{DynamicResource Primary}" />
+                    <Label
+                        IsVisible="{TemplateBinding HasMoodHistorySummary}"
+                        Text="{TemplateBinding MoodHistorySummary}"
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{DynamicResource Gray500}"
+                        MaxLines="2"
+                        LineBreakMode="TailTruncation" />
+                </VerticalStackLayout>
+            </Border>
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+
+</ContentView>

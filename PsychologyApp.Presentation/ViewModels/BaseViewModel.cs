@@ -115,7 +115,11 @@ public class BaseViewModel : INotifyPropertyChanged
         if (def.Entries is not null)
         {
             Entries.Clear();
-            Entries.AddRange(def.Entries);
+            foreach (EntryItem entry in def.Entries)
+            {
+                Entries.Add(entry.CloneEmpty());
+            }
+
             OnPropertyChanged(nameof(Entries));
         }
 

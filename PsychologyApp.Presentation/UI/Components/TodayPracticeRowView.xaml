@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             x:Class="PsychologyApp.Presentation.UI.Components.TodayPracticeRowView"
+             x:Name="Root">
+
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <VerticalStackLayout Spacing="6">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <Label
+                        Grid.Column="0"
+                        Text="{TemplateBinding CaptionText}"
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{DynamicResource Primary}" />
+                    <Label
+                        Grid.Column="1"
+                        IsVisible="{TemplateBinding HasStreak}"
+                        Text="{TemplateBinding StreakText}"
+                        Style="{StaticResource CaptionStyle}"
+                        HorizontalTextAlignment="End" />
+                </Grid>
+                <Border Style="{StaticResource TodayPracticeRowStyle}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                        <Border
+                            Grid.Column="0"
+                            WidthRequest="52"
+                            HeightRequest="52"
+                            StrokeThickness="0"
+                            BackgroundColor="{DynamicResource PrimaryTint}"
+                            VerticalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <ui:MaterialIconView
+                                WidthRequest="28"
+                                HeightRequest="28"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"
+                                IconName="{TemplateBinding IconName}" />
+                        </Border>
+                        <VerticalStackLayout
+                            Grid.Column="1"
+                            Spacing="4"
+                            VerticalOptions="Center">
+                            <Label
+                                Text="{TemplateBinding Title}"
+                                Style="{StaticResource ListRowTitleStyle}"
+                                MaxLines="1"
+                                LineBreakMode="TailTruncation" />
+                            <Label
+                                Text="{TemplateBinding Subtitle}"
+                                Style="{StaticResource CaptionStyle}"
+                                MaxLines="2"
+                                LineBreakMode="TailTruncation" />
+                            <Label
+                                Text="{TemplateBinding ReasonText}"
+                                Style="{StaticResource CaptionStyle}"
+                                TextColor="{DynamicResource Primary}"
+                                MaxLines="1"
+                                LineBreakMode="TailTruncation" />
+                        </VerticalStackLayout>
+                        <Label
+                            Grid.Column="2"
+                            VerticalOptions="Center"
+                            TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                            Text="{mi:Material Icon=KeyboardArrowRight}" />
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+
+</ContentView>

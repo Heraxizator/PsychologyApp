@@ -6,7 +6,7 @@
              x:Name="Root">
 
     <ScrollView VerticalScrollBarVisibility="Never">
-        <StackLayout Margin="{StaticResource LayoutTabPageMarginThickness}" Spacing="20">
+        <VerticalStackLayout Margin="{StaticResource LayoutTabPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
             <ui:NavigationBarExtendedView
                 TitleText="{Binding Source={x:Reference Root}, Path=TitleText}"
                 BackCommand="{Binding Source={x:Reference Root}, Path=BackCommand}"
@@ -19,6 +19,6 @@
             <ui:ButtonView
                 BodyText="{Binding Source={x:Reference Root}, Path=FinishText}"
                 TapCommand="{Binding Source={x:Reference Root}, Path=FinishCommand}" />
-        </StackLayout>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentView>

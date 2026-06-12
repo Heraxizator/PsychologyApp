@@ -1,14 +1,17 @@
 ﻿{
   "title": "Beck Inventory",
   "subtitle": "Depression screening",
-  "description": "This questionnaire helps estimate your depression level in about five minutes.",
+  "estimatedMinutes": 5,
+  "questionCount": 21,
+  "construct": "Depression",
+  "description": "Estimate depressive symptoms over the past week in 5–7 minutes.",
   "algorithm": [
     "1. This questionnaire contains groups of statements. Read each group carefully.",
     "2. In each group, choose the one statement that best describes how you felt THIS WEEK AND TODAY.",
     "3. Check the statement you selected.",
     "4. If several statements in one group seem equally fitting, you may check more than one."
   ],
-  "comment": "Before choosing, make sure you have read all statements in each group.",
+  "comment": "Read all statements in each group before choosing. This is a screening tool, not a diagnosis.",
   "analyzerId": "beck",
   "singleAnswer": false,
   "questions": [

@@ -68,8 +68,8 @@ public sealed class MauiPageFactory(
     public TheoryPage CreateTheoryPage(string content, TechniqueId? techniqueId = null) =>
         WithPressFeedback(testPageFactory.CreateTheoryPage(content, techniqueId));
 
-    public FindProblemPage CreateFindProblemPage(string? description, List<string> algorithm, string? comment, Action action, string? testId = null) =>
-        WithPressFeedback(testPageFactory.CreateFindProblemPage(description, algorithm, comment, action, testId));
+    public FindProblemPage CreateFindProblemPage(string? description, List<string> algorithm, string? comment, Func<Task> startTest, string? testId = null) =>
+        WithPressFeedback(testPageFactory.CreateFindProblemPage(description, algorithm, comment, startTest, testId));
 
     public QuestionPage CreateQuestionPage(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null) =>
         WithPressFeedback(testPageFactory.CreateQuestionPage(questions, scoreAnalyzer, singleAnswer, session));

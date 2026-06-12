@@ -1,4 +1,6 @@
+using PsychologyApp.Application.Models;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
+using PsychologyApp.Presentation.UI.Components;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
@@ -35,6 +37,37 @@ public class TechniqueCatalogTests
             Assert.Equal(definition.ListTitle, entry.Title);
             Assert.Equal(definition.ListSubtitle, entry.Subtitle);
             Assert.Equal(definition.ListNumber, entry.Number);
+            Assert.False(string.IsNullOrWhiteSpace(definition.ListIcon));
+            Assert.True(definition.ListDurationMinutes > 0);
+            Assert.Equal(definition.ListIcon, entry.Icon);
+            Assert.Equal(definition.ListDurationMinutes, entry.DurationMinutes);
         }
+    }
+
+    [Fact]
+    public void All_builtin_techniques_have_theory_sections()
+    {
+        foreach (TechniqueDefinition definition in TechniqueCatalog.All)
+        {
+            Assert.NotNull(definition.TheorySections);
+            Assert.Equal(4, definition.TheorySections!.Count);
+        }
+    }
+
+    [Theory]
+    [InlineData(TechniqueId.Spin, EntryFieldKind.Rating0To10)]
+    [InlineData(TechniqueId.Future, EntryFieldKind.Rating0To10)]
+    [InlineData(TechniqueId.Experience, EntryFieldKind.RatingNeg10To10)]
+    public void Entry_techniques_include_rating_fields(TechniqueId id, EntryFieldKind expectedKind)
+    {
+        TechniqueDefinition definition = TechniqueCatalog.Get(id);
+        Assert.Contains(definition.Entries!, entry => entry.Kind == expectedKind);
+    }
+
+    [Fact]
+    public void Comparison_includes_reflection_field()
+    {
+        TechniqueDefinition definition = TechniqueCatalog.Get(TechniqueId.Comparison);
+        Assert.Contains(definition.Entries!, entry => entry.Title.Contains("изменилось", StringComparison.OrdinalIgnoreCase));
     }
 }
