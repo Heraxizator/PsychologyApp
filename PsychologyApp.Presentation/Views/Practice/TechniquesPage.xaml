@@ -21,11 +21,34 @@
         <CollectionView
             x:Name="TechniquesCollectionView"
             Margin="{StaticResource LayoutTabPageMarginThickness}"
-            ItemsSource="{Binding Techniques}"
+            ItemsSource="{Binding TechniquesItemsSource}"
+            IsGrouped="{Binding IsTechniquesGrouped}"
+            HeaderFooterSpacing="0"
             IsVisible="{Binding IsDone}"
             SelectionMode="Single"
             VerticalScrollBarVisibility="Never"
             HorizontalScrollBarVisibility="Never">
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate x:DataType="technique:TechniqueGroup">
+                    <Grid>
+                        <Grid.Triggers>
+                            <DataTrigger
+                                Binding="{Binding HasTitle}"
+                                TargetType="Grid"
+                                Value="False">
+                                <Setter Property="HeightRequest" Value="0" />
+                                <Setter Property="MinimumHeightRequest" Value="0" />
+                                <Setter Property="Margin" Value="0" />
+                            </DataTrigger>
+                        </Grid.Triggers>
+                        <Label
+                            Text="{Binding Title}"
+                            IsVisible="{Binding HasTitle}"
+                            Style="{StaticResource SectionTitleStyle}"
+                            Margin="0,12,0,4" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
             <CollectionView.Behaviors>
                 <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
             </CollectionView.Behaviors>
@@ -35,7 +58,7 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.Header>
-                <VerticalStackLayout Spacing="{StaticResource ListItemSpacing}" Padding="0,0,0,8">
+                <VerticalStackLayout Spacing="{StaticResource ListItemSpacing}" Padding="0">
                     <VerticalStackLayout.Behaviors>
                         <behaviors:StaggerChildrenBehavior />
                     </VerticalStackLayout.Behaviors>
@@ -59,7 +82,7 @@
                         MoodHistorySummary="{Binding MoodHistorySummary}"
                         HasMoodHistorySummary="{Binding HasMoodHistorySummary}" />
 
-                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" Margin="0,4,0,0">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" Margin="0,4,0,0" Padding="0,0,0,0">
                         <Label
                             Grid.Column="0"
                             Text="{Binding PracticeCatalogLabel}"

@@ -203,11 +203,6 @@ public class QuoteViewModel : BaseViewModel
 
                 QuoteItem quoteItem = CreateQuoteItem(quotDTO);
                 QuotesObservableCollection.Add(quoteItem);
-
-                if (_feedMode == QuoteFeedMode.All && quotDTO.QuotId > 0 && !quotDTO.IsReaded)
-                {
-                    _quotService.MarkAsReadedAsync(quotDTO.QuotId, cancellationToken).FireAndForget();
-                }
             }
 
             UpdateAllReadEmptyState();
@@ -245,7 +240,7 @@ public class QuoteViewModel : BaseViewModel
                 await LoadQuotesAsync(effectiveToken);
             }
 
-            await AddItemsInCollAsync(1, effectiveToken);
+            await AddItemsInCollAsync(5, effectiveToken);
             UpdateAllReadEmptyState();
         }
         catch (Exception e)

@@ -218,6 +218,21 @@
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
     </Style>
 
+    <Style x:Key="FilterChipStyle" TargetType="Border">
+        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}" />
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 16" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="FilterChipSelectedStyle" TargetType="Border" BasedOn="{StaticResource FilterChipStyle}">
+        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryTint}" />
+        <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+        <Setter Property="StrokeThickness" Value="1.5" />
+    </Style>
+
     <Style x:Key="MoodChipStyle" TargetType="Border">
         <Setter Property="WidthRequest" Value="44" />
         <Setter Property="HeightRequest" Value="44" />

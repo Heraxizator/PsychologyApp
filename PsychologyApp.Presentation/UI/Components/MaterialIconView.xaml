@@ -7,8 +7,8 @@
 
     <mi:MauiIcon
         x:Name="Icon"
-        IconColor="{DynamicResource Primary}"
-        IconSize="24"
+        IconColor="{Binding IconColor, Source={x:Reference Root}, FallbackValue={DynamicResource Primary}}"
+        IconSize="{Binding IconSize, Source={x:Reference Root}}"
         HorizontalOptions="Center"
         VerticalOptions="Center" />
 

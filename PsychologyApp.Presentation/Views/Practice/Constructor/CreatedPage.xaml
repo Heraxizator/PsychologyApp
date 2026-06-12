@@ -9,19 +9,31 @@
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="{Binding EditToolbarText}" Command="{Binding Edit}" />
-        <ToolbarItem Text="{Binding RemoveToolbarText}" Command="{Binding Remove}" />
-    </ContentPage.ToolbarItems>
-
     <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
         <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
             <VerticalStackLayout.Behaviors>
                 <behaviors:RevealOnAppearingBehavior />
             </VerticalStackLayout.Behaviors>
+
             <ui:NavigationBarSimpleView
                 TitleText="{Binding CustomTechniqueTitle}"
-                BackCommand="{Binding Finish}" />
+                BackCommand="{Binding BackCommand}" />
+
+            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                <ui:ButtonView
+                    Grid.Column="1"
+                    IsCompact="True"
+                    Variant="Secondary"
+                    BodyText="{Binding EditToolbarText}"
+                    TapCommand="{Binding Edit}" />
+                <ui:ButtonView
+                    Grid.Column="2"
+                    IsCompact="True"
+                    Variant="Secondary"
+                    BodyText="{Binding RemoveToolbarText}"
+                    TapCommand="{Binding Remove}" />
+            </Grid>
+
             <ui:AlgorithmBoxView
                 TitleText="{Binding AlgorithmTitle}"
                 BodySource="{Binding Algorithm}" />

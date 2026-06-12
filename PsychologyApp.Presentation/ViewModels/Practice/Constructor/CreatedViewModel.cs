@@ -25,6 +25,7 @@ public class CreatedViewModel : BaseViewModel
     private readonly IUserProgressService _userProgressService;
     private readonly DateTime _sessionStartedAt = DateTime.UtcNow;
 
+    public ICommand BackCommand { get; private set; } = default!;
     public ICommand Remove { get; private set; } = default!;
     public ICommand Edit { get; private set; } = default!;
 
@@ -61,6 +62,7 @@ public class CreatedViewModel : BaseViewModel
             PageName = AppStrings.PracticeCustomTechnique;
 
             BindNavigation(navigation, _navigationService);
+            BackCommand = new AsyncCommand(GoBackAsync);
             Finish = new AsyncCommand(CompleteSessionAsync);
             Remove = new AsyncCommand(() => ToRemoveAsync());
             Edit = new AsyncCommand(() => ToEditAsync());
@@ -132,10 +134,13 @@ public class CreatedViewModel : BaseViewModel
 
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
+                Algorithm.Clear();
                 foreach (string action in actions)
                 {
                     Algorithm.Add(action);
                 }
+
+                SetDone();
             });
         }
         catch (Exception e)

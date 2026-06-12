@@ -32,6 +32,16 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
             cancellationToken: cancellationToken));
     }
 
+    public async Task<IEnumerable<Quot>> GetLatestAsync(int count, CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        return await connection.QueryAsync<Quot>(DapperCommandFactory.Create(
+            "SELECT * FROM Quots ORDER BY QuotId DESC LIMIT @count;",
+            new { count },
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
+    }
+
     public async Task<IEnumerable<Quot>> GetFavouritesAsync(int count, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              x:Class="PsychologyApp.Presentation.UI.Components.MusicListCardView"
              x:Name="Root">
     <Border x:Name="CardBorder" Style="{StaticResource MusicListRowStyle}">
@@ -12,28 +12,72 @@
                 Value="True">
                 <Setter Property="Stroke" Value="{DynamicResource Primary}" />
                 <Setter Property="StrokeThickness" Value="2" />
+                <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryTint}" />
             </DataTrigger>
         </Border.Triggers>
         <Border.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding TapCommand, Source={x:Reference Root}}" />
         </Border.GestureRecognizers>
-        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
             <Border
                 Grid.Column="0"
                 WidthRequest="52"
                 HeightRequest="52"
                 StrokeThickness="0"
-                BackgroundColor="{DynamicResource PrimaryTint}"
+                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
                 VerticalOptions="Center">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="12" />
                 </Border.StrokeShape>
-                <Label
-                    x:Name="PlayIcon"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    TextColor="{DynamicResource Primary}"
-                    Text="{mi:Material Icon=PlayArrow}" />
+                <Border.Triggers>
+                    <DataTrigger
+                        Binding="{Binding IsActive, Source={x:Reference Root}}"
+                        TargetType="Border"
+                        Value="True">
+                        <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
+                    </DataTrigger>
+                </Border.Triggers>
+                <Grid>
+                    <ui:MaterialIconView
+                        IconName="PlayArrow"
+                        IconSize="28"
+                        IconColor="{DynamicResource Primary}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                        <ui:MaterialIconView.Triggers>
+                            <DataTrigger
+                                Binding="{Binding IsActive, Source={x:Reference Root}}"
+                                TargetType="ui:MaterialIconView"
+                                Value="True">
+                                <Setter Property="IconColor" Value="White" />
+                            </DataTrigger>
+                            <MultiTrigger TargetType="ui:MaterialIconView">
+                                <MultiTrigger.Conditions>
+                                    <BindingCondition Binding="{Binding IsActive, Source={x:Reference Root}}" Value="True" />
+                                    <BindingCondition Binding="{Binding IsPlayingThis, Source={x:Reference Root}}" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter Property="IsVisible" Value="False" />
+                            </MultiTrigger>
+                        </ui:MaterialIconView.Triggers>
+                    </ui:MaterialIconView>
+                    <ui:MaterialIconView
+                        IconName="Pause"
+                        IconSize="28"
+                        IconColor="White"
+                        IsVisible="False"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                        <ui:MaterialIconView.Triggers>
+                            <MultiTrigger TargetType="ui:MaterialIconView">
+                                <MultiTrigger.Conditions>
+                                    <BindingCondition Binding="{Binding IsActive, Source={x:Reference Root}}" Value="True" />
+                                    <BindingCondition Binding="{Binding IsPlayingThis, Source={x:Reference Root}}" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter Property="IsVisible" Value="True" />
+                            </MultiTrigger>
+                        </ui:MaterialIconView.Triggers>
+                    </ui:MaterialIconView>
+                </Grid>
             </Border>
             <VerticalStackLayout
                 Grid.Column="1"
@@ -50,16 +94,19 @@
                     MaxLines="2"
                     LineBreakMode="TailTruncation" />
                 <Label
+                    IsVisible="{Binding HasMetaText, Source={x:Reference Root}}"
+                    Text="{Binding MetaText, Source={x:Reference Root}}"
+                    Style="{StaticResource CaptionStyle}"
+                    FontFamily="{StaticResource SemiBoldFontFamily}"
+                    TextColor="{DynamicResource Primary}"
+                    MaxLines="1"
+                    LineBreakMode="TailTruncation" />
+                <Label
                     IsVisible="{Binding ShowOfflineBadge, Source={x:Reference Root}}"
                     Text="{Binding OfflineBadgeText, Source={x:Reference Root}}"
                     Style="{StaticResource CaptionStyle}"
                     TextColor="{DynamicResource Primary}" />
             </VerticalStackLayout>
-            <Label
-                Grid.Column="2"
-                VerticalOptions="Center"
-                TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                Text="{mi:Material Icon=KeyboardArrowRight}" />
         </Grid>
     </Border>
 </ContentView>

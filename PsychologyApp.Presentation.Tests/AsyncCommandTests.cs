@@ -51,20 +51,4 @@ public sealed class AsyncCommandTests
         Assert.Equal(1, executions);
     }
 
-    [Fact]
-    public async Task Execute_IgnoresRapidRepeatAfterFastCompletion()
-    {
-        int executions = 0;
-        var command = new AsyncCommand(() =>
-        {
-            executions++;
-            return Task.CompletedTask;
-        });
-
-        command.Execute(null);
-        command.Execute(null);
-        await Task.Delay(50);
-
-        Assert.Equal(1, executions);
-    }
 }

@@ -54,46 +54,46 @@ public sealed class MauiNavigationService(
         NavigationCoordinator.RunAsync(() => navigation.PopToRootAsync(true));
 
     public Task GoToTechniqueAsync(TechniqueId techniqueId) =>
-        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateTechniqueSessionPage(techniqueId), true));
+        NavigationCoordinator.RunPushAsync(() => navigation.PushAsync(pageFactory.CreateTechniqueSessionPage(techniqueId), true));
 
     public Task GoToCreatedAsync(long techniqueId) =>
-        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateCreatedPage(techniqueId), false));
+        NavigationCoordinator.RunPushAsync(() => navigation.PushAsync(pageFactory.CreateCreatedPage(techniqueId), false));
 
     public Task GoToDesignerAsync(long techniqueId) =>
-        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateDesignerPage(techniqueId), false));
+        NavigationCoordinator.RunPushAsync(() => navigation.PushAsync(pageFactory.CreateDesignerPage(techniqueId), false));
 
     public Task GoToUserProfileAsync() =>
-        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateUserPage(), true));
+        NavigationCoordinator.RunPushAsync(() => navigation.PushAsync(pageFactory.CreateUserPage(), true));
 
     public Task GoToOptionsAsync() =>
-        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateOptionsPage(), false));
+        NavigationCoordinator.RunPushAsync(() => navigation.PushAsync(pageFactory.CreateOptionsPage(), false));
 
     public Task GoToInfoAsync() =>
-        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateInfoPage(), false));
+        NavigationCoordinator.RunPushAsync(() => navigation.PushAsync(pageFactory.CreateInfoPage(), false));
 
     public Task GoToDonateAsync() =>
-        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateDonatePage(navigation), false));
+        NavigationCoordinator.RunPushAsync(() => navigation.PushAsync(pageFactory.CreateDonatePage(navigation), false));
 
     public Task GoToFormAsync() =>
-        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateFormPage(), false));
+        NavigationCoordinator.RunPushAsync(() => navigation.PushAsync(pageFactory.CreateFormPage(), false));
 
     public Task GoToSettingsAsync() =>
-        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateSettingsPage(), false));
+        NavigationCoordinator.RunPushAsync(() => navigation.PushAsync(pageFactory.CreateSettingsPage(), false));
 
     public Task GoToPhysicsSearchAsync() =>
-        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreatePhysicsSearchPage(), false));
+        NavigationCoordinator.RunPushAsync(() => navigation.PushAsync(pageFactory.CreatePhysicsSearchPage(), false));
 
     public Task GoToTheoryAsync(string content, TechniqueId? techniqueId = null) =>
-        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateTheoryPage(content, techniqueId), false));
+        NavigationCoordinator.RunPushAsync(() => navigation.PushAsync(pageFactory.CreateTheoryPage(content, techniqueId), false));
 
     public Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Func<Task> startTest, string? testId = null) =>
-        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateFindProblemPage(description, algorithm, comment, startTest, testId), false));
+        NavigationCoordinator.RunPushAsync(() => navigation.PushAsync(pageFactory.CreateFindProblemPage(description, algorithm, comment, startTest, testId), false));
 
     public Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null) =>
-        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateQuestionPage(questions, scoreAnalyzer, singleAnswer, session), true));
+        NavigationCoordinator.RunPushAsync(() => navigation.PushAsync(pageFactory.CreateQuestionPage(questions, scoreAnalyzer, singleAnswer, session), true));
 
     public Task GoToLuscherTestAsync(LuscherMode mode) =>
-        NavigationCoordinator.RunAsync(() => mode switch
+        NavigationCoordinator.RunPushAsync(() => mode switch
         {
             LuscherMode.Standard => navigation.PushAsync(pageFactory.CreateStandardTestPage(), false),
             LuscherMode.Brief => navigation.PushAsync(pageFactory.CreateAlternativeTestPage(), false),
@@ -107,10 +107,10 @@ public sealed class MauiNavigationService(
         GoToLuscherTestAsync(LuscherMode.Brief);
 
     public Task GoToTestHistoryAsync(string testId, string testTitle) =>
-        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateTestHistoryPage(testId, testTitle), true));
+        NavigationCoordinator.RunPushAsync(() => navigation.PushAsync(pageFactory.CreateTestHistoryPage(testId, testTitle), true));
 
     public Task GoToTestsListAsync() =>
-        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateTestsListPage(), true));
+        NavigationCoordinator.RunPushAsync(() => navigation.PushAsync(pageFactory.CreateTestsListPage(), true));
 
     public Task GoToTestResultAsync(
         int score,
@@ -119,7 +119,7 @@ public sealed class MauiNavigationService(
         string? testId = null,
         string? interpretationDetail = null,
         string? analyzerId = null) =>
-        NavigationCoordinator.RunAsync(() => navigation.PushAsync(
+        NavigationCoordinator.RunPushAsync(() => navigation.PushAsync(
             pageFactory.CreateTestResultPage(new TestResultInfo
             {
                 Score = score,

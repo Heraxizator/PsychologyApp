@@ -37,7 +37,10 @@ public static class TechniqueCatalog
         [TechniqueId.Copied] = TechniqueCatalogContentRu.Copied,
         [TechniqueId.Extend] = TechniqueCatalogContentRu.Extend,
         [TechniqueId.Resize] = TechniqueCatalogContentRu.Resize,
-        [TechniqueId.Check] = TechniqueCatalogContentRu.Check
+        [TechniqueId.Check] = TechniqueCatalogContentRu.Check,
+        [TechniqueId.Observer] = TechniqueCatalogContentRu.Observer,
+        [TechniqueId.Anchor] = TechniqueCatalogContentRu.Anchor,
+        [TechniqueId.Grounding] = TechniqueCatalogContentRu.Grounding
     };
 
     public static IReadOnlyList<TechniqueDefinition> All =>

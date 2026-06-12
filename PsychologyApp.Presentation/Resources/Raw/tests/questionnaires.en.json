@@ -175,5 +175,296 @@
       "If someone treats me badly, I become very upset about it."
     ],
     "singleAnswer": true
+  },
+  {
+    "title": "GAD-7 Scale",
+    "subtitle": "Anxiety screening",
+    "estimatedMinutes": 2,
+    "questionCount": 7,
+    "construct": "Anxiety",
+    "description": "Seven questions about how often you were bothered by each symptom over the last two weeks.",
+    "algorithm": [
+      "1. Think about the last two weeks.",
+      "2. For each item, choose how often you were bothered by the symptom."
+    ],
+    "comment": "This is a screening tool, not a diagnosis. Seek professional help if anxiety is severe.",
+    "analyzerId": "gad7",
+    "answers": [
+      "Not at all",
+      "Several days",
+      "More than half the days",
+      "Nearly every day"
+    ],
+    "balls": [0, 1, 2, 3],
+    "questions": [
+      "Feeling nervous, anxious, or on edge",
+      "Not being able to stop or control worrying",
+      "Worrying too much about different things",
+      "Trouble relaxing",
+      "Being so restless that it is hard to sit still",
+      "Becoming easily annoyed or irritable",
+      "Feeling afraid as if something awful might happen"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "K10 Scale",
+    "subtitle": "Psychological distress",
+    "estimatedMinutes": 3,
+    "questionCount": 10,
+    "construct": "Psychological distress",
+    "description": "Ten questions about how often you experienced each state during the last four weeks.",
+    "algorithm": [
+      "1. Think about the last four weeks.",
+      "2. For each item, choose how often it was true for you."
+    ],
+    "comment": "This is a screening tool, not a diagnosis. Seek support if distress is high.",
+    "analyzerId": "k10",
+    "answers": [
+      "None of the time",
+      "A little of the time",
+      "Some of the time",
+      "Most of the time",
+      "All of the time"
+    ],
+    "balls": [1, 2, 3, 4, 5],
+    "questions": [
+      "Tired out for no good reason",
+      "Nervous",
+      "So nervous that nothing could calm you down",
+      "Hopeless",
+      "Restless or fidgety",
+      "So restless you could not sit still",
+      "Depressed",
+      "Everything was an effort",
+      "So sad that nothing could cheer you up",
+      "Worthless"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "WHO-5 Index",
+    "subtitle": "Subjective well-being",
+    "estimatedMinutes": 2,
+    "questionCount": 5,
+    "construct": "Well-being",
+    "description": "Five questions about positive well-being over the last two weeks. A higher total score means higher subjective well-being.",
+    "algorithm": [
+      "1. Think about the last two weeks.",
+      "2. For each item, mark how often you felt the way described."
+    ],
+    "comment": "This screens subjective well-being; it is not a diagnosis.",
+    "analyzerId": "who5",
+    "answers": [
+      "All of the time",
+      "Most of the time",
+      "More than half the time",
+      "Less than half the time",
+      "Some of the time",
+      "At no time"
+    ],
+    "balls": [5, 4, 3, 2, 1, 0],
+    "questions": [
+      "I have felt cheerful and in good spirits",
+      "I have felt calm and relaxed",
+      "I have felt active and vigorous",
+      "I woke up feeling fresh and rested",
+      "My daily life has been filled with things that interest me"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "PHQ-9 Scale",
+    "subtitle": "Depression screening",
+    "estimatedMinutes": 3,
+    "questionCount": 9,
+    "construct": "Depression",
+    "description": "Nine questions about depressive symptoms over the last two weeks. Rate how often each symptom bothered you.",
+    "algorithm": [
+      "1. Think about the last two weeks.",
+      "2. For each item, choose how often you were bothered by the symptom."
+    ],
+    "comment": "This is a screening tool, not a diagnosis. Seek professional help if symptoms are severe.",
+    "analyzerId": "phq9",
+    "answers": [
+      "Not at all",
+      "Several days",
+      "More than half the days",
+      "Nearly every day"
+    ],
+    "balls": [0, 1, 2, 3],
+    "questions": [
+      "Little interest or pleasure in doing things",
+      "Feeling down, depressed, or hopeless",
+      "Trouble falling or staying asleep, or sleeping too much",
+      "Feeling tired or having little energy",
+      "Poor appetite or overeating",
+      "Feeling bad about yourself, or that you are a failure or have let others down",
+      "Trouble concentrating on things, such as reading or watching TV",
+      "Moving or speaking slowly, or being fidgety or restless",
+      "Thoughts that you would be better off dead or of hurting yourself"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "ISI-7 Index",
+    "subtitle": "Insomnia severity",
+    "estimatedMinutes": 2,
+    "questionCount": 7,
+    "construct": "Insomnia",
+    "description": "Seven questions about sleep problems over the last two weeks. Rate the severity of each difficulty.",
+    "algorithm": [
+      "1. Think about the last two weeks.",
+      "2. For each item, choose how much the described problem bothered you."
+    ],
+    "comment": "This screens for insomnia; it is not a diagnosis. Seek help if sleep problems persist.",
+    "analyzerId": "isi",
+    "answers": [
+      "None",
+      "Mild",
+      "Moderate",
+      "Severe",
+      "Very severe"
+    ],
+    "balls": [0, 1, 2, 3, 4],
+    "questions": [
+      "Difficulty falling asleep",
+      "Difficulty staying asleep",
+      "Problems waking up too early",
+      "How dissatisfied are you with your current sleep pattern",
+      "How noticeable to others do you think your sleep problems are",
+      "How worried or distressed are you about your current sleep problems",
+      "How much do your sleep problems interfere with daily life"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "ESS-8 Scale",
+    "subtitle": "Daytime sleepiness",
+    "estimatedMinutes": 2,
+    "questionCount": 8,
+    "construct": "Daytime sleepiness",
+    "description": "Eight everyday situations. Rate how likely you would be to doze off in each.",
+    "algorithm": [
+      "1. Imagine each situation listed.",
+      "2. Choose how likely you would be to doze off in that situation."
+    ],
+    "comment": "This screens for daytime sleepiness; it is not a diagnosis. Consult a doctor if sleepiness is severe.",
+    "analyzerId": "ess",
+    "answers": [
+      "Would never doze",
+      "Slight chance",
+      "Moderate chance",
+      "High chance"
+    ],
+    "balls": [0, 1, 2, 3],
+    "questions": [
+      "Sitting and reading",
+      "Watching TV",
+      "Sitting inactive in a public place",
+      "As a passenger in a car for an hour without a break",
+      "Lying down to rest in the afternoon",
+      "Sitting and talking to someone",
+      "Sitting quietly after lunch without alcohol",
+      "In a car, stopped for a few minutes in traffic"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "PHQ-15 Scale",
+    "subtitle": "Somatic symptoms",
+    "estimatedMinutes": 4,
+    "questionCount": 15,
+    "construct": "Somatic symptoms",
+    "description": "Fifteen questions about physical symptoms over the last four weeks. Rate how much each symptom bothered you.",
+    "algorithm": [
+      "1. Think about the last four weeks.",
+      "2. For each item, choose how much the symptom bothered you."
+    ],
+    "comment": "This screens somatic symptoms; it is not a diagnosis. See a doctor if symptoms persist.",
+    "analyzerId": "phq15",
+    "answers": [
+      "Not bothered at all",
+      "Bothered a little",
+      "Bothered a lot"
+    ],
+    "balls": [0, 1, 2],
+    "questions": [
+      "Stomach pain",
+      "Back pain",
+      "Pain in your arms, legs, or joints",
+      "Menstrual cramps or other problems with your periods",
+      "Headaches",
+      "Chest pain",
+      "Dizziness",
+      "Fainting spells",
+      "Feeling your heart pound or race",
+      "Shortness of breath",
+      "Pain or problems during sexual intercourse",
+      "Constipation, loose bowels, or diarrhea",
+      "Nausea, gas, or indigestion",
+      "Feeling tired or having low energy",
+      "Trouble sleeping"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "SCOFF Questionnaire",
+    "subtitle": "Eating disorders screening",
+    "estimatedMinutes": 1,
+    "questionCount": 5,
+    "construct": "Eating behavior",
+    "description": "Five brief questions to screen for possible eating disorders. Answer yes or no.",
+    "algorithm": [
+      "1. Read each question carefully.",
+      "2. Answer yes if the statement is true for you, or no if it is not."
+    ],
+    "comment": "This is a screening tool, not a diagnosis. Seek professional help if the screen is positive.",
+    "analyzerId": "scoff",
+    "answers": [
+      "Yes",
+      "No"
+    ],
+    "balls": [1, 0],
+    "questions": [
+      "Do you make yourself Sick because you feel uncomfortably full?",
+      "Do you worry you have lost Control over how much you eat?",
+      "Have you recently lost more than 14 lb (6 kg) in a three-month period?",
+      "Do you believe yourself to be Fat when others say you are too thin?",
+      "Would you say Food dominates your life?"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "SWLS Scale",
+    "subtitle": "Life satisfaction",
+    "estimatedMinutes": 2,
+    "questionCount": 5,
+    "construct": "Life satisfaction",
+    "description": "Five statements about life satisfaction. A higher total score means higher subjective satisfaction.",
+    "algorithm": [
+      "1. Read each statement.",
+      "2. Choose how much you agree with it."
+    ],
+    "comment": "This screens subjective life satisfaction; it is not a diagnosis.",
+    "analyzerId": "swls",
+    "answers": [
+      "Strongly disagree",
+      "Disagree",
+      "Slightly disagree",
+      "Neither agree nor disagree",
+      "Slightly agree",
+      "Agree",
+      "Strongly agree"
+    ],
+    "balls": [1, 2, 3, 4, 5, 6, 7],
+    "questions": [
+      "In most ways my life is close to my ideal",
+      "The conditions of my life are excellent",
+      "I am satisfied with my life",
+      "So far I have gotten the important things I want in life",
+      "If I could live my life over, I would change almost nothing"
+    ],
+    "singleAnswer": true
   }
 ]

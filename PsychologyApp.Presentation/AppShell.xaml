@@ -34,8 +34,8 @@
         <ShellContent
             x:Name="CleanerTab"
             Route="CleanerTab"
-            Title="Звук"
-            Icon="{mi:Material Icon=Headphones}" />
+            Title="Молитвы"
+            Icon="{mi:Material Icon=MenuBook}" />
 
         <ShellContent
             x:Name="MotivatorTab"

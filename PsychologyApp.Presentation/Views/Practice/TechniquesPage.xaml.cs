@@ -23,13 +23,8 @@ public partial class TechniquesPage : ContentPage
     {
         base.OnAppearing();
         _animationHelper?.TryRevealAsync();
+        _viewModel?.RefreshOnAppearAsync().FireAndForget();
         _viewModel?.TryOpenPendingTechniqueAsync().FireAndForget();
-    }
-
-    protected override void OnDisappearing()
-    {
-        _viewModel?.Unsubscribe();
-        base.OnDisappearing();
     }
 
     protected override void OnHandlerChanged()

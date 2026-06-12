@@ -13,6 +13,7 @@ public partial class MusicPlayerPage : ContentPage
     private PageAnimationHelper? _animationHelper;
     private IDispatcherTimer? _positionTimer;
     private MediaElement? _player;
+    private bool _isSeeking;
 
     public MusicPlayerPage(IMusicPlayerViewModelFactory musicPlayerViewModelFactory, IToastService toastService)
     {
@@ -24,6 +25,7 @@ public partial class MusicPlayerPage : ContentPage
 
         _viewModel.PlayAudioHandler = PlayUrlAsync;
         _viewModel.TogglePlaybackHandler = TogglePlaybackAsync;
+        _viewModel.SeekHandler = SeekToFractionAsync;
         _viewModel.PrefetchHandler = PrefetchPlaylistAsync;
 
         _animationHelper = new PageAnimationHelper(_viewModel, contentView: Musics);
@@ -78,6 +80,18 @@ public partial class MusicPlayerPage : ContentPage
             _animationHelper?.Dispose();
             _animationHelper = null;
         }
+    }
+
+    private void OnProgressDragStarted(object? sender, EventArgs e)
+    {
+        _isSeeking = true;
+        Player.Pause();
+    }
+
+    private void OnProgressDragCompleted(object? sender, EventArgs e)
+    {
+        _isSeeking = false;
+        SeekToFractionAsync(ProgressSlider.Value).FireAndForget();
     }
 
     private async Task PrefetchPlaylistAsync()
@@ -140,6 +154,25 @@ public partial class MusicPlayerPage : ContentPage
         return Task.CompletedTask;
     }
 
+    private async Task SeekToFractionAsync(double fraction)
+    {
+        MediaElement player = Player;
+        if (player.Duration.TotalSeconds <= 0)
+        {
+            return;
+        }
+
+        double clamped = Math.Clamp(fraction, 0, 1);
+        TimeSpan target = TimeSpan.FromSeconds(player.Duration.TotalSeconds * clamped);
+        await player.SeekTo(target);
+
+        _viewModel.UpdatePlaybackProgress(player.Position, player.Duration);
+        if (_viewModel.IsPlaying)
+        {
+            player.Play();
+        }
+    }
+
     private void OnMediaEnded(object? sender, EventArgs e) =>
         _viewModel.SetPlaybackState(false);
 
@@ -157,7 +190,7 @@ public partial class MusicPlayerPage : ContentPage
         _positionTimer.Interval = TimeSpan.FromMilliseconds(500);
         _positionTimer.Tick += (_, _) =>
         {
-            if (_player is null)
+            if (_player is null || _isSeeking)
             {
                 return;
             }
