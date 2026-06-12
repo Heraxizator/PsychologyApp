@@ -1,15 +1,29 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace PsychologyApp.Presentation.Models.Clean;
+namespace PsychologyApp.Presentation.Models.Common;
 
-public sealed class PrayerCategoryFilter : INotifyPropertyChanged
+public sealed class FilterChipTabItem : INotifyPropertyChanged
 {
+    private string _title = string.Empty;
     private bool _isSelected;
 
     public string Key { get; init; } = string.Empty;
 
-    public string Title { get; init; } = string.Empty;
+    public string Title
+    {
+        get => _title;
+        set
+        {
+            if (_title == value)
+            {
+                return;
+            }
+
+            _title = value;
+            OnPropertyChanged();
+        }
+    }
 
     public bool IsSelected
     {

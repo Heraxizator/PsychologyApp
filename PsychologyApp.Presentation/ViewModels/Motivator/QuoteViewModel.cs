@@ -6,7 +6,9 @@ using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.QuotService;
 using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Models.Common;
 using PsychologyApp.Presentation.Models.Profile;
+using System.Collections.ObjectModel;
 using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.Services.Quotes;
 using PsychologyApp.Presentation.Services.Toasts;
@@ -27,8 +29,9 @@ public class QuoteViewModel : BaseViewModel
     private readonly SemaphoreSlim _initGate = new(1, 1);
 
     public ObservableRangeCollection<QuoteItem> QuotesObservableCollection { get; set; } = [];
+    public ObservableCollection<FilterChipTabItem> FeedFilters { get; } = [];
     public ICommand LoadMoreQuotesCommand { get; private set; } = default!;
-    public ICommand ShowAllCommand { get; private set; } = default!;
+    public ICommand SelectFeedCommand { get; private set; } = default!;
     public ICommand ShowFavoritesCommand { get; private set; } = default!;
 
     public string PageTitle => AppStrings.MotivatorTitle;
@@ -43,11 +46,6 @@ public class QuoteViewModel : BaseViewModel
     public string AllReadTitle => AppStrings.QuotesAllReadTitle;
     public string AllReadBody => AppStrings.QuotesAllReadBody;
     public string ShowFavoritesButtonText => AppStrings.QuotesShowFavorites;
-
-    public bool IsAllFeed => _feedMode == QuoteFeedMode.All;
-    public bool IsFavoritesFeed => _feedMode == QuoteFeedMode.Favorites;
-    public string AllFeedVariant => IsAllFeed ? "Primary" : "Secondary";
-    public string FavoritesFeedVariant => IsFavoritesFeed ? "Primary" : "Secondary";
 
     private bool _showAllReadEmpty;
     public bool ShowAllReadEmpty
@@ -83,9 +81,10 @@ public class QuoteViewModel : BaseViewModel
             BindNavigation(navigation, navigationService);
             Cancel = new Command(CancelProgress);
             LoadMoreQuotesCommand = new AsyncCommand(() => AddFreshQuotesAsync());
-            ShowAllCommand = new AsyncCommand(() => SwitchFeedAsync(QuoteFeedMode.All));
+            SelectFeedCommand = new Command<string?>(key => _ = SelectFeedAsync(key));
             ShowFavoritesCommand = new AsyncCommand(() => SwitchFeedAsync(QuoteFeedMode.Favorites));
             Reload = new AsyncCommand(() => RunInitAsync(seedNewQuote: false));
+            EnsureFeedFilters();
 
             RunInitAsync(seedNewQuote: true).FireAndForget();
         }
@@ -111,22 +110,53 @@ public class QuoteViewModel : BaseViewModel
             nameof(AllReadTitle),
             nameof(AllReadBody),
             nameof(ShowFavoritesButtonText));
+        EnsureFeedFilters();
     }
 
     public Task ReloadFromPullAsync() => RunInitAsync(seedNewQuote: false);
+
+    private async Task SelectFeedAsync(string? key)
+    {
+        QuoteFeedMode mode = key == "favorites" ? QuoteFeedMode.Favorites : QuoteFeedMode.All;
+        await SwitchFeedAsync(mode);
+    }
+
+    private void EnsureFeedFilters()
+    {
+        if (FeedFilters.Count == 0)
+        {
+            FeedFilters.Add(new FilterChipTabItem { Key = "all", Title = FeedAllLabel });
+            FeedFilters.Add(new FilterChipTabItem { Key = "favorites", Title = FeedFavoritesLabel });
+        }
+        else
+        {
+            FeedFilters[0].Title = FeedAllLabel;
+            FeedFilters[1].Title = FeedFavoritesLabel;
+        }
+
+        SyncFeedFilterSelection();
+    }
+
+    private void SyncFeedFilterSelection()
+    {
+        foreach (FilterChipTabItem filter in FeedFilters)
+        {
+            filter.IsSelected = _feedMode == QuoteFeedMode.Favorites
+                ? filter.Key == "favorites"
+                : filter.Key == "all";
+        }
+    }
 
     private async Task SwitchFeedAsync(QuoteFeedMode mode)
     {
         if (_feedMode == mode)
         {
+            SyncFeedFilterSelection();
             return;
         }
 
         _feedMode = mode;
-        OnPropertyChanged(nameof(IsAllFeed));
-        OnPropertyChanged(nameof(IsFavoritesFeed));
-        OnPropertyChanged(nameof(AllFeedVariant));
-        OnPropertyChanged(nameof(FavoritesFeedVariant));
+        SyncFeedFilterSelection();
         await RunInitAsync(seedNewQuote: false);
     }
 

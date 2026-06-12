@@ -135,7 +135,7 @@
 
     <!-- Input field shell -->
     <Style x:Key="InputBorderStyle" TargetType="Border">
-        <Setter Property="Padding" Value="14,10" />
+        <Setter Property="Padding" Value="12,8" />
         <Setter Property="StrokeThickness" Value="1" />
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusEntryShape}" />
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}" />
@@ -151,7 +151,7 @@
         <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource InputPlaceholderLight}, Dark={StaticResource InputPlaceholderDark}}" />
         <Setter Property="VerticalTextAlignment" Value="Center" />
         <Setter Property="HorizontalOptions" Value="Fill" />
-        <Setter Property="MinimumHeightRequest" Value="48" />
+        <Setter Property="MinimumHeightRequest" Value="40" />
         <Setter Property="Margin" Value="0" />
     </Style>
 
@@ -218,8 +218,21 @@
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
     </Style>
 
+    <Style x:Key="FilterChipLabelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="{DynamicResource FieldLabelFontSize}" />
+        <Setter Property="FontFamily" Value="{StaticResource MediumFontFamily}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="FilterChipSelectedLabelStyle" TargetType="Label" BasedOn="{StaticResource FilterChipLabelStyle}">
+        <Setter Property="TextColor" Value="{DynamicResource Primary}" />
+        <Setter Property="FontFamily" Value="{StaticResource SemiBoldFontFamily}" />
+    </Style>
+
     <Style x:Key="FilterChipStyle" TargetType="Border">
-        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="Padding" Value="12,7" />
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}" />
         <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}" />
         <Setter Property="StrokeThickness" Value="1" />
@@ -260,7 +273,7 @@
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
         <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource InputPlaceholderLight}, Dark={StaticResource InputPlaceholderDark}}" />
         <Setter Property="HorizontalOptions" Value="Fill" />
-        <Setter Property="MinimumHeightRequest" Value="120" />
+        <Setter Property="MinimumHeightRequest" Value="96" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="AutoSize" Value="TextChanges" />
     </Style>

@@ -5,26 +5,34 @@
              x:Name="Root"
              HorizontalOptions="Fill">
     <Border Style="{StaticResource InputBorderStyle}">
-        <VerticalStackLayout Spacing="8">
-            <Label
-                Text="{Binding TitleText, Source={x:Reference Root}}"
-                Style="{StaticResource CaptionStyle}"
-                Margin="2,0,0,0">
-                <Label.Triggers>
-                    <DataTrigger
-                        Binding="{Binding TitleText, Source={x:Reference Root}}"
-                        TargetType="Label"
-                        Value="">
-                        <Setter Property="IsVisible" Value="False" />
-                    </DataTrigger>
-                </Label.Triggers>
-            </Label>
-            <Label
-                Text="{Binding ValueDisplay, Source={x:Reference Root}}"
-                Style="{StaticResource BodyStyle}"
-                HorizontalTextAlignment="Center" />
+        <VerticalStackLayout Spacing="4">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <Label
+                    Grid.Column="0"
+                    Text="{Binding TitleText, Source={x:Reference Root}}"
+                    Style="{StaticResource FieldLabelStyle}"
+                    Margin="0"
+                    VerticalOptions="Center">
+                    <Label.Triggers>
+                        <DataTrigger
+                            Binding="{Binding TitleText, Source={x:Reference Root}}"
+                            TargetType="Label"
+                            Value="">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+                <Label
+                    Grid.Column="1"
+                    Text="{Binding ValueDisplay, Source={x:Reference Root}}"
+                    Style="{StaticResource BodyStyle}"
+                    FontFamily="{StaticResource MediumFontFamily}"
+                    VerticalOptions="Center"
+                    HorizontalTextAlignment="End" />
+            </Grid>
             <Slider
                 x:Name="RatingSlider"
+                Margin="0,-4,0,0"
                 Minimum="{Binding Minimum, Source={x:Reference Root}}"
                 Maximum="{Binding Maximum, Source={x:Reference Root}}"
                 Value="{Binding SliderValue, Source={x:Reference Root}, Mode=TwoWay}"

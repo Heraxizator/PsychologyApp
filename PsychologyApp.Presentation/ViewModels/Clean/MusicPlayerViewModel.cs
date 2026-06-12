@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Models.Clean;
+using PsychologyApp.Presentation.Models.Common;
 using PsychologyApp.Presentation.ViewModels;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -21,7 +22,7 @@ public class MusicPlayerViewModel : BaseViewModel
 
     public ObservableCollection<Audio> AllItems { get; } = [];
     public ObservableCollection<Audio> FilteredItems { get; } = [];
-    public ObservableCollection<PrayerCategoryFilter> CategoryFilters { get; } = [];
+    public ObservableCollection<FilterChipTabItem> CategoryFilters { get; } = [];
 
     public Func<string, Task>? PlayAudioHandler { get; set; }
     public Func<Task>? TogglePlaybackHandler { get; set; }
@@ -220,7 +221,7 @@ public class MusicPlayerViewModel : BaseViewModel
     {
         CategoryFilters.Clear();
 
-        CategoryFilters.Add(new PrayerCategoryFilter
+        CategoryFilters.Add(new FilterChipTabItem
         {
             Key = string.Empty,
             Title = AppStrings.CleanerCategoryAll,
@@ -232,7 +233,7 @@ public class MusicPlayerViewModel : BaseViewModel
                      .Where(category => !string.IsNullOrWhiteSpace(category))
                      .Distinct(StringComparer.Ordinal))
         {
-            CategoryFilters.Add(new PrayerCategoryFilter
+            CategoryFilters.Add(new FilterChipTabItem
             {
                 Key = category!,
                 Title = category!,
@@ -244,7 +245,7 @@ public class MusicPlayerViewModel : BaseViewModel
     private void SelectCategory(string? key)
     {
         _selectedCategoryKey = key ?? string.Empty;
-        foreach (PrayerCategoryFilter filter in CategoryFilters)
+        foreach (FilterChipTabItem filter in CategoryFilters)
         {
             filter.IsSelected = filter.Key == _selectedCategoryKey;
         }

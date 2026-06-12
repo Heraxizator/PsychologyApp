@@ -46,7 +46,7 @@
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\Clean\MusicPlayerViewModel.cs" Link="MusicPlayerViewModel.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Models\Clean\MusicPlaylist.cs" Link="MusicPlaylist.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Models\Clean\PrayerCatalog.cs" Link="PrayerCatalog.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Models\Clean\PrayerCategoryFilter.cs" Link="PrayerCategoryFilter.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Models\Common\FilterChipTabItem.cs" Link="FilterChipTabItem.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Models\Clean\Audio.cs" Link="Audio.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Common\Infrastructure\MusicAudioCache.cs" Link="MusicAudioCache.cs" />
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\FindProblemViewModel.cs" Link="FindProblemViewModel.cs" />

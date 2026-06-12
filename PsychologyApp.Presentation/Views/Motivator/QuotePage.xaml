@@ -19,24 +19,11 @@
         VerticalOptions="FillAndExpand"
         Margin="{StaticResource LayoutTabPageMarginThickness}"
         RowDefinitions="Auto,*">
-        <Grid
+        <ui:FilterChipTabBarView
             Grid.Row="0"
-            ColumnDefinitions="*,*"
-            ColumnSpacing="8"
-            Margin="0,0,0,8">
-            <ui:ButtonView
-                Grid.Column="0"
-                IsCompact="True"
-                BodyText="{Binding FeedAllLabel}"
-                Variant="{Binding AllFeedVariant}"
-                TapCommand="{Binding ShowAllCommand}" />
-            <ui:ButtonView
-                Grid.Column="1"
-                IsCompact="True"
-                BodyText="{Binding FeedFavoritesLabel}"
-                Variant="{Binding FavoritesFeedVariant}"
-                TapCommand="{Binding ShowFavoritesCommand}" />
-        </Grid>
+            Margin="0,0,0,8"
+            ItemsSource="{Binding FeedFilters}"
+            TapCommand="{Binding SelectFeedCommand}" />
 
         <RefreshView
             x:Name="QuotesRefresh"

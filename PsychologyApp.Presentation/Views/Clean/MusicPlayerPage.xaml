@@ -29,37 +29,9 @@
                     PlaceholderText="{Binding SearchPlaceholder}"
                     BodyText="{Binding SearchText, Mode=TwoWay}" />
 
-                <CollectionView
+                <ui:FilterChipTabBarView
                     ItemsSource="{Binding CategoryFilters}"
-                    HeightRequest="40"
-                    SelectionMode="None">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="8" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="clean:PrayerCategoryFilter">
-                            <Border Style="{StaticResource FilterChipStyle}">
-                                <Border.Triggers>
-                                    <DataTrigger
-                                        Binding="{Binding IsSelected}"
-                                        TargetType="Border"
-                                        Value="True">
-                                        <Setter Property="Style" Value="{StaticResource FilterChipSelectedStyle}" />
-                                    </DataTrigger>
-                                </Border.Triggers>
-                                <Border.GestureRecognizers>
-                                    <TapGestureRecognizer
-                                        Command="{Binding Source={x:Reference PageRoot}, Path=BindingContext.SelectCategoryCommand}"
-                                        CommandParameter="{Binding Key}" />
-                                </Border.GestureRecognizers>
-                                <Label
-                                    Text="{Binding Title}"
-                                    Style="{StaticResource CaptionStyle}"
-                                    FontFamily="{StaticResource MediumFontFamily}" />
-                            </Border>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                    TapCommand="{Binding SelectCategoryCommand}" />
             </VerticalStackLayout>
 
             <CollectionView
