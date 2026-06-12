@@ -12,30 +12,32 @@ public class MusicPlayerViewModel : BaseViewModel
     private readonly ILogger<MusicPlayerViewModel> _logger;
     private Audio? _activeTrack;
     private string search_text = string.Empty;
+    private string _selectedCategoryKey = string.Empty;
     private bool _isPlaying;
     private bool _isBuffering;
     private string _positionDisplay = "0:00";
     private string _durationDisplay = "0:00";
+    private double _progressFraction;
 
     public ObservableCollection<Audio> AllItems { get; } = [];
     public ObservableCollection<Audio> FilteredItems { get; } = [];
+    public ObservableCollection<PrayerCategoryFilter> CategoryFilters { get; } = [];
 
     public Func<string, Task>? PlayAudioHandler { get; set; }
     public Func<Task>? TogglePlaybackHandler { get; set; }
+    public Func<double, Task>? SeekHandler { get; set; }
     public Func<Task>? PrefetchHandler { get; set; }
     public ICommand TogglePlayPauseCommand { get; }
     public ICommand PlayNextCommand { get; }
+    public ICommand PlayPreviousCommand { get; }
+    public ICommand SelectCategoryCommand { get; }
 
-    public string PageTitle => AppStrings.ShellTabCleanerShort;
+    public string PageTitle => AppStrings.CleanerPrayersPage;
     public string SearchPlaceholder => AppStrings.CleanerSearchPlaceholder;
-    public string MoreInfoHeader => AppStrings.TestsMoreInfo;
-    public string MoreInfoBody => AppStrings.CleanerMoreInfoBody;
     public string NoPrayersFoundText => AppStrings.CleanerNoPrayersFound;
     public string NowPlayingLabel => AppStrings.CleanerNowPlaying;
     public string BufferingText => AppStrings.CleanerPreparingAudio;
     public string OfflineBadgeText => AppStrings.CleanerOfflineBadge;
-    public string PlayNextButtonText => AppStrings.CleanerPlayNext;
-    public string ReplayButtonText => AppStrings.CleanerReplay;
     public string LoadFailedText => AppStrings.LoadFailed;
     public string RetryText => AppStrings.RetryQuestion;
 
@@ -53,12 +55,14 @@ public class MusicPlayerViewModel : BaseViewModel
             OnPropertyChanged(nameof(ActiveTrack));
             OnPropertyChanged(nameof(HasActiveTrack));
             OnPropertyChanged(nameof(ActiveTrackTitle));
+            OnPropertyChanged(nameof(ActiveTrackCategory));
             SyncActiveTrackFlags();
         }
     }
 
     public bool HasActiveTrack => ActiveTrack is not null;
     public string ActiveTrackTitle => ActiveTrack?.Name ?? string.Empty;
+    public string ActiveTrackCategory => ActiveTrack?.Category ?? string.Empty;
     public bool ShowBufferingOverlay => IsBuffering && HasActiveTrack;
 
     public bool IsPlaying
@@ -73,7 +77,6 @@ public class MusicPlayerViewModel : BaseViewModel
 
             _isPlaying = value;
             OnPropertyChanged(nameof(IsPlaying));
-            OnPropertyChanged(nameof(PlayPauseGlyph));
             SyncActiveTrackFlags();
         }
     }
@@ -90,8 +93,6 @@ public class MusicPlayerViewModel : BaseViewModel
         }
     }
 
-    public string PlayPauseGlyph => IsPlaying ? "⏸" : "▶";
-
     public string PositionDisplay
     {
         get => _positionDisplay;
@@ -106,8 +107,14 @@ public class MusicPlayerViewModel : BaseViewModel
 
     public string ProgressDisplay => $"{PositionDisplay} / {DurationDisplay}";
 
+    public double ProgressFraction
+    {
+        get => _progressFraction;
+        set => SetProperty(ref _progressFraction, value);
+    }
+
     public bool HasFilteredItems => FilteredItems.Count > 0;
-    public bool IsSearchEmptyVisible => IsDone && !string.IsNullOrWhiteSpace(SearchText) && FilteredItems.Count == 0;
+    public bool IsSearchEmptyVisible => IsDone && !HasFilteredItems && AllItems.Count > 0;
 
     public MusicPlayerViewModel(ILogger<MusicPlayerViewModel> logger)
     {
@@ -117,6 +124,8 @@ public class MusicPlayerViewModel : BaseViewModel
 
         TogglePlayPauseCommand = new AsyncCommand(TogglePlayPauseAsync);
         PlayNextCommand = new AsyncCommand(PlayNextAsync);
+        PlayPreviousCommand = new AsyncCommand(PlayPreviousAsync);
+        SelectCategoryCommand = new Command<string?>(SelectCategory);
         Reload = new AsyncCommand(() =>
         {
             InitializePlaylist();
@@ -131,27 +140,24 @@ public class MusicPlayerViewModel : BaseViewModel
         Notify(
             nameof(PageTitle),
             nameof(SearchPlaceholder),
-            nameof(MoreInfoHeader),
-            nameof(MoreInfoBody),
             nameof(NoPrayersFoundText),
             nameof(NowPlayingLabel),
             nameof(BufferingText),
             nameof(OfflineBadgeText),
-            nameof(PlayNextButtonText),
-            nameof(ReplayButtonText),
-            nameof(PlayPauseGlyph),
-            nameof(ProgressDisplay));
+            nameof(ProgressDisplay),
+            nameof(ActiveTrackCategory));
 
-        if (IsDone && AllItems.Count > 0)
+        if (IsDone)
         {
-            ObservableCollection<Audio> localized = MusicPlaylist.CreateDefault();
-            for (int i = 0; i < AllItems.Count && i < localized.Count; i++)
-            {
-                AllItems[i].Name = localized[i].Name;
-                AllItems[i].Description = localized[i].Description;
-            }
-
+            string? activeUrl = ActiveTrack?.URL;
+            string categoryKey = _selectedCategoryKey;
+            InitializePlaylist();
+            _selectedCategoryKey = categoryKey;
             ApplyFilter();
+            if (!string.IsNullOrWhiteSpace(activeUrl))
+            {
+                ActiveTrack = AllItems.FirstOrDefault(item => item.URL == activeUrl);
+            }
         }
     }
 
@@ -181,7 +187,18 @@ public class MusicPlayerViewModel : BaseViewModel
     {
         PositionDisplay = FormatTime(position);
         DurationDisplay = FormatTime(duration);
+        ProgressFraction = duration.TotalSeconds > 0
+            ? Math.Clamp(position.TotalSeconds / duration.TotalSeconds, 0, 1)
+            : 0;
         OnPropertyChanged(nameof(ProgressDisplay));
+    }
+
+    public async Task SeekToFractionAsync(double fraction)
+    {
+        if (SeekHandler is not null)
+        {
+            await SeekHandler(fraction);
+        }
     }
 
     private void InitItems(ObservableCollection<Audio> collection)
@@ -193,6 +210,43 @@ public class MusicPlayerViewModel : BaseViewModel
             item.ClickCommand = new AsyncCommand(() => PlayTrackAsync(item));
             item.IsCached = !string.IsNullOrWhiteSpace(item.URL) && MusicAudioCache.IsCached(item.URL);
             AllItems.Add(item);
+        }
+
+        BuildCategoryFilters();
+        ApplyFilter();
+    }
+
+    private void BuildCategoryFilters()
+    {
+        CategoryFilters.Clear();
+
+        CategoryFilters.Add(new PrayerCategoryFilter
+        {
+            Key = string.Empty,
+            Title = AppStrings.CleanerCategoryAll,
+            IsSelected = string.IsNullOrEmpty(_selectedCategoryKey)
+        });
+
+        foreach (string category in AllItems
+                     .Select(item => item.Category)
+                     .Where(category => !string.IsNullOrWhiteSpace(category))
+                     .Distinct(StringComparer.Ordinal))
+        {
+            CategoryFilters.Add(new PrayerCategoryFilter
+            {
+                Key = category!,
+                Title = category!,
+                IsSelected = category == _selectedCategoryKey
+            });
+        }
+    }
+
+    private void SelectCategory(string? key)
+    {
+        _selectedCategoryKey = key ?? string.Empty;
+        foreach (PrayerCategoryFilter filter in CategoryFilters)
+        {
+            filter.IsSelected = filter.Key == _selectedCategoryKey;
         }
 
         ApplyFilter();
@@ -215,14 +269,43 @@ public class MusicPlayerViewModel : BaseViewModel
 
     private async Task PlayNextAsync()
     {
-        if (ActiveTrack is null || AllItems.Count == 0)
+        Audio? next = ResolveAdjacentTrack(step: 1);
+        if (next is not null)
         {
-            return;
+            await PlayTrackAsync(next);
+        }
+    }
+
+    private async Task PlayPreviousAsync()
+    {
+        Audio? previous = ResolveAdjacentTrack(step: -1);
+        if (previous is not null)
+        {
+            await PlayTrackAsync(previous);
+        }
+    }
+
+    private Audio? ResolveAdjacentTrack(int step)
+    {
+        if (ActiveTrack is null || FilteredItems.Count == 0)
+        {
+            return null;
         }
 
-        int index = AllItems.IndexOf(ActiveTrack);
-        int nextIndex = index < 0 ? 0 : (index + 1) % AllItems.Count;
-        await PlayTrackAsync(AllItems[nextIndex]);
+        int index = FilteredItems.IndexOf(ActiveTrack);
+        if (index < 0)
+        {
+            index = AllItems.IndexOf(ActiveTrack);
+            if (index < 0)
+            {
+                return FilteredItems[0];
+            }
+
+            return AllItems[Math.Clamp(index + step, 0, AllItems.Count - 1)];
+        }
+
+        int nextIndex = (index + step + FilteredItems.Count) % FilteredItems.Count;
+        return FilteredItems[nextIndex];
     }
 
     private async Task TogglePlayPauseAsync()
@@ -253,23 +336,30 @@ public class MusicPlayerViewModel : BaseViewModel
             if (SetProperty(ref search_text, value))
             {
                 ApplyFilter();
-                OnPropertyChanged(nameof(IsSearchEmptyVisible));
-                OnPropertyChanged(nameof(HasFilteredItems));
             }
         }
     }
 
     private void ApplyFilter()
     {
-        FilteredItems.Clear();
         string query = SearchText.Trim();
 
-        IEnumerable<Audio> source = string.IsNullOrWhiteSpace(query)
-            ? AllItems
-            : AllItems.Where(item =>
-                (item.Name?.Contains(query, StringComparison.OrdinalIgnoreCase) ?? false)
-                || (item.Description?.Contains(query, StringComparison.OrdinalIgnoreCase) ?? false));
+        IEnumerable<Audio> source = AllItems;
 
+        if (!string.IsNullOrWhiteSpace(_selectedCategoryKey))
+        {
+            source = source.Where(item => item.Category == _selectedCategoryKey);
+        }
+
+        if (!string.IsNullOrWhiteSpace(query))
+        {
+            source = source.Where(item =>
+                (item.Name?.Contains(query, StringComparison.OrdinalIgnoreCase) ?? false)
+                || (item.Description?.Contains(query, StringComparison.OrdinalIgnoreCase) ?? false)
+                || (item.Category?.Contains(query, StringComparison.OrdinalIgnoreCase) ?? false));
+        }
+
+        FilteredItems.Clear();
         foreach (Audio item in source)
         {
             FilteredItems.Add(item);

@@ -16,6 +16,9 @@ internal static class TechniqueCatalogEnglish
         [TechniqueId.Copied] = TechniqueCatalogContentEn.Copied,
         [TechniqueId.Extend] = TechniqueCatalogContentEn.Extend,
         [TechniqueId.Resize] = TechniqueCatalogContentEn.Resize,
-        [TechniqueId.Check] = TechniqueCatalogContentEn.Check
+        [TechniqueId.Check] = TechniqueCatalogContentEn.Check,
+        [TechniqueId.Observer] = TechniqueCatalogContentEn.Observer,
+        [TechniqueId.Anchor] = TechniqueCatalogContentEn.Anchor,
+        [TechniqueId.Grounding] = TechniqueCatalogContentEn.Grounding
     };
 }

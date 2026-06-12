@@ -13,6 +13,9 @@ public class TechniqueCatalogTests
     [InlineData(TechniqueId.Paper, TechniqueUiKind.Paper, "Лист бумаги")]
     [InlineData(TechniqueId.Hack, TechniqueUiKind.Entry, "Белое пятно")]
     [InlineData(TechniqueId.Copied, TechniqueUiKind.Copied, "Повтори это")]
+    [InlineData(TechniqueId.Observer, TechniqueUiKind.Entry, "Позиция наблюдателя")]
+    [InlineData(TechniqueId.Anchor, TechniqueUiKind.Entry, "Якорь ресурса")]
+    [InlineData(TechniqueId.Grounding, TechniqueUiKind.Entry, "Заземление 5-4-3-2-1")]
     public void Get_returns_expected_ui_kind_and_page_name(TechniqueId id, TechniqueUiKind kind, string pageName)
     {
         TechniqueDefinition definition = TechniqueCatalog.Get(id);
@@ -23,8 +26,8 @@ public class TechniqueCatalogTests
     }
 
     [Fact]
-    public void All_contains_eleven_builtin_techniques() =>
-        Assert.Equal(11, TechniqueCatalog.All.Count);
+    public void All_contains_fourteen_builtin_techniques() =>
+        Assert.Equal(14, TechniqueCatalog.All.Count);
 
     [Fact]
     public void ListCatalog_entries_align_with_catalog()
@@ -58,6 +61,8 @@ public class TechniqueCatalogTests
     [InlineData(TechniqueId.Spin, EntryFieldKind.Rating0To10)]
     [InlineData(TechniqueId.Future, EntryFieldKind.Rating0To10)]
     [InlineData(TechniqueId.Experience, EntryFieldKind.RatingNeg10To10)]
+    [InlineData(TechniqueId.Observer, EntryFieldKind.Rating0To10)]
+    [InlineData(TechniqueId.Anchor, EntryFieldKind.Rating0To10)]
     public void Entry_techniques_include_rating_fields(TechniqueId id, EntryFieldKind expectedKind)
     {
         TechniqueDefinition definition = TechniqueCatalog.Get(id);

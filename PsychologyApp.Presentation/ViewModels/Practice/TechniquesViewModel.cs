@@ -10,6 +10,7 @@ using PsychologyApp.Presentation.Services.Practice;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.Models.Practice;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using BaseViewModel = PsychologyApp.Presentation.ViewModels.BaseViewModel;
 
@@ -25,7 +26,23 @@ public class TechniquesViewModel : BaseViewModel
     private readonly IUserProgressService _userProgressService;
     private readonly IOptions<AppSettings> _settings;
 
-    public ObservableRangeCollection<TechniqueItem> Techniques { get; private set; } = [];
+    public ObservableCollection<TechniqueGroup> TechniqueGroups { get; private set; } = [];
+    public ObservableCollection<TechniqueItem> CatalogTechniques { get; private set; } = [];
+
+    private bool _isTechniquesGrouped;
+    private object _techniquesItemsSource = new ObservableCollection<TechniqueItem>();
+
+    public bool IsTechniquesGrouped
+    {
+        get => _isTechniquesGrouped;
+        private set => SetProperty(ref _isTechniquesGrouped, value);
+    }
+
+    public object TechniquesItemsSource
+    {
+        get => _techniquesItemsSource;
+        private set => SetProperty(ref _techniquesItemsSource, value);
+    }
     public ICommand ConstructorTapped { get; private set; } = default!;
     public ICommand OpenProfileCommand { get; private set; } = default!;
     public ICommand StartTodayPracticeCommand { get; private set; } = default!;
@@ -120,12 +137,18 @@ public class TechniquesViewModel : BaseViewModel
         });
 
         Cancel = new Command(CancelProgress);
-        Reload = new AsyncCommand(InitializeAsync);
+        Reload = new AsyncCommand(() => InitializeAsync(showLoadingOverlay: true));
 
-        _techniqueMessenger.Subscribe(this, message => OnTechniqueMessageAsync(message).FireAndForget());
+        SubscribeToTechniqueChanges();
         SetInit();
-        InitializeAsync().FireAndForget();
+        InitializeAsync(showLoadingOverlay: true).FireAndForget();
     }
+
+    public void SubscribeToTechniqueChanges() =>
+        _techniqueMessenger.Subscribe(this, message => OnTechniqueMessageAsync(message).FireAndForget());
+
+    public Task RefreshOnAppearAsync() =>
+        InitializeAsync(showLoadingOverlay: false);
 
     protected override void RefreshLocalizedProperties()
     {
@@ -151,8 +174,6 @@ public class TechniquesViewModel : BaseViewModel
         UpdateTodayRecommendation();
     }
 
-    public void Unsubscribe() => _techniqueMessenger.Unsubscribe(this);
-
     private async Task OnTechniqueMessageAsync(TechniqueMessage message)
     {
         if (message.MessageType is not (TechniqueMessageType.Add or TechniqueMessageType.Remove or TechniqueMessageType.Change))
@@ -160,16 +181,16 @@ public class TechniquesViewModel : BaseViewModel
             return;
         }
 
-        await InitializeAsync();
+        await InitializeAsync(showLoadingOverlay: false);
     }
 
-    private async Task InitializeAsync()
+    private async Task InitializeAsync(bool showLoadingOverlay)
     {
         await _initGate.WaitAsync();
         try
         {
             using CancellationTokenSource timeoutSource = OperationCancellation.CreateMiddleTimeoutSource(_settings);
-            await InitAsync(timeoutSource.Token);
+            await InitAsync(timeoutSource.Token, showLoadingOverlay);
         }
         finally
         {
@@ -177,27 +198,49 @@ public class TechniquesViewModel : BaseViewModel
         }
     }
 
-    public async Task InitAsync(CancellationToken cancellationToken)
+    public async Task InitAsync(CancellationToken cancellationToken, bool showLoadingOverlay = true)
     {
         try
         {
-            await MainThread.InvokeOnMainThreadAsync(SetInit);
+            if (showLoadingOverlay)
+            {
+                await MainThread.InvokeOnMainThreadAsync(SetInit);
+            }
 
             await AppReadiness.DatabaseReadyAsync.WaitAsync(cancellationToken);
 
             StreakDays = await _userProgressService.GetStreakDaysAsync(cancellationToken);
             await RefreshTodayMoodAsync(cancellationToken);
             await RefreshMoodHistoryAsync(cancellationToken);
-            IEnumerable<TechniqueItem> staticItems = await BuildStaticItemsAsync(cancellationToken);
-            IEnumerable<TechniqueDTO> dynamicSource = await _techniqueService.GetTechniquesListAsync(500, cancellationToken);
+            List<TechniqueItem> staticItems = (await BuildStaticItemsAsync(cancellationToken)).ToList();
+            List<TechniqueItem> customItems = (await _techniqueService.GetTechniquesListAsync(500, cancellationToken))
+                .Select(ParseFromDb)
+                .ToList();
 
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
                 UpdateTodayRecommendation();
                 ApplyTodayTechniqueDateFromList(staticItems);
-                Techniques.Clear();
-                Techniques.AddRange(staticItems);
-                Techniques.AddRange(dynamicSource.Select(ParseFromDb));
+
+                if (customItems.Count > 0)
+                {
+                    IsTechniquesGrouped = true;
+                    CatalogTechniques = [];
+                    TechniqueGroups =
+                    [
+                        new TechniqueGroup(string.Empty, staticItems),
+                        new TechniqueGroup(MyTechniquesLabel, customItems)
+                    ];
+                    TechniquesItemsSource = TechniqueGroups;
+                }
+                else
+                {
+                    IsTechniquesGrouped = false;
+                    TechniqueGroups = [];
+                    CatalogTechniques = new ObservableCollection<TechniqueItem>(staticItems);
+                    TechniquesItemsSource = CatalogTechniques;
+                }
+
                 SetDone();
             });
         }
@@ -290,6 +333,7 @@ public class TechniquesViewModel : BaseViewModel
         Number = AppStrings.PracticeCustomTechniqueNumber(item.TechniqueId),
         Date = item.Date,
         Image = item.Image,
+        IconName = "Build",
         Title = item.Header,
         Subtitle = item.Describtion,
         Theme = item.Subject,

@@ -4,12 +4,9 @@ namespace PsychologyApp.Presentation.Common;
 
 public sealed class AsyncCommand : ICommand
 {
-    private static readonly TimeSpan MinInterval = TimeSpan.FromMilliseconds(450);
-
     private readonly Func<Task> _execute;
     private readonly Func<bool>? _canExecute;
     private int _isExecuting;
-    private long _nextAllowedUtcTicks;
 
     public AsyncCommand(Func<Task> execute, Func<bool>? canExecute = null)
     {
@@ -20,17 +17,10 @@ public sealed class AsyncCommand : ICommand
     public event EventHandler? CanExecuteChanged;
 
     public bool CanExecute(object? parameter) =>
-        DateTime.UtcNow.Ticks >= Volatile.Read(ref _nextAllowedUtcTicks)
-        && Volatile.Read(ref _isExecuting) == 0
-        && (_canExecute?.Invoke() ?? true);
+        Volatile.Read(ref _isExecuting) == 0 && (_canExecute?.Invoke() ?? true);
 
     public void Execute(object? parameter)
     {
-        if (DateTime.UtcNow.Ticks < Volatile.Read(ref _nextAllowedUtcTicks))
-        {
-            return;
-        }
-
         if (Interlocked.CompareExchange(ref _isExecuting, 1, 0) != 0)
         {
             return;
@@ -48,7 +38,6 @@ public sealed class AsyncCommand : ICommand
         }
         finally
         {
-            Volatile.Write(ref _nextAllowedUtcTicks, DateTime.UtcNow.Add(MinInterval).Ticks);
             Volatile.Write(ref _isExecuting, 0);
             RaiseCanExecuteChanged();
         }

@@ -17,7 +17,7 @@ public sealed class QuotService(IQuotRepository quotRepository, IQuotContentProv
 
     public async Task<IEnumerable<QuotDTO>> GetAllAsync(int count, CancellationToken cancellationToken = default)
     {
-        IEnumerable<Quot> quots = await quotRepository.GetUnreadLatestAsync(count, cancellationToken);
+        IEnumerable<Quot> quots = await quotRepository.GetLatestAsync(count, cancellationToken);
         return quots.Select(QuotMapper.GetQuotDTO);
     }
 

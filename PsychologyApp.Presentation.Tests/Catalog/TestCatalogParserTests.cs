@@ -68,6 +68,87 @@ public sealed class TestCatalogParserTests
     }
 
     [Fact]
+    public void ParseSimpleQuestionnaires_IncludesRegisteredGad7Analyzer()
+    {
+        IReadOnlyList<TestDefinition> items = TestCatalogParser.ParseSimpleQuestionnaires(
+        [
+            new JsonSimpleQuestionnaireDefinition(
+                "GAD-7",
+                "Anxiety",
+                "Desc",
+                ["Step"],
+                "Note",
+                "gad7",
+                ["Not at all", "Several days", "More than half", "Nearly every day"],
+                [0, 1, 2, 3],
+                ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"],
+                true,
+                2,
+                7,
+                "Anxiety")
+        ]);
+
+        Assert.Single(items);
+        Assert.Equal("gad7", items[0].TestId);
+        Assert.Equal(7, items[0].QuestionCount);
+        Assert.Equal(7, items[0].Questions!.Count);
+    }
+
+    [Fact]
+    public void ParseSimpleQuestionnaires_IncludesRegisteredPhq9Analyzer()
+    {
+        IReadOnlyList<TestDefinition> items = TestCatalogParser.ParseSimpleQuestionnaires(
+        [
+            new JsonSimpleQuestionnaireDefinition(
+                "PHQ-9",
+                "Depression",
+                "Desc",
+                ["Step"],
+                "Note",
+                "phq9",
+                ["Not at all", "Several days", "More than half", "Nearly every day"],
+                [0, 1, 2, 3],
+                ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9"],
+                true,
+                3,
+                9,
+                "Depression")
+        ]);
+
+        Assert.Single(items);
+        Assert.Equal("phq9", items[0].TestId);
+        Assert.Equal(9, items[0].QuestionCount);
+        Assert.Equal(9, items[0].Questions!.Count);
+    }
+
+    [Fact]
+    public void ParseSimpleQuestionnaires_IncludesRegisteredPhq15Analyzer()
+    {
+        IReadOnlyList<TestDefinition> items = TestCatalogParser.ParseSimpleQuestionnaires(
+        [
+            new JsonSimpleQuestionnaireDefinition(
+                "PHQ-15",
+                "Somatic",
+                "Desc",
+                ["Step"],
+                "Note",
+                "phq15",
+                ["Not at all", "A little", "A lot"],
+                [0, 1, 2],
+                ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12", "Q13", "Q14", "Q15"],
+                true,
+                4,
+                15,
+                "Somatic symptoms")
+        ]);
+
+        Assert.Single(items);
+        Assert.Equal("phq15", items[0].TestId);
+        Assert.Equal(15, items[0].QuestionCount);
+        Assert.Equal(15, items[0].Questions!.Count);
+    }
+
+    [Fact]
     public void ParseGroupedQuestionnaire_BuildsQuestionsForKnownAnalyzer()
     {
         ParseResult<TestDefinition> result = TestCatalogParser.ParseGroupedQuestionnaire(

@@ -12,7 +12,10 @@ public enum TechniqueId
     Copied,
     Extend,
     Resize,
-    Check
+    Check,
+    Observer,
+    Anchor,
+    Grounding
 }
 
 public enum TechniqueUiKind

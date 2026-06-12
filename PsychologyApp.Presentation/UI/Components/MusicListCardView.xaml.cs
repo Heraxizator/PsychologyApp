@@ -9,7 +9,6 @@ public partial class MusicListCardView : ContentView
     {
         InitializeComponent();
         VisualElementPressFeedback.AttachToTemplateRoot(this, new PressFeedbackOptions { HapticOnRelease = true });
-        UpdatePlayIcon();
     }
 
     public static readonly BindableProperty TitleProperty =
@@ -30,6 +29,30 @@ public partial class MusicListCardView : ContentView
         set => SetValue(SubtitleProperty, value);
     }
 
+    public static readonly BindableProperty MetaTextProperty =
+        BindableProperty.Create(
+            nameof(MetaText),
+            typeof(string),
+            typeof(MusicListCardView),
+            string.Empty,
+            propertyChanged: OnMetaTextChanged);
+
+    public string MetaText
+    {
+        get => (string)GetValue(MetaTextProperty);
+        set => SetValue(MetaTextProperty, value);
+    }
+
+    public bool HasMetaText => !string.IsNullOrWhiteSpace(MetaText);
+
+    private static void OnMetaTextChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is MusicListCardView view)
+        {
+            view.OnPropertyChanged(nameof(HasMetaText));
+        }
+    }
+
     public static readonly BindableProperty TapCommandProperty =
         BindableProperty.Create(nameof(TapCommand), typeof(ICommand), typeof(MusicListCardView), null);
 
@@ -40,7 +63,7 @@ public partial class MusicListCardView : ContentView
     }
 
     public static readonly BindableProperty IsActiveProperty =
-        BindableProperty.Create(nameof(IsActive), typeof(bool), typeof(MusicListCardView), false, propertyChanged: OnPlaybackStateChanged);
+        BindableProperty.Create(nameof(IsActive), typeof(bool), typeof(MusicListCardView), false);
 
     public bool IsActive
     {
@@ -49,7 +72,7 @@ public partial class MusicListCardView : ContentView
     }
 
     public static readonly BindableProperty IsPlayingThisProperty =
-        BindableProperty.Create(nameof(IsPlayingThis), typeof(bool), typeof(MusicListCardView), false, propertyChanged: OnPlaybackStateChanged);
+        BindableProperty.Create(nameof(IsPlayingThis), typeof(bool), typeof(MusicListCardView), false);
 
     public bool IsPlayingThis
     {
@@ -75,21 +98,4 @@ public partial class MusicListCardView : ContentView
         set => SetValue(OfflineBadgeTextProperty, value);
     }
 
-    private static void OnPlaybackStateChanged(BindableObject bindable, object oldValue, object newValue)
-    {
-        if (bindable is MusicListCardView card)
-        {
-            card.UpdatePlayIcon();
-        }
-    }
-
-    private void UpdatePlayIcon()
-    {
-        if (PlayIcon is null)
-        {
-            return;
-        }
-
-        PlayIcon.Text = IsActive && IsPlayingThis ? "⏸" : "▶";
-    }
 }

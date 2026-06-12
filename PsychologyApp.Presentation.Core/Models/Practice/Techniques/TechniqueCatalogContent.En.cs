@@ -234,4 +234,75 @@ internal static class TechniqueCatalogContentEn
             "Name the thought, then gently shift attention to breath or sounds around you.",
             "Thought: \"What if I'm ill\". After a pause, anxiety often drops from 7 to 4."),
         null, null);
+
+    internal static readonly TechniqueDefinition Observer = new(
+        "Practice", "Observer position",
+        [
+            "1. Describe the situation that bothers you",
+            "2. Write feelings from first person",
+            "3. View the situation as a neutral observer",
+            "4. Rate tension after shifting position"
+        ],
+        "Shifting perceptual position helps step back from an emotional peak and see the situation more broadly.",
+        TechniqueUiKind.Entry, "Technique #12", "12.06.2026", "Observer position", "Step back from emotions and see the situation from outside", "Episodes", "NLP", 4, "Visibility",
+        [
+            new EntryItem { Title = "Situation", Placeholder = "What happened or what are you replaying in your mind?" },
+            new EntryItem { Title = "Feelings from first person", Placeholder = "What do you feel while inside the situation?" },
+            new EntryItem { Title = "What the observer sees", Placeholder = "What would a calm outside observer notice?" },
+            new EntryItem { Title = "Tension now", Kind = EntryFieldKind.Rating0To10 }
+        ],
+        Theory(
+            "When you are inside an episode, emotions feel inevitable. The observer position creates distance without denying the experience.",
+            "When a situation overwhelms you and rational arguments do not help.",
+            "Describe the situation and feelings, then rewrite it in third person — neutrally, without judgment.",
+            "Argument: inside — \"they disrespect me\". Observer: \"two people are speaking loudly\". Tension: 8 → 5."),
+        null, null);
+
+    internal static readonly TechniqueDefinition Anchor = new(
+        "Practice", "Resource anchor",
+        [
+            "1. Recall a moment when you felt confident or calm",
+            "2. Describe body sensations",
+            "3. Choose a simple anchor gesture",
+            "4. Rate the strength of the resource state"
+        ],
+        "An anchor links a body gesture to a resource state so you can return to support more quickly.",
+        TechniqueUiKind.Entry, "Technique #13", "12.06.2026", "Resource anchor", "Restore support through gesture and memory", "Episodes", "NLP", 4, "SelfImprovement",
+        [
+            new EntryItem { Title = "Resource memory", Placeholder = "When did you feel strong, calm, or joyful?" },
+            new EntryItem { Title = "Body sensations", Placeholder = "Where do you feel it? Warmth, lightness, grounding…" },
+            new EntryItem { Title = "Gesture or anchor", Placeholder = "E.g. clench fist, touch wrist" },
+            new EntryItem { Title = "State strength", Kind = EntryFieldKind.Rating0To10 }
+        ],
+        Theory(
+            "The brain quickly links a gesture to a state if you repeat the pair \"memory + gesture\" several times.",
+            "Before a stressful event or when inner support feels low.",
+            "Recall the resource episode, intensify body sensations, and fix them with a simple gesture.",
+            "Resource: successful talk. Body: warmth in chest. Anchor: thumb touch. Strength: 8."),
+        null, null);
+
+    internal static readonly TechniqueDefinition Grounding = new(
+        "Practice", "5-4-3-2-1 grounding",
+        [
+            "1. Name 5 things you can see",
+            "2. Name 4 things you can feel with your body",
+            "3. Name 3 sounds around you",
+            "4. Name 2 smells",
+            "5. Name 1 taste or pleasant sensation"
+        ],
+        "Sensory grounding shifts attention from anxious thoughts to the present moment.",
+        TechniqueUiKind.Entry, "Technique #14", "12.06.2026", "5-4-3-2-1 grounding", "Return to the present through the senses", "Episodes", "Psyche", 3, "Nature",
+        [
+            new EntryItem { Title = "5 things I see", Placeholder = "E.g. window, cup, book, lamp, hand" },
+            new EntryItem { Title = "4 things I feel with my body", Placeholder = "E.g. chair, floor, clothes, air temperature" },
+            new EntryItem { Title = "3 sounds", Placeholder = "E.g. street, clock, your breath" },
+            new EntryItem { Title = "2 smells", Placeholder = "E.g. coffee, fresh air" },
+            new EntryItem { Title = "1 taste or pleasant sensation", Placeholder = "E.g. water in mouth, soft fabric" }
+        ],
+        Theory(
+            "Anxiety often pulls you into past or future. Counting through senses brings you back to here and now.",
+            "During panic, strong anxiety, dizziness, or feeling detached from reality.",
+            "Go through the steps slowly, naming concrete sensations. Breathe evenly between items.",
+            "5 see → 4 feel → 3 hear → breathing steadies, thoughts slow down."),
+        null, null);
 }

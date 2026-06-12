@@ -14,13 +14,14 @@ public sealed class MusicPlayerViewModelTests
     }
 
     [Fact]
-    public void InitializePlaylist_LoadsFivePrayersImmediately()
+    public void InitializePlaylist_LoadsVerifiedPrayersImmediately()
     {
         MusicPlayerViewModel viewModel = new(NullLogger<MusicPlayerViewModel>.Instance);
 
         Assert.True(viewModel.IsDone);
         Assert.Equal(5, viewModel.AllItems.Count);
         Assert.Equal(5, viewModel.FilteredItems.Count);
+        Assert.Equal(4, viewModel.CategoryFilters.Count);
     }
 
     [Fact]
@@ -31,7 +32,18 @@ public sealed class MusicPlayerViewModelTests
         viewModel.SearchText = AppStrings.CleanerPsalm50;
 
         Assert.Single(viewModel.FilteredItems);
-        Assert.Contains(viewModel.FilteredItems, item => item.Name == AppStrings.CleanerPsalm50);
+        Assert.Equal(AppStrings.CleanerPsalm50, viewModel.FilteredItems[0].Name);
+    }
+
+    [Fact]
+    public void SelectCategory_FiltersByCategory()
+    {
+        MusicPlayerViewModel viewModel = new(NullLogger<MusicPlayerViewModel>.Instance);
+
+        viewModel.SelectCategoryCommand.Execute(AppStrings.CleanerCategoryCore);
+
+        Assert.Equal(3, viewModel.FilteredItems.Count);
+        Assert.All(viewModel.FilteredItems, item => Assert.Equal(AppStrings.CleanerCategoryCore, item.Category));
     }
 
     [Fact]

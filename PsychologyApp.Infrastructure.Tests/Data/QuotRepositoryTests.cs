@@ -28,6 +28,19 @@ public class QuotRepositoryTests : IAsyncLifetime
         Assert.Contains(unread, quote => quote.Text == "Unread quote");
     }
 
+    [Fact]
+    public async Task GetLatestAsync_ReturnsReadAndUnreadQuotes()
+    {
+        await _repository.AddAsync(Quot.Create("A", "First", "general", isReaded: true, isFavourite: false));
+        await _repository.AddAsync(Quot.Create("B", "Second", "general", isReaded: false, isFavourite: false));
+
+        var latest = (await _repository.GetLatestAsync(10)).ToList();
+
+        Assert.Equal(2, latest.Count);
+        Assert.Contains(latest, quote => quote.Text == "First");
+        Assert.Contains(latest, quote => quote.Text == "Second");
+    }
+
     public Task InitializeAsync() => Task.CompletedTask;
 
     public async Task DisposeAsync() => await _connectionFactory.DisposeAsync();

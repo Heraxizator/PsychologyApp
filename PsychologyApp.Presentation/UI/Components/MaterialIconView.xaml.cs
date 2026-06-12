@@ -17,10 +17,36 @@ public partial class MaterialIconView : ContentView
             string.Empty,
             propertyChanged: OnIconNameChanged);
 
+    public static readonly BindableProperty IconColorProperty =
+        BindableProperty.Create(
+            nameof(IconColor),
+            typeof(Color),
+            typeof(MaterialIconView),
+            null);
+
+    public static readonly BindableProperty IconSizeProperty =
+        BindableProperty.Create(
+            nameof(IconSize),
+            typeof(double),
+            typeof(MaterialIconView),
+            24d);
+
     public string IconName
     {
         get => (string)GetValue(IconNameProperty);
         set => SetValue(IconNameProperty, value);
+    }
+
+    public Color IconColor
+    {
+        get => (Color)GetValue(IconColorProperty);
+        set => SetValue(IconColorProperty, value);
+    }
+
+    public double IconSize
+    {
+        get => (double)GetValue(IconSizeProperty);
+        set => SetValue(IconSizeProperty, value);
     }
 
     private static void OnIconNameChanged(BindableObject bindable, object oldValue, object newValue)
