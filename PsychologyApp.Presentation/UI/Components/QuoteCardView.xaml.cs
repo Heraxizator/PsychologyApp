@@ -10,7 +10,6 @@ public partial class QuoteCardView : ContentView
         InitializeComponent();
         LocalizedContentView.SubscribePreferences(this, ApplyLocalization);
         ApplyLocalization();
-        VisualElementPressFeedback.AttachToTemplateRoot(this, new PressFeedbackOptions { HapticOnRelease = true });
         Loaded += OnLoaded;
     }
 

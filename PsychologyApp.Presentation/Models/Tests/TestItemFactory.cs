@@ -17,19 +17,20 @@ public static class TestItemFactory
             Description = definition.Description,
             Comment = definition.Comment,
             Algorithm = definition.Algorithm.ToList(),
-            Action = CreateStartAction(definition, navigationService)
+            MetaText = BuildMetaText(definition),
+            StartAsync = CreateStartAction(definition, navigationService)
         };
 
         return item;
     }
 
-    private static Action CreateStartAction(TestDefinition definition, INavigationService navigationService) =>
+    private static Func<Task> CreateStartAction(TestDefinition definition, INavigationService navigationService) =>
         definition.Kind switch
         {
-            TestKind.LuscherStandard => () => navigationService.GoToStandardTestAsync().FireAndForget(),
-            TestKind.LuscherBrief => () => navigationService.GoToAlternativeTestAsync().FireAndForget(),
-            TestKind.Questionnaire => () => StartQuestionnaireAsync(definition, navigationService).FireAndForget(),
-            _ => () => { }
+            TestKind.LuscherStandard => () => navigationService.GoToStandardTestAsync(),
+            TestKind.LuscherBrief => () => navigationService.GoToAlternativeTestAsync(),
+            TestKind.Questionnaire => () => StartQuestionnaireAsync(definition, navigationService),
+            _ => () => Task.CompletedTask
         };
 
     private static Task StartQuestionnaireAsync(TestDefinition definition, INavigationService navigationService)
@@ -52,6 +53,28 @@ public static class TestItemFactory
             analyzer,
             definition.SingleAnswer,
             new TestSessionInfo { TestId = definition.TestId, AnalyzerId = definition.AnalyzerId });
+    }
+
+    private static string? BuildMetaText(TestDefinition definition)
+    {
+        List<string> parts = [];
+
+        if (definition.EstimatedMinutes is int minutes and > 0)
+        {
+            parts.Add(AppStrings.TestDuration(minutes));
+        }
+
+        if (definition.QuestionCount is int count and > 0)
+        {
+            parts.Add(AppStrings.TestQuestionCount(count));
+        }
+
+        if (!string.IsNullOrWhiteSpace(definition.Construct))
+        {
+            parts.Add(definition.Construct);
+        }
+
+        return parts.Count == 0 ? null : string.Join(" · ", parts);
     }
 
     private static List<Question> CloneQuestions(IReadOnlyList<Question> source) =>

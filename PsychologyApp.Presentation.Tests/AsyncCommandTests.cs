@@ -31,4 +31,40 @@ public sealed class AsyncCommandTests
 
         Assert.False(command.CanExecute(null));
     }
+
+    [Fact]
+    public async Task Execute_IgnoresConcurrentInvocations()
+    {
+        int executions = 0;
+        var gate = new TaskCompletionSource();
+        var command = new AsyncCommand(async () =>
+        {
+            executions++;
+            await gate.Task;
+        });
+
+        command.Execute(null);
+        command.Execute(null);
+        gate.SetResult();
+        await Task.Delay(50);
+
+        Assert.Equal(1, executions);
+    }
+
+    [Fact]
+    public async Task Execute_IgnoresRapidRepeatAfterFastCompletion()
+    {
+        int executions = 0;
+        var command = new AsyncCommand(() =>
+        {
+            executions++;
+            return Task.CompletedTask;
+        });
+
+        command.Execute(null);
+        command.Execute(null);
+        await Task.Delay(50);
+
+        Assert.Equal(1, executions);
+    }
 }

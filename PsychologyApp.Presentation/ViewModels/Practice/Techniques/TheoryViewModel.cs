@@ -9,9 +9,13 @@ public class TheoryViewModel : BaseViewModel
 {
     private readonly TechniqueId? _techniqueId;
     private string text = string.Empty;
+    private IReadOnlyList<TheorySection> sections = [];
 
     public string PageTitle => AppStrings.TechniqueTheory;
     public string BackText => AppStrings.Back;
+    public bool HasSections => sections.Count > 0;
+    public bool HasLegacyText => !HasSections && !string.IsNullOrWhiteSpace(Text);
+    public IReadOnlyList<TheorySection> Sections => sections;
 
     public TheoryViewModel() { }
 
@@ -22,7 +26,7 @@ public class TheoryViewModel : BaseViewModel
         PageName = AppStrings.TechniqueTheory;
 
         BindNavigation(navigation, navigationService);
-        Text = content;
+        ApplyContent(content, techniqueId);
     }
 
     protected override void RefreshLocalizedProperties()
@@ -31,8 +35,28 @@ public class TheoryViewModel : BaseViewModel
 
         if (_techniqueId is TechniqueId techniqueId)
         {
-            Text = TechniqueCatalog.Get(techniqueId).TheoryInfo;
+            ApplyContent(TechniqueCatalog.Get(techniqueId).TheoryInfo, techniqueId);
         }
+    }
+
+    private void ApplyContent(string content, TechniqueId? techniqueId)
+    {
+        if (techniqueId is TechniqueId id)
+        {
+            TechniqueDefinition definition = TechniqueCatalog.Get(id);
+            sections = definition.TheorySections ?? [];
+            Text = sections.Count > 0 ? string.Empty : definition.TheoryInfo;
+        }
+        else
+        {
+            sections = [];
+            Text = content;
+        }
+
+        OnPropertyChanged(nameof(Sections));
+        OnPropertyChanged(nameof(HasSections));
+        OnPropertyChanged(nameof(HasLegacyText));
+        OnPropertyChanged(nameof(Text));
     }
 
     public string Text
@@ -44,6 +68,7 @@ public class TheoryViewModel : BaseViewModel
             {
                 text = value;
                 OnPropertyChanged(nameof(Text));
+                OnPropertyChanged(nameof(HasLegacyText));
             }
         }
     }

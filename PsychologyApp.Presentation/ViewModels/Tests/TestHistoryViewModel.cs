@@ -120,6 +120,6 @@ public sealed class TestHistoryViewModel : BaseViewModel
 
         TestItem item = TestItemFactory.Create(definition, _navigationService);
         await _navigationService.GoToRootAsync();
-        item.Action.Invoke();
+        await item.StartAsync();
     }
 }

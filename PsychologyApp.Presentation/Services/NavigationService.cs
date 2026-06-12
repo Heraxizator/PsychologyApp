@@ -21,14 +21,20 @@ public interface INavigationService
     Task GoToSettingsAsync();
     Task GoToPhysicsSearchAsync();
     Task GoToTheoryAsync(string content, TechniqueId? techniqueId = null);
-    Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Action action, string? testId = null);
+    Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Func<Task> startTest, string? testId = null);
     Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null);
     Task GoToLuscherTestAsync(LuscherMode mode);
     Task GoToStandardTestAsync();
     Task GoToAlternativeTestAsync();
     Task GoToTestHistoryAsync(string testId, string testTitle);
     Task GoToTestsListAsync();
-    Task GoToTestResultAsync(int score, string interpretation, TechniqueId? recommendedTechnique = null, string? testId = null);
+    Task GoToTestResultAsync(
+        int score,
+        string interpretation,
+        TechniqueId? recommendedTechnique = null,
+        string? testId = null,
+        string? interpretationDetail = null,
+        string? analyzerId = null);
     Task GoToTestsTabAsync();
     Task GoToQuotesTabAsync();
     Task ShowOnboardingAsync();
@@ -42,56 +48,57 @@ public sealed class MauiNavigationService(
     public INavigation Navigation => navigation;
 
     public Task GoBackAsync() =>
-        navigation.PopAsync(true);
+        NavigationCoordinator.RunAsync(() => navigation.PopAsync(true));
 
     public Task GoToRootAsync() =>
-        navigation.PopToRootAsync(true);
+        NavigationCoordinator.RunAsync(() => navigation.PopToRootAsync(true));
 
     public Task GoToTechniqueAsync(TechniqueId techniqueId) =>
-        navigation.PushAsync(pageFactory.CreateTechniqueSessionPage(techniqueId), true);
+        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateTechniqueSessionPage(techniqueId), true));
 
     public Task GoToCreatedAsync(long techniqueId) =>
-        navigation.PushAsync(pageFactory.CreateCreatedPage(techniqueId), false);
+        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateCreatedPage(techniqueId), false));
 
     public Task GoToDesignerAsync(long techniqueId) =>
-        navigation.PushAsync(pageFactory.CreateDesignerPage(techniqueId), false);
+        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateDesignerPage(techniqueId), false));
 
     public Task GoToUserProfileAsync() =>
-        navigation.PushAsync(pageFactory.CreateUserPage(), true);
+        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateUserPage(), true));
 
     public Task GoToOptionsAsync() =>
-        navigation.PushAsync(pageFactory.CreateOptionsPage(), false);
+        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateOptionsPage(), false));
 
     public Task GoToInfoAsync() =>
-        navigation.PushAsync(pageFactory.CreateInfoPage(), false);
+        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateInfoPage(), false));
 
     public Task GoToDonateAsync() =>
-        navigation.PushAsync(pageFactory.CreateDonatePage(navigation), false);
+        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateDonatePage(navigation), false));
 
     public Task GoToFormAsync() =>
-        navigation.PushAsync(pageFactory.CreateFormPage(), false);
+        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateFormPage(), false));
 
     public Task GoToSettingsAsync() =>
-        navigation.PushAsync(pageFactory.CreateSettingsPage(), false);
+        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateSettingsPage(), false));
 
     public Task GoToPhysicsSearchAsync() =>
-        navigation.PushAsync(pageFactory.CreatePhysicsSearchPage(), false);
+        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreatePhysicsSearchPage(), false));
 
     public Task GoToTheoryAsync(string content, TechniqueId? techniqueId = null) =>
-        navigation.PushAsync(pageFactory.CreateTheoryPage(content, techniqueId), false);
+        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateTheoryPage(content, techniqueId), false));
 
-    public Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Action action, string? testId = null) =>
-        navigation.PushAsync(pageFactory.CreateFindProblemPage(description, algorithm, comment, action, testId), false);
+    public Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Func<Task> startTest, string? testId = null) =>
+        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateFindProblemPage(description, algorithm, comment, startTest, testId), false));
 
     public Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null) =>
-        navigation.PushAsync(pageFactory.CreateQuestionPage(questions, scoreAnalyzer, singleAnswer, session), true);
+        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateQuestionPage(questions, scoreAnalyzer, singleAnswer, session), true));
 
-    public Task GoToLuscherTestAsync(LuscherMode mode) => mode switch
-    {
-        LuscherMode.Standard => navigation.PushAsync(pageFactory.CreateStandardTestPage(), false),
-        LuscherMode.Brief => navigation.PushAsync(pageFactory.CreateAlternativeTestPage(), false),
-        _ => navigation.PushAsync(pageFactory.CreateAlternativeTestPage(), false)
-    };
+    public Task GoToLuscherTestAsync(LuscherMode mode) =>
+        NavigationCoordinator.RunAsync(() => mode switch
+        {
+            LuscherMode.Standard => navigation.PushAsync(pageFactory.CreateStandardTestPage(), false),
+            LuscherMode.Brief => navigation.PushAsync(pageFactory.CreateAlternativeTestPage(), false),
+            _ => navigation.PushAsync(pageFactory.CreateAlternativeTestPage(), false)
+        });
 
     public Task GoToStandardTestAsync() =>
         GoToLuscherTestAsync(LuscherMode.Standard);
@@ -100,46 +107,56 @@ public sealed class MauiNavigationService(
         GoToLuscherTestAsync(LuscherMode.Brief);
 
     public Task GoToTestHistoryAsync(string testId, string testTitle) =>
-        navigation.PushAsync(pageFactory.CreateTestHistoryPage(testId, testTitle), true);
+        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateTestHistoryPage(testId, testTitle), true));
 
     public Task GoToTestsListAsync() =>
-        navigation.PushAsync(pageFactory.CreateTestsListPage(), true);
+        NavigationCoordinator.RunAsync(() => navigation.PushAsync(pageFactory.CreateTestsListPage(), true));
 
-    public Task GoToTestResultAsync(int score, string interpretation, TechniqueId? recommendedTechnique = null, string? testId = null) =>
-        navigation.PushAsync(
+    public Task GoToTestResultAsync(
+        int score,
+        string interpretation,
+        TechniqueId? recommendedTechnique = null,
+        string? testId = null,
+        string? interpretationDetail = null,
+        string? analyzerId = null) =>
+        NavigationCoordinator.RunAsync(() => navigation.PushAsync(
             pageFactory.CreateTestResultPage(new TestResultInfo
             {
                 Score = score,
                 Interpretation = interpretation,
+                InterpretationDetail = interpretationDetail,
+                AnalyzerId = analyzerId,
                 RecommendedTechnique = recommendedTechnique,
                 TestId = testId
             }),
-            true);
+            true));
 
-    public Task GoToTestsTabAsync()
-    {
-        if (Microsoft.Maui.Controls.Shell.Current is AppShell appShell)
+    public Task GoToTestsTabAsync() =>
+        NavigationCoordinator.RunAsync(() =>
         {
-            appShell.MaterializeTab(appShell.TestsTab);
-            appShell.CurrentItem = appShell.TestsTab;
-        }
+            if (Microsoft.Maui.Controls.Shell.Current is AppShell appShell)
+            {
+                appShell.MaterializeTab(appShell.TestsTab);
+                appShell.CurrentItem = appShell.TestsTab;
+            }
 
-        return Task.CompletedTask;
-    }
+            return Task.CompletedTask;
+        });
 
-    public Task GoToQuotesTabAsync()
-    {
-        if (Microsoft.Maui.Controls.Shell.Current is AppShell appShell)
+    public Task GoToQuotesTabAsync() =>
+        NavigationCoordinator.RunAsync(() =>
         {
-            appShell.MaterializeTab(appShell.QuotesTab);
-            appShell.CurrentItem = appShell.QuotesTab;
-        }
+            if (Microsoft.Maui.Controls.Shell.Current is AppShell appShell)
+            {
+                appShell.MaterializeTab(appShell.QuotesTab);
+                appShell.CurrentItem = appShell.QuotesTab;
+            }
 
-        return Task.CompletedTask;
-    }
+            return Task.CompletedTask;
+        });
 
     public Task ShowOnboardingAsync() =>
-        shellStartupCoordinator.ShowOnboardingAsync(
+        NavigationCoordinator.RunAsync(() => shellStartupCoordinator.ShowOnboardingAsync(
             navigation,
             techniqueId =>
             {
@@ -149,6 +166,6 @@ public sealed class MauiNavigationService(
                 }
 
                 return GoToTechniqueAsync(techniqueId.Value);
-            });
+            }));
 }
 

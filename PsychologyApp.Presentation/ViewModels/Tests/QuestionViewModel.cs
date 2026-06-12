@@ -77,11 +77,21 @@ public class QuestionViewModel : BaseViewModel
         string interpretation = ConfigureResultByBalls(questionBalls);
         await SaveResultAsync(questionBalls, interpretation);
 
-        TechniqueId? recommended = _session?.AnalyzerId is string analyzerId
+        string? analyzerId = _session?.AnalyzerId;
+        TechniqueId? recommended = analyzerId is not null
             ? TestScoreAnalyzers.RecommendTechnique(analyzerId, questionBalls)
             : null;
+        string? interpretationDetail = analyzerId is not null
+            ? TestScoreAnalyzers.ResolveDetail(analyzerId)?.Invoke(questionBalls)
+            : null;
 
-        await _navigationService.GoToTestResultAsync(questionBalls, interpretation, recommended, _session?.TestId);
+        await _navigationService.GoToTestResultAsync(
+            questionBalls,
+            interpretation,
+            recommended,
+            _session?.TestId,
+            interpretationDetail,
+            analyzerId);
     }
 
     private async Task SaveResultAsync(int score, string summary)

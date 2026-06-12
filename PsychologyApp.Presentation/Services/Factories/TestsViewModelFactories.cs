@@ -126,7 +126,7 @@ public interface IFindProblemViewModelFactory
         string? description,
         List<string> algorithm,
         string? comment,
-        Action action,
+        Func<Task> startTest,
         string? testId = null);
 }
 
@@ -139,7 +139,7 @@ public sealed class FindProblemViewModelFactory(
         string? description,
         List<string> algorithm,
         string? comment,
-        Action action,
+        Func<Task> startTest,
         string? testId = null) =>
         new(
             navigation,
@@ -148,7 +148,7 @@ public sealed class FindProblemViewModelFactory(
             description,
             algorithm,
             comment,
-            action,
+            startTest,
             testId);
 }
 

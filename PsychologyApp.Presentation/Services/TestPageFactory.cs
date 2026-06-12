@@ -1,7 +1,6 @@
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Models.Tests;
 using PsychologyApp.Presentation.Services.Factories;
-using PsychologyApp.Presentation.Models.Tests;
 using PsychologyApp.Presentation.Views.Practice.Techniques;
 using PsychologyApp.Presentation.Views.Tests;
 
@@ -12,7 +11,7 @@ public interface ITestPageFactory
     TestsListPage CreateTestsListPage();
     TestHistoryPage CreateTestHistoryPage(string testId, string testTitle);
     TheoryPage CreateTheoryPage(string content, TechniqueId? techniqueId = null);
-    FindProblemPage CreateFindProblemPage(string? description, List<string> algorithm, string? comment, Action action, string? testId = null);
+    FindProblemPage CreateFindProblemPage(string? description, List<string> algorithm, string? comment, Func<Task> startTest, string? testId = null);
     QuestionPage CreateQuestionPage(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null);
     StandardTestPage CreateStandardTestPage();
     AlternativeTestPage CreateAlternativeTestPage();
@@ -38,8 +37,8 @@ public sealed class TestPageFactory(
     public TheoryPage CreateTheoryPage(string content, TechniqueId? techniqueId = null) =>
         new(theoryViewModelFactory, content, techniqueId);
 
-    public FindProblemPage CreateFindProblemPage(string? description, List<string> algorithm, string? comment, Action action, string? testId = null) =>
-        new(findProblemViewModelFactory, description, algorithm, comment, action, testId);
+    public FindProblemPage CreateFindProblemPage(string? description, List<string> algorithm, string? comment, Func<Task> startTest, string? testId = null) =>
+        new(findProblemViewModelFactory, description, algorithm, comment, startTest, testId);
 
     public QuestionPage CreateQuestionPage(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null) =>
         new(questionViewModelFactory, questions, scoreAnalyzer, singleAnswer, session);

@@ -20,13 +20,13 @@
         <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
             <Border
                 Grid.Column="0"
-                WidthRequest="40"
-                HeightRequest="40"
+                WidthRequest="52"
+                HeightRequest="52"
                 StrokeThickness="0"
                 BackgroundColor="{DynamicResource PrimaryTint}"
                 VerticalOptions="Center">
                 <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="20" />
+                    <RoundRectangle CornerRadius="12" />
                 </Border.StrokeShape>
                 <Label
                     x:Name="PlayIcon"
@@ -41,12 +41,14 @@
                 VerticalOptions="Center">
                 <Label
                     Text="{Binding Title, Source={x:Reference Root}}"
-                    Style="{StaticResource BodyStyle}"
-                    FontFamily="{StaticResource SemiBoldFontFamily}" />
+                    Style="{StaticResource ListRowTitleStyle}"
+                    MaxLines="2"
+                    LineBreakMode="TailTruncation" />
                 <Label
                     Text="{Binding Subtitle, Source={x:Reference Root}}"
                     Style="{StaticResource CaptionStyle}"
-                    MaxLines="2" />
+                    MaxLines="2"
+                    LineBreakMode="TailTruncation" />
                 <Label
                     IsVisible="{Binding ShowOfflineBadge, Source={x:Reference Root}}"
                     Text="{Binding OfflineBadgeText, Source={x:Reference Root}}"

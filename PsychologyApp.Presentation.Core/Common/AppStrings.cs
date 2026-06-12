@@ -222,6 +222,11 @@ public static class AppStrings
     public static string TestsResultRecommendationHint => T(
         "На основе результата мы подобрали практику, которая может помочь",
         "Based on your result, we picked a practice that may help");
+    public static string TestDuration(int minutes) => T($"~{minutes} мин", $"~{minutes} min");
+    public static string TestQuestionCount(int count) => T($"{count} вопр.", $"{count} questions");
+    public static string TestRecommendationFor(string techniqueTitle) =>
+        T($"Рекомендуем: {techniqueTitle}", $"Recommended: {techniqueTitle}");
+    public static string TestRecommendationReason(string reason) => reason;
     public static string TestsContinueButton => T("Продолжить", "Continue");
     public static string TestsCoLabel => T("Суммарное отклонение от аутогенной нормы (СО)", "Total deviation from autogenic norm (CO)");
     public static string TestsBkLabel => T("Вегетативный коэффициент (ВК)", "Vegetative coefficient (VC)");
@@ -259,6 +264,13 @@ public static class AppStrings
     public static string TodayForYou => T("Сегодня для вас", "Today for you");
     public static string TodayRecommended => T("Рекомендуемая практика", "Recommended practice");
     public static string TodayStartPractice => T("Начать", "Start");
+    public static string TodayRecommendationReason(string concern) => concern switch
+    {
+        "anxiety" => T("Подходит при тревоге", "Good for anxiety"),
+        "body" => T("Для работы с телом и симптомами", "For body and symptoms"),
+        "mood" => T("Помогает при тяжёлом настроении", "Helps when mood is low"),
+        _ => T("Практика дня", "Practice of the day")
+    };
     public static string TodayMoodQuestion => T("Как настроение?", "How are you feeling?");
     public static string TodayMoodSaved => T("Настроение сохранено", "Mood saved");
     public static string TodayMoodLine(int level, int max) =>
@@ -304,6 +316,11 @@ public static class AppStrings
     };
     public static string TechniqueContinueBadge => T("Продолжить", "Continue");
     public static string TechniqueLastPractice(string date) => T($"Последняя практика: {date}", $"Last practice: {date}");
+    public static string TechniqueNotTriedYet => T("Не пробовали", "Not tried yet");
+    public static string TechniqueDuration(int minutes) => T($"~{minutes} мин", $"~{minutes} min");
+    public static string TechniqueMetaLine(string duration, string theme) => T($"{duration} · {theme}", $"{duration} · {theme}");
+    public static string TechniqueRatingValue(int value) => T($"Оценка: {value} из 10", $"Rating: {value} of 10");
+    public static string TechniqueRatingNegValue(int value) => T($"Оценка: {value} (от −10 до 10)", $"Rating: {value} (from −10 to 10)");
 
     public static string TestLastResult(string summary) => T($"Последний результат: {summary}", $"Last result: {summary}");
     public static string TestTryTechnique => T("Попробовать технику", "Try a technique");
@@ -396,15 +413,52 @@ public static class AppStrings
         _ => T("30-63 – тяжелая депрессия", "30-63 - severe depression")
     };
 
+    public static string BeckScoreDetail(int ball) => ball switch
+    {
+        <= 9 => T(
+            "Симптомы в пределах нормы. Поддерживайте режим сна и регулярную активность.",
+            "Symptoms are within normal range. Keep sleep and regular activity."),
+        <= 15 => T(
+            "Лёгкое снижение настроения. Помогают прогулки, дневник мыслей и короткие практики.",
+            "Mild low mood. Walks, thought journaling, and short practices can help."),
+        <= 19 => T(
+            "Умеренная депрессия. Имеет смысл обсудить состояние со специалистом и добавить ежедневные практики.",
+            "Moderate depression. Consider talking to a professional and daily practices."),
+        <= 29 => T(
+            "Выраженные симптомы. Рекомендуем обратиться к психологу или врачу и не оставаться с этим наедине.",
+            "Marked symptoms. Please consult a psychologist or doctor and seek support."),
+        _ => T(
+            "Тяжёлая депрессия. Важно как можно скорее получить профессиональную помощь.",
+            "Severe depression. Professional help is strongly recommended.")
+    };
+
     public static string HeckHessScore(int ball) =>
         ball <= 24
             ? T("0-24 - невысокий уровень невротизации", "0-24 - low neuroticism")
             : T("25-40 - высокий уровень невротизации", "25-40 - high neuroticism");
 
+    public static string HeckHessScoreDetail(int ball) =>
+        ball <= 24
+            ? T(
+                "Эмоциональная реактивность в пределах нормы. Продолжайте отслеживать стресс и отдых.",
+                "Emotional reactivity is within normal range. Keep monitoring stress and rest.")
+            : T(
+                "Повышенная невротизация. Практики на баланс противоположностей и сравнение важностей могут снизить напряжение.",
+                "Elevated neuroticism. Polarity and importance-comparison practices may ease tension.");
+
     public static string HaerScore(int ball) =>
         ball <= 29
             ? T("0-28 - невысокий уровень психопатии", "0-28 - low psychopathy")
             : T("29-40 - высокий уровень психопатии", "29-40 - high psychopathy");
+
+    public static string HaerScoreDetail(int ball) =>
+        ball <= 29
+            ? T(
+                "Показатель в низком диапазоне. Это скрининг, а не диагноз — ориентируйтесь на самочувствие.",
+                "Score is in the low range. This is a screening tool, not a diagnosis.")
+            : T(
+                "Повышенные показатели. Полезно работать с прошлым опытом и переосмыслением убеждений.",
+                "Elevated score. Working with past experience and beliefs may help.");
 
     public static string PochebutScore(int ball) => ball switch
     {
@@ -412,6 +466,39 @@ public static class AppStrings
         <= 24 => T("11-24 - средний уровень агрессивности", "11-24 - moderate aggressiveness"),
         _ => T("25-40 - высокий уровень агрессивности", "25-40 - high aggressiveness")
     };
+
+    public static string PochebutScoreDetail(int ball) => ball switch
+    {
+        <= 10 => T(
+            "Агрессивные реакции редки. Сохраняйте навыки саморегуляции.",
+            "Aggressive reactions are rare. Keep your self-regulation habits."),
+        <= 24 => T(
+            "Умеренная агрессивность. Помогает пауза, дыхание и переформулировка ситуации.",
+            "Moderate aggressiveness. Pause, breathing, and reframing the situation help."),
+        _ => T(
+            "Высокая агрессивность. Практики на снижение важности и дистанцирование от триггера особенно уместны.",
+            "High aggressiveness. Practices that lower importance and add distance from triggers are especially useful.")
+    };
+
+    public static string TestRecommendationReasonBeck(int score) =>
+        score >= 10
+            ? T("При депрессивных симптомах «Крутилка» помогает снизить заряд болезненных воспоминаний.", "For depressive symptoms, Spin helps lower the charge of painful memories.")
+            : T("Для профилактики полезно выгружать мысли на бумагу.", "For prevention, writing thoughts on paper is helpful.");
+
+    public static string TestRecommendationReasonHeckHess(int score) =>
+        score >= 25
+            ? T("При высокой невротизации полярности помогают увидеть обе стороны ситуации.", "With high neuroticism, polarities help see both sides.")
+            : T("Сравнение важностей укрепляет ощущение перспективы.", "Comparing importance strengthens perspective.");
+
+    public static string TestRecommendationReasonHaer(int score) =>
+        score >= 29
+            ? T("«50 лет спустя» отдаляет проблему во времени.", "\"50 years later\" moves the problem forward in time.")
+            : T("Модификация опыта помогает пересмотреть убеждения.", "Experience modification helps revisit beliefs.");
+
+    public static string TestRecommendationReasonPochebut(int score) =>
+        score >= 25
+            ? T("«Уменьши это» визуально снижает значимость триггера.", "\"Shrink it\" visually lowers the trigger's importance.")
+            : T("«Проверь это» помогает отпустить зацикленную мысль.", "\"Check it\" helps release a looping thought.");
 
     private static string T(string russian, string english) =>
         IsEnglish(Language) ? english : russian;

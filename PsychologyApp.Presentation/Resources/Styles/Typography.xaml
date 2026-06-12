@@ -20,6 +20,8 @@
     <Thickness x:Key="LayoutPageMarginThickness">20,0,20,20</Thickness>
     <Thickness x:Key="LayoutTabPageMarginThickness">20,20,20,20</Thickness>
     <Thickness x:Key="LayoutEmptyPaddingThickness">20</Thickness>
+    <system:Double x:Key="ListItemSpacing">4</system:Double>
+    <Thickness x:Key="ListEntryPadding">12</Thickness>
     <x:String x:Key="BodyFontFamily">InterRegular</x:String>
     <x:String x:Key="MediumFontFamily">InterMedium</x:String>
     <x:String x:Key="SemiBoldFontFamily">InterSemiBold</x:String>
@@ -51,6 +53,17 @@
         <Setter Property="FontSize" Value="{DynamicResource CaptionFontSize}" />
         <Setter Property="FontFamily" Value="{DynamicResource BodyFontFamily}" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+    </Style>
+
+    <Style x:Key="ListRowTitleStyle" TargetType="Label" BasedOn="{StaticResource BodyStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource SemiBoldFontFamily}" />
+    </Style>
+
+    <Style x:Key="NavActionLabelStyle" TargetType="Label" BasedOn="{StaticResource BodyStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource MediumFontFamily}" />
+        <Setter Property="TextColor" Value="{DynamicResource Primary}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="End" />
     </Style>
 
     <Style x:Key="NavTitleStyle" TargetType="Label">

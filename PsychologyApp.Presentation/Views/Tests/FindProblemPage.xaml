@@ -9,16 +9,20 @@
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
-    <StackLayout VerticalOptions="FillAndExpand">
-        <StackLayout.Behaviors>
+    <Grid RowDefinitions="Auto,*,Auto" VerticalOptions="Fill">
+        <Grid.Behaviors>
             <behaviors:StaggerChildrenBehavior />
-        </StackLayout.Behaviors>
+        </Grid.Behaviors>
+
         <ui:NavigationBarSimpleView
+            Grid.Row="0"
             TitleText="{Binding PageTitle}"
             BackCommand="{Binding BackCommand}" />
 
-        <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
-            <StackLayout Margin="20,0,20,20" Spacing="20">
+        <ScrollView
+            Grid.Row="1"
+            VerticalScrollBarVisibility="Default">
+            <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
                 <ui:TextBoxView
                     HeaderText="{Binding DescriptionHeader}"
                     BodyText="{Binding DescriptionText}" />
@@ -41,12 +45,13 @@
                 <ui:TextBoxView
                     HeaderText="{Binding NoteHeader}"
                     BodyText="{Binding CommentText}" />
-
-                <ui:ButtonView
-                    Margin="0,5,0,0"
-                    BodyText="{Binding StartButtonText}"
-                    TapCommand="{Binding Continue}" />
-            </StackLayout>
+            </VerticalStackLayout>
         </ScrollView>
-    </StackLayout>
+
+        <ui:ButtonView
+            Grid.Row="2"
+            Margin="{StaticResource LayoutPageMarginThickness}"
+            BodyText="{Binding StartButtonText}"
+            TapCommand="{Binding Continue}" />
+    </Grid>
 </ContentPage>

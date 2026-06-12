@@ -4,14 +4,14 @@
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              x:Class="PsychologyApp.Presentation.UI.Components.QuoteCardView"
              x:Name="Root">
-    <Border Style="{StaticResource ListCardItemStyle}">
-        <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
+    <Border Style="{StaticResource QuoteListCardStyle}">
+        <VerticalStackLayout Spacing="8">
             <Label
                 HorizontalTextAlignment="Justify"
                 Style="{StaticResource BodyStyle}"
                 Text="{Binding Text, Source={x:Reference Root}}" />
             <Label
-                Style="{StaticResource SectionTitleStyle}"
+                Style="{StaticResource ListRowTitleStyle}"
                 HorizontalTextAlignment="Center"
                 Text="{Binding Author, Source={x:Reference Root}}">
                 <Label.Triggers>

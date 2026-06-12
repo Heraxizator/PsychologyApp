@@ -9,10 +9,10 @@ public partial class FindProblemPage : ContentPage
         string? description,
         List<string> algorithm,
         string? comment,
-        Action action,
+        Func<Task> startTest,
         string? testId = null)
     {
         InitializeComponent();
-        BindingContext = findProblemViewModelFactory.Create(Navigation, description, algorithm, comment, action, testId);
+        BindingContext = findProblemViewModelFactory.Create(Navigation, description, algorithm, comment, startTest, testId);
     }
 }

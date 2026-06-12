@@ -41,10 +41,11 @@
                         HorizontalTextAlignment="Center"
                         Style="{StaticResource BodyStyle}"
                         Text="{Binding NoPrayersFoundText}"
+                        Padding="{StaticResource LayoutEmptyPaddingThickness}"
                         IsVisible="{Binding IsSearchEmptyVisible}" />
                 </CollectionView.EmptyView>
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="4" />
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="clean:Audio">
@@ -75,7 +76,7 @@
                 Margin="0,8,0,0"
                 IsVisible="{Binding HasActiveTrack}"
                 Style="{StaticResource BrandCardStyle}"
-                Padding="10">
+                Padding="{StaticResource ListEntryPadding}">
                 <VerticalStackLayout Spacing="4">
                     <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                         <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">

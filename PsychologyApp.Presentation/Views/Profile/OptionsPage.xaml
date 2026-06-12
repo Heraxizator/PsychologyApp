@@ -9,16 +9,16 @@
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
-    <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
-        <StackLayout.Behaviors>
+    <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+        <VerticalStackLayout.Behaviors>
             <behaviors:StaggerChildrenBehavior />
-        </StackLayout.Behaviors>
+        </VerticalStackLayout.Behaviors>
         <ui:NavigationBarSimpleView
             TitleText="{Binding PageTitle}"
             BackCommand="{Binding BackCommand}" />
 
         <ScrollView VerticalScrollBarVisibility="Never">
-            <StackLayout Spacing="{StaticResource LayoutSpacing}">
+            <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
                 <ui:SettingsLinkCardView
                     Title="{Binding SettingsTitle}"
                     Subtitle="{Binding SettingsSubtitle}"
@@ -54,7 +54,7 @@
                         <behaviors:ListItemRevealBehavior RevealIndex="3" />
                     </ui:SettingsLinkCardView.Behaviors>
                 </ui:SettingsLinkCardView>
-            </StackLayout>
+            </VerticalStackLayout>
         </ScrollView>
-    </StackLayout>
+    </VerticalStackLayout>
 </ContentPage>

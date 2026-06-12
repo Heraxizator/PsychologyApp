@@ -20,10 +20,10 @@ public partial class FindProblemViewModel : BaseViewModel
     public string NoteHeader => AppStrings.TestsNoteHeader;
     public string StartButtonText => AppStrings.TestsStartButton;
 
-    private readonly INavigationService _navigationService;
-    private readonly ITestCatalogService _testCatalogService;
+    private readonly INavigationService _navigationService = null!;
+    private readonly ITestCatalogService _testCatalogService = null!;
     private readonly string? _testId;
-    private readonly Action _nextPageTappedAction = default!;
+    private readonly Func<Task> _startTestAsync = () => Task.CompletedTask;
 
     public FindProblemViewModel() { }
 
@@ -34,7 +34,7 @@ public partial class FindProblemViewModel : BaseViewModel
         string? description,
         List<string> algorithm,
         string? comment,
-        Action action,
+        Func<Task> startTest,
         string? testId = null)
     {
         _navigationService = navigationService;
@@ -49,13 +49,9 @@ public partial class FindProblemViewModel : BaseViewModel
         InitAlgorithmRows(algorithm);
         CommentText = comment;
 
-        _nextPageTappedAction = action;
+        _startTestAsync = startTest;
 
-        Continue = new AsyncCommand(() =>
-        {
-            ToContinue();
-            return Task.CompletedTask;
-        });
+        Continue = new AsyncCommand(_startTestAsync);
         BackCommand = new AsyncCommand(GoToRootAsync);
     }
 
@@ -80,8 +76,6 @@ public partial class FindProblemViewModel : BaseViewModel
             AlgorithmRows.Add(new AlgorithmRow { Text = algorithmRow });
         }
     }
-
-    public void ToContinue() => _nextPageTappedAction.Invoke();
 
     private string? _descriptionText;
     public string? DescriptionText

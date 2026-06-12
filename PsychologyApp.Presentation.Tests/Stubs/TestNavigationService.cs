@@ -34,7 +34,7 @@ public class TestNavigationService(INavigation navigation) : INavigationService
 
     public Task GoToTheoryAsync(string content, TechniqueId? techniqueId = null) => Task.CompletedTask;
 
-    public Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Action action, string? testId = null) =>
+    public Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Func<Task> startTest, string? testId = null) =>
         Task.CompletedTask;
 
     public virtual Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null) =>
@@ -50,7 +50,13 @@ public class TestNavigationService(INavigation navigation) : INavigationService
 
     public Task GoToTestsListAsync() => Task.CompletedTask;
 
-    public virtual Task GoToTestResultAsync(int score, string interpretation, TechniqueId? recommendedTechnique = null) =>
+    public virtual Task GoToTestResultAsync(
+        int score,
+        string interpretation,
+        TechniqueId? recommendedTechnique = null,
+        string? testId = null,
+        string? interpretationDetail = null,
+        string? analyzerId = null) =>
         Task.CompletedTask;
 
     public Task GoToTestsTabAsync() => Task.CompletedTask;

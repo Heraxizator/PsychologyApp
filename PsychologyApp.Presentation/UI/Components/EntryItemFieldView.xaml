@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             x:Class="PsychologyApp.Presentation.UI.Components.EntryItemFieldView"
+             x:Name="Root">
+
+    <Grid>
+        <ui:TextEntryView
+            IsVisible="{Binding IsTextField, Source={x:Reference Root}}"
+            TitleText="{Binding Entry.Title, Source={x:Reference Root}}"
+            BodyText="{Binding Entry.Text, Source={x:Reference Root}, Mode=TwoWay}"
+            PlaceholderText="{Binding Entry.Placeholder, Source={x:Reference Root}}" />
+        <ui:RatingEntryView
+            IsVisible="{Binding IsRatingField, Source={x:Reference Root}}"
+            TitleText="{Binding Entry.Title, Source={x:Reference Root}}"
+            BodyText="{Binding Entry.Text, Source={x:Reference Root}, Mode=TwoWay}"
+            Kind="{Binding Entry.Kind, Source={x:Reference Root}}" />
+    </Grid>
+
+</ContentView>

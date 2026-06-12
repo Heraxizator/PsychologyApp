@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              x:Class="PsychologyApp.Presentation.UI.Components.SettingsLinkCardView">
 
     <ContentView.ControlTemplate>
@@ -9,10 +10,21 @@
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
                 </Border.GestureRecognizers>
-                <StackLayout Spacing="6">
-                    <Label Text="{TemplateBinding Title}" Style="{StaticResource SectionTitleStyle}" />
-                    <Label Text="{TemplateBinding Subtitle}" Style="{StaticResource BodyStyle}" />
-                </StackLayout>
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
+                        <Label Text="{TemplateBinding Title}" Style="{StaticResource SectionTitleStyle}" />
+                        <Label
+                            Text="{TemplateBinding Subtitle}"
+                            Style="{StaticResource CaptionStyle}"
+                            MaxLines="2"
+                            LineBreakMode="TailTruncation" />
+                    </VerticalStackLayout>
+                    <Label
+                        Grid.Column="1"
+                        VerticalOptions="Center"
+                        TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                        Text="{mi:Material Icon=KeyboardArrowRight}" />
+                </Grid>
             </Border>
         </ControlTemplate>
     </ContentView.ControlTemplate>

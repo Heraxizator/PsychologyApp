@@ -186,7 +186,13 @@ public sealed class QuestionViewModelTests
         public string? LastInterpretation { get; private set; }
         public TechniqueId? LastRecommendedTechnique { get; private set; }
 
-        public override Task GoToTestResultAsync(int score, string interpretation, TechniqueId? recommendedTechnique = null)
+        public override Task GoToTestResultAsync(
+            int score,
+            string interpretation,
+            TechniqueId? recommendedTechnique = null,
+            string? testId = null,
+            string? interpretationDetail = null,
+            string? analyzerId = null)
         {
             LastScore = score;
             LastInterpretation = interpretation;

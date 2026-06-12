@@ -30,12 +30,48 @@ public partial class TechniqueListCardView : ContentView
     }
 
     public static readonly BindableProperty ImageProperty =
-        BindableProperty.Create(nameof(Image), typeof(string), typeof(TechniqueListCardView), string.Empty);
+        BindableProperty.Create(nameof(Image), typeof(string), typeof(TechniqueListCardView), string.Empty, propertyChanged: OnVisualChanged);
 
     public string Image
     {
         get => (string)GetValue(ImageProperty);
         set => SetValue(ImageProperty, value);
+    }
+
+    public static readonly BindableProperty IconNameProperty =
+        BindableProperty.Create(nameof(IconName), typeof(string), typeof(TechniqueListCardView), string.Empty, propertyChanged: OnVisualChanged);
+
+    public string IconName
+    {
+        get => (string)GetValue(IconNameProperty);
+        set => SetValue(IconNameProperty, value);
+    }
+
+    public static readonly BindableProperty HasIconProperty =
+        BindableProperty.Create(nameof(HasIcon), typeof(bool), typeof(TechniqueListCardView), false);
+
+    public bool HasIcon
+    {
+        get => (bool)GetValue(HasIconProperty);
+        private set => SetValue(HasIconProperty, value);
+    }
+
+    public static readonly BindableProperty HasImageProperty =
+        BindableProperty.Create(nameof(HasImage), typeof(bool), typeof(TechniqueListCardView), false);
+
+    public bool HasImage
+    {
+        get => (bool)GetValue(HasImageProperty);
+        private set => SetValue(HasImageProperty, value);
+    }
+
+    public static readonly BindableProperty MetaTextProperty =
+        BindableProperty.Create(nameof(MetaText), typeof(string), typeof(TechniqueListCardView), string.Empty);
+
+    public string MetaText
+    {
+        get => (string)GetValue(MetaTextProperty);
+        set => SetValue(MetaTextProperty, value);
     }
 
     public static readonly BindableProperty TitleProperty =
@@ -66,12 +102,21 @@ public partial class TechniqueListCardView : ContentView
     }
 
     public static readonly BindableProperty AuthorProperty =
-        BindableProperty.Create(nameof(Author), typeof(string), typeof(TechniqueListCardView), string.Empty);
+        BindableProperty.Create(nameof(Author), typeof(string), typeof(TechniqueListCardView), string.Empty, propertyChanged: OnAuthorChanged);
 
     public string Author
     {
         get => (string)GetValue(AuthorProperty);
         set => SetValue(AuthorProperty, value);
+    }
+
+    public static readonly BindableProperty HasAuthorProperty =
+        BindableProperty.Create(nameof(HasAuthor), typeof(bool), typeof(TechniqueListCardView), false);
+
+    public bool HasAuthor
+    {
+        get => (bool)GetValue(HasAuthorProperty);
+        private set => SetValue(HasAuthorProperty, value);
     }
 
     public static readonly BindableProperty ActiveProperty =
@@ -90,5 +135,20 @@ public partial class TechniqueListCardView : ContentView
     {
         get => (ICommand?)GetValue(TapCommandProperty);
         set => SetValue(TapCommandProperty, value);
+    }
+
+    private static void OnVisualChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        var view = (TechniqueListCardView)bindable;
+        bool hasIcon = !string.IsNullOrWhiteSpace(view.IconName);
+        bool hasImage = !hasIcon && !string.IsNullOrWhiteSpace(view.Image);
+        view.HasIcon = hasIcon;
+        view.HasImage = hasImage;
+    }
+
+    private static void OnAuthorChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        var view = (TechniqueListCardView)bindable;
+        view.HasAuthor = !string.IsNullOrWhiteSpace((string)newValue);
     }
 }

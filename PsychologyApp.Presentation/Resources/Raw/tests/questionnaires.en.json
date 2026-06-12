@@ -2,7 +2,10 @@
   {
     "title": "Heck and Hess Questionnaire",
     "subtitle": "Neuroticism screening",
-    "description": "This test helps you estimate your level of neuroticism in about five minutes.",
+    "estimatedMinutes": 8,
+    "questionCount": 40,
+    "construct": "Neuroticism",
+    "description": "40 statements on emotional reactivity. Answer Yes or No about yourself.",
     "algorithm": [
       "1. You are given a list of statements.",
       "2. For each statement, answer Yes if you agree (consider it true for you) or No if you disagree."
@@ -58,7 +61,10 @@
   {
     "title": "Hare Test",
     "subtitle": "Psychopathy screening",
-    "description": "This test helps you estimate your level of psychopathy in about five minutes.",
+    "estimatedMinutes": 8,
+    "questionCount": 40,
+    "construct": "Psychopathy",
+    "description": "Screens interpersonal and behavioral patterns. Answer honestly—there are no right answers.",
     "algorithm": [
       "1. You are given a list of statements.",
       "2. For each statement, give one of the suggested answers."
@@ -114,7 +120,10 @@
   {
     "title": "L.G. Pochebut Questionnaire",
     "subtitle": "Aggressiveness screening",
-    "description": "This test helps you estimate your level of aggressiveness in about five minutes.",
+    "estimatedMinutes": 8,
+    "questionCount": 40,
+    "construct": "Aggressiveness",
+    "description": "Estimate how often aggressive reactions show up in everyday situations.",
     "algorithm": [
       "1. You are given a list of statements.",
       "2. For each statement, give one of the suggested answers."

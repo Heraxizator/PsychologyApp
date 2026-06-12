@@ -14,10 +14,7 @@
             BindableLayout.ItemsSource="{Binding BodySource, Source={x:Reference Root}}">
             <BindableLayout.ItemTemplate>
                 <DataTemplate x:DataType="ui:EntryItem">
-                    <ui:TextEntryView
-                        TitleText="{Binding Title}"
-                        BodyText="{Binding Text, Mode=TwoWay}"
-                        PlaceholderText="{Binding Placeholder}" />
+                    <ui:EntryItemFieldView Entry="{Binding .}" />
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </VerticalStackLayout>

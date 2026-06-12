@@ -7,6 +7,24 @@ namespace PsychologyApp.Presentation.Tests;
 public sealed class EntryDraftTests
 {
     [Fact]
+    public void EntryDraft_RoundTrips_rating_value()
+    {
+        var draft = new EntryDraft
+        {
+            Fields = new Dictionary<string, string>
+            {
+                ["2"] = "8"
+            }
+        };
+
+        string json = JsonSerializer.Serialize(draft);
+        EntryDraft? restored = JsonSerializer.Deserialize<EntryDraft>(json);
+
+        Assert.NotNull(restored);
+        Assert.Equal("8", restored.Fields["2"]);
+    }
+
+    [Fact]
     public void EntryDraft_RoundTripsThroughJson()
     {
         var draft = new EntryDraft

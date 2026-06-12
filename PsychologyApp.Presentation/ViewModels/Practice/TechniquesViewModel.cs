@@ -29,13 +29,7 @@ public class TechniquesViewModel : BaseViewModel
     public ICommand ConstructorTapped { get; private set; } = default!;
     public ICommand OpenProfileCommand { get; private set; } = default!;
     public ICommand StartTodayPracticeCommand { get; private set; } = default!;
-    public ICommand RecordMood1Command { get; private set; } = default!;
-    public ICommand RecordMood2Command { get; private set; } = default!;
-    public ICommand RecordMood3Command { get; private set; } = default!;
-    public ICommand RecordMood4Command { get; private set; } = default!;
-    public ICommand RecordMood5Command { get; private set; } = default!;
-
-    public ObservableRangeCollection<MoodHistoryItem> MoodHistory { get; } = [];
+    public ICommand RecordMoodCommand { get; private set; } = default!;
 
     public string PageTitle => AppStrings.PracticeHomeTitle;
     public string MyTechniquesLabel => AppStrings.PracticeMyTechniques;
@@ -45,10 +39,18 @@ public class TechniquesViewModel : BaseViewModel
     public string TodayForYouLabel => AppStrings.TodayForYou;
     public string TodayStartPracticeText => AppStrings.TodayStartPractice;
     public string TodayMoodQuestion => AppStrings.TodayMoodQuestion;
+    public string TodayReasonText { get; private set; } = string.Empty;
     public string TodayMoodDisplay { get; private set; } = string.Empty;
     public bool HasTodayMood => !string.IsNullOrWhiteSpace(TodayMoodDisplay);
-    public string MoodHistoryTitle => AppStrings.MoodHistoryTitle;
-    public bool HasMoodHistory => MoodHistory.Count > 0;
+    public string MoodHistorySummary { get; private set; } = string.Empty;
+    public bool HasMoodHistorySummary => !string.IsNullOrWhiteSpace(MoodHistorySummary);
+
+    private int _selectedMoodLevel;
+    public int SelectedMoodLevel
+    {
+        get => _selectedMoodLevel;
+        private set => SetProperty(ref _selectedMoodLevel, value);
+    }
     public string StreakDisplay => AppStrings.ProfileStreakCount(StreakDays);
     public bool HasStreak => StreakDays > 0;
     public string PracticeEmptyTitle => AppStrings.PracticeEmptyTitle;
@@ -102,11 +104,20 @@ public class TechniquesViewModel : BaseViewModel
         ConstructorTapped = new AsyncCommand(() => _navigationService.GoToDesignerAsync(-1));
         OpenProfileCommand = new AsyncCommand(() => _navigationService.GoToUserProfileAsync());
         StartTodayPracticeCommand = new AsyncCommand(() => _navigationService.GoToTechniqueAsync(_todayTechniqueId));
-        RecordMood1Command = new AsyncCommand(() => RecordMoodAsync(1));
-        RecordMood2Command = new AsyncCommand(() => RecordMoodAsync(2));
-        RecordMood3Command = new AsyncCommand(() => RecordMoodAsync(3));
-        RecordMood4Command = new AsyncCommand(() => RecordMoodAsync(4));
-        RecordMood5Command = new AsyncCommand(() => RecordMoodAsync(5));
+        RecordMoodCommand = new Command<object?>(parameter =>
+        {
+            int level = parameter switch
+            {
+                int value => value,
+                string text when int.TryParse(text, out int parsed) => parsed,
+                _ => 0
+            };
+
+            if (level is >= 1 and <= 5)
+            {
+                RecordMoodAsync(level).FireAndForget();
+            }
+        });
 
         Cancel = new Command(CancelProgress);
         Reload = new AsyncCommand(InitializeAsync);
@@ -125,12 +136,12 @@ public class TechniquesViewModel : BaseViewModel
             nameof(CreateButtonText),
             nameof(ProfileToolbarText),
             nameof(TodayForYouLabel),
-            nameof(TodayStartPracticeText),
+            nameof(TodayReasonText),
             nameof(TodayMoodQuestion),
             nameof(TodayMoodDisplay),
             nameof(HasTodayMood),
-            nameof(MoodHistoryTitle),
-            nameof(HasMoodHistory),
+            nameof(MoodHistorySummary),
+            nameof(HasMoodHistorySummary),
             nameof(StreakDisplay),
             nameof(PracticeEmptyTitle),
             nameof(PracticeEmptyBody),
@@ -206,11 +217,15 @@ public class TechniquesViewModel : BaseViewModel
         string concern = UserPreferences.Load().OnboardingConcern;
         _todayTechniqueId = OnboardingRecommendation.ResolveTechnique(concern);
         TechniqueDefinition definition = TechniqueCatalog.Get(_todayTechniqueId);
+        string durationText = AppStrings.TechniqueDuration(definition.ListDurationMinutes);
+        TodayReasonText = AppStrings.TodayRecommendationReason(concern);
         TodayTechniqueItem = new TechniqueItem
         {
             Number = definition.ListNumber,
             Date = HasStreak ? StreakDisplay : definition.ListDate,
-            Image = "method.png",
+            IconName = definition.ListIcon,
+            DurationText = durationText,
+            MetaText = AppStrings.TechniqueMetaLine(durationText, definition.Theme),
             Title = definition.ListTitle,
             Subtitle = definition.ListSubtitle,
             Theme = definition.Theme,
@@ -218,6 +233,7 @@ public class TechniquesViewModel : BaseViewModel
             Active = true,
             TapCommand = new AsyncCommand(() => _navigationService.GoToTechniqueAsync(_todayTechniqueId))
         };
+        OnPropertyChanged(nameof(TodayReasonText));
     }
 
     private void ApplyTodayTechniqueDateFromList(IEnumerable<TechniqueItem> staticItems)
@@ -238,24 +254,27 @@ public class TechniquesViewModel : BaseViewModel
 
     private async Task<IEnumerable<TechniqueItem>> BuildStaticItemsAsync(CancellationToken cancellationToken)
     {
-        const string image = "method.png";
         List<TechniqueItem> items = [];
 
         foreach (TechniqueListEntry entry in TechniqueListCatalog.GetBuiltIn())
         {
             DateTime? lastPractice = await _userProgressService.GetLastPracticeDateAsync(entry.TechniqueId.ToString(), cancellationToken);
             string? draft = await _userProgressService.GetSessionDraftAsync(entry.TechniqueId.ToString(), cancellationToken);
+            string durationText = AppStrings.TechniqueDuration(entry.DurationMinutes);
+            string theme = !string.IsNullOrWhiteSpace(draft) ? AppStrings.TechniqueContinueBadge : entry.Theme;
 
             items.Add(new TechniqueItem
             {
                 Number = entry.Number,
                 Date = lastPractice is null
-                    ? entry.Date
+                    ? AppStrings.TechniqueNotTriedYet
                     : AppStrings.TechniqueLastPractice(lastPractice.Value.ToLocalTime().ToString("d")),
-                Image = image,
+                IconName = entry.Icon,
+                DurationText = durationText,
+                MetaText = AppStrings.TechniqueMetaLine(durationText, theme),
                 Title = entry.Title,
                 Subtitle = entry.Subtitle,
-                Theme = !string.IsNullOrWhiteSpace(draft) ? AppStrings.TechniqueContinueBadge : entry.Theme,
+                Theme = theme,
                 Author = entry.Author,
                 Active = true,
                 TapCommand = new AsyncCommand(() => _navigationService.GoToTechniqueAsync(entry.TechniqueId))
@@ -274,6 +293,7 @@ public class TechniquesViewModel : BaseViewModel
         Title = item.Header,
         Subtitle = item.Describtion,
         Theme = item.Subject,
+        MetaText = item.Subject ?? string.Empty,
         Author = item.Author,
         Active = true,
         TapCommand = new AsyncCommand(() => _navigationService.GoToCreatedAsync(item.TechniqueId))
@@ -285,14 +305,22 @@ public class TechniquesViewModel : BaseViewModel
         if (moods.Count == 0)
         {
             TodayMoodDisplay = string.Empty;
+            SelectedMoodLevel = 0;
         }
         else
         {
             MoodEntryDTO latest = moods[0];
             DateTime local = latest.RecordedAt.ToLocalTime();
-            TodayMoodDisplay = local.Date == DateTime.Today
-                ? AppStrings.TodayMoodLine(latest.MoodLevel, 5)
-                : string.Empty;
+            if (local.Date == DateTime.Today)
+            {
+                TodayMoodDisplay = AppStrings.TodayMoodLine(latest.MoodLevel, 5);
+                SelectedMoodLevel = latest.MoodLevel;
+            }
+            else
+            {
+                TodayMoodDisplay = string.Empty;
+                SelectedMoodLevel = 0;
+            }
         }
 
         OnPropertyChanged(nameof(TodayMoodDisplay));
@@ -305,23 +333,25 @@ public class TechniquesViewModel : BaseViewModel
 
         await MainThread.InvokeOnMainThreadAsync(() =>
         {
-            MoodHistory.Clear();
-            foreach (MoodEntryDTO mood in moods)
-            {
-                string date = mood.RecordedAt.ToLocalTime().ToString("d");
-                MoodHistory.Add(new MoodHistoryItem
-                {
-                    DisplayText = AppStrings.MoodHistoryEntry(date, mood.MoodLevel, 5)
-                });
-            }
+            IEnumerable<MoodEntryDTO> summarySource = moods.Count > 0 && moods[0].RecordedAt.ToLocalTime().Date == DateTime.Today
+                ? moods.Skip(1)
+                : moods;
 
-            OnPropertyChanged(nameof(HasMoodHistory));
+            string[] entries = summarySource
+                .Take(2)
+                .Select(mood => AppStrings.MoodHistoryEntry(mood.RecordedAt.ToLocalTime().ToString("d"), mood.MoodLevel, 5))
+                .ToArray();
+
+            MoodHistorySummary = entries.Length == 0 ? string.Empty : string.Join(" · ", entries);
+            OnPropertyChanged(nameof(MoodHistorySummary));
+            OnPropertyChanged(nameof(HasMoodHistorySummary));
         });
     }
 
     private async Task RecordMoodAsync(int moodLevel)
     {
         await _userProgressService.RecordMoodAsync(moodLevel);
+        SelectedMoodLevel = moodLevel;
         StreakDays = await _userProgressService.GetStreakDaysAsync();
         await RefreshTodayMoodAsync();
         await RefreshMoodHistoryAsync();

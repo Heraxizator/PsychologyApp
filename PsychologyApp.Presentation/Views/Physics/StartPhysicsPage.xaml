@@ -13,13 +13,13 @@
         <ScrollView
             IsVisible="{Binding IsDone}"
             VerticalScrollBarVisibility="Never">
-            <StackLayout
+            <VerticalStackLayout
                 x:Name="ContentStack"
                 Margin="{StaticResource LayoutTabPageMarginThickness}"
                 Spacing="{StaticResource LayoutSpacing}">
-                    <StackLayout.Behaviors>
+                    <VerticalStackLayout.Behaviors>
                         <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
-                    </StackLayout.Behaviors>
+                    </VerticalStackLayout.Behaviors>
                     <ui:TextBoxView
                         HeaderText="{Binding ExplanationHeader}"
                         BodyText="{Binding ExplanationBody}" />
@@ -32,7 +32,7 @@
                     <ui:ButtonView
                         BodyText="{Binding StartButtonText}"
                         TapCommand="{Binding StartCommand}" />
-            </StackLayout>
+            </VerticalStackLayout>
         </ScrollView>
 
         <ui:ProgressBarView

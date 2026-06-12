@@ -11,6 +11,9 @@ public class TechniqueItem
     public string? Number { get; set; }
     public string? Date { get; set; }
     public string? Image { get; set; }
+    public string? IconName { get; set; }
+    public string? DurationText { get; set; }
+    public string? MetaText { get; set; }
     public string? Title { get; set; }
     public string? Subtitle { get; set; }
     public string? Theme { get; set; }

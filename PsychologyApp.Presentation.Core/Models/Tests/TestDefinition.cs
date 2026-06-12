@@ -13,4 +13,7 @@ public sealed class TestDefinition
     public IReadOnlyList<Question>? Questions { get; init; }
     public bool SingleAnswer { get; init; }
     public LuscherMode? LuscherMode { get; init; }
+    public int? EstimatedMinutes { get; init; }
+    public int? QuestionCount { get; init; }
+    public string? Construct { get; init; }
 }

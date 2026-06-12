@@ -62,7 +62,10 @@ public static class TestCatalogParser
             Algorithm = definition.Algorithm,
             Kind = TestKind.Questionnaire,
             Questions = questions,
-            SingleAnswer = definition.SingleAnswer
+            SingleAnswer = definition.SingleAnswer,
+            EstimatedMinutes = definition.EstimatedMinutes,
+            QuestionCount = definition.QuestionCount ?? questions.Count,
+            Construct = definition.Construct
         });
     }
 
@@ -83,7 +86,10 @@ public static class TestCatalogParser
                 Comment = definition.Comment,
                 Algorithm = definition.Algorithm,
                 Kind = LuscherNavigationMapper.ToKind(mode),
-                LuscherMode = mode
+                LuscherMode = mode,
+                EstimatedMinutes = definition.EstimatedMinutes,
+                QuestionCount = definition.QuestionCount ?? (mode == LuscherMode.Brief ? 2 : 8),
+                Construct = definition.Construct
             });
         }
 
@@ -142,7 +148,10 @@ public static class TestCatalogParser
                 Algorithm = definition.Algorithm,
                 Kind = TestKind.Questionnaire,
                 Questions = questions,
-                SingleAnswer = definition.SingleAnswer
+                SingleAnswer = definition.SingleAnswer,
+                EstimatedMinutes = definition.EstimatedMinutes,
+                QuestionCount = definition.QuestionCount ?? questions.Count,
+                Construct = definition.Construct
             });
         }
 

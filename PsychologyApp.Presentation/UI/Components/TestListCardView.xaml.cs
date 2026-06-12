@@ -29,6 +29,30 @@ public partial class TestListCardView : ContentView
         set => SetValue(SubtitleProperty, value);
     }
 
+    public static readonly BindableProperty MetaTextProperty =
+        BindableProperty.Create(nameof(MetaText), typeof(string), typeof(TestListCardView), string.Empty, propertyChanged: OnMetaTextChanged);
+
+    public string MetaText
+    {
+        get => (string)GetValue(MetaTextProperty);
+        set => SetValue(MetaTextProperty, value);
+    }
+
+    public static readonly BindableProperty HasMetaTextProperty =
+        BindableProperty.Create(nameof(HasMetaText), typeof(bool), typeof(TestListCardView), false);
+
+    public bool HasMetaText
+    {
+        get => (bool)GetValue(HasMetaTextProperty);
+        private set => SetValue(HasMetaTextProperty, value);
+    }
+
+    private static void OnMetaTextChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        var view = (TestListCardView)bindable;
+        view.HasMetaText = !string.IsNullOrWhiteSpace((string)newValue);
+    }
+
     public static readonly BindableProperty LastResultTextProperty =
         BindableProperty.Create(nameof(LastResultText), typeof(string), typeof(TestListCardView), string.Empty);
 

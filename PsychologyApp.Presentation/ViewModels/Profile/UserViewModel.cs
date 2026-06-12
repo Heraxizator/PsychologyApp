@@ -247,8 +247,10 @@ public class UserViewModel : BaseViewModel
 
                     QuoteItem item = new()
                     {
+                        Id = quotDTO.QuotId,
                         Text = quotDTO.Text,
                         Author = quotDTO.Title,
+                        IsFavourite = quotDTO.IsFavourite,
                         ShareCommand = CreateShareCommand(quotDTO.Text, quotDTO.Title),
                         CopyCommand = CreateCopyCommand(quotDTO.Text, quotDTO.Title),
                         OpenQuotesTabCommand = OpenQuotesTabCommand
@@ -363,7 +365,6 @@ public class UserViewModel : BaseViewModel
             TechniqueId.Polarity
         ];
 
-        const string image = "method.png";
         HashSet<TechniqueId> added = [];
 
         foreach (TechniqueId techniqueId in featuredIds)
@@ -374,12 +375,15 @@ public class UserViewModel : BaseViewModel
             }
 
             TechniqueDefinition definition = TechniqueCatalog.Get(techniqueId);
+            string durationText = AppStrings.TechniqueDuration(definition.ListDurationMinutes);
             Techniques.Add(new TechniqueItem
             {
-                Image = image,
+                IconName = definition.ListIcon,
+                DurationText = durationText,
                 Title = definition.PageName,
                 Subtitle = definition.ListSubtitle,
                 Theme = definition.Theme,
+                MetaText = AppStrings.TechniqueMetaLine(durationText, definition.Theme),
                 Active = true,
                 TapCommand = NavigationService is null
                     ? null

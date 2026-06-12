@@ -61,7 +61,7 @@ public class TestsListViewModel : BaseViewModel
             testItem.Description,
             testItem.Algorithm,
             testItem.Comment,
-            testItem.Action,
+            testItem.StartAsync,
             testItem.TestId);
 
     public async Task InitAsync()
