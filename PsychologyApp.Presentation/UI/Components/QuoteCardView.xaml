@@ -24,55 +24,76 @@
                 </Label.Triggers>
             </Label>
             <Grid
-                ColumnSpacing="{StaticResource LayoutSpacing}"
+                ColumnSpacing="4"
                 HorizontalOptions="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Label
-                    x:Name="FavoriteActionLabel"
+                <Border
+                    x:Name="FavoriteActionBorder"
                     Grid.Column="0"
-                    Style="{StaticResource BodyStyle}"
-                    SemanticProperties.Description="{Binding FavoriteHint, Source={x:Reference Root}}">
-                    <Label.Triggers>
-                        <DataTrigger
-                            Binding="{Binding IsFavourite, Source={x:Reference Root}}"
-                            TargetType="Label"
-                            Value="True">
-                            <Setter Property="Text" Value="{mi:Material Icon=Favorite}" />
-                            <Setter Property="TextColor" Value="{DynamicResource Primary}" />
-                        </DataTrigger>
-                        <DataTrigger
-                            Binding="{Binding IsFavourite, Source={x:Reference Root}}"
-                            TargetType="Label"
-                            Value="False">
-                            <Setter Property="Text" Value="{mi:Material Icon=FavoriteBorder}" />
-                        </DataTrigger>
-                    </Label.Triggers>
-                    <Label.GestureRecognizers>
+                    WidthRequest="44"
+                    HeightRequest="44"
+                    StrokeThickness="0"
+                    BackgroundColor="Transparent">
+                    <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding LikeCommand, Source={x:Reference Root}}" />
-                    </Label.GestureRecognizers>
-                </Label>
-                <Label
+                    </Border.GestureRecognizers>
+                    <Label
+                        x:Name="FavoriteActionLabel"
+                        Style="{StaticResource IconActionStyle}"
+                        SemanticProperties.Description="{Binding FavoriteHint, Source={x:Reference Root}}"
+                        mi:MauiIcon.Value="{mi:Material Icon=FavoriteBorder, FontOverride=True}">
+                        <Label.Triggers>
+                            <DataTrigger
+                                Binding="{Binding IsFavourite, Source={x:Reference Root}}"
+                                TargetType="Label"
+                                Value="True">
+                                <Setter Property="mi:MauiIcon.Value" Value="{mi:Material Icon=Favorite, FontOverride=True}" />
+                                <Setter Property="TextColor" Value="{DynamicResource Primary}" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding IsFavourite, Source={x:Reference Root}}"
+                                TargetType="Label"
+                                Value="False">
+                                <Setter Property="mi:MauiIcon.Value" Value="{mi:Material Icon=FavoriteBorder, FontOverride=True}" />
+                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Border>
+                <Border
+                    x:Name="CopyActionBorder"
                     Grid.Column="1"
-                    Style="{StaticResource BodyStyle}"
-                    Text="{mi:Material Icon=ContentCopy}"
-                    SemanticProperties.Description="{Binding CopyHint, Source={x:Reference Root}}">
-                    <Label.GestureRecognizers>
+                    WidthRequest="44"
+                    HeightRequest="44"
+                    StrokeThickness="0"
+                    BackgroundColor="Transparent">
+                    <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding CopyCommand, Source={x:Reference Root}}" />
-                    </Label.GestureRecognizers>
-                </Label>
-                <Label
+                    </Border.GestureRecognizers>
+                    <Label
+                        Style="{StaticResource IconActionStyle}"
+                        SemanticProperties.Description="{Binding CopyHint, Source={x:Reference Root}}"
+                        mi:MauiIcon.Value="{mi:Material Icon=ContentCopy, FontOverride=True}" />
+                </Border>
+                <Border
+                    x:Name="ShareActionBorder"
                     Grid.Column="2"
-                    Style="{StaticResource BodyStyle}"
-                    Text="{mi:Material Icon=Share}"
-                    SemanticProperties.Description="{Binding ShareHint, Source={x:Reference Root}}">
-                    <Label.GestureRecognizers>
+                    WidthRequest="44"
+                    HeightRequest="44"
+                    StrokeThickness="0"
+                    BackgroundColor="Transparent">
+                    <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ShareCommand, Source={x:Reference Root}}" />
-                    </Label.GestureRecognizers>
-                </Label>
+                    </Border.GestureRecognizers>
+                    <Label
+                        Style="{StaticResource IconActionStyle}"
+                        SemanticProperties.Description="{Binding ShareHint, Source={x:Reference Root}}"
+                        mi:MauiIcon.Value="{mi:Material Icon=Share, FontOverride=True}" />
+                </Border>
             </Grid>
         </VerticalStackLayout>
     </Border>

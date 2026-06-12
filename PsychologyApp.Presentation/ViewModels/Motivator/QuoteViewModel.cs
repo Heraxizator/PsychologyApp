@@ -24,6 +24,8 @@ public enum QuoteFeedMode
 
 public class QuoteViewModel : BaseViewModel
 {
+    private readonly SemaphoreSlim _initGate = new(1, 1);
+
     public ObservableRangeCollection<QuoteItem> QuotesObservableCollection { get; set; } = [];
     public ICommand LoadMoreQuotesCommand { get; private set; } = default!;
     public ICommand ShowAllCommand { get; private set; } = default!;
@@ -83,9 +85,9 @@ public class QuoteViewModel : BaseViewModel
             LoadMoreQuotesCommand = new AsyncCommand(() => AddFreshQuotesAsync());
             ShowAllCommand = new AsyncCommand(() => SwitchFeedAsync(QuoteFeedMode.All));
             ShowFavoritesCommand = new AsyncCommand(() => SwitchFeedAsync(QuoteFeedMode.Favorites));
-            Reload = new AsyncCommand(() => InitAsync(seedNewQuote: false));
+            Reload = new AsyncCommand(() => RunInitAsync(seedNewQuote: false));
 
-            InitAsync(seedNewQuote: true).FireAndForget();
+            RunInitAsync(seedNewQuote: true).FireAndForget();
         }
         catch (Exception e)
         {
@@ -109,8 +111,9 @@ public class QuoteViewModel : BaseViewModel
             nameof(AllReadTitle),
             nameof(AllReadBody),
             nameof(ShowFavoritesButtonText));
-        InitAsync(seedNewQuote: false).FireAndForget();
     }
+
+    public Task ReloadFromPullAsync() => RunInitAsync(seedNewQuote: false);
 
     private async Task SwitchFeedAsync(QuoteFeedMode mode)
     {
@@ -124,7 +127,20 @@ public class QuoteViewModel : BaseViewModel
         OnPropertyChanged(nameof(IsFavoritesFeed));
         OnPropertyChanged(nameof(AllFeedVariant));
         OnPropertyChanged(nameof(FavoritesFeedVariant));
-        await InitAsync(seedNewQuote: false);
+        await RunInitAsync(seedNewQuote: false);
+    }
+
+    private async Task RunInitAsync(bool seedNewQuote)
+    {
+        await _initGate.WaitAsync();
+        try
+        {
+            await InitAsync(seedNewQuote);
+        }
+        finally
+        {
+            _initGate.Release();
+        }
     }
 
     private async Task InitAsync(bool seedNewQuote)

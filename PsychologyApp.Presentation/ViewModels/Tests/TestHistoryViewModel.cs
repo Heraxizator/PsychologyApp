@@ -2,9 +2,11 @@ using MvvmHelpers;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Models.Tests;
 using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.Services.Tests;
 using BaseViewModel = PsychologyApp.Presentation.ViewModels.BaseViewModel;
+using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.ViewModels.Tests;
 
@@ -18,6 +20,7 @@ public sealed class TestHistoryViewModel : BaseViewModel
 {
     private readonly IUserProgressService _userProgressService;
     private readonly ITestCatalogService _testCatalogService;
+    private readonly INavigationService _navigationService;
     private readonly string _testId;
     private string _testTitle;
 
@@ -27,7 +30,10 @@ public sealed class TestHistoryViewModel : BaseViewModel
     public string LoadingText => AppStrings.TestsLoadingText;
     public string FailedText => AppStrings.LoadFailed;
     public string RetryText => AppStrings.RetryQuestion;
+    public string RetakeButtonText => AppStrings.TestRetakeButton;
     public bool HasEntries => HistoryEntries.Count > 0;
+
+    public ICommand RetakeCommand { get; }
 
     public TestHistoryViewModel(
         INavigation navigation,
@@ -37,6 +43,7 @@ public sealed class TestHistoryViewModel : BaseViewModel
         string testId,
         string testTitle)
     {
+        _navigationService = navigationService;
         _userProgressService = userProgressService;
         _testCatalogService = testCatalogService;
         _testId = testId;
@@ -46,12 +53,13 @@ public sealed class TestHistoryViewModel : BaseViewModel
 
         BindNavigation(navigation, navigationService);
         Reload = new AsyncCommand(LoadAsync);
+        RetakeCommand = new AsyncCommand(RetakeAsync);
         LoadAsync().FireAndForget();
     }
 
     protected override void RefreshLocalizedProperties()
     {
-        Notify(nameof(PageTitle), nameof(EmptyText), nameof(LoadingText), nameof(FailedText), nameof(RetryText));
+        Notify(nameof(PageTitle), nameof(EmptyText), nameof(LoadingText), nameof(FailedText), nameof(RetryText), nameof(RetakeButtonText));
         RefreshTitleAsync().FireAndForget();
     }
 
@@ -100,5 +108,18 @@ public sealed class TestHistoryViewModel : BaseViewModel
         {
             await MainThread.InvokeOnMainThreadAsync(SetFail);
         }
+    }
+
+    private async Task RetakeAsync()
+    {
+        TestDefinition? definition = await _testCatalogService.GetByIdAsync(_testId);
+        if (definition is null)
+        {
+            return;
+        }
+
+        TestItem item = TestItemFactory.Create(definition, _navigationService);
+        await _navigationService.GoToRootAsync();
+        item.Action.Invoke();
     }
 }

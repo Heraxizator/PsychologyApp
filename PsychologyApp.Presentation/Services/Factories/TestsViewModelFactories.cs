@@ -71,10 +71,15 @@ public interface ITestResultViewModelFactory
 }
 
 public sealed class TestResultViewModelFactory(
-    Func<NavigationContext, INavigationService> navigationServiceFactory) : ITestResultViewModelFactory
+    Func<NavigationContext, INavigationService> navigationServiceFactory,
+    ITestCatalogService testCatalogService) : ITestResultViewModelFactory
 {
     public TestResultViewModel Create(INavigation navigation, TestResultInfo result) =>
-        new(navigation, navigationServiceFactory(NavigationContext.From(navigation)), result);
+        new(
+            navigation,
+            navigationServiceFactory(NavigationContext.From(navigation)),
+            testCatalogService,
+            result);
 }
 
 public interface IQuestionViewModelFactory

@@ -15,26 +15,31 @@
 
         <ShellContent
             x:Name="PracticeTab"
+            Route="PracticeTab"
             Title="Практик"
             Icon="{mi:Material Icon=AutoAwesome}" />
 
         <ShellContent
             x:Name="DetectorTab"
+            Route="TestsTab"
             Title="Тесты"
             Icon="{mi:Material Icon=Insights}" />
 
         <ShellContent
             x:Name="SomaticTab"
+            Route="SomaticTab"
             Title="Тело"
             Icon="{mi:Material Icon=Favorite}" />
 
         <ShellContent
             x:Name="CleanerTab"
+            Route="CleanerTab"
             Title="Звук"
             Icon="{mi:Material Icon=Headphones}" />
 
         <ShellContent
             x:Name="MotivatorTab"
+            Route="QuotesTab"
             Title="Цитаты"
             Icon="{mi:Material Icon=Lightbulb}" />
 

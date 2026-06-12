@@ -69,4 +69,13 @@
         <Setter Property="WidthRequest" Value="{StaticResource NavBarBackColumnWidth}" />
     </Style>
 
+    <Style x:Key="IconActionStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+    </Style>
+
 </ResourceDictionary>

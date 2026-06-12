@@ -6,7 +6,6 @@
              xmlns:clean="clr-namespace:PsychologyApp.Presentation.Models.Clean"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Common.Behaviors"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="vm:MusicPlayerViewModel"
              x:Name="PageRoot"
              Shell.NavBarIsVisible="True"
@@ -17,9 +16,10 @@
         HorizontalOptions="FillAndExpand">
 
         <Grid
+            x:Name="MainContentGrid"
             IsVisible="{Binding IsDone}"
             Margin="{StaticResource LayoutTabPageMarginThickness}"
-            RowDefinitions="Auto,*,Auto,Auto">
+            RowDefinitions="Auto,*,Auto">
             <Grid.Behaviors>
                 <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
             </Grid.Behaviors>
@@ -62,19 +62,30 @@
                         </ui:MusicListCardView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
+                <CollectionView.Footer>
+                    <ui:TextBoxView
+                        Margin="0,8,0,10"
+                        HeaderText="{Binding Source={x:Reference PageRoot}, Path=BindingContext.MoreInfoHeader}"
+                        BodyText="{Binding Source={x:Reference PageRoot}, Path=BindingContext.MoreInfoBody}" />
+                </CollectionView.Footer>
             </CollectionView>
 
             <Border
                 Grid.Row="2"
-                Margin="0,8,0,8"
+                Margin="0,8,0,0"
                 IsVisible="{Binding HasActiveTrack}"
                 Style="{StaticResource BrandCardStyle}"
-                Padding="12">
-                <VerticalStackLayout Spacing="8">
+                Padding="10">
+                <VerticalStackLayout Spacing="4">
                     <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                         <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
                             <Label Text="{Binding NowPlayingLabel}" Style="{StaticResource CaptionStyle}" />
-                            <Label Text="{Binding ActiveTrackTitle}" Style="{StaticResource SectionTitleStyle}" />
+                            <Label
+                                Text="{Binding ActiveTrackTitle}"
+                                Style="{StaticResource BodyStyle}"
+                                FontFamily="{StaticResource SemiBoldFontFamily}"
+                                MaxLines="1"
+                                LineBreakMode="TailTruncation" />
                             <Label Text="{Binding ProgressDisplay}" Style="{StaticResource CaptionStyle}" />
                         </VerticalStackLayout>
                         <ui:ButtonView
@@ -95,20 +106,6 @@
                         TextColor="{DynamicResource Primary}" />
                 </VerticalStackLayout>
             </Border>
-
-            <ui:TextBoxView
-                Grid.Row="3"
-                Margin="0,0,0,10"
-                HeaderText="{Binding MoreInfoHeader}"
-                BodyText="{Binding MoreInfoBody}" />
-
-            <toolkit:MediaElement
-                x:Name="Player"
-                Grid.Row="3"
-                IsVisible="False"
-                ShouldAutoPlay="True"
-                MediaEnded="OnMediaEnded"
-                MediaFailed="OnMediaFailed" />
         </Grid>
 
         <ui:RetryView

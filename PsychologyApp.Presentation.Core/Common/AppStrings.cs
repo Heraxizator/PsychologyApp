@@ -81,6 +81,7 @@ public static class AppStrings
 
     public static string PracticeHomeTitle => T("Главная", "Home");
     public static string PracticeMyTechniques => T("Мои техники", "My techniques");
+    public static string PracticeCatalog => T("Каталог практик", "Practice catalog");
     public static string PracticeCreate => T("Создать", "Create");
     public static string PracticeTechniquesList => T("Список техник", "Techniques list");
     public static string PracticeInitError => T("Ошибка при инициализации", "Initialization failed");
@@ -199,6 +200,7 @@ public static class AppStrings
         "Choose colors in an order that feels pleasant to you");
     public static string TestsMoreInfo => T("Подробнее", "More info");
     public static string TestsRestart => T("Заново", "Start over");
+    public static string TestRetakeButton => T("Пройти снова", "Take again");
     public static string TestsFirstColor => T("Первый цвет", "First color");
     public static string TestsSecondColor => T("Второй цвет", "Second color");
     public static string TestsLuscherFirstInstruction => T(
@@ -261,7 +263,7 @@ public static class AppStrings
     public static string TodayMoodSaved => T("Настроение сохранено", "Mood saved");
     public static string TodayMoodLine(int level, int max) =>
         T($"Сегодня: {MoodEmoji(level)} {level}/{max}", $"Today: {MoodEmoji(level)} {level}/{max}");
-    public static string MoodHistoryTitle => T("Настроение за 7 дней", "Mood over 7 days");
+    public static string MoodHistoryTitle => T("Недавнее", "Recent");
     public static string MoodHistoryEntry(string date, int level, int max) =>
         T($"{date}: {MoodEmoji(level)} {level}/{max}", $"{date}: {MoodEmoji(level)} {level}/{max}");
     public static string PracticeCompletedTitle => T("Готово!", "Done!");
