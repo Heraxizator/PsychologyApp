@@ -1,5 +1,7 @@
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Abstractions.Startup;
+using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Views.Onboarding;
@@ -10,13 +12,15 @@ namespace PsychologyApp.Presentation.Services.Shell;
 public sealed class ShellStartupCoordinator(
     IAppStartupService startupService,
     IOnboardingViewModelFactory onboardingViewModelFactory,
+    IOptions<AppSettings> settings,
     ILogger<ShellStartupCoordinator> logger) : IShellStartupCoordinator
 {
     public async Task InitializeAsync()
     {
         try
         {
-            await startupService.InitializeAsync();
+            using CancellationTokenSource timeoutSource = OperationCancellation.CreateLargeTimeoutSource(settings);
+            await startupService.InitializeAsync(timeoutSource.Token);
             AppReadiness.SignalDatabaseReady();
         }
         catch (Exception ex)

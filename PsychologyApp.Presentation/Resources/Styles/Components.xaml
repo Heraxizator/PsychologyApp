@@ -160,6 +160,11 @@
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
     </Style>
 
+    <Style x:Key="TechniqueListCardStyle" TargetType="Border" BasedOn="{StaticResource ListCardItemStyle}">
+        <Setter Property="Padding" Value="12,14" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
+    </Style>
+
     <Style x:Key="ProfileTechniqueCardStyle" TargetType="Border" BasedOn="{StaticResource ListCardItemStyle}">
         <Setter Property="Padding" Value="12" />
         <Setter Property="WidthRequest" Value="228" />

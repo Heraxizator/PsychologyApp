@@ -19,10 +19,20 @@ public partial class AppShell : Shell
     public ShellContent TestsTab => DetectorTab;
     public ShellContent QuotesTab => MotivatorTab;
 
+    private static readonly string[] TabRoutes =
+    [
+        "PracticeTab",
+        "TestsTab",
+        "SomaticTab",
+        "CleanerTab",
+        "QuotesTab"
+    ];
+
     private readonly IPageFactory _pageFactory;
     private readonly IShellStartupCoordinator _startupCoordinator;
     private readonly ILogger<AppShell> _logger;
-    private bool _tabsConfigured;
+    private readonly bool[] _tabsMaterialized = new bool[5];
+    private bool _lazyTabsReady;
 
     public AppShell(
         IPageFactory pageFactory,
@@ -34,15 +44,26 @@ public partial class AppShell : Shell
         _logger = logger;
         InitializeComponent();
         ApplyLocalization();
-        EnsureTabsConfigured();
+        EnsureLazyTabsReady();
         UserPreferences.Changed += OnPreferencesChanged;
         HandlerChanged += OnShellHandlerChanged;
+        Navigating += OnShellNavigating;
         Navigated += OnShellNavigated;
         _ = InitializeAppAsync();
     }
 
+    private void OnShellNavigating(object? sender, ShellNavigatingEventArgs e)
+    {
+        if (TryResolveTabIndex(e.Target, out int index))
+        {
+            EnsureTabMaterialized(index);
+        }
+    }
+
     private void OnShellNavigated(object? sender, ShellNavigatedEventArgs e)
     {
+        EnsureCurrentTabMaterialized();
+
         if (e.Source != ShellNavigationSource.ShellItemChanged)
         {
             return;
@@ -80,6 +101,7 @@ public partial class AppShell : Shell
 
         ApplyTabBarChrome();
         ApplyStatusBarChrome(UserPreferences.IsDarkTheme(UserPreferences.Load().Theme));
+        EnsureCurrentTabMaterialized();
     }
 
     private void OnPreferencesChanged()
@@ -176,33 +198,162 @@ public partial class AppShell : Shell
     private static Color ResolveColor(ResourceDictionary? resources, string key, Color fallback) =>
         resources?.TryGetValue(key, out object? value) == true && value is Color color ? color : fallback;
 
-    private void EnsureTabsConfigured()
+    private void EnsureLazyTabsReady()
     {
-        if (_tabsConfigured || Items.FirstOrDefault() is not TabBar tabBar)
+        if (_lazyTabsReady)
         {
             return;
         }
 
-        ContentPage[] pages =
-        [
-            _pageFactory.CreateTechniquesPage(),
-            _pageFactory.CreateTestsListPage(),
-            _pageFactory.CreateStartPhysicsPage(),
-            _pageFactory.CreateMusicPlayerPage(),
-            _pageFactory.CreateQuotePage(),
-        ];
-
-        for (int index = 0; index < tabBar.Items.Count && index < pages.Length; index++)
+        for (int index = 0; index < _tabsMaterialized.Length; index++)
         {
-            if (tabBar.Items[index].CurrentItem is ShellContent shellContent)
+            AssignPlaceholderIfEmpty(index);
+        }
+
+        EnsureTabMaterialized(0);
+        _lazyTabsReady = true;
+    }
+
+    private void AssignPlaceholderIfEmpty(int index)
+    {
+        if (_tabsMaterialized[index])
+        {
+            return;
+        }
+
+        ShellContent shellContent = GetTabShellContent(index);
+        if (shellContent.Content is not null)
+        {
+            return;
+        }
+
+        shellContent.Content = new ContentPage
+        {
+            BackgroundColor = Colors.Transparent,
+            Title = shellContent.Title
+        };
+    }
+
+    private void EnsureCurrentTabMaterialized()
+    {
+        if (GetCurrentTabIndex() is int index)
+        {
+            EnsureTabMaterialized(index);
+        }
+    }
+
+    private int? GetCurrentTabIndex()
+    {
+        ShellContent? activeContent = GetActiveShellContent();
+        if (activeContent is null)
+        {
+            return null;
+        }
+
+        int index = GetTabIndex(activeContent);
+        return index >= 0 ? index : null;
+    }
+
+    private ShellContent? GetActiveShellContent()
+    {
+        BaseShellItem? current = CurrentItem is TabBar tabBar ? tabBar.CurrentItem : CurrentItem;
+        return ResolveShellContent(current);
+    }
+
+    private static ShellContent? ResolveShellContent(BaseShellItem? item) => item switch
+    {
+        ShellContent shellContent => shellContent,
+        ShellSection section => ResolveShellContent(section.CurrentItem),
+        ShellItem shellItem => ResolveShellContent(shellItem.CurrentItem),
+        _ => null
+    };
+
+    private static bool TryResolveTabIndex(ShellNavigationState target, out int index)
+    {
+        string location = target.Location.ToString();
+        for (int i = 0; i < TabRoutes.Length; i++)
+        {
+            if (location.Contains(TabRoutes[i], StringComparison.OrdinalIgnoreCase))
             {
-                shellContent.Content = pages[index];
+                index = i;
+                return true;
             }
         }
 
-        _tabsConfigured = true;
-        OpenPendingTechniqueIfNeeded();
+        index = -1;
+        return false;
     }
+
+    private int GetTabIndex(ShellContent shellContent)
+    {
+        if (ReferenceEquals(shellContent, PracticeTab))
+        {
+            return 0;
+        }
+
+        if (ReferenceEquals(shellContent, DetectorTab))
+        {
+            return 1;
+        }
+
+        if (ReferenceEquals(shellContent, SomaticTab))
+        {
+            return 2;
+        }
+
+        if (ReferenceEquals(shellContent, CleanerTab))
+        {
+            return 3;
+        }
+
+        if (ReferenceEquals(shellContent, MotivatorTab))
+        {
+            return 4;
+        }
+
+        return -1;
+    }
+
+    private ShellContent GetTabShellContent(int index) => index switch
+    {
+        0 => PracticeTab,
+        1 => DetectorTab,
+        2 => SomaticTab,
+        3 => CleanerTab,
+        4 => MotivatorTab,
+        _ => PracticeTab
+    };
+
+    public void MaterializeTab(ShellContent shellContent) =>
+        EnsureTabMaterialized(GetTabIndex(shellContent));
+
+    private void EnsureTabMaterialized(int index)
+    {
+        if (index < 0 || index >= _tabsMaterialized.Length || _tabsMaterialized[index])
+        {
+            return;
+        }
+
+        ShellContent shellContent = GetTabShellContent(index);
+        shellContent.Content = CreateTabPage(index);
+        _tabsMaterialized[index] = true;
+        UpdateTabPageTitle(shellContent);
+
+        if (index == 0)
+        {
+            OpenPendingTechniqueIfNeeded();
+        }
+    }
+
+    private ContentPage CreateTabPage(int index) => index switch
+    {
+        0 => _pageFactory.CreateTechniquesPage(),
+        1 => _pageFactory.CreateTestsListPage(),
+        2 => _pageFactory.CreateStartPhysicsPage(),
+        3 => _pageFactory.CreateMusicPlayerPage(),
+        4 => _pageFactory.CreateQuotePage(),
+        _ => _pageFactory.CreateTechniquesPage()
+    };
 
     private void OpenPendingTechniqueIfNeeded()
     {

@@ -36,9 +36,9 @@
         </Grid>
 
         <RefreshView
+            x:Name="QuotesRefresh"
             Grid.Row="1"
-            Command="{Binding Reload}"
-            IsRefreshing="{Binding IsLoadingOverlayVisible}">
+            Refreshing="OnPullToRefresh">
             <Grid Margin="{StaticResource LayoutTabPageMarginThickness}">
                 <CollectionView
                     x:Name="QuotesCollectionView"

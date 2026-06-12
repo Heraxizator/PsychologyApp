@@ -8,8 +8,9 @@
              x:DataType="vm:TestHistoryViewModel"
              Shell.NavBarIsVisible="True"
              Title="{Binding PageTitle}">
-    <Grid Margin="{StaticResource LayoutPageMarginThickness}">
+    <Grid Margin="{StaticResource LayoutPageMarginThickness}" RowDefinitions="*,Auto">
         <CollectionView
+            Grid.Row="0"
             IsVisible="{Binding IsDone}"
             ItemsSource="{Binding HistoryEntries}"
             SelectionMode="None">
@@ -30,6 +31,13 @@
                     Text="{Binding EmptyText}" />
             </CollectionView.EmptyView>
         </CollectionView>
+
+        <ui:ButtonView
+            Grid.Row="1"
+            Margin="0,8,0,0"
+            IsVisible="{Binding IsDone}"
+            BodyText="{Binding RetakeButtonText}"
+            TapCommand="{Binding RetakeCommand}" />
 
         <ui:ProgressBarView
             VerticalOptions="Center"

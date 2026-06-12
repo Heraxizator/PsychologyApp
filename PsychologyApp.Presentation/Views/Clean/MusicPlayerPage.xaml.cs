@@ -12,6 +12,7 @@ public partial class MusicPlayerPage : ContentPage
     private readonly IToastService _toastService;
     private PageAnimationHelper? _animationHelper;
     private IDispatcherTimer? _positionTimer;
+    private MediaElement? _player;
 
     public MusicPlayerPage(IMusicPlayerViewModelFactory musicPlayerViewModelFactory, IToastService toastService)
     {
@@ -28,6 +29,26 @@ public partial class MusicPlayerPage : ContentPage
         _animationHelper = new PageAnimationHelper(_viewModel, contentView: Musics);
     }
 
+    private MediaElement Player => EnsurePlayer();
+
+    private MediaElement EnsurePlayer()
+    {
+        if (_player is not null)
+        {
+            return _player;
+        }
+
+        _player = new MediaElement
+        {
+            IsVisible = false,
+            ShouldAutoPlay = true
+        };
+        _player.MediaEnded += OnMediaEnded;
+        _player.MediaFailed += OnMediaFailed;
+        MainContentGrid.Children.Add(_player);
+        return _player;
+    }
+
     protected override void OnAppearing()
     {
         base.OnAppearing();
@@ -40,7 +61,11 @@ public partial class MusicPlayerPage : ContentPage
     {
         base.OnDisappearing();
         StopPositionTimer();
-        Player.Pause();
+        if (_player is not null)
+        {
+            _player.Pause();
+        }
+
         _viewModel.SetPlaybackState(false);
     }
 
@@ -68,6 +93,7 @@ public partial class MusicPlayerPage : ContentPage
 
     private async Task PlayUrlAsync(string url)
     {
+        MediaElement player = Player;
         _viewModel.IsBuffering = true;
 
         try
@@ -80,8 +106,8 @@ public partial class MusicPlayerPage : ContentPage
                 return;
             }
 
-            Player.Source = MediaSource.FromUri(result.Uri);
-            Player.Play();
+            player.Source = MediaSource.FromUri(result.Uri);
+            player.Play();
             _viewModel.SetPlaybackState(true);
             _viewModel.RefreshCacheFlags();
         }
@@ -98,14 +124,16 @@ public partial class MusicPlayerPage : ContentPage
 
     private Task TogglePlaybackAsync()
     {
+        MediaElement player = Player;
+
         if (_viewModel.IsPlaying)
         {
-            Player.Pause();
+            player.Pause();
             _viewModel.SetPlaybackState(false);
         }
         else
         {
-            Player.Play();
+            player.Play();
             _viewModel.SetPlaybackState(true);
         }
 
@@ -129,7 +157,12 @@ public partial class MusicPlayerPage : ContentPage
         _positionTimer.Interval = TimeSpan.FromMilliseconds(500);
         _positionTimer.Tick += (_, _) =>
         {
-            _viewModel.UpdatePlaybackProgress(Player.Position, Player.Duration);
+            if (_player is null)
+            {
+                return;
+            }
+
+            _viewModel.UpdatePlaybackProgress(_player.Position, _player.Duration);
         };
         _positionTimer.Start();
     }

@@ -39,6 +39,7 @@ public class TechniquesViewModel : BaseViewModel
 
     public string PageTitle => AppStrings.PracticeHomeTitle;
     public string MyTechniquesLabel => AppStrings.PracticeMyTechniques;
+    public string PracticeCatalogLabel => AppStrings.PracticeCatalog;
     public string CreateButtonText => AppStrings.PracticeCreate;
     public string ProfileToolbarText => AppStrings.ProfileTitle;
     public string TodayForYouLabel => AppStrings.TodayForYou;
@@ -120,6 +121,7 @@ public class TechniquesViewModel : BaseViewModel
         Notify(
             nameof(PageTitle),
             nameof(MyTechniquesLabel),
+            nameof(PracticeCatalogLabel),
             nameof(CreateButtonText),
             nameof(ProfileToolbarText),
             nameof(TodayForYouLabel),
@@ -136,7 +138,6 @@ public class TechniquesViewModel : BaseViewModel
             nameof(FailedText),
             nameof(RetryText));
         UpdateTodayRecommendation();
-        InitializeAsync().FireAndForget();
     }
 
     public void Unsubscribe() => _techniqueMessenger.Unsubscribe(this);
@@ -300,7 +301,7 @@ public class TechniquesViewModel : BaseViewModel
 
     private async Task RefreshMoodHistoryAsync(CancellationToken cancellationToken = default)
     {
-        IReadOnlyList<MoodEntryDTO> moods = await _userProgressService.GetRecentMoodsAsync(7, cancellationToken);
+        IReadOnlyList<MoodEntryDTO> moods = await _userProgressService.GetRecentMoodsAsync(3, cancellationToken);
 
         await MainThread.InvokeOnMainThreadAsync(() =>
         {

@@ -6,6 +6,8 @@ namespace PsychologyApp.Presentation.UI.Components;
 
 public partial class ProgressBarView : ContentView
 {
+    private bool _wasLoading;
+
     public ProgressBarView()
     {
         InitializeComponent();
@@ -17,16 +19,25 @@ public partial class ProgressBarView : ContentView
     {
         base.OnPropertyChanged(propertyName);
 
-        if (propertyName is nameof(IsVisible) or nameof(IsLoading))
+        if (propertyName is not (nameof(IsVisible) or nameof(IsLoading)))
         {
-            if (!IsVisible || !IsLoading)
-            {
-                UiAnimations.ResetVisualState(this);
-                return;
-            }
-
-            UiAnimations.SafeRevealPremiumAsync(this).FireAndForget();
+            return;
         }
+
+        if (!IsVisible || !IsLoading)
+        {
+            _wasLoading = false;
+            UiAnimations.ResetVisualState(this);
+            return;
+        }
+
+        if (_wasLoading)
+        {
+            return;
+        }
+
+        _wasLoading = true;
+        UiAnimations.SafeRevealPremiumAsync(this).FireAndForget();
     }
 
     private void ApplyLocalization() => CancelText = AppStrings.Cancel;

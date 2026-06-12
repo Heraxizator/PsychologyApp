@@ -81,7 +81,7 @@ public class QuestionViewModel : BaseViewModel
             ? TestScoreAnalyzers.RecommendTechnique(analyzerId, questionBalls)
             : null;
 
-        await _navigationService.GoToTestResultAsync(questionBalls, interpretation, recommended);
+        await _navigationService.GoToTestResultAsync(questionBalls, interpretation, recommended, _session?.TestId);
     }
 
     private async Task SaveResultAsync(int score, string summary)

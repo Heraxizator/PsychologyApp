@@ -33,6 +33,11 @@
                 TapCommand="{Binding TryTechniqueCommand}" />
 
             <ui:ButtonView
+                IsVisible="{Binding CanRetake}"
+                BodyText="{Binding RetakeButtonText}"
+                TapCommand="{Binding RetakeCommand}" />
+
+            <ui:ButtonView
                 BodyText="{Binding FinishButtonText}"
                 Variant="Secondary"
                 TapCommand="{Binding FinishCommand}" />

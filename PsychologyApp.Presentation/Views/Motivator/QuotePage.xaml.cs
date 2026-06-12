@@ -17,8 +17,27 @@ public partial class QuotePage : ContentPage
         _animationHelper = new PageAnimationHelper(ViewModel, LoadingProgress, QuotesCollectionView);
     }
 
-    private void OnRemainingItemsThresholdReached(object? sender, EventArgs e) =>
+    private void OnRemainingItemsThresholdReached(object? sender, EventArgs e)
+    {
+        if (!ViewModel.IsDone || ViewModel.IsInit)
+        {
+            return;
+        }
+
         ViewModel.LoadMoreQuotesCommand.Execute(null);
+    }
+
+    private async void OnPullToRefresh(object? sender, EventArgs e)
+    {
+        try
+        {
+            await ViewModel.ReloadFromPullAsync();
+        }
+        finally
+        {
+            QuotesRefresh.IsRefreshing = false;
+        }
+    }
 
     protected override void OnAppearing()
     {

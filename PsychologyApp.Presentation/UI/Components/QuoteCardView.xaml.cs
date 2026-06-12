@@ -5,28 +5,24 @@ namespace PsychologyApp.Presentation.UI.Components;
 
 public partial class QuoteCardView : ContentView
 {
-    private Label? _favoriteLabel;
-
     public QuoteCardView()
     {
         InitializeComponent();
         LocalizedContentView.SubscribePreferences(this, ApplyLocalization);
         ApplyLocalization();
+        VisualElementPressFeedback.AttachToTemplateRoot(this, new PressFeedbackOptions { HapticOnRelease = true });
         Loaded += OnLoaded;
     }
 
     private void OnLoaded(object? sender, EventArgs e)
     {
-        foreach (Label label in this.GetVisualTreeDescendants().OfType<Label>())
-        {
-            if (label.GestureRecognizers.OfType<TapGestureRecognizer>().Any())
-            {
-                VisualElementPressFeedback.Attach(label);
-            }
-        }
-
-        _favoriteLabel = FavoriteActionLabel;
+        AttachIconPressFeedback(FavoriteActionBorder);
+        AttachIconPressFeedback(CopyActionBorder);
+        AttachIconPressFeedback(ShareActionBorder);
     }
+
+    private static void AttachIconPressFeedback(Border border) =>
+        VisualElementPressFeedback.Attach(border, new PressFeedbackOptions { HapticOnRelease = true });
 
     protected override void OnPropertyChanged(string? propertyName = null)
     {
@@ -34,7 +30,7 @@ public partial class QuoteCardView : ContentView
 
         if (propertyName == nameof(IsFavourite))
         {
-            UiAnimations.SafePulseAsync(_favoriteLabel ?? FavoriteActionLabel).FireAndForget();
+            UiAnimations.SafePulseAsync(FavoriteActionBorder).FireAndForget();
         }
     }
 

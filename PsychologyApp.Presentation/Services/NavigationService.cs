@@ -28,7 +28,7 @@ public interface INavigationService
     Task GoToAlternativeTestAsync();
     Task GoToTestHistoryAsync(string testId, string testTitle);
     Task GoToTestsListAsync();
-    Task GoToTestResultAsync(int score, string interpretation, TechniqueId? recommendedTechnique = null);
+    Task GoToTestResultAsync(int score, string interpretation, TechniqueId? recommendedTechnique = null, string? testId = null);
     Task GoToTestsTabAsync();
     Task GoToQuotesTabAsync();
     Task ShowOnboardingAsync();
@@ -105,13 +105,14 @@ public sealed class MauiNavigationService(
     public Task GoToTestsListAsync() =>
         navigation.PushAsync(pageFactory.CreateTestsListPage(), true);
 
-    public Task GoToTestResultAsync(int score, string interpretation, TechniqueId? recommendedTechnique = null) =>
+    public Task GoToTestResultAsync(int score, string interpretation, TechniqueId? recommendedTechnique = null, string? testId = null) =>
         navigation.PushAsync(
             pageFactory.CreateTestResultPage(new TestResultInfo
             {
                 Score = score,
                 Interpretation = interpretation,
-                RecommendedTechnique = recommendedTechnique
+                RecommendedTechnique = recommendedTechnique,
+                TestId = testId
             }),
             true);
 
@@ -119,6 +120,7 @@ public sealed class MauiNavigationService(
     {
         if (Microsoft.Maui.Controls.Shell.Current is AppShell appShell)
         {
+            appShell.MaterializeTab(appShell.TestsTab);
             appShell.CurrentItem = appShell.TestsTab;
         }
 
@@ -129,6 +131,7 @@ public sealed class MauiNavigationService(
     {
         if (Microsoft.Maui.Controls.Shell.Current is AppShell appShell)
         {
+            appShell.MaterializeTab(appShell.QuotesTab);
             appShell.CurrentItem = appShell.QuotesTab;
         }
 
