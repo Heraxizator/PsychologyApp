@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.UI.Components.FilterChipView"
+             x:Name="Root">
+    <Border
+        Style="{StaticResource FilterChipStyle}">
+        <Border.Triggers>
+            <DataTrigger
+                Binding="{Binding IsSelected, Source={x:Reference Root}}"
+                TargetType="Border"
+                Value="True">
+                <Setter Property="Style" Value="{StaticResource FilterChipSelectedStyle}" />
+            </DataTrigger>
+        </Border.Triggers>
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer
+                Command="{Binding TapCommand, Source={x:Reference Root}}"
+                CommandParameter="{Binding CommandParameter, Source={x:Reference Root}}" />
+        </Border.GestureRecognizers>
+        <Label
+            Text="{Binding TitleText, Source={x:Reference Root}}"
+            Style="{StaticResource FilterChipLabelStyle}">
+            <Label.Triggers>
+                <DataTrigger
+                    Binding="{Binding IsSelected, Source={x:Reference Root}}"
+                    TargetType="Label"
+                    Value="True">
+                    <Setter Property="Style" Value="{StaticResource FilterChipSelectedLabelStyle}" />
+                </DataTrigger>
+            </Label.Triggers>
+        </Label>
+    </Border>
+</ContentView>

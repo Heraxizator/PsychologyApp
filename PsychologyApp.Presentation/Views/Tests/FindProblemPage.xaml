@@ -19,9 +19,7 @@
             TitleText="{Binding PageTitle}"
             BackCommand="{Binding BackCommand}" />
 
-        <ScrollView
-            Grid.Row="1"
-            VerticalScrollBarVisibility="Default">
+        <ScrollView Grid.Row="1">
             <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
                 <ui:TextBoxView
                     HeaderText="{Binding DescriptionHeader}"
