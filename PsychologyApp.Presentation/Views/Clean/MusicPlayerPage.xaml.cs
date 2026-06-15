@@ -29,24 +29,22 @@ public partial class MusicPlayerPage : ContentPage
         _viewModel = musicPlayerViewModelFactory.Create(_playbackService);
         BindingContext = _viewModel;
 
+        EnsurePlayer();
         _animationHelper = new PageAnimationHelper(_viewModel, contentView: Musics);
     }
 
-    private MediaElement Player => EnsurePlayer();
-
     private MediaElement EnsurePlayer()
     {
-        if (_player is not null)
+        if (_player is null)
         {
-            return _player;
+            _player = new MediaElement
+            {
+                IsVisible = false,
+                ShouldAutoPlay = true
+            };
+            MainContentGrid.Children.Add(_player);
         }
 
-        _player = new MediaElement
-        {
-            IsVisible = false,
-            ShouldAutoPlay = true
-        };
-        MainContentGrid.Children.Add(_player);
         _playbackService.Attach(_player);
         return _player;
     }
@@ -54,6 +52,7 @@ public partial class MusicPlayerPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        EnsurePlayer();
         _animationHelper?.TryRevealAsync();
         PrefetchPlaylistAsync().FireAndForget();
         StartPositionTimer();
