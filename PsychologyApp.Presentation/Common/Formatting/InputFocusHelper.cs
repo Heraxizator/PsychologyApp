@@ -3,10 +3,10 @@ namespace PsychologyApp.Presentation.Common;
 public static class InputFocusHelper
 {
     public static void ApplyFocusedBorder(Border border) =>
-        ApplyFocusedBorderAsync(border).GetAwaiter().GetResult();
+        ApplyFocusedBorderInstant(border);
 
     public static void ApplyDefaultBorder(Border border) =>
-        ApplyDefaultBorderAsync(border).GetAwaiter().GetResult();
+        ApplyDefaultBorderInstant(border);
 
     public static Task ApplyFocusedBorderAsync(Border border) =>
         UiAnimations.SafeInputFocusAsync(border, focused: true);

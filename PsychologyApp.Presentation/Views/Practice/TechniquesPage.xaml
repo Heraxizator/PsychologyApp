@@ -54,7 +54,7 @@
             </CollectionView.Behaviors>
 
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource PracticeListItemSpacing}" />
             </CollectionView.ItemsLayout>
 
             <CollectionView.Header>
@@ -82,12 +82,15 @@
                         MoodHistorySummary="{Binding MoodHistorySummary}"
                         HasMoodHistorySummary="{Binding HasMoodHistorySummary}" />
 
-                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" Margin="0,4,0,0" Padding="0,0,0,0">
-                        <Label
-                            Grid.Column="0"
-                            Text="{Binding PracticeCatalogLabel}"
-                            Style="{StaticResource SectionTitleStyle}"
-                            VerticalOptions="Center" />
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" Margin="0,4,0,0">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                            <Label
+                                Text="{Binding PracticeCatalogLabel}"
+                                Style="{StaticResource SectionTitleStyle}" />
+                            <Label
+                                Text="{Binding PracticeCatalogHint}"
+                                Style="{StaticResource CaptionStyle}" />
+                        </VerticalStackLayout>
                         <ui:ButtonView
                             Grid.Column="1"
                             IsCompact="True"

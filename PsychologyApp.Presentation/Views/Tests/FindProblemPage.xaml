@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Views.Tests.FindProblemPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Tests"
+             xmlns:models="clr-namespace:PsychologyApp.Presentation.Models.Tests"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Common.Behaviors"
              x:DataType="vm:FindProblemViewModel"
@@ -30,7 +31,7 @@
                         <Binding Path="AlgorithmRows" />
                     </ui:AlgorithmBoxView.ItemsSource>
                     <ui:AlgorithmBoxView.ItemTemplate>
-                        <DataTemplate x:DataType="vm:AlgorithmRow">
+                        <DataTemplate x:DataType="models:AlgorithmRow">
                             <Label Text="{Binding Text}" Style="{StaticResource BodyStyle}" Margin="0,0,0,3">
                                 <Label.Behaviors>
                                     <behaviors:ListItemRevealBehavior />

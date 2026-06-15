@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 using PsychologyApp.Application.Services.UserProgress;
 
 namespace PsychologyApp.Presentation.Common;
@@ -16,7 +17,11 @@ public static class SessionDraftStore
         await service.SaveSessionDraftAsync(techniqueKey, json, cancellationToken);
     }
 
-    public static async Task<T?> LoadAsync<T>(IUserProgressService service, string techniqueKey, CancellationToken cancellationToken = default)
+    public static async Task<T?> LoadAsync<T>(
+        IUserProgressService service,
+        string techniqueKey,
+        ILogger? logger = null,
+        CancellationToken cancellationToken = default)
     {
         string? json = await service.GetSessionDraftAsync(techniqueKey, cancellationToken);
         if (string.IsNullOrWhiteSpace(json))
@@ -28,8 +33,9 @@ public static class SessionDraftStore
         {
             return JsonSerializer.Deserialize<T>(json, SerializerOptions);
         }
-        catch
+        catch (Exception ex)
         {
+            logger?.LogWarning(ex, "Failed to deserialize session draft for {TechniqueKey}.", techniqueKey);
             return default;
         }
     }

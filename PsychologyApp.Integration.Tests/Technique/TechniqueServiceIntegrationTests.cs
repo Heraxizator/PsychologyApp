@@ -30,10 +30,10 @@ public sealed class TechniqueServiceIntegrationTests : IAsyncLifetime
             Number = "1",
             Date = "2026-06-06",
             Header = "Integration Header",
-            Describtion = "Description",
+            Description = "Description",
             Subject = "Subject",
             Author = "Author",
-            Actions = "Step 1",
+            Algorithm = "Step 1",
             Image = "img.png"
         };
 

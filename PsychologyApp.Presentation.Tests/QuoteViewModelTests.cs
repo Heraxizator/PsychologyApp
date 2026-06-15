@@ -5,6 +5,7 @@ using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.QuotService;
 using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Common.Infrastructure;
 using PsychologyApp.Presentation.Services.Quotes;
 using PsychologyApp.Presentation.Services.Toasts;
 using PsychologyApp.Presentation.ViewModels.Motivator;
@@ -17,7 +18,6 @@ public sealed class QuoteViewModelTests
     public QuoteViewModelTests()
     {
         AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
-        AppReadiness.SignalDatabaseReady();
     }
 
     [Fact]
@@ -25,6 +25,7 @@ public sealed class QuoteViewModelTests
     {
         var quotService = CreateQuotServiceMock();
         QuoteViewModel viewModel = CreateViewModel(quotService.Object);
+        await viewModel.EnsureInitializedAsync();
         await WaitForStateAsync(viewModel);
 
         quotService.Invocations.Clear();
@@ -44,6 +45,7 @@ public sealed class QuoteViewModelTests
         notifier.FavoritesChanged += () => notifications++;
 
         QuoteViewModel viewModel = CreateViewModel(quotService.Object, notifier);
+        await viewModel.EnsureInitializedAsync();
         await WaitForStateAsync(viewModel);
 
         Assert.NotEmpty(viewModel.QuotesObservableCollection);
@@ -54,6 +56,19 @@ public sealed class QuoteViewModelTests
         quotService.Verify(
             s => s.MarkAsFavouriteAsync(1, true, It.IsAny<CancellationToken>()),
             Times.Once);
+    }
+
+    [Fact]
+    public void Constructor_DoesNotLoadUntilEnsureInitialized()
+    {
+        Mock<IQuotService> quotService = CreateQuotServiceMock();
+        QuoteViewModel viewModel = CreateViewModel(quotService.Object);
+
+        Assert.False(viewModel.HasInitialized);
+        Assert.False(viewModel.IsDone);
+        quotService.Verify(
+            s => s.GetAllAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()),
+            Times.Never);
     }
 
     private static Mock<IQuotService> CreateQuotServiceMock()
@@ -100,13 +115,19 @@ public sealed class QuoteViewModelTests
         });
 
         return new QuoteViewModel(
-            navigation.Object,
             new TestNavigationService(navigation.Object),
             quotService,
             NullLogger<QuoteViewModel>.Instance,
             settings,
-            toast.Object,
-            notifier ?? new QuotesChangeNotifier());
+            new QuoteFeedCoordinator(),
+            new QuoteItemCommandsFactory(
+                quotService,
+                notifier ?? new QuotesChangeNotifier(),
+                toast.Object,
+                settings,
+                NullLogger<QuoteItemCommandsFactory>.Instance),
+            new QuoteFeedLoader(),
+            TestDatabaseReady.CreateSignaled());
     }
 
     private static async Task WaitForStateAsync(QuoteViewModel viewModel)

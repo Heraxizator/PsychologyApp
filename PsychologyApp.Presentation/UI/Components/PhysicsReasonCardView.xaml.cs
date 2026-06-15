@@ -29,11 +29,21 @@ public partial class PhysicsReasonCardView : ContentView
         }
     }
 
-    protected override async void OnPropertyChanged(string? propertyName = null)
+    protected override void OnPropertyChanged(string? propertyName = null)
     {
         base.OnPropertyChanged(propertyName);
 
         if (propertyName != nameof(IsExpanded) || _expandedSection is null || _isAnimatingExpand)
+        {
+            return;
+        }
+
+        HandleExpandedChangedAsync().FireAndForget();
+    }
+
+    private async Task HandleExpandedChangedAsync()
+    {
+        if (_expandedSection is null)
         {
             return;
         }

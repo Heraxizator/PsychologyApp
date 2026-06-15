@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging;
+
 namespace PsychologyApp.Presentation.Services;
 
 internal static class NavigationCoordinator
@@ -5,6 +7,9 @@ internal static class NavigationCoordinator
     private static readonly SemaphoreSlim Gate = new(1, 1);
     private static long _pushBlockedUntilUtcTicks;
     private static readonly TimeSpan PushCooldown = TimeSpan.FromMilliseconds(350);
+    private static ILogger? _logger;
+
+    internal static void SetLogger(ILogger logger) => _logger = logger;
 
     public static Task RunAsync(Func<Task> navigate) =>
         RunCoreAsync(navigate, applyPushCooldown: false);
@@ -19,12 +24,14 @@ internal static class NavigationCoordinator
             long now = DateTime.UtcNow.Ticks;
             if (now < Volatile.Read(ref _pushBlockedUntilUtcTicks))
             {
+                _logger?.LogDebug("Navigation dropped: push cooldown active.");
                 return;
             }
         }
 
         if (!await Gate.WaitAsync(0).ConfigureAwait(false))
         {
+            _logger?.LogDebug("Navigation dropped: coordinator gate busy.");
             return;
         }
 

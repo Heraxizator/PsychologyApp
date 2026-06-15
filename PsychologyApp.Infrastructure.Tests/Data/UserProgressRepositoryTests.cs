@@ -1,4 +1,6 @@
+using Dapper;
 using PsychologyApp.Application.Models;
+using PsychologyApp.Infrastructure.Data.Context;
 using PsychologyApp.Infrastructure.Data.Repositories.UserProgress;
 using PsychologyApp.Testing.Data;
 using Xunit;
@@ -192,6 +194,65 @@ public sealed class UserProgressRepositoryTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task GetLastPracticeDatesAsync_ReturnsLatestDatePerItemKey()
+    {
+        DateTime spinOlder = DateTime.UtcNow.AddDays(-5);
+        DateTime spinNewer = DateTime.UtcNow.AddDays(-2);
+        DateTime paperDate = DateTime.UtcNow.AddDays(-1);
+
+        await _repository.RecordCompletionAsync(new CompletionDTO
+        {
+            CompletionKind = "technique",
+            ItemKey = "Spin",
+            ModuleName = "Practice",
+            PageName = "Spin",
+            CompletedAt = spinOlder,
+            DurationSeconds = 0
+        });
+
+        await _repository.RecordCompletionAsync(new CompletionDTO
+        {
+            CompletionKind = "technique",
+            ItemKey = "Spin",
+            ModuleName = "Practice",
+            PageName = "Spin",
+            CompletedAt = spinNewer,
+            DurationSeconds = 0
+        });
+
+        await _repository.RecordCompletionAsync(new CompletionDTO
+        {
+            CompletionKind = "technique",
+            ItemKey = "Paper",
+            ModuleName = "Practice",
+            PageName = "Paper",
+            CompletedAt = paperDate,
+            DurationSeconds = 0
+        });
+
+        IReadOnlyDictionary<string, DateTime> dates = await _repository.GetLastPracticeDatesAsync(["Spin", "Paper", "Missing"]);
+
+        Assert.Equal(2, dates.Count);
+        Assert.True(Math.Abs((spinNewer - dates["Spin"]).TotalSeconds) < 1);
+        Assert.True(Math.Abs((paperDate - dates["Paper"]).TotalSeconds) < 1);
+        Assert.False(dates.ContainsKey("Missing"));
+    }
+
+    [Fact]
+    public async Task GetSessionDraftKeysAsync_ReturnsKeysWithDrafts()
+    {
+        await _repository.SaveSessionDraftAsync("Paper", "draft-paper");
+        await _repository.SaveSessionDraftAsync("Spin", "draft-spin");
+
+        IReadOnlySet<string> keys = await _repository.GetSessionDraftKeysAsync(["Paper", "Spin", "Check"]);
+
+        Assert.Equal(2, keys.Count);
+        Assert.Contains("Paper", keys);
+        Assert.Contains("Spin", keys);
+        Assert.DoesNotContain("Check", keys);
+    }
+
+    [Fact]
     public async Task SessionDraft_SaveGetDelete_Works()
     {
         const string key = "Paper";
@@ -251,6 +312,30 @@ public sealed class UserProgressRepositoryTests : IAsyncLifetime
 
         Assert.Single(moods);
         Assert.Equal(5, moods[0].MoodLevel);
+    }
+
+    [Fact]
+    public async Task DropAllTablesAsync_RemovesV5Data()
+    {
+        await _repository.SaveTestResultAsync(new TestResultDTO
+        {
+            TestId = "beck",
+            Score = 1,
+            Summary = "s",
+            CompletedAt = DateTime.UtcNow
+        });
+
+        await using Microsoft.Data.Sqlite.SqliteConnection connection =
+            (Microsoft.Data.Sqlite.SqliteConnection)await _connectionFactory.CreateOpenConnectionAsync();
+        await SqliteSchema.DropAllTablesAsync(connection);
+
+        IEnumerable<string> tableNames = await connection.QueryAsync<string>(
+            "SELECT name FROM sqlite_master WHERE type = 'table';");
+
+        Assert.DoesNotContain("TestResults", tableNames);
+        Assert.DoesNotContain("SessionDrafts", tableNames);
+        Assert.DoesNotContain("Completions", tableNames);
+        Assert.DoesNotContain("MoodEntries", tableNames);
     }
 
     public Task InitializeAsync() => Task.CompletedTask;

@@ -196,7 +196,7 @@ public static class VisualElementPressFeedback
             }
         }
 
-        private async void OnPointerPressed(object? sender, PointerEventArgs e)
+        private void OnPointerPressed(object? sender, PointerEventArgs e)
         {
             if (sender is not View target)
             {
@@ -204,10 +204,10 @@ public static class VisualElementPressFeedback
             }
 
             _pointerGestureActive = true;
-            await AnimatePressAsync(target);
+            AnimatePressAsync(target).FireAndForget();
         }
 
-        private async void OnPointerReleased(object? sender, PointerEventArgs e)
+        private void OnPointerReleased(object? sender, PointerEventArgs e)
         {
             if (sender is not View target)
             {
@@ -215,10 +215,10 @@ public static class VisualElementPressFeedback
             }
 
             _pointerGestureActive = false;
-            await AnimateReleaseAsync(target);
+            AnimateReleaseAsync(target).FireAndForget();
         }
 
-        private async void OnPointerExited(object? sender, PointerEventArgs e)
+        private void OnPointerExited(object? sender, PointerEventArgs e)
         {
             if (sender is not View target)
             {
@@ -226,17 +226,17 @@ public static class VisualElementPressFeedback
             }
 
             _pointerGestureActive = false;
-            await AnimateReleaseAsync(target);
+            AnimateReleaseAsync(target).FireAndForget();
         }
 
-        private async void OnTapped(object? sender, TappedEventArgs e)
+        private void OnTapped(object? sender, TappedEventArgs e)
         {
             if (_pointerGestureActive)
             {
                 return;
             }
 
-            await PlayTapFeedbackAsync(_target);
+            PlayTapFeedbackAsync(_target).FireAndForget();
         }
 
         public void Detach(View target)

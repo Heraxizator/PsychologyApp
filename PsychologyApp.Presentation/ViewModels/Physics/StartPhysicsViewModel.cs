@@ -26,12 +26,12 @@ public class StartPhysicsViewModel : BaseViewModel
 
     public ICommand StartCommand { get; private set; } = default!;
 
-    public StartPhysicsViewModel(INavigation navigation, INavigationService navigationService)
+    public StartPhysicsViewModel(INavigationService navigationService)
     {
         ModuleName = AppStrings.PhysicsTitle;
         PageName = AppStrings.PhysicsIntroPage;
 
-        BindNavigation(navigation, navigationService);
+        BindNavigation(navigationService);
         StartCommand = new AsyncCommand(() => navigationService.GoToPhysicsSearchAsync());
         SetDone();
     }

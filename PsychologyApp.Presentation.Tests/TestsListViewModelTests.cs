@@ -1,8 +1,11 @@
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using PsychologyApp.Application.Models;
-using PsychologyApp.Presentation.Common;
 using PsychologyApp.Application.Services.UserProgress;
+using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Common.Infrastructure;
 using PsychologyApp.Presentation.Models.Tests;
+using PsychologyApp.Presentation.Services.Tests;
 using PsychologyApp.Presentation.ViewModels.Tests;
 using Xunit;
 
@@ -13,7 +16,6 @@ public sealed class TestsListViewModelTests
     public TestsListViewModelTests()
     {
         AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
-        AppReadiness.SignalDatabaseReady();
     }
 
     [Fact]
@@ -48,10 +50,10 @@ public sealed class TestsListViewModelTests
             });
 
         TestsListViewModel viewModel = new(
-            navigation.Object,
             navigationService,
-            progress.Object,
-            catalog);
+            TestDatabaseReady.CreateSignaled(),
+            new TestsListLoader(progress.Object, catalog),
+            NullLogger<TestsListViewModel>.Instance);
 
         await viewModel.InitAsync();
 

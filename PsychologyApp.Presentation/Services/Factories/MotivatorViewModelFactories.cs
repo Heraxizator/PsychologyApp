@@ -5,7 +5,9 @@ using PsychologyApp.Application.Services.QuotService;
 using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.Services.Quotes;
 using PsychologyApp.Presentation.Services.Toasts;
+using PsychologyApp.Presentation.Common.Infrastructure;
 using PsychologyApp.Presentation.ViewModels.Motivator;
+using PsychologyApp.Presentation.Services.Clean;
 using PsychologyApp.Presentation.ViewModels.Clean;
 
 namespace PsychologyApp.Presentation.Services.Factories;
@@ -19,27 +21,34 @@ public sealed class QuoteViewModelFactory(
     IQuotService quotService,
     ILogger<QuoteViewModel> logger,
     IOptions<AppSettings> settings,
-    IToastService toastService,
-    IQuotesChangeNotifier quotesChangeNotifier,
-    Func<NavigationContext, INavigationService> navigationServiceFactory) : IQuoteViewModelFactory
+    IDatabaseReadySignal databaseReadySignal,
+    Func<QuoteFeedCoordinator> feedCoordinatorFactory,
+    QuoteItemCommandsFactory quoteCommandsFactory,
+    QuoteFeedLoader quoteFeedLoader,
+    Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IQuoteViewModelFactory
 {
     public QuoteViewModel Create(INavigation navigation) =>
         new(
-            navigation,
-            navigationServiceFactory(NavigationContext.From(navigation)),
+            ResolveNavigation(navigationServiceFactory, navigation),
             quotService,
             logger,
             settings,
-            toastService,
-            quotesChangeNotifier);
+            feedCoordinatorFactory(),
+            quoteCommandsFactory,
+            quoteFeedLoader,
+            databaseReadySignal);
 }
 
 public interface IMusicPlayerViewModelFactory
 {
-    MusicPlayerViewModel Create();
+    MusicPlayerViewModel Create(IAudioPlaybackService playbackService);
 }
 
-public sealed class MusicPlayerViewModelFactory(ILogger<MusicPlayerViewModel> logger) : IMusicPlayerViewModelFactory
+public sealed class MusicPlayerViewModelFactory(
+    ILogger<MusicPlayerViewModel> logger,
+    MusicPlaylistPresenter playlistPresenter,
+    MusicPlaybackPresenter playbackPresenter) : IMusicPlayerViewModelFactory
 {
-    public MusicPlayerViewModel Create() => new(logger);
+    public MusicPlayerViewModel Create(IAudioPlaybackService playbackService) =>
+        new(logger, playbackService, playlistPresenter, playbackPresenter);
 }

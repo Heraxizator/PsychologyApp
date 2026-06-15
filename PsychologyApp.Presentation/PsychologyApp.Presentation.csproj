@@ -156,6 +156,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <InternalsVisibleTo Include="PsychologyApp.Presentation.Tests" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="Views\Tests\AlternativeTestPage.xaml.cs">
 	    <DependentUpon>AlternativeTestPage.xaml</DependentUpon>
 	  </Compile>

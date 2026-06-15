@@ -10,7 +10,7 @@ public class TestNavigationService(INavigation navigation) : INavigationService
 
     public Task GoBackAsync() => navigation.PopAsync(false);
 
-    public Task GoToRootAsync() => navigation.PopToRootAsync(true);
+    public virtual Task GoToRootAsync() => navigation.PopToRootAsync(true);
 
     public virtual Task GoToTechniqueAsync(TechniqueId techniqueId) => Task.CompletedTask;
 
@@ -42,7 +42,7 @@ public class TestNavigationService(INavigation navigation) : INavigationService
 
     public Task GoToLuscherTestAsync(LuscherMode mode) => Task.CompletedTask;
 
-    public Task GoToStandardTestAsync() => Task.CompletedTask;
+    public virtual Task GoToStandardTestAsync() => Task.CompletedTask;
 
     public Task GoToAlternativeTestAsync() => Task.CompletedTask;
 

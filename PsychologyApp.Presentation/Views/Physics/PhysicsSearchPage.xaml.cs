@@ -51,6 +51,7 @@ public partial class PhysicsSearchPage : ContentPage
     {
         base.OnAppearing();
         _animationHelper?.TryRevealAsync();
+        ViewModel.EnsureInitializedAsync().FireAndForget();
     }
 
     protected override void OnHandlerChanged()

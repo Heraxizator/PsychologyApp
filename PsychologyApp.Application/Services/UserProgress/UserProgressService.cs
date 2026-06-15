@@ -76,11 +76,21 @@ public sealed class UserProgressService(IUserProgressRepository repository) : IU
     public Task<DateTime?> GetLastPracticeDateAsync(string itemKey, CancellationToken cancellationToken = default) =>
         repository.GetLastCompletionForItemAsync(itemKey, cancellationToken);
 
+    public Task<IReadOnlyDictionary<string, DateTime>> GetLastPracticeDatesAsync(
+        IReadOnlyList<string> itemKeys,
+        CancellationToken cancellationToken = default) =>
+        repository.GetLastPracticeDatesAsync(itemKeys, cancellationToken);
+
     public Task SaveSessionDraftAsync(string techniqueKey, string payloadJson, CancellationToken cancellationToken = default) =>
         repository.SaveSessionDraftAsync(techniqueKey, payloadJson, cancellationToken);
 
     public Task<string?> GetSessionDraftAsync(string techniqueKey, CancellationToken cancellationToken = default) =>
         repository.GetSessionDraftAsync(techniqueKey, cancellationToken);
+
+    public Task<IReadOnlySet<string>> GetSessionDraftKeysAsync(
+        IReadOnlyList<string> techniqueKeys,
+        CancellationToken cancellationToken = default) =>
+        repository.GetSessionDraftKeysAsync(techniqueKeys, cancellationToken);
 
     public Task DeleteSessionDraftAsync(string techniqueKey, CancellationToken cancellationToken = default) =>
         repository.DeleteSessionDraftAsync(techniqueKey, cancellationToken);

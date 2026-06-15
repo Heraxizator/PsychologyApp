@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -7,6 +8,10 @@ public readonly record struct AudioCacheResult(string Uri, bool UsedNetwork, boo
 
 public static class MusicAudioCache
 {
+    private const int MaxDownloadBytes = 50 * 1024 * 1024;
+    private static readonly TimeSpan HttpTimeout = TimeSpan.FromSeconds(30);
+    private static readonly HttpClient HttpClient = CreateHttpClient();
+
     public static bool IsCached(string remoteUrl) =>
         !string.IsNullOrWhiteSpace(remoteUrl) && File.Exists(GetCachePath(remoteUrl));
 
@@ -27,8 +32,24 @@ public static class MusicAudioCache
 
         try
         {
-            using HttpClient client = new();
-            byte[] bytes = await client.GetByteArrayAsync(remoteUrl, cancellationToken);
+            using HttpResponseMessage response = await HttpClient.GetAsync(
+                remoteUrl,
+                HttpCompletionOption.ResponseHeadersRead,
+                cancellationToken);
+
+            response.EnsureSuccessStatusCode();
+
+            if (response.Content.Headers.ContentLength is > MaxDownloadBytes)
+            {
+                return new AudioCacheResult(remoteUrl, UsedNetwork: true, DownloadFailed: true);
+            }
+
+            byte[] bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken);
+            if (bytes.Length > MaxDownloadBytes)
+            {
+                return new AudioCacheResult(remoteUrl, UsedNetwork: true, DownloadFailed: true);
+            }
+
             string? directory = Path.GetDirectoryName(cachePath);
             if (!string.IsNullOrEmpty(directory))
             {
@@ -61,6 +82,14 @@ public static class MusicAudioCache
             await ResolvePlaybackUriAsync(url, cancellationToken);
         }
     }
+
+    internal static HttpClient SharedHttpClient => HttpClient;
+
+    private static HttpClient CreateHttpClient() =>
+        new(new SocketsHttpHandler { PooledConnectionLifetime = TimeSpan.FromMinutes(5) })
+        {
+            Timeout = HttpTimeout
+        };
 
     private static string GetCachePath(string remoteUrl)
     {

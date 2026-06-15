@@ -17,6 +17,18 @@ public partial class UserPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        _viewModel?.RefreshAsync(forceQuotesReload: false).FireAndForget();
+        if (_viewModel is null)
+        {
+            return;
+        }
+
+        if (_viewModel.HasInitialized)
+        {
+            _viewModel.RefreshAsync(forceQuotesReload: false).FireAndForget();
+        }
+        else
+        {
+            _viewModel.EnsureInitializedAsync().FireAndForget();
+        }
     }
 }

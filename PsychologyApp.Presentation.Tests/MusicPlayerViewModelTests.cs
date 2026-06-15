@@ -1,6 +1,7 @@
-using Microsoft.Extensions.Logging.Abstractions;
+using Moq;
 using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Models.Clean;
+using PsychologyApp.Presentation.Services.Clean;
 using PsychologyApp.Presentation.ViewModels.Clean;
 using Xunit;
 
@@ -13,10 +14,25 @@ public sealed class MusicPlayerViewModelTests
         AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
     }
 
+    private static MusicPlayerViewModel CreateViewModel(Mock<IAudioPlaybackService>? playbackMock = null)
+    {
+        playbackMock ??= new Mock<IAudioPlaybackService>();
+        playbackMock.Setup(p => p.PlayAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+        playbackMock.Setup(p => p.Duration).Returns(TimeSpan.FromMinutes(3));
+        playbackMock.Setup(p => p.Position).Returns(TimeSpan.Zero);
+        return new MusicPlayerViewModel(
+            Microsoft.Extensions.Logging.Abstractions.NullLogger<MusicPlayerViewModel>.Instance,
+            playbackMock.Object,
+            new MusicPlaylistPresenter(),
+            new MusicPlaybackPresenter(
+                Microsoft.Extensions.Logging.Abstractions.NullLogger<MusicPlaybackPresenter>.Instance,
+                new MusicPlaylistPresenter()));
+    }
+
     [Fact]
     public void InitializePlaylist_LoadsVerifiedPrayersImmediately()
     {
-        MusicPlayerViewModel viewModel = new(NullLogger<MusicPlayerViewModel>.Instance);
+        MusicPlayerViewModel viewModel = CreateViewModel();
 
         Assert.True(viewModel.IsDone);
         Assert.Equal(5, viewModel.AllItems.Count);
@@ -27,7 +43,7 @@ public sealed class MusicPlayerViewModelTests
     [Fact]
     public void SearchText_FiltersPrayerList()
     {
-        MusicPlayerViewModel viewModel = new(NullLogger<MusicPlayerViewModel>.Instance);
+        MusicPlayerViewModel viewModel = CreateViewModel();
 
         viewModel.SearchText = AppStrings.CleanerPsalm50;
 
@@ -38,7 +54,7 @@ public sealed class MusicPlayerViewModelTests
     [Fact]
     public void SelectCategory_FiltersByCategory()
     {
-        MusicPlayerViewModel viewModel = new(NullLogger<MusicPlayerViewModel>.Instance);
+        MusicPlayerViewModel viewModel = CreateViewModel();
 
         viewModel.SelectCategoryCommand.Execute(AppStrings.CleanerCategoryCore);
 
@@ -49,16 +65,15 @@ public sealed class MusicPlayerViewModelTests
     [Fact]
     public async Task PlayCommand_SetsActiveTrackAndPlaybackFlags()
     {
-        MusicPlayerViewModel viewModel = new(NullLogger<MusicPlayerViewModel>.Instance);
+        Mock<IAudioPlaybackService> playback = new();
+        playback.Setup(p => p.PlayAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+        MusicPlayerViewModel viewModel = CreateViewModel(playback);
         Audio track = viewModel.AllItems[0];
-        viewModel.PlayAudioHandler = _ => Task.CompletedTask;
 
         track.ClickCommand?.Execute(null);
         await Task.Delay(50);
 
-        viewModel.SetPlaybackState(true);
-
         Assert.True(track.IsActive);
-        Assert.True(track.IsPlayingThis);
+        playback.Verify(p => p.PlayAsync(track.URL!, It.IsAny<CancellationToken>()), Times.Once);
     }
 }

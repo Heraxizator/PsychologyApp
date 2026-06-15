@@ -12,9 +12,9 @@ public sealed class DonateViewModel : BaseViewModel
     public string MoreInfoBody => AppStrings.DonateBody;
     public string DonateButtonText => AppStrings.DonateButton;
 
-    public DonateViewModel(INavigation navigation, INavigationService navigationService)
+    public DonateViewModel(INavigationService navigationService)
     {
-        BindNavigation(navigation, navigationService);
+        BindNavigation(navigationService);
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
         DonateCommand = new AsyncCommand(OpenDonatePageAsync);
     }

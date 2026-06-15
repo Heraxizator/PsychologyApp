@@ -47,7 +47,13 @@ public static class LuscherScoring
         double blueValue = colourValues.FindIndex(x => x.Code == ColourValue.Blue.Code);
         double greenValue = colourValues.FindIndex(x => x.Code == ColourValue.Green.Code);
 
-        return (18 - redValue - yellowValue) / (18 - blueValue - greenValue);
+        double denominator = 18 - blueValue - greenValue;
+        if (denominator == 0)
+        {
+            return 0;
+        }
+
+        return (18 - redValue - yellowValue) / denominator;
     }
 
     public static string InterpretCo(int coValue)

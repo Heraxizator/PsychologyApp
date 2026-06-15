@@ -52,10 +52,10 @@ public sealed class TechniqueService(ITechniqueRepository techniqueRepository) :
             techniqueDTO.Number!,
             techniqueDTO.Date!,
             techniqueDTO.Header!,
-            techniqueDTO.Describtion!,
+            techniqueDTO.Description!,
             techniqueDTO.Subject!,
             techniqueDTO.Author!,
-            techniqueDTO.Actions!,
+            techniqueDTO.Algorithm!,
             techniqueDTO.Image);
 
         await techniqueRepository.EditAsync(technique, cancellationToken);

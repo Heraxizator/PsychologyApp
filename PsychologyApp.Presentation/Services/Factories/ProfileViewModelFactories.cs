@@ -2,11 +2,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Services.QuotService;
-using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Services.Dialogs;
 using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.Services.Preferences;
 using PsychologyApp.Presentation.Services.Quotes;
 using PsychologyApp.Presentation.Services.Toasts;
+using PsychologyApp.Presentation.Services.Profile;
 using PsychologyApp.Presentation.ViewModels.Review;
 using PsychologyApp.Presentation.ViewModels.Profile;
 
@@ -18,24 +19,29 @@ public interface IUserViewModelFactory
 }
 
 public sealed class UserViewModelFactory(
-    IQuotService quotService,
-    IUserProgressService userProgressService,
     ILogger<UserViewModel> logger,
     IOptions<AppSettings> settings,
     IQuotesChangeNotifier quotesChangeNotifier,
-    IToastService toastService,
-    Func<NavigationContext, INavigationService> navigationServiceFactory) : IUserViewModelFactory
+    ProfileStatsLoader profileStatsLoader,
+    Func<ProfileQuotesLoader> profileQuotesLoaderFactory,
+    ProfilePracticeHistoryLoader practiceHistoryLoader,
+    ProfileFeaturedTechniquesBuilder featuredTechniquesBuilder,
+    QuoteItemCommandsFactory quoteCommandsFactory,
+    UserProfileRefreshCoordinator profileRefreshCoordinator,
+    Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IUserViewModelFactory
 {
     public UserViewModel Create(INavigation navigation) =>
         new(
-            navigation,
-            quotService,
-            userProgressService,
             logger,
             settings,
-            navigationServiceFactory(NavigationContext.From(navigation)),
+            ResolveNavigation(navigationServiceFactory, navigation),
             quotesChangeNotifier,
-            toastService);
+            profileStatsLoader,
+            profileQuotesLoaderFactory(),
+            practiceHistoryLoader,
+            featuredTechniquesBuilder,
+            quoteCommandsFactory,
+            profileRefreshCoordinator);
 }
 
 public interface IOptionsViewModelFactory
@@ -43,10 +49,10 @@ public interface IOptionsViewModelFactory
     OptionsViewModel Create(INavigation navigation);
 }
 
-public sealed class OptionsViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory) : IOptionsViewModelFactory
+public sealed class OptionsViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IOptionsViewModelFactory
 {
     public OptionsViewModel Create(INavigation navigation) =>
-        new(navigation, navigationServiceFactory(NavigationContext.From(navigation)));
+        new(ResolveNavigation(navigationServiceFactory, navigation));
 }
 
 public interface IDonateViewModelFactory
@@ -54,10 +60,10 @@ public interface IDonateViewModelFactory
     DonateViewModel Create(INavigation navigation);
 }
 
-public sealed class DonateViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory) : IDonateViewModelFactory
+public sealed class DonateViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IDonateViewModelFactory
 {
     public DonateViewModel Create(INavigation navigation) =>
-        new(navigation, navigationServiceFactory(NavigationContext.From(navigation)));
+        new(ResolveNavigation(navigationServiceFactory, navigation));
 }
 
 public interface IFormViewModelFactory
@@ -77,10 +83,16 @@ public interface ISettingsViewModelFactory
 
 public sealed class SettingsViewModelFactory(
     IDialogService dialogService,
-    Func<NavigationContext, INavigationService> navigationServiceFactory) : ISettingsViewModelFactory
+    IUserPreferencesStore userPreferencesStore,
+    SettingsPreferencesPresenter settingsPreferencesPresenter,
+    Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, ISettingsViewModelFactory
 {
     public SettingsViewModel Create(INavigation navigation) =>
-        new(navigation, dialogService, navigationServiceFactory(NavigationContext.From(navigation)));
+        new(
+            dialogService,
+            ResolveNavigation(navigationServiceFactory, navigation),
+            userPreferencesStore,
+            settingsPreferencesPresenter);
 }
 
 public interface IInfoViewModelFactory
@@ -88,8 +100,8 @@ public interface IInfoViewModelFactory
     InfoViewModel Create(INavigation navigation);
 }
 
-public sealed class InfoViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory) : IInfoViewModelFactory
+public sealed class InfoViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IInfoViewModelFactory
 {
     public InfoViewModel Create(INavigation navigation) =>
-        new(navigation, navigationServiceFactory(NavigationContext.From(navigation)));
+        new(ResolveNavigation(navigationServiceFactory, navigation));
 }

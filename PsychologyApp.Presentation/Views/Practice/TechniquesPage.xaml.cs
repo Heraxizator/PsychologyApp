@@ -23,8 +23,21 @@ public partial class TechniquesPage : ContentPage
     {
         base.OnAppearing();
         _animationHelper?.TryRevealAsync();
-        _viewModel?.RefreshOnAppearAsync().FireAndForget();
-        _viewModel?.TryOpenPendingTechniqueAsync().FireAndForget();
+        if (_viewModel is null)
+        {
+            return;
+        }
+
+        if (_viewModel.HasInitialized)
+        {
+            _viewModel.RefreshOnAppearAsync().FireAndForget();
+        }
+        else
+        {
+            _viewModel.EnsureInitializedAsync().FireAndForget();
+        }
+
+        _viewModel.TryOpenPendingTechniqueAsync().FireAndForget();
     }
 
     protected override void OnHandlerChanged()

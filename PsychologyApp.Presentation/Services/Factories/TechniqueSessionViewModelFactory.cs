@@ -24,10 +24,22 @@ public sealed class CreatedViewModelFactory(
     ILogger<CreatedViewModel> logger,
     IOptions<AppSettings> settings,
     IUserProgressService userProgressService,
-    Func<NavigationContext, INavigationService> navigationServiceFactory) : ICreatedViewModelFactory
+    CustomTechniqueSessionOperations sessionOperations,
+    TechniqueSessionCompletionService sessionCompletionService,
+    Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, ICreatedViewModelFactory
 {
     public CreatedViewModel Create(INavigation navigation, long techniqueId) =>
-        new(navigation, techniqueId, dialogService, techniqueService, techniqueMessenger, logger, settings, navigationServiceFactory(NavigationContext.From(navigation)), userProgressService);
+        new(
+            techniqueId,
+            dialogService,
+            techniqueService,
+            techniqueMessenger,
+            logger,
+            settings,
+            ResolveNavigation(navigationServiceFactory, navigation),
+            userProgressService,
+            sessionOperations,
+            sessionCompletionService);
 }
 
 public interface IDesignerViewModelFactory
@@ -38,12 +50,13 @@ public interface IDesignerViewModelFactory
 public sealed class DesignerViewModelFactory(
     ITechniqueService techniqueService,
     ITechniqueMessenger techniqueMessenger,
+    DesignerTechniqueOperations techniqueOperations,
     ILogger<DesignerViewModel> logger,
     IOptions<AppSettings> settings,
-    Func<NavigationContext, INavigationService> navigationServiceFactory) : IDesignerViewModelFactory
+    Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IDesignerViewModelFactory
 {
     public DesignerViewModel Create(INavigation navigation, long techniqueId) =>
-        new(navigation, techniqueId, techniqueService, techniqueMessenger, logger, settings, navigationServiceFactory(NavigationContext.From(navigation)));
+        new(techniqueId, techniqueService, techniqueMessenger, techniqueOperations, logger, settings, ResolveNavigation(navigationServiceFactory, navigation));
 }
 
 public interface ITechniqueViewModelFactory
@@ -54,17 +67,27 @@ public interface ITechniqueViewModelFactory
 public sealed class TechniqueViewModelFactory(
     Func<NavigationContext, INavigationService> navigationServiceFactory,
     IUserProgressService userProgressService,
-    IDialogService dialogService) : ITechniqueViewModelFactory
+    IDialogService dialogService,
+    TechniqueSessionCompletionService sessionCompletionService,
+    Func<EntryDraftCoordinator> entryDraftCoordinatorFactory,
+    Func<PaperListDraftCoordinator> paperListDraftCoordinatorFactory,
+    Func<PolarityListDraftCoordinator> polarityListDraftCoordinatorFactory) : ViewModelFactoryBase, ITechniqueViewModelFactory
 {
     public BaseViewModel Create(TechniqueId techniqueId, INavigation navigation)
     {
-        INavigationService navigationService = navigationServiceFactory(NavigationContext.From(navigation));
+        INavigationService navigationService = ResolveNavigation(navigationServiceFactory, navigation);
+        ListTechniqueSessionHelper sessionHelper = new(
+            sessionCompletionService,
+            userProgressService,
+            navigationService,
+            dialogService);
+
         return techniqueId switch
         {
-            TechniqueId.Paper => new PaperListViewModel(navigationService, TechniqueId.Paper, clearTextAfterAdd: true, userProgressService, dialogService),
-            TechniqueId.Polarity => new PolarityViewModel(navigationService, userProgressService, dialogService),
-            TechniqueId.Copied => new PaperListViewModel(navigationService, TechniqueId.Copied, clearTextAfterAdd: false, userProgressService, dialogService),
-            _ => new TechniqueSessionViewModel(navigation, techniqueId, navigationService, userProgressService, dialogService)
+            TechniqueId.Paper => new PaperListViewModel(navigationService, TechniqueId.Paper, clearTextAfterAdd: true, userProgressService, sessionHelper, paperListDraftCoordinatorFactory()),
+            TechniqueId.Polarity => new PolarityViewModel(navigationService, userProgressService, sessionHelper, polarityListDraftCoordinatorFactory()),
+            TechniqueId.Copied => new PaperListViewModel(navigationService, TechniqueId.Copied, clearTextAfterAdd: false, userProgressService, sessionHelper, paperListDraftCoordinatorFactory()),
+            _ => new TechniqueSessionViewModel(techniqueId, navigationService, userProgressService, sessionHelper, entryDraftCoordinatorFactory())
         };
     }
 }

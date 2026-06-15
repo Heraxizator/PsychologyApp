@@ -21,19 +21,15 @@ public sealed class ReasonSearchService(IReasonContentProvider reasonContentProv
         }
 
         return source
-            .Where(reason => MatchesSearch(reason, query))
-            .Select(reason => new RankedReason(reason, RankMatch(reason, query)))
+            .Select(reason => (Reason: reason, Score: TryGetMatchScore(reason, query)))
+            .Where(match => match.Score is not null)
+            .Select(match => new RankedReason(match.Reason, match.Score!.Value))
             .OrderByDescending(pair => pair.MatchScore)
             .ThenBy(pair => pair.Reason.Title, StringComparer.OrdinalIgnoreCase)
             .ToList();
     }
 
-    private static bool MatchesSearch(ReasonDTO reason, string searchText) =>
-        reason.Title?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true
-        || reason.Subtitle?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true
-        || reason.Solution?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true;
-
-    private static int RankMatch(ReasonDTO reason, string searchText)
+    private static int? TryGetMatchScore(ReasonDTO reason, string searchText)
     {
         if (reason.Title?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true)
         {
@@ -45,6 +41,6 @@ public sealed class ReasonSearchService(IReasonContentProvider reasonContentProv
             return 2;
         }
 
-        return reason.Solution?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true ? 1 : 0;
+        return reason.Solution?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true ? 1 : null;
     }
 }

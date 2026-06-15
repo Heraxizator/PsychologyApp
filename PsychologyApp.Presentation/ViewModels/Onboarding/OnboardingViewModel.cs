@@ -1,33 +1,18 @@
 using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Core.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.Services.Preferences;
 using PsychologyApp.Presentation.ViewModels;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.ViewModels.Onboarding;
 
-public class OnboardingViewModel : BaseViewModel
+public partial class OnboardingViewModel : BaseViewModel
 {
     private readonly INavigationService _navigationService;
+    private readonly IUserPreferencesStore _userPreferencesStore;
     private readonly Func<TechniqueId?, Task> _onCompleted;
-
-    public string WelcomeTitle => AppStrings.OnboardingWelcomeTitle;
-    public string WelcomeBody => AppStrings.OnboardingWelcomeBody;
-    public string ConcernTitle => AppStrings.OnboardingConcernTitle;
-    public string DisclaimerTitle => AppStrings.OnboardingDisclaimerTitle;
-    public string DisclaimerBody => AppStrings.OnboardingDisclaimerBody;
-    public string StartLabel => AppStrings.OnboardingStart;
-    public string SkipLabel => AppStrings.OnboardingSkip;
-    public string NextLabel => AppStrings.OnboardingNext;
-    public string ConcernAnxiety => AppStrings.OnboardingConcernAnxiety;
-    public string ConcernBody => AppStrings.OnboardingConcernBody;
-    public string ConcernMood => AppStrings.OnboardingConcernMood;
-    public string ConcernExplore => AppStrings.OnboardingConcernExplore;
-
-    public string ConcernAnxietyVariant => SelectedConcern == "anxiety" ? "Primary" : "Secondary";
-    public string ConcernBodyVariant => SelectedConcern == "body" ? "Primary" : "Secondary";
-    public string ConcernMoodVariant => SelectedConcern == "mood" ? "Primary" : "Secondary";
-    public string ConcernExploreVariant => SelectedConcern == "explore" ? "Primary" : "Secondary";
 
     public ICommand NextCommand { get; }
     public ICommand SkipCommand { get; }
@@ -37,90 +22,23 @@ public class OnboardingViewModel : BaseViewModel
     public ICommand SelectExploreCommand { get; }
     public ICommand StartPracticeCommand { get; }
 
-    private int _step;
-    public int Step
+    public OnboardingViewModel(
+        INavigationService navigationService,
+        IUserPreferencesStore userPreferencesStore,
+        Func<TechniqueId?, Task> onCompleted)
     {
-        get => _step;
-        set
-        {
-            if (SetProperty(ref _step, value))
-            {
-                OnPropertyChanged(nameof(IsWelcomeStep));
-                OnPropertyChanged(nameof(IsConcernStep));
-                OnPropertyChanged(nameof(IsDisclaimerStep));
-            }
-        }
-    }
-
-    public bool IsWelcomeStep => Step == 0;
-    public bool IsConcernStep => Step == 1;
-    public bool IsDisclaimerStep => Step == 2;
-
-    private string _selectedConcern = "explore";
-    public string SelectedConcern
-    {
-        get => _selectedConcern;
-        set
-        {
-            if (SetProperty(ref _selectedConcern, value))
-            {
-                NotifyConcernSelection();
-            }
-        }
-    }
-
-    public OnboardingViewModel(INavigation navigation, INavigationService navigationService, Func<TechniqueId?, Task> onCompleted)
-    {
+        BindPreferences(userPreferencesStore);
         _onCompleted = onCompleted;
-        BindNavigation(navigation, navigationService);
+        BindNavigation(navigationService);
         _navigationService = navigationService;
+        _userPreferencesStore = userPreferencesStore;
 
         NextCommand = new Command(() => Step++);
         SkipCommand = new AsyncCommand(CompleteWithoutPracticeAsync);
-        SelectAnxietyCommand = new Command(() => SelectedConcern = "anxiety");
-        SelectBodyCommand = new Command(() => SelectedConcern = "body");
-        SelectMoodCommand = new Command(() => SelectedConcern = "mood");
-        SelectExploreCommand = new Command(() => SelectedConcern = "explore");
+        SelectAnxietyCommand = new Command(() => SelectedConcern = OnboardingConcernKeys.Anxiety);
+        SelectBodyCommand = new Command(() => SelectedConcern = OnboardingConcernKeys.Body);
+        SelectMoodCommand = new Command(() => SelectedConcern = OnboardingConcernKeys.Mood);
+        SelectExploreCommand = new Command(() => SelectedConcern = OnboardingConcernKeys.Explore);
         StartPracticeCommand = new AsyncCommand(StartPracticeAsync);
-    }
-
-    protected override void RefreshLocalizedProperties()
-    {
-        Notify(
-            nameof(WelcomeTitle),
-            nameof(WelcomeBody),
-            nameof(ConcernTitle),
-            nameof(DisclaimerTitle),
-            nameof(DisclaimerBody),
-            nameof(StartLabel),
-            nameof(SkipLabel),
-            nameof(NextLabel),
-            nameof(ConcernAnxiety),
-            nameof(ConcernBody),
-            nameof(ConcernMood),
-            nameof(ConcernExplore));
-        NotifyConcernSelection();
-    }
-
-    private void NotifyConcernSelection()
-    {
-        Notify(
-            nameof(ConcernAnxietyVariant),
-            nameof(ConcernBodyVariant),
-            nameof(ConcernMoodVariant),
-            nameof(ConcernExploreVariant));
-    }
-
-    private async Task StartPracticeAsync()
-    {
-        UserPreferences.CompleteOnboarding(SelectedConcern);
-        TechniqueId techniqueId = OnboardingRecommendation.ResolveTechnique(SelectedConcern);
-        await _onCompleted(techniqueId);
-    }
-
-    private async Task CompleteWithoutPracticeAsync()
-    {
-        UserPreferences.CompleteOnboarding(SelectedConcern);
-        await _onCompleted(null);
     }
 }

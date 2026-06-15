@@ -1,5 +1,4 @@
 using PsychologyApp.Presentation.Common;
-using PsychologyApp.Presentation.Models.Tests;
 using PsychologyApp.Presentation.Services.Tests;
 
 namespace PsychologyApp.Presentation.ViewModels.Tests;
@@ -15,15 +14,15 @@ public partial class FindProblemViewModel
             return;
         }
 
-        TestDefinition? definition = await _testCatalogService.GetByIdAsync(_testId);
-        if (definition is null)
+        FindProblemContentSnapshot? snapshot = await _contentLoader.LoadAsync(_testId, _testCatalogService);
+        if (snapshot is null)
         {
             return;
         }
 
-        DescriptionText = definition.Description;
-        CommentText = definition.Comment;
+        DescriptionText = snapshot.Description;
+        CommentText = snapshot.Comment;
         AlgorithmRows.Clear();
-        InitAlgorithmRows(definition.Algorithm.ToList());
+        InitAlgorithmRows(snapshot.Algorithm.ToList());
     }
 }

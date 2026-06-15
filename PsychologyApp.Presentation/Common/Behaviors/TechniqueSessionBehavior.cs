@@ -1,3 +1,5 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using PsychologyApp.Application.Abstractions.Analytics;
 using PsychologyApp.Presentation.ViewModels;
 using PsychologyApp.Presentation.Views.Practice.Techniques;
@@ -49,7 +51,11 @@ public class TechniqueSessionBehavior : Behavior<ContentPage>
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine(ex);
+            if (Microsoft.Maui.Controls.Application.Current?.Handler?.MauiContext?.Services.GetService<ILogger<TechniqueSessionBehavior>>()
+                is ILogger<TechniqueSessionBehavior> logger)
+            {
+                logger.LogWarning(ex, "Failed to track technique session analytics.");
+            }
         }
     }
 }

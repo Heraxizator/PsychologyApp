@@ -3,6 +3,7 @@ using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Common;
 using PsychologyApp.Domain.Colour.ValueObjects;
 using PsychologyApp.Presentation.Models.Tests;
+using PsychologyApp.Presentation.Services.Tests;
 using PsychologyApp.Presentation.ViewModels.Tests;
 using Xunit;
 
@@ -26,9 +27,9 @@ public sealed class LuscherTestViewModelTests
 
         LuscherTestViewModel viewModel = new(
             LuscherMode.Standard,
-            navigation.Object,
             new TestNavigationService(navigation.Object),
-            progress.Object);
+            progress.Object,
+            new LuscherTestSubmissionService());
 
         ColourValue[] colors =
         [
@@ -72,9 +73,9 @@ public sealed class LuscherTestViewModelTests
 
         LuscherTestViewModel viewModel = new(
             LuscherMode.Brief,
-            navigation.Object,
             new TestNavigationService(navigation.Object),
-            progress.Object);
+            progress.Object,
+            new LuscherTestSubmissionService());
 
         InvokeColorHandler(viewModel, ColourValue.Red);
         InvokeColorHandler(viewModel, ColourValue.Blue);

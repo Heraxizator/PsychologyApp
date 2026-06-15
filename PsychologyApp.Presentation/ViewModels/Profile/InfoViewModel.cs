@@ -11,11 +11,11 @@ public class InfoViewModel : BaseViewModel
     public string AboutBody => AppStrings.InfoAboutBody;
     public string AppVersionText => AppStrings.InfoAppVersion(AppInfo.Current.VersionString);
 
-    public InfoViewModel(INavigation navigation, INavigationService navigationService)
+    public InfoViewModel(INavigationService navigationService)
     {
         ModuleName = AppStrings.ShellTabPractice;
         PageName = AppStrings.OptionsAboutTitle;
-        BindNavigation(navigation, navigationService);
+        BindNavigation(navigationService);
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
     }
 

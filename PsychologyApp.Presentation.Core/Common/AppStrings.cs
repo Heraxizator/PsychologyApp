@@ -82,6 +82,9 @@ public static class AppStrings
     public static string PracticeHomeTitle => T("Главная", "Home");
     public static string PracticeMyTechniques => T("Мои техники", "My techniques");
     public static string PracticeCatalog => T("Каталог практик", "Practice catalog");
+    public static string PracticeCatalogHint => T(
+        "Выберите технику или создайте свою",
+        "Pick a technique or create your own");
     public static string PracticeCreate => T("Создать", "Create");
     public static string PracticeTechniquesList => T("Список техник", "Techniques list");
     public static string PracticeInitError => T("Ошибка при инициализации", "Initialization failed");
@@ -107,16 +110,19 @@ public static class AppStrings
     public static string ReviewSmsNotSupported => T(
         "Отправка СМС не поддерживается",
         "SMS is not supported on this device");
-    public static string ReviewSmsError(string message) =>
-        T($"Ошибка при отправке СМС: {message}", $"Failed to send SMS: {message}");
+    public static string ReviewSmsFailed => T(
+        "Не удалось открыть приложение для отправки СМС",
+        "Failed to open the SMS app");
     public static string ReviewEmailNotSupported => T(
         "Отправка email не поддерживается",
         "Email is not supported on this device");
-    public static string ReviewEmailError(string message) =>
-        T($"Ошибка при отправке email: {message}", $"Failed to send email: {message}");
+    public static string ReviewEmailFailed => T(
+        "Не удалось открыть приложение для отправки email",
+        "Failed to open the email app");
     public static string ReviewShareTitle => T("Отзыв о приложении", "App feedback");
-    public static string ReviewShareError(string message) =>
-        T($"Не удалось открыть меню отправки: {message}", $"Failed to open share menu: {message}");
+    public static string ReviewShareFailed => T(
+        "Не удалось открыть меню отправки",
+        "Failed to open the share menu");
 
     public static string DonateTitle => T("Пожертвования", "Donations");
     public static string DonateMoreInfo => T("Подробнее", "More info");
@@ -335,10 +341,6 @@ public static class AppStrings
     public static string PracticeHistoryEmpty => T("Пока нет завершённых практик", "No completed practices yet");
     public static string PracticeHistoryEntry(string date, string name) =>
         T($"{date}: {name}", $"{date}: {name}");
-    public static string ReviewSentTitle => T("Спасибо!", "Thank you!");
-    public static string ReviewSentMessage => T(
-        "Сообщение отправлено. Мы ценим ваш отзыв.",
-        "Your message was sent. We appreciate your feedback.");
     public static string InfoAppVersion(string version) =>
         T($"Версия {version}", $"Version {version}");
     public static string QuoteCopied => T("Скопировано", "Copied");

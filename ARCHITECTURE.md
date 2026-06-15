@@ -52,7 +52,7 @@ ViewModels must not reference Infrastructure types. `MauiProgram` registers `Add
 
 - SQLite file: `%LocalApplicationData%/mentalfire3.db`
 
-- `SchemaVersion` table + incremental migrations in `SqliteSchema` (v2: index on `Statistics.PageName`)
+- `SchemaVersion` table + incremental migrations in `SqliteSchema` (current **v5**: `Techniques.Description`, `TechniqueDTO.Algorithm`; v4→v5 renames `Describtion` column)
 
 - Repositories implement `PsychologyApp.Application.Abstractions.Persistence.*`
 
@@ -74,7 +74,13 @@ ViewModels must not reference Infrastructure types. `MauiProgram` registers `Add
 
 - `IPageViewModelActivator` + `ActivateViewModel` — Shell and module pages bind VMs via factories
 
-- `Services/Factories/*` — ViewModel factories split by feature (Profile, Techniques, Physics, Motivator, Tests, technique session)
+- `Services/Factories/*` — ViewModel factories split by feature; `ViewModelFactoryBase.ResolveNavigation` centralizes `NavigationContext.From(navigation)`
+- `TechniqueListBuilder`, `TodayRecommendationResolver`, `PracticeDashboardLoader`, `TechniqueDashboardApplier`, `TechniquesListInitializer`, `DesignerTechniqueOperations`, `TechniqueSessionCompletionService`, `ListTechniqueSessionHelper`, `EntryDraftCoordinator`, `ListSessionDraftCoordinator`, `CustomTechniqueSessionOperations`, `TestRetakeOperations`, `TestHistoryLoader`, `TestsListLoader`, `QuestionnaireSubmissionService`, `LuscherTestSubmissionService`, `FindProblemContentLoader`, `ProfileStatsLoader`, `ProfileQuotesPresenter`, `ProfileQuotesLoader`, `ProfilePracticeHistoryLoader`, `ProfileFeaturedTechniquesBuilder`, `UserProfileRefreshCoordinator`, `QuoteFeedCoordinator`, `QuoteFeedLoader`, `QuoteItemCommandsFactory`, `MusicPlaylistPresenter`, `MusicPlaybackPresenter`, `MusicPlaylistViewApplier`, `PhysicsSearchCoordinator`, `PhysicsSearchSession`, `PhysicsSearchUiState`, `PhysicsSearchUiBinder`, `PhysicsReasonItemFactory`, `SettingsPreferencesPresenter` — extracted from god ViewModels; `PhysicsSearchCoordinator` runs debounce and in-memory search without `Task.Run`
+- `IPageHost` / `MauiPageHost` — dialog host without `Application.Current`
+- `IUserPreferencesStore`, `IDatabaseReadySignal` (`DatabaseReadySignal` — singleton readiness gate with `SignalReady` / `SignalFailed`), `IAudioPlaybackService` — DI ports replacing static hooks where wired
+- `IUserProgressService.GetLastPracticeDatesAsync` / `GetSessionDraftKeysAsync` — batch SQLite reads for the practice techniques list (replaces per-technique N+1)
+- Shell tabs (`QuotePage`, `TechniquesPage`, `UserPage`, `PhysicsSearchPage`) call `EnsureInitializedAsync` on first appear; `QuoteFeedCoordinator` / `ProfileQuotesLoader` registered as transient
+- ViewModels depend on `INavigationService` only (not MAUI `INavigation`); factories resolve navigation context
 - `IFormViewModelFactory` — new `FormViewModel` per open (fixes stale `MessageText` from singleton capture)
 - `IDonateViewModelFactory` — `DonateViewModel` with `INavigationService` + `AsyncCommand`
 
@@ -94,6 +100,10 @@ Multiple factory types are deliberate, not accidental duplication:
 | Session factory | `ITechniqueViewModelFactory` | Selects `PaperListViewModel` / `PolarityViewModel` / `TechniqueSessionViewModel` by `TechniqueId` |
 
 Collapsing into a single mega-factory would couple unrelated features. Current split matches feature boundaries and is covered by Presentation tests.
+
+**Practice session flow:** `PaperListViewModel`, `PolarityViewModel`, and entry `TechniqueSessionViewModel` finish via `ListTechniqueSessionHelper` (per-VM instance with navigation-scoped deps; wraps `TechniqueSessionCompletionService` for progress record, draft cleanup, and `PracticeCompletionNavigator`). Entry techniques delegate debounced draft persistence to `EntryDraftCoordinator`. Paper/Polarity list drafts use `ListSessionDraftCoordinator` (typed wrappers per technique). Custom technique sessions use `CustomTechniqueSessionOperations` for load/remove/mark-complete; finish still records progress through `TechniqueSessionCompletionService` (without deleting a session draft).
+
+**Tests module flow:** Luscher standard/brief results persist through `LuscherTestSubmissionService`. Find-problem page reloads localized copy through `FindProblemContentLoader`. `TestsListLoader` (singleton with injected `IUserProgressService` + `ITestCatalogService`) builds catalog rows with latest-result metadata; `TestsListViewModel` only passes navigation and selection handler. `TestHistoryLoader` loads history entries; retake from history or result pages goes through `TestRetakeOperations` (root navigation + `TestItem.StartAsync`).
 
 ### Presentation layout
 
@@ -124,7 +134,8 @@ Feature areas under `Views` / `ViewModels` / `Models`: `Practice` (incl. `Techni
 | `Models/Practice/Techniques/TechniqueCatalog*` | `Models.Practice.Techniques` | Registry + list metadata |
 | `UI/Techniques/TechniqueBodyFactory.cs` | `UI.Techniques` | Session body templates |
 | `Common/Behaviors/TechniqueSessionBehavior.cs` | `Common.Behaviors` | Session analytics |
-| `Services/Practice/*` | `Services.Practice` | `ITechniqueMessenger` |
+| `Services/Practice/*` | `Services.Practice` | `ITechniqueMessenger`, session completion/draft coordinators |
+| `Services/Tests/*` | `Services.Tests` | `TestRetakeOperations`, `TestHistoryLoader`, `TestsListLoader`, catalog services |
 | `Models/Tests/*` | `Models.Tests` | Test catalog JSON, `Question`/`Answer` |
 | `UI/Components/` | `UI.Components` | Reusable XAML components |
 
