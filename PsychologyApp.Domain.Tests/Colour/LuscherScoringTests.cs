@@ -26,6 +26,16 @@ public sealed class LuscherScoringTests
         Assert.True(bk > 0);
     }
 
+    [Fact]
+    public void CalculateBk_WhenDenominatorIsZero_ReturnsZero()
+    {
+        var selections = BuildDenominatorZeroSelections();
+
+        double bk = LuscherScoring.CalculateBk(selections);
+
+        Assert.Equal(0, bk);
+    }
+
     [Theory]
     [InlineData(0)]
     [InlineData(10)]
@@ -55,4 +65,18 @@ public sealed class LuscherScoringTests
         (ColourValue.Black, ColourMeaning.BlackVoted),
         (ColourValue.Gray, ColourMeaning.GrayVoted)
     ];
+
+    private static List<(ColourValue, ColourMeaning)> BuildDenominatorZeroSelections()
+    {
+        List<(ColourValue, ColourMeaning)> selections = [];
+        for (int index = 0; index < 8; index++)
+        {
+            selections.Add((ColourValue.Purple, ColourMeaning.PurpleVoted));
+        }
+
+        selections.Add((ColourValue.Green, ColourMeaning.GreenVoted));
+        selections.Add((ColourValue.Brown, ColourMeaning.BrownVoted));
+        selections.Add((ColourValue.Blue, ColourMeaning.BlueVoted));
+        return selections;
+    }
 }

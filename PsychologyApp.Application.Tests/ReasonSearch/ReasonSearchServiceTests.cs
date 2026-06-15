@@ -49,4 +49,22 @@ public sealed class ReasonSearchServiceTests
         Assert.Equal(0, provider.GetPageCallCount);
     }
 
+    [Fact]
+    public void Search_SubtitleMatchRanksHigherThanSolution()
+    {
+        var service = new ReasonSearchService(new FakeReasonContentProvider());
+        var reasons = new List<ReasonDTO>
+        {
+            new() { Title = "Other", Subtitle = "s", Solution = "neck pain" },
+            new() { Title = "Other", Subtitle = "neck tension", Solution = "rest" }
+        };
+
+        IReadOnlyList<RankedReason> results = service.Search(reasons, "neck");
+
+        Assert.Equal(2, results.Count);
+        Assert.Equal("neck tension", results[0].Reason.Subtitle);
+        Assert.Equal(2, results[0].MatchScore);
+        Assert.Equal(1, results[1].MatchScore);
+    }
+
 }

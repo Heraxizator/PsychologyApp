@@ -24,7 +24,7 @@ public sealed class QuotService(IQuotRepository quotRepository, IQuotContentProv
     public async Task<QuotDTO> GetByIdAsync(long id, CancellationToken cancellationToken = default)
     {
         Quot quot = await quotRepository.GetByIdAsync(id, cancellationToken)
-            ?? throw new QuotNotFoundException($"Цитата с идентификатром {id} не найдена");
+            ?? throw new QuotNotFoundException($"Цитата с идентификатором {id} не найдена");
 
         return QuotMapper.GetQuotDTO(quot);
     }
@@ -45,7 +45,7 @@ public sealed class QuotService(IQuotRepository quotRepository, IQuotContentProv
     public async Task MarkAsFavouriteAsync(long quotId, bool isFavourite, CancellationToken cancellationToken = default)
     {
         Quot quot = await quotRepository.GetByIdAsync(quotId, cancellationToken)
-            ?? throw new QuotNotFoundException($"Цитата с идентификатром {quotId} не найдена");
+            ?? throw new QuotNotFoundException($"Цитата с идентификатором {quotId} не найдена");
 
         quot.SetFavourite(isFavourite);
         await quotRepository.EditAsync(quot, cancellationToken);

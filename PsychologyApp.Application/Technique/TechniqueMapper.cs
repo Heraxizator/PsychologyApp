@@ -1,34 +1,34 @@
 ﻿using PsychologyApp.Application.Models;
 using PsychologyApp.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PsychologyApp.Application;
 
 public static class TechniqueMapper
 {
-    public static Technique GetTechnique(TechniqueDTO techniqueDTO)
-    {
-        return Technique.Create(techniqueDTO.TechniqueId, techniqueDTO.Number!, techniqueDTO.Date!, techniqueDTO.Header!, techniqueDTO.Describtion!, techniqueDTO.Subject!, techniqueDTO.Author!, techniqueDTO.Actions!, techniqueDTO.Image!);
-    }
+    public static Technique GetTechnique(TechniqueDTO techniqueDTO) =>
+        Technique.Create(
+            techniqueDTO.TechniqueId,
+            techniqueDTO.Number!,
+            techniqueDTO.Date!,
+            techniqueDTO.Header!,
+            techniqueDTO.Description!,
+            techniqueDTO.Subject!,
+            techniqueDTO.Author!,
+            techniqueDTO.Algorithm!,
+            techniqueDTO.Image!);
 
-    public static TechniqueDTO GetTechniqueDTO(Technique technique)
-    {
-        return new TechniqueDTO
+    public static TechniqueDTO GetTechniqueDTO(Technique technique) =>
+        new()
         {
             TechniqueId = technique.TechniqueId,
             Number = technique.Number,
             Date = technique.Date,
             Header = technique.Header,
-            Describtion = technique.Describtion,
+            Description = technique.Description,
             Subject = technique.Subject,
             Author = technique.Author,
-            Actions = technique.Algorithm,
+            Algorithm = technique.Algorithm,
             Image = technique.Image,
             IsCompleted = technique.IsCompleted
         };
-    }
 }

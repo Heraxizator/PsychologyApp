@@ -9,6 +9,7 @@ using PsychologyApp.Presentation.DependencyInjection;
 using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Abstractions;
 using PsychologyApp.Presentation.Platform;
+using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.Services.Tests;
 
 namespace PsychologyApp.Presentation;
@@ -64,7 +65,10 @@ public static class MauiProgram
         builder.Services.AddPsychologyAppPresentation();
         builder.Services.AddSingleton<AppShell>();
 
-        return builder.Build();
+        MauiApp app = builder.Build();
+        NavigationCoordinator.SetLogger(
+            app.Services.GetRequiredService<ILoggerFactory>().CreateLogger("NavigationCoordinator"));
+        return app;
     }
 
     private static void ConfigureHandlers()

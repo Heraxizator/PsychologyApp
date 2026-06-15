@@ -15,9 +15,11 @@ public interface IUserProgressRepository
     Task<IReadOnlyList<CompletionDTO>> GetRecentTechniqueCompletionsAsync(int limit, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<DateOnly>> GetCompletionDatesAsync(CancellationToken cancellationToken = default);
     Task<DateTime?> GetLastCompletionForItemAsync(string itemKey, CancellationToken cancellationToken = default);
+    Task<IReadOnlyDictionary<string, DateTime>> GetLastPracticeDatesAsync(IReadOnlyList<string> itemKeys, CancellationToken cancellationToken = default);
 
     Task SaveSessionDraftAsync(string techniqueKey, string payloadJson, CancellationToken cancellationToken = default);
     Task<string?> GetSessionDraftAsync(string techniqueKey, CancellationToken cancellationToken = default);
+    Task<IReadOnlySet<string>> GetSessionDraftKeysAsync(IReadOnlyList<string> techniqueKeys, CancellationToken cancellationToken = default);
     Task DeleteSessionDraftAsync(string techniqueKey, CancellationToken cancellationToken = default);
 
     Task RecordMoodAsync(MoodEntryDTO entry, CancellationToken cancellationToken = default);

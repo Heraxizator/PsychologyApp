@@ -4,6 +4,7 @@ using PsychologyApp.Application.Abstractions.Startup;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Common.Infrastructure;
 using PsychologyApp.Presentation.Views.Onboarding;
 using PsychologyApp.Presentation.Services.Factories;
 
@@ -13,6 +14,7 @@ public sealed class ShellStartupCoordinator(
     IAppStartupService startupService,
     IOnboardingViewModelFactory onboardingViewModelFactory,
     IOptions<AppSettings> settings,
+    IDatabaseReadySignal databaseReadySignal,
     ILogger<ShellStartupCoordinator> logger) : IShellStartupCoordinator
 {
     public async Task InitializeAsync()
@@ -21,12 +23,12 @@ public sealed class ShellStartupCoordinator(
         {
             using CancellationTokenSource timeoutSource = OperationCancellation.CreateLargeTimeoutSource(settings);
             await startupService.InitializeAsync(timeoutSource.Token);
-            AppReadiness.SignalDatabaseReady();
+            databaseReadySignal.SignalReady();
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Application startup failed.");
-            AppReadiness.SignalDatabaseFailed(ex);
+            databaseReadySignal.SignalFailed(ex);
             await MainThread.InvokeOnMainThreadAsync(async () =>
             {
                 if (Microsoft.Maui.Controls.Application.Current?.Windows.Count > 0

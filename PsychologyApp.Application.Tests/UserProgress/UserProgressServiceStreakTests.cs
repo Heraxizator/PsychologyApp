@@ -79,8 +79,12 @@ public sealed class UserProgressServiceStreakTests
         public Task<IReadOnlyList<CompletionDTO>> GetRecentTechniqueCompletionsAsync(int limit, CancellationToken cancellationToken = default) =>
             Task.FromResult<IReadOnlyList<CompletionDTO>>([]);
         public Task<DateTime?> GetLastCompletionForItemAsync(string itemKey, CancellationToken cancellationToken = default) => Task.FromResult<DateTime?>(null);
+        public Task<IReadOnlyDictionary<string, DateTime>> GetLastPracticeDatesAsync(IReadOnlyList<string> itemKeys, CancellationToken cancellationToken = default) =>
+            Task.FromResult<IReadOnlyDictionary<string, DateTime>>(new Dictionary<string, DateTime>(StringComparer.Ordinal));
         public Task SaveSessionDraftAsync(string techniqueKey, string payloadJson, CancellationToken cancellationToken = default) => Task.CompletedTask;
         public Task<string?> GetSessionDraftAsync(string techniqueKey, CancellationToken cancellationToken = default) => Task.FromResult<string?>(null);
+        public Task<IReadOnlySet<string>> GetSessionDraftKeysAsync(IReadOnlyList<string> techniqueKeys, CancellationToken cancellationToken = default) =>
+            Task.FromResult<IReadOnlySet<string>>(new HashSet<string>(StringComparer.Ordinal));
         public Task DeleteSessionDraftAsync(string techniqueKey, CancellationToken cancellationToken = default) => Task.CompletedTask;
         public Task RecordMoodAsync(MoodEntryDTO entry, CancellationToken cancellationToken = default) => Task.CompletedTask;
         public Task<IReadOnlyList<MoodEntryDTO>> GetRecentMoodsAsync(int limit, CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyList<MoodEntryDTO>>([]);

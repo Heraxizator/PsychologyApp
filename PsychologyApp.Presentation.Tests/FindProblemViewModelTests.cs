@@ -1,6 +1,8 @@
 using System.Reflection;
 using Moq;
 using PsychologyApp.Presentation.ViewModels;
+using PsychologyApp.Presentation.Models.Tests;
+using PsychologyApp.Presentation.Services.Tests;
 using PsychologyApp.Presentation.ViewModels.Tests;
 using Xunit;
 
@@ -13,9 +15,9 @@ public sealed class FindProblemViewModelTests
     {
         bool invoked = false;
         FindProblemViewModel viewModel = new(
-            Mock.Of<INavigation>(),
             new TestNavigationService(Mock.Of<INavigation>()),
             new FakeTestCatalogService(),
+            new FindProblemContentLoader(),
             "Description",
             ["Step 1", "Step 2"],
             "Comment",
@@ -35,9 +37,9 @@ public sealed class FindProblemViewModelTests
     public void Constructor_InitializesAlgorithmRows()
     {
         FindProblemViewModel viewModel = new(
-            Mock.Of<INavigation>(),
             new TestNavigationService(Mock.Of<INavigation>()),
             new FakeTestCatalogService(),
+            new FindProblemContentLoader(),
             "Description",
             ["Alpha", "Beta"],
             null,
@@ -64,9 +66,9 @@ public sealed class FindProblemViewModelTests
         });
 
         FindProblemViewModel viewModel = new(
-            Mock.Of<INavigation>(),
             new TestNavigationService(Mock.Of<INavigation>()),
             catalog,
+            new FindProblemContentLoader(),
             "Old",
             ["Old step"],
             "Old comment",

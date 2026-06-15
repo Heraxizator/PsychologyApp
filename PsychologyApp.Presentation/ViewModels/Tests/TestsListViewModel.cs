@@ -1,6 +1,6 @@
-using PsychologyApp.Application.Models;
-using PsychologyApp.Application.Services.UserProgress;
+using Microsoft.Extensions.Logging;
 using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Common.Infrastructure;
 using PsychologyApp.Presentation.Models.Tests;
 using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.Services.Tests;
@@ -11,105 +11,29 @@ using BaseViewModel = PsychologyApp.Presentation.ViewModels.BaseViewModel;
 
 namespace PsychologyApp.Presentation.ViewModels.Tests;
 
-public class TestsListViewModel : BaseViewModel
+public partial class TestsListViewModel : BaseViewModel
 {
     private readonly INavigationService _navigationService;
-    private readonly IUserProgressService _userProgressService;
-    private readonly ITestCatalogService _testCatalogService;
-
-    public string PageTitle => AppStrings.TestsDetectorTitle;
-    public string EmptyTitle => AppStrings.TestsEmptyTitle;
-    public string EmptyBody => AppStrings.TestsEmptyBody;
-    public string LoadingText => AppStrings.TestsLoadingText;
-    public string FailedText => AppStrings.LoadFailed;
-    public string RetryText => AppStrings.RetryQuestion;
-    public string ProfileToolbarText => AppStrings.ProfileTitle;
+    private readonly IDatabaseReadySignal _databaseReadySignal;
+    private readonly TestsListLoader _testsListLoader;
+    private readonly ILogger<TestsListViewModel> _logger;
 
     public ICommand OpenProfileCommand { get; }
 
     public ObservableCollection<TestItem> TestItemCollection { get; private set; } = [];
 
     public TestsListViewModel(
-        INavigation navigation,
         INavigationService navigationService,
-        IUserProgressService userProgressService,
-        ITestCatalogService testCatalogService)
+        IDatabaseReadySignal databaseReadySignal,
+        TestsListLoader testsListLoader,
+        ILogger<TestsListViewModel> logger)
     {
         _navigationService = navigationService;
-        _userProgressService = userProgressService;
-        _testCatalogService = testCatalogService;
-        BindNavigation(navigation, navigationService);
+        _databaseReadySignal = databaseReadySignal;
+        _testsListLoader = testsListLoader;
+        _logger = logger;
+        BindNavigation(navigationService);
         OpenProfileCommand = new AsyncCommand(() => _navigationService.GoToUserProfileAsync());
         Reload = new AsyncCommand(InitAsync);
-    }
-
-    protected override void RefreshLocalizedProperties()
-    {
-        Notify(
-            nameof(PageTitle),
-            nameof(EmptyTitle),
-            nameof(EmptyBody),
-            nameof(LoadingText),
-            nameof(FailedText),
-            nameof(RetryText),
-            nameof(ProfileToolbarText));
-        InitAsync().FireAndForget();
-    }
-
-    private async Task HandleSelectionAsync(TestItem testItem) =>
-        await _navigationService.GoToFindProblemAsync(
-            testItem.Description,
-            testItem.Algorithm,
-            testItem.Comment,
-            testItem.StartAsync,
-            testItem.TestId);
-
-    public async Task InitAsync()
-    {
-        try
-        {
-            await AppReadiness.DatabaseReadyAsync;
-
-            SetInit();
-
-            IReadOnlyList<TestDefinition> definitions = await _testCatalogService.GetCatalogAsync();
-            List<TestItem> items = [];
-
-            foreach (TestDefinition definition in definitions)
-            {
-                if (string.IsNullOrWhiteSpace(definition.TestId))
-                {
-                    continue;
-                }
-
-                TestItem item = TestItemFactory.Create(definition, _navigationService);
-
-                TestResultDTO? latest = await _userProgressService.GetLatestTestResultAsync(item.TestId);
-                if (latest is not null)
-                {
-                    item.LastResultSummary = AppStrings.TestLastResult(latest.Summary);
-                }
-
-                IReadOnlyList<TestResultDTO> history =
-                    await _userProgressService.GetTestResultHistoryAsync(item.TestId, 2);
-                item.HasMultipleResults = history.Count > 1;
-
-                TestItem selected = item;
-                item.TapCommand = new AsyncCommand(() => HandleSelectionAsync(selected));
-                item.OpenHistoryCommand = new AsyncCommand(() =>
-                    _navigationService.GoToTestHistoryAsync(selected.TestId, selected.Title));
-
-                items.Add(item);
-            }
-
-            TestItemCollection = new ObservableCollection<TestItem>(items);
-            OnPropertyChanged(nameof(TestItemCollection));
-
-            SetDone();
-        }
-        catch (Exception)
-        {
-            SetFail();
-        }
     }
 }

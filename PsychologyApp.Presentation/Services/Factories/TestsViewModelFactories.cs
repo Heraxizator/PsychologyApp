@@ -1,7 +1,9 @@
+using Microsoft.Extensions.Logging;
 using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.Services.Dialogs;
 using PsychologyApp.Presentation.Services.Tests;
+using PsychologyApp.Presentation.Common.Infrastructure;
 using PsychologyApp.Presentation.Services.Toasts;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Models.Tests;
@@ -17,15 +19,16 @@ public interface ITestsListViewModelFactory
 
 public sealed class TestsListViewModelFactory(
     Func<NavigationContext, INavigationService> navigationServiceFactory,
-    IUserProgressService userProgressService,
-    ITestCatalogService testCatalogService) : ITestsListViewModelFactory
+    IDatabaseReadySignal databaseReadySignal,
+    TestsListLoader testsListLoader,
+    ILogger<TestsListViewModel> logger) : ViewModelFactoryBase, ITestsListViewModelFactory
 {
     public TestsListViewModel Create(INavigation navigation) =>
         new(
-            navigation,
-            navigationServiceFactory(NavigationContext.From(navigation)),
-            userProgressService,
-            testCatalogService);
+            ResolveNavigation(navigationServiceFactory, navigation),
+            databaseReadySignal,
+            testsListLoader,
+            logger);
 }
 
 public interface ITestHistoryViewModelFactory
@@ -36,14 +39,21 @@ public interface ITestHistoryViewModelFactory
 public sealed class TestHistoryViewModelFactory(
     Func<NavigationContext, INavigationService> navigationServiceFactory,
     IUserProgressService userProgressService,
-    ITestCatalogService testCatalogService) : ITestHistoryViewModelFactory
+    ITestCatalogService testCatalogService,
+    IDatabaseReadySignal databaseReadySignal,
+    TestHistoryLoader historyLoader,
+    TestRetakeOperations retakeOperations,
+    ILogger<TestHistoryViewModel> logger) : ViewModelFactoryBase, ITestHistoryViewModelFactory
 {
     public TestHistoryViewModel Create(INavigation navigation, string testId, string testTitle) =>
         new(
-            navigation,
-            navigationServiceFactory(NavigationContext.From(navigation)),
+            ResolveNavigation(navigationServiceFactory, navigation),
             userProgressService,
             testCatalogService,
+            databaseReadySignal,
+            historyLoader,
+            retakeOperations,
+            logger,
             testId,
             testTitle);
 }
@@ -55,14 +65,15 @@ public interface ILuscherTestViewModelFactory
 
 public sealed class LuscherTestViewModelFactory(
     IUserProgressService userProgressService,
-    Func<NavigationContext, INavigationService> navigationServiceFactory) : ILuscherTestViewModelFactory
+    LuscherTestSubmissionService submissionService,
+    Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, ILuscherTestViewModelFactory
 {
     public LuscherTestViewModel Create(INavigation navigation, LuscherMode mode) =>
         new(
             mode,
-            navigation,
-            navigationServiceFactory(NavigationContext.From(navigation)),
-            userProgressService);
+            ResolveNavigation(navigationServiceFactory, navigation),
+            userProgressService,
+            submissionService);
 }
 
 public interface ITestResultViewModelFactory
@@ -72,13 +83,14 @@ public interface ITestResultViewModelFactory
 
 public sealed class TestResultViewModelFactory(
     Func<NavigationContext, INavigationService> navigationServiceFactory,
-    ITestCatalogService testCatalogService) : ITestResultViewModelFactory
+    ITestCatalogService testCatalogService,
+    TestRetakeOperations retakeOperations) : ViewModelFactoryBase, ITestResultViewModelFactory
 {
     public TestResultViewModel Create(INavigation navigation, TestResultInfo result) =>
         new(
-            navigation,
-            navigationServiceFactory(NavigationContext.From(navigation)),
+            ResolveNavigation(navigationServiceFactory, navigation),
             testCatalogService,
+            retakeOperations,
             result);
 }
 
@@ -96,7 +108,8 @@ public sealed class QuestionViewModelFactory(
     IToastService toastService,
     IDialogService dialogService,
     IUserProgressService userProgressService,
-    Func<NavigationContext, INavigationService> navigationServiceFactory) : IQuestionViewModelFactory
+    QuestionnaireSubmissionService submissionService,
+    Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IQuestionViewModelFactory
 {
     public QuestionViewModel Create(
         INavigation navigation,
@@ -105,9 +118,8 @@ public sealed class QuestionViewModelFactory(
         bool singleAnswer,
         TestSessionInfo? session = null)
     {
-        INavigationService navigationService = navigationServiceFactory(NavigationContext.From(navigation));
+        INavigationService navigationService = ResolveNavigation(navigationServiceFactory, navigation);
         return new(
-            navigation,
             questions,
             analyzer,
             singleAnswer,
@@ -115,6 +127,7 @@ public sealed class QuestionViewModelFactory(
             dialogService,
             navigationService,
             userProgressService,
+            submissionService,
             session);
     }
 }
@@ -132,7 +145,8 @@ public interface IFindProblemViewModelFactory
 
 public sealed class FindProblemViewModelFactory(
     Func<NavigationContext, INavigationService> navigationServiceFactory,
-    ITestCatalogService testCatalogService) : IFindProblemViewModelFactory
+    ITestCatalogService testCatalogService,
+    FindProblemContentLoader contentLoader) : ViewModelFactoryBase, IFindProblemViewModelFactory
 {
     public FindProblemViewModel Create(
         INavigation navigation,
@@ -142,9 +156,9 @@ public sealed class FindProblemViewModelFactory(
         Func<Task> startTest,
         string? testId = null) =>
         new(
-            navigation,
-            navigationServiceFactory(NavigationContext.From(navigation)),
+            ResolveNavigation(navigationServiceFactory, navigation),
             testCatalogService,
+            contentLoader,
             description,
             algorithm,
             comment,
@@ -157,8 +171,8 @@ public interface ITheoryViewModelFactory
     TheoryViewModel Create(INavigation navigation, string content, TechniqueId? techniqueId = null);
 }
 
-public sealed class TheoryViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory) : ITheoryViewModelFactory
+public sealed class TheoryViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, ITheoryViewModelFactory
 {
     public TheoryViewModel Create(INavigation navigation, string content, TechniqueId? techniqueId = null) =>
-        new(navigation, navigationServiceFactory(NavigationContext.From(navigation)), content, techniqueId);
+        new(ResolveNavigation(navigationServiceFactory, navigation), content, techniqueId);
 }

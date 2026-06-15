@@ -1,0 +1,33 @@
+using Moq;
+using PsychologyApp.Application.Services.ReasonSearch;
+using PsychologyApp.Presentation.Services.Physics;
+using Xunit;
+
+namespace PsychologyApp.Presentation.Tests;
+
+public sealed class PhysicsSearchSessionTests
+{
+    [Fact]
+    public void NewInstances_DoNotShareMutableSearchState()
+    {
+        Mock<IReasonSearchService> reasonSearch = new();
+        PhysicsSearchCoordinator coordinator = new(reasonSearch.Object);
+        PhysicsSearchSession first = new(coordinator);
+        PhysicsSearchSession second = new(coordinator);
+
+        Assert.NotSame(first, second);
+        first.ResetSearchMatches();
+        Assert.Equal(0, first.LoadedSearchCount);
+        Assert.Equal(0, second.LoadedSearchCount);
+    }
+
+    [Fact]
+    public void ResetSearchMatches_ClearsLoadedCount()
+    {
+        PhysicsSearchSession session = new(new PhysicsSearchCoordinator(new Mock<IReasonSearchService>().Object));
+
+        session.ResetSearchMatches();
+
+        Assert.Equal(0, session.LoadedSearchCount);
+    }
+}

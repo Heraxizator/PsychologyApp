@@ -546,8 +546,4 @@ public static class UiAnimations
 
     public static int ComputeRevealDelay(int index, int cap = StaggerCap) =>
         Math.Max(0, Math.Min(index, cap - 1)) * (int)StaggerDelay;
-
-    [Obsolete("Use ComputeRevealDelay with list index instead.")]
-    public static int ComputeListItemRevealDelay(object? bindingContext, int cap = StaggerCap) =>
-        ComputeRevealDelay(Math.Abs(bindingContext?.GetHashCode() ?? 0) % cap, cap);
 }

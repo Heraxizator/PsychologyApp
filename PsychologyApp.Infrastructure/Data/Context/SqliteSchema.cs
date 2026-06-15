@@ -6,10 +6,14 @@ namespace PsychologyApp.Infrastructure.Data.Context;
 
 public static class SqliteSchema
 {
-    public const int CurrentVersion = 4;
+    public const int CurrentVersion = 5;
 
     private static readonly string[] DropTablesSql =
     [
+        "DROP TABLE IF EXISTS MoodEntries;",
+        "DROP TABLE IF EXISTS SessionDrafts;",
+        "DROP TABLE IF EXISTS Completions;",
+        "DROP TABLE IF EXISTS TestResults;",
         "DROP TABLE IF EXISTS SchemaVersion;",
         "DROP TABLE IF EXISTS Techniques;",
         "DROP TABLE IF EXISTS Quots;",
@@ -66,6 +70,26 @@ public static class SqliteSchema
         if (version < 4)
         {
             await ApplyMigrationAsync(connection, 4, MigrateToVersion4Async, cancellationToken);
+            version = 4;
+        }
+
+        if (version < 5)
+        {
+            await ApplyMigrationAsync(connection, 5, MigrateToVersion5Async, cancellationToken);
+        }
+    }
+
+    private static async Task MigrateToVersion5Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)
+    {
+        int legacyColumnExists = await connection.ExecuteScalarAsync<int>(
+            "SELECT COUNT(*) FROM pragma_table_info('Techniques') WHERE name = 'Describtion';",
+            transaction: transaction);
+
+        if (legacyColumnExists > 0)
+        {
+            await connection.ExecuteAsync(
+                "ALTER TABLE Techniques RENAME COLUMN Describtion TO Description;",
+                transaction: transaction);
         }
     }
 
@@ -192,7 +216,7 @@ public static class SqliteSchema
                 Number TEXT NOT NULL,
                 Date TEXT NOT NULL,
                 Header TEXT NOT NULL,
-                Describtion TEXT NOT NULL,
+                Description TEXT NOT NULL,
                 Subject TEXT NOT NULL,
                 Author TEXT NOT NULL,
                 Algorithm TEXT NOT NULL,

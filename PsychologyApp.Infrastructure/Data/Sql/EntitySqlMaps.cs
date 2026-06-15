@@ -7,15 +7,15 @@ internal static class EntitySqlMaps
         Table = "Techniques",
         KeyColumn = "TechniqueId",
         InsertSql = """
-            INSERT INTO Techniques (Number, Date, Header, Describtion, Subject, Author, Algorithm, Image, IsCompleted)
-            VALUES (@Number, @Date, @Header, @Describtion, @Subject, @Author, @Algorithm, @Image, @IsCompleted);
+            INSERT INTO Techniques (Number, Date, Header, Description, Subject, Author, Algorithm, Image, IsCompleted)
+            VALUES (@Number, @Date, @Header, @Description, @Subject, @Author, @Algorithm, @Image, @IsCompleted);
             """,
         UpdateSql = """
             UPDATE Techniques SET
                 Number = @Number,
                 Date = @Date,
                 Header = @Header,
-                Describtion = @Describtion,
+                Description = @Description,
                 Subject = @Subject,
                 Author = @Author,
                 Algorithm = @Algorithm,

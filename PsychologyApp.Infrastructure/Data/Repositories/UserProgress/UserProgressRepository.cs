@@ -189,6 +189,44 @@ public sealed class UserProgressRepository : IUserProgressRepository
             : DateTime.Parse(value, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.RoundtripKind);
     }
 
+    public async Task<IReadOnlyDictionary<string, DateTime>> GetLastPracticeDatesAsync(
+        IReadOnlyList<string> itemKeys,
+        CancellationToken cancellationToken = default)
+    {
+        if (itemKeys.Count == 0)
+        {
+            return new Dictionary<string, DateTime>(StringComparer.Ordinal);
+        }
+
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        IEnumerable<(string ItemKey, string CompletedAt)> rows = await connection.QueryAsync<(string ItemKey, string CompletedAt)>(
+            DapperCommandFactory.Create(
+                """
+                SELECT c.ItemKey, c.CompletedAt
+                FROM Completions c
+                INNER JOIN (
+                    SELECT ItemKey, MAX(CompletionId) AS MaxCompletionId
+                    FROM Completions
+                    WHERE ItemKey IN @itemKeys
+                    GROUP BY ItemKey
+                ) latest ON c.CompletionId = latest.MaxCompletionId;
+                """,
+                new { itemKeys },
+                commandTimeout: _commandTimeoutSeconds,
+                cancellationToken: cancellationToken));
+
+        Dictionary<string, DateTime> result = new(StringComparer.Ordinal);
+        foreach ((string itemKey, string completedAt) in rows)
+        {
+            result[itemKey] = DateTime.Parse(
+                completedAt,
+                System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.RoundtripKind);
+        }
+
+        return result;
+    }
+
     public async Task SaveSessionDraftAsync(string techniqueKey, string payloadJson, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
@@ -218,6 +256,25 @@ public sealed class UserProgressRepository : IUserProgressRepository
             new { techniqueKey },
             commandTimeout: _commandTimeoutSeconds,
             cancellationToken: cancellationToken));
+    }
+
+    public async Task<IReadOnlySet<string>> GetSessionDraftKeysAsync(
+        IReadOnlyList<string> techniqueKeys,
+        CancellationToken cancellationToken = default)
+    {
+        if (techniqueKeys.Count == 0)
+        {
+            return new HashSet<string>(StringComparer.Ordinal);
+        }
+
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        IEnumerable<string> rows = await connection.QueryAsync<string>(DapperCommandFactory.Create(
+            "SELECT TechniqueKey FROM SessionDrafts WHERE TechniqueKey IN @techniqueKeys;",
+            new { techniqueKeys },
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
+
+        return rows.ToHashSet(StringComparer.Ordinal);
     }
 
     public async Task DeleteSessionDraftAsync(string techniqueKey, CancellationToken cancellationToken = default)

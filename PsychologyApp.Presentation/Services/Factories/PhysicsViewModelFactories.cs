@@ -3,6 +3,8 @@ using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Services.ReasonSearch;
 using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.Services.Physics;
+using PsychologyApp.Presentation.Common.Infrastructure;
 using PsychologyApp.Presentation.ViewModels.Physics;
 
 namespace PsychologyApp.Presentation.Services.Factories;
@@ -14,12 +16,23 @@ public interface IPhysicsSearchViewModelFactory
 
 public sealed class PhysicsSearchViewModelFactory(
     IReasonSearchService reasonSearchService,
+    PhysicsSearchCoordinator searchCoordinator,
+    Func<PhysicsSearchSession> searchSessionFactory,
     ILogger<PhysicsSearchViewModel> logger,
     IOptions<AppSettings> settings,
-    Func<NavigationContext, INavigationService> navigationServiceFactory) : IPhysicsSearchViewModelFactory
+    IDatabaseReadySignal databaseReadySignal,
+    Func<NavigationContext, INavigationService> navigationServiceFactory)
+    : ViewModelFactoryBase, IPhysicsSearchViewModelFactory
 {
     public PhysicsSearchViewModel Create(INavigation navigation) =>
-        new(navigation, reasonSearchService, logger, settings, navigationServiceFactory(NavigationContext.From(navigation)));
+        new(
+            reasonSearchService,
+            searchCoordinator,
+            searchSessionFactory(),
+            logger,
+            settings,
+            ResolveNavigation(navigationServiceFactory, navigation),
+            databaseReadySignal);
 }
 
 public interface IStartPhysicsViewModelFactory
@@ -27,8 +40,8 @@ public interface IStartPhysicsViewModelFactory
     StartPhysicsViewModel Create(INavigation navigation);
 }
 
-public sealed class StartPhysicsViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory) : IStartPhysicsViewModelFactory
+public sealed class StartPhysicsViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IStartPhysicsViewModelFactory
 {
     public StartPhysicsViewModel Create(INavigation navigation) =>
-        new(navigation, navigationServiceFactory(NavigationContext.From(navigation)));
+        new(ResolveNavigation(navigationServiceFactory, navigation));
 }

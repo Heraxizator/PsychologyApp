@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Core.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 
 namespace PsychologyApp.Presentation.Common;
@@ -13,10 +14,10 @@ public static class OnboardingRecommendation
 
     public static TechniqueId ResolveTechnique(string concern) => concern switch
     {
-        "anxiety" => TechniqueId.Spin,
-        "body" => TechniqueId.Experience,
-        "mood" => TechniqueId.Paper,
-        "explore" => ExploreRotation[DateTime.UtcNow.DayOfYear % ExploreRotation.Length],
+        OnboardingConcernKeys.Anxiety => TechniqueId.Spin,
+        OnboardingConcernKeys.Body => TechniqueId.Experience,
+        OnboardingConcernKeys.Mood => TechniqueId.Paper,
+        OnboardingConcernKeys.Explore => ExploreRotation[DateTime.UtcNow.DayOfYear % ExploreRotation.Length],
         _ => ExploreRotation[DateTime.UtcNow.DayOfYear % ExploreRotation.Length]
     };
 }

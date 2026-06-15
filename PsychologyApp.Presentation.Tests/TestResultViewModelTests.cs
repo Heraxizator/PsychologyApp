@@ -1,7 +1,8 @@
 using Moq;
+using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Models.Tests;
-using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.Services.Tests;
 using PsychologyApp.Presentation.ViewModels.Tests;
 using Xunit;
@@ -10,92 +11,113 @@ namespace PsychologyApp.Presentation.Tests;
 
 public sealed class TestResultViewModelTests
 {
-    private readonly Mock<ITestCatalogService> _catalogService = new();
-
     public TestResultViewModelTests()
     {
         AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
     }
 
     [Fact]
-    public async Task FinishCommand_NavigatesToRoot()
+    public void HasRecommendation_ReflectsResultInfo()
     {
-        var navigation = new Mock<INavigation>();
-        var navigationService = new TestNavigationService(navigation.Object);
+        TestResultViewModel withRecommendation = CreateViewModel(new TestResultInfo
+        {
+            Score = 5,
+            Interpretation = "Mild",
+            RecommendedTechnique = TechniqueId.Paper,
+            TestId = "beck",
+            AnalyzerId = "beck"
+        });
 
-        TestResultViewModel viewModel = new(
-            navigation.Object,
-            navigationService,
-            _catalogService.Object,
-            new TestResultInfo { Score = 5, Interpretation = "Mild" });
+        TestResultViewModel withoutRecommendation = CreateViewModel(new TestResultInfo
+        {
+            Score = 5,
+            Interpretation = "Mild",
+            TestId = "beck",
+            AnalyzerId = "beck"
+        });
 
-        viewModel.FinishCommand.Execute(null);
-        await Task.Delay(50);
-
-        navigation.Verify(n => n.PopToRootAsync(true), Times.Once);
+        Assert.True(withRecommendation.HasRecommendation);
+        Assert.False(withoutRecommendation.HasRecommendation);
     }
 
     [Fact]
-    public async Task TryTechniqueCommand_WithRecommendation_NavigatesToTechnique()
+    public async Task RetakeCommand_DelegatesToRetakeOperations()
     {
-        var navigation = new Mock<INavigation>();
-        var trackingNavigation = new TechniqueTrackingNavigationService(navigation.Object);
+        Mock<INavigation> navigation = new();
+        RetakeTrackingNavigation navigationService = new(navigation.Object);
+        FakeTestCatalogService catalog = new FakeTestCatalogService().WithCatalog(new TestDefinition
+        {
+            TestId = "beck",
+            AnalyzerId = "beck",
+            Title = "Beck",
+            Subtitle = "Sub",
+            Description = "Desc",
+            Comment = "Note",
+            Algorithm = ["Step"],
+            Kind = TestKind.Questionnaire
+        });
 
-        TestResultViewModel viewModel = new(
-            navigation.Object,
-            trackingNavigation,
-            _catalogService.Object,
+        TestResultViewModel viewModel = CreateViewModel(
             new TestResultInfo
             {
-                Score = 12,
-                Interpretation = "High",
-                RecommendedTechnique = TechniqueId.Spin,
+                Score = 8,
+                Interpretation = "Score 8",
+                TestId = "beck",
                 AnalyzerId = "beck"
-            });
+            },
+            navigationService,
+            catalog);
+
+        viewModel.RetakeCommand.Execute(null);
+        await Task.Delay(200);
+
+        Assert.True(navigationService.WentToRoot);
+    }
+
+    [Fact]
+    public async Task TryTechniqueCommand_NavigatesWhenRecommendationPresent()
+    {
+        TechniqueTrackingNavigation navigationService = new(Mock.Of<INavigation>());
+
+        TestResultViewModel viewModel = CreateViewModel(
+            new TestResultInfo
+            {
+                Score = 8,
+                Interpretation = "Score 8",
+                RecommendedTechnique = TechniqueId.Polarity,
+                TestId = "beck",
+                AnalyzerId = "beck"
+            },
+            navigationService);
 
         viewModel.TryTechniqueCommand.Execute(null);
         await Task.Delay(50);
 
-        Assert.Equal(TechniqueId.Spin, trackingNavigation.LastTechniqueId);
+        Assert.Equal(TechniqueId.Polarity, navigationService.LastTechniqueId);
     }
 
-    [Fact]
-    public void HasRecommendation_IsFalse_WhenNoTechniqueRecommended()
+    private static TestResultViewModel CreateViewModel(
+        TestResultInfo result,
+        INavigationService? navigationService = null,
+        ITestCatalogService? catalogService = null) =>
+        new(
+            navigationService ?? new TestNavigationService(Mock.Of<INavigation>()),
+            catalogService ?? new FakeTestCatalogService(),
+            new TestRetakeOperations(),
+            result);
+
+    private sealed class RetakeTrackingNavigation(INavigation navigation) : TestNavigationService(navigation)
     {
-        var navigation = new Mock<INavigation>();
-        var navigationService = new TestNavigationService(navigation.Object);
+        public bool WentToRoot { get; private set; }
 
-        TestResultViewModel viewModel = new(
-            navigation.Object,
-            navigationService,
-            _catalogService.Object,
-            new TestResultInfo { Score = 3, Interpretation = "Low" });
-
-        Assert.False(viewModel.HasRecommendation);
+        public override Task GoToRootAsync()
+        {
+            WentToRoot = true;
+            return Task.CompletedTask;
+        }
     }
 
-    [Fact]
-    public void Recommendation_includes_technique_title_when_present()
-    {
-        var navigation = new Mock<INavigation>();
-        var navigationService = new TestNavigationService(navigation.Object);
-
-        TestResultViewModel viewModel = new(
-            navigation.Object,
-            navigationService,
-            _catalogService.Object,
-            new TestResultInfo
-            {
-                Score = 12,
-                Interpretation = "10-15",
-                RecommendedTechnique = TechniqueId.Spin,
-                AnalyzerId = "beck"
-            });
-
-        Assert.Contains("Крутилка", viewModel.RecommendedTechniqueTitle);
-    }
-
-    private sealed class TechniqueTrackingNavigationService(INavigation navigation) : TestNavigationService(navigation)
+    private sealed class TechniqueTrackingNavigation(INavigation navigation) : TestNavigationService(navigation)
     {
         public TechniqueId? LastTechniqueId { get; private set; }
 

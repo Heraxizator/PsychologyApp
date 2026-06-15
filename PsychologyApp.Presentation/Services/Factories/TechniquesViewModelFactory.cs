@@ -4,6 +4,7 @@ using PsychologyApp.Application.Services.TechniqueService;
 using PsychologyApp.Application.Services.UserProgress;
 using PsychologyApp.Presentation.Services.Toasts;
 using PsychologyApp.Presentation.Services.Practice;
+using PsychologyApp.Presentation.Common.Infrastructure;
 using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.ViewModels.Practice;
 
@@ -20,15 +21,22 @@ public sealed class TechniquesViewModelFactory(
     ITechniqueMessenger techniqueMessenger,
     Func<NavigationContext, INavigationService> navigationServiceFactory,
     IUserProgressService userProgressService,
-    IOptions<AppSettings> settings) : ITechniquesViewModelFactory
+    TechniqueListBuilder techniqueListBuilder,
+    IDatabaseReadySignal databaseReadySignal,
+    PracticeDashboardLoader dashboardLoader,
+    TechniquesListInitializer listInitializer,
+    IOptions<AppSettings> settings) : ViewModelFactoryBase, ITechniquesViewModelFactory
 {
     public TechniquesViewModel Create(INavigation navigation) =>
         new(
-            navigation,
             techniqueService,
             toastService,
             techniqueMessenger,
-            navigationServiceFactory(NavigationContext.From(navigation)),
+            ResolveNavigation(navigationServiceFactory, navigation),
             userProgressService,
+            techniqueListBuilder,
+            databaseReadySignal,
+            dashboardLoader,
+            listInitializer,
             settings);
 }

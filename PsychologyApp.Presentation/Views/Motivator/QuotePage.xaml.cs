@@ -27,7 +27,10 @@ public partial class QuotePage : ContentPage
         ViewModel.LoadMoreQuotesCommand.Execute(null);
     }
 
-    private async void OnPullToRefresh(object? sender, EventArgs e)
+    private void OnPullToRefresh(object? sender, EventArgs e) =>
+        HandlePullToRefreshAsync().FireAndForget();
+
+    private async Task HandlePullToRefreshAsync()
     {
         try
         {
@@ -43,6 +46,7 @@ public partial class QuotePage : ContentPage
     {
         base.OnAppearing();
         _animationHelper?.TryRevealAsync();
+        ViewModel.EnsureInitializedAsync().FireAndForget();
     }
 
     protected override void OnHandlerChanged()

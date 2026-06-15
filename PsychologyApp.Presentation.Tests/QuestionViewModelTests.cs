@@ -6,6 +6,7 @@ using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Services.Dialogs;
 using PsychologyApp.Presentation.Services.Toasts;
 using PsychologyApp.Presentation.Models.Tests;
+using PsychologyApp.Presentation.Services.Tests;
 using PsychologyApp.Presentation.ViewModels.Tests;
 using Xunit;
 
@@ -13,6 +14,8 @@ namespace PsychologyApp.Presentation.Tests;
 
 public sealed class QuestionViewModelTests
 {
+    private static readonly QuestionnaireSubmissionService SubmissionService = new();
+
     public QuestionViewModelTests()
     {
         AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
@@ -40,14 +43,14 @@ public sealed class QuestionViewModelTests
         ];
 
         QuestionViewModel viewModel = new(
-            navigation.Object,
             questions,
             score => $"Result {score}",
             singleAnswer: true,
             toast.Object,
             dialog.Object,
             navigationService,
-            progress.Object);
+            progress.Object,
+            SubmissionService);
 
         viewModel.ConfirmCommand.Execute(null);
         await Task.Delay(50);
@@ -88,14 +91,14 @@ public sealed class QuestionViewModelTests
         ];
 
         QuestionViewModel viewModel = new(
-            navigation.Object,
             questions,
             score => $"Score {score}",
             singleAnswer: true,
             toast.Object,
             dialog.Object,
             trackingNavigation,
-            progress.Object);
+            progress.Object,
+            SubmissionService);
 
         viewModel.ConfirmCommand.Execute(null);
         await Task.Delay(50);
@@ -128,7 +131,6 @@ public sealed class QuestionViewModelTests
         ];
 
         QuestionViewModel viewModel = new(
-            navigation.Object,
             questions,
             score => $"Score {score}",
             singleAnswer: true,
@@ -136,6 +138,7 @@ public sealed class QuestionViewModelTests
             dialog.Object,
             navigationService,
             progress.Object,
+            SubmissionService,
             new TestSessionInfo { TestId = "beck", AnalyzerId = "beck" });
 
         viewModel.ConfirmCommand.Execute(null);
@@ -164,7 +167,6 @@ public sealed class QuestionViewModelTests
         ];
 
         QuestionViewModel viewModel = new(
-            navigation.Object,
             questions,
             score => $"Score {score}",
             singleAnswer: true,
@@ -172,6 +174,7 @@ public sealed class QuestionViewModelTests
             dialog.Object,
             trackingNavigation,
             progress.Object,
+            SubmissionService,
             new TestSessionInfo { TestId = "beck", AnalyzerId = "beck" });
 
         viewModel.ConfirmCommand.Execute(null);

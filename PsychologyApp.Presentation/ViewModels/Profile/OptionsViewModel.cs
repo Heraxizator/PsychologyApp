@@ -22,9 +22,9 @@ public class OptionsViewModel : BaseViewModel
     public string DonateTitle => AppStrings.OptionsDonateTitle;
     public string DonateSubtitle => AppStrings.OptionsDonateSubtitle;
 
-    public OptionsViewModel(INavigation navigation, INavigationService navigationService)
+    public OptionsViewModel(INavigationService navigationService)
     {
-        BindNavigation(navigation, navigationService);
+        BindNavigation(navigationService);
 
         OpenAboutPageCommand = new AsyncCommand(() => navigationService.GoToInfoAsync());
         OpenDonatePageCommand = new AsyncCommand(() => navigationService.GoToDonateAsync());

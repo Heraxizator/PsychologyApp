@@ -14,23 +14,18 @@ public partial class FindProblemViewModel : BaseViewModel
     public ICommand BackCommand { get; private set; } = default!;
     public ObservableCollection<AlgorithmRow> AlgorithmRows { get; private set; } = [];
 
-    public string PageTitle => AppStrings.TestsAboutPassageTitle;
-    public string DescriptionHeader => AppStrings.TestsDescriptionHeader;
-    public string AlgorithmHeader => AppStrings.TestsAlgorithmHeader;
-    public string NoteHeader => AppStrings.TestsNoteHeader;
-    public string StartButtonText => AppStrings.TestsStartButton;
-
     private readonly INavigationService _navigationService = null!;
     private readonly ITestCatalogService _testCatalogService = null!;
+    private readonly FindProblemContentLoader _contentLoader = null!;
     private readonly string? _testId;
     private readonly Func<Task> _startTestAsync = () => Task.CompletedTask;
 
     public FindProblemViewModel() { }
 
     public FindProblemViewModel(
-        INavigation navigation,
         INavigationService navigationService,
         ITestCatalogService testCatalogService,
+        FindProblemContentLoader contentLoader,
         string? description,
         List<string> algorithm,
         string? comment,
@@ -39,11 +34,12 @@ public partial class FindProblemViewModel : BaseViewModel
     {
         _navigationService = navigationService;
         _testCatalogService = testCatalogService;
+        _contentLoader = contentLoader;
         _testId = testId;
         ModuleName = AppStrings.TestsDetectorTitle;
         PageName = AppStrings.TestsAboutPassageTitle;
 
-        BindNavigation(navigation, navigationService);
+        BindNavigation(navigationService);
 
         DescriptionText = description;
         InitAlgorithmRows(algorithm);
@@ -68,45 +64,4 @@ public partial class FindProblemViewModel : BaseViewModel
     }
 
     partial void ReloadLocalizedTestContent();
-
-    private void InitAlgorithmRows(List<string> algorithmRows)
-    {
-        foreach (string algorithmRow in algorithmRows)
-        {
-            AlgorithmRows.Add(new AlgorithmRow { Text = algorithmRow });
-        }
-    }
-
-    private string? _descriptionText;
-    public string? DescriptionText
-    {
-        get => _descriptionText;
-        set
-        {
-            if (_descriptionText != value)
-            {
-                _descriptionText = value;
-                OnPropertyChanged(nameof(DescriptionText));
-            }
-        }
-    }
-
-    private string? _comment_text;
-    public string? CommentText
-    {
-        get => _comment_text;
-        set
-        {
-            if (_comment_text != value)
-            {
-                _comment_text = value;
-                OnPropertyChanged(nameof(CommentText));
-            }
-        }
-    }
-}
-
-public class AlgorithmRow
-{
-    public string Text { get; set; } = default!;
 }
