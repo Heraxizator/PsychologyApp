@@ -265,8 +265,8 @@
 
     <Style TargetType="SearchBar">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
-        <Setter Property="PlaceholderColor" Value="{StaticResource Gray500}" />
-        <Setter Property="CancelButtonColor" Value="{StaticResource Gray500}" />
+        <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource InputPlaceholderLight}, Dark={StaticResource InputPlaceholderDark}}" />
+        <Setter Property="CancelButtonColor" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="InterRegular" />
         <Setter Property="FontSize" Value="14" />
@@ -289,7 +289,7 @@
 
     <Style TargetType="SearchHandler">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
-        <Setter Property="PlaceholderColor" Value="{StaticResource Gray500}" />
+        <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource InputPlaceholderLight}, Dark={StaticResource InputPlaceholderDark}}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="InterRegular" />
         <Setter Property="FontSize" Value="14" />
@@ -354,7 +354,7 @@
                     </VisualState>
                     <VisualState x:Name="On">
                         <VisualState.Setters>
-                            <Setter Property="OnColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={StaticResource Gray200}}" />
+                            <Setter Property="OnColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
                             <Setter Property="ThumbColor" Value="{AppThemeBinding Light={DynamicResource Primary}, Dark={StaticResource White}}" />
                         </VisualState.Setters>
                     </VisualState>
@@ -399,13 +399,13 @@
         <Setter Property="Shell.ForegroundColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
         <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource White}}" />
         <Setter Property="Shell.DisabledColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
-        <Setter Property="Shell.UnselectedColor" Value="{StaticResource Gray400}" />
+        <Setter Property="Shell.UnselectedColor" Value="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray300}}" />
         <Setter Property="Shell.NavBarHasShadow" Value="False" />
         <!-- ??????????? ????? ??? TabBar -->
         <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray950}}" />
         <Setter Property="Shell.TabBarForegroundColor" Value="{DynamicResource Primary}" />
         <Setter Property="Shell.TabBarTitleColor" Value="{DynamicResource Primary}" />
-        <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource Gray400}" />
+        <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray300}}" />
     </Style>
     
 

@@ -1,19 +1,43 @@
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
+using PsychologyApp.Presentation.Serialization;
 
 namespace PsychologyApp.Presentation.Models.Tests;
 
 public static class TestCatalogParser
 {
-    private static readonly JsonSerializerOptions SerializerOptions = new()
-    {
-        PropertyNameCaseInsensitive = true
-    };
+    public static Task<ParseResult<JsonGroupedQuestionnaireDefinition>> DeserializeGroupedQuestionnaireAsync(
+        Stream stream,
+        CancellationToken cancellationToken = default) =>
+        DeserializeAsync(
+            stream,
+            AppJsonSerializerContext.Default.JsonGroupedQuestionnaireDefinition,
+            cancellationToken);
 
-    public static async Task<ParseResult<T>> DeserializeAsync<T>(Stream stream, CancellationToken cancellationToken = default)
+    public static Task<ParseResult<List<JsonNavigationTestDefinition>>> DeserializeNavigationTestsAsync(
+        Stream stream,
+        CancellationToken cancellationToken = default) =>
+        DeserializeAsync(
+            stream,
+            AppJsonSerializerContext.Default.ListJsonNavigationTestDefinition,
+            cancellationToken);
+
+    public static Task<ParseResult<List<JsonSimpleQuestionnaireDefinition>>> DeserializeSimpleQuestionnairesAsync(
+        Stream stream,
+        CancellationToken cancellationToken = default) =>
+        DeserializeAsync(
+            stream,
+            AppJsonSerializerContext.Default.ListJsonSimpleQuestionnaireDefinition,
+            cancellationToken);
+
+    private static async Task<ParseResult<T>> DeserializeAsync<T>(
+        Stream stream,
+        JsonTypeInfo<T> typeInfo,
+        CancellationToken cancellationToken)
     {
         try
         {
-            T? value = await JsonSerializer.DeserializeAsync<T>(stream, SerializerOptions, cancellationToken)
+            T? value = await JsonSerializer.DeserializeAsync(stream, typeInfo, cancellationToken)
                 .ConfigureAwait(false);
 
             if (value is null)

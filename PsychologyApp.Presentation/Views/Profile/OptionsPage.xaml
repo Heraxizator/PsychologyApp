@@ -10,9 +10,6 @@
              Title="{Binding PageTitle}">
 
     <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
-        <VerticalStackLayout.Behaviors>
-            <behaviors:StaggerChildrenBehavior />
-        </VerticalStackLayout.Behaviors>
         <ui:NavigationBarSimpleView
             TitleText="{Binding PageTitle}"
             BackCommand="{Binding BackCommand}" />

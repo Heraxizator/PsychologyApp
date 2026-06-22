@@ -2,7 +2,9 @@ using CommunityToolkit.Maui;
 using MauiIcons.Material;
 using Microsoft.Extensions.Logging;
 using PsychologyApp.Application.Configuration;
+using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.DependencyInjection;
+using PsychologyApp.Application.Services.ReasonService;
 using PsychologyApp.Bootstrap;
 using PsychologyApp.Domain.Base.Constants;
 using PsychologyApp.Presentation.DependencyInjection;
@@ -53,7 +55,11 @@ public static class MauiProgram
         });
 
         builder.Services.AddSingleton<MauiReasonContentProvider>();
-        builder.Services.AddCachedReasonContentProvider<MauiReasonContentProvider>();
+        builder.Services.AddSingleton<CachedReasonContentProvider>(sp =>
+            new CachedReasonContentProvider(
+                sp.GetRequiredService<MauiReasonContentProvider>(),
+                () => AppStrings.Language));
+        builder.Services.AddSingleton<IReasonContentProvider>(sp => sp.GetRequiredService<CachedReasonContentProvider>());
         builder.Services.AddSingleton<MauiQuotContentProvider>();
         builder.Services.AddCachedQuotContentProvider<MauiQuotContentProvider>();
         builder.Services.AddSingleton<MauiTestAssetReader>();
@@ -61,7 +67,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<TestCatalogService>();
         builder.Services.AddSingleton<CachedTestCatalogService>();
         builder.Services.AddSingleton<ITestCatalogService>(sp => sp.GetRequiredService<CachedTestCatalogService>());
-        builder.Services.AddSingleton<ContentCacheInvalidator>();
+        builder.Services.AddSingleton<LanguageContentReloader>();
         builder.Services.AddPsychologyAppPresentation();
         builder.Services.AddSingleton<AppShell>();
 

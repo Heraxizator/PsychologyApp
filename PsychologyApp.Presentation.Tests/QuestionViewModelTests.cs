@@ -15,6 +15,7 @@ namespace PsychologyApp.Presentation.Tests;
 public sealed class QuestionViewModelTests
 {
     private static readonly QuestionnaireSubmissionService SubmissionService = new();
+    private static readonly Mock<ITestCatalogService> CatalogService = new();
 
     public QuestionViewModelTests()
     {
@@ -50,7 +51,8 @@ public sealed class QuestionViewModelTests
             dialog.Object,
             navigationService,
             progress.Object,
-            SubmissionService);
+            SubmissionService,
+            CatalogService.Object);
 
         viewModel.ConfirmCommand.Execute(null);
         await Task.Delay(50);
@@ -98,7 +100,8 @@ public sealed class QuestionViewModelTests
             dialog.Object,
             trackingNavigation,
             progress.Object,
-            SubmissionService);
+            SubmissionService,
+            CatalogService.Object);
 
         viewModel.ConfirmCommand.Execute(null);
         await Task.Delay(50);
@@ -139,6 +142,7 @@ public sealed class QuestionViewModelTests
             navigationService,
             progress.Object,
             SubmissionService,
+            CatalogService.Object,
             new TestSessionInfo { TestId = "beck", AnalyzerId = "beck" });
 
         viewModel.ConfirmCommand.Execute(null);
@@ -175,6 +179,7 @@ public sealed class QuestionViewModelTests
             trackingNavigation,
             progress.Object,
             SubmissionService,
+            CatalogService.Object,
             new TestSessionInfo { TestId = "beck", AnalyzerId = "beck" });
 
         viewModel.ConfirmCommand.Execute(null);

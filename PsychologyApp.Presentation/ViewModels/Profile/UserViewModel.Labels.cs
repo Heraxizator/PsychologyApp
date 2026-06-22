@@ -1,4 +1,5 @@
 using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Common.Infrastructure;
 
 namespace PsychologyApp.Presentation.ViewModels.Profile;
 
@@ -71,6 +72,20 @@ public partial class UserViewModel
             nameof(HasQuotes),
             nameof(ShowQuotesEmptyCta));
         InitTechniques();
-        RefreshAsync(forceQuotesReload: false).FireAndForget();
+
+        string currentLanguage = UserPreferences.GetPersistedLanguage();
+        if (string.Equals(_feedLanguage, currentLanguage, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        _feedLanguage = currentLanguage;
+        ReloadProfileForLanguageAsync().FireAndForget();
+    }
+
+    private async Task ReloadProfileForLanguageAsync()
+    {
+        await _languageContentReloader.EnsureReloadedAsync();
+        await RefreshAsync(forceQuotesReload: true);
     }
 }

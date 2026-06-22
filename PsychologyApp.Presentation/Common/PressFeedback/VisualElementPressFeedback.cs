@@ -85,10 +85,17 @@ public static class VisualElementPressFeedback
 
         try
         {
-            await Task.WhenAll(
-                target.ScaleToAsync(scale, UiAnimations.PressDuration, UiAnimations.EnterEasing),
-                target.FadeToAsync(UiAnimations.PressOpacity, UiAnimations.PressDuration, UiAnimations.EnterEasing),
-                target.TranslateToAsync(0, UiAnimations.PressTranslationY, UiAnimations.PressDuration, UiAnimations.EnterEasing));
+            if (opts.ScaleOnly)
+            {
+                await target.ScaleToAsync(scale, UiAnimations.PressDuration, UiAnimations.EnterEasing);
+            }
+            else
+            {
+                await Task.WhenAll(
+                    target.ScaleToAsync(scale, UiAnimations.PressDuration, UiAnimations.EnterEasing),
+                    target.FadeToAsync(UiAnimations.PressOpacity, UiAnimations.PressDuration, UiAnimations.EnterEasing),
+                    target.TranslateToAsync(0, UiAnimations.PressTranslationY, UiAnimations.PressDuration, UiAnimations.EnterEasing));
+            }
         }
         finally
         {
@@ -128,10 +135,17 @@ public static class VisualElementPressFeedback
 
         try
         {
-            await Task.WhenAll(
-                target.ScaleToAsync(1, UiAnimations.ReleaseDuration, UiAnimations.ReleaseEasing),
-                target.FadeToAsync(1, UiAnimations.ReleaseDuration, UiAnimations.ReleaseEasing),
-                target.TranslateToAsync(0, 0, UiAnimations.ReleaseDuration, UiAnimations.ReleaseEasing));
+            if (opts.ScaleOnly)
+            {
+                await target.ScaleToAsync(1, UiAnimations.ReleaseDuration, UiAnimations.ReleaseEasing);
+            }
+            else
+            {
+                await Task.WhenAll(
+                    target.ScaleToAsync(1, UiAnimations.ReleaseDuration, UiAnimations.ReleaseEasing),
+                    target.FadeToAsync(1, UiAnimations.ReleaseDuration, UiAnimations.ReleaseEasing),
+                    target.TranslateToAsync(0, 0, UiAnimations.ReleaseDuration, UiAnimations.ReleaseEasing));
+            }
         }
         finally
         {

@@ -31,6 +31,26 @@ public sealed class QuotService(IQuotRepository quotRepository, IQuotContentProv
 
     public async Task LoadSingleAsync(CancellationToken cancellationToken = default)
     {
+        await AddRandomQuoteAsync(cancellationToken);
+    }
+
+    public async Task ReseedFeedAsync(int count, CancellationToken cancellationToken = default)
+    {
+        if (count <= 0)
+        {
+            return;
+        }
+
+        await quotRepository.DeleteAllAsync(cancellationToken);
+
+        for (int i = 0; i < count; i++)
+        {
+            await AddRandomQuoteAsync(cancellationToken);
+        }
+    }
+
+    private async Task AddRandomQuoteAsync(CancellationToken cancellationToken)
+    {
         IReadOnlyList<QuotSeed> seeds = await quotContentProvider.LoadAllAsync(cancellationToken);
         if (seeds.Count == 0)
         {

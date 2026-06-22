@@ -92,7 +92,7 @@ public sealed class PageAnimationHelper : IDisposable
         {
             _contentRevealed = true;
 
-            if (_contentView is not null && _contentView.IsVisible)
+            if (_contentView is not null && _contentView.IsVisible && !ShouldSkipContentReveal(_contentView))
             {
                 await UiAnimations.SafeRevealPremiumAsync(_contentView, cancellationToken: _cts!.Token);
             }
@@ -119,6 +119,9 @@ public sealed class PageAnimationHelper : IDisposable
             UiAnimations.ResetVisualState(_contentView);
         }
     }
+
+    internal static bool ShouldSkipContentReveal(VisualElement contentView) =>
+        contentView is CollectionView or ItemsView;
 
     private void ResetCancellation()
     {

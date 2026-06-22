@@ -20,9 +20,6 @@
             IsVisible="{Binding IsDone}"
             Margin="{StaticResource LayoutTabPageMarginThickness}"
             RowDefinitions="Auto,*,Auto">
-            <Grid.Behaviors>
-                <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
-            </Grid.Behaviors>
 
             <VerticalStackLayout Grid.Row="0" Spacing="10" Margin="0,0,0,8">
                 <ui:TextEntryView
@@ -39,7 +36,6 @@
                 x:Name="Musics"
                 VerticalOptions="FillAndExpand"
                 VerticalScrollBarVisibility="Never"
-                HeaderFooterSpacing="0"
                 ItemsSource="{Binding FilteredItems}">
                 <CollectionView.EmptyView>
                     <Label
@@ -97,7 +93,7 @@
                             WidthRequest="48"
                             HeightRequest="48"
                             StrokeThickness="0"
-                            BackgroundColor="{DynamicResource PrimaryTint}"
+                            BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}"
                             VerticalOptions="Center">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="12" />

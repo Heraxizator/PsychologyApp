@@ -22,12 +22,24 @@ public sealed class CachedQuotContentProvider(IQuotContentProvider innerProvider
         await _gate.WaitAsync(cancellationToken);
         try
         {
-            if (_cache is null)
+            if (_cache is not null)
             {
-                _cache = (await innerProvider.LoadAllAsync(cancellationToken)).ToList();
+                return _cache;
             }
 
+            IReadOnlyList<QuotSeed> loaded = (await innerProvider.LoadAllAsync(cancellationToken)).ToList();
+            if (loaded.Count == 0)
+            {
+                throw new InvalidOperationException("Embedded quote catalog is empty.");
+            }
+
+            _cache = loaded;
             return _cache;
+        }
+        catch
+        {
+            _cache = null;
+            throw;
         }
         finally
         {

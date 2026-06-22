@@ -23,7 +23,6 @@
             Margin="{StaticResource LayoutTabPageMarginThickness}"
             ItemsSource="{Binding TechniquesItemsSource}"
             IsGrouped="{Binding IsTechniquesGrouped}"
-            HeaderFooterSpacing="0"
             IsVisible="{Binding IsDone}"
             SelectionMode="Single"
             VerticalScrollBarVisibility="Never"
@@ -49,9 +48,6 @@
                     </Grid>
                 </DataTemplate>
             </CollectionView.GroupHeaderTemplate>
-            <CollectionView.Behaviors>
-                <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
-            </CollectionView.Behaviors>
 
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource PracticeListItemSpacing}" />

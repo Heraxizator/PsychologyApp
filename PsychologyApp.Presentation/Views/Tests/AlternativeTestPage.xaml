@@ -11,10 +11,6 @@
              Title="{Binding PageTitle}"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Common.Behaviors">
 <StackLayout VerticalOptions="FillAndExpand">
-        <StackLayout.Behaviors>
-            <behaviors:RevealOnAppearingBehavior />
-        </StackLayout.Behaviors>
-
         <ui:NavigationBarSimpleView
             TitleText="{Binding PageTitle}"
             BackCommand="{Binding Finish}" />
@@ -23,6 +19,9 @@
             <StackLayout>
 
                 <StackLayout x:Name="StartSection" IsVisible="{Binding IsStart}">
+                    <StackLayout.Behaviors>
+                        <behaviors:RevealOnAppearingBehavior />
+                    </StackLayout.Behaviors>
                     <StackLayout Margin="{StaticResource LayoutPageMarginThickness}">
                         <Label
                             HorizontalTextAlignment="Center"
@@ -37,6 +36,9 @@
                 <StackLayout
                     x:Name="FinishSection"
                     IsVisible="{Binding IsFinish}">
+                    <StackLayout.Behaviors>
+                        <behaviors:RevealOnAppearingBehavior />
+                    </StackLayout.Behaviors>
 
                     <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
 
@@ -44,12 +46,12 @@
                         Text="{Binding FirstColorLabel}"
                         Style="{StaticResource SectionTitleStyle}"
                         HorizontalOptions="Center"
-                        TextColor="{StaticResource TextSecondaryLight}"/>
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"/>
 
                         <BoxView 
-                        Margin="20,{StaticResource LayoutSpacing},20,{StaticResource LayoutSpacing}"
+                        Margin="{StaticResource HorizontalGutterVerticalSpacingMargin}"
                         HeightRequest="3"
-                        Color="{StaticResource Gray}"/>
+                        Color="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}"/>
 
                         <StackLayout>
                             <BoxView 
@@ -68,9 +70,9 @@
                         </StackLayout>
 
                         <BoxView 
-                        Margin="20,{StaticResource LayoutSpacing},20,0"
+                        Margin="{StaticResource HorizontalGutterTopSpacingMargin}"
                         HeightRequest="3"
-                        Color="{StaticResource Gray}"/>
+                        Color="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}"/>
 
                         <Border Style="{StaticResource BrandCardStyle}">
                             <Border.Behaviors>
@@ -83,12 +85,12 @@
                         Text="{Binding SecondColorLabel}"
                         Style="{StaticResource SectionTitleStyle}"
                         HorizontalOptions="Center"
-                        TextColor="{StaticResource TextSecondaryLight}"/>
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"/>
 
                         <BoxView 
-                        Margin="20,{StaticResource LayoutSpacing},20,{StaticResource LayoutSpacing}"
+                        Margin="{StaticResource HorizontalGutterVerticalSpacingMargin}"
                         HeightRequest="3"
-                        Color="{StaticResource Gray}"/>
+                        Color="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}"/>
 
                         <StackLayout>
                             <BoxView 
@@ -107,9 +109,9 @@
                         </StackLayout>
 
                         <BoxView 
-                        Margin="20,{StaticResource LayoutSpacing},20,0"
+                        Margin="{StaticResource HorizontalGutterTopSpacingMargin}"
                         HeightRequest="3"
-                        Color="{StaticResource Gray}"/>
+                        Color="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}"/>
 
                         <Border Style="{StaticResource BrandCardStyle}">
                             <Border.Behaviors>

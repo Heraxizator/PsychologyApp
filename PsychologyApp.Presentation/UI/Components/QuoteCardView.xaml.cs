@@ -23,16 +23,6 @@ public partial class QuoteCardView : ContentView
     private static void AttachIconPressFeedback(Border border) =>
         VisualElementPressFeedback.Attach(border, new PressFeedbackOptions { HapticOnRelease = true });
 
-    protected override void OnPropertyChanged(string? propertyName = null)
-    {
-        base.OnPropertyChanged(propertyName);
-
-        if (propertyName == nameof(IsFavourite))
-        {
-            UiAnimations.SafePulseAsync(FavoriteActionBorder).FireAndForget();
-        }
-    }
-
     private void ApplyLocalization()
     {
         DefaultAuthorText = AppStrings.ProverbLabel;

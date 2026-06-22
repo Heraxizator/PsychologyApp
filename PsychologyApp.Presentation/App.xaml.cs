@@ -11,4 +11,10 @@ public partial class App : Microsoft.Maui.Controls.Application
         exceptionHandler.Attach(this);
         MainPage = services.GetRequiredService<AppShell>();
     }
+
+    protected override void OnResume()
+    {
+        base.OnResume();
+        ReduceMotion.Refresh();
+    }
 }

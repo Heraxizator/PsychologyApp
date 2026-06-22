@@ -11,10 +11,6 @@
              Title="{Binding PageTitle}"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Common.Behaviors">
 <StackLayout VerticalOptions="FillAndExpand">
-        <StackLayout.Behaviors>
-            <behaviors:RevealOnAppearingBehavior />
-        </StackLayout.Behaviors>
-
         <ui:NavigationBarSimpleView
             TitleText="{Binding PageTitle}"
             BackCommand="{Binding Finish}" />
@@ -22,6 +18,9 @@
         <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
             <StackLayout>
                 <StackLayout x:Name="StartSection" IsVisible="{Binding IsStart}">
+                    <StackLayout.Behaviors>
+                        <behaviors:RevealOnAppearingBehavior />
+                    </StackLayout.Behaviors>
                     <StackLayout Margin="{StaticResource LayoutPageMarginThickness}">
                         <Label
                             HorizontalTextAlignment="Center"
@@ -36,6 +35,9 @@
                 <StackLayout
                 x:Name="FinishSection"
                 IsVisible="{Binding IsFinish}">
+                    <StackLayout.Behaviors>
+                        <behaviors:RevealOnAppearingBehavior />
+                    </StackLayout.Behaviors>
 
                     <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
 

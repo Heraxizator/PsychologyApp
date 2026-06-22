@@ -97,7 +97,7 @@
                         Text="{TemplateBinding MoodHistorySummary}"
                         HorizontalTextAlignment="Center"
                         Style="{StaticResource CaptionStyle}"
-                        TextColor="{DynamicResource Gray500}"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
                         MaxLines="2"
                         LineBreakMode="TailTruncation" />
                 </VerticalStackLayout>

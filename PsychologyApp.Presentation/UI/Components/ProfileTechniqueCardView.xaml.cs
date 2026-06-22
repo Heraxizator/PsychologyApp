@@ -8,7 +8,7 @@ public partial class ProfileTechniqueCardView : ContentView
     public ProfileTechniqueCardView()
     {
         InitializeComponent();
-        VisualElementPressFeedback.AttachToTemplateRoot(this, new PressFeedbackOptions { HapticOnRelease = true });
+        VisualElementPressFeedback.AttachToTemplateRoot(this, new PressFeedbackOptions { HapticOnRelease = true, ScaleOnly = true });
     }
 
     public static readonly BindableProperty ImageProperty =

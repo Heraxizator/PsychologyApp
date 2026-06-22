@@ -8,7 +8,7 @@ public partial class MoodStripView : ContentView
     public MoodStripView()
     {
         InitializeComponent();
-        VisualElementPressFeedback.AttachToTemplateRoot(this, new PressFeedbackOptions { HapticOnRelease = true });
+        VisualElementPressFeedback.AttachToTemplateRoot(this, new PressFeedbackOptions { HapticOnRelease = true, ScaleOnly = true });
     }
 
     public static readonly BindableProperty QuestionTextProperty =

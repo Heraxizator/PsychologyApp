@@ -7,6 +7,7 @@ namespace PsychologyApp.Presentation.ViewModels.Physics;
 public partial class PhysicsSearchViewModel
 {
     private bool _initialized;
+    private string? _reasonsLanguage;
 
     public bool HasInitialized => _initialized;
 
@@ -17,6 +18,7 @@ public partial class PhysicsSearchViewModel
     {
         await InitAsync();
         _initialized = true;
+        _reasonsLanguage = UserPreferences.GetPersistedLanguage();
     }
 
     private void OnSelfPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -42,6 +44,7 @@ public partial class PhysicsSearchViewModel
         try
         {
             CancelPendingSearch();
+            _searchSession.ResetSearchMatches();
             await UiThread.RunAsync(() => ResultsObservableCollection.Clear());
             await InitCoreAsync();
         }

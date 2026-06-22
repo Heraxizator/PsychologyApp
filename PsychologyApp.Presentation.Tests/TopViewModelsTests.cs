@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Moq;
+using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.QuotService;
@@ -16,6 +17,7 @@ using PsychologyApp.Presentation.Services.Preferences;
 using PsychologyApp.Presentation.Services.Practice;
 using PsychologyApp.Presentation.Services.Profile;
 using PsychologyApp.Presentation.Services.Quotes;
+using PsychologyApp.Presentation.Services.Tests;
 using PsychologyApp.Presentation.Services.Toasts;
 using PsychologyApp.Presentation.ViewModels.Practice;
 using PsychologyApp.Presentation.ViewModels.Profile;
@@ -48,10 +50,91 @@ public sealed class SettingsPreferencesPresenterTests
         Assert.True(built.HasCompletedOnboarding);
         Assert.Equal(OnboardingConcernKeys.Mood, built.OnboardingConcern);
     }
+
+    [Fact]
+    public void ApplyKeysFromState_LoadsNormalizedKeysFromState()
+    {
+        SettingsPreferencesPresenter presenter = new();
+        UserPreferencesState state = new()
+        {
+            Language = "en",
+            Theme = "dark",
+            Color = "red",
+            Form = "square",
+            Size = "small",
+            IsBold = true
+        };
+
+        string language = string.Empty;
+        string theme = string.Empty;
+        string color = string.Empty;
+        string form = string.Empty;
+        string size = string.Empty;
+        bool isBold = false;
+
+        presenter.ApplyKeysFromState(
+            state,
+            value => language = value,
+            value => theme = value,
+            value => color = value,
+            value => form = value,
+            value => size = value,
+            value => isBold = value);
+
+        Assert.Equal("en", language);
+        Assert.Equal("dark", theme);
+        Assert.Equal("red", color);
+        Assert.Equal("square", form);
+        Assert.Equal("small", size);
+        Assert.True(isBold);
+    }
+
+    [Fact]
+    public void ApplyKeysFromState_ParsesDisplayLabelsToKeys()
+    {
+        SettingsPreferencesPresenter presenter = new();
+        UserPreferencesState state = new()
+        {
+            Language = "Russian",
+            Theme = "Светлая",
+            Color = "Синий",
+            Form = "С закруглением",
+            Size = "Средний"
+        };
+
+        string language = string.Empty;
+        string theme = string.Empty;
+        string color = string.Empty;
+        string form = string.Empty;
+        string size = string.Empty;
+
+        presenter.ApplyKeysFromState(
+            state,
+            value => language = value,
+            value => theme = value,
+            value => color = value,
+            value => form = value,
+            value => size = value,
+            _ => { });
+
+        Assert.Equal("ru", language);
+        Assert.Equal("light", theme);
+        Assert.Equal("blue", color);
+        Assert.Equal("rounded", form);
+        Assert.Equal("medium", size);
+    }
 }
 
-public sealed class SettingsViewModelTests
+[Collection("Localization")]
+public sealed class SettingsViewModelTests : IDisposable
 {
+    public SettingsViewModelTests()
+    {
+        UserPreferences.UseInMemoryStorage();
+    }
+
+    public void Dispose() => UserPreferences.ResetInMemoryStorage();
+
     [Fact]
     public async Task ReplayOnboardingCommand_ResetsOnboardingAndNavigates()
     {
@@ -65,7 +148,8 @@ public sealed class SettingsViewModelTests
             dialog.Object,
             navigation.Object,
             store,
-            new SettingsPreferencesPresenter());
+            new SettingsPreferencesPresenter(),
+            TopViewModelTestHelpers.CreateLanguageReloader(Mock.Of<IQuotService>()));
 
         viewModel.ReplayOnboardingCommand.Execute(null);
         await Task.Delay(200);
@@ -87,13 +171,90 @@ public sealed class SettingsViewModelTests
             dialog.Object,
             navigation.Object,
             store,
-            new SettingsPreferencesPresenter());
+            new SettingsPreferencesPresenter(),
+            TopViewModelTestHelpers.CreateLanguageReloader(Mock.Of<IQuotService>()));
 
         viewModel.ApplyCommand.Execute(null);
         await Task.Delay(200);
 
         dialog.Verify(d => d.ShowAsync(AppStrings.SettingsAppliedTitle, AppStrings.SettingsAppliedMessage), Times.Once);
         navigation.Verify(n => n.GoBackAsync(), Times.Once);
+    }
+
+    private static SettingsViewModel CreateSettingsViewModel(
+        IUserPreferencesStore store,
+        Mock<INavigationService>? navigation = null,
+        Mock<IDialogService>? dialog = null)
+    {
+        navigation ??= new Mock<INavigationService>();
+        dialog ??= new Mock<IDialogService>();
+
+        return new SettingsViewModel(
+            dialog.Object,
+            navigation.Object,
+            store,
+            new SettingsPreferencesPresenter(),
+            TopViewModelTestHelpers.CreateLanguageReloader(Mock.Of<IQuotService>()));
+    }
+
+    [Fact]
+    public void Constructor_UsesStablePickerKeys()
+    {
+        InMemoryUserPreferencesStore store = new();
+        store.Save(new UserPreferencesState
+        {
+            Language = "en",
+            Theme = UserPreferences.DefaultTheme,
+            Color = UserPreferences.DefaultColor,
+            Form = UserPreferences.DefaultForm,
+            Size = UserPreferences.DefaultSize
+        });
+
+        SettingsViewModel viewModel = CreateSettingsViewModel(store);
+
+        Assert.Equal("en", viewModel.Language);
+        Assert.Equal(UserPreferences.DefaultTheme, viewModel.Theme);
+        Assert.Equal("ru", viewModel.LanguageOptions[0]);
+        Assert.Equal("en", viewModel.LanguageOptions[1]);
+        Assert.DoesNotContain("Russian", viewModel.LanguageOptions);
+    }
+
+    [Fact]
+    public void Language_WhenChangedToRussian_KeepsOtherPickerKeys()
+    {
+        InMemoryUserPreferencesStore store = new();
+        store.Save(new UserPreferencesState
+        {
+            Language = "en",
+            Theme = "light",
+            Color = "blue",
+            Form = "rounded",
+            Size = "medium"
+        });
+
+        SettingsViewModel viewModel = CreateSettingsViewModel(store);
+
+        viewModel.Language = "ru";
+
+        Assert.Equal("ru", viewModel.Language);
+        Assert.Equal("light", viewModel.Theme);
+        Assert.Equal("blue", viewModel.Color);
+        Assert.Equal("rounded", viewModel.Form);
+        Assert.Equal("medium", viewModel.Size);
+        Assert.Equal("ru", store.Load().Language);
+    }
+
+    [Fact]
+    public void Language_WhenChangedFromDisplayLabel_NormalizesToKey()
+    {
+        InMemoryUserPreferencesStore store = new();
+        store.Save(new UserPreferencesState { Language = "en" });
+
+        SettingsViewModel viewModel = CreateSettingsViewModel(store);
+
+        viewModel.Language = "Russian";
+
+        Assert.Equal("ru", viewModel.Language);
     }
 }
 
@@ -123,7 +284,8 @@ public sealed class UserViewModelTests
             new ProfilePracticeHistoryLoader(progress.Object),
             new ProfileFeaturedTechniquesBuilder(preferences.Object),
             TopViewModelTestHelpers.CreateQuoteCommandsFactory(quotService.Object),
-            new UserProfileRefreshCoordinator());
+            new UserProfileRefreshCoordinator(),
+            TopViewModelTestHelpers.CreateLanguageReloader(quotService.Object));
 
         Assert.Equal(4, viewModel.Techniques.Count);
         Assert.Equal("0", viewModel.TechniquesCompletedCount);
@@ -159,7 +321,8 @@ public sealed class UserViewModelTests
             new ProfilePracticeHistoryLoader(progress.Object),
             new ProfileFeaturedTechniquesBuilder(preferences.Object),
             TopViewModelTestHelpers.CreateQuoteCommandsFactory(quotService.Object),
-            new UserProfileRefreshCoordinator());
+            new UserProfileRefreshCoordinator(),
+            TopViewModelTestHelpers.CreateLanguageReloader(quotService.Object));
 
         await viewModel.InitAsync();
         await Task.Delay(100);
@@ -321,7 +484,8 @@ public sealed class TechniquesViewModelTests
             databaseReady.Object,
             dashboardLoader,
             new TechniquesListInitializer(),
-            Options.Create(new AppSettings()));
+            Options.Create(new AppSettings()),
+            Mock.Of<Microsoft.Extensions.Logging.ILogger<TechniquesViewModel>>());
     }
 }
 
@@ -334,4 +498,14 @@ file static class TopViewModelTestHelpers
             Mock.Of<IToastService>(),
             Options.Create(new AppSettings()),
             NullLogger<QuoteItemCommandsFactory>.Instance);
+
+    public static LanguageContentReloader CreateLanguageReloader(IQuotService quotService) =>
+        new(
+            quotService,
+            new PsychologyApp.Application.Services.ReasonService.CachedReasonContentProvider(
+                Mock.Of<PsychologyApp.Application.Abstractions.Integration.IReasonContentProvider>()),
+            new CachedQuotContentProvider(Mock.Of<IQuotContentProvider>()),
+            new CachedTestCatalogService(
+                new TestCatalogService(Mock.Of<PsychologyApp.Presentation.Abstractions.ITestAssetReader>(), NullLogger<TestCatalogService>.Instance),
+                NullLogger<CachedTestCatalogService>.Instance));
 }

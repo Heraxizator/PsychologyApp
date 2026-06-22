@@ -8,6 +8,7 @@
     <Color x:Key="PrimaryHover">#006ACC</Color>
     <Color x:Key="PrimaryActive">#005BB5</Color>
     <Color x:Key="PrimaryTint">#E6F2FF</Color>
+    <Color x:Key="PrimaryTintDark">#1A2A3D</Color>
     <Color x:Key="AccentTextLight">#0085FF</Color>
     <Color x:Key="Secondary">#0085FF</Color>
     <Color x:Key="SecondaryFill">#96d1ff</Color>

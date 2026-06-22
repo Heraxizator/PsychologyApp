@@ -24,6 +24,7 @@ public partial class QuestionViewModel : BaseViewModel
     private readonly INavigationService _navigationService;
     private readonly QuestionnaireSubmissionService _submissionService;
     private readonly TestSessionInfo? _session;
+    private readonly ITestCatalogService _testCatalogService;
 
     public QuestionViewModel(
         List<Question> questions,
@@ -34,6 +35,7 @@ public partial class QuestionViewModel : BaseViewModel
         INavigationService navigationService,
         IUserProgressService userProgressService,
         QuestionnaireSubmissionService submissionService,
+        ITestCatalogService testCatalogService,
         TestSessionInfo? session = null)
     {
         BindNavigation(navigationService);
@@ -42,6 +44,7 @@ public partial class QuestionViewModel : BaseViewModel
         _navigationService = navigationService;
         _userProgressService = userProgressService;
         _submissionService = submissionService;
+        _testCatalogService = testCatalogService;
         _session = session;
 
         Analyzer = analyzer;

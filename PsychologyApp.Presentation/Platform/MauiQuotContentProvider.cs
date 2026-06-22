@@ -1,21 +1,21 @@
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 using PsychologyApp.Application.Abstractions.Integration;
+using PsychologyApp.Presentation.Models.Quotes;
+using PsychologyApp.Presentation.Serialization;
 
 namespace PsychologyApp.Presentation.Platform;
 
 public sealed class MauiQuotContentProvider : IQuotContentProvider
 {
-    private static readonly JsonSerializerOptions SerializerOptions = new()
-    {
-        PropertyNameCaseInsensitive = true
-    };
-
+    private readonly ILogger<MauiQuotContentProvider> _logger;
     private readonly SemaphoreSlim _gate = new(1, 1);
     private string? _loadedAsset;
     private IReadOnlyList<QuotSeed>? _cache;
 
-    public MauiQuotContentProvider()
+    public MauiQuotContentProvider(ILogger<MauiQuotContentProvider> logger)
     {
+        _logger = logger;
         UserPreferences.Changed += InvalidateCache;
     }
 
@@ -45,19 +45,18 @@ public sealed class MauiQuotContentProvider : IQuotContentProvider
             }
 
             await using Stream stream = await FileSystem.OpenAppPackageFileAsync(assetPath);
-            List<JsonQuotEntry>? entries = await JsonSerializer.DeserializeAsync<List<JsonQuotEntry>>(
+            List<QuoteJsonEntry>? entries = await JsonSerializer.DeserializeAsync(
                 stream,
-                SerializerOptions,
+                AppJsonSerializerContext.Default.ListQuoteJsonEntry,
                 cancellationToken);
 
             if (entries is null || entries.Count == 0)
             {
-                _cache = [];
-                _loadedAsset = assetPath;
-                return _cache;
+                _logger.LogWarning("Quote asset {AssetPath} is empty or failed to deserialize.", assetPath);
+                throw new InvalidOperationException($"Embedded quote catalog is empty: {assetPath}.");
             }
 
-            _cache = entries
+            IReadOnlyList<QuotSeed> seeds = entries
                 .Where(entry => !string.IsNullOrWhiteSpace(entry.Text))
                 .Select(entry => new QuotSeed(
                     entry.Author ?? string.Empty,
@@ -65,6 +64,13 @@ public sealed class MauiQuotContentProvider : IQuotContentProvider
                     string.IsNullOrWhiteSpace(entry.Theme) ? "general" : entry.Theme.Trim()))
                 .ToList();
 
+            if (seeds.Count == 0)
+            {
+                _logger.LogWarning("Quote asset {AssetPath} contains no valid entries.", assetPath);
+                throw new InvalidOperationException($"Embedded quote catalog has no valid entries: {assetPath}.");
+            }
+
+            _cache = seeds;
             _loadedAsset = assetPath;
             return _cache;
         }
@@ -73,12 +79,4 @@ public sealed class MauiQuotContentProvider : IQuotContentProvider
             _gate.Release();
         }
     }
-
-    private sealed class JsonQuotEntry
-    {
-        public string? Author { get; set; }
-        public string Text { get; set; } = string.Empty;
-        public string? Theme { get; set; }
-    }
 }
-

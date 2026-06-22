@@ -36,6 +36,8 @@ public partial class QuoteViewModel : BaseViewModel
     private readonly QuoteFeedCoordinator _feedCoordinator;
     private readonly QuoteItemCommandsFactory _quoteCommandsFactory;
     private readonly QuoteFeedLoader _quoteFeedLoader;
+    private readonly LanguageContentReloader _languageContentReloader;
+    private string? _feedLanguage;
 
     public QuoteViewModel(
         INavigationService navigationService,
@@ -45,7 +47,8 @@ public partial class QuoteViewModel : BaseViewModel
         QuoteFeedCoordinator feedCoordinator,
         QuoteItemCommandsFactory quoteCommandsFactory,
         QuoteFeedLoader quoteFeedLoader,
-        IDatabaseReadySignal databaseReadySignal)
+        IDatabaseReadySignal databaseReadySignal,
+        LanguageContentReloader languageContentReloader)
     {
         try
         {
@@ -56,6 +59,7 @@ public partial class QuoteViewModel : BaseViewModel
             _feedCoordinator = feedCoordinator;
             _quoteCommandsFactory = quoteCommandsFactory;
             _quoteFeedLoader = quoteFeedLoader;
+            _languageContentReloader = languageContentReloader;
             BindNavigation(navigationService);
             Cancel = new Command(CancelProgress);
             LoadMoreQuotesCommand = new AsyncCommand(() => AddFreshQuotesAsync());

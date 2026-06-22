@@ -4,11 +4,15 @@
        x:Class="PsychologyApp.Presentation.AppShell"
        xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
        xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+       xmlns:common="clr-namespace:PsychologyApp.Presentation.Common;assembly=PsychologyApp.Presentation.Core"
        NavigationPage.HasNavigationBar="False"
        Shell.NavBarIsVisible="False">
 
     <Shell.Behaviors>
-        <mct:StatusBarBehavior x:Name="StatusBar" StatusBarColor="White" StatusBarStyle="DarkContent" />
+        <mct:StatusBarBehavior
+            x:Name="StatusBar"
+            StatusBarColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray950}}"
+            StatusBarStyle="{AppThemeBinding Light=DarkContent, Dark=LightContent}" />
     </Shell.Behaviors>
 
     <TabBar>
@@ -16,31 +20,31 @@
         <ShellContent
             x:Name="PracticeTab"
             Route="PracticeTab"
-            Title="Практик"
+            Title="{x:Static common:AppStrings.ShellTabPracticeShort}"
             Icon="{mi:Material Icon=AutoAwesome}" />
 
         <ShellContent
             x:Name="DetectorTab"
             Route="TestsTab"
-            Title="Тесты"
+            Title="{x:Static common:AppStrings.ShellTabDetectorShort}"
             Icon="{mi:Material Icon=Insights}" />
 
         <ShellContent
             x:Name="SomaticTab"
             Route="SomaticTab"
-            Title="Тело"
+            Title="{x:Static common:AppStrings.ShellTabSomaticShort}"
             Icon="{mi:Material Icon=Favorite}" />
 
         <ShellContent
             x:Name="CleanerTab"
             Route="CleanerTab"
-            Title="Молитвы"
+            Title="{x:Static common:AppStrings.ShellTabCleanerShort}"
             Icon="{mi:Material Icon=MenuBook}" />
 
         <ShellContent
             x:Name="MotivatorTab"
             Route="QuotesTab"
-            Title="Цитаты"
+            Title="{x:Static common:AppStrings.ShellTabMotivatorShort}"
             Icon="{mi:Material Icon=Lightbulb}" />
 
     </TabBar>

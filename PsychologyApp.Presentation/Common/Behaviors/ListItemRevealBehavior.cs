@@ -6,6 +6,9 @@ namespace PsychologyApp.Presentation.Common.Behaviors;
 
 public sealed class ListItemRevealBehavior : Behavior<VisualElement>
 {
+    private static int _activeRevealCount;
+    private static readonly SemaphoreSlim RevealSlot = new(UiAnimations.MaxConcurrentListReveals, UiAnimations.MaxConcurrentListReveals);
+
     public static readonly BindableProperty RevealIndexProperty =
         BindableProperty.Create(
             nameof(RevealIndex),
@@ -19,9 +22,14 @@ public sealed class ListItemRevealBehavior : Behavior<VisualElement>
         set => SetValue(RevealIndexProperty, value);
     }
 
+    internal static int ResolveRevealTier(int index) =>
+        index <= UiAnimations.PremiumRevealMaxIndex ? 0
+        : index <= UiAnimations.LiteRevealMaxIndex ? 1
+        : 2;
+
     private VisualElement? _attachedView;
-    private object? _lastBindingContext;
     private bool _hasRevealed;
+    private CancellationTokenSource? _revealCts;
 
     protected override void OnAttachedTo(VisualElement bindable)
     {
@@ -35,25 +43,32 @@ public sealed class ListItemRevealBehavior : Behavior<VisualElement>
     {
         bindable.Loaded -= OnLoaded;
         bindable.BindingContextChanged -= OnBindingContextChanged;
+        CancelReveal();
         _attachedView = null;
-        _lastBindingContext = null;
         _hasRevealed = false;
         base.OnDetachingFrom(bindable);
     }
 
+    private void CancelReveal()
+    {
+        if (_revealCts is null)
+        {
+            return;
+        }
+
+        _revealCts.Cancel();
+        _revealCts.Dispose();
+        _revealCts = null;
+    }
+
     private void OnBindingContextChanged(object? sender, EventArgs e)
     {
-        if (sender is not VisualElement view)
+        if (sender is not VisualElement view || IsInsideCollectionView(view))
         {
             return;
         }
 
-        if (ReferenceEquals(view.BindingContext, _lastBindingContext))
-        {
-            return;
-        }
-
-        _lastBindingContext = view.BindingContext;
+        CancelReveal();
         _hasRevealed = false;
 
         if (view.Handler is not null)
@@ -74,16 +89,64 @@ public sealed class ListItemRevealBehavior : Behavior<VisualElement>
 
     private async Task RevealAsync(VisualElement view)
     {
-        if (_hasRevealed)
+        if (_hasRevealed || !UiAnimations.ShouldAnimate(view))
         {
             return;
         }
 
         _hasRevealed = true;
-        _lastBindingContext = view.BindingContext;
-        int index = ResolveRevealIndex(view);
-        int delay = UiAnimations.ComputeRevealDelay(index);
-        await UiAnimations.SafeRevealPremiumAsync(view, delayMs: delay, allowHidden: true);
+        CancelReveal();
+        _revealCts = new CancellationTokenSource();
+        CancellationToken token = _revealCts.Token;
+
+        await RevealSlot.WaitAsync(token);
+        Interlocked.Increment(ref _activeRevealCount);
+
+        try
+        {
+            int index = ResolveRevealIndex(view);
+            int delay = UiAnimations.ComputeRevealDelay(index);
+            int tier = ResolveRevealTier(index);
+
+            switch (tier)
+            {
+                case 0:
+                    await UiAnimations.SafeRevealPremiumAsync(
+                        view,
+                        delayMs: delay,
+                        allowHidden: true,
+                        cancellationToken: token);
+                    break;
+                case 1:
+                    await UiAnimations.SafeRevealLiteAsync(
+                        view,
+                        delayMs: delay,
+                        allowHidden: true,
+                        cancellationToken: token);
+                    break;
+                default:
+                    if (delay > 0)
+                    {
+                        await Task.Delay(delay, token);
+                    }
+
+                    await UiAnimations.SafeFadeInAsync(
+                        view,
+                        duration: UiAnimations.FastDuration,
+                        allowHidden: true,
+                        cancellationToken: token);
+                    break;
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            UiAnimations.ResetVisualState(view);
+        }
+        finally
+        {
+            Interlocked.Decrement(ref _activeRevealCount);
+            RevealSlot.Release();
+        }
     }
 
     private int ResolveRevealIndex(VisualElement view)
@@ -94,6 +157,22 @@ public sealed class ListItemRevealBehavior : Behavior<VisualElement>
         }
 
         return FindIndexInParentCollection(view);
+    }
+
+    private static bool IsInsideCollectionView(VisualElement view)
+    {
+        Element? parent = view.Parent;
+        while (parent is not null)
+        {
+            if (parent is CollectionView)
+            {
+                return true;
+            }
+
+            parent = parent.Parent;
+        }
+
+        return false;
     }
 
     private static int FindIndexInParentCollection(VisualElement view)

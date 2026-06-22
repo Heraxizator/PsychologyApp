@@ -12,7 +12,7 @@
                 Value="True">
                 <Setter Property="Stroke" Value="{DynamicResource Primary}" />
                 <Setter Property="StrokeThickness" Value="2" />
-                <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryTint}" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
             </DataTrigger>
         </Border.Triggers>
         <Border.GestureRecognizers>

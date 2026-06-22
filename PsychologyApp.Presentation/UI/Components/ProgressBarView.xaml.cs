@@ -37,7 +37,7 @@ public partial class ProgressBarView : ContentView
         }
 
         _wasLoading = true;
-        UiAnimations.SafeRevealPremiumAsync(this).FireAndForget();
+        UiAnimations.SafeFadeInAsync(this, duration: UiAnimations.FastDuration).FireAndForget();
     }
 
     private void ApplyLocalization() => CancelText = AppStrings.Cancel;

@@ -30,9 +30,6 @@
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
             </CollectionView.ItemsLayout>
-            <CollectionView.Behaviors>
-                <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
-            </CollectionView.Behaviors>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="tests:TestItem">
                     <ui:TestListCardView

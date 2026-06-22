@@ -21,6 +21,9 @@
     <Thickness x:Key="LayoutPageMarginThickness">20,0,20,20</Thickness>
     <Thickness x:Key="LayoutTabPageMarginThickness">20,20,20,20</Thickness>
     <Thickness x:Key="LayoutEmptyPaddingThickness">20</Thickness>
+    <Thickness x:Key="HorizontalGutterVerticalSpacingMargin">20,20,20,20</Thickness>
+    <Thickness x:Key="HorizontalGutterTopSpacingMargin">20,20,20,0</Thickness>
+    <Thickness x:Key="LuscherColorGridMargin">0,4,0,20</Thickness>
     <system:Double x:Key="ListItemSpacing">4</system:Double>
     <system:Double x:Key="PracticeListItemSpacing">8</system:Double>
     <Thickness x:Key="ListEntryPadding">12</Thickness>

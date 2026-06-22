@@ -1,4 +1,5 @@
 using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Common.Infrastructure;
 
 namespace PsychologyApp.Presentation.ViewModels.Motivator;
 
@@ -33,5 +34,27 @@ public partial class QuoteViewModel
             nameof(AllReadBody),
             nameof(ShowFavoritesButtonText));
         EnsureFeedFilters();
+
+        string currentLanguage = UserPreferences.GetPersistedLanguage();
+        if (!_initialized)
+        {
+            _feedLanguage = currentLanguage;
+            return;
+        }
+
+        if (string.Equals(_feedLanguage, currentLanguage, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        _feedLanguage = currentLanguage;
+        ReloadFeedForLanguageAsync().FireAndForget();
+    }
+
+    private async Task ReloadFeedForLanguageAsync()
+    {
+        await _languageContentReloader.EnsureReloadedAsync();
+        _feedCoordinator.ResetKnownQuotes();
+        await RunInitAsync(seedNewQuote: false);
     }
 }

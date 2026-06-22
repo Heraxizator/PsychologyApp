@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Views.Tests.QuestionPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Tests"
+             xmlns:models="clr-namespace:PsychologyApp.Presentation.Models.Tests;assembly=PsychologyApp.Presentation.Core"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
              x:DataType="vm:QuestionViewModel"
              Shell.NavBarIsVisible="False"
@@ -13,9 +14,6 @@
     <StackLayout
         HorizontalOptions="FillAndExpand" 
         VerticalOptions="FillAndExpand">
-        <StackLayout.Behaviors>
-            <behaviors:RevealOnAppearingBehavior />
-        </StackLayout.Behaviors>
 
         <ui:NavigationBarSimpleView
             TitleText="{Binding PageTitle}"
@@ -27,6 +25,9 @@
             AbsoluteLayout.LayoutFlags="All"
             Margin="{StaticResource LayoutPageMarginThickness}"
             ItemsSource="{Binding Questions}">
+            <CollectionView.Behaviors>
+                <behaviors:RevealOnAppearingBehavior />
+            </CollectionView.Behaviors>
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
             </CollectionView.ItemsLayout>
@@ -34,7 +35,7 @@
             <CollectionView.ItemTemplate>
             <DataTemplate>
                 <Border
-                    x:DataType="vm:Question"
+                    x:DataType="models:Question"
                     Style="{StaticResource BrandCardStyle}"
                     Margin="0">
                     <Border.Behaviors>
@@ -60,7 +61,7 @@
                                 IsVisible="{Binding IsSingleAnswer}">
 
                                 <Label
-                                    x:DataType="vm:Question"
+                                    x:DataType="models:Question"
                                     Text="{Binding Context}"
                                     HorizontalTextAlignment="Justify"
                                     Margin="0,0,5,5"
@@ -68,11 +69,11 @@
                             </Grid>
 
                             <StackLayout
-                                x:DataType="vm:Question"
+                                x:DataType="models:Question"
                                 BindableLayout.ItemsSource="{Binding Answers}">
 
                                 <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="vm:Answer">
+                                    <DataTemplate x:DataType="models:Answer">
 
                                         <Grid>
 
@@ -112,7 +113,7 @@
                                                 Orientation="Horizontal">
 
                                                 <RadioButton
-                                                    x:DataType="vm:Answer"
+                                                    x:DataType="models:Answer"
                                                     Content="{Binding Text}"
                                                     GroupName="{Binding Number}"
                                                     TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"

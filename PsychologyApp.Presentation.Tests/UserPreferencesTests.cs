@@ -125,6 +125,19 @@ public sealed class UserPreferencesTests
     }
 
     [Fact]
+    public void GetLanguageLabel_ReturnsRussianInEnglishUi()
+    {
+        Assert.Equal("Russian", UserPreferences.GetLanguageLabel("ru", "en"));
+        Assert.Equal("English", UserPreferences.GetLanguageLabel("en", "en"));
+    }
+
+    [Fact]
+    public void GetLanguageLabel_ReturnsRussianInRussianUi()
+    {
+        Assert.Equal("Русский", UserPreferences.GetLanguageLabel("ru", "ru"));
+    }
+
+    [Fact]
     public void ApplyAccentColor_DoesNotThrowWhenResourcesUnavailable()
     {
         Exception? exception = Record.Exception(() => UserPreferences.ApplyAccentColor("red"));

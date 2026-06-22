@@ -1,4 +1,5 @@
 using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Common.Infrastructure;
 
 namespace PsychologyApp.Presentation.ViewModels.Tests;
 
@@ -11,5 +12,6 @@ public partial class QuestionViewModel
     protected override void RefreshLocalizedProperties()
     {
         Notify(nameof(PageTitle), nameof(QuestionPrefix), nameof(FinishButtonText));
+        ReloadQuestionsAsync().FireAndForget();
     }
 }

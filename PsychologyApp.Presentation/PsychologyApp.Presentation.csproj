@@ -42,17 +42,13 @@
 	
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
-	  <AndroidUseAapt2>True</AndroidUseAapt2>
-	  <EnableLLVM>True</EnableLLVM>
-	  <IsPublishable>False</IsPublishable>
-	  <Debugger>Xamarin</Debugger>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
+	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Debug'">
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
 	  <IsPublishable>False</IsPublishable>
 	  <Debugger>Xamarin</Debugger>
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>portable</DebugType>
+	  <AndroidIncludeDebugSymbols>true</AndroidIncludeDebugSymbols>
 	  <TrimMode>link</TrimMode>
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
@@ -63,6 +59,22 @@
 	  <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
 	  <!-- Debug: arm64 for physical devices + x64 for Windows emulator; avoids all 4 ABIs (XAWAS7024). -->
 	  <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
+	</PropertyGroup>
+
+	<!-- Release Android: verify trim/AOT on device before enabling in production. -->
+	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Release'">
+	  <AndroidUseAapt2>True</AndroidUseAapt2>
+	  <EnableLLVM>True</EnableLLVM>
+	  <IsPublishable>False</IsPublishable>
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	  <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
+	  <PublishTrimmed>True</PublishTrimmed>
+	  <TrimMode>link</TrimMode>
+	  <!-- AOT off until verified on device; trim + roots keep Release APK lean. -->
+	  <RunAOTCompilation>False</RunAOTCompilation>
+	  <DebugSymbols>False</DebugSymbols>
+	  <AndroidIncludeDebugSymbols>False</AndroidIncludeDebugSymbols>
+	  <AndroidLinkTool>r8</AndroidLinkTool>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-maccatalyst|AnyCPU'">
@@ -87,18 +99,6 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows10.0.19041.0|AnyCPU'">
 	  <IsPublishable>False</IsPublishable>
-	</PropertyGroup>
-
-	<!-- Release Android: verify trim/AOT on device before enabling in production. -->
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
-	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	  <AndroidUseAapt2>True</AndroidUseAapt2>
-	  <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
-	  <PublishTrimmed>True</PublishTrimmed>
-	  <TrimMode>link</TrimMode>
-	  <RunAOTCompilation>True</RunAOTCompilation>
-	  <DebugSymbols>True</DebugSymbols>
-	  <AndroidLinkTool>r8</AndroidLinkTool>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -142,10 +142,15 @@
 		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
 	
 		<TrimmerRootAssembly Include="CommunityToolkit.Maui" RootMode="All" />
-		
+		<TrimmerRootAssembly Include="Dapper" RootMode="All" />
+		<TrimmerRootAssembly Include="Microsoft.Data.Sqlite" RootMode="All" />
 		<TrimmerRootAssembly Include="System.Text.Json" RootMode="All" />
-		
 		<TrimmerRootAssembly Include="PsychologyApp.Presentation" RootMode="All" />
+		<TrimmerRootAssembly Include="PsychologyApp.Presentation.Core" RootMode="All" />
+		<TrimmerRootAssembly Include="PsychologyApp.Bootstrap" RootMode="All" />
+		<TrimmerRootAssembly Include="PsychologyApp.Application" RootMode="All" />
+		<TrimmerRootAssembly Include="PsychologyApp.Infrastructure" RootMode="All" />
+		<TrimmerRootAssembly Include="PsychologyApp.Domain" RootMode="All" />
 	
 	</ItemGroup>
 

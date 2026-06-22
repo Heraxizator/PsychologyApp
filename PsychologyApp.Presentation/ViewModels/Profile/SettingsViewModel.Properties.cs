@@ -11,13 +11,15 @@ public partial class SettingsViewModel
         get => language;
         set
         {
-            if (language != value)
+            string normalized = UserPreferences.ParseLanguageKey(value);
+            if (_isSyncingPickers || string.Equals(language, normalized, StringComparison.Ordinal))
             {
-                language = value;
-                RefreshLocalizedCollections();
-                OnPropertyChanged(nameof(Language));
-                ApplyLivePreview();
+                return;
             }
+
+            language = normalized;
+            OnPropertyChanged(nameof(Language));
+            ApplyLivePreview();
         }
     }
 
@@ -27,12 +29,15 @@ public partial class SettingsViewModel
         get => theme;
         set
         {
-            if (theme != value)
+            string normalized = UserPreferences.ParseThemeKey(value);
+            if (_isSyncingPickers || string.Equals(theme, normalized, StringComparison.Ordinal))
             {
-                theme = value;
-                OnPropertyChanged(nameof(Theme));
-                ApplyLivePreview();
+                return;
             }
+
+            theme = normalized;
+            OnPropertyChanged(nameof(Theme));
+            ApplyLivePreview();
         }
     }
 
@@ -42,12 +47,15 @@ public partial class SettingsViewModel
         get => color;
         set
         {
-            if (color != value)
+            string normalized = UserPreferences.ParseColorKey(value);
+            if (_isSyncingPickers || string.Equals(color, normalized, StringComparison.Ordinal))
             {
-                color = value;
-                OnPropertyChanged(nameof(Color));
-                ApplyLivePreview();
+                return;
             }
+
+            color = normalized;
+            OnPropertyChanged(nameof(Color));
+            ApplyLivePreview();
         }
     }
 
@@ -57,12 +65,15 @@ public partial class SettingsViewModel
         get => form;
         set
         {
-            if (form != value)
+            string normalized = UserPreferences.ParseFormKey(value);
+            if (_isSyncingPickers || string.Equals(form, normalized, StringComparison.Ordinal))
             {
-                form = value;
-                OnPropertyChanged(nameof(Form));
-                ApplyLivePreview();
+                return;
             }
+
+            form = normalized;
+            OnPropertyChanged(nameof(Form));
+            ApplyLivePreview();
         }
     }
 
@@ -72,12 +83,15 @@ public partial class SettingsViewModel
         get => size;
         set
         {
-            if (size != value)
+            string normalized = UserPreferences.ParseSizeKey(value);
+            if (_isSyncingPickers || string.Equals(size, normalized, StringComparison.Ordinal))
             {
-                size = value;
-                OnPropertyChanged(nameof(Size));
-                ApplyLivePreview();
+                return;
             }
+
+            size = normalized;
+            OnPropertyChanged(nameof(Size));
+            ApplyLivePreview();
         }
     }
 
@@ -99,5 +113,16 @@ public partial class SettingsViewModel
     private UserPreferencesState BuildCurrentState() =>
         _presenter.BuildState(Language, Theme, Color, Form, Size, IsThick, _savedState);
 
-    private void ApplyLivePreview() => _userPreferencesStore.ApplyPreview(BuildCurrentState());
+    private void ApplyLivePreview()
+    {
+        _isApplyingLivePreview = true;
+        try
+        {
+            _userPreferencesStore.ApplyPreview(BuildCurrentState());
+        }
+        finally
+        {
+            _isApplyingLivePreview = false;
+        }
+    }
 }

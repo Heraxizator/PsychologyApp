@@ -71,7 +71,7 @@ public sealed class GlobalExceptionHandler
         {
             try
             {
-                await _dialogService.ShowAsync("Ошибка", GetUserMessage(exception));
+                await _dialogService.ShowAsync(AppStrings.ErrorTitle, GetUserMessage(exception));
             }
             catch
             {
@@ -83,8 +83,10 @@ public sealed class GlobalExceptionHandler
     private static string GetUserMessage(Exception exception) =>
         exception switch
         {
-            NotFoundException notFound => notFound.Message,
+            TechniqueNotFoundException => AppStrings.TechniqueNotFound,
+            QuotNotFoundException => AppStrings.QuoteNotFound,
+            NotFoundException => AppStrings.UnexpectedErrorMessage,
             AppException app => app.Message,
-            _ => "Произошла непредвиденная ошибка. Попробуйте ещё раз."
+            _ => AppStrings.UnexpectedErrorMessage
         };
 }

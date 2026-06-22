@@ -1,9 +1,12 @@
-using PsychologyApp.Presentation.Services.Preferences;
+using PsychologyApp.Presentation.Common;
 
 namespace PsychologyApp.Presentation.ViewModels.Profile;
 
 public partial class SettingsViewModel
 {
+    private bool _isApplyingLivePreview;
+    private bool _isSyncingPickers;
+
     public IReadOnlyList<string> LanguageOptions { get; private set; } = [];
     public IReadOnlyList<string> ThemeOptions { get; private set; } = [];
     public IReadOnlyList<string> ColorOptions { get; private set; } = [];
@@ -12,48 +15,49 @@ public partial class SettingsViewModel
 
     private void LoadFromPreferences()
     {
-        _presenter.ApplyDisplayLabels(
-            _savedState,
-            value => language = value,
-            value => theme = value,
-            value => color = value,
-            value => form = value,
-            value => size = value,
-            value => isThick = value);
+        _isSyncingPickers = true;
+        try
+        {
+            _presenter.ApplyKeysFromState(
+                _savedState,
+                value => language = value,
+                value => theme = value,
+                value => color = value,
+                value => form = value,
+                value => size = value,
+                value => isThick = value);
 
-        OnPropertyChanged(nameof(Language));
-        OnPropertyChanged(nameof(Theme));
-        OnPropertyChanged(nameof(Color));
-        OnPropertyChanged(nameof(Form));
-        OnPropertyChanged(nameof(Size));
-        OnPropertyChanged(nameof(IsThick));
+            NotifyPickerValuesChanged();
+            OnPropertyChanged(nameof(IsThick));
+        }
+        finally
+        {
+            _isSyncingPickers = false;
+        }
     }
 
-    private void RefreshLocalizedCollections()
+    private void RefreshPickerDisplays()
     {
-        _presenter.RefreshLocalizedLabels(
-            Language,
-            Theme,
-            Color,
-            Form,
-            Size,
-            value => language = value,
-            value => theme = value,
-            value => color = value,
-            value => form = value,
-            value => size = value,
-            value => LanguageOptions = value,
-            value => ThemeOptions = value,
-            value => ColorOptions = value,
-            value => FormOptions = value,
-            value => SizeOptions = value);
+        LanguageOptions = UserPreferences.LanguageKeys.ToArray();
+        ThemeOptions = UserPreferences.ThemeKeys.ToArray();
+        ColorOptions = UserPreferences.ColorKeys.ToArray();
+        FormOptions = UserPreferences.FormKeys.ToArray();
+        SizeOptions = UserPreferences.SizeKeys.ToArray();
 
         OnPropertyChanged(nameof(LanguageOptions));
         OnPropertyChanged(nameof(ThemeOptions));
         OnPropertyChanged(nameof(ColorOptions));
         OnPropertyChanged(nameof(FormOptions));
         OnPropertyChanged(nameof(SizeOptions));
-        NotifyLocalizedLabelsChanged();
+    }
+
+    private void NotifyPickerValuesChanged()
+    {
+        OnPropertyChanged(nameof(Language));
+        OnPropertyChanged(nameof(Theme));
+        OnPropertyChanged(nameof(Color));
+        OnPropertyChanged(nameof(Form));
+        OnPropertyChanged(nameof(Size));
     }
 
     private void NotifyLocalizedLabelsChanged()
@@ -80,6 +84,15 @@ public partial class SettingsViewModel
 
     protected override void RefreshLocalizedProperties()
     {
-        RefreshLocalizedCollections();
+        if (_isApplyingLivePreview)
+        {
+            RefreshPickerDisplays();
+            NotifyLocalizedLabelsChanged();
+            return;
+        }
+
+        LoadFromPreferences();
+        RefreshPickerDisplays();
+        NotifyLocalizedLabelsChanged();
     }
 }

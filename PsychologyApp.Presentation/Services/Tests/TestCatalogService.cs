@@ -18,13 +18,19 @@ public sealed class TestCatalogService(ITestAssetReader assetReader, ILogger<Tes
         await LoadLuscherAsync(items, cancellationToken).ConfigureAwait(false);
         await LoadQuestionnairesAsync(items, cancellationToken).ConfigureAwait(false);
 
+        if (items.Count == 0)
+        {
+            logger.LogError("Embedded test catalog is empty after loading all assets.");
+            throw new InvalidOperationException("Embedded test catalog is empty.");
+        }
+
         return items;
     }
 
     private async Task LoadBeckAsync(List<TestDefinition> items, CancellationToken cancellationToken)
     {
         ParseResult<JsonGroupedQuestionnaireDefinition>? parseResult =
-            await DeserializeAssetAsync<JsonGroupedQuestionnaireDefinition>(BeckPath, cancellationToken)
+            await DeserializeGroupedQuestionnaireAsync(BeckPath, cancellationToken)
                 .ConfigureAwait(false);
 
         if (parseResult is null)
@@ -46,7 +52,7 @@ public sealed class TestCatalogService(ITestAssetReader assetReader, ILogger<Tes
     private async Task LoadLuscherAsync(List<TestDefinition> items, CancellationToken cancellationToken)
     {
         ParseResult<List<JsonNavigationTestDefinition>>? parseResult =
-            await DeserializeAssetAsync<List<JsonNavigationTestDefinition>>(LuscherPath, cancellationToken)
+            await DeserializeNavigationTestsAsync(LuscherPath, cancellationToken)
                 .ConfigureAwait(false);
 
         if (parseResult is null || !parseResult.IsSuccess || parseResult.Value is null)
@@ -60,7 +66,7 @@ public sealed class TestCatalogService(ITestAssetReader assetReader, ILogger<Tes
     private async Task LoadQuestionnairesAsync(List<TestDefinition> items, CancellationToken cancellationToken)
     {
         ParseResult<List<JsonSimpleQuestionnaireDefinition>>? parseResult =
-            await DeserializeAssetAsync<List<JsonSimpleQuestionnaireDefinition>>(QuestionnairesPath, cancellationToken)
+            await DeserializeSimpleQuestionnairesAsync(QuestionnairesPath, cancellationToken)
                 .ConfigureAwait(false);
 
         if (parseResult is null || !parseResult.IsSuccess || parseResult.Value is null)
@@ -71,12 +77,65 @@ public sealed class TestCatalogService(ITestAssetReader assetReader, ILogger<Tes
         items.AddRange(TestCatalogParser.ParseSimpleQuestionnaires(parseResult.Value));
     }
 
-    private async Task<ParseResult<T>?> DeserializeAssetAsync<T>(string assetPath, CancellationToken cancellationToken)
+    private async Task<ParseResult<JsonGroupedQuestionnaireDefinition>?> DeserializeGroupedQuestionnaireAsync(
+        string assetPath,
+        CancellationToken cancellationToken)
     {
         try
         {
             await using Stream stream = await assetReader.OpenAsync(assetPath, cancellationToken).ConfigureAwait(false);
-            ParseResult<T> result = await TestCatalogParser.DeserializeAsync<T>(stream, cancellationToken).ConfigureAwait(false);
+            ParseResult<JsonGroupedQuestionnaireDefinition> result =
+                await TestCatalogParser.DeserializeGroupedQuestionnaireAsync(stream, cancellationToken).ConfigureAwait(false);
+
+            if (!result.IsSuccess)
+            {
+                logger.LogWarning("Failed to parse test asset {AssetPath}: {Error}", assetPath, result.Error);
+                return null;
+            }
+
+            return result;
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "Failed to load test asset {AssetPath}", assetPath);
+            return null;
+        }
+    }
+
+    private async Task<ParseResult<List<JsonNavigationTestDefinition>>?> DeserializeNavigationTestsAsync(
+        string assetPath,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            await using Stream stream = await assetReader.OpenAsync(assetPath, cancellationToken).ConfigureAwait(false);
+            ParseResult<List<JsonNavigationTestDefinition>> result =
+                await TestCatalogParser.DeserializeNavigationTestsAsync(stream, cancellationToken).ConfigureAwait(false);
+
+            if (!result.IsSuccess)
+            {
+                logger.LogWarning("Failed to parse test asset {AssetPath}: {Error}", assetPath, result.Error);
+                return null;
+            }
+
+            return result;
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "Failed to load test asset {AssetPath}", assetPath);
+            return null;
+        }
+    }
+
+    private async Task<ParseResult<List<JsonSimpleQuestionnaireDefinition>>?> DeserializeSimpleQuestionnairesAsync(
+        string assetPath,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            await using Stream stream = await assetReader.OpenAsync(assetPath, cancellationToken).ConfigureAwait(false);
+            ParseResult<List<JsonSimpleQuestionnaireDefinition>> result =
+                await TestCatalogParser.DeserializeSimpleQuestionnairesAsync(stream, cancellationToken).ConfigureAwait(false);
 
             if (!result.IsSuccess)
             {

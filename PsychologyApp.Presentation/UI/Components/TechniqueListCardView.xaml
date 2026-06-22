@@ -1,95 +1,95 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
-             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
-             x:Class="PsychologyApp.Presentation.UI.Components.TechniqueListCardView">
-
-    <ContentView.ControlTemplate>
-        <ControlTemplate>
-            <Border Style="{StaticResource TechniqueListCardStyle}" IsVisible="{TemplateBinding Active}">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
-                </Border.GestureRecognizers>
-                <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="4">
-                    <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                        <Border
-                            Grid.Column="0"
-                            WidthRequest="52"
-                            HeightRequest="52"
-                            StrokeThickness="0"
-                            BackgroundColor="{DynamicResource PrimaryTint}"
-                            VerticalOptions="Center">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="12" />
-                            </Border.StrokeShape>
-                            <Grid>
-                                <ui:MaterialIconView
-                                    IsVisible="{TemplateBinding HasIcon}"
-                                    WidthRequest="28"
-                                    HeightRequest="28"
-                                    VerticalOptions="Center"
-                                    HorizontalOptions="Center"
-                                    IconName="{TemplateBinding IconName}" />
-                                <Image
-                                    IsVisible="{TemplateBinding HasImage}"
-                                    WidthRequest="40"
-                                    HeightRequest="40"
-                                    Aspect="AspectFit"
-                                    VerticalOptions="Center"
-                                    HorizontalOptions="Center"
-                                    Source="{TemplateBinding Image}" />
-                            </Grid>
-                        </Border>
-                        <VerticalStackLayout
-                            Grid.Column="1"
-                            Spacing="4"
-                            VerticalOptions="Center">
-                            <Label
-                                Text="{TemplateBinding Title}"
-                                Style="{StaticResource ListRowTitleStyle}"
-                                MaxLines="2"
-                                LineBreakMode="TailTruncation" />
-                            <Label
-                                Text="{TemplateBinding Subtitle}"
-                                Style="{StaticResource CaptionStyle}"
-                                MaxLines="2"
-                                LineBreakMode="TailTruncation" />
-                        </VerticalStackLayout>
-                        <Label
-                            Grid.Column="2"
-                            VerticalOptions="Center"
-                            TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                            Text="{mi:Material Icon=KeyboardArrowRight}" />
-                    </Grid>
-                    <Grid Grid.Row="1" ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                        <Label
-                            Grid.Column="0"
-                            Text="{TemplateBinding MetaText}"
-                            Style="{StaticResource CaptionStyle}"
-                            FontFamily="{StaticResource SemiBoldFontFamily}"
-                            TextColor="{DynamicResource Primary}"
-                            MaxLines="1"
-                            LineBreakMode="TailTruncation" />
-                        <Label
-                            Grid.Column="1"
-                            Text="{TemplateBinding Date}"
-                            Style="{StaticResource CaptionStyle}"
-                            HorizontalTextAlignment="End"
-                            MaxLines="1"
-                            LineBreakMode="TailTruncation" />
-                    </Grid>
-                    <Label
-                        Grid.Row="2"
-                        IsVisible="{TemplateBinding HasAuthor}"
-                        Text="{TemplateBinding Author}"
-                        Style="{StaticResource CaptionStyle}"
-                        HorizontalTextAlignment="End"
-                        MaxLines="1"
-                        LineBreakMode="TailTruncation" />
-                </Grid>
-            </Border>
-        </ControlTemplate>
-    </ContentView.ControlTemplate>
-
-</ContentView>
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             x:Class="PsychologyApp.Presentation.UI.Components.TechniqueListCardView">
+
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <Border Style="{StaticResource TechniqueListCardStyle}" IsVisible="{TemplateBinding Active}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
+                </Border.GestureRecognizers>
+                <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="4">
+                    <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                        <Border
+                            Grid.Column="0"
+                            WidthRequest="52"
+                            HeightRequest="52"
+                            StrokeThickness="0"
+                            BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}"
+                            VerticalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Grid>
+                                <ui:MaterialIconView
+                                    IsVisible="{TemplateBinding HasIcon}"
+                                    WidthRequest="28"
+                                    HeightRequest="28"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Center"
+                                    IconName="{TemplateBinding IconName}" />
+                                <Image
+                                    IsVisible="{TemplateBinding HasImage}"
+                                    WidthRequest="40"
+                                    HeightRequest="40"
+                                    Aspect="AspectFit"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="Center"
+                                    Source="{TemplateBinding Image}" />
+                            </Grid>
+                        </Border>
+                        <VerticalStackLayout
+                            Grid.Column="1"
+                            Spacing="4"
+                            VerticalOptions="Center">
+                            <Label
+                                Text="{TemplateBinding Title}"
+                                Style="{StaticResource ListRowTitleStyle}"
+                                MaxLines="2"
+                                LineBreakMode="TailTruncation" />
+                            <Label
+                                Text="{TemplateBinding Subtitle}"
+                                Style="{StaticResource CaptionStyle}"
+                                MaxLines="2"
+                                LineBreakMode="TailTruncation" />
+                        </VerticalStackLayout>
+                        <Label
+                            Grid.Column="2"
+                            VerticalOptions="Center"
+                            TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                            Text="{mi:Material Icon=KeyboardArrowRight}" />
+                    </Grid>
+                    <Grid Grid.Row="1" ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <Label
+                            Grid.Column="0"
+                            Text="{TemplateBinding MetaText}"
+                            Style="{StaticResource CaptionStyle}"
+                            FontFamily="{StaticResource SemiBoldFontFamily}"
+                            TextColor="{DynamicResource Primary}"
+                            MaxLines="1"
+                            LineBreakMode="TailTruncation" />
+                        <Label
+                            Grid.Column="1"
+                            Text="{TemplateBinding Date}"
+                            Style="{StaticResource CaptionStyle}"
+                            HorizontalTextAlignment="End"
+                            MaxLines="1"
+                            LineBreakMode="TailTruncation" />
+                    </Grid>
+                    <Label
+                        Grid.Row="2"
+                        IsVisible="{TemplateBinding HasAuthor}"
+                        Text="{TemplateBinding Author}"
+                        Style="{StaticResource CaptionStyle}"
+                        HorizontalTextAlignment="End"
+                        MaxLines="1"
+                        LineBreakMode="TailTruncation" />
+                </Grid>
+            </Border>
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+
+</ContentView>

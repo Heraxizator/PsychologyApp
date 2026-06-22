@@ -24,8 +24,33 @@ public static class UserPreferences
 
     public static event Action? Changed;
 
+    private static UserPreferencesState? _inMemoryState;
+
+    internal static void UseInMemoryStorage(UserPreferencesState? seed = null) =>
+        _inMemoryState = seed ?? new UserPreferencesState();
+
+    internal static void ResetInMemoryStorage() => _inMemoryState = null;
+
+    public static string GetPersistedLanguage() =>
+        NormalizeLanguageKey(Load().Language);
+
     public static UserPreferencesState Load()
     {
+        if (_inMemoryState is not null)
+        {
+            return new UserPreferencesState
+            {
+                Language = _inMemoryState.Language,
+                Theme = _inMemoryState.Theme,
+                Color = _inMemoryState.Color,
+                Form = _inMemoryState.Form,
+                Size = _inMemoryState.Size,
+                IsBold = _inMemoryState.IsBold,
+                HasCompletedOnboarding = _inMemoryState.HasCompletedOnboarding,
+                OnboardingConcern = _inMemoryState.OnboardingConcern
+            };
+        }
+
         return new UserPreferencesState
         {
             Language = NormalizeLanguageKey(Preferences.Get(LanguageKey, DefaultLanguage)),
@@ -45,6 +70,12 @@ public static class UserPreferences
 
     public static void Save(UserPreferencesState state)
     {
+        if (_inMemoryState is not null)
+        {
+            _inMemoryState = state;
+            return;
+        }
+
         Preferences.Set(LanguageKey, NormalizeLanguageKey(state.Language));
         Preferences.Set(ThemeKey, NormalizeThemeKey(state.Theme));
         Preferences.Set(ColorKey, NormalizeColorKey(state.Color));
@@ -165,11 +196,13 @@ public static class UserPreferences
             return;
         }
 
-        (Color primary, Color secondary, Color hover, Color tint) = ResolveAccentColors(NormalizeColorKey(color));
+        (Color primary, Color secondary, Color hover, Color tintLight, Color tintDark) =
+            ResolveAccentColors(NormalizeColorKey(color));
         resources["Primary"] = primary;
         resources["Secondary"] = secondary;
         resources["PrimaryHover"] = hover;
-        resources["PrimaryTint"] = tint;
+        resources["PrimaryTint"] = tintLight;
+        resources["PrimaryTintDark"] = tintDark;
     }
 
     public static void ApplyTypography(string size, bool isBold)
@@ -245,12 +278,15 @@ public static class UserPreferences
         _ => string.IsNullOrWhiteSpace(value) ? DefaultSize : value
     };
 
-    public static string GetLanguageLabel(string key, string? language = null) =>
-        NormalizeLanguageKey(key) switch
+    public static string GetLanguageLabel(string key, string? language = null)
+    {
+        string lang = language ?? Load().Language;
+        return NormalizeLanguageKey(key) switch
         {
             "en" => "English",
-            _ => "Русский"
+            _ => IsEnglish(lang) ? "Russian" : "Русский"
         };
+    }
 
     public static string GetThemeLabel(string key, string? language = null)
     {
@@ -295,20 +331,30 @@ public static class UserPreferences
         };
     }
 
+    public static IReadOnlyList<string> LanguageKeys { get; } = ["ru", "en"];
+
+    public static IReadOnlyList<string> ThemeKeys { get; } = ["dark", "light"];
+
+    public static IReadOnlyList<string> ColorKeys { get; } = ["blue", "red", "yellow", "green"];
+
+    public static IReadOnlyList<string> FormKeys { get; } = ["rounded", "square"];
+
+    public static IReadOnlyList<string> SizeKeys { get; } = ["large", "medium", "small"];
+
     public static IReadOnlyList<string> GetLanguageOptions(string? language = null) =>
-        [GetLanguageLabel("ru", language), GetLanguageLabel("en", language)];
+        LanguageKeys.Select(key => GetLanguageLabel(key, language)).ToArray();
 
     public static IReadOnlyList<string> GetThemeOptions(string? language = null) =>
-        [GetThemeLabel("dark", language), GetThemeLabel("light", language)];
+        ThemeKeys.Select(key => GetThemeLabel(key, language)).ToArray();
 
     public static IReadOnlyList<string> GetColorOptions(string? language = null) =>
-        new[] { "blue", "red", "yellow", "green" }.Select(key => GetColorLabel(key, language)).ToArray();
+        ColorKeys.Select(key => GetColorLabel(key, language)).ToArray();
 
     public static IReadOnlyList<string> GetFormOptions(string? language = null) =>
-        [GetFormLabel("rounded", language), GetFormLabel("square", language)];
+        FormKeys.Select(key => GetFormLabel(key, language)).ToArray();
 
     public static IReadOnlyList<string> GetSizeOptions(string? language = null) =>
-        [GetSizeLabel("large", language), GetSizeLabel("medium", language), GetSizeLabel("small", language)];
+        SizeKeys.Select(key => GetSizeLabel(key, language)).ToArray();
 
     public static string ParseLanguageKey(string displayOrKey) => NormalizeLanguageKey(displayOrKey);
 
@@ -323,13 +369,33 @@ public static class UserPreferences
     private static bool IsRoundedForm(string form) =>
         NormalizeFormKey(form) == "rounded";
 
-    private static (Color primary, Color secondary, Color hover, Color tint) ResolveAccentColors(string color) =>
+    private static (Color primary, Color secondary, Color hover, Color tintLight, Color tintDark) ResolveAccentColors(string color) =>
         NormalizeColorKey(color) switch
         {
-            "red" => (Color.FromArgb("#E53935"), Color.FromArgb("#FFAB91"), Color.FromArgb("#C62828"), Color.FromArgb("#FFEBEE")),
-            "yellow" => (Color.FromArgb("#F7B548"), Color.FromArgb("#FFE5B9"), Color.FromArgb("#E6A020"), Color.FromArgb("#FFF8E6")),
-            "green" => (Color.FromArgb("#2E9E5B"), Color.FromArgb("#A8E6C1"), Color.FromArgb("#1F7A45"), Color.FromArgb("#EBF3F0")),
-            _ => (Color.FromArgb("#0085FF"), Color.FromArgb("#0085FF"), Color.FromArgb("#006ACC"), Color.FromArgb("#E6F2FF"))
+            "red" => (
+                Color.FromArgb("#E53935"),
+                Color.FromArgb("#FFAB91"),
+                Color.FromArgb("#C62828"),
+                Color.FromArgb("#FFEBEE"),
+                Color.FromArgb("#3D1A1A")),
+            "yellow" => (
+                Color.FromArgb("#F7B548"),
+                Color.FromArgb("#FFE5B9"),
+                Color.FromArgb("#E6A020"),
+                Color.FromArgb("#FFF8E6"),
+                Color.FromArgb("#3D331A")),
+            "green" => (
+                Color.FromArgb("#2E9E5B"),
+                Color.FromArgb("#A8E6C1"),
+                Color.FromArgb("#1F7A45"),
+                Color.FromArgb("#EBF3F0"),
+                Color.FromArgb("#1A3D2A")),
+            _ => (
+                Color.FromArgb("#0085FF"),
+                Color.FromArgb("#0085FF"),
+                Color.FromArgb("#006ACC"),
+                Color.FromArgb("#E6F2FF"),
+                Color.FromArgb("#1A2A3D"))
         };
 
     private static (double pageTitle, double section, double body) ResolveFontSizes(string size) =>
