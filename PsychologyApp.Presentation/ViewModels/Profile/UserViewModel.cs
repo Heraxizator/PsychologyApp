@@ -19,10 +19,12 @@ public partial class UserViewModel : BaseViewModel
     private readonly ProfileFeaturedTechniquesBuilder _featuredTechniquesBuilder;
     private readonly QuoteItemCommandsFactory _quoteCommandsFactory;
     private readonly UserProfileRefreshCoordinator _profileRefreshCoordinator;
+    private readonly LanguageContentReloader _languageContentReloader;
     private readonly ILogger<UserViewModel> _logger;
     private readonly IOptions<AppSettings> _settings;
     private int _initGeneration;
     private bool _initialized;
+    private string? _feedLanguage;
 
     public bool HasInitialized => _initialized;
 
@@ -35,6 +37,7 @@ public partial class UserViewModel : BaseViewModel
 
         await RefreshAsync(forceQuotesReload: false);
         _initialized = true;
+        _feedLanguage = UserPreferences.GetPersistedLanguage();
     }
 
     public UserViewModel(
@@ -47,7 +50,8 @@ public partial class UserViewModel : BaseViewModel
         ProfilePracticeHistoryLoader practiceHistoryLoader,
         ProfileFeaturedTechniquesBuilder featuredTechniquesBuilder,
         QuoteItemCommandsFactory quoteCommandsFactory,
-        UserProfileRefreshCoordinator profileRefreshCoordinator)
+        UserProfileRefreshCoordinator profileRefreshCoordinator,
+        LanguageContentReloader languageContentReloader)
     {
         try
         {
@@ -59,6 +63,7 @@ public partial class UserViewModel : BaseViewModel
             _featuredTechniquesBuilder = featuredTechniquesBuilder;
             _quoteCommandsFactory = quoteCommandsFactory;
             _profileRefreshCoordinator = profileRefreshCoordinator;
+            _languageContentReloader = languageContentReloader;
             _logger = logger;
             _settings = settings;
             _quotesChangeNotifier.FavoritesChanged += OnFavoritesChanged;

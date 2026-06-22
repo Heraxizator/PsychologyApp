@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Services.TechniqueService;
@@ -24,6 +25,7 @@ public partial class TechniquesViewModel : BaseViewModel
     private readonly PracticeDashboardLoader _dashboardLoader;
     private readonly TechniquesListInitializer _listInitializer;
     private readonly IOptions<AppSettings> _settings;
+    private readonly ILogger<TechniquesViewModel> _logger;
 
     public TechniquesViewModel(
         ITechniqueService techniqueService,
@@ -35,7 +37,8 @@ public partial class TechniquesViewModel : BaseViewModel
         IDatabaseReadySignal databaseReadySignal,
         PracticeDashboardLoader dashboardLoader,
         TechniquesListInitializer listInitializer,
-        IOptions<AppSettings> settings)
+        IOptions<AppSettings> settings,
+        ILogger<TechniquesViewModel> logger)
     {
         _techniqueService = techniqueService;
         _toastService = toastService;
@@ -47,6 +50,7 @@ public partial class TechniquesViewModel : BaseViewModel
         _dashboardLoader = dashboardLoader;
         _listInitializer = listInitializer;
         _settings = settings;
+        _logger = logger;
         ModuleName = AppStrings.ShellTabPractice;
         PageName = AppStrings.PracticeTechniquesList;
 

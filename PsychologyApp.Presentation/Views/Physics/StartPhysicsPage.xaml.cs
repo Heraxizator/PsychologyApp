@@ -19,7 +19,7 @@ public partial class StartPhysicsPage : ContentPage
         viewModel = this.ActivateViewModel(pageViewModelActivator, nav => startPhysicsViewModelFactory.Create(nav));
 
         BindingContext = viewModel;
-        _animationHelper = new PageAnimationHelper(viewModel, LoadingProgress, ContentStack);
+        _animationHelper = new PageAnimationHelper(viewModel, LoadingProgress, staggerLayout: ContentStack);
     }
 
     protected override void OnAppearing()

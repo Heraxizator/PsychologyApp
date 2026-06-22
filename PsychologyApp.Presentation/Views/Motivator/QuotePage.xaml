@@ -39,9 +39,6 @@
                     RemainingItemsThreshold="2"
                     RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
                     ItemsSource="{Binding QuotesObservableCollection}">
-                    <CollectionView.Behaviors>
-                        <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
-                    </CollectionView.Behaviors>
 
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout

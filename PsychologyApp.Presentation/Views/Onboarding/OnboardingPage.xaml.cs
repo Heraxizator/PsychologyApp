@@ -46,7 +46,7 @@ public partial class OnboardingPage : ContentPage
         VisualElement? previousView = GetStepView(previousStep);
         VisualElement? nextView = GetStepView(newStep);
 
-        if (previousView is not null && previousView.IsVisible && UiAnimations.CanAnimate(previousView))
+        if (previousView is not null && previousView.IsVisible && UiAnimations.ShouldAnimate(previousView))
         {
             await previousView.FadeToAsync(0, UiAnimations.MicroDuration, UiAnimations.StandardEasing);
             UiAnimations.ResetVisualState(previousView);
@@ -60,8 +60,14 @@ public partial class OnboardingPage : ContentPage
 
     private static async Task RevealStepAsync(VisualElement? stepView)
     {
-        if (stepView is null)
+        if (stepView is null || !UiAnimations.ShouldAnimate(stepView))
         {
+            if (stepView is not null)
+            {
+                stepView.Opacity = 1;
+                stepView.IsVisible = true;
+            }
+
             return;
         }
 

@@ -7,5 +7,8 @@ public static class ReduceMotion
     public static void Configure(Func<bool> isReduceMotionEnabled) =>
         _isEnabled = isReduceMotionEnabled;
 
+    public static void Refresh() =>
+        Configure(ReduceMotionDetector.IsEnabled);
+
     public static bool IsEnabled => _isEnabled?.Invoke() ?? false;
 }

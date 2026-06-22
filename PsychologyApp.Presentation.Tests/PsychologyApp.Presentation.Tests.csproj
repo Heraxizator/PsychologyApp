@@ -37,7 +37,11 @@
     <Compile Include="..\PsychologyApp.Presentation\Common\PressFeedback\TemplatePressFeedback.cs" Link="TemplatePressFeedback.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Common\Behaviors\PressFeedbackBehavior.cs" Link="PressFeedbackBehavior.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Common\Animation\UiAnimations.cs" Link="UiAnimations.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Common\Animation\PageAnimationHelper.cs" Link="PageAnimationHelper.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Common\Animation\DynamicListReveal.cs" Link="DynamicListReveal.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Common\Animation\ReduceMotion.cs" Link="ReduceMotion.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Common\Animation\ReduceMotionDetector.cs" Link="ReduceMotionDetector.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Common\Behaviors\ListItemRevealBehavior.cs" Link="ListItemRevealBehavior.cs" />
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\BaseViewModel.cs" Link="BaseViewModel.cs" />
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\BaseViewModel.Technique.cs" Link="BaseViewModel.Technique.cs" />
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\BaseViewModel.LoadingState.cs" Link="BaseViewModel.LoadingState.cs" />
@@ -49,6 +53,7 @@
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\QuestionViewModel.cs" Link="QuestionViewModel.cs" />
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\QuestionViewModel.Labels.cs" Link="QuestionViewModel.Labels.cs" />
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\QuestionViewModel.Results.cs" Link="QuestionViewModel.Results.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\QuestionViewModel.Reload.cs" Link="QuestionViewModel.Reload.cs" />
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\TestResultViewModel.cs" Link="TestResultViewModel.cs" />
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\TestResultViewModel.Labels.cs" Link="TestResultViewModel.Labels.cs" />
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\TestResultViewModel.Recommendation.cs" Link="TestResultViewModel.Recommendation.cs" />
@@ -72,6 +77,8 @@
     <Compile Include="..\PsychologyApp.Presentation\Models\Profile\PracticeHistoryItem.cs" Link="PracticeHistoryItem.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Common\PracticeHistoryFormatter.cs" Link="PracticeHistoryFormatter.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Services\Preferences\SettingsPreferencesPresenter.cs" Link="SettingsPreferencesPresenter.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\UI\Converters\PreferenceLabelKind.cs" Link="PreferenceLabelKind.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\UI\Converters\PreferenceLabelConverter.cs" Link="PreferenceLabelConverter.cs" />
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\Profile\SettingsViewModel.cs" Link="SettingsViewModel.cs" />
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\Profile\SettingsViewModel.Labels.cs" Link="SettingsViewModel.Labels.cs" />
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\Profile\SettingsViewModel.Properties.cs" Link="SettingsViewModel.Properties.cs" />
@@ -171,6 +178,7 @@
     <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\FindProblemViewModel.Content.cs" Link="FindProblemViewModel.Content.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Models\Tests\AlgorithmRow.cs" Link="AlgorithmRow.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Common\Localization\ContentAssets.cs" Link="ContentAssets.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Common\Localization\LanguageContentReloader.cs" Link="LanguageContentReloader.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Models\Tests\TestItem.cs" Link="TestItem.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Models\Tests\TestItemFactory.cs" Link="TestItemFactory.cs" />
     <Compile Include="..\PsychologyApp.Presentation\Services\Tests\ITestCatalogService.cs" Link="ITestCatalogService.cs" />

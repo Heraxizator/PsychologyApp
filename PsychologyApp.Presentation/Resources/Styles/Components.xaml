@@ -2,8 +2,10 @@
 <?xaml-comp compile="true" ?>
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:PsychologyApp.Presentation.UI.Converters">
 
+    <converters:PreferenceLabelConverter x:Key="PreferenceLabelConverter" />
     <Style x:Key="CardFrameStyle" TargetType="Frame">
         <Setter Property="HasShadow" Value="False" />
         <Setter Property="Margin" Value="0" />
@@ -194,7 +196,7 @@
         <Setter Property="HeightRequest" Value="56" />
         <Setter Property="Stroke" Value="Transparent" />
         <Setter Property="StrokeThickness" Value="0" />
-        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryTint}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
         <Setter Property="StrokeShape" Value="RoundRectangle 28" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="HorizontalOptions" Value="Center" />
@@ -212,7 +214,7 @@
 
     <Style x:Key="MoodStripStyle" TargetType="Border">
         <Setter Property="Padding" Value="12,10" />
-        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryTint}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
         <Setter Property="Stroke" Value="Transparent" />
         <Setter Property="StrokeThickness" Value="0" />
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
@@ -241,7 +243,7 @@
     </Style>
 
     <Style x:Key="FilterChipSelectedStyle" TargetType="Border" BasedOn="{StaticResource FilterChipStyle}">
-        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryTint}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
         <Setter Property="Stroke" Value="{DynamicResource Primary}" />
         <Setter Property="StrokeThickness" Value="1.5" />
     </Style>

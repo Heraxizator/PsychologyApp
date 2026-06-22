@@ -7,7 +7,7 @@ namespace PsychologyApp.Presentation.ViewModels.Motivator;
 
 public partial class QuoteViewModel
 {
-    private async Task InitAsync(bool seedNewQuote)
+    private async Task<bool> InitAsync(bool seedNewQuote)
     {
         try
         {
@@ -39,11 +39,14 @@ public partial class QuoteViewModel
                 UpdateAllReadEmptyState();
                 SetDone();
             });
+
+            return true;
         }
         catch (Exception e)
         {
             await UiThread.RunAsync(SetFail);
             _logger.LogError(e, "QuoteViewModel init failed.");
+            return false;
         }
     }
 

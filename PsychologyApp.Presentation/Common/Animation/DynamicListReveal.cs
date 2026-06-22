@@ -10,7 +10,7 @@ public static class DynamicListReveal
         {
             if (e.Element is VisualElement element)
             {
-                UiAnimations.SafeRevealPremiumAsync(element, allowHidden: true).FireAndForget();
+                UiAnimations.SafeFadeInAsync(element, duration: UiAnimations.FastDuration, allowHidden: true).FireAndForget();
             }
         };
     }

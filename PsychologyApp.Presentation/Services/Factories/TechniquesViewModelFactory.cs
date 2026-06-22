@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Services.TechniqueService;
@@ -25,7 +26,8 @@ public sealed class TechniquesViewModelFactory(
     IDatabaseReadySignal databaseReadySignal,
     PracticeDashboardLoader dashboardLoader,
     TechniquesListInitializer listInitializer,
-    IOptions<AppSettings> settings) : ViewModelFactoryBase, ITechniquesViewModelFactory
+    IOptions<AppSettings> settings,
+    ILogger<TechniquesViewModel> logger) : ViewModelFactoryBase, ITechniquesViewModelFactory
 {
     public TechniquesViewModel Create(INavigation navigation) =>
         new(
@@ -38,5 +40,6 @@ public sealed class TechniquesViewModelFactory(
             databaseReadySignal,
             dashboardLoader,
             listInitializer,
-            settings);
+            settings,
+            logger);
 }

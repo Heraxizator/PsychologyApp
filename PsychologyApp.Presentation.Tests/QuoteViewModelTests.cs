@@ -1,25 +1,25 @@
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Moq;
+using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Services.QuotService;
+using PsychologyApp.Application.Services.ReasonService;
+using PsychologyApp.Presentation.Abstractions;
 using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Common.Infrastructure;
 using PsychologyApp.Presentation.Services.Quotes;
+using PsychologyApp.Presentation.Services.Tests;
 using PsychologyApp.Presentation.Services.Toasts;
 using PsychologyApp.Presentation.ViewModels.Motivator;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
 
+[Collection("Localization")]
 public sealed class QuoteViewModelTests
 {
-    public QuoteViewModelTests()
-    {
-        AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
-    }
-
     [Fact]
     public async Task Reload_DoesNotCallLoadSingleAsync()
     {
@@ -102,9 +102,105 @@ public sealed class QuoteViewModelTests
         return quotService;
     }
 
+    [Fact]
+    public async Task RefreshLocalizedProperties_WhenPreviewLanguageChanges_DoesNotReseedFeed()
+    {
+        var quotService = CreateQuotServiceMock();
+        quotService
+            .Setup(s => s.ReseedFeedAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+        LanguageContentReloader languageReloader = CreateLanguageReloader(quotService.Object);
+
+        QuoteViewModel viewModel = CreateViewModel(quotService.Object, languageReloader: languageReloader);
+        await viewModel.EnsureInitializedAsync();
+        await WaitForStateAsync(viewModel);
+
+        quotService.Invocations.Clear();
+
+        try
+        {
+            UserPreferences.ApplyPreview(new UserPreferencesState
+            {
+                Language = "en",
+                Theme = UserPreferences.DefaultTheme,
+                Color = UserPreferences.DefaultColor,
+                Form = UserPreferences.DefaultForm,
+                Size = UserPreferences.DefaultSize,
+                IsBold = false,
+                HasCompletedOnboarding = true,
+                OnboardingConcern = "explore"
+            });
+            await WaitForStateAsync(viewModel);
+
+            quotService.Verify(
+                s => s.ReseedFeedAsync(LanguageContentReloader.DefaultQuoteFeedCount, It.IsAny<CancellationToken>()),
+                Times.Never);
+        }
+        finally
+        {
+            AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
+        }
+    }
+
+    [Fact]
+    public async Task RefreshLocalizedProperties_WhenPersistedLanguageChanges_ReloadsFeed()
+    {
+        var quotService = CreateQuotServiceMock();
+        quotService
+            .Setup(s => s.ReseedFeedAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+        LanguageContentReloader languageReloader = CreateLanguageReloader(quotService.Object);
+
+        QuoteViewModel viewModel = CreateViewModel(quotService.Object, languageReloader: languageReloader);
+        await viewModel.EnsureInitializedAsync();
+        await WaitForStateAsync(viewModel);
+
+        quotService.Invocations.Clear();
+
+        try
+        {
+            UserPreferences.Save(new UserPreferencesState
+            {
+                Language = "en",
+                Theme = UserPreferences.DefaultTheme,
+                Color = UserPreferences.DefaultColor,
+                Form = UserPreferences.DefaultForm,
+                Size = UserPreferences.DefaultSize,
+                IsBold = false,
+                HasCompletedOnboarding = true,
+                OnboardingConcern = "explore"
+            });
+            UserPreferences.ApplyAll();
+            await languageReloader.EnsureReloadedAsync();
+            await WaitForStateAsync(viewModel);
+
+            quotService.Verify(
+                s => s.ReseedFeedAsync(LanguageContentReloader.DefaultQuoteFeedCount, It.IsAny<CancellationToken>()),
+                Times.Once);
+            quotService.Verify(s => s.GetAllAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.AtLeastOnce);
+        }
+        finally
+        {
+            UserPreferences.Save(new UserPreferencesState
+            {
+                Language = UserPreferences.DefaultLanguage,
+                Theme = UserPreferences.DefaultTheme,
+                Color = UserPreferences.DefaultColor,
+                Form = UserPreferences.DefaultForm,
+                Size = UserPreferences.DefaultSize,
+                IsBold = false,
+                HasCompletedOnboarding = true,
+                OnboardingConcern = "explore"
+            });
+            UserPreferences.ApplyAll();
+            AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
+        }
+    }
+
     private static QuoteViewModel CreateViewModel(
         IQuotService quotService,
-        IQuotesChangeNotifier? notifier = null)
+        IQuotesChangeNotifier? notifier = null,
+        LanguageContentReloader? languageReloader = null)
     {
         var navigation = new Mock<INavigation>();
         var toast = new Mock<IToastService>();
@@ -127,8 +223,18 @@ public sealed class QuoteViewModelTests
                 settings,
                 NullLogger<QuoteItemCommandsFactory>.Instance),
             new QuoteFeedLoader(),
-            TestDatabaseReady.CreateSignaled());
+            TestDatabaseReady.CreateSignaled(),
+            languageReloader ?? CreateLanguageReloader(quotService));
     }
+
+    private static LanguageContentReloader CreateLanguageReloader(IQuotService quotService) =>
+        new(
+            quotService,
+            new CachedReasonContentProvider(Mock.Of<IReasonContentProvider>()),
+            new CachedQuotContentProvider(Mock.Of<IQuotContentProvider>()),
+            new CachedTestCatalogService(
+                new TestCatalogService(Mock.Of<ITestAssetReader>(), NullLogger<TestCatalogService>.Instance),
+                NullLogger<CachedTestCatalogService>.Instance));
 
     private static async Task WaitForStateAsync(QuoteViewModel viewModel)
     {

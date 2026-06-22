@@ -48,6 +48,14 @@ public partial class PhysicsReasonCardView : ContentView
             return;
         }
 
+        if (!UiAnimations.ShouldAnimate(this))
+        {
+            _expandedSection.IsVisible = IsExpanded;
+            _expandedSection.Opacity = IsExpanded ? 1 : 0;
+            _expandedSection.TranslationY = 0;
+            return;
+        }
+
         _isAnimatingExpand = true;
         try
         {

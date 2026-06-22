@@ -8,6 +8,7 @@ public interface IQuotService
     Task<QuotDTO> GetByIdAsync(long id, CancellationToken cancellationToken = default);
     Task AddSingleAsync(QuotDTO quotDTO, CancellationToken cancellationToken = default);
     Task LoadSingleAsync(CancellationToken cancellationToken = default);
+    Task ReseedFeedAsync(int count, CancellationToken cancellationToken = default);
     Task MarkAsReadedAsync(long quotId, CancellationToken cancellationToken = default);
     Task MarkAsFavouriteAsync(long quotId, bool isFavourite, CancellationToken cancellationToken = default);
     Task<IEnumerable<QuotDTO>> GetFavouritesAsync(int count, CancellationToken cancellationToken = default);

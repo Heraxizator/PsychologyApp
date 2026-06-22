@@ -73,11 +73,6 @@ public partial class AppShell : Shell
         {
             TryPerformTabHaptic();
         }
-
-        if (CurrentPage is ContentPage { Content: View root })
-        {
-            UiAnimations.SafePulseAsync(root).FireAndForget();
-        }
     }
 
     private static void TryPerformTabHaptic()
@@ -100,7 +95,7 @@ public partial class AppShell : Shell
         }
 
         ApplyTabBarChrome();
-        ApplyStatusBarChrome(UserPreferences.IsDarkTheme(UserPreferences.Load().Theme));
+        ApplyStatusBarChrome(IsDarkRequestedTheme());
         EnsureCurrentTabMaterialized();
     }
 
@@ -118,7 +113,7 @@ public partial class AppShell : Shell
         CleanerTab.Title = AppStrings.ShellTabCleanerShort;
         MotivatorTab.Title = AppStrings.ShellTabMotivatorShort;
         ApplyTabBarChrome();
-        ApplyStatusBarChrome(UserPreferences.IsDarkTheme(UserPreferences.Load().Theme));
+        ApplyStatusBarChrome(IsDarkRequestedTheme());
     }
 
     private void RefreshShellTabPageTitles()
@@ -186,7 +181,10 @@ public partial class AppShell : Shell
                 return;
             }
 
-            statusBar.StatusBarColor = isDark ? Colors.Black : Colors.White;
+            ResourceDictionary? resources = Microsoft.Maui.Controls.Application.Current?.Resources;
+            statusBar.StatusBarColor = isDark
+                ? ResolveColor(resources, "Gray950", Color.FromArgb("#141414"))
+                : ResolveColor(resources, "White", Colors.White);
             statusBar.StatusBarStyle = isDark ? StatusBarStyle.LightContent : StatusBarStyle.DarkContent;
         }
         catch (Exception ex)
@@ -194,6 +192,9 @@ public partial class AppShell : Shell
             _logger.LogDebug(ex, "Status bar chrome update skipped.");
         }
     }
+
+    private static bool IsDarkRequestedTheme() =>
+        Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark;
 
     private static Color ResolveColor(ResourceDictionary? resources, string key, Color fallback) =>
         resources?.TryGetValue(key, out object? value) == true && value is Color color ? color : fallback;
@@ -374,7 +375,7 @@ public partial class AppShell : Shell
         }
         catch (Exception ex)
         {
-            _logger.LogDebug(ex, "Shell startup completed with errors.");
+            _logger.LogError(ex, "Shell startup completed with errors.");
         }
     }
 

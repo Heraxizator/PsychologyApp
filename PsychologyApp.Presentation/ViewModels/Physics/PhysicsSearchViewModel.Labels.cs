@@ -38,6 +38,17 @@ public partial class PhysicsSearchViewModel
             nameof(SolutionHeader),
             nameof(RecommendedPracticesLabel),
             nameof(TryPracticeLabel));
-        ReloadAsync().FireAndForget();
+
+        string currentLanguage = UserPreferences.GetPersistedLanguage();
+        if (string.Equals(_reasonsLanguage, currentLanguage, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        _reasonsLanguage = currentLanguage;
+        if (_initialized)
+        {
+            ReloadAsync().FireAndForget();
+        }
     }
 }

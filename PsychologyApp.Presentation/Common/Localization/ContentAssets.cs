@@ -4,7 +4,7 @@ public static class ContentAssets
 {
     public static string Localized(string assetPath)
     {
-        if (!UserPreferences.IsEnglish(UserPreferences.Load().Language))
+        if (!UserPreferences.IsEnglish(AppStrings.Language))
         {
             return assetPath;
         }
@@ -19,12 +19,12 @@ public static class ContentAssets
     }
 
     public static string PsychosomaticFile =>
-        UserPreferences.IsEnglish(UserPreferences.Load().Language)
+        UserPreferences.IsEnglish(AppStrings.Language)
             ? "Psyhosomatic.en.txt"
             : "Psyhosomatic.txt";
 
     public static string QuotesFile =>
-        UserPreferences.IsEnglish(UserPreferences.Load().Language)
+        UserPreferences.IsEnglish(AppStrings.Language)
             ? "quotes/quotes.en.json"
             : "quotes/quotes.ru.json";
 }

@@ -32,7 +32,7 @@
                             WidthRequest="52"
                             HeightRequest="52"
                             StrokeThickness="0"
-                            BackgroundColor="{DynamicResource PrimaryTint}"
+                            BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}"
                             VerticalOptions="Center">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="12" />

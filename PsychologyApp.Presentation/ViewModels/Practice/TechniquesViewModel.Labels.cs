@@ -42,5 +42,6 @@ public partial class TechniquesViewModel
             nameof(FailedText),
             nameof(RetryText));
         UpdateTodayRecommendation();
+        ReloadLocalizedContent();
     }
 }

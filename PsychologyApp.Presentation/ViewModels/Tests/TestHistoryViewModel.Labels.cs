@@ -1,4 +1,5 @@
 using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Common.Infrastructure;
 
 namespace PsychologyApp.Presentation.ViewModels.Tests;
 
@@ -20,5 +21,6 @@ public partial class TestHistoryViewModel
             nameof(FailedText),
             nameof(RetryText),
             nameof(RetakeButtonText));
+        LoadAsync().FireAndForget();
     }
 }

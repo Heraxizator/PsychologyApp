@@ -17,7 +17,7 @@ public partial class RetryView : ContentView
 
         if (propertyName == nameof(IsVisible) && IsVisible)
         {
-            UiAnimations.SafeRevealPremiumAsync(this, allowHidden: true).FireAndForget();
+            UiAnimations.SafeFadeInAsync(this, duration: UiAnimations.FastDuration, allowHidden: true).FireAndForget();
         }
     }
 

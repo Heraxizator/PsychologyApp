@@ -1,4 +1,6 @@
+using Microsoft.Extensions.Logging;
 using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Common.Infrastructure;
 using PsychologyApp.Presentation.Models.Practice;
 using PsychologyApp.Presentation.Services.Practice;
 
@@ -70,10 +72,33 @@ public partial class TechniquesViewModel
         {
             await UiThread.RunAsync(CancelProgress);
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogError(ex, "Practice tab initialization failed.");
             await UiThread.RunAsync(SetFail);
             _toastService.ShortToast(AppStrings.PracticeInitError);
+        }
+    }
+
+    private void ReloadLocalizedContent() =>
+        ReloadLocalizedContentAsync().FireAndForget();
+
+    private async Task ReloadLocalizedContentAsync()
+    {
+        if (!_initialized)
+        {
+            return;
+        }
+
+        await _initGate.WaitAsync();
+        try
+        {
+            using CancellationTokenSource timeoutSource = OperationCancellation.CreateMiddleTimeoutSource(_settings);
+            await InitAsync(timeoutSource.Token, showLoadingOverlay: false);
+        }
+        finally
+        {
+            _initGate.Release();
         }
     }
 }

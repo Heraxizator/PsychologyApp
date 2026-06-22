@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Abstractions.Persistence;
@@ -24,9 +25,9 @@ public sealed class AppStartupService(
             timeoutSource.CancelAfter(settings.Value.MiddleTimeoutMs);
             await quotService.LoadSingleAsync(timeoutSource.Token);
         }
-        catch (Exception ex) when (ex is InvalidOperationException or OperationCanceledException)
+        catch (Exception ex) when (ex is InvalidOperationException or OperationCanceledException or JsonException)
         {
-            logger.LogWarning(ex, "Preload quotes failed; app can continue.");
+            logger.LogError(ex, "Preload quotes failed; app can continue.");
         }
     }
 }

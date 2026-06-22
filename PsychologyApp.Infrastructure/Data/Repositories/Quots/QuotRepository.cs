@@ -51,4 +51,13 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
             commandTimeout: _commandTimeoutSeconds,
             cancellationToken: cancellationToken));
     }
+
+    public async Task DeleteAllAsync(CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
+            "DELETE FROM Quots;",
+            commandTimeout: _commandTimeoutSeconds,
+            cancellationToken: cancellationToken));
+    }
 }

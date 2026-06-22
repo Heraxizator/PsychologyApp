@@ -236,6 +236,12 @@ public static class AppStrings
     public static string StartupErrorMessage => T(
         "Не удалось инициализировать приложение. Перезапустите приложение.",
         "Failed to initialize the app. Please restart.");
+    public static string ErrorTitle => T("Ошибка", "Error");
+    public static string UnexpectedErrorMessage => T(
+        "Произошла непредвиденная ошибка. Попробуйте ещё раз.",
+        "An unexpected error occurred. Please try again.");
+    public static string TechniqueNotFound => T("Техника не найдена.", "Technique not found.");
+    public static string QuoteNotFound => T("Цитата не найдена.", "Quote not found.");
 
     public static string TestsDetectorTitle => ShellTabDetectorShort;
     public static string TestsFindProblemTitle => T("Поиск проблемы", "Find a problem");

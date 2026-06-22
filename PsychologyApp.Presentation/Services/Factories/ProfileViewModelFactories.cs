@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Services.QuotService;
+using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Services.Dialogs;
 using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.Services.Preferences;
@@ -28,6 +29,7 @@ public sealed class UserViewModelFactory(
     ProfileFeaturedTechniquesBuilder featuredTechniquesBuilder,
     QuoteItemCommandsFactory quoteCommandsFactory,
     UserProfileRefreshCoordinator profileRefreshCoordinator,
+    LanguageContentReloader languageContentReloader,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IUserViewModelFactory
 {
     public UserViewModel Create(INavigation navigation) =>
@@ -41,7 +43,8 @@ public sealed class UserViewModelFactory(
             practiceHistoryLoader,
             featuredTechniquesBuilder,
             quoteCommandsFactory,
-            profileRefreshCoordinator);
+            profileRefreshCoordinator,
+            languageContentReloader);
 }
 
 public interface IOptionsViewModelFactory
@@ -85,6 +88,7 @@ public sealed class SettingsViewModelFactory(
     IDialogService dialogService,
     IUserPreferencesStore userPreferencesStore,
     SettingsPreferencesPresenter settingsPreferencesPresenter,
+    LanguageContentReloader languageContentReloader,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, ISettingsViewModelFactory
 {
     public SettingsViewModel Create(INavigation navigation) =>
@@ -92,7 +96,8 @@ public sealed class SettingsViewModelFactory(
             dialogService,
             ResolveNavigation(navigationServiceFactory, navigation),
             userPreferencesStore,
-            settingsPreferencesPresenter);
+            settingsPreferencesPresenter,
+            languageContentReloader);
 }
 
 public interface IInfoViewModelFactory

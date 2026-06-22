@@ -109,6 +109,7 @@ public sealed class QuestionViewModelFactory(
     IDialogService dialogService,
     IUserProgressService userProgressService,
     QuestionnaireSubmissionService submissionService,
+    ITestCatalogService testCatalogService,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IQuestionViewModelFactory
 {
     public QuestionViewModel Create(
@@ -128,6 +129,7 @@ public sealed class QuestionViewModelFactory(
             navigationService,
             userProgressService,
             submissionService,
+            testCatalogService,
             session);
     }
 }

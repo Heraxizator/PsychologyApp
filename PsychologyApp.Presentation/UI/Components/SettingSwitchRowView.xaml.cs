@@ -1,4 +1,3 @@
-using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Services;
 
 namespace PsychologyApp.Presentation.UI.Components;
@@ -8,16 +7,6 @@ public partial class SettingSwitchRowView : ContentView
     public SettingSwitchRowView()
     {
         InitializeComponent();
-    }
-
-    protected override void OnPropertyChanged(string? propertyName = null)
-    {
-        base.OnPropertyChanged(propertyName);
-
-        if (propertyName == nameof(IsToggled))
-        {
-            UiAnimations.SafePulseAsync(this).FireAndForget();
-        }
     }
 
     public static readonly BindableProperty LabelTextProperty =

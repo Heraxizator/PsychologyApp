@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Services.QuotService;
+using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Services;
 using PsychologyApp.Presentation.Services.Quotes;
 using PsychologyApp.Presentation.Services.Toasts;
@@ -25,6 +26,7 @@ public sealed class QuoteViewModelFactory(
     Func<QuoteFeedCoordinator> feedCoordinatorFactory,
     QuoteItemCommandsFactory quoteCommandsFactory,
     QuoteFeedLoader quoteFeedLoader,
+    LanguageContentReloader languageContentReloader,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IQuoteViewModelFactory
 {
     public QuoteViewModel Create(INavigation navigation) =>
@@ -36,7 +38,8 @@ public sealed class QuoteViewModelFactory(
             feedCoordinatorFactory(),
             quoteCommandsFactory,
             quoteFeedLoader,
-            databaseReadySignal);
+            databaseReadySignal,
+            languageContentReloader);
 }
 
 public interface IMusicPlayerViewModelFactory

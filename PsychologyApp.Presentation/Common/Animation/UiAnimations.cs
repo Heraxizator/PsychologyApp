@@ -5,8 +5,12 @@ public static class UiAnimations
     public const uint MicroDuration = 200;
     public const uint MediumDuration = 300;
     public const uint FastDuration = 120;
+    public const uint ListRevealDuration = 150;
     public const uint StaggerDelay = 50;
     public const int StaggerCap = 10;
+    public const int PremiumRevealMaxIndex = 2;
+    public const int LiteRevealMaxIndex = 8;
+    public const int MaxConcurrentListReveals = 6;
     public const uint PressDuration = 80;
     public const uint ReleaseDuration = 120;
     public const double PressScale = 0.96;
@@ -18,6 +22,7 @@ public static class UiAnimations
     public const double ShakeOffset = 4;
     public const double FocusScale = 1.01;
     public const double SlideOffset = 14;
+    public const double LiteSlideOffset = 8;
     public const double RevealScaleFrom = 0.96;
     public const double CrossfadeScaleFrom = 0.98;
 
@@ -123,6 +128,62 @@ public static class UiAnimations
             System.Diagnostics.Debug.WriteLine($"UiAnimations.SafeFadeInAsync skipped: {ex.GetType().Name}: {ex.Message}");
             ResetVisualState(view);
         }
+    }
+
+    public static async Task SafeRevealLiteAsync(
+        VisualElement? view,
+        double y = LiteSlideOffset,
+        uint duration = ListRevealDuration,
+        bool allowHidden = false,
+        int delayMs = 0,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            if (delayMs > 0)
+            {
+                await Task.Delay(delayMs, cancellationToken);
+            }
+
+            await RevealLiteAsync(view, y, duration, allowHidden, cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"UiAnimations.SafeRevealLiteAsync skipped: {ex.GetType().Name}: {ex.Message}");
+            ResetVisualState(view);
+        }
+    }
+
+    public static async Task RevealLiteAsync(
+        VisualElement? view,
+        double y = LiteSlideOffset,
+        uint duration = ListRevealDuration,
+        bool allowHidden = false,
+        CancellationToken cancellationToken = default)
+    {
+        if (view is null || (!allowHidden && !view.IsVisible))
+        {
+            return;
+        }
+
+        if (!ShouldAnimate(view))
+        {
+            ResetVisualState(view);
+            return;
+        }
+
+        cancellationToken.ThrowIfCancellationRequested();
+        double targetY = view.TranslationY;
+        view.Opacity = 0;
+        view.TranslationY = targetY + y;
+        view.Scale = 1;
+        await Task.WhenAll(
+            view.FadeToAsync(1, duration, EnterEasing),
+            view.TranslateToAsync(0, targetY, duration, EnterEasing));
+        ResetVisualState(view);
     }
 
     public static async Task FadeInAsync(

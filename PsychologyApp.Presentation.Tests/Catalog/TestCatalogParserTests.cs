@@ -11,7 +11,7 @@ public sealed class TestCatalogParserTests
         await using MemoryStream stream = new(System.Text.Encoding.UTF8.GetBytes("""{"title":"T","analyzerId":"beck"}"""));
 
         ParseResult<JsonGroupedQuestionnaireDefinition> result =
-            await TestCatalogParser.DeserializeAsync<JsonGroupedQuestionnaireDefinition>(stream);
+            await TestCatalogParser.DeserializeGroupedQuestionnaireAsync(stream);
 
         Assert.True(result.IsSuccess);
         Assert.Equal("beck", result.Value!.AnalyzerId);
@@ -23,7 +23,7 @@ public sealed class TestCatalogParserTests
         await using MemoryStream stream = new(System.Text.Encoding.UTF8.GetBytes("{not json"));
 
         ParseResult<JsonGroupedQuestionnaireDefinition> result =
-            await TestCatalogParser.DeserializeAsync<JsonGroupedQuestionnaireDefinition>(stream);
+            await TestCatalogParser.DeserializeGroupedQuestionnaireAsync(stream);
 
         Assert.False(result.IsSuccess);
         Assert.NotNull(result.Error);

@@ -37,11 +37,6 @@ public partial class PhysicsSearchPage : ContentPage
         {
             UiStateAnimator.AnimateVisibilityAsync(SearchNoResults, ViewModel.IsSearchNoResultsVisible).FireAndForget();
         }
-
-        if (e.PropertyName == nameof(PhysicsSearchViewModel.IsSearchResultsListVisible) && ViewModel.IsSearchResultsListVisible)
-        {
-            UiAnimations.SafeRevealPremiumAsync(SearchResultsCollectionView, allowHidden: true).FireAndForget();
-        }
     }
 
     private void OnRemainingItemsThresholdReached(object? sender, EventArgs e) =>

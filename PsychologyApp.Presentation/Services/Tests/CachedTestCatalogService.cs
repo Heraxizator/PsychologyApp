@@ -34,9 +34,21 @@ public sealed class CachedTestCatalogService(TestCatalogService inner, ILogger<C
             }
 
             logger.LogDebug("Loading test catalog for language key {CacheKey}", cacheKey);
-            _cache = await inner.LoadCatalogAsync(cancellationToken).ConfigureAwait(false);
+            IReadOnlyList<TestDefinition> loaded = await inner.LoadCatalogAsync(cancellationToken).ConfigureAwait(false);
+            if (loaded.Count == 0)
+            {
+                throw new InvalidOperationException("Embedded test catalog is empty.");
+            }
+
+            _cache = loaded;
             _cacheKey = cacheKey;
             return _cache;
+        }
+        catch
+        {
+            _cache = null;
+            _cacheKey = null;
+            throw;
         }
         finally
         {

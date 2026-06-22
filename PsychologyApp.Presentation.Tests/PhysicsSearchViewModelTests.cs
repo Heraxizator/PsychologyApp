@@ -13,13 +13,9 @@ using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
 
+[Collection("Localization")]
 public sealed class PhysicsSearchViewModelTests
 {
-    public PhysicsSearchViewModelTests()
-    {
-        AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
-    }
-
     [Fact]
     public async Task ExecuteSearch_WhenSearchFails_ResetsIsSearching()
     {
@@ -118,6 +114,137 @@ public sealed class PhysicsSearchViewModelTests
 
         Assert.False(viewModel.HasInitialized);
         reasonSearch.Verify(r => r.LoadReasonsAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task RefreshLocalizedProperties_DoesNotReloadReasonsWhenOnlyThemeChanges()
+    {
+        Mock<IReasonSearchService> reasonSearch = new();
+        reasonSearch
+            .Setup(r => r.LoadReasonsAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+
+        PhysicsSearchViewModel viewModel = CreateViewModel(reasonSearch.Object);
+        await viewModel.EnsureInitializedAsync();
+        await WaitUntilDoneAsync(viewModel);
+        reasonSearch.Invocations.Clear();
+
+        UserPreferences.ApplyPreview(new UserPreferencesState
+        {
+            Language = UserPreferences.DefaultLanguage,
+            Theme = "dark",
+            Color = UserPreferences.DefaultColor,
+            Form = UserPreferences.DefaultForm,
+            Size = UserPreferences.DefaultSize,
+            IsBold = false,
+            HasCompletedOnboarding = true,
+            OnboardingConcern = "explore"
+        });
+
+        await Task.Delay(200);
+        reasonSearch.Verify(r => r.LoadReasonsAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task RefreshLocalizedProperties_WhenPreviewLanguageChanges_DoesNotReloadReasons()
+    {
+        Mock<IReasonSearchService> reasonSearch = new();
+        reasonSearch
+            .Setup(r => r.LoadReasonsAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+
+        PhysicsSearchViewModel viewModel = CreateViewModel(reasonSearch.Object);
+        await viewModel.EnsureInitializedAsync();
+        await WaitUntilDoneAsync(viewModel);
+        reasonSearch.Invocations.Clear();
+
+        try
+        {
+            UserPreferences.ApplyPreview(new UserPreferencesState
+            {
+                Language = "en",
+                Theme = UserPreferences.DefaultTheme,
+                Color = UserPreferences.DefaultColor,
+                Form = UserPreferences.DefaultForm,
+                Size = UserPreferences.DefaultSize,
+                IsBold = false,
+                HasCompletedOnboarding = true,
+                OnboardingConcern = "explore"
+            });
+            await Task.Delay(200);
+
+            reasonSearch.Verify(r => r.LoadReasonsAsync(It.IsAny<CancellationToken>()), Times.Never);
+        }
+        finally
+        {
+            AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
+        }
+    }
+
+    [Fact]
+    public async Task RefreshLocalizedProperties_ReloadsReasonsWhenPersistedLanguageChanges()
+    {
+        Mock<IReasonSearchService> reasonSearch = new();
+        reasonSearch
+            .Setup(r => r.LoadReasonsAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+
+        PhysicsSearchViewModel viewModel = CreateViewModel(reasonSearch.Object);
+
+        try
+        {
+            await viewModel.EnsureInitializedAsync();
+            await WaitUntilDoneAsync(viewModel);
+            reasonSearch.Invocations.Clear();
+
+            UserPreferences.Save(new UserPreferencesState
+            {
+                Language = "en",
+                Theme = UserPreferences.DefaultTheme,
+                Color = UserPreferences.DefaultColor,
+                Form = UserPreferences.DefaultForm,
+                Size = UserPreferences.DefaultSize,
+                IsBold = false,
+                HasCompletedOnboarding = true,
+                OnboardingConcern = "explore"
+            });
+            UserPreferences.ApplyAll();
+            await WaitUntilDoneAsync(viewModel);
+
+            reasonSearch.Verify(r => r.LoadReasonsAsync(It.IsAny<CancellationToken>()), Times.AtLeastOnce);
+        }
+        finally
+        {
+            UserPreferences.Save(new UserPreferencesState
+            {
+                Language = UserPreferences.DefaultLanguage,
+                Theme = UserPreferences.DefaultTheme,
+                Color = UserPreferences.DefaultColor,
+                Form = UserPreferences.DefaultForm,
+                Size = UserPreferences.DefaultSize,
+                IsBold = false,
+                HasCompletedOnboarding = true,
+                OnboardingConcern = "explore"
+            });
+            UserPreferences.ApplyAll();
+            AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
+        }
+    }
+
+    private static PhysicsSearchViewModel CreateViewModel(IReasonSearchService reasonSearch)
+    {
+        PhysicsSearchCoordinator coordinator = new(reasonSearch);
+        PhysicsSearchSession session = new(coordinator);
+        Mock<INavigation> navigation = new();
+
+        return new PhysicsSearchViewModel(
+            reasonSearch,
+            coordinator,
+            session,
+            NullLogger<PhysicsSearchViewModel>.Instance,
+            Options.Create(new AppSettings()),
+            new TestNavigationService(navigation.Object),
+            TestDatabaseReady.CreateSignaled());
     }
 
     private static async Task WaitUntilDoneAsync(PhysicsSearchViewModel viewModel)

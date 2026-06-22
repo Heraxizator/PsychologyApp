@@ -1,3 +1,5 @@
+using PsychologyApp.Presentation.Common;
+
 namespace PsychologyApp.Presentation.ViewModels.Motivator;
 
 public partial class QuoteViewModel
@@ -17,8 +19,11 @@ public partial class QuoteViewModel
         await _initGate.WaitAsync();
         try
         {
-            await InitAsync(seedNewQuote);
-            _initialized = true;
+            if (await InitAsync(seedNewQuote))
+            {
+                _initialized = true;
+                _feedLanguage = UserPreferences.GetPersistedLanguage();
+            }
         }
         finally
         {

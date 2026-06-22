@@ -10,11 +10,5 @@ public class MainActivity : MauiAppCompatActivity
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
-
-        if (Build.VERSION.SdkInt >= BuildVersionCodes.S)
-        {
-            UiModeManager? uiModeManager = (UiModeManager?)GetSystemService(UiModeService);
-            uiModeManager?.SetApplicationNightMode(1);
-        }
     }
 }

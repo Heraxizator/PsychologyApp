@@ -4,6 +4,7 @@
              x:Class="PsychologyApp.Presentation.Views.Profile.SettingsPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.ViewModels.Profile"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.UI.Components"
+             xmlns:converters="clr-namespace:PsychologyApp.Presentation.UI.Converters"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Common.Behaviors"
              x:DataType="vm:SettingsViewModel"
              Shell.NavBarIsVisible="False"
@@ -21,27 +22,28 @@
 
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                 <VerticalStackLayout Spacing="8">
-                    <VerticalStackLayout.Behaviors>
-                        <behaviors:StaggerChildrenBehavior />
-                    </VerticalStackLayout.Behaviors>
                     <Label Text="{Binding DesignSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
                     <ui:SettingPickerRowView
+                        LabelKind="{x:Static converters:PreferenceLabelKind.Language}"
                         LabelText="{Binding LanguageLabel}"
                         PickerTitle="{Binding LanguagePickerTitle}"
                         ItemsSource="{Binding LanguageOptions}"
                         SelectedItem="{Binding Language}" />
                     <ui:SettingPickerRowView
+                        LabelKind="{x:Static converters:PreferenceLabelKind.Theme}"
                         LabelText="{Binding ThemeLabel}"
                         PickerTitle="{Binding ThemePickerTitle}"
                         ItemsSource="{Binding ThemeOptions}"
                         SelectedItem="{Binding Theme}" />
                     <ui:SettingPickerRowView
+                        LabelKind="{x:Static converters:PreferenceLabelKind.Color}"
                         LabelText="{Binding ColorLabel}"
                         PickerTitle="{Binding ColorPickerTitle}"
                         ItemsSource="{Binding ColorOptions}"
                         SelectedItem="{Binding Color}" />
                     <Label Text="{Binding ColorHelperText}" Style="{StaticResource CaptionStyle}" />
                     <ui:SettingPickerRowView
+                        LabelKind="{x:Static converters:PreferenceLabelKind.Form}"
                         LabelText="{Binding FormLabel}"
                         PickerTitle="{Binding FormPickerTitle}"
                         ItemsSource="{Binding FormOptions}"
@@ -52,11 +54,9 @@
 
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                 <VerticalStackLayout Spacing="8">
-                    <VerticalStackLayout.Behaviors>
-                        <behaviors:StaggerChildrenBehavior />
-                    </VerticalStackLayout.Behaviors>
                     <Label Text="{Binding FontSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
                     <ui:SettingPickerRowView
+                        LabelKind="{x:Static converters:PreferenceLabelKind.Size}"
                         LabelText="{Binding SizeLabel}"
                         PickerTitle="{Binding SizePickerTitle}"
                         ItemsSource="{Binding SizeOptions}"
