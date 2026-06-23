@@ -38,7 +38,7 @@
         <ShellContent
             x:Name="CleanerTab"
             Route="CleanerTab"
-            Title="{x:Static common:AppStrings.ShellTabCleanerShort}"
+            Title="{x:Static common:AppStrings.ShellTabMusicShort}"
             Icon="{mi:Material Icon=MenuBook}" />
 
         <ShellContent

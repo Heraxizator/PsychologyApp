@@ -234,7 +234,7 @@ Dead controls removed: `LocalFrame`, `LocalEditor`, `LocalEntry`, `ExtendedLabel
 
 
 
-## Tests module (`Views/Tests`, `ViewModels/Tests`, `Models/Tests`)
+## Tests module (`Pages/TestsList`, `Features/RunTests`, `Presentation.Core/Models/Tests`)
 
 
 
@@ -242,13 +242,13 @@ Dead controls removed: `LocalFrame`, `LocalEditor`, `LocalEntry`, `ExtendedLabel
 
 - `TestCatalogParser` + `TestDefinition` (Core) — pure JSON parsing; `CachedTestCatalogService` caches catalog per language and invalidates with `ContentCacheInvalidator`
 
-- `TestItemFactory` — maps `TestDefinition` to UI `TestItem` (navigation commands, question cloning)
+- `TestItemFactory` (`Entities/Test/`) — maps `TestDefinition` to UI `TestItem` (navigation commands, question cloning)
 
-- `TestScoreAnalyzers` / `TestScoreRecommendation` — scoring and technique recommendation by `analyzerId`
+- `TestScoreAnalyzers` / `TestScoreRecommendation` — scoring and technique recommendation by `analyzerId` (Core + Application)
 
-- `LuscherTestViewModel` + `LuscherColorGridView` — shared Lüscher UI (`LuscherMode.Standard` / `Brief`)
+- `LuscherTestViewModel` + `LuscherColorGridView` — shared Lüscher UI (`LuscherMode.Standard` / `Brief`) under `Pages/LuscherTest/`
 
-- `TestsListViewModel` — loads catalog via `ITestCatalogService`, enriches with `IUserProgressService`; `ITestsListViewModelFactory` + activator on `TestsListPage`
+- `TestsListViewModel` (`Pages/TestsList/`) — loads catalog via `ITestCatalogService`, enriches with `IUserProgressService`; `TestsListLoader` in `Features/RunTests/`; VM factory in `App/Providers/RunTestsViewModelFactories.cs`
 
 
 
