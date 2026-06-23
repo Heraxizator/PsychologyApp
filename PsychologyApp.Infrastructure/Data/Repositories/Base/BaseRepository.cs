@@ -10,29 +10,17 @@ using PsychologyApp.Infrastructure.Data.Sql;
 
 namespace PsychologyApp.Infrastructure.Data.Repositories.Base;
 
-public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class
+public abstract class BaseRepository<TEntity> : SqliteRepositoryBase, IRepository<TEntity> where TEntity : class
 {
-    private readonly IDbConnectionFactory _connectionFactory;
     private readonly EntitySqlMap _sql;
-    private readonly int _commandTimeoutSeconds;
 
     protected BaseRepository(
         IDbConnectionFactory connectionFactory,
         EntitySqlMap sql,
         IOptions<AppSettings> settings)
+        : base(connectionFactory, settings)
     {
-        _connectionFactory = connectionFactory;
         _sql = sql;
-        _commandTimeoutSeconds = settings.Value.DbCommandTimeoutSeconds > 0
-            ? settings.Value.DbCommandTimeoutSeconds
-            : 30;
-    }
-
-    protected async Task<SqliteConnection> OpenConnectionAsync(CancellationToken cancellationToken = default)
-    {
-        var connection = (SqliteConnection)await _connectionFactory.CreateOpenConnectionAsync(cancellationToken);
-        await SqliteSchema.ConfigureConnectionAsync(connection, cancellationToken);
-        return connection;
     }
 
     public async Task<long> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
@@ -46,12 +34,12 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEnti
                 _sql.InsertSql,
                 entity,
                 transaction,
-                _commandTimeoutSeconds,
+                CommandTimeoutSeconds,
                 cancellationToken));
             long id = await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
                 "SELECT last_insert_rowid();",
                 transaction: transaction,
-                commandTimeout: _commandTimeoutSeconds,
+                commandTimeout: CommandTimeoutSeconds,
                 cancellationToken: cancellationToken));
 
             await transaction.CommitAsync(cancellationToken);
@@ -70,7 +58,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEnti
         int affected = await connection.ExecuteAsync(DapperCommandFactory.Create(
             _sql.DeleteSql,
             entity,
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
 
         if (affected == 0)
@@ -87,7 +75,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEnti
         int affected = await connection.ExecuteAsync(DapperCommandFactory.Create(
             _sql.UpdateSql,
             entity,
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
 
         if (affected == 0)
@@ -104,7 +92,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity> where TEnti
         return await connection.QuerySingleOrDefaultAsync<TEntity>(DapperCommandFactory.Create(
             _sql.SelectByKeySql,
             new { id },
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
     }
 }

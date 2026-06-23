@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<tests:LuscherTestPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.AlternativeTest.AlternativeTestPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.LuscherTest"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:tests="clr-namespace:PsychologyApp.Presentation.Pages.LuscherTest"
+             xmlns:grid="clr-namespace:PsychologyApp.Presentation.Widgets.LuscherColorGrid"
+             x:DataType="vm:LuscherTestViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors">
+<StackLayout VerticalOptions="FillAndExpand">
+        <ui:NavigationBarSimpleView
+            TitleText="{Binding PageTitle}"
+            BackCommand="{Binding Finish}" />
+
+        <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
+            <StackLayout>
+
+                <StackLayout x:Name="StartSection" IsVisible="{Binding IsStart}">
+                    <StackLayout.Behaviors>
+                        <behaviors:RevealOnAppearingBehavior />
+                    </StackLayout.Behaviors>
+                    <StackLayout Margin="{StaticResource LayoutPageMarginThickness}">
+                        <Label
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding CurrentInstruction}"
+                            Style="{StaticResource SectionTitleStyle}" />
+                    </StackLayout>
+
+                    <grid:LuscherColorGridView />
+
+                </StackLayout>
+
+                <StackLayout
+                    x:Name="FinishSection"
+                    IsVisible="{Binding IsFinish}">
+                    <StackLayout.Behaviors>
+                        <behaviors:RevealOnAppearingBehavior />
+                    </StackLayout.Behaviors>
+
+                    <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+
+                        <Label
+                        Text="{Binding FirstColorLabel}"
+                        Style="{StaticResource SectionTitleStyle}"
+                        HorizontalOptions="Center"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"/>
+
+                        <BoxView 
+                        Margin="{StaticResource HorizontalGutterVerticalSpacingMargin}"
+                        HeightRequest="3"
+                        Color="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}"/>
+
+                        <StackLayout>
+                            <BoxView 
+                            Margin="10, 10, 10, 5"
+                            WidthRequest="200"
+                            HeightRequest="200"
+                            HorizontalOptions="Center"
+                            CornerRadius="30"
+                            Color="{Binding FirstColor}"
+                            Opacity="0.9"/>
+
+                            <Label 
+                            Text="{Binding FirstName}"
+                            Style="{StaticResource SectionTitleStyle}"
+                            HorizontalOptions="Center"/>
+                        </StackLayout>
+
+                        <BoxView 
+                        Margin="{StaticResource HorizontalGutterTopSpacingMargin}"
+                        HeightRequest="3"
+                        Color="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}"/>
+
+                        <Border Style="{StaticResource BrandCardStyle}">
+                            <Border.Behaviors>
+                                <behaviors:ListItemRevealBehavior />
+                            </Border.Behaviors>
+                            <Label Text="{Binding FirstResult}" Style="{StaticResource BodyStyle}" />
+                        </Border>
+
+                        <Label
+                        Text="{Binding SecondColorLabel}"
+                        Style="{StaticResource SectionTitleStyle}"
+                        HorizontalOptions="Center"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"/>
+
+                        <BoxView 
+                        Margin="{StaticResource HorizontalGutterVerticalSpacingMargin}"
+                        HeightRequest="3"
+                        Color="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}"/>
+
+                        <StackLayout>
+                            <BoxView 
+                            Margin="10, 10, 10, 5"
+                            WidthRequest="200"
+                            HeightRequest="200"
+                            HorizontalOptions="Center"
+                            CornerRadius="30"
+                            Color="{Binding SecondColor}"
+                            Opacity="0.9"/>
+
+                            <Label 
+                            Text="{Binding SecondName}"
+                            Style="{StaticResource SectionTitleStyle}"
+                            HorizontalOptions="Center"/>
+                        </StackLayout>
+
+                        <BoxView 
+                        Margin="{StaticResource HorizontalGutterTopSpacingMargin}"
+                        HeightRequest="3"
+                        Color="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}"/>
+
+                        <Border Style="{StaticResource BrandCardStyle}">
+                            <Border.Behaviors>
+                                <behaviors:ListItemRevealBehavior />
+                            </Border.Behaviors>
+                            <Label Text="{Binding SecondResult}" Style="{StaticResource BodyStyle}" />
+                        </Border>
+
+                        <ui:ButtonView
+                            BodyText="{Binding RestartButtonText}"
+                            TapCommand="{Binding Restart}" />
+
+                        <ui:ButtonView
+                            Variant="Secondary"
+                            BodyText="{Binding BackToListButtonText}"
+                            TapCommand="{Binding BackToListCommand}" />
+                    </StackLayout>
+
+                </StackLayout>
+
+            </StackLayout>
+        </ScrollView>
+        
+    </StackLayout>
+</tests:LuscherTestPageBase>

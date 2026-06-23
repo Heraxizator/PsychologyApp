@@ -1,12 +1,12 @@
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
-using PsychologyApp.Application.Services.UserProgress;
-using PsychologyApp.Presentation.Common;
+using PsychologyApp.Application.UserProgress;
+using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
-using PsychologyApp.Presentation.Services;
-using PsychologyApp.Presentation.Services.Dialogs;
-using PsychologyApp.Presentation.Services.Practice;
-using PsychologyApp.Presentation.ViewModels.Practice.Techniques;
+using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Shared.Services.Dialogs;
+using PsychologyApp.Presentation.Features.RunTechniqueSession;
+using PsychologyApp.Presentation.Pages.TechniqueSession;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

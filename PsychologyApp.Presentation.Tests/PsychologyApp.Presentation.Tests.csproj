@@ -1,10 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net10.0-android</TargetFramework>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <RootNamespace>PsychologyApp.Presentation.Tests</RootNamespace>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,197 +27,7 @@
     <ProjectReference Include="..\PsychologyApp.Application\PsychologyApp.Application.csproj" />
     <ProjectReference Include="..\PsychologyApp.Domain\PsychologyApp.Domain.csproj" />
     <ProjectReference Include="..\PsychologyApp.Presentation.Core\PsychologyApp.Presentation.Core.csproj" />
-    <ProjectReference Include="..\PsychologyApp.Testing\PsychologyApp.Testing.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="..\PsychologyApp.Presentation\Common\Infrastructure\AsyncCommand.cs" Link="AsyncCommand.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Infrastructure\AsyncCommandExtensions.cs" Link="AsyncCommandExtensions.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Preferences\UserPreferences.cs" Link="UserPreferences.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\PressFeedback\PressFeedbackTapScanner.cs" Link="PressFeedbackTapScanner.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\PressFeedback\PressFeedbackHost.cs" Link="PressFeedbackHost.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\PressFeedback\PressFeedbackOptions.cs" Link="PressFeedbackOptions.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\PressFeedback\VisualElementPressFeedback.cs" Link="VisualElementPressFeedback.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\PressFeedback\TemplatePressFeedback.cs" Link="TemplatePressFeedback.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Behaviors\PressFeedbackBehavior.cs" Link="PressFeedbackBehavior.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Animation\UiAnimations.cs" Link="UiAnimations.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Animation\PageAnimationHelper.cs" Link="PageAnimationHelper.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Animation\DynamicListReveal.cs" Link="DynamicListReveal.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Animation\ReduceMotion.cs" Link="ReduceMotion.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Animation\ReduceMotionDetector.cs" Link="ReduceMotionDetector.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Behaviors\ListItemRevealBehavior.cs" Link="ListItemRevealBehavior.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\BaseViewModel.cs" Link="BaseViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\BaseViewModel.Technique.cs" Link="BaseViewModel.Technique.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\BaseViewModel.LoadingState.cs" Link="BaseViewModel.LoadingState.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\BaseViewModel.LoadingState.Properties.cs" Link="BaseViewModel.LoadingState.Properties.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Review\FormViewModel.cs" Link="FormViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Review\FormViewModel.Labels.cs" Link="FormViewModel.Labels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Review\FormViewModel.Send.cs" Link="FormViewModel.Send.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Review\FormViewModel.Send.Channels.cs" Link="FormViewModel.Send.Channels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\QuestionViewModel.cs" Link="QuestionViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\QuestionViewModel.Labels.cs" Link="QuestionViewModel.Labels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\QuestionViewModel.Results.cs" Link="QuestionViewModel.Results.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\QuestionViewModel.Reload.cs" Link="QuestionViewModel.Reload.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\TestResultViewModel.cs" Link="TestResultViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\TestResultViewModel.Labels.cs" Link="TestResultViewModel.Labels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\TestResultViewModel.Recommendation.cs" Link="TestResultViewModel.Recommendation.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\TestResultViewModel.Commands.cs" Link="TestResultViewModel.Commands.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Models\Tests\TestHistoryEntryItem.cs" Link="TestHistoryEntryItem.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Models\Tests\TestResultInfo.cs" Link="TestResultInfo.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Clean\MusicPlayerViewModel.cs" Link="MusicPlayerViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Clean\MusicPlayerViewModel.Labels.cs" Link="MusicPlayerViewModel.Labels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Clean\MusicPlayerViewModel.Properties.cs" Link="MusicPlayerViewModel.Properties.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Clean\MusicPlayerViewModel.Playback.cs" Link="MusicPlayerViewModel.Playback.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Clean\MusicPlayerViewModel.Playback.Playlist.cs" Link="MusicPlayerViewModel.Playback.Playlist.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Clean\IAudioPlaybackService.cs" Link="IAudioPlaybackService.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Practice\TechniqueListBuilder.cs" Link="TechniqueListBuilder.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Practice\TechniquesListInitializer.cs" Link="TechniquesListInitializer.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Practice\TodayRecommendationResolver.cs" Link="TodayRecommendationResolver.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Practice\PracticeDashboardLoader.cs" Link="PracticeDashboardLoader.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Profile\ProfileStatsLoader.cs" Link="ProfileStatsLoader.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Profile\UserProfileRefreshCoordinator.cs" Link="UserProfileRefreshCoordinator.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Profile\ProfileFeaturedTechniquesBuilder.cs" Link="ProfileFeaturedTechniquesBuilder.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Profile\ProfilePracticeHistoryLoader.cs" Link="ProfilePracticeHistoryLoader.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Models\Profile\PracticeHistoryItem.cs" Link="PracticeHistoryItem.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\PracticeHistoryFormatter.cs" Link="PracticeHistoryFormatter.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Preferences\SettingsPreferencesPresenter.cs" Link="SettingsPreferencesPresenter.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\UI\Converters\PreferenceLabelKind.cs" Link="PreferenceLabelKind.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\UI\Converters\PreferenceLabelConverter.cs" Link="PreferenceLabelConverter.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Profile\SettingsViewModel.cs" Link="SettingsViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Profile\SettingsViewModel.Labels.cs" Link="SettingsViewModel.Labels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Profile\SettingsViewModel.Properties.cs" Link="SettingsViewModel.Properties.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Profile\SettingsViewModel.Collections.cs" Link="SettingsViewModel.Collections.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Profile\SettingsViewModel.Apply.cs" Link="SettingsViewModel.Apply.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Profile\UserViewModel.cs" Link="UserViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Profile\UserViewModel.Labels.cs" Link="UserViewModel.Labels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Profile\UserViewModel.Quotes.cs" Link="UserViewModel.Quotes.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Profile\UserViewModel.Refresh.cs" Link="UserViewModel.Refresh.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Profile\UserViewModel.Commands.cs" Link="UserViewModel.Commands.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Profile\UserViewModel.Collections.cs" Link="UserViewModel.Collections.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Profile\UserViewModel.Stats.cs" Link="UserViewModel.Stats.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Clean\MusicPlaylistViewApplier.cs" Link="MusicPlaylistViewApplier.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\TechniquesViewModel.cs" Link="TechniquesViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\TechniquesViewModel.Labels.cs" Link="TechniquesViewModel.Labels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\TechniquesViewModel.Dashboard.cs" Link="TechniquesViewModel.Dashboard.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\TechniquesViewModel.Dashboard.Properties.cs" Link="TechniquesViewModel.Dashboard.Properties.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\TechniquesViewModel.Init.cs" Link="TechniquesViewModel.Init.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\TechniquesViewModel.Messenger.cs" Link="TechniquesViewModel.Messenger.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\TechniquesViewModel.Commands.cs" Link="TechniquesViewModel.Commands.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\TechniquesViewModel.Collections.cs" Link="TechniquesViewModel.Collections.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Profile\ProfileQuotesPresenter.cs" Link="ProfileQuotesPresenter.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Profile\ProfileQuotesLoader.cs" Link="ProfileQuotesLoader.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Clean\MusicPlaybackPresenter.cs" Link="MusicPlaybackPresenter.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Quotes\QuoteItemCommandsFactory.cs" Link="QuoteItemCommandsFactory.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Physics\PhysicsSearchSession.cs" Link="PhysicsSearchSession.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Physics\PhysicsReasonItemFactory.cs" Link="PhysicsReasonItemFactory.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Physics\PhysicsSearchUiBinder.cs" Link="PhysicsSearchUiBinder.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Practice\TechniqueDashboardApplier.cs" Link="TechniqueDashboardApplier.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Practice\DesignerTechniqueOperations.cs" Link="DesignerTechniqueOperations.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Practice\TechniqueSessionCompletionService.cs" Link="TechniqueSessionCompletionService.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Practice\ListTechniqueSessionHelper.cs" Link="ListTechniqueSessionHelper.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Practice\EntryDraftCoordinator.cs" Link="EntryDraftCoordinator.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Practice\CustomTechniqueSessionOperations.cs" Link="CustomTechniqueSessionOperations.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Practice\ListSessionDraftCoordinator.cs" Link="ListSessionDraftCoordinator.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Tests\TestRetakeOperations.cs" Link="TestRetakeOperations.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Tests\TestHistoryLoader.cs" Link="TestHistoryLoader.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Tests\TestsListLoader.cs" Link="TestsListLoader.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Tests\QuestionnaireSubmissionService.cs" Link="QuestionnaireSubmissionService.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Tests\LuscherTestSubmissionService.cs" Link="LuscherTestSubmissionService.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Tests\FindProblemContentLoader.cs" Link="FindProblemContentLoader.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Preferences\SessionDraftStore.cs" Link="SessionDraftStore.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\PracticeCompletionNavigator.cs" Link="PracticeCompletionNavigator.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Preferences\OnboardingRecommendation.cs" Link="OnboardingRecommendation.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Onboarding\OnboardingViewModel.cs" Link="OnboardingViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Onboarding\OnboardingViewModel.Labels.cs" Link="OnboardingViewModel.Labels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Onboarding\OnboardingViewModel.Flow.cs" Link="OnboardingViewModel.Flow.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Onboarding\OnboardingViewModel.Steps.cs" Link="OnboardingViewModel.Steps.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\TestHistoryViewModel.cs" Link="TestHistoryViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\TestHistoryViewModel.Labels.cs" Link="TestHistoryViewModel.Labels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\TestHistoryViewModel.Load.cs" Link="TestHistoryViewModel.Load.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\Constructor\DesignerViewModel.cs" Link="DesignerViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\Constructor\DesignerViewModel.Labels.cs" Link="DesignerViewModel.Labels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\Constructor\DesignerViewModel.Fields.cs" Link="DesignerViewModel.Fields.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\Constructor\DesignerViewModel.Init.cs" Link="DesignerViewModel.Init.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\Constructor\DesignerViewModel.Save.cs" Link="DesignerViewModel.Save.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\Constructor\CreatedViewModel.cs" Link="CreatedViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\Constructor\CreatedViewModel.Labels.cs" Link="CreatedViewModel.Labels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\Constructor\CreatedViewModel.Session.cs" Link="CreatedViewModel.Session.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\Constructor\CreatedViewModel.Commands.cs" Link="CreatedViewModel.Commands.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Practice\TechniqueMessage.cs" Link="TechniqueMessage.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Practice\ITechniqueMessenger.cs" Link="ITechniqueMessenger.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\NavigationCoordinator.cs" Link="NavigationCoordinator.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Models\Practice\TechniqueItem.cs" Link="TechniqueItem.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Models\Practice\TechniqueGroup.cs" Link="TechniqueGroup.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Models\Clean\MusicPlaylist.cs" Link="MusicPlaylist.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Models\Clean\PrayerCatalog.cs" Link="PrayerCatalog.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Models\Common\FilterChipTabItem.cs" Link="FilterChipTabItem.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Models\Clean\Audio.cs" Link="Audio.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Infrastructure\IDatabaseReadySignal.cs" Link="IDatabaseReadySignal.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Preferences\IUserPreferencesStore.cs" Link="IUserPreferencesStore.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Clean\MusicPlaylistPresenter.cs" Link="MusicPlaylistPresenter.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Quotes\QuoteFeedCoordinator.cs" Link="QuoteFeedCoordinator.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Physics\PhysicsSearchUiState.cs" Link="PhysicsSearchUiState.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Physics\PhysicsSearchCoordinator.cs" Link="PhysicsSearchCoordinator.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Physics\PhysicsSearchViewModel.cs" Link="PhysicsSearchViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Physics\PhysicsSearchViewModel.Labels.cs" Link="PhysicsSearchViewModel.Labels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Physics\PhysicsSearchViewModel.Init.cs" Link="PhysicsSearchViewModel.Init.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Physics\PhysicsSearchViewModel.Search.cs" Link="PhysicsSearchViewModel.Search.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Physics\PhysicsSearchViewModel.State.cs" Link="PhysicsSearchViewModel.State.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Physics\PhysicsSearchViewModel.Properties.cs" Link="PhysicsSearchViewModel.Properties.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\Techniques\PolarityViewModel.cs" Link="PolarityViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\Techniques\PolarityViewModel.Labels.cs" Link="PolarityViewModel.Labels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\Techniques\PolarityViewModel.Fields.cs" Link="PolarityViewModel.Fields.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\Techniques\PolarityViewModel.Session.cs" Link="PolarityViewModel.Session.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\Techniques\PaperListViewModel.cs" Link="PaperListViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\Techniques\PaperListViewModel.Labels.cs" Link="PaperListViewModel.Labels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\Techniques\PaperListViewModel.Fields.cs" Link="PaperListViewModel.Fields.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\Techniques\PaperListViewModel.Session.cs" Link="PaperListViewModel.Session.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\Techniques\TechniqueSessionViewModel.cs" Link="TechniqueSessionViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Practice\Techniques\TechniqueSessionViewModel.Session.cs" Link="TechniqueSessionViewModel.Session.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Models\Physics\PhysicsReasonItem.cs" Link="PhysicsReasonItem.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Formatting\SearchTextHighlighter.cs" Link="SearchTextHighlighter.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Infrastructure\MusicAudioCache.cs" Link="MusicAudioCache.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\FindProblemViewModel.cs" Link="FindProblemViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\FindProblemViewModel.Labels.cs" Link="FindProblemViewModel.Labels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\FindProblemViewModel.Content.cs" Link="FindProblemViewModel.Content.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Models\Tests\AlgorithmRow.cs" Link="AlgorithmRow.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Localization\ContentAssets.cs" Link="ContentAssets.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Localization\LanguageContentReloader.cs" Link="LanguageContentReloader.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Models\Tests\TestItem.cs" Link="TestItem.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Models\Tests\TestItemFactory.cs" Link="TestItemFactory.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Tests\ITestCatalogService.cs" Link="ITestCatalogService.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Tests\TestCatalogService.cs" Link="TestCatalogService.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Tests\CachedTestCatalogService.cs" Link="CachedTestCatalogService.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\TestsListViewModel.cs" Link="TestsListViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\TestsListViewModel.Labels.cs" Link="TestsListViewModel.Labels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\TestsListViewModel.Load.cs" Link="TestsListViewModel.Load.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\LuscherTestViewModel.cs" Link="LuscherTestViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\LuscherTestViewModel.Labels.cs" Link="LuscherTestViewModel.Labels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\LuscherTestViewModel.Init.cs" Link="LuscherTestViewModel.Init.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\LuscherTestViewModel.Results.Labels.cs" Link="LuscherTestViewModel.Results.Labels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\LuscherTestViewModel.Results.Scoring.cs" Link="LuscherTestViewModel.Results.Scoring.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\BaseTestViewModel.cs" Link="BaseTestViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\BaseTestViewModel.Handlers.cs" Link="BaseTestViewModel.Handlers.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\BaseTestViewModel.Results.Properties.cs" Link="BaseTestViewModel.Results.Properties.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\BaseTestViewModel.Results.Colors.cs" Link="BaseTestViewModel.Results.Colors.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\BaseTestViewModel.ColorVisibility.Properties.cs" Link="BaseTestViewModel.ColorVisibility.Properties.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Localization\LuscherStrings.cs" Link="LuscherStrings.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Localization\ColourStrings.cs" Link="ColourStrings.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Tests\FindProblemViewModel.Reload.cs" Link="FindProblemViewModel.Reload.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Dialogs\IDialogService.cs" Link="IDialogService.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Toasts\IToastService.cs" Link="IToastService.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Motivator\QuoteViewModel.cs" Link="QuoteViewModel.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Motivator\QuoteViewModel.Labels.cs" Link="QuoteViewModel.Labels.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Motivator\QuoteViewModel.Feed.cs" Link="QuoteViewModel.Feed.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Motivator\QuoteViewModel.Init.cs" Link="QuoteViewModel.Init.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Motivator\QuoteViewModel.Init.Load.cs" Link="QuoteViewModel.Init.Load.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\ViewModels\Motivator\QuoteViewModel.Properties.cs" Link="QuoteViewModel.Properties.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Quotes\QuoteFeedLoader.cs" Link="QuoteFeedLoader.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Models\Profile\QuoteItem.cs" Link="QuoteItem.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Services\Quotes\IQuotesChangeNotifier.cs" Link="IQuotesChangeNotifier.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Infrastructure\OperationCancellation.cs" Link="OperationCancellation.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Formatting\QuoteShareFormatter.cs" Link="QuoteShareFormatter.cs" />
-    <Compile Include="..\PsychologyApp.Presentation\Common\Infrastructure\UiThread.cs" Link="UiThread.cs" />
+    <ProjectReference Include="..\PsychologyApp.Presentation\PsychologyApp.Presentation.csproj" />
   </ItemGroup>
 
 </Project>

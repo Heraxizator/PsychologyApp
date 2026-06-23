@@ -2,12 +2,11 @@ using Microsoft.Extensions.DependencyInjection;
 using PsychologyApp.Application.Abstractions.Analytics;
 using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Abstractions.Startup;
-using PsychologyApp.Application.Services.QuotService;
-using PsychologyApp.Application.Services.ReasonSearch;
-using PsychologyApp.Application.Services.ReasonService;
-using PsychologyApp.Application.Services.Statistic;
-using PsychologyApp.Application.Services.TechniqueService;
-using PsychologyApp.Application.Services.UserProgress;
+using PsychologyApp.Application.Quot;
+using PsychologyApp.Application.Reason;
+using PsychologyApp.Application.Statistic;
+using PsychologyApp.Application.Technique;
+using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Application.Startup;
 using PsychologyApp.Application.Analytics;
 
@@ -39,7 +38,6 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<ITechniqueService, TechniqueService>();
         services.AddSingleton<IQuotService, QuotService>();
-        services.AddSingleton<IReasonService, ReasonService>();
         services.AddSingleton<IReasonSearchService, ReasonSearchService>();
         services.AddSingleton(TimeProvider.System);
         services.AddSingleton<IStatisticService, StatisticService>();

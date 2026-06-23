@@ -1,10 +1,10 @@
 using Moq;
-using PsychologyApp.Application.Services.UserProgress;
-using PsychologyApp.Presentation.Models.Tests;
-using PsychologyApp.Presentation.Services.Dialogs;
-using PsychologyApp.Presentation.Services.Tests;
-using PsychologyApp.Presentation.Services.Toasts;
-using PsychologyApp.Presentation.ViewModels.Tests;
+using PsychologyApp.Application.UserProgress;
+using PsychologyApp.Presentation.Entities.Test;
+using PsychologyApp.Presentation.Shared.Services.Dialogs;
+using PsychologyApp.Presentation.Features.RunTests;
+using PsychologyApp.Presentation.Shared.Services.Toasts;
+using PsychologyApp.Presentation.Pages.TestsList;
 using System.Reflection;
 using Xunit;
 

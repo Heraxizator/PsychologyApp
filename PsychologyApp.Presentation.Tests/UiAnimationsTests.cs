@@ -1,4 +1,4 @@
-using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Shared.Common;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
@@ -8,16 +8,19 @@ public class UiAnimationsTests
     [Fact]
     public void Constants_MatchUiKitDurations()
     {
-        Assert.Equal(200u, UiAnimations.MicroDuration);
-        Assert.Equal(300u, UiAnimations.MediumDuration);
+        Assert.Equal(260u, UiAnimations.MicroDuration);
+        Assert.Equal(320u, UiAnimations.MediumDuration);
         Assert.Equal(120u, UiAnimations.FastDuration);
-        Assert.Equal(50u, UiAnimations.StaggerDelay);
-        Assert.Equal(0.96, UiAnimations.PressScale);
-        Assert.Equal(0.96, UiAnimations.PressScalePrimary);
+        Assert.Equal(40u, UiAnimations.StaggerDelay);
+        Assert.Equal(0.97, UiAnimations.PressScale);
+        Assert.Equal(0.97, UiAnimations.PressScalePrimary);
         Assert.Equal(0.98, UiAnimations.PressScaleSecondary);
         Assert.Equal(1.04, UiAnimations.PulseScaleTo);
-        Assert.Equal(14, UiAnimations.SlideOffset);
+        Assert.Equal(11, UiAnimations.SlideOffset);
         Assert.Equal(10, UiAnimations.StaggerCap);
+        Assert.Equal(200u, UiAnimations.ListRevealDuration);
+        Assert.Equal(150u, UiAnimations.InputFocusDuration);
+        Assert.Equal(12, UiAnimations.MaxConcurrentListReveals);
     }
 
     [Fact]
@@ -30,7 +33,7 @@ public class UiAnimationsTests
     public void ComputeRevealDelay_IsBoundedByCap()
     {
         int delay = UiAnimations.ComputeRevealDelay(99, cap: 10);
-        Assert.Equal(9 * (int)UiAnimations.StaggerDelay, delay);
+        Assert.Equal((int)(UiAnimations.StaggerDelay * Math.Sqrt(9)), delay);
     }
 
     [Fact]
@@ -45,6 +48,18 @@ public class UiAnimationsTests
     public void ComputeRevealDelay_WithNegativeIndex_ReturnsZero()
     {
         Assert.Equal(0, UiAnimations.ComputeRevealDelay(-1));
+    }
+
+    [Fact]
+    public void ComputeRevealDelay_UsesEaseOutStagger()
+    {
+        int linearSecond = (int)UiAnimations.StaggerDelay;
+        int easedSecond = UiAnimations.ComputeRevealDelay(1);
+        Assert.Equal(linearSecond, easedSecond);
+
+        int linearFourth = 3 * (int)UiAnimations.StaggerDelay;
+        int easedFourth = UiAnimations.ComputeRevealDelay(3);
+        Assert.True(easedFourth < linearFourth);
     }
 
     [Fact]

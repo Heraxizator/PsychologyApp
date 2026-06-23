@@ -1,5 +1,5 @@
 using System.Collections.Concurrent;
-using PsychologyApp.Presentation.Abstractions;
+using PsychologyApp.Presentation.Shared.Abstractions;
 
 namespace PsychologyApp.Testing.Tests;
 

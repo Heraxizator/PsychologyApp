@@ -1,7 +1,7 @@
-﻿using ObjCRuntime;
+using ObjCRuntime;
 using UIKit;
 
-namespace PsychologyApp.Presentation;
+namespace PsychologyApp.Presentation.App;
 
 public class Program
 {

@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Widgets.LuscherColorGrid.LuscherColorGridView">
+    <StackLayout Margin="{StaticResource LuscherColorGridMargin}">
+        <BoxView
+            Margin="30, 0, 30, 5"
+            HeightRequest="3"
+            Color="{DynamicResource Primary}" />
+
+        <FlexLayout JustifyContent="Center">
+            <BoxView
+                IsVisible="{Binding IsRed}"
+                Margin="10"
+                WidthRequest="100"
+                HeightRequest="100"
+                CornerRadius="15"
+                Color="Red"
+                Opacity="0.9">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding RedHandler}" />
+                </BoxView.GestureRecognizers>
+            </BoxView>
+
+            <BoxView
+                IsVisible="{Binding IsBrown}"
+                Margin="10"
+                WidthRequest="100"
+                HeightRequest="100"
+                CornerRadius="15"
+                Color="Brown"
+                Opacity="0.9">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BrownHandler}" />
+                </BoxView.GestureRecognizers>
+            </BoxView>
+
+            <BoxView
+                IsVisible="{Binding IsYellow}"
+                Margin="10"
+                WidthRequest="100"
+                HeightRequest="100"
+                CornerRadius="15"
+                Color="Yellow"
+                Opacity="0.9">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding YellowHandler}" />
+                </BoxView.GestureRecognizers>
+            </BoxView>
+        </FlexLayout>
+
+        <FlexLayout Margin="10, 0, 10, 0" JustifyContent="Center">
+            <BoxView
+                IsVisible="{Binding IsGreen}"
+                Margin="10"
+                WidthRequest="100"
+                HeightRequest="100"
+                CornerRadius="15"
+                Color="Green"
+                Opacity="0.9">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GreenHandler}" />
+                </BoxView.GestureRecognizers>
+            </BoxView>
+
+            <BoxView
+                IsVisible="{Binding IsBlue}"
+                Margin="10"
+                WidthRequest="100"
+                HeightRequest="100"
+                CornerRadius="15"
+                Color="Blue"
+                Opacity="0.9">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BlueHandler}" />
+                </BoxView.GestureRecognizers>
+            </BoxView>
+
+            <BoxView
+                IsVisible="{Binding IsPurple}"
+                Margin="10"
+                WidthRequest="100"
+                HeightRequest="100"
+                CornerRadius="15"
+                Color="Purple"
+                Opacity="0.9">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding PurpleHandler}" />
+                </BoxView.GestureRecognizers>
+            </BoxView>
+        </FlexLayout>
+
+        <FlexLayout JustifyContent="Center">
+            <BoxView
+                IsVisible="{Binding IsGray}"
+                Margin="10"
+                WidthRequest="100"
+                HeightRequest="100"
+                CornerRadius="15"
+                Color="Gray"
+                Opacity="0.9">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GrayHandler}" />
+                </BoxView.GestureRecognizers>
+            </BoxView>
+
+            <BoxView
+                IsVisible="{Binding IsBlack}"
+                Margin="10"
+                WidthRequest="100"
+                HeightRequest="100"
+                CornerRadius="15"
+                Color="Black"
+                Opacity="0.9">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BlackHandler}" />
+                </BoxView.GestureRecognizers>
+            </BoxView>
+        </FlexLayout>
+
+        <BoxView
+            Margin="30, 10, 30, 0"
+            HeightRequest="3"
+            Color="{DynamicResource Primary}" />
+    </StackLayout>
+</ContentView>

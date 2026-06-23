@@ -1,10 +1,10 @@
 using Moq;
-using PsychologyApp.Application.Services.UserProgress;
+using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Core.Common;
-using PsychologyApp.Presentation.Services;
-using PsychologyApp.Presentation.Services.Preferences;
-using PsychologyApp.Presentation.Services.Profile;
-using PsychologyApp.Presentation.ViewModels.Onboarding;
+using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Shared.Services.Preferences;
+using PsychologyApp.Presentation.Features.ManageProfile;
+using PsychologyApp.Presentation.Pages.Onboarding;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

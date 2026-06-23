@@ -1,6 +1,6 @@
 using Moq;
 using PsychologyApp.Application.Abstractions.Persistence;
-using PsychologyApp.Application.Services.TechniqueService;
+using PsychologyApp.Application.Technique;
 using DomainTechnique = PsychologyApp.Domain.Entities.Technique;
 using Xunit;
 

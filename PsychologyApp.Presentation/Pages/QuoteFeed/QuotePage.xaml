@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.QuoteFeed.QuotePage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.QuoteFeed"
+             xmlns:quotes="clr-namespace:PsychologyApp.Presentation.Entities.Quote"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:quoteCard="clr-namespace:PsychologyApp.Presentation.Widgets.QuoteCard"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:DataType="vm:QuoteViewModel"
+             Shell.NavBarIsVisible="True"
+             x:Name="page"
+             Title="{Binding PageTitle}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{Binding QuotesRefreshButton}" Command="{Binding Reload}" />
+    </ContentPage.ToolbarItems>
+
+    <Grid
+        VerticalOptions="FillAndExpand"
+        Margin="{StaticResource LayoutTabPageMarginThickness}"
+        RowDefinitions="Auto,*">
+        <ui:FilterChipTabBarView
+            Grid.Row="0"
+            Margin="0,0,0,8"
+            ItemsSource="{Binding FeedFilters}"
+            TapCommand="{Binding SelectFeedCommand}" />
+
+        <RefreshView
+            x:Name="QuotesRefresh"
+            Grid.Row="1"
+            Refreshing="OnPullToRefresh">
+            <Grid>
+                <CollectionView
+                    x:Name="QuotesCollectionView"
+                    IsVisible="{Binding IsDone}"
+                    HorizontalScrollBarVisibility="Never"
+                    VerticalScrollBarVisibility="Never"
+                    VerticalOptions="FillAndExpand"
+                    RemainingItemsThreshold="2"
+                    RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
+                    ItemsSource="{Binding QuotesObservableCollection}">
+
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout
+                            Orientation="Vertical"
+                            ItemSpacing="{StaticResource ListItemSpacing}" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="quotes:QuoteItem">
+                            <quoteCard:QuoteCardView
+                                Text="{Binding Text}"
+                                Author="{Binding Author}"
+                                IsFavourite="{Binding IsFavourite, Mode=TwoWay}"
+                                LikeCommand="{Binding LikeCommand}"
+                                CopyCommand="{Binding CopyCommand}"
+                                ShareCommand="{Binding ShareCommand}">
+                                <quoteCard:QuoteCardView.Behaviors>
+                                    <behaviors:ListItemRevealBehavior />
+                                </quoteCard:QuoteCardView.Behaviors>
+                            </quoteCard:QuoteCardView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                    <CollectionView.EmptyView>
+                        <VerticalStackLayout Padding="{StaticResource LayoutEmptyPaddingThickness}" HorizontalOptions="Center" VerticalOptions="Center" Spacing="12">
+                            <Label HorizontalTextAlignment="Center" Style="{StaticResource SectionTitleStyle}" Text="{Binding QuotesEmptyTitle}" />
+                            <Label HorizontalTextAlignment="Center" Style="{StaticResource BodyStyle}" Text="{Binding QuotesEmptyBody}" />
+                            <ui:ButtonView
+                                IsCompact="True"
+                                BodyText="{Binding QuotesRefreshButton}"
+                                TapCommand="{Binding Reload}" />
+                        </VerticalStackLayout>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+
+                <VerticalStackLayout
+                    IsVisible="{Binding ShowAllReadEmpty}"
+                    Padding="{StaticResource LayoutEmptyPaddingThickness}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Spacing="12">
+                    <Label HorizontalTextAlignment="Center" Style="{StaticResource SectionTitleStyle}" Text="{Binding AllReadTitle}" />
+                    <Label HorizontalTextAlignment="Center" Style="{StaticResource BodyStyle}" Text="{Binding AllReadBody}" />
+                    <ui:ButtonView
+                        IsCompact="True"
+                        BodyText="{Binding ShowFavoritesButtonText}"
+                        TapCommand="{Binding ShowFavoritesCommand}" />
+                </VerticalStackLayout>
+
+                <ui:ProgressBarView
+                    x:Name="LoadingProgress"
+                    IsVisible="{Binding IsLoadingOverlayVisible}"
+                    IsLoading="{Binding IsLoadingOverlayVisible}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    ProgressText="{Binding QuotesLoadingText}" />
+            </Grid>
+        </RefreshView>
+
+        <ui:RetryView
+            Grid.Row="1"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsFail}"
+            FailedText="{Binding LoadErrorText}"
+            RetryText="{Binding RetryText}"
+            RetryCommand="{Binding Reload}" />
+    </Grid>
+
+</ContentPage>

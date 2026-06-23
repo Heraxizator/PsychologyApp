@@ -1,7 +1,7 @@
 using Moq;
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Models;
-using PsychologyApp.Application.Services.Statistic;
+using PsychologyApp.Application.Statistic;
 using DomainStatistic = PsychologyApp.Domain.Entities.Statistic;
 using Xunit;
 

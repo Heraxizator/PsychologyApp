@@ -1,5 +1,5 @@
-using PsychologyApp.Presentation.Models.Tests;
-using PsychologyApp.Presentation.Services.Tests;
+using PsychologyApp.Presentation.Entities.Test;
+using PsychologyApp.Presentation.Features.RunTests;
 
 namespace PsychologyApp.Presentation.Tests;
 

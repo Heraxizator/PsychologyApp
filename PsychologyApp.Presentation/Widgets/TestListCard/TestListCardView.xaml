@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             x:Class="PsychologyApp.Presentation.Widgets.TestListCard.TestListCardView">
+
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <Border Style="{StaticResource TestListCardStyle}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
+                        <Label
+                            Text="{TemplateBinding Title}"
+                            Style="{StaticResource ListRowTitleStyle}"
+                            MaxLines="2"
+                            LineBreakMode="TailTruncation" />
+                        <Label
+                            Text="{TemplateBinding Subtitle}"
+                            Style="{StaticResource CaptionStyle}"
+                            MaxLines="2"
+                            LineBreakMode="TailTruncation" />
+                        <Label
+                            IsVisible="{TemplateBinding HasMetaText}"
+                            Text="{TemplateBinding MetaText}"
+                            Style="{StaticResource CaptionStyle}"
+                            FontFamily="{StaticResource SemiBoldFontFamily}"
+                            TextColor="{DynamicResource Primary}"
+                            MaxLines="1"
+                            LineBreakMode="TailTruncation" />
+                        <Grid ColumnDefinitions="*,Auto" IsVisible="{TemplateBinding HasLastResult}">
+                            <Label
+                                Grid.Column="0"
+                                Text="{TemplateBinding LastResultText}"
+                                Style="{StaticResource CaptionStyle}"
+                                FontFamily="{StaticResource MediumFontFamily}"
+                                TextColor="{DynamicResource Primary}"
+                                MaxLines="1"
+                                LineBreakMode="TailTruncation">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{TemplateBinding OpenHistoryCommand}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Label
+                                Grid.Column="1"
+                                IsVisible="{TemplateBinding HasMultipleResults}"
+                                Text="{TemplateBinding HistoryLabel}"
+                                Style="{StaticResource CaptionStyle}"
+                                TextColor="{DynamicResource Primary}"
+                                FontFamily="{StaticResource SemiBoldFontFamily}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{TemplateBinding OpenHistoryCommand}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+                    </VerticalStackLayout>
+                    <Label
+                        Grid.Column="1"
+                        VerticalOptions="Center"
+                        TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                        Text="{mi:Material Icon=KeyboardArrowRight}" />
+                </Grid>
+            </Border>
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+
+</ContentView>

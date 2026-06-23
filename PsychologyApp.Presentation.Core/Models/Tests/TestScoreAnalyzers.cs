@@ -1,5 +1,4 @@
-using PsychologyApp.Application.Models;
-using PsychologyApp.Application.TestScoring;
+using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Common;
 
 namespace PsychologyApp.Presentation.Models.Tests;
@@ -59,7 +58,4 @@ public static class TestScoreAnalyzers
         "swls" => AppStrings.TestRecommendationReasonSwls(score),
         _ => null
     };
-
-    public static TechniqueId? RecommendTechnique(string? analyzerId, int score) =>
-        TestScoreRecommendation.RecommendTechnique(analyzerId, score);
 }

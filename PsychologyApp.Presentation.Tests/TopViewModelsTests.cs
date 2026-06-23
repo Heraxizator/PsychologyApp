@@ -4,23 +4,23 @@ using Moq;
 using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
-using PsychologyApp.Application.Services.QuotService;
-using PsychologyApp.Application.Services.TechniqueService;
-using PsychologyApp.Application.Services.UserProgress;
-using PsychologyApp.Presentation.Common;
-using PsychologyApp.Presentation.Common.Infrastructure;
+using PsychologyApp.Application.Quot;
+using PsychologyApp.Application.Technique;
+using PsychologyApp.Application.UserProgress;
+using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Core.Common;
-using PsychologyApp.Presentation.Models.Profile;
-using PsychologyApp.Presentation.Services;
-using PsychologyApp.Presentation.Services.Dialogs;
-using PsychologyApp.Presentation.Services.Preferences;
-using PsychologyApp.Presentation.Services.Practice;
-using PsychologyApp.Presentation.Services.Profile;
-using PsychologyApp.Presentation.Services.Quotes;
-using PsychologyApp.Presentation.Services.Tests;
-using PsychologyApp.Presentation.Services.Toasts;
-using PsychologyApp.Presentation.ViewModels.Practice;
-using PsychologyApp.Presentation.ViewModels.Profile;
+using PsychologyApp.Presentation.Entities.Profile;
+using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Shared.Services.Dialogs;
+using PsychologyApp.Presentation.Shared.Services.Preferences;
+using PsychologyApp.Presentation.Features.RunTechniqueSession;
+using PsychologyApp.Presentation.Features.ManageProfile;
+using PsychologyApp.Presentation.Features.ManageQuotes;
+using PsychologyApp.Presentation.Features.RunTests;
+using PsychologyApp.Presentation.Shared.Services.Toasts;
+using PsychologyApp.Presentation.Pages.Techniques;
+using PsychologyApp.Presentation.Pages.ProfileUser;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
@@ -126,15 +126,8 @@ public sealed class SettingsPreferencesPresenterTests
 }
 
 [Collection("Localization")]
-public sealed class SettingsViewModelTests : IDisposable
+public sealed class SettingsViewModelTests
 {
-    public SettingsViewModelTests()
-    {
-        UserPreferences.UseInMemoryStorage();
-    }
-
-    public void Dispose() => UserPreferences.ResetInMemoryStorage();
-
     [Fact]
     public async Task ReplayOnboardingCommand_ResetsOnboardingAndNavigates()
     {
@@ -258,10 +251,12 @@ public sealed class SettingsViewModelTests : IDisposable
     }
 }
 
+[Collection("Localization")]
 public sealed class UserViewModelTests
 {
     public UserViewModelTests()
     {
+        UserPreferences.UseInMemoryStorage();
         AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
     }
 
@@ -502,10 +497,10 @@ file static class TopViewModelTestHelpers
     public static LanguageContentReloader CreateLanguageReloader(IQuotService quotService) =>
         new(
             quotService,
-            new PsychologyApp.Application.Services.ReasonService.CachedReasonContentProvider(
+            new PsychologyApp.Application.Reason.CachedReasonContentProvider(
                 Mock.Of<PsychologyApp.Application.Abstractions.Integration.IReasonContentProvider>()),
             new CachedQuotContentProvider(Mock.Of<IQuotContentProvider>()),
             new CachedTestCatalogService(
-                new TestCatalogService(Mock.Of<PsychologyApp.Presentation.Abstractions.ITestAssetReader>(), NullLogger<TestCatalogService>.Instance),
+                new TestCatalogService(Mock.Of<PsychologyApp.Presentation.Shared.Abstractions.ITestAssetReader>(), NullLogger<TestCatalogService>.Instance),
                 NullLogger<CachedTestCatalogService>.Instance));
 }

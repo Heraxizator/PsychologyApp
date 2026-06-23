@@ -1,6 +1,6 @@
 using PsychologyApp.Application.Models;
 
-namespace PsychologyApp.Application.Services.Statistic;
+namespace PsychologyApp.Application.Statistic;
 
 public interface IStatisticService
 {

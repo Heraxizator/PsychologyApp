@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using PsychologyApp.Application.Services.UserProgress;
+using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Testing.Data;
 using Xunit;
 

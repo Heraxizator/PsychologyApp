@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.ReviewForm.FormPage"
+             xmlns:reviewForm="clr-namespace:PsychologyApp.Presentation.Features.SendReviewForm"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:DataType="reviewForm:FormViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}">
+    <ScrollView VerticalScrollBarVisibility="Never">
+        <VerticalStackLayout
+            Margin="{StaticResource LayoutPageMarginThickness}"
+            Spacing="{StaticResource LayoutSpacing}">
+            <VerticalStackLayout.Behaviors>
+                <behaviors:StaggerChildrenBehavior />
+            </VerticalStackLayout.Behaviors>
+
+            <ui:TextBoxView
+                HeaderText="{Binding ExplanationHeader}"
+                BodyText="{Binding ExplanationBody}" />
+
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding FormSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <ui:TextEditorView
+                        Variant="Plain"
+                        PlaceholderText="{Binding MessagePlaceholder}"
+                        BodyText="{Binding MessageText}"
+                        TitleText="{Binding MessageFieldLabel}" />
+                    <ui:ButtonView
+                        BodyText="{Binding SendButtonText}"
+                        TapCommand="{Binding Send}" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,9 +1,9 @@
-using System.Reflection;
+﻿using System.Reflection;
 using Moq;
-using PsychologyApp.Presentation.ViewModels;
-using PsychologyApp.Presentation.Models.Tests;
-using PsychologyApp.Presentation.Services.Tests;
-using PsychologyApp.Presentation.ViewModels.Tests;
+using PsychologyApp.Presentation.Shared.ViewModels;
+using PsychologyApp.Presentation.Entities.Test;
+using PsychologyApp.Presentation.Features.RunTests;
+using PsychologyApp.Presentation.Pages.TestsList;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
@@ -53,7 +53,7 @@ public sealed class FindProblemViewModelTests
     [Fact]
     public async Task ReloadLocalizedTestContent_UsesGetByIdInsteadOfFullCatalog()
     {
-        var catalog = new FakeTestCatalogService().WithCatalog(new PsychologyApp.Presentation.Models.Tests.TestDefinition
+        var catalog = new FakeTestCatalogService().WithCatalog(new TestDefinition
         {
             TestId = "beck",
             Title = "Updated",
@@ -61,7 +61,7 @@ public sealed class FindProblemViewModelTests
             Description = "Updated description",
             Comment = "Updated comment",
             Algorithm = ["New step"],
-            Kind = PsychologyApp.Presentation.Models.Tests.TestKind.Questionnaire,
+            Kind = TestKind.Questionnaire,
             AnalyzerId = "beck"
         });
 

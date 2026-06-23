@@ -1,8 +1,8 @@
 using Moq;
-using PsychologyApp.Presentation.Common;
-using PsychologyApp.Presentation.Models.Clean;
-using PsychologyApp.Presentation.Services.Clean;
-using PsychologyApp.Presentation.ViewModels.Clean;
+using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Entities.Audio;
+using PsychologyApp.Presentation.Features.PlayMusic;
+using PsychologyApp.Presentation.Pages.MusicPlayer;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

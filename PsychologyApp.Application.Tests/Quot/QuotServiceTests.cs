@@ -1,7 +1,7 @@
 using Moq;
 using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Abstractions.Persistence;
-using PsychologyApp.Application.Services.QuotService;
+using PsychologyApp.Application.Quot;
 using DomainQuot = PsychologyApp.Domain.Entities.Quot;
 using Xunit;
 

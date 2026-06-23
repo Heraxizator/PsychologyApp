@@ -1,6 +1,6 @@
-using System.Reflection;
-using PsychologyApp.Presentation.Common;
-using PsychologyApp.Presentation.ViewModels;
+﻿using System.Reflection;
+using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.ViewModels;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

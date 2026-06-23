@@ -1,5 +1,5 @@
-using PsychologyApp.Presentation.Common;
-using PsychologyApp.Presentation.Common.Behaviors;
+using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Behaviors;
 using System.Windows.Input;
 using Xunit;
 

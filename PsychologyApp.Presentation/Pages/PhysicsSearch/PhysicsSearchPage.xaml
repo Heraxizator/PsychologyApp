@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.PhysicsSearch.PhysicsSearchPage"
+             x:Name="PageRoot"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.PhysicsSearch"
+             xmlns:physics="clr-namespace:PsychologyApp.Presentation.Entities.Physics"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:physicsUi="clr-namespace:PsychologyApp.Presentation.Widgets.PhysicsReasonCard"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:DataType="vm:PhysicsSearchViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{Binding SearchToolbarText}" Command="{Binding SearchCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <Grid
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
+
+        <Grid
+            IsVisible="{Binding IsDone}"
+            Margin="{StaticResource LayoutPageMarginThickness}"
+            RowDefinitions="Auto,Auto,*">
+
+            <ui:NavigationBarSimpleView
+                Grid.Row="0"
+                TitleText="{Binding PageTitle}"
+                BackCommand="{Binding Finish}"/>
+
+            <ui:TextEntryView
+                Grid.Row="1"
+                Margin="0,8,0,8"
+                PlaceholderText="{Binding IllnessPlaceholder}"
+                BodyText="{Binding SearchText, Mode=TwoWay}"
+                TitleText="{Binding ProblemLabel}"/>
+
+            <Grid Grid.Row="2">
+                <StackLayout
+                    x:Name="SearchEmptyPrompt"
+                    IsVisible="{Binding IsSearchEmptyPromptVisible}"
+                    Padding="{StaticResource LayoutEmptyPaddingThickness}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource SectionTitleStyle}"
+                        Text="{Binding EmptySearchHint}"/>
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource BodyStyle}"
+                        Text="{Binding EmptySearchSubhint}"/>
+                </StackLayout>
+
+                <ui:ProgressBarView
+                    x:Name="SearchFilteringProgress"
+                    IsVisible="{Binding IsSearchFilteringVisible}"
+                    IsLoading="{Binding IsSearchFilteringVisible}"
+                    ProgressText="{Binding SearchFilteringText}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center" />
+
+                <StackLayout
+                    x:Name="SearchNoResults"
+                    IsVisible="{Binding IsSearchNoResultsVisible}"
+                    Padding="{StaticResource LayoutEmptyPaddingThickness}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource SectionTitleStyle}"
+                        Text="{Binding NoResultsHint}"/>
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource BodyStyle}"
+                        Text="{Binding NoResultsSubhint}"/>
+                </StackLayout>
+
+                <CollectionView
+                    x:Name="SearchResultsCollectionView"
+                    IsVisible="{Binding IsSearchResultsListVisible}"
+                    SelectionMode="None"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalScrollBarVisibility="Never"
+                    RemainingItemsThreshold="5"
+                    RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
+                    ItemsSource="{Binding ResultsObservableCollection}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="physics:PhysicsReasonItem">
+                            <physicsUi:PhysicsReasonCardView
+                                TitleFormatted="{Binding HighlightedTitle}"
+                                SubtitleFormatted="{Binding HighlightedSubtitle}"
+                                Solution="{Binding Solution}"
+                                IsExpanded="{Binding IsExpanded}"
+                                ToggleExpandCommand="{Binding ToggleExpandCommand}"
+                                SuggestedTechniques="{Binding SuggestedTechniques}"
+                                SolutionHeader="{Binding SolutionHeader, Source={x:Reference PageRoot}, Path=BindingContext}"
+                                RecommendedPracticesLabel="{Binding RecommendedPracticesLabel, Source={x:Reference PageRoot}, Path=BindingContext}">
+                                <physicsUi:PhysicsReasonCardView.Behaviors>
+                                    <behaviors:ListItemRevealBehavior />
+                                </physicsUi:PhysicsReasonCardView.Behaviors>
+                            </physicsUi:PhysicsReasonCardView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </Grid>
+
+        <ui:ProgressBarView
+            x:Name="InitLoadingProgress"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsLoadingOverlayVisible}"
+            IsLoading="{Binding IsLoadingOverlayVisible}"
+            ProgressText="{Binding LoadingText}">
+            <ui:ProgressBarView.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Cancel}"/>
+            </ui:ProgressBarView.GestureRecognizers>
+        </ui:ProgressBarView>
+
+        <ui:RetryView
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsFail}"
+            FailedText="{Binding FailedText}"
+            RetryText="{Binding RetryText}"
+            RetryCommand="{Binding Reload}" />
+    </Grid>
+</ContentPage>

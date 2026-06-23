@@ -1,4 +1,4 @@
-﻿using Android.Content;
+using Android.Content;
 using Microsoft.Maui.Controls.Handlers.Compatibility;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PsychologyApp.Presentation.Platforms.Android.Renderers;
+namespace PsychologyApp.Presentation.Shared.Platforms.Android.Renderers;
 
 public class ShadowFrameRenderer : FrameRenderer
 {

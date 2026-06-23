@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Logging.Abstractions;
-using PsychologyApp.Presentation.Common;
-using PsychologyApp.Presentation.Models.Tests;
-using PsychologyApp.Presentation.Services.Tests;
-using PsychologyApp.Testing.Tests;
+using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Entities.Test;
+using PsychologyApp.Presentation.Features.RunTests;
+using PsychologyApp.Presentation.Tests;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests.Catalog;

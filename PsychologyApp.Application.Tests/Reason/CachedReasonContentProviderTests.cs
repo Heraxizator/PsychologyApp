@@ -1,5 +1,5 @@
 using PsychologyApp.Application.Abstractions.Integration;
-using PsychologyApp.Application.Services.ReasonService;
+using PsychologyApp.Application.Reason;
 using DomainReason = PsychologyApp.Domain.Entities.Reason;
 using Xunit;
 

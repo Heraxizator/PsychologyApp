@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using PsychologyApp.Application.Services.TechniqueService;
+using PsychologyApp.Application.Technique;
 using PsychologyApp.Bootstrap;
 using Xunit;
 

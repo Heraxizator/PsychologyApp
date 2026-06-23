@@ -3,12 +3,12 @@ using Microsoft.Extensions.Options;
 using Moq;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
-using PsychologyApp.Application.Services.ReasonSearch;
-using PsychologyApp.Presentation.Common;
-using PsychologyApp.Presentation.Common.Infrastructure;
-using PsychologyApp.Presentation.Services;
-using PsychologyApp.Presentation.Services.Physics;
-using PsychologyApp.Presentation.ViewModels.Physics;
+using PsychologyApp.Application.Reason;
+using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
+using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Features.SearchPhysics;
+using PsychologyApp.Presentation.Pages.PhysicsSearch;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

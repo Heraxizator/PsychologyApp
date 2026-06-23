@@ -1,4 +1,4 @@
-using PsychologyApp.Presentation.Common.Infrastructure;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 
 namespace PsychologyApp.Presentation.Tests;
 

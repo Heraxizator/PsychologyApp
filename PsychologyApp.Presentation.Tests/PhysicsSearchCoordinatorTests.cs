@@ -1,9 +1,9 @@
 using Moq;
 using PsychologyApp.Application.Models;
-using PsychologyApp.Application.Services.ReasonSearch;
-using PsychologyApp.Presentation.Models.Physics;
-using PsychologyApp.Presentation.Services;
-using PsychologyApp.Presentation.Services.Physics;
+using PsychologyApp.Application.Reason;
+using PsychologyApp.Presentation.Entities.Physics;
+using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Features.SearchPhysics;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

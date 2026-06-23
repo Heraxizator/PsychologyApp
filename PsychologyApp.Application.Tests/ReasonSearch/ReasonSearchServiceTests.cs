@@ -1,5 +1,5 @@
 using PsychologyApp.Application.Models;
-using PsychologyApp.Application.Services.ReasonSearch;
+using PsychologyApp.Application.Reason;
 using PsychologyApp.Testing.Integration;
 using Xunit;
 

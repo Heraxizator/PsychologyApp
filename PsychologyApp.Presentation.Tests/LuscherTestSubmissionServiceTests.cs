@@ -1,10 +1,10 @@
 using Moq;
-using PsychologyApp.Application.Services.UserProgress;
+using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Domain.Colour.Enums;
 using PsychologyApp.Domain.Colour.ValueObjects;
-using PsychologyApp.Presentation.Common;
-using PsychologyApp.Presentation.Models.Tests;
-using PsychologyApp.Presentation.Services.Tests;
+using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Entities.Test;
+using PsychologyApp.Presentation.Features.RunTests;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
