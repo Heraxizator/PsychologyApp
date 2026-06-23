@@ -49,7 +49,7 @@ public partial class MusicPlayerViewModel : BaseViewModel
             SetPlaybackState(false);
             IsBuffering = false;
         };
-        ModuleName = AppStrings.ShellTabCleanerShort;
+        ModuleName = AppStrings.ShellTabMusicShort;
         PageName = AppStrings.CleanerPrayersPage;
 
         TogglePlayPauseCommand = new AsyncCommand(async () =>

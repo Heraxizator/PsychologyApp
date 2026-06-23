@@ -110,7 +110,7 @@ public partial class AppShell : Shell
         PracticeTab.Title = AppStrings.ShellTabPracticeShort;
         DetectorTab.Title = AppStrings.ShellTabDetectorShort;
         SomaticTab.Title = AppStrings.ShellTabSomaticShort;
-        CleanerTab.Title = AppStrings.ShellTabCleanerShort;
+        CleanerTab.Title = AppStrings.ShellTabMusicShort;
         QuotesTab.Title = AppStrings.ShellTabMotivatorShort;
         ApplyTabBarChrome();
         ApplyStatusBarChrome(IsDarkRequestedTheme());
