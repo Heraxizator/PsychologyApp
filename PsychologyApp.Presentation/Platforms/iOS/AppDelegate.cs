@@ -1,6 +1,8 @@
-﻿using Foundation;
+using Foundation;
 
-namespace PsychologyApp.Presentation;
+using PsychologyApp.Presentation.App;
+
+namespace PsychologyApp.Presentation.App;
 
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate

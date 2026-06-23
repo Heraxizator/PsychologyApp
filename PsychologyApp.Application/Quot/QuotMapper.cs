@@ -10,7 +10,7 @@ namespace PsychologyApp.Application;
 
 public static class QuotMapper
 {
-    public static QuotDTO GetQuotDTO(Quot quot)
+    public static QuotDTO GetQuotDTO(global::PsychologyApp.Domain.Entities.Quot quot)
     {
         return new QuotDTO
         {
@@ -23,8 +23,8 @@ public static class QuotMapper
         };
     }
 
-    public static Quot GetQuot(QuotDTO quotDTO)
+    public static global::PsychologyApp.Domain.Entities.Quot GetQuot(QuotDTO quotDTO)
     {
-        return Quot.Create(quotDTO.Title!, quotDTO.Text!, quotDTO.Theme!, quotDTO.IsReaded, quotDTO.IsFavourite);
+        return global::PsychologyApp.Domain.Entities.Quot.Create(quotDTO.Title!, quotDTO.Text!, quotDTO.Theme!, quotDTO.IsReaded, quotDTO.IsFavourite);
     }
 }

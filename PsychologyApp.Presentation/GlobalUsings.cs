@@ -1,2 +1,12 @@
-global using PsychologyApp.Application.Models;
+﻿global using PsychologyApp.Application.Models;
+global using TechniqueId = PsychologyApp.Domain.Practice.TechniqueId;
+global using TechniqueUiKind = PsychologyApp.Domain.Practice.TechniqueUiKind;
+global using PsychologyApp.Presentation.App;
+global using PsychologyApp.Presentation.App.Routes;
 global using PsychologyApp.Presentation.Common;
+global using PsychologyApp.Presentation.Features.RunTests;
+global using PsychologyApp.Presentation.Shared.Common;
+global using PsychologyApp.Presentation.Entities.Test;
+global using PsychologyApp.Presentation.Models.Tests;
+global using PsychologyApp.Presentation.UI.Components;
+global using BaseViewModel = PsychologyApp.Presentation.Shared.ViewModels.BaseViewModel;

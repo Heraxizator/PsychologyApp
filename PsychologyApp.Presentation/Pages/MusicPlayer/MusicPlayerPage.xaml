@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.MusicPlayer.MusicPlayerPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.MusicPlayer"
+             xmlns:clean="clr-namespace:PsychologyApp.Presentation.Entities.Audio"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:cleanUi="clr-namespace:PsychologyApp.Presentation.Widgets.MusicListCard"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:DataType="vm:MusicPlayerViewModel"
+             x:Name="PageRoot"
+             Shell.NavBarIsVisible="True"
+             Title="{Binding PageTitle}">
+
+    <Grid
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+
+        <Grid
+            x:Name="MainContentGrid"
+            IsVisible="{Binding IsDone}"
+            Margin="{StaticResource LayoutTabPageMarginThickness}"
+            RowDefinitions="Auto,*,Auto">
+
+            <VerticalStackLayout Grid.Row="0" Spacing="10" Margin="0,0,0,8">
+                <ui:TextEntryView
+                    PlaceholderText="{Binding SearchPlaceholder}"
+                    BodyText="{Binding SearchText, Mode=TwoWay}" />
+
+                <ui:FilterChipTabBarView
+                    ItemsSource="{Binding CategoryFilters}"
+                    TapCommand="{Binding SelectCategoryCommand}" />
+            </VerticalStackLayout>
+
+            <CollectionView
+                Grid.Row="1"
+                x:Name="Musics"
+                VerticalOptions="FillAndExpand"
+                VerticalScrollBarVisibility="Never"
+                ItemsSource="{Binding FilteredItems}">
+                <CollectionView.EmptyView>
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource BodyStyle}"
+                        Text="{Binding NoPrayersFoundText}"
+                        Padding="{StaticResource LayoutEmptyPaddingThickness}"
+                        IsVisible="{Binding IsSearchEmptyVisible}" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="clean:Audio">
+                        <cleanUi:MusicListCardView
+                            Title="{Binding Name}"
+                            Subtitle="{Binding Description}"
+                            MetaText="{Binding Category}"
+                            IsActive="{Binding IsActive}"
+                            IsPlayingThis="{Binding IsPlayingThis}"
+                            ShowOfflineBadge="{Binding IsCached}"
+                            OfflineBadgeText="{Binding Source={x:Reference PageRoot}, Path=BindingContext.OfflineBadgeText}"
+                            TapCommand="{Binding ClickCommand}">
+                            <cleanUi:MusicListCardView.Behaviors>
+                                <behaviors:ListItemRevealBehavior />
+                            </cleanUi:MusicListCardView.Behaviors>
+                        </cleanUi:MusicListCardView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.Footer>
+                    <BoxView HeightRequest="96" Color="Transparent" />
+                </CollectionView.Footer>
+            </CollectionView>
+
+            <Border
+                Grid.Row="2"
+                IsVisible="{Binding HasActiveTrack}"
+                Style="{StaticResource BrandCardStyle}"
+                Padding="14,12">
+                <VerticalStackLayout Spacing="10">
+                    <Slider
+                        x:Name="ProgressSlider"
+                        Minimum="0"
+                        Maximum="1"
+                        Value="{Binding ProgressFraction}"
+                        DragStarted="OnProgressDragStarted"
+                        DragCompleted="OnProgressDragCompleted"
+                        MinimumTrackColor="{DynamicResource Primary}"
+                        MaximumTrackColor="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}"
+                        ThumbColor="{DynamicResource Primary}" />
+
+                    <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto" ColumnSpacing="10">
+                        <Border
+                            Grid.Column="0"
+                            WidthRequest="48"
+                            HeightRequest="48"
+                            StrokeThickness="0"
+                            BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}"
+                            VerticalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <ui:MaterialIconView
+                                IconName="MenuBook"
+                                IconSize="26"
+                                IconColor="{DynamicResource Primary}"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                        </Border>
+
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                            <Label
+                                Text="{Binding NowPlayingLabel}"
+                                Style="{StaticResource CaptionStyle}"
+                                TextColor="{DynamicResource Primary}" />
+                            <Label
+                                Text="{Binding ActiveTrackTitle}"
+                                Style="{StaticResource ListRowTitleStyle}"
+                                MaxLines="1"
+                                LineBreakMode="TailTruncation" />
+                            <Label
+                                Text="{Binding ActiveTrackCategory}"
+                                Style="{StaticResource CaptionStyle}"
+                                MaxLines="1"
+                                LineBreakMode="TailTruncation" />
+                        </VerticalStackLayout>
+
+                        <Border
+                            Grid.Column="2"
+                            WidthRequest="40"
+                            HeightRequest="40"
+                            Style="{StaticResource FilterChipStyle}"
+                            VerticalOptions="Center">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding PlayPreviousCommand}" />
+                            </Border.GestureRecognizers>
+                            <ui:MaterialIconView
+                                IconName="SkipPrevious"
+                                IconSize="26"
+                                IconColor="{DynamicResource Primary}"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                        </Border>
+
+                        <Border
+                            Grid.Column="3"
+                            WidthRequest="48"
+                            HeightRequest="48"
+                            StrokeThickness="0"
+                            BackgroundColor="{DynamicResource Primary}"
+                            VerticalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="24" />
+                            </Border.StrokeShape>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TogglePlayPauseCommand}" />
+                            </Border.GestureRecognizers>
+                            <Grid>
+                                <ui:MaterialIconView
+                                    IconName="PlayArrow"
+                                    IconSize="30"
+                                    IconColor="White"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center">
+                                    <ui:MaterialIconView.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding IsPlaying}"
+                                            TargetType="ui:MaterialIconView"
+                                            Value="True">
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                    </ui:MaterialIconView.Triggers>
+                                </ui:MaterialIconView>
+                                <ui:MaterialIconView
+                                    IconName="Pause"
+                                    IconSize="30"
+                                    IconColor="White"
+                                    IsVisible="False"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center">
+                                    <ui:MaterialIconView.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding IsPlaying}"
+                                            TargetType="ui:MaterialIconView"
+                                            Value="True">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                    </ui:MaterialIconView.Triggers>
+                                </ui:MaterialIconView>
+                            </Grid>
+                        </Border>
+
+                        <Border
+                            Grid.Column="4"
+                            WidthRequest="40"
+                            HeightRequest="40"
+                            Style="{StaticResource FilterChipStyle}"
+                            VerticalOptions="Center">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding PlayNextCommand}" />
+                            </Border.GestureRecognizers>
+                            <ui:MaterialIconView
+                                IconName="SkipNext"
+                                IconSize="26"
+                                IconColor="{DynamicResource Primary}"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                        </Border>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label
+                            Grid.Column="0"
+                            Text="{Binding ProgressDisplay}"
+                            Style="{StaticResource CaptionStyle}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Column="1"
+                            IsVisible="{Binding ShowBufferingOverlay}"
+                            Text="{Binding BufferingText}"
+                            Style="{StaticResource CaptionStyle}"
+                            TextColor="{DynamicResource Primary}"
+                            HorizontalTextAlignment="End" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <ui:RetryView
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsFail}"
+            FailedText="{Binding LoadFailedText}"
+            RetryText="{Binding RetryText}"
+            RetryCommand="{Binding Reload}" />
+    </Grid>
+</ContentPage>

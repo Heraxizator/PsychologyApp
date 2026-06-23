@@ -1,6 +1,6 @@
 using Moq;
-using PsychologyApp.Application.Services.ReasonSearch;
-using PsychologyApp.Presentation.Services.Physics;
+using PsychologyApp.Application.Reason;
+using PsychologyApp.Presentation.Features.SearchPhysics;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

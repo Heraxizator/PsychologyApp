@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:Class="PsychologyApp.Presentation.Widgets.TechniqueBodies.CopiedFormBody">
+    <StackLayout>
+        <Border Style="{StaticResource BrandCardStyle}" Margin="0,0,0,8">
+            <StackLayout>
+                <Label Text="{Binding FormSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
+                <ui:TextEntryView
+                    Margin="0,5,0,0"
+                    TitleText="{Binding ConcernFieldLabel}"
+                    BodyText="{Binding Text}"
+                    PlaceholderText="{Binding ThoughtPlaceholder}" />
+                <ui:ButtonView
+                    BodyText="{Binding RepeatButtonText}"
+                    TapCommand="{Binding AddCommand}" />
+            </StackLayout>
+        </Border>
+        <StackLayout
+            x:Name="PaperItemsStack"
+            Margin="0,15,0,0"
+            IsVisible="{Binding IsFull}"
+            BindableLayout.ItemsSource="{Binding PapersObservableCollection}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <ui:ListEntryCardView
+                        Title="{Binding Id}"
+                        Body="{Binding Text}">
+                        <ui:ListEntryCardView.Behaviors>
+                            <behaviors:ListItemRevealBehavior />
+                        </ui:ListEntryCardView.Behaviors>
+                    </ui:ListEntryCardView>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </StackLayout>
+    </StackLayout>
+</ContentView>

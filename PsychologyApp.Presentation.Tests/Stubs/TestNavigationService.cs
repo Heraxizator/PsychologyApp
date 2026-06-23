@@ -1,6 +1,4 @@
-using PsychologyApp.Presentation.Models.Practice.Techniques;
-using PsychologyApp.Presentation.Models.Tests;
-using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.Entities.Test;
 
 namespace PsychologyApp.Presentation.Tests;
 

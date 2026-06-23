@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.Techniques.TechniquesPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.Techniques"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:practiceUi="clr-namespace:PsychologyApp.Presentation.Widgets.TechniqueListCard"
+             xmlns:today="clr-namespace:PsychologyApp.Presentation.Widgets.TodayPracticeRow"
+             xmlns:mood="clr-namespace:PsychologyApp.Presentation.Widgets.MoodStrip"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:technique="clr-namespace:PsychologyApp.Presentation.Entities.Technique"
+             x:DataType="vm:TechniquesViewModel"
+             Shell.NavBarIsVisible="True"
+             Title="{Binding PageTitle}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{Binding ProfileToolbarText}" Command="{Binding OpenProfileCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <Grid
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+
+        <CollectionView
+            x:Name="TechniquesCollectionView"
+            Margin="{StaticResource LayoutTabPageMarginThickness}"
+            ItemsSource="{Binding TechniquesItemsSource}"
+            IsGrouped="{Binding IsTechniquesGrouped}"
+            IsVisible="{Binding IsDone}"
+            SelectionMode="Single"
+            VerticalScrollBarVisibility="Never"
+            HorizontalScrollBarVisibility="Never">
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate x:DataType="technique:TechniqueGroup">
+                    <Grid>
+                        <Grid.Triggers>
+                            <DataTrigger
+                                Binding="{Binding HasTitle}"
+                                TargetType="Grid"
+                                Value="False">
+                                <Setter Property="HeightRequest" Value="0" />
+                                <Setter Property="MinimumHeightRequest" Value="0" />
+                                <Setter Property="Margin" Value="0" />
+                            </DataTrigger>
+                        </Grid.Triggers>
+                        <Label
+                            Text="{Binding Title}"
+                            IsVisible="{Binding HasTitle}"
+                            Style="{StaticResource SectionTitleStyle}"
+                            Margin="0,12,0,4" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource PracticeListItemSpacing}" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.Header>
+                <VerticalStackLayout Spacing="{StaticResource ListItemSpacing}" Padding="0">
+                    <VerticalStackLayout.Behaviors>
+                        <behaviors:StaggerChildrenBehavior />
+                    </VerticalStackLayout.Behaviors>
+
+                    <today:TodayPracticeRowView
+                        CaptionText="{Binding TodayForYouLabel}"
+                        StreakText="{Binding StreakDisplay}"
+                        HasStreak="{Binding HasStreak}"
+                        IconName="{Binding TodayTechniqueItem.IconName}"
+                        Title="{Binding TodayTechniqueItem.Title}"
+                        Subtitle="{Binding TodayTechniqueItem.Subtitle}"
+                        ReasonText="{Binding TodayReasonText}"
+                        TapCommand="{Binding StartTodayPracticeCommand}" />
+
+                    <mood:MoodStripView
+                        QuestionText="{Binding TodayMoodQuestion}"
+                        RecordMoodCommand="{Binding RecordMoodCommand}"
+                        SelectedMoodLevel="{Binding SelectedMoodLevel}"
+                        TodayMoodDisplay="{Binding TodayMoodDisplay}"
+                        HasTodayMood="{Binding HasTodayMood}"
+                        MoodHistorySummary="{Binding MoodHistorySummary}"
+                        HasMoodHistorySummary="{Binding HasMoodHistorySummary}" />
+
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" Margin="0,4,0,0">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                            <Label
+                                Text="{Binding PracticeCatalogLabel}"
+                                Style="{StaticResource SectionTitleStyle}" />
+                            <Label
+                                Text="{Binding PracticeCatalogHint}"
+                                Style="{StaticResource CaptionStyle}" />
+                        </VerticalStackLayout>
+                        <ui:ButtonView
+                            Grid.Column="1"
+                            IsCompact="True"
+                            Variant="Secondary"
+                            BodyText="{Binding CreateButtonText}"
+                            TapCommand="{Binding ConstructorTapped}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </CollectionView.Header>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="technique:TechniqueItem">
+                    <practiceUi:TechniqueListCardView
+                        Number="{Binding Number}"
+                        Date="{Binding Date}"
+                        Image="{Binding Image}"
+                        IconName="{Binding IconName}"
+                        MetaText="{Binding MetaText}"
+                        Title="{Binding Title}"
+                        Subtitle="{Binding Subtitle}"
+                        Theme="{Binding Theme}"
+                        Author="{Binding Author}"
+                        Active="{Binding Active}"
+                        TapCommand="{Binding TapCommand}">
+                        <practiceUi:TechniqueListCardView.Behaviors>
+                            <behaviors:ListItemRevealBehavior />
+                        </practiceUi:TechniqueListCardView.Behaviors>
+                    </practiceUi:TechniqueListCardView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.EmptyView>
+                <StackLayout Padding="{StaticResource LayoutEmptyPaddingThickness}" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label HorizontalTextAlignment="Center" Style="{StaticResource SectionTitleStyle}" Text="{Binding PracticeEmptyTitle}" />
+                    <Label HorizontalTextAlignment="Center" Style="{StaticResource BodyStyle}" Text="{Binding PracticeEmptyBody}" />
+                </StackLayout>
+            </CollectionView.EmptyView>
+
+        </CollectionView>
+
+        <ui:ProgressBarView
+            x:Name="LoadingProgress"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsLoadingOverlayVisible}"
+            IsLoading="{Binding IsLoadingOverlayVisible}"
+            ProgressText="{Binding LoadingText}">
+            <ui:ProgressBarView.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Cancel}" />
+            </ui:ProgressBarView.GestureRecognizers>
+        </ui:ProgressBarView>
+
+        <ui:RetryView
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsFail}"
+            FailedText="{Binding FailedText}"
+            RetryText="{Binding RetryText}"
+            RetryCommand="{Binding Reload}" />
+
+    </Grid>
+</ContentPage>

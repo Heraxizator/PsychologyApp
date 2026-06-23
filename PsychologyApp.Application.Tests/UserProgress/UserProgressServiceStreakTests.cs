@@ -1,6 +1,6 @@
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Models;
-using PsychologyApp.Application.Services.UserProgress;
+using PsychologyApp.Application.UserProgress;
 using Xunit;
 
 namespace PsychologyApp.Application.Tests.UserProgress;

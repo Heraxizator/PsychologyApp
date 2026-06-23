@@ -5,8 +5,8 @@ namespace PsychologyApp.Application;
 
 public static class TechniqueMapper
 {
-    public static Technique GetTechnique(TechniqueDTO techniqueDTO) =>
-        Technique.Create(
+    public static global::PsychologyApp.Domain.Entities.Technique GetTechnique(TechniqueDTO techniqueDTO) =>
+        global::PsychologyApp.Domain.Entities.Technique.Create(
             techniqueDTO.TechniqueId,
             techniqueDTO.Number!,
             techniqueDTO.Date!,
@@ -17,7 +17,7 @@ public static class TechniqueMapper
             techniqueDTO.Algorithm!,
             techniqueDTO.Image!);
 
-    public static TechniqueDTO GetTechniqueDTO(Technique technique) =>
+    public static TechniqueDTO GetTechniqueDTO(global::PsychologyApp.Domain.Entities.Technique technique) =>
         new()
         {
             TechniqueId = technique.TechniqueId,

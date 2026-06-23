@@ -1,6 +1,6 @@
-﻿using PsychologyApp.Application.Models;
+using PsychologyApp.Application.Models;
 
-namespace PsychologyApp.Application.Services.TechniqueService;
+namespace PsychologyApp.Application.Technique;
 
 public interface ITechniqueService
 {

@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\PsychologyApp.Presentation\Abstractions\ITestAssetReader.cs" Link="ITestAssetReader.cs" />
+    <Compile Include="..\PsychologyApp.Presentation\Shared\Abstractions\ITestAssetReader.cs" Link="ITestAssetReader.cs" />
   </ItemGroup>
 
   <ItemGroup>

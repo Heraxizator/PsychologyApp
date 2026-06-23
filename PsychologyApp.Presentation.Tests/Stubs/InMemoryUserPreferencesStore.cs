@@ -1,6 +1,6 @@
-using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
-using PsychologyApp.Presentation.Services.Preferences;
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 
 namespace PsychologyApp.Presentation.Tests;
 

@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using PsychologyApp.Application.Abstractions.Integration;
-using PsychologyApp.Application.Services.ReasonSearch;
+using PsychologyApp.Application.Reason;
 using PsychologyApp.Domain.Entities;
 using PsychologyApp.Testing.Data;
 using PsychologyApp.Testing.Integration;

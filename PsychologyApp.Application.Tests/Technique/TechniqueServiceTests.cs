@@ -3,7 +3,7 @@ using Xunit;
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Exceptions;
 using PsychologyApp.Application.Models;
-using PsychologyApp.Application.Services.TechniqueService;
+using PsychologyApp.Application.Technique;
 using DomainTechnique = PsychologyApp.Domain.Entities.Technique;
 
 namespace PsychologyApp.Application.Tests.Technique;

@@ -1,6 +1,6 @@
 using System.Globalization;
-using PsychologyApp.Presentation.Common;
-using PsychologyApp.Presentation.UI.Converters;
+using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.UI.Converters;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
@@ -8,16 +8,7 @@ namespace PsychologyApp.Presentation.Tests;
 [Collection("Localization")]
 public sealed class PreferenceLabelConverterTests : IDisposable
 {
-    public PreferenceLabelConverterTests()
-    {
-        UserPreferences.UseInMemoryStorage();
-    }
-
-    public void Dispose()
-    {
-        AppStrings.LanguageOverride = null;
-        UserPreferences.ResetInMemoryStorage();
-    }
+    public void Dispose() => AppStrings.LanguageOverride = null;
 
     [Fact]
     public void Convert_ReturnsRussianLabelInEnglishUi()

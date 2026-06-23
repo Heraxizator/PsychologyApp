@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using PsychologyApp.Application.Abstractions.Persistence;
-using PsychologyApp.Application.Services.TechniqueService;
+using PsychologyApp.Application.Technique;
 using PsychologyApp.Testing.Data;
 using Xunit;
 

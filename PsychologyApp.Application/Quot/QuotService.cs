@@ -2,29 +2,27 @@
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Exceptions;
 using PsychologyApp.Application.Models;
-using PsychologyApp.Application.Services.QuotService;
-using PsychologyApp.Domain.Entities;
 
-namespace PsychologyApp.Application.Services.QuotService;
+namespace PsychologyApp.Application.Quot;
 
 public sealed class QuotService(IQuotRepository quotRepository, IQuotContentProvider quotContentProvider) : IQuotService
 {
     public async Task AddSingleAsync(QuotDTO quotDTO, CancellationToken cancellationToken = default)
     {
-        Quot quot = QuotMapper.GetQuot(quotDTO);
+        global::PsychologyApp.Domain.Entities.Quot quot = QuotMapper.GetQuot(quotDTO);
         await quotRepository.AddAsync(quot, cancellationToken);
     }
 
     public async Task<IEnumerable<QuotDTO>> GetAllAsync(int count, CancellationToken cancellationToken = default)
     {
-        IEnumerable<Quot> quots = await quotRepository.GetLatestAsync(count, cancellationToken);
+        IEnumerable<global::PsychologyApp.Domain.Entities.Quot> quots = await quotRepository.GetLatestAsync(count, cancellationToken);
         return quots.Select(QuotMapper.GetQuotDTO);
     }
 
     public async Task<QuotDTO> GetByIdAsync(long id, CancellationToken cancellationToken = default)
     {
-        Quot quot = await quotRepository.GetByIdAsync(id, cancellationToken)
-            ?? throw new QuotNotFoundException($"Цитата с идентификатором {id} не найдена");
+        global::PsychologyApp.Domain.Entities.Quot quot = await quotRepository.GetByIdAsync(id, cancellationToken)
+            ?? throw new QuotNotFoundException($"Р¦РёС‚Р°С‚Р° СЃ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРј {id} РЅРµ РЅР°Р№РґРµРЅР°");
 
         return QuotMapper.GetQuotDTO(quot);
     }
@@ -58,14 +56,14 @@ public sealed class QuotService(IQuotRepository quotRepository, IQuotContentProv
         }
 
         QuotSeed seed = seeds[Random.Shared.Next(seeds.Count)];
-        Quot quot = Quot.Create(seed.Author, seed.Text, seed.Theme, isReaded: false, isFavourite: false);
+        global::PsychologyApp.Domain.Entities.Quot quot = global::PsychologyApp.Domain.Entities.Quot.Create(seed.Author, seed.Text, seed.Theme, isReaded: false, isFavourite: false);
         await quotRepository.AddAsync(quot, cancellationToken);
     }
 
     public async Task MarkAsFavouriteAsync(long quotId, bool isFavourite, CancellationToken cancellationToken = default)
     {
-        Quot quot = await quotRepository.GetByIdAsync(quotId, cancellationToken)
-            ?? throw new QuotNotFoundException($"Цитата с идентификатором {quotId} не найдена");
+        global::PsychologyApp.Domain.Entities.Quot quot = await quotRepository.GetByIdAsync(quotId, cancellationToken)
+            ?? throw new QuotNotFoundException($"Р¦РёС‚Р°С‚Р° СЃ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРј {quotId} РЅРµ РЅР°Р№РґРµРЅР°");
 
         quot.SetFavourite(isFavourite);
         await quotRepository.EditAsync(quot, cancellationToken);
@@ -73,8 +71,8 @@ public sealed class QuotService(IQuotRepository quotRepository, IQuotContentProv
 
     public async Task MarkAsReadedAsync(long quotId, CancellationToken cancellationToken = default)
     {
-        Quot quot = await quotRepository.GetByIdAsync(quotId, cancellationToken)
-            ?? throw new QuotNotFoundException($"Цитата с идентификатором {quotId} не найдена");
+        global::PsychologyApp.Domain.Entities.Quot quot = await quotRepository.GetByIdAsync(quotId, cancellationToken)
+            ?? throw new QuotNotFoundException($"Р¦РёС‚Р°С‚Р° СЃ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРј {quotId} РЅРµ РЅР°Р№РґРµРЅР°");
 
         quot.MarkAsReaded();
         await quotRepository.EditAsync(quot, cancellationToken);
@@ -82,7 +80,7 @@ public sealed class QuotService(IQuotRepository quotRepository, IQuotContentProv
 
     public async Task<IEnumerable<QuotDTO>> GetFavouritesAsync(int count, CancellationToken cancellationToken = default)
     {
-        IEnumerable<Quot> quots = await quotRepository.GetFavouritesAsync(count, cancellationToken);
+        IEnumerable<global::PsychologyApp.Domain.Entities.Quot> quots = await quotRepository.GetFavouritesAsync(count, cancellationToken);
         return quots.Select(QuotMapper.GetQuotDTO);
     }
 }

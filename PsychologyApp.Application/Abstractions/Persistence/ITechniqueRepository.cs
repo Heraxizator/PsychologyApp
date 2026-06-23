@@ -1,8 +1,8 @@
-using PsychologyApp.Domain.Entities;
+﻿using PsychologyApp.Domain.Entities;
 
 namespace PsychologyApp.Application.Abstractions.Persistence;
 
-public interface ITechniqueRepository : IReadRepository<Technique>, IWriteRepository<Technique>
+public interface ITechniqueRepository : IReadRepository<global::PsychologyApp.Domain.Entities.Technique>, IWriteRepository<global::PsychologyApp.Domain.Entities.Technique>
 {
-    Task<IEnumerable<Technique>> GetLatestAsync(int count, CancellationToken cancellationToken = default);
+    Task<IEnumerable<global::PsychologyApp.Domain.Entities.Technique>> GetLatestAsync(int count, CancellationToken cancellationToken = default);
 }

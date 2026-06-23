@@ -1,6 +1,6 @@
-﻿using PsychologyApp.Application.Models;
+using PsychologyApp.Application.Models;
 
-namespace PsychologyApp.Application.Services.QuotService;
+namespace PsychologyApp.Application.Quot;
 
 public interface IQuotService
 {

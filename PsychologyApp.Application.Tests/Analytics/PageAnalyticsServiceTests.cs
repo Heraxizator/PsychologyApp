@@ -1,7 +1,7 @@
 using Moq;
 using PsychologyApp.Application.Analytics;
 using PsychologyApp.Application.Models;
-using PsychologyApp.Application.Services.Statistic;
+using PsychologyApp.Application.Statistic;
 using Xunit;
 
 namespace PsychologyApp.Application.Tests.Analytics;

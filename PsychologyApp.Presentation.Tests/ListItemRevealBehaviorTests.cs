@@ -1,5 +1,5 @@
-using PsychologyApp.Presentation.Common;
-using PsychologyApp.Presentation.Common.Behaviors;
+using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Behaviors;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
@@ -39,8 +39,8 @@ public sealed class ListItemRevealBehaviorTests
     }
 
     [Fact]
-    public void MaxConcurrentListReveals_IsSix()
+    public void MaxConcurrentListReveals_IsTwelve()
     {
-        Assert.Equal(6, UiAnimations.MaxConcurrentListReveals);
+        Assert.Equal(12, UiAnimations.MaxConcurrentListReveals);
     }
 }

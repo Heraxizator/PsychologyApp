@@ -10,12 +10,12 @@ namespace PsychologyApp.Application;
 
 public static class StatisticMapper
 {
-    public static Statistic GetStatistic(StatisticDTO statisticDTO)
+    public static global::PsychologyApp.Domain.Entities.Statistic GetStatistic(StatisticDTO statisticDTO)
     {
-        return Statistic.Create(statisticDTO.ModuleName!, statisticDTO.PageName!, statisticDTO.DateTime, statisticDTO.SecondsDuration);
+        return global::PsychologyApp.Domain.Entities.Statistic.Create(statisticDTO.ModuleName!, statisticDTO.PageName!, statisticDTO.DateTime, statisticDTO.SecondsDuration);
     }
 
-    public static StatisticDTO GetStatisticDTO(Statistic statistic)
+    public static StatisticDTO GetStatisticDTO(global::PsychologyApp.Domain.Entities.Statistic statistic)
     {
         return new StatisticDTO
         {

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             x:Class="PsychologyApp.Presentation.Widgets.QuoteCard.QuoteCardView"
+             x:Name="Root">
+    <Border Style="{StaticResource QuoteListCardStyle}">
+        <VerticalStackLayout Spacing="8">
+            <Label
+                HorizontalTextAlignment="Justify"
+                Style="{StaticResource BodyStyle}"
+                Text="{Binding Text, Source={x:Reference Root}}" />
+            <Label
+                Style="{StaticResource ListRowTitleStyle}"
+                HorizontalTextAlignment="Center"
+                Text="{Binding Author, Source={x:Reference Root}}">
+                <Label.Triggers>
+                    <DataTrigger
+                        Binding="{Binding Author, Source={x:Reference Root}}"
+                        TargetType="Label"
+                        Value="">
+                        <Setter Property="Text" Value="{Binding DefaultAuthorText, Source={x:Reference Root}}" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+            <Grid
+                ColumnSpacing="4"
+                HorizontalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Border
+                    x:Name="FavoriteActionBorder"
+                    Grid.Column="0"
+                    WidthRequest="44"
+                    HeightRequest="44"
+                    StrokeThickness="0"
+                    BackgroundColor="Transparent">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding LikeCommand, Source={x:Reference Root}}" />
+                    </Border.GestureRecognizers>
+                    <Label
+                        x:Name="FavoriteActionLabel"
+                        Style="{StaticResource IconActionStyle}"
+                        SemanticProperties.Description="{Binding FavoriteHint, Source={x:Reference Root}}"
+                        mi:MauiIcon.Value="{mi:Material Icon=FavoriteBorder, FontOverride=True}">
+                        <Label.Triggers>
+                            <DataTrigger
+                                Binding="{Binding IsFavourite, Source={x:Reference Root}}"
+                                TargetType="Label"
+                                Value="True">
+                                <Setter Property="mi:MauiIcon.Value" Value="{mi:Material Icon=Favorite, FontOverride=True}" />
+                                <Setter Property="TextColor" Value="{DynamicResource Primary}" />
+                            </DataTrigger>
+                            <DataTrigger
+                                Binding="{Binding IsFavourite, Source={x:Reference Root}}"
+                                TargetType="Label"
+                                Value="False">
+                                <Setter Property="mi:MauiIcon.Value" Value="{mi:Material Icon=FavoriteBorder, FontOverride=True}" />
+                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Border>
+                <Border
+                    x:Name="CopyActionBorder"
+                    Grid.Column="1"
+                    WidthRequest="44"
+                    HeightRequest="44"
+                    StrokeThickness="0"
+                    BackgroundColor="Transparent">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CopyCommand, Source={x:Reference Root}}" />
+                    </Border.GestureRecognizers>
+                    <Label
+                        Style="{StaticResource IconActionStyle}"
+                        SemanticProperties.Description="{Binding CopyHint, Source={x:Reference Root}}"
+                        mi:MauiIcon.Value="{mi:Material Icon=ContentCopy, FontOverride=True}" />
+                </Border>
+                <Border
+                    x:Name="ShareActionBorder"
+                    Grid.Column="2"
+                    WidthRequest="44"
+                    HeightRequest="44"
+                    StrokeThickness="0"
+                    BackgroundColor="Transparent">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ShareCommand, Source={x:Reference Root}}" />
+                    </Border.GestureRecognizers>
+                    <Label
+                        Style="{StaticResource IconActionStyle}"
+                        SemanticProperties.Description="{Binding ShareHint, Source={x:Reference Root}}"
+                        mi:MauiIcon.Value="{mi:Material Icon=Share, FontOverride=True}" />
+                </Border>
+            </Grid>
+        </VerticalStackLayout>
+    </Border>
+</ContentView>

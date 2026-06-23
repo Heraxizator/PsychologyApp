@@ -1,11 +1,11 @@
 using Moq;
-using PsychologyApp.Application.Services.UserProgress;
+using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
-using PsychologyApp.Presentation.Models.Tests;
-using PsychologyApp.Presentation.Services;
-using PsychologyApp.Presentation.Services.Dialogs;
-using PsychologyApp.Presentation.Services.Practice;
-using PsychologyApp.Presentation.Services.Tests;
+using PsychologyApp.Presentation.Entities.Test;
+using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Shared.Services.Dialogs;
+using PsychologyApp.Presentation.Features.RunTechniqueSession;
+using PsychologyApp.Presentation.Features.RunTests;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

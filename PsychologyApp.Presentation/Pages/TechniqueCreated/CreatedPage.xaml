@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.TechniqueCreated.CreatedPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.TechniqueCreated"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:DataType="vm:CreatedViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}">
+
+    <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
+        <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+            <VerticalStackLayout.Behaviors>
+                <behaviors:RevealOnAppearingBehavior />
+            </VerticalStackLayout.Behaviors>
+
+            <ui:NavigationBarSimpleView
+                TitleText="{Binding CustomTechniqueTitle}"
+                BackCommand="{Binding BackCommand}" />
+
+            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                <ui:ButtonView
+                    Grid.Column="1"
+                    IsCompact="True"
+                    Variant="Secondary"
+                    BodyText="{Binding EditToolbarText}"
+                    TapCommand="{Binding Edit}" />
+                <ui:ButtonView
+                    Grid.Column="2"
+                    IsCompact="True"
+                    Variant="Secondary"
+                    BodyText="{Binding RemoveToolbarText}"
+                    TapCommand="{Binding Remove}" />
+            </Grid>
+
+            <ui:AlgorithmBoxView
+                TitleText="{Binding AlgorithmTitle}"
+                BodySource="{Binding Algorithm}" />
+            <ui:ButtonView
+                BodyText="{Binding FinishButtonText}"
+                TapCommand="{Binding Finish}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

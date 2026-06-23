@@ -1,6 +1,5 @@
 using PsychologyApp.Application.Models;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
-using PsychologyApp.Presentation.UI.Components;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

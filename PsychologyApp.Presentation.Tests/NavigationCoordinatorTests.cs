@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
-using PsychologyApp.Presentation.Services;
+using PsychologyApp.Presentation.Shared.Navigation;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

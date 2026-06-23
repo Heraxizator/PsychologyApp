@@ -5,31 +5,23 @@ using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Infrastructure.Data;
-using PsychologyApp.Infrastructure.Data.Context;
+using PsychologyApp.Infrastructure.Data.Repositories.Base;
+using PsychologyApp.Infrastructure.Data.Sql;
 
 namespace PsychologyApp.Infrastructure.Data.Repositories.UserProgress;
 
-public sealed class UserProgressRepository : IUserProgressRepository
+public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgressRepository
 {
-    private readonly IDbConnectionFactory _connectionFactory;
-    private readonly int _commandTimeoutSeconds;
-
     public UserProgressRepository(IDbConnectionFactory connectionFactory, IOptions<AppSettings> settings)
+        : base(connectionFactory, settings)
     {
-        _connectionFactory = connectionFactory;
-        _commandTimeoutSeconds = settings.Value.DbCommandTimeoutSeconds > 0
-            ? settings.Value.DbCommandTimeoutSeconds
-            : 30;
     }
 
     public async Task SaveTestResultAsync(TestResultDTO result, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         await connection.ExecuteAsync(DapperCommandFactory.Create(
-            """
-            INSERT INTO TestResults (TestId, Score, Summary, DetailJson, CompletedAt)
-            VALUES (@TestId, @Score, @Summary, @DetailJson, @CompletedAt);
-            """,
+            UserProgressSql.InsertTestResult,
             new
             {
                 result.TestId,
@@ -38,7 +30,7 @@ public sealed class UserProgressRepository : IUserProgressRepository
                 result.DetailJson,
                 CompletedAt = result.CompletedAt.ToString("O")
             },
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
     }
 
@@ -46,15 +38,9 @@ public sealed class UserProgressRepository : IUserProgressRepository
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         return await connection.QuerySingleOrDefaultAsync<TestResultDTO>(DapperCommandFactory.Create(
-            """
-            SELECT TestResultId, TestId, Score, Summary, DetailJson, CompletedAt
-            FROM TestResults
-            WHERE TestId = @testId
-            ORDER BY TestResultId DESC
-            LIMIT 1;
-            """,
+            UserProgressSql.SelectLatestTestResult,
             new { testId },
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
     }
 
@@ -62,15 +48,9 @@ public sealed class UserProgressRepository : IUserProgressRepository
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         IEnumerable<TestResultDTO> rows = await connection.QueryAsync<TestResultDTO>(DapperCommandFactory.Create(
-            """
-            SELECT TestResultId, TestId, Score, Summary, DetailJson, CompletedAt
-            FROM TestResults
-            WHERE TestId = @testId
-            ORDER BY TestResultId DESC
-            LIMIT @limit;
-            """,
+            UserProgressSql.SelectTestResultHistory,
             new { testId, limit },
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
 
         return rows.ToList();
@@ -80,27 +60,19 @@ public sealed class UserProgressRepository : IUserProgressRepository
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         string? value = await connection.QuerySingleOrDefaultAsync<string>(DapperCommandFactory.Create(
-            """
-            SELECT CompletedAt
-            FROM Completions
-            WHERE CompletionKind = 'technique'
-            ORDER BY CompletionId DESC
-            LIMIT 1;
-            """,
-            commandTimeout: _commandTimeoutSeconds,
+            UserProgressSql.SelectLastTechniqueCompletionDate,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
 
-        return value is null
-            ? null
-            : DateTime.Parse(value, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.RoundtripKind);
+        return ParseOptionalUtcDateTime(value);
     }
 
     public async Task<long> CountTestResultsAsync(CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         return await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
-            "SELECT COUNT(*) FROM TestResults;",
-            commandTimeout: _commandTimeoutSeconds,
+            UserProgressSql.CountTestResults,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
     }
 
@@ -108,10 +80,7 @@ public sealed class UserProgressRepository : IUserProgressRepository
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         await connection.ExecuteAsync(DapperCommandFactory.Create(
-            """
-            INSERT INTO Completions (CompletionKind, ItemKey, ModuleName, PageName, CompletedAt, DurationSeconds)
-            VALUES (@CompletionKind, @ItemKey, @ModuleName, @PageName, @CompletedAt, @DurationSeconds);
-            """,
+            UserProgressSql.InsertCompletion,
             new
             {
                 completion.CompletionKind,
@@ -121,7 +90,7 @@ public sealed class UserProgressRepository : IUserProgressRepository
                 CompletedAt = completion.CompletedAt.ToString("O"),
                 completion.DurationSeconds
             },
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
     }
 
@@ -129,8 +98,8 @@ public sealed class UserProgressRepository : IUserProgressRepository
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         return await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
-            "SELECT COUNT(*) FROM Completions WHERE CompletionKind = 'technique';",
-            commandTimeout: _commandTimeoutSeconds,
+            UserProgressSql.CountTechniqueCompletions,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
     }
 
@@ -138,15 +107,9 @@ public sealed class UserProgressRepository : IUserProgressRepository
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         IEnumerable<CompletionDTO> rows = await connection.QueryAsync<CompletionDTO>(DapperCommandFactory.Create(
-            """
-            SELECT CompletionId, CompletionKind, ItemKey, ModuleName, PageName, CompletedAt, DurationSeconds
-            FROM Completions
-            WHERE CompletionKind = 'technique'
-            ORDER BY CompletionId DESC
-            LIMIT @limit;
-            """,
+            UserProgressSql.SelectRecentTechniqueCompletions,
             new { limit },
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
 
         return rows.ToList();
@@ -156,12 +119,8 @@ public sealed class UserProgressRepository : IUserProgressRepository
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         IEnumerable<string> rows = await connection.QueryAsync<string>(DapperCommandFactory.Create(
-            """
-            SELECT DISTINCT substr(CompletedAt, 1, 10) AS Day
-            FROM Completions
-            ORDER BY Day DESC;
-            """,
-            commandTimeout: _commandTimeoutSeconds,
+            UserProgressSql.SelectCompletionDates,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
 
         return rows
@@ -173,20 +132,12 @@ public sealed class UserProgressRepository : IUserProgressRepository
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         string? value = await connection.QuerySingleOrDefaultAsync<string>(DapperCommandFactory.Create(
-            """
-            SELECT CompletedAt
-            FROM Completions
-            WHERE ItemKey = @itemKey
-            ORDER BY CompletionId DESC
-            LIMIT 1;
-            """,
+            UserProgressSql.SelectLastCompletionForItem,
             new { itemKey },
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
 
-        return value is null
-            ? null
-            : DateTime.Parse(value, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.RoundtripKind);
+        return ParseOptionalUtcDateTime(value);
     }
 
     public async Task<IReadOnlyDictionary<string, DateTime>> GetLastPracticeDatesAsync(
@@ -201,27 +152,15 @@ public sealed class UserProgressRepository : IUserProgressRepository
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         IEnumerable<(string ItemKey, string CompletedAt)> rows = await connection.QueryAsync<(string ItemKey, string CompletedAt)>(
             DapperCommandFactory.Create(
-                """
-                SELECT c.ItemKey, c.CompletedAt
-                FROM Completions c
-                INNER JOIN (
-                    SELECT ItemKey, MAX(CompletionId) AS MaxCompletionId
-                    FROM Completions
-                    WHERE ItemKey IN @itemKeys
-                    GROUP BY ItemKey
-                ) latest ON c.CompletionId = latest.MaxCompletionId;
-                """,
+                UserProgressSql.SelectLastPracticeDates,
                 new { itemKeys },
-                commandTimeout: _commandTimeoutSeconds,
+                commandTimeout: CommandTimeoutSeconds,
                 cancellationToken: cancellationToken));
 
         Dictionary<string, DateTime> result = new(StringComparer.Ordinal);
         foreach ((string itemKey, string completedAt) in rows)
         {
-            result[itemKey] = DateTime.Parse(
-                completedAt,
-                System.Globalization.CultureInfo.InvariantCulture,
-                System.Globalization.DateTimeStyles.RoundtripKind);
+            result[itemKey] = ParseUtcDateTime(completedAt);
         }
 
         return result;
@@ -231,20 +170,14 @@ public sealed class UserProgressRepository : IUserProgressRepository
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         await connection.ExecuteAsync(DapperCommandFactory.Create(
-            """
-            INSERT INTO SessionDrafts (TechniqueKey, PayloadJson, UpdatedAt)
-            VALUES (@techniqueKey, @payloadJson, @updatedAt)
-            ON CONFLICT(TechniqueKey) DO UPDATE SET
-                PayloadJson = excluded.PayloadJson,
-                UpdatedAt = excluded.UpdatedAt;
-            """,
+            UserProgressSql.UpsertSessionDraft,
             new
             {
                 techniqueKey,
                 payloadJson,
                 updatedAt = DateTime.UtcNow.ToString("O")
             },
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
     }
 
@@ -252,9 +185,9 @@ public sealed class UserProgressRepository : IUserProgressRepository
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         return await connection.QuerySingleOrDefaultAsync<string>(DapperCommandFactory.Create(
-            "SELECT PayloadJson FROM SessionDrafts WHERE TechniqueKey = @techniqueKey;",
+            UserProgressSql.SelectSessionDraft,
             new { techniqueKey },
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
     }
 
@@ -269,9 +202,9 @@ public sealed class UserProgressRepository : IUserProgressRepository
 
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         IEnumerable<string> rows = await connection.QueryAsync<string>(DapperCommandFactory.Create(
-            "SELECT TechniqueKey FROM SessionDrafts WHERE TechniqueKey IN @techniqueKeys;",
+            UserProgressSql.SelectSessionDraftKeys,
             new { techniqueKeys },
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
 
         return rows.ToHashSet(StringComparer.Ordinal);
@@ -281,9 +214,9 @@ public sealed class UserProgressRepository : IUserProgressRepository
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         await connection.ExecuteAsync(DapperCommandFactory.Create(
-            "DELETE FROM SessionDrafts WHERE TechniqueKey = @techniqueKey;",
+            UserProgressSql.DeleteSessionDraft,
             new { techniqueKey },
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
     }
 
@@ -296,10 +229,7 @@ public sealed class UserProgressRepository : IUserProgressRepository
         try
         {
             await connection.ExecuteAsync(DapperCommandFactory.Create(
-                """
-                INSERT INTO MoodEntries (MoodLevel, Note, RecordedAt)
-                VALUES (@MoodLevel, @Note, @RecordedAt);
-                """,
+                UserProgressSql.InsertMoodEntry,
                 new
                 {
                     entry.MoodLevel,
@@ -307,14 +237,11 @@ public sealed class UserProgressRepository : IUserProgressRepository
                     RecordedAt = entry.RecordedAt.ToString("O")
                 },
                 transaction,
-                _commandTimeoutSeconds,
+                CommandTimeoutSeconds,
                 cancellationToken));
 
             await connection.ExecuteAsync(DapperCommandFactory.Create(
-                """
-                INSERT INTO Completions (CompletionKind, ItemKey, ModuleName, PageName, CompletedAt, DurationSeconds)
-                VALUES ('mood', 'mood', @moduleName, @pageName, @completedAt, 0);
-                """,
+                UserProgressSql.InsertMoodCompletion,
                 new
                 {
                     moduleName = "Practice",
@@ -322,7 +249,7 @@ public sealed class UserProgressRepository : IUserProgressRepository
                     completedAt = entry.RecordedAt.ToString("O")
                 },
                 transaction,
-                _commandTimeoutSeconds,
+                CommandTimeoutSeconds,
                 cancellationToken));
 
             await transaction.CommitAsync(cancellationToken);
@@ -338,23 +265,19 @@ public sealed class UserProgressRepository : IUserProgressRepository
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         IEnumerable<MoodEntryDTO> rows = await connection.QueryAsync<MoodEntryDTO>(DapperCommandFactory.Create(
-            """
-            SELECT MoodEntryId, MoodLevel, Note, RecordedAt
-            FROM MoodEntries
-            ORDER BY MoodEntryId DESC
-            LIMIT @limit;
-            """,
+            UserProgressSql.SelectRecentMoods,
             new { limit },
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
 
         return rows.ToList();
     }
 
-    private async Task<SqliteConnection> OpenConnectionAsync(CancellationToken cancellationToken)
-    {
-        var connection = (SqliteConnection)await _connectionFactory.CreateOpenConnectionAsync(cancellationToken);
-        await SqliteSchema.ConfigureConnectionAsync(connection, cancellationToken);
-        return connection;
-    }
+    private static DateTime? ParseOptionalUtcDateTime(string? value) =>
+        value is null
+            ? null
+            : ParseUtcDateTime(value);
+
+    private static DateTime ParseUtcDateTime(string value) =>
+        DateTime.Parse(value, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.RoundtripKind);
 }

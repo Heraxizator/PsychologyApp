@@ -1,6 +1,8 @@
 ﻿using Android.App;
 using Android.Runtime;
 
+using PsychologyApp.Presentation.App;
+
 namespace PsychologyApp.Presentation
 {
     [Application]

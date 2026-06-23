@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using Moq;
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Configuration;
-using PsychologyApp.Application.Services.QuotService;
+using PsychologyApp.Application.Quot;
 using PsychologyApp.Application.Startup;
 using Xunit;
 

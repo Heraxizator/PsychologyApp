@@ -12,14 +12,9 @@ namespace PsychologyApp.Infrastructure.Data.Repositories.Statistics;
 
 public sealed class StatisticRepository : BaseRepository<Statistic>, IStatisticRepository
 {
-    private readonly int _commandTimeoutSeconds;
-
     public StatisticRepository(IDbConnectionFactory connectionFactory, IOptions<AppSettings> settings)
         : base(connectionFactory, EntitySqlMaps.Statistic, settings)
     {
-        _commandTimeoutSeconds = settings.Value.DbCommandTimeoutSeconds > 0
-            ? settings.Value.DbCommandTimeoutSeconds
-            : 30;
     }
 
     public async Task<long> CountDistinctPagesAsync(CancellationToken cancellationToken = default)
@@ -27,7 +22,7 @@ public sealed class StatisticRepository : BaseRepository<Statistic>, IStatisticR
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         return await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
             "SELECT COUNT(DISTINCT PageName) FROM Statistics;",
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
     }
 
@@ -37,7 +32,7 @@ public sealed class StatisticRepository : BaseRepository<Statistic>, IStatisticR
         return await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
             "SELECT COUNT(*) FROM Statistics WHERE PageName = @pageName;",
             new { pageName },
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
     }
 
@@ -47,7 +42,7 @@ public sealed class StatisticRepository : BaseRepository<Statistic>, IStatisticR
         return await connection.QueryAsync<Statistic>(DapperCommandFactory.Create(
             "SELECT * FROM Statistics ORDER BY StatisticId DESC LIMIT @limit;",
             new { limit },
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
     }
 }

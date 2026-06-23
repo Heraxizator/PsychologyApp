@@ -12,14 +12,9 @@ namespace PsychologyApp.Infrastructure.Data.Repositories.Quots;
 
 public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
 {
-    private readonly int _commandTimeoutSeconds;
-
     public QuotRepository(IDbConnectionFactory connectionFactory, IOptions<AppSettings> settings)
         : base(connectionFactory, EntitySqlMaps.Quot, settings)
     {
-        _commandTimeoutSeconds = settings.Value.DbCommandTimeoutSeconds > 0
-            ? settings.Value.DbCommandTimeoutSeconds
-            : 30;
     }
 
     public async Task<IEnumerable<Quot>> GetUnreadLatestAsync(int count, CancellationToken cancellationToken = default)
@@ -28,7 +23,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
         return await connection.QueryAsync<Quot>(DapperCommandFactory.Create(
             "SELECT * FROM Quots WHERE IsReaded = 0 ORDER BY QuotId DESC LIMIT @count;",
             new { count },
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
     }
 
@@ -38,7 +33,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
         return await connection.QueryAsync<Quot>(DapperCommandFactory.Create(
             "SELECT * FROM Quots ORDER BY QuotId DESC LIMIT @count;",
             new { count },
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
     }
 
@@ -48,7 +43,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
         return await connection.QueryAsync<Quot>(DapperCommandFactory.Create(
             "SELECT * FROM Quots WHERE IsFavourite = 1 ORDER BY QuotId DESC LIMIT @count;",
             new { count },
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
     }
 
@@ -57,7 +52,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         await connection.ExecuteAsync(DapperCommandFactory.Create(
             "DELETE FROM Quots;",
-            commandTimeout: _commandTimeoutSeconds,
+            commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
     }
 }

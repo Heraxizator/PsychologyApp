@@ -3,11 +3,11 @@ using Microsoft.Extensions.Options;
 using Moq;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
-using PsychologyApp.Application.Services.TechniqueService;
-using PsychologyApp.Presentation.Common;
-using PsychologyApp.Presentation.Services;
-using PsychologyApp.Presentation.Services.Practice;
-using PsychologyApp.Presentation.ViewModels.Practice.Constructor;
+using PsychologyApp.Application.Technique;
+using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Features.RunTechniqueSession;
+using PsychologyApp.Presentation.Pages.TechniqueDesigner;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

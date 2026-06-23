@@ -1,4 +1,4 @@
-using PsychologyApp.Application.Models;
+using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.UI.Components;
 
 namespace PsychologyApp.Presentation.Models.Practice.Techniques;

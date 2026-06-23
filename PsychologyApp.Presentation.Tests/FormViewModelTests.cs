@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Options;
 using Moq;
 using PsychologyApp.Application.Configuration;
-using PsychologyApp.Presentation.Services.Dialogs;
-using PsychologyApp.Presentation.ViewModels.Review;
+using PsychologyApp.Presentation.Shared.Services.Dialogs;
+using PsychologyApp.Presentation.Features.SendReviewForm;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

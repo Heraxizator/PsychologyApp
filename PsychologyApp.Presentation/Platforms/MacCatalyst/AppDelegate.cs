@@ -1,5 +1,7 @@
 ﻿using Foundation;
 
+using PsychologyApp.Presentation.App;
+
 namespace PsychologyApp.Presentation
 {
     [Register("AppDelegate")]

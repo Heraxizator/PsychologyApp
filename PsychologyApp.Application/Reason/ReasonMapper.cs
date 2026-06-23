@@ -10,12 +10,12 @@ namespace PsychologyApp.Application;
 
 public static class ReasonMapper
 {
-    public static Reason GetReason(ReasonDTO reasonDTO)
+    public static global::PsychologyApp.Domain.Entities.Reason GetReason(ReasonDTO reasonDTO)
     {
-        return Reason.Create(reasonDTO.Title!, reasonDTO.Subtitle!, reasonDTO.Solution!);
+        return global::PsychologyApp.Domain.Entities.Reason.Create(reasonDTO.Title!, reasonDTO.Subtitle!, reasonDTO.Solution!);
     }
 
-    public static ReasonDTO GetReasonDTO(Reason reason)
+    public static ReasonDTO GetReasonDTO(global::PsychologyApp.Domain.Entities.Reason reason)
     {
         return new ReasonDTO
         {

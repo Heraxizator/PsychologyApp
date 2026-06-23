@@ -1,5 +1,5 @@
-using PsychologyApp.Presentation.Common;
-using PsychologyApp.Presentation.Models.Tests;
+using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Entities.Test;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
