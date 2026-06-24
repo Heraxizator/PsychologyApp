@@ -15,6 +15,7 @@ public partial class OnboardingViewModel : BaseViewModel
     private readonly Func<TechniqueId?, Task> _onCompleted;
 
     public ICommand NextCommand { get; }
+    public ICommand BackCommand { get; }
     public ICommand SkipCommand { get; }
     public ICommand SelectAnxietyCommand { get; }
     public ICommand SelectBodyCommand { get; }
@@ -33,12 +34,23 @@ public partial class OnboardingViewModel : BaseViewModel
         _navigationService = navigationService;
         _userPreferencesStore = userPreferencesStore;
 
-        NextCommand = new Command(() => Step++);
+        NextCommand = new Command(GoNext);
+        BackCommand = new Command(GoBack);
         SkipCommand = new AsyncCommand(CompleteWithoutPracticeAsync);
-        SelectAnxietyCommand = new Command(() => SelectedConcern = OnboardingConcernKeys.Anxiety);
-        SelectBodyCommand = new Command(() => SelectedConcern = OnboardingConcernKeys.Body);
-        SelectMoodCommand = new Command(() => SelectedConcern = OnboardingConcernKeys.Mood);
-        SelectExploreCommand = new Command(() => SelectedConcern = OnboardingConcernKeys.Explore);
+        SelectAnxietyCommand = new Command(() => SelectConcernAndAdvance(OnboardingConcernKeys.Anxiety));
+        SelectBodyCommand = new Command(() => SelectConcernAndAdvance(OnboardingConcernKeys.Body));
+        SelectMoodCommand = new Command(() => SelectConcernAndAdvance(OnboardingConcernKeys.Mood));
+        SelectExploreCommand = new Command(() => SelectConcernAndAdvance(OnboardingConcernKeys.Explore));
         StartPracticeCommand = new AsyncCommand(StartPracticeAsync);
+    }
+
+    private void GoNext() => Step = OnboardingStepNavigator.GoNext(Step);
+
+    private void GoBack() => Step = OnboardingStepNavigator.GoBack(Step);
+
+    private void SelectConcernAndAdvance(string concern)
+    {
+        SelectedConcern = concern;
+        Step = OnboardingStepNavigator.FinishStep;
     }
 }

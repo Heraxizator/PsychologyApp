@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             x:Class="PsychologyApp.Presentation.Widgets.Onboarding.OnboardingRecommendationPreviewView"
+             x:Name="Root">
+
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <VerticalStackLayout Spacing="6">
+                <Label
+                    Text="{TemplateBinding CaptionText}"
+                    Style="{StaticResource CaptionStyle}"
+                    TextColor="{DynamicResource Primary}" />
+                <Border Style="{StaticResource TodayPracticeRowStyle}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border
+                            Grid.Column="0"
+                            WidthRequest="52"
+                            HeightRequest="52"
+                            StrokeThickness="0"
+                            BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}"
+                            VerticalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <ui:MaterialIconView
+                                WidthRequest="28"
+                                HeightRequest="28"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"
+                                IconName="{TemplateBinding IconName}" />
+                        </Border>
+                        <VerticalStackLayout
+                            Grid.Column="1"
+                            Spacing="4"
+                            VerticalOptions="Center">
+                            <Label
+                                Text="{TemplateBinding Title}"
+                                Style="{StaticResource ListRowTitleStyle}"
+                                MaxLines="1"
+                                LineBreakMode="TailTruncation" />
+                            <Label
+                                Text="{TemplateBinding Subtitle}"
+                                Style="{StaticResource CaptionStyle}"
+                                MaxLines="2"
+                                LineBreakMode="TailTruncation" />
+                            <Label
+                                Text="{TemplateBinding ReasonText}"
+                                Style="{StaticResource CaptionStyle}"
+                                TextColor="{DynamicResource Primary}"
+                                MaxLines="1"
+                                LineBreakMode="TailTruncation" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+
+</ContentView>

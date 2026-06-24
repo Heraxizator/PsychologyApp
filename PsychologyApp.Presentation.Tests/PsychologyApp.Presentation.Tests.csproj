@@ -20,6 +20,11 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
     <Compile Include="Architecture\**\*.cs" />
+    <Compile Include="OnboardingStepNavigatorTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+    <ProjectReference Include="..\PsychologyApp.Presentation.Core\PsychologyApp.Presentation.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
