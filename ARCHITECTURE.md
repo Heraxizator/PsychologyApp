@@ -110,7 +110,7 @@ ViewModels must not reference Infrastructure types. `MauiProgram` registers `Add
 - `IDonateViewModelFactory` — `DonateViewModel` with `INavigationService` + `AsyncCommand`
 
 - `INavigationService` / `MauiNavigationService` — in `App/Routes/`; centralized imperative navigation; ViewModels do not use `IPageFactory`
-- `IShellStartupCoordinator` / `ShellStartupCoordinator` — in `App/`; DB init + onboarding modal
+- `IShellStartupCoordinator` / `ShellStartupCoordinator` — in `App/`; DB init + first-run onboarding modal (4 steps: welcome → app overview → concern → personalized finish)
 - `IProfilePageFactory`, `ITestPageFactory`, `ITechniquePageFactory` — feature page factories; `MauiPageFactory` is a thin facade for Shell and navigation
 
 - `ITechniqueMessenger` / `TechniqueMessengerService` — technique list updates (constructor CRUD)
@@ -201,7 +201,9 @@ ViewModel/page factories live in `App/Providers/` (`PsychologyApp.Presentation.A
 | `Features/RunTechniqueSession/*` | `Features.RunTechniqueSession` | Messenger, session completion, theory navigator |
 | `Features/RunTests/*` | `Features.RunTests` | Retake, history, catalog, LanguageContentReloader |
 | `Presentation.Core/Models/Tests/*` | `Models.Tests` | Test catalog JSON, `Question`/`Answer` |
-| `Shared/UI/Components/` | `Shared.UI.Components` | Generic XAML; feature cards under `Widgets/*/` |
+| `Pages/Onboarding/*` | `Pages.Onboarding` | First-run modal; replay via Settings |
+| `Widgets/Onboarding/*` | `Widgets.Onboarding` | Step indicator, module rows, recommendation preview |
+| `Presentation.Core/Common/OnboardingStepNavigator.cs` | `Presentation.Common` | Pure step navigation (testable on `net10.0`) |
 
 Per-technique legacy `*Page.xaml` (Spin, Hack, …) removed; bodies live in `Widgets/TechniqueBodies/`.
 

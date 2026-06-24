@@ -42,6 +42,14 @@ xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
 
 Feature-specific cards live under `Widgets/` (`QuoteCardView`, `TechniqueListCardView`, `TestListCardView`, …).
 
+Onboarding widgets (`Widgets/Onboarding/`):
+
+| Widget | Use when |
+|--------|----------|
+| `OnboardingStepIndicatorView` | Progress dots + `StepLabel` ("1 of 4") |
+| `OnboardingModuleRowView` | App section overview row (icon + title + hint) |
+| `OnboardingRecommendationPreviewView` | Finish step practice preview (read-only) |
+
 ## Rules for new UI
 
 1. **Before writing inline XAML**, search `Shared/UI/Components/` and `Widgets/`.

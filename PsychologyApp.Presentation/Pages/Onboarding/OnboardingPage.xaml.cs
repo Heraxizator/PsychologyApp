@@ -17,6 +17,7 @@ public partial class OnboardingPage : ContentPage
         _viewModel = factory.Create(Navigation, onCompleted);
         BindingContext = _viewModel;
         _viewModel.PropertyChanged += OnViewModelPropertyChanged;
+        HideAllSteps();
     }
 
     protected override void OnAppearing()
@@ -39,6 +40,14 @@ public partial class OnboardingPage : ContentPage
 
         AnimateStepChangeAsync(_currentStep, _viewModel.Step).FireAndForget();
         _currentStep = _viewModel.Step;
+    }
+
+    private void HideAllSteps()
+    {
+        WelcomeStep.IsVisible = false;
+        OverviewStep.IsVisible = false;
+        ConcernStep.IsVisible = false;
+        FinishStep.IsVisible = false;
     }
 
     private async Task AnimateStepChangeAsync(int previousStep, int newStep)
@@ -68,14 +77,16 @@ public partial class OnboardingPage : ContentPage
 
     private static async Task RevealStepAsync(VisualElement? stepView)
     {
-        if (stepView is null || !UiAnimations.ShouldAnimate(stepView))
+        if (stepView is null)
         {
-            if (stepView is not null)
-            {
-                stepView.Opacity = 1;
-                stepView.IsVisible = true;
-            }
+            return;
+        }
 
+        stepView.IsVisible = true;
+
+        if (!UiAnimations.ShouldAnimate(stepView))
+        {
+            stepView.Opacity = 1;
             return;
         }
 
@@ -100,8 +111,9 @@ public partial class OnboardingPage : ContentPage
         step switch
         {
             0 => WelcomeStep,
-            1 => ConcernStep,
-            2 => DisclaimerStep,
+            1 => OverviewStep,
+            2 => ConcernStep,
+            3 => FinishStep,
             _ => null
         };
 }

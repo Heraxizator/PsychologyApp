@@ -321,13 +321,43 @@ public static partial class AppStrings
 
     public static string OnboardingWelcomeTitle => T("Добро пожаловать", "Welcome");
     public static string OnboardingWelcomeBody => T(
-        "Короткие практики, тесты и психосоматика — офлайн и без осуждения",
-        "Short practices, tests, and psychosomatic insights — offline and judgment-free");
+        "Практики, тесты, психосоматика, молитвы и цитаты — всё работает офлайн и без осуждения.",
+        "Practices, tests, psychosomatic search, prayers, and quotes — all offline and judgment-free.");
+    public static string OnboardingStepOf(int current, int total) =>
+        T($"{current} из {total}", $"{current} of {total}");
+    public static string OnboardingBack => T("Назад", "Back");
+    public static string OnboardingOverviewTitle => T("Что внутри", "What's inside");
+    public static string OnboardingOverviewSubtitle => T(
+        "Пять разделов — выберите нужный в любой момент",
+        "Five sections — open whichever you need anytime");
+    public static string OnboardingModulePracticeHint => T(
+        "Техники и ваши практики",
+        "Techniques and your practices");
+    public static string OnboardingModuleTestsHint => T(
+        "Опросники и тест Люшера",
+        "Questionnaires and the Lüscher test");
+    public static string OnboardingModuleSomaticHint => T(
+        "Поиск причин симптомов",
+        "Find possible causes of symptoms");
+    public static string OnboardingModuleMusicHint => T(
+        "Молитвы и аудио",
+        "Prayers and audio");
+    public static string OnboardingModuleQuotesHint => T(
+        "Цитаты для настроения",
+        "Quotes for motivation");
     public static string OnboardingConcernTitle => T("Что вас беспокоит?", "What troubles you?");
+    public static string OnboardingConcernSubtitle => T(
+        "Подберём первую практику под ваш запрос",
+        "We'll pick a first practice for your needs");
     public static string OnboardingConcernAnxiety => T("Тревога", "Anxiety");
     public static string OnboardingConcernBody => T("Тело / симптомы", "Body / symptoms");
     public static string OnboardingConcernMood => T("Настроение", "Mood");
     public static string OnboardingConcernExplore => T("Просто попробовать", "Just exploring");
+    public static string OnboardingFinishTitle => T("Готово к старту", "Ready to begin");
+    public static string OnboardingFinishSubtitle(string practiceName) => T(
+        $"Рекомендуем начать с «{practiceName}»",
+        $"We recommend starting with \"{practiceName}\"");
+    public static string OnboardingRecommendedCaption => T("Рекомендуемая практика", "Recommended practice");
     public static string OnboardingDisclaimerTitle => T("Важно", "Important");
     public static string OnboardingDisclaimerBody => T(
         "Приложение не заменяет профессиональную помощь. При тяжёлых состояниях обратитесь к специалисту.",

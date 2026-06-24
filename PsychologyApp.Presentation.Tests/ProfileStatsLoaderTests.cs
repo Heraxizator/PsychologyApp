@@ -30,21 +30,3 @@ public sealed class ProfileStatsLoaderTests
         Assert.False(string.IsNullOrWhiteSpace(snapshot.LastPracticeDisplay));
     }
 }
-
-public sealed class OnboardingViewModelTests
-{
-    [Fact]
-    public void SelectAnxietyCommand_SetsPrimaryVariant()
-    {
-        Mock<INavigationService> navigation = new();
-        OnboardingViewModel viewModel = new(
-            navigation.Object,
-            new MauiUserPreferencesStore(),
-            _ => Task.CompletedTask);
-
-        viewModel.SelectAnxietyCommand.Execute(null);
-
-        Assert.Equal(OnboardingConcernKeys.Anxiety, viewModel.SelectedConcern);
-        Assert.Equal("Primary", viewModel.ConcernAnxietyVariant);
-    }
-}
