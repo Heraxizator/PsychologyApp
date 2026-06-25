@@ -1,6 +1,8 @@
 using Microsoft.Extensions.Logging;
 using PsychologyApp.Application.Exceptions;
+using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
+using PsychologyApp.Presentation.Shared.Services.Toasts;
 
 namespace PsychologyApp.Presentation.Shared.Common;
 
@@ -8,16 +10,23 @@ public sealed class GlobalExceptionHandler
 {
     private readonly ILogger<GlobalExceptionHandler> _logger;
     private readonly IDialogService _dialogService;
+    private readonly IToastService _toastService;
 
-    public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger, IDialogService dialogService)
+    public GlobalExceptionHandler(
+        ILogger<GlobalExceptionHandler> logger,
+        IDialogService dialogService,
+        IToastService toastService)
     {
         _logger = logger;
         _dialogService = dialogService;
+        _toastService = toastService;
     }
 
     public void Attach(Microsoft.Maui.Controls.Application application)
     {
         AsyncCommandExtensions.DefaultErrorHandler = ex => LogAndNotify(ex, "Background task failed");
+        NavigationCoordinator.NavigationDroppedHandler = () =>
+            _toastService.ShortToast(AppStrings.UnexpectedErrorMessage);
         application.HandlerChanged += OnHandlerChanged;
         AppDomain.CurrentDomain.UnhandledException += OnDomainUnhandled;
         TaskScheduler.UnobservedTaskException += OnUnobservedTask;

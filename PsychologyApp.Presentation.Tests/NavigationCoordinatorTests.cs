@@ -58,7 +58,7 @@ public sealed class NavigationCoordinatorTests
             Assert.False(secondExecuted);
             logger.Verify(
                 x => x.Log(
-                    LogLevel.Debug,
+                    LogLevel.Warning,
                     It.IsAny<EventId>(),
                     It.Is<It.IsAnyType>((state, _) => state.ToString()!.Contains("gate busy", StringComparison.OrdinalIgnoreCase)),
                     It.IsAny<Exception>(),

@@ -126,16 +126,13 @@
 
                         <Border
                             Grid.Column="2"
-                            WidthRequest="40"
-                            HeightRequest="40"
-                            Style="{StaticResource FilterChipStyle}"
-                            VerticalOptions="Center">
+                            Style="{StaticResource PlayerTransportButtonStyle}">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding PlayPreviousCommand}" />
                             </Border.GestureRecognizers>
                             <ui:MaterialIconView
                                 IconName="SkipPrevious"
-                                IconSize="26"
+                                IconSize="24"
                                 IconColor="{DynamicResource Primary}"
                                 HorizontalOptions="Center"
                                 VerticalOptions="Center" />
@@ -143,21 +140,14 @@
 
                         <Border
                             Grid.Column="3"
-                            WidthRequest="48"
-                            HeightRequest="48"
-                            StrokeThickness="0"
-                            BackgroundColor="{DynamicResource Primary}"
-                            VerticalOptions="Center">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="24" />
-                            </Border.StrokeShape>
+                            Style="{StaticResource PlayerPlayButtonStyle}">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding TogglePlayPauseCommand}" />
                             </Border.GestureRecognizers>
                             <Grid>
                                 <ui:MaterialIconView
                                     IconName="PlayArrow"
-                                    IconSize="30"
+                                    IconSize="28"
                                     IconColor="White"
                                     HorizontalOptions="Center"
                                     VerticalOptions="Center">
@@ -172,7 +162,7 @@
                                 </ui:MaterialIconView>
                                 <ui:MaterialIconView
                                     IconName="Pause"
-                                    IconSize="30"
+                                    IconSize="28"
                                     IconColor="White"
                                     IsVisible="False"
                                     HorizontalOptions="Center"
@@ -191,16 +181,13 @@
 
                         <Border
                             Grid.Column="4"
-                            WidthRequest="40"
-                            HeightRequest="40"
-                            Style="{StaticResource FilterChipStyle}"
-                            VerticalOptions="Center">
+                            Style="{StaticResource PlayerTransportButtonStyle}">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding PlayNextCommand}" />
                             </Border.GestureRecognizers>
                             <ui:MaterialIconView
                                 IconName="SkipNext"
-                                IconSize="26"
+                                IconSize="24"
                                 IconColor="{DynamicResource Primary}"
                                 HorizontalOptions="Center"
                                 VerticalOptions="Center" />
