@@ -69,6 +69,7 @@ public sealed class ShellStartupCoordinator(
                 OnboardingPage onboardingPage = new(onboardingViewModelFactory, async techniqueId =>
                 {
                     await navigation.PopModalAsync(true);
+                    await Task.Yield();
                     await onTechniqueSelected(techniqueId);
                 });
 

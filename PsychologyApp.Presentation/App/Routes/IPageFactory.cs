@@ -48,5 +48,5 @@ public interface IPageFactory
     TestResultPage CreateTestResultPage(TestResultInfo result);
     CreatedPage CreateCreatedPage(long techniqueId);
     DesignerPage CreateDesignerPage(long techniqueId);
-    TechniqueSessionPage CreateTechniqueSessionPage(TechniqueId techniqueId);
+    TechniqueSessionPage CreateTechniqueSessionPage(TechniqueId techniqueId, INavigation hostNavigation);
 }

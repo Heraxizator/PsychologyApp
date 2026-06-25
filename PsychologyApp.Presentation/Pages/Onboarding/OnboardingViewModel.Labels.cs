@@ -7,11 +7,17 @@ public partial class OnboardingViewModel
 {
     public string WelcomeTitle => AppStrings.OnboardingWelcomeTitle;
     public string WelcomeBody => AppStrings.OnboardingWelcomeBody;
-    public string AppName => AppStrings.QuoteShareFooter;
+    public string AppName => AppStrings.OnboardingAppName;
+    public string AppTagline => AppStrings.OnboardingAppTagline;
+    public string ValueOfflineLabel => AppStrings.OnboardingValueOffline;
+    public string ValueNoJudgmentLabel => AppStrings.OnboardingValueNoJudgment;
+    public string ValueOnDeviceLabel => AppStrings.OnboardingValueOnDevice;
     public string OverviewTitle => AppStrings.OnboardingOverviewTitle;
     public string OverviewSubtitle => AppStrings.OnboardingOverviewSubtitle;
+    public string OverviewLead => AppStrings.OnboardingOverviewLead;
     public string ConcernTitle => AppStrings.OnboardingConcernTitle;
     public string ConcernSubtitle => AppStrings.OnboardingConcernSubtitle;
+    public string ConcernFooterHint => AppStrings.OnboardingConcernFooterHint;
     public string FinishTitle => AppStrings.OnboardingFinishTitle;
     public string FinishSubtitle => AppStrings.OnboardingFinishSubtitle(RecommendedTitle);
     public string RecommendedCaption => AppStrings.OnboardingRecommendedCaption;
@@ -38,6 +44,20 @@ public partial class OnboardingViewModel
     public string ConcernBody => AppStrings.OnboardingConcernBody;
     public string ConcernMood => AppStrings.OnboardingConcernMood;
     public string ConcernExplore => AppStrings.OnboardingConcernExplore;
+    public string ConcernAnxietyHint => AppStrings.OnboardingConcernAnxietyHint;
+    public string ConcernBodyHint => AppStrings.OnboardingConcernBodyHint;
+    public string ConcernMoodHint => AppStrings.OnboardingConcernMoodHint;
+    public string ConcernExploreHint => AppStrings.OnboardingConcernExploreHint;
+
+    public string ConcernAnxietyIcon => "Psychology";
+    public string ConcernBodyIcon => "MonitorHeart";
+    public string ConcernMoodIcon => "SentimentSatisfied";
+    public string ConcernExploreIcon => "Explore";
+
+    public bool ConcernAnxietyIsSelected => SelectedConcern == OnboardingConcernKeys.Anxiety;
+    public bool ConcernBodyIsSelected => SelectedConcern == OnboardingConcernKeys.Body;
+    public bool ConcernMoodIsSelected => SelectedConcern == OnboardingConcernKeys.Mood;
+    public bool ConcernExploreIsSelected => SelectedConcern == OnboardingConcernKeys.Explore;
 
     public string ConcernAnxietyVariant => SelectedConcern == OnboardingConcernKeys.Anxiety ? "Primary" : "Secondary";
     public string ConcernBodyVariant => SelectedConcern == OnboardingConcernKeys.Body ? "Primary" : "Secondary";
@@ -50,10 +70,16 @@ public partial class OnboardingViewModel
             nameof(WelcomeTitle),
             nameof(WelcomeBody),
             nameof(AppName),
+            nameof(AppTagline),
+            nameof(ValueOfflineLabel),
+            nameof(ValueNoJudgmentLabel),
+            nameof(ValueOnDeviceLabel),
             nameof(OverviewTitle),
             nameof(OverviewSubtitle),
+            nameof(OverviewLead),
             nameof(ConcernTitle),
             nameof(ConcernSubtitle),
+            nameof(ConcernFooterHint),
             nameof(FinishTitle),
             nameof(FinishSubtitle),
             nameof(RecommendedCaption),
@@ -77,7 +103,11 @@ public partial class OnboardingViewModel
             nameof(ConcernAnxiety),
             nameof(ConcernBody),
             nameof(ConcernMood),
-            nameof(ConcernExplore));
+            nameof(ConcernExplore),
+            nameof(ConcernAnxietyHint),
+            nameof(ConcernBodyHint),
+            nameof(ConcernMoodHint),
+            nameof(ConcernExploreHint));
         NotifyConcernSelection();
         NotifyRecommendation();
     }
@@ -88,6 +118,10 @@ public partial class OnboardingViewModel
             nameof(ConcernAnxietyVariant),
             nameof(ConcernBodyVariant),
             nameof(ConcernMoodVariant),
-            nameof(ConcernExploreVariant));
+            nameof(ConcernExploreVariant),
+            nameof(ConcernAnxietyIsSelected),
+            nameof(ConcernBodyIsSelected),
+            nameof(ConcernMoodIsSelected),
+            nameof(ConcernExploreIsSelected));
     }
 }

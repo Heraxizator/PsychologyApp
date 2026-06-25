@@ -16,6 +16,7 @@ namespace PsychologyApp.Presentation.App;
 
 public partial class AppShell : Shell
 {
+    public ShellContent PracticeShellTab => PracticeTab;
     public ShellContent TestsTab => DetectorTab;
     public ShellContent QuotesShellTab => QuotesTab;
 
@@ -356,7 +357,7 @@ public partial class AppShell : Shell
         _ => _pageFactory.CreateTechniquesPage()
     };
 
-    private void OpenPendingTechniqueIfNeeded()
+    public void OpenPendingTechniqueIfNeeded()
     {
         if (PracticeTab.Content is not ContentPage { BindingContext: TechniquesViewModel viewModel })
         {

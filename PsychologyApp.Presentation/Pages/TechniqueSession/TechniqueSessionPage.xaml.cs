@@ -16,11 +16,12 @@ public partial class TechniqueSessionPage : ContentPage
     public TechniqueSessionPage(
         ITechniqueViewModelFactory techniqueViewModelFactory,
         IPageAnalyticsService pageAnalyticsService,
-        TechniqueId techniqueId)
+        TechniqueId techniqueId,
+        INavigation hostNavigation)
     {
         AnalyticsService = pageAnalyticsService;
         InitializeComponent();
-        BaseViewModel viewModel = techniqueViewModelFactory.Create(techniqueId, Navigation);
+        BaseViewModel viewModel = techniqueViewModelFactory.Create(techniqueId, hostNavigation);
         BindingContext = viewModel;
         View body = TechniqueBodyFactory.Create(TechniqueCatalog.Get(techniqueId).UiKind);
         body.BindingContext = viewModel;

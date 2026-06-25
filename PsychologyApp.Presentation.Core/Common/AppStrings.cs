@@ -319,41 +319,66 @@ public static partial class AppStrings
     public static string TestResultWorse => T("Хуже прошлого раза", "Worse than last time");
     public static string TestResultSame => T("Как в прошлый раз", "Same as last time");
 
-    public static string OnboardingWelcomeTitle => T("Добро пожаловать", "Welcome");
+    public static string OnboardingAppName => T("PsychologyApp", "PsychologyApp");
+    public static string OnboardingAppTagline => T(
+        "Спокойствие рядом — даже без интернета",
+        "Calm within reach — even offline");
+    public static string OnboardingWelcomeTitle => T("Пространство для себя", "A space for you");
     public static string OnboardingWelcomeBody => T(
-        "Практики, тесты, психосоматика, молитвы и цитаты — всё работает офлайн и без осуждения.",
-        "Practices, tests, psychosomatic search, prayers, and quotes — all offline and judgment-free.");
+        "Здесь можно выдохнуть, разобраться с собой и найти опору — в своём темпе.",
+        "Here you can breathe, understand yourself, and find support — at your own pace.");
+    public static string OnboardingValueOffline => T("Офлайн", "Offline");
+    public static string OnboardingValueNoJudgment => T("Без осуждения", "No judgment");
+    public static string OnboardingValueOnDevice => T("На устройстве", "On your device");
     public static string OnboardingStepOf(int current, int total) =>
         T($"{current} из {total}", $"{current} of {total}");
     public static string OnboardingBack => T("Назад", "Back");
-    public static string OnboardingOverviewTitle => T("Что внутри", "What's inside");
+    public static string OnboardingOverviewTitle => T("Пять опор в одном месте", "Five pillars in one place");
     public static string OnboardingOverviewSubtitle => T(
-        "Пять разделов — выберите нужный в любой момент",
-        "Five sections — open whichever you need anytime");
+        "Практики, тесты, психосоматика, молитвы и цитаты — редкое сочетание в одном компаньоне",
+        "Practices, tests, psychosomatic search, prayers, and quotes — a rare mix in one companion");
+    public static string OnboardingOverviewLead => T(
+        "Всё под рукой в нижней панели",
+        "Everything is one tap away in the tab bar");
     public static string OnboardingModulePracticeHint => T(
-        "Техники и ваши практики",
-        "Techniques and your practices");
+        "Успокоить нервную систему за минуты",
+        "Calm your nervous system in minutes");
     public static string OnboardingModuleTestsHint => T(
-        "Опросники и тест Люшера",
-        "Questionnaires and the Lüscher test");
+        "Узнать себя через опросники и Люшера",
+        "Know yourself through questionnaires and Lüscher");
     public static string OnboardingModuleSomaticHint => T(
-        "Поиск причин симптомов",
-        "Find possible causes of symptoms");
+        "Понять связь тела и эмоций",
+        "Understand the body–emotion link");
     public static string OnboardingModuleMusicHint => T(
-        "Молитвы и аудио",
-        "Prayers and audio");
+        "Найти слова и звук для души",
+        "Find words and sound for the soul");
     public static string OnboardingModuleQuotesHint => T(
-        "Цитаты для настроения",
-        "Quotes for motivation");
+        "Поддержать настроение одной мыслью",
+        "Lift your mood with one thought");
     public static string OnboardingConcernTitle => T("Что вас беспокоит?", "What troubles you?");
     public static string OnboardingConcernSubtitle => T(
         "Подберём первую практику под ваш запрос",
         "We'll pick a first practice for your needs");
+    public static string OnboardingConcernFooterHint => T(
+        "Нажмите на вариант, чтобы продолжить",
+        "Tap an option to continue");
     public static string OnboardingConcernAnxiety => T("Тревога", "Anxiety");
     public static string OnboardingConcernBody => T("Тело / симптомы", "Body / symptoms");
     public static string OnboardingConcernMood => T("Настроение", "Mood");
     public static string OnboardingConcernExplore => T("Просто попробовать", "Just exploring");
-    public static string OnboardingFinishTitle => T("Готово к старту", "Ready to begin");
+    public static string OnboardingConcernAnxietyHint => T(
+        "Когда мысли не отпускают",
+        "When thoughts won't let go");
+    public static string OnboardingConcernBodyHint => T(
+        "Когда тело сигналит о стрессе",
+        "When your body signals stress");
+    public static string OnboardingConcernMoodHint => T(
+        "Когда тяжело внутри",
+        "When it feels heavy inside");
+    public static string OnboardingConcernExploreHint => T(
+        "Хочу просто посмотреть",
+        "I just want to look around");
+    public static string OnboardingFinishTitle => T("Всё готово — начнём?", "All set — shall we begin?");
     public static string OnboardingFinishSubtitle(string practiceName) => T(
         $"Рекомендуем начать с «{practiceName}»",
         $"We recommend starting with \"{practiceName}\"");
@@ -362,7 +387,7 @@ public static partial class AppStrings
     public static string OnboardingDisclaimerBody => T(
         "Приложение не заменяет профессиональную помощь. При тяжёлых состояниях обратитесь к специалисту.",
         "This app does not replace professional care. Seek a specialist for severe conditions.");
-    public static string OnboardingStart => T("Начать практику", "Start a practice");
+    public static string OnboardingStart => T("Попробовать сейчас", "Try it now");
     public static string OnboardingSkip => T("Пропустить", "Skip");
     public static string OnboardingNext => T("Далее", "Next");
 

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Widgets.Onboarding.OnboardingWelcomeHeroView"
+             x:Name="Root">
+
+    <VerticalStackLayout Spacing="16">
+        <Border Style="{StaticResource TodayBannerStyle}">
+            <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Grid
+                    WidthRequest="128"
+                    HeightRequest="128"
+                    HorizontalOptions="Center"
+                    Margin="0,4,0,0">
+                    <Border
+                        x:Name="LogoHalo"
+                        WidthRequest="120"
+                        HeightRequest="120"
+                        StrokeThickness="0"
+                        BackgroundColor="#1A0085FF"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="30" />
+                        </Border.StrokeShape>
+                    </Border>
+                    <Border
+                        WidthRequest="96"
+                        HeightRequest="96"
+                        StrokeThickness="0"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="22" />
+                        </Border.StrokeShape>
+                        <Image
+                            x:Name="LogoImage"
+                            Source="onboarding_app_logo"
+                            WidthRequest="80"
+                            HeightRequest="80"
+                            Aspect="AspectFit"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center" />
+                    </Border>
+                </Grid>
+                <Label
+                    Text="{Binding Source={x:Reference Root}, Path=AppName}"
+                    Style="{StaticResource ListRowTitleStyle}"
+                    HorizontalTextAlignment="Center" />
+                <Label
+                    Text="{Binding Source={x:Reference Root}, Path=AppTagline}"
+                    Style="{StaticResource CaptionStyle}"
+                    TextColor="{DynamicResource Primary}"
+                    HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+        </Border>
+        <Label
+            Text="{Binding Source={x:Reference Root}, Path=WelcomeTitle}"
+            Style="{StaticResource PageTitleStyle}" />
+        <Label
+            Text="{Binding Source={x:Reference Root}, Path=WelcomeBody}"
+            Style="{StaticResource BodyStyle}" />
+    </VerticalStackLayout>
+
+</ContentView>

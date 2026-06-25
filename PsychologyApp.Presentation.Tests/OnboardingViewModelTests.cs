@@ -91,4 +91,70 @@ public sealed class OnboardingViewModelTests
         viewModel.Step = 1;
         Assert.Contains("2", viewModel.StepLabel);
     }
+
+    [Fact]
+    public void AppTagline_And_ConcernFooterHint_AreNotEmpty()
+    {
+        OnboardingViewModel viewModel = CreateViewModel();
+
+        Assert.False(string.IsNullOrWhiteSpace(viewModel.AppTagline));
+        Assert.False(string.IsNullOrWhiteSpace(viewModel.ConcernFooterHint));
+    }
+
+    [Fact]
+    public void IsConcernFooterVisible_OnlyOnConcernStep()
+    {
+        OnboardingViewModel viewModel = CreateViewModel();
+
+        Assert.False(viewModel.IsConcernFooterVisible);
+
+        viewModel.Step = 1;
+        Assert.False(viewModel.IsConcernFooterVisible);
+
+        viewModel.Step = 2;
+        Assert.True(viewModel.IsConcernFooterVisible);
+
+        viewModel.Step = 3;
+        Assert.False(viewModel.IsConcernFooterVisible);
+    }
+
+    [Fact]
+    public void IsStepLabelOnIndicatorVisible_OnlyOnWelcomeStep()
+    {
+        OnboardingViewModel viewModel = CreateViewModel();
+
+        Assert.True(viewModel.IsStepLabelOnIndicatorVisible);
+
+        viewModel.Step = 1;
+        Assert.False(viewModel.IsStepLabelOnIndicatorVisible);
+    }
+
+    [Fact]
+    public void ValueStripLabels_AreNotEmpty()
+    {
+        OnboardingViewModel viewModel = CreateViewModel();
+
+        Assert.False(string.IsNullOrWhiteSpace(viewModel.ValueOfflineLabel));
+        Assert.False(string.IsNullOrWhiteSpace(viewModel.ValueNoJudgmentLabel));
+        Assert.False(string.IsNullOrWhiteSpace(viewModel.ValueOnDeviceLabel));
+    }
+
+    [Fact]
+    public void ConcernHints_AreNotEmpty()
+    {
+        OnboardingViewModel viewModel = CreateViewModel();
+
+        Assert.False(string.IsNullOrWhiteSpace(viewModel.ConcernAnxietyHint));
+        Assert.False(string.IsNullOrWhiteSpace(viewModel.ConcernBodyHint));
+        Assert.False(string.IsNullOrWhiteSpace(viewModel.ConcernMoodHint));
+        Assert.False(string.IsNullOrWhiteSpace(viewModel.ConcernExploreHint));
+    }
+
+    [Fact]
+    public void StartLabel_UsesTryItNowCopy()
+    {
+        OnboardingViewModel viewModel = CreateViewModel();
+
+        Assert.Equal(AppStrings.OnboardingStart, viewModel.StartLabel);
+    }
 }

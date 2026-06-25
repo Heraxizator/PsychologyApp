@@ -46,8 +46,13 @@ Onboarding widgets (`Widgets/Onboarding/`):
 
 | Widget | Use when |
 |--------|----------|
-| `OnboardingStepIndicatorView` | Progress dots + `StepLabel` ("1 of 4") |
-| `OnboardingModuleRowView` | App section overview row (icon + title + hint) |
+| `OnboardingStepIndicatorView` | Progress dots + optional `StepLabel` (`ShowStepLabel`) |
+| `OnboardingWelcomeHeroView` | Welcome step branding (logo halo, name, tagline, copy) |
+| `OnboardingValueStripView` | Welcome trust pills (offline, no judgment, on device) |
+| `OnboardingOverviewBannerView` | Overview step tab-icon strip + lead line |
+| `OnboardingModuleRowView` | App section overview row (accent bar + icon + title + hint) |
+| `OnboardingConcernOptionView` | Tappable concern picker row (icon + title + empathy subtitle) |
+| `OnboardingFinishHeaderView` | Finish step celebration check circle |
 | `OnboardingRecommendationPreviewView` | Finish step practice preview (read-only) |
 
 ## Rules for new UI

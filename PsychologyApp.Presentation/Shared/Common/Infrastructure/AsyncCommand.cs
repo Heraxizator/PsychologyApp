@@ -36,6 +36,17 @@ public sealed class AsyncCommand : ICommand
             RaiseCanExecuteChanged();
             await _execute().ConfigureAwait(false);
         }
+        catch (Exception ex)
+        {
+            if (AsyncCommandExtensions.DefaultErrorHandler is Action<Exception> handler)
+            {
+                handler.Invoke(ex);
+            }
+            else
+            {
+                throw;
+            }
+        }
         finally
         {
             Volatile.Write(ref _isExecuting, 0);

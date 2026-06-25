@@ -6,7 +6,9 @@
 
     <VerticalStackLayout Spacing="8">
         <Label
+            x:Name="StepLabelView"
             Text="{Binding StepLabel, Source={x:Reference Root}}"
+            IsVisible="{Binding ShowStepLabel, Source={x:Reference Root}}"
             Style="{StaticResource CaptionStyle}"
             HorizontalTextAlignment="Center"
             TextColor="{DynamicResource Primary}" />
