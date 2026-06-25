@@ -3,12 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Pages.TechniqueSession.TechniqueSessionPage"
              xmlns:controls="clr-namespace:PsychologyApp.Presentation.Widgets.TechniqueSessionShell"
-             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Widgets.TechniqueSessionShell"
+             xmlns:shellBehaviors="clr-namespace:PsychologyApp.Presentation.Widgets.TechniqueSessionShell"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              Shell.NavBarIsVisible="False"
              Title="{Binding TechniquePageTitle}">
 
     <ContentPage.Behaviors>
-        <behaviors:TechniqueSessionBehavior />
+        <shellBehaviors:TechniqueSessionBehavior />
     </ContentPage.Behaviors>
 
     <ContentPage.ToolbarItems>
