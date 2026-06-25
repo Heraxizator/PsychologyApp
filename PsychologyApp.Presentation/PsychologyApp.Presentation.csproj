@@ -64,7 +64,8 @@
 	<!-- Release Android: verify trim/AOT on device before enabling in production. -->
 	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Release'">
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
-	  <EnableLLVM>True</EnableLLVM>
+	  <!-- LLVM can cause native startup crashes on some devices; re-enable after device QA. -->
+	  <EnableLLVM>False</EnableLLVM>
 	  <IsPublishable>False</IsPublishable>
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
@@ -152,6 +153,11 @@
 		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
 	
 		<TrimmerRootAssembly Include="CommunityToolkit.Maui" RootMode="All" />
+		<TrimmerRootAssembly Include="CommunityToolkit.Maui.Core" RootMode="All" />
+		<TrimmerRootAssembly Include="CommunityToolkit.Maui.MediaElement" RootMode="All" />
+		<TrimmerRootAssembly Include="MauiIcons.Core" RootMode="All" />
+		<TrimmerRootAssembly Include="MauiIcons.Material" RootMode="All" />
+		<TrimmerRootAssembly Include="MvvmHelpers" RootMode="All" />
 		<TrimmerRootAssembly Include="Dapper" RootMode="All" />
 		<TrimmerRootAssembly Include="Microsoft.Data.Sqlite" RootMode="All" />
 		<TrimmerRootAssembly Include="System.Text.Json" RootMode="All" />

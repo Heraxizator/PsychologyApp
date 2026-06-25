@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.ApplicationModel;
 
 namespace PsychologyApp.Presentation.Shared.Navigation;
 
@@ -10,6 +11,8 @@ internal static class NavigationCoordinator
     private static ILogger? _logger;
 
     internal static void SetLogger(ILogger logger) => _logger = logger;
+
+    internal static Action? NavigationDroppedHandler { get; set; }
 
     public static Task RunAsync(Func<Task> navigate) =>
         RunCoreAsync(navigate, applyPushCooldown: false);
@@ -41,16 +44,17 @@ internal static class NavigationCoordinator
 
         if (!acquired)
         {
-            _logger?.LogDebug(
-                waitForGate
-                    ? "Navigation dropped: coordinator gate timeout."
-                    : "Navigation dropped: coordinator gate busy.");
+            string message = waitForGate
+                ? "Navigation dropped: coordinator gate timeout."
+                : "Navigation dropped: coordinator gate busy.";
+            _logger?.LogWarning(message);
+            NavigationDroppedHandler?.Invoke();
             return;
         }
 
         try
         {
-            await navigate().ConfigureAwait(false);
+            await MainThread.InvokeOnMainThreadAsync(navigate).ConfigureAwait(false);
         }
         finally
         {

@@ -126,9 +126,18 @@ public partial class AppShell : Shell
         UpdateTabPageTitle(QuotesTab);
     }
 
+    private static ContentPage? GetTabRootPage(ShellContent tab) =>
+        tab.Content switch
+        {
+            ContentPage page => page,
+            NavigationPage navigationPage => navigationPage.RootPage as ContentPage
+                ?? navigationPage.CurrentPage as ContentPage,
+            _ => null
+        };
+
     private static void UpdateTabPageTitle(ShellContent tab)
     {
-        if (tab.Content is not ContentPage page)
+        if (GetTabRootPage(tab) is not ContentPage page)
         {
             return;
         }
@@ -347,19 +356,24 @@ public partial class AppShell : Shell
         }
     }
 
-    private ContentPage CreateTabPage(int index) => index switch
+    private Page CreateTabPage(int index)
     {
-        0 => _pageFactory.CreateTechniquesPage(),
-        1 => _pageFactory.CreateTestsListPage(),
-        2 => _pageFactory.CreateStartPhysicsPage(),
-        3 => _pageFactory.CreateMusicPlayerPage(),
-        4 => _pageFactory.CreateQuotePage(),
-        _ => _pageFactory.CreateTechniquesPage()
-    };
+        ContentPage root = index switch
+        {
+            0 => _pageFactory.CreateTechniquesPage(),
+            1 => _pageFactory.CreateTestsListPage(),
+            2 => _pageFactory.CreateStartPhysicsPage(),
+            3 => _pageFactory.CreateMusicPlayerPage(),
+            4 => _pageFactory.CreateQuotePage(),
+            _ => _pageFactory.CreateTechniquesPage()
+        };
+
+        return new NavigationPage(root);
+    }
 
     public void OpenPendingTechniqueIfNeeded()
     {
-        if (PracticeTab.Content is not ContentPage { BindingContext: TechniquesViewModel viewModel })
+        if (GetTabRootPage(PracticeTab) is not ContentPage { BindingContext: TechniquesViewModel viewModel })
         {
             return;
         }
