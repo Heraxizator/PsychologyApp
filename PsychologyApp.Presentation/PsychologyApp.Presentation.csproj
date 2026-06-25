@@ -69,9 +69,9 @@
 	  <IsPublishable>False</IsPublishable>
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
-	  <PublishTrimmed>True</PublishTrimmed>
-	  <TrimMode>link</TrimMode>
-	  <!-- AOT off until verified on device; trim + roots keep Release APK lean. -->
+	  <PublishTrimmed>False</PublishTrimmed>
+	  <TrimMode>copyused</TrimMode>
+	  <!-- Trim off until verified on device; roots kept for future re-enable. -->
 	  <RunAOTCompilation>False</RunAOTCompilation>
 	  <DebugSymbols>False</DebugSymbols>
 	  <AndroidIncludeDebugSymbols>False</AndroidIncludeDebugSymbols>
@@ -103,11 +103,16 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
-	  <RunAOTCompilation>False</RunAOTCompilation>
+	  <RunAOTCompilation>True</RunAOTCompilation>
+	  <AndroidEnableProfiledAot>True</AndroidEnableProfiledAot>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
-	  <RunAOTCompilation>False</RunAOTCompilation>
+	  <RunAOTCompilation>True</RunAOTCompilation>
+	  <EnableLLVM>True</EnableLLVM>
+	  <AndroidEnableProfiledAot>True</AndroidEnableProfiledAot>
+	  <PublishTrimmed>True</PublishTrimmed>
+	  <TrimMode>copyused</TrimMode>
 	</PropertyGroup>
 
 	<ItemGroup>

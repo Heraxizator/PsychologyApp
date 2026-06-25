@@ -127,13 +127,7 @@ public partial class AppShell : Shell
     }
 
     private static ContentPage? GetTabRootPage(ShellContent tab) =>
-        tab.Content switch
-        {
-            ContentPage page => page,
-            NavigationPage navigationPage => navigationPage.RootPage as ContentPage
-                ?? navigationPage.CurrentPage as ContentPage,
-            _ => null
-        };
+        tab.Content as ContentPage;
 
     private static void UpdateTabPageTitle(ShellContent tab)
     {
@@ -356,20 +350,15 @@ public partial class AppShell : Shell
         }
     }
 
-    private Page CreateTabPage(int index)
+    private ContentPage CreateTabPage(int index) => index switch
     {
-        ContentPage root = index switch
-        {
-            0 => _pageFactory.CreateTechniquesPage(),
-            1 => _pageFactory.CreateTestsListPage(),
-            2 => _pageFactory.CreateStartPhysicsPage(),
-            3 => _pageFactory.CreateMusicPlayerPage(),
-            4 => _pageFactory.CreateQuotePage(),
-            _ => _pageFactory.CreateTechniquesPage()
-        };
-
-        return new NavigationPage(root);
-    }
+        0 => _pageFactory.CreateTechniquesPage(),
+        1 => _pageFactory.CreateTestsListPage(),
+        2 => _pageFactory.CreateStartPhysicsPage(),
+        3 => _pageFactory.CreateMusicPlayerPage(),
+        4 => _pageFactory.CreateQuotePage(),
+        _ => _pageFactory.CreateTechniquesPage()
+    };
 
     public void OpenPendingTechniqueIfNeeded()
     {
