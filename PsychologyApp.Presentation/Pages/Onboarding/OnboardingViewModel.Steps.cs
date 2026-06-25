@@ -25,7 +25,9 @@ public partial class OnboardingViewModel
     public bool IsFinishStep => Step == 3;
     public bool IsBackVisible => Step > 0;
     public bool IsNextFooterVisible => Step < 2;
+    public bool IsConcernFooterVisible => Step == 2;
     public bool IsFinishFooterVisible => Step == 3;
+    public bool IsStepLabelOnIndicatorVisible => Step == 0;
 
     private string _selectedConcern = string.Empty;
     public string SelectedConcern
@@ -50,7 +52,9 @@ public partial class OnboardingViewModel
             nameof(IsFinishStep),
             nameof(IsBackVisible),
             nameof(IsNextFooterVisible),
+            nameof(IsConcernFooterVisible),
             nameof(IsFinishFooterVisible),
+            nameof(IsStepLabelOnIndicatorVisible),
             nameof(StepLabel));
     }
 }

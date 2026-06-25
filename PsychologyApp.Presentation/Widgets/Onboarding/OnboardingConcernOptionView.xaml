@@ -2,21 +2,28 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
-             x:Class="PsychologyApp.Presentation.Widgets.Onboarding.OnboardingModuleRowView"
+             x:Class="PsychologyApp.Presentation.Widgets.Onboarding.OnboardingConcernOptionView"
              x:Name="Root">
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Border Style="{StaticResource BrandCardStyle}">
-                <Grid ColumnDefinitions="3,Auto,*" ColumnSpacing="12">
-                    <BoxView
-                        Grid.Column="0"
-                        WidthRequest="3"
-                        Color="{DynamicResource Primary}"
-                        VerticalOptions="Fill"
-                        HorizontalOptions="Start" />
+            <Border x:Name="OptionBorder" Style="{StaticResource BrandCardStyle}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnOptionTapped" />
+                </Border.GestureRecognizers>
+                <Border.Triggers>
+                    <DataTrigger
+                        Binding="{TemplateBinding IsSelected}"
+                        TargetType="Border"
+                        Value="True">
+                        <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                        <Setter Property="StrokeThickness" Value="1.5" />
+                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
+                    </DataTrigger>
+                </Border.Triggers>
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
                     <Border
-                        Grid.Column="1"
+                        Grid.Column="0"
                         WidthRequest="44"
                         HeightRequest="44"
                         StrokeThickness="0"
@@ -34,17 +41,18 @@
                             IconColor="{DynamicResource Primary}" />
                     </Border>
                     <VerticalStackLayout
-                        Grid.Column="2"
+                        Grid.Column="1"
                         Spacing="2"
                         VerticalOptions="Center">
                         <Label
                             Text="{TemplateBinding Title}"
                             Style="{StaticResource ListRowTitleStyle}"
-                            MaxLines="1"
+                            MaxLines="2"
                             LineBreakMode="TailTruncation" />
                         <Label
                             Text="{TemplateBinding Subtitle}"
                             Style="{StaticResource CaptionStyle}"
+                            TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
                             MaxLines="2"
                             LineBreakMode="TailTruncation" />
                     </VerticalStackLayout>

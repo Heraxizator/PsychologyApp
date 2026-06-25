@@ -113,8 +113,8 @@ public sealed class PageRegistry(
     public DesignerPage CreateDesignerPage(long techniqueId) =>
         WithPressFeedback(techniquePageFactory.CreateDesignerPage(techniqueId));
 
-    public TechniqueSessionPage CreateTechniqueSessionPage(TechniqueId techniqueId) =>
-        WithPressFeedback(techniquePageFactory.CreateTechniqueSessionPage(techniqueId));
+    public TechniqueSessionPage CreateTechniqueSessionPage(TechniqueId techniqueId, INavigation hostNavigation) =>
+        WithPressFeedback(techniquePageFactory.CreateTechniqueSessionPage(techniqueId, hostNavigation));
 
     private static TPage WithPressFeedback<TPage>(TPage page) where TPage : ContentPage
     {

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             x:Class="PsychologyApp.Presentation.Widgets.Onboarding.OnboardingOverviewBannerView"
+             x:Name="Root">
+
+    <Border Style="{StaticResource MoodStripStyle}">
+        <VerticalStackLayout Spacing="10">
+            <HorizontalStackLayout
+                Spacing="10"
+                HorizontalOptions="Center">
+                <Border
+                    x:Name="PracticeIconBorder"
+                    WidthRequest="40"
+                    HeightRequest="40"
+                    StrokeThickness="0"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <ui:MaterialIconView
+                        IconName="AutoAwesome"
+                        IconColor="{DynamicResource Primary}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+                </Border>
+                <Border
+                    x:Name="TestsIconBorder"
+                    WidthRequest="40"
+                    HeightRequest="40"
+                    StrokeThickness="0"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <ui:MaterialIconView
+                        IconName="Insights"
+                        IconColor="{DynamicResource Primary}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+                </Border>
+                <Border
+                    x:Name="SomaticIconBorder"
+                    WidthRequest="40"
+                    HeightRequest="40"
+                    StrokeThickness="0"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <ui:MaterialIconView
+                        IconName="Favorite"
+                        IconColor="{DynamicResource Primary}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+                </Border>
+                <Border
+                    x:Name="MusicIconBorder"
+                    WidthRequest="40"
+                    HeightRequest="40"
+                    StrokeThickness="0"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <ui:MaterialIconView
+                        IconName="MenuBook"
+                        IconColor="{DynamicResource Primary}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+                </Border>
+                <Border
+                    x:Name="QuotesIconBorder"
+                    WidthRequest="40"
+                    HeightRequest="40"
+                    StrokeThickness="0"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray900}}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <ui:MaterialIconView
+                        IconName="Lightbulb"
+                        IconColor="{DynamicResource Primary}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+                </Border>
+            </HorizontalStackLayout>
+            <Label
+                Text="{Binding Source={x:Reference Root}, Path=LeadText}"
+                Style="{StaticResource CaptionStyle}"
+                TextColor="{DynamicResource Primary}"
+                HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+    </Border>
+
+</ContentView>

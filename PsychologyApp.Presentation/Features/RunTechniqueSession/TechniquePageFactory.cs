@@ -14,7 +14,7 @@ public interface ITechniquePageFactory
     TechniquesPage CreateTechniquesPage();
     CreatedPage CreateCreatedPage(long techniqueId);
     DesignerPage CreateDesignerPage(long techniqueId);
-    TechniqueSessionPage CreateTechniqueSessionPage(TechniqueId techniqueId);
+    TechniqueSessionPage CreateTechniqueSessionPage(TechniqueId techniqueId, INavigation hostNavigation);
 }
 
 public sealed class TechniquePageFactory(
@@ -34,6 +34,6 @@ public sealed class TechniquePageFactory(
     public DesignerPage CreateDesignerPage(long techniqueId) =>
         new(pageViewModelActivator, designerViewModelFactory, techniqueId);
 
-    public TechniqueSessionPage CreateTechniqueSessionPage(TechniqueId techniqueId) =>
-        new(techniqueViewModelFactory, pageAnalyticsService, techniqueId);
+    public TechniqueSessionPage CreateTechniqueSessionPage(TechniqueId techniqueId, INavigation hostNavigation) =>
+        new(techniqueViewModelFactory, pageAnalyticsService, techniqueId, hostNavigation);
 }

@@ -23,6 +23,9 @@ public partial class OnboardingStepIndicatorView : ContentView
     public static readonly BindableProperty StepLabelProperty =
         BindableProperty.Create(nameof(StepLabel), typeof(string), typeof(OnboardingStepIndicatorView), string.Empty);
 
+    public static readonly BindableProperty ShowStepLabelProperty =
+        BindableProperty.Create(nameof(ShowStepLabel), typeof(bool), typeof(OnboardingStepIndicatorView), true);
+
     public int Step
     {
         get => (int)GetValue(StepProperty);
@@ -39,6 +42,12 @@ public partial class OnboardingStepIndicatorView : ContentView
     {
         get => (string)GetValue(StepLabelProperty);
         set => SetValue(StepLabelProperty, value);
+    }
+
+    public bool ShowStepLabel
+    {
+        get => (bool)GetValue(ShowStepLabelProperty);
+        set => SetValue(ShowStepLabelProperty, value);
     }
 
     private static void OnStepOrCountChanged(BindableObject bindable, object oldValue, object newValue)

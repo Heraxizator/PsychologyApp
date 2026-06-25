@@ -6,122 +6,154 @@
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:onboarding="clr-namespace:PsychologyApp.Presentation.Widgets.Onboarding"
              x:DataType="vm:OnboardingViewModel"
-             Shell.NavBarIsVisible="False"
-             BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray950}}">
+             Shell.NavBarIsVisible="False">
 
     <Grid
         Padding="{StaticResource LayoutTabPageMarginThickness}"
         RowDefinitions="Auto,*,Auto"
         RowSpacing="{StaticResource LayoutSpacing}">
 
-        <VerticalStackLayout Grid.Row="0" Spacing="8">
-            <ui:NavigationBarSimpleView
-                IsVisible="{Binding IsBackVisible}"
-                TitleText="{Binding StepLabel}"
-                BackCommand="{Binding BackCommand}" />
-            <onboarding:OnboardingStepIndicatorView
-                Step="{Binding Step}"
-                StepCount="{x:Static vm:OnboardingViewModel.StepCount}"
-                StepLabel="{Binding StepLabel}" />
-        </VerticalStackLayout>
-
-        <ScrollView Grid.Row="1">
-            <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
-
-                <VerticalStackLayout x:Name="WelcomeStep" IsVisible="False" Spacing="16">
-                    <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
-                        <Border
-                            WidthRequest="72"
-                            HeightRequest="72"
-                            StrokeThickness="0"
-                            BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}"
-                            HorizontalOptions="Center">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="20" />
-                            </Border.StrokeShape>
-                            <ui:MaterialIconView
-                                IconName="AutoAwesome"
-                                IconSize="36"
-                                IconColor="{DynamicResource Primary}"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center" />
-                        </Border>
-                        <Label
-                            Text="{Binding AppName}"
-                            Style="{StaticResource CaptionStyle}"
-                            TextColor="{DynamicResource Primary}"
-                            HorizontalTextAlignment="Center" />
-                    </VerticalStackLayout>
-                    <Label Text="{Binding WelcomeTitle}" Style="{StaticResource PageTitleStyle}" />
-                    <Label Text="{Binding WelcomeBody}" Style="{StaticResource BodyStyle}" />
-                </VerticalStackLayout>
-
-                <VerticalStackLayout x:Name="OverviewStep" IsVisible="False" Spacing="12">
-                    <Label Text="{Binding OverviewTitle}" Style="{StaticResource PageTitleStyle}" />
-                    <Label Text="{Binding OverviewSubtitle}" Style="{StaticResource BodyStyle}" />
-                    <onboarding:OnboardingModuleRowView
-                        IconName="AutoAwesome"
-                        Title="{Binding ModulePracticeTitle}"
-                        Subtitle="{Binding ModulePracticeHint}" />
-                    <onboarding:OnboardingModuleRowView
-                        IconName="Insights"
-                        Title="{Binding ModuleTestsTitle}"
-                        Subtitle="{Binding ModuleTestsHint}" />
-                    <onboarding:OnboardingModuleRowView
-                        IconName="Favorite"
-                        Title="{Binding ModuleSomaticTitle}"
-                        Subtitle="{Binding ModuleSomaticHint}" />
-                    <onboarding:OnboardingModuleRowView
-                        IconName="MenuBook"
-                        Title="{Binding ModuleMusicTitle}"
-                        Subtitle="{Binding ModuleMusicHint}" />
-                    <onboarding:OnboardingModuleRowView
-                        IconName="Lightbulb"
-                        Title="{Binding ModuleQuotesTitle}"
-                        Subtitle="{Binding ModuleQuotesHint}" />
-                </VerticalStackLayout>
-
-                <VerticalStackLayout x:Name="ConcernStep" IsVisible="False" Spacing="12">
-                    <Label Text="{Binding ConcernTitle}" Style="{StaticResource PageTitleStyle}" />
-                    <Label Text="{Binding ConcernSubtitle}" Style="{StaticResource BodyStyle}" />
-                    <ui:ButtonView Variant="{Binding ConcernAnxietyVariant}" BodyText="{Binding ConcernAnxiety}" TapCommand="{Binding SelectAnxietyCommand}" />
-                    <ui:ButtonView Variant="{Binding ConcernBodyVariant}" BodyText="{Binding ConcernBody}" TapCommand="{Binding SelectBodyCommand}" />
-                    <ui:ButtonView Variant="{Binding ConcernMoodVariant}" BodyText="{Binding ConcernMood}" TapCommand="{Binding SelectMoodCommand}" />
-                    <ui:ButtonView Variant="{Binding ConcernExploreVariant}" BodyText="{Binding ConcernExplore}" TapCommand="{Binding SelectExploreCommand}" />
-                </VerticalStackLayout>
-
-                <VerticalStackLayout x:Name="FinishStep" IsVisible="False" Spacing="12">
-                    <Label Text="{Binding FinishTitle}" Style="{StaticResource PageTitleStyle}" />
-                    <Label Text="{Binding FinishSubtitle}" Style="{StaticResource BodyStyle}" />
-                    <onboarding:OnboardingRecommendationPreviewView
-                        CaptionText="{Binding RecommendedCaption}"
-                        IconName="{Binding RecommendedIconName}"
-                        Title="{Binding RecommendedTitle}"
-                        Subtitle="{Binding RecommendedSubtitle}"
-                        ReasonText="{Binding RecommendedReason}" />
-                    <ui:TextBoxView
-                        HeaderText="{Binding DisclaimerTitle}"
-                        BodyText="{Binding DisclaimerBody}" />
-                </VerticalStackLayout>
-
+            <VerticalStackLayout Grid.Row="0" Spacing="8">
+                <ui:NavigationBarSimpleView
+                    IsVisible="{Binding IsBackVisible}"
+                    TitleText="{Binding StepLabel}"
+                    BackCommand="{Binding BackCommand}" />
+                <onboarding:OnboardingStepIndicatorView
+                    Step="{Binding Step}"
+                    StepCount="{x:Static vm:OnboardingViewModel.StepCount}"
+                    StepLabel="{Binding StepLabel}"
+                    ShowStepLabel="{Binding IsStepLabelOnIndicatorVisible}" />
             </VerticalStackLayout>
-        </ScrollView>
 
-        <VerticalStackLayout Grid.Row="2" Spacing="12">
-            <ui:ButtonView
-                IsVisible="{Binding IsNextFooterVisible}"
-                BodyText="{Binding NextLabel}"
-                TapCommand="{Binding NextCommand}" />
-            <ui:ButtonView
-                IsVisible="{Binding IsFinishFooterVisible}"
-                BodyText="{Binding StartLabel}"
-                TapCommand="{Binding StartPracticeCommand}" />
-            <ui:ButtonView
-                IsVisible="{Binding IsFinishFooterVisible}"
-                Variant="Secondary"
-                BodyText="{Binding SkipLabel}"
-                TapCommand="{Binding SkipCommand}" />
-        </VerticalStackLayout>
+            <ScrollView x:Name="StepScrollView" Grid.Row="1">
+                <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
+
+                    <VerticalStackLayout
+                        x:Name="WelcomeStep"
+                        IsVisible="False"
+                        VerticalOptions="Center"
+                        Spacing="12">
+                        <onboarding:OnboardingWelcomeHeroView
+                            x:Name="WelcomeHero"
+                            AppName="{Binding AppName}"
+                            AppTagline="{Binding AppTagline}"
+                            WelcomeTitle="{Binding WelcomeTitle}"
+                            WelcomeBody="{Binding WelcomeBody}" />
+                        <onboarding:OnboardingValueStripView
+                            OfflineText="{Binding ValueOfflineLabel}"
+                            NoJudgmentText="{Binding ValueNoJudgmentLabel}"
+                            OnDeviceText="{Binding ValueOnDeviceLabel}" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        x:Name="OverviewStep"
+                        IsVisible="False"
+                        VerticalOptions="Center"
+                        Spacing="12">
+                        <Label Text="{Binding OverviewTitle}" Style="{StaticResource PageTitleStyle}" />
+                        <Label Text="{Binding OverviewSubtitle}" Style="{StaticResource BodyStyle}" />
+                        <onboarding:OnboardingOverviewBannerView
+                            x:Name="OverviewBanner"
+                            LeadText="{Binding OverviewLead}" />
+                        <onboarding:OnboardingModuleRowView
+                            IconName="AutoAwesome"
+                            Title="{Binding ModulePracticeTitle}"
+                            Subtitle="{Binding ModulePracticeHint}" />
+                        <onboarding:OnboardingModuleRowView
+                            IconName="Insights"
+                            Title="{Binding ModuleTestsTitle}"
+                            Subtitle="{Binding ModuleTestsHint}" />
+                        <onboarding:OnboardingModuleRowView
+                            IconName="Favorite"
+                            Title="{Binding ModuleSomaticTitle}"
+                            Subtitle="{Binding ModuleSomaticHint}" />
+                        <onboarding:OnboardingModuleRowView
+                            IconName="MenuBook"
+                            Title="{Binding ModuleMusicTitle}"
+                            Subtitle="{Binding ModuleMusicHint}" />
+                        <onboarding:OnboardingModuleRowView
+                            IconName="Lightbulb"
+                            Title="{Binding ModuleQuotesTitle}"
+                            Subtitle="{Binding ModuleQuotesHint}" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        x:Name="ConcernStep"
+                        IsVisible="False"
+                        VerticalOptions="Center"
+                        Spacing="12">
+                        <Label Text="{Binding ConcernTitle}" Style="{StaticResource PageTitleStyle}" />
+                        <Label Text="{Binding ConcernSubtitle}" Style="{StaticResource BodyStyle}" />
+                        <onboarding:OnboardingConcernOptionView
+                            IconName="{Binding ConcernAnxietyIcon}"
+                            Title="{Binding ConcernAnxiety}"
+                            Subtitle="{Binding ConcernAnxietyHint}"
+                            IsSelected="{Binding ConcernAnxietyIsSelected}"
+                            TapCommand="{Binding SelectAnxietyCommand}" />
+                        <onboarding:OnboardingConcernOptionView
+                            IconName="{Binding ConcernBodyIcon}"
+                            Title="{Binding ConcernBody}"
+                            Subtitle="{Binding ConcernBodyHint}"
+                            IsSelected="{Binding ConcernBodyIsSelected}"
+                            TapCommand="{Binding SelectBodyCommand}" />
+                        <onboarding:OnboardingConcernOptionView
+                            IconName="{Binding ConcernMoodIcon}"
+                            Title="{Binding ConcernMood}"
+                            Subtitle="{Binding ConcernMoodHint}"
+                            IsSelected="{Binding ConcernMoodIsSelected}"
+                            TapCommand="{Binding SelectMoodCommand}" />
+                        <onboarding:OnboardingConcernOptionView
+                            IconName="{Binding ConcernExploreIcon}"
+                            Title="{Binding ConcernExplore}"
+                            Subtitle="{Binding ConcernExploreHint}"
+                            IsSelected="{Binding ConcernExploreIsSelected}"
+                            TapCommand="{Binding SelectExploreCommand}" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        x:Name="FinishStep"
+                        IsVisible="False"
+                        VerticalOptions="Center"
+                        Spacing="12">
+                        <onboarding:OnboardingFinishHeaderView x:Name="FinishHeader" />
+                        <Label Text="{Binding FinishTitle}" Style="{StaticResource PageTitleStyle}" />
+                        <Label Text="{Binding FinishSubtitle}" Style="{StaticResource BodyStyle}" />
+                        <onboarding:OnboardingRecommendationPreviewView
+                            x:Name="RecommendationPreview"
+                            CaptionText="{Binding RecommendedCaption}"
+                            IconName="{Binding RecommendedIconName}"
+                            Title="{Binding RecommendedTitle}"
+                            Subtitle="{Binding RecommendedSubtitle}"
+                            ReasonText="{Binding RecommendedReason}" />
+                        <ui:TextBoxView
+                            HeaderText="{Binding DisclaimerTitle}"
+                            BodyText="{Binding DisclaimerBody}" />
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <VerticalStackLayout Grid.Row="2" Spacing="12">
+                <ui:ButtonView
+                    IsVisible="{Binding IsNextFooterVisible}"
+                    BodyText="{Binding NextLabel}"
+                    TapCommand="{Binding NextCommand}" />
+                <Label
+                    IsVisible="{Binding IsConcernFooterVisible}"
+                    Text="{Binding ConcernFooterHint}"
+                    Style="{StaticResource CaptionStyle}"
+                    TextColor="{DynamicResource Primary}"
+                    HorizontalTextAlignment="Center" />
+                <ui:ButtonView
+                    IsVisible="{Binding IsFinishFooterVisible}"
+                    BodyText="{Binding StartLabel}"
+                    TapCommand="{Binding StartPracticeCommand}" />
+                <ui:ButtonView
+                    IsVisible="{Binding IsFinishFooterVisible}"
+                    Variant="Secondary"
+                    BodyText="{Binding SkipLabel}"
+                    TapCommand="{Binding SkipCommand}" />
+            </VerticalStackLayout>
 
     </Grid>
 </ContentPage>

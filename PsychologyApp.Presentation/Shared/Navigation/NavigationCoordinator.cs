@@ -14,24 +14,37 @@ internal static class NavigationCoordinator
     public static Task RunAsync(Func<Task> navigate) =>
         RunCoreAsync(navigate, applyPushCooldown: false);
 
-    public static Task RunPushAsync(Func<Task> navigate) =>
-        RunCoreAsync(navigate, applyPushCooldown: true);
+    private static readonly TimeSpan PushGateWait = TimeSpan.FromMilliseconds(500);
 
-    private static async Task RunCoreAsync(Func<Task> navigate, bool applyPushCooldown)
+    public static Task RunPushAsync(Func<Task> navigate) =>
+        RunCoreAsync(navigate, applyPushCooldown: true, waitForGate: true);
+
+    private static async Task RunCoreAsync(Func<Task> navigate, bool applyPushCooldown, bool waitForGate = false)
     {
         if (applyPushCooldown)
         {
             long now = DateTime.UtcNow.Ticks;
-            if (now < Volatile.Read(ref _pushBlockedUntilUtcTicks))
+            long blockedUntil = Volatile.Read(ref _pushBlockedUntilUtcTicks);
+            if (now < blockedUntil)
             {
-                _logger?.LogDebug("Navigation dropped: push cooldown active.");
-                return;
+                TimeSpan wait = TimeSpan.FromTicks(blockedUntil - now);
+                if (wait > TimeSpan.Zero)
+                {
+                    await Task.Delay(wait).ConfigureAwait(false);
+                }
             }
         }
 
-        if (!await Gate.WaitAsync(0).ConfigureAwait(false))
+        bool acquired = waitForGate
+            ? await Gate.WaitAsync(PushGateWait).ConfigureAwait(false)
+            : await Gate.WaitAsync(0).ConfigureAwait(false);
+
+        if (!acquired)
         {
-            _logger?.LogDebug("Navigation dropped: coordinator gate busy.");
+            _logger?.LogDebug(
+                waitForGate
+                    ? "Navigation dropped: coordinator gate timeout."
+                    : "Navigation dropped: coordinator gate busy.");
             return;
         }
 
