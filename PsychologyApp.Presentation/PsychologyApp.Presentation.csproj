@@ -71,8 +71,9 @@
 	  <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
 	  <PublishTrimmed>False</PublishTrimmed>
 	  <TrimMode>copyused</TrimMode>
-	  <!-- Trim off until verified on device; roots kept for future re-enable. -->
+	  <!-- Trim/AOT off until verified on device; roots kept for future re-enable. -->
 	  <RunAOTCompilation>False</RunAOTCompilation>
+	  <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
 	  <DebugSymbols>False</DebugSymbols>
 	  <AndroidIncludeDebugSymbols>False</AndroidIncludeDebugSymbols>
 	  <AndroidLinkTool>r8</AndroidLinkTool>
@@ -103,16 +104,13 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
-	  <RunAOTCompilation>True</RunAOTCompilation>
-	  <AndroidEnableProfiledAot>True</AndroidEnableProfiledAot>
+	  <RunAOTCompilation>False</RunAOTCompilation>
+	  <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
-	  <RunAOTCompilation>True</RunAOTCompilation>
-	  <EnableLLVM>True</EnableLLVM>
-	  <AndroidEnableProfiledAot>True</AndroidEnableProfiledAot>
-	  <PublishTrimmed>True</PublishTrimmed>
-	  <TrimMode>copyused</TrimMode>
+	  <RunAOTCompilation>False</RunAOTCompilation>
+	  <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
 	</PropertyGroup>
 
 	<ItemGroup>
