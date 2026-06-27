@@ -19,6 +19,8 @@
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<!-- ViewModels are DI-only; nullable init warnings are false positives in partial MAUI types. -->
+		<NoWarn>$(NoWarn);CS8618;CS8625;CS8601;CS8604;CS8600;CS8619;XA4304;XC0022;XC0025;XC0045;CA1416;CS0618</NoWarn>
 
 		<!-- Display name -->
 		<ApplicationTitle>Psychology App</ApplicationTitle>
@@ -38,7 +40,9 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 		<PublishTrimmed>False</PublishTrimmed>
 	
-		<RuntimeIdentifiers Condition="$(TargetFramework.Contains('-android'))">android-arm;android-arm64;android-x64;</RuntimeIdentifiers>
+		<RuntimeIdentifiers Condition="$(TargetFramework.Contains('-android'))">android-arm;android-arm64;android-x64</RuntimeIdentifiers>
+		<RuntimeIdentifiers Condition="$(TargetFramework.Contains('-ios'))">ios-arm64;iossimulator-arm64;iossimulator-x64</RuntimeIdentifiers>
+		<RuntimeIdentifiers Condition="$(TargetFramework.Contains('-maccatalyst'))">maccatalyst-arm64;maccatalyst-x64</RuntimeIdentifiers>
 	
 	</PropertyGroup>
 
@@ -70,13 +74,17 @@
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
 	  <PublishTrimmed>False</PublishTrimmed>
-	  <TrimMode>copyused</TrimMode>
-	  <!-- Trim/AOT off until verified on device; roots kept for future re-enable. -->
+	  <TrimMode>link</TrimMode>
+	  <!-- Full: Mono linker trims app + SDK managed assemblies; R8 (SdkOnly dex) stays via AndroidLinkTool. -->
 	  <RunAOTCompilation>False</RunAOTCompilation>
 	  <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
 	  <DebugSymbols>False</DebugSymbols>
 	  <AndroidIncludeDebugSymbols>False</AndroidIncludeDebugSymbols>
 	  <AndroidLinkTool>r8</AndroidLinkTool>
+	  <AndroidLinkMode>Full</AndroidLinkMode>
+	  <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+	  <!-- Match Debug ABIs for device deploy; avoids mixed native libs on phone. -->
+	  <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-maccatalyst|AnyCPU'">
@@ -111,7 +119,13 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
 	  <RunAOTCompilation>False</RunAOTCompilation>
 	  <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
+	  <TrimMode>link</TrimMode>
+	  <AndroidLinkMode>Full</AndroidLinkMode>
 	</PropertyGroup>
+
+	<ItemGroup Condition="'$(Configuration)' == 'Release' And $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+		<ProguardConfiguration Include="Platforms\Android\proguard-rules.pro" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<!-- App Icon -->
@@ -155,6 +169,11 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.3" />
 		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
 	
+		<TrimmerRootAssembly Include="Microsoft.Maui" RootMode="All" />
+		<TrimmerRootAssembly Include="Microsoft.Maui.Controls" RootMode="All" />
+		<TrimmerRootAssembly Include="Microsoft.Maui.Controls.Xaml" RootMode="All" />
+		<TrimmerRootAssembly Include="Microsoft.Maui.Graphics" RootMode="All" />
+		<TrimmerRootAssembly Include="Microsoft.Maui.Essentials" RootMode="All" />
 		<TrimmerRootAssembly Include="CommunityToolkit.Maui" RootMode="All" />
 		<TrimmerRootAssembly Include="CommunityToolkit.Maui.Core" RootMode="All" />
 		<TrimmerRootAssembly Include="CommunityToolkit.Maui.MediaElement" RootMode="All" />

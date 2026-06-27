@@ -154,14 +154,16 @@ public sealed class MauiNavigationService(
 
     private INavigation ResolveNavigation()
     {
-        if (Microsoft.Maui.Controls.Shell.Current?.CurrentPage?.Navigation is INavigation shellNavigation)
-        {
-            return shellNavigation;
-        }
-
+        // Prefer the navigation stack bound to the page that created this service.
+        // Shell.Current.CurrentPage can be AppShell on Android, which pushes to the wrong stack.
         if (navigation is not null)
         {
             return navigation;
+        }
+
+        if (Microsoft.Maui.Controls.Shell.Current?.CurrentPage?.Navigation is INavigation shellNavigation)
+        {
+            return shellNavigation;
         }
 
         Page? windowPage = Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault()?.Page;

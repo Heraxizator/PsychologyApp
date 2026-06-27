@@ -4,5 +4,5 @@ public sealed class MauiPageHost : IPageHost
 {
     public Page? GetActivePage() =>
         Microsoft.Maui.Controls.Shell.Current?.CurrentPage
-        ?? Microsoft.Maui.Controls.Application.Current?.MainPage;
+        ?? Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault()?.Page;
 }

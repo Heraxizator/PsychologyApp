@@ -3,7 +3,6 @@ using PsychologyApp.Presentation.Core.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Pages.Onboarding;
 using PsychologyApp.Presentation.Shared.Navigation;
-using PsychologyApp.Presentation.Tests.Stubs;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

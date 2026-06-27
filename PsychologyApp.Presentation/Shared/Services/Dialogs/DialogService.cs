@@ -8,13 +8,13 @@ public class DialogService(IPageHost pageHost) : IDialogService
     {
         Page? page = pageHost.GetActivePage()
             ?? throw new InvalidOperationException("No active page available for dialog.");
-        return page.DisplayAlert(title, message, AppStrings.Ok);
+        return page.DisplayAlertAsync(title, message, AppStrings.Ok);
     }
 
     public Task<bool> AskAsync(string title, string message, string accept, string cancel)
     {
         Page? page = pageHost.GetActivePage()
             ?? throw new InvalidOperationException("No active page available for dialog.");
-        return page.DisplayAlert(title, message, accept, cancel);
+        return page.DisplayAlertAsync(title, message, accept, cancel);
     }
 }

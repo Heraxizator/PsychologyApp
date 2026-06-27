@@ -8,6 +8,8 @@ using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Pages.Onboarding;
 using PsychologyApp.Presentation.App.Providers;
 
+using PsychologyApp.Presentation.Shared.Services.Toasts;
+
 namespace PsychologyApp.Presentation.App;
 
 public sealed class ShellStartupCoordinator(
@@ -15,6 +17,7 @@ public sealed class ShellStartupCoordinator(
     IOnboardingViewModelFactory onboardingViewModelFactory,
     IOptions<AppSettings> settings,
     IDatabaseReadySignal databaseReadySignal,
+    IToastService toastService,
     ILogger<ShellStartupCoordinator> logger) : IShellStartupCoordinator
 {
     public async Task InitializeAsync()
@@ -29,16 +32,10 @@ public sealed class ShellStartupCoordinator(
         {
             logger.LogError(ex, "Application startup failed.");
             databaseReadySignal.SignalFailed(ex);
-            await MainThread.InvokeOnMainThreadAsync(async () =>
+            await MainThread.InvokeOnMainThreadAsync(() =>
             {
-                if (Microsoft.Maui.Controls.Application.Current?.Windows.Count > 0
-                    && Microsoft.Maui.Controls.Application.Current.Windows[0].Page is not null)
-                {
-                    await Microsoft.Maui.Controls.Application.Current.Windows[0].Page!.DisplayAlert(
-                        AppStrings.StartupErrorTitle,
-                        AppStrings.StartupErrorMessage,
-                        AppStrings.Ok);
-                }
+                toastService.ShortToast(AppStrings.StartupErrorMessage);
+                return Task.CompletedTask;
             });
 
             throw;
@@ -68,13 +65,13 @@ public sealed class ShellStartupCoordinator(
             {
                 OnboardingPage onboardingPage = new(onboardingViewModelFactory, async techniqueId =>
                 {
-                    await navigation.PopModalAsync(true);
                     await Task.Yield();
+                    await navigation.PopModalAsync(false);
                     await onTechniqueSelected(techniqueId);
                 });
 
                 PressFeedbackHost.AttachToPage(onboardingPage);
-                await navigation.PushModalAsync(onboardingPage, true);
+                await navigation.PushModalAsync(onboardingPage, false);
             });
         }
         catch (Exception ex)
