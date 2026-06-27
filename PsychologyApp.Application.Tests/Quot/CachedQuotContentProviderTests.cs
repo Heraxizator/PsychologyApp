@@ -22,7 +22,7 @@ public sealed class CachedQuotContentProviderTests
     }
 
     [Fact]
-    public void Invalidate_ForcesReload()
+    public async Task Invalidate_ForcesReload()
     {
         var inner = new CountingQuotProvider(
         [
@@ -30,9 +30,9 @@ public sealed class CachedQuotContentProviderTests
         ]);
         var provider = new CachedQuotContentProvider(inner);
 
-        provider.LoadAllAsync().GetAwaiter().GetResult();
+        await provider.LoadAllAsync();
         provider.Invalidate();
-        provider.LoadAllAsync().GetAwaiter().GetResult();
+        await provider.LoadAllAsync();
 
         Assert.Equal(2, inner.LoadCount);
     }

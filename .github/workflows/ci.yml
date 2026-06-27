@@ -38,7 +38,7 @@ jobs:
           path: CoverageReport
       - run: dotnet build PsychologyApp.Presentation/PsychologyApp.Presentation.csproj -f net10.0-ios
       - run: dotnet build PsychologyApp.Presentation/PsychologyApp.Presentation.csproj -f net10.0-android
-      - run: dotnet build PsychologyApp.Presentation/PsychologyApp.Presentation.csproj -f net10.0-android -c Release -p:PublishTrimmed=true
+      - run: dotnet build PsychologyApp.Presentation/PsychologyApp.Presentation.csproj -f net10.0-android -c Release
 
   build-test-linux:
     runs-on: ubuntu-latest

@@ -2,7 +2,6 @@ using Microsoft.Extensions.Logging;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Entities.Quote;
-using PsychologyApp.Presentation.Entities.Quote;
 
 namespace PsychologyApp.Presentation.Pages.QuoteFeed;
 

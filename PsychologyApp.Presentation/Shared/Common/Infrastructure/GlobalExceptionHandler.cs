@@ -24,7 +24,7 @@ public sealed class GlobalExceptionHandler
 
     public void Attach(Microsoft.Maui.Controls.Application application)
     {
-        AsyncCommandExtensions.DefaultErrorHandler = ex => LogAndNotify(ex, "Background task failed");
+        AsyncCommandExtensions.DefaultErrorHandler = ex => LogAndNotify(ex, "Background task failed", useDialog: false);
         NavigationCoordinator.NavigationDroppedHandler = () =>
             _toastService.ShortToast(AppStrings.UnexpectedErrorMessage);
         application.HandlerChanged += OnHandlerChanged;
@@ -52,16 +52,16 @@ public sealed class GlobalExceptionHandler
             return;
         }
 
-        LogAndNotify(ex, "Unhandled domain exception");
+        LogAndNotify(ex, "Unhandled domain exception", useDialog: e.IsTerminating);
     }
 
     private void OnUnobservedTask(object? sender, UnobservedTaskExceptionEventArgs e)
     {
-        LogAndNotify(e.Exception, "Unobserved task exception");
+        LogAndNotify(e.Exception, "Unobserved task exception", useDialog: false);
         e.SetObserved();
     }
 
-    private void LogAndNotify(Exception exception, string message)
+    private void LogAndNotify(Exception exception, string message, bool useDialog)
     {
         try
         {
@@ -76,15 +76,23 @@ public sealed class GlobalExceptionHandler
             System.Diagnostics.Debug.WriteLine($"{message}: {exception}");
         }
 
+        string userMessage = GetUserMessage(exception);
         _ = MainThread.InvokeOnMainThreadAsync(async () =>
         {
             try
             {
-                await _dialogService.ShowAsync(AppStrings.ErrorTitle, GetUserMessage(exception));
+                if (useDialog)
+                {
+                    await Task.Yield();
+                    await _dialogService.ShowAsync(AppStrings.ErrorTitle, userMessage);
+                    return;
+                }
+
+                _toastService.ShortToast(userMessage);
             }
             catch
             {
-                // Avoid recursive failures during startup.
+                // Avoid recursive failures during startup or heavy UI passes.
             }
         });
     }

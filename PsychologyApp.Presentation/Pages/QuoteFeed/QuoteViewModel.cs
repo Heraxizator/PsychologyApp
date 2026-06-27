@@ -9,7 +9,6 @@ using PsychologyApp.Presentation.Entities.FilterChip;
 using PsychologyApp.Presentation.Entities.Quote;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Features.ManageQuotes;
-using PsychologyApp.Presentation.Entities.Quote;
 using PsychologyApp.Presentation.Shared.ViewModels;
 using System.Collections.ObjectModel;
 using System.Windows.Input;

@@ -148,7 +148,7 @@ public sealed class CustomTechniqueSessionOperationsTests
         techniqueService.Setup(s => s.DeleteTechniqueAsync(dto, It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
         Mock<ITechniqueMessenger> messenger = new();
         Mock<IDialogService> dialog = new();
-        dialog.Setup(d => d.AskAsync(null, AppStrings.PracticeDeleteConfirm, AppStrings.Yes, AppStrings.No))
+        dialog.Setup(d => d.AskAsync(It.IsAny<string>(), AppStrings.PracticeDeleteConfirm, AppStrings.Yes, AppStrings.No))
             .ReturnsAsync(true);
         CustomTechniqueSessionOperations operations = new();
 
@@ -172,7 +172,7 @@ public sealed class CustomTechniqueSessionOperationsTests
         Mock<ITechniqueService> techniqueService = new();
         Mock<ITechniqueMessenger> messenger = new();
         Mock<IDialogService> dialog = new();
-        dialog.Setup(d => d.AskAsync(null, AppStrings.PracticeDeleteConfirm, AppStrings.Yes, AppStrings.No))
+        dialog.Setup(d => d.AskAsync(It.IsAny<string>(), AppStrings.PracticeDeleteConfirm, AppStrings.Yes, AppStrings.No))
             .ReturnsAsync(false);
         CustomTechniqueSessionOperations operations = new();
 
