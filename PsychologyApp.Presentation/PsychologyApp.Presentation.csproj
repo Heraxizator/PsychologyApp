@@ -41,8 +41,6 @@
 		<PublishTrimmed>False</PublishTrimmed>
 	
 		<RuntimeIdentifiers Condition="$(TargetFramework.Contains('-android'))">android-arm;android-arm64;android-x64</RuntimeIdentifiers>
-		<RuntimeIdentifiers Condition="$(TargetFramework.Contains('-ios'))">ios-arm64;iossimulator-arm64;iossimulator-x64</RuntimeIdentifiers>
-		<RuntimeIdentifiers Condition="$(TargetFramework.Contains('-maccatalyst'))">maccatalyst-arm64;maccatalyst-x64</RuntimeIdentifiers>
 	
 	</PropertyGroup>
 
