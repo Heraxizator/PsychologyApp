@@ -8,13 +8,19 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <!-- MAUI Android tests compile for CI/device runs; Windows desktop cannot host android testhost. -->
-  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
-    <TargetFrameworks>net10.0</TargetFrameworks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
-    <TargetFrameworks>net10.0;net10.0-android</TargetFrameworks>
-  </PropertyGroup>
+  <!-- Windows/VS: net10.0 only. Linux CI: include net10.0-android MAUI tests. -->
+  <Choose>
+    <When Condition="'$(OS)' == 'Windows_NT'">
+      <PropertyGroup>
+        <TargetFrameworks>net10.0</TargetFrameworks>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <TargetFrameworks>net10.0;net10.0-android</TargetFrameworks>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net10.0-android'">
     <UseMaui>true</UseMaui>
