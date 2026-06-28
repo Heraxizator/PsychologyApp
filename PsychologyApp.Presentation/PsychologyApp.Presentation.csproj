@@ -26,7 +26,7 @@
 		<ApplicationTitle>Psychology App</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.subconscious.calm</ApplicationId>
+		<ApplicationId>com.subconscious.psychologyapp</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>2.000</ApplicationDisplayVersion>
