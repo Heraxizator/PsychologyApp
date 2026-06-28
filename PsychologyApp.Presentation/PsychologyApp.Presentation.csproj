@@ -26,11 +26,11 @@
 		<ApplicationTitle>Psychology App</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.subconscious.psychologyapp</ApplicationId>
+		<ApplicationId>com.subconscious.calm</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>2.0</ApplicationDisplayVersion>
-		<ApplicationVersion>10</ApplicationVersion>
+		<ApplicationDisplayVersion>2.000</ApplicationDisplayVersion>
+		<ApplicationVersion>2000</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
@@ -63,26 +63,32 @@
 	  <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
 	</PropertyGroup>
 
-	<!-- Release Android: verify trim/AOT on device before enabling in production. -->
+	<!-- Release Android: single source of truth for build, run, and publish (no duplicate TFM|Platform overrides). -->
 	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Release'">
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
-	  <!-- LLVM can cause native startup crashes on some devices; re-enable after device QA. -->
-	  <EnableLLVM>False</EnableLLVM>
-	  <IsPublishable>False</IsPublishable>
-	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
 	  <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
+	  <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+	  <!-- Play Console: aab. Sideload on phone: -p:AndroidPackageFormat=apk -p:RuntimeIdentifier=android-arm64 -->
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <PublishTrimmed>False</PublishTrimmed>
 	  <TrimMode>link</TrimMode>
-	  <!-- Full: Mono linker trims app + SDK managed assemblies; R8 (SdkOnly dex) stays via AndroidLinkTool. -->
 	  <RunAOTCompilation>False</RunAOTCompilation>
 	  <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
+	  <!-- LLVM can cause native startup crashes on some devices; re-enable after device QA. -->
+	  <EnableLLVM>False</EnableLLVM>
 	  <DebugSymbols>False</DebugSymbols>
 	  <AndroidIncludeDebugSymbols>False</AndroidIncludeDebugSymbols>
+	  <!-- SdkOnly: Mono linker trims SDK assemblies; R8 + ProguardConfiguration shrink dex. Full breaks AndroidX (PickVisualMedia). -->
 	  <AndroidLinkTool>r8</AndroidLinkTool>
-	  <AndroidLinkMode>Full</AndroidLinkMode>
-	  <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
-	  <!-- Match Debug ABIs for device deploy; avoids mixed native libs on phone. -->
+	  <AndroidLinkMode>SdkOnly</AndroidLinkMode>
 	  <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
+	  <!-- Release signing: paths/passwords in AndroidSigning.local.props (gitignored) or env vars. -->
+	  <AndroidKeyStore Condition="'$(AndroidSigningKeyStore)' != ''">true</AndroidKeyStore>
+	  <AndroidSigningKeyStore Condition="'$(AndroidSigningKeyStore)' != ''">$(AndroidSigningKeyStore)</AndroidSigningKeyStore>
+	  <AndroidSigningKeyAlias Condition="'$(AndroidSigningKeyAlias)' != ''">$(AndroidSigningKeyAlias)</AndroidSigningKeyAlias>
+	  <AndroidSigningStorePass Condition="'$(AndroidSigningStorePass)' != ''">$(AndroidSigningStorePass)</AndroidSigningStorePass>
+	  <AndroidSigningKeyPass Condition="'$(AndroidSigningKeyPass)' != ''">$(AndroidSigningKeyPass)</AndroidSigningKeyPass>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-maccatalyst|AnyCPU'">
@@ -107,18 +113,6 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows10.0.19041.0|AnyCPU'">
 	  <IsPublishable>False</IsPublishable>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
-	  <RunAOTCompilation>False</RunAOTCompilation>
-	  <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
-	  <RunAOTCompilation>False</RunAOTCompilation>
-	  <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
-	  <TrimMode>link</TrimMode>
-	  <AndroidLinkMode>Full</AndroidLinkMode>
 	</PropertyGroup>
 
 	<ItemGroup Condition="'$(Configuration)' == 'Release' And $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
@@ -199,5 +193,7 @@
 	<ItemGroup>
 	  <InternalsVisibleTo Include="PsychologyApp.Presentation.Tests" />
 	</ItemGroup>
+
+	<Import Project="AndroidSigning.local.props" Condition="Exists('AndroidSigning.local.props')" />
 
 </Project>

@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Android release signing (passwords); use AndroidSigning.local.props.example as template
+**/AndroidSigning.local.props
