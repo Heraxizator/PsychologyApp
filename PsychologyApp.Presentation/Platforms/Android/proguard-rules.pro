@@ -15,15 +15,7 @@
     native <methods>;
 }
 
-# AndroidX / Material used during Shell and app startup.
--keep class androidx.appcompat.** { *; }
+# Option B: umbrella keep for AndroidX — MAUI Shell, photo picker, Startup provider, MediaElement.
+# Point -keep per package fails whack-a-mole; -keepclassmembers does not prevent class removal.
+-keep class androidx.** { *; }
 -keep class com.google.android.material.** { *; }
--keepclassmembers class androidx.startup.** {
-    public <init>(...);
-}
--keepclassmembers class androidx.core.app.** {
-    public <init>(...);
-}
-
-# CommunityToolkit MediaElement / ExoPlayer (if R8 reaches app dex).
--keep class androidx.media3.** { *; }

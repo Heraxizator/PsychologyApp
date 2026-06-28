@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copy to AndroidSigning.local.props and fill in. AndroidSigning.local.props is gitignored. -->
+<Project>
+  <PropertyGroup>
+    <AndroidSigningKeyStore>C:\Users\YOU\AppData\Local\Xamarin\Mono for Android\Keystore\YOUR_ALIAS\YOUR.keystore</AndroidSigningKeyStore>
+    <AndroidSigningKeyAlias>YOUR_ALIAS</AndroidSigningKeyAlias>
+    <AndroidSigningStorePass>YOUR_STORE_PASSWORD</AndroidSigningStorePass>
+    <AndroidSigningKeyPass>YOUR_KEY_PASSWORD</AndroidSigningKeyPass>
+  </PropertyGroup>
+</Project>
