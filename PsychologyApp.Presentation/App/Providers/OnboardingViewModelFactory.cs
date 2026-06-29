@@ -6,16 +6,16 @@ namespace PsychologyApp.Presentation.App.Providers;
 
 public interface IOnboardingViewModelFactory
 {
-    OnboardingViewModel Create(INavigation navigation, Func<TechniqueId?, Task> onCompleted);
+    OnboardingViewModel Create(ContentPage page, Func<TechniqueId?, Task> onCompleted);
 }
 
 public sealed class OnboardingViewModelFactory(
     IUserPreferencesStore userPreferencesStore,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IOnboardingViewModelFactory
 {
-    public OnboardingViewModel Create(INavigation navigation, Func<TechniqueId?, Task> onCompleted) =>
+    public OnboardingViewModel Create(ContentPage page, Func<TechniqueId?, Task> onCompleted) =>
         new(
-            ResolveNavigation(navigationServiceFactory, navigation),
+            ResolveNavigation(navigationServiceFactory, page),
             userPreferencesStore,
             onCompleted);
 }

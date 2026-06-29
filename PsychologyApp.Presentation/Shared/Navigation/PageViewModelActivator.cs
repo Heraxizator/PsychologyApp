@@ -4,14 +4,14 @@ namespace PsychologyApp.Presentation.Shared.Navigation;
 
 public interface IPageViewModelActivator
 {
-    T Bind<T>(ContentPage page, Func<INavigation, T> factory) where T : class;
+    T Bind<T>(ContentPage page, Func<ContentPage, T> factory) where T : class;
 }
 
 public sealed class PageViewModelActivator : IPageViewModelActivator
 {
-    public T Bind<T>(ContentPage page, Func<INavigation, T> factory) where T : class
+    public T Bind<T>(ContentPage page, Func<ContentPage, T> factory) where T : class
     {
-        T viewModel = factory(page.Navigation);
+        T viewModel = factory(page);
         page.BindingContext = viewModel;
         return viewModel;
     }
@@ -22,6 +22,6 @@ public static class PageActivationExtensions
     public static T ActivateViewModel<T>(
         this ContentPage page,
         IPageViewModelActivator activator,
-        Func<INavigation, T> factory) where T : class =>
+        Func<ContentPage, T> factory) where T : class =>
         activator.Bind(page, factory);
 }

@@ -13,7 +13,7 @@ namespace PsychologyApp.Presentation.App.Providers;
 
 public interface ITechniquesViewModelFactory
 {
-    TechniquesViewModel Create(INavigation navigation);
+    TechniquesViewModel Create(ContentPage page);
 }
 
 public sealed class TechniquesViewModelFactory(
@@ -29,12 +29,12 @@ public sealed class TechniquesViewModelFactory(
     IOptions<AppSettings> settings,
     ILogger<TechniquesViewModel> logger) : ViewModelFactoryBase, ITechniquesViewModelFactory
 {
-    public TechniquesViewModel Create(INavigation navigation) =>
+    public TechniquesViewModel Create(ContentPage page) =>
         new(
             techniqueService,
             toastService,
             techniqueMessenger,
-            ResolveNavigation(navigationServiceFactory, navigation),
+            ResolveNavigation(navigationServiceFactory, page),
             userProgressService,
             techniqueListBuilder,
             databaseReadySignal,

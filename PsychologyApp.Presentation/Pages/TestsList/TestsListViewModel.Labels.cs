@@ -5,6 +5,8 @@ namespace PsychologyApp.Presentation.Pages.TestsList;
 public partial class TestsListViewModel
 {
     public string PageTitle => AppStrings.TestsDetectorTitle;
+    public string SectionTitle => AppStrings.TestsListSectionTitle;
+    public string SectionSubtitle => AppStrings.TestsListSectionSubtitle;
     public string EmptyTitle => AppStrings.TestsEmptyTitle;
     public string EmptyBody => AppStrings.TestsEmptyBody;
     public string LoadingText => AppStrings.TestsLoadingText;
@@ -16,6 +18,8 @@ public partial class TestsListViewModel
     {
         Notify(
             nameof(PageTitle),
+            nameof(SectionTitle),
+            nameof(SectionSubtitle),
             nameof(EmptyTitle),
             nameof(EmptyBody),
             nameof(LoadingText),

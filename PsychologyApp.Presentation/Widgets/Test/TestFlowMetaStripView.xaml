@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             x:Class="PsychologyApp.Presentation.Widgets.Test.TestFlowMetaStripView"
+             x:Name="Root">
+
+    <HorizontalStackLayout
+        Spacing="8"
+        IsVisible="{Binding HasMeta, Source={x:Reference Root}}">
+        <Border
+            IsVisible="{Binding HasDuration, Source={x:Reference Root}}"
+            Padding="10,6"
+            StrokeThickness="0"
+            BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="8" />
+            </Border.StrokeShape>
+            <HorizontalStackLayout Spacing="6">
+                <Label
+                    Text="{mi:Material Icon=Schedule}"
+                    FontSize="14"
+                    TextColor="{DynamicResource Primary}"
+                    VerticalOptions="Center" />
+                <Label
+                    Text="{Binding DurationText, Source={x:Reference Root}}"
+                    Style="{StaticResource CaptionStyle}"
+                    TextColor="{DynamicResource Primary}"
+                    FontFamily="{StaticResource MediumFontFamily}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+        </Border>
+
+        <Border
+            IsVisible="{Binding HasQuestionCount, Source={x:Reference Root}}"
+            Padding="10,6"
+            StrokeThickness="0"
+            BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="8" />
+            </Border.StrokeShape>
+            <HorizontalStackLayout Spacing="6">
+                <Label
+                    Text="{mi:Material Icon=Quiz}"
+                    FontSize="14"
+                    TextColor="{DynamicResource Primary}"
+                    VerticalOptions="Center" />
+                <Label
+                    Text="{Binding QuestionCountText, Source={x:Reference Root}}"
+                    Style="{StaticResource CaptionStyle}"
+                    TextColor="{DynamicResource Primary}"
+                    FontFamily="{StaticResource MediumFontFamily}"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+        </Border>
+    </HorizontalStackLayout>
+
+</ContentView>

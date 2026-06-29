@@ -8,6 +8,6 @@ public partial class OptionsPage : ContentPage
     public OptionsPage(IPageViewModelActivator pageViewModelActivator, IOptionsViewModelFactory optionsViewModelFactory)
     {
         InitializeComponent();
-        BindingContext = this.ActivateViewModel(pageViewModelActivator, nav => optionsViewModelFactory.Create(nav));
+        BindingContext = this.ActivateViewModel(pageViewModelActivator, page => optionsViewModelFactory.Create(page));
     }
 }

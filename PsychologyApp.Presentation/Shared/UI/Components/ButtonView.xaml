@@ -32,6 +32,13 @@
                         </MultiTrigger.Conditions>
                         <Setter Property="Style" Value="{StaticResource CompactOutlinedBorderStyle}" />
                     </MultiTrigger>
+                    <DataTrigger
+                        Binding="{TemplateBinding IsEnabled}"
+                        TargetType="Border"
+                        Value="False">
+                        <Setter Property="Opacity" Value="0.45" />
+                        <Setter Property="InputTransparent" Value="True" />
+                    </DataTrigger>
                 </Border.Triggers>
                 <Label
                     x:Name="ActionLabel"

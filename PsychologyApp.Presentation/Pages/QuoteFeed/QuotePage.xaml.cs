@@ -13,7 +13,7 @@ public partial class QuotePage : ContentPage
     public QuotePage(IPageViewModelActivator pageViewModelActivator, IQuoteViewModelFactory quoteViewModelFactory)
     {
         InitializeComponent();
-        ViewModel = this.ActivateViewModel(pageViewModelActivator, nav => quoteViewModelFactory.Create(nav));
+        ViewModel = this.ActivateViewModel(pageViewModelActivator, page => quoteViewModelFactory.Create(page));
         _animationHelper = new PageAnimationHelper(ViewModel, LoadingProgress, QuotesCollectionView);
     }
 

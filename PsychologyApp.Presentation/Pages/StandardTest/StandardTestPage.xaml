@@ -3,107 +3,64 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Pages.StandardTest.StandardTestPage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
-             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.LuscherTest"
              xmlns:tests="clr-namespace:PsychologyApp.Presentation.Pages.LuscherTest"
              xmlns:grid="clr-namespace:PsychologyApp.Presentation.Widgets.LuscherColorGrid"
+             xmlns:testUi="clr-namespace:PsychologyApp.Presentation.Widgets.Test"
+             xmlns:models="clr-namespace:PsychologyApp.Presentation.Pages.LuscherTest"
              x:DataType="vm:LuscherTestViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors">
-<StackLayout VerticalOptions="FillAndExpand">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="{StaticResource LayoutPageMarginThickness}" RowSpacing="{StaticResource LayoutSpacing}">
         <ui:NavigationBarSimpleView
+            Grid.Row="0"
             TitleText="{Binding PageTitle}"
             BackCommand="{Binding Finish}" />
 
-        <ScrollView VerticalOptions="FillAndExpand" VerticalScrollBarVisibility="Never">
-            <StackLayout>
-                <StackLayout x:Name="StartSection" IsVisible="{Binding IsStart}">
-                    <StackLayout.Behaviors>
+        <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
+                <VerticalStackLayout x:Name="StartSection" IsVisible="{Binding IsStart}" Spacing="{StaticResource LayoutSpacing}">
+                    <VerticalStackLayout.Behaviors>
                         <behaviors:RevealOnAppearingBehavior />
-                    </StackLayout.Behaviors>
-                    <StackLayout Margin="{StaticResource LayoutPageMarginThickness}">
-                        <Label
-                            HorizontalTextAlignment="Center"
-                            Text="{Binding ColorInstruction}"
-                            Style="{StaticResource SectionTitleStyle}" />
-                    </StackLayout>
-
+                    </VerticalStackLayout.Behaviors>
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding ColorInstruction}"
+                        Style="{StaticResource SectionTitleStyle}" />
                     <grid:LuscherColorGridView />
+                </VerticalStackLayout>
 
-                </StackLayout>
-
-                <StackLayout
-                x:Name="FinishSection"
-                IsVisible="{Binding IsFinish}">
-                    <StackLayout.Behaviors>
+                <VerticalStackLayout x:Name="FinishSection" IsVisible="{Binding IsFinish}" Spacing="{StaticResource LayoutSpacing}">
+                    <VerticalStackLayout.Behaviors>
                         <behaviors:RevealOnAppearingBehavior />
-                    </StackLayout.Behaviors>
+                    </VerticalStackLayout.Behaviors>
 
-                    <StackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
-
-                        <CollectionView
-                            SelectionMode="None"
-                            VerticalScrollBarVisibility="Never"
-                            ItemsSource="{Binding ResultItems}">
-                            <CollectionView.ItemsLayout>
-                                <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
-                            </CollectionView.ItemsLayout>
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="vm:ResultItem">
-                                    <Border Style="{StaticResource BrandCardStyle}">
-                                        <Border.Behaviors>
-                                            <behaviors:ListItemRevealBehavior />
-                                        </Border.Behaviors>
-                                        <VerticalStackLayout Spacing="8">
-                                            <Label LineBreakMode="WordWrap">
-                                                <Label.FormattedText>
-                                                    <FormattedString>
-                                                        <Span
-                                                            Text="{Binding PropertyName}"
-                                                            FontFamily="{StaticResource SemiBoldFontFamily}"
-                                                            FontSize="{StaticResource SectionTitleFontSize}"
-                                                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
-                                                        <Span
-                                                            Text=": "
-                                                            FontFamily="{StaticResource BodyFontFamily}"
-                                                            FontSize="{StaticResource BodyFontSize}"
-                                                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
-                                                        <Span
-                                                            Text="{Binding PropertyValue}"
-                                                            FontFamily="{StaticResource SemiBoldFontFamily}"
-                                                            FontSize="{StaticResource SectionTitleFontSize}"
-                                                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
-                                                    </FormattedString>
-                                                </Label.FormattedText>
-                                            </Label>
-                                            <Label
-                                                Text="{Binding PropertyText}"
-                                                HorizontalTextAlignment="Justify"
-                                                Style="{StaticResource BodyStyle}" />
-                                        </VerticalStackLayout>
-                                    </Border>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-
-                        <ui:ButtonView
-                            BodyText="{Binding RestartButtonText}"
-                            TapCommand="{Binding Restart}" />
-
-                        <ui:ButtonView
-                            Variant="Secondary"
-                            BodyText="{Binding BackToListButtonText}"
-                            TapCommand="{Binding BackToListCommand}" />
-
-                    </StackLayout>
-
-                </StackLayout>
-
-
-
-            </StackLayout>
+                    <VerticalStackLayout
+                        Spacing="{StaticResource ListItemSpacing}"
+                        BindableLayout.ItemsSource="{Binding ResultItems}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="models:ResultItem">
+                                <testUi:TestResultMetricCardView
+                                    MetricName="{Binding PropertyName}"
+                                    MetricValue="{Binding PropertyValue}"
+                                    MetricDescription="{Binding PropertyText}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
         </ScrollView>
 
-    </StackLayout>
+        <VerticalStackLayout Grid.Row="2" IsVisible="{Binding IsFinish}" Spacing="8">
+            <ui:ButtonView
+                BodyText="{Binding RestartButtonText}"
+                TapCommand="{Binding Restart}" />
+            <ui:ButtonView
+                Variant="Secondary"
+                BodyText="{Binding BackToListButtonText}"
+                TapCommand="{Binding BackToListCommand}" />
+        </VerticalStackLayout>
+    </Grid>
 </tests:LuscherTestPageBase>

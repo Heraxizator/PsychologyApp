@@ -1,126 +1,81 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PsychologyApp.Presentation.Widgets.LuscherColorGrid.LuscherColorGridView">
-    <StackLayout Margin="{StaticResource LuscherColorGridMargin}">
+             x:Class="PsychologyApp.Presentation.Widgets.LuscherColorGrid.LuscherColorGridView"
+             x:Name="Root">
+
+    <VerticalStackLayout Margin="{StaticResource LuscherColorGridMargin}" Spacing="12">
         <BoxView
-            Margin="30, 0, 30, 5"
-            HeightRequest="3"
+            Margin="20,0"
+            HeightRequest="2"
             Color="{DynamicResource Primary}" />
 
-        <FlexLayout JustifyContent="Center">
-            <BoxView
-                IsVisible="{Binding IsRed}"
-                Margin="10"
-                WidthRequest="100"
-                HeightRequest="100"
-                CornerRadius="15"
-                Color="Red"
-                Opacity="0.9">
-                <BoxView.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding RedHandler}" />
-                </BoxView.GestureRecognizers>
-            </BoxView>
+        <Grid
+            x:Name="ColorGrid"
+            ColumnDefinitions="*,*,*"
+            RowDefinitions="Auto,Auto,Auto"
+            ColumnSpacing="12"
+            RowSpacing="12"
+            HorizontalOptions="Center">
 
-            <BoxView
-                IsVisible="{Binding IsBrown}"
-                Margin="10"
-                WidthRequest="100"
-                HeightRequest="100"
-                CornerRadius="15"
-                Color="Brown"
-                Opacity="0.9">
-                <BoxView.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding BrownHandler}" />
-                </BoxView.GestureRecognizers>
-            </BoxView>
+            <Border x:Name="RedTile" Grid.Row="0" Grid.Column="0" StrokeThickness="0" IsVisible="{Binding IsRed}">
+                <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
+                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding RedHandler}" /></Border.GestureRecognizers>
+                <BoxView Color="Red" CornerRadius="16" Opacity="0.92" />
+            </Border>
 
-            <BoxView
-                IsVisible="{Binding IsYellow}"
-                Margin="10"
-                WidthRequest="100"
-                HeightRequest="100"
-                CornerRadius="15"
-                Color="Yellow"
-                Opacity="0.9">
-                <BoxView.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding YellowHandler}" />
-                </BoxView.GestureRecognizers>
-            </BoxView>
-        </FlexLayout>
+            <Border x:Name="BrownTile" Grid.Row="0" Grid.Column="1" StrokeThickness="0" IsVisible="{Binding IsBrown}">
+                <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
+                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding BrownHandler}" /></Border.GestureRecognizers>
+                <BoxView Color="Brown" CornerRadius="16" Opacity="0.92" />
+            </Border>
 
-        <FlexLayout Margin="10, 0, 10, 0" JustifyContent="Center">
-            <BoxView
-                IsVisible="{Binding IsGreen}"
-                Margin="10"
-                WidthRequest="100"
-                HeightRequest="100"
-                CornerRadius="15"
-                Color="Green"
-                Opacity="0.9">
-                <BoxView.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GreenHandler}" />
-                </BoxView.GestureRecognizers>
-            </BoxView>
+            <Border x:Name="YellowTile" Grid.Row="0" Grid.Column="2" StrokeThickness="0" IsVisible="{Binding IsYellow}">
+                <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
+                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding YellowHandler}" /></Border.GestureRecognizers>
+                <BoxView Color="Yellow" CornerRadius="16" Opacity="0.92" />
+            </Border>
 
-            <BoxView
-                IsVisible="{Binding IsBlue}"
-                Margin="10"
-                WidthRequest="100"
-                HeightRequest="100"
-                CornerRadius="15"
-                Color="Blue"
-                Opacity="0.9">
-                <BoxView.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding BlueHandler}" />
-                </BoxView.GestureRecognizers>
-            </BoxView>
+            <Border x:Name="GreenTile" Grid.Row="1" Grid.Column="0" StrokeThickness="0" IsVisible="{Binding IsGreen}">
+                <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
+                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding GreenHandler}" /></Border.GestureRecognizers>
+                <BoxView Color="Green" CornerRadius="16" Opacity="0.92" />
+            </Border>
 
-            <BoxView
-                IsVisible="{Binding IsPurple}"
-                Margin="10"
-                WidthRequest="100"
-                HeightRequest="100"
-                CornerRadius="15"
-                Color="Purple"
-                Opacity="0.9">
-                <BoxView.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding PurpleHandler}" />
-                </BoxView.GestureRecognizers>
-            </BoxView>
-        </FlexLayout>
+            <Border x:Name="BlueTile" Grid.Row="1" Grid.Column="1" StrokeThickness="0" IsVisible="{Binding IsBlue}">
+                <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
+                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding BlueHandler}" /></Border.GestureRecognizers>
+                <BoxView Color="Blue" CornerRadius="16" Opacity="0.92" />
+            </Border>
 
-        <FlexLayout JustifyContent="Center">
-            <BoxView
-                IsVisible="{Binding IsGray}"
-                Margin="10"
-                WidthRequest="100"
-                HeightRequest="100"
-                CornerRadius="15"
-                Color="Gray"
-                Opacity="0.9">
-                <BoxView.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GrayHandler}" />
-                </BoxView.GestureRecognizers>
-            </BoxView>
+            <Border x:Name="PurpleTile" Grid.Row="1" Grid.Column="2" StrokeThickness="0" IsVisible="{Binding IsPurple}">
+                <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
+                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding PurpleHandler}" /></Border.GestureRecognizers>
+                <BoxView Color="Purple" CornerRadius="16" Opacity="0.92" />
+            </Border>
 
-            <BoxView
-                IsVisible="{Binding IsBlack}"
-                Margin="10"
-                WidthRequest="100"
-                HeightRequest="100"
-                CornerRadius="15"
-                Color="Black"
-                Opacity="0.9">
-                <BoxView.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding BlackHandler}" />
-                </BoxView.GestureRecognizers>
-            </BoxView>
-        </FlexLayout>
+            <HorizontalStackLayout
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Spacing="12"
+                HorizontalOptions="Center">
+                <Border x:Name="GrayTile" StrokeThickness="0" IsVisible="{Binding IsGray}">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
+                    <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding GrayHandler}" /></Border.GestureRecognizers>
+                    <BoxView Color="Gray" CornerRadius="16" Opacity="0.92" />
+                </Border>
+                <Border x:Name="BlackTile" StrokeThickness="0" IsVisible="{Binding IsBlack}">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
+                    <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding BlackHandler}" /></Border.GestureRecognizers>
+                    <BoxView Color="Black" CornerRadius="16" Opacity="0.92" />
+                </Border>
+            </HorizontalStackLayout>
+        </Grid>
 
         <BoxView
-            Margin="30, 10, 30, 0"
-            HeightRequest="3"
+            Margin="20,0"
+            HeightRequest="2"
             Color="{DynamicResource Primary}" />
-    </StackLayout>
+    </VerticalStackLayout>
 </ContentView>

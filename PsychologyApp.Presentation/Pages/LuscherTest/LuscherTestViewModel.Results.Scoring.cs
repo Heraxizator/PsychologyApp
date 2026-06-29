@@ -59,6 +59,7 @@ public partial class LuscherTestViewModel
             FirstResult = ColourStrings.GetExplanation(colourValue, ColourMeaningType.Wanted);
             FirstColor = Color.FromArgb(colourValue.Code);
             FirstName = ColourStrings.GetColorName(colourValue);
+            NotifyBriefProgress();
             return;
         }
 

@@ -11,7 +11,21 @@ public partial class QuestionViewModel
 
     protected override void RefreshLocalizedProperties()
     {
-        Notify(nameof(PageTitle), nameof(QuestionPrefix), nameof(FinishButtonText));
+        Notify(
+            nameof(PageTitle),
+            nameof(QuestionPrefix),
+            nameof(FinishButtonText),
+            nameof(NextButtonText),
+            nameof(PreviousButtonText),
+            nameof(StepLabel),
+            nameof(Progress),
+            nameof(UseBarProgress),
+            nameof(MultiChoiceHintText),
+            nameof(QuestionLeadText),
+            nameof(ValidationHintText),
+            nameof(DurationText),
+            nameof(QuestionCountText),
+            nameof(RemainingDurationText));
         ReloadQuestionsAsync().FireAndForget();
     }
 }

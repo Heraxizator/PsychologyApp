@@ -19,7 +19,7 @@ namespace PsychologyApp.Presentation.App.Providers;
 
 public interface IUserViewModelFactory
 {
-    UserViewModel Create(INavigation navigation);
+    UserViewModel Create(ContentPage page);
 }
 
 public sealed class UserViewModelFactory(
@@ -35,11 +35,11 @@ public sealed class UserViewModelFactory(
     LanguageContentReloader languageContentReloader,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IUserViewModelFactory
 {
-    public UserViewModel Create(INavigation navigation) =>
+    public UserViewModel Create(ContentPage page) =>
         new(
             logger,
             settings,
-            ResolveNavigation(navigationServiceFactory, navigation),
+            ResolveNavigation(navigationServiceFactory, page),
             quotesChangeNotifier,
             profileStatsLoader,
             profileQuotesLoaderFactory(),
@@ -52,29 +52,29 @@ public sealed class UserViewModelFactory(
 
 public interface IOptionsViewModelFactory
 {
-    OptionsViewModel Create(INavigation navigation);
+    OptionsViewModel Create(ContentPage page);
 }
 
 public sealed class OptionsViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IOptionsViewModelFactory
 {
-    public OptionsViewModel Create(INavigation navigation) =>
-        new(ResolveNavigation(navigationServiceFactory, navigation));
+    public OptionsViewModel Create(ContentPage page) =>
+        new(ResolveNavigation(navigationServiceFactory, page));
 }
 
 public interface IDonateViewModelFactory
 {
-    DonateViewModel Create(INavigation navigation);
+    DonateViewModel Create(ContentPage page);
 }
 
 public sealed class DonateViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IDonateViewModelFactory
 {
-    public DonateViewModel Create(INavigation navigation) =>
-        new(ResolveNavigation(navigationServiceFactory, navigation));
+    public DonateViewModel Create(ContentPage page) =>
+        new(ResolveNavigation(navigationServiceFactory, page));
 }
 
 public interface ISettingsViewModelFactory
 {
-    SettingsViewModel Create(INavigation navigation);
+    SettingsViewModel Create(ContentPage page);
 }
 
 public sealed class SettingsViewModelFactory(
@@ -84,10 +84,10 @@ public sealed class SettingsViewModelFactory(
     LanguageContentReloader languageContentReloader,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, ISettingsViewModelFactory
 {
-    public SettingsViewModel Create(INavigation navigation) =>
+    public SettingsViewModel Create(ContentPage page) =>
         new(
             dialogService,
-            ResolveNavigation(navigationServiceFactory, navigation),
+            ResolveNavigation(navigationServiceFactory, page),
             userPreferencesStore,
             settingsPreferencesPresenter,
             languageContentReloader);
@@ -95,11 +95,11 @@ public sealed class SettingsViewModelFactory(
 
 public interface IInfoViewModelFactory
 {
-    InfoViewModel Create(INavigation navigation);
+    InfoViewModel Create(ContentPage page);
 }
 
 public sealed class InfoViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IInfoViewModelFactory
 {
-    public InfoViewModel Create(INavigation navigation) =>
-        new(ResolveNavigation(navigationServiceFactory, navigation));
+    public InfoViewModel Create(ContentPage page) =>
+        new(ResolveNavigation(navigationServiceFactory, page));
 }

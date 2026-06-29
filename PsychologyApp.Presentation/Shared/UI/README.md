@@ -42,6 +42,17 @@ xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
 
 Feature-specific cards live under `Widgets/` (`QuoteCardView`, `TechniqueListCardView`, `TestListCardView`, …).
 
+Test flow widgets (`Widgets/Test/`):
+
+| Widget | Use when |
+|--------|----------|
+| `TestAnswerOptionView` | Tappable questionnaire answer row (single/multi) |
+| `TestProgressHeaderView` | Step dots + label (`Step`, `StepCount`, `StepLabel`) |
+| `TestResultHeroView` | Result screen score headline + interpretation + trend badge |
+| `TestResultMetricCardView` | Named metric card (Lüscher standard results) |
+| `LuscherColorResultView` | Brief Lüscher color swatch + interpretation block |
+| `TestFlowMetaStripView` | Duration / question-count chips on test intro |
+
 Onboarding widgets (`Widgets/Onboarding/`):
 
 | Widget | Use when |

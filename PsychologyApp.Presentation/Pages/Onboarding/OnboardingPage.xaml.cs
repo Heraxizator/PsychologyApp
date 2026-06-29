@@ -16,7 +16,7 @@ public partial class OnboardingPage : ContentPage
     public OnboardingPage(IOnboardingViewModelFactory factory, Func<TechniqueId?, Task> onCompleted)
     {
         InitializeComponent();
-        _viewModel = factory.Create(Navigation, onCompleted);
+        _viewModel = factory.Create(this, onCompleted);
         BindingContext = _viewModel;
         _viewModel.PropertyChanged += OnViewModelPropertyChanged;
         StepScrollView.SizeChanged += OnStepScrollSizeChanged;

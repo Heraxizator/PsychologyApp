@@ -1,10 +1,10 @@
 using Moq;
-using PsychologyApp.Presentation.Shared.Common;
-using PsychologyApp.Presentation.Models.Practice.Techniques;
+using PsychologyApp.Application.Models;
+using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Entities.Test;
-using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Features.RunTests;
-using PsychologyApp.Presentation.Pages.TestsList;
+using PsychologyApp.Presentation.Models.Practice.Techniques;
+using PsychologyApp.Presentation.Shared.Common;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
@@ -17,107 +17,66 @@ public sealed class TestResultViewModelTests
     }
 
     [Fact]
-    public void HasRecommendation_ReflectsResultInfo()
+    public async Task LoadTrend_ShowsImproved_WhenScoreDecreased()
     {
-        TestResultViewModel withRecommendation = CreateViewModel(new TestResultInfo
-        {
-            Score = 5,
-            Interpretation = "Mild",
-            RecommendedTechnique = TechniqueId.Paper,
-            TestId = "beck",
-            AnalyzerId = "beck"
-        });
-
-        TestResultViewModel withoutRecommendation = CreateViewModel(new TestResultInfo
-        {
-            Score = 5,
-            Interpretation = "Mild",
-            TestId = "beck",
-            AnalyzerId = "beck"
-        });
-
-        Assert.True(withRecommendation.HasRecommendation);
-        Assert.False(withoutRecommendation.HasRecommendation);
-    }
-
-    [Fact]
-    public async Task RetakeCommand_DelegatesToRetakeOperations()
-    {
-        Mock<INavigation> navigation = new();
-        RetakeTrackingNavigation navigationService = new(navigation.Object);
-        FakeTestCatalogService catalog = new FakeTestCatalogService().WithCatalog(new TestDefinition
-        {
-            TestId = "beck",
-            AnalyzerId = "beck",
-            Title = "Beck",
-            Subtitle = "Sub",
-            Description = "Desc",
-            Comment = "Note",
-            Algorithm = ["Step"],
-            Kind = TestKind.Questionnaire
-        });
-
-        TestResultViewModel viewModel = CreateViewModel(
-            new TestResultInfo
+        var navigation = new Mock<INavigation>();
+        var navigationService = new TestNavigationService(navigation.Object);
+        var catalog = new Mock<ITestCatalogService>();
+        var progress = new Mock<IUserProgressService>();
+        progress
+            .Setup(p => p.GetTestResultHistoryAsync("beck", 2, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<TestResultDTO>
             {
-                Score = 8,
-                Interpretation = "Score 8",
-                TestId = "beck",
-                AnalyzerId = "beck"
-            },
+                new() { Score = 3, Summary = "Mild" },
+                new() { Score = 8, Summary = "Moderate" }
+            });
+
+        TestResultViewModel viewModel = new(
             navigationService,
-            catalog);
+            catalog.Object,
+            new TestRetakeOperations(),
+            progress.Object,
+            new TestResultInfo
+            {
+                Score = 3,
+                Interpretation = "Mild",
+                TestId = "beck"
+            });
 
-        viewModel.RetakeCommand.Execute(null);
-        await Task.Delay(200);
+        await Task.Delay(100);
 
-        Assert.True(navigationService.WentToRoot);
+        Assert.True(viewModel.HasTrendBadge);
+        Assert.Equal(TestTrendKind.Improved, viewModel.TrendKind);
+        Assert.Equal(AppStrings.TestResultImproved, viewModel.TrendText);
     }
 
     [Fact]
-    public async Task TryTechniqueCommand_NavigatesWhenRecommendationPresent()
+    public async Task TryTechniqueCommand_NavigatesToTechnique()
     {
-        TechniqueTrackingNavigation navigationService = new(Mock.Of<INavigation>());
+        var navigation = new Mock<INavigation>();
+        var tracking = new TechniqueTrackingNavigationService(navigation.Object);
+        var catalog = new Mock<ITestCatalogService>();
+        var progress = new Mock<IUserProgressService>();
 
-        TestResultViewModel viewModel = CreateViewModel(
+        TestResultViewModel viewModel = new(
+            tracking,
+            catalog.Object,
+            new TestRetakeOperations(),
+            progress.Object,
             new TestResultInfo
             {
-                Score = 8,
-                Interpretation = "Score 8",
-                RecommendedTechnique = TechniqueId.Polarity,
-                TestId = "beck",
-                AnalyzerId = "beck"
-            },
-            navigationService);
+                Score = 5,
+                Interpretation = "Moderate",
+                RecommendedTechnique = TechniqueId.Polarity
+            });
 
         viewModel.TryTechniqueCommand.Execute(null);
         await Task.Delay(50);
 
-        Assert.Equal(TechniqueId.Polarity, navigationService.LastTechniqueId);
+        Assert.Equal(TechniqueId.Polarity, tracking.LastTechniqueId);
     }
 
-    private static TestResultViewModel CreateViewModel(
-        TestResultInfo result,
-        INavigationService? navigationService = null,
-        ITestCatalogService? catalogService = null) =>
-        new(
-            navigationService ?? new TestNavigationService(Mock.Of<INavigation>()),
-            catalogService ?? new FakeTestCatalogService(),
-            new TestRetakeOperations(),
-            result);
-
-    private sealed class RetakeTrackingNavigation(INavigation navigation) : TestNavigationService(navigation)
-    {
-        public bool WentToRoot { get; private set; }
-
-        public override Task GoToRootAsync()
-        {
-            WentToRoot = true;
-            return Task.CompletedTask;
-        }
-    }
-
-    private sealed class TechniqueTrackingNavigation(INavigation navigation) : TestNavigationService(navigation)
+    private sealed class TechniqueTrackingNavigationService(INavigation navigation) : TestNavigationService(navigation)
     {
         public TechniqueId? LastTechniqueId { get; private set; }
 

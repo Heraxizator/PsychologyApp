@@ -12,7 +12,7 @@ namespace PsychologyApp.Presentation.App.Providers;
 
 public interface IPhysicsSearchViewModelFactory
 {
-    PhysicsSearchViewModel Create(INavigation navigation);
+    PhysicsSearchViewModel Create(ContentPage page);
 }
 
 public sealed class PhysicsSearchViewModelFactory(
@@ -25,24 +25,24 @@ public sealed class PhysicsSearchViewModelFactory(
     Func<NavigationContext, INavigationService> navigationServiceFactory)
     : ViewModelFactoryBase, IPhysicsSearchViewModelFactory
 {
-    public PhysicsSearchViewModel Create(INavigation navigation) =>
+    public PhysicsSearchViewModel Create(ContentPage page) =>
         new(
             reasonSearchService,
             searchCoordinator,
             searchSessionFactory(),
             logger,
             settings,
-            ResolveNavigation(navigationServiceFactory, navigation),
+            ResolveNavigation(navigationServiceFactory, page),
             databaseReadySignal);
 }
 
 public interface IStartPhysicsViewModelFactory
 {
-    StartPhysicsViewModel Create(INavigation navigation);
+    StartPhysicsViewModel Create(ContentPage page);
 }
 
 public sealed class StartPhysicsViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IStartPhysicsViewModelFactory
 {
-    public StartPhysicsViewModel Create(INavigation navigation) =>
-        new(ResolveNavigation(navigationServiceFactory, navigation));
+    public StartPhysicsViewModel Create(ContentPage page) =>
+        new(ResolveNavigation(navigationServiceFactory, page));
 }

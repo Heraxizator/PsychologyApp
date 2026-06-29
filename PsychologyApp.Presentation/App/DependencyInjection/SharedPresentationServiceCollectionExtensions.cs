@@ -22,7 +22,7 @@ public static class SharedPresentationServiceCollectionExtensions
         services.AddSingleton<IDatabaseReadySignal, DatabaseReadySignal>();
         services.AddSingleton<Func<NavigationContext, INavigationService>>(sp => context =>
             context.NavigationService ?? new MauiNavigationService(
-                context.Navigation,
+                context,
                 sp.GetRequiredService<IPageFactory>(),
                 sp.GetRequiredService<IShellStartupCoordinator>()));
 

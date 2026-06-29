@@ -17,7 +17,7 @@ namespace PsychologyApp.Presentation.App.Providers;
 
 public interface ICreatedViewModelFactory
 {
-    CreatedViewModel Create(INavigation navigation, long techniqueId);
+    CreatedViewModel Create(ContentPage page, long techniqueId);
 }
 
 public sealed class CreatedViewModelFactory(
@@ -31,7 +31,7 @@ public sealed class CreatedViewModelFactory(
     TechniqueSessionCompletionService sessionCompletionService,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, ICreatedViewModelFactory
 {
-    public CreatedViewModel Create(INavigation navigation, long techniqueId) =>
+    public CreatedViewModel Create(ContentPage page, long techniqueId) =>
         new(
             techniqueId,
             dialogService,
@@ -39,7 +39,7 @@ public sealed class CreatedViewModelFactory(
             techniqueMessenger,
             logger,
             settings,
-            ResolveNavigation(navigationServiceFactory, navigation),
+            ResolveNavigation(navigationServiceFactory, page),
             userProgressService,
             sessionOperations,
             sessionCompletionService);
@@ -47,7 +47,7 @@ public sealed class CreatedViewModelFactory(
 
 public interface IDesignerViewModelFactory
 {
-    DesignerViewModel Create(INavigation navigation, long techniqueId);
+    DesignerViewModel Create(ContentPage page, long techniqueId);
 }
 
 public sealed class DesignerViewModelFactory(
@@ -58,8 +58,8 @@ public sealed class DesignerViewModelFactory(
     IOptions<AppSettings> settings,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IDesignerViewModelFactory
 {
-    public DesignerViewModel Create(INavigation navigation, long techniqueId) =>
-        new(techniqueId, techniqueService, techniqueMessenger, techniqueOperations, logger, settings, ResolveNavigation(navigationServiceFactory, navigation));
+    public DesignerViewModel Create(ContentPage page, long techniqueId) =>
+        new(techniqueId, techniqueService, techniqueMessenger, techniqueOperations, logger, settings, ResolveNavigation(navigationServiceFactory, page));
 }
 
 public interface ITechniqueViewModelFactory
@@ -78,7 +78,7 @@ public sealed class TechniqueViewModelFactory(
 {
     public BaseViewModel Create(TechniqueId techniqueId, INavigation navigation)
     {
-        INavigationService navigationService = ResolveNavigation(navigationServiceFactory, navigation);
+        INavigationService navigationService = navigationServiceFactory(NavigationContext.From(navigation));
         ListTechniqueSessionHelper sessionHelper = new(
             sessionCompletionService,
             userProgressService,

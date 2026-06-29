@@ -12,7 +12,7 @@ public partial class FindProblemPage : ContentPage
         Func<Task> startTest,
         string? testId = null)
     {
+        BindingContext = findProblemViewModelFactory.Create(this, description, algorithm, comment, startTest, testId);
         InitializeComponent();
-        BindingContext = findProblemViewModelFactory.Create(Navigation, description, algorithm, comment, startTest, testId);
     }
 }

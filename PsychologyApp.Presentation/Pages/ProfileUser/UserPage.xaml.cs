@@ -11,7 +11,7 @@ public partial class UserPage : ContentPage
     public UserPage(IPageViewModelActivator pageViewModelActivator, IUserViewModelFactory userViewModelFactory)
     {
         InitializeComponent();
-        _viewModel = this.ActivateViewModel(pageViewModelActivator, nav => userViewModelFactory.Create(nav));
+        _viewModel = this.ActivateViewModel(pageViewModelActivator, page => userViewModelFactory.Create(page));
     }
 
     protected override void OnAppearing()

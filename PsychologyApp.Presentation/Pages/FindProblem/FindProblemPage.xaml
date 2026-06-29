@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.FindProblem"
              xmlns:models="clr-namespace:PsychologyApp.Presentation.Entities.Test"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:testUi="clr-namespace:PsychologyApp.Presentation.Widgets.Test"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:DataType="vm:FindProblemViewModel"
              Shell.NavBarIsVisible="False"
@@ -15,13 +16,37 @@
             <behaviors:StaggerChildrenBehavior />
         </Grid.Behaviors>
 
-        <ui:NavigationBarSimpleView
+        <VerticalStackLayout
             Grid.Row="0"
-            TitleText="{Binding PageTitle}"
-            BackCommand="{Binding BackCommand}" />
+            Spacing="8"
+            Margin="{StaticResource LayoutPageMarginThickness}">
+            <ui:NavigationBarSimpleView
+                TitleText="{Binding PageTitle}"
+                BackCommand="{Binding BackCommand}" />
+            <testUi:TestFlowMetaStripView
+                DurationText="{Binding DurationText}"
+                QuestionCountText="{Binding QuestionCountText}" />
+        </VerticalStackLayout>
 
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+                <Border Style="{StaticResource MoodStripStyle}">
+                    <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                        <ui:MaterialIconView
+                            IconName="Insights"
+                            IconColor="{DynamicResource Primary}"
+                            WidthRequest="28"
+                            HeightRequest="28"
+                            HorizontalOptions="Center" />
+                        <Label
+                            Text="{Binding IntroLeadText}"
+                            Style="{StaticResource CaptionStyle}"
+                            TextColor="{DynamicResource Primary}"
+                            HorizontalTextAlignment="Center"
+                            LineBreakMode="WordWrap" />
+                    </VerticalStackLayout>
+                </Border>
+
                 <ui:TextBoxView
                     HeaderText="{Binding DescriptionHeader}"
                     BodyText="{Binding DescriptionText}" />

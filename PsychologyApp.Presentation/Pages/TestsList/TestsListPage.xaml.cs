@@ -15,7 +15,7 @@ public partial class TestsListPage : ContentPage
         ITestsListViewModelFactory testsListViewModelFactory)
     {
         InitializeComponent();
-        _viewModel = this.ActivateViewModel(pageViewModelActivator, nav => testsListViewModelFactory.Create(nav));
+        _viewModel = this.ActivateViewModel(pageViewModelActivator, page => testsListViewModelFactory.Create(page));
         _animationHelper = new PageAnimationHelper(_viewModel, LoadingProgress, TestsCollectionView);
     }
 

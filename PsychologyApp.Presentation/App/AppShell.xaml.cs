@@ -262,16 +262,8 @@ public partial class AppShell : Shell
     private ShellContent? GetActiveShellContent()
     {
         BaseShellItem? current = CurrentItem is TabBar tabBar ? tabBar.CurrentItem : CurrentItem;
-        return ResolveShellContent(current);
+        return ShellNavigationResolver.ResolveShellContent(current);
     }
-
-    private static ShellContent? ResolveShellContent(BaseShellItem? item) => item switch
-    {
-        ShellContent shellContent => shellContent,
-        ShellSection section => ResolveShellContent(section.CurrentItem),
-        ShellItem shellItem => ResolveShellContent(shellItem.CurrentItem),
-        _ => null
-    };
 
     private static bool TryResolveTabIndex(ShellNavigationState target, out int index)
     {

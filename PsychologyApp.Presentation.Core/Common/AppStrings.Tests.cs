@@ -35,6 +35,10 @@ public static partial class AppStrings
         "Это краткая версия теста Люшера. Выберите два цвета — самый приятный и самый неприятный.",
         "This is the brief Lüscher test. Choose two colors — the most and least pleasant.");
     public static string TestsAnswerAllToast => T("Нужно ответить на все вопросы", "Please answer all questions");
+    public static string TestsAnswerCurrentToast => T("Ответьте на этот вопрос", "Answer this question");
+    public static string TestsStepOf(int current, int total) => T($"{current} из {total}", $"{current} of {total}");
+    public static string TestsNextButton => T("Далее", "Next");
+    public static string TestsPreviousButton => T("Назад", "Back");
     public static string TestsResultTitle(int score) => T($"Ваш результат: {score}", $"Your score: {score}");
     public static string TestsResultPageTitle => T("Результат теста", "Test result");
     public static string TestsBackToList => T("К списку тестов", "Back to tests");
@@ -47,6 +51,21 @@ public static partial class AppStrings
         T($"Рекомендуем: {techniqueTitle}", $"Recommended: {techniqueTitle}");
     public static string TestRecommendationReason(string reason) => reason;
     public static string TestsContinueButton => T("Продолжить", "Continue");
+    public static string TestsListSectionTitle => T("Психологические тесты", "Psychological tests");
+    public static string TestsListSectionSubtitle => T(
+        "Выберите тест и узнайте больше о своём состоянии",
+        "Pick a test to learn more about how you feel");
+    public static string TestHistoryScore(int score) => T($"Балл: {score}", $"Score: {score}");
+    public static string TestsIntroLead => T(
+        "Несколько минут — и вы получите персональную интерпретацию",
+        "A few minutes for a personal interpretation");
+    public static string TestsQuestionLead => T(
+        "Отвечайте честно — здесь нет правильных или неправильных ответов",
+        "Answer honestly — there are no right or wrong answers");
+    public static string TestsMultiChoiceHint => T(
+        "Можно выбрать несколько вариантов",
+        "You can select more than one option");
+    public static string TestsRemainingDuration(int minutes) => T($"~{minutes} мин осталось", $"~{minutes} min left");
     public static string TestsCoLabel => T("Суммарное отклонение от аутогенной нормы (СО)", "Total deviation from autogenic norm (CO)");
     public static string TestsBkLabel => T("Вегетативный коэффициент (ВК)", "Vegetative coefficient (VC)");
     public static string TestsScoreOutOf(int value, string total) => T($"{value} из {total}", $"{value} of {total}");

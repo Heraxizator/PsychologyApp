@@ -77,8 +77,8 @@ public sealed class PageRegistry(
     public InfoPage CreateInfoPage() =>
         WithPressFeedback(profilePageFactory.CreateInfoPage());
 
-    public DonatePage CreateDonatePage(INavigation navigation) =>
-        WithPressFeedback(profilePageFactory.CreateDonatePage(navigation));
+    public DonatePage CreateDonatePage() =>
+        WithPressFeedback(profilePageFactory.CreateDonatePage());
 
     public FormPage CreateFormPage() =>
         WithPressFeedback(reviewPageFactory.CreateFormPage());
