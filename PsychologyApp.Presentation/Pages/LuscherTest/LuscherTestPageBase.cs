@@ -1,9 +1,8 @@
-﻿using System.ComponentModel;
-using PsychologyApp.Presentation.Shared.Common;
+﻿using PsychologyApp.Presentation.App.Providers;
 using PsychologyApp.Presentation.Entities.Test;
+using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.Navigation;
-using PsychologyApp.Presentation.App.Providers;
-using PsychologyApp.Presentation.Pages.TestsList;
 
 namespace PsychologyApp.Presentation.Pages.LuscherTest;
 
@@ -11,16 +10,20 @@ public abstract class LuscherTestPageBase : ContentPage
 {
     private LuscherTestViewModel? _viewModel;
 
-    protected LuscherTestPageBase(
+    protected LuscherTestPageBase()
+    {
+        Loaded += OnPageLoaded;
+    }
+
+    protected void InitializeLuscherViewModel(
         LuscherMode mode,
         IPageViewModelActivator pageViewModelActivator,
         ILuscherTestViewModelFactory luscherTestViewModelFactory)
     {
         _viewModel = this.ActivateViewModel(
             pageViewModelActivator,
-            nav => luscherTestViewModelFactory.Create(nav, mode));
+            page => luscherTestViewModelFactory.Create(page, mode));
         _viewModel.PropertyChanged += OnViewModelPropertyChanged;
-        Loaded += OnPageLoaded;
     }
 
     protected abstract View LuscherStartSection { get; }
@@ -28,18 +31,29 @@ public abstract class LuscherTestPageBase : ContentPage
 
     private void OnPageLoaded(object? sender, EventArgs e)
     {
-        foreach (BoxView boxView in this.GetVisualTreeDescendants().OfType<BoxView>())
+        foreach (VisualElement element in this.GetVisualTreeDescendants())
         {
-            if (boxView.GestureRecognizers.OfType<TapGestureRecognizer>().Any())
+            if (element is not View view)
             {
-                VisualElementPressFeedback.Attach(boxView);
+                continue;
+            }
+
+            if (view.GestureRecognizers.OfType<TapGestureRecognizer>().Any() &&
+                element is Border or BoxView)
+            {
+                VisualElementPressFeedback.Attach(element);
             }
         }
     }
 
-    private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    private void OnViewModelPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
-        if (_viewModel is null)
+        if (_viewModel is null || !IsLoaded)
+        {
+            return;
+        }
+
+        if (LuscherStartSection is null || LuscherFinishSection is null)
         {
             return;
         }

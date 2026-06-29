@@ -11,6 +11,6 @@ public partial class DesignerPage : ContentPage
         long id)
     {
         InitializeComponent();
-        this.ActivateViewModel(pageViewModelActivator, nav => designerViewModelFactory.Create(nav, id));
+        this.ActivateViewModel(pageViewModelActivator, page => designerViewModelFactory.Create(page, id));
     }
 }

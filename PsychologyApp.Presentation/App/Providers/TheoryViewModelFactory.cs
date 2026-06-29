@@ -6,12 +6,12 @@ namespace PsychologyApp.Presentation.App.Providers;
 
 public interface ITheoryViewModelFactory
 {
-    TheoryViewModel Create(INavigation navigation, string content, TechniqueId? techniqueId = null);
+    TheoryViewModel Create(ContentPage page, string content, TechniqueId? techniqueId = null);
 }
 
 public sealed class TheoryViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory)
     : ViewModelFactoryBase, ITheoryViewModelFactory
 {
-    public TheoryViewModel Create(INavigation navigation, string content, TechniqueId? techniqueId = null) =>
-        new(ResolveNavigation(navigationServiceFactory, navigation), content, techniqueId);
+    public TheoryViewModel Create(ContentPage page, string content, TechniqueId? techniqueId = null) =>
+        new(ResolveNavigation(navigationServiceFactory, page), content, techniqueId);
 }

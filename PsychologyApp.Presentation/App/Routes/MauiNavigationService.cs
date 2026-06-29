@@ -7,11 +7,24 @@ using AppShell = PsychologyApp.Presentation.App.AppShell;
 
 namespace PsychologyApp.Presentation.App.Routes;
 
-public sealed class MauiNavigationService(
-    INavigation navigation,
-    IPageFactory pageFactory,
-    IShellStartupCoordinator shellStartupCoordinator) : INavigationService
+public sealed class MauiNavigationService : INavigationService
 {
+    private readonly INavigation? _navigation;
+    private readonly WeakReference<ContentPage>? _ownerPage;
+    private readonly IPageFactory _pageFactory;
+    private readonly IShellStartupCoordinator _shellStartupCoordinator;
+
+    public MauiNavigationService(
+        NavigationContext context,
+        IPageFactory pageFactory,
+        IShellStartupCoordinator shellStartupCoordinator)
+    {
+        _navigation = context.Navigation;
+        _ownerPage = context.OwnerPage is { } page ? new WeakReference<ContentPage>(page) : null;
+        _pageFactory = pageFactory;
+        _shellStartupCoordinator = shellStartupCoordinator;
+    }
+
     public INavigation Navigation => ResolveNavigation();
 
     public Task GoBackAsync() =>
@@ -25,52 +38,52 @@ public sealed class MauiNavigationService(
         {
             INavigation hostNavigation = ResolveNavigation();
             return hostNavigation.PushAsync(
-                pageFactory.CreateTechniqueSessionPage(techniqueId, hostNavigation),
+                _pageFactory.CreateTechniqueSessionPage(techniqueId, hostNavigation),
                 true);
         });
 
     public Task GoToCreatedAsync(long techniqueId) =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(pageFactory.CreateCreatedPage(techniqueId), false));
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateCreatedPage(techniqueId), false));
 
     public Task GoToDesignerAsync(long techniqueId) =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(pageFactory.CreateDesignerPage(techniqueId), false));
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateDesignerPage(techniqueId), false));
 
     public Task GoToUserProfileAsync() =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(pageFactory.CreateUserPage(), true));
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateUserPage(), true));
 
     public Task GoToOptionsAsync() =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(pageFactory.CreateOptionsPage(), false));
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateOptionsPage(), false));
 
     public Task GoToInfoAsync() =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(pageFactory.CreateInfoPage(), false));
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateInfoPage(), false));
 
     public Task GoToDonateAsync() =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(pageFactory.CreateDonatePage(ResolveNavigation()), false));
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateDonatePage(), false));
 
     public Task GoToFormAsync() =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(pageFactory.CreateFormPage(), false));
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateFormPage(), false));
 
     public Task GoToSettingsAsync() =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(pageFactory.CreateSettingsPage(), false));
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateSettingsPage(), false));
 
     public Task GoToPhysicsSearchAsync() =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(pageFactory.CreatePhysicsSearchPage(), false));
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreatePhysicsSearchPage(), false));
 
     public Task GoToTheoryAsync(string content, TechniqueId? techniqueId = null) =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(pageFactory.CreateTheoryPage(content, techniqueId), false));
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateTheoryPage(content, techniqueId), false));
 
     public Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Func<Task> startTest, string? testId = null) =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(pageFactory.CreateFindProblemPage(description, algorithm, comment, startTest, testId), false));
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateFindProblemPage(description, algorithm, comment, startTest, testId), false));
 
     public Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null) =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(pageFactory.CreateQuestionPage(questions, scoreAnalyzer, singleAnswer, session), true));
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateQuestionPage(questions, scoreAnalyzer, singleAnswer, session), true));
 
     public Task GoToLuscherTestAsync(LuscherMode mode) =>
         NavigationCoordinator.RunPushAsync(() => mode switch
         {
-            LuscherMode.Standard => ResolveNavigation().PushAsync(pageFactory.CreateStandardTestPage(), false),
-            LuscherMode.Brief => ResolveNavigation().PushAsync(pageFactory.CreateAlternativeTestPage(), false),
-            _ => ResolveNavigation().PushAsync(pageFactory.CreateAlternativeTestPage(), false)
+            LuscherMode.Standard => ResolveNavigation().PushAsync(_pageFactory.CreateStandardTestPage(), false),
+            LuscherMode.Brief => ResolveNavigation().PushAsync(_pageFactory.CreateAlternativeTestPage(), false),
+            _ => ResolveNavigation().PushAsync(_pageFactory.CreateAlternativeTestPage(), false)
         });
 
     public Task GoToStandardTestAsync() =>
@@ -80,10 +93,10 @@ public sealed class MauiNavigationService(
         GoToLuscherTestAsync(LuscherMode.Brief);
 
     public Task GoToTestHistoryAsync(string testId, string testTitle) =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(pageFactory.CreateTestHistoryPage(testId, testTitle), true));
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateTestHistoryPage(testId, testTitle), true));
 
     public Task GoToTestsListAsync() =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(pageFactory.CreateTestsListPage(), true));
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateTestsListPage(), true));
 
     public Task GoToTestResultAsync(
         int score,
@@ -93,7 +106,7 @@ public sealed class MauiNavigationService(
         string? interpretationDetail = null,
         string? analyzerId = null) =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(
-            pageFactory.CreateTestResultPage(new TestResultInfo
+            _pageFactory.CreateTestResultPage(new TestResultInfo
             {
                 Score = score,
                 Interpretation = interpretation,
@@ -107,7 +120,7 @@ public sealed class MauiNavigationService(
     public Task GoToTestsTabAsync() =>
         NavigationCoordinator.RunAsync(() =>
         {
-            if (Microsoft.Maui.Controls.Shell.Current is AppShell appShell)
+            if (Shell.Current is AppShell appShell)
             {
                 appShell.MaterializeTab(appShell.TestsTab);
                 appShell.CurrentItem = appShell.TestsTab;
@@ -119,7 +132,7 @@ public sealed class MauiNavigationService(
     public Task GoToQuotesTabAsync() =>
         NavigationCoordinator.RunAsync(() =>
         {
-            if (Microsoft.Maui.Controls.Shell.Current is AppShell appShell)
+            if (Shell.Current is AppShell appShell)
             {
                 appShell.MaterializeTab(appShell.QuotesShellTab);
                 appShell.CurrentItem = appShell.QuotesShellTab;
@@ -129,7 +142,7 @@ public sealed class MauiNavigationService(
         });
 
     public Task ShowOnboardingAsync() =>
-        NavigationCoordinator.RunAsync(() => shellStartupCoordinator.ShowOnboardingAsync(
+        NavigationCoordinator.RunAsync(() => _shellStartupCoordinator.ShowOnboardingAsync(
             ResolveNavigation(),
             CompleteOnboardingWithTechniqueAsync));
 
@@ -142,7 +155,7 @@ public sealed class MauiNavigationService(
 
         UserPreferences.SetPendingTechnique(techniqueId.Value);
 
-        if (Microsoft.Maui.Controls.Shell.Current is AppShell appShell)
+        if (Shell.Current is AppShell appShell)
         {
             appShell.MaterializeTab(appShell.PracticeShellTab);
             appShell.CurrentItem = appShell.PracticeShellTab;
@@ -154,16 +167,25 @@ public sealed class MauiNavigationService(
 
     private INavigation ResolveNavigation()
     {
-        // Prefer the navigation stack bound to the page that created this service.
-        // Shell.Current.CurrentPage can be AppShell on Android, which pushes to the wrong stack.
-        if (navigation is not null)
+        if (_ownerPage?.TryGetTarget(out ContentPage? owner) == true && owner.Navigation is INavigation ownerNavigation)
         {
-            return navigation;
+            return ownerNavigation;
         }
 
-        if (Microsoft.Maui.Controls.Shell.Current?.CurrentPage?.Navigation is INavigation shellNavigation)
+        Page? shellPage = Shell.Current?.CurrentPage;
+        if (shellPage is not null && shellPage is not Shell && shellPage.Navigation is INavigation shellNavigation)
         {
             return shellNavigation;
+        }
+
+        if (ShellNavigationResolver.TryGetActiveTabStackNavigation() is INavigation tabStackNavigation)
+        {
+            return tabStackNavigation;
+        }
+
+        if (_navigation is not null)
+        {
+            return _navigation;
         }
 
         Page? windowPage = Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault()?.Page;

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Widgets.Test.TestResultHeroView"
+             x:Name="Root">
+
+    <Border Style="{StaticResource TestFlatCardStyle}" Margin="0">
+        <VerticalStackLayout Spacing="12">
+            <Border
+                IsVisible="{Binding HasTrendBadge, Source={x:Reference Root}}"
+                HorizontalOptions="Start"
+                Padding="10,4"
+                StrokeThickness="0"
+                BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <Label
+                    Text="{Binding TrendText, Source={x:Reference Root}}"
+                    Style="{StaticResource CaptionStyle}"
+                    TextColor="{DynamicResource Primary}"
+                    FontFamily="{StaticResource SemiBoldFontFamily}" />
+            </Border>
+
+            <Label
+                Text="{Binding ScoreTitle, Source={x:Reference Root}}"
+                Style="{StaticResource PageTitleStyle}"
+                HorizontalTextAlignment="Center" />
+
+            <Label
+                Text="{Binding Interpretation, Source={x:Reference Root}}"
+                Style="{StaticResource SectionTitleStyle}"
+                HorizontalTextAlignment="Center"
+                LineBreakMode="WordWrap" />
+        </VerticalStackLayout>
+    </Border>
+
+</ContentView>

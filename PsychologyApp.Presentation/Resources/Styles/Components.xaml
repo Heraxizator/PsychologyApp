@@ -36,6 +36,12 @@
         <Setter Property="Margin" Value="4,4,4,12" />
     </Style>
 
+    <Style x:Key="TestFlatCardStyle" TargetType="Border" BasedOn="{StaticResource BrandCardStyle}">
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="14,12" />
+        <Setter Property="Shadow" Value="{x:Null}" />
+    </Style>
+
     <!-- dvgups page panel: single white container on #FAFAFA -->
     <Style x:Key="BrandPanelStyle" TargetType="Border">
         <Setter Property="Margin" Value="20" />

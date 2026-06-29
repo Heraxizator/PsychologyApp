@@ -36,7 +36,7 @@ public interface IPageFactory
     UserPage CreateUserPage();
     OptionsPage CreateOptionsPage();
     InfoPage CreateInfoPage();
-    DonatePage CreateDonatePage(INavigation navigation);
+    DonatePage CreateDonatePage();
     FormPage CreateFormPage();
     SettingsPage CreateSettingsPage();
     PhysicsSearchPage CreatePhysicsSearchPage();

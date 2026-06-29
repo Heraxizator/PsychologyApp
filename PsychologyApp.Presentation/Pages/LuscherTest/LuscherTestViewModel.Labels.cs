@@ -25,6 +25,17 @@ public partial class LuscherTestViewModel
 
     public string SecondColorLabel => AppStrings.TestsSecondColor;
 
+    public int BriefStep => _colourSelectedItems.Count;
+
+    public int BriefStepCount => 2;
+
+    public string BriefStepLabel => AppStrings.TestsStepOf(BriefStep + 1, BriefStepCount);
+
+    public bool ShowBriefProgress => IsBriefMode && IsStart;
+
+    private void NotifyBriefProgress() =>
+        Notify(nameof(BriefStep), nameof(BriefStepLabel), nameof(ShowBriefProgress));
+
     protected override void RefreshLocalizedProperties()
     {
         Notify(
@@ -35,13 +46,15 @@ public partial class LuscherTestViewModel
             nameof(RestartButtonText),
             nameof(BackToListButtonText),
             nameof(FirstColorLabel),
-            nameof(SecondColorLabel));
+            nameof(SecondColorLabel),
+            nameof(BriefStepLabel));
 
         if (_mode == LuscherMode.Brief)
         {
             CurrentInstruction = _colourSelectedItems.Count == 0
                 ? AppStrings.TestsLuscherFirstInstruction
                 : AppStrings.TestsLuscherSecondInstruction;
+            NotifyBriefProgress();
             RefreshBriefResultText();
         }
         else

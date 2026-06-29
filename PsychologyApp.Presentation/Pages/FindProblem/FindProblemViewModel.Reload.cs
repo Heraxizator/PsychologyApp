@@ -24,5 +24,6 @@ public partial class FindProblemViewModel
         CommentText = snapshot.Comment;
         AlgorithmRows.Clear();
         InitAlgorithmRows(snapshot.Algorithm.ToList());
+        await LoadMetaAsync();
     }
 }

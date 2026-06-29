@@ -17,8 +17,7 @@ public sealed class TestRetakeOperations
             return;
         }
 
-        TestItem item = TestItemFactory.Create(definition, navigationService);
         await navigationService.GoToRootAsync();
-        await item.StartAsync();
+        await TestStartOperations.StartAsync(definition, navigationService);
     }
 }

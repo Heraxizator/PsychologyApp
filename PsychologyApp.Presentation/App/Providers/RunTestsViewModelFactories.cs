@@ -18,7 +18,7 @@ namespace PsychologyApp.Presentation.App.Providers;
 
 public interface ITestsListViewModelFactory
 {
-    TestsListViewModel Create(INavigation navigation);
+    TestsListViewModel Create(ContentPage page);
 }
 
 public sealed class TestsListViewModelFactory(
@@ -27,9 +27,9 @@ public sealed class TestsListViewModelFactory(
     TestsListLoader testsListLoader,
     ILogger<TestsListViewModel> logger) : ViewModelFactoryBase, ITestsListViewModelFactory
 {
-    public TestsListViewModel Create(INavigation navigation) =>
+    public TestsListViewModel Create(ContentPage page) =>
         new(
-            ResolveNavigation(navigationServiceFactory, navigation),
+            ResolveNavigation(navigationServiceFactory, page),
             databaseReadySignal,
             testsListLoader,
             logger);
@@ -37,7 +37,7 @@ public sealed class TestsListViewModelFactory(
 
 public interface ITestHistoryViewModelFactory
 {
-    TestHistoryViewModel Create(INavigation navigation, string testId, string testTitle);
+    TestHistoryViewModel Create(ContentPage page, string testId, string testTitle);
 }
 
 public sealed class TestHistoryViewModelFactory(
@@ -49,9 +49,9 @@ public sealed class TestHistoryViewModelFactory(
     TestRetakeOperations retakeOperations,
     ILogger<TestHistoryViewModel> logger) : ViewModelFactoryBase, ITestHistoryViewModelFactory
 {
-    public TestHistoryViewModel Create(INavigation navigation, string testId, string testTitle) =>
+    public TestHistoryViewModel Create(ContentPage page, string testId, string testTitle) =>
         new(
-            ResolveNavigation(navigationServiceFactory, navigation),
+            ResolveNavigation(navigationServiceFactory, page),
             userProgressService,
             testCatalogService,
             databaseReadySignal,
@@ -64,7 +64,7 @@ public sealed class TestHistoryViewModelFactory(
 
 public interface ILuscherTestViewModelFactory
 {
-    LuscherTestViewModel Create(INavigation navigation, LuscherMode mode);
+    LuscherTestViewModel Create(ContentPage page, LuscherMode mode);
 }
 
 public sealed class LuscherTestViewModelFactory(
@@ -72,36 +72,38 @@ public sealed class LuscherTestViewModelFactory(
     LuscherTestSubmissionService submissionService,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, ILuscherTestViewModelFactory
 {
-    public LuscherTestViewModel Create(INavigation navigation, LuscherMode mode) =>
+    public LuscherTestViewModel Create(ContentPage page, LuscherMode mode) =>
         new(
             mode,
-            ResolveNavigation(navigationServiceFactory, navigation),
+            ResolveNavigation(navigationServiceFactory, page),
             userProgressService,
             submissionService);
 }
 
 public interface ITestResultViewModelFactory
 {
-    TestResultViewModel Create(INavigation navigation, TestResultInfo result);
+    TestResultViewModel Create(ContentPage page, TestResultInfo result);
 }
 
 public sealed class TestResultViewModelFactory(
     Func<NavigationContext, INavigationService> navigationServiceFactory,
     ITestCatalogService testCatalogService,
-    TestRetakeOperations retakeOperations) : ViewModelFactoryBase, ITestResultViewModelFactory
+    TestRetakeOperations retakeOperations,
+    IUserProgressService userProgressService) : ViewModelFactoryBase, ITestResultViewModelFactory
 {
-    public TestResultViewModel Create(INavigation navigation, TestResultInfo result) =>
+    public TestResultViewModel Create(ContentPage page, TestResultInfo result) =>
         new(
-            ResolveNavigation(navigationServiceFactory, navigation),
+            ResolveNavigation(navigationServiceFactory, page),
             testCatalogService,
             retakeOperations,
+            userProgressService,
             result);
 }
 
 public interface IQuestionViewModelFactory
 {
     QuestionViewModel Create(
-        INavigation navigation,
+        ContentPage page,
         List<Question> questions,
         Func<int, string> analyzer,
         bool singleAnswer,
@@ -117,13 +119,13 @@ public sealed class QuestionViewModelFactory(
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IQuestionViewModelFactory
 {
     public QuestionViewModel Create(
-        INavigation navigation,
+        ContentPage page,
         List<Question> questions,
         Func<int, string> analyzer,
         bool singleAnswer,
         TestSessionInfo? session = null)
     {
-        INavigationService navigationService = ResolveNavigation(navigationServiceFactory, navigation);
+        INavigationService navigationService = ResolveNavigation(navigationServiceFactory, page);
         return new(
             questions,
             analyzer,
@@ -141,7 +143,7 @@ public sealed class QuestionViewModelFactory(
 public interface IFindProblemViewModelFactory
 {
     FindProblemViewModel Create(
-        INavigation navigation,
+        ContentPage page,
         string? description,
         List<string> algorithm,
         string? comment,
@@ -155,14 +157,14 @@ public sealed class FindProblemViewModelFactory(
     FindProblemContentLoader contentLoader) : ViewModelFactoryBase, IFindProblemViewModelFactory
 {
     public FindProblemViewModel Create(
-        INavigation navigation,
+        ContentPage page,
         string? description,
         List<string> algorithm,
         string? comment,
         Func<Task> startTest,
         string? testId = null) =>
         new(
-            ResolveNavigation(navigationServiceFactory, navigation),
+            ResolveNavigation(navigationServiceFactory, page),
             testCatalogService,
             contentLoader,
             description,

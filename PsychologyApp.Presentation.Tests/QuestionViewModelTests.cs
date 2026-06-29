@@ -1,5 +1,4 @@
 using Moq;
-using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Common;
@@ -7,7 +6,6 @@ using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Features.RunTests;
-using PsychologyApp.Presentation.Pages.TestsList;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
@@ -23,7 +21,7 @@ public sealed class QuestionViewModelTests
     }
 
     [Fact]
-    public async Task ConfirmCommand_IncompleteAnswers_ShowsValidationToast()
+    public async Task NextCommand_WithoutAnswer_ShowsValidationHint()
     {
         var navigation = new Mock<INavigation>();
         var navigationService = new TestNavigationService(navigation.Object);
@@ -43,28 +41,67 @@ public sealed class QuestionViewModelTests
             }
         ];
 
-        QuestionViewModel viewModel = new(
+        QuestionViewModel viewModel = CreateViewModel(
             questions,
-            score => $"Result {score}",
-            singleAnswer: true,
+            navigationService,
             toast.Object,
             dialog.Object,
-            navigationService,
-            progress.Object,
-            SubmissionService,
-            CatalogService.Object);
+            progress.Object);
 
-        viewModel.ConfirmCommand.Execute(null);
+        Assert.False(viewModel.NextCommand.CanExecute(null));
+        viewModel.NextCommand.Execute(null);
         await Task.Delay(50);
 
-        toast.Verify(t => t.LongToast(AppStrings.TestsAnswerAllToast), Times.Once);
-        dialog.Verify(
-            d => d.AskAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()),
-            Times.Never);
+        Assert.True(viewModel.IsValidationHintVisible);
+        toast.Verify(t => t.LongToast(AppStrings.TestsAnswerCurrentToast), Times.Never);
     }
 
     [Fact]
-    public async Task ConfirmCommand_CompleteAnswers_NavigatesToTestResult()
+    public async Task NextCommand_AfterSelectBeforeAutoAdvance_DoesNotShowPhantomToast()
+    {
+        var navigation = new Mock<INavigation>();
+        var navigationService = new TestNavigationService(navigation.Object);
+        var toast = new Mock<IToastService>();
+        var dialog = new Mock<IDialogService>();
+        var progress = new Mock<IUserProgressService>();
+
+        List<Question> questions =
+        [
+            new()
+            {
+                Answers =
+                [
+                    new Answer { Ball = 1, Selected = false },
+                    new Answer { Ball = 2, Selected = false }
+                ]
+            },
+            new()
+            {
+                Answers =
+                [
+                    new Answer { Ball = 1, Selected = false },
+                    new Answer { Ball = 2, Selected = false }
+                ]
+            }
+        ];
+
+        QuestionViewModel viewModel = CreateViewModel(
+            questions,
+            navigationService,
+            toast.Object,
+            dialog.Object,
+            progress.Object);
+
+        viewModel.CurrentAnswers[0].SelectCommand.Execute(null);
+        viewModel.NextCommand.Execute(null);
+        await Task.Delay(400);
+
+        Assert.Equal(1, viewModel.CurrentIndex);
+        toast.Verify(t => t.LongToast(AppStrings.TestsAnswerCurrentToast), Times.Never);
+    }
+
+    [Fact]
+    public async Task NextCommand_OnLastStepWithAllAnswers_NavigatesToTestResult()
     {
         var navigation = new Mock<INavigation>();
         var trackingNavigation = new TestResultTrackingNavigationService(navigation.Object);
@@ -92,38 +129,30 @@ public sealed class QuestionViewModelTests
             }
         ];
 
-        QuestionViewModel viewModel = new(
+        QuestionViewModel viewModel = CreateViewModel(
             questions,
-            score => $"Score {score}",
-            singleAnswer: true,
+            trackingNavigation,
             toast.Object,
             dialog.Object,
-            trackingNavigation,
-            progress.Object,
-            SubmissionService,
-            CatalogService.Object);
+            progress.Object);
 
-        viewModel.ConfirmCommand.Execute(null);
+        viewModel.NextCommand.Execute(null);
+        await Task.Delay(50);
+        viewModel.NextCommand.Execute(null);
         await Task.Delay(50);
 
-        dialog.Verify(
-            d => d.AskAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()),
-            Times.Never);
         Assert.Equal(5, trackingNavigation.LastScore);
         Assert.Equal("Score 5", trackingNavigation.LastInterpretation);
     }
 
     [Fact]
-    public async Task ConfirmCommand_WithSession_SavesResult()
+    public async Task NextCommand_OnLastStep_WithSession_SavesResult()
     {
         var navigation = new Mock<INavigation>();
         var navigationService = new TestNavigationService(navigation.Object);
         var toast = new Mock<IToastService>();
         var dialog = new Mock<IDialogService>();
         var progress = new Mock<IUserProgressService>();
-        dialog
-            .Setup(d => d.AskAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
-            .ReturnsAsync(true);
 
         List<Question> questions =
         [
@@ -133,19 +162,15 @@ public sealed class QuestionViewModelTests
             }
         ];
 
-        QuestionViewModel viewModel = new(
+        QuestionViewModel viewModel = CreateViewModel(
             questions,
-            score => $"Score {score}",
-            singleAnswer: true,
+            navigationService,
             toast.Object,
             dialog.Object,
-            navigationService,
             progress.Object,
-            SubmissionService,
-            CatalogService.Object,
             new TestSessionInfo { TestId = "beck", AnalyzerId = "beck" });
 
-        viewModel.ConfirmCommand.Execute(null);
+        viewModel.NextCommand.Execute(null);
         await Task.Delay(50);
 
         progress.Verify(
@@ -154,7 +179,7 @@ public sealed class QuestionViewModelTests
     }
 
     [Fact]
-    public async Task ConfirmCommand_WithRecommendation_PassesTechniqueToResultPage()
+    public async Task NextCommand_OnLastStep_PassesTechniqueToResultPage()
     {
         var navigation = new Mock<INavigation>();
         var trackingNavigation = new TestResultTrackingNavigationService(navigation.Object);
@@ -170,23 +195,90 @@ public sealed class QuestionViewModelTests
             }
         ];
 
-        QuestionViewModel viewModel = new(
+        QuestionViewModel viewModel = CreateViewModel(
             questions,
-            score => $"Score {score}",
-            singleAnswer: true,
+            trackingNavigation,
             toast.Object,
             dialog.Object,
-            trackingNavigation,
             progress.Object,
-            SubmissionService,
-            CatalogService.Object,
             new TestSessionInfo { TestId = "beck", AnalyzerId = "beck" });
 
-        viewModel.ConfirmCommand.Execute(null);
+        viewModel.NextCommand.Execute(null);
         await Task.Delay(50);
 
         Assert.Equal(TechniqueId.Spin, trackingNavigation.LastRecommendedTechnique);
     }
+
+    [Fact]
+    public void UseBarProgress_IsTrue_WhenMoreThanSevenQuestions()
+    {
+        List<Question> questions = Enumerable.Range(1, 8)
+            .Select(i => new Question
+            {
+                Number = i,
+                Answers = [new Answer { Ball = 1, Selected = false }]
+            })
+            .ToList();
+
+        QuestionViewModel viewModel = CreateViewModel(
+            questions,
+            new TestNavigationService(new Mock<INavigation>().Object),
+            new Mock<IToastService>().Object,
+            new Mock<IDialogService>().Object,
+            new Mock<IUserProgressService>().Object);
+
+        Assert.True(viewModel.UseBarProgress);
+        Assert.Equal(0.125, viewModel.Progress, 3);
+    }
+
+    [Fact]
+    public async Task PreviousCommand_OnFirstStep_GoesBack()
+    {
+        var navigation = new Mock<INavigation>();
+        var navigationService = new TestNavigationService(navigation.Object);
+        var toast = new Mock<IToastService>();
+        var dialog = new Mock<IDialogService>();
+        var progress = new Mock<IUserProgressService>();
+
+        List<Question> questions =
+        [
+            new()
+            {
+                Answers = [new Answer { Ball = 1, Selected = true }]
+            }
+        ];
+
+        QuestionViewModel viewModel = CreateViewModel(
+            questions,
+            navigationService,
+            toast.Object,
+            dialog.Object,
+            progress.Object);
+
+        viewModel.PreviousCommand.Execute(null);
+        await Task.Delay(50);
+
+        navigation.Verify(n => n.PopAsync(false), Times.Once);
+    }
+
+    private static QuestionViewModel CreateViewModel(
+        List<Question> questions,
+        INavigationService navigationService,
+        IToastService toast,
+        IDialogService dialog,
+        IUserProgressService progress,
+        TestSessionInfo? session = null) =>
+        new(
+            questions,
+            score => $"Score {score}",
+            singleAnswer: true,
+            toast,
+            dialog,
+            navigationService,
+            progress,
+            SubmissionService,
+            CatalogService.Object,
+            session);
 
     private sealed class TestResultTrackingNavigationService(INavigation navigation) : TestNavigationService(navigation)
     {

@@ -7,6 +7,6 @@ public partial class TheoryPage : ContentPage
     public TheoryPage(ITheoryViewModelFactory theoryViewModelFactory, string content, TechniqueId? techniqueId = null)
     {
         InitializeComponent();
-        BindingContext = theoryViewModelFactory.Create(Navigation, content, techniqueId);
+        BindingContext = theoryViewModelFactory.Create(this, content, techniqueId);
     }
 }

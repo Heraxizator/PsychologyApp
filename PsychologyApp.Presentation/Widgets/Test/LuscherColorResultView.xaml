@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Widgets.Test.LuscherColorResultView"
+             x:Name="Root">
+
+    <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
+        <Label
+            Text="{Binding SectionLabel, Source={x:Reference Root}}"
+            Style="{StaticResource SectionTitleStyle}"
+            HorizontalOptions="Center"
+            TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+
+        <BoxView
+            Margin="20,0"
+            HeightRequest="2"
+            Color="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
+
+        <Border
+            WidthRequest="{StaticResource LuscherResultSwatchSize}"
+            HeightRequest="{StaticResource LuscherResultSwatchSize}"
+            HorizontalOptions="Center"
+            StrokeThickness="0"
+            BackgroundColor="{Binding Color, Source={x:Reference Root}}"
+            Opacity="0.92">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="32" />
+            </Border.StrokeShape>
+        </Border>
+
+        <Label
+            Text="{Binding ColorName, Source={x:Reference Root}}"
+            Style="{StaticResource SectionTitleStyle}"
+            HorizontalOptions="Center" />
+
+        <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+            <Label
+                Text="{Binding ResultText, Source={x:Reference Root}}"
+                Style="{StaticResource BodyStyle}"
+                HorizontalTextAlignment="Justify"
+                LineBreakMode="WordWrap" />
+        </Border>
+    </VerticalStackLayout>
+
+</ContentView>

@@ -47,8 +47,26 @@ public partial class FindProblemViewModel : BaseViewModel
 
         _startTestAsync = startTest;
 
-        Continue = new AsyncCommand(_startTestAsync);
+        Continue = new AsyncCommand(ContinueAsync);
         BackCommand = new AsyncCommand(GoToRootAsync);
+        OnConstructed();
+    }
+
+    partial void OnConstructed();
+
+    private async Task ContinueAsync()
+    {
+        if (!string.IsNullOrWhiteSpace(_testId))
+        {
+            TestDefinition? definition = await _testCatalogService.GetByIdAsync(_testId);
+            if (definition is not null)
+            {
+                await TestStartOperations.StartAsync(definition, _navigationService);
+                return;
+            }
+        }
+
+        await _startTestAsync();
     }
 
     protected override void RefreshLocalizedProperties()
@@ -58,7 +76,8 @@ public partial class FindProblemViewModel : BaseViewModel
             nameof(DescriptionHeader),
             nameof(AlgorithmHeader),
             nameof(NoteHeader),
-            nameof(StartButtonText));
+            nameof(StartButtonText),
+            nameof(IntroLeadText));
 
         ReloadLocalizedTestContent();
     }

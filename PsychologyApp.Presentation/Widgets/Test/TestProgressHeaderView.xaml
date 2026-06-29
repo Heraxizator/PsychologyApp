@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:onboarding="clr-namespace:PsychologyApp.Presentation.Widgets.Onboarding"
+             x:Class="PsychologyApp.Presentation.Widgets.Test.TestProgressHeaderView"
+             x:Name="Root">
+
+    <VerticalStackLayout Spacing="8">
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+            <Label
+                Grid.Column="0"
+                Text="{Binding StepLabel, Source={x:Reference Root}}"
+                IsVisible="{Binding ShowStepLabel, Source={x:Reference Root}}"
+                Style="{StaticResource CaptionStyle}"
+                HorizontalTextAlignment="Start"
+                VerticalOptions="Center"
+                TextColor="{DynamicResource Primary}" />
+            <Label
+                Grid.Column="1"
+                Text="{Binding RemainingDurationText, Source={x:Reference Root}}"
+                IsVisible="{Binding HasRemainingDuration, Source={x:Reference Root}}"
+                Style="{StaticResource CaptionStyle}"
+                HorizontalTextAlignment="End"
+                VerticalOptions="Center"
+                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+        </Grid>
+
+        <ProgressBar
+            x:Name="ProgressBarView"
+            IsVisible="{Binding ShowBarProgress, Source={x:Reference Root}}"
+            HeightRequest="6" />
+
+        <onboarding:OnboardingStepIndicatorView
+            IsVisible="{Binding ShowDotProgress, Source={x:Reference Root}}"
+            Step="{Binding Step, Source={x:Reference Root}}"
+            StepCount="{Binding StepCount, Source={x:Reference Root}}"
+            StepLabel="{Binding StepLabel, Source={x:Reference Root}}"
+            ShowStepLabel="False" />
+    </VerticalStackLayout>
+
+</ContentView>

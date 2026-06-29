@@ -13,7 +13,7 @@ public interface IProfilePageFactory
     UserPage CreateUserPage();
     OptionsPage CreateOptionsPage();
     InfoPage CreateInfoPage();
-    DonatePage CreateDonatePage(INavigation navigation);
+    DonatePage CreateDonatePage();
     SettingsPage CreateSettingsPage();
 }
 
@@ -34,8 +34,8 @@ public sealed class ProfilePageFactory(
     public InfoPage CreateInfoPage() =>
         new(pageViewModelActivator, infoViewModelFactory);
 
-    public DonatePage CreateDonatePage(INavigation navigation) =>
-        new(donateViewModelFactory.Create(navigation));
+    public DonatePage CreateDonatePage() =>
+        new(donateViewModelFactory);
 
     public SettingsPage CreateSettingsPage() =>
         new(pageViewModelActivator, settingsViewModelFactory);

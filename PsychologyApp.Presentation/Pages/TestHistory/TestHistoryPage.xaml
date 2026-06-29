@@ -20,8 +20,51 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:TestHistoryEntryItem">
                     <Border Style="{StaticResource ListEntryCardStyle}">
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="{Binding DateText}" Style="{StaticResource CaptionStyle}" />
+                        <VerticalStackLayout Spacing="6">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label
+                                    Grid.Column="0"
+                                    Text="{Binding DateText}"
+                                    Style="{StaticResource CaptionStyle}" />
+                                <Border
+                                    Grid.Column="1"
+                                    IsVisible="{Binding HasTrend}"
+                                    Padding="8,2"
+                                    StrokeThickness="0"
+                                    BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
+                                    <Border.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding IsWorse}"
+                                            TargetType="Border"
+                                            Value="True">
+                                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="6" />
+                                    </Border.StrokeShape>
+                                    <Label
+                                        Text="{Binding TrendText}"
+                                        Style="{StaticResource CaptionStyle}"
+                                        TextColor="{DynamicResource Primary}"
+                                        FontFamily="{StaticResource SemiBoldFontFamily}">
+                                        <Label.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding IsWorse}"
+                                                TargetType="Label"
+                                                Value="True">
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </Border>
+                            </Grid>
+                            <Label
+                                IsVisible="{Binding HasScore}"
+                                Text="{Binding ScoreText}"
+                                Style="{StaticResource CaptionStyle}"
+                                FontFamily="{StaticResource MediumFontFamily}"
+                                TextColor="{DynamicResource Primary}" />
                             <Label Text="{Binding SummaryText}" Style="{StaticResource BodyStyle}" />
                         </VerticalStackLayout>
                     </Border>

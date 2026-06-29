@@ -15,7 +15,7 @@ public partial class TechniquesPage : ContentPage
         ITechniquesViewModelFactory techniquesViewModelFactory)
     {
         InitializeComponent();
-        _viewModel = this.ActivateViewModel(pageViewModelActivator, nav => techniquesViewModelFactory.Create(nav));
+        _viewModel = this.ActivateViewModel(pageViewModelActivator, page => techniquesViewModelFactory.Create(page));
         _animationHelper = new PageAnimationHelper(_viewModel, LoadingProgress, TechniquesCollectionView);
     }
 

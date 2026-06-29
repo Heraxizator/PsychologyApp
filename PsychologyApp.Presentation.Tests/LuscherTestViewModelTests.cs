@@ -4,6 +4,7 @@ using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Domain.Colour.ValueObjects;
 using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Features.RunTests;
+using PsychologyApp.Presentation.Pages.LuscherTest;
 using PsychologyApp.Presentation.Pages.TestsList;
 using Xunit;
 
@@ -60,6 +61,21 @@ public sealed class LuscherTestViewModelTests
                 It.IsAny<string?>(),
                 It.IsAny<CancellationToken>()),
             Times.Once);
+    }
+
+    [Fact]
+    public void BriefStepLabel_ReflectsCurrentStep()
+    {
+        var navigation = new Mock<INavigation>();
+        LuscherTestViewModel viewModel = new(
+            LuscherMode.Brief,
+            new TestNavigationService(navigation.Object));
+
+        Assert.Equal(AppStrings.TestsStepOf(1, 2), viewModel.BriefStepLabel);
+
+        InvokeColorHandler(viewModel, ColourValue.Red);
+
+        Assert.Equal(AppStrings.TestsStepOf(2, 2), viewModel.BriefStepLabel);
     }
 
     [Fact]

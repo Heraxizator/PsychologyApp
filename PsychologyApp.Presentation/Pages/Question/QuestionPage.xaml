@@ -3,147 +3,132 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Pages.Question.QuestionPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.Question"
-             xmlns:models="clr-namespace:PsychologyApp.Presentation.Models.Tests;assembly=PsychologyApp.Presentation.Core"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:testUi="clr-namespace:PsychologyApp.Presentation.Widgets.Test"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:DataType="vm:QuestionViewModel"
              Shell.NavBarIsVisible="False"
-             Title="{Binding PageTitle}"
-             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
-             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors">
+             Title="{Binding PageTitle}">
 
-    <StackLayout
-        HorizontalOptions="FillAndExpand" 
-        VerticalOptions="FillAndExpand">
+    <Grid
+        Padding="{StaticResource LayoutPageMarginThickness}"
+        RowDefinitions="Auto,*,Auto"
+        RowSpacing="{StaticResource LayoutSpacing}">
 
-        <ui:NavigationBarSimpleView
-            TitleText="{Binding PageTitle}"
-            BackCommand="{Binding BackCommand}" />
+        <VerticalStackLayout Grid.Row="0" Spacing="8">
+            <ui:NavigationBarSimpleView
+                TitleText="{Binding PageTitle}"
+                BackCommand="{Binding BackCommand}" />
+            <testUi:TestFlowMetaStripView
+                DurationText="{Binding DurationText}"
+                QuestionCountText="{Binding QuestionCountText}" />
+            <testUi:TestProgressHeaderView
+                Step="{Binding CurrentIndex}"
+                StepCount="{Binding TotalCount}"
+                StepLabel="{Binding StepLabel}"
+                Progress="{Binding Progress}"
+                UseBarProgress="{Binding UseBarProgress}"
+                RemainingDurationText="{Binding RemainingDurationText}"
+                ShowStepLabel="True" />
+        </VerticalStackLayout>
 
-        <CollectionView
-            VerticalOptions="FillAndExpand"
-            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
-            AbsoluteLayout.LayoutFlags="All"
-            Margin="{StaticResource LayoutPageMarginThickness}"
-            ItemsSource="{Binding Questions}">
-            <CollectionView.Behaviors>
-                <behaviors:RevealOnAppearingBehavior />
-            </CollectionView.Behaviors>
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
-            </CollectionView.ItemsLayout>
-
-            <CollectionView.ItemTemplate>
-            <DataTemplate>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
                 <Border
-                    x:DataType="models:Question"
+                    x:Name="QuestionCard"
                     Style="{StaticResource BrandCardStyle}"
-                    Margin="0">
+                    Margin="0"
+                    IsVisible="{Binding HasCurrentQuestion}">
                     <Border.Behaviors>
-                        <behaviors:ListItemRevealBehavior />
+                        <behaviors:RevealOnAppearingBehavior />
+                        <behaviors:StepChangeRevealBehavior Step="{Binding CurrentIndex}" />
                     </Border.Behaviors>
-
-                        <VerticalStackLayout>
-
-                            <Label
-                                Margin="0,0,0,10"
-                                TextColor="{DynamicResource Primary}"
-                                Style="{StaticResource SectionTitleStyle}">
+                    <VerticalStackLayout Spacing="12">
+                        <Label
+                            Text="{Binding QuestionLeadText}"
+                            Style="{StaticResource CaptionStyle}"
+                            TextColor="{DynamicResource Primary}"
+                            LineBreakMode="WordWrap" />
+                        <Border
+                            Padding="10,4"
+                            HorizontalOptions="Start"
+                            StrokeThickness="0"
+                            BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <Label Style="{StaticResource CaptionStyle}" TextColor="{DynamicResource Primary}" FontFamily="{StaticResource MediumFontFamily}">
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="{Binding QuestionPrefix, Source={RelativeSource AncestorType={x:Type vm:QuestionViewModel}}}"/>
-                                        <Span Text="{Binding Number}"/>
+                                        <Span Text="{Binding QuestionPrefix}" />
+                                        <Span Text="{Binding CurrentQuestionNumber}" />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
+                        </Border>
+                        <Label
+                            Text="{Binding CurrentQuestionContext}"
+                            Style="{StaticResource BodyStyle}"
+                            FontSize="17"
+                            LineHeight="1.35"
+                            HorizontalTextAlignment="Start"
+                            LineBreakMode="WordWrap" />
+                    </VerticalStackLayout>
+                </Border>
 
-                            <Grid
-                                x:DataType="vm:QuestionViewModel"
-                                IsVisible="{Binding IsSingleAnswer}">
+                <VerticalStackLayout
+                    x:Name="AnswersPanel"
+                    BindableLayout.ItemsSource="{Binding CurrentAnswers}"
+                    Spacing="0">
+                    <VerticalStackLayout.Behaviors>
+                        <behaviors:StepChangeRevealBehavior Step="{Binding CurrentIndex}" />
+                    </VerticalStackLayout.Behaviors>
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:AnswerOptionItem">
+                            <testUi:TestAnswerOptionView
+                                Text="{Binding Text}"
+                                IsSelected="{Binding IsSelected}"
+                                IsSingleChoice="{Binding IsSingleChoice}"
+                                TapCommand="{Binding SelectCommand}">
+                                <testUi:TestAnswerOptionView.Behaviors>
+                                    <behaviors:ListItemRevealBehavior />
+                                </testUi:TestAnswerOptionView.Behaviors>
+                            </testUi:TestAnswerOptionView>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
 
-                                <Label
-                                    x:DataType="models:Question"
-                                    Text="{Binding Context}"
-                                    HorizontalTextAlignment="Justify"
-                                    Margin="0,0,5,5"
-                                    Style="{StaticResource BodyStyle}"/>
-                            </Grid>
-
-                            <StackLayout
-                                x:DataType="models:Question"
-                                BindableLayout.ItemsSource="{Binding Answers}">
-
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="models:Answer">
-
-                                        <Grid>
-
-                                            <StackLayout
-                                                x:Name="MultipleStack"
-                                                HorizontalOptions="FillAndExpand"
-                                                Orientation="Horizontal">
-
-                                                <CheckBox 
-                                                    VerticalOptions="Center"
-                                                    IsChecked="{Binding Selected}"/>
-
-                                                <Label 
-                                                    VerticalOptions="Center"
-                                                    HorizontalOptions="FillAndExpand"
-                                                    Style="{StaticResource BodyStyle}"
-                                                    HorizontalTextAlignment="Justify"
-                                                    Text="{Binding Text}"/>
-
-                                                <StackLayout.Triggers>
-                                                    <DataTrigger
-                                                        TargetType="StackLayout"
-                                                        Binding="{Binding Source={x:Reference SingleStack}, Path=IsVisible}"
-                                                        Value="True">
-                                                        <Setter 
-                                                            Property="IsVisible"
-                                                            Value="False"/>
-                                                    </DataTrigger>
-                                                </StackLayout.Triggers>
-                                            </StackLayout>
-
-                                            <StackLayout
-                                                x:Name="SingleStack"
-                                                x:DataType="vm:QuestionViewModel"
-                                                IsVisible="{Binding IsSingleAnswer}"
-                                                HorizontalOptions="FillAndExpand"
-                                                Orientation="Horizontal">
-
-                                                <RadioButton
-                                                    x:DataType="models:Answer"
-                                                    Content="{Binding Text}"
-                                                    GroupName="{Binding Number}"
-                                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                                                    BorderColor="{DynamicResource Primary}"
-                                                    IsChecked="{Binding Selected}"/>
-
-                                            </StackLayout>
-                                            
-                                        </Grid>
-                                        
-
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </StackLayout>
-                        </VerticalStackLayout>
-                    </Border>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-
-        <CollectionView.Footer>
-
-            <ui:ButtonView
-                Margin="{StaticResource LayoutPageMarginThickness}"
-                BodyText="{Binding FinishButtonText}"
-                TapCommand="{Binding ConfirmCommand}" />
-
-        </CollectionView.Footer>
-        
-    </CollectionView>
-
-    </StackLayout>
-
+        <VerticalStackLayout Grid.Row="2" Spacing="8">
+            <Label
+                Text="{Binding MultiChoiceHintText}"
+                IsVisible="{Binding IsMultiChoiceHintVisible}"
+                Style="{StaticResource CaptionStyle}"
+                TextColor="{DynamicResource Primary}"
+                HorizontalTextAlignment="Center"
+                LineBreakMode="WordWrap" />
+            <Label
+                Text="{Binding ValidationHintText}"
+                IsVisible="{Binding IsValidationHintVisible}"
+                Style="{StaticResource CaptionStyle}"
+                TextColor="{DynamicResource Primary}"
+                HorizontalTextAlignment="Center"
+                LineBreakMode="WordWrap" />
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                <ui:ButtonView
+                    Grid.Column="0"
+                    Variant="Secondary"
+                    BodyText="{Binding PreviousButtonText}"
+                    TapCommand="{Binding PreviousCommand}"
+                    IsVisible="{Binding IsPreviousVisible}" />
+                <ui:ButtonView
+                    Grid.Column="{Binding NextButtonColumn}"
+                    Grid.ColumnSpan="{Binding NextButtonColumnSpan}"
+                    BodyText="{Binding NextButtonText}"
+                    TapCommand="{Binding NextCommand}"
+                    IsEnabled="{Binding CanAdvance}" />
+            </Grid>
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>

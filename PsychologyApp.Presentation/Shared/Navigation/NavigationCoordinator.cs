@@ -17,7 +17,7 @@ internal static class NavigationCoordinator
     public static Task RunAsync(Func<Task> navigate) =>
         RunCoreAsync(navigate, applyPushCooldown: false);
 
-    private static readonly TimeSpan PushGateWait = TimeSpan.FromMilliseconds(500);
+    private static readonly TimeSpan PushGateWait = TimeSpan.FromSeconds(2);
 
     public static Task RunPushAsync(Func<Task> navigate) =>
         RunCoreAsync(navigate, applyPushCooldown: true, waitForGate: true);

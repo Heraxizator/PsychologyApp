@@ -42,7 +42,13 @@ public partial class QuestionViewModel
             }
         }
 
-        await UiThread.RunAsync(() => Questions.ReplaceRange(reloaded));
+        await UiThread.RunAsync(() =>
+        {
+            Questions.ReplaceRange(reloaded);
+            _currentIndex = Math.Min(_currentIndex, Math.Max(0, Questions.Count - 1));
+            RefreshCurrentAnswers();
+            NotifyWizardState();
+        });
     }
 
     private static List<Models.Tests.Question> CloneQuestions(IReadOnlyList<Models.Tests.Question> source) =>

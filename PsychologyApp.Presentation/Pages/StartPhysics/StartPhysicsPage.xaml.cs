@@ -16,7 +16,7 @@ public partial class StartPhysicsPage : ContentPage
     {
         InitializeComponent();
 
-        viewModel = this.ActivateViewModel(pageViewModelActivator, nav => startPhysicsViewModelFactory.Create(nav));
+        viewModel = this.ActivateViewModel(pageViewModelActivator, page => startPhysicsViewModelFactory.Create(page));
 
         BindingContext = viewModel;
         _animationHelper = new PageAnimationHelper(viewModel, LoadingProgress, staggerLayout: ContentStack);

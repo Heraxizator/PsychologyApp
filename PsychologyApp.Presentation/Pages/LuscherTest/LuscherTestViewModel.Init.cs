@@ -18,5 +18,6 @@ public partial class LuscherTestViewModel
         ResultItems = [];
         SetColorsVisibility();
         SetStart();
+        NotifyBriefProgress();
     }
 }

@@ -53,7 +53,8 @@
                 <StackLayout
                     Padding="{StaticResource LayoutEmptyPaddingThickness}"
                     HorizontalOptions="Center"
-                    VerticalOptions="Center">
+                    VerticalOptions="Center"
+                    Spacing="8">
                     <Label
                         HorizontalTextAlignment="Center"
                         Style="{StaticResource SectionTitleStyle}"
@@ -64,6 +65,11 @@
                         Text="{Binding EmptyBody}" />
                 </StackLayout>
             </CollectionView.EmptyView>
+            <CollectionView.Header>
+                <VerticalStackLayout Margin="0,0,0,12">
+                    <Label Text="{Binding SectionSubtitle}" Style="{StaticResource BodyStyle}" />
+                </VerticalStackLayout>
+            </CollectionView.Header>
         </CollectionView>
 
         <ui:ProgressBarView

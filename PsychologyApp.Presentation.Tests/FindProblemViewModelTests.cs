@@ -88,4 +88,65 @@ public sealed class FindProblemViewModelTests
         Assert.Single(viewModel.AlgorithmRows);
         Assert.Equal("New step", viewModel.AlgorithmRows[0].Text);
     }
+
+    [Fact]
+    public async Task Continue_WithTestId_StartsQuestionnaireViaNavigationService()
+    {
+        var navigation = new Mock<INavigation>();
+        var navigationService = new RecordingQuestionnaireNavigation(navigation.Object);
+        var catalog = new FakeTestCatalogService().WithCatalog(new TestDefinition
+        {
+            TestId = "beck",
+            Title = "Beck",
+            Subtitle = "Sub",
+            Description = "Desc",
+            Comment = "Note",
+            Algorithm = ["Step"],
+            Kind = TestKind.Questionnaire,
+            AnalyzerId = "beck",
+            SingleAnswer = true,
+            Questions =
+            [
+                new Question
+                {
+                    Number = 1,
+                    Context = "Question 1",
+                    Answers = [new Answer { Ball = 1, Text = "Yes", Selected = false }]
+                }
+            ]
+        });
+
+        FindProblemViewModel viewModel = new(
+            navigationService,
+            catalog,
+            new FindProblemContentLoader(),
+            "Desc",
+            ["Step"],
+            "Note",
+            () => Task.FromException(new InvalidOperationException("Fallback should not run.")),
+            "beck");
+
+        viewModel.Continue.Execute(null);
+        await Task.Delay(100);
+
+        Assert.True(navigationService.QuestionPageRequested);
+        Assert.Equal("beck", navigationService.LastSession?.TestId);
+    }
+
+    private sealed class RecordingQuestionnaireNavigation(INavigation navigation) : TestNavigationService(navigation)
+    {
+        public bool QuestionPageRequested { get; private set; }
+        public TestSessionInfo? LastSession { get; private set; }
+
+        public override Task GoToQuestionPageAsync(
+            List<Question> questions,
+            Func<int, string> scoreAnalyzer,
+            bool singleAnswer,
+            TestSessionInfo? session = null)
+        {
+            QuestionPageRequested = true;
+            LastSession = session;
+            return Task.CompletedTask;
+        }
+    }
 }

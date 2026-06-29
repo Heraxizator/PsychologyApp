@@ -13,7 +13,7 @@ namespace PsychologyApp.Presentation.App.Providers;
 
 public interface IQuoteViewModelFactory
 {
-    QuoteViewModel Create(INavigation navigation);
+    QuoteViewModel Create(ContentPage page);
 }
 
 public sealed class QuoteViewModelFactory(
@@ -27,9 +27,9 @@ public sealed class QuoteViewModelFactory(
     LanguageContentReloader languageContentReloader,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IQuoteViewModelFactory
 {
-    public QuoteViewModel Create(INavigation navigation) =>
+    public QuoteViewModel Create(ContentPage page) =>
         new(
-            ResolveNavigation(navigationServiceFactory, navigation),
+            ResolveNavigation(navigationServiceFactory, page),
             quotService,
             logger,
             settings,

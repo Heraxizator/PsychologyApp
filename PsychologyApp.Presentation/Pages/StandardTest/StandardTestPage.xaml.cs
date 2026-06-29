@@ -13,8 +13,8 @@ public partial class StandardTestPage : LuscherTestPageBase
     public StandardTestPage(
         IPageViewModelActivator pageViewModelActivator,
         ILuscherTestViewModelFactory luscherTestViewModelFactory)
-        : base(LuscherMode.Standard, pageViewModelActivator, luscherTestViewModelFactory)
     {
         InitializeComponent();
+        InitializeLuscherViewModel(LuscherMode.Standard, pageViewModelActivator, luscherTestViewModelFactory);
     }
 }

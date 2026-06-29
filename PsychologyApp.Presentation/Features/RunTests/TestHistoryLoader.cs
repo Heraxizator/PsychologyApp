@@ -1,7 +1,9 @@
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
+using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Features.RunTests;
+using PsychologyApp.Presentation.Models.Tests;
 
 namespace PsychologyApp.Presentation.Features.RunTests;
 
@@ -25,12 +27,21 @@ public sealed class TestHistoryLoader
             await userProgressService.GetTestResultHistoryAsync(testId, 50, cancellationToken);
 
         List<TestHistoryEntryItem> entries = [];
-        foreach (TestResultDTO item in history)
+        for (int i = 0; i < history.Count; i++)
         {
+            TestResultDTO item = history[i];
+            TestResultDTO? older = i + 1 < history.Count ? history[i + 1] : null;
+            TestTrendKind trend = older is null
+                ? TestTrendKind.None
+                : TestTrendComparer.CompareScores(item.Score, older.Score);
+
             entries.Add(new TestHistoryEntryItem
             {
                 DateText = item.CompletedAt.ToLocalTime().ToString("g"),
-                SummaryText = item.Summary
+                SummaryText = item.Summary,
+                ScoreText = item.Score is int score ? AppStrings.TestHistoryScore(score) : string.Empty,
+                TrendText = TestTrendComparer.ToLabel(trend),
+                TrendKind = trend
             });
         }
 

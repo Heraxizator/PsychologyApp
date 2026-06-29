@@ -1,4 +1,5 @@
-﻿using PsychologyApp.Presentation.Pages.TestResult;
+﻿using PsychologyApp.Presentation.Entities.Test;
+using PsychologyApp.Presentation.Pages.TestResult;
 using PsychologyApp.Presentation.Pages.AlternativeTest;
 using PsychologyApp.Presentation.Pages.StandardTest;
 using PsychologyApp.Presentation.Pages.Question;

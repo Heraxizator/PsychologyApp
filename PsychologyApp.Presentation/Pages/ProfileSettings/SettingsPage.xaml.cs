@@ -8,6 +8,6 @@ public partial class SettingsPage : ContentPage
     public SettingsPage(IPageViewModelActivator pageViewModelActivator, ISettingsViewModelFactory settingsViewModelFactory)
     {
         InitializeComponent();
-        this.ActivateViewModel(pageViewModelActivator, nav => settingsViewModelFactory.Create(nav));
+        this.ActivateViewModel(pageViewModelActivator, page => settingsViewModelFactory.Create(page));
     }
 }

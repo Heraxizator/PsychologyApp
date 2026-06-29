@@ -10,6 +10,6 @@ public partial class TestHistoryPage : ContentPage
         string testTitle)
     {
         InitializeComponent();
-        BindingContext = factory.Create(Navigation, testId, testTitle);
+        BindingContext = factory.Create(this, testId, testTitle);
     }
 }

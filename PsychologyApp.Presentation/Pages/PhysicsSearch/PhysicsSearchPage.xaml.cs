@@ -16,7 +16,7 @@ public partial class PhysicsSearchPage : ContentPage
         IPhysicsSearchViewModelFactory physicsSearchViewModelFactory)
     {
         InitializeComponent();
-        ViewModel = this.ActivateViewModel(pageViewModelActivator, nav => physicsSearchViewModelFactory.Create(nav));
+        ViewModel = this.ActivateViewModel(pageViewModelActivator, page => physicsSearchViewModelFactory.Create(page));
         _animationHelper = new PageAnimationHelper(ViewModel, InitLoadingProgress, SearchResultsCollectionView);
         ViewModel.PropertyChanged += OnViewModelPropertyChanged;
     }

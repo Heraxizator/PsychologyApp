@@ -1,6 +1,6 @@
-﻿using PsychologyApp.Presentation.Entities.Test;
-using PsychologyApp.Presentation.App.Providers;
-using PsychologyApp.Presentation.Pages.TestsList;
+﻿using PsychologyApp.Presentation.App.Providers;
+using PsychologyApp.Presentation.Entities.Test;
+using PsychologyApp.Presentation.Shared.Common;
 
 namespace PsychologyApp.Presentation.Pages.Question;
 
@@ -13,7 +13,20 @@ public partial class QuestionPage : ContentPage
         bool singleAnswer,
         TestSessionInfo? session = null)
     {
+        BindingContext = questionViewModelFactory.Create(this, questions, analyzer, singleAnswer, session);
+        if (BindingContext is QuestionViewModel viewModel)
+        {
+            viewModel.ValidationHintRequested += OnValidationHintRequested;
+        }
+
         InitializeComponent();
-        BindingContext = questionViewModelFactory.Create(Navigation, questions, analyzer, singleAnswer, session);
+    }
+
+    private async void OnValidationHintRequested(object? sender, EventArgs e)
+    {
+        if (QuestionCard is not null)
+        {
+            await UiAnimations.SafeShakeAsync(QuestionCard);
+        }
     }
 }

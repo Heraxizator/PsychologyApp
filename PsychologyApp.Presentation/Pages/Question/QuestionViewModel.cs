@@ -14,7 +14,7 @@ public partial class QuestionViewModel : BaseViewModel
     public ObservableRangeCollection<Models.Tests.Question> Questions { get; private set; } = [];
     public ICommand ConfirmCommand { get; private set; } = default!;
     public ICommand BackCommand { get; private set; } = default!;
-    public readonly bool IsSingleAnswer = default!;
+    public bool IsSingleAnswer { get; }
 
     private Func<int, string> Analyzer { get; set; } = default!;
     private readonly IToastService _toastService;
@@ -51,5 +51,6 @@ public partial class QuestionViewModel : BaseViewModel
 
         ConfirmCommand = new AsyncCommand(CalculateAnswersAsync);
         BackCommand = new AsyncCommand(GoBackAsync);
+        InitializeWizard();
     }
 }
