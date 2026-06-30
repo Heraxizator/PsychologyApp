@@ -2,10 +2,11 @@ using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
+using PsychologyApp.Presentation.Shared.Services.Notifications;
 
 namespace PsychologyApp.Presentation.Features.RunTechniqueSession;
 
-public sealed class TechniqueSessionCompletionService
+public sealed class TechniqueSessionCompletionService(IPracticeReminderCoordinator practiceReminderCoordinator)
 {
     public async Task CompleteStandardSessionAsync(
         IUserProgressService progress,
@@ -35,5 +36,7 @@ public sealed class TechniqueSessionCompletionService
             navigation,
             dialog,
             progress);
+
+        await practiceReminderCoordinator.SyncAsync(cancellationToken);
     }
 }

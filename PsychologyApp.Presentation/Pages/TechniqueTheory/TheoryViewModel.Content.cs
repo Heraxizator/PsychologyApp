@@ -1,3 +1,5 @@
+using PsychologyApp.Application.Models.Practice;
+using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 
@@ -16,7 +18,7 @@ public partial class TheoryViewModel
     {
         if (techniqueId is TechniqueId id)
         {
-            TechniqueDefinition definition = TechniqueCatalog.Get(id);
+            TechniqueDefinition definition = _techniqueCatalog.Get(id);
             sections = definition.TheorySections ?? [];
             Text = sections.Count > 0 ? string.Empty : definition.TheoryInfo;
         }

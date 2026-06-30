@@ -1,17 +1,18 @@
-using PsychologyApp.Application.Models;
+﻿using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Entities.Test;
-using PsychologyApp.Presentation.Features.RunTests;
-using PsychologyApp.Presentation.Models.Tests;
 
 namespace PsychologyApp.Presentation.Features.RunTests;
 
 public sealed record TestHistoryLoadResult(
     IReadOnlyList<TestHistoryEntryItem> Entries,
+    IReadOnlyList<TestScoreChartPoint> ChartPoints,
     string Title);
 
-public sealed class TestHistoryLoader
+public sealed class TestHistoryLoader(
+    TestTrendResolver trendResolver,
+    QuestionnaireDetailReader detailReader)
 {
     public async Task<TestHistoryLoadResult> LoadEntriesAsync(
         string testId,
@@ -22,6 +23,7 @@ public sealed class TestHistoryLoader
     {
         TestDefinition? definition = await testCatalogService.GetByIdAsync(testId, cancellationToken);
         string title = definition?.Title ?? fallbackTitle;
+        ScoreDirection direction = definition?.ScoreDirection ?? ScoreDirection.LowerIsBetter;
 
         IReadOnlyList<TestResultDTO> history =
             await userProgressService.GetTestResultHistoryAsync(testId, 50, cancellationToken);
@@ -33,7 +35,9 @@ public sealed class TestHistoryLoader
             TestResultDTO? older = i + 1 < history.Count ? history[i + 1] : null;
             TestTrendKind trend = older is null
                 ? TestTrendKind.None
-                : TestTrendComparer.CompareScores(item.Score, older.Score);
+                : trendResolver.Compare(item.Score, older.Score, direction);
+
+            QuestionnaireResultDetail? detail = detailReader.TryParse(item.DetailJson);
 
             entries.Add(new TestHistoryEntryItem
             {
@@ -41,10 +45,13 @@ public sealed class TestHistoryLoader
                 SummaryText = item.Summary,
                 ScoreText = item.Score is int score ? AppStrings.TestHistoryScore(score) : string.Empty,
                 TrendText = TestTrendComparer.ToLabel(trend),
-                TrendKind = trend
+                TrendKind = trend,
+                Detail = detail,
+                DurationText = detail is null ? string.Empty : AppStrings.TestResultDuration(detail.DurationSeconds)
             });
         }
 
-        return new TestHistoryLoadResult(entries, title);
+        IReadOnlyList<TestScoreChartPoint> chartPoints = trendResolver.BuildChartPoints(history);
+        return new TestHistoryLoadResult(entries, chartPoints, title);
     }
 }

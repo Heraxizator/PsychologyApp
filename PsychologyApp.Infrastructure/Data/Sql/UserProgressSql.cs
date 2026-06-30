@@ -23,6 +23,24 @@ internal static class UserProgressSql
         LIMIT @limit;
         """;
 
+    internal const string SelectLatestTestResults = """
+        SELECT tr.TestResultId, tr.TestId, tr.Score, tr.Summary, tr.DetailJson, tr.CompletedAt
+        FROM TestResults tr
+        INNER JOIN (
+            SELECT TestId, MAX(TestResultId) AS MaxTestResultId
+            FROM TestResults
+            WHERE TestId IN @testIds
+            GROUP BY TestId
+        ) latest ON tr.TestResultId = latest.MaxTestResultId;
+        """;
+
+    internal const string SelectTestResultCounts = """
+        SELECT TestId, COUNT(*) AS Count
+        FROM TestResults
+        WHERE TestId IN @testIds
+        GROUP BY TestId;
+        """;
+
     internal const string SelectLastTechniqueCompletionDate = """
         SELECT CompletedAt
         FROM Completions

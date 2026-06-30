@@ -16,6 +16,7 @@ public partial class TechniqueSessionPage : ContentPage
     public TechniqueSessionPage(
         ITechniqueViewModelFactory techniqueViewModelFactory,
         IPageAnalyticsService pageAnalyticsService,
+        TechniqueCatalogGateway techniqueCatalog,
         TechniqueId techniqueId,
         INavigation hostNavigation)
     {
@@ -23,7 +24,7 @@ public partial class TechniqueSessionPage : ContentPage
         InitializeComponent();
         BaseViewModel viewModel = techniqueViewModelFactory.Create(techniqueId, hostNavigation);
         BindingContext = viewModel;
-        View body = TechniqueBodyFactory.Create(TechniqueCatalog.Get(techniqueId).UiKind);
+        View body = TechniqueBodyFactory.Create(techniqueCatalog.Get(techniqueId).UiKind);
         body.BindingContext = viewModel;
         SessionShell.BodyContent = body;
     }

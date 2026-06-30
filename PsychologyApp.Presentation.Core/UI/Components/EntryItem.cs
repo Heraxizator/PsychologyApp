@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using PsychologyApp.Domain.Practice;
 
 namespace PsychologyApp.Presentation.UI.Components;
 

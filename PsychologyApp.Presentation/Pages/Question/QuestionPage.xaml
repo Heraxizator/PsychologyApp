@@ -14,6 +14,9 @@
         Padding="{StaticResource LayoutPageMarginThickness}"
         RowDefinitions="Auto,*,Auto"
         RowSpacing="{StaticResource LayoutSpacing}">
+        <Grid.Behaviors>
+            <behaviors:PageAnalyticsBehavior TestId="{Binding TestFlowId}" />
+        </Grid.Behaviors>
 
         <VerticalStackLayout Grid.Row="0" Spacing="8">
             <ui:NavigationBarSimpleView
@@ -38,7 +41,8 @@
                     x:Name="QuestionCard"
                     Style="{StaticResource BrandCardStyle}"
                     Margin="0"
-                    IsVisible="{Binding HasCurrentQuestion}">
+                    IsVisible="{Binding HasCurrentQuestion}"
+                    SemanticProperties.Description="{Binding CurrentQuestionSemanticDescription}">
                     <Border.Behaviors>
                         <behaviors:RevealOnAppearingBehavior />
                         <behaviors:StepChangeRevealBehavior Step="{Binding CurrentIndex}" />

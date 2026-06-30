@@ -27,9 +27,9 @@ public partial class QuestionViewModel
                 .Select(answer => answer.Number)
                 .ToHashSet());
 
-        List<Models.Tests.Question> reloaded = CloneQuestions(definition.Questions);
+        List<TestQuestion> reloaded = CloneQuestions(definition.Questions);
 
-        foreach (Models.Tests.Question question in reloaded)
+        foreach (TestQuestion question in reloaded)
         {
             if (!selectedAnswers.TryGetValue(question.Number, out HashSet<int>? selected))
             {
@@ -51,8 +51,8 @@ public partial class QuestionViewModel
         });
     }
 
-    private static List<Models.Tests.Question> CloneQuestions(IReadOnlyList<Models.Tests.Question> source) =>
-        source.Select(question => new Models.Tests.Question
+    private static List<TestQuestion> CloneQuestions(IReadOnlyList<TestQuestion> source) =>
+        source.Select(question => new TestQuestion
         {
             Number = question.Number,
             Context = question.Context,

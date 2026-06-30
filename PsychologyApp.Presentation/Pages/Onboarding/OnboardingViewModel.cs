@@ -1,4 +1,7 @@
-﻿using PsychologyApp.Presentation.Shared.Common;
+﻿using PsychologyApp.Application.Recommendations;
+using PsychologyApp.Domain.Practice;
+using PsychologyApp.Presentation.Features.RunTechniqueSession;
+using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Core.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
@@ -12,6 +15,8 @@ public partial class OnboardingViewModel : BaseViewModel
 {
     private readonly INavigationService _navigationService;
     private readonly IUserPreferencesStore _userPreferencesStore;
+    private readonly TechniqueCatalogGateway _techniqueCatalog;
+    private readonly ITechniqueRecommendationService _techniqueRecommendationService;
     private readonly Func<TechniqueId?, Task> _onCompleted;
 
     public ICommand NextCommand { get; }
@@ -26,6 +31,8 @@ public partial class OnboardingViewModel : BaseViewModel
     public OnboardingViewModel(
         INavigationService navigationService,
         IUserPreferencesStore userPreferencesStore,
+        TechniqueCatalogGateway techniqueCatalog,
+        ITechniqueRecommendationService techniqueRecommendationService,
         Func<TechniqueId?, Task> onCompleted)
     {
         BindPreferences(userPreferencesStore);
@@ -33,6 +40,8 @@ public partial class OnboardingViewModel : BaseViewModel
         BindNavigation(navigationService);
         _navigationService = navigationService;
         _userPreferencesStore = userPreferencesStore;
+        _techniqueCatalog = techniqueCatalog;
+        _techniqueRecommendationService = techniqueRecommendationService;
 
         NextCommand = new Command(GoNext);
         BackCommand = new Command(GoBack);

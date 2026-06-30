@@ -1,9 +1,8 @@
 ﻿using System.Reflection;
 using Moq;
 using PsychologyApp.Presentation.Shared.ViewModels;
-using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Features.RunTests;
-using PsychologyApp.Presentation.Pages.TestsList;
+using PsychologyApp.Presentation.Pages.FindProblem;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
@@ -14,10 +13,12 @@ public sealed class FindProblemViewModelTests
     public async Task Continue_InvokesConfiguredStartAsync()
     {
         bool invoked = false;
+        FakeTestCatalogService catalog = new();
         FindProblemViewModel viewModel = new(
             new TestNavigationService(Mock.Of<INavigation>()),
-            new FakeTestCatalogService(),
+            catalog,
             new FindProblemContentLoader(),
+            TestRunTestHelpers.CreateCoordinator(catalog),
             "Description",
             ["Step 1", "Step 2"],
             "Comment",
@@ -36,10 +37,12 @@ public sealed class FindProblemViewModelTests
     [Fact]
     public void Constructor_InitializesAlgorithmRows()
     {
+        FakeTestCatalogService catalog = new();
         FindProblemViewModel viewModel = new(
             new TestNavigationService(Mock.Of<INavigation>()),
-            new FakeTestCatalogService(),
+            catalog,
             new FindProblemContentLoader(),
+            TestRunTestHelpers.CreateCoordinator(catalog),
             "Description",
             ["Alpha", "Beta"],
             null,
@@ -69,6 +72,7 @@ public sealed class FindProblemViewModelTests
             new TestNavigationService(Mock.Of<INavigation>()),
             catalog,
             new FindProblemContentLoader(),
+            TestRunTestHelpers.CreateCoordinator(catalog),
             "Old",
             ["Old step"],
             "Old comment",
@@ -120,6 +124,7 @@ public sealed class FindProblemViewModelTests
             navigationService,
             catalog,
             new FindProblemContentLoader(),
+            TestRunTestHelpers.CreateCoordinator(catalog),
             "Desc",
             ["Step"],
             "Note",

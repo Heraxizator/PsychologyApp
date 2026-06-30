@@ -34,6 +34,18 @@ public static partial class AppStrings
     public static string SettingsFormLabel => T("Форма", "Shape");
     public static string SettingsSizeLabel => T("Размер", "Size");
     public static string SettingsBoldLabel => T("Жирный", "Bold");
+    public static string SettingsTestsSection => T("Тесты", "Tests");
+    public static string SettingsPracticeSection => T("Практика", "Practice");
+    public static string SettingsPracticeRemindersLabel => T("Напоминания о практике", "Practice reminders");
+    public static string SettingsPracticeReminderHourLabel => T("Время напоминания", "Reminder time");
+    public static string SettingsPracticeReminderHourPickerTitle => T("Время", "Time");
+    public static string PracticeReminderTitle => T("Пора позаниматься", "Time to practice");
+    public static string PracticeReminderBody => T(
+        "Уделите несколько минут практике — это поддержит ваш прогресс.",
+        "Take a few minutes to practice and keep your progress going.");
+    public static string SettingsQuestionnaireAutoAdvanceLabel => T(
+        "Автопереход к следующему вопросу",
+        "Auto-advance to the next question");
     public static string SettingsApplyButton => T("Применить", "Apply");
     public static string SettingsPickerOptions => T("Варианты", "Options");
     public static string SettingsPickerColors => T("Цвета", "Colors");

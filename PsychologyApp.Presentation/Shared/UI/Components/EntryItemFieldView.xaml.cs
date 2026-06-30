@@ -1,3 +1,5 @@
+using PsychologyApp.Domain.Practice;
+
 namespace PsychologyApp.Presentation.Shared.UI.Components;
 
 public partial class EntryItemFieldView : ContentView

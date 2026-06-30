@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
+using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Features.RunTests;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
@@ -69,7 +70,7 @@ public interface ILuscherTestViewModelFactory
 
 public sealed class LuscherTestViewModelFactory(
     IUserProgressService userProgressService,
-    LuscherTestSubmissionService submissionService,
+    ILuscherResultService luscherResultService,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, ILuscherTestViewModelFactory
 {
     public LuscherTestViewModel Create(ContentPage page, LuscherMode mode) =>
@@ -77,7 +78,7 @@ public sealed class LuscherTestViewModelFactory(
             mode,
             ResolveNavigation(navigationServiceFactory, page),
             userProgressService,
-            submissionService);
+            luscherResultService);
 }
 
 public interface ITestResultViewModelFactory
@@ -88,15 +89,19 @@ public interface ITestResultViewModelFactory
 public sealed class TestResultViewModelFactory(
     Func<NavigationContext, INavigationService> navigationServiceFactory,
     ITestCatalogService testCatalogService,
+    TechniqueCatalogGateway techniqueCatalog,
     TestRetakeOperations retakeOperations,
-    IUserProgressService userProgressService) : ViewModelFactoryBase, ITestResultViewModelFactory
+    IUserProgressService userProgressService,
+    TestTrendResolver trendResolver) : ViewModelFactoryBase, ITestResultViewModelFactory
 {
     public TestResultViewModel Create(ContentPage page, TestResultInfo result) =>
         new(
             ResolveNavigation(navigationServiceFactory, page),
             testCatalogService,
+            techniqueCatalog,
             retakeOperations,
             userProgressService,
+            trendResolver,
             result);
 }
 
@@ -115,6 +120,7 @@ public sealed class QuestionViewModelFactory(
     IDialogService dialogService,
     IUserProgressService userProgressService,
     QuestionnaireSubmissionService submissionService,
+    TestRunCoordinator runCoordinator,
     ITestCatalogService testCatalogService,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IQuestionViewModelFactory
 {
@@ -135,6 +141,7 @@ public sealed class QuestionViewModelFactory(
             navigationService,
             userProgressService,
             submissionService,
+            runCoordinator,
             testCatalogService,
             session);
     }
@@ -154,7 +161,8 @@ public interface IFindProblemViewModelFactory
 public sealed class FindProblemViewModelFactory(
     Func<NavigationContext, INavigationService> navigationServiceFactory,
     ITestCatalogService testCatalogService,
-    FindProblemContentLoader contentLoader) : ViewModelFactoryBase, IFindProblemViewModelFactory
+    FindProblemContentLoader contentLoader,
+    TestRunCoordinator testRunCoordinator) : ViewModelFactoryBase, IFindProblemViewModelFactory
 {
     public FindProblemViewModel Create(
         ContentPage page,
@@ -167,6 +175,7 @@ public sealed class FindProblemViewModelFactory(
             ResolveNavigation(navigationServiceFactory, page),
             testCatalogService,
             contentLoader,
+            testRunCoordinator,
             description,
             algorithm,
             comment,

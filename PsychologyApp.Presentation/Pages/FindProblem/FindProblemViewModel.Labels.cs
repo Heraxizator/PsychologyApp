@@ -9,4 +9,5 @@ public partial class FindProblemViewModel
     public string AlgorithmHeader => AppStrings.TestsAlgorithmHeader;
     public string NoteHeader => AppStrings.TestsNoteHeader;
     public string StartButtonText => AppStrings.TestsStartButton;
+    public string TestFlowId => _testId ?? string.Empty;
 }

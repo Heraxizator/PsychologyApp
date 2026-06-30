@@ -1,5 +1,4 @@
-using MvvmHelpers;
-using PsychologyApp.Presentation.Models.Tests;
+﻿using MvvmHelpers;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using System.ComponentModel;
@@ -25,6 +24,8 @@ public partial class QuestionViewModel
     public bool IsMultiChoiceHintVisible => !IsSingleAnswer;
 
     public string MultiChoiceHintText => AppStrings.TestsMultiChoiceHint;
+
+    public string TestFlowId => _session?.TestId ?? string.Empty;
 
     public string QuestionLeadText => AppStrings.TestsQuestionLead;
 
@@ -55,7 +56,7 @@ public partial class QuestionViewModel
 
     public int TotalCount => Questions.Count;
 
-    public Models.Tests.Question? CurrentQuestion =>
+    public TestQuestion? CurrentQuestion =>
         Questions.Count > 0 && _currentIndex >= 0 && _currentIndex < Questions.Count
             ? Questions[_currentIndex]
             : null;
@@ -67,6 +68,11 @@ public partial class QuestionViewModel
     public bool HasCurrentQuestion => CurrentQuestion is not null;
 
     public string StepLabel => AppStrings.TestsStepOf(_currentIndex + 1, Math.Max(1, TotalCount));
+
+    public string CurrentQuestionSemanticDescription =>
+        string.IsNullOrWhiteSpace(CurrentQuestionContext)
+            ? StepLabel
+            : $"{StepLabel}. {CurrentQuestionContext}";
 
     public double Progress => TotalCount > 0 ? (_currentIndex + 1.0) / TotalCount : 0;
 
@@ -101,6 +107,7 @@ public partial class QuestionViewModel
             nameof(CurrentQuestionContext),
             nameof(HasCurrentQuestion),
             nameof(StepLabel),
+            nameof(CurrentQuestionSemanticDescription),
             nameof(Progress),
             nameof(UseBarProgress),
             nameof(IsFirstStep),
@@ -201,6 +208,11 @@ public partial class QuestionViewModel
 
     private async Task TryAutoAdvanceAsync()
     {
+        if (!UserPreferences.Load().QuestionnaireAutoAdvance)
+        {
+            return;
+        }
+
         if (!IsSingleAnswer || IsLastStep)
         {
             return;

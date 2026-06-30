@@ -6,9 +6,14 @@ public sealed class TestHistoryEntryItem
     public string SummaryText { get; init; } = string.Empty;
     public string ScoreText { get; init; } = string.Empty;
     public string TrendText { get; init; } = string.Empty;
+    public string DurationText { get; init; } = string.Empty;
     public TestTrendKind TrendKind { get; init; } = TestTrendKind.None;
+    public QuestionnaireResultDetail? Detail { get; init; }
+    public IReadOnlyList<QuestionnaireResultQuestion> DetailQuestions =>
+        Detail?.Questions ?? Array.Empty<QuestionnaireResultQuestion>();
     public bool HasScore => !string.IsNullOrWhiteSpace(ScoreText);
     public bool HasTrend => TrendKind is not TestTrendKind.None;
+    public bool HasDetail => Detail is not null;
     public bool IsImproved => TrendKind is TestTrendKind.Improved;
     public bool IsWorse => TrendKind is TestTrendKind.Worse;
     public bool IsSame => TrendKind is TestTrendKind.Same;

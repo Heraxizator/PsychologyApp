@@ -10,6 +10,7 @@ using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
+using PsychologyApp.Presentation.Shared.Services.Notifications;
 using PsychologyApp.Presentation.Features.ManageQuotes;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Features.ManageProfile;
@@ -82,6 +83,7 @@ public sealed class SettingsViewModelFactory(
     IUserPreferencesStore userPreferencesStore,
     SettingsPreferencesPresenter settingsPreferencesPresenter,
     LanguageContentReloader languageContentReloader,
+    IPracticeReminderCoordinator practiceReminderCoordinator,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, ISettingsViewModelFactory
 {
     public SettingsViewModel Create(ContentPage page) =>
@@ -90,7 +92,8 @@ public sealed class SettingsViewModelFactory(
             ResolveNavigation(navigationServiceFactory, page),
             userPreferencesStore,
             settingsPreferencesPresenter,
-            languageContentReloader);
+            languageContentReloader,
+            practiceReminderCoordinator);
 }
 
 public interface IInfoViewModelFactory

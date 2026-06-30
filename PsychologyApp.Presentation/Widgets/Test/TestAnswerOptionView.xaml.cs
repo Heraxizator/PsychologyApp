@@ -13,7 +13,12 @@ public partial class TestAnswerOptionView : ContentView
     }
 
     public static readonly BindableProperty TextProperty =
-        BindableProperty.Create(nameof(Text), typeof(string), typeof(TestAnswerOptionView), string.Empty);
+        BindableProperty.Create(
+            nameof(Text),
+            typeof(string),
+            typeof(TestAnswerOptionView),
+            string.Empty,
+            propertyChanged: OnSemanticsPropertyChanged);
 
     public static readonly BindableProperty IsSelectedProperty =
         BindableProperty.Create(
@@ -24,7 +29,12 @@ public partial class TestAnswerOptionView : ContentView
             propertyChanged: OnIsSelectedChanged);
 
     public static readonly BindableProperty IsSingleChoiceProperty =
-        BindableProperty.Create(nameof(IsSingleChoice), typeof(bool), typeof(TestAnswerOptionView), true);
+        BindableProperty.Create(
+            nameof(IsSingleChoice),
+            typeof(bool),
+            typeof(TestAnswerOptionView),
+            true,
+            propertyChanged: OnSemanticsPropertyChanged);
 
     public static readonly BindableProperty TapCommandProperty =
         BindableProperty.Create(nameof(TapCommand), typeof(ICommand), typeof(TestAnswerOptionView), default);
@@ -55,10 +65,35 @@ public partial class TestAnswerOptionView : ContentView
 
     private static void OnIsSelectedChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        if (bindable is TestAnswerOptionView view && newValue is true)
+        if (bindable is TestAnswerOptionView view)
         {
-            UiAnimations.SafePulseAsync(view).FireAndForget();
+            if (newValue is true)
+            {
+                UiAnimations.SafePulseAsync(view).FireAndForget();
+            }
+
+            UpdateSemantics(view);
         }
+    }
+
+    private static void OnSemanticsPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is TestAnswerOptionView view)
+        {
+            UpdateSemantics(view);
+        }
+    }
+
+    private static void UpdateSemantics(TestAnswerOptionView view)
+    {
+        string description = string.IsNullOrWhiteSpace(view.Text) ? AppStrings.TestsAnswerOption : view.Text;
+        SemanticProperties.SetDescription(view, description);
+
+        string selectionState = view.IsSelected ? AppStrings.TestsAnswerSelected : AppStrings.TestsAnswerNotSelected;
+        string modeHint = view.IsSingleChoice
+            ? AppStrings.TestsSingleChoiceHint
+            : AppStrings.TestsMultiChoiceHint;
+        SemanticProperties.SetHint(view, $"{selectionState}. {modeHint}");
     }
 
     private async void OnOptionTapped(object? sender, TappedEventArgs e)

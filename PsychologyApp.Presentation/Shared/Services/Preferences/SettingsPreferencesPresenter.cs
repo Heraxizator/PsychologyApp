@@ -17,7 +17,10 @@ public sealed class SettingsPreferencesPresenter
         Action<string> setColor,
         Action<string> setForm,
         Action<string> setSize,
-        Action<bool> setBold)
+        Action<bool> setBold,
+        Action<bool> setQuestionnaireAutoAdvance,
+        Action<bool> setPracticeRemindersEnabled,
+        Action<int> setPracticeReminderHour)
     {
         setLanguage(UserPreferences.ParseLanguageKey(state.Language));
         setTheme(UserPreferences.ParseThemeKey(state.Theme));
@@ -25,6 +28,9 @@ public sealed class SettingsPreferencesPresenter
         setForm(UserPreferences.ParseFormKey(state.Form));
         setSize(UserPreferences.ParseSizeKey(state.Size));
         setBold(state.IsBold);
+        setQuestionnaireAutoAdvance(state.QuestionnaireAutoAdvance);
+        setPracticeRemindersEnabled(state.PracticeRemindersEnabled);
+        setPracticeReminderHour(UserPreferences.NormalizePracticeReminderHour(state.PracticeReminderHour));
     }
 
     public UserPreferencesState BuildState(
@@ -34,6 +40,9 @@ public sealed class SettingsPreferencesPresenter
         string form,
         string size,
         bool isBold,
+        bool questionnaireAutoAdvance,
+        bool practiceRemindersEnabled,
+        int practiceReminderHour,
         UserPreferencesState savedState) =>
         new()
         {
@@ -43,6 +52,9 @@ public sealed class SettingsPreferencesPresenter
             Form = UserPreferences.ParseFormKey(form),
             Size = UserPreferences.ParseSizeKey(size),
             IsBold = isBold,
+            QuestionnaireAutoAdvance = questionnaireAutoAdvance,
+            PracticeRemindersEnabled = practiceRemindersEnabled,
+            PracticeReminderHour = UserPreferences.NormalizePracticeReminderHour(practiceReminderHour),
             HasCompletedOnboarding = savedState.HasCompletedOnboarding,
             OnboardingConcern = savedState.OnboardingConcern
         };

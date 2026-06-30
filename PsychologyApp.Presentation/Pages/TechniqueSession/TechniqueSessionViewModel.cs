@@ -1,5 +1,6 @@
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Application.Practice;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
@@ -24,8 +25,10 @@ public partial class TechniqueSessionViewModel : BaseViewModel
         INavigationService navigationService,
         IUserProgressService userProgressService,
         ListTechniqueSessionHelper sessionHelper,
-        EntryDraftCoordinator entryDraftCoordinator)
+        EntryDraftCoordinator entryDraftCoordinator,
+        ITechniqueCatalogService techniqueCatalogService)
     {
+        TechniqueCatalogService = techniqueCatalogService;
         _techniqueId = techniqueId;
         _userProgressService = userProgressService;
         _sessionHelper = sessionHelper;

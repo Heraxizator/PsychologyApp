@@ -1,6 +1,6 @@
 using PsychologyApp.Domain.Practice;
 
-namespace PsychologyApp.Application.TestScoring;
+namespace PsychologyApp.Application.Tests;
 
 public static class TestScoreRecommendation
 {

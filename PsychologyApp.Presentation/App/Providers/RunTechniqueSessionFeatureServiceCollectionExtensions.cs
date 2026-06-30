@@ -13,6 +13,8 @@ public static class RunTechniqueSessionFeatureServiceCollectionExtensions
     {
         services.AddSingleton<ITechniquePageFactory, TechniquePageFactory>();
         services.AddSingleton<ITechniqueMessenger, TechniqueMessengerService>();
+        services.AddSingleton<TechniqueCatalogGateway>();
+        services.AddSingleton<TodayRecommendationResolver>();
         services.AddSingleton<TechniqueListBuilder>();
         services.AddSingleton<DesignerTechniqueOperations>();
         services.AddSingleton<TechniqueSessionCompletionService>();

@@ -56,6 +56,12 @@ public static partial class AppStrings
         "Выберите тест и узнайте больше о своём состоянии",
         "Pick a test to learn more about how you feel");
     public static string TestHistoryScore(int score) => T($"Балл: {score}", $"Score: {score}");
+    public static string TestHistoryTrendTitle => T("Динамика баллов", "Score trend");
+    public static string TestResultDuration(int seconds) =>
+        seconds < 60
+            ? T($"{seconds} сек", $"{seconds} sec")
+            : T($"{seconds / 60} мин {seconds % 60} сек", $"{seconds / 60} min {seconds % 60} sec");
+    public static string TestResultAnswersTitle => T("Ваши ответы", "Your answers");
     public static string TestsIntroLead => T(
         "Несколько минут — и вы получите персональную интерпретацию",
         "A few minutes for a personal interpretation");
@@ -65,6 +71,12 @@ public static partial class AppStrings
     public static string TestsMultiChoiceHint => T(
         "Можно выбрать несколько вариантов",
         "You can select more than one option");
+    public static string TestsSingleChoiceHint => T(
+        "Один вариант ответа",
+        "Single answer");
+    public static string TestsAnswerSelected => T("Выбрано", "Selected");
+    public static string TestsAnswerNotSelected => T("Не выбрано", "Not selected");
+    public static string TestsAnswerOption => T("Вариант ответа", "Answer option");
     public static string TestsRemainingDuration(int minutes) => T($"~{minutes} мин осталось", $"~{minutes} min left");
     public static string TestsCoLabel => T("Суммарное отклонение от аутогенной нормы (СО)", "Total deviation from autogenic norm (CO)");
     public static string TestsBkLabel => T("Вегетативный коэффициент (ВК)", "Vegetative coefficient (VC)");

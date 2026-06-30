@@ -1,5 +1,6 @@
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Models;
+using PsychologyApp.Domain.UserProgress;
 
 namespace PsychologyApp.Application.UserProgress;
 
@@ -20,6 +21,50 @@ public sealed class UserProgressService(IUserProgressRepository repository) : IU
 
     public Task<IReadOnlyList<TestResultDTO>> GetTestResultHistoryAsync(string testId, int limit = 20, CancellationToken cancellationToken = default) =>
         repository.GetTestResultHistoryAsync(testId, limit, cancellationToken);
+
+    public async Task<IReadOnlyDictionary<string, TestResultDTO>> GetLatestTestResultsAsync(
+        IReadOnlyList<string> testIds,
+        CancellationToken cancellationToken = default)
+    {
+        if (testIds.Count == 0)
+        {
+            return new Dictionary<string, TestResultDTO>(StringComparer.Ordinal);
+        }
+
+        IReadOnlyList<TestResultDTO> rows = await repository.GetLatestTestResultsAsync(testIds, cancellationToken);
+        Dictionary<string, TestResultDTO> result = new(StringComparer.Ordinal);
+        foreach (TestResultDTO row in rows)
+        {
+            if (!string.IsNullOrWhiteSpace(row.TestId))
+            {
+                result[row.TestId] = row;
+            }
+        }
+
+        return result;
+    }
+
+    public async Task<IReadOnlyDictionary<string, int>> GetTestResultCountsAsync(
+        IReadOnlyList<string> testIds,
+        CancellationToken cancellationToken = default)
+    {
+        if (testIds.Count == 0)
+        {
+            return new Dictionary<string, int>(StringComparer.Ordinal);
+        }
+
+        IReadOnlyList<(string TestId, int Count)> rows = await repository.GetTestResultCountsAsync(testIds, cancellationToken);
+        Dictionary<string, int> result = new(StringComparer.Ordinal);
+        foreach ((string testId, int count) in rows)
+        {
+            if (!string.IsNullOrWhiteSpace(testId))
+            {
+                result[testId] = count;
+            }
+        }
+
+        return result;
+    }
 
     public Task<long> CountTestResultsAsync(CancellationToken cancellationToken = default) =>
         repository.CountTestResultsAsync(cancellationToken);
@@ -47,30 +92,7 @@ public sealed class UserProgressService(IUserProgressRepository repository) : IU
     public async Task<int> GetStreakDaysAsync(CancellationToken cancellationToken = default)
     {
         IReadOnlyList<DateOnly> dates = await repository.GetCompletionDatesAsync(cancellationToken);
-        if (dates.Count == 0)
-        {
-            return 0;
-        }
-
-        int streak = 0;
-        DateOnly expected = DateOnly.FromDateTime(DateTime.Today);
-
-        foreach (DateOnly date in dates)
-        {
-            if (date == expected)
-            {
-                streak++;
-                expected = expected.AddDays(-1);
-                continue;
-            }
-
-            if (date < expected)
-            {
-                break;
-            }
-        }
-
-        return streak;
+        return StreakCalculator.CalculateFromCompletionDates(dates, DateOnly.FromDateTime(DateTime.Today));
     }
 
     public Task<DateTime?> GetLastPracticeDateAsync(string itemKey, CancellationToken cancellationToken = default) =>

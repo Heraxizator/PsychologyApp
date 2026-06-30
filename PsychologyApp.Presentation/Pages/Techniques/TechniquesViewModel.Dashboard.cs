@@ -31,7 +31,7 @@ public partial class TechniquesViewModel
 
         if (staticItems is not null)
         {
-            TodayRecommendationResolver.ApplyCatalogDate(TodayTechniqueItem, _todayTechniqueId, staticItems, HasStreak);
+            _todayRecommendationResolver.ApplyCatalogDate(TodayTechniqueItem, _todayTechniqueId, staticItems, HasStreak);
             OnPropertyChanged(nameof(TodayTechniqueItem));
         }
     }

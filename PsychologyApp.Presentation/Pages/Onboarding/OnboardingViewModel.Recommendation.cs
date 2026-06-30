@@ -1,7 +1,6 @@
-using PsychologyApp.Presentation.Shared.Common;
-using PsychologyApp.Presentation.Core.Common;
+using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
-
+using PsychologyApp.Presentation.Shared.Common;
 namespace PsychologyApp.Presentation.Pages.Onboarding;
 
 public partial class OnboardingViewModel
@@ -15,7 +14,7 @@ public partial class OnboardingViewModel
         string.IsNullOrEmpty(SelectedConcern) ? OnboardingConcernKeys.Explore : SelectedConcern;
 
     private TechniqueDefinition GetRecommendationDefinition() =>
-        TechniqueCatalog.Get(OnboardingRecommendation.ResolveTechnique(ResolveConcernForRecommendation()));
+        _techniqueCatalog.Get(_techniqueRecommendationService.ResolveFromOnboardingConcern(ResolveConcernForRecommendation()));
 
     private void NotifyRecommendation()
     {

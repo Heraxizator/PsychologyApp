@@ -17,6 +17,7 @@ public partial class FindProblemViewModel : BaseViewModel
     private readonly INavigationService _navigationService = null!;
     private readonly ITestCatalogService _testCatalogService = null!;
     private readonly FindProblemContentLoader _contentLoader = null!;
+    private readonly TestRunCoordinator _testRunCoordinator = null!;
     private readonly string? _testId;
     private readonly Func<Task> _startTestAsync = () => Task.CompletedTask;
 
@@ -26,6 +27,7 @@ public partial class FindProblemViewModel : BaseViewModel
         INavigationService navigationService,
         ITestCatalogService testCatalogService,
         FindProblemContentLoader contentLoader,
+        TestRunCoordinator testRunCoordinator,
         string? description,
         List<string> algorithm,
         string? comment,
@@ -35,6 +37,7 @@ public partial class FindProblemViewModel : BaseViewModel
         _navigationService = navigationService;
         _testCatalogService = testCatalogService;
         _contentLoader = contentLoader;
+        _testRunCoordinator = testRunCoordinator;
         _testId = testId;
         ModuleName = AppStrings.TestsDetectorTitle;
         PageName = AppStrings.TestsAboutPassageTitle;
@@ -61,7 +64,7 @@ public partial class FindProblemViewModel : BaseViewModel
             TestDefinition? definition = await _testCatalogService.GetByIdAsync(_testId);
             if (definition is not null)
             {
-                await TestStartOperations.StartAsync(definition, _navigationService);
+                await _testRunCoordinator.StartAsync(definition, _navigationService);
                 return;
             }
         }

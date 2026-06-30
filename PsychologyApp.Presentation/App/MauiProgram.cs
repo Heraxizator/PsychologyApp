@@ -5,6 +5,7 @@ using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.DependencyInjection;
 using PsychologyApp.Application.Reason;
+using PsychologyApp.Application.Practice;
 using PsychologyApp.Bootstrap;
 using PsychologyApp.Domain.Base.Constants;
 using PsychologyApp.Presentation.App.DependencyInjection;
@@ -63,9 +64,14 @@ public static class MauiProgram
         builder.Services.AddPsychologyAppCachedQuotContent<MauiQuotContentProvider>();
         builder.Services.AddSingleton<MauiTestAssetReader>();
         builder.Services.AddSingleton<ITestAssetReader>(sp => sp.GetRequiredService<MauiTestAssetReader>());
-        builder.Services.AddSingleton<TestCatalogService>();
-        builder.Services.AddSingleton<CachedTestCatalogService>();
-        builder.Services.AddSingleton<ITestCatalogService>(sp => sp.GetRequiredService<CachedTestCatalogService>());
+        builder.Services.AddSingleton<MauiTestCatalogProvider>();
+        builder.Services.AddPsychologyAppCachedTestCatalog(sp =>
+            new CachedTestCatalogProvider(
+                sp.GetRequiredService<MauiTestCatalogProvider>(),
+                () => AppStrings.IsEnglish(AppStrings.Language) ? "en" : "ru"));
+        builder.Services.AddSingleton(sp => new BuiltInTechniqueCatalogProvider(
+            () => AppStrings.IsEnglish(AppStrings.Language) ? "en" : "ru"));
+        builder.Services.AddCachedTechniqueCatalogProvider();
         builder.Services.AddSingleton<LanguageContentReloader>();
         builder.Services.AddPsychologyAppPresentation();
         builder.Services.AddSingleton<AppShell>();

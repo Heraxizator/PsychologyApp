@@ -10,4 +10,5 @@ public sealed class TestResultInfo
     public string? AnalyzerId { get; init; }
     public TechniqueId? RecommendedTechnique { get; init; }
     public string? TestId { get; init; }
+    public QuestionnaireResultDetail? Detail { get; init; }
 }

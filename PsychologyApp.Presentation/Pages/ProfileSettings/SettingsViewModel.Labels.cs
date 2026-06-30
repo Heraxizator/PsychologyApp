@@ -13,6 +13,12 @@ public partial class SettingsViewModel
     public string FormLabel => AppStrings.SettingsFormLabel;
     public string SizeLabel => AppStrings.SettingsSizeLabel;
     public string BoldLabel => AppStrings.SettingsBoldLabel;
+    public string TestsSectionTitle => AppStrings.SettingsTestsSection;
+    public string PracticeSectionTitle => AppStrings.SettingsPracticeSection;
+    public string PracticeRemindersLabel => AppStrings.SettingsPracticeRemindersLabel;
+    public string PracticeReminderHourLabel => AppStrings.SettingsPracticeReminderHourLabel;
+    public string PracticeReminderHourPickerTitle => AppStrings.SettingsPracticeReminderHourPickerTitle;
+    public string QuestionnaireAutoAdvanceLabel => AppStrings.SettingsQuestionnaireAutoAdvanceLabel;
     public string ApplyButtonText => AppStrings.SettingsApplyButton;
     public string ReplayOnboardingText => AppStrings.SettingsReplayOnboarding;
     public string FormHelperText => AppStrings.SettingsFormHelper;

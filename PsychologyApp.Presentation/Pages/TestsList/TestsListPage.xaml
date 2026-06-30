@@ -18,6 +18,9 @@
     <Grid
         VerticalOptions="FillAndExpand"
         HorizontalOptions="FillAndExpand">
+        <Grid.Behaviors>
+            <behaviors:PageAnalyticsBehavior />
+        </Grid.Behaviors>
 
         <CollectionView
             x:Name="TestsCollectionView"

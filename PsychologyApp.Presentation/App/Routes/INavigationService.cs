@@ -1,4 +1,4 @@
-using PsychologyApp.Presentation.Entities.Test;
+﻿using PsychologyApp.Presentation.Entities.Test;
 
 namespace PsychologyApp.Presentation.App.Routes;
 
@@ -31,7 +31,8 @@ public interface INavigationService
         TechniqueId? recommendedTechnique = null,
         string? testId = null,
         string? interpretationDetail = null,
-        string? analyzerId = null);
+        string? analyzerId = null,
+        QuestionnaireResultDetail? detail = null);
     Task GoToTestsTabAsync();
     Task GoToQuotesTabAsync();
     Task ShowOnboardingAsync();

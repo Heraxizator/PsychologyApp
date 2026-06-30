@@ -1,7 +1,6 @@
+﻿using PsychologyApp.Application.Models.Tests;
+using PsychologyApp.Application.Tests;
 using PsychologyApp.Application.UserProgress;
-using PsychologyApp.Application.TestScoring;
-using PsychologyApp.Presentation.Models.Practice.Techniques;
-using PsychologyApp.Presentation.Entities.Test;
 
 namespace PsychologyApp.Presentation.Features.RunTests;
 
@@ -11,31 +10,24 @@ public sealed record QuestionnaireSubmission(
     TechniqueId? RecommendedTechnique,
     string? InterpretationDetail);
 
-public sealed class QuestionnaireSubmissionService
+public sealed class QuestionnaireSubmissionService(IQuestionnaireScoringService scoringService)
 {
     public bool TryValidateAllAnswered(IEnumerable<Question> questions) =>
-        questions.All(question => question.Answers.Any(answer => answer.Selected is true));
+        scoringService.TryValidateAllAnswered(questions);
 
     public QuestionnaireSubmission Calculate(
         IEnumerable<Question> questions,
-        Func<int, string> analyzer,
-        TestSessionInfo? session)
+        string? analyzerId)
     {
-        int score = questions
-            .SelectMany(question => question.Answers)
-            .Where(answer => answer.Selected is true)
-            .Sum(answer => answer.Ball);
+        QuestionnaireScoringResult result = scoringService.Calculate(questions, analyzerId);
+        string interpretation = TestScoreLabelMapper.GetSummary(analyzerId, result.Score) ?? string.Empty;
+        string? interpretationDetail = TestScoreLabelMapper.GetDetail(analyzerId, result.Score);
 
-        string interpretation = analyzer.Invoke(score);
-        string? analyzerId = session?.AnalyzerId;
-        TechniqueId? recommended = analyzerId is not null
-            ? TestScoreRecommendation.RecommendTechnique(analyzerId, score)
-            : null;
-        string? interpretationDetail = analyzerId is not null
-            ? TestScoreAnalyzers.ResolveDetail(analyzerId)?.Invoke(score)
-            : null;
-
-        return new QuestionnaireSubmission(score, interpretation, recommended, interpretationDetail);
+        return new QuestionnaireSubmission(
+            result.Score,
+            interpretation,
+            result.RecommendedTechnique,
+            interpretationDetail);
     }
 
     public Task SaveAsync(
@@ -43,13 +35,14 @@ public sealed class QuestionnaireSubmissionService
         TestSessionInfo session,
         int score,
         string summary,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        string? detailJson = null)
     {
         if (string.IsNullOrWhiteSpace(session.TestId))
         {
             return Task.CompletedTask;
         }
 
-        return progress.SaveTestResultAsync(session.TestId, score, summary, detailJson: null, cancellationToken);
+        return progress.SaveTestResultAsync(session.TestId, score, summary, detailJson: detailJson, cancellationToken);
     }
 }

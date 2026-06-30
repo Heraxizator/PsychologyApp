@@ -1,4 +1,5 @@
-﻿using PsychologyApp.Presentation.Shared.Common;
+﻿using PsychologyApp.Presentation.Features.RunTechniqueSession;
+using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 
 namespace PsychologyApp.Presentation.Features.RunTechniqueSession.Polarity;
@@ -12,7 +13,7 @@ public partial class PolarityViewModel
     {
         get
         {
-            TechniqueDefinition definition = TechniqueCatalog.Get(TechniqueId.Polarity);
+            TechniqueDefinition definition = TechniqueDefinitionMapper.ToPresentation(TechniqueCatalogService!.Get(TechniqueId.Polarity));
             return definition.PolarityNegativePlaceholder ?? AppStrings.PolarityNegativePlaceholder;
         }
     }
@@ -21,7 +22,7 @@ public partial class PolarityViewModel
     {
         get
         {
-            TechniqueDefinition definition = TechniqueCatalog.Get(TechniqueId.Polarity);
+            TechniqueDefinition definition = TechniqueDefinitionMapper.ToPresentation(TechniqueCatalogService!.Get(TechniqueId.Polarity));
             return definition.PolarityPositivePlaceholder ?? AppStrings.PolarityPositivePlaceholder;
         }
     }

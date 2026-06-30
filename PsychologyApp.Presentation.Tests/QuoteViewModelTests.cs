@@ -4,6 +4,7 @@ using Moq;
 using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
+using PsychologyApp.Application.Practice;
 using PsychologyApp.Application.Quot;
 using PsychologyApp.Application.Reason;
 using PsychologyApp.Presentation.Shared.Abstractions;
@@ -232,9 +233,9 @@ public sealed class QuoteViewModelTests
             quotService,
             new CachedReasonContentProvider(Mock.Of<IReasonContentProvider>()),
             new CachedQuotContentProvider(Mock.Of<IQuotContentProvider>()),
-            new CachedTestCatalogService(
-                new TestCatalogService(Mock.Of<ITestAssetReader>(), NullLogger<TestCatalogService>.Instance),
-                NullLogger<CachedTestCatalogService>.Instance));
+            new CachedTestCatalogProvider(Mock.Of<ITestCatalogProvider>()),
+            new CachedTechniqueCatalogProvider(Mock.Of<ITechniqueCatalogProvider>()),
+            Mock.Of<ITechniqueCatalogService>());
 
     private static async Task WaitForStateAsync(QuoteViewModel viewModel)
     {

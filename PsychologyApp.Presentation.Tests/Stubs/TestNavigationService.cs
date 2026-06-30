@@ -1,4 +1,4 @@
-using PsychologyApp.Presentation.Entities.Test;
+﻿using PsychologyApp.Presentation.Entities.Test;
 
 namespace PsychologyApp.Presentation.Tests;
 
@@ -54,7 +54,8 @@ public class TestNavigationService(INavigation navigation) : INavigationService
         TechniqueId? recommendedTechnique = null,
         string? testId = null,
         string? interpretationDetail = null,
-        string? analyzerId = null) =>
+        string? analyzerId = null,
+        QuestionnaireResultDetail? detail = null) =>
         Task.CompletedTask;
 
     public Task GoToTestsTabAsync() => Task.CompletedTask;

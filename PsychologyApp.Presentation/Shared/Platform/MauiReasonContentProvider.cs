@@ -1,3 +1,4 @@
+using PsychologyApp.Application.Reason;
 using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Domain.Entities;
 
@@ -48,32 +49,16 @@ public sealed class MauiReasonContentProvider : IReasonContentProvider
                 return _cache;
             }
 
-            List<Reason> reasons = [];
-
+            List<string> lines = [];
             await using Stream fileStream = await FileSystem.OpenAppPackageFileAsync(assetPath);
             using StreamReader reader = new(fileStream);
 
             while (await reader.ReadLineAsync(cancellationToken) is { } line)
             {
-                string[] cols = line.Split('\t');
-                if (cols.Length < 3)
-                {
-                    continue;
-                }
-
-                string problemText = cols[0];
-                string problemReason = cols[1];
-                string problemSolution = cols[2];
-
-                if (string.IsNullOrWhiteSpace(problemText) ||
-                    string.IsNullOrWhiteSpace(problemReason) ||
-                    string.IsNullOrWhiteSpace(problemSolution))
-                {
-                    continue;
-                }
-
-                reasons.Add(Reason.Create(problemText, problemReason, problemSolution));
+                lines.Add(line);
             }
+
+            List<Reason> reasons = ReasonTsvParser.ParseLines(lines).ToList();
 
             _cache = reasons;
             _loadedAsset = assetPath;

@@ -88,7 +88,7 @@ public sealed class TestModuleOperationsTests
             Algorithm = ["Step"],
             Kind = TestKind.LuscherStandard
         });
-        TestRetakeOperations operations = new();
+        TestRetakeOperations operations = TestRunTestHelpers.CreateRetakeOperations(catalog);
 
         await operations.RetakeAsync("gad7", catalog, navigationService);
 
@@ -117,7 +117,7 @@ public sealed class TestModuleOperationsTests
             Algorithm = ["Step"],
             Kind = TestKind.Questionnaire
         });
-        TestHistoryLoader loader = new();
+        TestHistoryLoader loader = TestRunTestHelpers.CreateHistoryLoader(catalog);
 
         TestHistoryLoadResult result = await loader.LoadEntriesAsync(
             "beck",
@@ -135,15 +135,14 @@ public sealed class TestModuleOperationsTests
     {
         Mock<IUserProgressService> progress = new();
         progress
-            .Setup(p => p.GetLatestTestResultAsync("beck", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new TestResultDTO { Summary = "Mild" });
-        progress
-            .Setup(p => p.GetTestResultHistoryAsync("beck", 2, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new List<TestResultDTO>
+            .Setup(p => p.GetLatestTestResultsAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new Dictionary<string, TestResultDTO>(StringComparer.Ordinal)
             {
-                new() { Summary = "Mild" },
-                new() { Summary = "Low" }
+                ["beck"] = new() { Summary = "Mild" }
             });
+        progress
+            .Setup(p => p.GetTestResultCountsAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new Dictionary<string, int>(StringComparer.Ordinal) { ["beck"] = 2 });
         FakeTestCatalogService catalog = new FakeTestCatalogService().WithCatalog(new TestDefinition
         {
             TestId = "beck",
@@ -159,7 +158,7 @@ public sealed class TestModuleOperationsTests
         });
         Mock<INavigation> navigation = new();
         TestNavigationService navigationService = new(navigation.Object);
-        TestsListLoader loader = new(progress.Object, catalog);
+        TestsListLoader loader = TestRunTestHelpers.CreateTestsListLoader(progress.Object, catalog);
 
         IReadOnlyList<TestItem> items = await loader.LoadItemsAsync(
             navigationService,

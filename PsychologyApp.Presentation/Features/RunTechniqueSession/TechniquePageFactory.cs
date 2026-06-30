@@ -23,7 +23,8 @@ public sealed class TechniquePageFactory(
     ICreatedViewModelFactory createdViewModelFactory,
     IDesignerViewModelFactory designerViewModelFactory,
     ITechniqueViewModelFactory techniqueViewModelFactory,
-    IPageAnalyticsService pageAnalyticsService) : ITechniquePageFactory
+    IPageAnalyticsService pageAnalyticsService,
+    TechniqueCatalogGateway techniqueCatalog) : ITechniquePageFactory
 {
     public TechniquesPage CreateTechniquesPage() =>
         new(pageViewModelActivator, techniquesViewModelFactory);
@@ -35,5 +36,5 @@ public sealed class TechniquePageFactory(
         new(pageViewModelActivator, designerViewModelFactory, techniqueId);
 
     public TechniqueSessionPage CreateTechniqueSessionPage(TechniqueId techniqueId, INavigation hostNavigation) =>
-        new(techniqueViewModelFactory, pageAnalyticsService, techniqueId, hostNavigation);
+        new(techniqueViewModelFactory, pageAnalyticsService, techniqueCatalog, techniqueId, hostNavigation);
 }

@@ -1,3 +1,4 @@
+using PsychologyApp.Application.Practice;
 using PsychologyApp.Presentation.Features.RunTechniqueSession.Polarity;
 using PsychologyApp.Presentation.Features.RunTechniqueSession.PaperList;
 using PsychologyApp.Presentation.Pages.TechniqueCreated;
@@ -69,6 +70,7 @@ public interface ITechniqueViewModelFactory
 
 public sealed class TechniqueViewModelFactory(
     Func<NavigationContext, INavigationService> navigationServiceFactory,
+    ITechniqueCatalogService techniqueCatalogService,
     IUserProgressService userProgressService,
     IDialogService dialogService,
     TechniqueSessionCompletionService sessionCompletionService,
@@ -87,10 +89,10 @@ public sealed class TechniqueViewModelFactory(
 
         return techniqueId switch
         {
-            TechniqueId.Paper => new PaperListViewModel(navigationService, TechniqueId.Paper, clearTextAfterAdd: true, userProgressService, sessionHelper, paperListDraftCoordinatorFactory()),
-            TechniqueId.Polarity => new PolarityViewModel(navigationService, userProgressService, sessionHelper, polarityListDraftCoordinatorFactory()),
-            TechniqueId.Copied => new PaperListViewModel(navigationService, TechniqueId.Copied, clearTextAfterAdd: false, userProgressService, sessionHelper, paperListDraftCoordinatorFactory()),
-            _ => new TechniqueSessionViewModel(techniqueId, navigationService, userProgressService, sessionHelper, entryDraftCoordinatorFactory())
+            TechniqueId.Paper => new PaperListViewModel(navigationService, TechniqueId.Paper, clearTextAfterAdd: true, userProgressService, sessionHelper, paperListDraftCoordinatorFactory(), techniqueCatalogService),
+            TechniqueId.Polarity => new PolarityViewModel(navigationService, userProgressService, sessionHelper, polarityListDraftCoordinatorFactory(), techniqueCatalogService),
+            TechniqueId.Copied => new PaperListViewModel(navigationService, TechniqueId.Copied, clearTextAfterAdd: false, userProgressService, sessionHelper, paperListDraftCoordinatorFactory(), techniqueCatalogService),
+            _ => new TechniqueSessionViewModel(techniqueId, navigationService, userProgressService, sessionHelper, entryDraftCoordinatorFactory(), techniqueCatalogService)
         };
     }
 }

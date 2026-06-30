@@ -14,6 +14,7 @@ public static class ManageProfileFeatureServiceCollectionExtensions
         services.AddSingleton<ProfileQuotesPresenter>();
         SharedPresentationServiceCollectionExtensions.AddTransientFactory<ProfileQuotesLoader>(services);
         services.AddSingleton<SettingsPreferencesPresenter>();
+        services.AddSingleton<PracticeHistoryFormatter>();
         services.AddSingleton<ProfilePracticeHistoryLoader>();
         services.AddSingleton<ProfileFeaturedTechniquesBuilder>();
         services.AddSingleton<UserProfileRefreshCoordinator>();

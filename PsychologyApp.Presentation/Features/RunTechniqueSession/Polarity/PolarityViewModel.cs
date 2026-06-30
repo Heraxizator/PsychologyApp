@@ -2,6 +2,7 @@ using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Application.Practice;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.ViewModels;
 using System.Collections.ObjectModel;
@@ -26,8 +27,10 @@ public partial class PolarityViewModel : BaseViewModel
         INavigationService navigationService,
         IUserProgressService userProgressService,
         ListTechniqueSessionHelper sessionHelper,
-        PolarityListDraftCoordinator draftCoordinator)
+        PolarityListDraftCoordinator draftCoordinator,
+        ITechniqueCatalogService techniqueCatalogService)
     {
+        TechniqueCatalogService = techniqueCatalogService;
         _userProgressService = userProgressService;
         _sessionHelper = sessionHelper;
         _draftCoordinator = draftCoordinator;

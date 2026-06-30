@@ -22,6 +22,7 @@ public partial class TechniquesViewModel : BaseViewModel
     private readonly TechniqueListBuilder _techniqueListBuilder;
     private readonly IDatabaseReadySignal _databaseReadySignal;
     private readonly PracticeDashboardLoader _dashboardLoader;
+    private readonly TodayRecommendationResolver _todayRecommendationResolver;
     private readonly TechniquesListInitializer _listInitializer;
     private readonly IOptions<AppSettings> _settings;
     private readonly ILogger<TechniquesViewModel> _logger;
@@ -35,6 +36,7 @@ public partial class TechniquesViewModel : BaseViewModel
         TechniqueListBuilder techniqueListBuilder,
         IDatabaseReadySignal databaseReadySignal,
         PracticeDashboardLoader dashboardLoader,
+        TodayRecommendationResolver todayRecommendationResolver,
         TechniquesListInitializer listInitializer,
         IOptions<AppSettings> settings,
         ILogger<TechniquesViewModel> logger)
@@ -47,6 +49,7 @@ public partial class TechniquesViewModel : BaseViewModel
         _techniqueListBuilder = techniqueListBuilder;
         _databaseReadySignal = databaseReadySignal;
         _dashboardLoader = dashboardLoader;
+        _todayRecommendationResolver = todayRecommendationResolver;
         _listInitializer = listInitializer;
         _settings = settings;
         _logger = logger;

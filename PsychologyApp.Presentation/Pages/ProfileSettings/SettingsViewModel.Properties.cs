@@ -110,8 +110,66 @@ public partial class SettingsViewModel
         }
     }
 
+    public bool questionnaireAutoAdvance = true;
+    public bool QuestionnaireAutoAdvance
+    {
+        get => questionnaireAutoAdvance;
+        set
+        {
+            if (questionnaireAutoAdvance != value)
+            {
+                questionnaireAutoAdvance = value;
+                OnPropertyChanged(nameof(QuestionnaireAutoAdvance));
+                ApplyLivePreview();
+            }
+        }
+    }
+
+    public bool practiceRemindersEnabled = true;
+    public bool PracticeRemindersEnabled
+    {
+        get => practiceRemindersEnabled;
+        set
+        {
+            if (practiceRemindersEnabled != value)
+            {
+                practiceRemindersEnabled = value;
+                OnPropertyChanged(nameof(PracticeRemindersEnabled));
+                ApplyLivePreview();
+            }
+        }
+    }
+
+    private int practiceReminderHour = UserPreferences.DefaultPracticeReminderHour;
+    public string PracticeReminderHour
+    {
+        get => UserPreferences.GetPracticeReminderHourLabel(practiceReminderHour);
+        set
+        {
+            int normalized = UserPreferences.ParsePracticeReminderHourKey(value);
+            if (_isSyncingPickers || practiceReminderHour == normalized)
+            {
+                return;
+            }
+
+            practiceReminderHour = normalized;
+            OnPropertyChanged(nameof(PracticeReminderHour));
+            ApplyLivePreview();
+        }
+    }
+
     private UserPreferencesState BuildCurrentState() =>
-        _presenter.BuildState(Language, Theme, Color, Form, Size, IsThick, _savedState);
+        _presenter.BuildState(
+            Language,
+            Theme,
+            Color,
+            Form,
+            Size,
+            IsThick,
+            QuestionnaireAutoAdvance,
+            PracticeRemindersEnabled,
+            practiceReminderHour,
+            _savedState);
 
     private void ApplyLivePreview()
     {

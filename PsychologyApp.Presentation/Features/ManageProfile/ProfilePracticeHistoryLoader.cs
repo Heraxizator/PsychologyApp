@@ -6,7 +6,9 @@ using PsychologyApp.Presentation.Entities.Profile;
 
 namespace PsychologyApp.Presentation.Features.ManageProfile;
 
-public sealed class ProfilePracticeHistoryLoader(IUserProgressService userProgressService)
+public sealed class ProfilePracticeHistoryLoader(
+    IUserProgressService userProgressService,
+    PracticeHistoryFormatter practiceHistoryFormatter)
 {
     public async Task<IReadOnlyList<PracticeHistoryItem>> LoadAsync(
         int count = 10,
@@ -19,7 +21,7 @@ public sealed class ProfilePracticeHistoryLoader(IUserProgressService userProgre
             .Select(completion =>
             {
                 string date = completion.CompletedAt.ToLocalTime().ToString("g");
-                string name = PracticeHistoryFormatter.ResolveName(completion);
+                string name = practiceHistoryFormatter.ResolveName(completion);
                 return new PracticeHistoryItem
                 {
                     DisplayText = AppStrings.PracticeHistoryEntry(date, name)

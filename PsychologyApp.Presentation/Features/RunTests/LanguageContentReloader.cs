@@ -1,5 +1,7 @@
+using PsychologyApp.Application.Practice;
 using PsychologyApp.Application.Quot;
 using PsychologyApp.Application.Reason;
+using PsychologyApp.Application.Tests;
 using PsychologyApp.Presentation.Shared.Common;
 
 namespace PsychologyApp.Presentation.Features.RunTests;
@@ -11,7 +13,9 @@ public sealed class LanguageContentReloader
     private readonly IQuotService _quotService;
     private readonly CachedReasonContentProvider _reasonCache;
     private readonly CachedQuotContentProvider _quotCache;
-    private readonly CachedTestCatalogService _testCatalogCache;
+    private readonly CachedTestCatalogProvider _testCatalogCache;
+    private readonly CachedTechniqueCatalogProvider _techniqueCatalogCache;
+    private readonly ITechniqueCatalogService _techniqueCatalogService;
     private readonly SemaphoreSlim _gate = new(1, 1);
     private string _lastPersistedLanguage = UserPreferences.DefaultLanguage;
     private Task _reloadTask = Task.CompletedTask;
@@ -20,12 +24,16 @@ public sealed class LanguageContentReloader
         IQuotService quotService,
         CachedReasonContentProvider reasonCache,
         CachedQuotContentProvider quotCache,
-        CachedTestCatalogService testCatalogCache)
+        CachedTestCatalogProvider testCatalogCache,
+        CachedTechniqueCatalogProvider techniqueCatalogCache,
+        ITechniqueCatalogService techniqueCatalogService)
     {
         _quotService = quotService;
         _reasonCache = reasonCache;
         _quotCache = quotCache;
         _testCatalogCache = testCatalogCache;
+        _techniqueCatalogCache = techniqueCatalogCache;
+        _techniqueCatalogService = techniqueCatalogService;
         _lastPersistedLanguage = UserPreferences.GetPersistedLanguage();
         UserPreferences.Changed += OnPreferencesChanged;
     }
@@ -44,6 +52,8 @@ public sealed class LanguageContentReloader
         _reasonCache.Invalidate();
         _quotCache.Invalidate();
         _testCatalogCache.Invalidate();
+        _techniqueCatalogCache.Invalidate();
+        _techniqueCatalogService.Invalidate();
         _reloadTask = ReseedQuotesAsync();
     }
 

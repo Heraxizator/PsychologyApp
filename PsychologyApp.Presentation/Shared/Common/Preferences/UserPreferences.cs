@@ -1,5 +1,6 @@
 using System.Globalization;
 using Microsoft.Maui.Controls.Shapes;
+using PsychologyApp.Domain.Notifications;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 
 namespace PsychologyApp.Presentation.Shared.Common;
@@ -12,15 +13,19 @@ public static class UserPreferences
     public const string FormKey = "Form";
     public const string SizeKey = "Size";
     public const string IsBoldKey = "IsBold";
+    public const string QuestionnaireAutoAdvanceKey = "QuestionnaireAutoAdvance";
     public const string HasCompletedOnboardingKey = "HasCompletedOnboarding";
     public const string OnboardingConcernKey = "OnboardingConcern";
     public const string PendingTechniqueKey = "PendingTechnique";
+    public const string PracticeRemindersEnabledKey = "PracticeRemindersEnabled";
+    public const string PracticeReminderHourKey = "PracticeReminderHour";
 
     public const string DefaultLanguage = "ru";
     public const string DefaultTheme = "light";
     public const string DefaultColor = "blue";
     public const string DefaultForm = "rounded";
     public const string DefaultSize = "medium";
+    public const int DefaultPracticeReminderHour = 19;
 
     public static event Action? Changed;
 
@@ -46,8 +51,11 @@ public static class UserPreferences
                 Form = _inMemoryState.Form,
                 Size = _inMemoryState.Size,
                 IsBold = _inMemoryState.IsBold,
+                QuestionnaireAutoAdvance = _inMemoryState.QuestionnaireAutoAdvance,
                 HasCompletedOnboarding = _inMemoryState.HasCompletedOnboarding,
-                OnboardingConcern = _inMemoryState.OnboardingConcern
+                OnboardingConcern = _inMemoryState.OnboardingConcern,
+                PracticeRemindersEnabled = _inMemoryState.PracticeRemindersEnabled,
+                PracticeReminderHour = _inMemoryState.PracticeReminderHour
             };
         }
 
@@ -59,12 +67,15 @@ public static class UserPreferences
             Form = NormalizeFormKey(Preferences.Get(FormKey, DefaultForm)),
             Size = NormalizeSizeKey(Preferences.Get(SizeKey, DefaultSize)),
             IsBold = Preferences.Get(IsBoldKey, false),
+            QuestionnaireAutoAdvance = Preferences.Get(QuestionnaireAutoAdvanceKey, true),
             HasCompletedOnboarding = Preferences.ContainsKey(HasCompletedOnboardingKey)
                 ? Preferences.Get(HasCompletedOnboardingKey, false)
                 : Preferences.ContainsKey(LanguageKey)
                   || Preferences.ContainsKey(ThemeKey)
                   || Preferences.ContainsKey(ColorKey),
-            OnboardingConcern = Preferences.Get(OnboardingConcernKey, "explore")
+            OnboardingConcern = Preferences.Get(OnboardingConcernKey, "explore"),
+            PracticeRemindersEnabled = Preferences.Get(PracticeRemindersEnabledKey, true),
+            PracticeReminderHour = NormalizePracticeReminderHour(Preferences.Get(PracticeReminderHourKey, DefaultPracticeReminderHour))
         };
     }
 
@@ -82,8 +93,11 @@ public static class UserPreferences
         Preferences.Set(FormKey, NormalizeFormKey(state.Form));
         Preferences.Set(SizeKey, NormalizeSizeKey(state.Size));
         Preferences.Set(IsBoldKey, state.IsBold);
+        Preferences.Set(QuestionnaireAutoAdvanceKey, state.QuestionnaireAutoAdvance);
         Preferences.Set(HasCompletedOnboardingKey, state.HasCompletedOnboarding);
         Preferences.Set(OnboardingConcernKey, state.OnboardingConcern);
+        Preferences.Set(PracticeRemindersEnabledKey, state.PracticeRemindersEnabled);
+        Preferences.Set(PracticeReminderHourKey, NormalizePracticeReminderHour(state.PracticeReminderHour));
     }
 
     public static void SetPendingTechnique(TechniqueId techniqueId) =>
@@ -112,8 +126,11 @@ public static class UserPreferences
             Form = current.Form,
             Size = current.Size,
             IsBold = current.IsBold,
+            QuestionnaireAutoAdvance = current.QuestionnaireAutoAdvance,
             HasCompletedOnboarding = true,
-            OnboardingConcern = concern
+            OnboardingConcern = concern,
+            PracticeRemindersEnabled = current.PracticeRemindersEnabled,
+            PracticeReminderHour = current.PracticeReminderHour
         });
         Changed?.Invoke();
     }
@@ -153,8 +170,11 @@ public static class UserPreferences
             Form = current.Form,
             Size = current.Size,
             IsBold = current.IsBold,
+            QuestionnaireAutoAdvance = current.QuestionnaireAutoAdvance,
             HasCompletedOnboarding = false,
-            OnboardingConcern = current.OnboardingConcern
+            OnboardingConcern = current.OnboardingConcern,
+            PracticeRemindersEnabled = current.PracticeRemindersEnabled,
+            PracticeReminderHour = current.PracticeReminderHour
         });
     }
 
@@ -331,6 +351,34 @@ public static class UserPreferences
         };
     }
 
+    public static IReadOnlyList<int> PracticeReminderHourKeys { get; } =
+        Enumerable.Range(PracticeReminderPolicy.MinHour, PracticeReminderPolicy.MaxHour - PracticeReminderPolicy.MinHour + 1).ToArray();
+
+    public static int NormalizePracticeReminderHour(int hour) =>
+        PracticeReminderPolicy.ClampHour(hour);
+
+    public static string GetPracticeReminderHourLabel(int hour, string? language = null)
+    {
+        int normalized = NormalizePracticeReminderHour(hour);
+        return $"{normalized:D2}:00";
+    }
+
+    public static int ParsePracticeReminderHourKey(string displayOrKey)
+    {
+        if (int.TryParse(displayOrKey, out int hour))
+        {
+            return NormalizePracticeReminderHour(hour);
+        }
+
+        string digits = new(displayOrKey.TakeWhile(ch => char.IsDigit(ch)).ToArray());
+        return int.TryParse(digits, out hour)
+            ? NormalizePracticeReminderHour(hour)
+            : DefaultPracticeReminderHour;
+    }
+
+    public static IReadOnlyList<string> GetPracticeReminderHourOptions(string? language = null) =>
+        PracticeReminderHourKeys.Select(hour => GetPracticeReminderHourLabel(hour, language)).ToArray();
+
     public static IReadOnlyList<string> LanguageKeys { get; } = ["ru", "en"];
 
     public static IReadOnlyList<string> ThemeKeys { get; } = ["dark", "light"];
@@ -426,6 +474,9 @@ public sealed class UserPreferencesState
     public string Form { get; init; } = UserPreferences.DefaultForm;
     public string Size { get; init; } = UserPreferences.DefaultSize;
     public bool IsBold { get; init; }
+    public bool QuestionnaireAutoAdvance { get; init; } = true;
     public bool HasCompletedOnboarding { get; init; }
     public string OnboardingConcern { get; init; } = "explore";
+    public bool PracticeRemindersEnabled { get; init; } = true;
+    public int PracticeReminderHour { get; init; } = UserPreferences.DefaultPracticeReminderHour;
 }

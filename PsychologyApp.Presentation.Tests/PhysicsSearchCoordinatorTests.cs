@@ -18,7 +18,7 @@ public sealed class PhysicsSearchCoordinatorTests
             .Setup(r => r.Search(It.IsAny<IReadOnlyList<ReasonDTO>>(), "stress"))
             .Returns([new RankedReason(new ReasonDTO { Title = "Stress relief" }, 3)]);
 
-        PhysicsSearchCoordinator coordinator = new(reasonSearch.Object);
+        PhysicsSearchCoordinator coordinator = new(reasonSearch.Object, TechniqueCatalogTestHelper.CreateGateway(), TechniqueCatalogTestHelper.CreateRecommendationService());
         Mock<INavigation> navigation = new();
         TestNavigationService navigationService = new(navigation.Object);
         List<ReasonDTO> reasons = [new ReasonDTO { Title = "Stress relief" }];
@@ -42,7 +42,7 @@ public sealed class PhysicsSearchCoordinatorTests
             .Setup(r => r.Search(It.IsAny<IReadOnlyList<ReasonDTO>>(), It.IsAny<string>()))
             .Returns([]);
 
-        PhysicsSearchCoordinator coordinator = new(reasonSearch.Object);
+        PhysicsSearchCoordinator coordinator = new(reasonSearch.Object, TechniqueCatalogTestHelper.CreateGateway(), TechniqueCatalogTestHelper.CreateRecommendationService());
         using CancellationTokenSource cts = new();
         cts.Cancel();
 

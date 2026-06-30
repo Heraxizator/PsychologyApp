@@ -11,21 +11,23 @@ namespace PsychologyApp.Presentation.Pages.Question;
 
 public partial class QuestionViewModel : BaseViewModel
 {
-    public ObservableRangeCollection<Models.Tests.Question> Questions { get; private set; } = [];
+    public ObservableRangeCollection<TestQuestion> Questions { get; private set; } = [];
     public ICommand ConfirmCommand { get; private set; } = default!;
     public ICommand BackCommand { get; private set; } = default!;
     public bool IsSingleAnswer { get; }
 
     private Func<int, string> Analyzer { get; set; } = default!;
+    private readonly DateTime _startedAtUtc;
     private readonly IToastService _toastService;
     private readonly IUserProgressService _userProgressService;
     private readonly INavigationService _navigationService;
     private readonly QuestionnaireSubmissionService _submissionService;
+    private readonly TestRunCoordinator _runCoordinator;
     private readonly TestSessionInfo? _session;
     private readonly ITestCatalogService _testCatalogService;
 
     public QuestionViewModel(
-        List<Models.Tests.Question> questions,
+        List<TestQuestion> questions,
         Func<int, string> analyzer,
         bool singleAnswer,
         IToastService toastService,
@@ -33,6 +35,7 @@ public partial class QuestionViewModel : BaseViewModel
         INavigationService navigationService,
         IUserProgressService userProgressService,
         QuestionnaireSubmissionService submissionService,
+        TestRunCoordinator runCoordinator,
         ITestCatalogService testCatalogService,
         TestSessionInfo? session = null)
     {
@@ -42,8 +45,10 @@ public partial class QuestionViewModel : BaseViewModel
         _navigationService = navigationService;
         _userProgressService = userProgressService;
         _submissionService = submissionService;
+        _runCoordinator = runCoordinator;
         _testCatalogService = testCatalogService;
         _session = session;
+        _startedAtUtc = DateTime.UtcNow;
 
         Analyzer = analyzer;
         IsSingleAnswer = singleAnswer;

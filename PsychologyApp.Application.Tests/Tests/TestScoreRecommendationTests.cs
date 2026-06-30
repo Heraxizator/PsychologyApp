@@ -1,5 +1,5 @@
 using PsychologyApp.Application.Models;
-using PsychologyApp.Application.TestScoring;
+using PsychologyApp.Application.Tests;
 using Xunit;
 
 namespace PsychologyApp.Application.Tests.Tests;

@@ -1,6 +1,5 @@
-using PsychologyApp.Presentation.Shared.Common;
-using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Features.RunTests;
+using PsychologyApp.Presentation.Shared.Common;
 
 namespace PsychologyApp.Presentation.Pages.Question;
 
@@ -14,24 +13,14 @@ public partial class QuestionViewModel
             return;
         }
 
-        QuestionnaireSubmission submission = _submissionService.Calculate(Questions, Analyzer, _session);
-
-        if (_session is not null)
+        if (_session is null)
         {
-            await _submissionService.SaveAsync(
-                _userProgressService,
-                _session,
-                submission.Score,
-                submission.Interpretation,
-                CancellationToken.None);
+            return;
         }
 
-        await _navigationService.GoToTestResultAsync(
-            submission.Score,
-            submission.Interpretation,
-            submission.RecommendedTechnique,
-            _session?.TestId,
-            submission.InterpretationDetail,
-            _session?.AnalyzerId);
+        await _runCoordinator.CompleteQuestionnaireAsync(
+            new QuestionnaireCompletionRequest(Questions, _session, _startedAtUtc),
+            _userProgressService,
+            _navigationService);
     }
 }

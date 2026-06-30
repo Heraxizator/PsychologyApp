@@ -67,6 +67,29 @@
                 </VerticalStackLayout>
             </Border>
 
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding PracticeSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <ui:SettingSwitchRowView
+                        LabelText="{Binding PracticeRemindersLabel}"
+                        IsToggled="{Binding PracticeRemindersEnabled}" />
+                    <ui:SettingPickerRowView
+                        LabelText="{Binding PracticeReminderHourLabel}"
+                        PickerTitle="{Binding PracticeReminderHourPickerTitle}"
+                        ItemsSource="{Binding PracticeReminderHourOptions}"
+                        SelectedItem="{Binding PracticeReminderHour}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding TestsSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <ui:SettingSwitchRowView
+                        LabelText="{Binding QuestionnaireAutoAdvanceLabel}"
+                        IsToggled="{Binding QuestionnaireAutoAdvance}" />
+                </VerticalStackLayout>
+            </Border>
+
             <ui:ButtonView
                 BodyText="{Binding ApplyButtonText}"
                 TapCommand="{Binding ApplyCommand}" />

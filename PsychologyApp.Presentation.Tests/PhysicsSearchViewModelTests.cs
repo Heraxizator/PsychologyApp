@@ -27,7 +27,7 @@ public sealed class PhysicsSearchViewModelTests
             .Setup(r => r.Search(It.IsAny<IReadOnlyList<ReasonDTO>>(), It.IsAny<string>()))
             .Throws(new InvalidOperationException("Search failed"));
 
-        PhysicsSearchCoordinator coordinator = new(reasonSearch.Object);
+        PhysicsSearchCoordinator coordinator = new(reasonSearch.Object, TechniqueCatalogTestHelper.CreateGateway(), TechniqueCatalogTestHelper.CreateRecommendationService());
         PhysicsSearchSession session = new(coordinator);
         Mock<INavigation> navigation = new();
         TestNavigationService navigationService = new(navigation.Object);
@@ -65,7 +65,7 @@ public sealed class PhysicsSearchViewModelTests
             .Setup(r => r.Search(It.IsAny<IReadOnlyList<ReasonDTO>>(), "stress"))
             .Returns([new RankedReason(new ReasonDTO { Title = "Stress relief" }, 3)]);
 
-        PhysicsSearchCoordinator coordinator = new(reasonSearch.Object);
+        PhysicsSearchCoordinator coordinator = new(reasonSearch.Object, TechniqueCatalogTestHelper.CreateGateway(), TechniqueCatalogTestHelper.CreateRecommendationService());
         PhysicsSearchSession session = new(coordinator);
         Mock<INavigation> navigation = new();
         TestNavigationService navigationService = new(navigation.Object);
@@ -99,7 +99,7 @@ public sealed class PhysicsSearchViewModelTests
     public void Constructor_DoesNotLoadUntilEnsureInitialized()
     {
         Mock<IReasonSearchService> reasonSearch = new();
-        PhysicsSearchCoordinator coordinator = new(reasonSearch.Object);
+        PhysicsSearchCoordinator coordinator = new(reasonSearch.Object, TechniqueCatalogTestHelper.CreateGateway(), TechniqueCatalogTestHelper.CreateRecommendationService());
         PhysicsSearchSession session = new(coordinator);
         Mock<INavigation> navigation = new();
 
@@ -233,7 +233,7 @@ public sealed class PhysicsSearchViewModelTests
 
     private static PhysicsSearchViewModel CreateViewModel(IReasonSearchService reasonSearch)
     {
-        PhysicsSearchCoordinator coordinator = new(reasonSearch);
+        PhysicsSearchCoordinator coordinator = new(reasonSearch, TechniqueCatalogTestHelper.CreateGateway(), TechniqueCatalogTestHelper.CreateRecommendationService());
         PhysicsSearchSession session = new(coordinator);
         Mock<INavigation> navigation = new();
 

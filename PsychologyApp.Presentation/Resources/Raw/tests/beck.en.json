@@ -4,6 +4,7 @@
   "estimatedMinutes": 5,
   "questionCount": 21,
   "construct": "Depression",
+  "betterWhen": "lower",
   "description": "Estimate depressive symptoms over the past week in 5–7 minutes.",
   "algorithm": [
     "1. This questionnaire contains groups of statements. Read each group carefully.",

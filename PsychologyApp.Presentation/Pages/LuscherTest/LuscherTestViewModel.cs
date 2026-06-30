@@ -13,7 +13,7 @@ public partial class LuscherTestViewModel : BaseTestViewModel
 {
     private readonly LuscherMode _mode;
     private readonly IUserProgressService? _userProgressService;
-    private readonly LuscherTestSubmissionService _submissionService;
+    private readonly ILuscherResultService _luscherResultService = null!;
     private int _lastCoValue;
     private double _lastBkValue;
 
@@ -30,12 +30,12 @@ public partial class LuscherTestViewModel : BaseTestViewModel
     public LuscherTestViewModel(
         LuscherMode mode,
         INavigationService navigationService,
-        IUserProgressService? userProgressService = null,
-        LuscherTestSubmissionService? submissionService = null)
+        IUserProgressService? userProgressService,
+        ILuscherResultService luscherResultService)
     {
         _mode = mode;
         _userProgressService = userProgressService;
-        _submissionService = submissionService ?? new LuscherTestSubmissionService();
+        _luscherResultService = luscherResultService;
         BindNavigation(navigationService);
         ModuleName = AppStrings.TestsDetectorTitle;
         PageName = PageTitle;

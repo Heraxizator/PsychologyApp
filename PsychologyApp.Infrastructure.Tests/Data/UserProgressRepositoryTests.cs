@@ -338,6 +338,52 @@ public sealed class UserProgressRepositoryTests : IAsyncLifetime
         Assert.DoesNotContain("MoodEntries", tableNames);
     }
 
+    [Fact]
+    public async Task GetLatestTestResultsAsync_ReturnsLatestPerTestId()
+    {
+        await _repository.SaveTestResultAsync(new TestResultDTO
+        {
+            TestId = "beck",
+            Score = 1,
+            Summary = "old",
+            CompletedAt = DateTime.UtcNow.AddDays(-1)
+        });
+        await _repository.SaveTestResultAsync(new TestResultDTO
+        {
+            TestId = "beck",
+            Score = 5,
+            Summary = "new",
+            CompletedAt = DateTime.UtcNow
+        });
+        await _repository.SaveTestResultAsync(new TestResultDTO
+        {
+            TestId = "gad7",
+            Score = 8,
+            Summary = "gad",
+            CompletedAt = DateTime.UtcNow
+        });
+
+        IReadOnlyList<TestResultDTO> latest = await _repository.GetLatestTestResultsAsync(["beck", "gad7", "missing"]);
+
+        Assert.Equal(2, latest.Count);
+        Assert.Contains(latest, row => row.TestId == "beck" && row.Score == 5);
+        Assert.Contains(latest, row => row.TestId == "gad7" && row.Score == 8);
+    }
+
+    [Fact]
+    public async Task GetTestResultCountsAsync_ReturnsCountsPerTestId()
+    {
+        await _repository.SaveTestResultAsync(new TestResultDTO { TestId = "beck", Score = 1, Summary = "a", CompletedAt = DateTime.UtcNow });
+        await _repository.SaveTestResultAsync(new TestResultDTO { TestId = "beck", Score = 2, Summary = "b", CompletedAt = DateTime.UtcNow });
+        await _repository.SaveTestResultAsync(new TestResultDTO { TestId = "gad7", Score = 3, Summary = "c", CompletedAt = DateTime.UtcNow });
+
+        IReadOnlyList<(string TestId, int Count)> counts = await _repository.GetTestResultCountsAsync(["beck", "gad7"]);
+
+        Assert.Equal(2, counts.Count);
+        Assert.Contains(counts, row => row.TestId == "beck" && row.Count == 2);
+        Assert.Contains(counts, row => row.TestId == "gad7" && row.Count == 1);
+    }
+
     public Task InitializeAsync() => Task.CompletedTask;
 
     public async Task DisposeAsync() => await _connectionFactory.DisposeAsync();
