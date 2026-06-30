@@ -25,6 +25,7 @@ public sealed class TechniquesViewModelFactory(
     TechniqueListBuilder techniqueListBuilder,
     IDatabaseReadySignal databaseReadySignal,
     PracticeDashboardLoader dashboardLoader,
+    TodayRecommendationResolver todayRecommendationResolver,
     TechniquesListInitializer listInitializer,
     IOptions<AppSettings> settings,
     ILogger<TechniquesViewModel> logger) : ViewModelFactoryBase, ITechniquesViewModelFactory
@@ -39,6 +40,7 @@ public sealed class TechniquesViewModelFactory(
             techniqueListBuilder,
             databaseReadySignal,
             dashboardLoader,
+            todayRecommendationResolver,
             listInitializer,
             settings,
             logger);

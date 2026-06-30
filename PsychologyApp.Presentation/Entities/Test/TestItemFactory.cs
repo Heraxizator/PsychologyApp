@@ -1,12 +1,15 @@
+using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Features.RunTests;
-using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
 
 namespace PsychologyApp.Presentation.Entities.Test;
 
 public static class TestItemFactory
 {
-    public static TestItem Create(TestDefinition definition, INavigationService navigationService)
+    public static TestItem Create(
+        TestDefinition definition,
+        INavigationService navigationService,
+        TestRunCoordinator testRunCoordinator)
     {
         TestItem item = new()
         {
@@ -18,7 +21,7 @@ public static class TestItemFactory
             Comment = definition.Comment,
             Algorithm = definition.Algorithm.ToList(),
             MetaText = BuildMetaText(definition),
-            StartAsync = () => TestStartOperations.StartAsync(definition, navigationService)
+            StartAsync = () => testRunCoordinator.StartAsync(definition, navigationService)
         };
 
         return item;

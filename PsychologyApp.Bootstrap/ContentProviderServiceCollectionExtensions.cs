@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.DependencyInjection;
 using PsychologyApp.Application.Reason;
+using PsychologyApp.Application.Tests;
 
 namespace PsychologyApp.Bootstrap;
 
@@ -20,6 +21,15 @@ public static class ContentProviderServiceCollectionExtensions
         where TInner : class, IQuotContentProvider
     {
         services.AddCachedQuotContentProvider<TInner>();
+        return services;
+    }
+
+    public static IServiceCollection AddPsychologyAppCachedTestCatalog(
+        this IServiceCollection services,
+        Func<IServiceProvider, CachedTestCatalogProvider> factory)
+    {
+        services.AddSingleton(factory);
+        services.AddSingleton<ITestCatalogProvider>(sp => sp.GetRequiredService<CachedTestCatalogProvider>());
         return services;
     }
 }

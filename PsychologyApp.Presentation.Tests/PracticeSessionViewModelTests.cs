@@ -6,6 +6,7 @@ using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
+using PsychologyApp.Presentation.Shared.Services.Notifications;
 using PsychologyApp.Presentation.Pages.TechniqueSession;
 using Xunit;
 
@@ -145,7 +146,7 @@ public sealed class PracticeSessionViewModelTests
         Mock<INavigationService> navigation = new();
         Mock<IDialogService> dialog = new();
         return new ListTechniqueSessionHelper(
-            new TechniqueSessionCompletionService(),
+            new TechniqueSessionCompletionService(Mock.Of<IPracticeReminderCoordinator>()),
             progress,
             navigation.Object,
             dialog.Object);

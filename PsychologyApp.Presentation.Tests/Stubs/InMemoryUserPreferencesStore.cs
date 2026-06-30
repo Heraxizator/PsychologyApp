@@ -35,8 +35,11 @@ public sealed class InMemoryUserPreferencesStore : IUserPreferencesStore
             Form = _state.Form,
             Size = _state.Size,
             IsBold = _state.IsBold,
+            QuestionnaireAutoAdvance = _state.QuestionnaireAutoAdvance,
             HasCompletedOnboarding = true,
-            OnboardingConcern = concern
+            OnboardingConcern = concern,
+            PracticeRemindersEnabled = _state.PracticeRemindersEnabled,
+            PracticeReminderHour = _state.PracticeReminderHour
         };
         Changed?.Invoke();
     }
@@ -51,8 +54,11 @@ public sealed class InMemoryUserPreferencesStore : IUserPreferencesStore
             Form = _state.Form,
             Size = _state.Size,
             IsBold = _state.IsBold,
+            QuestionnaireAutoAdvance = _state.QuestionnaireAutoAdvance,
             HasCompletedOnboarding = false,
-            OnboardingConcern = _state.OnboardingConcern
+            OnboardingConcern = _state.OnboardingConcern,
+            PracticeRemindersEnabled = _state.PracticeRemindersEnabled,
+            PracticeReminderHour = _state.PracticeReminderHour
         };
         Changed?.Invoke();
     }

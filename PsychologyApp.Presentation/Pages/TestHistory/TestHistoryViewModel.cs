@@ -23,8 +23,12 @@ public partial class TestHistoryViewModel : BaseViewModel
     private readonly string _testId;
     private string _testTitle;
 
+    public string TestFlowId => _testId;
+
     public ObservableRangeCollection<TestHistoryEntryItem> HistoryEntries { get; } = [];
+    public IReadOnlyList<TestScoreChartPoint> ChartPoints { get; private set; } = [];
     public bool HasEntries => HistoryEntries.Count > 0;
+    public bool HasChart => ChartPoints.Count >= 2;
 
     public ICommand RetakeCommand { get; }
 

@@ -5,6 +5,7 @@
     "estimatedMinutes": 8,
     "questionCount": 40,
     "construct": "Neuroticism",
+    "betterWhen": "lower",
     "description": "40 statements on emotional reactivity. Answer Yes or No about yourself.",
     "algorithm": [
       "1. You are given a list of statements.",
@@ -64,6 +65,7 @@
     "estimatedMinutes": 8,
     "questionCount": 40,
     "construct": "Psychopathy",
+    "betterWhen": "lower",
     "description": "Screens interpersonal and behavioral patterns. Answer honestly—there are no right answers.",
     "algorithm": [
       "1. You are given a list of statements.",
@@ -123,6 +125,7 @@
     "estimatedMinutes": 8,
     "questionCount": 40,
     "construct": "Aggressiveness",
+    "betterWhen": "lower",
     "description": "Estimate how often aggressive reactions show up in everyday situations.",
     "algorithm": [
       "1. You are given a list of statements.",
@@ -182,6 +185,7 @@
     "estimatedMinutes": 2,
     "questionCount": 7,
     "construct": "Anxiety",
+    "betterWhen": "lower",
     "description": "Seven questions about how often you were bothered by each symptom over the last two weeks.",
     "algorithm": [
       "1. Think about the last two weeks.",
@@ -213,6 +217,7 @@
     "estimatedMinutes": 3,
     "questionCount": 10,
     "construct": "Psychological distress",
+    "betterWhen": "lower",
     "description": "Ten questions about how often you experienced each state during the last four weeks.",
     "algorithm": [
       "1. Think about the last four weeks.",
@@ -248,6 +253,7 @@
     "estimatedMinutes": 2,
     "questionCount": 5,
     "construct": "Well-being",
+    "betterWhen": "higher",
     "description": "Five questions about positive well-being over the last two weeks. A higher total score means higher subjective well-being.",
     "algorithm": [
       "1. Think about the last two weeks.",
@@ -279,6 +285,7 @@
     "estimatedMinutes": 3,
     "questionCount": 9,
     "construct": "Depression",
+    "betterWhen": "lower",
     "description": "Nine questions about depressive symptoms over the last two weeks. Rate how often each symptom bothered you.",
     "algorithm": [
       "1. Think about the last two weeks.",
@@ -312,6 +319,7 @@
     "estimatedMinutes": 2,
     "questionCount": 7,
     "construct": "Insomnia",
+    "betterWhen": "lower",
     "description": "Seven questions about sleep problems over the last two weeks. Rate the severity of each difficulty.",
     "algorithm": [
       "1. Think about the last two weeks.",
@@ -344,6 +352,7 @@
     "estimatedMinutes": 2,
     "questionCount": 8,
     "construct": "Daytime sleepiness",
+    "betterWhen": "lower",
     "description": "Eight everyday situations. Rate how likely you would be to doze off in each.",
     "algorithm": [
       "1. Imagine each situation listed.",
@@ -376,6 +385,7 @@
     "estimatedMinutes": 4,
     "questionCount": 15,
     "construct": "Somatic symptoms",
+    "betterWhen": "lower",
     "description": "Fifteen questions about physical symptoms over the last four weeks. Rate how much each symptom bothered you.",
     "algorithm": [
       "1. Think about the last four weeks.",
@@ -414,6 +424,7 @@
     "estimatedMinutes": 1,
     "questionCount": 5,
     "construct": "Eating behavior",
+    "betterWhen": "lower",
     "description": "Five brief questions to screen for possible eating disorders. Answer yes or no.",
     "algorithm": [
       "1. Read each question carefully.",
@@ -441,6 +452,7 @@
     "estimatedMinutes": 2,
     "questionCount": 5,
     "construct": "Life satisfaction",
+    "betterWhen": "higher",
     "description": "Five statements about life satisfaction. A higher total score means higher subjective satisfaction.",
     "algorithm": [
       "1. Read each statement.",

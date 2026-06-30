@@ -1,4 +1,4 @@
-using PsychologyApp.Application.Models;
+﻿using PsychologyApp.Application.Models;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Shared.Common;
@@ -104,7 +104,8 @@ public sealed class MauiNavigationService : INavigationService
         TechniqueId? recommendedTechnique = null,
         string? testId = null,
         string? interpretationDetail = null,
-        string? analyzerId = null) =>
+        string? analyzerId = null,
+        QuestionnaireResultDetail? detail = null) =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(
             _pageFactory.CreateTestResultPage(new TestResultInfo
             {
@@ -113,7 +114,8 @@ public sealed class MauiNavigationService : INavigationService
                 InterpretationDetail = interpretationDetail,
                 AnalyzerId = analyzerId,
                 RecommendedTechnique = recommendedTechnique,
-                TestId = testId
+                TestId = testId,
+                Detail = detail
             }),
             true));
 

@@ -5,6 +5,7 @@
     "estimatedMinutes": 2,
     "questionCount": 2,
     "construct": "Emotional state",
+    "betterWhen": "lower",
     "description": "Pick the most and least pleasant color right now—not your favorite colors in general.",
     "algorithm": [
       "1. Choose the most pleasant color",
@@ -19,6 +20,7 @@
     "estimatedMinutes": 5,
     "questionCount": 8,
     "construct": "Emotional state",
+    "betterWhen": "lower",
     "description": "Order 8 colors from most to least pleasant—reflecting how you feel here and now.",
     "algorithm": [
       "1. Choose the most pleasant color",

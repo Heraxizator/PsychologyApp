@@ -9,7 +9,8 @@ namespace PsychologyApp.Presentation.Features.RunTests;
 
 public sealed class TestsListLoader(
     IUserProgressService userProgressService,
-    ITestCatalogService testCatalogService)
+    ITestCatalogService testCatalogService,
+    TestRunCoordinator testRunCoordinator)
 {
     public async Task<IReadOnlyList<TestItem>> LoadItemsAsync(
         INavigationService navigationService,
@@ -17,6 +18,17 @@ public sealed class TestsListLoader(
         CancellationToken cancellationToken = default)
     {
         IReadOnlyList<TestDefinition> definitions = await testCatalogService.GetCatalogAsync(cancellationToken);
+        List<string> testIds = definitions
+            .Select(d => d.TestId)
+            .Where(id => !string.IsNullOrWhiteSpace(id))
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+
+        IReadOnlyDictionary<string, TestResultDTO> latestByTestId =
+            await userProgressService.GetLatestTestResultsAsync(testIds, cancellationToken);
+        IReadOnlyDictionary<string, int> countsByTestId =
+            await userProgressService.GetTestResultCountsAsync(testIds, cancellationToken);
+
         List<TestItem> items = [];
 
         foreach (TestDefinition definition in definitions)
@@ -26,17 +38,14 @@ public sealed class TestsListLoader(
                 continue;
             }
 
-            TestItem item = TestItemFactory.Create(definition, navigationService);
+            TestItem item = TestItemFactory.Create(definition, navigationService, testRunCoordinator);
 
-            TestResultDTO? latest = await userProgressService.GetLatestTestResultAsync(item.TestId, cancellationToken);
-            if (latest is not null)
+            if (latestByTestId.TryGetValue(item.TestId, out TestResultDTO? latest))
             {
                 item.LastResultSummary = AppStrings.TestLastResult(latest.Summary);
             }
 
-            IReadOnlyList<TestResultDTO> history =
-                await userProgressService.GetTestResultHistoryAsync(item.TestId, 2, cancellationToken);
-            item.HasMultipleResults = history.Count > 1;
+            item.HasMultipleResults = countsByTestId.TryGetValue(item.TestId, out int count) && count > 1;
 
             TestItem selected = item;
             item.TapCommand = new AsyncCommand(() => handleSelectionAsync(selected));

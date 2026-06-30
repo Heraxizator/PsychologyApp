@@ -11,7 +11,7 @@ public sealed class PhysicsSearchSessionTests
     public void NewInstances_DoNotShareMutableSearchState()
     {
         Mock<IReasonSearchService> reasonSearch = new();
-        PhysicsSearchCoordinator coordinator = new(reasonSearch.Object);
+        PhysicsSearchCoordinator coordinator = new(reasonSearch.Object, TechniqueCatalogTestHelper.CreateGateway(), TechniqueCatalogTestHelper.CreateRecommendationService());
         PhysicsSearchSession first = new(coordinator);
         PhysicsSearchSession second = new(coordinator);
 
@@ -24,7 +24,7 @@ public sealed class PhysicsSearchSessionTests
     [Fact]
     public void ResetSearchMatches_ClearsLoadedCount()
     {
-        PhysicsSearchSession session = new(new PhysicsSearchCoordinator(new Mock<IReasonSearchService>().Object));
+        PhysicsSearchSession session = new(new PhysicsSearchCoordinator(new Mock<IReasonSearchService>().Object, TechniqueCatalogTestHelper.CreateGateway(), TechniqueCatalogTestHelper.CreateRecommendationService()));
 
         session.ResetSearchMatches();
 

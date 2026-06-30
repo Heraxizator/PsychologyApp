@@ -36,24 +36,6 @@ public sealed class LuscherScoringTests
         Assert.Equal(0, bk);
     }
 
-    [Theory]
-    [InlineData(0)]
-    [InlineData(10)]
-    [InlineData(25)]
-    public void InterpretCo_ReturnsNonEmptyText(int coValue)
-    {
-        Assert.False(string.IsNullOrWhiteSpace(LuscherScoring.InterpretCo(coValue)));
-    }
-
-    [Theory]
-    [InlineData(0.2)]
-    [InlineData(0.6)]
-    [InlineData(2.5)]
-    public void InterpretBk_ReturnsNonEmptyText(double bkValue)
-    {
-        Assert.False(string.IsNullOrWhiteSpace(LuscherScoring.InterpretBk(bkValue)));
-    }
-
     private static List<(ColourValue, ColourMeaning)> BuildStandardSelectionOrder() =>
     [
         (ColourValue.Blue, ColourMeaning.BlueVoted),

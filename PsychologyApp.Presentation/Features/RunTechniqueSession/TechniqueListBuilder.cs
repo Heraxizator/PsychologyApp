@@ -1,8 +1,7 @@
-using PsychologyApp.Application.Models;
+using PsychologyApp.Application.Models.Practice;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Entities.Technique;
-using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -18,13 +17,15 @@ public sealed class TechniqueListLayout
     public required IReadOnlyList<TechniqueGroup> Groups { get; init; }
 }
 
-public sealed class TechniqueListBuilder(IUserProgressService userProgressService)
+public sealed class TechniqueListBuilder(
+    IUserProgressService userProgressService,
+    TechniqueCatalogGateway techniqueCatalog)
 {
     public async Task<IReadOnlyList<TechniqueItem>> BuildStaticItemsAsync(
         INavigationService navigationService,
         CancellationToken cancellationToken = default)
     {
-        IReadOnlyList<TechniqueListEntry> entries = TechniqueListCatalog.GetBuiltIn();
+        IReadOnlyList<TechniqueListEntry> entries = techniqueCatalog.GetBuiltInListEntries();
         IReadOnlyList<string> keys = entries.Select(entry => entry.TechniqueId.ToString()).ToList();
 
         Task<IReadOnlyDictionary<string, DateTime>> lastPracticeDatesTask =

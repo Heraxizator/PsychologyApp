@@ -1,5 +1,5 @@
+using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Shared.Common;
-using PsychologyApp.Presentation.Core.Common;
 
 namespace PsychologyApp.Presentation.Pages.Onboarding;
 

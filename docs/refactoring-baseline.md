@@ -111,7 +111,7 @@ Application layer coverage **~67%** (target ≥65%).
 | PhysicsSearchViewModel.cs | ~55 | Labels, Init, Search, State |
 | UserViewModel.cs | ~55 | Labels, Quotes, Refresh, Commands, Collections, Stats |
 | TechniquesViewModel.cs | ~55 | Labels, Dashboard, Init, Messenger, Commands, Collections |
-| LuscherTestViewModel.cs | ~45 | Labels, Init, Results; LuscherTestSubmissionService |
+| LuscherTestViewModel.cs | ~45 | Labels, Init, Results; ~~LuscherTestSubmissionService~~ → `ILuscherResultService` (Phase 15) |
 | BaseTestViewModel.cs | ~20 | Handlers, Results.Properties, ColorVisibility |
 | Paper/Polarity/TechniqueSession | — | Session; ListTechniqueSessionHelper (ctor-scoped deps) |
 
@@ -120,7 +120,7 @@ Application layer coverage **~67%** (target ≥65%).
 | ViewModel | Lines (main file) | Partials / services |
 |-----------|-------------------|---------------------|
 | FindProblemViewModel.cs | ~65 | Labels, Content, Reload; FindProblemContentLoader |
-| LuscherTestViewModel.cs | ~45 | Labels, Init, Results.Labels, Results.Scoring; LuscherTestSubmissionService |
+| LuscherTestViewModel.cs | ~45 | Labels, Init, Results.Labels, Results.Scoring; ~~LuscherTestSubmissionService~~ → `ILuscherResultService` (Phase 15) |
 | QuoteViewModel.cs | ~75 | Labels, Feed, Init, Properties |
 | PhysicsSearchViewModel.cs | ~55 | Labels, Init, Search, State, Properties |
 | PaperListViewModel.cs | ~50 | Labels, Session, Fields; ListTechniqueSessionHelper |
@@ -202,7 +202,7 @@ All listed ViewModels use **`UiThread.RunAsync`** (no direct `MainThread` in Vie
 - `QuestionnaireSubmissionService` — validate answers, score, save result, recommendation mapping
 
 ### Phase 8
-- `LuscherTestSubmissionService` — Luscher standard/brief result JSON + persistence
+- ~~`LuscherTestSubmissionService`~~ — removed in Phase 15; Luscher persistence now in Application `ILuscherResultService`
 
 ### Phase 9
 - `FindProblemContentLoader` — localized reload of test description/algorithm/comment by test id
@@ -213,7 +213,7 @@ All listed ViewModels use **`UiThread.RunAsync`** (no direct `MainThread` in Vie
 - Constructor: `DesignerViewModelTests`, `DesignerTechniqueOperationsTests`
 - Practice sessions: `PracticeSessionServicesTests`, `TestModuleOperationsTests`, `ListSessionDraftCoordinatorTests`
 - Tests module: `LuscherTestViewModelTests`, `TestHistoryViewModelTests`, `TestsListViewModelTests`, `TestResultViewModelTests`, `QuestionViewModelTests`
-- Extracted services: `ExtractedServicesTests`, `ProfileStatsLoaderTests`, `Phase5LoaderTests`, `Phase6LoaderTests`, `LuscherTestSubmissionServiceTests`, `FindProblemContentLoaderTests`, `QuoteViewModelTests`, `MusicPlayerViewModelTests`, `PhysicsSearchCoordinatorTests`, `MusicAudioCacheTests`
+- Extracted services: `ExtractedServicesTests`, `ProfileStatsLoaderTests`, `Phase5LoaderTests`, `Phase6LoaderTests`, `LuscherResultServiceTests`, `FindProblemContentLoaderTests`, `QuoteViewModelTests`, `MusicPlayerViewModelTests`, `PhysicsSearchCoordinatorTests`, `MusicAudioCacheTests`
 
 ## Architecture notes
 
@@ -227,7 +227,80 @@ All listed ViewModels use **`UiThread.RunAsync`** (no direct `MainThread` in Vie
 - Technique list progress badges load via batch SQLite queries (`GetLastPracticeDatesAsync`, `GetSessionDraftKeysAsync`)
 - Shell tab ViewModels defer data load to `EnsureInitializedAsync` on first `OnAppearing` (see `TestsListPage` pattern)
 - `QuoteFeedCoordinator` and `ProfileQuotesLoader` are transient per ViewModel scope
-- Test list/history loading and retake in `TestsListLoader`, `TestHistoryLoader`, `TestRetakeOperations`; questionnaire scoring in `QuestionnaireSubmissionService`; Luscher persistence in `LuscherTestSubmissionService`; find-problem reload in `FindProblemContentLoader`
+- Test list/history loading and retake in `TestsListLoader`, `TestHistoryLoader`, `TestRetakeOperations`; Luscher persistence in Application `ILuscherResultService`; find-problem reload in `FindProblemContentLoader`
+- **Application owns test use-cases** (aligned with Quot/Reason/Somatic): `ITestCatalogService`, `IQuestionnaireScoringService`, `ITestTrendService`, `IQuestionnaireResultDetailService`; `MauiTestCatalogProvider` reads embedded JSON assets
+- **Domain owns pure test logic**: `TestTrendEvaluator`, `QuestionnaireScoreCalculator`, `ScoreDirection`
+- Presentation keeps orchestration (`TestRunCoordinator`), loaders, navigation, `TestScoreLabelMapper` (AppStrings), widgets/charts
 - Profile dashboard refresh orchestration in `UserProfileRefreshCoordinator`; techniques list init in `TechniquesListInitializer`
 - Large ViewModels split into partial classes (Labels, domain-specific partials)
 - All ViewModel factories use `ViewModelFactoryBase.ResolveNavigation` where navigation is resolved
+
+## Phase 14 (tests module)
+
+### ViewModels (after extraction)
+
+| ViewModel | Lines (main file) | Partials / services |
+|-----------|-------------------|---------------------|
+| QuestionViewModel.cs | ~55 | Labels, Wizard, Results; `TestRunCoordinator`, `QuestionnaireSubmissionService` (thin adapter to `IQuestionnaireScoringService`) |
+| TestResultViewModel.cs | ~95 | Labels, Recommendation, Commands, AnswerDetail; `TestTrendResolver` (thin adapter to `ITestTrendService`), `TestRetakeOperations` |
+| TestHistoryViewModel.cs | ~65 | Labels, Load; `TestHistoryLoader`, chart points |
+| FindProblemViewModel.cs | ~70 | Labels, Content, Reload; `TestRunCoordinator` |
+
+### Extracted services (tests)
+
+**Application**
+
+- `ITestCatalogService` / `CachedTestCatalogProvider` — catalog load + language-scoped cache (like Quot)
+- `IQuestionnaireScoringService` — validate answers, score, band index, technique recommendation (`TestScoreRecommendation`)
+- `ITestTrendService` — trend compare (via Domain `TestTrendEvaluator`), chart points, latest trend evaluation
+- `IQuestionnaireResultDetailService` — build/parse `detailJson`
+- `TestCatalogParser`, `TestScoreInterpreter` — JSON → `TestDefinition`, score-band thresholds
+
+**Presentation**
+
+- `TestRunCoordinator` — start questionnaire/Lüscher, retake, complete questionnaire (save + navigate)
+- `TestTrendResolver` — UI labels for trend (`AppStrings`)
+- `QuestionnaireDetailBuilder` / `QuestionnaireDetailReader` — thin wrappers over `IQuestionnaireResultDetailService`
+- `QuestionnaireSubmissionService` — scoring adapter + save
+- `TestScoreLabelMapper` — `ScoreBand`/score → localized interpretation strings
+- `TestsListLoader` — batch latest results and counts per `testId`
+- `TestHistoryLoader` — history entries, trend labels, chart points, parsed detail
+
+### Test flow
+
+`TestsList` → `FindProblem` → `TestRunCoordinator.Start` → `Question` / Lüscher → `TestRunCoordinator.Complete` → `TestResult` → `TestHistory` (chart + answer detail)
+
+### Widgets
+
+- `TestResultHeroView`, `QuestionnaireResultDetailView`, `TestScoreTrendChartView` (`GraphicsView` + `TestScoreTrendDrawable`)
+- `PageAnalyticsBehavior` supports optional `TestId` for funnel page names (`PageTitle:testId`)
+
+## Phase 15 (app-wide layer rebalance)
+
+See [app-layer-rebalance.md](app-layer-rebalance.md) for the full boundary map.
+
+### Practice catalog
+
+- Technique catalog content moved from `Presentation.Core` static classes to **Application** (`Practice/Catalog`, `ITechniqueCatalogService`, `CachedTechniqueCatalogProvider`)
+- Presentation uses `TechniqueCatalogGateway` + mappers; `EntryFieldKind` in **Domain**
+- `LanguageContentReloader` invalidates technique catalog on language change
+
+### Recommendations
+
+- `TechniqueRecommendationService` in **Application** replaces `OnboardingRecommendation` in Presentation
+- `OnboardingConcernKeys` moved to **Domain**
+
+### Tests finish
+
+- `TestSessionInfo` → **Application.Models.Tests**
+- `ILuscherResultService` replaces `LuscherTestSubmissionService` in Presentation
+- Lüscher interpretation prose in `LuscherStrings` / `LuscherInterpretationsRu`; **Domain** `LuscherScoring` formulas only
+- Removed dead `TestBuilder` / `ITestBuilder`; `TestScoreRecommendation` namespace → `Application.Tests`
+
+### Content providers
+
+- `ReasonTsvParser` in **Application**; `QuoteJsonEntry` → **Application.Models.Quotes**
+
+### Domain polish
+
+- `StreakCalculator` extracted from `UserProgressService.GetStreakDaysAsync`

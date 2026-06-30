@@ -1,11 +1,10 @@
 using PsychologyApp.Application.Models;
-using PsychologyApp.Presentation.Models.Practice.Techniques;
 
 namespace PsychologyApp.Presentation.Shared.Common;
 
-public static class PracticeHistoryFormatter
+public sealed class PracticeHistoryFormatter(TechniqueCatalogGateway techniqueCatalog)
 {
-    public static string ResolveName(CompletionDTO completion)
+    public string ResolveName(CompletionDTO completion)
     {
         if (completion.ItemKey.StartsWith("custom_", StringComparison.Ordinal))
         {
@@ -14,7 +13,7 @@ public static class PracticeHistoryFormatter
 
         if (Enum.TryParse(completion.ItemKey, out TechniqueId techniqueId))
         {
-            return TechniqueCatalog.Get(techniqueId).PageName;
+            return techniqueCatalog.Get(techniqueId).PageName;
         }
 
         return string.IsNullOrWhiteSpace(completion.PageName)

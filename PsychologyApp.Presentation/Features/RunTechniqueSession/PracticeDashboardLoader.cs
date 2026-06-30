@@ -16,7 +16,8 @@ public sealed class MoodSnapshot
 
 public sealed class PracticeDashboardLoader(
     IUserProgressService userProgressService,
-    IUserPreferencesStore userPreferencesStore)
+    IUserPreferencesStore userPreferencesStore,
+    TodayRecommendationResolver todayRecommendationResolver)
 {
     public async Task<int> LoadStreakDaysAsync(CancellationToken cancellationToken = default) =>
         await userProgressService.GetStreakDaysAsync(cancellationToken);
@@ -66,7 +67,7 @@ public sealed class PracticeDashboardLoader(
     {
         string streakDisplay = AppStrings.ProfileStreakCount(streakDays);
         bool hasStreak = streakDays > 0;
-        return TodayRecommendationResolver.Resolve(
+        return todayRecommendationResolver.Resolve(
             userPreferencesStore.Load().OnboardingConcern,
             streakDisplay,
             hasStreak,

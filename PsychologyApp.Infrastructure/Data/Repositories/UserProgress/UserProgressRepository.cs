@@ -56,6 +56,45 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
         return rows.ToList();
     }
 
+    public async Task<IReadOnlyList<TestResultDTO>> GetLatestTestResultsAsync(
+        IReadOnlyList<string> testIds,
+        CancellationToken cancellationToken = default)
+    {
+        if (testIds.Count == 0)
+        {
+            return [];
+        }
+
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        IEnumerable<TestResultDTO> rows = await connection.QueryAsync<TestResultDTO>(DapperCommandFactory.Create(
+            UserProgressSql.SelectLatestTestResults,
+            new { testIds },
+            commandTimeout: CommandTimeoutSeconds,
+            cancellationToken: cancellationToken));
+
+        return rows.ToList();
+    }
+
+    public async Task<IReadOnlyList<(string TestId, int Count)>> GetTestResultCountsAsync(
+        IReadOnlyList<string> testIds,
+        CancellationToken cancellationToken = default)
+    {
+        if (testIds.Count == 0)
+        {
+            return [];
+        }
+
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        IEnumerable<(string TestId, int Count)> rows =
+            await connection.QueryAsync<(string TestId, int Count)>(DapperCommandFactory.Create(
+                UserProgressSql.SelectTestResultCounts,
+                new { testIds },
+                commandTimeout: CommandTimeoutSeconds,
+                cancellationToken: cancellationToken));
+
+        return rows.ToList();
+    }
+
     public async Task<DateTime?> GetLastTechniqueCompletionDateAsync(CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);

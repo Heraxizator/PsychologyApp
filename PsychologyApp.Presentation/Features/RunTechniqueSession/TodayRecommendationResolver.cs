@@ -1,4 +1,6 @@
+using PsychologyApp.Application.Recommendations;
 using PsychologyApp.Application.Models;
+using PsychologyApp.Application.Models.Practice;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
@@ -14,16 +16,18 @@ public sealed class TodayRecommendationResult
     public required string ReasonText { get; init; }
 }
 
-public static class TodayRecommendationResolver
+public sealed class TodayRecommendationResolver(
+    TechniqueCatalogGateway techniqueCatalog,
+    ITechniqueRecommendationService techniqueRecommendationService)
 {
-    public static TodayRecommendationResult Resolve(
+    public TodayRecommendationResult Resolve(
         string onboardingConcern,
         string streakDisplay,
         bool hasStreak,
         INavigationService navigationService)
     {
-        TechniqueId techniqueId = OnboardingRecommendation.ResolveTechnique(onboardingConcern);
-        TechniqueDefinition definition = TechniqueCatalog.Get(techniqueId);
+        TechniqueId techniqueId = techniqueRecommendationService.ResolveFromOnboardingConcern(onboardingConcern);
+        TechniqueDefinition definition = techniqueCatalog.Get(techniqueId);
         string durationText = AppStrings.TechniqueDuration(definition.ListDurationMinutes);
 
         return new TodayRecommendationResult
@@ -47,14 +51,14 @@ public static class TodayRecommendationResolver
         };
     }
 
-    public static void ApplyCatalogDate(TechniqueItem todayItem, TechniqueId techniqueId, IEnumerable<TechniqueItem> staticItems, bool hasStreak)
+    public void ApplyCatalogDate(TechniqueItem todayItem, TechniqueId techniqueId, IEnumerable<TechniqueItem> staticItems, bool hasStreak)
     {
         if (hasStreak)
         {
             return;
         }
 
-        TechniqueListEntry entry = TechniqueListCatalog.GetBuiltIn().First(e => e.TechniqueId == techniqueId);
+        TechniqueListEntry entry = techniqueCatalog.GetBuiltInListEntries().First(e => e.TechniqueId == techniqueId);
         TechniqueItem? match = staticItems.FirstOrDefault(item => item.Number == entry.Number);
         if (match is not null)
         {

@@ -1,6 +1,8 @@
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
+using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
+using PsychologyApp.Presentation.Pages.TestHistory;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Entities.Test;
@@ -35,8 +37,8 @@ public sealed class TestHistoryViewModelTests
             new Mock<IUserProgressService>().Object,
             catalog,
             TestDatabaseReady.CreateSignaled(),
-            new TestHistoryLoader(),
-            new TestRetakeOperations(),
+            TestRunTestHelpers.CreateHistoryLoader(catalog),
+            TestRunTestHelpers.CreateRetakeOperations(catalog),
             NullLogger<TestHistoryViewModel>.Instance,
             "gad7",
             "GAD-7");
@@ -46,6 +48,46 @@ public sealed class TestHistoryViewModelTests
 
         Assert.True(navigationService.WentToRoot);
         Assert.True(navigationService.StartedLuscherStandard);
+    }
+
+    [Fact]
+    public async Task LoadAsync_SetsHasChart_WhenTwoScoredResultsExist()
+    {
+        Mock<IUserProgressService> progress = new();
+        DateTime completedAt = new(2026, 1, 15, 10, 0, 0, DateTimeKind.Utc);
+        progress
+            .Setup(p => p.GetTestResultHistoryAsync("beck", 50, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<TestResultDTO>
+            {
+                new() { TestId = "beck", Score = 8, Summary = "High", CompletedAt = completedAt },
+                new() { TestId = "beck", Score = 3, Summary = "Low", CompletedAt = completedAt.AddDays(-7) }
+            });
+        FakeTestCatalogService catalog = new FakeTestCatalogService().WithCatalog(new TestDefinition
+        {
+            TestId = "beck",
+            Title = "Beck",
+            Subtitle = "Sub",
+            Description = "Desc",
+            Comment = "Note",
+            Algorithm = ["Step"],
+            Kind = TestKind.Questionnaire
+        });
+
+        TestHistoryViewModel viewModel = new(
+            new TestNavigationService(new Mock<INavigation>().Object),
+            progress.Object,
+            catalog,
+            TestDatabaseReady.CreateSignaled(),
+            TestRunTestHelpers.CreateHistoryLoader(catalog),
+            TestRunTestHelpers.CreateRetakeOperations(catalog),
+            NullLogger<TestHistoryViewModel>.Instance,
+            "beck",
+            "Beck");
+
+        await Task.Delay(200);
+
+        Assert.True(viewModel.HasChart);
+        Assert.Equal(2, viewModel.ChartPoints.Count);
     }
 
     private sealed class RetakeTrackingNavigation(INavigation navigation) : TestNavigationService(navigation)

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:PsychologyApp.Application.Models.Tests;assembly=PsychologyApp.Application"
+             x:Class="PsychologyApp.Presentation.Widgets.Test.QuestionnaireResultDetailView"
+             x:Name="Root">
+
+    <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Questions, Source={x:Reference Root}}">
+        <Label
+            Text="{Binding DurationText, Source={x:Reference Root}}"
+            IsVisible="{Binding HasDuration, Source={x:Reference Root}}"
+            Style="{StaticResource CaptionStyle}" />
+        <BindableLayout.ItemTemplate>
+            <DataTemplate x:DataType="models:QuestionnaireResultQuestion">
+                <VerticalStackLayout Spacing="4" Margin="0,0,0,8">
+                    <Label Style="{StaticResource CaptionStyle}" TextColor="{DynamicResource Primary}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding QuestionNumber}" />
+                                <Span Text=". " />
+                                <Span Text="{Binding Context}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <VerticalStackLayout
+                        Spacing="2"
+                        BindableLayout.ItemsSource="{Binding SelectedAnswerTexts}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <Label Text="{Binding .}" Style="{StaticResource BodyStyle}" LineBreakMode="WordWrap" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </DataTemplate>
+        </BindableLayout.ItemTemplate>
+    </VerticalStackLayout>
+
+</ContentView>

@@ -1,4 +1,5 @@
-﻿using PsychologyApp.Presentation.Models.Practice.Techniques;
+﻿using PsychologyApp.Application.Practice;
+using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.UI.Components;
@@ -10,6 +11,7 @@ namespace PsychologyApp.Presentation.Shared.ViewModels;
 public partial class BaseViewModel
 {
     protected INavigationService? NavigationService { get; private set; }
+    protected ITechniqueCatalogService? TechniqueCatalogService { get; set; }
     protected IUserPreferencesStore UserPreferencesStore { get; private set; } = new MauiUserPreferencesStore();
     protected string? TheoryInfo { get; set; }
     private TechniqueId? _appliedTechniqueId;
@@ -66,7 +68,12 @@ public partial class BaseViewModel
 
     private void ApplyTechniqueCore(TechniqueId id)
     {
-        TechniqueDefinition def = TechniqueCatalog.Get(id);
+        if (TechniqueCatalogService is null)
+        {
+            throw new InvalidOperationException("TechniqueCatalogService must be set before ApplyTechnique.");
+        }
+
+        TechniqueDefinition def = TechniqueDefinitionMapper.ToPresentation(TechniqueCatalogService.Get(id));
         ModuleName = def.ModuleName;
         PageName = def.PageName;
         Algorithm.Clear();

@@ -4,15 +4,18 @@ using Moq;
 using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
+using PsychologyApp.Application.Practice;
 using PsychologyApp.Application.Quot;
 using PsychologyApp.Application.Technique;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
-using PsychologyApp.Presentation.Core.Common;
+using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Entities.Profile;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
+using PsychologyApp.Presentation.Shared.Services.Notifications;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Features.ManageProfile;
@@ -45,6 +48,9 @@ public sealed class SettingsPreferencesPresenterTests
             UserPreferences.DefaultForm,
             UserPreferences.DefaultSize,
             isBold: false,
+            questionnaireAutoAdvance: true,
+            practiceRemindersEnabled: true,
+            practiceReminderHour: UserPreferences.DefaultPracticeReminderHour,
             saved);
 
         Assert.True(built.HasCompletedOnboarding);
@@ -71,6 +77,7 @@ public sealed class SettingsPreferencesPresenterTests
         string form = string.Empty;
         string size = string.Empty;
         bool isBold = false;
+        bool questionnaireAutoAdvance = true;
 
         presenter.ApplyKeysFromState(
             state,
@@ -79,7 +86,10 @@ public sealed class SettingsPreferencesPresenterTests
             value => color = value,
             value => form = value,
             value => size = value,
-            value => isBold = value);
+            value => isBold = value,
+            value => questionnaireAutoAdvance = value,
+            _ => { },
+            _ => { });
 
         Assert.Equal("en", language);
         Assert.Equal("dark", theme);
@@ -115,6 +125,9 @@ public sealed class SettingsPreferencesPresenterTests
             value => color = value,
             value => form = value,
             value => size = value,
+            _ => { },
+            _ => { },
+            _ => { },
             _ => { });
 
         Assert.Equal("ru", language);
@@ -142,7 +155,8 @@ public sealed class SettingsViewModelTests
             navigation.Object,
             store,
             new SettingsPreferencesPresenter(),
-            TopViewModelTestHelpers.CreateLanguageReloader(Mock.Of<IQuotService>()));
+            TopViewModelTestHelpers.CreateLanguageReloader(Mock.Of<IQuotService>()),
+            Mock.Of<IPracticeReminderCoordinator>());
 
         viewModel.ReplayOnboardingCommand.Execute(null);
         await Task.Delay(200);
@@ -165,7 +179,8 @@ public sealed class SettingsViewModelTests
             navigation.Object,
             store,
             new SettingsPreferencesPresenter(),
-            TopViewModelTestHelpers.CreateLanguageReloader(Mock.Of<IQuotService>()));
+            TopViewModelTestHelpers.CreateLanguageReloader(Mock.Of<IQuotService>()),
+            Mock.Of<IPracticeReminderCoordinator>());
 
         viewModel.ApplyCommand.Execute(null);
         await Task.Delay(200);
@@ -187,7 +202,8 @@ public sealed class SettingsViewModelTests
             navigation.Object,
             store,
             new SettingsPreferencesPresenter(),
-            TopViewModelTestHelpers.CreateLanguageReloader(Mock.Of<IQuotService>()));
+            TopViewModelTestHelpers.CreateLanguageReloader(Mock.Of<IQuotService>()),
+            Mock.Of<IPracticeReminderCoordinator>());
     }
 
     [Fact]
@@ -277,7 +293,10 @@ public sealed class UserViewModelTests
             new ProfileStatsLoader(progress.Object),
             new ProfileQuotesLoader(quotService.Object, new ProfileQuotesPresenter()),
             new ProfilePracticeHistoryLoader(progress.Object),
-            new ProfileFeaturedTechniquesBuilder(preferences.Object),
+            new ProfileFeaturedTechniquesBuilder(
+                preferences.Object,
+                TechniqueCatalogTestHelper.CreateGateway(),
+                TechniqueCatalogTestHelper.CreateRecommendationService()),
             TopViewModelTestHelpers.CreateQuoteCommandsFactory(quotService.Object),
             new UserProfileRefreshCoordinator(),
             TopViewModelTestHelpers.CreateLanguageReloader(quotService.Object));
@@ -314,7 +333,10 @@ public sealed class UserViewModelTests
             new ProfileStatsLoader(progress.Object),
             quotesLoader,
             new ProfilePracticeHistoryLoader(progress.Object),
-            new ProfileFeaturedTechniquesBuilder(preferences.Object),
+            new ProfileFeaturedTechniquesBuilder(
+                preferences.Object,
+                TechniqueCatalogTestHelper.CreateGateway(),
+                TechniqueCatalogTestHelper.CreateRecommendationService()),
             TopViewModelTestHelpers.CreateQuoteCommandsFactory(quotService.Object),
             new UserProfileRefreshCoordinator(),
             TopViewModelTestHelpers.CreateLanguageReloader(quotService.Object));
@@ -365,7 +387,7 @@ public sealed class TechniquesViewModelTests
         techniqueService.Setup(s => s.GetTechniquesListAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
-        PracticeDashboardLoader dashboardLoader = new(progress.Object, preferences.Object);
+        PracticeDashboardLoader dashboardLoader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
         TechniquesViewModel viewModel = CreateViewModel(
             techniqueService.Object,
             navigation.Object,
@@ -394,7 +416,7 @@ public sealed class TechniquesViewModelTests
         techniqueService.Setup(s => s.GetTechniquesListAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
-        PracticeDashboardLoader dashboardLoader = new(progress.Object, preferences.Object);
+        PracticeDashboardLoader dashboardLoader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
         TechniquesViewModel viewModel = CreateViewModel(
             techniqueService.Object,
             navigation.Object,
@@ -436,7 +458,7 @@ public sealed class TechniquesViewModelTests
         techniqueService.Setup(s => s.GetTechniquesListAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
-        PracticeDashboardLoader dashboardLoader = new(progress.Object, preferences.Object);
+        PracticeDashboardLoader dashboardLoader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
         TechniquesViewModel viewModel = CreateViewModel(
             techniqueService.Object,
             navigation.Object,
@@ -475,9 +497,10 @@ public sealed class TechniquesViewModelTests
             techniqueMessenger ?? Mock.Of<ITechniqueMessenger>(),
             navigationService,
             userProgressService,
-            new TechniqueListBuilder(userProgressService),
+            new TechniqueListBuilder(userProgressService, TechniqueCatalogTestHelper.CreateGateway()),
             databaseReady.Object,
             dashboardLoader,
+            TechniqueCatalogTestHelper.CreateTodayRecommendationResolver(),
             new TechniquesListInitializer(),
             Options.Create(new AppSettings()),
             Mock.Of<Microsoft.Extensions.Logging.ILogger<TechniquesViewModel>>());
@@ -500,7 +523,8 @@ file static class TopViewModelTestHelpers
             new PsychologyApp.Application.Reason.CachedReasonContentProvider(
                 Mock.Of<PsychologyApp.Application.Abstractions.Integration.IReasonContentProvider>()),
             new CachedQuotContentProvider(Mock.Of<IQuotContentProvider>()),
-            new CachedTestCatalogService(
-                new TestCatalogService(Mock.Of<PsychologyApp.Presentation.Shared.Abstractions.ITestAssetReader>(), NullLogger<TestCatalogService>.Instance),
-                NullLogger<CachedTestCatalogService>.Instance));
+            new CachedTestCatalogProvider(
+                Mock.Of<ITestCatalogProvider>()),
+            new CachedTechniqueCatalogProvider(Mock.Of<ITechniqueCatalogProvider>()),
+            Mock.Of<ITechniqueCatalogService>());
 }

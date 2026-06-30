@@ -14,6 +14,8 @@ public sealed class QuestionViewModelTests
 {
     private static readonly QuestionnaireSubmissionService SubmissionService = new();
     private static readonly Mock<ITestCatalogService> CatalogService = new();
+    private static readonly QuestionnaireDetailBuilder DetailBuilder = new(CatalogService.Object);
+    private static readonly TestRunCoordinator RunCoordinator = new(SubmissionService, DetailBuilder);
 
     public QuestionViewModelTests()
     {
@@ -101,6 +103,57 @@ public sealed class QuestionViewModelTests
     }
 
     [Fact]
+    public async Task TryAutoAdvance_DoesNotAdvance_WhenPreferenceDisabled()
+    {
+        UserPreferences.UseInMemoryStorage(new UserPreferencesState { QuestionnaireAutoAdvance = false });
+
+        try
+        {
+            var navigation = new Mock<INavigation>();
+            var navigationService = new TestNavigationService(navigation.Object);
+            var toast = new Mock<IToastService>();
+            var dialog = new Mock<IDialogService>();
+            var progress = new Mock<IUserProgressService>();
+
+            List<Question> questions =
+            [
+                new()
+                {
+                    Answers =
+                    [
+                        new Answer { Ball = 1, Selected = false },
+                        new Answer { Ball = 2, Selected = false }
+                    ]
+                },
+                new()
+                {
+                    Answers =
+                    [
+                        new Answer { Ball = 1, Selected = false },
+                        new Answer { Ball = 2, Selected = false }
+                    ]
+                }
+            ];
+
+            QuestionViewModel viewModel = CreateViewModel(
+                questions,
+                navigationService,
+                toast.Object,
+                dialog.Object,
+                progress.Object);
+
+            viewModel.CurrentAnswers[0].SelectCommand.Execute(null);
+            await Task.Delay(400);
+
+            Assert.Equal(0, viewModel.CurrentIndex);
+        }
+        finally
+        {
+            UserPreferences.ResetInMemoryStorage();
+        }
+    }
+
+    [Fact]
     public async Task NextCommand_OnLastStepWithAllAnswers_NavigatesToTestResult()
     {
         var navigation = new Mock<INavigation>();
@@ -143,6 +196,74 @@ public sealed class QuestionViewModelTests
 
         Assert.Equal(5, trackingNavigation.LastScore);
         Assert.Equal("Score 5", trackingNavigation.LastInterpretation);
+    }
+
+    [Fact]
+    public async Task Finish_SavesQuestionnaireDetailJson_WhenSessionIsPresent()
+    {
+        var navigation = new Mock<INavigation>();
+        var navigationService = new TestNavigationService(navigation.Object);
+        var toast = new Mock<IToastService>();
+        var dialog = new Mock<IDialogService>();
+        var progress = new Mock<IUserProgressService>();
+
+        CatalogService
+            .Setup(s => s.GetByIdAsync("heck_hess", It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new TestDefinition
+            {
+                TestId = "heck_hess",
+                Title = "Heck & Hess",
+                Subtitle = "Sub",
+                Description = "Desc",
+                Comment = "Note",
+                Algorithm = ["Step"],
+                Kind = TestKind.Questionnaire,
+                AnalyzerId = "heck_hess",
+                Questions = [],
+                SingleAnswer = true,
+                Construct = "Neuroticism"
+            });
+
+        progress
+            .Setup(p => p.SaveTestResultAsync(
+                "heck_hess",
+                It.IsAny<int?>(),
+                It.IsAny<string>(),
+                It.IsAny<string?>(),
+                It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+
+        List<Question> questions =
+        [
+            new()
+            {
+                Number = 1,
+                Context = "Q1",
+                Answers =
+                [
+                    new Answer { Ball = 1, Text = "Yes", Selected = true },
+                    new Answer { Ball = 0, Text = "No", Selected = false }
+                ]
+            }
+        ];
+
+        QuestionViewModel viewModel = CreateViewModel(
+            questions,
+            navigationService,
+            toast.Object,
+            dialog.Object,
+            progress.Object,
+            new TestSessionInfo { TestId = "heck_hess", AnalyzerId = "heck_hess" });
+
+        viewModel.NextCommand.Execute(null);
+        await Task.Delay(50);
+
+        progress.Verify(p => p.SaveTestResultAsync(
+            "heck_hess",
+            It.IsAny<int?>(),
+            It.IsAny<string>(),
+            It.Is<string?>(json => !string.IsNullOrWhiteSpace(json) && json.Contains("\"testId\":\"heck_hess\"", StringComparison.OrdinalIgnoreCase)),
+            It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -277,6 +398,7 @@ public sealed class QuestionViewModelTests
             navigationService,
             progress,
             SubmissionService,
+            RunCoordinator,
             CatalogService.Object,
             session);
 

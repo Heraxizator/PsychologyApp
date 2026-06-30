@@ -71,9 +71,29 @@ public partial class LuscherTestViewModel
         PersistBriefResultAsync().FireAndForget();
     }
 
-    private Task PersistStandardResultAsync(int coValue, double bkValue) =>
-        _submissionService.SaveStandardAsync(_userProgressService, coValue, bkValue, _colourSelectedItems);
+    private Task PersistStandardResultAsync(int coValue, double bkValue)
+    {
+        if (_userProgressService is null)
+        {
+            return Task.CompletedTask;
+        }
 
-    private Task PersistBriefResultAsync() =>
-        _submissionService.SaveBriefAsync(_userProgressService, FirstName, SecondName, FirstResult, SecondResult);
+        string summary = $"{AppStrings.TestsCoLabel}: {coValue}; {AppStrings.TestsBkLabel}: {Math.Round(bkValue, 2)}";
+        IReadOnlyList<LuscherColorSelection> colors = _colourSelectedItems
+            .Select(item => new LuscherColorSelection(item.Item1.Code, ColourStrings.GetColorName(item.Item1)))
+            .ToList();
+
+        return _luscherResultService.SaveStandardAsync(_userProgressService, summary, coValue, bkValue, colors);
+    }
+
+    private Task PersistBriefResultAsync()
+    {
+        if (_userProgressService is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        string summary = $"{FirstName} / {SecondName}";
+        return _luscherResultService.SaveBriefAsync(_userProgressService, summary, FirstName, SecondName, FirstResult, SecondResult);
+    }
 }

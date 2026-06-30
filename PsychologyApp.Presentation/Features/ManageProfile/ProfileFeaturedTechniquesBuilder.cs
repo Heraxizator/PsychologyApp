@@ -1,3 +1,5 @@
+using PsychologyApp.Application.Recommendations;
+using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
@@ -7,12 +9,15 @@ using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Features.ManageProfile;
 
-public sealed class ProfileFeaturedTechniquesBuilder(IUserPreferencesStore userPreferencesStore)
+public sealed class ProfileFeaturedTechniquesBuilder(
+    IUserPreferencesStore userPreferencesStore,
+    TechniqueCatalogGateway techniqueCatalog,
+    ITechniqueRecommendationService techniqueRecommendationService)
 {
     public IReadOnlyList<TechniqueItem> Build(INavigationService navigationService)
     {
         string concern = userPreferencesStore.Load().OnboardingConcern;
-        TechniqueId recommendedId = OnboardingRecommendation.ResolveTechnique(concern);
+        TechniqueId recommendedId = techniqueRecommendationService.ResolveFromOnboardingConcern(concern);
         TechniqueId[] featuredIds =
         [
             recommendedId,
@@ -31,7 +36,7 @@ public sealed class ProfileFeaturedTechniquesBuilder(IUserPreferencesStore userP
                 continue;
             }
 
-            TechniqueDefinition definition = TechniqueCatalog.Get(techniqueId);
+            TechniqueDefinition definition = techniqueCatalog.Get(techniqueId);
             string durationText = AppStrings.TechniqueDuration(definition.ListDurationMinutes);
             items.Add(new TechniqueItem
             {

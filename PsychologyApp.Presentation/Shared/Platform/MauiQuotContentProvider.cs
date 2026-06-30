@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using PsychologyApp.Application.Abstractions.Integration;
-using PsychologyApp.Presentation.Models.Quotes;
+using PsychologyApp.Application.Models.Quotes;
 using PsychologyApp.Presentation.Serialization;
 
 namespace PsychologyApp.Presentation.Shared.Platform;

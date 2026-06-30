@@ -1,6 +1,6 @@
+using PsychologyApp.Application.Recommendations;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Reason;
-using PsychologyApp.Application.Somatic;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Entities.Physics;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
@@ -15,7 +15,10 @@ public sealed class PhysicsSearchPageSlice
     public required int LoadedCount { get; init; }
 }
 
-public sealed class PhysicsSearchCoordinator(IReasonSearchService reasonSearchService)
+public sealed class PhysicsSearchCoordinator(
+    IReasonSearchService reasonSearchService,
+    TechniqueCatalogGateway techniqueCatalog,
+    ITechniqueRecommendationService techniqueRecommendationService)
 {
     public const int SearchDebounceMs = 300;
     public const int SearchResultsPageSize = 20;
@@ -67,11 +70,11 @@ public sealed class PhysicsSearchCoordinator(IReasonSearchService reasonSearchSe
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        IReadOnlyList<TechniqueId> techniqueIds = SomaticTechniqueRecommendation.RecommendForQuery(searchText);
+        IReadOnlyList<TechniqueId> techniqueIds = techniqueRecommendationService.RecommendForSomaticQuery(searchText);
         List<PhysicsTechniqueSuggestion> suggestions = techniqueIds
             .Select(id =>
             {
-                TechniqueDefinition definition = TechniqueCatalog.Get(id);
+                TechniqueDefinition definition = techniqueCatalog.Get(id);
                 return new PhysicsTechniqueSuggestion
                 {
                     Title = definition.PageName,

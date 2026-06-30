@@ -1,23 +1,13 @@
-using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Shared.Navigation;
 
 namespace PsychologyApp.Presentation.Features.RunTests;
 
-public sealed class TestRetakeOperations
+public sealed class TestRetakeOperations(TestRunCoordinator testRunCoordinator)
 {
-    public async Task RetakeAsync(
+    public Task RetakeAsync(
         string testId,
         ITestCatalogService testCatalogService,
         INavigationService navigationService,
-        CancellationToken cancellationToken = default)
-    {
-        TestDefinition? definition = await testCatalogService.GetByIdAsync(testId, cancellationToken);
-        if (definition is null)
-        {
-            return;
-        }
-
-        await navigationService.GoToRootAsync();
-        await TestStartOperations.StartAsync(definition, navigationService);
-    }
+        CancellationToken cancellationToken = default) =>
+        testRunCoordinator.RetakeAsync(testId, testCatalogService, navigationService, cancellationToken);
 }

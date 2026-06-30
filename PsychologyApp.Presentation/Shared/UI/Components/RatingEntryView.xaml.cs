@@ -1,3 +1,4 @@
+using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Shared.Common;
 
 namespace PsychologyApp.Presentation.Shared.UI.Components;

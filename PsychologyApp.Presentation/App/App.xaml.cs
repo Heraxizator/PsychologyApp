@@ -1,4 +1,6 @@
 using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
+using PsychologyApp.Presentation.Shared.Services.Notifications;
 
 namespace PsychologyApp.Presentation.App;
 
@@ -21,5 +23,6 @@ public partial class App : Microsoft.Maui.Controls.Application
     {
         base.OnResume();
         ReduceMotion.Refresh();
+        _services.GetRequiredService<IPracticeReminderCoordinator>().SyncAsync().FireAndForget();
     }
 }

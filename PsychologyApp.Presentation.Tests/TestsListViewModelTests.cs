@@ -35,24 +35,24 @@ public sealed class TestsListViewModelTests
             Kind = TestKind.Questionnaire,
             AnalyzerId = "beck",
             Questions = [],
-            SingleAnswer = true
+            SingleAnswer = true,
+            ScoreDirection = ScoreDirection.LowerIsBetter
         });
 
         progress
-            .Setup(p => p.GetLatestTestResultAsync("beck", It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new TestResultDTO { TestId = "beck", Score = 5, Summary = "Mild", CompletedAt = DateTime.UtcNow });
-        progress
-            .Setup(p => p.GetTestResultHistoryAsync("beck", 2, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new List<TestResultDTO>
+            .Setup(p => p.GetLatestTestResultsAsync(It.Is<IReadOnlyList<string>>(ids => ids.Contains("beck")), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new Dictionary<string, TestResultDTO>(StringComparer.Ordinal)
             {
-                new() { TestId = "beck", Score = 5, Summary = "Mild", CompletedAt = DateTime.UtcNow },
-                new() { TestId = "beck", Score = 3, Summary = "Low", CompletedAt = DateTime.UtcNow.AddDays(-1) }
+                ["beck"] = new TestResultDTO { TestId = "beck", Score = 5, Summary = "Mild", CompletedAt = DateTime.UtcNow }
             });
+        progress
+            .Setup(p => p.GetTestResultCountsAsync(It.Is<IReadOnlyList<string>>(ids => ids.Contains("beck")), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new Dictionary<string, int>(StringComparer.Ordinal) { ["beck"] = 2 });
 
         TestsListViewModel viewModel = new(
             navigationService,
             TestDatabaseReady.CreateSignaled(),
-            new TestsListLoader(progress.Object, catalog),
+            TestRunTestHelpers.CreateTestsListLoader(progress.Object, catalog),
             NullLogger<TestsListViewModel>.Instance);
 
         await viewModel.InitAsync();
@@ -61,5 +61,10 @@ public sealed class TestsListViewModelTests
         Assert.Equal("Beck", viewModel.TestItemCollection[0].Title);
         Assert.True(viewModel.TestItemCollection[0].HasLastResult);
         Assert.True(viewModel.TestItemCollection[0].HasMultipleResults);
+
+        progress.Verify(p => p.GetLatestTestResultsAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()), Times.Once);
+        progress.Verify(p => p.GetTestResultCountsAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()), Times.Once);
+        progress.Verify(p => p.GetLatestTestResultAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Never);
+        progress.Verify(p => p.GetTestResultHistoryAsync(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 }

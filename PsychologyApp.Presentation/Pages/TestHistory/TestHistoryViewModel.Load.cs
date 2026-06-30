@@ -30,6 +30,9 @@ public partial class TestHistoryViewModel
                     HistoryEntries.Add(item);
                 }
 
+                ChartPoints = result.ChartPoints;
+                OnPropertyChanged(nameof(ChartPoints));
+                OnPropertyChanged(nameof(HasChart));
                 OnPropertyChanged(nameof(HasEntries));
                 SetDone();
             });

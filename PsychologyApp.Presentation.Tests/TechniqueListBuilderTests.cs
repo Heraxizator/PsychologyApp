@@ -1,7 +1,7 @@
+using PsychologyApp.Domain.Practice;
 using Moq;
-using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
-using PsychologyApp.Presentation.Core.Common;
+using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
@@ -20,7 +20,9 @@ public sealed class TodayRecommendationResolverTests
     {
         Mock<INavigationService> navigation = new();
 
-        TodayRecommendationResult result = TodayRecommendationResolver.Resolve(
+        TodayRecommendationResolver resolver = TechniqueCatalogTestHelper.CreateTodayRecommendationResolver();
+
+        TodayRecommendationResult result = resolver.Resolve(
             concern,
             "3 дн.",
             hasStreak: true,
@@ -37,7 +39,7 @@ public sealed class TechniqueListBuilderTests
     [Fact]
     public void BuildLayout_GroupsWhenCustomTechniquesExist()
     {
-        TechniqueListBuilder builder = new(new Mock<IUserProgressService>().Object);
+        TechniqueListBuilder builder = new(new Mock<IUserProgressService>().Object, TechniqueCatalogTestHelper.CreateGateway());
         List<TechniqueItem> staticItems = [new() { Title = "Static" }];
         List<TechniqueItem> customItems = [new() { Title = "Custom" }];
 
@@ -51,7 +53,7 @@ public sealed class TechniqueListBuilderTests
     public void MapCustomItems_MapsDtoFields()
     {
         Mock<INavigationService> navigation = new();
-        TechniqueListBuilder builder = new(new Mock<IUserProgressService>().Object);
+        TechniqueListBuilder builder = new(new Mock<IUserProgressService>().Object, TechniqueCatalogTestHelper.CreateGateway());
 
         IReadOnlyList<TechniqueItem> items = builder.MapCustomItems(
         [
@@ -86,10 +88,10 @@ public sealed class TechniqueListBuilderTests
             .Setup(p => p.GetSessionDraftKeysAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new HashSet<string>(StringComparer.Ordinal) { TechniqueId.Paper.ToString() });
 
-        TechniqueListBuilder builder = new(progress.Object);
+        TechniqueListBuilder builder = new(progress.Object, TechniqueCatalogTestHelper.CreateGateway());
         IReadOnlyList<TechniqueItem> items = await builder.BuildStaticItemsAsync(Mock.Of<INavigationService>());
 
-        Assert.Equal(TechniqueListCatalog.GetBuiltIn().Count, items.Count);
+        Assert.Equal(TechniqueCatalogTestHelper.CreateGateway().GetBuiltInListEntries().Count, items.Count);
         progress.Verify(
             p => p.GetLastPracticeDatesAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()),
             Times.Once);

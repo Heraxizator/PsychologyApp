@@ -2,6 +2,7 @@ using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Application.Practice;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.ViewModels;
 using System.Collections.ObjectModel;
@@ -29,8 +30,10 @@ public partial class PaperListViewModel : BaseViewModel
         bool clearTextAfterAdd,
         IUserProgressService userProgressService,
         ListTechniqueSessionHelper sessionHelper,
-        PaperListDraftCoordinator draftCoordinator)
+        PaperListDraftCoordinator draftCoordinator,
+        ITechniqueCatalogService techniqueCatalogService)
     {
+        TechniqueCatalogService = techniqueCatalogService;
         _techniqueId = techniqueId;
         _clearTextAfterAdd = clearTextAfterAdd;
         _userProgressService = userProgressService;

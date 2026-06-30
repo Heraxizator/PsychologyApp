@@ -1,5 +1,6 @@
 using Moq;
 using PsychologyApp.Presentation.Entities.Test;
+using PsychologyApp.Presentation.Features.RunTests;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
@@ -11,6 +12,8 @@ public sealed class TestItemFactoryTests
     {
         var navigation = new Mock<INavigation>();
         var navigationService = new RecordingTestNavigationService(navigation.Object);
+        FakeTestCatalogService catalog = new FakeTestCatalogService();
+        TestRunCoordinator coordinator = TestRunTestHelpers.CreateCoordinator(catalog);
         TestDefinition definition = new()
         {
             TestId = "heck_hess",
@@ -31,7 +34,7 @@ public sealed class TestItemFactoryTests
             ]
         };
 
-        TestItem item = TestItemFactory.Create(definition, navigationService);
+        TestItem item = TestItemFactory.Create(definition, navigationService, coordinator);
         await item.StartAsync();
 
         Assert.Equal("heck_hess", navigationService.LastSession?.TestId);

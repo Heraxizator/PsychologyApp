@@ -1,4 +1,5 @@
-using PsychologyApp.Presentation.Entities.Test;
+using PsychologyApp.Application.Models.Tests;
+using PsychologyApp.Application.Tests;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests.Catalog;

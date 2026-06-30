@@ -1,5 +1,5 @@
+using PsychologyApp.Domain.Practice;
 using Moq;
-using PsychologyApp.Presentation.Core.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Pages.Onboarding;
 using PsychologyApp.Presentation.Shared.Navigation;
@@ -15,6 +15,8 @@ public sealed class OnboardingViewModelTests
         return new OnboardingViewModel(
             navigation.Object,
             new InMemoryUserPreferencesStore(),
+            TechniqueCatalogTestHelper.CreateGateway(),
+            TechniqueCatalogTestHelper.CreateRecommendationService(),
             _ => Task.CompletedTask);
     }
 
@@ -75,7 +77,7 @@ public sealed class OnboardingViewModelTests
 
         viewModel.SelectAnxietyCommand.Execute(null);
 
-        TechniqueDefinition spin = TechniqueCatalog.Get(TechniqueId.Spin);
+        TechniqueDefinition spin = TechniqueCatalogTestHelper.CreateGateway().Get(TechniqueId.Spin);
         Assert.Equal(spin.ListTitle, viewModel.RecommendedTitle);
         Assert.False(string.IsNullOrWhiteSpace(viewModel.RecommendedReason));
     }

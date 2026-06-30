@@ -8,6 +8,7 @@ using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
+using PsychologyApp.Presentation.Shared.Services.Notifications;
 using System.Text.Json;
 using Xunit;
 
@@ -29,7 +30,7 @@ public sealed class TechniqueSessionCompletionServiceTests
                 It.IsAny<string>(),
                 It.IsAny<string>()))
             .ReturnsAsync(false);
-        TechniqueSessionCompletionService service = new();
+        TechniqueSessionCompletionService service = new(Mock.Of<IPracticeReminderCoordinator>());
         DateTime startedAt = DateTime.UtcNow.AddMinutes(-2);
 
         await service.CompleteStandardSessionAsync(
@@ -74,7 +75,7 @@ public sealed class TechniqueSessionCompletionServiceTests
                 It.IsAny<string>(),
                 It.IsAny<string>()))
             .ReturnsAsync(true);
-        TechniqueSessionCompletionService service = new();
+        TechniqueSessionCompletionService service = new(Mock.Of<IPracticeReminderCoordinator>());
 
         await service.CompleteStandardSessionAsync(
             progress.Object,

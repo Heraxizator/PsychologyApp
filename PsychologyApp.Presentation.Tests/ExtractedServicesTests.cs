@@ -1,8 +1,5 @@
+using PsychologyApp.Domain.Practice;
 using Moq;
-using PsychologyApp.Application.Models;
-using PsychologyApp.Application.UserProgress;
-using PsychologyApp.Presentation.Shared.Common;
-using PsychologyApp.Presentation.Core.Common;
 using PsychologyApp.Presentation.Entities.Audio;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Entities.Technique;
@@ -30,7 +27,7 @@ public sealed class PracticeDashboardLoaderTests
         Mock<IUserPreferencesStore> preferences = new();
         preferences.Setup(p => p.Load()).Returns(new UserPreferencesState { OnboardingConcern = OnboardingConcernKeys.Anxiety });
 
-        PracticeDashboardLoader loader = new(progress.Object, preferences.Object);
+        PracticeDashboardLoader loader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
         MoodSnapshot snapshot = await loader.LoadMoodSnapshotAsync();
 
         Assert.Equal(string.Empty, snapshot.TodayMoodDisplay);
@@ -45,7 +42,7 @@ public sealed class PracticeDashboardLoaderTests
         preferences.Setup(p => p.Load()).Returns(new UserPreferencesState { OnboardingConcern = OnboardingConcernKeys.Mood });
         Mock<INavigationService> navigation = new();
 
-        PracticeDashboardLoader loader = new(progress.Object, preferences.Object);
+        PracticeDashboardLoader loader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
         TodayRecommendationResult result = loader.ResolveTodayRecommendation(streakDays: 0, navigation.Object);
 
         Assert.Equal(TechniqueId.Paper, result.TechniqueId);
@@ -117,7 +114,10 @@ public sealed class ProfileFeaturedTechniquesBuilderTests
         Mock<IUserPreferencesStore> preferences = new();
         preferences.Setup(p => p.Load()).Returns(new UserPreferencesState { OnboardingConcern = OnboardingConcernKeys.Body });
         Mock<INavigationService> navigation = new();
-        ProfileFeaturedTechniquesBuilder builder = new(preferences.Object);
+        ProfileFeaturedTechniquesBuilder builder = new(
+            preferences.Object,
+            TechniqueCatalogTestHelper.CreateGateway(),
+            TechniqueCatalogTestHelper.CreateRecommendationService());
 
         IReadOnlyList<TechniqueItem> items = builder.Build(navigation.Object);
 

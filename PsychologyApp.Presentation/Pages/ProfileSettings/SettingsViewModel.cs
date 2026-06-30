@@ -1,6 +1,7 @@
 ﻿using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Shared.Services.Notifications;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Shared.ViewModels;
 using System.Windows.Input;
@@ -14,6 +15,7 @@ public partial class SettingsViewModel : BaseViewModel
     private readonly IUserPreferencesStore _userPreferencesStore;
     private readonly SettingsPreferencesPresenter _presenter;
     private readonly LanguageContentReloader _languageContentReloader;
+    private readonly IPracticeReminderCoordinator _practiceReminderCoordinator;
     private UserPreferencesState _savedState;
 
     public SettingsViewModel(
@@ -21,7 +23,8 @@ public partial class SettingsViewModel : BaseViewModel
         INavigationService navigationService,
         IUserPreferencesStore userPreferencesStore,
         SettingsPreferencesPresenter presenter,
-        LanguageContentReloader languageContentReloader)
+        LanguageContentReloader languageContentReloader,
+        IPracticeReminderCoordinator practiceReminderCoordinator)
     {
         BindPreferences(userPreferencesStore);
         _dialogService = dialogService;
@@ -29,6 +32,7 @@ public partial class SettingsViewModel : BaseViewModel
         _userPreferencesStore = userPreferencesStore;
         _presenter = presenter;
         _languageContentReloader = languageContentReloader;
+        _practiceReminderCoordinator = practiceReminderCoordinator;
         ModuleName = AppStrings.ShellTabPractice;
         PageName = AppStrings.SettingsTitle;
 

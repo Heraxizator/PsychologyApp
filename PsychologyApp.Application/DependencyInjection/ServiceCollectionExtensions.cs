@@ -9,6 +9,9 @@ using PsychologyApp.Application.Technique;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Application.Startup;
 using PsychologyApp.Application.Analytics;
+using PsychologyApp.Application.Recommendations;
+using PsychologyApp.Application.Practice;
+using PsychologyApp.Application.Tests;
 
 namespace PsychologyApp.Application.DependencyInjection;
 
@@ -34,6 +37,25 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection AddCachedTestCatalogProvider<TInner>(this IServiceCollection services)
+        where TInner : class, ITestCatalogProvider
+    {
+        services.AddSingleton<CachedTestCatalogProvider>(sp =>
+            new CachedTestCatalogProvider(sp.GetRequiredService<TInner>()));
+        services.AddSingleton<ITestCatalogProvider>(sp => sp.GetRequiredService<CachedTestCatalogProvider>());
+
+        return services;
+    }
+
+    public static IServiceCollection AddCachedTechniqueCatalogProvider(this IServiceCollection services)
+    {
+        services.AddSingleton<CachedTechniqueCatalogProvider>(sp =>
+            new CachedTechniqueCatalogProvider(sp.GetRequiredService<BuiltInTechniqueCatalogProvider>()));
+        services.AddSingleton<ITechniqueCatalogProvider>(sp => sp.GetRequiredService<CachedTechniqueCatalogProvider>());
+
+        return services;
+    }
+
     public static IServiceCollection AddPsychologyAppApplication(this IServiceCollection services)
     {
         services.AddSingleton<ITechniqueService, TechniqueService>();
@@ -44,6 +66,13 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IUserProgressService, UserProgressService>();
         services.AddSingleton<IPageAnalyticsService, PageAnalyticsService>();
         services.AddSingleton<IAppStartupService, AppStartupService>();
+        services.AddSingleton<ITestCatalogService, TestCatalogService>();
+        services.AddSingleton<IQuestionnaireScoringService, QuestionnaireScoringService>();
+        services.AddSingleton<ITestTrendService, TestTrendService>();
+        services.AddSingleton<IQuestionnaireResultDetailService, QuestionnaireResultDetailService>();
+        services.AddSingleton<ITechniqueCatalogService, TechniqueCatalogService>();
+        services.AddSingleton<ITechniqueRecommendationService, TechniqueRecommendationService>();
+        services.AddSingleton<ILuscherResultService, LuscherResultService>();
 
         return services;
     }

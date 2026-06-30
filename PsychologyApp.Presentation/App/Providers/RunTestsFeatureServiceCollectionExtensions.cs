@@ -8,11 +8,14 @@ public static class RunTestsFeatureServiceCollectionExtensions
     public static IServiceCollection AddRunTestsFeature(this IServiceCollection services)
     {
         services.AddSingleton<ITestPageFactory, TestPageFactory>();
+        services.AddSingleton<TestRunCoordinator>();
         services.AddSingleton<TestRetakeOperations>();
+        services.AddSingleton<QuestionnaireDetailBuilder>();
+        services.AddSingleton<QuestionnaireDetailReader>();
+        services.AddSingleton<TestTrendResolver>();
         services.AddSingleton<TestHistoryLoader>();
         services.AddSingleton<TestsListLoader>();
         services.AddSingleton<QuestionnaireSubmissionService>();
-        services.AddSingleton<LuscherTestSubmissionService>();
         services.AddSingleton<FindProblemContentLoader>();
         services.AddSingleton<ITestsListViewModelFactory, TestsListViewModelFactory>();
         services.AddSingleton<ITestHistoryViewModelFactory, TestHistoryViewModelFactory>();

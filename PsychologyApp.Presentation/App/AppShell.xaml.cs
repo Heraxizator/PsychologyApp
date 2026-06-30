@@ -3,6 +3,8 @@ using CommunityToolkit.Maui.Core;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Devices;
 using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
+using PsychologyApp.Presentation.Shared.Services.Notifications;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Pages.Techniques;
@@ -31,6 +33,7 @@ public partial class AppShell : Shell
 
     private readonly IPageFactory _pageFactory;
     private readonly IShellStartupCoordinator _startupCoordinator;
+    private readonly IPracticeReminderCoordinator _practiceReminderCoordinator;
     private readonly ILogger<AppShell> _logger;
     private readonly bool[] _tabsMaterialized = new bool[5];
     private bool _lazyTabsReady;
@@ -38,10 +41,12 @@ public partial class AppShell : Shell
     public AppShell(
         IPageFactory pageFactory,
         IShellStartupCoordinator startupCoordinator,
+        IPracticeReminderCoordinator practiceReminderCoordinator,
         ILogger<AppShell> logger)
     {
         _pageFactory = pageFactory;
         _startupCoordinator = startupCoordinator;
+        _practiceReminderCoordinator = practiceReminderCoordinator;
         _logger = logger;
         InitializeComponent();
         ApplyLocalization();
@@ -368,6 +373,7 @@ public partial class AppShell : Shell
         {
             await _startupCoordinator.InitializeAsync();
             await ShowOnboardingIfNeededAsync();
+            await _practiceReminderCoordinator.SyncAsync();
         }
         catch (Exception ex)
         {

@@ -155,8 +155,8 @@ public sealed class TechniquesListInitializerTests
         Mock<IUserPreferencesStore> preferences = new();
         preferences.Setup(p => p.Load()).Returns(new UserPreferencesState());
 
-        PracticeDashboardLoader dashboardLoader = new(progress.Object, preferences.Object);
-        TechniqueListBuilder listBuilder = new(progress.Object);
+        PracticeDashboardLoader dashboardLoader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
+        TechniqueListBuilder listBuilder = new(progress.Object, TechniqueCatalogTestHelper.CreateGateway());
         TechniquesListInitializer initializer = new();
         Mock<INavigationService> navigation = new();
 

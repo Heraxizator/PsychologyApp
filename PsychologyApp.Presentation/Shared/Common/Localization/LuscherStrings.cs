@@ -1,5 +1,3 @@
-using PsychologyApp.Domain.Colour;
-
 namespace PsychologyApp.Presentation.Shared.Common;
 
 public static class LuscherStrings
@@ -11,7 +9,7 @@ public static class LuscherStrings
             return InterpretCoEn(coValue);
         }
 
-        return LuscherScoring.InterpretCo(coValue);
+        return LuscherInterpretationsRu.InterpretCo(coValue);
     }
 
     public static string InterpretBk(double bkValue)
@@ -21,7 +19,7 @@ public static class LuscherStrings
             return InterpretBkEn(bkValue);
         }
 
-        return LuscherScoring.InterpretBk(bkValue);
+        return LuscherInterpretationsRu.InterpretBk(bkValue);
     }
 
     private static string InterpretCoEn(int coValue)

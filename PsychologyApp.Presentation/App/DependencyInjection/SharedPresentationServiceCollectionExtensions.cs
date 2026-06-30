@@ -1,5 +1,9 @@
+#if ANDROID
+using PsychologyApp.Presentation.Platforms.Android;
+#endif
 using PsychologyApp.Presentation.App.Routes;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
+using PsychologyApp.Presentation.Shared.Services.Notifications;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
@@ -19,6 +23,12 @@ public static class SharedPresentationServiceCollectionExtensions
         services.AddSingleton<IPageFactory, PageRegistry>();
         services.AddSingleton<IShellStartupCoordinator, ShellStartupCoordinator>();
         services.AddSingleton<IUserPreferencesStore, MauiUserPreferencesStore>();
+        services.AddSingleton<IPracticeReminderCoordinator, PracticeReminderCoordinator>();
+#if ANDROID
+        services.AddSingleton<IPracticeReminderScheduler, AndroidPracticeReminderScheduler>();
+#else
+        services.AddSingleton<IPracticeReminderScheduler, NullPracticeReminderScheduler>();
+#endif
         services.AddSingleton<IDatabaseReadySignal, DatabaseReadySignal>();
         services.AddSingleton<Func<NavigationContext, INavigationService>>(sp => context =>
             context.NavigationService ?? new MauiNavigationService(

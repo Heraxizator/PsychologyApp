@@ -5,6 +5,7 @@ using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
+using PsychologyApp.Presentation.Shared.Services.Notifications;
 using PsychologyApp.Presentation.Features.RunTests;
 using Xunit;
 
@@ -28,7 +29,7 @@ public sealed class ListTechniqueSessionHelperTests
             .ReturnsAsync(false);
 
         ListTechniqueSessionHelper helper = new(
-            new TechniqueSessionCompletionService(),
+            new TechniqueSessionCompletionService(Mock.Of<IPracticeReminderCoordinator>()),
             progress.Object,
             navigation.Object,
             dialog.Object);

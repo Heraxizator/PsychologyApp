@@ -30,7 +30,7 @@ public sealed class LuscherTestViewModelTests
             LuscherMode.Standard,
             new TestNavigationService(navigation.Object),
             progress.Object,
-            new LuscherTestSubmissionService());
+            new LuscherResultService());
 
         ColourValue[] colors =
         [
@@ -91,7 +91,7 @@ public sealed class LuscherTestViewModelTests
             LuscherMode.Brief,
             new TestNavigationService(navigation.Object),
             progress.Object,
-            new LuscherTestSubmissionService());
+            new LuscherResultService());
 
         InvokeColorHandler(viewModel, ColourValue.Red);
         InvokeColorHandler(viewModel, ColourValue.Blue);

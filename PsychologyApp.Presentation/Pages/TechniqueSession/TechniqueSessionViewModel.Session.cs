@@ -9,7 +9,7 @@ public partial class TechniqueSessionViewModel
 {
     protected override void OnTechniqueContentChanged()
     {
-        if (TechniqueCatalog.Get(_techniqueId).UiKind == TechniqueUiKind.Entry)
+        if (TechniqueDefinitionMapper.ToPresentation(TechniqueCatalogService!.Get(_techniqueId)).UiKind == TechniqueUiKind.Entry)
         {
             _entryDraftCoordinator.WireHandlers();
             _entryDraftCoordinator.LoadAsync(() => OnPropertyChanged(nameof(Entries))).FireAndForget();

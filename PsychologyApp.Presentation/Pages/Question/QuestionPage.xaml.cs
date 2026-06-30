@@ -8,7 +8,7 @@ public partial class QuestionPage : ContentPage
 {
     public QuestionPage(
         IQuestionViewModelFactory questionViewModelFactory,
-        List<Models.Tests.Question> questions,
+        List<TestQuestion> questions,
         Func<int, string> analyzer,
         bool singleAnswer,
         TestSessionInfo? session = null)
