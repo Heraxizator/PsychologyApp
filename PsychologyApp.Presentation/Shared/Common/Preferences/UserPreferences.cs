@@ -236,7 +236,7 @@ public static class UserPreferences
         resources["PageTitleFontSize"] = pageTitle;
         resources["SectionTitleFontSize"] = section;
         resources["BodyFontSize"] = body;
-        resources["CaptionFontSize"] = body;
+        resources["CaptionFontSize"] = Math.Max(body - 2, 10);
         resources["NavTitleFontSize"] = section;
         resources["BodyFontFamily"] = isBold ? "InterSemiBold" : "InterRegular";
     }
@@ -458,9 +458,7 @@ public static class UserPreferences
     {
         double buttonRadius = radius <= 4 ? 4 : 8;
         double entryRadius = radius;
-        resources["UiCornerRadius"] = radius;
         resources["UiButtonCornerRadius"] = buttonRadius;
-        resources["UiCornerRadiusShape"] = new RoundRectangle { CornerRadius = radius };
         resources["UiCornerRadiusCompactShape"] = new RoundRectangle { CornerRadius = buttonRadius };
         resources["UiCornerRadiusEntryShape"] = new RoundRectangle { CornerRadius = entryRadius };
     }

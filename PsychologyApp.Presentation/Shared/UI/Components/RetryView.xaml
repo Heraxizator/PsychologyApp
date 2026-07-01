@@ -7,30 +7,34 @@
     <ContentView.Behaviors>
         <behaviors:PressFeedbackBehavior AttachToTappableLabels="True" />
     </ContentView.Behaviors>
-<ContentView.ControlTemplate>
+    <ContentView.ControlTemplate>
         <ControlTemplate>
-            <StackLayout>
-
-                <Label 
-                    Text="{TemplateBinding FailedText}"
-                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                    FontSize="16"
-                    VerticalOptions="Center" 
+            <VerticalStackLayout
+                Padding="{StaticResource LayoutEmptyPaddingThickness}"
+                Spacing="16"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                MaximumWidthRequest="300">
+                <Label
+                    Text="{mi:Material Icon=ErrorOutline}"
+                    Style="{StaticResource IconActionStyle}"
+                    FontSize="36"
+                    TextColor="{DynamicResource Primary}"
                     HorizontalOptions="Center" />
-
+                <Label
+                    Text="{TemplateBinding FailedText}"
+                    Style="{StaticResource BodyStyle}"
+                    HorizontalTextAlignment="Center"
+                    HorizontalOptions="Center" />
                 <Label
                     Text="{TemplateBinding RetryText}"
-                    TextColor="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={DynamicResource Secondary}}"
-                    FontSize="15"
-                    VerticalOptions="CenterAndExpand"
-                    HorizontalOptions="CenterAndExpand">
+                    Style="{StaticResource NavActionLabelStyle}"
+                    HorizontalOptions="Center">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{TemplateBinding RetryCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
-            </StackLayout>
+            </VerticalStackLayout>
         </ControlTemplate>
     </ContentView.ControlTemplate>
-    
-    
 </ContentView>

@@ -13,8 +13,11 @@
     <Color x:Key="Secondary">#0085FF</Color>
     <Color x:Key="SecondaryFill">#96d1ff</Color>
 
-    <Color x:Key="PageBackground">#FAFAFA</Color>
+    <Color x:Key="PageBackground">#F3F4F6</Color>
     <Color x:Key="PageBackgroundDark">#121212</Color>
+    <Color x:Key="SurfaceMutedLight">#F3F4F6</Color>
+    <Color x:Key="SurfaceElevatedLight">#FFFFFF</Color>
+    <Color x:Key="SurfaceElevatedDark">#282828</Color>
     <Color x:Key="TextPrimaryLight">#343434</Color>
     <Color x:Key="TextSecondaryLight">#666666</Color>
     <Color x:Key="TextTertiaryLight">#999999</Color>

@@ -194,16 +194,11 @@
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                         <CollectionView.EmptyView>
-                            <VerticalStackLayout Margin="0,24,0,0" Spacing="12" HorizontalOptions="Center">
-                                <Label
-                                    HorizontalTextAlignment="Center"
-                                    Style="{StaticResource BodyStyle}"
-                                    Text="{Binding QuotesEmptyText}" />
-                                <ui:ButtonView
-                                    IsCompact="True"
-                                    BodyText="{Binding GoToQuotesTabText}"
-                                    TapCommand="{Binding OpenQuotesTabCommand}" />
-                            </VerticalStackLayout>
+                            <ui:EmptyStateView
+                                Margin="0,24,0,0"
+                                BodyText="{Binding QuotesEmptyText}"
+                                ActionText="{Binding GoToQuotesTabText}"
+                                ActionCommand="{Binding OpenQuotesTabCommand}" />
                         </CollectionView.EmptyView>
                     </CollectionView>
                 </Grid>

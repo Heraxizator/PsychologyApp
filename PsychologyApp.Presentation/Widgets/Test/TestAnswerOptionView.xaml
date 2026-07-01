@@ -19,7 +19,7 @@
                         <Setter Property="Stroke" Value="{DynamicResource Primary}" />
                         <Setter Property="StrokeThickness" Value="1.5" />
                         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
-                        <Setter Property="Shadow" Value="{StaticResource BrandCardShadow}" />
+                        <Setter Property="Shadow" Value="{AppThemeBinding Light={StaticResource BrandCardShadowLight}, Dark={StaticResource BrandCardShadowDark}}" />
                     </DataTrigger>
                 </Border.Triggers>
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" MinimumHeightRequest="{StaticResource TestAnswerOptionMinHeight}">

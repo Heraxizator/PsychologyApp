@@ -39,12 +39,9 @@
                 VerticalScrollBarVisibility="Never"
                 ItemsSource="{Binding FilteredItems}">
                 <CollectionView.EmptyView>
-                    <Label
-                        HorizontalTextAlignment="Center"
-                        Style="{StaticResource BodyStyle}"
-                        Text="{Binding NoPrayersFoundText}"
-                        Padding="{StaticResource LayoutEmptyPaddingThickness}"
-                        IsVisible="{Binding IsSearchEmptyVisible}" />
+                    <ui:EmptyStateView
+                        IsVisible="{Binding IsSearchEmptyVisible}"
+                        BodyText="{Binding NoPrayersFoundText}" />
                 </CollectionView.EmptyView>
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
