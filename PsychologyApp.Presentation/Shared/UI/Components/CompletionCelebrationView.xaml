@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:Class="PsychologyApp.Presentation.Shared.UI.Components.CompletionCelebrationView">
+
+    <ContentView.Behaviors>
+        <behaviors:EmptyStateRevealBehavior />
+    </ContentView.Behaviors>
+
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <Grid
+                Padding="{StaticResource LayoutPageMarginThickness}"
+                RowDefinitions="*,Auto"
+                VerticalOptions="FillAndExpand">
+                <VerticalStackLayout
+                    Grid.Row="0"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Spacing="16"
+                    MaximumWidthRequest="320">
+                    <Border Style="{StaticResource EmptyStateIconHaloStyle}">
+                        <ui:MaterialIconView
+                            IconName="{TemplateBinding IconName}"
+                            IconSize="32"
+                            IconColor="{DynamicResource Primary}"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center" />
+                    </Border>
+                    <Label
+                        Text="{TemplateBinding TitleText}"
+                        Style="{StaticResource PageTitleStyle}"
+                        HorizontalTextAlignment="Center" />
+                    <Label
+                        Text="{TemplateBinding BodyText}"
+                        Style="{StaticResource BodyStyle}"
+                        HorizontalTextAlignment="Center" />
+                    <VerticalStackLayout
+                        IsVisible="{TemplateBinding HasStreak}"
+                        Spacing="4"
+                        HorizontalOptions="Center">
+                        <Label
+                            Text="{TemplateBinding StreakValueText}"
+                            Style="{StaticResource SectionTitleStyle}"
+                            HorizontalTextAlignment="Center"
+                            TextColor="{DynamicResource Primary}" />
+                        <Label
+                            Text="{TemplateBinding StreakLabelText}"
+                            Style="{StaticResource CaptionStyle}"
+                            HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+                <VerticalStackLayout
+                    Grid.Row="1"
+                    Spacing="8"
+                    Padding="0,0,0,8">
+                    <ui:ButtonView
+                        BodyText="{TemplateBinding PrimaryActionText}"
+                        TapCommand="{TemplateBinding PrimaryCommand}" />
+                    <ui:ButtonView
+                        Variant="Secondary"
+                        BodyText="{TemplateBinding SecondaryActionText}"
+                        TapCommand="{TemplateBinding SecondaryCommand}" />
+                </VerticalStackLayout>
+            </Grid>
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+
+</ContentView>

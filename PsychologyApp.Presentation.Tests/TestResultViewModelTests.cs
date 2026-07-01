@@ -41,7 +41,7 @@ public sealed class TestResultViewModelTests
             });
         var progress = new Mock<IUserProgressService>();
         progress
-            .Setup(p => p.GetTestResultHistoryAsync("beck", 2, It.IsAny<CancellationToken>()))
+            .Setup(p => p.GetTestResultHistoryAsync("beck", It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new List<TestResultDTO>
             {
                 new() { Score = 3, Summary = "Mild" },
@@ -93,7 +93,7 @@ public sealed class TestResultViewModelTests
             });
         var progress = new Mock<IUserProgressService>();
         progress
-            .Setup(p => p.GetTestResultHistoryAsync("who5", 2, It.IsAny<CancellationToken>()))
+            .Setup(p => p.GetTestResultHistoryAsync("who5", It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new List<TestResultDTO>
             {
                 new() { Score = 20, Summary = "Good" },

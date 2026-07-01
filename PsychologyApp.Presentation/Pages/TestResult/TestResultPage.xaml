@@ -16,9 +16,6 @@
     </ContentPage.Behaviors>
 
     <Grid RowDefinitions="Auto,*,Auto" Padding="{StaticResource LayoutPageMarginThickness}" RowSpacing="{StaticResource LayoutSpacing}">
-        <Grid.Behaviors>
-            <behaviors:StaggerChildrenBehavior />
-        </Grid.Behaviors>
 
         <ui:NavigationBarSimpleView
             Grid.Row="0"
@@ -27,11 +24,21 @@
 
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
+                <VerticalStackLayout.Behaviors>
+                    <behaviors:StaggerChildrenBehavior />
+                </VerticalStackLayout.Behaviors>
+
                 <testUi:TestResultHeroView
                     ScoreTitle="{Binding ScoreTitle}"
                     Interpretation="{Binding Interpretation}"
                     TrendText="{Binding TrendText}"
+                    TrendKind="{Binding TrendKind}"
                     HasTrendBadge="{Binding HasTrendBadge}" />
+
+                <testUi:TestScoreTrendChartView
+                    IsVisible="{Binding HasTrendChart}"
+                    Title="{Binding ChartTitle}"
+                    ChartPoints="{Binding ChartPoints}" />
 
                 <Border
                     IsVisible="{Binding HasInterpretationDetail}"

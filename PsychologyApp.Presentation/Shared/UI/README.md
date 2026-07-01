@@ -34,6 +34,7 @@ xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
 | `EntryBoxView` | List of labeled entries from `BodySource` |
 | `ButtonView` | Action button; `TapCommand`. Use `Variant="Primary"` (default) or `Variant="Secondary"`; `IsCompact="True"` for compact header actions. Attaches `PressFeedbackBehavior`. |
 | `EmptyStateView` | Centered empty list/content: `TitleText`, `BodyText`, optional `IconName` (halo), optional `ActionText` + `ActionCommand`. Auto `EmptyStateRevealBehavior` on appear. |
+| `CompletionCelebrationView` | Full-screen celebration moment: icon halo, title/body, optional streak (`StreakValueText`, `HasStreak`), primary + secondary actions. Used by `PracticeCompletionPage`. |
 | `MetricTileView` | Profile-style stat: `ValueText` + `LabelText`, optional `TapCommand` |
 | `SectionHeaderView` | Section title + optional `SubtitleText` + optional compact `ActionText` / `ActionCommand` |
 | `ListEntryCardView` | Tappable list card: title (`ListRowTitleStyle`) + body (`CaptionStyle`) |
@@ -63,7 +64,8 @@ Test flow widgets (`Widgets/Test/`):
 |--------|----------|
 | `TestAnswerOptionView` | Tappable questionnaire answer row (single/multi) |
 | `TestProgressHeaderView` | Step dots + label (`Step`, `StepCount`, `StepLabel`) |
-| `TestResultHeroView` | Result screen score headline + interpretation + trend badge |
+| `TestResultHeroView` | Result screen: check icon halo, score headline, interpretation, trend badge (`TrendKind` colors) |
+| `TestScoreTrendChartView` | Score-over-time line chart: `ChartPoints`, `Title`. On `TestResultPage` when 2+ results; also `TestHistoryPage`. |
 | `TestResultMetricCardView` | Named metric card (Lüscher standard results) |
 | `LuscherColorResultView` | Brief Lüscher color swatch + interpretation block |
 | `TestFlowMetaStripView` | Duration / question-count chips on test intro |
@@ -92,3 +94,10 @@ Onboarding widgets (`Widgets/Onboarding/`):
 7. **Empty states:** prefer `EmptyStateView` with `IconName`; reveal animation is built in via `EmptyStateRevealBehavior`.
 8. **Card shadows:** use `BrandCardShadowLight` / `BrandCardShadowDark` via `AppThemeBinding` in styles — not a single hard-coded shadow color.
 9. **Run `dotnet build`** after adding or migrating a component.
+
+## Emotional moments
+
+| Flow | Screen / widget |
+|------|-----------------|
+| Practice completed | `PracticeCompletionPage` → `CompletionCelebrationView` (replaces system alert). Primary: back to techniques list; secondary: home tab. |
+| Test result | `TestResultPage` → `TestResultHeroView` + `TestScoreTrendChartView` when history has 2+ scored results. |

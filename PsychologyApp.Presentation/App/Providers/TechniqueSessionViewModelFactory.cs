@@ -72,7 +72,6 @@ public sealed class TechniqueViewModelFactory(
     Func<NavigationContext, INavigationService> navigationServiceFactory,
     ITechniqueCatalogService techniqueCatalogService,
     IUserProgressService userProgressService,
-    IDialogService dialogService,
     TechniqueSessionCompletionService sessionCompletionService,
     Func<EntryDraftCoordinator> entryDraftCoordinatorFactory,
     Func<PaperListDraftCoordinator> paperListDraftCoordinatorFactory,
@@ -84,8 +83,7 @@ public sealed class TechniqueViewModelFactory(
         ListTechniqueSessionHelper sessionHelper = new(
             sessionCompletionService,
             userProgressService,
-            navigationService,
-            dialogService);
+            navigationService);
 
         return techniqueId switch
         {
