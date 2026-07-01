@@ -2,8 +2,14 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:Class="PsychologyApp.Presentation.Widgets.MusicListCard.MusicListCardView"
              x:Name="Root">
+
+    <ContentView.Behaviors>
+        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+    </ContentView.Behaviors>
+
     <Border x:Name="CardBorder" Style="{StaticResource MusicListRowStyle}">
         <Border.Triggers>
             <DataTrigger

@@ -2,7 +2,12 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:Class="PsychologyApp.Presentation.Shared.UI.Components.EmptyStateView">
+
+    <ContentView.Behaviors>
+        <behaviors:EmptyStateRevealBehavior />
+    </ContentView.Behaviors>
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
@@ -12,12 +17,16 @@
                 VerticalOptions="Center"
                 Spacing="12"
                 MaximumWidthRequest="320">
-                <ui:MaterialIconView
+                <Border
                     IsVisible="{TemplateBinding HasIcon}"
-                    IconName="{TemplateBinding IconName}"
-                    IconSize="40"
-                    IconColor="{DynamicResource Primary}"
-                    HorizontalOptions="Center" />
+                    Style="{StaticResource EmptyStateIconHaloStyle}">
+                    <ui:MaterialIconView
+                        IconName="{TemplateBinding IconName}"
+                        IconSize="32"
+                        IconColor="{DynamicResource Primary}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+                </Border>
                 <Label
                     IsVisible="{TemplateBinding HasTitle}"
                     Text="{TemplateBinding TitleText}"

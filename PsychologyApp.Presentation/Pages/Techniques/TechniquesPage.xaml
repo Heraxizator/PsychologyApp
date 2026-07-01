@@ -114,7 +114,8 @@
             <CollectionView.EmptyView>
                 <ui:EmptyStateView
                     TitleText="{Binding PracticeEmptyTitle}"
-                    BodyText="{Binding PracticeEmptyBody}" />
+                    BodyText="{Binding PracticeEmptyBody}"
+                    IconName="SelfImprovement" />
             </CollectionView.EmptyView>
 
         </CollectionView>

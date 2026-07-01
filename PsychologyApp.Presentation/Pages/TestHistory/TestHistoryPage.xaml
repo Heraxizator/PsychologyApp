@@ -93,7 +93,9 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                     <CollectionView.EmptyView>
-                        <ui:EmptyStateView BodyText="{Binding EmptyText}" />
+                        <ui:EmptyStateView
+                            BodyText="{Binding EmptyText}"
+                            IconName="History" />
                     </CollectionView.EmptyView>
                 </CollectionView>
             </VerticalStackLayout>

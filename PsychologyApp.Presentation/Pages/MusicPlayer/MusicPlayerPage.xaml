@@ -41,7 +41,8 @@
                 <CollectionView.EmptyView>
                     <ui:EmptyStateView
                         IsVisible="{Binding IsSearchEmptyVisible}"
-                        BodyText="{Binding NoPrayersFoundText}" />
+                        BodyText="{Binding NoPrayersFoundText}"
+                        IconName="SearchOff" />
                 </CollectionView.EmptyView>
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />

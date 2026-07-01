@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:Class="PsychologyApp.Presentation.Shared.UI.Components.MetricTileView">
+
+    <ContentView.Behaviors>
+        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+    </ContentView.Behaviors>
+
+    <ContentView.ControlTemplate>
+        <ControlTemplate>
+            <VerticalStackLayout Spacing="4">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
+                </VerticalStackLayout.GestureRecognizers>
+                <Label
+                    Text="{TemplateBinding ValueText}"
+                    Style="{StaticResource SectionTitleStyle}"
+                    HorizontalTextAlignment="Center" />
+                <Label
+                    Text="{TemplateBinding LabelText}"
+                    Style="{StaticResource CaptionStyle}"
+                    HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+        </ControlTemplate>
+    </ContentView.ControlTemplate>
+
+</ContentView>
