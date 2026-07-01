@@ -5,7 +5,7 @@
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Grid HeightRequest="50">
+            <Grid MinimumHeightRequest="48">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
@@ -13,11 +13,11 @@
                 <Label
                     Grid.Column="0"
                     Text="{TemplateBinding LabelText}"
-                    FontSize="15"
-                    VerticalOptions="Center"
-                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                    Style="{StaticResource BodyStyle}"
+                    VerticalOptions="Center" />
                 <Switch
                     Grid.Column="1"
+                    OnColor="{DynamicResource Primary}"
                     IsToggled="{TemplateBinding IsToggled, Mode=TwoWay}" />
             </Grid>
         </ControlTemplate>

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:Class="PsychologyApp.Presentation.Widgets.MoodStrip.MoodStripView"
              x:Name="Root">
+
+    <ContentView.Behaviors>
+        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+    </ContentView.Behaviors>
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
@@ -21,7 +26,7 @@
                                     Binding="{TemplateBinding SelectedMoodLevel}"
                                     TargetType="Border"
                                     Value="1">
-                                    <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                    <Setter Property="Style" Value="{StaticResource MoodChipSelectedStyle}" />
                                 </DataTrigger>
                             </Border.Triggers>
                             <Border.GestureRecognizers>
@@ -35,7 +40,7 @@
                                     Binding="{TemplateBinding SelectedMoodLevel}"
                                     TargetType="Border"
                                     Value="2">
-                                    <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                    <Setter Property="Style" Value="{StaticResource MoodChipSelectedStyle}" />
                                 </DataTrigger>
                             </Border.Triggers>
                             <Border.GestureRecognizers>
@@ -49,7 +54,7 @@
                                     Binding="{TemplateBinding SelectedMoodLevel}"
                                     TargetType="Border"
                                     Value="3">
-                                    <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                    <Setter Property="Style" Value="{StaticResource MoodChipSelectedStyle}" />
                                 </DataTrigger>
                             </Border.Triggers>
                             <Border.GestureRecognizers>
@@ -63,7 +68,7 @@
                                     Binding="{TemplateBinding SelectedMoodLevel}"
                                     TargetType="Border"
                                     Value="4">
-                                    <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                    <Setter Property="Style" Value="{StaticResource MoodChipSelectedStyle}" />
                                 </DataTrigger>
                             </Border.Triggers>
                             <Border.GestureRecognizers>
@@ -77,7 +82,7 @@
                                     Binding="{TemplateBinding SelectedMoodLevel}"
                                     TargetType="Border"
                                     Value="5">
-                                    <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                    <Setter Property="Style" Value="{StaticResource MoodChipSelectedStyle}" />
                                 </DataTrigger>
                             </Border.Triggers>
                             <Border.GestureRecognizers>

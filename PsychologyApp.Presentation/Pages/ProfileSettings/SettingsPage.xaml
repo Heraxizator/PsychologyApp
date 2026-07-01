@@ -74,6 +74,7 @@
                         LabelText="{Binding PracticeRemindersLabel}"
                         IsToggled="{Binding PracticeRemindersEnabled}" />
                     <ui:SettingPickerRowView
+                        LabelKind="{x:Static converters:PreferenceLabelKind.PassThrough}"
                         LabelText="{Binding PracticeReminderHourLabel}"
                         PickerTitle="{Binding PracticeReminderHourPickerTitle}"
                         ItemsSource="{Binding PracticeReminderHourOptions}"

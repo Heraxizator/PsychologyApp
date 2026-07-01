@@ -126,6 +126,7 @@ public partial class SettingPickerRowView : ContentView
     private string NormalizeKey(object? value) =>
         LabelKind switch
         {
+            PreferenceLabelKind.PassThrough => value?.ToString() ?? string.Empty,
             PreferenceLabelKind.Language => UserPreferences.ParseLanguageKey(value?.ToString() ?? string.Empty),
             PreferenceLabelKind.Theme => UserPreferences.ParseThemeKey(value?.ToString() ?? string.Empty),
             PreferenceLabelKind.Color => UserPreferences.ParseColorKey(value?.ToString() ?? string.Empty),
@@ -157,7 +158,7 @@ public partial class SettingPickerRowView : ContentView
             nameof(LabelKind),
             typeof(PreferenceLabelKind),
             typeof(SettingPickerRowView),
-            PreferenceLabelKind.Language,
+            PreferenceLabelKind.PassThrough,
             propertyChanged: static (bindable, _, _) => ((SettingPickerRowView)bindable).ApplyItemDisplayBinding());
 
     public PreferenceLabelKind LabelKind
