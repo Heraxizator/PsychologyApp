@@ -81,22 +81,12 @@
                         MoodHistorySummary="{Binding MoodHistorySummary}"
                         HasMoodHistorySummary="{Binding HasMoodHistorySummary}" />
 
-                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" Margin="0,4,0,0">
-                        <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
-                            <Label
-                                Text="{Binding PracticeCatalogLabel}"
-                                Style="{StaticResource SectionTitleStyle}" />
-                            <Label
-                                Text="{Binding PracticeCatalogHint}"
-                                Style="{StaticResource CaptionStyle}" />
-                        </VerticalStackLayout>
-                        <ui:ButtonView
-                            Grid.Column="1"
-                            IsCompact="True"
-                            Variant="Secondary"
-                            BodyText="{Binding CreateButtonText}"
-                            TapCommand="{Binding ConstructorTapped}" />
-                    </Grid>
+                    <ui:SectionHeaderView
+                        Margin="0,4,0,0"
+                        TitleText="{Binding PracticeCatalogLabel}"
+                        SubtitleText="{Binding PracticeCatalogHint}"
+                        ActionText="{Binding CreateButtonText}"
+                        ActionCommand="{Binding ConstructorTapped}" />
                 </VerticalStackLayout>
             </CollectionView.Header>
 
@@ -122,10 +112,9 @@
             </CollectionView.ItemTemplate>
 
             <CollectionView.EmptyView>
-                <StackLayout Padding="{StaticResource LayoutEmptyPaddingThickness}" HorizontalOptions="Center" VerticalOptions="Center">
-                    <Label HorizontalTextAlignment="Center" Style="{StaticResource SectionTitleStyle}" Text="{Binding PracticeEmptyTitle}" />
-                    <Label HorizontalTextAlignment="Center" Style="{StaticResource BodyStyle}" Text="{Binding PracticeEmptyBody}" />
-                </StackLayout>
+                <ui:EmptyStateView
+                    TitleText="{Binding PracticeEmptyTitle}"
+                    BodyText="{Binding PracticeEmptyBody}" />
             </CollectionView.EmptyView>
 
         </CollectionView>

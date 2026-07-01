@@ -11,25 +11,31 @@
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="20" />
         <Setter Property="CornerRadius" Value="16" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource SurfaceDark}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceElevatedLight}, Dark={StaticResource SurfaceElevatedDark}}" />
     </Style>
 
     <Shadow
-        x:Key="BrandCardShadow"
-        Brush="#400085FF"
+        x:Key="BrandCardShadowLight"
+        Brush="#1A152238"
         Offset="0,4"
-        Radius="8"
-        Opacity="0.2" />
+        Radius="10"
+        Opacity="0.14" />
 
-    <!-- dvgups card: white, rounded-2xl, blue-tinted shadow -->
+    <Shadow
+        x:Key="BrandCardShadowDark"
+        Brush="#000000"
+        Offset="0,2"
+        Radius="12"
+        Opacity="0.38" />
+
     <Style x:Key="BrandCardStyle" TargetType="Border">
         <Setter Property="Margin" Value="4,4,4,12" />
         <Setter Property="Padding" Value="20" />
         <Setter Property="Stroke" Value="Transparent" />
         <Setter Property="StrokeThickness" Value="0" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource SurfaceDark}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceElevatedLight}, Dark={StaticResource SurfaceElevatedDark}}" />
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusShape}" />
-        <Setter Property="Shadow" Value="{StaticResource BrandCardShadow}" />
+        <Setter Property="Shadow" Value="{AppThemeBinding Light={StaticResource BrandCardShadowLight}, Dark={StaticResource BrandCardShadowDark}}" />
     </Style>
 
     <Style x:Key="ListCardItemStyle" TargetType="Border" BasedOn="{StaticResource BrandCardStyle}">
@@ -48,9 +54,9 @@
         <Setter Property="Padding" Value="20" />
         <Setter Property="Stroke" Value="Transparent" />
         <Setter Property="StrokeThickness" Value="0" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource SurfaceDark}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceElevatedLight}, Dark={StaticResource SurfaceElevatedDark}}" />
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusShape}" />
-        <Setter Property="Shadow" Value="{StaticResource BrandCardShadow}" />
+        <Setter Property="Shadow" Value="{AppThemeBinding Light={StaticResource BrandCardShadowLight}, Dark={StaticResource BrandCardShadowDark}}" />
     </Style>
 
     <Style x:Key="CardBorderStyle" TargetType="Border" BasedOn="{StaticResource BrandCardStyle}" />
@@ -58,7 +64,7 @@
     <!-- FILLED primary button (dvgups Button FILLED + PRIMARY) -->
     <Style x:Key="PrimaryActionBorderStyle" TargetType="Border">
         <Setter Property="Padding" Value="16,12" />
-        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="MinimumHeightRequest" Value="48" />
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
         <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
         <Setter Property="Stroke" Value="Transparent" />
@@ -79,7 +85,7 @@
     <!-- OUTLINED secondary button (dvgups Button OUTLINED + SECONDARY) -->
     <Style x:Key="OutlinedActionBorderStyle" TargetType="Border">
         <Setter Property="Padding" Value="16,12" />
-        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="MinimumHeightRequest" Value="48" />
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="Stroke" Value="{DynamicResource Primary}" />

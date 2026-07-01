@@ -93,10 +93,7 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                     <CollectionView.EmptyView>
-                        <Label
-                            HorizontalTextAlignment="Center"
-                            Style="{StaticResource BodyStyle}"
-                            Text="{Binding EmptyText}" />
+                        <ui:EmptyStateView BodyText="{Binding EmptyText}" />
                     </CollectionView.EmptyView>
                 </CollectionView>
             </VerticalStackLayout>

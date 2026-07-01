@@ -54,20 +54,9 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
             <CollectionView.EmptyView>
-                <StackLayout
-                    Padding="{StaticResource LayoutEmptyPaddingThickness}"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    Spacing="8">
-                    <Label
-                        HorizontalTextAlignment="Center"
-                        Style="{StaticResource SectionTitleStyle}"
-                        Text="{Binding EmptyTitle}" />
-                    <Label
-                        HorizontalTextAlignment="Center"
-                        Style="{StaticResource BodyStyle}"
-                        Text="{Binding EmptyBody}" />
-                </StackLayout>
+                <ui:EmptyStateView
+                    TitleText="{Binding EmptyTitle}"
+                    BodyText="{Binding EmptyBody}" />
             </CollectionView.EmptyView>
             <CollectionView.Header>
                 <VerticalStackLayout Margin="0,0,0,12">

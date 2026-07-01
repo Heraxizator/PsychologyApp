@@ -5,8 +5,8 @@
              x:Name="Root">
     <Border Style="{StaticResource BrandCardStyle}">
         <VerticalStackLayout Spacing="4">
-            <Label Text="{Binding Title, Source={x:Reference Root}}" Style="{StaticResource BodyStyle}" />
-            <Label Text="{Binding Body, Source={x:Reference Root}}" Style="{StaticResource BodyStyle}" />
+            <Label Text="{Binding Title, Source={x:Reference Root}}" Style="{StaticResource ListRowTitleStyle}" />
+            <Label Text="{Binding Body, Source={x:Reference Root}}" Style="{StaticResource CaptionStyle}" />
         </VerticalStackLayout>
     </Border>
 </ContentView>

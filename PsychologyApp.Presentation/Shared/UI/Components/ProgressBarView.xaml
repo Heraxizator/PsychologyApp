@@ -10,7 +10,7 @@
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <StackLayout>
+            <VerticalStackLayout Spacing="12">
                 <ActivityIndicator
                     IsRunning="{TemplateBinding IsLoading}"
                     Color="{DynamicResource Primary}" />
@@ -19,17 +19,14 @@
                     HorizontalOptions="Center"
                     Style="{StaticResource BodyStyle}" />
                 <Label
-                    Margin="0,3,0,0"
-                    FontAttributes="Bold"
                     Text="{TemplateBinding CancelText}"
                     HorizontalOptions="Center"
-                    TextColor="{AppThemeBinding Light={StaticResource AccentTextLight}, Dark={DynamicResource Secondary}}"
-                    FontSize="14">
+                    Style="{StaticResource NavActionLabelStyle}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{TemplateBinding CancelCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
-            </StackLayout>
+            </VerticalStackLayout>
         </ControlTemplate>
     </ContentView.ControlTemplate>
 

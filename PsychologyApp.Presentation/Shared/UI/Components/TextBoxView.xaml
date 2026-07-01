@@ -6,15 +6,14 @@
     <ContentView.ControlTemplate>
         <ControlTemplate>
             <Border Style="{StaticResource BrandCardStyle}">
-                <StackLayout Margin="0">
+                <VerticalStackLayout Spacing="8">
                     <Label
                         Text="{TemplateBinding HeaderText}"
                         Style="{StaticResource SectionTitleStyle}" />
                     <Label
-                        Margin="0,5,0,0"
                         Text="{TemplateBinding BodyText}"
                         Style="{StaticResource BodyStyle}" />
-                </StackLayout>
+                </VerticalStackLayout>
             </Border>
         </ControlTemplate>
     </ContentView.ControlTemplate>

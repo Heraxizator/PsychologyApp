@@ -64,30 +64,20 @@
                     </CollectionView.ItemTemplate>
 
                     <CollectionView.EmptyView>
-                        <VerticalStackLayout Padding="{StaticResource LayoutEmptyPaddingThickness}" HorizontalOptions="Center" VerticalOptions="Center" Spacing="12">
-                            <Label HorizontalTextAlignment="Center" Style="{StaticResource SectionTitleStyle}" Text="{Binding QuotesEmptyTitle}" />
-                            <Label HorizontalTextAlignment="Center" Style="{StaticResource BodyStyle}" Text="{Binding QuotesEmptyBody}" />
-                            <ui:ButtonView
-                                IsCompact="True"
-                                BodyText="{Binding QuotesRefreshButton}"
-                                TapCommand="{Binding Reload}" />
-                        </VerticalStackLayout>
+                        <ui:EmptyStateView
+                            TitleText="{Binding QuotesEmptyTitle}"
+                            BodyText="{Binding QuotesEmptyBody}"
+                            ActionText="{Binding QuotesRefreshButton}"
+                            ActionCommand="{Binding Reload}" />
                     </CollectionView.EmptyView>
                 </CollectionView>
 
-                <VerticalStackLayout
+                <ui:EmptyStateView
                     IsVisible="{Binding ShowAllReadEmpty}"
-                    Padding="{StaticResource LayoutEmptyPaddingThickness}"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    Spacing="12">
-                    <Label HorizontalTextAlignment="Center" Style="{StaticResource SectionTitleStyle}" Text="{Binding AllReadTitle}" />
-                    <Label HorizontalTextAlignment="Center" Style="{StaticResource BodyStyle}" Text="{Binding AllReadBody}" />
-                    <ui:ButtonView
-                        IsCompact="True"
-                        BodyText="{Binding ShowFavoritesButtonText}"
-                        TapCommand="{Binding ShowFavoritesCommand}" />
-                </VerticalStackLayout>
+                    TitleText="{Binding AllReadTitle}"
+                    BodyText="{Binding AllReadBody}"
+                    ActionText="{Binding ShowFavoritesButtonText}"
+                    ActionCommand="{Binding ShowFavoritesCommand}" />
 
                 <ui:ProgressBarView
                     x:Name="LoadingProgress"

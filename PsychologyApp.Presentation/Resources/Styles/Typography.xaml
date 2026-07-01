@@ -9,7 +9,11 @@
     <system:Double x:Key="PageTitleFontSize">20</system:Double>
     <system:Double x:Key="SectionTitleFontSize">18</system:Double>
     <system:Double x:Key="BodyFontSize">14</system:Double>
-    <system:Double x:Key="CaptionFontSize">14</system:Double>
+    <system:Double x:Key="CaptionFontSize">12</system:Double>
+    <system:Double x:Key="PageTitleLineHeight">1.25</system:Double>
+    <system:Double x:Key="SectionTitleLineHeight">1.3</system:Double>
+    <system:Double x:Key="BodyLineHeight">1.45</system:Double>
+    <system:Double x:Key="CaptionLineHeight">1.35</system:Double>
     <system:Double x:Key="FieldLabelFontSize">13</system:Double>
     <system:Double x:Key="NavTitleFontSize">18</system:Double>
     <system:Double x:Key="NavBarBackColumnWidth">44</system:Double>
@@ -40,18 +44,21 @@
 
     <Style x:Key="PageTitleStyle" TargetType="Label">
         <Setter Property="FontSize" Value="{DynamicResource PageTitleFontSize}" />
+        <Setter Property="LineHeight" Value="{StaticResource PageTitleLineHeight}" />
         <Setter Property="FontFamily" Value="{StaticResource SemiBoldFontFamily}" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
     </Style>
 
     <Style x:Key="SectionTitleStyle" TargetType="Label">
         <Setter Property="FontSize" Value="{DynamicResource SectionTitleFontSize}" />
+        <Setter Property="LineHeight" Value="{StaticResource SectionTitleLineHeight}" />
         <Setter Property="FontFamily" Value="{StaticResource SemiBoldFontFamily}" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
     </Style>
 
     <Style x:Key="BodyStyle" TargetType="Label">
         <Setter Property="FontSize" Value="{DynamicResource BodyFontSize}" />
+        <Setter Property="LineHeight" Value="{StaticResource BodyLineHeight}" />
         <Setter Property="FontFamily" Value="{DynamicResource BodyFontFamily}" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
         <Setter Property="HorizontalTextAlignment" Value="Start" />
@@ -59,6 +66,7 @@
 
     <Style x:Key="CaptionStyle" TargetType="Label">
         <Setter Property="FontSize" Value="{DynamicResource CaptionFontSize}" />
+        <Setter Property="LineHeight" Value="{StaticResource CaptionLineHeight}" />
         <Setter Property="FontFamily" Value="{DynamicResource BodyFontFamily}" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
     </Style>
