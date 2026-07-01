@@ -39,12 +39,12 @@ xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
 | `ListEntryCardView` | Tappable list card: title (`ListRowTitleStyle`) + body (`CaptionStyle`) |
 | `TextItemView` | List row with title + body (tests, simple lists) |
 | `SettingsLinkCardView` | Tappable settings menu card: `Title`, `Subtitle`, `TapCommand` |
-| `SettingPickerRowView` | Settings row with label + picker: `LabelText`, `PickerTitle`, `ItemsSource`, `SelectedItem` |
-| `SettingSwitchRowView` | Settings row with label + switch: `LabelText`, `IsToggled` |
+| `SettingPickerRowView` | Settings row with label + picker. Set `LabelKind` (`Language`, `Theme`, … or `PassThrough` for raw labels like reminder hours). Default: `PassThrough`. |
+| `SettingSwitchRowView` | Settings row with label + switch: `LabelText`, `IsToggled` (`BodyStyle`, `OnColor=Primary`) |
 | `ProgressBarView` | Loading + optional `CancelCommand` (cancel row hidden when command is null) |
 | `RetryView` | Error overlay: `FailedText`, `RetryText`, `RetryCommand` (icon + press feedback) |
 
-Feature-specific cards live under `Widgets/` (`QuoteCardView`, `TechniqueListCardView`, `TestListCardView`, …). All list-card widgets attach `PressFeedbackBehavior AttachToAllTapTargets="True"`.
+Feature-specific cards live under `Widgets/` (`QuoteCardView`, `TechniqueListCardView`, `TestListCardView`, …). All list-card widgets attach `PressFeedbackBehavior AttachToAllTapTargets="True"`. High-touch widgets: `MoodStripView` (mood chips + `MoodChipSelectedStyle`), `TodayPracticeRowView`, `PhysicsReasonCardView`.
 
 ### Empty state icons (by screen)
 
@@ -87,7 +87,8 @@ Onboarding widgets (`Widgets/Onboarding/`):
 2. **Add a generic component** only when the same pattern repeats ≥3 times; otherwise use a widget slice.
 3. **Use typography tokens** (`SectionTitleStyle`, `BodyStyle`) and `AppThemeBinding` for text.
 4. **Bind commands** on components — not page-level gesture wrappers.
-5. **Press feedback:** `ButtonView`, `SettingsLinkCardView`, `RetryView`, `FilterChipView`, `MetricTileView`, and all list-card widgets attach `PressFeedbackBehavior`; pages use `PressFeedbackHost.AttachToPage` via `PageRegistry`.
-6. **Empty states:** prefer `EmptyStateView` with `IconName`; reveal animation is built in via `EmptyStateRevealBehavior`.
-7. **Card shadows:** use `BrandCardShadowLight` / `BrandCardShadowDark` via `AppThemeBinding` in styles — not a single hard-coded shadow color.
-8. **Run `dotnet build`** after adding or migrating a component.
+5. **Press feedback:** `ButtonView`, `SettingsLinkCardView`, `RetryView`, `FilterChipView`, `MetricTileView`, list-card widgets, `MoodStripView`, `TodayPracticeRowView`, and `PhysicsReasonCardView` attach `PressFeedbackBehavior`; pages use `PressFeedbackHost.AttachToPage` via `PageRegistry`.
+6. **Settings pickers:** always set `LabelKind` on `SettingPickerRowView`; use `PassThrough` when `ItemsSource` already contains display strings (e.g. `07:00`…`22:00`).
+7. **Empty states:** prefer `EmptyStateView` with `IconName`; reveal animation is built in via `EmptyStateRevealBehavior`.
+8. **Card shadows:** use `BrandCardShadowLight` / `BrandCardShadowDark` via `AppThemeBinding` in styles — not a single hard-coded shadow color.
+9. **Run `dotnet build`** after adding or migrating a component.

@@ -47,7 +47,7 @@ public sealed class PreferenceLabelConverterTests : IDisposable
     }
 
     [Fact]
-    public void Convert_WithoutParameter_DoesNotTreatColorKeyAsLanguage()
+    public void Convert_WithoutParameter_PassesValueThrough()
     {
         AppStrings.LanguageOverride = "ru";
         PreferenceLabelConverter converter = new();
@@ -55,6 +55,17 @@ public sealed class PreferenceLabelConverterTests : IDisposable
         string label = Assert.IsType<string>(
             converter.Convert("blue", typeof(string), null, CultureInfo.InvariantCulture));
 
-        Assert.Equal("Русский", label);
+        Assert.Equal("blue", label);
+    }
+
+    [Fact]
+    public void Convert_WithPassThroughKind_ReturnsReminderHourLabel()
+    {
+        PreferenceLabelConverter converter = new();
+
+        string label = Assert.IsType<string>(
+            converter.Convert("19:00", typeof(string), PreferenceLabelKind.PassThrough, CultureInfo.InvariantCulture));
+
+        Assert.Equal("19:00", label);
     }
 }

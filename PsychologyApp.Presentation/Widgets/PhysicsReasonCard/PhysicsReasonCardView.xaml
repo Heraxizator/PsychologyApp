@@ -3,7 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:physics="clr-namespace:PsychologyApp.Presentation.Entities.Physics"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:Class="PsychologyApp.Presentation.Widgets.PhysicsReasonCard.PhysicsReasonCardView">
+
+    <ContentView.Behaviors>
+        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+    </ContentView.Behaviors>
 
     <ContentView.ControlTemplate>
         <ControlTemplate>

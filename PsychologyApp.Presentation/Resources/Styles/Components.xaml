@@ -282,6 +282,11 @@
         <Setter Property="HorizontalOptions" Value="Center" />
     </Style>
 
+    <Style x:Key="MoodChipSelectedStyle" TargetType="Border" BasedOn="{StaticResource MoodChipStyle}">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
+        <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+    </Style>
+
     <Style x:Key="PlayerTransportButtonStyle" TargetType="Border">
         <Setter Property="WidthRequest" Value="44" />
         <Setter Property="HeightRequest" Value="44" />

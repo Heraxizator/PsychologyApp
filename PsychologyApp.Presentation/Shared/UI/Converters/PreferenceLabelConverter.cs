@@ -17,6 +17,7 @@ public sealed class PreferenceLabelConverter : IValueConverter
 
         return kind switch
         {
+            PreferenceLabelKind.PassThrough => value,
             PreferenceLabelKind.Language => UserPreferences.GetLanguageLabel(key, uiLanguage),
             PreferenceLabelKind.Theme => UserPreferences.GetThemeLabel(key, uiLanguage),
             PreferenceLabelKind.Color => UserPreferences.GetColorLabel(key, uiLanguage),
@@ -34,6 +35,6 @@ public sealed class PreferenceLabelConverter : IValueConverter
         {
             PreferenceLabelKind kind => kind,
             string text when Enum.TryParse(text, ignoreCase: true, out PreferenceLabelKind parsed) => parsed,
-            _ => PreferenceLabelKind.Language
+            _ => PreferenceLabelKind.PassThrough
         };
 }
