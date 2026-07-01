@@ -50,39 +50,19 @@
                 <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                     <VerticalStackLayout Spacing="8">
                         <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
-                            <VerticalStackLayout Grid.Column="0" Spacing="4">
-                                <Label
-                                    Style="{StaticResource SectionTitleStyle}"
-                                    HorizontalTextAlignment="Center"
-                                    Text="{Binding TechniquesCompletedCount}" />
-                                <Label
-                                    Style="{StaticResource BodyStyle}"
-                                    HorizontalTextAlignment="Center"
-                                    Text="{Binding TechniquesCompletedLabel}" />
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Column="1" Spacing="4">
-                                <VerticalStackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding OpenTestsListCommand}" />
-                                </VerticalStackLayout.GestureRecognizers>
-                                <Label
-                                    Style="{StaticResource SectionTitleStyle}"
-                                    HorizontalTextAlignment="Center"
-                                    Text="{Binding TestsCompletedCount}" />
-                                <Label
-                                    Style="{StaticResource BodyStyle}"
-                                    HorizontalTextAlignment="Center"
-                                    Text="{Binding TestsCompletedLabel}" />
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Column="2" Spacing="4">
-                                <Label
-                                    Style="{StaticResource SectionTitleStyle}"
-                                    HorizontalTextAlignment="Center"
-                                    Text="{Binding StreakCount}" />
-                                <Label
-                                    Style="{StaticResource BodyStyle}"
-                                    HorizontalTextAlignment="Center"
-                                    Text="{Binding StreakLabel}" />
-                            </VerticalStackLayout>
+                            <ui:MetricTileView
+                                Grid.Column="0"
+                                ValueText="{Binding TechniquesCompletedCount}"
+                                LabelText="{Binding TechniquesCompletedLabel}" />
+                            <ui:MetricTileView
+                                Grid.Column="1"
+                                ValueText="{Binding TestsCompletedCount}"
+                                LabelText="{Binding TestsCompletedLabel}"
+                                TapCommand="{Binding OpenTestsListCommand}" />
+                            <ui:MetricTileView
+                                Grid.Column="2"
+                                ValueText="{Binding StreakCount}"
+                                LabelText="{Binding StreakLabel}" />
                         </Grid>
                         <Label
                             IsVisible="{Binding HasLastPractice}"
@@ -197,6 +177,7 @@
                             <ui:EmptyStateView
                                 Margin="0,24,0,0"
                                 BodyText="{Binding QuotesEmptyText}"
+                                IconName="FavoriteBorder"
                                 ActionText="{Binding GoToQuotesTabText}"
                                 ActionCommand="{Binding OpenQuotesTabCommand}" />
                         </CollectionView.EmptyView>

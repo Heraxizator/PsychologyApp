@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:Class="PsychologyApp.Presentation.Shared.UI.Components.FilterChipView"
              x:Name="Root">
+
+    <ContentView.Behaviors>
+        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+    </ContentView.Behaviors>
+
     <Border
         Style="{StaticResource FilterChipStyle}">
         <Border.Triggers>

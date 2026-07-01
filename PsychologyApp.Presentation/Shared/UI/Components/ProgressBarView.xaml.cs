@@ -61,12 +61,34 @@ public partial class ProgressBarView : ContentView
     }
 
     public static readonly BindableProperty CancelCommandProperty =
-        BindableProperty.Create(nameof(CancelCommand), typeof(ICommand), typeof(ProgressBarView), null);
+        BindableProperty.Create(
+            nameof(CancelCommand),
+            typeof(ICommand),
+            typeof(ProgressBarView),
+            null,
+            propertyChanged: OnCancelPresentationChanged);
+
+    public static readonly BindableProperty HasCancelProperty =
+        BindableProperty.Create(nameof(HasCancel), typeof(bool), typeof(ProgressBarView), false);
 
     public ICommand? CancelCommand
     {
         get => (ICommand?)GetValue(CancelCommandProperty);
         set => SetValue(CancelCommandProperty, value);
+    }
+
+    public bool HasCancel
+    {
+        get => (bool)GetValue(HasCancelProperty);
+        private set => SetValue(HasCancelProperty, value);
+    }
+
+    private static void OnCancelPresentationChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is ProgressBarView view)
+        {
+            view.HasCancel = view.CancelCommand is not null;
+        }
     }
 
     public static readonly BindableProperty CancelTextProperty =

@@ -67,6 +67,7 @@
                         <ui:EmptyStateView
                             TitleText="{Binding QuotesEmptyTitle}"
                             BodyText="{Binding QuotesEmptyBody}"
+                            IconName="FormatQuote"
                             ActionText="{Binding QuotesRefreshButton}"
                             ActionCommand="{Binding Reload}" />
                     </CollectionView.EmptyView>
@@ -76,6 +77,7 @@
                     IsVisible="{Binding ShowAllReadEmpty}"
                     TitleText="{Binding AllReadTitle}"
                     BodyText="{Binding AllReadBody}"
+                    IconName="DoneAll"
                     ActionText="{Binding ShowFavoritesButtonText}"
                     ActionCommand="{Binding ShowFavoritesCommand}" />
 

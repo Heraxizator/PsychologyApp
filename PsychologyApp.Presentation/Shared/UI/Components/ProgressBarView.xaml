@@ -19,6 +19,7 @@
                     HorizontalOptions="Center"
                     Style="{StaticResource BodyStyle}" />
                 <Label
+                    IsVisible="{TemplateBinding HasCancel}"
                     Text="{TemplateBinding CancelText}"
                     HorizontalOptions="Center"
                     Style="{StaticResource NavActionLabelStyle}">

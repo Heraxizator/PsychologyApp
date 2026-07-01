@@ -214,6 +214,16 @@
         <Setter Property="HorizontalOptions" Value="Center" />
     </Style>
 
+    <Style x:Key="EmptyStateIconHaloStyle" TargetType="Border">
+        <Setter Property="WidthRequest" Value="72" />
+        <Setter Property="HeightRequest" Value="72" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 36" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+    </Style>
+
     <Style x:Key="TodayBannerStyle" TargetType="Border" BasedOn="{StaticResource BrandCardStyle}">
         <Setter Property="Padding" Value="16" />
         <Setter Property="Margin" Value="4,4,4,12" />

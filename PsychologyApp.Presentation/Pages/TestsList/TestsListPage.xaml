@@ -56,7 +56,8 @@
             <CollectionView.EmptyView>
                 <ui:EmptyStateView
                     TitleText="{Binding EmptyTitle}"
-                    BodyText="{Binding EmptyBody}" />
+                    BodyText="{Binding EmptyBody}"
+                    IconName="Assignment" />
             </CollectionView.EmptyView>
             <CollectionView.Header>
                 <VerticalStackLayout Margin="0,0,0,12">
