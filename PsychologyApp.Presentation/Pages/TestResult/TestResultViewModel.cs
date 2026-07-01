@@ -95,36 +95,44 @@ public partial class TestResultViewModel : BaseViewModel
             return;
         }
 
-        IReadOnlyList<TestResultDTO> history = await _userProgressService.GetTestResultHistoryAsync(_result.TestId, 50);
-
-        TestTrendSnapshot? snapshot = null;
-        if (history.Count >= 2)
+        try
         {
-            ScoreDirection direction = await _trendResolver.ResolveDirectionAsync(_result.TestId);
-            TestTrendKind kind = _trendResolver.Compare(history[0].Score, history[1].Score, direction);
-            snapshot = new TestTrendSnapshot(kind, TestTrendComparer.ToLabel(kind), kind is not TestTrendKind.None);
-        }
+            IReadOnlyList<TestResultDTO> history =
+                await _userProgressService.GetTestResultHistoryAsync(_result.TestId, 50);
 
-        IReadOnlyList<TestScoreChartPoint> chartPoints = _trendResolver.BuildChartPoints(history);
-
-        await UiThread.RunAsync(() =>
-        {
-            if (snapshot is not null)
+            TestTrendSnapshot? snapshot = null;
+            if (history.Count >= 2)
             {
-                TrendKind = snapshot.Kind;
-                TrendText = snapshot.Label;
-                HasTrendBadge = snapshot.HasBadge;
+                ScoreDirection direction = await _trendResolver.ResolveDirectionAsync(_result.TestId);
+                TestTrendKind kind = _trendResolver.Compare(history[0].Score, history[1].Score, direction);
+                snapshot = new TestTrendSnapshot(kind, TestTrendComparer.ToLabel(kind), kind is not TestTrendKind.None);
             }
 
-            ChartPoints = chartPoints;
-            HasTrendChart = chartPoints.Count >= 2;
-            Notify(
-                nameof(TrendKind),
-                nameof(TrendText),
-                nameof(HasTrendBadge),
-                nameof(ChartPoints),
-                nameof(HasTrendChart),
-                nameof(ChartTitle));
-        });
+            IReadOnlyList<TestScoreChartPoint> chartPoints = _trendResolver.BuildChartPoints(history);
+
+            await UiThread.RunAsync(() =>
+            {
+                if (snapshot is not null)
+                {
+                    TrendKind = snapshot.Kind;
+                    TrendText = snapshot.Label;
+                    HasTrendBadge = snapshot.HasBadge;
+                }
+
+                ChartPoints = chartPoints;
+                HasTrendChart = chartPoints.Count >= 2;
+                Notify(
+                    nameof(TrendKind),
+                    nameof(TrendText),
+                    nameof(HasTrendBadge),
+                    nameof(ChartPoints),
+                    nameof(HasTrendChart),
+                    nameof(ChartTitle));
+            });
+        }
+        catch
+        {
+            // Trend/chart are optional; result screen must stay usable if history load fails.
+        }
     }
 }
