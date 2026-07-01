@@ -43,6 +43,8 @@ Generated\ Files/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
+!PsychologyApp.Presentation/Pages/TestResult/
+!PsychologyApp.Presentation/Pages/TestResult/**
 [Bb]uild[Ll]og.*
 
 # NUnit

@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.TestResult.TestResultPage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:testUi="clr-namespace:PsychologyApp.Presentation.Widgets.Test"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.TestResult"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:DataType="vm:TestResultViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}"
+             SafeAreaEdges="All">
+
+    <ContentPage.Behaviors>
+        <behaviors:PageAnalyticsBehavior TestId="{Binding TestFlowId}" />
+    </ContentPage.Behaviors>
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="{StaticResource LayoutPageMarginThickness}" RowSpacing="{StaticResource LayoutSpacing}">
+        <Grid.Behaviors>
+            <behaviors:StaggerChildrenBehavior />
+        </Grid.Behaviors>
+
+        <ui:NavigationBarSimpleView
+            Grid.Row="0"
+            TitleText="{Binding PageTitle}"
+            BackCommand="{Binding BackToListCommand}" />
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
+                <testUi:TestResultHeroView
+                    ScoreTitle="{Binding ScoreTitle}"
+                    Interpretation="{Binding Interpretation}"
+                    TrendText="{Binding TrendText}"
+                    HasTrendBadge="{Binding HasTrendBadge}" />
+
+                <Border
+                    IsVisible="{Binding HasInterpretationDetail}"
+                    Style="{StaticResource TestFlatCardStyle}"
+                    Margin="0">
+                    <Label
+                        Text="{Binding InterpretationDetail}"
+                        Style="{StaticResource BodyStyle}"
+                        HorizontalTextAlignment="Justify"
+                        LineBreakMode="WordWrap" />
+                </Border>
+
+                <Border
+                    IsVisible="{Binding HasRecommendation}"
+                    Style="{StaticResource TestFlatCardStyle}"
+                    Margin="0">
+                    <VerticalStackLayout Spacing="6">
+                        <Label
+                            Text="{Binding RecommendationHint}"
+                            Style="{StaticResource CaptionStyle}" />
+                        <Label
+                            Text="{Binding RecommendationTitle}"
+                            Style="{StaticResource SectionTitleStyle}"
+                            TextColor="{DynamicResource Primary}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border
+                    IsVisible="{Binding HasAnswerDetail}"
+                    Style="{StaticResource TestFlatCardStyle}"
+                    Margin="0">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{Binding AnswerDetailTitle}" Style="{StaticResource SectionTitleStyle}" />
+                        <testUi:QuestionnaireResultDetailView
+                            Questions="{Binding AnswerDetailQuestions}"
+                            DurationText="{Binding AnswerDetailDurationText}"
+                            HasDuration="{Binding HasAnswerDetail}" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <VerticalStackLayout Grid.Row="2" Spacing="8" Padding="0,0,0,8">
+            <ui:ButtonView
+                IsVisible="{Binding HasRecommendation}"
+                BodyText="{Binding TryTechniqueButtonText}"
+                TapCommand="{Binding TryTechniqueCommand}" />
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                <ui:ButtonView
+                    Grid.Column="0"
+                    BodyText="{Binding RetakeButtonText}"
+                    TapCommand="{Binding RetakeCommand}" />
+                <ui:ButtonView
+                    Grid.Column="1"
+                    Variant="Secondary"
+                    BodyText="{Binding BackToListButtonText}"
+                    TapCommand="{Binding BackToListCommand}" />
+            </Grid>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
