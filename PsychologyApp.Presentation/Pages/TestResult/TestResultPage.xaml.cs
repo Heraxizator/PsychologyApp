@@ -7,7 +7,7 @@ public partial class TestResultPage : ContentPage
 {
     public TestResultPage(ITestResultViewModelFactory factory, TestResultInfo result)
     {
-        BindingContext = factory.Create(this, result);
         InitializeComponent();
+        BindingContext = factory.Create(this, result);
     }
 }
