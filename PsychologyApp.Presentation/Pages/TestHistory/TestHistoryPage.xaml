@@ -10,10 +10,12 @@
              x:DataType="vm:TestHistoryViewModel"
              Shell.NavBarIsVisible="True"
              Title="{Binding PageTitle}">
+
+    <ContentPage.Behaviors>
+        <behaviors:PageAnalyticsBehavior TestId="{Binding TestFlowId}" />
+    </ContentPage.Behaviors>
+
     <Grid Margin="{StaticResource LayoutPageMarginThickness}" RowDefinitions="*,Auto">
-        <Grid.Behaviors>
-            <behaviors:PageAnalyticsBehavior TestId="{Binding TestFlowId}" />
-        </Grid.Behaviors>
         <ScrollView Grid.Row="0" IsVisible="{Binding IsDone}">
             <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
                 <testUi:TestScoreTrendChartView

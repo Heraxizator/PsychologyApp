@@ -10,13 +10,14 @@
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
+    <ContentPage.Behaviors>
+        <behaviors:PageAnalyticsBehavior TestId="{Binding TestFlowId}" />
+    </ContentPage.Behaviors>
+
     <Grid
         Padding="{StaticResource LayoutPageMarginThickness}"
         RowDefinitions="Auto,*,Auto"
         RowSpacing="{StaticResource LayoutSpacing}">
-        <Grid.Behaviors>
-            <behaviors:PageAnalyticsBehavior TestId="{Binding TestFlowId}" />
-        </Grid.Behaviors>
 
         <VerticalStackLayout Grid.Row="0" Spacing="8">
             <ui:NavigationBarSimpleView

@@ -11,6 +11,10 @@
              x:DataType="vm:TestsListViewModel"
              Title="{Binding PageTitle}">
 
+    <ContentPage.Behaviors>
+        <behaviors:PageAnalyticsBehavior />
+    </ContentPage.Behaviors>
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="{Binding ProfileToolbarText}" Command="{Binding OpenProfileCommand}" />
     </ContentPage.ToolbarItems>
@@ -18,9 +22,6 @@
     <Grid
         VerticalOptions="FillAndExpand"
         HorizontalOptions="FillAndExpand">
-        <Grid.Behaviors>
-            <behaviors:PageAnalyticsBehavior />
-        </Grid.Behaviors>
 
         <CollectionView
             x:Name="TestsCollectionView"
