@@ -12,10 +12,11 @@
              Title="{Binding PageTitle}"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors">
 
+    <ContentPage.Behaviors>
+        <behaviors:PageAnalyticsBehavior />
+    </ContentPage.Behaviors>
+
     <Grid RowDefinitions="Auto,*,Auto" Padding="{StaticResource LayoutPageMarginThickness}" RowSpacing="{StaticResource LayoutSpacing}">
-        <Grid.Behaviors>
-            <behaviors:PageAnalyticsBehavior />
-        </Grid.Behaviors>
         <VerticalStackLayout Grid.Row="0" Spacing="8">
             <ui:NavigationBarSimpleView
                 TitleText="{Binding PageTitle}"

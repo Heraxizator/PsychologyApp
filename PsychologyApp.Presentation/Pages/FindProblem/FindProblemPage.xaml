@@ -11,10 +11,13 @@
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
+    <ContentPage.Behaviors>
+        <behaviors:PageAnalyticsBehavior TestId="{Binding TestFlowId}" />
+    </ContentPage.Behaviors>
+
     <Grid RowDefinitions="Auto,*,Auto" VerticalOptions="Fill">
         <Grid.Behaviors>
             <behaviors:StaggerChildrenBehavior />
-            <behaviors:PageAnalyticsBehavior TestId="{Binding TestFlowId}" />
         </Grid.Behaviors>
 
         <VerticalStackLayout
