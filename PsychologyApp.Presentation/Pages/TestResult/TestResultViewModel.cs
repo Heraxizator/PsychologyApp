@@ -1,4 +1,7 @@
-﻿using PsychologyApp.Application.UserProgress;
+﻿using PsychologyApp.Application.Models;
+using PsychologyApp.Application.Models.Tests;
+using PsychologyApp.Application.UserProgress;
+using PsychologyApp.Domain.Tests;
 using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Features.RunTests;
@@ -62,6 +65,9 @@ public partial class TestResultViewModel : BaseViewModel
     public string TrendText { get; private set; } = string.Empty;
     public TestTrendKind TrendKind { get; private set; } = TestTrendKind.None;
     public bool HasTrendBadge { get; private set; }
+    public IReadOnlyList<TestScoreChartPoint> ChartPoints { get; private set; } = [];
+    public bool HasTrendChart { get; private set; }
+    public string ChartTitle => AppStrings.TestHistoryTrendTitle;
     public string TestFlowId => _result.TestId ?? string.Empty;
 
     private void ApplyResult()
@@ -89,21 +95,36 @@ public partial class TestResultViewModel : BaseViewModel
             return;
         }
 
-        TestTrendSnapshot? snapshot = await _trendResolver.LoadLatestTrendAsync(
-            _result.TestId,
-            _userProgressService);
+        IReadOnlyList<TestResultDTO> history = await _userProgressService.GetTestResultHistoryAsync(_result.TestId, 50);
 
-        if (snapshot is null)
+        TestTrendSnapshot? snapshot = null;
+        if (history.Count >= 2)
         {
-            return;
+            ScoreDirection direction = await _trendResolver.ResolveDirectionAsync(_result.TestId);
+            TestTrendKind kind = _trendResolver.Compare(history[0].Score, history[1].Score, direction);
+            snapshot = new TestTrendSnapshot(kind, TestTrendComparer.ToLabel(kind), kind is not TestTrendKind.None);
         }
+
+        IReadOnlyList<TestScoreChartPoint> chartPoints = _trendResolver.BuildChartPoints(history);
 
         await UiThread.RunAsync(() =>
         {
-            TrendKind = snapshot.Kind;
-            TrendText = snapshot.Label;
-            HasTrendBadge = snapshot.HasBadge;
-            Notify(nameof(TrendKind), nameof(TrendText), nameof(HasTrendBadge));
+            if (snapshot is not null)
+            {
+                TrendKind = snapshot.Kind;
+                TrendText = snapshot.Label;
+                HasTrendBadge = snapshot.HasBadge;
+            }
+
+            ChartPoints = chartPoints;
+            HasTrendChart = chartPoints.Count >= 2;
+            Notify(
+                nameof(TrendKind),
+                nameof(TrendText),
+                nameof(HasTrendBadge),
+                nameof(ChartPoints),
+                nameof(HasTrendChart),
+                nameof(ChartTitle));
         });
     }
 }

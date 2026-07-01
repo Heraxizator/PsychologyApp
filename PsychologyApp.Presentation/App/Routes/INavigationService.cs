@@ -35,5 +35,6 @@ public interface INavigationService
         QuestionnaireResultDetail? detail = null);
     Task GoToTestsTabAsync();
     Task GoToQuotesTabAsync();
+    Task GoToPracticeCompletionAsync(int streakDays);
     Task ShowOnboardingAsync();
 }

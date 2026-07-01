@@ -83,7 +83,6 @@ public partial class CreatedViewModel
         await _sessionCompletionService.CompleteStandardSessionAsync(
             _userProgressService,
             _navigationService,
-            _dialogService,
             $"custom_{_techniqueId}",
             ModuleName,
             PageName,

@@ -1,5 +1,7 @@
 namespace PsychologyApp.Presentation.Widgets.Test;
 
+using PsychologyApp.Domain.Tests;
+
 public partial class TestResultHeroView : ContentView
 {
     public TestResultHeroView()
@@ -18,6 +20,9 @@ public partial class TestResultHeroView : ContentView
 
     public static readonly BindableProperty HasTrendBadgeProperty =
         BindableProperty.Create(nameof(HasTrendBadge), typeof(bool), typeof(TestResultHeroView), false);
+
+    public static readonly BindableProperty TrendKindProperty =
+        BindableProperty.Create(nameof(TrendKind), typeof(TestTrendKind), typeof(TestResultHeroView), TestTrendKind.None);
 
     public string ScoreTitle
     {
@@ -41,5 +46,11 @@ public partial class TestResultHeroView : ContentView
     {
         get => (bool)GetValue(HasTrendBadgeProperty);
         set => SetValue(HasTrendBadgeProperty, value);
+    }
+
+    public TestTrendKind TrendKind
+    {
+        get => (TestTrendKind)GetValue(TrendKindProperty);
+        set => SetValue(TrendKindProperty, value);
     }
 }

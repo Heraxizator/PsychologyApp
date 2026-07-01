@@ -144,11 +144,9 @@ public sealed class PracticeSessionViewModelTests
     private static ListTechniqueSessionHelper CreateSessionHelper(IUserProgressService progress)
     {
         Mock<INavigationService> navigation = new();
-        Mock<IDialogService> dialog = new();
         return new ListTechniqueSessionHelper(
             new TechniqueSessionCompletionService(Mock.Of<IPracticeReminderCoordinator>()),
             progress,
-            navigation.Object,
-            dialog.Object);
+            navigation.Object);
     }
 }

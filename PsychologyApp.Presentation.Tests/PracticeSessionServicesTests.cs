@@ -6,7 +6,6 @@ using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
-using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Services.Notifications;
 using System.Text.Json;
@@ -22,21 +21,13 @@ public sealed class TechniqueSessionCompletionServiceTests
         Mock<IUserProgressService> progress = new();
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(3);
         Mock<INavigationService> navigation = new();
-        navigation.Setup(n => n.GoBackAsync()).Returns(Task.CompletedTask);
-        Mock<IDialogService> dialog = new();
-        dialog.Setup(d => d.AskAsync(
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<string>()))
-            .ReturnsAsync(false);
+        navigation.Setup(n => n.GoToPracticeCompletionAsync(It.IsAny<int>())).Returns(Task.CompletedTask);
         TechniqueSessionCompletionService service = new(Mock.Of<IPracticeReminderCoordinator>());
         DateTime startedAt = DateTime.UtcNow.AddMinutes(-2);
 
         await service.CompleteStandardSessionAsync(
             progress.Object,
             navigation.Object,
-            dialog.Object,
             "Paper",
             "Practice",
             "Paper technique",
@@ -51,14 +42,7 @@ public sealed class TechniqueSessionCompletionServiceTests
                 It.IsAny<CancellationToken>()),
             Times.Once);
         progress.Verify(p => p.DeleteSessionDraftAsync("Paper", It.IsAny<CancellationToken>()), Times.Once);
-        dialog.Verify(
-            d => d.AskAsync(
-                AppStrings.PracticeCompletedTitle,
-                AppStrings.PracticeCompletedBody(3),
-                AppStrings.PracticeGoHomeButton,
-                AppStrings.PracticeMoreButton),
-            Times.Once);
-        navigation.Verify(n => n.GoBackAsync(), Times.Once);
+        navigation.Verify(n => n.GoToPracticeCompletionAsync(3), Times.Once);
     }
 
     [Fact]
@@ -67,20 +51,12 @@ public sealed class TechniqueSessionCompletionServiceTests
         Mock<IUserProgressService> progress = new();
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
         Mock<INavigationService> navigation = new();
-        navigation.Setup(n => n.GoToRootAsync()).Returns(Task.CompletedTask);
-        Mock<IDialogService> dialog = new();
-        dialog.Setup(d => d.AskAsync(
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<string>()))
-            .ReturnsAsync(true);
+        navigation.Setup(n => n.GoToPracticeCompletionAsync(It.IsAny<int>())).Returns(Task.CompletedTask);
         TechniqueSessionCompletionService service = new(Mock.Of<IPracticeReminderCoordinator>());
 
         await service.CompleteStandardSessionAsync(
             progress.Object,
             navigation.Object,
-            dialog.Object,
             "custom_5",
             "Practice",
             "Custom",
@@ -88,7 +64,7 @@ public sealed class TechniqueSessionCompletionServiceTests
             deleteDraft: false);
 
         progress.Verify(p => p.DeleteSessionDraftAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Never);
-        navigation.Verify(n => n.GoToRootAsync(), Times.Once);
+        navigation.Verify(n => n.GoToPracticeCompletionAsync(1), Times.Once);
     }
 }
 

@@ -18,6 +18,7 @@ using PsychologyApp.Presentation.Pages.ProfileUser;
 using PsychologyApp.Presentation.Pages.ReviewForm;
 using PsychologyApp.Presentation.Pages.TechniqueSession;
 using PsychologyApp.Presentation.Pages.TechniqueDesigner;
+using PsychologyApp.Presentation.Pages.PracticeCompletion;
 using PsychologyApp.Presentation.Pages.TestsList;
 using PsychologyApp.Presentation.Pages.PhysicsSearch;
 using PsychologyApp.Presentation.Pages.MusicPlayer;
@@ -49,4 +50,5 @@ public interface IPageFactory
     CreatedPage CreateCreatedPage(long techniqueId);
     DesignerPage CreateDesignerPage(long techniqueId);
     TechniqueSessionPage CreateTechniqueSessionPage(TechniqueId techniqueId, INavigation hostNavigation);
+    PracticeCompletionPage CreatePracticeCompletionPage(int streakDays);
 }

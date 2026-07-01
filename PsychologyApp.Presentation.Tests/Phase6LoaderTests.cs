@@ -3,7 +3,6 @@ using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Shared.Navigation;
-using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Services.Notifications;
 using PsychologyApp.Presentation.Features.RunTests;
@@ -19,20 +18,12 @@ public sealed class ListTechniqueSessionHelperTests
         Mock<IUserProgressService> progress = new();
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(2);
         Mock<INavigationService> navigation = new();
-        navigation.Setup(n => n.GoBackAsync()).Returns(Task.CompletedTask);
-        Mock<IDialogService> dialog = new();
-        dialog.Setup(d => d.AskAsync(
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<string>()))
-            .ReturnsAsync(false);
+        navigation.Setup(n => n.GoToPracticeCompletionAsync(It.IsAny<int>())).Returns(Task.CompletedTask);
 
         ListTechniqueSessionHelper helper = new(
             new TechniqueSessionCompletionService(Mock.Of<IPracticeReminderCoordinator>()),
             progress.Object,
-            navigation.Object,
-            dialog.Object);
+            navigation.Object);
         DateTime startedAt = DateTime.UtcNow.AddMinutes(-1);
 
         await helper.CompleteAsync(
