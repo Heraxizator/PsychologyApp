@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Options;
 using Moq;
 using PsychologyApp.Application.Configuration;
+using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Features.SendReviewForm;
 using Xunit;
@@ -44,5 +45,6 @@ public sealed class FormViewModelTests
             {
                 ReviewEmailAddress = email,
                 ReviewSmsRecipient = sms
-            }));
+            }),
+            Mock.Of<INavigationService>());
 }

@@ -442,6 +442,7 @@ public static partial class AppStrings
     public static string LoadError => T("Ошибка при загрузке", "Failed to load");
 
     public static string ProfileTitle => T("Профиль", "Profile");
+    public static string ProfileLoadingText => T("Загрузка профиля", "Loading profile");
     public static string ProfileUserLabel => T("Пользователь", "User");
     public static string ProfileStandardUser => T("Стандартный", "Standard");
     public static string ProfileTechniquesCompleted => T("Пройдено техник", "Techniques completed");

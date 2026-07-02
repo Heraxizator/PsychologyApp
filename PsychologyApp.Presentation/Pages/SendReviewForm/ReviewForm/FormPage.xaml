@@ -16,12 +16,16 @@
                 <behaviors:StaggerChildrenBehavior />
             </VerticalStackLayout.Behaviors>
 
+            <ui:NavigationBarSimpleView
+                TitleText="{Binding PageTitle}"
+                BackCommand="{Binding BackCommand}" />
+
             <ui:TextBoxView
                 HeaderText="{Binding ExplanationHeader}"
                 BodyText="{Binding ExplanationBody}" />
 
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <VerticalStackLayout Spacing="8">
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                     <Label Text="{Binding FormSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
                     <ui:TextEditorView
                         Variant="Plain"

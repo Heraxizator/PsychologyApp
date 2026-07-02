@@ -6,6 +6,7 @@ public partial class MusicPlayerViewModel
 {
     public string PageTitle => AppStrings.CleanerPrayersPage;
     public string SearchPlaceholder => AppStrings.CleanerSearchPlaceholder;
+    public string LoadingText => AppStrings.CleanerSearchingPrayers;
     public string NoPrayersFoundText => AppStrings.CleanerNoPrayersFound;
     public string NowPlayingLabel => AppStrings.CleanerNowPlaying;
     public string BufferingText => AppStrings.CleanerPreparingAudio;
@@ -18,6 +19,7 @@ public partial class MusicPlayerViewModel
         Notify(
             nameof(PageTitle),
             nameof(SearchPlaceholder),
+            nameof(LoadingText),
             nameof(NoPrayersFoundText),
             nameof(NowPlayingLabel),
             nameof(BufferingText),

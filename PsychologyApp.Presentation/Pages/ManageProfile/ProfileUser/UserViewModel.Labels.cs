@@ -6,6 +6,7 @@ namespace PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
 public partial class UserViewModel
 {
     public string PageTitle => AppStrings.ProfileTitle;
+    public string LoadingText => AppStrings.ProfileLoadingText;
     public string OptionsLabel => AppStrings.OptionsTitle;
     public string SettingsCardTitle => AppStrings.OptionsSettingsTitle;
     public string SettingsCardSubtitle => AppStrings.ProfileSettingsCardSubtitle;
@@ -41,6 +42,7 @@ public partial class UserViewModel
     {
         Notify(
             nameof(PageTitle),
+            nameof(LoadingText),
             nameof(OptionsLabel),
             nameof(SettingsCardTitle),
             nameof(SettingsCardSubtitle),

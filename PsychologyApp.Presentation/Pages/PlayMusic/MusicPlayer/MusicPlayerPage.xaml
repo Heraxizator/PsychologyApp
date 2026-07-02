@@ -6,6 +6,7 @@
              xmlns:clean="clr-namespace:PsychologyApp.Presentation.Entities.Audio"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:cleanUi="clr-namespace:PsychologyApp.Presentation.Widgets.MusicListCard"
+             xmlns:audioUi="clr-namespace:PsychologyApp.Presentation.Widgets.Audio"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:DataType="vm:MusicPlayerViewModel"
              x:Name="PageRoot"
@@ -22,7 +23,7 @@
             Margin="{StaticResource LayoutTabPageMarginThickness}"
             RowDefinitions="Auto,*,Auto">
 
-            <VerticalStackLayout Grid.Row="0" Spacing="10" Margin="0,0,0,8">
+            <VerticalStackLayout Grid.Row="0" Spacing="{StaticResource PracticeListItemSpacing}" Margin="0,0,0,8">
                 <ui:TextEntryView
                     PlaceholderText="{Binding SearchPlaceholder}"
                     BodyText="{Binding SearchText, Mode=TwoWay}" />
@@ -74,7 +75,7 @@
                 IsVisible="{Binding HasActiveTrack}"
                 Style="{StaticResource BrandCardStyle}"
                 Padding="14,12">
-                <VerticalStackLayout Spacing="10">
+                <VerticalStackLayout Spacing="{StaticResource PlayerControlSpacing}">
                     <Slider
                         x:Name="ProgressSlider"
                         Minimum="0"
@@ -86,7 +87,7 @@
                         MaximumTrackColor="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}"
                         ThumbColor="{DynamicResource Primary}" />
 
-                    <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto" ColumnSpacing="10">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource PlayerControlSpacing}">
                         <Border
                             Grid.Column="0"
                             WidthRequest="48"
@@ -122,74 +123,12 @@
                                 LineBreakMode="TailTruncation" />
                         </VerticalStackLayout>
 
-                        <Border
+                        <audioUi:MusicTransportControlsView
                             Grid.Column="2"
-                            Style="{StaticResource PlayerTransportButtonStyle}">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding PlayPreviousCommand}" />
-                            </Border.GestureRecognizers>
-                            <ui:MaterialIconView
-                                IconName="SkipPrevious"
-                                IconSize="24"
-                                IconColor="{DynamicResource Primary}"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center" />
-                        </Border>
-
-                        <Border
-                            Grid.Column="3"
-                            Style="{StaticResource PlayerPlayButtonStyle}">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding TogglePlayPauseCommand}" />
-                            </Border.GestureRecognizers>
-                            <Grid>
-                                <ui:MaterialIconView
-                                    IconName="PlayArrow"
-                                    IconSize="28"
-                                    IconColor="White"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center">
-                                    <ui:MaterialIconView.Triggers>
-                                        <DataTrigger
-                                            Binding="{Binding IsPlaying}"
-                                            TargetType="ui:MaterialIconView"
-                                            Value="True">
-                                            <Setter Property="IsVisible" Value="False" />
-                                        </DataTrigger>
-                                    </ui:MaterialIconView.Triggers>
-                                </ui:MaterialIconView>
-                                <ui:MaterialIconView
-                                    IconName="Pause"
-                                    IconSize="28"
-                                    IconColor="White"
-                                    IsVisible="False"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center">
-                                    <ui:MaterialIconView.Triggers>
-                                        <DataTrigger
-                                            Binding="{Binding IsPlaying}"
-                                            TargetType="ui:MaterialIconView"
-                                            Value="True">
-                                            <Setter Property="IsVisible" Value="True" />
-                                        </DataTrigger>
-                                    </ui:MaterialIconView.Triggers>
-                                </ui:MaterialIconView>
-                            </Grid>
-                        </Border>
-
-                        <Border
-                            Grid.Column="4"
-                            Style="{StaticResource PlayerTransportButtonStyle}">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding PlayNextCommand}" />
-                            </Border.GestureRecognizers>
-                            <ui:MaterialIconView
-                                IconName="SkipNext"
-                                IconSize="24"
-                                IconColor="{DynamicResource Primary}"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center" />
-                        </Border>
+                            PlayPreviousCommand="{Binding PlayPreviousCommand}"
+                            TogglePlayPauseCommand="{Binding TogglePlayPauseCommand}"
+                            PlayNextCommand="{Binding PlayNextCommand}"
+                            IsPlaying="{Binding IsPlaying}" />
                     </Grid>
 
                     <Grid ColumnDefinitions="*,Auto">
@@ -209,6 +148,17 @@
                 </VerticalStackLayout>
             </Border>
         </Grid>
+
+        <ui:ProgressBarView
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsLoadingOverlayVisible}"
+            IsLoading="{Binding IsLoadingOverlayVisible}"
+            ProgressText="{Binding LoadingText}">
+            <ui:ProgressBarView.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Cancel}" />
+            </ui:ProgressBarView.GestureRecognizers>
+        </ui:ProgressBarView>
 
         <ui:RetryView
             VerticalOptions="Center"

@@ -60,12 +60,15 @@ public partial class MusicPlayerViewModel : BaseViewModel
         PlayNextCommand = new AsyncCommand(PlayNextAsync);
         PlayPreviousCommand = new AsyncCommand(PlayPreviousAsync);
         SelectCategoryCommand = new Command<string?>(SelectCategory);
+        Cancel = new Command(CancelProgress);
         Reload = new AsyncCommand(() =>
         {
+            SetInit();
             InitializePlaylist();
             return Task.CompletedTask;
         });
 
+        SetInit();
         InitializePlaylist();
     }
 }

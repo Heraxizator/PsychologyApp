@@ -17,7 +17,7 @@
     </ContentPage.Behaviors>
 
     <Grid RowDefinitions="Auto,*,Auto" Padding="{StaticResource LayoutPageMarginThickness}" RowSpacing="{StaticResource LayoutSpacing}">
-        <VerticalStackLayout Grid.Row="0" Spacing="8">
+        <VerticalStackLayout Grid.Row="0" Spacing="{StaticResource CompactSpacing}">
             <ui:NavigationBarSimpleView
                 TitleText="{Binding PageTitle}"
                 BackCommand="{Binding Finish}" />
@@ -63,7 +63,7 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <VerticalStackLayout Grid.Row="2" IsVisible="{Binding IsFinish}" Spacing="8">
+        <VerticalStackLayout Grid.Row="2" IsVisible="{Binding IsFinish}" Spacing="{StaticResource CompactSpacing}">
             <ui:ButtonView
                 BodyText="{Binding RestartButtonText}"
                 TapCommand="{Binding Restart}" />

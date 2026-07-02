@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser.UserPage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
-             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser"
              xmlns:technique="clr-namespace:PsychologyApp.Presentation.Entities.Technique"
              xmlns:profile="clr-namespace:PsychologyApp.Presentation.Entities.Profile"
@@ -34,11 +33,12 @@
                         <Border
                             Grid.Column="0"
                             Style="{StaticResource ProfileAvatarBorderStyle}">
-                            <Label
+                            <ui:MaterialIconView
+                                IconName="Person"
+                                IconSize="30"
+                                IconColor="{DynamicResource Primary}"
                                 HorizontalOptions="Center"
-                                VerticalOptions="Center"
-                                Text="{mi:Material Icon=Person, IconSize=30}"
-                                TextColor="{DynamicResource Primary}" />
+                                VerticalOptions="Center" />
                         </Border>
                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
                             <Label Style="{StaticResource PageTitleStyle}" Text="{Binding UserLabel}" />
@@ -48,8 +48,8 @@
                 </Border>
 
                 <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                    <VerticalStackLayout Spacing="8">
-                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                    <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="{StaticResource CompactSpacing}">
                             <ui:MetricTileView
                                 Grid.Column="0"
                                 ValueText="{Binding TechniquesCompletedCount}"
@@ -73,12 +73,12 @@
                 </Border>
 
                 <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                    <VerticalStackLayout Spacing="8">
+                    <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                         <Label Text="{Binding PracticeHistoryTitle}" Style="{StaticResource SectionTitleStyle}" />
-                        <Label
+                        <ui:EmptyStateView
                             IsVisible="{Binding ShowPracticeHistoryEmpty}"
-                            Text="{Binding PracticeHistoryEmpty}"
-                            Style="{StaticResource BodyStyle}" />
+                            BodyText="{Binding PracticeHistoryEmpty}"
+                            IconName="History" />
                         <VerticalStackLayout
                             IsVisible="{Binding HasPracticeHistory}"
                             BindableLayout.ItemsSource="{Binding PracticeHistory}"
@@ -194,5 +194,12 @@
             FailedText="{Binding LoadErrorText}"
             RetryText="{Binding RetryText}"
             RetryCommand="{Binding ReloadQuotesCommand}" />
+
+        <ui:ProgressBarView
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsLoadingOverlayVisible}"
+            IsLoading="{Binding IsLoadingOverlayVisible}"
+            ProgressText="{Binding LoadingText}" />
     </Grid>
 </ContentPage>

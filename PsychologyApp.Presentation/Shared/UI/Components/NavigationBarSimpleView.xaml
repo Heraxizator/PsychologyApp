@@ -2,14 +2,19 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:Class="PsychologyApp.Presentation.Shared.UI.Components.NavigationBarSimpleView">
+
+    <ContentView.Behaviors>
+        <behaviors:PressFeedbackBehavior AttachToTappableLabels="True" />
+    </ContentView.Behaviors>
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
             <Grid
                 Margin="{StaticResource NavBarBottomMargin}"
                 ColumnDefinitions="44,*,44"
-                ColumnSpacing="8"
+                ColumnSpacing="{StaticResource CompactSpacing}"
                 MinimumHeightRequest="48">
                 <BoxView
                     Grid.ColumnSpan="3"
@@ -29,7 +34,9 @@
                     Text="{TemplateBinding TitleText}"
                     Style="{StaticResource NavTitleStyle}"
                     HorizontalOptions="Center"
-                    HorizontalTextAlignment="Center" />
+                    HorizontalTextAlignment="Center"
+                    LineBreakMode="TailTruncation"
+                    MaxLines="1" />
             </Grid>
         </ControlTemplate>
     </ContentView.ControlTemplate>
