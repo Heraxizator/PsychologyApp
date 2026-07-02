@@ -1,15 +1,14 @@
-﻿using PsychologyApp.Presentation.Entities.Test;
-using PsychologyApp.Presentation.Pages.TestResult;
-using PsychologyApp.Presentation.Pages.AlternativeTest;
-using PsychologyApp.Presentation.Pages.StandardTest;
-using PsychologyApp.Presentation.Pages.Question;
-using PsychologyApp.Presentation.Pages.FindProblem;
-using PsychologyApp.Presentation.Pages.TestHistory;
-using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Entities.Test;
+using PsychologyApp.Presentation.Features.RunTests.DependencyInjection;
+using PsychologyApp.Presentation.Pages.RunTests.TestResult;
+using PsychologyApp.Presentation.Pages.RunTests.AlternativeTest;
+using PsychologyApp.Presentation.Pages.RunTests.StandardTest;
+using PsychologyApp.Presentation.Pages.RunTests.Question;
+using PsychologyApp.Presentation.Pages.RunTests.FindProblem;
+using PsychologyApp.Presentation.Pages.RunTests.TestHistory;
+using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
-using PsychologyApp.Presentation.App.Providers;
-using PsychologyApp.Presentation.Pages.TestsList;
+using PsychologyApp.Presentation.Pages.RunTests.TestsList;
 
 namespace PsychologyApp.Presentation.Features.RunTests;
 

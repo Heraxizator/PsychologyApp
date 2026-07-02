@@ -1,5 +1,7 @@
+using System.Text.Json.Serialization.Metadata;
 using Microsoft.Extensions.Logging;
 using PsychologyApp.Application.UserProgress;
+using PsychologyApp.Presentation.Features.RunTechniqueSession.Serialization;
 using PsychologyApp.Presentation.Shared.Common;
 
 namespace PsychologyApp.Presentation.Features.RunTechniqueSession;
@@ -12,12 +14,14 @@ public interface IListSessionDraft<TDraftItem>
 public class ListSessionDraftCoordinator<TItem, TDraft, TDraftItem>
     where TDraft : IListSessionDraft<TDraftItem>, new()
 {
+    private readonly JsonTypeInfo<TDraft> _draftTypeInfo;
     private readonly ILogger? _logger;
     private string _techniqueKey = string.Empty;
     private IUserProgressService _userProgressService = default!;
 
-    protected ListSessionDraftCoordinator(ILogger? logger = null)
+    protected ListSessionDraftCoordinator(JsonTypeInfo<TDraft> draftTypeInfo, ILogger? logger = null)
     {
+        _draftTypeInfo = draftTypeInfo;
         _logger = logger;
     }
 
@@ -32,9 +36,10 @@ public class ListSessionDraftCoordinator<TItem, TDraft, TDraftItem>
         Func<TDraftItem, TItem> map,
         Action<bool> setHasItems)
     {
-        TDraft? draft = await SessionDraftStore.LoadAsync<TDraft>(
+        TDraft? draft = await SessionDraftStore.LoadAsync(
             _userProgressService,
             _techniqueKey,
+            _draftTypeInfo,
             _logger);
         if (draft?.Items is null)
         {
@@ -56,7 +61,8 @@ public class ListSessionDraftCoordinator<TItem, TDraft, TDraftItem>
         SessionDraftStore.SaveAsync(
             _userProgressService,
             _techniqueKey,
-            new TDraft { Items = source.Select(map).ToList() });
+            new TDraft { Items = source.Select(map).ToList() },
+            _draftTypeInfo);
 }
 
 public sealed class PaperListDraft : IListSessionDraft<PaperListDraftItem>
@@ -71,7 +77,9 @@ public sealed class PaperListDraftItem
 }
 
 public sealed class PaperListDraftCoordinator(ILogger<PaperListDraftCoordinator> logger)
-    : ListSessionDraftCoordinator<Models.Practice.Techniques.Paper, PaperListDraft, PaperListDraftItem>(logger);
+    : ListSessionDraftCoordinator<Models.Practice.Techniques.Paper, PaperListDraft, PaperListDraftItem>(
+        SessionDraftJsonSerializerContext.Default.PaperListDraft,
+        logger);
 
 public sealed class PolarityListDraft : IListSessionDraft<PolarityListDraftItem>
 {
@@ -86,4 +94,6 @@ public sealed class PolarityListDraftItem
 }
 
 public sealed class PolarityListDraftCoordinator(ILogger<PolarityListDraftCoordinator> logger)
-    : ListSessionDraftCoordinator<Models.Practice.Techniques.Polarity, PolarityListDraft, PolarityListDraftItem>(logger);
+    : ListSessionDraftCoordinator<Models.Practice.Techniques.Polarity, PolarityListDraft, PolarityListDraftItem>(
+        SessionDraftJsonSerializerContext.Default.PolarityListDraft,
+        logger);

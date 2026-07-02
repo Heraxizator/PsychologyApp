@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<tests:LuscherTestPageBase xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.RunTests.StandardTest.StandardTestPage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.RunTests.LuscherTest"
+             xmlns:tests="clr-namespace:PsychologyApp.Presentation.Pages.RunTests.LuscherTest"
+             xmlns:grid="clr-namespace:PsychologyApp.Presentation.Widgets.LuscherColorGrid"
+             xmlns:testUi="clr-namespace:PsychologyApp.Presentation.Widgets.Test"
+             xmlns:models="clr-namespace:PsychologyApp.Presentation.Pages.RunTests.LuscherTest"
+             x:DataType="vm:LuscherTestViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors">
+
+    <ContentPage.Behaviors>
+        <behaviors:PageAnalyticsBehavior />
+    </ContentPage.Behaviors>
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="{StaticResource LayoutPageMarginThickness}" RowSpacing="{StaticResource LayoutSpacing}">
+        <ui:NavigationBarSimpleView
+            Grid.Row="0"
+            TitleText="{Binding PageTitle}"
+            BackCommand="{Binding Finish}" />
+
+        <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
+                <VerticalStackLayout x:Name="StartSection" IsVisible="{Binding IsStart}" Spacing="{StaticResource LayoutSpacing}">
+                    <VerticalStackLayout.Behaviors>
+                        <behaviors:RevealOnAppearingBehavior />
+                    </VerticalStackLayout.Behaviors>
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding ColorInstruction}"
+                        Style="{StaticResource SectionTitleStyle}" />
+                    <grid:LuscherColorGridView />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout x:Name="FinishSection" IsVisible="{Binding IsFinish}" Spacing="{StaticResource LayoutSpacing}">
+                    <VerticalStackLayout.Behaviors>
+                        <behaviors:RevealOnAppearingBehavior />
+                    </VerticalStackLayout.Behaviors>
+
+                    <VerticalStackLayout
+                        Spacing="{StaticResource ListItemSpacing}"
+                        BindableLayout.ItemsSource="{Binding ResultItems}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="models:ResultItem">
+                                <testUi:TestResultMetricCardView
+                                    MetricName="{Binding PropertyName}"
+                                    MetricValue="{Binding PropertyValue}"
+                                    MetricDescription="{Binding PropertyText}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <VerticalStackLayout Grid.Row="2" IsVisible="{Binding IsFinish}" Spacing="8">
+            <ui:ButtonView
+                BodyText="{Binding RestartButtonText}"
+                TapCommand="{Binding Restart}" />
+            <ui:ButtonView
+                Variant="Secondary"
+                BodyText="{Binding BackToListButtonText}"
+                TapCommand="{Binding BackToListCommand}" />
+        </VerticalStackLayout>
+    </Grid>
+</tests:LuscherTestPageBase>

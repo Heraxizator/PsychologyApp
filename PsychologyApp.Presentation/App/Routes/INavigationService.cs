@@ -1,4 +1,5 @@
 ﻿using PsychologyApp.Presentation.Entities.Test;
+using PsychologyApp.Presentation.Shared.Navigation;
 
 namespace PsychologyApp.Presentation.App.Routes;
 
@@ -25,14 +26,15 @@ public interface INavigationService
     Task GoToAlternativeTestAsync();
     Task GoToTestHistoryAsync(string testId, string testTitle);
     Task GoToTestsListAsync();
-    Task GoToTestResultAsync(
+    Task<NavigationRunStatus> GoToTestResultAsync(
         int score,
         string interpretation,
         TechniqueId? recommendedTechnique = null,
         string? testId = null,
         string? interpretationDetail = null,
         string? analyzerId = null,
-        QuestionnaireResultDetail? detail = null);
+        QuestionnaireResultDetail? detail = null,
+        CancellationToken cancellationToken = default);
     Task GoToTestsTabAsync();
     Task GoToQuotesTabAsync();
     Task GoToPracticeCompletionAsync(int streakDays);

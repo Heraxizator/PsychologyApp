@@ -2,7 +2,7 @@
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Features.RunTests;
-using PsychologyApp.Presentation.Models.Practice.Techniques;
+using PsychologyApp.Presentation.Shared.Navigation;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
@@ -50,30 +50,82 @@ public sealed class TestRunCoordinatorTests
         progress.Verify(p => p.SaveTestResultAsync(
             "beck",
             2,
-            It.Is<string>(summary => summary.Contains('2') || summary.Contains("РґРµРїСЂРµСЃСЃ", StringComparison.OrdinalIgnoreCase) || summary.Contains("depress", StringComparison.OrdinalIgnoreCase)),
+            It.Is<string>(summary => summary.Contains('2') || summary.Contains("depress", StringComparison.OrdinalIgnoreCase)),
             It.Is<string?>(json => !string.IsNullOrWhiteSpace(json)),
             It.IsAny<CancellationToken>()), Times.Once);
         Assert.Equal(2, navigationService.LastScore);
         Assert.NotNull(navigationService.LastDetail);
+        Assert.Equal(1, navigationService.NavigationAttempts);
+    }
+
+    [Fact]
+    public async Task CompleteQuestionnaireAsync_ThrowsWhenNavigationFails()
+    {
+        var navigation = new Mock<INavigation>();
+        DroppingNavigationService navigationService = new(navigation.Object);
+        var progress = new Mock<IUserProgressService>();
+        progress
+            .Setup(p => p.SaveTestResultAsync(
+                It.IsAny<string>(),
+                It.IsAny<int?>(),
+                It.IsAny<string>(),
+                It.IsAny<string?>(),
+                It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+
+        TestRunCoordinator coordinator = TestRunTestHelpers.CreateCoordinator(new FakeTestCatalogService());
+        List<Question> questions =
+        [
+            new()
+            {
+                Answers = [new Answer { Ball = 1, Selected = true }]
+            }
+        ];
+
+        await Assert.ThrowsAsync<TestCompletionNavigationException>(() =>
+            coordinator.CompleteQuestionnaireAsync(
+                new QuestionnaireCompletionRequest(
+                    questions,
+                    new TestSessionInfo { TestId = "beck", AnalyzerId = "beck" },
+                    DateTime.UtcNow),
+                progress.Object,
+                navigationService));
     }
 
     private sealed class RecordingNavigationService(INavigation navigation) : TestNavigationService(navigation)
     {
         public int? LastScore { get; private set; }
         public QuestionnaireResultDetail? LastDetail { get; private set; }
+        public int NavigationAttempts { get; private set; }
 
-        public override Task GoToTestResultAsync(
+        public override Task<NavigationRunStatus> GoToTestResultAsync(
             int score,
             string interpretation,
             TechniqueId? recommendedTechnique = null,
             string? testId = null,
             string? interpretationDetail = null,
             string? analyzerId = null,
-            QuestionnaireResultDetail? detail = null)
+            QuestionnaireResultDetail? detail = null,
+            CancellationToken cancellationToken = default)
         {
+            NavigationAttempts++;
             LastScore = score;
             LastDetail = detail;
-            return Task.CompletedTask;
+            return Task.FromResult(NavigationRunStatus.Completed);
         }
+    }
+
+    private sealed class DroppingNavigationService(INavigation navigation) : TestNavigationService(navigation)
+    {
+        public override Task<NavigationRunStatus> GoToTestResultAsync(
+            int score,
+            string interpretation,
+            TechniqueId? recommendedTechnique = null,
+            string? testId = null,
+            string? interpretationDetail = null,
+            string? analyzerId = null,
+            QuestionnaireResultDetail? detail = null,
+            CancellationToken cancellationToken = default) =>
+            Task.FromResult(NavigationRunStatus.Failed);
     }
 }

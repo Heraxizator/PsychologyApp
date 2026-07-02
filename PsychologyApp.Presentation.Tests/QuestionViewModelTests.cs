@@ -1,7 +1,11 @@
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
+using PsychologyApp.Presentation.Pages.RunTests.Question;
 using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Entities.Test;
@@ -16,6 +20,7 @@ public sealed class QuestionViewModelTests
     private static readonly Mock<ITestCatalogService> CatalogService = new();
     private static readonly QuestionnaireDetailBuilder DetailBuilder = new(CatalogService.Object);
     private static readonly TestRunCoordinator RunCoordinator = new(SubmissionService, DetailBuilder);
+    private static readonly ILogger<QuestionViewModel> Logger = NullLogger<QuestionViewModel>.Instance;
 
     public QuestionViewModelTests()
     {
@@ -331,6 +336,186 @@ public sealed class QuestionViewModelTests
     }
 
     [Fact]
+    public async Task NextCommand_OnLastStep_WhenNavigationFails_ShowsResultNavigationToast()
+    {
+        var navigation = new Mock<INavigation>();
+        var navigationService = new FailingResultNavigationService(navigation.Object);
+        var toast = new Mock<IToastService>();
+        var dialog = new Mock<IDialogService>();
+        var progress = new Mock<IUserProgressService>();
+        progress
+            .Setup(p => p.SaveTestResultAsync(
+                It.IsAny<string>(),
+                It.IsAny<int?>(),
+                It.IsAny<string>(),
+                It.IsAny<string?>(),
+                It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+
+        List<Question> questions =
+        [
+            new()
+            {
+                Answers = [new Answer { Ball = 2, Selected = true }]
+            }
+        ];
+
+        QuestionViewModel viewModel = CreateViewModel(
+            questions,
+            navigationService,
+            toast.Object,
+            dialog.Object,
+            progress.Object,
+            new TestSessionInfo { TestId = "beck", AnalyzerId = "beck" });
+
+        viewModel.NextCommand.Execute(null);
+        await Task.Delay(600);
+
+        toast.Verify(t => t.LongToast(AppStrings.TestsResultNavigationFailedMessage), Times.Once);
+        toast.Verify(t => t.LongToast(AppStrings.UnexpectedErrorMessage), Times.Never);
+    }
+
+    [Fact]
+    public async Task NextCommand_OnLastStep_WhenSaveFails_ShowsResultSaveToast()
+    {
+        var navigation = new Mock<INavigation>();
+        var navigationService = new TestNavigationService(navigation.Object);
+        var toast = new Mock<IToastService>();
+        var dialog = new Mock<IDialogService>();
+        var progress = new Mock<IUserProgressService>();
+        progress
+            .Setup(p => p.SaveTestResultAsync(
+                It.IsAny<string>(),
+                It.IsAny<int?>(),
+                It.IsAny<string>(),
+                It.IsAny<string?>(),
+                It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new InvalidOperationException("Database unavailable"));
+
+        List<Question> questions =
+        [
+            new()
+            {
+                Answers = [new Answer { Ball = 2, Selected = true }]
+            }
+        ];
+
+        QuestionViewModel viewModel = CreateViewModel(
+            questions,
+            navigationService,
+            toast.Object,
+            dialog.Object,
+            progress.Object,
+            new TestSessionInfo { TestId = "beck", AnalyzerId = "beck" });
+
+        viewModel.NextCommand.Execute(null);
+        await Task.Delay(100);
+
+        toast.Verify(t => t.LongToast(AppStrings.TestsResultSaveFailedMessage), Times.Once);
+        toast.Verify(t => t.LongToast(AppStrings.UnexpectedErrorMessage), Times.Never);
+    }
+
+    [Fact]
+    public async Task NextCommand_OnLastStep_WhenNavigationThrows_ShowsResultNavigationToast()
+    {
+        var navigation = new Mock<INavigation>();
+        var navigationService = new ThrowingResultNavigationService(navigation.Object);
+        var toast = new Mock<IToastService>();
+        var dialog = new Mock<IDialogService>();
+        var progress = new Mock<IUserProgressService>();
+        progress
+            .Setup(p => p.SaveTestResultAsync(
+                It.IsAny<string>(),
+                It.IsAny<int?>(),
+                It.IsAny<string>(),
+                It.IsAny<string?>(),
+                It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+
+        List<Question> questions =
+        [
+            new()
+            {
+                Answers = [new Answer { Ball = 2, Selected = true }]
+            }
+        ];
+
+        QuestionViewModel viewModel = CreateViewModel(
+            questions,
+            navigationService,
+            toast.Object,
+            dialog.Object,
+            progress.Object,
+            new TestSessionInfo { TestId = "beck", AnalyzerId = "beck" });
+
+        viewModel.NextCommand.Execute(null);
+        await Task.Delay(600);
+
+        toast.Verify(t => t.LongToast(AppStrings.TestsResultNavigationFailedMessage), Times.Once);
+        toast.Verify(t => t.LongToast(AppStrings.TestsResultSaveFailedMessage), Times.Never);
+        progress.Verify(
+            p => p.SaveTestResultAsync(
+                It.IsAny<string>(),
+                It.IsAny<int?>(),
+                It.IsAny<string>(),
+                It.IsAny<string?>(),
+                It.IsAny<CancellationToken>()),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task NextCommand_OnLastStep_WhenNavigationFailsThenRetry_SavesOnceAndNavigatesOnSecondAttempt()
+    {
+        var navigation = new Mock<INavigation>();
+        var navigationService = new RetryResultNavigationService(navigation.Object);
+        var toast = new Mock<IToastService>();
+        var dialog = new Mock<IDialogService>();
+        var progress = new Mock<IUserProgressService>();
+        progress
+            .Setup(p => p.SaveTestResultAsync(
+                It.IsAny<string>(),
+                It.IsAny<int?>(),
+                It.IsAny<string>(),
+                It.IsAny<string?>(),
+                It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+
+        List<Question> questions =
+        [
+            new()
+            {
+                Answers = [new Answer { Ball = 2, Selected = true }]
+            }
+        ];
+
+        QuestionViewModel viewModel = CreateViewModel(
+            questions,
+            navigationService,
+            toast.Object,
+            dialog.Object,
+            progress.Object,
+            new TestSessionInfo { TestId = "beck", AnalyzerId = "beck" });
+
+        viewModel.NextCommand.Execute(null);
+        await Task.Delay(300);
+
+        toast.Verify(t => t.LongToast(AppStrings.TestsResultNavigationFailedMessage), Times.Once);
+
+        viewModel.NextCommand.Execute(null);
+        await Task.Delay(300);
+
+        progress.Verify(
+            p => p.SaveTestResultAsync(
+                It.IsAny<string>(),
+                It.IsAny<int?>(),
+                It.IsAny<string>(),
+                It.IsAny<string?>(),
+                It.IsAny<CancellationToken>()),
+            Times.Once);
+        toast.Verify(t => t.LongToast(AppStrings.TestsResultNavigationFailedMessage), Times.Once);
+    }
+
+    [Fact]
     public void UseBarProgress_IsTrue_WhenMoreThanSevenQuestions()
     {
         List<Question> questions = Enumerable.Range(1, 8)
@@ -400,6 +585,7 @@ public sealed class QuestionViewModelTests
             SubmissionService,
             RunCoordinator,
             CatalogService.Object,
+            Logger,
             session);
 
     private sealed class TestResultTrackingNavigationService(INavigation navigation) : TestNavigationService(navigation)
@@ -408,18 +594,67 @@ public sealed class QuestionViewModelTests
         public string? LastInterpretation { get; private set; }
         public TechniqueId? LastRecommendedTechnique { get; private set; }
 
-        public override Task GoToTestResultAsync(
+        public override Task<NavigationRunStatus> GoToTestResultAsync(
             int score,
             string interpretation,
             TechniqueId? recommendedTechnique = null,
             string? testId = null,
             string? interpretationDetail = null,
-            string? analyzerId = null)
+            string? analyzerId = null,
+            QuestionnaireResultDetail? detail = null,
+            CancellationToken cancellationToken = default)
         {
             LastScore = score;
             LastInterpretation = interpretation;
             LastRecommendedTechnique = recommendedTechnique;
-            return Task.CompletedTask;
+            return Task.FromResult(NavigationRunStatus.Completed);
         }
+    }
+
+    private sealed class RetryResultNavigationService(INavigation navigation) : TestNavigationService(navigation)
+    {
+        private int _attempts;
+
+        public override Task<NavigationRunStatus> GoToTestResultAsync(
+            int score,
+            string interpretation,
+            TechniqueId? recommendedTechnique = null,
+            string? testId = null,
+            string? interpretationDetail = null,
+            string? analyzerId = null,
+            QuestionnaireResultDetail? detail = null,
+            CancellationToken cancellationToken = default)
+        {
+            _attempts++;
+            return Task.FromResult(_attempts == 1 ? NavigationRunStatus.Failed : NavigationRunStatus.Completed);
+        }
+    }
+
+    private sealed class FailingResultNavigationService(INavigation navigation) : TestNavigationService(navigation)
+    {
+        public override Task<NavigationRunStatus> GoToTestResultAsync(
+            int score,
+            string interpretation,
+            TechniqueId? recommendedTechnique = null,
+            string? testId = null,
+            string? interpretationDetail = null,
+            string? analyzerId = null,
+            QuestionnaireResultDetail? detail = null,
+            CancellationToken cancellationToken = default) =>
+            Task.FromResult(NavigationRunStatus.Failed);
+    }
+
+    private sealed class ThrowingResultNavigationService(INavigation navigation) : TestNavigationService(navigation)
+    {
+        public override Task<NavigationRunStatus> GoToTestResultAsync(
+            int score,
+            string interpretation,
+            TechniqueId? recommendedTechnique = null,
+            string? testId = null,
+            string? interpretationDetail = null,
+            string? analyzerId = null,
+            QuestionnaireResultDetail? detail = null,
+            CancellationToken cancellationToken = default) =>
+            Task.FromResult(NavigationRunStatus.Failed);
     }
 }

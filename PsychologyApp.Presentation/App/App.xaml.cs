@@ -16,8 +16,12 @@ public partial class App : Microsoft.Maui.Controls.Application
         exceptionHandler.Attach(this);
     }
 
-    protected override Window CreateWindow(IActivationState? activationState) =>
-        new(_services.GetRequiredService<AppShell>());
+    protected override Window CreateWindow(IActivationState? activationState)
+    {
+        AppShell shell = _services.GetRequiredService<AppShell>();
+        PracticeReminderTapHandler.Configure(new AppShellTabNavigator(shell));
+        return new(shell);
+    }
 
     protected override void OnResume()
     {

@@ -2,7 +2,7 @@ using Moq;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Entities.Audio;
 using PsychologyApp.Presentation.Features.PlayMusic;
-using PsychologyApp.Presentation.Pages.MusicPlayer;
+using PsychologyApp.Presentation.Pages.PlayMusic.MusicPlayer;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

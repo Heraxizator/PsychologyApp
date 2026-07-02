@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.RunTests.Question.QuestionPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.RunTests.Question"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:testUi="clr-namespace:PsychologyApp.Presentation.Widgets.Test"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:DataType="vm:QuestionViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}">
+
+    <ContentPage.Behaviors>
+        <behaviors:PageAnalyticsBehavior TestId="{Binding TestFlowId}" />
+    </ContentPage.Behaviors>
+
+    <Grid
+        Padding="{StaticResource LayoutPageMarginThickness}"
+        RowDefinitions="Auto,*,Auto"
+        RowSpacing="{StaticResource LayoutSpacing}">
+
+        <VerticalStackLayout Grid.Row="0" Spacing="8">
+            <ui:NavigationBarSimpleView
+                TitleText="{Binding PageTitle}"
+                BackCommand="{Binding BackCommand}" />
+            <testUi:TestFlowMetaStripView
+                DurationText="{Binding DurationText}"
+                QuestionCountText="{Binding QuestionCountText}" />
+            <testUi:TestProgressHeaderView
+                Step="{Binding CurrentIndex}"
+                StepCount="{Binding TotalCount}"
+                StepLabel="{Binding StepLabel}"
+                Progress="{Binding Progress}"
+                UseBarProgress="{Binding UseBarProgress}"
+                RemainingDurationText="{Binding RemainingDurationText}"
+                ShowStepLabel="True" />
+        </VerticalStackLayout>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
+                <Border
+                    x:Name="QuestionCard"
+                    Style="{StaticResource BrandCardStyle}"
+                    Margin="0"
+                    IsVisible="{Binding HasCurrentQuestion}"
+                    SemanticProperties.Description="{Binding CurrentQuestionSemanticDescription}">
+                    <Border.Behaviors>
+                        <behaviors:RevealOnAppearingBehavior />
+                        <behaviors:StepChangeRevealBehavior Step="{Binding CurrentIndex}" />
+                    </Border.Behaviors>
+                    <VerticalStackLayout Spacing="12">
+                        <Label
+                            Text="{Binding QuestionLeadText}"
+                            Style="{StaticResource CaptionStyle}"
+                            TextColor="{DynamicResource Primary}"
+                            LineBreakMode="WordWrap" />
+                        <Border
+                            Padding="10,4"
+                            HorizontalOptions="Start"
+                            StrokeThickness="0"
+                            BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <Label Style="{StaticResource CaptionStyle}" TextColor="{DynamicResource Primary}" FontFamily="{StaticResource MediumFontFamily}">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding QuestionPrefix}" />
+                                        <Span Text="{Binding CurrentQuestionNumber}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </Border>
+                        <Label
+                            Text="{Binding CurrentQuestionContext}"
+                            Style="{StaticResource BodyStyle}"
+                            FontSize="17"
+                            LineHeight="1.35"
+                            HorizontalTextAlignment="Start"
+                            LineBreakMode="WordWrap" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <VerticalStackLayout
+                    x:Name="AnswersPanel"
+                    BindableLayout.ItemsSource="{Binding CurrentAnswers}"
+                    Spacing="0">
+                    <VerticalStackLayout.Behaviors>
+                        <behaviors:StepChangeRevealBehavior Step="{Binding CurrentIndex}" />
+                    </VerticalStackLayout.Behaviors>
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:AnswerOptionItem">
+                            <testUi:TestAnswerOptionView
+                                Text="{Binding Text}"
+                                IsSelected="{Binding IsSelected}"
+                                IsSingleChoice="{Binding IsSingleChoice}"
+                                TapCommand="{Binding SelectCommand}">
+                                <testUi:TestAnswerOptionView.Behaviors>
+                                    <behaviors:ListItemRevealBehavior />
+                                </testUi:TestAnswerOptionView.Behaviors>
+                            </testUi:TestAnswerOptionView>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <VerticalStackLayout Grid.Row="2" Spacing="8">
+            <Label
+                Text="{Binding MultiChoiceHintText}"
+                IsVisible="{Binding IsMultiChoiceHintVisible}"
+                Style="{StaticResource CaptionStyle}"
+                TextColor="{DynamicResource Primary}"
+                HorizontalTextAlignment="Center"
+                LineBreakMode="WordWrap" />
+            <Label
+                Text="{Binding ValidationHintText}"
+                IsVisible="{Binding IsValidationHintVisible}"
+                Style="{StaticResource CaptionStyle}"
+                TextColor="{DynamicResource Primary}"
+                HorizontalTextAlignment="Center"
+                LineBreakMode="WordWrap" />
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                <ui:ButtonView
+                    Grid.Column="0"
+                    Variant="Secondary"
+                    BodyText="{Binding PreviousButtonText}"
+                    TapCommand="{Binding PreviousCommand}"
+                    IsVisible="{Binding IsPreviousVisible}" />
+                <ui:ButtonView
+                    Grid.Column="{Binding NextButtonColumn}"
+                    Grid.ColumnSpan="{Binding NextButtonColumnSpan}"
+                    BodyText="{Binding NextButtonText}"
+                    TapCommand="{Binding NextCommand}"
+                    IsEnabled="{Binding CanAdvance}" />
+            </Grid>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

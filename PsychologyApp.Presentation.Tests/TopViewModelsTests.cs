@@ -19,11 +19,12 @@ using PsychologyApp.Presentation.Shared.Services.Notifications;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Features.ManageProfile;
+using PsychologyApp.Presentation.Features.ManageProfile.Index;
 using PsychologyApp.Presentation.Features.ManageQuotes;
 using PsychologyApp.Presentation.Features.RunTests;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
-using PsychologyApp.Presentation.Pages.Techniques;
-using PsychologyApp.Presentation.Pages.ProfileUser;
+using PsychologyApp.Presentation.Pages.RunTechniqueSession.Techniques;
+using PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
@@ -298,7 +299,7 @@ public sealed class UserViewModelTests
                 TechniqueCatalogTestHelper.CreateGateway(),
                 TechniqueCatalogTestHelper.CreateRecommendationService()),
             TopViewModelTestHelpers.CreateQuoteCommandsFactory(quotService.Object),
-            new UserProfileRefreshCoordinator(),
+            new ProfileScreenCoordinator(new UserProfileRefreshCoordinator()),
             TopViewModelTestHelpers.CreateLanguageReloader(quotService.Object));
 
         Assert.Equal(4, viewModel.Techniques.Count);
@@ -338,7 +339,7 @@ public sealed class UserViewModelTests
                 TechniqueCatalogTestHelper.CreateGateway(),
                 TechniqueCatalogTestHelper.CreateRecommendationService()),
             TopViewModelTestHelpers.CreateQuoteCommandsFactory(quotService.Object),
-            new UserProfileRefreshCoordinator(),
+            new ProfileScreenCoordinator(new UserProfileRefreshCoordinator()),
             TopViewModelTestHelpers.CreateLanguageReloader(quotService.Object));
 
         await viewModel.InitAsync();
@@ -500,6 +501,10 @@ public sealed class TechniquesViewModelTests
             new TechniqueListBuilder(userProgressService, TechniqueCatalogTestHelper.CreateGateway()),
             databaseReady.Object,
             dashboardLoader,
+            new TechniquesDashboardPresenter(
+                dashboardLoader,
+                TechniqueCatalogTestHelper.CreateTodayRecommendationResolver(),
+                Mock.Of<IToastService>()),
             TechniqueCatalogTestHelper.CreateTodayRecommendationResolver(),
             new TechniquesListInitializer(),
             Options.Create(new AppSettings()),
