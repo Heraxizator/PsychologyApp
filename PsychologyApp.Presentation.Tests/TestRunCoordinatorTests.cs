@@ -59,6 +59,41 @@ public sealed class TestRunCoordinatorTests
     }
 
     [Fact]
+    public async Task CompleteQuestionnaireAsync_RetriesNavigationWhenFirstAttemptFails()
+    {
+        var navigation = new Mock<INavigation>();
+        FlakyNavigationService navigationService = new(navigation.Object);
+        var progress = new Mock<IUserProgressService>();
+        progress
+            .Setup(p => p.SaveTestResultAsync(
+                It.IsAny<string>(),
+                It.IsAny<int?>(),
+                It.IsAny<string>(),
+                It.IsAny<string?>(),
+                It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+
+        TestRunCoordinator coordinator = TestRunTestHelpers.CreateCoordinator(new FakeTestCatalogService());
+        List<Question> questions =
+        [
+            new()
+            {
+                Answers = [new Answer { Ball = 1, Selected = true }]
+            }
+        ];
+
+        await coordinator.CompleteQuestionnaireAsync(
+            new QuestionnaireCompletionRequest(
+                questions,
+                new TestSessionInfo { TestId = "beck", AnalyzerId = "beck" },
+                DateTime.UtcNow),
+            progress.Object,
+            navigationService);
+
+        Assert.Equal(2, navigationService.NavigationAttempts);
+    }
+
+    [Fact]
     public async Task CompleteQuestionnaireAsync_ThrowsWhenNavigationFails()
     {
         var navigation = new Mock<INavigation>();
@@ -90,6 +125,8 @@ public sealed class TestRunCoordinatorTests
                     DateTime.UtcNow),
                 progress.Object,
                 navigationService));
+
+        Assert.Equal(3, navigationService.NavigationAttempts);
     }
 
     private sealed class RecordingNavigationService(INavigation navigation) : TestNavigationService(navigation)
@@ -117,6 +154,8 @@ public sealed class TestRunCoordinatorTests
 
     private sealed class DroppingNavigationService(INavigation navigation) : TestNavigationService(navigation)
     {
+        public int NavigationAttempts { get; private set; }
+
         public override Task<NavigationRunStatus> GoToTestResultAsync(
             int score,
             string interpretation,
@@ -125,7 +164,32 @@ public sealed class TestRunCoordinatorTests
             string? interpretationDetail = null,
             string? analyzerId = null,
             QuestionnaireResultDetail? detail = null,
-            CancellationToken cancellationToken = default) =>
-            Task.FromResult(NavigationRunStatus.Failed);
+            CancellationToken cancellationToken = default)
+        {
+            NavigationAttempts++;
+            return Task.FromResult(NavigationRunStatus.Failed);
+        }
+    }
+
+    private sealed class FlakyNavigationService(INavigation navigation) : TestNavigationService(navigation)
+    {
+        public int NavigationAttempts { get; private set; }
+
+        public override Task<NavigationRunStatus> GoToTestResultAsync(
+            int score,
+            string interpretation,
+            TechniqueId? recommendedTechnique = null,
+            string? testId = null,
+            string? interpretationDetail = null,
+            string? analyzerId = null,
+            QuestionnaireResultDetail? detail = null,
+            CancellationToken cancellationToken = default)
+        {
+            NavigationAttempts++;
+            return Task.FromResult(
+                NavigationAttempts == 1
+                    ? NavigationRunStatus.DroppedTimeout
+                    : NavigationRunStatus.Completed);
+        }
     }
 }
