@@ -10,10 +10,11 @@ using PsychologyApp.Bootstrap;
 using PsychologyApp.Domain.Base.Constants;
 using PsychologyApp.Presentation.App.DependencyInjection;
 using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.Abstractions;
 using PsychologyApp.Presentation.Shared.Platform;
 using PsychologyApp.Presentation.Shared.Navigation;
-using PsychologyApp.Presentation.Features.RunTests;
+using PsychologyApp.Presentation.Shared.Services.Notifications;
 
 namespace PsychologyApp.Presentation.App;
 
@@ -36,11 +37,14 @@ public static class MauiProgram
 
         ConfigureHandlers();
         ReduceMotion.Configure(ReduceMotionDetector.IsEnabled);
+        NavigationThread.InvokeAsync = action => MainThread.InvokeOnMainThreadAsync(action);
         builder.AddPsychologyAppConfiguration();
 
 #if DEBUG
         builder.Logging.AddDebug();
         builder.Logging.SetMinimumLevel(LogLevel.Debug);
+        string logFilePath = Path.Combine(FileSystem.AppDataDirectory, "logs", "app-debug.log");
+        builder.Logging.AddProvider(new DebugFileLoggerProvider(logFilePath));
 #else
         builder.Logging.SetMinimumLevel(LogLevel.Information);
 #endif
@@ -72,7 +76,6 @@ public static class MauiProgram
         builder.Services.AddSingleton(sp => new BuiltInTechniqueCatalogProvider(
             () => AppStrings.IsEnglish(AppStrings.Language) ? "en" : "ru"));
         builder.Services.AddCachedTechniqueCatalogProvider();
-        builder.Services.AddSingleton<LanguageContentReloader>();
         builder.Services.AddPsychologyAppPresentation();
         builder.Services.AddSingleton<AppShell>();
 

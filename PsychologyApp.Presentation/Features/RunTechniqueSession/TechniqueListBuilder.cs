@@ -1,5 +1,6 @@
 using PsychologyApp.Application.Models.Practice;
 using PsychologyApp.Application.UserProgress;
+using PsychologyApp.Presentation.Features.RunTechniqueSession.Index;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Shared.Navigation;

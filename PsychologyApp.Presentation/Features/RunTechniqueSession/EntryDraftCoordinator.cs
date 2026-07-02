@@ -1,15 +1,13 @@
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 using Microsoft.Extensions.Logging;
 using PsychologyApp.Application.UserProgress;
+using PsychologyApp.Presentation.Common;
+using PsychologyApp.Presentation.Features.RunTechniqueSession.Serialization;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 
 namespace PsychologyApp.Presentation.Features.RunTechniqueSession;
-
-internal sealed class EntryDraft
-{
-    public Dictionary<string, string> Fields { get; set; } = new(StringComparer.Ordinal);
-}
 
 public sealed class EntryDraftCoordinator(ILogger<EntryDraftCoordinator> logger)
 {
@@ -76,9 +74,10 @@ public sealed class EntryDraftCoordinator(ILogger<EntryDraftCoordinator> logger)
 
     public async Task LoadAsync(Action onEntriesChanged)
     {
-        EntryDraft? draft = await SessionDraftStore.LoadAsync<EntryDraft>(
+        EntryDraft? draft = await SessionDraftStore.LoadAsync(
             _userProgressService,
             _techniqueId.ToString(),
+            SessionDraftJsonSerializerContext.Default.EntryDraft,
             _logger);
 
         if (draft?.Fields is null || draft.Fields.Count == 0)
@@ -118,7 +117,11 @@ public sealed class EntryDraftCoordinator(ILogger<EntryDraftCoordinator> logger)
             return;
         }
 
-        await SessionDraftStore.SaveAsync(_userProgressService, key, new EntryDraft { Fields = fields });
+        await SessionDraftStore.SaveAsync(
+            _userProgressService,
+            key,
+            new EntryDraft { Fields = fields },
+            SessionDraftJsonSerializerContext.Default.EntryDraft);
     }
 
     private void OnEntryFieldChanged(object? sender, PropertyChangedEventArgs e)

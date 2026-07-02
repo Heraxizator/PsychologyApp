@@ -1,10 +1,10 @@
-﻿using PsychologyApp.Presentation.Pages.ProfileSettings;
-using PsychologyApp.Presentation.Pages.ProfileDonate;
-using PsychologyApp.Presentation.Pages.ProfileInfo;
-using PsychologyApp.Presentation.Pages.ProfileOptions;
+using PsychologyApp.Presentation.Features.ManageProfile.DependencyInjection;
+using PsychologyApp.Presentation.Pages.ManageProfile.ProfileSettings;
+using PsychologyApp.Presentation.Pages.ManageProfile.ProfileDonate;
+using PsychologyApp.Presentation.Pages.ManageProfile.ProfileInfo;
+using PsychologyApp.Presentation.Pages.ManageProfile.ProfileOptions;
 using PsychologyApp.Presentation.Shared.Navigation;
-using PsychologyApp.Presentation.App.Providers;
-using PsychologyApp.Presentation.Pages.ProfileUser;
+using PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
 
 namespace PsychologyApp.Presentation.Features.ManageProfile;
 

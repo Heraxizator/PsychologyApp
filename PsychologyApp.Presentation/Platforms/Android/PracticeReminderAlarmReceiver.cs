@@ -38,15 +38,17 @@ public sealed class PracticeReminderAlarmReceiver : BroadcastReceiver
         AndroidPracticeReminderScheduler.EnsureNotificationChannel(context);
 
         PendingIntent tapIntent = AndroidPracticeReminderScheduler.CreateTapPendingIntent(context, techniqueId);
-        var builder = new NotificationCompat.Builder(context, PracticeReminderConstants.ChannelId)
-            .SetContentTitle(title)
-            .SetContentText(body)
-            .SetSmallIcon(Resource.Mipmap.logo)
-            .SetAutoCancel(true)
-            .SetContentIntent(tapIntent)
-            .SetPriority((int)NotificationPriority.Default);
+        int smallIcon = context.ApplicationInfo?.Icon ?? Resource.Mipmap.logo;
+        var builder = new NotificationCompat.Builder(context, PracticeReminderConstants.ChannelId);
+        builder.SetContentTitle(title);
+        builder.SetContentText(body);
+        builder.SetSmallIcon(smallIcon);
+        builder.SetAutoCancel(true);
+        builder.SetContentIntent(tapIntent);
+        builder.SetPriority((int)NotificationPriority.Default);
 
-        NotificationManagerCompat.From(context).Notify(PracticeReminderConstants.NotificationId, builder.Build());
+        Notification notification = builder.Build()!;
+        NotificationManagerCompat.From(context)?.Notify(PracticeReminderConstants.NotificationId, notification);
         tapIntent.Dispose();
     }
 

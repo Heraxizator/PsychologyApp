@@ -7,7 +7,7 @@ using PsychologyApp.Application.Technique;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
-using PsychologyApp.Presentation.Pages.TechniqueDesigner;
+using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueDesigner;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

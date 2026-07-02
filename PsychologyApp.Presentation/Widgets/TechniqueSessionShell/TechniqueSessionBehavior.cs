@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PsychologyApp.Application.Abstractions.Analytics;
 using PsychologyApp.Presentation.Shared.ViewModels;
-using PsychologyApp.Presentation.Pages.TechniqueSession;
+using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueSession;
 
 namespace PsychologyApp.Presentation.Widgets.TechniqueSessionShell;
 

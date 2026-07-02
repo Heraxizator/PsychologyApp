@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using PsychologyApp.Application.Models;
+using PsychologyApp.Presentation.Features.Onboarding.DependencyInjection;
 using PsychologyApp.Presentation.Shared.Common;
-using PsychologyApp.Presentation.App.Providers;
 using PsychologyApp.Presentation.Pages.Onboarding;
 using PsychologyApp.Presentation.Widgets.Onboarding;
 

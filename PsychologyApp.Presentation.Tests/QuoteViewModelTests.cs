@@ -13,7 +13,7 @@ using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Features.ManageQuotes;
 using PsychologyApp.Presentation.Features.RunTests;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
-using PsychologyApp.Presentation.Pages.QuoteFeed;
+using PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

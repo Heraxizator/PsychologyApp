@@ -6,7 +6,7 @@ using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Features.RunTests;
-using PsychologyApp.Presentation.Pages.TestsList;
+using PsychologyApp.Presentation.Pages.RunTests.TestsList;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

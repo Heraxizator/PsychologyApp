@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Configuration;
-using PsychologyApp.Presentation.Pages.ReviewForm;
+using PsychologyApp.Presentation.Pages.SendReviewForm.ReviewForm;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
 
 namespace PsychologyApp.Presentation.Features.SendReviewForm;

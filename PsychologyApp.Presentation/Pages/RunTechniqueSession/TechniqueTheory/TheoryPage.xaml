@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueTheory.TheoryPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueTheory"
+             xmlns:technique="clr-namespace:PsychologyApp.Presentation.Models.Practice.Techniques;assembly=PsychologyApp.Presentation.Core"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:DataType="vm:TheoryViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}">
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+        <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+            <VerticalStackLayout.Behaviors>
+                <behaviors:StaggerChildrenBehavior />
+            </VerticalStackLayout.Behaviors>
+            <ui:NavigationBarSimpleView
+                TitleText="{Binding PageTitle}"
+                BackText="{Binding BackText}"
+                BackCommand="{Binding Finish}" />
+            <VerticalStackLayout
+                IsVisible="{Binding HasSections}"
+                Spacing="{StaticResource ListItemSpacing}"
+                BindableLayout.ItemsSource="{Binding Sections}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="technique:TheorySection">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="{Binding Heading}" Style="{StaticResource SectionTitleStyle}" />
+                            <Label Text="{Binding Body}" Style="{StaticResource BodyStyle}" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+            <ui:TextBoxView
+                IsVisible="{Binding HasLegacyText}"
+                HeaderText="{Binding PageTitle}"
+                BodyText="{Binding Text}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,23 +1,22 @@
-using PsychologyApp.Domain.Practice;
-using PsychologyApp.Presentation.Models.Practice.Techniques;
+using PsychologyApp.Presentation.Features.Onboarding;
 using PsychologyApp.Presentation.Shared.Common;
 namespace PsychologyApp.Presentation.Pages.Onboarding;
 
 public partial class OnboardingViewModel
 {
-    public string RecommendedIconName => GetRecommendationDefinition().ListIcon;
-    public string RecommendedTitle => GetRecommendationDefinition().ListTitle;
-    public string RecommendedSubtitle => GetRecommendationDefinition().ListSubtitle;
-    public string RecommendedReason => AppStrings.TodayRecommendationReason(ResolveConcernForRecommendation());
+    public string RecommendedIconName => _recommendation.IconName;
+    public string RecommendedTitle => _recommendation.Title;
+    public string RecommendedSubtitle => _recommendation.Subtitle;
+    public string RecommendedReason => _recommendation.ReasonText;
 
-    private string ResolveConcernForRecommendation() =>
-        string.IsNullOrEmpty(SelectedConcern) ? OnboardingConcernKeys.Explore : SelectedConcern;
+    private OnboardingRecommendationResult _recommendation = null!;
 
-    private TechniqueDefinition GetRecommendationDefinition() =>
-        _techniqueCatalog.Get(_techniqueRecommendationService.ResolveFromOnboardingConcern(ResolveConcernForRecommendation()));
+    private void RefreshRecommendation() =>
+        _recommendation = _onboardingRecommendationResolver.Resolve(SelectedConcern);
 
     private void NotifyRecommendation()
     {
+        RefreshRecommendation();
         Notify(
             nameof(RecommendedIconName),
             nameof(RecommendedTitle),

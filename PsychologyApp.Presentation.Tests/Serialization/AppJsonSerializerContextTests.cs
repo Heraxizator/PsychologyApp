@@ -1,5 +1,5 @@
 using System.Text.Json;
-using PsychologyApp.Presentation.Models.Quotes;
+using PsychologyApp.Application.Models.Quot;
 using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Serialization;
 using Xunit;

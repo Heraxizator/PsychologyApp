@@ -1,5 +1,5 @@
 using PsychologyApp.Presentation.Models.Practice.Techniques;
-using PsychologyApp.Presentation.Pages.TechniqueTheory;
+using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueTheory;
 using PsychologyApp.Presentation.Shared.Lib.Navigation;
 using PsychologyApp.Presentation.Shared.Navigation;
 

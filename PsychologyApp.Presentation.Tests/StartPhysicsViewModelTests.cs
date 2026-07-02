@@ -1,6 +1,6 @@
 using Moq;
 using PsychologyApp.Presentation.App.Routes;
-using PsychologyApp.Presentation.Pages.StartPhysics;
+using PsychologyApp.Presentation.Pages.SearchPhysics.StartPhysics;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

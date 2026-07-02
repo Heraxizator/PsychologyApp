@@ -1,12 +1,13 @@
-﻿using PsychologyApp.Presentation.Pages.TechniqueCreated;
+using PsychologyApp.Presentation.Features.RunTechniqueSession.Index;
+using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueCreated;
 using PsychologyApp.Application.Abstractions.Analytics;
+using PsychologyApp.Presentation.Features.RunTechniqueSession.DependencyInjection;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
-using PsychologyApp.Presentation.App.Providers;
-using PsychologyApp.Presentation.Pages.Techniques;
-using PsychologyApp.Presentation.Pages.TechniqueSession;
-using PsychologyApp.Presentation.Pages.TechniqueDesigner;
-using PsychologyApp.Presentation.Pages.PracticeCompletion;
+using PsychologyApp.Presentation.Pages.RunTechniqueSession.Techniques;
+using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueSession;
+using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueDesigner;
+using PsychologyApp.Presentation.Pages.RunTechniqueSession.PracticeCompletion;
 
 namespace PsychologyApp.Presentation.Features.RunTechniqueSession;
 

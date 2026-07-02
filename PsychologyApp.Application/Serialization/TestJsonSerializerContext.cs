@@ -8,4 +8,6 @@ namespace PsychologyApp.Application.Serialization;
 [JsonSerializable(typeof(List<JsonNavigationTestDefinition>))]
 [JsonSerializable(typeof(List<JsonSimpleQuestionnaireDefinition>))]
 [JsonSerializable(typeof(QuestionnaireResultDetail))]
+[JsonSerializable(typeof(LuscherStandardResultDetail))]
+[JsonSerializable(typeof(LuscherBriefResultDetail))]
 public partial class TestJsonSerializerContext : JsonSerializerContext;

@@ -43,7 +43,7 @@ public sealed class AndroidPracticeReminderScheduler : IPracticeReminderSchedule
         alarmManager?.Cancel(pendingIntent);
         pendingIntent.Dispose();
 
-        NotificationManagerCompat.From(context).Cancel(PracticeReminderConstants.NotificationId);
+        NotificationManagerCompat.From(context)?.Cancel(PracticeReminderConstants.NotificationId);
     }
 
     public void Schedule(DateTime fireLocal, TechniqueId techniqueId, string title, string body)

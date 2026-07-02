@@ -1,5 +1,5 @@
 using PsychologyApp.Domain.Practice;
-using PsychologyApp.Presentation.Models.Practice.Techniques;
+using PsychologyApp.Presentation.Features.Onboarding;
 
 namespace PsychologyApp.Presentation.Pages.Onboarding;
 
@@ -7,16 +7,15 @@ public partial class OnboardingViewModel
 {
     private async Task StartPracticeAsync()
     {
-        string concern = string.IsNullOrEmpty(SelectedConcern) ? OnboardingConcernKeys.Explore : SelectedConcern;
-        _userPreferencesStore.CompleteOnboarding(concern);
-        TechniqueId techniqueId = _techniqueRecommendationService.ResolveFromOnboardingConcern(concern);
-        await _onCompleted(techniqueId);
+        OnboardingRecommendationResult recommendation = _onboardingRecommendationResolver.Resolve(SelectedConcern);
+        _userPreferencesStore.CompleteOnboarding(recommendation.Concern);
+        await _onCompleted(recommendation.TechniqueId);
     }
 
     private async Task CompleteWithoutPracticeAsync()
     {
-        string concern = string.IsNullOrEmpty(SelectedConcern) ? OnboardingConcernKeys.Explore : SelectedConcern;
-        _userPreferencesStore.CompleteOnboarding(concern);
+        OnboardingRecommendationResult recommendation = _onboardingRecommendationResolver.Resolve(SelectedConcern);
+        _userPreferencesStore.CompleteOnboarding(recommendation.Concern);
         await _onCompleted(null);
     }
 }

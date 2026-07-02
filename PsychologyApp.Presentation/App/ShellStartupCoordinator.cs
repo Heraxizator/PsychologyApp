@@ -6,7 +6,7 @@ using PsychologyApp.Application.Models;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Pages.Onboarding;
-using PsychologyApp.Presentation.App.Providers;
+using PsychologyApp.Presentation.Features.Onboarding.DependencyInjection;
 
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 

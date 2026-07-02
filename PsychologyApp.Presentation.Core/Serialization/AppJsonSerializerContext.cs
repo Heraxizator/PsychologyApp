@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using PsychologyApp.Application.Models.Quotes;
+using PsychologyApp.Application.Models.Quot;
 
 namespace PsychologyApp.Presentation.Serialization;
 
