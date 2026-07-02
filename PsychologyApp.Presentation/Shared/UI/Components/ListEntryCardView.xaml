@@ -9,8 +9,11 @@
         <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
     </ContentView.Behaviors>
 
-    <Border Style="{StaticResource BrandCardStyle}">
-        <VerticalStackLayout Spacing="4">
+    <Border x:Name="CardBorder" Style="{StaticResource BrandCardStyle}">
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding TapCommand, Source={x:Reference Root}}" />
+        </Border.GestureRecognizers>
+        <VerticalStackLayout Spacing="{StaticResource ListItemSpacing}">
             <Label Text="{Binding Title, Source={x:Reference Root}}" Style="{StaticResource ListRowTitleStyle}" />
             <Label Text="{Binding Body, Source={x:Reference Root}}" Style="{StaticResource CaptionStyle}" />
         </VerticalStackLayout>

@@ -24,7 +24,7 @@
                 BackCommand="{Binding Finish}" />
 
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <VerticalStackLayout Spacing="8">
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                     <Label Text="{Binding DescriptionSection}" Style="{StaticResource SectionTitleStyle}" />
                     <ui:TextEntryView
                         TitleText="{Binding NameFieldLabel}"
@@ -46,7 +46,7 @@
             </Border>
 
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <VerticalStackLayout Spacing="8">
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                     <Label Text="{Binding AlgorithmSection}" Style="{StaticResource SectionTitleStyle}" />
                     <ui:TextEntryView
                         TitleText="{Binding ActionsFieldLabel}"

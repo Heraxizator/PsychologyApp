@@ -13,6 +13,12 @@ public partial class UserViewModel
 {
     private async Task RefreshCoreAsync(int generation, bool forceQuotesReload)
     {
+        bool isInitialLoad = !_initialized;
+        if (isInitialLoad)
+        {
+            SetInit();
+        }
+
         try
         {
             await UiThread.RunAsync(InitTechniques);
@@ -62,6 +68,13 @@ public partial class UserViewModel
             }
 
             _logger.LogError(e, "UserViewModel refresh failed.");
+        }
+        finally
+        {
+            if (isInitialLoad && generation == Volatile.Read(ref _initGeneration))
+            {
+                SetDone();
+            }
         }
     }
 

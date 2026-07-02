@@ -4,9 +4,9 @@ namespace PsychologyApp.Presentation.Pages.SendReviewForm.ReviewForm;
 
 public partial class FormPage : ContentPage
 {
-    public FormPage(FormViewModel formViewModel)
+    public FormPage(IFormViewModelFactory formViewModelFactory)
     {
         InitializeComponent();
-        BindingContext = formViewModel;
+        BindingContext = formViewModelFactory.Create(this);
     }
 }

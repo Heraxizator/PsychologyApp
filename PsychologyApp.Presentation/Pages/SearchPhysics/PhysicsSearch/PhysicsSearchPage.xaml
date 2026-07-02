@@ -12,10 +12,6 @@
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="{Binding SearchToolbarText}" Command="{Binding SearchCommand}"/>
-    </ContentPage.ToolbarItems>
-
     <Grid
         HorizontalOptions="FillAndExpand"
         VerticalOptions="FillAndExpand">
@@ -32,27 +28,17 @@
 
             <ui:TextEntryView
                 Grid.Row="1"
-                Margin="0,8,0,8"
+                Margin="{StaticResource FieldVerticalMargin}"
                 PlaceholderText="{Binding IllnessPlaceholder}"
                 BodyText="{Binding SearchText, Mode=TwoWay}"
                 TitleText="{Binding ProblemLabel}"/>
 
             <Grid Grid.Row="2">
-                <StackLayout
+                <ui:EmptyStateView
                     x:Name="SearchEmptyPrompt"
                     IsVisible="{Binding IsSearchEmptyPromptVisible}"
-                    Padding="{StaticResource LayoutEmptyPaddingThickness}"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center">
-                    <Label
-                        HorizontalTextAlignment="Center"
-                        Style="{StaticResource SectionTitleStyle}"
-                        Text="{Binding EmptySearchHint}"/>
-                    <Label
-                        HorizontalTextAlignment="Center"
-                        Style="{StaticResource BodyStyle}"
-                        Text="{Binding EmptySearchSubhint}"/>
-                </StackLayout>
+                    TitleText="{Binding EmptySearchHint}"
+                    BodyText="{Binding EmptySearchSubhint}" />
 
                 <ui:ProgressBarView
                     x:Name="SearchFilteringProgress"
@@ -62,21 +48,12 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center" />
 
-                <StackLayout
+                <ui:EmptyStateView
                     x:Name="SearchNoResults"
                     IsVisible="{Binding IsSearchNoResultsVisible}"
-                    Padding="{StaticResource LayoutEmptyPaddingThickness}"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center">
-                    <Label
-                        HorizontalTextAlignment="Center"
-                        Style="{StaticResource SectionTitleStyle}"
-                        Text="{Binding NoResultsHint}"/>
-                    <Label
-                        HorizontalTextAlignment="Center"
-                        Style="{StaticResource BodyStyle}"
-                        Text="{Binding NoResultsSubhint}"/>
-                </StackLayout>
+                    TitleText="{Binding NoResultsHint}"
+                    BodyText="{Binding NoResultsSubhint}"
+                    IconName="SearchOff" />
 
                 <CollectionView
                     x:Name="SearchResultsCollectionView"

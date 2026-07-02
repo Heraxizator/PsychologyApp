@@ -22,7 +22,7 @@
 
         <VerticalStackLayout
             Grid.Row="0"
-            Spacing="8"
+            Spacing="{StaticResource CompactSpacing}"
             Margin="{StaticResource LayoutPageMarginThickness}">
             <ui:NavigationBarSimpleView
                 TitleText="{Binding PageTitle}"
@@ -35,7 +35,7 @@
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
                 <Border Style="{StaticResource MoodStripStyle}">
-                    <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                    <VerticalStackLayout Spacing="{StaticResource CompactSpacing}" HorizontalOptions="Center">
                         <ui:MaterialIconView
                             IconName="Insights"
                             IconColor="{DynamicResource Primary}"

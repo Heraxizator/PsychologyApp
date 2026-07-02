@@ -8,15 +8,20 @@
              xmlns:models="clr-namespace:PsychologyApp.Presentation.Entities.Test"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:DataType="vm:TestHistoryViewModel"
-             Shell.NavBarIsVisible="True"
+             Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
     <ContentPage.Behaviors>
         <behaviors:PageAnalyticsBehavior TestId="{Binding TestFlowId}" />
     </ContentPage.Behaviors>
 
-    <Grid Margin="{StaticResource LayoutPageMarginThickness}" RowDefinitions="*,Auto">
-        <ScrollView Grid.Row="0" IsVisible="{Binding IsDone}">
+    <Grid Padding="{StaticResource LayoutPageMarginThickness}" RowDefinitions="Auto,*,Auto" RowSpacing="{StaticResource LayoutSpacing}">
+        <ui:NavigationBarSimpleView
+            Grid.Row="0"
+            TitleText="{Binding PageTitle}"
+            BackCommand="{Binding Finish}" />
+
+        <ScrollView Grid.Row="1" IsVisible="{Binding IsDone}">
             <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
                 <testUi:TestScoreTrendChartView
                     IsVisible="{Binding HasChart}"
@@ -29,67 +34,17 @@
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:TestHistoryEntryItem">
-                            <Border Style="{StaticResource ListEntryCardStyle}">
-                                <VerticalStackLayout Spacing="6">
-                                    <Grid ColumnDefinitions="*,Auto">
-                                        <Label
-                                            Grid.Column="0"
-                                            Text="{Binding DateText}"
-                                            Style="{StaticResource CaptionStyle}" />
-                                        <Border
-                                            Grid.Column="1"
-                                            IsVisible="{Binding HasTrend}"
-                                            Padding="8,2"
-                                            StrokeThickness="0"
-                                            BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
-                                            <Border.Triggers>
-                                                <DataTrigger
-                                                    Binding="{Binding IsWorse}"
-                                                    TargetType="Border"
-                                                    Value="True">
-                                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray700}}" />
-                                                </DataTrigger>
-                                            </Border.Triggers>
-                                            <Border.StrokeShape>
-                                                <RoundRectangle CornerRadius="6" />
-                                            </Border.StrokeShape>
-                                            <Label
-                                                Text="{Binding TrendText}"
-                                                Style="{StaticResource CaptionStyle}"
-                                                TextColor="{DynamicResource Primary}"
-                                                FontFamily="{StaticResource SemiBoldFontFamily}">
-                                                <Label.Triggers>
-                                                    <DataTrigger
-                                                        Binding="{Binding IsWorse}"
-                                                        TargetType="Label"
-                                                        Value="True">
-                                                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
-                                                    </DataTrigger>
-                                                </Label.Triggers>
-                                            </Label>
-                                        </Border>
-                                    </Grid>
-                                    <Label
-                                        IsVisible="{Binding HasScore}"
-                                        Text="{Binding ScoreText}"
-                                        Style="{StaticResource CaptionStyle}"
-                                        FontFamily="{StaticResource MediumFontFamily}"
-                                        TextColor="{DynamicResource Primary}" />
-                                    <Label Text="{Binding SummaryText}" Style="{StaticResource BodyStyle}" />
-                                    <Expander IsVisible="{Binding HasDetail}">
-                                        <Expander.Header>
-                                            <Label
-                                                Text="{Binding DurationText}"
-                                                Style="{StaticResource CaptionStyle}"
-                                                TextColor="{DynamicResource Primary}" />
-                                        </Expander.Header>
-                                        <testUi:QuestionnaireResultDetailView
-                                            Questions="{Binding DetailQuestions}"
-                                            DurationText="{Binding DurationText}"
-                                            HasDuration="False" />
-                                    </Expander>
-                                </VerticalStackLayout>
-                            </Border>
+                            <testUi:TestHistoryEntryView
+                                DateText="{Binding DateText}"
+                                SummaryText="{Binding SummaryText}"
+                                ScoreText="{Binding ScoreText}"
+                                TrendText="{Binding TrendText}"
+                                DurationText="{Binding DurationText}"
+                                HasScore="{Binding HasScore}"
+                                HasTrend="{Binding HasTrend}"
+                                HasDetail="{Binding HasDetail}"
+                                IsWorse="{Binding IsWorse}"
+                                DetailQuestions="{Binding DetailQuestions}" />
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                     <CollectionView.EmptyView>
@@ -102,13 +57,13 @@
         </ScrollView>
 
         <ui:ButtonView
-            Grid.Row="1"
-            Margin="0,8,0,0"
+            Grid.Row="2"
             IsVisible="{Binding IsDone}"
             BodyText="{Binding RetakeButtonText}"
             TapCommand="{Binding RetakeCommand}" />
 
         <ui:ProgressBarView
+            Grid.RowSpan="3"
             VerticalOptions="Center"
             HorizontalOptions="Center"
             IsVisible="{Binding IsLoadingOverlayVisible}"
@@ -116,6 +71,7 @@
             ProgressText="{Binding LoadingText}" />
 
         <ui:RetryView
+            Grid.RowSpan="3"
             VerticalOptions="Center"
             HorizontalOptions="Center"
             IsVisible="{Binding IsFail}"

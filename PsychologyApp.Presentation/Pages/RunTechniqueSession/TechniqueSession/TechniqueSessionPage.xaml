@@ -12,10 +12,6 @@
         <shellBehaviors:TechniqueSessionBehavior />
     </ContentPage.Behaviors>
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="{Binding TheoryToolbarText}" Command="{Binding Theory}" />
-    </ContentPage.ToolbarItems>
-
     <controls:TechniquePageShell
         x:Name="SessionShell"
         TitleText="{Binding PageName}"

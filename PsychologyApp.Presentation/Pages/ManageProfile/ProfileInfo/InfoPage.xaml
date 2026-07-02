@@ -18,7 +18,7 @@
             TitleText="{Binding PageTitle}" />
 
         <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-            <VerticalStackLayout Spacing="8">
+            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                 <Label
                     HorizontalTextAlignment="Justify"
                     Text="{Binding AboutBody}"

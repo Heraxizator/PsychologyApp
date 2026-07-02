@@ -26,7 +26,7 @@
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="technique:TheorySection">
                         <VerticalStackLayout Spacing="6">
-                            <Label Text="{Binding Heading}" Style="{StaticResource SectionTitleStyle}" />
+                            <ui:SectionHeaderView TitleText="{Binding Heading}" />
                             <Label Text="{Binding Body}" Style="{StaticResource BodyStyle}" />
                         </VerticalStackLayout>
                     </DataTemplate>

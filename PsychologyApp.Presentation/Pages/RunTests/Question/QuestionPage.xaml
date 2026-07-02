@@ -19,7 +19,7 @@
         RowDefinitions="Auto,*,Auto"
         RowSpacing="{StaticResource LayoutSpacing}">
 
-        <VerticalStackLayout Grid.Row="0" Spacing="8">
+        <VerticalStackLayout Grid.Row="0" Spacing="{StaticResource CompactSpacing}">
             <ui:NavigationBarSimpleView
                 TitleText="{Binding PageTitle}"
                 BackCommand="{Binding BackCommand}" />
@@ -48,7 +48,7 @@
                         <behaviors:RevealOnAppearingBehavior />
                         <behaviors:StepChangeRevealBehavior Step="{Binding CurrentIndex}" />
                     </Border.Behaviors>
-                    <VerticalStackLayout Spacing="12">
+                    <VerticalStackLayout Spacing="{StaticResource SectionSpacing}">
                         <Label
                             Text="{Binding QuestionLeadText}"
                             Style="{StaticResource CaptionStyle}"
@@ -73,9 +73,7 @@
                         </Border>
                         <Label
                             Text="{Binding CurrentQuestionContext}"
-                            Style="{StaticResource BodyStyle}"
-                            FontSize="17"
-                            LineHeight="1.35"
+                            Style="{StaticResource EmphasisBodyStyle}"
                             HorizontalTextAlignment="Start"
                             LineBreakMode="WordWrap" />
                     </VerticalStackLayout>
@@ -105,7 +103,7 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <VerticalStackLayout Grid.Row="2" Spacing="8">
+        <VerticalStackLayout Grid.Row="2" Spacing="{StaticResource CompactSpacing}">
             <Label
                 Text="{Binding MultiChoiceHintText}"
                 IsVisible="{Binding IsMultiChoiceHintVisible}"
@@ -120,7 +118,7 @@
                 TextColor="{DynamicResource Primary}"
                 HorizontalTextAlignment="Center"
                 LineBreakMode="WordWrap" />
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="{StaticResource CompactSpacing}">
                 <ui:ButtonView
                     Grid.Column="0"
                     Variant="Secondary"

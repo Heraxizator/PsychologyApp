@@ -19,7 +19,7 @@
                 TitleText="{Binding CustomTechniqueTitle}"
                 BackCommand="{Binding BackCommand}" />
 
-            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="{StaticResource CompactSpacing}">
                 <ui:ButtonView
                     Grid.Column="1"
                     IsCompact="True"
