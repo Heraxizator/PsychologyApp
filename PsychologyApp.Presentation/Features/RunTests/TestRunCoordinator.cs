@@ -93,17 +93,22 @@ public sealed class TestRunCoordinator(
         QuestionnaireSubmission submission = saved.Submission;
         QuestionnaireCompletionRequest request = saved.Request;
 
-        NavigationRunStatus status = await navigationService.GoToTestResultAsync(
-            submission.Score,
-            submission.Interpretation,
-            submission.RecommendedTechnique,
-            request.Session.TestId,
-            submission.InterpretationDetail,
-            request.Session.AnalyzerId,
-            saved.Detail,
+        bool completed = await NavigationRetry.TryExecuteWithRetryAsync(
+            () => navigationService.GoToTestResultAsync(
+                submission.Score,
+                submission.Interpretation,
+                submission.RecommendedTechnique,
+                request.Session.TestId,
+                submission.InterpretationDetail,
+                request.Session.AnalyzerId,
+                saved.Detail,
+                cancellationToken),
+            status => status == NavigationRunStatus.Completed,
+            maxAttempts: 3,
+            delay: TimeSpan.FromMilliseconds(150),
             cancellationToken);
 
-        if (status != NavigationRunStatus.Completed)
+        if (!completed)
         {
             throw new TestCompletionNavigationException();
         }

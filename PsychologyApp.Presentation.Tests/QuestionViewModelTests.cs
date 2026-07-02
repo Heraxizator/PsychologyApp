@@ -464,7 +464,7 @@ public sealed class QuestionViewModelTests
     }
 
     [Fact]
-    public async Task NextCommand_OnLastStep_WhenNavigationFailsThenRetry_SavesOnceAndNavigatesOnSecondAttempt()
+    public async Task NextCommand_OnLastStep_WhenNavigationFailsOnce_RetriesAutomaticallyWithoutToast()
     {
         var navigation = new Mock<INavigation>();
         var navigationService = new RetryResultNavigationService(navigation.Object);
@@ -497,12 +497,7 @@ public sealed class QuestionViewModelTests
             new TestSessionInfo { TestId = "beck", AnalyzerId = "beck" });
 
         viewModel.NextCommand.Execute(null);
-        await Task.Delay(300);
-
-        toast.Verify(t => t.LongToast(AppStrings.TestsResultNavigationFailedMessage), Times.Once);
-
-        viewModel.NextCommand.Execute(null);
-        await Task.Delay(300);
+        await Task.Delay(500);
 
         progress.Verify(
             p => p.SaveTestResultAsync(
@@ -512,7 +507,8 @@ public sealed class QuestionViewModelTests
                 It.IsAny<string?>(),
                 It.IsAny<CancellationToken>()),
             Times.Once);
-        toast.Verify(t => t.LongToast(AppStrings.TestsResultNavigationFailedMessage), Times.Once);
+        Assert.Equal(2, navigationService.NavigationAttempts);
+        toast.Verify(t => t.LongToast(AppStrings.TestsResultNavigationFailedMessage), Times.Never);
     }
 
     [Fact]
@@ -614,6 +610,8 @@ public sealed class QuestionViewModelTests
     private sealed class RetryResultNavigationService(INavigation navigation) : TestNavigationService(navigation)
     {
         private int _attempts;
+
+        public int NavigationAttempts => _attempts;
 
         public override Task<NavigationRunStatus> GoToTestResultAsync(
             int score,
