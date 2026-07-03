@@ -52,19 +52,22 @@ public sealed class MauiNavigationService : INavigationService
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateUserPage(), true));
 
     public Task GoToOptionsAsync() =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateOptionsPage(), false));
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateOptionsPage(), true));
 
     public Task GoToInfoAsync() =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateInfoPage(), false));
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateInfoPage(), true));
 
     public Task GoToDonateAsync() =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateDonatePage(), false));
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateDonatePage(), true));
+
+    public Task GoToAliceAsync() =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateAlicePage(), true));
 
     public Task GoToFormAsync() =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateFormPage(), false));
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateFormPage(), true));
 
     public Task GoToSettingsAsync() =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateSettingsPage(), false));
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateSettingsPage(), true));
 
     public Task GoToPhysicsSearchAsync() =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreatePhysicsSearchPage(), false));

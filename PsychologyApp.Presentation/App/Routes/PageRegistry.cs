@@ -9,6 +9,7 @@ using PsychologyApp.Presentation.Pages.RunTests.FindProblem;
 using PsychologyApp.Presentation.Pages.PlayMusic.MusicPlayer;
 using PsychologyApp.Presentation.Pages.SearchPhysics.PhysicsSearch;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileDonate;
+using PsychologyApp.Presentation.Pages.ManageProfile.ProfileAlice;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileInfo;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileOptions;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileSettings;
@@ -82,6 +83,9 @@ public sealed class PageRegistry(
 
     public DonatePage CreateDonatePage() =>
         WithPressFeedback(profilePageFactory.CreateDonatePage());
+
+    public AlicePage CreateAlicePage() =>
+        WithPressFeedback(profilePageFactory.CreateAlicePage());
 
     public FormPage CreateFormPage() =>
         WithPressFeedback(reviewPageFactory.CreateFormPage());

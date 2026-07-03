@@ -10,11 +10,14 @@ public class OptionsViewModel : BaseViewModel
     public ICommand OpenDonatePageCommand { get; private set; } = default!;
     public ICommand OpenFeedbackPageCommand { get; private set; } = default!;
     public ICommand OpenSettingsPageCommand { get; private set; } = default!;
+    public ICommand OpenAlicePageCommand { get; private set; } = default!;
     public ICommand BackCommand { get; private set; } = default!;
 
     public string PageTitle => AppStrings.OptionsTitle;
     public string SettingsTitle => AppStrings.OptionsSettingsTitle;
-    public string SettingsSubtitle => AppStrings.OptionsSettingsSubtitle;
+    public string SettingsSubtitle => AppStrings.ProfileSettingsCardSubtitle;
+    public string AliceTitle => AppStrings.OptionsAliceTitle;
+    public string AliceSubtitle => AppStrings.OptionsAliceSubtitle;
     public string AboutTitle => AppStrings.OptionsAboutTitle;
     public string AboutSubtitle => AppStrings.OptionsAboutSubtitle;
     public string FeedbackTitle => AppStrings.OptionsFeedbackTitle;
@@ -30,8 +33,8 @@ public class OptionsViewModel : BaseViewModel
         OpenDonatePageCommand = new AsyncCommand(() => navigationService.GoToDonateAsync());
         OpenFeedbackPageCommand = new AsyncCommand(() => navigationService.GoToFormAsync());
         OpenSettingsPageCommand = new AsyncCommand(() => navigationService.GoToSettingsAsync());
+        OpenAlicePageCommand = new AsyncCommand(() => navigationService.GoToAliceAsync());
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
-
     }
 
     protected override void RefreshLocalizedProperties()
@@ -40,6 +43,8 @@ public class OptionsViewModel : BaseViewModel
             nameof(PageTitle),
             nameof(SettingsTitle),
             nameof(SettingsSubtitle),
+            nameof(AliceTitle),
+            nameof(AliceSubtitle),
             nameof(AboutTitle),
             nameof(AboutSubtitle),
             nameof(FeedbackTitle),

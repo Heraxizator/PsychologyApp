@@ -25,6 +25,8 @@ public class TestNavigationService(INavigation navigation) : INavigationService
 
     public Task GoToDonateAsync() => Task.CompletedTask;
 
+    public Task GoToAliceAsync() => Task.CompletedTask;
+
     public Task GoToFormAsync() => Task.CompletedTask;
 
     public Task GoToSettingsAsync() => Task.CompletedTask;
