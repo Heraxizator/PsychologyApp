@@ -44,7 +44,7 @@ public sealed class QuoteCatalogContentTests
     [Fact]
     public void QuoteCatalogPolicy_CurrentVersionIsAtLeastTwo()
     {
-        Assert.True(QuoteCatalogPolicy.CurrentVersion >= 2);
+        Assert.True(QuoteCatalogPolicy.CurrentVersion >= 3);
     }
 
     private static async Task<List<QuoteJsonEntry>> LoadAsync(string relativePath)
