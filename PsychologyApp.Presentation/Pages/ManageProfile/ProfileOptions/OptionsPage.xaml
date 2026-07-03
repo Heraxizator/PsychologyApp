@@ -16,6 +16,10 @@
 
         <ScrollView VerticalScrollBarVisibility="Never">
             <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
+                <VerticalStackLayout.Behaviors>
+                    <behaviors:StaggerChildrenBehavior />
+                </VerticalStackLayout.Behaviors>
+
                 <ui:SettingsLinkCardView
                     Title="{Binding SettingsTitle}"
                     Subtitle="{Binding SettingsSubtitle}"
@@ -26,9 +30,9 @@
                 </ui:SettingsLinkCardView>
 
                 <ui:SettingsLinkCardView
-                    Title="{Binding AboutTitle}"
-                    Subtitle="{Binding AboutSubtitle}"
-                    TapCommand="{Binding OpenAboutPageCommand}">
+                    Title="{Binding AliceTitle}"
+                    Subtitle="{Binding AliceSubtitle}"
+                    TapCommand="{Binding OpenAlicePageCommand}">
                     <ui:SettingsLinkCardView.Behaviors>
                         <behaviors:ListItemRevealBehavior RevealIndex="1" />
                     </ui:SettingsLinkCardView.Behaviors>
@@ -49,6 +53,15 @@
                     TapCommand="{Binding OpenDonatePageCommand}">
                     <ui:SettingsLinkCardView.Behaviors>
                         <behaviors:ListItemRevealBehavior RevealIndex="3" />
+                    </ui:SettingsLinkCardView.Behaviors>
+                </ui:SettingsLinkCardView>
+
+                <ui:SettingsLinkCardView
+                    Title="{Binding AboutTitle}"
+                    Subtitle="{Binding AboutSubtitle}"
+                    TapCommand="{Binding OpenAboutPageCommand}">
+                    <ui:SettingsLinkCardView.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="4" />
                     </ui:SettingsLinkCardView.Behaviors>
                 </ui:SettingsLinkCardView>
             </VerticalStackLayout>

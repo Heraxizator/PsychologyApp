@@ -24,15 +24,24 @@ public partial class FormViewModel
     {
         if (string.IsNullOrWhiteSpace(MessageText))
         {
+            await _dialogService.ShowAsync(null, AppStrings.ReviewMessageRequired);
             return;
         }
 
-        _ = ResolveChannel(_settings) switch
+        bool sent = ResolveChannel(_settings) switch
         {
             FeedbackChannel.Email => await SendEmailAsync(MessageText, _settings.ReviewEmailAddress),
             FeedbackChannel.Sms => await SendSmsAsync(MessageText, _settings.ReviewSmsRecipient),
             FeedbackChannel.Share => await SendShareAsync(MessageText),
             _ => false
         };
+
+        if (!sent || NavigationService is null)
+        {
+            return;
+        }
+
+        await _dialogService.ShowAsync(AppStrings.ReviewSendSuccessTitle, AppStrings.ReviewSendSuccessMessage);
+        await NavigationService.GoBackAsync();
     }
 }

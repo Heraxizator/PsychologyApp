@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.ManageProfile.ProfileAlice.AlicePage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ManageProfile.ProfileAlice"
+             x:DataType="vm:AliceViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}">
+
+    <Grid RowDefinitions="Auto,*">
+        <VerticalStackLayout
+            Grid.Row="0"
+            Margin="{StaticResource LayoutPageMarginThickness}"
+            Spacing="{StaticResource CompactSpacing}">
+            <ui:NavigationBarExtendedView
+                TitleText="{Binding PageTitle}"
+                BackCommand="{Binding BackCommand}"
+                ExtensionText="{Binding OpenInBrowserText}"
+                ExtensionCommand="{Binding OpenInBrowserCommand}" />
+
+            <Label
+                Text="{Binding DisclaimerBody}"
+                Style="{StaticResource CaptionStyle}"
+                MaxLines="2"
+                LineBreakMode="TailTruncation" />
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="1">
+            <WebView
+                x:Name="AliceWebView"
+                Source="{Binding AliceUrl}"
+                Navigating="OnWebViewNavigating"
+                Navigated="OnWebViewNavigated" />
+
+            <ui:ProgressBarView
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                IsVisible="{Binding IsWebViewLoading}"
+                IsLoading="{Binding IsWebViewLoading}"
+                ProgressText="{Binding LoadingText}" />
+        </Grid>
+    </Grid>
+</ContentPage>

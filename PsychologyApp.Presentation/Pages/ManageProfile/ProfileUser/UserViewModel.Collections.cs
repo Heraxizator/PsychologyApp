@@ -9,5 +9,6 @@ public partial class UserViewModel
 {
     public ObservableCollection<TechniqueItem> Techniques { get; private set; } = [];
     public ObservableCollection<QuoteItem> Quotes { get; private set; } = [];
+    public ObservableCollection<QuoteItem> DisplayQuotes { get; private set; } = [];
     public ObservableCollection<PracticeHistoryItem> PracticeHistory { get; private set; } = [];
 }
