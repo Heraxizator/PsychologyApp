@@ -3,6 +3,7 @@ using PsychologyApp.Presentation.Pages.ManageProfile.ProfileSettings;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileDonate;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileInfo;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileOptions;
+using PsychologyApp.Presentation.Pages.ManageProfile.ProfileAlice;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Configuration;
@@ -70,10 +71,25 @@ public interface IDonateViewModelFactory
     DonateViewModel Create(ContentPage page);
 }
 
-public sealed class DonateViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IDonateViewModelFactory
+public sealed class DonateViewModelFactory(
+    IDialogService dialogService,
+    Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IDonateViewModelFactory
 {
     public DonateViewModel Create(ContentPage page) =>
-        new(ResolveNavigation(navigationServiceFactory, page));
+        new(dialogService, ResolveNavigation(navigationServiceFactory, page));
+}
+
+public interface IAliceViewModelFactory
+{
+    AliceViewModel Create(ContentPage page);
+}
+
+public sealed class AliceViewModelFactory(
+    IDialogService dialogService,
+    Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IAliceViewModelFactory
+{
+    public AliceViewModel Create(ContentPage page) =>
+        new(dialogService, ResolveNavigation(navigationServiceFactory, page));
 }
 
 public interface ISettingsViewModelFactory

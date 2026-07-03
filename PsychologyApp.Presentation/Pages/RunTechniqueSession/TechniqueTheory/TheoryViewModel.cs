@@ -33,7 +33,7 @@ public partial class TheoryViewModel : BaseViewModel
 
     protected override void RefreshLocalizedProperties()
     {
-        Notify(nameof(PageTitle), nameof(BackText));
+        Notify(nameof(PageTitle), nameof(BackText), nameof(TechniqueSubtitle), nameof(HasTechniqueSubtitle));
 
         if (_techniqueId is TechniqueId techniqueId)
         {

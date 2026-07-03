@@ -52,7 +52,7 @@ public static class MauiProgram
         builder.Services.AddPsychologyAppCore(settings =>
         {
             settings.ReviewEmailAddress = string.IsNullOrWhiteSpace(settings.ReviewEmailAddress)
-                ? Constants.ReviewEmailAdress
+                ? Constants.ReviewEmailAddress
                 : settings.ReviewEmailAddress;
             settings.SmallTimeoutMs = settings.SmallTimeoutMs > 0 ? settings.SmallTimeoutMs : Constants.SmallBaseTimeout;
             settings.MiddleTimeoutMs = settings.MiddleTimeoutMs > 0 ? settings.MiddleTimeoutMs : Constants.MiddleBaseTimeout;

@@ -21,7 +21,7 @@ public sealed class UserProfileRefreshCoordinator
         CancellationToken cancellationToken)
     {
         Task<ProfileStatsSnapshot> statsTask = statsLoader.LoadAsync(cancellationToken);
-        Task<IReadOnlyList<PracticeHistoryItem>> historyTask = historyLoader.LoadAsync(10, cancellationToken);
+        Task<IReadOnlyList<PracticeHistoryItem>> historyTask = historyLoader.LoadAsync(5, cancellationToken);
 
         await Task.WhenAll(statsTask, historyTask);
 

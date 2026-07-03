@@ -15,6 +15,7 @@ public interface INavigationService
     Task GoToOptionsAsync();
     Task GoToInfoAsync();
     Task GoToDonateAsync();
+    Task GoToAliceAsync();
     Task GoToFormAsync();
     Task GoToSettingsAsync();
     Task GoToPhysicsSearchAsync();

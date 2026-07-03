@@ -15,27 +15,51 @@
             <VerticalStackLayout.Behaviors>
                 <behaviors:StaggerChildrenBehavior />
             </VerticalStackLayout.Behaviors>
+
             <ui:NavigationBarSimpleView
                 TitleText="{Binding PageTitle}"
                 BackText="{Binding BackText}"
                 BackCommand="{Binding Finish}" />
+
+            <Label
+                IsVisible="{Binding HasTechniqueSubtitle}"
+                Text="{Binding TechniqueSubtitle}"
+                Style="{StaticResource CaptionStyle}"
+                TextColor="{DynamicResource Primary}"
+                MaxLines="2"
+                LineBreakMode="TailTruncation" />
+
             <VerticalStackLayout
                 IsVisible="{Binding HasSections}"
                 Spacing="{StaticResource ListItemSpacing}"
                 BindableLayout.ItemsSource="{Binding Sections}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="technique:TheorySection">
-                        <VerticalStackLayout Spacing="6">
-                            <ui:SectionHeaderView TitleText="{Binding Heading}" />
-                            <Label Text="{Binding Body}" Style="{StaticResource BodyStyle}" />
-                        </VerticalStackLayout>
+                        <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                            <Border.Behaviors>
+                                <behaviors:ListItemRevealBehavior />
+                            </Border.Behaviors>
+                            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                                <Label Text="{Binding Heading}" Style="{StaticResource SectionTitleStyle}" />
+                                <Label
+                                    Text="{Binding Body}"
+                                    Style="{StaticResource BodyStyle}"
+                                    HorizontalTextAlignment="Justify" />
+                            </VerticalStackLayout>
+                        </Border>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </VerticalStackLayout>
-            <ui:TextBoxView
+
+            <Border
                 IsVisible="{Binding HasLegacyText}"
-                HeaderText="{Binding PageTitle}"
-                BodyText="{Binding Text}" />
+                Style="{StaticResource BrandCardStyle}"
+                Margin="0">
+                <Label
+                    Text="{Binding Text}"
+                    Style="{StaticResource BodyStyle}"
+                    HorizontalTextAlignment="Justify" />
+            </Border>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
