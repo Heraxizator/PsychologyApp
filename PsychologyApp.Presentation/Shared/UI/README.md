@@ -51,6 +51,12 @@ xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
 
 Feature-specific cards live under `Widgets/` (`QuoteCardView`, `TechniqueListCardView`, `TestListCardView`, …). All list-card widgets attach `PressFeedbackBehavior AttachToAllTapTargets="True"`. High-touch widgets: `MoodStripView`, `TodayPracticeRowView`, `PhysicsReasonCardView`, `MusicTransportControlsView`.
 
+Profile widgets (`Widgets/Profile/`):
+
+| Widget | Use when |
+|--------|----------|
+| `ProfileHistoryEntryView` | Single practice completion row on profile (technique icon, name, date, optional duration pill) |
+
 ### Empty state icons (by screen)
 
 | Screen | `IconName` |

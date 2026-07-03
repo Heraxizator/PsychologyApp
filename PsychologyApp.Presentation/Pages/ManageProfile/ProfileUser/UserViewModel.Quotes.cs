@@ -35,6 +35,7 @@ public partial class UserViewModel
             IsQuotesFailed = false;
             IsQuotesReady = false;
             IsQuotesLoading = true;
+            NotifyQuotesPresentation();
         });
 
         ProfileQuotesLoadResult result = await _profileQuotesLoader.LoadFavoritesAsync(
@@ -52,14 +53,19 @@ public partial class UserViewModel
                 await UiThread.RunAsync(() =>
                 {
                     Quotes.Clear();
+                    DisplayQuotes.Clear();
                     foreach (QuoteItem item in result.Items)
                     {
                         Quotes.Add(item);
                     }
 
-                    OnPropertyChanged(nameof(HasQuotes));
-                    OnPropertyChanged(nameof(ShowQuotesEmptyCta));
+                    foreach (QuoteItem item in result.Items.Take(2))
+                    {
+                        DisplayQuotes.Add(item);
+                    }
+
                     SetQuotesReady();
+                    NotifyQuotesPresentation();
                 });
                 break;
             case ProfileQuotesLoadStatus.Failed:
@@ -80,11 +86,13 @@ public partial class UserViewModel
         if (result.ShouldRestoreReady)
         {
             SetQuotesReady();
+            NotifyQuotesPresentation();
         }
         else if (result.ShouldSetReadyWithoutData)
         {
             IsQuotesLoading = false;
             IsQuotesReady = true;
+            NotifyQuotesPresentation();
         }
     }
 
@@ -100,5 +108,17 @@ public partial class UserViewModel
         IsQuotesLoading = false;
         IsQuotesReady = false;
         IsQuotesFailed = true;
+        NotifyQuotesPresentation();
+    }
+
+    private void NotifyQuotesPresentation()
+    {
+        OnPropertyChanged(nameof(HasQuotes));
+        OnPropertyChanged(nameof(ShowQuotesSectionAction));
+        OnPropertyChanged(nameof(ShowQuotesEmpty));
+        OnPropertyChanged(nameof(ShowQuotesPreview));
+        OnPropertyChanged(nameof(HasQuotesSectionSubtitle));
+        OnPropertyChanged(nameof(QuotesSectionSubtitle));
+        OnPropertyChanged(nameof(QuotesSectionActionText));
     }
 }
