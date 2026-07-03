@@ -11,7 +11,7 @@ public partial class FormViewModel
         {
             await Email.Default.ComposeAsync(new EmailMessage
             {
-                Subject = FeedbackEmailSubject,
+                Subject = AppStrings.ReviewEmailSubject,
                 Body = messageText,
                 To = [recipient]
             });

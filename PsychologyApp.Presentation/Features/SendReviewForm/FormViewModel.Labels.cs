@@ -5,7 +5,7 @@ namespace PsychologyApp.Presentation.Features.SendReviewForm;
 public partial class FormViewModel
 {
     public string PageTitle => AppStrings.ReviewTitle;
-    public string ExplanationHeader => AppStrings.PhysicsExplanationHeader;
+    public string ExplanationHeader => AppStrings.ReviewExplanationHeader;
     public string ExplanationBody => AppStrings.ReviewExplanation;
     public new string FormSectionTitle => AppStrings.FormLabel;
     public string MessageFieldLabel => AppStrings.MessageLabel;

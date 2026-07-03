@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Options;
 using Moq;
 using PsychologyApp.Application.Configuration;
+using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Features.SendReviewForm;
@@ -11,7 +12,7 @@ namespace PsychologyApp.Presentation.Tests;
 public sealed class FormViewModelTests
 {
     [Fact]
-    public async Task Send_EmptyMessage_DoesNotOpenDialog()
+    public async Task Send_EmptyMessage_ShowsValidationDialog()
     {
         var dialog = new Mock<IDialogService>();
         var viewModel = CreateViewModel(dialog.Object, email: "a@b.com");
@@ -19,7 +20,24 @@ public sealed class FormViewModelTests
         viewModel.Send.Execute(null);
         await Task.Delay(50);
 
-        dialog.Verify(d => d.ShowAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+        dialog.Verify(
+            d => d.ShowAsync(It.IsAny<string>(), AppStrings.ReviewMessageRequired),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task Send_WhitespaceMessage_ShowsValidationDialog()
+    {
+        var dialog = new Mock<IDialogService>();
+        var viewModel = CreateViewModel(dialog.Object, email: "a@b.com");
+        viewModel.MessageText = "   ";
+
+        viewModel.Send.Execute(null);
+        await Task.Delay(50);
+
+        dialog.Verify(
+            d => d.ShowAsync(It.IsAny<string>(), AppStrings.ReviewMessageRequired),
+            Times.Once);
     }
 
     [Theory]

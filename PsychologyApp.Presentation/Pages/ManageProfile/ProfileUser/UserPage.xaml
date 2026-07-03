@@ -9,6 +9,7 @@
              xmlns:quotes="clr-namespace:PsychologyApp.Presentation.Entities.Quote"
              xmlns:quoteCard="clr-namespace:PsychologyApp.Presentation.Widgets.QuoteCard"
              xmlns:profileUi="clr-namespace:PsychologyApp.Presentation.Widgets.ProfileTechniqueCard"
+             xmlns:profileHistory="clr-namespace:PsychologyApp.Presentation.Widgets.Profile"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:DataType="vm:UserViewModel"
              Shell.NavBarIsVisible="False"
@@ -29,26 +30,28 @@
                     BackCommand="{Binding Finish}" />
 
                 <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
-                        <Border
-                            Grid.Column="0"
-                            Style="{StaticResource ProfileAvatarBorderStyle}">
-                            <ui:MaterialIconView
-                                IconName="Person"
-                                IconSize="30"
-                                IconColor="{DynamicResource Primary}"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center" />
-                        </Border>
-                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
-                            <Label Style="{StaticResource PageTitleStyle}" Text="{Binding UserLabel}" />
-                            <Label Style="{StaticResource BodyStyle}" Text="{Binding StandardUserLabel}" />
-                        </VerticalStackLayout>
-                    </Grid>
-                </Border>
-
-                <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                     <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                            <Border
+                                Grid.Column="0"
+                                Style="{StaticResource ProfileAvatarBorderStyle}">
+                                <ui:MaterialIconView
+                                    IconName="Person"
+                                    IconSize="30"
+                                    IconColor="{DynamicResource Primary}"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                                <Label Style="{StaticResource PageTitleStyle}" Text="{Binding UserLabel}" />
+                                <Label Style="{StaticResource BodyStyle}" Text="{Binding StandardUserLabel}" />
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <BoxView
+                            HeightRequest="1"
+                            Color="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}" />
+
                         <Grid ColumnDefinitions="*,*,*" ColumnSpacing="{StaticResource CompactSpacing}">
                             <ui:MetricTileView
                                 Grid.Column="0"
@@ -64,83 +67,79 @@
                                 ValueText="{Binding StreakCount}"
                                 LabelText="{Binding StreakLabel}" />
                         </Grid>
+
                         <Label
                             IsVisible="{Binding HasLastPractice}"
                             HorizontalTextAlignment="Center"
                             Style="{StaticResource CaptionStyle}"
+                            TextColor="{DynamicResource Primary}"
                             Text="{Binding LastPracticeDisplay}" />
                     </VerticalStackLayout>
                 </Border>
 
-                <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                    <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                        <Label Text="{Binding PracticeHistoryTitle}" Style="{StaticResource SectionTitleStyle}" />
-                        <ui:EmptyStateView
-                            IsVisible="{Binding ShowPracticeHistoryEmpty}"
-                            BodyText="{Binding PracticeHistoryEmpty}"
-                            IconName="History" />
-                        <VerticalStackLayout
-                            IsVisible="{Binding HasPracticeHistory}"
-                            BindableLayout.ItemsSource="{Binding PracticeHistory}"
-                            Spacing="{StaticResource ListItemSpacing}">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="profile:PracticeHistoryItem">
-                                    <Border Style="{StaticResource ListEntryCardStyle}">
-                                        <Label Text="{Binding DisplayText}" Style="{StaticResource BodyStyle}" />
-                                    </Border>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </VerticalStackLayout>
+                <ui:SettingsLinkCardView
+                    Title="{Binding OptionsLabel}"
+                    Subtitle="{Binding OptionsCardSubtitle}"
+                    TapCommand="{Binding OpenOptionsCommand}">
+                    <ui:SettingsLinkCardView.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="1" />
+                    </ui:SettingsLinkCardView.Behaviors>
+                </ui:SettingsLinkCardView>
+
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <ui:SectionHeaderView TitleText="{Binding PracticeHistoryTitle}" />
+                    <ui:EmptyStateView
+                        IsVisible="{Binding ShowPracticeHistoryEmpty}"
+                        BodyText="{Binding PracticeHistoryEmpty}"
+                        IconName="History" />
+                    <VerticalStackLayout
+                        IsVisible="{Binding HasPracticeHistory}"
+                        BindableLayout.ItemsSource="{Binding PracticeHistory}"
+                        Spacing="{StaticResource ListItemSpacing}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="profile:PracticeHistoryItem">
+                                <profileHistory:ProfileHistoryEntryView
+                                    DateText="{Binding DateText}"
+                                    TechniqueName="{Binding TechniqueName}"
+                                    IconName="{Binding IconName}"
+                                    DurationText="{Binding DurationText}"
+                                    HasDuration="{Binding HasDuration}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>
-                </Border>
+                </VerticalStackLayout>
 
-                <ui:SettingsLinkCardView
-                    Title="{Binding SettingsCardTitle}"
-                    Subtitle="{Binding SettingsCardSubtitle}"
-                    TapCommand="{Binding OpenSettingsCommand}" />
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <ui:SectionHeaderView TitleText="{Binding RecommendedLabel}" />
+                    <CollectionView
+                        HeightRequest="156"
+                        HorizontalScrollBarVisibility="Never"
+                        ItemsSource="{Binding Techniques}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal" ItemSpacing="{StaticResource ListItemSpacing}" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="technique:TechniqueItem">
+                                <profileUi:ProfileTechniqueCardView
+                                    Image="{Binding Image}"
+                                    IconName="{Binding IconName}"
+                                    Title="{Binding Title}"
+                                    Subtitle="{Binding Subtitle}"
+                                    Theme="{Binding Theme}"
+                                    TapCommand="{Binding TapCommand}" />
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
 
-                <ui:SettingsLinkCardView
-                    Title="{Binding DonateTitle}"
-                    Subtitle="{Binding DonateSubtitle}"
-                    TapCommand="{Binding OpenDonateCommand}" />
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <ui:SectionHeaderView
+                        TitleText="{Binding BestQuotesLabel}"
+                        SubtitleText="{Binding QuotesSectionSubtitle}"
+                        ActionText="{Binding QuotesSectionActionText}"
+                        ActionCommand="{Binding OpenQuotesTabCommand}" />
 
-                <ui:SettingsLinkCardView
-                    Title="{Binding FeedbackCardTitle}"
-                    Subtitle="{Binding FeedbackCardSubtitle}"
-                    TapCommand="{Binding OpenFeedbackCommand}" />
-
-                <ui:SettingsLinkCardView
-                    Title="{Binding InfoCardTitle}"
-                    Subtitle="{Binding InfoCardSubtitle}"
-                    TapCommand="{Binding OpenInfoCommand}" />
-
-                <Label Text="{Binding RecommendedLabel}" Style="{StaticResource SectionTitleStyle}" />
-
-                <CollectionView
-                    HeightRequest="156"
-                    HorizontalScrollBarVisibility="Never"
-                    ItemsSource="{Binding Techniques}">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="{StaticResource ListItemSpacing}" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="technique:TechniqueItem">
-                            <profileUi:ProfileTechniqueCardView
-                                Image="{Binding Image}"
-                                IconName="{Binding IconName}"
-                                Title="{Binding Title}"
-                                Subtitle="{Binding Subtitle}"
-                                Theme="{Binding Theme}"
-                                TapCommand="{Binding TapCommand}" />
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-
-                <Label Text="{Binding BestQuotesLabel}" Style="{StaticResource SectionTitleStyle}" />
-
-                <Grid MinimumHeightRequest="120">
                     <ui:ProgressBarView
-                        x:Name="QuotesLoading"
                         IsVisible="{Binding IsQuotesLoading}"
                         IsLoading="{Binding IsQuotesLoading}"
                         ProgressText="{Binding QuotesLoadingText}">
@@ -149,16 +148,18 @@
                         </ui:ProgressBarView.GestureRecognizers>
                     </ui:ProgressBarView>
 
-                    <CollectionView
-                        x:Name="QuotesCollection"
-                        IsVisible="{Binding IsQuotesReady}"
-                        SelectionMode="None"
-                        VerticalScrollBarVisibility="Never"
-                        ItemsSource="{Binding Quotes}">
-                        <CollectionView.ItemsLayout>
-                            <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
-                        </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
+                    <ui:EmptyStateView
+                        IsVisible="{Binding ShowQuotesEmpty}"
+                        BodyText="{Binding QuotesEmptyText}"
+                        IconName="FavoriteBorder"
+                        ActionText="{Binding GoToQuotesTabText}"
+                        ActionCommand="{Binding OpenQuotesTabCommand}" />
+
+                    <VerticalStackLayout
+                        IsVisible="{Binding ShowQuotesPreview}"
+                        BindableLayout.ItemsSource="{Binding DisplayQuotes}"
+                        Spacing="{StaticResource ListItemSpacing}">
+                        <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="quotes:QuoteItem">
                                 <quoteCard:QuoteCardView
                                     Text="{Binding Text}"
@@ -172,17 +173,9 @@
                                     </quoteCard:QuoteCardView.Behaviors>
                                 </quoteCard:QuoteCardView>
                             </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                        <CollectionView.EmptyView>
-                            <ui:EmptyStateView
-                                Margin="0,24,0,0"
-                                BodyText="{Binding QuotesEmptyText}"
-                                IconName="FavoriteBorder"
-                                ActionText="{Binding GoToQuotesTabText}"
-                                ActionCommand="{Binding OpenQuotesTabCommand}" />
-                        </CollectionView.EmptyView>
-                    </CollectionView>
-                </Grid>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
 
             </VerticalStackLayout>
         </ScrollView>

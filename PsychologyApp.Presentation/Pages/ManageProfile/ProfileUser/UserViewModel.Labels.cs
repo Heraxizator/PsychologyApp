@@ -8,14 +8,7 @@ public partial class UserViewModel
     public string PageTitle => AppStrings.ProfileTitle;
     public string LoadingText => AppStrings.ProfileLoadingText;
     public string OptionsLabel => AppStrings.OptionsTitle;
-    public string SettingsCardTitle => AppStrings.OptionsSettingsTitle;
-    public string SettingsCardSubtitle => AppStrings.ProfileSettingsCardSubtitle;
-    public string DonateTitle => AppStrings.OptionsDonateTitle;
-    public string DonateSubtitle => AppStrings.OptionsDonateSubtitle;
-    public string FeedbackCardTitle => AppStrings.OptionsFeedbackTitle;
-    public string FeedbackCardSubtitle => AppStrings.OptionsFeedbackSubtitle;
-    public string InfoCardTitle => AppStrings.OptionsAboutTitle;
-    public string InfoCardSubtitle => AppStrings.OptionsAboutSubtitle;
+    public string OptionsCardSubtitle => AppStrings.ProfileOptionsCardSubtitle;
     public string UserLabel => AppStrings.ProfileUserLabel;
     public string StandardUserLabel => AppStrings.ProfileStandardUser;
     public string TechniquesCompletedLabel => AppStrings.ProfileTechniquesCompleted;
@@ -27,8 +20,15 @@ public partial class UserViewModel
     public string BestQuotesLabel => AppStrings.ProfileBestQuotes;
     public string QuotesEmptyText => AppStrings.ProfileQuotesEmpty;
     public string GoToQuotesTabText => AppStrings.QuotesGoToTab;
+    public string QuotesSectionActionText =>
+        ShowQuotesSectionAction ? AppStrings.ProfileQuotesSeeAll : string.Empty;
+    public bool ShowQuotesSectionAction => IsQuotesReady && HasQuotes;
+    public bool ShowQuotesEmpty => IsQuotesReady && !HasQuotes;
+    public bool ShowQuotesPreview => IsQuotesReady && HasQuotes;
+    public string QuotesSectionSubtitle =>
+        HasQuotesSectionSubtitle ? AppStrings.ProfileQuotesPreviewSubtitle : string.Empty;
     public bool HasQuotes => Quotes.Count > 0;
-    public bool ShowQuotesEmptyCta => IsQuotesReady && !HasQuotes;
+    public bool HasQuotesSectionSubtitle => IsQuotesReady && HasQuotes;
     public string QuotesSearchingText => AppStrings.QuotesSearching;
     public string QuotesLoadingText => AppStrings.QuotesLoading;
     public string LoadErrorText => AppStrings.LoadError;
@@ -44,14 +44,7 @@ public partial class UserViewModel
             nameof(PageTitle),
             nameof(LoadingText),
             nameof(OptionsLabel),
-            nameof(SettingsCardTitle),
-            nameof(SettingsCardSubtitle),
-            nameof(DonateTitle),
-            nameof(DonateSubtitle),
-            nameof(FeedbackCardTitle),
-            nameof(FeedbackCardSubtitle),
-            nameof(InfoCardTitle),
-            nameof(InfoCardSubtitle),
+            nameof(OptionsCardSubtitle),
             nameof(UserLabel),
             nameof(StandardUserLabel),
             nameof(TechniquesCompletedLabel),
@@ -62,6 +55,14 @@ public partial class UserViewModel
             nameof(RecommendedLabel),
             nameof(BestQuotesLabel),
             nameof(QuotesEmptyText),
+            nameof(GoToQuotesTabText),
+            nameof(QuotesSectionActionText),
+            nameof(ShowQuotesSectionAction),
+            nameof(ShowQuotesEmpty),
+            nameof(ShowQuotesPreview),
+            nameof(QuotesSectionSubtitle),
+            nameof(HasQuotes),
+            nameof(HasQuotesSectionSubtitle),
             nameof(QuotesSearchingText),
             nameof(QuotesLoadingText),
             nameof(LoadErrorText),
@@ -69,10 +70,7 @@ public partial class UserViewModel
             nameof(PracticeHistoryTitle),
             nameof(PracticeHistoryEmpty),
             nameof(HasPracticeHistory),
-            nameof(ShowPracticeHistoryEmpty),
-            nameof(GoToQuotesTabText),
-            nameof(HasQuotes),
-            nameof(ShowQuotesEmptyCta));
+            nameof(ShowPracticeHistoryEmpty));
         InitTechniques();
 
         string currentLanguage = UserPreferences.GetPersistedLanguage();

@@ -21,6 +21,7 @@ public static class ManageProfileFeatureServiceCollectionExtensions
         services.AddFeatureViewModelFactory<IOptionsViewModelFactory, OptionsViewModelFactory>();
         services.AddFeatureViewModelFactory<IInfoViewModelFactory, InfoViewModelFactory>();
         services.AddFeatureViewModelFactory<IDonateViewModelFactory, DonateViewModelFactory>();
+        services.AddFeatureViewModelFactory<IAliceViewModelFactory, AliceViewModelFactory>();
         services.AddFeatureViewModelFactory<ISettingsViewModelFactory, SettingsViewModelFactory>();
         return services;
     }
