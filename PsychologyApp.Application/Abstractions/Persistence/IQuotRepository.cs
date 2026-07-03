@@ -8,4 +8,6 @@ public interface IQuotRepository : IReadRepository<global::PsychologyApp.Domain.
     Task<IEnumerable<global::PsychologyApp.Domain.Entities.Quot>> GetLatestAsync(int count, CancellationToken cancellationToken = default);
     Task<IEnumerable<global::PsychologyApp.Domain.Entities.Quot>> GetFavouritesAsync(int count, CancellationToken cancellationToken = default);
     Task DeleteAllAsync(CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyList<string>> GetExistingTextsAsync(CancellationToken cancellationToken = default);
 }

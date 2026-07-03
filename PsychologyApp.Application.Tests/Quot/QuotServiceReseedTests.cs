@@ -19,6 +19,8 @@ public sealed class QuotServiceReseedTests
         ];
 
         var repository = new Mock<IQuotRepository>();
+        repository.Setup(r => r.GetExistingTextsAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Array.Empty<string>());
         var provider = new Mock<IQuotContentProvider>();
         provider.Setup(p => p.LoadAllAsync(It.IsAny<CancellationToken>())).ReturnsAsync(seeds);
 

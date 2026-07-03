@@ -6,6 +6,7 @@ using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Entities.Profile;
 using PsychologyApp.Presentation.Features.ManageProfile;
 using PsychologyApp.Presentation.Features.ManageProfile.Index;
+using System.Collections.ObjectModel;
 
 namespace PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
 
@@ -49,7 +50,8 @@ public partial class UserViewModel
 
             await UiThread.RunAsync(() =>
             {
-                PracticeHistory = result.History;
+                PracticeHistory = new ObservableCollection<PracticeHistoryItem>(
+                    result.History.Select(item => ProfilePracticeHistoryTapFactory.WithTapCommand(item, _navigationService)));
                 OnPropertyChanged(nameof(PracticeHistory));
                 OnPropertyChanged(nameof(HasPracticeHistory));
                 OnPropertyChanged(nameof(ShowPracticeHistoryEmpty));

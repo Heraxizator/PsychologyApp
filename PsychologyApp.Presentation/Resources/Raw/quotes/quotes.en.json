@@ -1,27 +1,2627 @@
 [
-  { "author": "Latin proverb", "text": "Summer, harvest, war.", "theme": "wisdom" },
-  { "author": "Seneca", "text": "Fate leads the willing and drags the unwilling.", "theme": "wisdom" },
-  { "author": "Confucius", "text": "A journey of a thousand miles begins with a single step.", "theme": "motivation" },
-  { "author": "Marcus Aurelius", "text": "The strength of the soul lies in changing one's inner world.", "theme": "resilience" },
-  { "author": "Viktor Frankl", "text": "When we can no longer change a situation, we are challenged to change ourselves.", "theme": "resilience" },
-  { "author": "Carl Jung", "text": "What you resist persists.", "theme": "self-awareness" },
-  { "author": "Epictetus", "text": "It is not events that disturb people, but their judgments about them.", "theme": "mindfulness" },
-  { "author": "Ralph Waldo Emerson", "text": "The deepest principle in human nature is the craving to be appreciated.", "theme": "self-esteem" },
-  { "author": "Albert Einstein", "text": "In the middle of difficulty lies opportunity.", "theme": "hope" },
-  { "author": "Maya Angelou", "text": "People will forget what you said, but they will never forget how you made them feel.", "theme": "empathy" },
-  { "author": "Dalai Lama XIV", "text": "Happiness is not something ready-made. It comes from your own actions.", "theme": "happiness" },
-  { "author": "Lao Tzu", "text": "The journey of a thousand miles begins beneath your feet.", "theme": "motivation" },
-  { "author": "Socrates", "text": "The unexamined life is not worth living.", "theme": "self-awareness" },
-  { "author": "Aristotle", "text": "We are what we repeatedly do. Excellence is not an act, but a habit.", "theme": "habits" },
-  { "author": "Plato", "text": "The greatest thing in life is to learn how to give love and let it come in.", "theme": "love" },
-  { "author": "Fyodor Dostoevsky", "text": "Beauty will save the world.", "theme": "hope" },
-  { "author": "Leo Tolstoy", "text": "All happy families are alike; each unhappy family is unhappy in its own way.", "theme": "relationships" },
-  { "author": "Antoine de Saint-Exupéry", "text": "We are responsible for those we have tamed.", "theme": "responsibility" },
-  { "author": "Mark Twain", "text": "The two most important days are the day you are born and the day you find out why.", "theme": "purpose" },
-  { "author": "Nelson Mandela", "text": "It always seems impossible until it is done.", "theme": "motivation" },
-  { "author": "Mahatma Gandhi", "text": "Be the change you wish to see in the world.", "theme": "growth" },
-  { "author": "Rumi", "text": "The wound is the place where the light enters you.", "theme": "healing" },
-  { "author": "Louise Hay", "text": "I love and approve of myself.", "theme": "self-love" },
-  { "author": "Carl Rogers", "text": "The more I accept myself, the more I can accept others.", "theme": "acceptance" },
-  { "author": "Anne Frank", "text": "Despite everything, I still believe people are really good at heart.", "theme": "hope" }
+  {
+    "author": "Latin proverb",
+    "text": "Summer, harvest, war.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Seneca",
+    "text": "Fate leads the willing and drags the unwilling.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Confucius",
+    "text": "A journey of a thousand miles begins with a single step.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Marcus Aurelius",
+    "text": "The strength of the soul lies in changing one\u0027s inner world.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Viktor Frankl",
+    "text": "When we can no longer change a situation, we are challenged to change ourselves.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Carl Jung",
+    "text": "What you resist persists.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Epictetus",
+    "text": "It is not events that disturb people, but their judgments about them.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Ralph Waldo Emerson",
+    "text": "The deepest principle in human nature is the craving to be appreciated.",
+    "theme": "self-esteem"
+  },
+  {
+    "author": "Albert Einstein",
+    "text": "In the middle of difficulty lies opportunity.",
+    "theme": "hope"
+  },
+  {
+    "author": "Maya Angelou",
+    "text": "People will forget what you said, but they will never forget how you made them feel.",
+    "theme": "empathy"
+  },
+  {
+    "author": "Dalai Lama XIV",
+    "text": "Happiness is not something ready-made. It comes from your own actions.",
+    "theme": "happiness"
+  },
+  {
+    "author": "Lao Tzu",
+    "text": "The journey of a thousand miles begins beneath your feet.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Socrates",
+    "text": "The unexamined life is not worth living.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Aristotle",
+    "text": "We are what we repeatedly do. Excellence is not an act, but a habit.",
+    "theme": "habits"
+  },
+  {
+    "author": "Plato",
+    "text": "The greatest thing in life is to learn how to give love and let it come in.",
+    "theme": "love"
+  },
+  {
+    "author": "Fyodor Dostoevsky",
+    "text": "Beauty will save the world.",
+    "theme": "hope"
+  },
+  {
+    "author": "Leo Tolstoy",
+    "text": "All happy families are alike; each unhappy family is unhappy in its own way.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Antoine de Saint-Exup\u00E9ry",
+    "text": "We are responsible for those we have tamed.",
+    "theme": "responsibility"
+  },
+  {
+    "author": "Mark Twain",
+    "text": "The two most important days are the day you are born and the day you find out why.",
+    "theme": "purpose"
+  },
+  {
+    "author": "Nelson Mandela",
+    "text": "It always seems impossible until it is done.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Mahatma Gandhi",
+    "text": "Be the change you wish to see in the world.",
+    "theme": "growth"
+  },
+  {
+    "author": "Rumi",
+    "text": "The wound is the place where the light enters you.",
+    "theme": "healing"
+  },
+  {
+    "author": "Louise Hay",
+    "text": "I love and approve of myself.",
+    "theme": "self-love"
+  },
+  {
+    "author": "Carl Rogers",
+    "text": "The more I accept myself, the more I can accept others.",
+    "theme": "acceptance"
+  },
+  {
+    "author": "Anne Frank",
+    "text": "Despite everything, I still believe people are really good at heart.",
+    "theme": "hope"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "A small step fatigue today already changes tomorrow.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Noticing fatigue is the beginning of self-care.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Calm grows where there is acceptance of fatigue.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "You are allowed to move at your own pace, even when fatigue.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Breath can be an anchor when fatigue feels too big.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Self-compassion is not weakness but support when fatigue.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "One honest look at fatigue releases some tension.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You do not have to solve everything at once\u2014one step about fatigue is enough.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "The body often knows the answer before thoughts\u2014listen to fatigue.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Anxiety eases when fatigue is broken into small parts.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Hope begins by admitting: it is hard for me because of fatigue.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Self-care is a practice, not a one-time feat about fatigue.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You do not have to be strong every day, especially when fatigue.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Accepting fatigue does not cancel change\u2014it supports it.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Gentleness with yourself today is fuel for tomorrow, even if fatigue.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Sometimes the best help is a pause and honesty about fatigue.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "You have gotten through hard things before\u2014fatigue can be lived through too.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "The point is not perfection but returning to yourself after fatigue.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Support starts with: what I feel about fatigue matters.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Each new day is a chance to relate differently to fatigue.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Comparison with others only adds pain when fatigue.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Your experience of fatigue deserves space.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You can want better and still accept fatigue now.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Slowing down is a skill, especially useful with fatigue.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "A thought is not a command\u2014you can notice fatigue and choose a response.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Boundaries protect energy when fatigue feels heavy.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "You are not alone with your fatigue\u2014asking for help is allowed.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "A small gratitude for fatigue can shift the day.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "The habit of noticing fatigue without judgment builds resilience.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Today it is enough to do a little less if fatigue drains you.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Clarity often passes through honesty about fatigue.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Silence sometimes heals better than advice when fatigue.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "A small step anxiety today already changes tomorrow.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Noticing anxiety is the beginning of self-care.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Calm grows where there is acceptance of anxiety.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "You are allowed to move at your own pace, even when anxiety.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Breath can be an anchor when anxiety feels too big.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Self-compassion is not weakness but support when anxiety.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "One honest look at anxiety releases some tension.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "You do not have to solve everything at once\u2014one step about anxiety is enough.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "The body often knows the answer before thoughts\u2014listen to anxiety.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Anxiety eases when anxiety is broken into small parts.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Hope begins by admitting: it is hard for me because of anxiety.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Self-care is a practice, not a one-time feat about anxiety.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "You do not have to be strong every day, especially when anxiety.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Accepting anxiety does not cancel change\u2014it supports it.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Gentleness with yourself today is fuel for tomorrow, even if anxiety.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Sometimes the best help is a pause and honesty about anxiety.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "You have gotten through hard things before\u2014anxiety can be lived through too.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "The point is not perfection but returning to yourself after anxiety.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Support starts with: what I feel about anxiety matters.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Each new day is a chance to relate differently to anxiety.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Comparison with others only adds pain when anxiety.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Your experience of anxiety deserves space.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "You can want better and still accept anxiety now.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Slowing down is a skill, especially useful with anxiety.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "A thought is not a command\u2014you can notice anxiety and choose a response.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Boundaries protect energy when anxiety feels heavy.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "You are not alone with your anxiety\u2014asking for help is allowed.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "A small gratitude for anxiety can shift the day.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "The habit of noticing anxiety without judgment builds resilience.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Today it is enough to do a little less if anxiety drains you.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Clarity often passes through honesty about anxiety.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Silence sometimes heals better than advice when anxiety.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "A small step uncertainty today already changes tomorrow.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Noticing uncertainty is the beginning of self-care.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Calm grows where there is acceptance of uncertainty.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You are allowed to move at your own pace, even when uncertainty.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Breath can be an anchor when uncertainty feels too big.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Self-compassion is not weakness but support when uncertainty.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "One honest look at uncertainty releases some tension.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "You do not have to solve everything at once\u2014one step about uncertainty is enough.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "The body often knows the answer before thoughts\u2014listen to uncertainty.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Anxiety eases when uncertainty is broken into small parts.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Hope begins by admitting: it is hard for me because of uncertainty.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Self-care is a practice, not a one-time feat about uncertainty.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "You do not have to be strong every day, especially when uncertainty.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Accepting uncertainty does not cancel change\u2014it supports it.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Gentleness with yourself today is fuel for tomorrow, even if uncertainty.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Sometimes the best help is a pause and honesty about uncertainty.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "You have gotten through hard things before\u2014uncertainty can be lived through too.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "The point is not perfection but returning to yourself after uncertainty.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Support starts with: what I feel about uncertainty matters.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Each new day is a chance to relate differently to uncertainty.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Comparison with others only adds pain when uncertainty.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Your experience of uncertainty deserves space.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "You can want better and still accept uncertainty now.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Slowing down is a skill, especially useful with uncertainty.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "A thought is not a command\u2014you can notice uncertainty and choose a response.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Boundaries protect energy when uncertainty feels heavy.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "You are not alone with your uncertainty\u2014asking for help is allowed.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "A small gratitude for uncertainty can shift the day.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "The habit of noticing uncertainty without judgment builds resilience.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Today it is enough to do a little less if uncertainty drains you.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Clarity often passes through honesty about uncertainty.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Silence sometimes heals better than advice when uncertainty.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "A small step loneliness today already changes tomorrow.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Noticing loneliness is the beginning of self-care.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Calm grows where there is acceptance of loneliness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "You are allowed to move at your own pace, even when loneliness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Breath can be an anchor when loneliness feels too big.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Self-compassion is not weakness but support when loneliness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "One honest look at loneliness releases some tension.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "You do not have to solve everything at once\u2014one step about loneliness is enough.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "The body often knows the answer before thoughts\u2014listen to loneliness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Anxiety eases when loneliness is broken into small parts.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Hope begins by admitting: it is hard for me because of loneliness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Self-care is a practice, not a one-time feat about loneliness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "You do not have to be strong every day, especially when loneliness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Accepting loneliness does not cancel change\u2014it supports it.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Gentleness with yourself today is fuel for tomorrow, even if loneliness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Sometimes the best help is a pause and honesty about loneliness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You have gotten through hard things before\u2014loneliness can be lived through too.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "The point is not perfection but returning to yourself after loneliness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Support starts with: what I feel about loneliness matters.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Each new day is a chance to relate differently to loneliness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Comparison with others only adds pain when loneliness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Your experience of loneliness deserves space.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "You can want better and still accept loneliness now.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Slowing down is a skill, especially useful with loneliness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "A thought is not a command\u2014you can notice loneliness and choose a response.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Boundaries protect energy when loneliness feels heavy.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You are not alone with your loneliness\u2014asking for help is allowed.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "A small gratitude for loneliness can shift the day.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "The habit of noticing loneliness without judgment builds resilience.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Today it is enough to do a little less if loneliness drains you.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Clarity often passes through honesty about loneliness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Silence sometimes heals better than advice when loneliness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "A small step disappointment today already changes tomorrow.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Noticing disappointment is the beginning of self-care.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Calm grows where there is acceptance of disappointment.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "You are allowed to move at your own pace, even when disappointment.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Breath can be an anchor when disappointment feels too big.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Self-compassion is not weakness but support when disappointment.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "One honest look at disappointment releases some tension.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "You do not have to solve everything at once\u2014one step about disappointment is enough.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "The body often knows the answer before thoughts\u2014listen to disappointment.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Anxiety eases when disappointment is broken into small parts.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Hope begins by admitting: it is hard for me because of disappointment.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Self-care is a practice, not a one-time feat about disappointment.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "You do not have to be strong every day, especially when disappointment.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Accepting disappointment does not cancel change\u2014it supports it.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Gentleness with yourself today is fuel for tomorrow, even if disappointment.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Sometimes the best help is a pause and honesty about disappointment.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "You have gotten through hard things before\u2014disappointment can be lived through too.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "The point is not perfection but returning to yourself after disappointment.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Support starts with: what I feel about disappointment matters.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Each new day is a chance to relate differently to disappointment.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Comparison with others only adds pain when disappointment.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Your experience of disappointment deserves space.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "You can want better and still accept disappointment now.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Slowing down is a skill, especially useful with disappointment.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "A thought is not a command\u2014you can notice disappointment and choose a response.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Boundaries protect energy when disappointment feels heavy.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "You are not alone with your disappointment\u2014asking for help is allowed.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "A small gratitude for disappointment can shift the day.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "The habit of noticing disappointment without judgment builds resilience.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Today it is enough to do a little less if disappointment drains you.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Clarity often passes through honesty about disappointment.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Silence sometimes heals better than advice when disappointment.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "A small step doubt today already changes tomorrow.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Noticing doubt is the beginning of self-care.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Calm grows where there is acceptance of doubt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "You are allowed to move at your own pace, even when doubt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Breath can be an anchor when doubt feels too big.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Self-compassion is not weakness but support when doubt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "One honest look at doubt releases some tension.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You do not have to solve everything at once\u2014one step about doubt is enough.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "The body often knows the answer before thoughts\u2014listen to doubt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Anxiety eases when doubt is broken into small parts.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Hope begins by admitting: it is hard for me because of doubt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Self-care is a practice, not a one-time feat about doubt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You do not have to be strong every day, especially when doubt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Accepting doubt does not cancel change\u2014it supports it.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Gentleness with yourself today is fuel for tomorrow, even if doubt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Sometimes the best help is a pause and honesty about doubt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "You have gotten through hard things before\u2014doubt can be lived through too.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "The point is not perfection but returning to yourself after doubt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Support starts with: what I feel about doubt matters.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Each new day is a chance to relate differently to doubt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Comparison with others only adds pain when doubt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Your experience of doubt deserves space.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You can want better and still accept doubt now.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Slowing down is a skill, especially useful with doubt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "A thought is not a command\u2014you can notice doubt and choose a response.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Boundaries protect energy when doubt feels heavy.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "You are not alone with your doubt\u2014asking for help is allowed.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "A small gratitude for doubt can shift the day.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "The habit of noticing doubt without judgment builds resilience.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Today it is enough to do a little less if doubt drains you.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Clarity often passes through honesty about doubt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Silence sometimes heals better than advice when doubt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "A small step pain today already changes tomorrow.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Noticing pain is the beginning of self-care.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Calm grows where there is acceptance of pain.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "You are allowed to move at your own pace, even when pain.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Breath can be an anchor when pain feels too big.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Self-compassion is not weakness but support when pain.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "One honest look at pain releases some tension.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "You do not have to solve everything at once\u2014one step about pain is enough.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "The body often knows the answer before thoughts\u2014listen to pain.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Anxiety eases when pain is broken into small parts.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Hope begins by admitting: it is hard for me because of pain.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Self-care is a practice, not a one-time feat about pain.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "You do not have to be strong every day, especially when pain.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Accepting pain does not cancel change\u2014it supports it.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Gentleness with yourself today is fuel for tomorrow, even if pain.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Sometimes the best help is a pause and honesty about pain.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "You have gotten through hard things before\u2014pain can be lived through too.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "The point is not perfection but returning to yourself after pain.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Support starts with: what I feel about pain matters.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Each new day is a chance to relate differently to pain.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Comparison with others only adds pain when pain.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Your experience of pain deserves space.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "You can want better and still accept pain now.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Slowing down is a skill, especially useful with pain.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "A thought is not a command\u2014you can notice pain and choose a response.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Boundaries protect energy when pain feels heavy.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "You are not alone with your pain\u2014asking for help is allowed.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "A small gratitude for pain can shift the day.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "The habit of noticing pain without judgment builds resilience.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Today it is enough to do a little less if pain drains you.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Clarity often passes through honesty about pain.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Silence sometimes heals better than advice when pain.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "A small step anger today already changes tomorrow.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Noticing anger is the beginning of self-care.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Calm grows where there is acceptance of anger.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You are allowed to move at your own pace, even when anger.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Breath can be an anchor when anger feels too big.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Self-compassion is not weakness but support when anger.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "One honest look at anger releases some tension.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "You do not have to solve everything at once\u2014one step about anger is enough.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "The body often knows the answer before thoughts\u2014listen to anger.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Anxiety eases when anger is broken into small parts.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Hope begins by admitting: it is hard for me because of anger.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Self-care is a practice, not a one-time feat about anger.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "You do not have to be strong every day, especially when anger.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Accepting anger does not cancel change\u2014it supports it.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Gentleness with yourself today is fuel for tomorrow, even if anger.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Sometimes the best help is a pause and honesty about anger.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "You have gotten through hard things before\u2014anger can be lived through too.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "The point is not perfection but returning to yourself after anger.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Support starts with: what I feel about anger matters.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Each new day is a chance to relate differently to anger.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Comparison with others only adds pain when anger.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Your experience of anger deserves space.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "You can want better and still accept anger now.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Slowing down is a skill, especially useful with anger.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "A thought is not a command\u2014you can notice anger and choose a response.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Boundaries protect energy when anger feels heavy.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "You are not alone with your anger\u2014asking for help is allowed.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "A small gratitude for anger can shift the day.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "The habit of noticing anger without judgment builds resilience.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Today it is enough to do a little less if anger drains you.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Clarity often passes through honesty about anger.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Silence sometimes heals better than advice when anger.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "A small step shame today already changes tomorrow.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Noticing shame is the beginning of self-care.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Calm grows where there is acceptance of shame.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "You are allowed to move at your own pace, even when shame.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Breath can be an anchor when shame feels too big.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Self-compassion is not weakness but support when shame.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "One honest look at shame releases some tension.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "You do not have to solve everything at once\u2014one step about shame is enough.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "The body often knows the answer before thoughts\u2014listen to shame.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Anxiety eases when shame is broken into small parts.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Hope begins by admitting: it is hard for me because of shame.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Self-care is a practice, not a one-time feat about shame.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "You do not have to be strong every day, especially when shame.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Accepting shame does not cancel change\u2014it supports it.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Gentleness with yourself today is fuel for tomorrow, even if shame.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Sometimes the best help is a pause and honesty about shame.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You have gotten through hard things before\u2014shame can be lived through too.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "The point is not perfection but returning to yourself after shame.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Support starts with: what I feel about shame matters.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Each new day is a chance to relate differently to shame.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Comparison with others only adds pain when shame.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Your experience of shame deserves space.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "You can want better and still accept shame now.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Slowing down is a skill, especially useful with shame.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "A thought is not a command\u2014you can notice shame and choose a response.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Boundaries protect energy when shame feels heavy.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You are not alone with your shame\u2014asking for help is allowed.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "A small gratitude for shame can shift the day.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "The habit of noticing shame without judgment builds resilience.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Today it is enough to do a little less if shame drains you.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Clarity often passes through honesty about shame.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Silence sometimes heals better than advice when shame.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "A small step guilt today already changes tomorrow.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Noticing guilt is the beginning of self-care.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Calm grows where there is acceptance of guilt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "You are allowed to move at your own pace, even when guilt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Breath can be an anchor when guilt feels too big.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Self-compassion is not weakness but support when guilt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "One honest look at guilt releases some tension.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "You do not have to solve everything at once\u2014one step about guilt is enough.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "The body often knows the answer before thoughts\u2014listen to guilt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Anxiety eases when guilt is broken into small parts.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Hope begins by admitting: it is hard for me because of guilt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Self-care is a practice, not a one-time feat about guilt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "You do not have to be strong every day, especially when guilt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Accepting guilt does not cancel change\u2014it supports it.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Gentleness with yourself today is fuel for tomorrow, even if guilt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Sometimes the best help is a pause and honesty about guilt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "You have gotten through hard things before\u2014guilt can be lived through too.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "The point is not perfection but returning to yourself after guilt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Support starts with: what I feel about guilt matters.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Each new day is a chance to relate differently to guilt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Comparison with others only adds pain when guilt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Your experience of guilt deserves space.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "You can want better and still accept guilt now.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Slowing down is a skill, especially useful with guilt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "A thought is not a command\u2014you can notice guilt and choose a response.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Boundaries protect energy when guilt feels heavy.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "You are not alone with your guilt\u2014asking for help is allowed.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "A small gratitude for guilt can shift the day.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "The habit of noticing guilt without judgment builds resilience.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Today it is enough to do a little less if guilt drains you.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Clarity often passes through honesty about guilt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Silence sometimes heals better than advice when guilt.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "A small step overload today already changes tomorrow.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Noticing overload is the beginning of self-care.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Calm grows where there is acceptance of overload.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "You are allowed to move at your own pace, even when overload.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Breath can be an anchor when overload feels too big.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Self-compassion is not weakness but support when overload.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "One honest look at overload releases some tension.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You do not have to solve everything at once\u2014one step about overload is enough.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "The body often knows the answer before thoughts\u2014listen to overload.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Anxiety eases when overload is broken into small parts.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Hope begins by admitting: it is hard for me because of overload.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Self-care is a practice, not a one-time feat about overload.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You do not have to be strong every day, especially when overload.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Accepting overload does not cancel change\u2014it supports it.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Gentleness with yourself today is fuel for tomorrow, even if overload.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Sometimes the best help is a pause and honesty about overload.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "You have gotten through hard things before\u2014overload can be lived through too.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "The point is not perfection but returning to yourself after overload.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Support starts with: what I feel about overload matters.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Each new day is a chance to relate differently to overload.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Comparison with others only adds pain when overload.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Your experience of overload deserves space.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You can want better and still accept overload now.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Slowing down is a skill, especially useful with overload.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "A thought is not a command\u2014you can notice overload and choose a response.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Boundaries protect energy when overload feels heavy.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "You are not alone with your overload\u2014asking for help is allowed.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "A small gratitude for overload can shift the day.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "The habit of noticing overload without judgment builds resilience.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Today it is enough to do a little less if overload drains you.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Clarity often passes through honesty about overload.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Silence sometimes heals better than advice when overload.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "A small step insomnia today already changes tomorrow.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Noticing insomnia is the beginning of self-care.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Calm grows where there is acceptance of insomnia.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "You are allowed to move at your own pace, even when insomnia.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Breath can be an anchor when insomnia feels too big.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Self-compassion is not weakness but support when insomnia.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "One honest look at insomnia releases some tension.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "You do not have to solve everything at once\u2014one step about insomnia is enough.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "The body often knows the answer before thoughts\u2014listen to insomnia.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Anxiety eases when insomnia is broken into small parts.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Hope begins by admitting: it is hard for me because of insomnia.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Self-care is a practice, not a one-time feat about insomnia.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "You do not have to be strong every day, especially when insomnia.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Accepting insomnia does not cancel change\u2014it supports it.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Gentleness with yourself today is fuel for tomorrow, even if insomnia.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Sometimes the best help is a pause and honesty about insomnia.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "You have gotten through hard things before\u2014insomnia can be lived through too.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "The point is not perfection but returning to yourself after insomnia.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Support starts with: what I feel about insomnia matters.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Each new day is a chance to relate differently to insomnia.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Comparison with others only adds pain when insomnia.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Your experience of insomnia deserves space.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "You can want better and still accept insomnia now.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Slowing down is a skill, especially useful with insomnia.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "A thought is not a command\u2014you can notice insomnia and choose a response.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Boundaries protect energy when insomnia feels heavy.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "You are not alone with your insomnia\u2014asking for help is allowed.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "A small gratitude for insomnia can shift the day.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "The habit of noticing insomnia without judgment builds resilience.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Today it is enough to do a little less if insomnia drains you.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Clarity often passes through honesty about insomnia.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Silence sometimes heals better than advice when insomnia.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "A small step self-kindness today already changes tomorrow.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Noticing self-kindness is the beginning of self-care.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Calm grows where there is acceptance of self-kindness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You are allowed to move at your own pace, even when self-kindness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Breath can be an anchor when self-kindness feels too big.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Self-compassion is not weakness but support when self-kindness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "One honest look at self-kindness releases some tension.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "You do not have to solve everything at once\u2014one step about self-kindness is enough.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "The body often knows the answer before thoughts\u2014listen to self-kindness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Anxiety eases when self-kindness is broken into small parts.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Hope begins by admitting: it is hard for me because of self-kindness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Self-care is a practice, not a one-time feat about self-kindness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "You do not have to be strong every day, especially when self-kindness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Accepting self-kindness does not cancel change\u2014it supports it.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Gentleness with yourself today is fuel for tomorrow, even if self-kindness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Sometimes the best help is a pause and honesty about self-kindness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "You have gotten through hard things before\u2014self-kindness can be lived through too.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "The point is not perfection but returning to yourself after self-kindness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Support starts with: what I feel about self-kindness matters.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Each new day is a chance to relate differently to self-kindness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Comparison with others only adds pain when self-kindness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Your experience of self-kindness deserves space.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "You can want better and still accept self-kindness now.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Slowing down is a skill, especially useful with self-kindness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "A thought is not a command\u2014you can notice self-kindness and choose a response.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Boundaries protect energy when self-kindness feels heavy.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "You are not alone with your self-kindness\u2014asking for help is allowed.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "A small gratitude for self-kindness can shift the day.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "The habit of noticing self-kindness without judgment builds resilience.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Today it is enough to do a little less if self-kindness drains you.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Clarity often passes through honesty about self-kindness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Silence sometimes heals better than advice when self-kindness.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "A small step boundaries today already changes tomorrow.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Noticing boundaries is the beginning of self-care.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Calm grows where there is acceptance of boundaries.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "You are allowed to move at your own pace, even when boundaries.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Breath can be an anchor when boundaries feels too big.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Self-compassion is not weakness but support when boundaries.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "One honest look at boundaries releases some tension.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "You do not have to solve everything at once\u2014one step about boundaries is enough.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "The body often knows the answer before thoughts\u2014listen to boundaries.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Anxiety eases when boundaries is broken into small parts.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Hope begins by admitting: it is hard for me because of boundaries.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Self-care is a practice, not a one-time feat about boundaries.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "You do not have to be strong every day, especially when boundaries.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Accepting boundaries does not cancel change\u2014it supports it.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Gentleness with yourself today is fuel for tomorrow, even if boundaries.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Sometimes the best help is a pause and honesty about boundaries.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You have gotten through hard things before\u2014boundaries can be lived through too.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "The point is not perfection but returning to yourself after boundaries.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Support starts with: what I feel about boundaries matters.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Each new day is a chance to relate differently to boundaries.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Comparison with others only adds pain when boundaries.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Your experience of boundaries deserves space.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "You can want better and still accept boundaries now.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Slowing down is a skill, especially useful with boundaries.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "A thought is not a command\u2014you can notice boundaries and choose a response.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Boundaries protect energy when boundaries feels heavy.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You are not alone with your boundaries\u2014asking for help is allowed.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "A small gratitude for boundaries can shift the day.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "The habit of noticing boundaries without judgment builds resilience.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Today it is enough to do a little less if boundaries drains you.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Clarity often passes through honesty about boundaries.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Silence sometimes heals better than advice when boundaries.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "A small step the past today already changes tomorrow.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Noticing the past is the beginning of self-care.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Calm grows where there is acceptance of the past.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "You are allowed to move at your own pace, even when the past.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Breath can be an anchor when the past feels too big.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Self-compassion is not weakness but support when the past.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "One honest look at the past releases some tension.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "You do not have to solve everything at once\u2014one step about the past is enough.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "The body often knows the answer before thoughts\u2014listen to the past.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Anxiety eases when the past is broken into small parts.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Hope begins by admitting: it is hard for me because of the past.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Self-care is a practice, not a one-time feat about the past.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "You do not have to be strong every day, especially when the past.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Accepting the past does not cancel change\u2014it supports it.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Gentleness with yourself today is fuel for tomorrow, even if the past.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Sometimes the best help is a pause and honesty about the past.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "You have gotten through hard things before\u2014the past can be lived through too.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "The point is not perfection but returning to yourself after the past.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Support starts with: what I feel about the past matters.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Each new day is a chance to relate differently to the past.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Comparison with others only adds pain when the past.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Your experience of the past deserves space.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "You can want better and still accept the past now.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Slowing down is a skill, especially useful with the past.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "A thought is not a command\u2014you can notice the past and choose a response.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Boundaries protect energy when the past feels heavy.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "You are not alone with your the past\u2014asking for help is allowed.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "A small gratitude for the past can shift the day.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "The habit of noticing the past without judgment builds resilience.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Today it is enough to do a little less if the past drains you.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Clarity often passes through honesty about the past.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Silence sometimes heals better than advice when the past.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "A small step the future today already changes tomorrow.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Noticing the future is the beginning of self-care.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "Calm grows where there is acceptance of the future.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "You are allowed to move at your own pace, even when the future.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Breath can be an anchor when the future feels too big.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Self-compassion is not weakness but support when the future.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "One honest look at the future releases some tension.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You do not have to solve everything at once\u2014one step about the future is enough.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "The body often knows the answer before thoughts\u2014listen to the future.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Anxiety eases when the future is broken into small parts.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Hope begins by admitting: it is hard for me because of the future.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "Self-care is a practice, not a one-time feat about the future.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "You do not have to be strong every day, especially when the future.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Accepting the future does not cancel change\u2014it supports it.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Gentleness with yourself today is fuel for tomorrow, even if the future.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mindfulness practice",
+    "text": "Sometimes the best help is a pause and honesty about the future.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Counselor\u0027s note",
+    "text": "You have gotten through hard things before\u2014the future can be lived through too.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Stoic wisdom",
+    "text": "The point is not perfection but returning to yourself after the future.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Care reminder",
+    "text": "Support starts with: what I feel about the future matters.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Daily support",
+    "text": "Each new day is a chance to relate differently to the future.",
+    "theme": "wisdom"
+  }
 ]

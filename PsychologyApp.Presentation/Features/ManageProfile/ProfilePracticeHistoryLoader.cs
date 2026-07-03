@@ -30,6 +30,7 @@ public sealed class ProfilePracticeHistoryLoader(
                     IconName = practiceHistoryFormatter.ResolveIcon(completion),
                     DurationText = durationText,
                     HasDuration = hasDuration,
+                    ItemKey = completion.ItemKey,
                     DisplayText = AppStrings.PracticeHistoryEntry(date, name)
                 };
             })

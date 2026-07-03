@@ -12,6 +12,7 @@ namespace PsychologyApp.Application.Startup;
 public sealed class AppStartupService(
     IDatabaseInitializer databaseInitializer,
     IQuotService quotService,
+    IQuoteCatalogVersionStore quoteCatalogVersionStore,
     IOptions<AppSettings> settings,
     ILogger<AppStartupService> logger) : IAppStartupService
 {
@@ -23,7 +24,17 @@ public sealed class AppStartupService(
         {
             using var timeoutSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             timeoutSource.CancelAfter(settings.Value.MiddleTimeoutMs);
-            await quotService.LoadSingleAsync(timeoutSource.Token);
+
+            int persistedVersion = await quoteCatalogVersionStore.GetAsync(timeoutSource.Token);
+            if (persistedVersion < QuoteCatalogPolicy.CurrentVersion)
+            {
+                await quotService.ReseedFeedAsync(QuoteCatalogPolicy.DefaultFeedSeedCount, timeoutSource.Token);
+                await quoteCatalogVersionStore.SetAsync(QuoteCatalogPolicy.CurrentVersion, timeoutSource.Token);
+            }
+            else
+            {
+                await quotService.LoadSingleAsync(timeoutSource.Token);
+            }
         }
         catch (Exception ex) when (ex is InvalidOperationException or OperationCanceledException or JsonException)
         {

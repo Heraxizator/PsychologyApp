@@ -25,6 +25,8 @@ public class StartPhysicsViewModel : BaseViewModel
     public string RetryText => AppStrings.RetryQuestion;
 
     public ICommand StartCommand { get; private set; } = default!;
+    public ICommand OpenProfileCommand { get; private set; } = default!;
+    public string ProfileToolbarText => AppStrings.ProfileTitle;
 
     public StartPhysicsViewModel(INavigationService navigationService)
     {
@@ -32,6 +34,7 @@ public class StartPhysicsViewModel : BaseViewModel
         PageName = AppStrings.PhysicsIntroPage;
 
         BindNavigation(navigationService);
+        OpenProfileCommand = new AsyncCommand(() => navigationService.GoToUserProfileAsync());
         StartCommand = new AsyncCommand(() => navigationService.GoToPhysicsSearchAsync());
         SetDone();
     }
@@ -49,6 +52,7 @@ public class StartPhysicsViewModel : BaseViewModel
             nameof(LoadingText),
             nameof(FailedText),
             nameof(RetryText),
+            nameof(ProfileToolbarText),
             nameof(AlgorithmSteps));
     }
 

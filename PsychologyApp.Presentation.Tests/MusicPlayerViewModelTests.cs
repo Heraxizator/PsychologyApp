@@ -3,6 +3,7 @@ using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Entities.Audio;
 using PsychologyApp.Presentation.Features.PlayMusic;
 using PsychologyApp.Presentation.Pages.PlayMusic.MusicPlayer;
+using PsychologyApp.Presentation.Shared.Navigation;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
@@ -21,6 +22,7 @@ public sealed class MusicPlayerViewModelTests
         playbackMock.Setup(p => p.Duration).Returns(TimeSpan.FromMinutes(3));
         playbackMock.Setup(p => p.Position).Returns(TimeSpan.Zero);
         return new MusicPlayerViewModel(
+            Mock.Of<INavigationService>(),
             Microsoft.Extensions.Logging.Abstractions.NullLogger<MusicPlayerViewModel>.Instance,
             playbackMock.Object,
             new MusicPlaylistPresenter(),

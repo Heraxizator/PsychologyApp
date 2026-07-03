@@ -33,8 +33,8 @@ public static partial class AppStrings
         "Yandex voice assistant");
     public static string AliceDisclaimerHeader => T("Важно", "Important");
     public static string AliceDisclaimerBody => T(
-        "Alice — сервис Яндекса. Для работы нужен интернет.",
-        "Alice is a Yandex service. An internet connection is required.");
+        "Alice — внешний сервис Яндекса. Для работы нужен интернет. Ответы носят ознакомительный характер и не заменяют консультацию специалиста.",
+        "Alice is an external Yandex service. An internet connection is required. Responses are informational only and do not replace professional care.");
     public static string AliceOpenInBrowser => T("Открыть в браузере", "Open in browser");
     public static string AliceOpenFailed => T(
         "Не удалось открыть Alice",
@@ -302,6 +302,9 @@ public static partial class AppStrings
 
     public static string ProfileTestsCompleted => T("Пройдено тестов", "Tests completed");
     public static string ProfileStreakDays => T("Дней подряд", "Day streak");
+    public static string ProfileStreakHint => T(
+        "Считаются дни с завершённой практикой",
+        "Counts days with a completed practice");
     public static string ProfileStreakCount(int days) => T($"{days} дн.", $"{days} days");
 
     public static string TodayForYou => T("Сегодня для вас", "Today for you");

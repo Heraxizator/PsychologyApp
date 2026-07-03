@@ -13,6 +13,7 @@
              Title="{Binding PageTitle}">
 
     <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{Binding ProfileToolbarText}" Command="{Binding OpenProfileCommand}" />
         <ToolbarItem Text="{Binding QuotesRefreshButton}" Command="{Binding Reload}" />
     </ContentPage.ToolbarItems>
 

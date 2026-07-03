@@ -4,6 +4,7 @@
              x:Class="PsychologyApp.Presentation.Pages.RunTests.TestResult.TestResultPage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:testUi="clr-namespace:PsychologyApp.Presentation.Widgets.Test"
+             xmlns:profileUi="clr-namespace:PsychologyApp.Presentation.Widgets.ProfileTechniqueCard"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.RunTests.TestResult"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:DataType="vm:TestResultViewModel"
@@ -51,20 +52,19 @@
                         LineBreakMode="WordWrap" />
                 </Border>
 
-                <Border
+                <VerticalStackLayout
                     IsVisible="{Binding HasRecommendation}"
-                    Style="{StaticResource TestFlatCardStyle}"
-                    Margin="0">
-                    <VerticalStackLayout Spacing="6">
-                        <Label
-                            Text="{Binding RecommendationHint}"
-                            Style="{StaticResource CaptionStyle}" />
-                        <Label
-                            Text="{Binding RecommendationTitle}"
-                            Style="{StaticResource SectionTitleStyle}"
-                            TextColor="{DynamicResource Primary}" />
-                    </VerticalStackLayout>
-                </Border>
+                    Spacing="{StaticResource CompactSpacing}">
+                    <Label
+                        Text="{Binding RecommendationHint}"
+                        Style="{StaticResource CaptionStyle}" />
+                    <profileUi:ProfileTechniqueCardView
+                        IconName="{Binding RecommendationIconName}"
+                        Title="{Binding RecommendationTitle}"
+                        Subtitle="{Binding RecommendationSubtitle}"
+                        Theme="{Binding RecommendationTheme}"
+                        TapCommand="{Binding TryTechniqueCommand}" />
+                </VerticalStackLayout>
 
                 <Border
                     IsVisible="{Binding HasAnswerDetail}"

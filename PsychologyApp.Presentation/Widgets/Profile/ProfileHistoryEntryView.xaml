@@ -8,9 +8,13 @@
 
     <ContentView.Behaviors>
         <behaviors:ListItemRevealBehavior />
+        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
     </ContentView.Behaviors>
 
     <Border Style="{StaticResource ListEntryCardStyle}">
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding TapCommand, Source={x:Reference Root}}" />
+        </Border.GestureRecognizers>
         <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
             <Border
                 Grid.Column="0"

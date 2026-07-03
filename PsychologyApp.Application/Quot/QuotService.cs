@@ -1,11 +1,13 @@
 ﻿using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Abstractions.Persistence;
-using PsychologyApp.Application.Exceptions;
 using PsychologyApp.Application.Models;
+using PsychologyApp.Application.Exceptions;
 
 namespace PsychologyApp.Application.Quot;
 
-public sealed class QuotService(IQuotRepository quotRepository, IQuotContentProvider quotContentProvider) : IQuotService
+public sealed class QuotService(
+    IQuotRepository quotRepository,
+    IQuotContentProvider quotContentProvider) : IQuotService
 {
     public async Task AddSingleAsync(QuotDTO quotDTO, CancellationToken cancellationToken = default)
     {
@@ -22,7 +24,7 @@ public sealed class QuotService(IQuotRepository quotRepository, IQuotContentProv
     public async Task<QuotDTO> GetByIdAsync(long id, CancellationToken cancellationToken = default)
     {
         global::PsychologyApp.Domain.Entities.Quot quot = await quotRepository.GetByIdAsync(id, cancellationToken)
-            ?? throw new QuotNotFoundException($"Р¦РёС‚Р°С‚Р° СЃ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРј {id} РЅРµ РЅР°Р№РґРµРЅР°");
+            ?? throw new QuotNotFoundException($"Цитата с идентификатором {id} не найдена");
 
         return QuotMapper.GetQuotDTO(quot);
     }
@@ -55,15 +57,33 @@ public sealed class QuotService(IQuotRepository quotRepository, IQuotContentProv
             throw new InvalidOperationException("Embedded quote catalog is empty.");
         }
 
-        QuotSeed seed = seeds[Random.Shared.Next(seeds.Count)];
-        global::PsychologyApp.Domain.Entities.Quot quot = global::PsychologyApp.Domain.Entities.Quot.Create(seed.Author, seed.Text, seed.Theme, isReaded: false, isFavourite: false);
+        IReadOnlyList<string> existingTexts = await quotRepository.GetExistingTextsAsync(cancellationToken);
+        HashSet<string> knownTexts = new(existingTexts ?? Array.Empty<string>(), StringComparer.Ordinal);
+
+        List<QuotSeed> available = seeds
+            .Where(seed => !knownTexts.Contains(seed.Text))
+            .ToList();
+
+        if (available.Count == 0)
+        {
+            await quotRepository.DeleteAllAsync(cancellationToken);
+            available = seeds.ToList();
+        }
+
+        QuotSeed seed = available[Random.Shared.Next(available.Count)];
+        global::PsychologyApp.Domain.Entities.Quot quot = global::PsychologyApp.Domain.Entities.Quot.Create(
+            seed.Author,
+            seed.Text,
+            seed.Theme,
+            isReaded: false,
+            isFavourite: false);
         await quotRepository.AddAsync(quot, cancellationToken);
     }
 
     public async Task MarkAsFavouriteAsync(long quotId, bool isFavourite, CancellationToken cancellationToken = default)
     {
         global::PsychologyApp.Domain.Entities.Quot quot = await quotRepository.GetByIdAsync(quotId, cancellationToken)
-            ?? throw new QuotNotFoundException($"Р¦РёС‚Р°С‚Р° СЃ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРј {quotId} РЅРµ РЅР°Р№РґРµРЅР°");
+            ?? throw new QuotNotFoundException($"Цитата с идентификатором {quotId} не найдена");
 
         quot.SetFavourite(isFavourite);
         await quotRepository.EditAsync(quot, cancellationToken);
@@ -72,7 +92,7 @@ public sealed class QuotService(IQuotRepository quotRepository, IQuotContentProv
     public async Task MarkAsReadedAsync(long quotId, CancellationToken cancellationToken = default)
     {
         global::PsychologyApp.Domain.Entities.Quot quot = await quotRepository.GetByIdAsync(quotId, cancellationToken)
-            ?? throw new QuotNotFoundException($"Р¦РёС‚Р°С‚Р° СЃ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРј {quotId} РЅРµ РЅР°Р№РґРµРЅР°");
+            ?? throw new QuotNotFoundException($"Цитата с идентификатором {quotId} не найдена");
 
         quot.MarkAsReaded();
         await quotRepository.EditAsync(quot, cancellationToken);

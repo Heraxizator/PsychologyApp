@@ -24,6 +24,7 @@ public sealed class AliceViewModel : BaseViewModel
     }
 
     public string PageTitle => AppStrings.OptionsAliceTitle;
+    public string DisclaimerHeader => AppStrings.AliceDisclaimerHeader;
     public string DisclaimerBody => AppStrings.AliceDisclaimerBody;
     public string OpenInBrowserText => AppStrings.AliceOpenInBrowser;
     public string LoadingText => AppStrings.AliceLoadingText;
@@ -53,6 +54,7 @@ public sealed class AliceViewModel : BaseViewModel
     {
         Notify(
             nameof(PageTitle),
+            nameof(DisclaimerHeader),
             nameof(DisclaimerBody),
             nameof(OpenInBrowserText),
             nameof(LoadingText),

@@ -6,7 +6,7 @@ namespace PsychologyApp.Infrastructure.Data.Context;
 
 public static class SqliteSchema
 {
-    public const int CurrentVersion = 5;
+    public const int CurrentVersion = 6;
 
     private static readonly string[] DropTablesSql =
     [
@@ -18,6 +18,7 @@ public static class SqliteSchema
         "DROP TABLE IF EXISTS Techniques;",
         "DROP TABLE IF EXISTS Quots;",
         "DROP TABLE IF EXISTS Statistics;",
+        "DROP TABLE IF EXISTS AppMetadata;",
     ];
 
     public static async Task ConfigureConnectionAsync(DbConnection connection, CancellationToken cancellationToken = default)
@@ -76,7 +77,25 @@ public static class SqliteSchema
         if (version < 5)
         {
             await ApplyMigrationAsync(connection, 5, MigrateToVersion5Async, cancellationToken);
+            version = 5;
         }
+
+        if (version < 6)
+        {
+            await ApplyMigrationAsync(connection, 6, MigrateToVersion6Async, cancellationToken);
+        }
+    }
+
+    private static async Task MigrateToVersion6Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)
+    {
+        await connection.ExecuteAsync(
+            """
+            CREATE TABLE IF NOT EXISTS AppMetadata (
+                Key TEXT NOT NULL PRIMARY KEY,
+                Value TEXT NOT NULL
+            );
+            """,
+            transaction: transaction);
     }
 
     private static async Task MigrateToVersion5Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)

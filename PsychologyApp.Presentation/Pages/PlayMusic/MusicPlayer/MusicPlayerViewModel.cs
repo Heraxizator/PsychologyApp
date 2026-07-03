@@ -3,6 +3,7 @@ using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Entities.Audio;
 using PsychologyApp.Presentation.Entities.FilterChip;
 using PsychologyApp.Presentation.Features.PlayMusic;
+using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.ViewModels;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -32,8 +33,10 @@ public partial class MusicPlayerViewModel : BaseViewModel
     public ICommand PlayNextCommand { get; }
     public ICommand PlayPreviousCommand { get; }
     public ICommand SelectCategoryCommand { get; }
+    public ICommand OpenProfileCommand { get; }
 
     public MusicPlayerViewModel(
+        INavigationService navigationService,
         ILogger<MusicPlayerViewModel> logger,
         IAudioPlaybackService playbackService,
         MusicPlaylistPresenter playlistPresenter,
@@ -43,6 +46,8 @@ public partial class MusicPlayerViewModel : BaseViewModel
         _playbackService = playbackService;
         _playlistPresenter = playlistPresenter;
         _playbackPresenter = playbackPresenter;
+        BindNavigation(navigationService);
+        OpenProfileCommand = new AsyncCommand(() => navigationService.GoToUserProfileAsync());
         _playbackService.PlaybackEnded += (_, _) => SetPlaybackState(false);
         _playbackService.PlaybackFailed += (_, _) =>
         {

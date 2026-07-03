@@ -14,6 +14,7 @@ public partial class UserViewModel
     public string TechniquesCompletedLabel => AppStrings.ProfileTechniquesCompleted;
     public string TestsCompletedLabel => AppStrings.ProfileTestsCompleted;
     public string StreakLabel => AppStrings.ProfileStreakDays;
+    public string StreakHintText => AppStrings.ProfileStreakHint;
     public string LastPracticeDisplay { get; private set; } = string.Empty;
     public bool HasLastPractice => !string.IsNullOrWhiteSpace(LastPracticeDisplay);
     public string RecommendedLabel => AppStrings.ProfileRecommended;
@@ -50,6 +51,7 @@ public partial class UserViewModel
             nameof(TechniquesCompletedLabel),
             nameof(TestsCompletedLabel),
             nameof(StreakLabel),
+            nameof(StreakHintText),
             nameof(LastPracticeDisplay),
             nameof(HasLastPractice),
             nameof(RecommendedLabel),

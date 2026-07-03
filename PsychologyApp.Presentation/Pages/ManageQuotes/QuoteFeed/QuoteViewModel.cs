@@ -23,6 +23,7 @@ public partial class QuoteViewModel : BaseViewModel
     public ICommand LoadMoreQuotesCommand { get; private set; } = default!;
     public ICommand SelectFeedCommand { get; private set; } = default!;
     public ICommand ShowFavoritesCommand { get; private set; } = default!;
+    public ICommand OpenProfileCommand { get; private set; } = default!;
 
     private readonly IQuotService _quotService;
     private readonly ILogger<QuoteViewModel> _logger;
@@ -56,6 +57,7 @@ public partial class QuoteViewModel : BaseViewModel
             _quoteFeedLoader = quoteFeedLoader;
             _languageContentReloader = languageContentReloader;
             BindNavigation(navigationService);
+            OpenProfileCommand = new AsyncCommand(() => navigationService.GoToUserProfileAsync());
             Cancel = new Command(CancelProgress);
             LoadMoreQuotesCommand = new AsyncCommand(() => AddFreshQuotesAsync());
             SelectFeedCommand = new Command<string?>(key => SelectFeedAsync(key).FireAndForget());
