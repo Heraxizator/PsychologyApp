@@ -36,8 +36,21 @@ public class SqliteSchemaTests
         int indexCount = await connection.ExecuteScalarAsync<int>(
             "SELECT COUNT(*) FROM sqlite_master WHERE type='index' AND name='IX_Statistics_PageName';");
 
-        Assert.Equal(5, version);
+        Assert.Equal(6, version);
         Assert.Equal(1, indexCount);
+    }
+
+    [Fact]
+    public async Task EnsureSchema_CreatesAppMetadataTableForVersion6()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+
+        await SqliteSchema.EnsureSchemaAsync(connection);
+
+        Assert.Equal(1, await TableExistsAsync(connection, "AppMetadata"));
+        int version = await connection.ExecuteScalarAsync<int>("SELECT MAX(Version) FROM SchemaVersion;");
+        Assert.Equal(6, version);
     }
 
     [Fact]

@@ -69,6 +69,12 @@
                         </Grid>
 
                         <Label
+                            HorizontalTextAlignment="Center"
+                            Style="{StaticResource CaptionStyle}"
+                            TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                            Text="{Binding StreakHintText}" />
+
+                        <Label
                             IsVisible="{Binding HasLastPractice}"
                             HorizontalTextAlignment="Center"
                             Style="{StaticResource CaptionStyle}"
@@ -103,7 +109,8 @@
                                     TechniqueName="{Binding TechniqueName}"
                                     IconName="{Binding IconName}"
                                     DurationText="{Binding DurationText}"
-                                    HasDuration="{Binding HasDuration}" />
+                                    HasDuration="{Binding HasDuration}"
+                                    TapCommand="{Binding TapCommand}" />
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>

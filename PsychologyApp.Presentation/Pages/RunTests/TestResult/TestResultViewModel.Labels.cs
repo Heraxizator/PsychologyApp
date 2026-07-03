@@ -19,6 +19,9 @@ public partial class TestResultViewModel
             nameof(RetakeButtonText),
             nameof(BackToListButtonText),
             nameof(RecommendationHint),
-            nameof(RecommendationTitle));
+            nameof(RecommendationTitle),
+            nameof(RecommendationSubtitle),
+            nameof(RecommendationTheme),
+            nameof(RecommendationIconName));
     }
 }

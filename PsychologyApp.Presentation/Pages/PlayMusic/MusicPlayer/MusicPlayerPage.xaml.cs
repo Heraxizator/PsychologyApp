@@ -26,7 +26,7 @@ public partial class MusicPlayerPage : ContentPage
         _playbackService.PlaybackFailed += (_, _) =>
             _toastService.LongToast(AppStrings.CleanerPlaybackError);
 
-        _viewModel = musicPlayerViewModelFactory.Create(_playbackService);
+        _viewModel = musicPlayerViewModelFactory.Create(this, _playbackService);
         BindingContext = _viewModel;
 
         EnsurePlayer();

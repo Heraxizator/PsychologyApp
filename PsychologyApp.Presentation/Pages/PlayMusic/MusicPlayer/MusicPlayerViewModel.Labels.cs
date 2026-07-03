@@ -5,6 +5,7 @@ namespace PsychologyApp.Presentation.Pages.PlayMusic.MusicPlayer;
 public partial class MusicPlayerViewModel
 {
     public string PageTitle => AppStrings.CleanerPrayersPage;
+    public string ProfileToolbarText => AppStrings.ProfileTitle;
     public string SearchPlaceholder => AppStrings.CleanerSearchPlaceholder;
     public string LoadingText => AppStrings.CleanerSearchingPrayers;
     public string NoPrayersFoundText => AppStrings.CleanerNoPrayersFound;
@@ -18,6 +19,7 @@ public partial class MusicPlayerViewModel
     {
         Notify(
             nameof(PageTitle),
+            nameof(ProfileToolbarText),
             nameof(SearchPlaceholder),
             nameof(LoadingText),
             nameof(NoPrayersFoundText),

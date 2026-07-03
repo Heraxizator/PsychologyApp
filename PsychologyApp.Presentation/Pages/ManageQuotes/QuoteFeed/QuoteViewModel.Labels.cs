@@ -6,6 +6,7 @@ namespace PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
 public partial class QuoteViewModel
 {
     public string PageTitle => AppStrings.MotivatorTitle;
+    public string ProfileToolbarText => AppStrings.ProfileTitle;
     public string QuotesLoadingText => AppStrings.QuotesLoading;
     public string QuotesEmptyTitle => AppStrings.QuotesEmptyTitle;
     public string QuotesEmptyBody => AppStrings.QuotesEmptyBody;
@@ -22,6 +23,7 @@ public partial class QuoteViewModel
     {
         Notify(
             nameof(PageTitle),
+            nameof(ProfileToolbarText),
             nameof(QuotesLoadingText),
             nameof(QuotesEmptyTitle),
             nameof(QuotesEmptyBody),

@@ -55,4 +55,15 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
             commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
     }
+
+    public async Task<IReadOnlyList<string>> GetExistingTextsAsync(CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        IEnumerable<string> rows = await connection.QueryAsync<string>(DapperCommandFactory.Create(
+            "SELECT DISTINCT Text FROM Quots;",
+            commandTimeout: CommandTimeoutSeconds,
+            cancellationToken: cancellationToken));
+
+        return rows.ToList();
+    }
 }

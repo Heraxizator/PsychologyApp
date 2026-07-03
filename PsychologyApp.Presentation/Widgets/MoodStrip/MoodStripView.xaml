@@ -95,8 +95,9 @@
                         IsVisible="{TemplateBinding HasTodayMood}"
                         Text="{TemplateBinding TodayMoodDisplay}"
                         HorizontalTextAlignment="Center"
-                        Style="{StaticResource CaptionStyle}"
-                        TextColor="{DynamicResource Primary}" />
+                        Style="{StaticResource EmphasisBodyStyle}"
+                        TextColor="{DynamicResource Primary}"
+                        FontFamily="{StaticResource SemiBoldFontFamily}" />
                     <Label
                         IsVisible="{TemplateBinding HasMoodHistorySummary}"
                         Text="{TemplateBinding MoodHistorySummary}"

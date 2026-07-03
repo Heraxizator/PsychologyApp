@@ -20,10 +20,11 @@
                 ExtensionCommand="{Binding OpenInBrowserCommand}" />
 
             <Label
+                Text="{Binding DisclaimerHeader}"
+                Style="{StaticResource ListRowTitleStyle}" />
+            <Label
                 Text="{Binding DisclaimerBody}"
-                Style="{StaticResource CaptionStyle}"
-                MaxLines="2"
-                LineBreakMode="TailTruncation" />
+                Style="{StaticResource CaptionStyle}" />
         </VerticalStackLayout>
 
         <Grid Grid.Row="1">

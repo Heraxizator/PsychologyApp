@@ -28,6 +28,7 @@ public static class ServiceCollectionExtensions
 
         services.AddSingleton<ITechniqueRepository, TechniqueRepository>();
         services.AddSingleton<IQuotRepository, QuotRepository>();
+        services.AddSingleton<IQuoteCatalogVersionStore, QuoteCatalogVersionStore>();
         services.AddSingleton<IStatisticRepository, StatisticRepository>();
         services.AddSingleton<IUserProgressRepository, UserProgressRepository>();
 

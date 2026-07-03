@@ -13,6 +13,10 @@
              Shell.NavBarIsVisible="True"
              Title="{Binding PageTitle}">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{Binding ProfileToolbarText}" Command="{Binding OpenProfileCommand}" />
+    </ContentPage.ToolbarItems>
+
     <Grid
         VerticalOptions="FillAndExpand"
         HorizontalOptions="FillAndExpand">

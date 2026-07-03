@@ -1,5 +1,7 @@
 namespace PsychologyApp.Presentation.Widgets.Profile;
 
+using System.Windows.Input;
+
 public partial class ProfileHistoryEntryView : ContentView
 {
     public ProfileHistoryEntryView()
@@ -21,6 +23,9 @@ public partial class ProfileHistoryEntryView : ContentView
 
     public static readonly BindableProperty HasDurationProperty =
         BindableProperty.Create(nameof(HasDuration), typeof(bool), typeof(ProfileHistoryEntryView), false);
+
+    public static readonly BindableProperty TapCommandProperty =
+        BindableProperty.Create(nameof(TapCommand), typeof(ICommand), typeof(ProfileHistoryEntryView), null);
 
     public string DateText
     {
@@ -50,5 +55,11 @@ public partial class ProfileHistoryEntryView : ContentView
     {
         get => (bool)GetValue(HasDurationProperty);
         set => SetValue(HasDurationProperty, value);
+    }
+
+    public ICommand? TapCommand
+    {
+        get => (ICommand?)GetValue(TapCommandProperty);
+        set => SetValue(TapCommandProperty, value);
     }
 }

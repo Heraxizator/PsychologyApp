@@ -18,6 +18,8 @@ public class QuotServiceTests
         ];
 
         var repository = new Mock<IQuotRepository>();
+        repository.Setup(r => r.GetExistingTextsAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Array.Empty<string>());
         var provider = new Mock<IQuotContentProvider>();
         provider.Setup(p => p.LoadAllAsync(It.IsAny<CancellationToken>())).ReturnsAsync(seeds);
 
@@ -44,6 +46,58 @@ public class QuotServiceTests
         var service = new QuotService(repository.Object, provider.Object);
 
         await Assert.ThrowsAsync<InvalidOperationException>(() => service.LoadSingleAsync());
+    }
+
+    [Fact]
+    public async Task LoadSingleAsync_SkipsTextsAlreadyInDatabase()
+    {
+        IReadOnlyList<QuotSeed> seeds =
+        [
+            new QuotSeed("A", "First quote", "wisdom"),
+            new QuotSeed("B", "Second quote", "calm"),
+        ];
+
+        var repository = new Mock<IQuotRepository>();
+        repository.Setup(r => r.GetExistingTextsAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(["First quote"]);
+        var provider = new Mock<IQuotContentProvider>();
+        provider.Setup(p => p.LoadAllAsync(It.IsAny<CancellationToken>())).ReturnsAsync(seeds);
+
+        var service = new QuotService(repository.Object, provider.Object);
+
+        await service.LoadSingleAsync();
+
+        repository.Verify(
+            r => r.AddAsync(
+                It.Is<DomainQuot>(q => q.Text == "Second quote"),
+                It.IsAny<CancellationToken>()),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task LoadSingleAsync_WhenAllSeedsUsed_ClearsDatabaseAndReseeds()
+    {
+        IReadOnlyList<QuotSeed> seeds =
+        [
+            new QuotSeed("A", "Only quote", "wisdom"),
+        ];
+
+        var repository = new Mock<IQuotRepository>();
+        repository.Setup(r => r.GetExistingTextsAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(["Only quote"]);
+        var provider = new Mock<IQuotContentProvider>();
+        provider.Setup(p => p.LoadAllAsync(It.IsAny<CancellationToken>())).ReturnsAsync(seeds);
+
+        var service = new QuotService(repository.Object, provider.Object);
+
+        await service.LoadSingleAsync();
+
+        repository.Verify(r => r.DeleteAllAsync(It.IsAny<CancellationToken>()), Times.Once);
+        repository.Verify(
+            r => r.AddAsync(
+                It.Is<DomainQuot>(q => q.Text == "Only quote"),
+                It.IsAny<CancellationToken>()),
+            Times.Once);
     }
 
     [Fact]
