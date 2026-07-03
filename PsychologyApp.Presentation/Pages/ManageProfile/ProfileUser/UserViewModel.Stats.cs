@@ -20,6 +20,15 @@ public partial class UserViewModel
     public string StreakCount
     {
         get => _streak_count;
-        set => SetProperty(ref _streak_count, value);
+        set
+        {
+            if (SetProperty(ref _streak_count, value))
+            {
+                OnPropertyChanged(nameof(HasActiveStreak));
+            }
+        }
     }
+
+    public bool HasActiveStreak =>
+        int.TryParse(StreakCount, out int days) && days > 0;
 }

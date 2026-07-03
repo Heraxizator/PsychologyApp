@@ -17,8 +17,6 @@ public enum FeedbackChannel
 
 public partial class FormViewModel : BaseViewModel
 {
-    public const string FeedbackEmailSubject = "Psychology App feedback";
-
     public ICommand Send { get; private set; } = default!;
     public ICommand BackCommand { get; }
 

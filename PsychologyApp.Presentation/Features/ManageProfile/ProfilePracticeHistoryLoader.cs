@@ -22,8 +22,14 @@ public sealed class ProfilePracticeHistoryLoader(
             {
                 string date = completion.CompletedAt.ToLocalTime().ToString("g");
                 string name = practiceHistoryFormatter.ResolveName(completion);
+                (string durationText, bool hasDuration) = practiceHistoryFormatter.ResolveDuration(completion);
                 return new PracticeHistoryItem
                 {
+                    DateText = date,
+                    TechniqueName = name,
+                    IconName = practiceHistoryFormatter.ResolveIcon(completion),
+                    DurationText = durationText,
+                    HasDuration = hasDuration,
                     DisplayText = AppStrings.PracticeHistoryEntry(date, name)
                 };
             })

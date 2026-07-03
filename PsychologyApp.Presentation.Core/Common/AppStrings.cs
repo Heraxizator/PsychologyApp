@@ -24,6 +24,22 @@ public static partial class AppStrings
     public static string OptionsFeedbackSubtitle => T("Сообщить о проблеме или предложить идею", "Report a problem or suggest an idea");
     public static string OptionsDonateTitle => T("Поддержать проект", "Support the project");
     public static string OptionsDonateSubtitle => T("Помочь развитию приложения", "Help the app grow");
+    public static string ProfileOptionsCardSubtitle => T(
+        "Настройки, поддержка, Alice AI",
+        "Settings, support, Alice AI");
+    public static string OptionsAliceTitle => T("Alice AI", "Alice AI");
+    public static string OptionsAliceSubtitle => T(
+        "Голосовой собеседник от Яндекса",
+        "Yandex voice assistant");
+    public static string AliceDisclaimerHeader => T("Важно", "Important");
+    public static string AliceDisclaimerBody => T(
+        "Alice — сервис Яндекса. Для работы нужен интернет.",
+        "Alice is a Yandex service. An internet connection is required.");
+    public static string AliceOpenInBrowser => T("Открыть в браузере", "Open in browser");
+    public static string AliceOpenFailed => T(
+        "Не удалось открыть Alice",
+        "Failed to open Alice");
+    public static string AliceLoadingText => T("Загрузка Alice…", "Loading Alice…");
 
     public static string SettingsTitle => T("Настройки", "Settings");
     public static string SettingsDesignSection => T("Дизайн", "Design");
@@ -99,12 +115,23 @@ public static partial class AppStrings
         "Вы уверены, что хотите удалить свою технику",
         "Are you sure you want to delete your technique?");
 
-    public static string ReviewTitle => T("Отзовик", "Feedback");
+    public static string ReviewTitle => T("Обратная связь", "Feedback");
     public static string ReviewPage => T("Отзыв", "Review");
+    public static string ReviewExplanationHeader => T("Как это работает", "How it works");
     public static string ReviewExplanation => T(
         "Вы можете сообщить о проблеме или предложить свои идеи о том, как сделать приложение ещё лучше. Служба поддержки получит ваше сообщение.",
         "You can report a problem or suggest ideas to improve the app. Support will receive your message.");
-    public static string ReviewMessagePlaceholder => T("Проблема на странице X", "Issue on page X");
+    public static string ReviewMessagePlaceholder => T(
+        "Опишите проблему или идею…",
+        "Describe the issue or idea…");
+    public static string ReviewMessageRequired => T(
+        "Введите сообщение перед отправкой",
+        "Enter a message before sending");
+    public static string ReviewSendSuccessTitle => T("Спасибо", "Thank you");
+    public static string ReviewSendSuccessMessage => T(
+        "Ваше сообщение отправлено",
+        "Your message has been sent");
+    public static string ReviewEmailSubject => T("Отзыв о приложении Psychology", "Psychology App feedback");
     public static string ReviewSmsRecipientMissing => T(
         "Получатель SMS не настроен",
         "SMS recipient is not configured");
@@ -131,9 +158,12 @@ public static partial class AppStrings
         "Наш проект существует исключительно на пожертвования. Мы не размещаем рекламу и не оказываем платных услуг. Пожертвования используются на работу программистов и дизайнеров.",
         "This project runs on donations only. We do not show ads or sell paid services. Donations support developers and designers.");
     public static string DonateButton => T("Пожертвовать", "Donate");
+    public static string DonateOpenFailed => T(
+        "Не удалось открыть страницу пожертвования",
+        "Failed to open the donation page");
 
     public static string InfoAboutBody => T(
-        "Приложение представляет собой список простых, но в тоже время мощных техник, которые помогут вам справиться с такими проблемами, как стресс, страх, сомнения, навязчивые мысли, ограничивающие убеждения и деструктивные установки. Все методики являются общеизвестными и проверены временем. Некоторые взяты из НЛП или трудов Живорада Славинского. Эти инструменты позволят вам сэкономить много времени, сил и денег. Они не потребуют глубоких знаний в области психологии и программирования подсознания. Желаем успеха в проработках!",
+        "Приложение представляет собой список простых, но в то же время мощных техник, которые помогут вам справиться с такими проблемами, как стресс, страх, сомнения, навязчивые мысли, ограничивающие убеждения и деструктивные установки. Все методики являются общеизвестными и проверены временем. Некоторые взяты из НЛП или трудов Живорада Славинского. Эти инструменты позволят вам сэкономить много времени, сил и денег. Они не потребуют глубоких знаний в области психологии и программирования подсознания. Желаем успеха в проработках!",
         "This app is a collection of simple yet powerful techniques to help with stress, fear, doubt, intrusive thoughts, limiting beliefs, and destructive patterns. The methods are well known and time-tested. Some come from NLP or the work of Zivorad Slavinski. These tools can save you time, energy, and money. They do not require deep knowledge of psychology or subconscious reprogramming. We wish you success in your practice!");
 
     public static string CleanerPrayersPage => T("Молитвы", "Prayers");
@@ -449,6 +479,9 @@ public static partial class AppStrings
     public static string ProfileFollowers => T("Подписчиков", "Followers");
     public static string ProfileRecommended => T("Советуем пройти", "Recommended");
     public static string ProfileBestQuotes => T("Избранные цитаты", "Favorite quotes");
+    public static string ProfileQuotesSeeAll => T("Все избранные цитаты", "All favorite quotes");
+    public static string ProfileQuotesSeeAllSubtitle => T("Открыть вкладку «Цитаты»", "Open Quotes tab");
+    public static string ProfileQuotesPreviewSubtitle => T("Показаны 2 избранных", "Showing 2 favorites");
     public static string QuotesFavoriteAdded => T("Добавлено в избранное", "Added to favorites");
     public static string QuotesFavoriteRemoved => T("Убрано из избранного", "Removed from favorites");
     public static string QuotesGoToTab => T("Перейти к цитатам", "Go to quotes");
