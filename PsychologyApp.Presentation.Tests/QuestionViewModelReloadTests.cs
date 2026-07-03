@@ -1,10 +1,14 @@
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
+using PsychologyApp.Application.Tests;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Entities.Test;
-using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Features.RunTests;
+using PsychologyApp.Presentation.Pages.RunTests.Question;
+using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
-using PsychologyApp.Presentation.Pages.TestsList;
+using PsychologyApp.Presentation.Pages.RunTests.TestsList;
 using System.Reflection;
 using Xunit;
 
@@ -12,6 +16,13 @@ namespace PsychologyApp.Presentation.Tests;
 
 public sealed class QuestionViewModelReloadTests
 {
+    private static readonly QuestionnaireSubmissionService SubmissionService = new();
+    private static readonly Mock<ITestCatalogService> CatalogService = new();
+    private static readonly QuestionnaireDetailBuilder DetailBuilder =
+        new(new QuestionnaireResultDetailService(), CatalogService.Object);
+    private static readonly TestRunCoordinator RunCoordinator = new(SubmissionService, DetailBuilder);
+    private static readonly ILogger<QuestionViewModel> Logger = NullLogger<QuestionViewModel>.Instance;
+
     [Fact]
     public async Task RefreshLocalizedProperties_ReloadsQuestionsFromCatalog()
     {
@@ -56,8 +67,10 @@ public sealed class QuestionViewModelReloadTests
             Mock.Of<IDialogService>(),
             new TestNavigationService(Mock.Of<INavigation>()),
             Mock.Of<IUserProgressService>(),
-            new QuestionnaireSubmissionService(),
+            SubmissionService,
+            RunCoordinator,
             catalogService.Object,
+            Logger,
             new TestSessionInfo { TestId = "beck", AnalyzerId = "beck" });
 
         MethodInfo? refresh = typeof(QuestionViewModel).GetMethod(

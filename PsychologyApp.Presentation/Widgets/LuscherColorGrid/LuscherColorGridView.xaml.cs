@@ -36,8 +36,8 @@ public partial class LuscherColorGridView : ContentView
 
     private void OnBindingContextPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(Pages.LuscherTest.LuscherTestViewModel.IsStart) &&
-            BindingContext is Pages.LuscherTest.LuscherTestViewModel vm &&
+        if (e.PropertyName == nameof(Pages.RunTests.LuscherTest.LuscherTestViewModel.IsStart) &&
+            BindingContext is Pages.RunTests.LuscherTest.LuscherTestViewModel vm &&
             vm.IsStart)
         {
             ResetTileVisualState();

@@ -3,6 +3,7 @@ using PsychologyApp.Presentation.Platforms.Android;
 #endif
 using PsychologyApp.Presentation.App.Routes;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
+using PsychologyApp.Presentation.Shared.Common.Localization;
 using PsychologyApp.Presentation.Shared.Services.Notifications;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
@@ -30,6 +31,7 @@ public static class SharedPresentationServiceCollectionExtensions
         services.AddSingleton<IPracticeReminderScheduler, NullPracticeReminderScheduler>();
 #endif
         services.AddSingleton<IDatabaseReadySignal, DatabaseReadySignal>();
+        services.AddSingleton<LanguageContentReloader>();
         services.AddSingleton<Func<NavigationContext, INavigationService>>(sp => context =>
             context.NavigationService ?? new MauiNavigationService(
                 context,

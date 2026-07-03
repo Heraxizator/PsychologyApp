@@ -1,4 +1,4 @@
-using PsychologyApp.Presentation.Shared.Common;
+using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Shared.UI.Components;
 
@@ -25,5 +25,14 @@ public partial class ListEntryCardView : ContentView
     {
         get => (string)GetValue(BodyProperty);
         set => SetValue(BodyProperty, value);
+    }
+
+    public static readonly BindableProperty TapCommandProperty =
+        BindableProperty.Create(nameof(TapCommand), typeof(ICommand), typeof(ListEntryCardView));
+
+    public ICommand? TapCommand
+    {
+        get => (ICommand?)GetValue(TapCommandProperty);
+        set => SetValue(TapCommandProperty, value);
     }
 }

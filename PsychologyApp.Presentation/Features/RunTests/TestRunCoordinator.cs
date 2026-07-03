@@ -1,5 +1,4 @@
 ﻿using PsychologyApp.Application.Models.Tests;
-using PsychologyApp.Application.Tests;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Navigation;
 
@@ -9,6 +8,11 @@ public sealed record QuestionnaireCompletionRequest(
     IEnumerable<Question> Questions,
     TestSessionInfo Session,
     DateTime StartedAtUtc);
+
+public sealed record QuestionnaireSavedResult(
+    QuestionnaireSubmission Submission,
+    QuestionnaireResultDetail? Detail,
+    QuestionnaireCompletionRequest Request);
 
 public sealed class TestRunCoordinator(
     QuestionnaireSubmissionService submissionService,
@@ -45,6 +49,19 @@ public sealed class TestRunCoordinator(
         INavigationService navigationService,
         CancellationToken cancellationToken = default)
     {
+        QuestionnaireSavedResult saved = await SaveQuestionnaireAsync(
+            request,
+            userProgressService,
+            cancellationToken);
+
+        await NavigateQuestionnaireResultAsync(saved, navigationService, cancellationToken);
+    }
+
+    public async Task<QuestionnaireSavedResult> SaveQuestionnaireAsync(
+        QuestionnaireCompletionRequest request,
+        IUserProgressService userProgressService,
+        CancellationToken cancellationToken = default)
+    {
         QuestionnaireSubmission submission = submissionService.Calculate(
             request.Questions,
             request.Session.AnalyzerId);
@@ -65,14 +82,36 @@ public sealed class TestRunCoordinator(
             cancellationToken,
             detailJson);
 
-        await navigationService.GoToTestResultAsync(
-            submission.Score,
-            submission.Interpretation,
-            submission.RecommendedTechnique,
-            request.Session.TestId,
-            submission.InterpretationDetail,
-            request.Session.AnalyzerId,
-            detail);
+        return new QuestionnaireSavedResult(submission, detail, request);
+    }
+
+    public async Task NavigateQuestionnaireResultAsync(
+        QuestionnaireSavedResult saved,
+        INavigationService navigationService,
+        CancellationToken cancellationToken = default)
+    {
+        QuestionnaireSubmission submission = saved.Submission;
+        QuestionnaireCompletionRequest request = saved.Request;
+
+        bool completed = await NavigationRetry.TryExecuteWithRetryAsync(
+            () => navigationService.GoToTestResultAsync(
+                submission.Score,
+                submission.Interpretation,
+                submission.RecommendedTechnique,
+                request.Session.TestId,
+                submission.InterpretationDetail,
+                request.Session.AnalyzerId,
+                saved.Detail,
+                cancellationToken),
+            status => status == NavigationRunStatus.Completed,
+            maxAttempts: 3,
+            delay: TimeSpan.FromMilliseconds(150),
+            cancellationToken);
+
+        if (!completed)
+        {
+            throw new TestCompletionNavigationException();
+        }
     }
 
     private static Task StartQuestionnaireAsync(TestDefinition definition, INavigationService navigationService)

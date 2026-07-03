@@ -22,7 +22,15 @@ public partial class TestResultHeroView : ContentView
         BindableProperty.Create(nameof(HasTrendBadge), typeof(bool), typeof(TestResultHeroView), false);
 
     public static readonly BindableProperty TrendKindProperty =
-        BindableProperty.Create(nameof(TrendKind), typeof(TestTrendKind), typeof(TestResultHeroView), TestTrendKind.None);
+        BindableProperty.Create(
+            nameof(TrendKind),
+            typeof(TestTrendKind),
+            typeof(TestResultHeroView),
+            TestTrendKind.None,
+            propertyChanged: OnTrendKindChanged);
+
+    public static readonly BindableProperty IsTrendWorseProperty =
+        BindableProperty.Create(nameof(IsTrendWorse), typeof(bool), typeof(TestResultHeroView), false);
 
     public string ScoreTitle
     {
@@ -52,5 +60,19 @@ public partial class TestResultHeroView : ContentView
     {
         get => (TestTrendKind)GetValue(TrendKindProperty);
         set => SetValue(TrendKindProperty, value);
+    }
+
+    public bool IsTrendWorse
+    {
+        get => (bool)GetValue(IsTrendWorseProperty);
+        private set => SetValue(IsTrendWorseProperty, value);
+    }
+
+    private static void OnTrendKindChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is TestResultHeroView view && newValue is TestTrendKind kind)
+        {
+            view.IsTrendWorse = kind is TestTrendKind.Worse;
+        }
     }
 }

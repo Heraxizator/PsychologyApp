@@ -1,4 +1,4 @@
-using PsychologyApp.Presentation.Entities.Test;
+using PsychologyApp.Application.Models.Tests;
 using PsychologyApp.Presentation.Shared.Common;
 
 namespace PsychologyApp.Presentation.Widgets.Test;

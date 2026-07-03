@@ -7,7 +7,7 @@ Design tokens, reusable components, and layouts used by `Pages/` and `Widgets/`.
 ```
 Resources/Styles/
   Colors.xaml       — palette (Primary, Secondary, Surface*, PageBackground, BrandCardShadowLight/Dark)
-  Typography.xaml   — TextPrimaryLight/Dark, SectionTitleStyle, BodyStyle, CaptionStyle, Nav*, UiCornerRadius
+  Typography.xaml   — spacing tokens (LayoutSpacing, CompactSpacing, SectionSpacing), text styles, EmphasisBodyStyle
   Components.xaml   — CardFrameStyle, BrandCardStyle, EmptyStateIconHaloStyle, PrimaryAction* (min height 48)
 Shared/UI/Components/   — generic ContentView building blocks
 Shared/ViewModels/      — BaseViewModel hierarchy (not XAML)
@@ -37,15 +37,19 @@ xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
 | `CompletionCelebrationView` | Full-screen celebration moment: icon halo, title/body, optional streak (`StreakValueText`, `HasStreak`), primary + secondary actions. Used by `PracticeCompletionPage`. |
 | `MetricTileView` | Profile-style stat: `ValueText` + `LabelText`, optional `TapCommand` |
 | `SectionHeaderView` | Section title + optional `SubtitleText` + optional compact `ActionText` / `ActionCommand` |
-| `ListEntryCardView` | Tappable list card: title (`ListRowTitleStyle`) + body (`CaptionStyle`) |
+| `ListEntryCardView` | List card: title + body; optional `TapCommand` for tappable rows |
 | `TextItemView` | List row with title + body (tests, simple lists) |
 | `SettingsLinkCardView` | Tappable settings menu card: `Title`, `Subtitle`, `TapCommand` |
 | `SettingPickerRowView` | Settings row with label + picker. Set `LabelKind` (`Language`, `Theme`, … or `PassThrough` for raw labels like reminder hours). Default: `PassThrough`. |
 | `SettingSwitchRowView` | Settings row with label + switch: `LabelText`, `IsToggled` (`BodyStyle`, `OnColor=Primary`) |
 | `ProgressBarView` | Loading + optional `CancelCommand` (cancel row hidden when command is null) |
 | `RetryView` | Error overlay: `FailedText`, `RetryText`, `RetryCommand` (icon + press feedback) |
+| `FilterChipView` | Single selectable chip with `TapCommand` |
+| `FilterChipTabBarView` | Horizontal chip tab bar bound to `ItemsSource` + `TapCommand` |
+| `EntryItemFieldView` | Routes entry fields to `TextEntryView` or `RatingEntryView` |
+| `RatingEntryView` | Label + slider rating field |
 
-Feature-specific cards live under `Widgets/` (`QuoteCardView`, `TechniqueListCardView`, `TestListCardView`, …). All list-card widgets attach `PressFeedbackBehavior AttachToAllTapTargets="True"`. High-touch widgets: `MoodStripView` (mood chips + `MoodChipSelectedStyle`), `TodayPracticeRowView`, `PhysicsReasonCardView`.
+Feature-specific cards live under `Widgets/` (`QuoteCardView`, `TechniqueListCardView`, `TestListCardView`, …). All list-card widgets attach `PressFeedbackBehavior AttachToAllTapTargets="True"`. High-touch widgets: `MoodStripView`, `TodayPracticeRowView`, `PhysicsReasonCardView`, `MusicTransportControlsView`.
 
 ### Empty state icons (by screen)
 
@@ -56,6 +60,8 @@ Feature-specific cards live under `Widgets/` (`QuoteCardView`, `TechniqueListCar
 | Quotes (empty / all read) | `FormatQuote` / `DoneAll` |
 | Music search | `SearchOff` |
 | Profile favorites | `FavoriteBorder` |
+| Profile practice history | `History` |
+| Physics search (no results) | `SearchOff` |
 | Test history | `History` |
 
 Test flow widgets (`Widgets/Test/`):
@@ -69,6 +75,13 @@ Test flow widgets (`Widgets/Test/`):
 | `TestResultMetricCardView` | Named metric card (Lüscher standard results) |
 | `LuscherColorResultView` | Brief Lüscher color swatch + interpretation block |
 | `TestFlowMetaStripView` | Duration / question-count chips on test intro |
+| `TestHistoryEntryView` | Single test history row with trend badge and expandable detail |
+
+Audio widgets (`Widgets/Audio/`):
+
+| Widget | Use when |
+|--------|----------|
+| `MusicTransportControlsView` | Mini-player prev/play-pause/next controls with press feedback |
 
 Onboarding widgets (`Widgets/Onboarding/`):
 
@@ -94,6 +107,25 @@ Onboarding widgets (`Widgets/Onboarding/`):
 7. **Empty states:** prefer `EmptyStateView` with `IconName`; reveal animation is built in via `EmptyStateRevealBehavior`.
 8. **Card shadows:** use `BrandCardShadowLight` / `BrandCardShadowDark` via `AppThemeBinding` in styles — not a single hard-coded shadow color.
 9. **Run `dotnet build`** after adding or migrating a component.
+
+## Screen checklist
+
+| Screen | Nav | Loading | Empty | Error |
+|--------|-----|---------|-------|-------|
+| Techniques (tab) | Shell | `ProgressBarView` | `EmptyStateView` / `SelfImprovement` | `RetryView` |
+| Tests list (tab) | Shell | `ProgressBarView` | `EmptyStateView` / `Assignment` | `RetryView` |
+| Quotes (tab) | Shell | `ProgressBarView` | `EmptyStateView` | `RetryView` |
+| Music player (tab) | Shell | `ProgressBarView` | `EmptyStateView` / `SearchOff` | `RetryView` |
+| Start physics | `NavigationBarSimpleView` | — | — | — |
+| Physics search | `NavigationBarSimpleView` | `ProgressBarView` | `EmptyStateView` / `SearchOff` | `RetryView` |
+| Profile user | `NavigationBarSimpleView` | `ProgressBarView` (init) | `EmptyStateView` (quotes, history) | `RetryView` (quotes) |
+| Settings / Options / Info / Donate | `NavigationBarSimpleView` | — | — | — |
+| Review form | `NavigationBarSimpleView` | — | — | — |
+| Test flow (FindProblem → Result) | `NavigationBarSimpleView` | per screen | — | `RetryView` where applicable |
+| Test history | `NavigationBarSimpleView` | `ProgressBarView` | `EmptyStateView` / `History` | `RetryView` |
+| Technique session | `NavigationBarExtendedView` (shell) | — | — | — |
+| Practice completion | — | — | — | — |
+| Onboarding | `NavigationBarSimpleView` | — | — | — |
 
 ## Emotional moments
 

@@ -98,16 +98,23 @@ public sealed class MauiNavigationService : INavigationService
     public Task GoToTestsListAsync() =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateTestsListPage(), true));
 
-    public Task GoToTestResultAsync(
+    public Task<NavigationRunStatus> GoToTestResultAsync(
         int score,
         string interpretation,
         TechniqueId? recommendedTechnique = null,
         string? testId = null,
         string? interpretationDetail = null,
         string? analyzerId = null,
-        QuestionnaireResultDetail? detail = null) =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(
-            _pageFactory.CreateTestResultPage(new TestResultInfo
+        QuestionnaireResultDetail? detail = null,
+        CancellationToken cancellationToken = default) =>
+        NavigationCoordinator.RunCompletionPushAsync(async () =>
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            // Let the current page finish layout/animation before pushing the result page.
+            await Task.Yield();
+
+            TestResultInfo result = new()
             {
                 Score = score,
                 Interpretation = interpretation,
@@ -116,8 +123,12 @@ public sealed class MauiNavigationService : INavigationService
                 RecommendedTechnique = recommendedTechnique,
                 TestId = testId,
                 Detail = detail
-            }),
-            true));
+            };
+
+            await ResolveNavigation().PushAsync(
+                _pageFactory.CreateTestResultPage(result),
+                animated: false);
+        });
 
     public Task GoToPracticeCompletionAsync(int streakDays) =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(

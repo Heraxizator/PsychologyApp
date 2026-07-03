@@ -241,6 +241,12 @@ public static partial class AppStrings
     public static string UnexpectedErrorMessage => T(
         "Произошла непредвиденная ошибка. Попробуйте ещё раз.",
         "An unexpected error occurred. Please try again.");
+    public static string TestsResultSaveFailedMessage => T(
+        "Не удалось сохранить результат теста. Попробуйте ещё раз.",
+        "Failed to save the test result. Please try again.");
+    public static string TestsResultNavigationFailedMessage => T(
+        "Результат сохранён, но не удалось открыть экран результата. Нажмите «Завершить» ещё раз.",
+        "The result was saved, but the result screen could not be opened. Tap Finish again.");
     public static string TechniqueNotFound => T("Техника не найдена.", "Technique not found.");
     public static string QuoteNotFound => T("Цитата не найдена.", "Quote not found.");
 
@@ -436,6 +442,7 @@ public static partial class AppStrings
     public static string LoadError => T("Ошибка при загрузке", "Failed to load");
 
     public static string ProfileTitle => T("Профиль", "Profile");
+    public static string ProfileLoadingText => T("Загрузка профиля", "Loading profile");
     public static string ProfileUserLabel => T("Пользователь", "User");
     public static string ProfileStandardUser => T("Стандартный", "Standard");
     public static string ProfileTechniquesCompleted => T("Пройдено техник", "Techniques completed");

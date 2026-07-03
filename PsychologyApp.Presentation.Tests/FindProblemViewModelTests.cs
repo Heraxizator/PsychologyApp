@@ -1,8 +1,8 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Moq;
 using PsychologyApp.Presentation.Shared.ViewModels;
 using PsychologyApp.Presentation.Features.RunTests;
-using PsychologyApp.Presentation.Pages.FindProblem;
+using PsychologyApp.Presentation.Pages.RunTests.FindProblem;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

@@ -1,6 +1,7 @@
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Quot;
 using PsychologyApp.Presentation.Entities.Quote;
+using PsychologyApp.Presentation.Features.ManageQuotes.Index;
 
 namespace PsychologyApp.Presentation.Features.ManageQuotes;
 

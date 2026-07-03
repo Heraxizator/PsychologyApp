@@ -1,10 +1,10 @@
-﻿using Moq;
+using Moq;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Features.RunTests;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
-using PsychologyApp.Presentation.Pages.TestResult;
+using PsychologyApp.Presentation.Pages.RunTests.TestResult;
 using PsychologyApp.Presentation.Shared.Common;
 using Xunit;
 

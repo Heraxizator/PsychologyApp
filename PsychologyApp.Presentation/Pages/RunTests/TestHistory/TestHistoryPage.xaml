@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.RunTests.TestHistory.TestHistoryPage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:testUi="clr-namespace:PsychologyApp.Presentation.Widgets.Test"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.RunTests.TestHistory"
+             xmlns:models="clr-namespace:PsychologyApp.Presentation.Entities.Test"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:DataType="vm:TestHistoryViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}">
+
+    <ContentPage.Behaviors>
+        <behaviors:PageAnalyticsBehavior TestId="{Binding TestFlowId}" />
+    </ContentPage.Behaviors>
+
+    <Grid Padding="{StaticResource LayoutPageMarginThickness}" RowDefinitions="Auto,*,Auto" RowSpacing="{StaticResource LayoutSpacing}">
+        <ui:NavigationBarSimpleView
+            Grid.Row="0"
+            TitleText="{Binding PageTitle}"
+            BackCommand="{Binding Finish}" />
+
+        <ScrollView Grid.Row="1" IsVisible="{Binding IsDone}">
+            <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
+                <testUi:TestScoreTrendChartView
+                    IsVisible="{Binding HasChart}"
+                    ChartPoints="{Binding ChartPoints}" />
+                <CollectionView
+                    ItemsSource="{Binding HistoryEntries}"
+                    SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:TestHistoryEntryItem">
+                            <testUi:TestHistoryEntryView
+                                DateText="{Binding DateText}"
+                                SummaryText="{Binding SummaryText}"
+                                ScoreText="{Binding ScoreText}"
+                                TrendText="{Binding TrendText}"
+                                DurationText="{Binding DurationText}"
+                                HasScore="{Binding HasScore}"
+                                HasTrend="{Binding HasTrend}"
+                                HasDetail="{Binding HasDetail}"
+                                IsWorse="{Binding IsWorse}"
+                                DetailQuestions="{Binding DetailQuestions}" />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <ui:EmptyStateView
+                            BodyText="{Binding EmptyText}"
+                            IconName="History" />
+                    </CollectionView.EmptyView>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <ui:ButtonView
+            Grid.Row="2"
+            IsVisible="{Binding IsDone}"
+            BodyText="{Binding RetakeButtonText}"
+            TapCommand="{Binding RetakeCommand}" />
+
+        <ui:ProgressBarView
+            Grid.RowSpan="3"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsLoadingOverlayVisible}"
+            IsLoading="{Binding IsLoadingOverlayVisible}"
+            ProgressText="{Binding LoadingText}" />
+
+        <ui:RetryView
+            Grid.RowSpan="3"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsFail}"
+            FailedText="{Binding FailedText}"
+            RetryText="{Binding RetryText}"
+            RetryCommand="{Binding Reload}" />
+    </Grid>
+</ContentPage>

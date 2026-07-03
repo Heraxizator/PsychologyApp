@@ -1,4 +1,11 @@
-using PsychologyApp.Presentation.App.Providers;
+using PsychologyApp.Presentation.Features.Onboarding.DependencyInjection;
+using PsychologyApp.Presentation.Features.PlayMusic.DependencyInjection;
+using PsychologyApp.Presentation.Features.SearchPhysics.DependencyInjection;
+using PsychologyApp.Presentation.Features.ManageQuotes.DependencyInjection;
+using PsychologyApp.Presentation.Features.RunTests.DependencyInjection;
+using PsychologyApp.Presentation.Features.ManageProfile.DependencyInjection;
+using PsychologyApp.Presentation.Features.RunTechniqueSession.DependencyInjection;
+using PsychologyApp.Presentation.Features.SendReviewForm.DependencyInjection;
 
 namespace PsychologyApp.Presentation.App.DependencyInjection;
 

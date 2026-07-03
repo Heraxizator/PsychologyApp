@@ -13,7 +13,7 @@
         RowDefinitions="Auto,*,Auto"
         RowSpacing="{StaticResource LayoutSpacing}">
 
-            <VerticalStackLayout Grid.Row="0" Spacing="8">
+            <VerticalStackLayout Grid.Row="0" Spacing="{StaticResource CompactSpacing}">
                 <ui:NavigationBarSimpleView
                     IsVisible="{Binding IsBackVisible}"
                     TitleText="{Binding StepLabel}"
