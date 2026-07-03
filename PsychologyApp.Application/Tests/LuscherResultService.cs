@@ -1,6 +1,7 @@
 using PsychologyApp.Application.Models.Tests;
 using PsychologyApp.Application.UserProgress;
 using System.Text.Json;
+using PsychologyApp.Application.Serialization;
 
 namespace PsychologyApp.Application.Tests;
 
@@ -38,16 +39,20 @@ public sealed class LuscherResultService : ILuscherResultService
     {
         ArgumentNullException.ThrowIfNull(progress);
 
-        string detailJson = JsonSerializer.Serialize(new
+        LuscherStandardResultDetail detail = new()
         {
-            co = coValue,
-            bk = Math.Round(bkValue, 2),
-            colors = selectedColors.Select(item => new
-            {
-                code = item.Code,
-                name = item.DisplayName
-            }).ToList()
-        });
+            Co = coValue,
+            Bk = Math.Round(bkValue, 2),
+            Colors = selectedColors
+                .Select(item => new LuscherStandardColorDetail
+                {
+                    Code = item.Code,
+                    Name = item.DisplayName
+                })
+                .ToList()
+        };
+
+        string detailJson = JsonSerializer.Serialize(detail, TestJsonSerializerContext.Default.LuscherStandardResultDetail);
 
         return progress.SaveTestResultAsync(TestIds.LuscherStandard, coValue, summary, detailJson, cancellationToken);
     }
@@ -63,11 +68,13 @@ public sealed class LuscherResultService : ILuscherResultService
     {
         ArgumentNullException.ThrowIfNull(progress);
 
-        string detailJson = JsonSerializer.Serialize(new
+        LuscherBriefResultDetail detail = new()
         {
-            first = new { name = firstName, text = firstResult },
-            second = new { name = secondName, text = secondResult }
-        });
+            First = new LuscherBriefColorDetail { Name = firstName, Text = firstResult },
+            Second = new LuscherBriefColorDetail { Name = secondName, Text = secondResult }
+        };
+
+        string detailJson = JsonSerializer.Serialize(detail, TestJsonSerializerContext.Default.LuscherBriefResultDetail);
 
         return progress.SaveTestResultAsync(TestIds.LuscherBrief, null, summary, detailJson, cancellationToken);
     }

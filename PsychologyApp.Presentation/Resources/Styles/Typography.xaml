@@ -31,8 +31,14 @@
     <system:Double x:Key="LuscherColorTileSize">88</system:Double>
     <system:Double x:Key="LuscherResultSwatchSize">160</system:Double>
     <system:Double x:Key="TestAnswerOptionMinHeight">56</system:Double>
+    <system:Double x:Key="EmphasisBodyFontSize">17</system:Double>
+    <system:Double x:Key="EmphasisBodyLineHeight">1.35</system:Double>
+    <system:Double x:Key="PlayerControlSpacing">10</system:Double>
     <system:Double x:Key="ListItemSpacing">4</system:Double>
     <system:Double x:Key="PracticeListItemSpacing">8</system:Double>
+    <system:Double x:Key="CompactSpacing">8</system:Double>
+    <system:Double x:Key="SectionSpacing">12</system:Double>
+    <Thickness x:Key="FieldVerticalMargin">0,8,0,8</Thickness>
     <Thickness x:Key="ListEntryPadding">12</Thickness>
     <x:String x:Key="BodyFontFamily">InterRegular</x:String>
     <x:String x:Key="MediumFontFamily">InterMedium</x:String>
@@ -62,6 +68,11 @@
         <Setter Property="FontFamily" Value="{DynamicResource BodyFontFamily}" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
         <Setter Property="HorizontalTextAlignment" Value="Start" />
+    </Style>
+
+    <Style x:Key="EmphasisBodyStyle" TargetType="Label" BasedOn="{StaticResource BodyStyle}">
+        <Setter Property="FontSize" Value="{StaticResource EmphasisBodyFontSize}" />
+        <Setter Property="LineHeight" Value="{StaticResource EmphasisBodyLineHeight}" />
     </Style>
 
     <Style x:Key="CaptionStyle" TargetType="Label">

@@ -1,6 +1,7 @@
 using PsychologyApp.Application.Recommendations;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Reason;
+using PsychologyApp.Presentation.Features.RunTechniqueSession.Index;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Entities.Physics;
 using PsychologyApp.Presentation.Models.Practice.Techniques;

@@ -1,4 +1,5 @@
 ﻿using PsychologyApp.Presentation.Entities.Test;
+using PsychologyApp.Presentation.Shared.Navigation;
 
 namespace PsychologyApp.Presentation.Tests;
 
@@ -48,15 +49,16 @@ public class TestNavigationService(INavigation navigation) : INavigationService
 
     public Task GoToTestsListAsync() => Task.CompletedTask;
 
-    public virtual Task GoToTestResultAsync(
+    public virtual Task<NavigationRunStatus> GoToTestResultAsync(
         int score,
         string interpretation,
         TechniqueId? recommendedTechnique = null,
         string? testId = null,
         string? interpretationDetail = null,
         string? analyzerId = null,
-        QuestionnaireResultDetail? detail = null) =>
-        Task.CompletedTask;
+        QuestionnaireResultDetail? detail = null,
+        CancellationToken cancellationToken = default) =>
+        Task.FromResult(NavigationRunStatus.Completed);
 
     public Task GoToTestsTabAsync() => Task.CompletedTask;
 

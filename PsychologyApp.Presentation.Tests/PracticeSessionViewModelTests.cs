@@ -7,7 +7,9 @@ using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Services.Notifications;
-using PsychologyApp.Presentation.Pages.TechniqueSession;
+using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueSession;
+using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueSession.SubViewModels.Polarity;
+using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueSession.SubViewModels.PaperList;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

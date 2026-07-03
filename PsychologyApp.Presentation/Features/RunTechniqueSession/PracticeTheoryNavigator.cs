@@ -1,7 +1,8 @@
 using PsychologyApp.Presentation.App.Providers;
+using PsychologyApp.Presentation.Features.RunTechniqueSession.DependencyInjection;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.App.Routes;
-using PsychologyApp.Presentation.Pages.TechniqueTheory;
+using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueTheory;
 
 namespace PsychologyApp.Presentation.Features.RunTechniqueSession;
 

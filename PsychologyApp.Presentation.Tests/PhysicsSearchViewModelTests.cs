@@ -8,7 +8,7 @@ using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Features.SearchPhysics;
-using PsychologyApp.Presentation.Pages.PhysicsSearch;
+using PsychologyApp.Presentation.Pages.SearchPhysics.PhysicsSearch;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

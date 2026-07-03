@@ -1,9 +1,7 @@
-﻿using PsychologyApp.Application.Recommendations;
+﻿using PsychologyApp.Presentation.Features.Onboarding;
 using PsychologyApp.Domain.Practice;
-using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Core.Common;
-using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Shared.ViewModels;
@@ -15,8 +13,7 @@ public partial class OnboardingViewModel : BaseViewModel
 {
     private readonly INavigationService _navigationService;
     private readonly IUserPreferencesStore _userPreferencesStore;
-    private readonly TechniqueCatalogGateway _techniqueCatalog;
-    private readonly ITechniqueRecommendationService _techniqueRecommendationService;
+    private readonly OnboardingRecommendationResolver _onboardingRecommendationResolver;
     private readonly Func<TechniqueId?, Task> _onCompleted;
 
     public ICommand NextCommand { get; }
@@ -31,8 +28,7 @@ public partial class OnboardingViewModel : BaseViewModel
     public OnboardingViewModel(
         INavigationService navigationService,
         IUserPreferencesStore userPreferencesStore,
-        TechniqueCatalogGateway techniqueCatalog,
-        ITechniqueRecommendationService techniqueRecommendationService,
+        OnboardingRecommendationResolver onboardingRecommendationResolver,
         Func<TechniqueId?, Task> onCompleted)
     {
         BindPreferences(userPreferencesStore);
@@ -40,8 +36,8 @@ public partial class OnboardingViewModel : BaseViewModel
         BindNavigation(navigationService);
         _navigationService = navigationService;
         _userPreferencesStore = userPreferencesStore;
-        _techniqueCatalog = techniqueCatalog;
-        _techniqueRecommendationService = techniqueRecommendationService;
+        _onboardingRecommendationResolver = onboardingRecommendationResolver;
+        RefreshRecommendation();
 
         NextCommand = new Command(GoNext);
         BackCommand = new Command(GoBack);

@@ -7,12 +7,12 @@ using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.Services.Notifications;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
-using PsychologyApp.Presentation.Pages.Techniques;
-using PsychologyApp.Presentation.Pages.MusicPlayer;
-using PsychologyApp.Presentation.Pages.QuoteFeed;
-using PsychologyApp.Presentation.Pages.PhysicsSearch;
-using PsychologyApp.Presentation.Pages.TestsList;
-using PsychologyApp.Presentation.Pages.StartPhysics;
+using PsychologyApp.Presentation.Pages.RunTechniqueSession.Techniques;
+using PsychologyApp.Presentation.Pages.PlayMusic.MusicPlayer;
+using PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
+using PsychologyApp.Presentation.Pages.SearchPhysics.PhysicsSearch;
+using PsychologyApp.Presentation.Pages.RunTests.TestsList;
+using PsychologyApp.Presentation.Pages.SearchPhysics.StartPhysics;
 
 namespace PsychologyApp.Presentation.App;
 
