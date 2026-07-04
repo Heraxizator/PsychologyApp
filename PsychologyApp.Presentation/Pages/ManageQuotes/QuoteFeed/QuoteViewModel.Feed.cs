@@ -6,9 +6,6 @@ namespace PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
 public partial class QuoteViewModel
 {
     private int _feedLoadGeneration;
-    private int _feedContentVersion;
-
-    public int FeedContentVersion => _feedContentVersion;
 
     public QuoteFeedMode FeedMode => _feedCoordinator.FeedMode;
 
@@ -29,44 +26,22 @@ public partial class QuoteViewModel
 
         await UiThread.RunAsync(() =>
         {
-            _feedItems.Clear();
-            DisplayItems.Clear();
+            _feedState.ClearFeed();
             ShowAllReadEmpty = false;
             OnPropertyChanged(nameof(FeedMode));
             OnPropertyChanged(nameof(ShowDailyQuoteHeader));
-            OnPropertyChanged(nameof(ShowForYouEmpty));
-            OnPropertyChanged(nameof(ShowFavoritesEmpty));
-            NotifyEmptyStateProperties();
+            NotifySearchRelatedProperties();
         });
 
         await ReloadFeedAsync(seedNewQuote: false);
     }
 
-    private void ClearSearchQuerySilently()
-    {
-        _searchDebounceCts?.Cancel();
-        _searchDebounceCts?.Dispose();
-        _searchDebounceCts = null;
-
-        if (string.IsNullOrEmpty(_searchQuery))
-        {
-            return;
-        }
-
-        _searchQuery = string.Empty;
-        OnPropertyChanged(nameof(SearchQuery));
-        OnPropertyChanged(nameof(IsSearching));
-        OnPropertyChanged(nameof(IsFeedFiltersVisible));
-        OnPropertyChanged(nameof(ShowDailyQuoteHeader));
-        OnPropertyChanged(nameof(ShowForYouEmpty));
-        OnPropertyChanged(nameof(ShowFavoritesEmpty));
-        NotifyEmptyStateProperties();
-    }
+    private void ClearSearchQuerySilently() => _searchController.ClearSilently();
 
     private async Task UpdateAllReadEmptyStateAsync(CancellationToken cancellationToken = default)
     {
         ShowAllReadEmpty = await _feedCoordinator.ShouldShowAllReadEmptyAsync(
-            _feedItems.Count,
+            _feedState.FeedItemCount,
             IsDone,
             _quotService,
             cancellationToken);

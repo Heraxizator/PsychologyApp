@@ -1,4 +1,3 @@
-using PsychologyApp.Application.Models;
 using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
@@ -18,9 +17,12 @@ public partial class TechniquesViewModel
         await InitializeAsync(showLoadingOverlay: false);
     }
 
-    private void UpdateTodayRecommendation(IReadOnlyList<TechniqueItem>? staticItems = null)
+    private void UpdateTodayRecommendation(IReadOnlyList<TechniqueItem>? staticItems = null) =>
+        UpdateTodayRecommendationCoreAsync(staticItems).FireAndForget();
+
+    private async Task UpdateTodayRecommendationCoreAsync(IReadOnlyList<TechniqueItem>? staticItems = null)
     {
-        TodayRecommendationResult recommendation = _dashboardPresenter.ResolveTodayRecommendation(
+        TodayRecommendationResult recommendation = await _dashboardPresenter.ResolveTodayRecommendationAsync(
             StreakDays,
             _navigationService);
 
@@ -31,7 +33,11 @@ public partial class TechniquesViewModel
 
         if (staticItems is not null)
         {
-            _dashboardPresenter.ApplyCatalogDate(TodayTechniqueItem, _todayTechniqueId, staticItems, HasStreak);
+            await _dashboardPresenter.ApplyCatalogDateAsync(
+                TodayTechniqueItem,
+                _todayTechniqueId,
+                staticItems,
+                HasStreak);
             OnPropertyChanged(nameof(TodayTechniqueItem));
         }
     }

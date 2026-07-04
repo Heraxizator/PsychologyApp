@@ -18,7 +18,9 @@ public sealed class ProfileFeaturedTechniquesBuilder(
     TechniqueCatalogGateway techniqueCatalog,
     ITechniqueRecommendationService techniqueRecommendationService)
 {
-    public IReadOnlyList<TechniqueItem> Build(INavigationService navigationService)
+    public async Task<IReadOnlyList<TechniqueItem>> BuildAsync(
+        INavigationService navigationService,
+        CancellationToken cancellationToken = default)
     {
         string concern = userPreferencesStore.Load().OnboardingConcern;
         TechniqueId recommendedId = techniqueRecommendationService.ResolveFromOnboardingConcern(concern);
@@ -40,7 +42,7 @@ public sealed class ProfileFeaturedTechniquesBuilder(
                 continue;
             }
 
-            TechniqueDefinition definition = techniqueCatalog.Get(techniqueId);
+            TechniqueDefinition definition = await techniqueCatalog.GetAsync(techniqueId, cancellationToken);
             string durationText = AppStrings.TechniqueDuration(definition.ListDurationMinutes);
             items.Add(new TechniqueItem
             {

@@ -11,6 +11,11 @@ public sealed class TechniqueCatalogGateway(ITechniqueCatalogService catalogServ
     public TechniqueDefinition Get(TechniqueId techniqueId) =>
         TechniqueDefinitionMapper.ToPresentation(catalogService.Get(techniqueId));
 
+    public async Task<TechniqueDefinition> GetAsync(
+        TechniqueId techniqueId,
+        CancellationToken cancellationToken = default) =>
+        TechniqueDefinitionMapper.ToPresentation(await catalogService.GetAsync(techniqueId, cancellationToken));
+
     public IReadOnlyList<TechniqueListEntry> GetBuiltInListEntries() =>
         catalogService.GetBuiltInListEntries();
 

@@ -56,11 +56,26 @@ public partial class TechniquesViewModel
                 MyTechniquesLabel,
                 cancellationToken);
 
+            TodayRecommendationResult recommendation = await _dashboardPresenter.ResolveTodayRecommendationAsync(
+                snapshot.StreakDays,
+                _navigationService,
+                cancellationToken);
+            await _dashboardPresenter.ApplyCatalogDateAsync(
+                recommendation.Item,
+                recommendation.TechniqueId,
+                snapshot.StaticItems,
+                snapshot.StreakDays > 0,
+                cancellationToken);
+
             await UiThread.RunAsync(() =>
             {
                 StreakDays = snapshot.StreakDays;
                 ApplyMoodSnapshot(snapshot.Mood);
-                UpdateTodayRecommendation(snapshot.StaticItems);
+                _todayTechniqueId = recommendation.TechniqueId;
+                TodayReasonText = recommendation.ReasonText;
+                TodayTechniqueItem = recommendation.Item;
+                OnPropertyChanged(nameof(TodayReasonText));
+                OnPropertyChanged(nameof(TodayTechniqueItem));
                 IsTechniquesGrouped = snapshot.UiState.IsGrouped;
                 TechniqueGroups = snapshot.UiState.Groups;
                 CatalogTechniques = snapshot.UiState.CatalogTechniques;

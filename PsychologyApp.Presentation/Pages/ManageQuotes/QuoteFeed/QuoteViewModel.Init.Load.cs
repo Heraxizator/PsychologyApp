@@ -52,10 +52,10 @@ public partial class QuoteViewModel
                     return;
                 }
 
-                SetFeedItems(loadResult.Items);
+                _feedState.SetFeedItems(loadResult.Items);
                 ShowAllReadEmpty = loadResult.ShowAllCaughtUp;
                 SetDone();
-                BumpFeedContentVersion();
+                NotifySearchRelatedProperties();
             });
 
             return true;
@@ -90,27 +90,8 @@ public partial class QuoteViewModel
         await UiThread.RunAsync(() => DailyQuote = item);
     }
 
-    private Task RefreshQuoteBindingAsync(QuoteItem quoteItem)
-    {
-        int index = _feedItems.IndexOf(quoteItem);
-        if (index < 0)
-        {
-            return Task.CompletedTask;
-        }
-
-        return UiThread.RunAsync(() =>
-        {
-            _feedItems[index] = quoteItem;
-            if (!IsSearching)
-            {
-                int displayIndex = DisplayItems.IndexOf(quoteItem);
-                if (displayIndex >= 0)
-                {
-                    DisplayItems[displayIndex] = quoteItem;
-                }
-            }
-        });
-    }
+    private Task RefreshQuoteBindingAsync(QuoteItem quoteItem) =>
+        UiThread.RunAsync(() => _feedState.TryUpdateFeedItem(quoteItem, IsSearching));
 
     private Task RefreshDailyQuoteBindingAsync(QuoteItem quoteItem) =>
         UiThread.RunAsync(() =>
@@ -145,12 +126,7 @@ public partial class QuoteViewModel
 
             await UiThread.RunAsync(async () =>
             {
-                foreach (QuoteItem item in items)
-                {
-                    _feedItems.Add(item);
-                    DisplayItems.Add(item);
-                }
-
+                _feedState.AppendItems(items);
                 await UpdateAllReadEmptyStateAsync(effectiveToken);
             });
         }

@@ -1,4 +1,3 @@
-using PsychologyApp.Application.Technique;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
@@ -9,7 +8,7 @@ public partial class TechniqueSessionViewModel
 {
     protected override void OnTechniqueContentChanged()
     {
-        if (TechniqueDefinitionMapper.ToPresentation(TechniqueCatalogService!.Get(_techniqueId)).UiKind == TechniqueUiKind.Entry)
+        if (AppliedUiKind == TechniqueUiKind.Entry)
         {
             _entryDraftCoordinator.WireHandlers();
             _entryDraftCoordinator.LoadAsync(() => OnPropertyChanged(nameof(Entries))).FireAndForget();

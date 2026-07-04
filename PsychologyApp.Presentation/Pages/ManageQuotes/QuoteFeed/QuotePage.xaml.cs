@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Entities.Quote;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.Navigation;

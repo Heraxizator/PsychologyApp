@@ -17,23 +17,24 @@ public sealed class ProfilePracticeHistoryLoader(
         IReadOnlyList<CompletionDTO> completions =
             await userProgressService.GetRecentTechniqueCompletionsAsync(count, cancellationToken);
 
-        return completions
-            .Select(completion =>
+        List<PracticeHistoryItem> items = [];
+        foreach (CompletionDTO completion in completions)
+        {
+            string date = completion.CompletedAt.ToLocalTime().ToString("g");
+            string name = await practiceHistoryFormatter.ResolveNameAsync(completion, cancellationToken);
+            (string durationText, bool hasDuration) = practiceHistoryFormatter.ResolveDuration(completion);
+            items.Add(new PracticeHistoryItem
             {
-                string date = completion.CompletedAt.ToLocalTime().ToString("g");
-                string name = practiceHistoryFormatter.ResolveName(completion);
-                (string durationText, bool hasDuration) = practiceHistoryFormatter.ResolveDuration(completion);
-                return new PracticeHistoryItem
-                {
-                    DateText = date,
-                    TechniqueName = name,
-                    IconName = practiceHistoryFormatter.ResolveIcon(completion),
-                    DurationText = durationText,
-                    HasDuration = hasDuration,
-                    ItemKey = completion.ItemKey,
-                    DisplayText = AppStrings.PracticeHistoryEntry(date, name)
-                };
-            })
-            .ToList();
+                DateText = date,
+                TechniqueName = name,
+                IconName = await practiceHistoryFormatter.ResolveIconAsync(completion, cancellationToken),
+                DurationText = durationText,
+                HasDuration = hasDuration,
+                ItemKey = completion.ItemKey,
+                DisplayText = AppStrings.PracticeHistoryEntry(date, name)
+            });
+        }
+
+        return items;
     }
 }

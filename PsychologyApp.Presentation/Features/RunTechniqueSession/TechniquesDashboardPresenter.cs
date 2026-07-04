@@ -13,17 +13,31 @@ public sealed class TechniquesDashboardPresenter(
     TodayRecommendationResolver todayRecommendationResolver,
     IToastService toastService)
 {
-    public TodayRecommendationResult ResolveTodayRecommendation(
+    public Task<TodayRecommendationResult> ResolveTodayRecommendationAsync(
         int streakDays,
-        INavigationService navigationService) =>
-        dashboardLoader.ResolveTodayRecommendation(streakDays, navigationService);
+        INavigationService navigationService,
+        CancellationToken cancellationToken = default) =>
+        dashboardLoader.ResolveTodayRecommendationAsync(streakDays, navigationService, cancellationToken);
 
-    public void ApplyCatalogDate(
+    public Task ApplyCatalogDateAsync(
         TechniqueItem? todayTechniqueItem,
         TechniqueId todayTechniqueId,
         IReadOnlyList<TechniqueItem> staticItems,
-        bool hasStreak) =>
-        todayRecommendationResolver.ApplyCatalogDate(todayTechniqueItem, todayTechniqueId, staticItems, hasStreak);
+        bool hasStreak,
+        CancellationToken cancellationToken = default)
+    {
+        if (todayTechniqueItem is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        return todayRecommendationResolver.ApplyCatalogDateAsync(
+            todayTechniqueItem,
+            todayTechniqueId,
+            staticItems,
+            hasStreak,
+            cancellationToken);
+    }
 
     public Task<MoodSnapshot> LoadMoodSnapshotAsync(CancellationToken cancellationToken = default) =>
         dashboardLoader.LoadMoodSnapshotAsync(cancellationToken);

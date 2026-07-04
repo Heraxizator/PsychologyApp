@@ -61,17 +61,19 @@ public sealed class PracticeDashboardLoader(
         await userProgressService.RecordMoodAsync(moodLevel, cancellationToken: cancellationToken);
     }
 
-    public TodayRecommendationResult ResolveTodayRecommendation(
+    public Task<TodayRecommendationResult> ResolveTodayRecommendationAsync(
         int streakDays,
-        INavigationService navigationService)
+        INavigationService navigationService,
+        CancellationToken cancellationToken = default)
     {
         string streakDisplay = AppStrings.ProfileStreakCount(streakDays);
         bool hasStreak = streakDays > 0;
-        return todayRecommendationResolver.Resolve(
+        return todayRecommendationResolver.ResolveAsync(
             userPreferencesStore.Load().OnboardingConcern,
             streakDisplay,
             hasStreak,
-            navigationService);
+            navigationService,
+            cancellationToken);
     }
 
     public TechniqueId? ConsumePendingTechnique() => userPreferencesStore.ConsumePendingTechnique();

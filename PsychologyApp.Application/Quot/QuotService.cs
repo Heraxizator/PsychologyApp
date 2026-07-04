@@ -59,12 +59,20 @@ public sealed class QuotService(
         }
 
         QuoteSeedContext context = await CreateSeedContextAsync(cancellationToken);
+        List<global::PsychologyApp.Domain.Entities.Quot> themedQuots = [];
         for (int i = 0; i < needed; i++)
         {
-            if (!await TryAddThemedQuoteFromCatalogAsync(themes, context, cancellationToken))
+            if (!TryPickThemedSeed(themes, context, out QuotSeed? seed))
             {
                 break;
             }
+
+            themedQuots.Add(CreateQuotFromSeed(seed));
+        }
+
+        if (themedQuots.Count > 0)
+        {
+            await quotRepository.AddManyAsync(themedQuots, cancellationToken);
         }
 
         unreadCount = await CountUnreadByThemesAsync(themes, count, cancellationToken);
@@ -87,8 +95,9 @@ public sealed class QuotService(
         }
 
         QuoteSeedContext context = await CreateSeedContextAsync(cancellationToken);
-        if (await TryAddThemedQuoteFromCatalogAsync(themes, context, cancellationToken))
+        if (TryPickThemedSeed(themes, context, out QuotSeed? seed))
         {
+            await quotRepository.AddManyAsync([CreateQuotFromSeed(seed)], cancellationToken);
             return true;
         }
 
@@ -396,24 +405,24 @@ public sealed class QuotService(
         return unread.Count();
     }
 
-    private async Task<bool> TryAddThemedQuoteFromCatalogAsync(
+    private static bool TryPickThemedSeed(
         IReadOnlyList<string> themes,
         QuoteSeedContext context,
-        CancellationToken cancellationToken)
+        out QuotSeed seed)
     {
         HashSet<string> themeSet = new(themes, StringComparer.OrdinalIgnoreCase);
         List<QuotSeed> available = context.Seeds
-            .Where(seed => themeSet.Contains(seed.Theme) && !context.KnownTexts.Contains(seed.Text))
+            .Where(candidate => themeSet.Contains(candidate.Theme) && !context.KnownTexts.Contains(candidate.Text))
             .ToList();
 
         if (available.Count == 0)
         {
+            seed = null!;
             return false;
         }
 
-        QuotSeed seed = available[Random.Shared.Next(available.Count)];
+        seed = available[Random.Shared.Next(available.Count)];
         context.KnownTexts.Add(seed.Text);
-        await quotRepository.AddAsync(CreateQuotFromSeed(seed), cancellationToken);
         return true;
     }
 

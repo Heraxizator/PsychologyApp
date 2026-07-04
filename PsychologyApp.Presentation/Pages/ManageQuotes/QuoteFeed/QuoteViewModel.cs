@@ -18,7 +18,10 @@ namespace PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
 
 public partial class QuoteViewModel : BaseViewModel
 {
-    public ObservableRangeCollection<QuoteItem> DisplayItems { get; } = [];
+    private readonly QuoteFeedState _feedState = new();
+    private readonly QuoteSearchController _searchController;
+
+    public ObservableRangeCollection<QuoteItem> DisplayItems => _feedState.DisplayItems;
     public ObservableCollection<FilterChipTabItem> FeedFilters { get; } = [];
     public ICommand LoadMoreQuotesCommand { get; private set; } = default!;
     public ICommand SelectFeedCommand { get; private set; } = default!;
@@ -27,16 +30,13 @@ public partial class QuoteViewModel : BaseViewModel
     public ICommand OpenProfileCommand { get; private set; } = default!;
 
     private readonly IQuotService _quotService;
-    private readonly IQuoteSearchService _quoteSearchService;
     private readonly ILogger<QuoteViewModel> _logger;
     private readonly IOptions<AppSettings> _settings;
     private readonly IDatabaseReadySignal _databaseReadySignal;
     private readonly QuoteFeedCoordinator _feedCoordinator;
     private readonly QuoteItemCommandsFactory _quoteCommandsFactory;
     private readonly LanguageContentReloader _languageContentReloader;
-    private CancellationTokenSource? _searchDebounceCts;
     private string? _feedLanguage;
-    private List<QuoteItem> _feedItems = [];
 
     public QuoteViewModel(
         INavigationService navigationService,
@@ -52,13 +52,20 @@ public partial class QuoteViewModel : BaseViewModel
         try
         {
             _quotService = quotService;
-            _quoteSearchService = quoteSearchService;
             _logger = logger;
             _settings = settings;
             _databaseReadySignal = databaseReadySignal;
             _feedCoordinator = feedCoordinator;
             _quoteCommandsFactory = quoteCommandsFactory;
             _languageContentReloader = languageContentReloader;
+            _searchController = new QuoteSearchController(
+                quoteSearchService,
+                quoteCommandsFactory,
+                _feedState,
+                logger,
+                NotifySearchRelatedProperties,
+                () => ShowAllReadEmpty = false,
+                SetFail);
             BindNavigation(navigationService);
             OpenProfileCommand = new AsyncCommand(() => navigationService.GoToUserProfileAsync());
             Cancel = new Command(CancelProgress);
@@ -76,91 +83,19 @@ public partial class QuoteViewModel : BaseViewModel
         }
     }
 
-    private async Task SearchQuotesAsync()
-    {
-        if (!IsSearching)
-        {
-            RestoreFeedDisplayItems();
-            ShowAllReadEmpty = false;
-            BumpFeedContentVersion();
-            return;
-        }
-
-        _searchDebounceCts?.Cancel();
-        _searchDebounceCts?.Dispose();
-        _searchDebounceCts = new CancellationTokenSource();
-        CancellationToken token = _searchDebounceCts.Token;
-
-        try
-        {
-            await Task.Delay(300, token);
-            IReadOnlyList<Application.Abstractions.Integration.QuotSeed> seeds =
-                await _quoteSearchService.SearchCatalogAsync(SearchQuery, cancellationToken: token);
-
-            await UiThread.RunAsync(() =>
-            {
-                DisplayItems.Clear();
-                foreach (Application.Abstractions.Integration.QuotSeed seed in seeds)
-                {
-                    DisplayItems.Add(_quoteCommandsFactory.CreateSearchResultItem(
-                        seed.Author,
-                        seed.Text,
-                        seed.Theme,
-                        RefreshSearchResultBindingAsync,
-                        SetFail));
-                }
-
-                OnPropertyChanged(nameof(IsSearching));
-                OnPropertyChanged(nameof(IsFeedFiltersVisible));
-        OnPropertyChanged(nameof(ShowDailyQuoteHeader));
-        OnPropertyChanged(nameof(ShowForYouEmpty));
-        OnPropertyChanged(nameof(ShowFavoritesEmpty));
-        NotifyEmptyStateProperties();
-                BumpFeedContentVersion();
-            });
-        }
-        catch (OperationCanceledException)
-        {
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Quote search failed.");
-        }
-    }
-
-    private Task RefreshSearchResultBindingAsync(QuoteItem quoteItem)
-    {
-        int index = DisplayItems.IndexOf(quoteItem);
-        if (index < 0)
-        {
-            return Task.CompletedTask;
-        }
-
-        return UiThread.RunAsync(() => DisplayItems[index] = quoteItem);
-    }
-
-    private void RestoreFeedDisplayItems()
-    {
-        DisplayItems.ReplaceRange(_feedItems);
-        OnPropertyChanged(nameof(IsSearching));
-        OnPropertyChanged(nameof(IsFeedFiltersVisible));
-        OnPropertyChanged(nameof(ShowDailyQuoteHeader));
-        OnPropertyChanged(nameof(ShowForYouEmpty));
-        OnPropertyChanged(nameof(ShowFavoritesEmpty));
-        NotifyEmptyStateProperties();
-    }
-
-    private void SetFeedItems(IReadOnlyList<QuoteItem> items)
-    {
-        _feedItems = items.ToList();
-        DisplayItems.ReplaceRange(_feedItems);
-        OnPropertyChanged(nameof(IsSearching));
-        OnPropertyChanged(nameof(IsFeedFiltersVisible));
-        OnPropertyChanged(nameof(ShowDailyQuoteHeader));
-        OnPropertyChanged(nameof(ShowForYouEmpty));
-        OnPropertyChanged(nameof(ShowFavoritesEmpty));
-        NotifyEmptyStateProperties();
-    }
+    private void NotifySearchRelatedProperties() =>
+        Notify(
+            nameof(SearchQuery),
+            nameof(IsSearching),
+            nameof(IsFeedFiltersVisible),
+            nameof(ShowDailyQuoteHeader),
+            nameof(ShowForYouEmpty),
+            nameof(ShowFavoritesEmpty),
+            nameof(EmptyTitleText),
+            nameof(EmptyBodyText),
+            nameof(EmptyActionText),
+            nameof(EmptyActionCommand),
+            nameof(EmptyIconName));
 
     private void NotifyEmptyStateProperties() =>
         Notify(
@@ -171,10 +106,4 @@ public partial class QuoteViewModel : BaseViewModel
             nameof(EmptyIconName),
             nameof(ShowForYouEmpty),
             nameof(ShowFavoritesEmpty));
-
-    private void BumpFeedContentVersion()
-    {
-        _feedContentVersion++;
-        OnPropertyChanged(nameof(FeedContentVersion));
-    }
 }

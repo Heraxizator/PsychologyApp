@@ -9,23 +9,11 @@ public partial class PolarityViewModel
     public string FirstPolarityLabel => AppStrings.FirstPolarityLabel;
     public string SecondPolarityLabel => AppStrings.SecondPolarityLabel;
 
-    public string NegativePlaceholder
-    {
-        get
-        {
-            TechniqueDefinition definition = TechniqueDefinitionMapper.ToPresentation(TechniqueCatalogService!.Get(TechniqueId.Polarity));
-            return definition.PolarityNegativePlaceholder ?? AppStrings.PolarityNegativePlaceholder;
-        }
-    }
+    public string NegativePlaceholder =>
+        AppliedDefinition?.PolarityNegativePlaceholder ?? AppStrings.PolarityNegativePlaceholder;
 
-    public string PositivePlaceholder
-    {
-        get
-        {
-            TechniqueDefinition definition = TechniqueDefinitionMapper.ToPresentation(TechniqueCatalogService!.Get(TechniqueId.Polarity));
-            return definition.PolarityPositivePlaceholder ?? AppStrings.PolarityPositivePlaceholder;
-        }
-    }
+    public string PositivePlaceholder =>
+        AppliedDefinition?.PolarityPositivePlaceholder ?? AppStrings.PolarityPositivePlaceholder;
 
     protected override void OnTechniqueContentChanged()
     {

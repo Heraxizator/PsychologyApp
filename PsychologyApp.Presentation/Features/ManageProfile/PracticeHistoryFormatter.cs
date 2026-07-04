@@ -7,7 +7,7 @@ namespace PsychologyApp.Presentation.Features.ManageProfile;
 
 public sealed class PracticeHistoryFormatter(ITechniqueCatalogService techniqueCatalogService)
 {
-    public string ResolveName(CompletionDTO completion)
+    public async Task<string> ResolveNameAsync(CompletionDTO completion, CancellationToken cancellationToken = default)
     {
         if (completion.ItemKey.StartsWith("custom_", StringComparison.Ordinal))
         {
@@ -16,7 +16,7 @@ public sealed class PracticeHistoryFormatter(ITechniqueCatalogService techniqueC
 
         if (Enum.TryParse(completion.ItemKey, out TechniqueId techniqueId))
         {
-            return techniqueCatalogService.Get(techniqueId).PageName;
+            return (await techniqueCatalogService.GetAsync(techniqueId, cancellationToken)).PageName;
         }
 
         return string.IsNullOrWhiteSpace(completion.PageName)
@@ -24,7 +24,7 @@ public sealed class PracticeHistoryFormatter(ITechniqueCatalogService techniqueC
             : completion.PageName;
     }
 
-    public string ResolveIcon(CompletionDTO completion)
+    public async Task<string> ResolveIconAsync(CompletionDTO completion, CancellationToken cancellationToken = default)
     {
         if (completion.ItemKey.StartsWith("custom_", StringComparison.Ordinal))
         {
@@ -33,7 +33,7 @@ public sealed class PracticeHistoryFormatter(ITechniqueCatalogService techniqueC
 
         if (Enum.TryParse(completion.ItemKey, out TechniqueId techniqueId))
         {
-            return techniqueCatalogService.Get(techniqueId).ListIcon;
+            return (await techniqueCatalogService.GetAsync(techniqueId, cancellationToken)).ListIcon;
         }
 
         return "SelfImprovement";

@@ -22,10 +22,14 @@ public partial class UserViewModel
 
         try
         {
-            await UiThread.RunAsync(InitTechniques);
-
             using CancellationTokenSource timeoutSource = OperationCancellation.CreateMiddleTimeoutSource(_settings);
             CancellationToken cancellationToken = timeoutSource.Token;
+
+            IReadOnlyList<TechniqueItem> featuredTechniques =
+                await _profileScreenCoordinator.BuildFeaturedTechniquesAsync(
+                    _featuredTechniquesBuilder,
+                    _navigationService,
+                    cancellationToken);
 
             ProfileScreenRefreshResult? result = await _profileScreenCoordinator.RefreshDashboardAsync(
                 _profileStatsLoader,
@@ -50,6 +54,12 @@ public partial class UserViewModel
 
             await UiThread.RunAsync(() =>
             {
+                Techniques.Clear();
+                foreach (TechniqueItem item in featuredTechniques)
+                {
+                    Techniques.Add(item);
+                }
+
                 PracticeHistory = new ObservableCollection<PracticeHistoryItem>(
                     result.History.Select(item => ProfilePracticeHistoryTapFactory.WithTapCommand(item, _navigationService)));
                 OnPropertyChanged(nameof(PracticeHistory));
@@ -85,15 +95,22 @@ public partial class UserViewModel
     private void OnFavoritesChanged() =>
         RefreshAsync(forceQuotesReload: true).FireAndForget();
 
-    private void InitTechniques()
-    {
-        Techniques.Clear();
+    private void InitTechniques() => InitTechniquesAsync().FireAndForget();
 
-        foreach (TechniqueItem item in _profileScreenCoordinator.BuildFeaturedTechniques(
-                     _featuredTechniquesBuilder,
-                     _navigationService))
+    private async Task InitTechniquesAsync(CancellationToken cancellationToken = default)
+    {
+        IReadOnlyList<TechniqueItem> items = await _profileScreenCoordinator.BuildFeaturedTechniquesAsync(
+            _featuredTechniquesBuilder,
+            _navigationService,
+            cancellationToken);
+
+        await UiThread.RunAsync(() =>
         {
-            Techniques.Add(item);
-        }
+            Techniques.Clear();
+            foreach (TechniqueItem item in items)
+            {
+                Techniques.Add(item);
+            }
+        });
     }
 }
