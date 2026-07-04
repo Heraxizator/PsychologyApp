@@ -168,4 +168,52 @@ public sealed class TestCatalogParserTests
         Assert.Single(result.Value.Questions!);
         Assert.Equal(2, result.Value.Questions![0].Answers.Count);
     }
+
+    [Fact]
+    public void ParseGroupedQuestionnaire_BuildsContextForPss10StyleQuestions()
+    {
+        ParseResult<TestDefinition> result = TestCatalogParser.ParseGroupedQuestionnaire(
+            new JsonGroupedQuestionnaireDefinition(
+                "PSS-10",
+                "Stress",
+                "Desc",
+                ["Step"],
+                "Note",
+                "pss10",
+                true,
+                [
+                    new JsonGroupedQuestionDefinition(
+                        [new JsonAnswerDefinition(0, "Never"), new JsonAnswerDefinition(1, "Rarely")],
+                        "How often were you upset?")
+                ]));
+
+        Assert.True(result.IsSuccess);
+        Assert.Equal("How often were you upset?", result.Value!.Questions![0].Context);
+    }
+
+    [Fact]
+    public void ParseGroupedQuestionnaire_BuildsRsesWithReverseScoredAnswers()
+    {
+        ParseResult<TestDefinition> result = TestCatalogParser.ParseGroupedQuestionnaire(
+            new JsonGroupedQuestionnaireDefinition(
+                "RSES",
+                "Self-esteem",
+                "Desc",
+                ["Step"],
+                "Note",
+                "rses",
+                true,
+                [
+                    new JsonGroupedQuestionDefinition(
+                        [new JsonAnswerDefinition(3, "Strongly agree"), new JsonAnswerDefinition(0, "Strongly disagree")]),
+                    new JsonGroupedQuestionDefinition(
+                        [new JsonAnswerDefinition(0, "Strongly agree"), new JsonAnswerDefinition(3, "Strongly disagree")])
+                ]));
+
+        Assert.True(result.IsSuccess);
+        Assert.Equal("rses", result.Value!.TestId);
+        Assert.Equal(2, result.Value.Questions!.Count);
+        Assert.Equal(3, result.Value.Questions![0].Answers[0].Score);
+        Assert.Equal(0, result.Value.Questions![1].Answers[0].Score);
+    }
 }

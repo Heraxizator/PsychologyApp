@@ -22,6 +22,12 @@ public sealed class TestScoreLabelMapperTests
     [InlineData("phq15", 1)]
     [InlineData("scoff", 1)]
     [InlineData("swls", 1)]
+    [InlineData("pss10", 1)]
+    [InlineData("phq2", 1)]
+    [InlineData("gad2", 1)]
+    [InlineData("hads_a", 1)]
+    [InlineData("hads_d", 1)]
+    [InlineData("rses", 1)]
     public void GetSummary_ReturnsLocalizedText(string id, int score)
     {
         string? summary = TestScoreLabelMapper.GetSummary(id, score);

@@ -19,12 +19,18 @@ public sealed class LuscherStandardResultDetail
     [JsonPropertyName("bk")]
     public double Bk { get; set; }
 
+    [JsonPropertyName("firstPassColors")]
+    public List<LuscherStandardColorDetail> FirstPassColors { get; set; } = [];
+
     [JsonPropertyName("colors")]
     public List<LuscherStandardColorDetail> Colors { get; set; } = [];
 }
 
 public sealed class LuscherBriefColorDetail
 {
+    [JsonPropertyName("code")]
+    public string? Code { get; set; }
+
     [JsonPropertyName("name")]
     public string? Name { get; set; }
 

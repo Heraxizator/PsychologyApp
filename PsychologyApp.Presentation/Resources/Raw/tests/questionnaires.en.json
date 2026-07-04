@@ -478,5 +478,123 @@
       "If I could live my life over, I would change almost nothing"
     ],
     "singleAnswer": true
+  },
+  {
+    "title": "PHQ-2",
+    "subtitle": "Brief depression screen",
+    "estimatedMinutes": 1,
+    "questionCount": 2,
+    "construct": "Depression",
+    "betterWhen": "lower",
+    "description": "Two questions about depressive symptoms over the last two weeks. A positive screen is a total score ≥ 3.",
+    "algorithm": [
+      "1. Think about the last two weeks.",
+      "2. For each question, choose how often the symptom bothered you."
+    ],
+    "comment": "This is a screen, not a diagnosis. If positive, consider PHQ-9 or a professional consultation.",
+    "analyzerId": "phq2",
+    "answers": [
+      "Not at all",
+      "Several days",
+      "More than half the days",
+      "Nearly every day"
+    ],
+    "balls": [0, 1, 2, 3],
+    "questions": [
+      "Little interest or pleasure in doing things",
+      "Feeling down, hopeless, or pessimistic"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "GAD-2",
+    "subtitle": "Brief anxiety screen",
+    "estimatedMinutes": 1,
+    "questionCount": 2,
+    "construct": "Anxiety",
+    "betterWhen": "lower",
+    "description": "Two questions about anxiety symptoms over the last two weeks. A positive screen is a total score ≥ 3.",
+    "algorithm": [
+      "1. Think about the last two weeks.",
+      "2. For each question, choose how often the symptom bothered you."
+    ],
+    "comment": "This is a screen, not a diagnosis. If positive, consider GAD-7 or a professional consultation.",
+    "analyzerId": "gad2",
+    "answers": [
+      "Not at all",
+      "Several days",
+      "More than half the days",
+      "Nearly every day"
+    ],
+    "balls": [0, 1, 2, 3],
+    "questions": [
+      "Feeling nervous, anxious, or on edge",
+      "Not being able to stop or control worrying"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "HADS — anxiety",
+    "subtitle": "Anxiety subscale",
+    "estimatedMinutes": 3,
+    "questionCount": 7,
+    "construct": "Anxiety",
+    "betterWhen": "lower",
+    "description": "Seven questions about anxious feelings over the last week.",
+    "algorithm": [
+      "1. Answer how often you felt each state during the last week.",
+      "2. Choose one of four options."
+    ],
+    "comment": "This is a screen, not a diagnosis. If the total is ≥ 8, consider professional support.",
+    "analyzerId": "hads_a",
+    "answers": [
+      "Not at all or rarely",
+      "Sometimes",
+      "Often",
+      "Most of the time"
+    ],
+    "balls": [0, 1, 2, 3],
+    "questions": [
+      "I feel tense or wound up",
+      "I get a sort of frightened feeling as if something awful is about to happen",
+      "Worrying thoughts go through my mind",
+      "I find it hard to relax and feel calm",
+      "I get a sort of frightened feeling like butterflies in the stomach",
+      "I feel restless as if I have to be on the move",
+      "I get sudden feelings of panic"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "HADS — depression",
+    "subtitle": "Depression subscale",
+    "estimatedMinutes": 3,
+    "questionCount": 7,
+    "construct": "Depression",
+    "betterWhen": "lower",
+    "description": "Seven questions about depressive feelings over the last week.",
+    "algorithm": [
+      "1. Answer how often you felt each state during the last week.",
+      "2. Choose one of four options."
+    ],
+    "comment": "This is a screen, not a diagnosis. If the total is ≥ 8, consider professional support.",
+    "analyzerId": "hads_d",
+    "answers": [
+      "Not at all or rarely",
+      "Sometimes",
+      "Often",
+      "Most of the time"
+    ],
+    "balls": [0, 1, 2, 3],
+    "questions": [
+      "I no longer enjoy things I used to enjoy",
+      "I find it hard to laugh and see the funny side of things",
+      "I feel low-spirited with little cheerful mood",
+      "I feel slowed down or, on the contrary, cannot sit still",
+      "I have little interest in how I look",
+      "I look forward to things with little pleasure",
+      "I find it hard to enjoy a book, film, or TV program"
+    ],
+    "singleAnswer": true
   }
 ]

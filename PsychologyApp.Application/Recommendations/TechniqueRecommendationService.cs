@@ -1,4 +1,5 @@
 using PsychologyApp.Application.Models;
+using PsychologyApp.Application.Models.Tests;
 using PsychologyApp.Application.Somatic;
 using PsychologyApp.Application.Tests;
 using PsychologyApp.Domain.Practice;
@@ -20,14 +21,17 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
     [
         TechniqueId.Spin,
         TechniqueId.Paper,
-        TechniqueId.Experience
+        TechniqueId.Experience,
+        TechniqueId.Breathing,
+        TechniqueId.Grounding,
+        TechniqueId.SmallStep
     ];
 
     public TechniqueId ResolveFromOnboardingConcern(string concern) => concern switch
     {
         OnboardingConcernKeys.Anxiety => TechniqueId.Spin,
         OnboardingConcernKeys.Body => TechniqueId.Experience,
-        OnboardingConcernKeys.Mood => TechniqueId.Paper,
+        OnboardingConcernKeys.Mood => TechniqueId.SmallStep,
         OnboardingConcernKeys.Explore => ExploreRotation[DateTime.UtcNow.DayOfYear % ExploreRotation.Length],
         _ => ExploreRotation[DateTime.UtcNow.DayOfYear % ExploreRotation.Length]
     };
@@ -37,6 +41,12 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
         if (context.RecentTestResult is { Score: not null } test &&
             test.CompletedAt >= DateTime.UtcNow.AddDays(-7))
         {
+            if (test.TestId == TestIds.LuscherStandard)
+            {
+                TechniqueId fromLuscher = LuscherScoreRecommendation.RecommendTechnique(test.Score.Value);
+                return new TodayRecommendationDecision(fromLuscher, TodayRecommendationSource.RecentTest, test.TestId);
+            }
+
             TechniqueId? fromTest = TestScoreRecommendation.RecommendTechnique(test.TestId, test.Score.Value);
             if (fromTest is TechniqueId techniqueId)
             {
@@ -46,7 +56,7 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
 
         if (context.TodayMoodLevel is int mood && mood <= 2)
         {
-            return new TodayRecommendationDecision(TechniqueId.Spin, TodayRecommendationSource.LowMood);
+            return new TodayRecommendationDecision(TechniqueId.Breathing, TodayRecommendationSource.LowMood);
         }
 
         TechniqueId fromConcern = ResolveFromOnboardingConcern(context.Concern);

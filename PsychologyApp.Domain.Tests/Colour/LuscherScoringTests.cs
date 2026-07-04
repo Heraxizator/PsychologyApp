@@ -7,13 +7,24 @@ namespace PsychologyApp.Domain.Tests.Colour;
 public sealed class LuscherScoringTests
 {
     [Fact]
-    public void CalculateCo_WithEightSelections_ReturnsNonNegativeValue()
+    public void CalculateCoBetweenPasses_WithIdenticalPasses_ReturnsZero()
     {
-        var selections = BuildStandardSelectionOrder();
+        var pass = BuildStandardSelectionOrder();
 
-        int co = LuscherScoring.CalculateCo(selections);
+        int co = LuscherScoring.CalculateCoBetweenPasses(pass, pass);
 
-        Assert.True(co >= 0);
+        Assert.Equal(0, co);
+    }
+
+    [Fact]
+    public void CalculateCoBetweenPasses_WithReversedPass_ReturnsThirtyTwo()
+    {
+        List<(ColourValue, ColourMeaning)> first = BuildStandardSelectionOrder();
+        List<(ColourValue, ColourMeaning)> second = first.AsEnumerable().Reverse().ToList();
+
+        int co = LuscherScoring.CalculateCoBetweenPasses(first, second);
+
+        Assert.Equal(32, co);
     }
 
     [Fact]

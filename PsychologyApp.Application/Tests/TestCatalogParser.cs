@@ -76,6 +76,7 @@ public static class TestCatalogParser
             .Select((group, index) => new Question
             {
                 Number = index + 1,
+                Context = group.Text,
                 Answers = group.Answers
                     .Select(answer => new Answer
                     {

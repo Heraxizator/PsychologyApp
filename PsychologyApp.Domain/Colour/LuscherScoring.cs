@@ -36,6 +36,32 @@ public static class LuscherScoring
         return coValue;
     }
 
+    public static int CalculateCoBetweenPasses(
+        IReadOnlyList<(ColourValue Colour, ColourMeaning Meaning)> firstPass,
+        IReadOnlyList<(ColourValue Colour, ColourMeaning Meaning)> secondPass)
+    {
+        ArgumentNullException.ThrowIfNull(firstPass);
+        ArgumentNullException.ThrowIfNull(secondPass);
+
+        if (firstPass.Count < 8 || secondPass.Count < 8)
+        {
+            return 0;
+        }
+
+        List<ColourValue> first = firstPass.Select(item => item.Colour).ToList();
+        List<ColourValue> second = secondPass.Select(item => item.Colour).ToList();
+        int coValue = 0;
+
+        foreach (ColourValue color in first)
+        {
+            int rank1 = first.FindIndex(item => item.Code == color.Code);
+            int rank2 = second.FindIndex(item => item.Code == color.Code);
+            coValue += Math.Abs(rank1 - rank2);
+        }
+
+        return coValue;
+    }
+
     public static double CalculateBk(IReadOnlyList<(ColourValue Colour, ColourMeaning Meaning)> selections)
     {
         ArgumentNullException.ThrowIfNull(selections);

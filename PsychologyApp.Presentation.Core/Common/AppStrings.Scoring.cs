@@ -371,4 +371,150 @@ public static partial class AppStrings
             ? T("При низкой удовлетворённости жизнью полезно выгружать мысли на бумагу.", "With low life satisfaction, writing thoughts on paper is helpful.")
             : T("Модификация опыта поддерживает ощущение смысла и ресурса.", "Experience modification supports a sense of meaning and resource.");
 
+    public static string Pss10Score(int ball) => ball switch
+    {
+        <= 13 => T("0–13 — низкий стресс", "0–13 — low stress"),
+        <= 26 => T("14–26 — умеренный стресс", "14–26 — moderate stress"),
+        _ => T("27–40 — высокий стресс", "27–40 — high stress")
+    };
+
+    public static string Pss10ScoreDetail(int ball) => ball switch
+    {
+        <= 13 => T(
+            "Воспринимаемый стресс в пределах нормы. Поддерживайте режим отдыха и восстановления.",
+            "Perceived stress is within normal range. Maintain rest and recovery habits."),
+        <= 26 => T(
+            "Умеренный стресс. Дыхательные практики и заземление помогают снизить напряжение.",
+            "Moderate stress. Breathing and grounding practices can ease tension."),
+        _ => T(
+            "Высокий воспринимаемый стресс. Имеет смысл снизить нагрузку и обратиться за поддержкой.",
+            "High perceived stress. Consider reducing load and seeking support.")
+    };
+
+    public static string Phq2Score(int ball) =>
+        ball <= 2
+            ? T("0–2 — отрицательный скрининг", "0–2 — negative screen")
+            : T("3–6 — положительный скрининг", "3–6 — positive screen");
+
+    public static string Phq2ScoreDetail(int ball) =>
+        ball <= 2
+            ? T(
+                "Симптомы депрессии не выражены. Продолжайте отслеживать настроение.",
+                "Depressive symptoms are not prominent. Keep monitoring mood.")
+            : T(
+                "Положительный скрининг депрессии. Рассмотрите PHQ-9 или консультацию со специалистом.",
+                "Positive depression screen. Consider PHQ-9 or a professional consultation.");
+
+    public static string Gad2Score(int ball) =>
+        ball <= 2
+            ? T("0–2 — отрицательный скрининг", "0–2 — negative screen")
+            : T("3–6 — положительный скрининг", "3–6 — positive screen");
+
+    public static string Gad2ScoreDetail(int ball) =>
+        ball <= 2
+            ? T(
+                "Симптомы тревоги не выражены. Продолжайте отслеживать состояние.",
+                "Anxiety symptoms are not prominent. Keep monitoring how you feel.")
+            : T(
+                "Положительный скрининг тревоги. Рассмотрите GAD-7 или консультацию со специалистом.",
+                "Positive anxiety screen. Consider GAD-7 or a professional consultation.");
+
+    public static string HadsAnxietyScore(int ball) => ball switch
+    {
+        <= 7 => T("0–7 — норма", "0–7 — normal"),
+        <= 10 => T("8–10 — пограничный уровень", "8–10 — borderline"),
+        _ => T("11–21 — выраженная тревога", "11–21 — elevated anxiety")
+    };
+
+    public static string HadsAnxietyScoreDetail(int ball) => ball switch
+    {
+        <= 7 => T(
+            "Тревожные симптомы в пределах нормы.",
+            "Anxiety symptoms are within normal range."),
+        <= 10 => T(
+            "Пограничный уровень тревоги. Дыхание и заземление помогают стабилизировать состояние.",
+            "Borderline anxiety. Breathing and grounding can help stabilize how you feel."),
+        _ => T(
+            "Выраженная тревога. Рекомендуем обратиться к специалисту и использовать практики саморегуляции.",
+            "Elevated anxiety. Consider professional support and self-regulation practices.")
+    };
+
+    public static string HadsDepressionScore(int ball) => ball switch
+    {
+        <= 7 => T("0–7 — норма", "0–7 — normal"),
+        <= 10 => T("8–10 — пограничный уровень", "8–10 — borderline"),
+        _ => T("11–21 — выраженная депрессия", "11–21 — elevated depression")
+    };
+
+    public static string HadsDepressionScoreDetail(int ball) => ball switch
+    {
+        <= 7 => T(
+            "Депрессивные симптомы в пределах нормы.",
+            "Depressive symptoms are within normal range."),
+        <= 10 => T(
+            "Пограничный уровень. Малые шаги действия и выгрузка мыслей могут помочь.",
+            "Borderline level. Small steps and writing thoughts may help."),
+        _ => T(
+            "Выраженные симптомы. Рекомендуем обратиться к специалисту.",
+            "Elevated symptoms. Professional support is recommended.")
+    };
+
+    public static string RsesScore(int ball) => ball switch
+    {
+        <= 14 => T("0–14 — низкая самооценка", "0–14 — low self-esteem"),
+        <= 25 => T("15–25 — нормальная самооценка", "15–25 — normal self-esteem"),
+        _ => T("26–30 — высокая самооценка", "26–30 — high self-esteem")
+    };
+
+    public static string RsesScoreDetail(int ball) => ball switch
+    {
+        <= 14 => T(
+            "Низкая самооценка. Практики самосострадания и поддерживающий внутренний диалог могут помочь.",
+            "Low self-esteem. Self-compassion and supportive self-talk may help."),
+        <= 25 => T(
+            "Самооценка в пределах нормы. Продолжайте поддерживать себя в сложные периоды.",
+            "Self-esteem is within normal range. Keep supporting yourself during hard periods."),
+        _ => T(
+            "Высокая самооценка. Сохраняйте баланс самопринятия и реалистичной самооценки.",
+            "High self-esteem. Maintain balance between self-acceptance and realistic self-appraisal.")
+    };
+
+    public static string TestRecommendationReasonPss10(int score) =>
+        score >= 27
+            ? T("При высоком стрессе «Крутилка» помогает снизить эмоциональный заряд.", "With high stress, Spin helps lower emotional charge.")
+            : score >= 14
+                ? T("При умеренном стрессе дыхание успокаивает нервную систему.", "With moderate stress, breathing calms the nervous system.")
+                : T("Для профилактики полезно выгружать мысли на бумагу.", "For prevention, writing thoughts on paper is helpful.");
+
+    public static string TestRecommendationReasonPhq2(int score) =>
+        score >= 3
+            ? T("При признаках депрессии «Один маленький шаг» возвращает движение.", "With signs of depression, One small step restores momentum.")
+            : T("Для профилактики полезно выгружать мысли на бумагу.", "For prevention, writing thoughts on paper is helpful.");
+
+    public static string TestRecommendationReasonGad2(int score) =>
+        score >= 3
+            ? T("При тревоге «Квадратное дыхание» успокаивает тело.", "With anxiety, box breathing calms the body.")
+            : T("Заземление помогает оставаться в настоящем моменте.", "Grounding helps you stay in the present moment.");
+
+    public static string TestRecommendationReasonHadsAnxiety(int score) =>
+        score >= 11
+            ? T("При выраженной тревоге «Крутилка» снижает эмоциональный заряд.", "With elevated anxiety, Spin lowers emotional charge.")
+            : score >= 8
+                ? T("При пограничной тревоге дыхание стабилизирует состояние.", "With borderline anxiety, breathing stabilizes how you feel.")
+                : T("Заземление поддерживает спокойствие в теле.", "Grounding supports calm in the body.");
+
+    public static string TestRecommendationReasonHadsDepression(int score) =>
+        score >= 11
+            ? T("При выраженной депрессии «Один маленький шаг» возвращает движение.", "With elevated depression, One small step restores momentum.")
+            : score >= 8
+                ? T("При пограничном состоянии «Лист бумаги» помогает выгрузить мысли.", "With borderline symptoms, Paper helps unload thoughts.")
+                : T("«Запись мысли» помогает работать с негативными интерпретациями.", "Thought record helps work with negative interpretations.");
+
+    public static string TestRecommendationReasonRses(int score) =>
+        score <= 14
+            ? T("При низкой самооценке «Добрые слова себе» смягчают самокритику.", "With low self-esteem, Kind words to yourself soften self-criticism.")
+            : score <= 25
+                ? T("«Один маленький шаг» поддерживает ощущение способности действовать.", "One small step supports a sense of ability to act.")
+                : T("Модификация опыта укрепляет ресурсное состояние.", "Experience modification strengthens resourceful states.");
+
 }

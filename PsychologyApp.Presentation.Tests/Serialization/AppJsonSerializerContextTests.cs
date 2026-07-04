@@ -61,6 +61,43 @@ public sealed class AppJsonSerializerContextTests
         Assert.NotEmpty(result.Value);
     }
 
+    [Fact]
+    public async Task EmbeddedCatalog_ContainsAtLeastTwentyOneParsedTests()
+    {
+        int count = 0;
+
+        await using (FileStream questionnairesStream = OpenAsset("tests/questionnaires.json"))
+        {
+            ParseResult<List<JsonSimpleQuestionnaireDefinition>> questionnaires =
+                await TestCatalogParser.DeserializeSimpleQuestionnairesAsync(questionnairesStream);
+            Assert.True(questionnaires.IsSuccess);
+            count += TestCatalogParser.ParseSimpleQuestionnaires(questionnaires.Value!).Count;
+        }
+
+        foreach (string groupedAsset in new[] { "tests/beck.json", "tests/pss10.json", "tests/rses.json" })
+        {
+            await using FileStream stream = OpenAsset(groupedAsset);
+            ParseResult<JsonGroupedQuestionnaireDefinition> grouped =
+                await TestCatalogParser.DeserializeGroupedQuestionnaireAsync(stream);
+            Assert.True(grouped.IsSuccess);
+            ParseResult<TestDefinition> parsed = TestCatalogParser.ParseGroupedQuestionnaire(grouped.Value!);
+            if (parsed.IsSuccess)
+            {
+                count++;
+            }
+        }
+
+        await using (FileStream luscherStream = OpenAsset("tests/luscher.json"))
+        {
+            ParseResult<List<JsonNavigationTestDefinition>> luscher =
+                await TestCatalogParser.DeserializeNavigationTestsAsync(luscherStream);
+            Assert.True(luscher.IsSuccess);
+            count += TestCatalogParser.ParseLuscherDefinitions(luscher.Value!).Count;
+        }
+
+        Assert.True(count >= 21, $"Expected at least 21 tests, got {count}.");
+    }
+
     private static FileStream OpenAsset(string relativePath)
     {
         string assetPath = Path.Combine(GetRawAssetsRoot(), relativePath.Replace('/', Path.DirectorySeparatorChar));

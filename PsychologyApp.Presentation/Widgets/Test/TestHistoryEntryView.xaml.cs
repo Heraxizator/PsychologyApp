@@ -43,6 +43,42 @@ public partial class TestHistoryEntryView : ContentView
             typeof(TestHistoryEntryView),
             Array.Empty<QuestionnaireResultQuestion>());
 
+    public static readonly BindableProperty HasLuscherDetailProperty =
+        BindableProperty.Create(nameof(HasLuscherDetail), typeof(bool), typeof(TestHistoryEntryView), false);
+
+    public static readonly BindableProperty HasStandardLuscherDetailProperty =
+        BindableProperty.Create(nameof(HasStandardLuscherDetail), typeof(bool), typeof(TestHistoryEntryView), false);
+
+    public static readonly BindableProperty HasBriefLuscherDetailProperty =
+        BindableProperty.Create(nameof(HasBriefLuscherDetail), typeof(bool), typeof(TestHistoryEntryView), false);
+
+    public static readonly BindableProperty LuscherFirstPassTitleProperty =
+        BindableProperty.Create(nameof(LuscherFirstPassTitle), typeof(string), typeof(TestHistoryEntryView), string.Empty);
+
+    public static readonly BindableProperty LuscherFirstPassTextProperty =
+        BindableProperty.Create(nameof(LuscherFirstPassText), typeof(string), typeof(TestHistoryEntryView), string.Empty);
+
+    public static readonly BindableProperty LuscherSecondPassTitleProperty =
+        BindableProperty.Create(nameof(LuscherSecondPassTitle), typeof(string), typeof(TestHistoryEntryView), string.Empty);
+
+    public static readonly BindableProperty LuscherSecondPassTextProperty =
+        BindableProperty.Create(nameof(LuscherSecondPassText), typeof(string), typeof(TestHistoryEntryView), string.Empty);
+
+    public static readonly BindableProperty LuscherBkTextProperty =
+        BindableProperty.Create(nameof(LuscherBkText), typeof(string), typeof(TestHistoryEntryView), string.Empty);
+
+    public static readonly BindableProperty LuscherBriefFirstTitleProperty =
+        BindableProperty.Create(nameof(LuscherBriefFirstTitle), typeof(string), typeof(TestHistoryEntryView), string.Empty);
+
+    public static readonly BindableProperty LuscherBriefFirstTextProperty =
+        BindableProperty.Create(nameof(LuscherBriefFirstText), typeof(string), typeof(TestHistoryEntryView), string.Empty);
+
+    public static readonly BindableProperty LuscherBriefSecondTitleProperty =
+        BindableProperty.Create(nameof(LuscherBriefSecondTitle), typeof(string), typeof(TestHistoryEntryView), string.Empty);
+
+    public static readonly BindableProperty LuscherBriefSecondTextProperty =
+        BindableProperty.Create(nameof(LuscherBriefSecondText), typeof(string), typeof(TestHistoryEntryView), string.Empty);
+
     public string DateText
     {
         get => (string)GetValue(DateTextProperty);
@@ -101,5 +137,77 @@ public partial class TestHistoryEntryView : ContentView
     {
         get => (IReadOnlyList<QuestionnaireResultQuestion>)GetValue(DetailQuestionsProperty);
         set => SetValue(DetailQuestionsProperty, value);
+    }
+
+    public bool HasLuscherDetail
+    {
+        get => (bool)GetValue(HasLuscherDetailProperty);
+        set => SetValue(HasLuscherDetailProperty, value);
+    }
+
+    public bool HasStandardLuscherDetail
+    {
+        get => (bool)GetValue(HasStandardLuscherDetailProperty);
+        set => SetValue(HasStandardLuscherDetailProperty, value);
+    }
+
+    public bool HasBriefLuscherDetail
+    {
+        get => (bool)GetValue(HasBriefLuscherDetailProperty);
+        set => SetValue(HasBriefLuscherDetailProperty, value);
+    }
+
+    public string LuscherFirstPassTitle
+    {
+        get => (string)GetValue(LuscherFirstPassTitleProperty);
+        set => SetValue(LuscherFirstPassTitleProperty, value);
+    }
+
+    public string LuscherFirstPassText
+    {
+        get => (string)GetValue(LuscherFirstPassTextProperty);
+        set => SetValue(LuscherFirstPassTextProperty, value);
+    }
+
+    public string LuscherSecondPassTitle
+    {
+        get => (string)GetValue(LuscherSecondPassTitleProperty);
+        set => SetValue(LuscherSecondPassTitleProperty, value);
+    }
+
+    public string LuscherSecondPassText
+    {
+        get => (string)GetValue(LuscherSecondPassTextProperty);
+        set => SetValue(LuscherSecondPassTextProperty, value);
+    }
+
+    public string LuscherBkText
+    {
+        get => (string)GetValue(LuscherBkTextProperty);
+        set => SetValue(LuscherBkTextProperty, value);
+    }
+
+    public string LuscherBriefFirstTitle
+    {
+        get => (string)GetValue(LuscherBriefFirstTitleProperty);
+        set => SetValue(LuscherBriefFirstTitleProperty, value);
+    }
+
+    public string LuscherBriefFirstText
+    {
+        get => (string)GetValue(LuscherBriefFirstTextProperty);
+        set => SetValue(LuscherBriefFirstTextProperty, value);
+    }
+
+    public string LuscherBriefSecondTitle
+    {
+        get => (string)GetValue(LuscherBriefSecondTitleProperty);
+        set => SetValue(LuscherBriefSecondTitleProperty, value);
+    }
+
+    public string LuscherBriefSecondText
+    {
+        get => (string)GetValue(LuscherBriefSecondTextProperty);
+        set => SetValue(LuscherBriefSecondTextProperty, value);
     }
 }

@@ -21,7 +21,11 @@ internal static class BuiltInTechniqueCatalogRegistry
             [TechniqueId.Check] = TechniqueCatalogContentRu.Check,
             [TechniqueId.Observer] = TechniqueCatalogContentRu.Observer,
             [TechniqueId.Anchor] = TechniqueCatalogContentRu.Anchor,
-            [TechniqueId.Grounding] = TechniqueCatalogContentRu.Grounding
+            [TechniqueId.Grounding] = TechniqueCatalogContentRu.Grounding,
+            [TechniqueId.Breathing] = TechniqueCatalogContentRu.Breathing,
+            [TechniqueId.SmallStep] = TechniqueCatalogContentRu.SmallStep,
+            [TechniqueId.ThoughtRecord] = TechniqueCatalogContentRu.ThoughtRecord,
+            [TechniqueId.SelfCompassion] = TechniqueCatalogContentRu.SelfCompassion
         };
 
     internal static IReadOnlyDictionary<TechniqueId, BuiltInTechniqueDefinition> English { get; } =
@@ -40,6 +44,10 @@ internal static class BuiltInTechniqueCatalogRegistry
             [TechniqueId.Check] = TechniqueCatalogContentEn.Check,
             [TechniqueId.Observer] = TechniqueCatalogContentEn.Observer,
             [TechniqueId.Anchor] = TechniqueCatalogContentEn.Anchor,
-            [TechniqueId.Grounding] = TechniqueCatalogContentEn.Grounding
+            [TechniqueId.Grounding] = TechniqueCatalogContentEn.Grounding,
+            [TechniqueId.Breathing] = TechniqueCatalogContentEn.Breathing,
+            [TechniqueId.SmallStep] = TechniqueCatalogContentEn.SmallStep,
+            [TechniqueId.ThoughtRecord] = TechniqueCatalogContentEn.ThoughtRecord,
+            [TechniqueId.SelfCompassion] = TechniqueCatalogContentEn.SelfCompassion
         };
 }

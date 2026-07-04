@@ -36,9 +36,14 @@ public static class LuscherStrings
             return "Moderate tension that may reduce efficiency. Emotional stability is generally adequate with occasional strain.";
         }
 
-        if (coValue < 18)
+        if (coValue < 17)
         {
             return "Noticeable tension and emotional strain. Efficiency may drop; recovery and rest are recommended.";
+        }
+
+        if (coValue < 23)
+        {
+            return "Elevated tension and reduced emotional stability. Sustained effort may feel forced; rest and support are recommended.";
         }
 
         return "High tension and emotional instability. Significant strain; professional support may be helpful.";
@@ -46,19 +51,19 @@ public static class LuscherStrings
 
     private static string InterpretBkEn(double bkValue)
     {
-        if (bkValue < 0.8)
+        if (bkValue <= 0.4)
         {
-            return "Low vegetative coefficient: restrained emotional expression, possible internal tension.";
+            return "Low vegetative coefficient: exhaustion, passivity, and need for substantial recovery.";
         }
 
-        if (bkValue < 1.2)
+        if (bkValue <= 0.8)
         {
-            return "Balanced vegetative coefficient: emotions and self-regulation are relatively stable.";
+            return "Balanced vegetative coefficient: moderate need for rest with enough energy for familiar routines.";
         }
 
-        if (bkValue < 1.6)
+        if (bkValue <= 1.9)
         {
-            return "Elevated vegetative coefficient: increased emotional reactivity and stress sensitivity.";
+            return "Optimal mobilization: physical and mental resources are well aligned for action.";
         }
 
         return "High vegetative coefficient: strong emotional arousal and autonomic reactivity.";

@@ -70,6 +70,26 @@
                     DurationText="{Binding DurationText, Source={x:Reference Root}}"
                     HasDuration="False" />
             </Expander>
+            <Expander IsVisible="{Binding HasLuscherDetail, Source={x:Reference Root}}">
+                <Expander.Header>
+                    <Label
+                        Text="{Binding SummaryText, Source={x:Reference Root}}"
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{DynamicResource Primary}" />
+                </Expander.Header>
+                <testUi:LuscherHistoryDetailView
+                    HasStandardDetail="{Binding HasStandardLuscherDetail, Source={x:Reference Root}}"
+                    HasBriefDetail="{Binding HasBriefLuscherDetail, Source={x:Reference Root}}"
+                    FirstPassTitle="{Binding LuscherFirstPassTitle, Source={x:Reference Root}}"
+                    FirstPassText="{Binding LuscherFirstPassText, Source={x:Reference Root}}"
+                    SecondPassTitle="{Binding LuscherSecondPassTitle, Source={x:Reference Root}}"
+                    SecondPassText="{Binding LuscherSecondPassText, Source={x:Reference Root}}"
+                    BkText="{Binding LuscherBkText, Source={x:Reference Root}}"
+                    BriefFirstTitle="{Binding LuscherBriefFirstTitle, Source={x:Reference Root}}"
+                    BriefFirstText="{Binding LuscherBriefFirstText, Source={x:Reference Root}}"
+                    BriefSecondTitle="{Binding LuscherBriefSecondTitle, Source={x:Reference Root}}"
+                    BriefSecondText="{Binding LuscherBriefSecondText, Source={x:Reference Root}}" />
+            </Expander>
         </VerticalStackLayout>
     </Border>
 </ContentView>

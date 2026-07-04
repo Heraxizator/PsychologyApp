@@ -28,6 +28,13 @@ public static partial class AppStrings
     public static string TestsLuscherSecondInstruction => T(
         "Из оставшихся выберите самый неприятный для вас цвет",
         "From the remaining colors, choose the one you find least pleasant");
+    public static string TestsLuscherSecondPassInstruction => T(
+        "Повторите выбор: снова расставьте все 8 цветов от самого приятного к наименее приятному",
+        "Repeat the selection: order all 8 colors again from most to least pleasant");
+    public static string TestsLuscherPassOf(int current, int total) => T($"Проход {current} из {total}", $"Pass {current} of {total}");
+    public static string TestsLuscherHistoryFirstPass => T("Проход 1", "Pass 1");
+    public static string TestsLuscherHistorySecondPass => T("Проход 2", "Pass 2");
+    public static string TestsLuscherHistoryBk(double bk) => T($"{TestsBkLabel}: {bk}", $"{TestsBkLabel}: {bk}");
     public static string TestsStandardDescription => T(
         "Это стандартная версия теста Люшера. Она может более точно оценить настроение, чем альтернативная.",
         "This is the full Lüscher test. It can assess mood more precisely than the brief version.");

@@ -43,8 +43,20 @@
                                 HasScore="{Binding HasScore}"
                                 HasTrend="{Binding HasTrend}"
                                 HasDetail="{Binding HasDetail}"
+                                HasLuscherDetail="{Binding HasLuscherDetail}"
+                                HasStandardLuscherDetail="{Binding HasStandardLuscherDetail}"
+                                HasBriefLuscherDetail="{Binding HasBriefLuscherDetail}"
                                 IsWorse="{Binding IsWorse}"
-                                DetailQuestions="{Binding DetailQuestions}" />
+                                DetailQuestions="{Binding DetailQuestions}"
+                                LuscherFirstPassTitle="{Binding LuscherFirstPassTitle}"
+                                LuscherFirstPassText="{Binding LuscherFirstPassText}"
+                                LuscherSecondPassTitle="{Binding LuscherSecondPassTitle}"
+                                LuscherSecondPassText="{Binding LuscherSecondPassText}"
+                                LuscherBkText="{Binding LuscherBkText}"
+                                LuscherBriefFirstTitle="{Binding LuscherBriefFirstTitle}"
+                                LuscherBriefFirstText="{Binding LuscherBriefFirstText}"
+                                LuscherBriefSecondTitle="{Binding LuscherBriefSecondTitle}"
+                                LuscherBriefSecondText="{Binding LuscherBriefSecondText}" />
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                     <CollectionView.EmptyView>

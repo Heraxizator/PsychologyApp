@@ -47,7 +47,7 @@ public sealed class PracticeDashboardLoaderTests
         PracticeDashboardLoader loader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
         TodayRecommendationResult result = await loader.ResolveTodayRecommendationAsync(streakDays: 0, navigation.Object);
 
-        Assert.Equal(TechniqueId.Paper, result.TechniqueId);
+        Assert.Equal(TechniqueId.SmallStep, result.TechniqueId);
     }
 }
 

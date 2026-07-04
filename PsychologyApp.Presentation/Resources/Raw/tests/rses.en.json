@@ -1,0 +1,108 @@
+{
+  "title": "Rosenberg Self-Esteem Scale",
+  "subtitle": "Self-esteem",
+  "estimatedMinutes": 3,
+  "questionCount": 10,
+  "construct": "Self-esteem",
+  "betterWhen": "higher",
+  "description": "Ten statements about how you feel about yourself. A higher total score means higher self-esteem.",
+  "algorithm": [
+    "1. Read each statement.",
+    "2. Choose how much you agree with it about yourself."
+  ],
+  "comment": "This screens self-esteem; it is not a diagnosis.",
+  "analyzerId": "rses",
+  "singleAnswer": true,
+  "questions": [
+    {
+      "text": "I feel that I am a person of worth, at least on an equal plane with others",
+      "answers": [
+        { "ball": 0, "text": "Strongly disagree" },
+        { "ball": 1, "text": "Disagree" },
+        { "ball": 2, "text": "Agree" },
+        { "ball": 3, "text": "Strongly agree" }
+      ]
+    },
+    {
+      "text": "I feel that I have a number of good qualities",
+      "answers": [
+        { "ball": 0, "text": "Strongly disagree" },
+        { "ball": 1, "text": "Disagree" },
+        { "ball": 2, "text": "Agree" },
+        { "ball": 3, "text": "Strongly agree" }
+      ]
+    },
+    {
+      "text": "All in all, I am inclined to feel that I am a failure",
+      "answers": [
+        { "ball": 3, "text": "Strongly disagree" },
+        { "ball": 2, "text": "Disagree" },
+        { "ball": 1, "text": "Agree" },
+        { "ball": 0, "text": "Strongly agree" }
+      ]
+    },
+    {
+      "text": "I am able to do things as well as most other people",
+      "answers": [
+        { "ball": 0, "text": "Strongly disagree" },
+        { "ball": 1, "text": "Disagree" },
+        { "ball": 2, "text": "Agree" },
+        { "ball": 3, "text": "Strongly agree" }
+      ]
+    },
+    {
+      "text": "I feel I do not have much to be proud of",
+      "answers": [
+        { "ball": 3, "text": "Strongly disagree" },
+        { "ball": 2, "text": "Disagree" },
+        { "ball": 1, "text": "Agree" },
+        { "ball": 0, "text": "Strongly agree" }
+      ]
+    },
+    {
+      "text": "I take a positive attitude toward myself",
+      "answers": [
+        { "ball": 0, "text": "Strongly disagree" },
+        { "ball": 1, "text": "Disagree" },
+        { "ball": 2, "text": "Agree" },
+        { "ball": 3, "text": "Strongly agree" }
+      ]
+    },
+    {
+      "text": "On the whole, I am satisfied with myself",
+      "answers": [
+        { "ball": 0, "text": "Strongly disagree" },
+        { "ball": 1, "text": "Disagree" },
+        { "ball": 2, "text": "Agree" },
+        { "ball": 3, "text": "Strongly agree" }
+      ]
+    },
+    {
+      "text": "I wish I could have more respect for myself",
+      "answers": [
+        { "ball": 3, "text": "Strongly disagree" },
+        { "ball": 2, "text": "Disagree" },
+        { "ball": 1, "text": "Agree" },
+        { "ball": 0, "text": "Strongly agree" }
+      ]
+    },
+    {
+      "text": "I certainly feel useless at times",
+      "answers": [
+        { "ball": 3, "text": "Strongly disagree" },
+        { "ball": 2, "text": "Disagree" },
+        { "ball": 1, "text": "Agree" },
+        { "ball": 0, "text": "Strongly agree" }
+      ]
+    },
+    {
+      "text": "At times I think I am no good at all",
+      "answers": [
+        { "ball": 3, "text": "Strongly disagree" },
+        { "ball": 2, "text": "Disagree" },
+        { "ball": 1, "text": "Agree" },
+        { "ball": 0, "text": "Strongly agree" }
+      ]
+    }
+  ]
+}
