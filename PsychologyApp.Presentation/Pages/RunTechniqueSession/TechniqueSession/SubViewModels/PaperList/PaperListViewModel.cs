@@ -41,7 +41,6 @@ public partial class PaperListViewModel : BaseViewModel
         _draftCoordinator = draftCoordinator;
         _draftCoordinator.Attach(_techniqueId.ToString(), _userProgressService);
         BindNavigation(navigationService);
-        ApplyTechnique(techniqueId);
         AddCommand = new Command(ToAdd);
         DeleteCommand = new Command<Paper>(DeleteItem);
         BackCommand = new Command(async () => await GoBackAsync());

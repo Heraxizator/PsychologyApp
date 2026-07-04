@@ -35,7 +35,6 @@ public partial class TechniqueSessionViewModel : BaseViewModel
         _entryDraftCoordinator = entryDraftCoordinator;
         _entryDraftCoordinator.Attach(_techniqueId, Entries, _userProgressService);
 
-        ApplyTechnique(techniqueId);
         BindNavigation(navigationService);
 
         BackCommand = new AsyncCommand(GoBackAsync);

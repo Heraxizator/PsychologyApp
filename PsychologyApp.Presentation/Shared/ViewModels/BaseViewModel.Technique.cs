@@ -63,8 +63,7 @@ public partial class BaseViewModel
 
     protected Task GoToRootAsync() => NavigationService!.GoToRootAsync();
 
-    protected void ApplyTechnique(TechniqueId id) =>
-        ApplyTechniqueAsync(id).FireAndForget();
+    public Task InitializeTechniqueAsync(TechniqueId id) => ApplyTechniqueAsync(id);
 
     protected async Task ApplyTechniqueAsync(TechniqueId id)
     {

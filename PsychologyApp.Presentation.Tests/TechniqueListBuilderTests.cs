@@ -91,7 +91,9 @@ public sealed class TechniqueListBuilderTests
         TechniqueListBuilder builder = new(progress.Object, TechniqueCatalogTestHelper.CreateGateway());
         IReadOnlyList<TechniqueItem> items = await builder.BuildStaticItemsAsync(Mock.Of<INavigationService>());
 
-        Assert.Equal(TechniqueCatalogTestHelper.CreateGateway().GetBuiltInListEntries().Count, items.Count);
+        Assert.Equal(
+            (await TechniqueCatalogTestHelper.CreateGateway().GetBuiltInListEntriesAsync()).Count,
+            items.Count);
         progress.Verify(
             p => p.GetLastPracticeDatesAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()),
             Times.Once);

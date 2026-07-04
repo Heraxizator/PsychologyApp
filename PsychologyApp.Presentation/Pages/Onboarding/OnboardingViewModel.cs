@@ -37,15 +37,14 @@ public partial class OnboardingViewModel : BaseViewModel
         _navigationService = navigationService;
         _userPreferencesStore = userPreferencesStore;
         _onboardingRecommendationResolver = onboardingRecommendationResolver;
-        RefreshRecommendation();
 
         NextCommand = new Command(GoNext);
         BackCommand = new Command(GoBack);
         SkipCommand = new AsyncCommand(CompleteWithoutPracticeAsync);
-        SelectAnxietyCommand = new Command(() => SelectConcernAndAdvance(OnboardingConcernKeys.Anxiety));
-        SelectBodyCommand = new Command(() => SelectConcernAndAdvance(OnboardingConcernKeys.Body));
-        SelectMoodCommand = new Command(() => SelectConcernAndAdvance(OnboardingConcernKeys.Mood));
-        SelectExploreCommand = new Command(() => SelectConcernAndAdvance(OnboardingConcernKeys.Explore));
+        SelectAnxietyCommand = new AsyncCommand(() => SelectConcernAndAdvanceAsync(OnboardingConcernKeys.Anxiety));
+        SelectBodyCommand = new AsyncCommand(() => SelectConcernAndAdvanceAsync(OnboardingConcernKeys.Body));
+        SelectMoodCommand = new AsyncCommand(() => SelectConcernAndAdvanceAsync(OnboardingConcernKeys.Mood));
+        SelectExploreCommand = new AsyncCommand(() => SelectConcernAndAdvanceAsync(OnboardingConcernKeys.Explore));
         StartPracticeCommand = new AsyncCommand(StartPracticeAsync);
     }
 
@@ -53,9 +52,10 @@ public partial class OnboardingViewModel : BaseViewModel
 
     private void GoBack() => Step = OnboardingStepNavigator.GoBack(Step);
 
-    private void SelectConcernAndAdvance(string concern)
+    private async Task SelectConcernAndAdvanceAsync(string concern)
     {
-        SelectedConcern = concern;
+        SetSelectedConcernWithoutRecommendationRefresh(concern);
+        await RefreshRecommendationAsync();
         Step = OnboardingStepNavigator.FinishStep;
     }
 }
