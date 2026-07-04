@@ -16,6 +16,13 @@ public partial class UserViewModel
         private set => SetProperty(ref _moodChartPoints, value);
     }
 
+    private string _moodChartSubtitle = string.Empty;
+    public string MoodChartSubtitle
+    {
+        get => _moodChartSubtitle;
+        private set => SetProperty(ref _moodChartSubtitle, value);
+    }
+
     private bool _hasMoodTrendChart;
     public bool HasMoodTrendChart
     {

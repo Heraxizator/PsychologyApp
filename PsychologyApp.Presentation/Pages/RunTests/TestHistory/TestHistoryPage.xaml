@@ -25,7 +25,10 @@
             <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
                 <testUi:TestScoreTrendChartView
                     IsVisible="{Binding HasChart}"
-                    ChartPoints="{Binding ChartPoints}" />
+                    ChartPoints="{Binding ChartPoints}"
+                    DomainMin="{Binding ChartDomainMin}"
+                    DomainMax="{Binding ChartDomainMax}"
+                    Subtitle="{Binding ChartSubtitle}" />
                 <CollectionView
                     ItemsSource="{Binding HistoryEntries}"
                     SelectionMode="None">

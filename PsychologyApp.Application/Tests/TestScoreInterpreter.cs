@@ -1,7 +1,32 @@
 namespace PsychologyApp.Application.Tests;
 
+public readonly record struct ScoreRange(int Min, int Max);
+
 public static class TestScoreInterpreter
 {
+    public static ScoreRange? GetScoreRange(string? analyzerId) => analyzerId switch
+    {
+        "beck" => new ScoreRange(0, 63),
+        "heck_hess" => new ScoreRange(0, 56),
+        "haer" => new ScoreRange(0, 60),
+        "pochebut" => new ScoreRange(0, 40),
+        "gad7" => new ScoreRange(0, 21),
+        "k10" => new ScoreRange(0, 50),
+        "who5" => new ScoreRange(0, 25),
+        "phq9" => new ScoreRange(0, 27),
+        "isi" => new ScoreRange(0, 28),
+        "ess" => new ScoreRange(0, 24),
+        "phq15" => new ScoreRange(0, 30),
+        "scoff" => new ScoreRange(0, 5),
+        "swls" => new ScoreRange(5, 35),
+        "pss10" => new ScoreRange(0, 40),
+        "phq2" => new ScoreRange(0, 6),
+        "gad2" => new ScoreRange(0, 6),
+        "hads_a" => new ScoreRange(0, 21),
+        "hads_d" => new ScoreRange(0, 21),
+        "rses" => new ScoreRange(0, 30),
+        _ => null
+    };
     public static bool IsKnownAnalyzer(string analyzerId) => analyzerId switch
     {
         "heck_hess" or "haer" or "pochebut" or "beck" or "gad7" or "k10" or "who5"

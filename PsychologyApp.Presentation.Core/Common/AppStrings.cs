@@ -338,6 +338,19 @@ public static partial class AppStrings
     public static string ProfileMoodTrendHint => T(
         "Отмечайте настроение на вкладке «Практика», чтобы увидеть динамику",
         "Track mood on the Practice tab to see your trend");
+    public static string ChartFirstMeasurement => T("Первое измерение", "First measurement");
+    public static string ChartSparseHint(int count) => T(
+        $"{count} измерения — тренд уточняется",
+        $"{count} measurements — trend still forming");
+    public static string ResolveChartSubtitle(int pointCount) =>
+        pointCount switch
+        {
+            1 => ChartFirstMeasurement,
+            >= 2 and <= 4 => ChartSparseHint(pointCount),
+            _ => string.Empty
+        };
+    public static string ChartDateLabel(DateTime date) =>
+        date.ToString("dd MMM", System.Globalization.CultureInfo.CurrentCulture);
     public static string PracticeReflectionQuestion => T("Как вы себя чувствуете?", "How do you feel now?");
     public static string PracticeReflectionNotePlaceholder => T("Короткая заметка (необязательно)", "Short note (optional)");
     public static string PracticeCompletedTitle => T("Готово!", "Done!");

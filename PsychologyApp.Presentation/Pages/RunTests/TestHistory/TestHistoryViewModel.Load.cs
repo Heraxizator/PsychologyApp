@@ -31,7 +31,13 @@ public partial class TestHistoryViewModel
                 }
 
                 ChartPoints = result.ChartPoints;
+                ChartDomainMin = result.ChartDomainMin;
+                ChartDomainMax = result.ChartDomainMax;
+                ChartSubtitle = result.ChartSubtitle;
                 OnPropertyChanged(nameof(ChartPoints));
+                OnPropertyChanged(nameof(ChartDomainMin));
+                OnPropertyChanged(nameof(ChartDomainMax));
+                OnPropertyChanged(nameof(ChartSubtitle));
                 OnPropertyChanged(nameof(HasChart));
                 OnPropertyChanged(nameof(HasEntries));
                 SetDone();

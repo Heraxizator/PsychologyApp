@@ -1,11 +1,13 @@
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
+using PsychologyApp.Presentation.Common;
 
 namespace PsychologyApp.Presentation.Features.ManageProfile;
 
 public sealed record ProfileMoodSnapshot(
     IReadOnlyList<MoodChartPoint> ChartPoints,
-    bool HasTrendChart);
+    bool HasTrendChart,
+    string ChartSubtitle);
 
 public sealed class ProfileMoodLoader(IUserProgressService userProgressService)
 {
@@ -17,6 +19,6 @@ public sealed class ProfileMoodLoader(IUserProgressService userProgressService)
             .Select(entry => new MoodChartPoint(entry.RecordedAt.ToLocalTime(), entry.MoodLevel))
             .ToList();
 
-        return new ProfileMoodSnapshot(points, points.Count >= 3);
+        return new ProfileMoodSnapshot(points, points.Count >= 2, AppStrings.ResolveChartSubtitle(points.Count));
     }
 }

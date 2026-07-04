@@ -10,6 +10,9 @@ namespace PsychologyApp.Presentation.Features.RunTests;
 public sealed record TestHistoryLoadResult(
     IReadOnlyList<TestHistoryEntryItem> Entries,
     IReadOnlyList<TestScoreChartPoint> ChartPoints,
+    int ChartDomainMin,
+    int ChartDomainMax,
+    string ChartSubtitle,
     string Title);
 
 public sealed class TestHistoryLoader(
@@ -75,7 +78,11 @@ public sealed class TestHistoryLoader(
         }
 
         IReadOnlyList<TestScoreChartPoint> chartPoints = trendResolver.BuildChartPoints(history);
-        return new TestHistoryLoadResult(entries, chartPoints, title);
+        IReadOnlyList<int> chartValues = chartPoints.Select(point => point.Score).ToList();
+        (int chartDomainMin, int chartDomainMax) =
+            TestScoreChartRangeResolver.ResolveDomain(definition?.AnalyzerId ?? testId, chartValues);
+        string chartSubtitle = AppStrings.ResolveChartSubtitle(chartPoints.Count);
+        return new TestHistoryLoadResult(entries, chartPoints, chartDomainMin, chartDomainMax, chartSubtitle, title);
     }
 
     private static string FormatColorPass(IReadOnlyList<LuscherStandardColorDetail>? colors) =>

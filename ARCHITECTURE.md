@@ -10,7 +10,7 @@ Psychology App uses a **modular monolith**: Clean Architecture layers at the sol
 | `PsychologyApp.Application` | Use cases, DTOs, ports (`Abstractions/`) |
 | `PsychologyApp.Infrastructure` | SQLite, Dapper, repository implementations |
 | `PsychologyApp.Bootstrap` | Composition root: `AddPsychologyAppCore()` |
-| `PsychologyApp.Presentation.Core` | Shared strings and small models without MAUI |
+| `PsychologyApp.Presentation.Core` | Shared strings, chart layout math (`Charts/`), small models without MAUI |
 | `PsychologyApp.Presentation` | MAUI UI (FSD slices) |
 
 Dependency flow:
@@ -22,6 +22,17 @@ Infrastructure → Application → Domain
 ```
 
 ViewModels and Features must not reference `PsychologyApp.Infrastructure`.
+
+### Presentation.Core folders
+
+| Folder | Contents |
+|--------|----------|
+| `Common/` | `AppStrings`, navigation helpers, cross-cutting presentation utilities |
+| `Charts/` | MAUI-free chart layout math (`TrendLineChartLayout`, `TrendChartPoint`) — rendering lives in `Presentation/Shared/UI/Drawing/` |
+| `Navigation/` | Shared navigation coordination |
+| `Models/` | Small presentation models without UI framework |
+
+Presentation copy for charts (sparse subtitles via `AppStrings.ResolveChartSubtitle`) lives in `Presentation.Core/Common/AppStrings.cs`; layout math stays in `Presentation.Core/Charts/`.
 
 ## Presentation (FSD)
 

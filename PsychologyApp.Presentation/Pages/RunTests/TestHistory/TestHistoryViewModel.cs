@@ -27,8 +27,11 @@ public partial class TestHistoryViewModel : BaseViewModel
 
     public ObservableRangeCollection<TestHistoryEntryItem> HistoryEntries { get; } = [];
     public IReadOnlyList<TestScoreChartPoint> ChartPoints { get; private set; } = [];
+    public int ChartDomainMin { get; private set; }
+    public int ChartDomainMax { get; private set; } = 10;
+    public string ChartSubtitle { get; private set; } = string.Empty;
     public bool HasEntries => HistoryEntries.Count > 0;
-    public bool HasChart => ChartPoints.Count >= 2;
+    public bool HasChart => ChartPoints.Count >= 1;
 
     public ICommand RetakeCommand { get; }
 

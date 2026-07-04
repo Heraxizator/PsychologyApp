@@ -47,6 +47,7 @@ public partial class UserViewModel
 
             ProfileMoodSnapshot moodSnapshot = await _profileMoodLoader.LoadAsync(cancellationToken);
             MoodChartPoints = moodSnapshot.ChartPoints;
+            MoodChartSubtitle = moodSnapshot.ChartSubtitle;
             HasMoodTrendChart = moodSnapshot.HasTrendChart;
 
             TechniquesCompletedCount = result.Stats.TechniquesCompletedCount;
