@@ -86,9 +86,6 @@
                                 CopyCommand="{Binding CopyCommand}"
                                 ShareCommand="{Binding ShareCommand}"
                                 MarkReadCommand="{Binding MarkReadCommand}">
-                                <quoteCard:QuoteCardView.Behaviors>
-                                    <behaviors:ListItemRevealBehavior />
-                                </quoteCard:QuoteCardView.Behaviors>
                             </quoteCard:QuoteCardView>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

@@ -1,6 +1,7 @@
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Features.ManageQuotes;
 using PsychologyApp.Presentation.Features.ManageQuotes.DependencyInjection;
 using PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
 using System.ComponentModel;
@@ -12,6 +13,7 @@ public partial class QuotePage : ContentPage
     private QuoteViewModel ViewModel = default!;
     private PageAnimationHelper? _animationHelper;
     private bool _wasSearching;
+    private QuoteFeedMode _lastFeedMode;
 
     public QuotePage(IPageViewModelActivator pageViewModelActivator, IQuoteViewModelFactory quoteViewModelFactory)
     {
@@ -20,12 +22,14 @@ public partial class QuotePage : ContentPage
         _animationHelper = new PageAnimationHelper(ViewModel, LoadingProgress, QuotesCollectionView);
         ViewModel.PropertyChanged += OnViewModelPropertyChanged;
         _wasSearching = ViewModel.IsSearching;
+        _lastFeedMode = ViewModel.FeedMode;
     }
 
     private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(QuoteViewModel.FeedContentVersion))
+        if (e.PropertyName == nameof(QuoteViewModel.FeedMode) && ViewModel.FeedMode != _lastFeedMode)
         {
+            _lastFeedMode = ViewModel.FeedMode;
             UiStateAnimator.CrossfadeContentRefreshAsync(QuotesCollectionView).FireAndForget();
         }
 

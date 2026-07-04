@@ -130,7 +130,7 @@ public sealed class QuoteFeedCoordinator
             ResetKnownQuotes();
         }
 
-        if (ShouldSeedNewQuote(seedNewQuote))
+        if (ShouldSeedNewQuote(seedNewQuote) && await ShouldSeedBecauseFeedIsEmptyAsync(quotService, cancellationToken))
         {
             await SeedSingleQuoteAsync(quotService, cancellationToken);
         }
@@ -233,6 +233,15 @@ public sealed class QuoteFeedCoordinator
         }
 
         await quotService.TryLoadSingleAsync(cancellationToken);
+    }
+
+    private static async Task<bool> ShouldSeedBecauseFeedIsEmptyAsync(
+        IQuotService quotService,
+        CancellationToken cancellationToken)
+    {
+        IEnumerable<QuotDTO> unread =
+            await quotService.GetUnreadAsync(1, cancellationToken);
+        return !unread.Any();
     }
 }
 

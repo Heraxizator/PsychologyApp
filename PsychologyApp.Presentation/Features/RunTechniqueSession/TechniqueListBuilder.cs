@@ -26,7 +26,8 @@ public sealed class TechniqueListBuilder(
         INavigationService navigationService,
         CancellationToken cancellationToken = default)
     {
-        IReadOnlyList<TechniqueListEntry> entries = techniqueCatalog.GetBuiltInListEntries();
+        IReadOnlyList<TechniqueListEntry> entries =
+            await techniqueCatalog.GetBuiltInListEntriesAsync(cancellationToken);
         IReadOnlyList<string> keys = entries.Select(entry => entry.TechniqueId.ToString()).ToList();
 
         Task<IReadOnlyDictionary<string, DateTime>> lastPracticeDatesTask =

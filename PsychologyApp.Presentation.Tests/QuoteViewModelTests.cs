@@ -50,8 +50,8 @@ public sealed class QuoteViewModelTests
         await viewModel.EnsureInitializedAsync();
         await WaitForStateAsync(viewModel);
 
-        Assert.NotEmpty(viewModel.QuotesObservableCollection);
-        viewModel.QuotesObservableCollection[0].LikeCommand?.Execute(null);
+        Assert.NotEmpty(viewModel.DisplayItems);
+        viewModel.DisplayItems[0].LikeCommand?.Execute(null);
         await Task.Delay(100);
 
         Assert.Equal(1, notifications);

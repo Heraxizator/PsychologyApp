@@ -33,6 +33,17 @@ public class TechniqueCatalogTests
         Assert.Equal(14, CreateCatalog().GetAll().Count);
 
     [Fact]
+    public async Task GetBuiltInListEntriesAsync_matches_sync_entries()
+    {
+        ITechniqueCatalogService catalog = CreateCatalog();
+        IReadOnlyList<TechniqueListEntry> syncEntries = catalog.GetBuiltInListEntries();
+        IReadOnlyList<TechniqueListEntry> asyncEntries = await catalog.GetBuiltInListEntriesAsync();
+
+        Assert.Equal(syncEntries.Count, asyncEntries.Count);
+        Assert.Equal(syncEntries[0].TechniqueId, asyncEntries[0].TechniqueId);
+    }
+
+    [Fact]
     public void List_entries_align_with_catalog()
     {
         ITechniqueCatalogService catalog = CreateCatalog();

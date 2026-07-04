@@ -37,6 +37,9 @@ internal static class QuotServiceTestFactory
         repository
             .Setup(r => r.GetFavoriteTextsAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(Array.Empty<string>());
+        repository
+            .Setup(r => r.AddManyAsync(It.IsAny<IReadOnlyList<Domain.Entities.Quot>>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
 
         return new QuotService(
             repository.Object,

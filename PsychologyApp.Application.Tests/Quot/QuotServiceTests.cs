@@ -29,8 +29,11 @@ public class QuotServiceTests
 
         provider.Verify(p => p.LoadAllAsync(It.IsAny<CancellationToken>()), Times.Once);
         repository.Verify(
-            r => r.AddAsync(
-                It.Is<DomainQuot>(q => q.Text == seeds[0].Text && q.Title == seeds[0].Author),
+            r => r.AddManyAsync(
+                It.Is<IReadOnlyList<DomainQuot>>(items =>
+                    items.Count == 1 &&
+                    items[0].Text == seeds[0].Text &&
+                    items[0].Title == seeds[0].Author),
                 It.IsAny<CancellationToken>()),
             Times.Once);
     }
@@ -68,8 +71,10 @@ public class QuotServiceTests
         await service.LoadSingleAsync();
 
         repository.Verify(
-            r => r.AddAsync(
-                It.Is<DomainQuot>(q => q.Text == "Second quote"),
+            r => r.AddManyAsync(
+                It.Is<IReadOnlyList<DomainQuot>>(items =>
+                    items.Count == 1 &&
+                    items[0].Text == "Second quote"),
                 It.IsAny<CancellationToken>()),
             Times.Once);
     }
@@ -94,8 +99,10 @@ public class QuotServiceTests
 
         repository.Verify(r => r.DeleteAllAsync(It.IsAny<CancellationToken>()), Times.Once);
         repository.Verify(
-            r => r.AddAsync(
-                It.Is<DomainQuot>(q => q.Text == "Only quote"),
+            r => r.AddManyAsync(
+                It.Is<IReadOnlyList<DomainQuot>>(items =>
+                    items.Count == 1 &&
+                    items[0].Text == "Only quote"),
                 It.IsAny<CancellationToken>()),
             Times.Once);
     }

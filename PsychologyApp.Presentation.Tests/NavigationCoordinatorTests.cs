@@ -6,8 +6,16 @@ using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
 
-public sealed class NavigationCoordinatorTests
+public sealed class NavigationCoordinatorTests : IDisposable
 {
+    public NavigationCoordinatorTests() => NavigationCoordinator.ResetForTests();
+
+    public void Dispose()
+    {
+        NavigationCoordinator.ResetForTests();
+        NavigationCoordinator.SetLogger(NullLogger.Instance);
+    }
+
     [Fact]
     public async Task RunPushAsync_ExecutesNavigationDelegate()
     {
@@ -38,36 +46,34 @@ public sealed class NavigationCoordinatorTests
     }
 
     [Fact]
-    public async Task RunAsync_WhenGateBusy_ReturnsDroppedBusy()
+    public async Task RunPushAsync_WhenGateBusy_ReturnsDroppedTimeout()
     {
         Mock<ILogger> logger = new();
         NavigationCoordinator.SetLogger(logger.Object);
         TaskCompletionSource<bool> holdGate = new();
+        TaskCompletionSource gateAcquired = new();
 
-        try
+        Task first = NavigationCoordinator.RunPushAsync(async () =>
         {
-            Task first = NavigationCoordinator.RunPushAsync(async () => await holdGate.Task);
+            gateAcquired.SetResult();
+            await holdGate.Task;
+        });
 
-            await Task.Delay(50);
+        await gateAcquired.Task;
 
-            NavigationRunStatus status = await NavigationCoordinator.RunPushAsync(() => Task.CompletedTask);
+        NavigationRunStatus status = await NavigationCoordinator.RunPushAsync(() => Task.CompletedTask);
 
-            Assert.Equal(NavigationRunStatus.DroppedTimeout, status);
-            logger.Verify(
-                x => x.Log(
-                    LogLevel.Warning,
-                    It.IsAny<EventId>(),
-                    It.Is<It.IsAnyType>((state, _) => state.ToString()!.Contains("gate timeout", StringComparison.OrdinalIgnoreCase)),
-                    It.IsAny<Exception>(),
-                    It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
-                Times.Once);
-            holdGate.SetResult(true);
-            await first;
-        }
-        finally
-        {
-            NavigationCoordinator.SetLogger(NullLogger.Instance);
-        }
+        Assert.Equal(NavigationRunStatus.DroppedTimeout, status);
+        logger.Verify(
+            x => x.Log(
+                LogLevel.Warning,
+                It.IsAny<EventId>(),
+                It.Is<It.IsAnyType>((state, _) => state.ToString()!.Contains("gate timeout", StringComparison.OrdinalIgnoreCase)),
+                It.IsAny<Exception>(),
+                It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
+            Times.Once);
+        holdGate.SetResult(true);
+        await first;
     }
 
     [Fact]
@@ -76,17 +82,10 @@ public sealed class NavigationCoordinatorTests
         Mock<ILogger> logger = new();
         NavigationCoordinator.SetLogger(logger.Object);
 
-        try
-        {
-            NavigationRunStatus status = await NavigationCoordinator.RunPushAsync(() =>
-                Task.FromException(new InvalidOperationException("Push failed")));
+        NavigationRunStatus status = await NavigationCoordinator.RunPushAsync(() =>
+            Task.FromException(new InvalidOperationException("Push failed")));
 
-            Assert.Equal(NavigationRunStatus.Failed, status);
-        }
-        finally
-        {
-            NavigationCoordinator.SetLogger(NullLogger.Instance);
-        }
+        Assert.Equal(NavigationRunStatus.Failed, status);
     }
 
     [Fact]
@@ -97,38 +96,31 @@ public sealed class NavigationCoordinatorTests
         TaskCompletionSource<bool> holdGate = new();
         TaskCompletionSource gateAcquired = new();
 
-        try
+        Task first = NavigationCoordinator.RunPushAsync(async () =>
         {
-            Task first = NavigationCoordinator.RunPushAsync(async () =>
-            {
-                gateAcquired.SetResult();
-                await holdGate.Task;
-            });
+            gateAcquired.SetResult();
+            await holdGate.Task;
+        });
 
-            await gateAcquired.Task;
+        await gateAcquired.Task;
 
-            bool secondExecuted = false;
-            await NavigationCoordinator.RunAsync(() =>
-            {
-                secondExecuted = true;
-                return Task.CompletedTask;
-            });
-
-            Assert.False(secondExecuted);
-            logger.Verify(
-                x => x.Log(
-                    LogLevel.Warning,
-                    It.IsAny<EventId>(),
-                    It.Is<It.IsAnyType>((state, _) => state.ToString()!.Contains("gate busy", StringComparison.OrdinalIgnoreCase)),
-                    It.IsAny<Exception>(),
-                    It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
-                Times.Once);
-            holdGate.SetResult(true);
-            await first;
-        }
-        finally
+        bool secondExecuted = false;
+        await NavigationCoordinator.RunAsync(() =>
         {
-            NavigationCoordinator.SetLogger(NullLogger.Instance);
-        }
+            secondExecuted = true;
+            return Task.CompletedTask;
+        });
+
+        Assert.False(secondExecuted);
+        logger.Verify(
+            x => x.Log(
+                LogLevel.Warning,
+                It.IsAny<EventId>(),
+                It.Is<It.IsAnyType>((state, _) => state.ToString()!.Contains("gate busy", StringComparison.OrdinalIgnoreCase)),
+                It.IsAny<Exception>(),
+                It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
+            Times.Once);
+        holdGate.SetResult(true);
+        await first;
     }
 }

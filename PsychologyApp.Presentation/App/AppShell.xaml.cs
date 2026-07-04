@@ -376,8 +376,9 @@ public partial class AppShell : Shell
         {
             await _startupCoordinator.InitializeAsync();
             await ShowOnboardingIfNeededAsync();
-            await _practiceReminderCoordinator.SyncAsync();
-            await _quoteReminderCoordinator.SyncAsync();
+            await Task.WhenAll(
+                _practiceReminderCoordinator.SyncAsync(),
+                _quoteReminderCoordinator.SyncAsync());
         }
         catch (Exception ex)
         {

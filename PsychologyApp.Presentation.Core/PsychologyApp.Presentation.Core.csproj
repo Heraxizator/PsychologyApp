@@ -14,4 +14,8 @@
     <ProjectReference Include="..\PsychologyApp.Domain\PsychologyApp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="PsychologyApp.Presentation.Tests" />
+  </ItemGroup>
+
 </Project>

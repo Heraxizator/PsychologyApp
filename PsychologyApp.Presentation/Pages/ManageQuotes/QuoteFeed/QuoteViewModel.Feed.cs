@@ -29,7 +29,7 @@ public partial class QuoteViewModel
 
         await UiThread.RunAsync(() =>
         {
-            QuotesObservableCollection.Clear();
+            _feedItems.Clear();
             DisplayItems.Clear();
             ShowAllReadEmpty = false;
             OnPropertyChanged(nameof(FeedMode));
@@ -66,7 +66,7 @@ public partial class QuoteViewModel
     private async Task UpdateAllReadEmptyStateAsync(CancellationToken cancellationToken = default)
     {
         ShowAllReadEmpty = await _feedCoordinator.ShouldShowAllReadEmptyAsync(
-            QuotesObservableCollection.Count,
+            _feedItems.Count,
             IsDone,
             _quotService,
             cancellationToken);
