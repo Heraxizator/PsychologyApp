@@ -24,4 +24,41 @@ public sealed class TechniqueRecommendationServiceTests
         Assert.Contains(TechniqueId.Spin, techniques);
         Assert.Contains(TechniqueId.Paper, techniques);
     }
+
+    [Fact]
+    public void ResolveTodayTechnique_UsesRecentTestWithinSevenDays()
+    {
+        TodayRecommendationDecision decision = _service.ResolveTodayTechnique(new TodayRecommendationContext(
+            OnboardingConcernKeys.Explore,
+            RecentTestResult: new PsychologyApp.Application.Models.TestResultDTO
+            {
+                TestId = "beck",
+                Score = 12,
+                CompletedAt = DateTime.UtcNow.AddDays(-2)
+            }));
+
+        Assert.Equal(TechniqueId.Spin, decision.TechniqueId);
+        Assert.Equal(TodayRecommendationSource.RecentTest, decision.Source);
+    }
+
+    [Fact]
+    public void ResolveTodayTechnique_UsesLowMoodWhenNoRecentTest()
+    {
+        TodayRecommendationDecision decision = _service.ResolveTodayTechnique(new TodayRecommendationContext(
+            OnboardingConcernKeys.Body,
+            TodayMoodLevel: 2));
+
+        Assert.Equal(TechniqueId.Spin, decision.TechniqueId);
+        Assert.Equal(TodayRecommendationSource.LowMood, decision.Source);
+    }
+
+    [Fact]
+    public void ResolveTodayTechnique_FallsBackToConcern()
+    {
+        TodayRecommendationDecision decision = _service.ResolveTodayTechnique(new TodayRecommendationContext(
+            OnboardingConcernKeys.Anxiety));
+
+        Assert.Equal(TechniqueId.Spin, decision.TechniqueId);
+        Assert.Equal(TodayRecommendationSource.OnboardingConcern, decision.Source);
+    }
 }

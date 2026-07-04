@@ -1,5 +1,4 @@
 using PsychologyApp.Application.Recommendations;
-using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Models.Practice;
 using PsychologyApp.Presentation.Features.RunTechniqueSession.Index;
 using PsychologyApp.Presentation.Shared.Common;
@@ -22,20 +21,21 @@ public sealed class TodayRecommendationResolver(
     ITechniqueRecommendationService techniqueRecommendationService)
 {
     public async Task<TodayRecommendationResult> ResolveAsync(
-        string onboardingConcern,
+        TodayRecommendationContext context,
         string streakDisplay,
         bool hasStreak,
         INavigationService navigationService,
         CancellationToken cancellationToken = default)
     {
-        TechniqueId techniqueId = techniqueRecommendationService.ResolveFromOnboardingConcern(onboardingConcern);
+        TodayRecommendationDecision decision = techniqueRecommendationService.ResolveTodayTechnique(context);
+        TechniqueId techniqueId = decision.TechniqueId;
         TechniqueDefinition definition = await techniqueCatalog.GetAsync(techniqueId, cancellationToken);
         string durationText = AppStrings.TechniqueDuration(definition.ListDurationMinutes);
 
         return new TodayRecommendationResult
         {
             TechniqueId = techniqueId,
-            ReasonText = AppStrings.TodayRecommendationReason(onboardingConcern),
+            ReasonText = ResolveReasonText(decision, context),
             Item = new TechniqueItem
             {
                 Number = definition.ListNumber,
@@ -74,4 +74,13 @@ public sealed class TodayRecommendationResolver(
             todayItem.Date = match.Date;
         }
     }
+
+    private static string ResolveReasonText(TodayRecommendationDecision decision, TodayRecommendationContext context) =>
+        decision.Source switch
+        {
+            TodayRecommendationSource.RecentTest =>
+                AppStrings.TodayRecommendationReasonFromTest(decision.TestId ?? context.RecentTestResult?.TestId ?? string.Empty),
+            TodayRecommendationSource.LowMood => AppStrings.TodayRecommendationReasonLowMood(),
+            _ => AppStrings.TodayRecommendationReason(context.Concern)
+        };
 }

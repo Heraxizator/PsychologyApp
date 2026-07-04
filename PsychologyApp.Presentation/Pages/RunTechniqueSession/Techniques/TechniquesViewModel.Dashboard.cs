@@ -59,5 +59,6 @@ public partial class TechniquesViewModel
         SelectedMoodLevel = moodLevel;
         StreakDays = result.StreakDays;
         ApplyMoodSnapshot(result.MoodSnapshot);
+        UpdateTodayRecommendation();
     }
 }

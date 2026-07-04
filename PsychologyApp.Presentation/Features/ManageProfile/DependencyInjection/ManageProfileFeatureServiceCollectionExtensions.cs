@@ -14,6 +14,7 @@ public static class ManageProfileFeatureServiceCollectionExtensions
         services.AddFeatureSingleton<SettingsPreferencesPresenter>();
         services.AddFeatureSingleton<PracticeHistoryFormatter>();
         services.AddFeatureSingleton<ProfilePracticeHistoryLoader>();
+        services.AddFeatureSingleton<ProfileMoodLoader>();
         services.AddFeatureSingleton<ProfileFeaturedTechniquesBuilder>();
         services.AddFeatureSingleton<UserProfileRefreshCoordinator>();
         services.AddFeatureSingleton<ProfileScreenCoordinator>();

@@ -45,6 +45,10 @@ public partial class UserViewModel
                 return;
             }
 
+            ProfileMoodSnapshot moodSnapshot = await _profileMoodLoader.LoadAsync(cancellationToken);
+            MoodChartPoints = moodSnapshot.ChartPoints;
+            HasMoodTrendChart = moodSnapshot.HasTrendChart;
+
             TechniquesCompletedCount = result.Stats.TechniquesCompletedCount;
             TestsCompletedCount = result.Stats.TestsCompletedCount;
             StreakCount = result.Stats.StreakCount;

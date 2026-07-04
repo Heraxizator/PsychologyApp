@@ -19,6 +19,9 @@ public sealed class UserProgressService(IUserProgressRepository repository) : IU
     public Task<TestResultDTO?> GetLatestTestResultAsync(string testId, CancellationToken cancellationToken = default) =>
         repository.GetLatestTestResultAsync(testId, cancellationToken);
 
+    public Task<TestResultDTO?> GetMostRecentTestResultAsync(TimeSpan within, CancellationToken cancellationToken = default) =>
+        repository.GetMostRecentTestResultAsync(within, cancellationToken);
+
     public Task<IReadOnlyList<TestResultDTO>> GetTestResultHistoryAsync(string testId, int limit = 20, CancellationToken cancellationToken = default) =>
         repository.GetTestResultHistoryAsync(testId, limit, cancellationToken);
 

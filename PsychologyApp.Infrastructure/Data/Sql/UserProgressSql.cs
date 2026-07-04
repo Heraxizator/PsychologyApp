@@ -15,6 +15,14 @@ internal static class UserProgressSql
         LIMIT 1;
         """;
 
+    internal const string SelectMostRecentTestResultSince = """
+        SELECT TestResultId, TestId, Score, Summary, DetailJson, CompletedAt
+        FROM TestResults
+        WHERE datetime(CompletedAt) >= datetime(@sinceUtc)
+        ORDER BY TestResultId DESC
+        LIMIT 1;
+        """;
+
     internal const string SelectTestResultHistory = """
         SELECT TestResultId, TestId, Score, Summary, DetailJson, CompletedAt
         FROM TestResults

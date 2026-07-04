@@ -28,13 +28,19 @@ public partial class TheoryViewModel : BaseViewModel
         PageName = AppStrings.TechniqueTheory;
 
         BindNavigation(navigationService);
-        if (techniqueId is TechniqueId id)
-        {
-            LoadTechniqueContentAsync(id).FireAndForget();
-            return;
-        }
 
-        ApplyContent(content, null);
+        if (techniqueId is null)
+        {
+            ApplyContent(content, null);
+        }
+    }
+
+    public async Task InitializeAsync()
+    {
+        if (_techniqueId is TechniqueId techniqueId)
+        {
+            await LoadTechniqueContentAsync(techniqueId);
+        }
     }
 
     protected override void RefreshLocalizedProperties()

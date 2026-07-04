@@ -321,6 +321,12 @@ public static partial class AppStrings
         "mood" => T("Помогает при тяжёлом настроении", "Helps when mood is low"),
         _ => T("Практика дня", "Practice of the day")
     };
+
+    public static string TodayRecommendationReasonFromTest(string testId) =>
+        T($"После недавнего теста ({testId})", $"After a recent test ({testId})");
+
+    public static string TodayRecommendationReasonLowMood() =>
+        T("Когда настроение низкое", "When mood is low");
     public static string TodayMoodQuestion => T("Как настроение?", "How are you feeling?");
     public static string TodayMoodSaved => T("Настроение сохранено", "Mood saved");
     public static string TodayMoodLine(int level, int max) =>
@@ -328,6 +334,12 @@ public static partial class AppStrings
     public static string MoodHistoryTitle => T("Недавнее", "Recent");
     public static string MoodHistoryEntry(string date, int level, int max) =>
         T($"{date}: {MoodEmoji(level)} {level}/{max}", $"{date}: {MoodEmoji(level)} {level}/{max}");
+    public static string ProfileMoodTrendTitle => T("Настроение", "Mood");
+    public static string ProfileMoodTrendHint => T(
+        "Отмечайте настроение на вкладке «Практика», чтобы увидеть динамику",
+        "Track mood on the Practice tab to see your trend");
+    public static string PracticeReflectionQuestion => T("Как вы себя чувствуете?", "How do you feel now?");
+    public static string PracticeReflectionNotePlaceholder => T("Короткая заметка (необязательно)", "Short note (optional)");
     public static string PracticeCompletedTitle => T("Готово!", "Done!");
     public static string PracticeCompletedBody(int streak) =>
         T($"Отличная работа! Серия: {streak} дн.", $"Great job! Streak: {streak} days");

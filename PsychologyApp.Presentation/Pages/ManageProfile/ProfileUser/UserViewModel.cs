@@ -18,6 +18,7 @@ public partial class UserViewModel : BaseViewModel
     private readonly ProfileStatsLoader _profileStatsLoader;
     private readonly ProfileQuotesLoader _profileQuotesLoader;
     private readonly ProfilePracticeHistoryLoader _practiceHistoryLoader;
+    private readonly ProfileMoodLoader _profileMoodLoader;
     private readonly ProfileFeaturedTechniquesBuilder _featuredTechniquesBuilder;
     private readonly QuoteItemCommandsFactory _quoteCommandsFactory;
     private readonly ProfileScreenCoordinator _profileScreenCoordinator;
@@ -50,6 +51,7 @@ public partial class UserViewModel : BaseViewModel
         ProfileStatsLoader profileStatsLoader,
         ProfileQuotesLoader profileQuotesLoader,
         ProfilePracticeHistoryLoader practiceHistoryLoader,
+        ProfileMoodLoader profileMoodLoader,
         ProfileFeaturedTechniquesBuilder featuredTechniquesBuilder,
         QuoteItemCommandsFactory quoteCommandsFactory,
         ProfileScreenCoordinator profileScreenCoordinator,
@@ -62,6 +64,7 @@ public partial class UserViewModel : BaseViewModel
             _profileStatsLoader = profileStatsLoader;
             _profileQuotesLoader = profileQuotesLoader;
             _practiceHistoryLoader = practiceHistoryLoader;
+            _profileMoodLoader = profileMoodLoader;
             _featuredTechniquesBuilder = featuredTechniquesBuilder;
             _quoteCommandsFactory = quoteCommandsFactory;
             _profileScreenCoordinator = profileScreenCoordinator;
