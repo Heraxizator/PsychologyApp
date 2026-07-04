@@ -91,6 +91,7 @@
                     <moodTrend:MoodTrendChartView
                         IsVisible="{Binding HasMoodTrendChart}"
                         ChartPoints="{Binding MoodChartPoints}"
+                        Subtitle="{Binding MoodChartSubtitle}"
                         Title="{Binding MoodTrendTitle}" />
                 </VerticalStackLayout>
 

@@ -65,6 +65,7 @@ public sealed class TestHistoryViewModelTests
         FakeTestCatalogService catalog = new FakeTestCatalogService().WithCatalog(new TestDefinition
         {
             TestId = "beck",
+            AnalyzerId = "beck",
             Title = "Beck",
             Subtitle = "Sub",
             Description = "Desc",
@@ -88,6 +89,49 @@ public sealed class TestHistoryViewModelTests
 
         Assert.True(viewModel.HasChart);
         Assert.Equal(2, viewModel.ChartPoints.Count);
+        Assert.NotEmpty(viewModel.ChartSubtitle);
+        Assert.Equal(0, viewModel.ChartDomainMin);
+        Assert.Equal(63, viewModel.ChartDomainMax);
+    }
+
+    [Fact]
+    public async Task LoadAsync_SetsHasChart_WhenSingleScoredResultExists()
+    {
+        Mock<IUserProgressService> progress = new();
+        progress
+            .Setup(p => p.GetTestResultHistoryAsync("beck", 50, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<TestResultDTO>
+            {
+                new() { TestId = "beck", Score = 8, Summary = "High", CompletedAt = DateTime.UtcNow }
+            });
+        FakeTestCatalogService catalog = new FakeTestCatalogService().WithCatalog(new TestDefinition
+        {
+            TestId = "beck",
+            AnalyzerId = "beck",
+            Title = "Beck",
+            Subtitle = "Sub",
+            Description = "Desc",
+            Comment = "Note",
+            Algorithm = ["Step"],
+            Kind = TestKind.Questionnaire
+        });
+
+        TestHistoryViewModel viewModel = new(
+            new TestNavigationService(new Mock<INavigation>().Object),
+            progress.Object,
+            catalog,
+            TestDatabaseReady.CreateSignaled(),
+            TestRunTestHelpers.CreateHistoryLoader(catalog),
+            TestRunTestHelpers.CreateRetakeOperations(catalog),
+            NullLogger<TestHistoryViewModel>.Instance,
+            "beck",
+            "Beck");
+
+        await Task.Delay(200);
+
+        Assert.True(viewModel.HasChart);
+        Assert.Single(viewModel.ChartPoints);
+        Assert.NotEmpty(viewModel.ChartSubtitle);
     }
 
     private sealed class RetakeTrackingNavigation(INavigation navigation) : TestNavigationService(navigation)

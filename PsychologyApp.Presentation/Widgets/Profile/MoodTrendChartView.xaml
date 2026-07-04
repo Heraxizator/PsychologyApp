@@ -9,9 +9,14 @@
             <Label
                 Text="{Binding Title, Source={x:Reference Root}}"
                 Style="{StaticResource SectionTitleStyle}" />
+            <Label
+                Text="{Binding Subtitle, Source={x:Reference Root}}"
+                IsVisible="{Binding HasSubtitle, Source={x:Reference Root}}"
+                Style="{StaticResource CaptionStyle}"
+                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
             <GraphicsView
                 x:Name="ChartView"
-                HeightRequest="160"
+                HeightRequest="192"
                 HorizontalOptions="Fill" />
         </VerticalStackLayout>
     </Border>
