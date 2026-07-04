@@ -44,6 +44,16 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             cancellationToken: cancellationToken));
     }
 
+    public async Task<TestResultDTO?> GetMostRecentTestResultAsync(TimeSpan within, CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        return await connection.QuerySingleOrDefaultAsync<TestResultDTO>(DapperCommandFactory.Create(
+            UserProgressSql.SelectMostRecentTestResultSince,
+            new { sinceUtc = DateTime.UtcNow.Subtract(within).ToString("O") },
+            commandTimeout: CommandTimeoutSeconds,
+            cancellationToken: cancellationToken));
+    }
+
     public async Task<IReadOnlyList<TestResultDTO>> GetTestResultHistoryAsync(string testId, int limit, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);

@@ -11,15 +11,6 @@ public sealed class TechniqueCatalogService(ITechniqueCatalogProvider provider) 
     private readonly SemaphoreSlim _indexGate = new(1, 1);
     private IReadOnlyDictionary<TechniqueId, BuiltInTechniqueDefinition>? _byId;
 
-    public IReadOnlyList<BuiltInTechniqueDefinition> GetAll() =>
-        EnsureIndex().Values.ToList();
-
-    public BuiltInTechniqueDefinition Get(TechniqueId techniqueId) =>
-        EnsureIndex()[techniqueId];
-
-    public IReadOnlyList<TechniqueListEntry> GetBuiltInListEntries() =>
-        BuildListEntries(EnsureIndex());
-
     public async Task<IReadOnlyList<BuiltInTechniqueDefinition>> GetAllAsync(CancellationToken cancellationToken = default) =>
         (await EnsureIndexAsync(cancellationToken).ConfigureAwait(false)).Values.ToList();
 
@@ -40,9 +31,6 @@ public sealed class TechniqueCatalogService(ITechniqueCatalogProvider provider) 
             cached.Invalidate();
         }
     }
-
-    private IReadOnlyDictionary<TechniqueId, BuiltInTechniqueDefinition> EnsureIndex() =>
-        EnsureIndexAsync(CancellationToken.None).GetAwaiter().GetResult();
 
     private async Task<IReadOnlyDictionary<TechniqueId, BuiltInTechniqueDefinition>> EnsureIndexAsync(
         CancellationToken cancellationToken)

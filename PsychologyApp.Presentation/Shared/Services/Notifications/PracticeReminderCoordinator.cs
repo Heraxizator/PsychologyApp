@@ -40,7 +40,8 @@ public sealed class PracticeReminderCoordinator(
             return;
         }
 
-        TechniqueId techniqueId = recommendationService.ResolveFromOnboardingConcern(state.OnboardingConcern);
+        TechniqueId techniqueId = recommendationService.ResolveTodayTechnique(
+            await TodayRecommendationContextBuilder.BuildAsync(progress, state.OnboardingConcern, cancellationToken)).TechniqueId;
         scheduler.Schedule(
             nextFireLocal.Value,
             techniqueId,

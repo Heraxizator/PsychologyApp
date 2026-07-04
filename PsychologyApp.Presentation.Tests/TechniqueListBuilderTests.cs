@@ -1,8 +1,7 @@
+using PsychologyApp.Application.Recommendations;
 using PsychologyApp.Domain.Practice;
 using Moq;
 using PsychologyApp.Application.UserProgress;
-using PsychologyApp.Domain.Practice;
-using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
@@ -23,7 +22,7 @@ public sealed class TodayRecommendationResolverTests
         TodayRecommendationResolver resolver = TechniqueCatalogTestHelper.CreateTodayRecommendationResolver();
 
         TodayRecommendationResult result = await resolver.ResolveAsync(
-            concern,
+            new TodayRecommendationContext(concern),
             "3 дн.",
             hasStreak: true,
             navigation.Object);

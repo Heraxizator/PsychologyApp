@@ -3,20 +3,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Pages.RunTechniqueSession.PracticeCompletion.PracticeCompletionPage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:mood="clr-namespace:PsychologyApp.Presentation.Widgets.MoodStrip"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.RunTechniqueSession.PracticeCompletion"
              x:DataType="vm:PracticeCompletionViewModel"
              Shell.NavBarIsVisible="False"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource Gray950}}">
 
-    <ui:CompletionCelebrationView
-        TitleText="{Binding TitleText}"
-        BodyText="{Binding BodyText}"
-        StreakValueText="{Binding StreakValueText}"
-        StreakLabelText="{Binding StreakLabelText}"
-        HasStreak="{Binding HasStreak}"
-        PrimaryActionText="{Binding MorePracticeText}"
-        PrimaryCommand="{Binding MorePracticeCommand}"
-        SecondaryActionText="{Binding GoHomeText}"
-        SecondaryCommand="{Binding GoHomeCommand}" />
+    <Grid RowDefinitions="*,Auto">
+        <ui:CompletionCelebrationView
+            Grid.Row="0"
+            TitleText="{Binding TitleText}"
+            BodyText="{Binding BodyText}"
+            StreakValueText="{Binding StreakValueText}"
+            StreakLabelText="{Binding StreakLabelText}"
+            HasStreak="{Binding HasStreak}"
+            PrimaryActionText="{Binding MorePracticeText}"
+            PrimaryCommand="{Binding MorePracticeCommand}"
+            SecondaryActionText="{Binding GoHomeText}"
+            SecondaryCommand="{Binding GoHomeCommand}" />
+
+        <VerticalStackLayout
+            Grid.Row="1"
+            Padding="{StaticResource LayoutPageMarginThickness}"
+            Spacing="{StaticResource CompactSpacing}">
+            <mood:MoodStripView
+                QuestionText="{Binding ReflectionQuestion}"
+                RecordMoodCommand="{Binding RecordMoodCommand}"
+                SelectedMoodLevel="{Binding SelectedMoodLevel}" />
+            <ui:TextEntryView
+                TitleText="{Binding ReflectionNotePlaceholder}"
+                BodyText="{Binding ReflectionNote}" />
+        </VerticalStackLayout>
+    </Grid>
 
 </ContentPage>

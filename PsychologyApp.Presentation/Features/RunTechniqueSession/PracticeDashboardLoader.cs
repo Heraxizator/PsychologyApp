@@ -1,4 +1,5 @@
 using PsychologyApp.Application.Models;
+using PsychologyApp.Application.Recommendations;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
@@ -61,15 +62,18 @@ public sealed class PracticeDashboardLoader(
         await userProgressService.RecordMoodAsync(moodLevel, cancellationToken: cancellationToken);
     }
 
-    public Task<TodayRecommendationResult> ResolveTodayRecommendationAsync(
+    public async Task<TodayRecommendationResult> ResolveTodayRecommendationAsync(
         int streakDays,
         INavigationService navigationService,
         CancellationToken cancellationToken = default)
     {
         string streakDisplay = AppStrings.ProfileStreakCount(streakDays);
         bool hasStreak = streakDays > 0;
-        return todayRecommendationResolver.ResolveAsync(
-            userPreferencesStore.Load().OnboardingConcern,
+        string concern = userPreferencesStore.Load().OnboardingConcern;
+        TodayRecommendationContext context =
+            await TodayRecommendationContextBuilder.BuildAsync(userProgressService, concern, cancellationToken);
+        return await todayRecommendationResolver.ResolveAsync(
+            context,
             streakDisplay,
             hasStreak,
             navigationService,

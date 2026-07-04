@@ -10,6 +10,7 @@
              xmlns:quoteCard="clr-namespace:PsychologyApp.Presentation.Widgets.QuoteCard"
              xmlns:profileUi="clr-namespace:PsychologyApp.Presentation.Widgets.ProfileTechniqueCard"
              xmlns:profileHistory="clr-namespace:PsychologyApp.Presentation.Widgets.Profile"
+             xmlns:moodTrend="clr-namespace:PsychologyApp.Presentation.Widgets.Profile"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:DataType="vm:UserViewModel"
              Shell.NavBarIsVisible="False"
@@ -80,6 +81,18 @@
                             Text="{Binding LastPracticeDisplay}" />
                     </VerticalStackLayout>
                 </Border>
+
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <ui:SectionHeaderView TitleText="{Binding MoodTrendTitle}" />
+                    <ui:EmptyStateView
+                        IsVisible="{Binding ShowMoodTrendHint}"
+                        BodyText="{Binding MoodTrendHint}"
+                        IconName="SelfImprovement" />
+                    <moodTrend:MoodTrendChartView
+                        IsVisible="{Binding HasMoodTrendChart}"
+                        ChartPoints="{Binding MoodChartPoints}"
+                        Title="{Binding MoodTrendTitle}" />
+                </VerticalStackLayout>
 
                 <ui:SettingsLinkCardView
                     Title="{Binding OptionsLabel}"

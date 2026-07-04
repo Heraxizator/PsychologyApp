@@ -1,3 +1,4 @@
+using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.App.Providers;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.PracticeCompletion;
 using PsychologyApp.Presentation.Shared.Navigation;
@@ -10,8 +11,9 @@ public interface IPracticeCompletionViewModelFactory
 }
 
 public sealed class PracticeCompletionViewModelFactory(
+    IUserProgressService userProgressService,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IPracticeCompletionViewModelFactory
 {
     public PracticeCompletionViewModel Create(ContentPage page, int streakDays) =>
-        new(ResolveNavigation(navigationServiceFactory, page), streakDays);
+        new(ResolveNavigation(navigationServiceFactory, page), userProgressService, streakDays);
 }

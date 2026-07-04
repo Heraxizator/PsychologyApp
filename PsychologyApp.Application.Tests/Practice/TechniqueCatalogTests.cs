@@ -19,9 +19,9 @@ public class TechniqueCatalogTests
     [InlineData(TechniqueId.Observer, TechniqueUiKind.Entry, "Позиция наблюдателя")]
     [InlineData(TechniqueId.Anchor, TechniqueUiKind.Entry, "Якорь ресурса")]
     [InlineData(TechniqueId.Grounding, TechniqueUiKind.Entry, "Заземление 5-4-3-2-1")]
-    public void Get_returns_expected_ui_kind_and_page_name(TechniqueId id, TechniqueUiKind kind, string pageName)
+    public async Task GetAsync_returns_expected_ui_kind_and_page_name(TechniqueId id, TechniqueUiKind kind, string pageName)
     {
-        BuiltInTechniqueDefinition definition = CreateCatalog().Get(id);
+        BuiltInTechniqueDefinition definition = await CreateCatalog().GetAsync(id);
 
         Assert.Equal(kind, definition.UiKind);
         Assert.Equal(pageName, definition.PageName);
@@ -29,29 +29,24 @@ public class TechniqueCatalogTests
     }
 
     [Fact]
-    public void GetAll_contains_fourteen_builtin_techniques() =>
-        Assert.Equal(14, CreateCatalog().GetAll().Count);
-
-    [Fact]
-    public async Task GetBuiltInListEntriesAsync_matches_sync_entries()
+    public async Task GetAllAsync_contains_fourteen_builtin_techniques()
     {
-        ITechniqueCatalogService catalog = CreateCatalog();
-        IReadOnlyList<TechniqueListEntry> syncEntries = catalog.GetBuiltInListEntries();
-        IReadOnlyList<TechniqueListEntry> asyncEntries = await catalog.GetBuiltInListEntriesAsync();
-
-        Assert.Equal(syncEntries.Count, asyncEntries.Count);
-        Assert.Equal(syncEntries[0].TechniqueId, asyncEntries[0].TechniqueId);
+        IReadOnlyList<BuiltInTechniqueDefinition> all = await CreateCatalog().GetAllAsync();
+        Assert.Equal(14, all.Count);
     }
 
     [Fact]
-    public void List_entries_align_with_catalog()
+    public async Task GetBuiltInListEntriesAsync_aligns_with_catalog()
     {
         ITechniqueCatalogService catalog = CreateCatalog();
-        Assert.Equal(catalog.GetAll().Count, catalog.GetBuiltInListEntries().Count);
+        IReadOnlyList<BuiltInTechniqueDefinition> all = await catalog.GetAllAsync();
+        IReadOnlyList<TechniqueListEntry> entries = await catalog.GetBuiltInListEntriesAsync();
 
-        foreach (TechniqueListEntry entry in catalog.GetBuiltInListEntries())
+        Assert.Equal(all.Count, entries.Count);
+
+        foreach (TechniqueListEntry entry in entries)
         {
-            BuiltInTechniqueDefinition definition = catalog.Get(entry.TechniqueId);
+            BuiltInTechniqueDefinition definition = await catalog.GetAsync(entry.TechniqueId);
             Assert.Equal(definition.ListTitle, entry.Title);
             Assert.Equal(definition.ListSubtitle, entry.Subtitle);
             Assert.Equal(definition.ListNumber, entry.Number);
@@ -63,9 +58,9 @@ public class TechniqueCatalogTests
     }
 
     [Fact]
-    public void All_builtin_techniques_have_theory_sections()
+    public async Task All_builtin_techniques_have_theory_sections()
     {
-        foreach (BuiltInTechniqueDefinition definition in CreateCatalog().GetAll())
+        foreach (BuiltInTechniqueDefinition definition in await CreateCatalog().GetAllAsync())
         {
             Assert.NotNull(definition.TheorySections);
             Assert.Equal(4, definition.TheorySections!.Count);
@@ -78,16 +73,16 @@ public class TechniqueCatalogTests
     [InlineData(TechniqueId.Experience, EntryFieldKind.RatingNeg10To10)]
     [InlineData(TechniqueId.Observer, EntryFieldKind.Rating0To10)]
     [InlineData(TechniqueId.Anchor, EntryFieldKind.Rating0To10)]
-    public void Entry_techniques_include_rating_fields(TechniqueId id, EntryFieldKind expectedKind)
+    public async Task Entry_techniques_include_rating_fields(TechniqueId id, EntryFieldKind expectedKind)
     {
-        BuiltInTechniqueDefinition definition = CreateCatalog().Get(id);
+        BuiltInTechniqueDefinition definition = await CreateCatalog().GetAsync(id);
         Assert.Contains(definition.Entries!, entry => entry.Kind == expectedKind);
     }
 
     [Fact]
-    public void Comparison_includes_reflection_field()
+    public async Task Comparison_includes_reflection_field()
     {
-        BuiltInTechniqueDefinition definition = CreateCatalog().Get(TechniqueId.Comparison);
+        BuiltInTechniqueDefinition definition = await CreateCatalog().GetAsync(TechniqueId.Comparison);
         Assert.Contains(definition.Entries!, entry => entry.Title.Contains("изменилось", StringComparison.OrdinalIgnoreCase));
     }
 }
