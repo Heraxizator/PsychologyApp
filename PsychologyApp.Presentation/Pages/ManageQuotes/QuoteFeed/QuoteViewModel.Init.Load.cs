@@ -61,6 +61,7 @@ public partial class QuoteViewModel
                 ShowAllReadEmpty = loadResult.ShowAllCaughtUp;
                 SyncDisplayItemsFromFeed();
                 SetDone();
+                BumpFeedContentVersion();
             });
 
             return true;

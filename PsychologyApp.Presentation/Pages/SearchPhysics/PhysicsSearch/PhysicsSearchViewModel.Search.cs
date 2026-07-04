@@ -8,6 +8,10 @@ namespace PsychologyApp.Presentation.Pages.SearchPhysics.PhysicsSearch;
 
 public partial class PhysicsSearchViewModel
 {
+    private int _searchResultsVersion;
+
+    public int SearchResultsVersion => _searchResultsVersion;
+
     private void DebouncedSearch(string searchText)
     {
         if (string.IsNullOrWhiteSpace(searchText))
@@ -65,6 +69,7 @@ public partial class PhysicsSearchViewModel
         ResultsObservableCollection.Clear();
         IsSearching = false;
         UpdateSearchUiState();
+        BumpSearchResultsVersion();
     }
 
     private async Task RunSearchAsync(string searchText, CancellationToken cancellationToken)
@@ -89,6 +94,7 @@ public partial class PhysicsSearchViewModel
                 ResultsObservableCollection.ReplaceRange(page.Items.ToList());
                 IsSearching = false;
                 UpdateSearchUiState();
+                BumpSearchResultsVersion();
             });
         }
         catch (OperationCanceledException)
@@ -123,5 +129,11 @@ public partial class PhysicsSearchViewModel
         }
 
         ResultsObservableCollection.AddRange(page.Items.ToList());
+    }
+
+    private void BumpSearchResultsVersion()
+    {
+        _searchResultsVersion++;
+        OnPropertyChanged(nameof(SearchResultsVersion));
     }
 }

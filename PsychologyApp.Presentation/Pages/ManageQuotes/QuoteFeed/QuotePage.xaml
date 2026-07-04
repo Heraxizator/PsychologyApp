@@ -38,6 +38,7 @@
                         BodyText="{Binding SearchQuery, Mode=TwoWay}" />
 
                     <ui:FilterChipTabBarView
+                        x:Name="FeedFilterBar"
                         IsVisible="{Binding IsFeedFiltersVisible}"
                         ItemsSource="{Binding FeedFilters}"
                         TapCommand="{Binding SelectFeedCommand}" />

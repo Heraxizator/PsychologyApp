@@ -80,7 +80,12 @@ public partial class DailyQuoteHeroView : ContentView
     }
 
     public static readonly BindableProperty IsFavouriteProperty =
-        BindableProperty.Create(nameof(IsFavourite), typeof(bool), typeof(DailyQuoteHeroView), false);
+        BindableProperty.Create(
+            nameof(IsFavourite),
+            typeof(bool),
+            typeof(DailyQuoteHeroView),
+            false,
+            propertyChanged: OnIsFavouriteChanged);
 
     public bool IsFavourite
     {
@@ -147,6 +152,17 @@ public partial class DailyQuoteHeroView : ContentView
         if (bindable is DailyQuoteHeroView view)
         {
             view.UpdateAuthorLine();
+        }
+    }
+
+    private static void OnIsFavouriteChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is DailyQuoteHeroView view)
+        {
+            FavoriteIconAnimator.PulseIfFavoriteChanged(
+                oldValue is true,
+                newValue is true,
+                view.FavoriteActionBorder);
         }
     }
 }

@@ -81,7 +81,12 @@ public partial class QuoteCardView : ContentView
     }
 
     public static readonly BindableProperty IsFavouriteProperty =
-        BindableProperty.Create(nameof(IsFavourite), typeof(bool), typeof(QuoteCardView), false);
+        BindableProperty.Create(
+            nameof(IsFavourite),
+            typeof(bool),
+            typeof(QuoteCardView),
+            false,
+            propertyChanged: OnIsFavouriteChanged);
 
     public bool IsFavourite
     {
@@ -180,6 +185,17 @@ public partial class QuoteCardView : ContentView
         if (bindable is QuoteCardView view)
         {
             view.UpdateAuthorLine();
+        }
+    }
+
+    private static void OnIsFavouriteChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is QuoteCardView view)
+        {
+            FavoriteIconAnimator.PulseIfFavoriteChanged(
+                oldValue is true,
+                newValue is true,
+                view.FavoriteActionBorder);
         }
     }
 }

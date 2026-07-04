@@ -82,6 +82,7 @@ public partial class QuoteViewModel : BaseViewModel
         {
             SyncDisplayItemsFromFeed();
             ShowAllReadEmpty = false;
+            BumpFeedContentVersion();
             return;
         }
 
@@ -115,6 +116,7 @@ public partial class QuoteViewModel : BaseViewModel
         OnPropertyChanged(nameof(ShowForYouEmpty));
         OnPropertyChanged(nameof(ShowFavoritesEmpty));
         NotifyEmptyStateProperties();
+                BumpFeedContentVersion();
             });
         }
         catch (OperationCanceledException)
@@ -156,4 +158,10 @@ public partial class QuoteViewModel : BaseViewModel
             nameof(EmptyIconName),
             nameof(ShowForYouEmpty),
             nameof(ShowFavoritesEmpty));
+
+    private void BumpFeedContentVersion()
+    {
+        _feedContentVersion++;
+        OnPropertyChanged(nameof(FeedContentVersion));
+    }
 }
