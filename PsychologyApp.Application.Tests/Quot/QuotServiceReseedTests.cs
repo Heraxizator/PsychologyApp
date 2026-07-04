@@ -26,13 +26,15 @@ public sealed class QuotServiceReseedTests
 
         var service = QuotServiceTestFactory.Create(repository, provider);
 
-        await service.ReseedFeedAsync(3);
+        await service.ReseedFeedAsync(2);
 
         repository.Verify(r => r.DeleteAllAsync(It.IsAny<CancellationToken>()), Times.Once);
         repository.Verify(
-            r => r.AddAsync(It.IsAny<DomainQuot>(), It.IsAny<CancellationToken>()),
-            Times.Exactly(3));
-        provider.Verify(p => p.LoadAllAsync(It.IsAny<CancellationToken>()), Times.AtLeast(3));
+            r => r.AddManyAsync(
+                It.Is<IReadOnlyList<DomainQuot>>(items => items.Count == 2),
+                It.IsAny<CancellationToken>()),
+            Times.Once);
+        provider.Verify(p => p.LoadAllAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]

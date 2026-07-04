@@ -52,14 +52,8 @@ public partial class QuoteViewModel
                     return;
                 }
 
-                QuotesObservableCollection.Clear();
-                foreach (QuoteItem item in loadResult.Items)
-                {
-                    QuotesObservableCollection.Add(item);
-                }
-
+                SetFeedItems(loadResult.Items);
                 ShowAllReadEmpty = loadResult.ShowAllCaughtUp;
-                SyncDisplayItemsFromFeed();
                 SetDone();
                 BumpFeedContentVersion();
             });
@@ -98,7 +92,7 @@ public partial class QuoteViewModel
 
     private Task RefreshQuoteBindingAsync(QuoteItem quoteItem)
     {
-        int index = QuotesObservableCollection.IndexOf(quoteItem);
+        int index = _feedItems.IndexOf(quoteItem);
         if (index < 0)
         {
             return Task.CompletedTask;
@@ -106,7 +100,7 @@ public partial class QuoteViewModel
 
         return UiThread.RunAsync(() =>
         {
-            QuotesObservableCollection[index] = quoteItem;
+            _feedItems[index] = quoteItem;
             if (!IsSearching)
             {
                 int displayIndex = DisplayItems.IndexOf(quoteItem);
@@ -153,7 +147,7 @@ public partial class QuoteViewModel
             {
                 foreach (QuoteItem item in items)
                 {
-                    QuotesObservableCollection.Add(item);
+                    _feedItems.Add(item);
                     DisplayItems.Add(item);
                 }
 

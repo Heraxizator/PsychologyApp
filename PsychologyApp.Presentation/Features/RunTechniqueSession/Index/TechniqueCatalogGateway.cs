@@ -13,4 +13,8 @@ public sealed class TechniqueCatalogGateway(ITechniqueCatalogService catalogServ
 
     public IReadOnlyList<TechniqueListEntry> GetBuiltInListEntries() =>
         catalogService.GetBuiltInListEntries();
+
+    public async Task<IReadOnlyList<TechniqueListEntry>> GetBuiltInListEntriesAsync(
+        CancellationToken cancellationToken = default) =>
+        await catalogService.GetBuiltInListEntriesAsync(cancellationToken);
 }

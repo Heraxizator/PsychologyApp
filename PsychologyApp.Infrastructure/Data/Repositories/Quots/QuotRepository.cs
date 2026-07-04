@@ -163,4 +163,38 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
 
         return rows.ToList();
     }
+
+    public async Task AddManyAsync(IReadOnlyList<Quot> quots, CancellationToken cancellationToken = default)
+    {
+        if (quots.Count == 0)
+        {
+            return;
+        }
+
+        if (quots.Count == 1)
+        {
+            await AddAsync(quots[0], cancellationToken);
+            return;
+        }
+
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteTransaction transaction = (SqliteTransaction)await connection.BeginTransactionAsync(cancellationToken);
+
+        try
+        {
+            await connection.ExecuteAsync(DapperCommandFactory.Create(
+                EntitySqlMaps.Quot.InsertSql,
+                quots,
+                transaction,
+                CommandTimeoutSeconds,
+                cancellationToken));
+
+            await transaction.CommitAsync(cancellationToken);
+        }
+        catch
+        {
+            await transaction.RollbackAsync(cancellationToken);
+            throw;
+        }
+    }
 }

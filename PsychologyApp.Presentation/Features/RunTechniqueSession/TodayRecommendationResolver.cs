@@ -59,7 +59,8 @@ public sealed class TodayRecommendationResolver(
             return;
         }
 
-        TechniqueListEntry entry = techniqueCatalog.GetBuiltInListEntries().First(e => e.TechniqueId == techniqueId);
+        TechniqueListEntry entry = techniqueCatalog.GetBuiltInListEntries()
+            .First(e => e.TechniqueId == techniqueId);
         TechniqueItem? match = staticItems.FirstOrDefault(item => item.Number == entry.Number);
         if (match is not null)
         {

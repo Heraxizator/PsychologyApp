@@ -18,7 +18,6 @@ namespace PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
 
 public partial class QuoteViewModel : BaseViewModel
 {
-    public ObservableRangeCollection<QuoteItem> QuotesObservableCollection { get; } = [];
     public ObservableRangeCollection<QuoteItem> DisplayItems { get; } = [];
     public ObservableCollection<FilterChipTabItem> FeedFilters { get; } = [];
     public ICommand LoadMoreQuotesCommand { get; private set; } = default!;
@@ -37,6 +36,7 @@ public partial class QuoteViewModel : BaseViewModel
     private readonly LanguageContentReloader _languageContentReloader;
     private CancellationTokenSource? _searchDebounceCts;
     private string? _feedLanguage;
+    private List<QuoteItem> _feedItems = [];
 
     public QuoteViewModel(
         INavigationService navigationService,
@@ -80,7 +80,7 @@ public partial class QuoteViewModel : BaseViewModel
     {
         if (!IsSearching)
         {
-            SyncDisplayItemsFromFeed();
+            RestoreFeedDisplayItems();
             ShowAllReadEmpty = false;
             BumpFeedContentVersion();
             return;
@@ -139,13 +139,26 @@ public partial class QuoteViewModel : BaseViewModel
         return UiThread.RunAsync(() => DisplayItems[index] = quoteItem);
     }
 
-    private void SyncDisplayItemsFromFeed()
+    private void RestoreFeedDisplayItems()
     {
-        DisplayItems.ReplaceRange(QuotesObservableCollection);
+        DisplayItems.ReplaceRange(_feedItems);
         OnPropertyChanged(nameof(IsSearching));
         OnPropertyChanged(nameof(IsFeedFiltersVisible));
         OnPropertyChanged(nameof(ShowDailyQuoteHeader));
         OnPropertyChanged(nameof(ShowForYouEmpty));
+        OnPropertyChanged(nameof(ShowFavoritesEmpty));
+        NotifyEmptyStateProperties();
+    }
+
+    private void SetFeedItems(IReadOnlyList<QuoteItem> items)
+    {
+        _feedItems = items.ToList();
+        DisplayItems.ReplaceRange(_feedItems);
+        OnPropertyChanged(nameof(IsSearching));
+        OnPropertyChanged(nameof(IsFeedFiltersVisible));
+        OnPropertyChanged(nameof(ShowDailyQuoteHeader));
+        OnPropertyChanged(nameof(ShowForYouEmpty));
+        OnPropertyChanged(nameof(ShowFavoritesEmpty));
         NotifyEmptyStateProperties();
     }
 

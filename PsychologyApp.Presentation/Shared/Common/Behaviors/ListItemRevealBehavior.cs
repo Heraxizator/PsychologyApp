@@ -79,7 +79,7 @@ public sealed class ListItemRevealBehavior : Behavior<VisualElement>
 
     private void OnLoaded(object? sender, EventArgs e)
     {
-        if (_hasRevealed || sender is not VisualElement view)
+        if (_hasRevealed || sender is not VisualElement view || IsInsideCollectionView(view))
         {
             return;
         }

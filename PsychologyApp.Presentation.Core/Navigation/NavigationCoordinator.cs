@@ -14,6 +14,28 @@ public static class NavigationCoordinator
 
     public static void SetLogger(ILogger logger) => _logger = logger;
 
+    internal static void ResetForTests()
+    {
+        while (Gate.CurrentCount == 0)
+        {
+            try
+            {
+                Gate.Release();
+            }
+            catch (SemaphoreFullException)
+            {
+                break;
+            }
+        }
+
+        while (Gate.CurrentCount > 1)
+        {
+            Gate.Wait(0);
+        }
+
+        Volatile.Write(ref _pushBlockedUntilUtcTicks, 0);
+    }
+
     public static void LogNavigationFailure(Exception exception, string message) =>
         _logger?.LogWarning(exception, message);
 

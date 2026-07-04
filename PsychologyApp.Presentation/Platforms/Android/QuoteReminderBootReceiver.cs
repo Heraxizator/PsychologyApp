@@ -25,7 +25,16 @@ public sealed class QuoteReminderBootReceiver : BroadcastReceiver
                 return;
             }
 
-            coordinator.SyncAsync().GetAwaiter().GetResult();
+            _ = Task.Run(async () =>
+            {
+                try
+                {
+                    await coordinator.SyncAsync().ConfigureAwait(false);
+                }
+                catch
+                {
+                }
+            });
         }
         catch
         {
