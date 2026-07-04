@@ -56,6 +56,6 @@ public partial class TheoryViewModel : BaseViewModel
     private async Task LoadTechniqueContentAsync(TechniqueId techniqueId)
     {
         TechniqueDefinition definition = await _techniqueCatalog.GetAsync(techniqueId);
-        await UiThread.RunAsync(() => ApplyContent(definition.TheoryInfo, techniqueId));
+        await UiThread.RunAsync(() => ApplyContent(definition));
     }
 }

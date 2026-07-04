@@ -14,8 +14,11 @@ public partial class TechniqueSessionPage : ContentPage
 {
     internal IPageAnalyticsService AnalyticsService { get; }
 
+    private readonly ITechniqueViewModelFactory _techniqueViewModelFactory;
     private readonly TechniqueCatalogGateway _techniqueCatalog;
     private readonly TechniqueId _techniqueId;
+    private readonly INavigation _hostNavigation;
+    private bool _initialized;
     private bool _bodyLoaded;
 
     public TechniqueSessionPage(
@@ -26,17 +29,30 @@ public partial class TechniqueSessionPage : ContentPage
         INavigation hostNavigation)
     {
         AnalyticsService = pageAnalyticsService;
+        _techniqueViewModelFactory = techniqueViewModelFactory;
         _techniqueCatalog = techniqueCatalog;
         _techniqueId = techniqueId;
+        _hostNavigation = hostNavigation;
         InitializeComponent();
-        BaseViewModel viewModel = techniqueViewModelFactory.Create(techniqueId, hostNavigation);
-        BindingContext = viewModel;
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        EnsureBodyLoadedAsync().FireAndForget();
+        InitializeSessionAsync().FireAndForget();
+    }
+
+    private async Task InitializeSessionAsync()
+    {
+        if (_initialized)
+        {
+            return;
+        }
+
+        _initialized = true;
+        BaseViewModel viewModel = await _techniqueViewModelFactory.CreateAsync(_techniqueId, _hostNavigation);
+        BindingContext = viewModel;
+        await EnsureBodyLoadedAsync();
     }
 
     private async Task EnsureBodyLoadedAsync()

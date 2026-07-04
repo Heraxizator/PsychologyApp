@@ -34,20 +34,27 @@ public partial class TheoryViewModel
 
     private void ApplyContent(string content, TechniqueId? techniqueId)
     {
-        if (techniqueId is TechniqueId id)
+        if (techniqueId is not null)
         {
-            TechniqueDefinition definition = _techniqueCatalog.Get(id);
-            TechniqueSubtitle = definition.ListTitle;
-            sections = definition.TheorySections ?? [];
-            Text = sections.Count > 0 ? string.Empty : definition.TheoryInfo;
-        }
-        else
-        {
-            TechniqueSubtitle = string.Empty;
-            sections = [];
-            Text = content;
+            throw new InvalidOperationException("Use ApplyContent(TechniqueDefinition) when techniqueId is set.");
         }
 
+        TechniqueSubtitle = string.Empty;
+        sections = [];
+        Text = content;
+        NotifyContentChanged();
+    }
+
+    private void ApplyContent(TechniqueDefinition definition)
+    {
+        TechniqueSubtitle = definition.ListTitle;
+        sections = definition.TheorySections ?? [];
+        Text = sections.Count > 0 ? string.Empty : definition.TheoryInfo;
+        NotifyContentChanged();
+    }
+
+    private void NotifyContentChanged()
+    {
         OnPropertyChanged(nameof(Sections));
         OnPropertyChanged(nameof(HasSections));
         OnPropertyChanged(nameof(HasLegacyText));

@@ -67,6 +67,8 @@ public sealed class DesignerViewModelFactory(
 public interface ITechniqueViewModelFactory
 {
     BaseViewModel Create(TechniqueId techniqueId, INavigation navigation);
+
+    Task<BaseViewModel> CreateAsync(TechniqueId techniqueId, INavigation navigation);
 }
 
 public sealed class TechniqueViewModelFactory(
@@ -78,7 +80,17 @@ public sealed class TechniqueViewModelFactory(
     Func<PaperListDraftCoordinator> paperListDraftCoordinatorFactory,
     Func<PolarityListDraftCoordinator> polarityListDraftCoordinatorFactory) : ViewModelFactoryBase, ITechniqueViewModelFactory
 {
-    public BaseViewModel Create(TechniqueId techniqueId, INavigation navigation)
+    public BaseViewModel Create(TechniqueId techniqueId, INavigation navigation) =>
+        CreateViewModel(techniqueId, navigation);
+
+    public async Task<BaseViewModel> CreateAsync(TechniqueId techniqueId, INavigation navigation)
+    {
+        BaseViewModel viewModel = CreateViewModel(techniqueId, navigation);
+        await viewModel.InitializeTechniqueAsync(techniqueId);
+        return viewModel;
+    }
+
+    private BaseViewModel CreateViewModel(TechniqueId techniqueId, INavigation navigation)
     {
         INavigationService navigationService = navigationServiceFactory(NavigationContext.From(navigation));
         ListTechniqueSessionHelper sessionHelper = new(

@@ -1,5 +1,6 @@
 using PsychologyApp.Application.Practice;
 using PsychologyApp.Application.Recommendations;
+using PsychologyApp.Presentation.Features.Onboarding;
 using PsychologyApp.Presentation.Features.RunTechniqueSession.Index;
 
 namespace PsychologyApp.Presentation.Tests;
@@ -14,4 +15,9 @@ internal static class TechniqueCatalogTestHelper
 
     public static TodayRecommendationResolver CreateTodayRecommendationResolver(string languageKey = "ru") =>
         new(CreateGateway(languageKey), CreateRecommendationService());
+
+    public static OnboardingRecommendationResolver CreateOnboardingRecommendationResolver(string languageKey = "ru") =>
+        new(
+            new TechniqueCatalogService(new BuiltInTechniqueCatalogProvider(() => languageKey)),
+            CreateRecommendationService());
 }

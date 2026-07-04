@@ -10,7 +10,7 @@ public partial class QuoteViewModel
     public bool HasInitialized => _initialized;
 
     public Task EnsureInitializedAsync() =>
-        _initialized ? Task.CompletedTask : RunInitAsync(seedNewQuote: true);
+        _initialized ? Task.CompletedTask : RunInitAsync(seedNewQuote: false);
 
     public Task ReloadFromPullAsync() => RunInitAsync(seedNewQuote: false);
 

@@ -35,9 +35,8 @@ public partial class PolarityViewModel : BaseViewModel
         _sessionHelper = sessionHelper;
         _draftCoordinator = draftCoordinator;
         _draftCoordinator.Attach(TechniqueId.Polarity.ToString(), _userProgressService);
-        ApplyTechnique(TechniqueId.Polarity);
-        IsFull = false;
         BindNavigation(navigationService);
+        IsFull = false;
         Add = new Command(ToAdd);
         Delete = new Command<Models.Practice.Techniques.Polarity>(DeleteItem);
         BackCommand = new AsyncCommand(GoBackAsync);

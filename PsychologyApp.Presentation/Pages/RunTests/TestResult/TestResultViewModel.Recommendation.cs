@@ -11,7 +11,9 @@ public partial class TestResultViewModel
     public string RecommendationTheme { get; private set; } = string.Empty;
     public string RecommendationIconName { get; private set; } = string.Empty;
 
-    private void RefreshRecommendationCopy()
+    private void RefreshRecommendationCopy() => RefreshRecommendationCopyAsync().FireAndForget();
+
+    private async Task RefreshRecommendationCopyAsync()
     {
         RecommendationHint = HasRecommendation ? AppStrings.TestsResultRecommendationHint : string.Empty;
         RecommendationTitle = string.Empty;
@@ -23,7 +25,7 @@ public partial class TestResultViewModel
         {
             try
             {
-                TechniqueDefinition definition = _techniqueCatalog.Get(techniqueId);
+                TechniqueDefinition definition = await _techniqueCatalog.GetAsync(techniqueId);
                 RecommendationTitle = definition.ListTitle;
                 RecommendationSubtitle = definition.ListSubtitle;
                 RecommendationTheme = definition.Theme;

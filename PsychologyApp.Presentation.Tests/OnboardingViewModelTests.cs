@@ -15,17 +15,17 @@ public sealed class OnboardingViewModelTests
         return new OnboardingViewModel(
             navigation.Object,
             new InMemoryUserPreferencesStore(),
-            TechniqueCatalogTestHelper.CreateGateway(),
-            TechniqueCatalogTestHelper.CreateRecommendationService(),
+            TechniqueCatalogTestHelper.CreateOnboardingRecommendationResolver(),
             _ => Task.CompletedTask);
     }
 
     [Fact]
-    public void SelectAnxietyCommand_SetsPrimaryVariant()
+    public async Task SelectAnxietyCommand_SetsPrimaryVariant()
     {
         OnboardingViewModel viewModel = CreateViewModel();
 
         viewModel.SelectAnxietyCommand.Execute(null);
+        await Task.Delay(100);
 
         Assert.Equal(OnboardingConcernKeys.Anxiety, viewModel.SelectedConcern);
         Assert.Equal("Primary", viewModel.ConcernAnxietyVariant);
@@ -33,12 +33,13 @@ public sealed class OnboardingViewModelTests
     }
 
     [Fact]
-    public void SelectMoodCommand_AdvancesToFinishStep()
+    public async Task SelectMoodCommand_AdvancesToFinishStep()
     {
         OnboardingViewModel viewModel = CreateViewModel();
         viewModel.Step = 2;
 
         viewModel.SelectMoodCommand.Execute(null);
+        await Task.Delay(100);
 
         Assert.Equal(OnboardingConcernKeys.Mood, viewModel.SelectedConcern);
         Assert.True(viewModel.IsFinishStep);
@@ -71,13 +72,14 @@ public sealed class OnboardingViewModelTests
     }
 
     [Fact]
-    public void RecommendedTitle_AfterAnxietySelection_IsSpinTitle()
+    public async Task RecommendedTitle_AfterAnxietySelection_IsSpinTitle()
     {
         OnboardingViewModel viewModel = CreateViewModel();
 
         viewModel.SelectAnxietyCommand.Execute(null);
+        await Task.Delay(100);
 
-        TechniqueDefinition spin = TechniqueCatalogTestHelper.CreateGateway().Get(TechniqueId.Spin);
+        TechniqueDefinition spin = await TechniqueCatalogTestHelper.CreateGateway().GetAsync(TechniqueId.Spin);
         Assert.Equal(spin.ListTitle, viewModel.RecommendedTitle);
         Assert.False(string.IsNullOrWhiteSpace(viewModel.RecommendedReason));
     }

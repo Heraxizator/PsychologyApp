@@ -57,4 +57,12 @@ public partial class OnboardingViewModel
             nameof(IsStepLabelOnIndicatorVisible),
             nameof(StepLabel));
     }
+
+    private void SetSelectedConcernWithoutRecommendationRefresh(string concern)
+    {
+        if (SetProperty(ref _selectedConcern, concern))
+        {
+            NotifyConcernSelection();
+        }
+    }
 }
