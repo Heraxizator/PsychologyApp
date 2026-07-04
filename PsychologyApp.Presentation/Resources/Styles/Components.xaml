@@ -69,6 +69,24 @@
         <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
         <Setter Property="Stroke" Value="Transparent" />
         <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryHover}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource DisabledSurfaceLight}, Dark={StaticResource DisabledSurfaceDark}}" />
+                            <Setter Property="Opacity" Value="{StaticResource DisabledOpacity}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
     </Style>
 
     <Style x:Key="PrimaryActionLabelStyle" TargetType="Label">
@@ -90,6 +108,23 @@
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="Stroke" Value="{DynamicResource Primary}" />
         <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="{StaticResource DisabledOpacity}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
     </Style>
 
     <Style x:Key="OutlinedActionLabelStyle" TargetType="Label">
@@ -234,6 +269,56 @@
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
     </Style>
 
+    <Shadow
+        x:Key="HeroCardShadowLight"
+        Brush="#120085FF"
+        Offset="0,2"
+        Radius="8"
+        Opacity="0.10" />
+
+    <Shadow
+        x:Key="HeroCardShadowDark"
+        Brush="#000000"
+        Offset="0,1"
+        Radius="10"
+        Opacity="0.28" />
+
+    <Style x:Key="HeroCardStyle" TargetType="Border" BasedOn="{StaticResource TodayPracticeRowStyle}">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceHeroLight}, Dark={StaticResource SurfaceHeroDark}}" />
+        <Setter Property="Shadow" Value="{AppThemeBinding Light={StaticResource HeroCardShadowLight}, Dark={StaticResource HeroCardShadowDark}}" />
+    </Style>
+
+    <Style x:Key="HeroAccentBarStyle" TargetType="Border">
+        <Setter Property="WidthRequest" Value="{StaticResource HeroAccentBarWidth}" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 2" />
+        <Setter Property="VerticalOptions" Value="Fill" />
+        <Setter Property="Margin" Value="0,2,0,2" />
+    </Style>
+
+    <Style x:Key="MetaPillStyle" TargetType="Border">
+        <Setter Property="Padding" Value="10,6" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="EmptyStateActionPillStyle" TargetType="Border">
+        <Setter Property="Padding" Value="4,0" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceHeroLight}, Dark={StaticResource SurfaceHeroDark}}" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="MetricTileTapTargetStyle" TargetType="VerticalStackLayout">
+        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="Padding" Value="4,8" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
     <Style x:Key="MoodStripStyle" TargetType="Border">
         <Setter Property="Padding" Value="12,10" />
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
@@ -268,6 +353,19 @@
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
         <Setter Property="Stroke" Value="{DynamicResource Primary}" />
         <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Pressed">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
+                            <Setter Property="Opacity" Value="0.92" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
     </Style>
 
     <Style x:Key="MoodChipStyle" TargetType="Border">

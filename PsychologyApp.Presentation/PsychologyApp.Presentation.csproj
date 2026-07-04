@@ -122,13 +122,13 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		 <MauiIcon Include="Resources\AppIcon\logo.svg" TintColor="#0085FF" Color="#FFFFFF" />
-		
+		<MauiIcon Include="Resources\AppIcon\logo.jpeg" />
+
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\icon.svg" Color="#FFFFFF" TintColor="#96d1ff" BaseSize="512, 512" />
+		<MauiSplashScreen Include="Resources\AppIcon\logo.jpeg" Color="#FFFFFF" BaseSize="512,512" />
 
 		<!-- Images -->
-		<MauiImage Include="Resources\AppIcon\logo.svg" Link="Resources\Images\onboarding_app_logo.svg" BaseSize="128,128" />
+		<MauiImage Include="Resources\AppIcon\logo.jpeg" Link="Resources\Images\onboarding_app_logo.jpeg" BaseSize="128,128" />
 		<MauiImage Include="Resources\Images\*" />
 		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
 

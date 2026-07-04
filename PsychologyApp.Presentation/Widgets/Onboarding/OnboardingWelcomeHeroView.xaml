@@ -16,8 +16,7 @@
                         x:Name="LogoHalo"
                         WidthRequest="120"
                         HeightRequest="120"
-                        StrokeThickness="0"
-                        BackgroundColor="#1A0085FF"
+                        Style="{StaticResource EmptyStateIconHaloStyle}"
                         HorizontalOptions="Center"
                         VerticalOptions="Center">
                         <Border.StrokeShape>
@@ -50,8 +49,7 @@
                     HorizontalTextAlignment="Center" />
                 <Label
                     Text="{Binding Source={x:Reference Root}, Path=AppTagline}"
-                    Style="{StaticResource CaptionStyle}"
-                    TextColor="{DynamicResource Primary}"
+                    Style="{StaticResource HeroCaptionStyle}"
                     HorizontalTextAlignment="Center" />
             </VerticalStackLayout>
         </Border>

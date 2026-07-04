@@ -9,10 +9,16 @@ public partial class SettingsLinkCardView : ContentView
     {
         InitializeComponent();
         TemplatePressFeedback.Attach(this, new PressFeedbackOptions { HapticOnRelease = true });
+        Loaded += (_, _) => UpdateSemantics();
     }
 
     public static readonly BindableProperty TitleProperty =
-        BindableProperty.Create(nameof(Title), typeof(string), typeof(SettingsLinkCardView), string.Empty);
+        BindableProperty.Create(
+            nameof(Title),
+            typeof(string),
+            typeof(SettingsLinkCardView),
+            string.Empty,
+            propertyChanged: OnPresentationChanged);
 
     public string Title
     {
@@ -21,7 +27,12 @@ public partial class SettingsLinkCardView : ContentView
     }
 
     public static readonly BindableProperty SubtitleProperty =
-        BindableProperty.Create(nameof(Subtitle), typeof(string), typeof(SettingsLinkCardView), string.Empty);
+        BindableProperty.Create(
+            nameof(Subtitle),
+            typeof(string),
+            typeof(SettingsLinkCardView),
+            string.Empty,
+            propertyChanged: OnPresentationChanged);
 
     public string Subtitle
     {
@@ -36,5 +47,22 @@ public partial class SettingsLinkCardView : ContentView
     {
         get => (ICommand)GetValue(TapCommandProperty);
         set => SetValue(TapCommandProperty, value);
+    }
+
+    private static void OnPresentationChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is SettingsLinkCardView view)
+        {
+            view.UpdateSemantics();
+        }
+    }
+
+    private void UpdateSemantics()
+    {
+        string description = string.IsNullOrWhiteSpace(Subtitle)
+            ? Title
+            : $"{Title}. {Subtitle}";
+        SemanticProperties.SetDescription(this, description);
+        SemanticProperties.SetHint(this, Title);
     }
 }

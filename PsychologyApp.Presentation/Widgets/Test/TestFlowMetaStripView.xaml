@@ -10,18 +10,11 @@
         IsVisible="{Binding HasMeta, Source={x:Reference Root}}">
         <Border
             IsVisible="{Binding HasDuration, Source={x:Reference Root}}"
-            Padding="10,6"
-            StrokeThickness="0"
-            BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="8" />
-            </Border.StrokeShape>
+            Style="{StaticResource MetaPillStyle}">
             <HorizontalStackLayout Spacing="6">
                 <Label
                     Text="{mi:Material Icon=Schedule}"
-                    FontSize="14"
-                    TextColor="{DynamicResource Primary}"
-                    VerticalOptions="Center" />
+                    Style="{StaticResource MetaIconStyle}" />
                 <Label
                     Text="{Binding DurationText, Source={x:Reference Root}}"
                     Style="{StaticResource CaptionStyle}"
@@ -33,18 +26,11 @@
 
         <Border
             IsVisible="{Binding HasQuestionCount, Source={x:Reference Root}}"
-            Padding="10,6"
-            StrokeThickness="0"
-            BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="8" />
-            </Border.StrokeShape>
+            Style="{StaticResource MetaPillStyle}">
             <HorizontalStackLayout Spacing="6">
                 <Label
                     Text="{mi:Material Icon=Quiz}"
-                    FontSize="14"
-                    TextColor="{DynamicResource Primary}"
-                    VerticalOptions="Center" />
+                    Style="{StaticResource MetaIconStyle}" />
                 <Label
                     Text="{Binding QuestionCountText, Source={x:Reference Root}}"
                     Style="{StaticResource CaptionStyle}"

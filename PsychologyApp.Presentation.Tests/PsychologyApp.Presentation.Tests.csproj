@@ -41,6 +41,7 @@
     <Compile Include="NavigationCoordinatorTests.cs" />
     <Compile Include="NavigationRetryTests.cs" />
     <Compile Include="OnboardingStepNavigatorTests.cs" />
+    <Compile Include="UiTokensTests.cs" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">

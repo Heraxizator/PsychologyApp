@@ -6,20 +6,19 @@
              x:Class="PsychologyApp.Presentation.Widgets.DailyQuoteHero.DailyQuoteHeroView"
              x:Name="Root">
 
-    <VerticalStackLayout Spacing="6" Margin="0,0,0,8">
+    <VerticalStackLayout Spacing="6" Margin="{StaticResource CardBottomMargin}">
         <Label
             Text="{Binding CaptionText, Source={x:Reference Root}}"
-            Style="{StaticResource CaptionStyle}"
-            TextColor="{DynamicResource Primary}" />
+            Style="{StaticResource HeroCaptionStyle}" />
 
-        <Border Style="{StaticResource TodayPracticeRowStyle}">
+        <Border Style="{StaticResource HeroCardStyle}">
             <Border.Behaviors>
                 <behaviors:RevealOnAppearingBehavior />
             </Border.Behaviors>
             <VerticalStackLayout Spacing="10">
                 <Label
                     HorizontalTextAlignment="Start"
-                    Style="{StaticResource QuoteDisplayStyle}"
+                    Style="{StaticResource HeroQuoteStyle}"
                     Text="{Binding QuoteText, Source={x:Reference Root}}" />
 
                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
