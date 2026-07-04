@@ -157,7 +157,8 @@ public sealed class SettingsViewModelTests
             store,
             new SettingsPreferencesPresenter(),
             TopViewModelTestHelpers.CreateLanguageReloader(Mock.Of<IQuotService>()),
-            Mock.Of<IPracticeReminderCoordinator>());
+            Mock.Of<IPracticeReminderCoordinator>(),
+            Mock.Of<IQuoteReminderCoordinator>());
 
         viewModel.ReplayOnboardingCommand.Execute(null);
         await Task.Delay(200);
@@ -181,7 +182,8 @@ public sealed class SettingsViewModelTests
             store,
             new SettingsPreferencesPresenter(),
             TopViewModelTestHelpers.CreateLanguageReloader(Mock.Of<IQuotService>()),
-            Mock.Of<IPracticeReminderCoordinator>());
+            Mock.Of<IPracticeReminderCoordinator>(),
+            Mock.Of<IQuoteReminderCoordinator>());
 
         viewModel.ApplyCommand.Execute(null);
         await Task.Delay(200);
@@ -204,7 +206,8 @@ public sealed class SettingsViewModelTests
             store,
             new SettingsPreferencesPresenter(),
             TopViewModelTestHelpers.CreateLanguageReloader(Mock.Of<IQuotService>()),
-            Mock.Of<IPracticeReminderCoordinator>());
+            Mock.Of<IPracticeReminderCoordinator>(),
+            Mock.Of<IQuoteReminderCoordinator>());
     }
 
     [Fact]

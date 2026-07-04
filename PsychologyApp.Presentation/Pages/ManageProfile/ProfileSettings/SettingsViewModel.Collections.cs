@@ -13,6 +13,7 @@ public partial class SettingsViewModel
     public IReadOnlyList<string> FormOptions { get; private set; } = [];
     public IReadOnlyList<string> SizeOptions { get; private set; } = [];
     public IReadOnlyList<string> PracticeReminderHourOptions { get; private set; } = [];
+    public IReadOnlyList<string> QuoteReminderHourOptions { get; private set; } = [];
 
     private void LoadFromPreferences()
     {
@@ -29,12 +30,15 @@ public partial class SettingsViewModel
                 value => isThick = value,
                 value => questionnaireAutoAdvance = value,
                 value => practiceRemindersEnabled = value,
-                value => practiceReminderHour = value);
+                value => practiceReminderHour = value,
+                value => quoteRemindersEnabled = value,
+                value => quoteReminderHour = value);
 
             NotifyPickerValuesChanged();
             OnPropertyChanged(nameof(IsThick));
             OnPropertyChanged(nameof(QuestionnaireAutoAdvance));
             OnPropertyChanged(nameof(PracticeRemindersEnabled));
+            OnPropertyChanged(nameof(QuoteRemindersEnabled));
         }
         finally
         {
@@ -50,6 +54,7 @@ public partial class SettingsViewModel
         FormOptions = UserPreferences.FormKeys.ToArray();
         SizeOptions = UserPreferences.SizeKeys.ToArray();
         PracticeReminderHourOptions = UserPreferences.GetPracticeReminderHourOptions().ToArray();
+        QuoteReminderHourOptions = UserPreferences.GetQuoteReminderHourOptions().ToArray();
 
         OnPropertyChanged(nameof(LanguageOptions));
         OnPropertyChanged(nameof(ThemeOptions));
@@ -57,6 +62,7 @@ public partial class SettingsViewModel
         OnPropertyChanged(nameof(FormOptions));
         OnPropertyChanged(nameof(SizeOptions));
         OnPropertyChanged(nameof(PracticeReminderHourOptions));
+        OnPropertyChanged(nameof(QuoteReminderHourOptions));
     }
 
     private void NotifyPickerValuesChanged()
@@ -67,6 +73,7 @@ public partial class SettingsViewModel
         OnPropertyChanged(nameof(Form));
         OnPropertyChanged(nameof(Size));
         OnPropertyChanged(nameof(PracticeReminderHour));
+        OnPropertyChanged(nameof(QuoteReminderHour));
     }
 
     private void NotifyLocalizedLabelsChanged()
@@ -86,6 +93,9 @@ public partial class SettingsViewModel
         OnPropertyChanged(nameof(PracticeRemindersLabel));
         OnPropertyChanged(nameof(PracticeReminderHourLabel));
         OnPropertyChanged(nameof(PracticeReminderHourPickerTitle));
+        OnPropertyChanged(nameof(QuoteRemindersLabel));
+        OnPropertyChanged(nameof(QuoteReminderHourLabel));
+        OnPropertyChanged(nameof(QuoteReminderHourPickerTitle));
         OnPropertyChanged(nameof(ApplyButtonText));
         OnPropertyChanged(nameof(ReplayOnboardingText));
         OnPropertyChanged(nameof(FormHelperText));

@@ -1,5 +1,6 @@
 using PsychologyApp.Application.Quot;
 using PsychologyApp.Presentation.Entities.Quote;
+using PsychologyApp.Presentation.Features.ManageQuotes.Index;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Features.ManageProfile;
@@ -57,9 +58,10 @@ public sealed class ProfileQuotesLoader(
         int generation,
         Func<int> getCurrentGeneration,
         CancellationToken outerToken,
-        ICommand openQuotesTabCommand,
-        Func<string, string, ICommand> shareCommandFactory,
-        Func<string, string, ICommand> copyCommandFactory)
+        QuoteItemCommandsFactory commandsFactory,
+        Func<QuoteItem, Task> refreshBindingAsync,
+        Action onFail,
+        ICommand openQuotesTabCommand)
     {
         _loadCts?.Cancel();
         _loadCts?.Dispose();
@@ -77,9 +79,10 @@ public sealed class ProfileQuotesLoader(
 
             IReadOnlyList<QuoteItem> items = presenter.MapFavorites(
                 quotDTOs,
-                openQuotesTabCommand,
-                shareCommandFactory,
-                copyCommandFactory);
+                commandsFactory,
+                refreshBindingAsync,
+                onFail,
+                openQuotesTabCommand);
 
             _loadedOnce = true;
             return new ProfileQuotesLoadResult

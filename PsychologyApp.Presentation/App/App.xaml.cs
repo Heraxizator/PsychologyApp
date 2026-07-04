@@ -19,7 +19,9 @@ public partial class App : Microsoft.Maui.Controls.Application
     protected override Window CreateWindow(IActivationState? activationState)
     {
         AppShell shell = _services.GetRequiredService<AppShell>();
-        PracticeReminderTapHandler.Configure(new AppShellTabNavigator(shell));
+        var tabNavigator = new AppShellTabNavigator(shell);
+        PracticeReminderTapHandler.Configure(tabNavigator);
+        QuoteReminderTapHandler.Configure(tabNavigator);
         return new(shell);
     }
 
@@ -28,5 +30,6 @@ public partial class App : Microsoft.Maui.Controls.Application
         base.OnResume();
         ReduceMotion.Refresh();
         _services.GetRequiredService<IPracticeReminderCoordinator>().SyncAsync().FireAndForget();
+        _services.GetRequiredService<IQuoteReminderCoordinator>().SyncAsync().FireAndForget();
     }
 }

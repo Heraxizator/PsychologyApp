@@ -60,6 +60,8 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<ITechniqueService, TechniqueService>();
         services.AddSingleton<IQuotService, QuotService>();
+        services.AddSingleton<IQuoteCatalogLookup, QuoteCatalogLookup>();
+        services.AddSingleton<IQuoteSearchService, QuoteSearchService>();
         services.AddSingleton<IReasonSearchService, ReasonSearchService>();
         services.AddSingleton(TimeProvider.System);
         services.AddSingleton<IStatisticService, StatisticService>();

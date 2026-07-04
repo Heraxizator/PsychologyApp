@@ -8,6 +8,12 @@
 				<action android:name="android.intent.action.BOOT_COMPLETED" />
 			</intent-filter>
 		</receiver>
+		<receiver android:name="PsychologyApp.Presentation.Platforms.Android.QuoteReminderAlarmReceiver" android:exported="false" />
+		<receiver android:name="PsychologyApp.Presentation.Platforms.Android.QuoteReminderBootReceiver" android:exported="false">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+			</intent-filter>
+		</receiver>
 	</application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />

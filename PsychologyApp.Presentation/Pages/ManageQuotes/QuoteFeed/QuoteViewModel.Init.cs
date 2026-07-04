@@ -19,11 +19,26 @@ public partial class QuoteViewModel
         await _initGate.WaitAsync();
         try
         {
-            if (await InitAsync(seedNewQuote))
+            int generation = ++_feedLoadGeneration;
+            if (await LoadFeedAsync(seedNewQuote, isInitialLoad: true, generation))
             {
                 _initialized = true;
                 _feedLanguage = UserPreferences.GetPersistedLanguage();
             }
+        }
+        finally
+        {
+            _initGate.Release();
+        }
+    }
+
+    private async Task ReloadFeedAsync(bool seedNewQuote)
+    {
+        await _initGate.WaitAsync();
+        try
+        {
+            int generation = ++_feedLoadGeneration;
+            await LoadFeedAsync(seedNewQuote, isInitialLoad: false, generation);
         }
         finally
         {

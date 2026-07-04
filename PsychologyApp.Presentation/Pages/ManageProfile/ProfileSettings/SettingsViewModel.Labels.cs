@@ -18,6 +18,10 @@ public partial class SettingsViewModel
     public string PracticeRemindersLabel => AppStrings.SettingsPracticeRemindersLabel;
     public string PracticeReminderHourLabel => AppStrings.SettingsPracticeReminderHourLabel;
     public string PracticeReminderHourPickerTitle => AppStrings.SettingsPracticeReminderHourPickerTitle;
+    public string QuotesSectionTitle => AppStrings.SettingsQuotesSection;
+    public string QuoteRemindersLabel => AppStrings.SettingsQuoteRemindersLabel;
+    public string QuoteReminderHourLabel => AppStrings.SettingsQuoteReminderHourLabel;
+    public string QuoteReminderHourPickerTitle => AppStrings.SettingsQuoteReminderHourPickerTitle;
     public string QuestionnaireAutoAdvanceLabel => AppStrings.SettingsQuestionnaireAutoAdvanceLabel;
     public string ApplyButtonText => AppStrings.SettingsApplyButton;
     public string ReplayOnboardingText => AppStrings.SettingsReplayOnboarding;

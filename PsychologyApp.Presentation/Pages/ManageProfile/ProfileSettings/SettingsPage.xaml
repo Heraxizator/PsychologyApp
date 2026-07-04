@@ -84,6 +84,21 @@
 
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                 <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <Label Text="{Binding QuotesSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <ui:SettingSwitchRowView
+                        LabelText="{Binding QuoteRemindersLabel}"
+                        IsToggled="{Binding QuoteRemindersEnabled}" />
+                    <ui:SettingPickerRowView
+                        LabelKind="{x:Static converters:PreferenceLabelKind.PassThrough}"
+                        LabelText="{Binding QuoteReminderHourLabel}"
+                        PickerTitle="{Binding QuoteReminderHourPickerTitle}"
+                        ItemsSource="{Binding QuoteReminderHourOptions}"
+                        SelectedItem="{Binding QuoteReminderHour}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                     <Label Text="{Binding TestsSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
                     <ui:SettingSwitchRowView
                         LabelText="{Binding QuestionnaireAutoAdvanceLabel}"

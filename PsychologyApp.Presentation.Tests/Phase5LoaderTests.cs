@@ -18,9 +18,9 @@ using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
 
-public sealed class QuoteFeedLoaderTests
+public sealed class QuoteFeedCoordinatorLoadTests
 {
-    public QuoteFeedLoaderTests()
+    public QuoteFeedCoordinatorLoadTests()
     {
         AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
     }
@@ -30,38 +30,40 @@ public sealed class QuoteFeedLoaderTests
     {
         Mock<IQuotService> quotService = new();
         quotService
-            .Setup(s => s.LoadSingleAsync(It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
+            .Setup(s => s.TryLoadSingleAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(true);
         quotService
-            .Setup(s => s.GetAllAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .Setup(s => s.GetUnreadAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(
             [
-                new QuotDTO { QuotId = 1, Text = "Alpha", Title = "A", IsFavourite = false, IsReaded = false },
-                new QuotDTO { QuotId = 2, Text = "Alpha", Title = "B", IsFavourite = false, IsReaded = false },
-                new QuotDTO { QuotId = 3, Text = "Beta", Title = "C", IsFavourite = false, IsReaded = false }
+                new QuotDTO { QuotId = 1, Text = "Alpha", Title = "A", Theme = "wisdom", IsFavourite = false, IsReaded = false },
+                new QuotDTO { QuotId = 2, Text = "Alpha", Title = "B", Theme = "wisdom", IsFavourite = false, IsReaded = false },
+                new QuotDTO { QuotId = 3, Text = "Beta", Title = "C", Theme = "calm", IsFavourite = false, IsReaded = false }
             ]);
+        quotService
+            .Setup(s => s.IsAllCaughtUpAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(false);
 
         QuoteFeedCoordinator coordinator = new();
-        QuoteFeedLoader loader = new();
         QuoteItemCommandsFactory factory = CreateQuoteItemFactory(quotService.Object);
         bool failed = false;
 
-        IReadOnlyList<QuoteItem> items = await loader.LoadItemsAsync(
-            coordinator,
+        QuoteFeedLoadResult result = await coordinator.LoadItemsAsync(
             quotService.Object,
             factory,
             count: 20,
             resetKnown: true,
             seedNewQuote: true,
+            dailyQuoteText: null,
             _ => Task.CompletedTask,
             () => failed = true,
             CancellationToken.None);
 
-        quotService.Verify(s => s.LoadSingleAsync(It.IsAny<CancellationToken>()), Times.Once);
+        quotService.Verify(s => s.TryLoadSingleAsync(It.IsAny<CancellationToken>()), Times.Once);
         Assert.False(failed);
-        Assert.Equal(2, items.Count);
-        Assert.Equal("Alpha", items[0].Text);
-        Assert.Equal("Beta", items[1].Text);
+        Assert.Equal(2, result.Items.Count);
+        Assert.Equal("Alpha", result.Items[0].Text);
+        Assert.Equal("Beta", result.Items[1].Text);
     }
 
     [Fact]
@@ -69,40 +71,42 @@ public sealed class QuoteFeedLoaderTests
     {
         Mock<IQuotService> quotService = new();
         quotService
-            .Setup(s => s.GetAllAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .Setup(s => s.GetUnreadAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(
             [
-                new QuotDTO { QuotId = 1, Text = "Shared", Title = "A", IsFavourite = false, IsReaded = false }
+                new QuotDTO { QuotId = 1, Text = "Shared", Title = "A", Theme = "wisdom", IsFavourite = false, IsReaded = false }
             ]);
+        quotService
+            .Setup(s => s.IsAllCaughtUpAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(false);
 
         QuoteFeedCoordinator firstCoordinator = new();
         QuoteFeedCoordinator secondCoordinator = new();
-        QuoteFeedLoader loader = new();
         QuoteItemCommandsFactory factory = CreateQuoteItemFactory(quotService.Object);
 
-        await loader.LoadItemsAsync(
-            firstCoordinator,
+        await firstCoordinator.LoadItemsAsync(
             quotService.Object,
             factory,
             count: 20,
             resetKnown: true,
             seedNewQuote: false,
+            dailyQuoteText: null,
             _ => Task.CompletedTask,
             () => { },
             CancellationToken.None);
 
-        IReadOnlyList<QuoteItem> secondLoad = await loader.LoadItemsAsync(
-            secondCoordinator,
+        QuoteFeedLoadResult secondLoad = await secondCoordinator.LoadItemsAsync(
             quotService.Object,
             factory,
             count: 20,
             resetKnown: true,
             seedNewQuote: false,
+            dailyQuoteText: null,
             _ => Task.CompletedTask,
             () => { },
             CancellationToken.None);
 
-        Assert.Single(secondLoad);
+        Assert.Single(secondLoad.Items);
     }
 
     private static QuoteItemCommandsFactory CreateQuoteItemFactory(IQuotService quotService) =>

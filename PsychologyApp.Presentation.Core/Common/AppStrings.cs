@@ -53,6 +53,7 @@ public static partial class AppStrings
     public static string SettingsTestsSection => T("Тесты", "Tests");
     public static string SettingsPracticeSection => T("Практика", "Practice");
     public static string SettingsPracticeRemindersLabel => T("Напоминания о практике", "Practice reminders");
+    public static string SettingsQuotesSection => T("Цитаты", "Quotes");
     public static string SettingsPracticeReminderHourLabel => T("Время напоминания", "Reminder time");
     public static string SettingsPracticeReminderHourPickerTitle => T("Время", "Time");
     public static string PracticeReminderTitle => T("Пора позаниматься", "Time to practice");
@@ -295,6 +296,9 @@ public static partial class AppStrings
         "Tap Refresh to load quotes again");
     public static string QuotesRefreshButton => T("Обновить", "Refresh");
     public static string ProfileQuotesEmpty => T("Пока нет избранных цитат", "No favorite quotes yet");
+    public static string QuotesFavoritesEmptyBody => T(
+        "Нажмите сердечко на цитате, чтобы добавить её сюда.",
+        "Tap the heart on a quote to add it here.");
 
     public static string PhysicsSolutionHeader => T("Что делать", "What to do");
     public static string PhysicsRecommendedPractices => T("Практики, которые могут помочь", "Practices that may help");
@@ -490,6 +494,49 @@ public static partial class AppStrings
     public static string QuotesGoToTab => T("Перейти к цитатам", "Go to quotes");
     public static string QuotesFeedAll => T("Все", "All");
     public static string QuotesFeedFavorites => T("Избранное", "Favorites");
+    public static string QuotesFeedForYou => T("Для вас", "For you");
+    public static string QuotesThemeAll => T("Все темы", "All themes");
+    public static string QuotesDailyTitle => T("Цитата дня", "Quote of the day");
+    public static string QuotesSearchPlaceholder => T("Поиск по цитатам", "Search quotes");
+    public static string QuotesSearchEmptyTitle => T("Ничего не найдено", "Nothing found");
+    public static string QuotesSearchEmptyBody => T("Попробуйте другой запрос.", "Try a different query.");
+    public static string QuotesShowAgain => T("Показать снова", "Show again");
+    public static string QuotesForYouHint => T(
+        "Подобрано под ваш запрос из онбординга",
+        "Picked for your onboarding focus");
+    public static string QuotesForYouEmptyTitle => T("Пока нет цитат для вас", "No quotes for you yet");
+    public static string QuotesForYouEmptyBody => T(
+        "Мы подбираем цитаты под ваш фокус из онбординга. Загляните позже или переключитесь на «Все».",
+        "We pick quotes for your onboarding focus. Check back later or switch to All.");
+    public static string SettingsQuoteRemindersLabel => T("Цитата дня", "Daily quote");
+    public static string SettingsQuoteReminderHourLabel => T("Время цитаты", "Quote time");
+    public static string SettingsQuoteReminderHourPickerTitle => T("Время", "Time");
+    public static string QuoteReminderTitle => T("Цитата дня", "Quote of the day");
+    public static string QuoteReminderBody => T(
+        "Откройте приложение и прочитайте мысль дня.",
+        "Open the app and read today's thought.");
+    public static string QuoteThemeWisdom => T("Мудрость", "Wisdom");
+    public static string QuoteThemeMotivation => T("Мотивация", "Motivation");
+    public static string QuoteThemeResilience => T("Стойкость", "Resilience");
+    public static string QuoteThemeSelfAwareness => T("Осознанность", "Self-awareness");
+    public static string QuoteThemeMindfulness => T("Осмыленность", "Mindfulness");
+    public static string QuoteThemeSelfEsteem => T("Самооценка", "Self-esteem");
+    public static string QuoteThemeHope => T("Надежда", "Hope");
+    public static string QuoteThemeEmpathy => T("Эмпатия", "Empathy");
+    public static string QuoteThemeHappiness => T("Счастье", "Happiness");
+    public static string QuoteThemeHabits => T("Привычки", "Habits");
+    public static string QuoteThemeLove => T("Любовь", "Love");
+    public static string QuoteThemeRelationships => T("Отношения", "Relationships");
+    public static string QuoteThemeResponsibility => T("Ответственность", "Responsibility");
+    public static string QuoteThemePurpose => T("Смысл", "Purpose");
+    public static string QuoteThemeGrowth => T("Рост", "Growth");
+    public static string QuoteThemeHealing => T("Исцеление", "Healing");
+    public static string QuoteThemeSelfLove => T("Любовь к себе", "Self-love");
+    public static string QuoteThemeAcceptance => T("Принятие", "Acceptance");
+    public static string QuoteThemeGratitude => T("Благодарность", "Gratitude");
+    public static string QuoteThemeCalm => T("Спокойствие", "Calm");
+    public static string QuoteThemeAnxiety => T("Тревога", "Anxiety");
+    public static string QuoteThemeGeneral => T("Общее", "General");
     public static string QuotesAllReadTitle => T("Вы всё прочитали", "You are all caught up");
     public static string QuotesAllReadBody => T(
         "Новых цитат пока нет. Откройте избранное или обновите позже.",

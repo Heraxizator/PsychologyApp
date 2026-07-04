@@ -1,6 +1,6 @@
-using PsychologyApp.Application;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Presentation.Entities.Quote;
+using PsychologyApp.Presentation.Features.ManageQuotes.Index;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Features.ManageProfile;
@@ -9,9 +9,10 @@ public sealed class ProfileQuotesPresenter
 {
     public IReadOnlyList<QuoteItem> MapFavorites(
         IEnumerable<QuotDTO> quotDTOs,
-        ICommand openQuotesTabCommand,
-        Func<string, string, ICommand> shareCommandFactory,
-        Func<string, string, ICommand> copyCommandFactory)
+        QuoteItemCommandsFactory commandsFactory,
+        Func<QuoteItem, Task> refreshBindingAsync,
+        Action onFail,
+        ICommand openQuotesTabCommand)
     {
         List<QuoteItem> items = [];
 
@@ -22,16 +23,9 @@ public sealed class ProfileQuotesPresenter
                 continue;
             }
 
-            items.Add(new QuoteItem
-            {
-                Id = quotDTO.QuotId,
-                Text = quotDTO.Text,
-                Author = quotDTO.Title,
-                IsFavourite = quotDTO.IsFavourite,
-                ShareCommand = shareCommandFactory(quotDTO.Text, quotDTO.Title),
-                CopyCommand = copyCommandFactory(quotDTO.Text, quotDTO.Title),
-                OpenQuotesTabCommand = openQuotesTabCommand
-            });
+            QuoteItem item = commandsFactory.CreateQuoteItem(quotDTO, refreshBindingAsync, onFail);
+            item.OpenQuotesTabCommand = openQuotesTabCommand;
+            items.Add(item);
         }
 
         return items;

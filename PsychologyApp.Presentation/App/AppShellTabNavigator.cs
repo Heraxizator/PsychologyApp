@@ -13,4 +13,13 @@ public sealed class AppShellTabNavigator(AppShell appShell) : IShellTabNavigator
             appShell.OpenPendingTechniqueIfNeeded();
         });
     }
+
+    public void OpenQuotesTab()
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            appShell.MaterializeTab(appShell.QuotesShellTab);
+            appShell.CurrentItem = appShell.QuotesShellTab;
+        });
+    }
 }

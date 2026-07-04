@@ -39,7 +39,9 @@ public sealed class InMemoryUserPreferencesStore : IUserPreferencesStore
             HasCompletedOnboarding = true,
             OnboardingConcern = concern,
             PracticeRemindersEnabled = _state.PracticeRemindersEnabled,
-            PracticeReminderHour = _state.PracticeReminderHour
+            PracticeReminderHour = _state.PracticeReminderHour,
+            QuoteRemindersEnabled = _state.QuoteRemindersEnabled,
+            QuoteReminderHour = _state.QuoteReminderHour
         };
         Changed?.Invoke();
     }
@@ -58,7 +60,9 @@ public sealed class InMemoryUserPreferencesStore : IUserPreferencesStore
             HasCompletedOnboarding = false,
             OnboardingConcern = _state.OnboardingConcern,
             PracticeRemindersEnabled = _state.PracticeRemindersEnabled,
-            PracticeReminderHour = _state.PracticeReminderHour
+            PracticeReminderHour = _state.PracticeReminderHour,
+            QuoteRemindersEnabled = _state.QuoteRemindersEnabled,
+            QuoteReminderHour = _state.QuoteReminderHour
         };
         Changed?.Invoke();
     }

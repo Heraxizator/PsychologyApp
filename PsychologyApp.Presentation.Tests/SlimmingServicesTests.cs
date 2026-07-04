@@ -11,6 +11,7 @@ using PsychologyApp.Presentation.Features.PlayMusic;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Features.ManageProfile;
 using PsychologyApp.Presentation.Features.ManageQuotes;
+using PsychologyApp.Presentation.Features.ManageQuotes.Index;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 using System.Collections.ObjectModel;
 using Xunit;
@@ -26,21 +27,58 @@ public sealed class ProfileQuotesLoaderTests
         quotService.Setup(q => q.GetFavouritesAsync(5, It.IsAny<CancellationToken>()))
             .ReturnsAsync(
             [
-                new QuotDTO { QuotId = 1, Text = "Quote", Title = "Author", IsFavourite = true }
+                new QuotDTO { QuotId = 1, Text = "Quote", Title = "Author", Theme = "wisdom", IsFavourite = true }
             ]);
 
+        QuoteItemCommandsFactory factory = CreateFactory(quotService.Object);
         ProfileQuotesLoader loader = new(quotService.Object, new ProfileQuotesPresenter());
         ProfileQuotesLoadResult result = await loader.LoadFavoritesAsync(
             5,
             generation: 1,
             () => 1,
             CancellationToken.None,
-            Mock.Of<System.Windows.Input.ICommand>(),
-            (_, _) => Mock.Of<System.Windows.Input.ICommand>(),
-            (_, _) => Mock.Of<System.Windows.Input.ICommand>());
+            factory,
+            _ => Task.CompletedTask,
+            () => { },
+            Mock.Of<System.Windows.Input.ICommand>());
 
         Assert.Equal(ProfileQuotesLoadStatus.Ready, result.Status);
         Assert.Single(result.Items);
+        Assert.NotNull(result.Items[0].LikeCommand);
+    }
+
+    [Fact]
+    public async Task LoadFavoritesAsync_LikeCommand_NotifiesFavoritesChanged()
+    {
+        Mock<IQuotService> quotService = new();
+        quotService.Setup(q => q.GetFavouritesAsync(5, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(
+            [
+                new QuotDTO { QuotId = 1, Text = "Quote", Title = "Author", Theme = "wisdom", IsFavourite = false }
+            ]);
+        quotService.Setup(q => q.MarkAsFavouriteAsync(1, true, It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+
+        QuotesChangeNotifier notifier = new();
+        int notifications = 0;
+        notifier.FavoritesChanged += () => notifications++;
+
+        QuoteItemCommandsFactory factory = CreateFactory(quotService.Object, notifier);
+        ProfileQuotesLoader loader = new(quotService.Object, new ProfileQuotesPresenter());
+        ProfileQuotesLoadResult result = await loader.LoadFavoritesAsync(
+            5,
+            1,
+            () => 1,
+            CancellationToken.None,
+            factory,
+            _ => Task.CompletedTask,
+            () => { },
+            Mock.Of<System.Windows.Input.ICommand>());
+
+        result.Items[0].LikeCommand?.Execute(null);
+        await Task.Delay(100);
+
+        Assert.Equal(1, notifications);
     }
 
     [Fact]
@@ -48,7 +86,7 @@ public sealed class ProfileQuotesLoaderTests
     {
         Mock<IQuotService> quotService = new();
         quotService.Setup(q => q.GetFavouritesAsync(1, It.IsAny<CancellationToken>()))
-            .ReturnsAsync([new QuotDTO { QuotId = 1, Text = "Q", Title = "A", IsFavourite = true }]);
+            .ReturnsAsync([new QuotDTO { QuotId = 1, Text = "Q", Title = "A", Theme = "wisdom", IsFavourite = true }]);
 
         ProfileQuotesLoader loader = new(quotService.Object, new ProfileQuotesPresenter());
         await loader.LoadFavoritesAsync(
@@ -56,13 +94,24 @@ public sealed class ProfileQuotesLoaderTests
             1,
             () => 1,
             CancellationToken.None,
-            Mock.Of<System.Windows.Input.ICommand>(),
-            (_, _) => Mock.Of<System.Windows.Input.ICommand>(),
-            (_, _) => Mock.Of<System.Windows.Input.ICommand>());
+            CreateFactory(quotService.Object),
+            _ => Task.CompletedTask,
+            () => { },
+            Mock.Of<System.Windows.Input.ICommand>());
 
         ProfileQuotesCancelResult result = loader.CancelLoading(isCurrentlyLoading: true);
         Assert.True(result.ShouldRestoreReady);
     }
+
+    private static QuoteItemCommandsFactory CreateFactory(
+        IQuotService quotService,
+        IQuotesChangeNotifier? notifier = null) =>
+        new(
+            quotService,
+            notifier ?? new QuotesChangeNotifier(),
+            Mock.Of<IToastService>(),
+            Options.Create(new AppSettings { SmallTimeoutMs = 5000 }),
+            NullLogger<QuoteItemCommandsFactory>.Instance);
 }
 
 public sealed class MusicPlaybackPresenterTests

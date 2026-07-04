@@ -8,7 +8,7 @@ namespace PsychologyApp.Presentation.Tests;
 
 public sealed class QuoteCatalogContentTests
 {
-    private const int MinimumCount = 525;
+    private const int MinimumCount = 975;
 
     [Theory]
     [InlineData("quotes/quotes.ru.json")]
@@ -44,7 +44,45 @@ public sealed class QuoteCatalogContentTests
     [Fact]
     public void QuoteCatalogPolicy_CurrentVersionIsAtLeastTwo()
     {
-        Assert.True(QuoteCatalogPolicy.CurrentVersion >= 3);
+        Assert.True(QuoteCatalogPolicy.CurrentVersion >= 6);
+    }
+
+    [Fact]
+    public async Task Catalog_ContainsByzantineAndRussianAuthors()
+    {
+        List<QuoteJsonEntry> en = await LoadAsync("quotes/quotes.en.json");
+        List<QuoteJsonEntry> ru = await LoadAsync("quotes/quotes.ru.json");
+
+        Assert.Equal(975, en.Count);
+        Assert.Equal(975, ru.Count);
+        Assert.Contains(en, e => e.Author == "John Chrysostom");
+        Assert.Contains(en, e => e.Author == "Alexander Pushkin");
+        Assert.Contains(ru, e => e.Author == "Иоанн Золотоуст");
+        Assert.Contains(ru, e => e.Author == "Александр Пушкин");
+    }
+
+    [Fact]
+    public async Task Catalog_ContainsSovietAndGermanAuthors()
+    {
+        List<QuoteJsonEntry> en = await LoadAsync("quotes/quotes.en.json");
+        List<QuoteJsonEntry> ru = await LoadAsync("quotes/quotes.ru.json");
+
+        Assert.Contains(en, e => e.Author == "Vladimir Mayakovsky");
+        Assert.Contains(en, e => e.Author == "Johann Wolfgang von Goethe");
+        Assert.Contains(ru, e => e.Author == "Владимир Маяковский");
+        Assert.Contains(ru, e => e.Author == "Иоганн Вольфганг фон Гёте");
+    }
+
+    [Fact]
+    public async Task Catalog_ContainsWorldAuthors()
+    {
+        List<QuoteJsonEntry> en = await LoadAsync("quotes/quotes.en.json");
+        List<QuoteJsonEntry> ru = await LoadAsync("quotes/quotes.ru.json");
+
+        Assert.Contains(en, e => e.Author == "Albert Camus");
+        Assert.Contains(en, e => e.Author == "Sun Tzu");
+        Assert.Contains(ru, e => e.Author == "Альбер Камю");
+        Assert.Contains(ru, e => e.Author == "Сунь-цзы");
     }
 
     private static async Task<List<QuoteJsonEntry>> LoadAsync(string relativePath)

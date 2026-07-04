@@ -47,5 +47,7 @@ public class Quot : Entity
         IsReaded = true;
     }
 
+    public void MarkAsUnread() => IsReaded = false;
+
     public void SetFavourite(bool isFavourite) => IsFavourite = isFavourite;
 }

@@ -18,6 +18,7 @@ public partial class QuoteCardView : ContentView
         AttachIconPressFeedback(FavoriteActionBorder);
         AttachIconPressFeedback(CopyActionBorder);
         AttachIconPressFeedback(ShareActionBorder);
+        MarkReadCommand?.Execute(null);
     }
 
     private static void AttachIconPressFeedback(Border border) =>
@@ -29,6 +30,13 @@ public partial class QuoteCardView : ContentView
         FavoriteHint = AppStrings.QuoteAddFavoriteHint;
         CopyHint = AppStrings.QuoteCopyHint;
         ShareHint = AppStrings.QuoteShareHint;
+        UpdateAuthorLine();
+    }
+
+    private void UpdateAuthorLine()
+    {
+        string author = string.IsNullOrWhiteSpace(Author) ? DefaultAuthorText : Author;
+        AuthorLine = $"— {author}";
     }
 
     public static readonly BindableProperty TextProperty =
@@ -41,12 +49,35 @@ public partial class QuoteCardView : ContentView
     }
 
     public static readonly BindableProperty AuthorProperty =
-        BindableProperty.Create(nameof(Author), typeof(string), typeof(QuoteCardView), string.Empty);
+        BindableProperty.Create(
+            nameof(Author),
+            typeof(string),
+            typeof(QuoteCardView),
+            string.Empty,
+            propertyChanged: OnAuthorChanged);
 
     public string Author
     {
         get => (string)GetValue(AuthorProperty);
         set => SetValue(AuthorProperty, value);
+    }
+
+    public static readonly BindableProperty AuthorLineProperty =
+        BindableProperty.Create(nameof(AuthorLine), typeof(string), typeof(QuoteCardView), string.Empty);
+
+    public string AuthorLine
+    {
+        get => (string)GetValue(AuthorLineProperty);
+        private set => SetValue(AuthorLineProperty, value);
+    }
+
+    public static readonly BindableProperty ThemeLabelProperty =
+        BindableProperty.Create(nameof(ThemeLabel), typeof(string), typeof(QuoteCardView), string.Empty);
+
+    public string ThemeLabel
+    {
+        get => (string)GetValue(ThemeLabelProperty);
+        set => SetValue(ThemeLabelProperty, value);
     }
 
     public static readonly BindableProperty IsFavouriteProperty =
@@ -56,6 +87,15 @@ public partial class QuoteCardView : ContentView
     {
         get => (bool)GetValue(IsFavouriteProperty);
         set => SetValue(IsFavouriteProperty, value);
+    }
+
+    public static readonly BindableProperty IsDailyQuoteProperty =
+        BindableProperty.Create(nameof(IsDailyQuote), typeof(bool), typeof(QuoteCardView), false);
+
+    public bool IsDailyQuote
+    {
+        get => (bool)GetValue(IsDailyQuoteProperty);
+        set => SetValue(IsDailyQuoteProperty, value);
     }
 
     public static readonly BindableProperty LikeCommandProperty =
@@ -85,8 +125,22 @@ public partial class QuoteCardView : ContentView
         set => SetValue(ShareCommandProperty, value);
     }
 
+    public static readonly BindableProperty MarkReadCommandProperty =
+        BindableProperty.Create(nameof(MarkReadCommand), typeof(ICommand), typeof(QuoteCardView), null);
+
+    public ICommand? MarkReadCommand
+    {
+        get => (ICommand?)GetValue(MarkReadCommandProperty);
+        set => SetValue(MarkReadCommandProperty, value);
+    }
+
     public static readonly BindableProperty DefaultAuthorTextProperty =
-        BindableProperty.Create(nameof(DefaultAuthorText), typeof(string), typeof(QuoteCardView), string.Empty);
+        BindableProperty.Create(
+            nameof(DefaultAuthorText),
+            typeof(string),
+            typeof(QuoteCardView),
+            string.Empty,
+            propertyChanged: OnAuthorChanged);
 
     public string DefaultAuthorText
     {
@@ -119,5 +173,13 @@ public partial class QuoteCardView : ContentView
     {
         get => (string)GetValue(ShareHintProperty);
         set => SetValue(ShareHintProperty, value);
+    }
+
+    private static void OnAuthorChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is QuoteCardView view)
+        {
+            view.UpdateAuthorLine();
+        }
     }
 }

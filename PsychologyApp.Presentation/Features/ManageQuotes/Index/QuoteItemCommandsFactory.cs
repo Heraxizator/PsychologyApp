@@ -36,20 +36,47 @@ public sealed class QuoteItemCommandsFactory(
     public QuoteItem CreateQuoteItem(
         QuotDTO quotDTO,
         Func<QuoteItem, Task> refreshBindingAsync,
-        Action onFail)
+        Action onFail,
+        bool isDailyQuote = false)
     {
         QuoteItem quoteItem = new()
         {
             Id = quotDTO.QuotId,
             Text = quotDTO.Text!,
             Author = quotDTO.Title!,
+            Theme = quotDTO.Theme ?? "general",
+            ThemeLabel = QuoteThemeLabels.GetLabel(quotDTO.Theme),
             IsFavourite = quotDTO.IsFavourite,
             IsReaded = quotDTO.IsReaded,
+            IsDailyQuote = isDailyQuote,
             ShareCommand = CreateShareCommand(quotDTO.Text, quotDTO.Title)
         };
 
         quoteItem.LikeCommand = CreateLikeCommand(quoteItem, refreshBindingAsync, onFail);
         quoteItem.CopyCommand = CreateCopyCommand(quoteItem.Text, quoteItem.Author);
+        quoteItem.MarkReadCommand = CreateMarkReadCommand(quoteItem);
+        return quoteItem;
+    }
+
+    public QuoteItem CreateSearchResultItem(
+        string author,
+        string text,
+        string theme,
+        Func<QuoteItem, Task> refreshBindingAsync,
+        Action onFail)
+    {
+        QuoteItem quoteItem = new()
+        {
+            Id = 0,
+            Text = text,
+            Author = author,
+            Theme = theme,
+            ThemeLabel = QuoteThemeLabels.GetLabel(theme),
+            ShareCommand = CreateShareCommand(text, author)
+        };
+
+        quoteItem.CopyCommand = CreateCopyCommand(text, author);
+        quoteItem.LikeCommand = CreateLikeCommand(quoteItem, refreshBindingAsync, onFail);
         return quoteItem;
     }
 
@@ -59,6 +86,11 @@ public sealed class QuoteItemCommandsFactory(
         Action onFail) =>
         new AsyncCommand(async () =>
         {
+            if (quoteItem.Id <= 0)
+            {
+                return;
+            }
+
             using CancellationTokenSource timeoutSource = OperationCancellation.CreateSmallTimeoutSource(settings);
             await MarkAsFavouriteAsync(
                 quoteItem,
@@ -66,6 +98,26 @@ public sealed class QuoteItemCommandsFactory(
                 timeoutSource.Token,
                 refreshBindingAsync,
                 onFail);
+        });
+
+    private ICommand CreateMarkReadCommand(QuoteItem quoteItem) =>
+        new AsyncCommand(async () =>
+        {
+            if (quoteItem.Id <= 0 || quoteItem.IsReaded)
+            {
+                return;
+            }
+
+            try
+            {
+                using CancellationTokenSource timeoutSource = OperationCancellation.CreateSmallTimeoutSource(settings);
+                await quotService.MarkAsReadedAsync(quoteItem.Id, timeoutSource.Token);
+                quoteItem.IsReaded = true;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Failed to mark quote as read.");
+            }
         });
 
     public async Task MarkAsFavouriteAsync(

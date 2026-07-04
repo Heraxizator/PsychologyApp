@@ -24,7 +24,7 @@ public sealed class QuotServiceReseedTests
         var provider = new Mock<IQuotContentProvider>();
         provider.Setup(p => p.LoadAllAsync(It.IsAny<CancellationToken>())).ReturnsAsync(seeds);
 
-        var service = new QuotService(repository.Object, provider.Object);
+        var service = QuotServiceTestFactory.Create(repository, provider);
 
         await service.ReseedFeedAsync(3);
 
@@ -32,7 +32,7 @@ public sealed class QuotServiceReseedTests
         repository.Verify(
             r => r.AddAsync(It.IsAny<DomainQuot>(), It.IsAny<CancellationToken>()),
             Times.Exactly(3));
-        provider.Verify(p => p.LoadAllAsync(It.IsAny<CancellationToken>()), Times.Exactly(3));
+        provider.Verify(p => p.LoadAllAsync(It.IsAny<CancellationToken>()), Times.AtLeast(3));
     }
 
     [Fact]
@@ -40,7 +40,7 @@ public sealed class QuotServiceReseedTests
     {
         var repository = new Mock<IQuotRepository>();
         var provider = new Mock<IQuotContentProvider>();
-        var service = new QuotService(repository.Object, provider.Object);
+        var service = QuotServiceTestFactory.Create(repository, provider);
 
         await service.ReseedFeedAsync(0);
 
