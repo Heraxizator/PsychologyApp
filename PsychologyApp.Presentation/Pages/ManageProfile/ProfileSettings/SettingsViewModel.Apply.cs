@@ -19,6 +19,7 @@ public partial class SettingsViewModel
         _userPreferencesStore.ApplyAll();
         await _languageContentReloader.EnsureReloadedAsync();
         await _practiceReminderCoordinator.SyncAsync();
+        await _quoteReminderCoordinator.SyncAsync();
         await _dialogService.ShowAsync(AppStrings.SettingsAppliedTitle, AppStrings.SettingsAppliedMessage);
         await _navigationService.GoBackAsync();
     }

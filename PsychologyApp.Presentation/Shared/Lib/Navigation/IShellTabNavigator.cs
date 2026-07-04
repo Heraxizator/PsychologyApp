@@ -6,4 +6,6 @@ namespace PsychologyApp.Presentation.Shared.Lib.Navigation;
 public interface IShellTabNavigator
 {
     void OpenPracticeTabAndPendingTechnique();
+
+    void OpenQuotesTab();
 }

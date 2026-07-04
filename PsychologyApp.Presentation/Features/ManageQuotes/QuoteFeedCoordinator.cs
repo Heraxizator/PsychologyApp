@@ -1,8 +1,9 @@
-using PsychologyApp.Application;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Quot;
 using PsychologyApp.Presentation.Entities.FilterChip;
 using PsychologyApp.Presentation.Entities.Quote;
+using PsychologyApp.Presentation.Features.ManageQuotes.Index;
+using PsychologyApp.Presentation.Shared.Common;
 using System.Collections.ObjectModel;
 
 namespace PsychologyApp.Presentation.Features.ManageQuotes;
@@ -27,17 +28,22 @@ public sealed class QuoteFeedCoordinator
         return true;
     }
 
+    public void SetFeedMode(QuoteFeedMode mode) => _feedMode = mode;
+
     public QuoteFeedMode ParseFeedKey(string? key) =>
-        key == "favorites" ? QuoteFeedMode.Favorites : QuoteFeedMode.All;
+        key switch
+        {
+            "favorites" => QuoteFeedMode.Favorites,
+            "for-you" => QuoteFeedMode.ForYou,
+            _ => QuoteFeedMode.All
+        };
 
     public async Task<IReadOnlyList<QuotDTO>> FetchQuotesAsync(
         IQuotService quotService,
         int count,
         CancellationToken cancellationToken)
     {
-        IEnumerable<QuotDTO> quotDTOs = _feedMode == QuoteFeedMode.Favorites
-            ? await quotService.GetFavouritesAsync(count, cancellationToken)
-            : await quotService.GetAllAsync(count, cancellationToken);
+        IEnumerable<QuotDTO> quotDTOs = await FetchRawQuotesAsync(quotService, count, cancellationToken);
 
         List<QuotDTO> result = [];
         foreach (QuotDTO quotDTO in quotDTOs)
@@ -53,25 +59,36 @@ public sealed class QuoteFeedCoordinator
         return result;
     }
 
-    public bool ShouldSeedNewQuote(bool seedNewQuote) => seedNewQuote && _feedMode == QuoteFeedMode.All;
+    public bool ShouldSeedNewQuote(bool seedNewQuote) =>
+        seedNewQuote && _feedMode is QuoteFeedMode.All or QuoteFeedMode.ForYou;
 
-    public bool ShouldShowAllReadEmpty(int collectionCount, bool isDone) =>
-        _feedMode == QuoteFeedMode.All && collectionCount == 0 && isDone;
+    public async Task<bool> ShouldShowAllReadEmptyAsync(
+        int collectionCount,
+        bool isDone,
+        IQuotService quotService,
+        CancellationToken cancellationToken) =>
+        _feedMode == QuoteFeedMode.All &&
+        collectionCount == 0 &&
+        isDone &&
+        await quotService.IsAllCaughtUpAsync(cancellationToken);
 
     public void EnsureFeedFilters(
         ObservableCollection<FilterChipTabItem> filters,
         string allLabel,
-        string favoritesLabel)
+        string favoritesLabel,
+        string forYouLabel)
     {
         if (filters.Count == 0)
         {
             filters.Add(new FilterChipTabItem { Key = "all", Title = allLabel });
+            filters.Add(new FilterChipTabItem { Key = "for-you", Title = forYouLabel });
             filters.Add(new FilterChipTabItem { Key = "favorites", Title = favoritesLabel });
         }
         else
         {
             filters[0].Title = allLabel;
-            filters[1].Title = favoritesLabel;
+            filters[1].Title = forYouLabel;
+            filters[2].Title = favoritesLabel;
         }
 
         SyncFeedFilterSelection(filters);
@@ -79,11 +96,144 @@ public sealed class QuoteFeedCoordinator
 
     public void SyncFeedFilterSelection(ObservableCollection<FilterChipTabItem> filters)
     {
+        string selectedKey = _feedMode switch
+        {
+            QuoteFeedMode.Favorites => "favorites",
+            QuoteFeedMode.ForYou => "for-you",
+            _ => "all"
+        };
+
         foreach (FilterChipTabItem filter in filters)
         {
-            filter.IsSelected = _feedMode == QuoteFeedMode.Favorites
-                ? filter.Key == "favorites"
-                : filter.Key == "all";
+            filter.IsSelected = filter.Key == selectedKey;
         }
     }
+
+    public bool ShouldExcludeFromFeed(string? text, string? dailyQuoteText) =>
+        !string.IsNullOrEmpty(text) &&
+        !string.IsNullOrEmpty(dailyQuoteText) &&
+        string.Equals(text, dailyQuoteText, StringComparison.Ordinal);
+
+    public async Task<QuoteFeedLoadResult> LoadItemsAsync(
+        IQuotService quotService,
+        QuoteItemCommandsFactory factory,
+        int count,
+        bool resetKnown,
+        bool seedNewQuote,
+        string? dailyQuoteText,
+        Func<QuoteItem, Task> refreshBindingAsync,
+        Action onFail,
+        CancellationToken cancellationToken)
+    {
+        if (resetKnown)
+        {
+            ResetKnownQuotes();
+        }
+
+        if (ShouldSeedNewQuote(seedNewQuote))
+        {
+            await SeedSingleQuoteAsync(quotService, cancellationToken);
+        }
+
+        IReadOnlyList<QuoteItem> items = await FetchMappedItemsAsync(
+            quotService,
+            factory,
+            count,
+            dailyQuoteText,
+            refreshBindingAsync,
+            onFail,
+            cancellationToken);
+
+        bool allCaughtUp = await ShouldShowAllReadEmptyAsync(
+            items.Count,
+            isDone: true,
+            quotService,
+            cancellationToken);
+
+        return new QuoteFeedLoadResult(items, allCaughtUp);
+    }
+
+    public async Task<IReadOnlyList<QuoteItem>> AppendItemsAsync(
+        IQuotService quotService,
+        QuoteItemCommandsFactory factory,
+        int count,
+        bool seedSingleFirst,
+        string? dailyQuoteText,
+        Func<QuoteItem, Task> refreshBindingAsync,
+        Action onFail,
+        CancellationToken cancellationToken)
+    {
+        if (seedSingleFirst)
+        {
+            await SeedSingleQuoteAsync(quotService, cancellationToken);
+        }
+
+        return await FetchMappedItemsAsync(
+            quotService,
+            factory,
+            count,
+            dailyQuoteText,
+            refreshBindingAsync,
+            onFail,
+            cancellationToken);
+    }
+
+    private async Task<IReadOnlyList<QuoteItem>> FetchMappedItemsAsync(
+        IQuotService quotService,
+        QuoteItemCommandsFactory factory,
+        int count,
+        string? dailyQuoteText,
+        Func<QuoteItem, Task> refreshBindingAsync,
+        Action onFail,
+        CancellationToken cancellationToken)
+    {
+        IReadOnlyList<QuotDTO> quotDTOs = await FetchQuotesAsync(quotService, count, cancellationToken);
+        List<QuoteItem> items = [];
+        foreach (QuotDTO quotDTO in quotDTOs)
+        {
+            if (ShouldExcludeFromFeed(quotDTO.Text, dailyQuoteText))
+            {
+                continue;
+            }
+
+            items.Add(factory.CreateQuoteItem(quotDTO, refreshBindingAsync, onFail));
+        }
+
+        return items;
+    }
+
+    private async Task<IEnumerable<QuotDTO>> FetchRawQuotesAsync(
+        IQuotService quotService,
+        int count,
+        CancellationToken cancellationToken)
+    {
+        if (_feedMode == QuoteFeedMode.Favorites)
+        {
+            IEnumerable<QuotDTO> favorites = await quotService.GetFavouritesAsync(count, cancellationToken);
+            return favorites.Where(quotDTO => quotDTO.IsFavourite);
+        }
+
+        if (_feedMode == QuoteFeedMode.ForYou)
+        {
+            IReadOnlyList<string> themes = QuotePersonalizationPolicy.ResolveThemes(UserPreferences.OnboardingConcern);
+            await quotService.EnsureThemedQuotesInFeedAsync(themes, count, cancellationToken);
+            return await quotService.GetUnreadByThemesAsync(themes, count, cancellationToken);
+        }
+
+        return await quotService.GetUnreadAsync(count, cancellationToken);
+    }
+
+    private async Task SeedSingleQuoteAsync(IQuotService quotService, CancellationToken cancellationToken)
+    {
+        if (_feedMode == QuoteFeedMode.ForYou)
+        {
+            IReadOnlyList<string> themes = QuotePersonalizationPolicy.ResolveThemes(UserPreferences.OnboardingConcern);
+            await quotService.TryLoadThemedSingleAsync(themes, cancellationToken);
+            return;
+        }
+
+        await quotService.TryLoadSingleAsync(cancellationToken);
+    }
 }
+
+public sealed record QuoteFeedLoadResult(IReadOnlyList<QuoteItem> Items, bool ShowAllCaughtUp);

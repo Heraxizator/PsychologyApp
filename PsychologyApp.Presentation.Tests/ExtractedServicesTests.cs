@@ -1,5 +1,6 @@
 using PsychologyApp.Domain.Practice;
 using Moq;
+using PsychologyApp.Application.Quot;
 using PsychologyApp.Presentation.Entities.Audio;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Entities.Technique;
@@ -62,13 +63,40 @@ public sealed class QuoteFeedCoordinatorTests
     }
 
     [Fact]
-    public void ShouldShowAllReadEmpty_OnlyForAllFeedWithNoItems()
+    public async Task ShouldShowAllReadEmptyAsync_OnlyForAllFeedWithNoItems()
     {
         QuoteFeedCoordinator coordinator = new();
+        Mock<IQuotService> quotService = new();
+        quotService.Setup(s => s.IsAllCaughtUpAsync(It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
-        Assert.True(coordinator.ShouldShowAllReadEmpty(collectionCount: 0, isDone: true));
+        Assert.True(await coordinator.ShouldShowAllReadEmptyAsync(collectionCount: 0, isDone: true, quotService.Object, CancellationToken.None));
         coordinator.TrySwitchFeed(QuoteFeedMode.Favorites);
-        Assert.False(coordinator.ShouldShowAllReadEmpty(collectionCount: 0, isDone: true));
+        Assert.False(await coordinator.ShouldShowAllReadEmptyAsync(collectionCount: 0, isDone: true, quotService.Object, CancellationToken.None));
+    }
+
+    [Fact]
+    public async Task FetchQuotesAsync_ForYou_DoesNotFallbackToUnreadLatest()
+    {
+        QuoteFeedCoordinator coordinator = new();
+        coordinator.SetFeedMode(QuoteFeedMode.ForYou);
+        Mock<IQuotService> quotService = new();
+        quotService
+            .Setup(s => s.GetUnreadByThemesAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Array.Empty<PsychologyApp.Application.Models.QuotDTO>());
+        quotService
+            .Setup(s => s.EnsureThemedQuotesInFeedAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+
+        IReadOnlyList<PsychologyApp.Application.Models.QuotDTO> result =
+            await coordinator.FetchQuotesAsync(quotService.Object, 20, CancellationToken.None);
+
+        Assert.Empty(result);
+        quotService.Verify(
+            s => s.EnsureThemedQuotesInFeedAsync(It.IsAny<IReadOnlyList<string>>(), 20, It.IsAny<CancellationToken>()),
+            Times.Once);
+        quotService.Verify(
+            s => s.GetUnreadAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()),
+            Times.Never);
     }
 }
 

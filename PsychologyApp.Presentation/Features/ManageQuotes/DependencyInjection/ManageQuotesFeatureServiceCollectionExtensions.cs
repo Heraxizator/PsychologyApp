@@ -9,7 +9,6 @@ public static class ManageQuotesFeatureServiceCollectionExtensions
     public static IServiceCollection AddManageQuotesFeature(this IServiceCollection services)
     {
         SharedPresentationServiceCollectionExtensions.AddTransientFactory<QuoteFeedCoordinator>(services);
-        services.AddSingleton<QuoteFeedLoader>();
         services.AddSingleton<QuoteItemCommandsFactory>();
         services.AddSingleton<IQuotesChangeNotifier, QuotesChangeNotifier>();
         services.AddSingleton<IQuoteViewModelFactory, QuoteViewModelFactory>();

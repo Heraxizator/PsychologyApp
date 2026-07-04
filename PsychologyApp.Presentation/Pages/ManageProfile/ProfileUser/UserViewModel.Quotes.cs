@@ -1,5 +1,6 @@
 namespace PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
 
+using System.Collections.ObjectModel;
 using Microsoft.Extensions.Logging;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Entities.Quote;
@@ -43,9 +44,10 @@ public partial class UserViewModel
             generation,
             () => Volatile.Read(ref _initGeneration),
             outerToken,
-            OpenQuotesTabCommand,
-            _quoteCommandsFactory.CreateShareCommand,
-            _quoteCommandsFactory.CreateCopyCommand);
+            _quoteCommandsFactory,
+            RefreshProfileQuoteBindingAsync,
+            SetQuotesFailed,
+            OpenQuotesTabCommand);
 
         switch (result.Status)
         {
@@ -120,5 +122,25 @@ public partial class UserViewModel
         OnPropertyChanged(nameof(HasQuotesSectionSubtitle));
         OnPropertyChanged(nameof(QuotesSectionSubtitle));
         OnPropertyChanged(nameof(QuotesSectionActionText));
+    }
+
+    private Task RefreshProfileQuoteBindingAsync(QuoteItem quoteItem) =>
+        UiThread.RunAsync(() =>
+        {
+            ReplaceQuoteItem(Quotes, quoteItem);
+            ReplaceQuoteItem(DisplayQuotes, quoteItem);
+            NotifyQuotesPresentation();
+        });
+
+    private static void ReplaceQuoteItem(ObservableCollection<QuoteItem> collection, QuoteItem quoteItem)
+    {
+        for (int index = 0; index < collection.Count; index++)
+        {
+            if (collection[index].Id == quoteItem.Id)
+            {
+                collection[index] = quoteItem;
+                return;
+            }
+        }
     }
 }

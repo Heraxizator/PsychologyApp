@@ -34,6 +34,7 @@ public partial class AppShell : Shell
     private readonly IPageFactory _pageFactory;
     private readonly IShellStartupCoordinator _startupCoordinator;
     private readonly IPracticeReminderCoordinator _practiceReminderCoordinator;
+    private readonly IQuoteReminderCoordinator _quoteReminderCoordinator;
     private readonly ILogger<AppShell> _logger;
     private readonly bool[] _tabsMaterialized = new bool[5];
     private bool _lazyTabsReady;
@@ -42,11 +43,13 @@ public partial class AppShell : Shell
         IPageFactory pageFactory,
         IShellStartupCoordinator startupCoordinator,
         IPracticeReminderCoordinator practiceReminderCoordinator,
+        IQuoteReminderCoordinator quoteReminderCoordinator,
         ILogger<AppShell> logger)
     {
         _pageFactory = pageFactory;
         _startupCoordinator = startupCoordinator;
         _practiceReminderCoordinator = practiceReminderCoordinator;
+        _quoteReminderCoordinator = quoteReminderCoordinator;
         _logger = logger;
         InitializeComponent();
         ApplyLocalization();
@@ -374,6 +377,7 @@ public partial class AppShell : Shell
             await _startupCoordinator.InitializeAsync();
             await ShowOnboardingIfNeededAsync();
             await _practiceReminderCoordinator.SyncAsync();
+            await _quoteReminderCoordinator.SyncAsync();
         }
         catch (Exception ex)
         {

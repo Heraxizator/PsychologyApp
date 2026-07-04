@@ -13,6 +13,7 @@ using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Features.ManageQuotes;
 using PsychologyApp.Presentation.Features.RunTests;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
+using PsychologyApp.Presentation.Entities.Quote;
 using PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
 using Xunit;
 
@@ -34,7 +35,7 @@ public sealed class QuoteViewModelTests
         viewModel.Reload?.Execute(null);
         await WaitForStateAsync(viewModel);
 
-        quotService.Verify(s => s.LoadSingleAsync(It.IsAny<CancellationToken>()), Times.Never);
+        quotService.Verify(s => s.TryLoadSingleAsync(It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact]
@@ -72,11 +73,85 @@ public sealed class QuoteViewModelTests
             Times.Never);
     }
 
+    [Fact]
+    public void SearchQuery_WhenSet_EntersSearchMode()
+    {
+        QuoteViewModel viewModel = CreateViewModel(CreateQuotServiceMock().Object);
+
+        Assert.False(viewModel.IsSearching);
+        Assert.True(viewModel.IsFeedFiltersVisible);
+
+        viewModel.SearchQuery = "wisdom";
+
+        Assert.True(viewModel.IsSearching);
+        Assert.False(viewModel.IsFeedFiltersVisible);
+    }
+
+    [Fact]
+    public async Task SelectFeedCommand_Favorites_LoadsFavoritesFeed()
+    {
+        Mock<IQuotService> quotService = CreateQuotServiceMock();
+        quotService
+            .Setup(s => s.GetFavouritesAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(
+            [
+                new QuotDTO
+                {
+                    QuotId = 99,
+                    Text = "Favorite quote",
+                    Title = "Author",
+                    Theme = "wisdom",
+                    IsFavourite = true,
+                    IsReaded = false
+                }
+            ]);
+
+        QuoteViewModel viewModel = CreateViewModel(quotService.Object);
+        await viewModel.EnsureInitializedAsync();
+        await WaitForStateAsync(viewModel);
+
+        quotService.Invocations.Clear();
+        viewModel.SelectFeedCommand.Execute("favorites");
+        await WaitForStateAsync(viewModel);
+
+        Assert.Equal(QuoteFeedMode.Favorites, viewModel.FeedMode);
+        quotService.Verify(
+            s => s.GetFavouritesAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()),
+            Times.AtLeastOnce);
+        quotService.Verify(
+            s => s.GetUnreadAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()),
+            Times.Never);
+    }
+
+    [Fact]
+    public async Task SelectFeedCommand_ForYou_WhenThemedQuotesEmpty_ShowsForYouEmptyState()
+    {
+        Mock<IQuotService> quotService = CreateQuotServiceMock();
+        quotService
+            .Setup(s => s.GetUnreadByThemesAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Array.Empty<QuotDTO>());
+
+        QuoteViewModel viewModel = CreateViewModel(quotService.Object);
+        await viewModel.EnsureInitializedAsync();
+        await WaitForStateAsync(viewModel);
+
+        quotService.Invocations.Clear();
+        viewModel.SelectFeedCommand.Execute("for-you");
+        await WaitForStateAsync(viewModel);
+
+        Assert.Equal(QuoteFeedMode.ForYou, viewModel.FeedMode);
+        Assert.True(viewModel.ShowForYouEmpty);
+        Assert.Empty(viewModel.DisplayItems);
+        quotService.Verify(
+            s => s.GetUnreadAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()),
+            Times.Never);
+    }
+
     private static Mock<IQuotService> CreateQuotServiceMock()
     {
         var quotService = new Mock<IQuotService>();
         quotService
-            .Setup(s => s.GetAllAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .Setup(s => s.GetUnreadAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(
             [
                 new QuotDTO
@@ -84,6 +159,7 @@ public sealed class QuoteViewModelTests
                     QuotId = 1,
                     Text = "Test quote",
                     Title = "Author",
+                    Theme = "wisdom",
                     IsFavourite = false,
                     IsReaded = false
                 }
@@ -92,8 +168,34 @@ public sealed class QuoteViewModelTests
             .Setup(s => s.GetFavouritesAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(Array.Empty<QuotDTO>());
         quotService
-            .Setup(s => s.LoadSingleAsync(It.IsAny<CancellationToken>()))
+            .Setup(s => s.GetUnreadByThemesAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(
+            [
+                new QuotDTO
+                {
+                    QuotId = 2,
+                    Text = "Themed quote",
+                    Title = "Author",
+                    Theme = "wisdom",
+                    IsFavourite = false,
+                    IsReaded = false
+                }
+            ]);
+        quotService
+            .Setup(s => s.EnsureThemedQuotesInFeedAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
+        quotService
+            .Setup(s => s.TryLoadThemedSingleAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(true);
+        quotService
+            .Setup(s => s.TryLoadSingleAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(true);
+        quotService
+            .Setup(s => s.GetDailyQuoteAsync(It.IsAny<DateOnly>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((QuotDTO?)null);
+        quotService
+            .Setup(s => s.IsAllCaughtUpAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(false);
         quotService
             .Setup(s => s.MarkAsReadedAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
@@ -178,7 +280,7 @@ public sealed class QuoteViewModelTests
             quotService.Verify(
                 s => s.ReseedFeedAsync(LanguageContentReloader.DefaultQuoteFeedCount, It.IsAny<CancellationToken>()),
                 Times.Once);
-            quotService.Verify(s => s.GetAllAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.AtLeastOnce);
+            quotService.Verify(s => s.GetUnreadAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.AtLeastOnce);
         }
         finally
         {
@@ -214,6 +316,7 @@ public sealed class QuoteViewModelTests
         return new QuoteViewModel(
             new TestNavigationService(navigation.Object),
             quotService,
+            Mock.Of<IQuoteSearchService>(),
             NullLogger<QuoteViewModel>.Instance,
             settings,
             new QuoteFeedCoordinator(),
@@ -223,7 +326,6 @@ public sealed class QuoteViewModelTests
                 toast.Object,
                 settings,
                 NullLogger<QuoteItemCommandsFactory>.Instance),
-            new QuoteFeedLoader(),
             TestDatabaseReady.CreateSignaled(),
             languageReloader ?? CreateLanguageReloader(quotService));
     }

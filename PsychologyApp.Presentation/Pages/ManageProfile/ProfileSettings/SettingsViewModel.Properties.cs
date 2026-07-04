@@ -158,6 +158,39 @@ public partial class SettingsViewModel
         }
     }
 
+    public bool quoteRemindersEnabled;
+    public bool QuoteRemindersEnabled
+    {
+        get => quoteRemindersEnabled;
+        set
+        {
+            if (quoteRemindersEnabled != value)
+            {
+                quoteRemindersEnabled = value;
+                OnPropertyChanged(nameof(QuoteRemindersEnabled));
+                ApplyLivePreview();
+            }
+        }
+    }
+
+    private int quoteReminderHour = UserPreferences.DefaultQuoteReminderHour;
+    public string QuoteReminderHour
+    {
+        get => UserPreferences.GetQuoteReminderHourLabel(quoteReminderHour);
+        set
+        {
+            int normalized = UserPreferences.ParseQuoteReminderHourKey(value);
+            if (_isSyncingPickers || quoteReminderHour == normalized)
+            {
+                return;
+            }
+
+            quoteReminderHour = normalized;
+            OnPropertyChanged(nameof(QuoteReminderHour));
+            ApplyLivePreview();
+        }
+    }
+
     private UserPreferencesState BuildCurrentState() =>
         _presenter.BuildState(
             Language,
@@ -169,6 +202,8 @@ public partial class SettingsViewModel
             QuestionnaireAutoAdvance,
             PracticeRemindersEnabled,
             practiceReminderHour,
+            QuoteRemindersEnabled,
+            quoteReminderHour,
             _savedState);
 
     private void ApplyLivePreview()

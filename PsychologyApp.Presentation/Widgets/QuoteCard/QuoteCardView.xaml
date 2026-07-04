@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:Class="PsychologyApp.Presentation.Widgets.QuoteCard.QuoteCardView"
              x:Name="Root">
@@ -13,22 +13,29 @@
     <Border Style="{StaticResource QuoteListCardStyle}">
         <VerticalStackLayout Spacing="8">
             <Label
-                HorizontalTextAlignment="Justify"
-                Style="{StaticResource BodyStyle}"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource QuoteDisplayStyle}"
                 Text="{Binding Text, Source={x:Reference Root}}" />
+
             <Label
-                Style="{StaticResource ListRowTitleStyle}"
-                HorizontalTextAlignment="Center"
-                Text="{Binding Author, Source={x:Reference Root}}">
+                Style="{StaticResource CaptionStyle}"
+                TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                Text="{Binding ThemeLabel, Source={x:Reference Root}}">
                 <Label.Triggers>
                     <DataTrigger
-                        Binding="{Binding Author, Source={x:Reference Root}}"
+                        Binding="{Binding ThemeLabel, Source={x:Reference Root}}"
                         TargetType="Label"
                         Value="">
-                        <Setter Property="Text" Value="{Binding DefaultAuthorText, Source={x:Reference Root}}" />
+                        <Setter Property="IsVisible" Value="False" />
                     </DataTrigger>
                 </Label.Triggers>
             </Label>
+
+            <Label
+                FontAttributes="Italic"
+                Style="{StaticResource CaptionStyle}"
+                Text="{Binding AuthorLine, Source={x:Reference Root}}" />
+
             <Grid
                 ColumnSpacing="4"
                 HorizontalOptions="Center">
@@ -47,28 +54,21 @@
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding LikeCommand, Source={x:Reference Root}}" />
                     </Border.GestureRecognizers>
-                    <Label
-                        x:Name="FavoriteActionLabel"
-                        Style="{StaticResource IconActionStyle}"
+                    <ui:MaterialIconView
+                        IconName="FavoriteBorder"
+                        IconSize="24"
                         SemanticProperties.Description="{Binding FavoriteHint, Source={x:Reference Root}}"
-                        mi:MauiIcon.Value="{mi:Material Icon=FavoriteBorder, FontOverride=True}">
-                        <Label.Triggers>
+                        IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}">
+                        <ui:MaterialIconView.Triggers>
                             <DataTrigger
                                 Binding="{Binding IsFavourite, Source={x:Reference Root}}"
-                                TargetType="Label"
+                                TargetType="ui:MaterialIconView"
                                 Value="True">
-                                <Setter Property="mi:MauiIcon.Value" Value="{mi:Material Icon=Favorite, FontOverride=True}" />
-                                <Setter Property="TextColor" Value="{DynamicResource Primary}" />
+                                <Setter Property="IconName" Value="Favorite" />
+                                <Setter Property="IconColor" Value="{DynamicResource Primary}" />
                             </DataTrigger>
-                            <DataTrigger
-                                Binding="{Binding IsFavourite, Source={x:Reference Root}}"
-                                TargetType="Label"
-                                Value="False">
-                                <Setter Property="mi:MauiIcon.Value" Value="{mi:Material Icon=FavoriteBorder, FontOverride=True}" />
-                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}" />
-                            </DataTrigger>
-                        </Label.Triggers>
-                    </Label>
+                        </ui:MaterialIconView.Triggers>
+                    </ui:MaterialIconView>
                 </Border>
                 <Border
                     x:Name="CopyActionBorder"
@@ -80,10 +80,11 @@
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding CopyCommand, Source={x:Reference Root}}" />
                     </Border.GestureRecognizers>
-                    <Label
-                        Style="{StaticResource IconActionStyle}"
+                    <ui:MaterialIconView
+                        IconName="ContentCopy"
+                        IconSize="24"
                         SemanticProperties.Description="{Binding CopyHint, Source={x:Reference Root}}"
-                        mi:MauiIcon.Value="{mi:Material Icon=ContentCopy, FontOverride=True}" />
+                        IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
                 </Border>
                 <Border
                     x:Name="ShareActionBorder"
@@ -95,12 +96,14 @@
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ShareCommand, Source={x:Reference Root}}" />
                     </Border.GestureRecognizers>
-                    <Label
-                        Style="{StaticResource IconActionStyle}"
+                    <ui:MaterialIconView
+                        IconName="Share"
+                        IconSize="24"
                         SemanticProperties.Description="{Binding ShareHint, Source={x:Reference Root}}"
-                        mi:MauiIcon.Value="{mi:Material Icon=Share, FontOverride=True}" />
+                        IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
                 </Border>
             </Grid>
         </VerticalStackLayout>
     </Border>
+
 </ContentView>

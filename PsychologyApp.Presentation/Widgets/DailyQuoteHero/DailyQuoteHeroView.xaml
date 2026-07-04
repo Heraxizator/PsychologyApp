@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             x:Class="PsychologyApp.Presentation.Widgets.DailyQuoteHero.DailyQuoteHeroView"
+             x:Name="Root">
+
+    <VerticalStackLayout Spacing="6" Margin="0,0,0,8">
+        <Label
+            Text="{Binding CaptionText, Source={x:Reference Root}}"
+            Style="{StaticResource CaptionStyle}"
+            TextColor="{DynamicResource Primary}" />
+
+        <Border Style="{StaticResource TodayPracticeRowStyle}">
+            <VerticalStackLayout Spacing="10">
+                <Label
+                    HorizontalTextAlignment="Start"
+                    Style="{StaticResource QuoteDisplayStyle}"
+                    Text="{Binding QuoteText, Source={x:Reference Root}}" />
+
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <Label
+                        Grid.Column="0"
+                        FontAttributes="Italic"
+                        Style="{StaticResource CaptionStyle}"
+                        Text="{Binding AuthorLine, Source={x:Reference Root}}"
+                        VerticalOptions="Center" />
+                    <HorizontalStackLayout
+                        Grid.Column="1"
+                        Spacing="0"
+                        VerticalOptions="Center">
+                        <Border
+                            x:Name="FavoriteActionBorder"
+                            WidthRequest="44"
+                            HeightRequest="44"
+                            StrokeThickness="0"
+                            BackgroundColor="Transparent">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding LikeCommand, Source={x:Reference Root}}" />
+                            </Border.GestureRecognizers>
+                            <ui:MaterialIconView
+                                IconName="FavoriteBorder"
+                                IconSize="24"
+                                SemanticProperties.Description="{Binding FavoriteHint, Source={x:Reference Root}}"
+                                IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}">
+                                <ui:MaterialIconView.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding IsFavourite, Source={x:Reference Root}}"
+                                        TargetType="ui:MaterialIconView"
+                                        Value="True">
+                                        <Setter Property="IconName" Value="Favorite" />
+                                        <Setter Property="IconColor" Value="{DynamicResource Primary}" />
+                                    </DataTrigger>
+                                </ui:MaterialIconView.Triggers>
+                            </ui:MaterialIconView>
+                        </Border>
+                        <Border
+                            x:Name="CopyActionBorder"
+                            WidthRequest="44"
+                            HeightRequest="44"
+                            StrokeThickness="0"
+                            BackgroundColor="Transparent">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CopyCommand, Source={x:Reference Root}}" />
+                            </Border.GestureRecognizers>
+                            <ui:MaterialIconView
+                                IconName="ContentCopy"
+                                IconSize="24"
+                                SemanticProperties.Description="{Binding CopyHint, Source={x:Reference Root}}"
+                                IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        </Border>
+                        <Border
+                            x:Name="ShareActionBorder"
+                            WidthRequest="44"
+                            HeightRequest="44"
+                            StrokeThickness="0"
+                            BackgroundColor="Transparent">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ShareCommand, Source={x:Reference Root}}" />
+                            </Border.GestureRecognizers>
+                            <ui:MaterialIconView
+                                IconName="Share"
+                                IconSize="24"
+                                SemanticProperties.Description="{Binding ShareHint, Source={x:Reference Root}}"
+                                IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        </Border>
+                    </HorizontalStackLayout>
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+    </VerticalStackLayout>
+
+</ContentView>

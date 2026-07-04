@@ -103,6 +103,7 @@ public sealed class SettingsViewModelFactory(
     SettingsPreferencesPresenter settingsPreferencesPresenter,
     LanguageContentReloader languageContentReloader,
     IPracticeReminderCoordinator practiceReminderCoordinator,
+    IQuoteReminderCoordinator quoteReminderCoordinator,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, ISettingsViewModelFactory
 {
     public SettingsViewModel Create(ContentPage page) =>
@@ -112,7 +113,8 @@ public sealed class SettingsViewModelFactory(
             userPreferencesStore,
             settingsPreferencesPresenter,
             languageContentReloader,
-            practiceReminderCoordinator);
+            practiceReminderCoordinator,
+            quoteReminderCoordinator);
 }
 
 public interface IInfoViewModelFactory

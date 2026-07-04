@@ -19,7 +19,7 @@ public partial class QuotePage : ContentPage
 
     private void OnRemainingItemsThresholdReached(object? sender, EventArgs e)
     {
-        if (!ViewModel.IsDone || ViewModel.IsInit)
+        if (!ViewModel.IsDone || ViewModel.IsInit || ViewModel.IsSearching)
         {
             return;
         }

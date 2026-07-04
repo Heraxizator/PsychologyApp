@@ -24,6 +24,12 @@ public class MainActivity : MauiAppCompatActivity
 
     private static void HandleReminderIntent(Intent? intent)
     {
+        if (intent?.GetBooleanExtra(QuoteReminderConstants.ActionReminder, false) == true)
+        {
+            QuoteReminderTapHandler.Handle();
+            return;
+        }
+
         if (intent?.HasExtra(PracticeReminderConstants.ExtraTechniqueId) != true)
         {
             return;

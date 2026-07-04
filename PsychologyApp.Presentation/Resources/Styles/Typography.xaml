@@ -33,6 +33,9 @@
     <system:Double x:Key="TestAnswerOptionMinHeight">56</system:Double>
     <system:Double x:Key="EmphasisBodyFontSize">17</system:Double>
     <system:Double x:Key="EmphasisBodyLineHeight">1.35</system:Double>
+    <system:Double x:Key="QuoteDisplayFontSize">18</system:Double>
+    <system:Double x:Key="QuoteDisplayLineHeight">1.4</system:Double>
+    <system:Double x:Key="QuoteListItemSpacing">28</system:Double>
     <system:Double x:Key="PlayerControlSpacing">10</system:Double>
     <system:Double x:Key="ListItemSpacing">4</system:Double>
     <system:Double x:Key="PracticeListItemSpacing">8</system:Double>
@@ -73,6 +76,11 @@
     <Style x:Key="EmphasisBodyStyle" TargetType="Label" BasedOn="{StaticResource BodyStyle}">
         <Setter Property="FontSize" Value="{StaticResource EmphasisBodyFontSize}" />
         <Setter Property="LineHeight" Value="{StaticResource EmphasisBodyLineHeight}" />
+    </Style>
+
+    <Style x:Key="QuoteDisplayStyle" TargetType="Label" BasedOn="{StaticResource BodyStyle}">
+        <Setter Property="FontSize" Value="{StaticResource QuoteDisplayFontSize}" />
+        <Setter Property="LineHeight" Value="{StaticResource QuoteDisplayLineHeight}" />
     </Style>
 
     <Style x:Key="CaptionStyle" TargetType="Label">

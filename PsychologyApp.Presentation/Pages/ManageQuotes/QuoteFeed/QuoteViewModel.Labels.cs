@@ -14,10 +14,20 @@ public partial class QuoteViewModel
     public string LoadErrorText => AppStrings.LoadError;
     public string RetryText => AppStrings.RetryQuestion;
     public string FeedAllLabel => AppStrings.QuotesFeedAll;
+    public string FeedForYouLabel => AppStrings.QuotesFeedForYou;
     public string FeedFavoritesLabel => AppStrings.QuotesFeedFavorites;
     public string AllReadTitle => AppStrings.QuotesAllReadTitle;
     public string AllReadBody => AppStrings.QuotesAllReadBody;
     public string ShowFavoritesButtonText => AppStrings.QuotesShowFavorites;
+    public string ShowAgainButtonText => AppStrings.QuotesShowAgain;
+    public string DailyQuoteTitle => AppStrings.QuotesDailyTitle;
+    public string SearchPlaceholder => AppStrings.QuotesSearchPlaceholder;
+    public string SearchEmptyTitle => AppStrings.QuotesSearchEmptyTitle;
+    public string SearchEmptyBody => AppStrings.QuotesSearchEmptyBody;
+    public string ForYouEmptyTitle => AppStrings.QuotesForYouEmptyTitle;
+    public string ForYouEmptyBody => AppStrings.QuotesForYouEmptyBody;
+    public string FavoritesEmptyTitle => AppStrings.ProfileQuotesEmpty;
+    public string FavoritesEmptyBody => AppStrings.QuotesFavoritesEmptyBody;
 
     protected override void RefreshLocalizedProperties()
     {
@@ -31,10 +41,21 @@ public partial class QuoteViewModel
             nameof(LoadErrorText),
             nameof(RetryText),
             nameof(FeedAllLabel),
+            nameof(FeedForYouLabel),
             nameof(FeedFavoritesLabel),
             nameof(AllReadTitle),
             nameof(AllReadBody),
-            nameof(ShowFavoritesButtonText));
+            nameof(ShowFavoritesButtonText),
+            nameof(ShowAgainButtonText),
+            nameof(DailyQuoteTitle),
+            nameof(SearchPlaceholder),
+            nameof(SearchEmptyTitle),
+            nameof(SearchEmptyBody),
+            nameof(ForYouEmptyTitle),
+            nameof(ForYouEmptyBody),
+            nameof(FavoritesEmptyTitle),
+            nameof(FavoritesEmptyBody));
+        NotifyEmptyStateProperties();
         EnsureFeedFilters();
 
         string currentLanguage = UserPreferences.GetPersistedLanguage();
