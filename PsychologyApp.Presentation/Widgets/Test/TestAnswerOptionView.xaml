@@ -7,7 +7,7 @@
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Border x:Name="OptionBorder" Style="{StaticResource TestFlatCardStyle}" Margin="0,0,0,8">
+            <Border x:Name="OptionBorder" Style="{StaticResource TestFlatCardStyle}" Margin="{StaticResource CardBottomMargin}">
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnOptionTapped" />
                 </Border.GestureRecognizers>
@@ -85,7 +85,7 @@
                         <Label
                             IsVisible="{TemplateBinding IsSelected}"
                             Text="{mi:Material Icon=Check}"
-                            FontSize="14"
+                            Style="{StaticResource MetaIconStyle}"
                             TextColor="White"
                             HorizontalOptions="Center"
                             VerticalOptions="Center"

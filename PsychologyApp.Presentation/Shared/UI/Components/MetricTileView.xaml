@@ -10,7 +10,7 @@
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <VerticalStackLayout Spacing="4">
+            <VerticalStackLayout Spacing="4" Style="{StaticResource MetricTileTapTargetStyle}">
                 <VerticalStackLayout.GestureRecognizers>
                     <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
                 </VerticalStackLayout.GestureRecognizers>

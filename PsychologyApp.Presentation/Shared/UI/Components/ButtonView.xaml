@@ -41,7 +41,7 @@
                         Binding="{TemplateBinding IsEnabled}"
                         TargetType="Border"
                         Value="False">
-                        <Setter Property="Opacity" Value="0.45" />
+                        <Setter Property="Opacity" Value="{StaticResource DisabledOpacity}" />
                         <Setter Property="InputTransparent" Value="True" />
                     </DataTrigger>
                 </Border.Triggers>

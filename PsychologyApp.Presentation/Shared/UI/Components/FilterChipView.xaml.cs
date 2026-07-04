@@ -6,10 +6,19 @@ namespace PsychologyApp.Presentation.Shared.UI.Components;
 
 public partial class FilterChipView : ContentView
 {
-    public FilterChipView() => InitializeComponent();
+    public FilterChipView()
+    {
+        InitializeComponent();
+        Loaded += (_, _) => UpdateSemantics();
+    }
 
     public static readonly BindableProperty TitleTextProperty =
-        BindableProperty.Create(nameof(TitleText), typeof(string), typeof(FilterChipView), string.Empty);
+        BindableProperty.Create(
+            nameof(TitleText),
+            typeof(string),
+            typeof(FilterChipView),
+            string.Empty,
+            propertyChanged: OnTitleTextChanged);
 
     public string TitleText
     {
@@ -49,13 +58,32 @@ public partial class FilterChipView : ContentView
         set => SetValue(CommandParameterProperty, value);
     }
 
+    private static void OnTitleTextChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is FilterChipView chip)
+        {
+            chip.UpdateSemantics();
+        }
+    }
+
     private static void OnIsSelectedChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        if (bindable is not FilterChipView chip || newValue is not true || oldValue is true)
+        if (bindable is not FilterChipView chip)
         {
             return;
         }
 
-        UiAnimations.SafePulseAsync(chip).FireAndForget();
+        chip.UpdateSemantics();
+
+        if (newValue is true && oldValue is not true)
+        {
+            UiAnimations.SafePulseAsync(chip).FireAndForget();
+        }
+    }
+
+    private void UpdateSemantics()
+    {
+        SemanticProperties.SetDescription(this, IsSelected ? $"{TitleText}, selected" : TitleText);
+        SemanticProperties.SetHint(this, TitleText);
     }
 }

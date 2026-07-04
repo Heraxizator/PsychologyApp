@@ -6,7 +6,7 @@
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              x:Class="PsychologyApp.Presentation.Widgets.TechniqueBodies.PolarityFormBody">
     <StackLayout Spacing="8">
-        <Border Style="{StaticResource BrandCardStyle}" Margin="0,0,0,8">
+        <Border Style="{StaticResource BrandCardStyle}" Margin="{StaticResource CardBottomMargin}">
             <StackLayout Spacing="8">
                 <Label Text="{Binding FormSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
                 <ui:TextEntryView TitleText="{Binding FirstPolarityLabel}" PlaceholderText="{Binding NegativePlaceholder}" BodyText="{Binding Negative}" />
@@ -29,9 +29,7 @@
                                 <Label Grid.Column="0" Text="{Binding Positive}" Style="{StaticResource BodyStyle}" />
                                 <Label
                                     Grid.Column="1"
-                                    FontSize="24"
-                                    VerticalOptions="Center"
-                                    TextColor="{DynamicResource Primary}"
+                                    Style="{StaticResource PolarityDividerIconStyle}"
                                     Text="{mi:Material Icon=Remove}" />
                                 <Label
                                     Grid.Column="2"

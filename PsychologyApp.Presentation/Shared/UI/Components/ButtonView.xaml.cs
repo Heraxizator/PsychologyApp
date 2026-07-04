@@ -15,15 +15,65 @@ public partial class ButtonView : ContentView
                 : UiAnimations.PressScalePrimary,
             HapticOnRelease = true
         });
+        UpdateSemantics();
+    }
+
+    private static void OnAccessibilityChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is ButtonView view)
+        {
+            view.UpdateSemantics();
+        }
+    }
+
+    private void UpdateSemantics()
+    {
+        string label = string.IsNullOrWhiteSpace(AccessibilityLabel) ? BodyText : AccessibilityLabel;
+        SemanticProperties.SetDescription(this, label);
+        SemanticProperties.SetHint(this, AccessibilityHint);
     }
 
     public static readonly BindableProperty BodyTextProperty =
-        BindableProperty.Create(nameof(BodyText), typeof(string), typeof(ButtonView), string.Empty, BindingMode.TwoWay);
+        BindableProperty.Create(
+            nameof(BodyText),
+            typeof(string),
+            typeof(ButtonView),
+            string.Empty,
+            BindingMode.TwoWay,
+            propertyChanged: OnAccessibilityChanged);
 
     public string BodyText
     {
         get => (string)GetValue(BodyTextProperty);
         set => SetValue(BodyTextProperty, value);
+    }
+
+    public static readonly BindableProperty AccessibilityHintProperty =
+        BindableProperty.Create(
+            nameof(AccessibilityHint),
+            typeof(string),
+            typeof(ButtonView),
+            string.Empty,
+            propertyChanged: OnAccessibilityChanged);
+
+    public string AccessibilityHint
+    {
+        get => (string)GetValue(AccessibilityHintProperty);
+        set => SetValue(AccessibilityHintProperty, value);
+    }
+
+    public static readonly BindableProperty AccessibilityLabelProperty =
+        BindableProperty.Create(
+            nameof(AccessibilityLabel),
+            typeof(string),
+            typeof(ButtonView),
+            string.Empty,
+            propertyChanged: OnAccessibilityChanged);
+
+    public string AccessibilityLabel
+    {
+        get => (string)GetValue(AccessibilityLabelProperty);
+        set => SetValue(AccessibilityLabelProperty, value);
     }
 
     public static readonly BindableProperty TapCommandProperty =

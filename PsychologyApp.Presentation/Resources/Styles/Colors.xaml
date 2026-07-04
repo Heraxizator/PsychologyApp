@@ -7,7 +7,7 @@
     <Color x:Key="Primary">#0085FF</Color>
     <Color x:Key="PrimaryHover">#006ACC</Color>
     <Color x:Key="PrimaryActive">#005BB5</Color>
-    <Color x:Key="PrimaryTint">#E6F2FF</Color>
+    <Color x:Key="PrimaryTint">#D6EBFF</Color>
     <Color x:Key="PrimaryTintDark">#1A2A3D</Color>
     <Color x:Key="AccentTextLight">#0085FF</Color>
     <Color x:Key="Secondary">#0085FF</Color>
@@ -51,6 +51,14 @@
     <Color x:Key="InputBorderDark">#404040</Color>
     <Color x:Key="InputPlaceholderLight">#999999</Color>
     <Color x:Key="InputPlaceholderDark">#AAAAAA</Color>
+
+    <Color x:Key="SurfaceHeroLight">#F5F9FF</Color>
+    <Color x:Key="SurfaceHeroDark">#1A2230</Color>
+    <Color x:Key="BorderSubtleLight">#E8EAED</Color>
+    <Color x:Key="BorderSubtleDark">#333333</Color>
+    <Color x:Key="OverlayScrim">#80000000</Color>
+    <Color x:Key="DisabledSurfaceLight">#ECECEC</Color>
+    <Color x:Key="DisabledSurfaceDark">#2E2E2E</Color>
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{DynamicResource Primary}" />
     <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource Secondary}" />

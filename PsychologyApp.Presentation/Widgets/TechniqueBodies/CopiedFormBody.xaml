@@ -5,11 +5,11 @@
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:Class="PsychologyApp.Presentation.Widgets.TechniqueBodies.CopiedFormBody">
     <StackLayout>
-        <Border Style="{StaticResource BrandCardStyle}" Margin="0,0,0,8">
+        <Border Style="{StaticResource BrandCardStyle}" Margin="{StaticResource CardBottomMargin}">
             <StackLayout>
                 <Label Text="{Binding FormSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
                 <ui:TextEntryView
-                    Margin="0,5,0,0"
+                    Margin="{StaticResource FieldTopMargin}"
                     TitleText="{Binding ConcernFieldLabel}"
                     BodyText="{Binding Text}"
                     PlaceholderText="{Binding ThoughtPlaceholder}" />
@@ -20,7 +20,7 @@
         </Border>
         <StackLayout
             x:Name="PaperItemsStack"
-            Margin="0,15,0,0"
+            Margin="{StaticResource SectionTopMargin}"
             IsVisible="{Binding IsFull}"
             BindableLayout.ItemsSource="{Binding PapersObservableCollection}">
             <BindableLayout.ItemTemplate>

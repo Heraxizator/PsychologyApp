@@ -253,6 +253,8 @@ public static class UserPreferences
         resources["BodyFontSize"] = body;
         resources["CaptionFontSize"] = Math.Max(body - 2, 10);
         resources["NavTitleFontSize"] = section;
+        resources["QuoteDisplayFontSize"] = body + 4;
+        resources["QuoteHeroFontSize"] = body + 6;
         resources["BodyFontFamily"] = isBold ? "InterSemiBold" : "InterRegular";
     }
 
@@ -472,25 +474,25 @@ public static class UserPreferences
                 Color.FromArgb("#E53935"),
                 Color.FromArgb("#FFAB91"),
                 Color.FromArgb("#C62828"),
-                Color.FromArgb("#FFEBEE"),
+                Color.FromArgb("#FFE0E0"),
                 Color.FromArgb("#3D1A1A")),
             "yellow" => (
                 Color.FromArgb("#F7B548"),
                 Color.FromArgb("#FFE5B9"),
                 Color.FromArgb("#E6A020"),
-                Color.FromArgb("#FFF8E6"),
+                Color.FromArgb("#FFF3D6"),
                 Color.FromArgb("#3D331A")),
             "green" => (
                 Color.FromArgb("#2E9E5B"),
                 Color.FromArgb("#A8E6C1"),
                 Color.FromArgb("#1F7A45"),
-                Color.FromArgb("#EBF3F0"),
+                Color.FromArgb("#DCEFE4"),
                 Color.FromArgb("#1A3D2A")),
             _ => (
                 Color.FromArgb("#0085FF"),
                 Color.FromArgb("#0085FF"),
                 Color.FromArgb("#006ACC"),
-                Color.FromArgb("#E6F2FF"),
+                Color.FromArgb("#D6EBFF"),
                 Color.FromArgb("#1A2A3D"))
         };
 

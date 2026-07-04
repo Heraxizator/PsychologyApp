@@ -48,9 +48,7 @@
                             </VerticalStackLayout>
                         </Grid>
 
-                        <BoxView
-                            HeightRequest="1"
-                            Color="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}" />
+                        <BoxView Style="{StaticResource SubtleDividerStyle}" />
 
                         <Grid ColumnDefinitions="*,*,*" ColumnSpacing="{StaticResource CompactSpacing}">
                             <ui:MetricTileView

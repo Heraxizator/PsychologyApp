@@ -18,8 +18,7 @@
                     <Label
                         Grid.Column="0"
                         Text="{TemplateBinding CaptionText}"
-                        Style="{StaticResource CaptionStyle}"
-                        TextColor="{DynamicResource Primary}" />
+                        Style="{StaticResource HeroCaptionStyle}" />
                     <Label
                         Grid.Column="1"
                         IsVisible="{TemplateBinding HasStreak}"
@@ -27,13 +26,16 @@
                         Style="{StaticResource CaptionStyle}"
                         HorizontalTextAlignment="End" />
                 </Grid>
-                <Border Style="{StaticResource TodayPracticeRowStyle}">
+                <Border Style="{StaticResource HeroCardStyle}">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
                     </Border.GestureRecognizers>
-                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                    <Grid ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="12">
                         <Border
                             Grid.Column="0"
+                            Style="{StaticResource HeroAccentBarStyle}" />
+                        <Border
+                            Grid.Column="1"
                             WidthRequest="52"
                             HeightRequest="52"
                             StrokeThickness="0"
@@ -50,7 +52,7 @@
                                 IconName="{TemplateBinding IconName}" />
                         </Border>
                         <VerticalStackLayout
-                            Grid.Column="1"
+                            Grid.Column="2"
                             Spacing="4"
                             VerticalOptions="Center">
                             <Label
@@ -71,7 +73,7 @@
                                 LineBreakMode="TailTruncation" />
                         </VerticalStackLayout>
                         <Label
-                            Grid.Column="2"
+                            Grid.Column="3"
                             VerticalOptions="Center"
                             TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
                             Text="{mi:Material Icon=KeyboardArrowRight}" />
