@@ -376,14 +376,29 @@ public partial class AppShell : Shell
         {
             await _startupCoordinator.InitializeAsync();
             await ShowOnboardingIfNeededAsync();
-            await Task.WhenAll(
-                _practiceReminderCoordinator.SyncAsync(),
-                _quoteReminderCoordinator.SyncAsync());
+            SyncRemindersFireAndForget();
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Shell startup completed with errors.");
         }
+    }
+
+    private void SyncRemindersFireAndForget()
+    {
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                await Task.WhenAll(
+                    _practiceReminderCoordinator.SyncAsync(),
+                    _quoteReminderCoordinator.SyncAsync()).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Reminder sync failed during startup.");
+            }
+        });
     }
 
     private async Task ShowOnboardingIfNeededAsync()

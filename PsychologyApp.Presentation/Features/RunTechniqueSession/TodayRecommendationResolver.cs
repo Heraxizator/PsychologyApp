@@ -21,14 +21,15 @@ public sealed class TodayRecommendationResolver(
     TechniqueCatalogGateway techniqueCatalog,
     ITechniqueRecommendationService techniqueRecommendationService)
 {
-    public TodayRecommendationResult Resolve(
+    public async Task<TodayRecommendationResult> ResolveAsync(
         string onboardingConcern,
         string streakDisplay,
         bool hasStreak,
-        INavigationService navigationService)
+        INavigationService navigationService,
+        CancellationToken cancellationToken = default)
     {
         TechniqueId techniqueId = techniqueRecommendationService.ResolveFromOnboardingConcern(onboardingConcern);
-        TechniqueDefinition definition = techniqueCatalog.Get(techniqueId);
+        TechniqueDefinition definition = await techniqueCatalog.GetAsync(techniqueId, cancellationToken);
         string durationText = AppStrings.TechniqueDuration(definition.ListDurationMinutes);
 
         return new TodayRecommendationResult
@@ -52,15 +53,21 @@ public sealed class TodayRecommendationResolver(
         };
     }
 
-    public void ApplyCatalogDate(TechniqueItem todayItem, TechniqueId techniqueId, IEnumerable<TechniqueItem> staticItems, bool hasStreak)
+    public async Task ApplyCatalogDateAsync(
+        TechniqueItem todayItem,
+        TechniqueId techniqueId,
+        IEnumerable<TechniqueItem> staticItems,
+        bool hasStreak,
+        CancellationToken cancellationToken = default)
     {
         if (hasStreak)
         {
             return;
         }
 
-        TechniqueListEntry entry = techniqueCatalog.GetBuiltInListEntries()
-            .First(e => e.TechniqueId == techniqueId);
+        IReadOnlyList<TechniqueListEntry> entries =
+            await techniqueCatalog.GetBuiltInListEntriesAsync(cancellationToken);
+        TechniqueListEntry entry = entries.First(e => e.TechniqueId == techniqueId);
         TechniqueItem? match = staticItems.FirstOrDefault(item => item.Number == entry.Number);
         if (match is not null)
         {

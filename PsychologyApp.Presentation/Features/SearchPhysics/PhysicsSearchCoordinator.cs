@@ -62,7 +62,7 @@ public sealed class PhysicsSearchCoordinator(
         return CreatePageSlice(matches, loadedCount);
     }
 
-    public Task<IReadOnlyList<PhysicsReasonItem>> SearchAsync(
+    public async Task<IReadOnlyList<PhysicsReasonItem>> SearchAsync(
         IReadOnlyList<ReasonDTO> reasons,
         string searchText,
         INavigationService navigationService,
@@ -72,24 +72,23 @@ public sealed class PhysicsSearchCoordinator(
         cancellationToken.ThrowIfCancellationRequested();
 
         IReadOnlyList<TechniqueId> techniqueIds = techniqueRecommendationService.RecommendForSomaticQuery(searchText);
-        List<PhysicsTechniqueSuggestion> suggestions = techniqueIds
-            .Select(id =>
+        List<PhysicsTechniqueSuggestion> suggestions = [];
+        foreach (TechniqueId id in techniqueIds)
+        {
+            TechniqueDefinition definition = await techniqueCatalog.GetAsync(id, cancellationToken);
+            suggestions.Add(new PhysicsTechniqueSuggestion
             {
-                TechniqueDefinition definition = techniqueCatalog.Get(id);
-                return new PhysicsTechniqueSuggestion
-                {
-                    Title = definition.PageName,
-                    OpenCommand = new AsyncCommand(() => navigationService.GoToTechniqueAsync(id))
-                };
-            })
-            .ToList();
+                Title = definition.PageName,
+                OpenCommand = new AsyncCommand(() => navigationService.GoToTechniqueAsync(id))
+            });
+        }
 
         List<PhysicsReasonItem> results = reasonSearchService.Search(reasons, searchText)
             .Select(pair => createItem(pair.Reason, suggestions, searchText))
             .ToList();
 
         cancellationToken.ThrowIfCancellationRequested();
-        return Task.FromResult<IReadOnlyList<PhysicsReasonItem>>(results);
+        return results;
     }
 
     private static async Task RunDebouncedSearchAsync(CancellationToken token, Action<CancellationToken> onDebounced)

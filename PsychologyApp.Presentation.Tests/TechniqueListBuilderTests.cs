@@ -16,13 +16,13 @@ public sealed class TodayRecommendationResolverTests
     [InlineData(OnboardingConcernKeys.Anxiety, TechniqueId.Spin)]
     [InlineData(OnboardingConcernKeys.Body, TechniqueId.Experience)]
     [InlineData(OnboardingConcernKeys.Mood, TechniqueId.Paper)]
-    public void Resolve_MapsConcernToTechnique(string concern, TechniqueId expected)
+    public async Task Resolve_MapsConcernToTechnique(string concern, TechniqueId expected)
     {
         Mock<INavigationService> navigation = new();
 
         TodayRecommendationResolver resolver = TechniqueCatalogTestHelper.CreateTodayRecommendationResolver();
 
-        TodayRecommendationResult result = resolver.Resolve(
+        TodayRecommendationResult result = await resolver.ResolveAsync(
             concern,
             "3 дн.",
             hasStreak: true,

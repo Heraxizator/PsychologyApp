@@ -20,11 +20,13 @@ public sealed class OnboardingRecommendationResolver(
     ITechniqueCatalogService techniqueCatalogService,
     ITechniqueRecommendationService techniqueRecommendationService)
 {
-    public OnboardingRecommendationResult Resolve(string? selectedConcern)
+    public async Task<OnboardingRecommendationResult> ResolveAsync(
+        string? selectedConcern,
+        CancellationToken cancellationToken = default)
     {
         string concern = string.IsNullOrEmpty(selectedConcern) ? OnboardingConcernKeys.Explore : selectedConcern;
         TechniqueId techniqueId = techniqueRecommendationService.ResolveFromOnboardingConcern(concern);
-        BuiltInTechniqueDefinition definition = techniqueCatalogService.Get(techniqueId);
+        BuiltInTechniqueDefinition definition = await techniqueCatalogService.GetAsync(techniqueId, cancellationToken);
 
         return new OnboardingRecommendationResult
         {

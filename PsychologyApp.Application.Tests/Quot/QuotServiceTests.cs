@@ -257,8 +257,11 @@ public class QuotServiceTests
         await service.EnsureThemedQuotesInFeedAsync(["calm", "anxiety"], 1);
 
         repository.Verify(
-            r => r.AddAsync(
-                It.Is<DomainQuot>(q => q.Text == "Calm quote" && q.Theme == "calm"),
+            r => r.AddManyAsync(
+                It.Is<IReadOnlyList<DomainQuot>>(items =>
+                    items.Count == 1 &&
+                    items[0].Text == "Calm quote" &&
+                    items[0].Theme == "calm"),
                 It.IsAny<CancellationToken>()),
             Times.Once);
     }

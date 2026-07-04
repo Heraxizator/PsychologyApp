@@ -1,4 +1,5 @@
-﻿using PsychologyApp.Application.Practice;
+﻿using PsychologyApp.Application.Models.Practice;
+using PsychologyApp.Application.Practice;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
@@ -14,6 +15,8 @@ public partial class BaseViewModel
     protected ITechniqueCatalogService? TechniqueCatalogService { get; set; }
     protected IUserPreferencesStore UserPreferencesStore { get; private set; } = new MauiUserPreferencesStore();
     protected string? TheoryInfo { get; set; }
+    protected TechniqueDefinition? AppliedDefinition { get; private set; }
+    protected TechniqueUiKind AppliedUiKind => AppliedDefinition?.UiKind ?? default;
     private TechniqueId? _appliedTechniqueId;
 
     public string TechniquePageTitle => AppStrings.TechniqueTitle;
@@ -52,7 +55,7 @@ public partial class BaseViewModel
 
         if (_appliedTechniqueId is TechniqueId techniqueId)
         {
-            ApplyTechniqueCore(techniqueId);
+            ApplyTechniqueAsync(techniqueId).FireAndForget();
         }
     }
 
@@ -60,20 +63,26 @@ public partial class BaseViewModel
 
     protected Task GoToRootAsync() => NavigationService!.GoToRootAsync();
 
-    protected void ApplyTechnique(TechniqueId id)
-    {
-        _appliedTechniqueId = id;
-        ApplyTechniqueCore(id);
-    }
+    protected void ApplyTechnique(TechniqueId id) =>
+        ApplyTechniqueAsync(id).FireAndForget();
 
-    private void ApplyTechniqueCore(TechniqueId id)
+    protected async Task ApplyTechniqueAsync(TechniqueId id)
     {
         if (TechniqueCatalogService is null)
         {
             throw new InvalidOperationException("TechniqueCatalogService must be set before ApplyTechnique.");
         }
 
-        TechniqueDefinition def = TechniqueDefinitionMapper.ToPresentation(TechniqueCatalogService.Get(id));
+        _appliedTechniqueId = id;
+        BuiltInTechniqueDefinition builtIn = await TechniqueCatalogService.GetAsync(id).ConfigureAwait(false);
+        TechniqueDefinition definition = TechniqueDefinitionMapper.ToPresentation(builtIn);
+
+        await UiThread.RunAsync(() => ApplyDefinition(definition)).ConfigureAwait(false);
+    }
+
+    private void ApplyDefinition(TechniqueDefinition def)
+    {
+        AppliedDefinition = def;
         ModuleName = def.ModuleName;
         PageName = def.PageName;
         Algorithm.Clear();

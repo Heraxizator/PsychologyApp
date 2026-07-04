@@ -37,7 +37,7 @@ public sealed class PracticeDashboardLoaderTests
     }
 
     [Fact]
-    public void ResolveTodayRecommendation_UsesOnboardingConcern()
+    public async Task ResolveTodayRecommendation_UsesOnboardingConcern()
     {
         Mock<IUserProgressService> progress = new();
         Mock<IUserPreferencesStore> preferences = new();
@@ -45,7 +45,7 @@ public sealed class PracticeDashboardLoaderTests
         Mock<INavigationService> navigation = new();
 
         PracticeDashboardLoader loader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
-        TodayRecommendationResult result = loader.ResolveTodayRecommendation(streakDays: 0, navigation.Object);
+        TodayRecommendationResult result = await loader.ResolveTodayRecommendationAsync(streakDays: 0, navigation.Object);
 
         Assert.Equal(TechniqueId.Paper, result.TechniqueId);
     }
@@ -138,7 +138,7 @@ public sealed class MusicPlaylistPresenterTests
 public sealed class ProfileFeaturedTechniquesBuilderTests
 {
     [Fact]
-    public void Build_ReturnsFourTechniquesIncludingRecommended()
+    public async Task Build_ReturnsFourTechniquesIncludingRecommended()
     {
         Mock<IUserPreferencesStore> preferences = new();
         preferences.Setup(p => p.Load()).Returns(new UserPreferencesState { OnboardingConcern = OnboardingConcernKeys.Body });
@@ -148,7 +148,7 @@ public sealed class ProfileFeaturedTechniquesBuilderTests
             TechniqueCatalogTestHelper.CreateGateway(),
             TechniqueCatalogTestHelper.CreateRecommendationService());
 
-        IReadOnlyList<TechniqueItem> items = builder.Build(navigation.Object);
+        IReadOnlyList<TechniqueItem> items = await builder.BuildAsync(navigation.Object);
 
         Assert.Equal(4, items.Count);
         Assert.All(items, item => Assert.NotNull(item.TapCommand));

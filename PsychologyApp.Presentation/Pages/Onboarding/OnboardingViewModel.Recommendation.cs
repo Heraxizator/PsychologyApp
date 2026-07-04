@@ -1,5 +1,7 @@
+using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Features.Onboarding;
 using PsychologyApp.Presentation.Shared.Common;
+
 namespace PsychologyApp.Presentation.Pages.Onboarding;
 
 public partial class OnboardingViewModel
@@ -9,14 +11,21 @@ public partial class OnboardingViewModel
     public string RecommendedSubtitle => _recommendation.Subtitle;
     public string RecommendedReason => _recommendation.ReasonText;
 
-    private OnboardingRecommendationResult _recommendation = null!;
-
-    private void RefreshRecommendation() =>
-        _recommendation = _onboardingRecommendationResolver.Resolve(SelectedConcern);
-
-    private void NotifyRecommendation()
+    private OnboardingRecommendationResult _recommendation = new()
     {
-        RefreshRecommendation();
+        TechniqueId = TechniqueId.Spin,
+        Concern = OnboardingConcernKeys.Explore,
+        IconName = string.Empty,
+        Title = string.Empty,
+        Subtitle = string.Empty,
+        ReasonText = string.Empty
+    };
+
+    private void RefreshRecommendation() => RefreshRecommendationAsync().FireAndForget();
+
+    private async Task RefreshRecommendationAsync()
+    {
+        _recommendation = await _onboardingRecommendationResolver.ResolveAsync(SelectedConcern);
         Notify(
             nameof(RecommendedIconName),
             nameof(RecommendedTitle),
@@ -24,4 +33,6 @@ public partial class OnboardingViewModel
             nameof(RecommendedReason),
             nameof(FinishSubtitle));
     }
+
+    private void NotifyRecommendation() => RefreshRecommendation();
 }

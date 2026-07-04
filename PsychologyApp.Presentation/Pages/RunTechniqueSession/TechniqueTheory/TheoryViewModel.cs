@@ -28,7 +28,13 @@ public partial class TheoryViewModel : BaseViewModel
         PageName = AppStrings.TechniqueTheory;
 
         BindNavigation(navigationService);
-        ApplyContent(content, techniqueId);
+        if (techniqueId is TechniqueId id)
+        {
+            LoadTechniqueContentAsync(id).FireAndForget();
+            return;
+        }
+
+        ApplyContent(content, null);
     }
 
     protected override void RefreshLocalizedProperties()
@@ -37,7 +43,7 @@ public partial class TheoryViewModel : BaseViewModel
 
         if (_techniqueId is TechniqueId techniqueId)
         {
-            ApplyContent(_techniqueCatalog.Get(techniqueId).TheoryInfo, techniqueId);
+            LoadTechniqueContentAsync(techniqueId).FireAndForget();
             return;
         }
 
@@ -45,5 +51,11 @@ public partial class TheoryViewModel : BaseViewModel
         {
             ApplyContent(_legacyContent, null);
         }
+    }
+
+    private async Task LoadTechniqueContentAsync(TechniqueId techniqueId)
+    {
+        TechniqueDefinition definition = await _techniqueCatalog.GetAsync(techniqueId);
+        await UiThread.RunAsync(() => ApplyContent(definition.TheoryInfo, techniqueId));
     }
 }

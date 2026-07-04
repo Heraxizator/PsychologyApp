@@ -83,20 +83,13 @@ public partial class QuoteViewModel
         }
     }
 
-    private string _searchQuery = string.Empty;
     public string SearchQuery
     {
-        get => _searchQuery;
-        set
-        {
-            if (SetProperty(ref _searchQuery, value))
-            {
-                SearchQuotesAsync().FireAndForget();
-            }
-        }
+        get => _searchController.Query;
+        set => _searchController.Query = value;
     }
 
-    public bool IsSearching => !string.IsNullOrWhiteSpace(SearchQuery);
+    public bool IsSearching => _searchController.IsSearching;
 
     public bool IsFeedFiltersVisible => !IsSearching;
 

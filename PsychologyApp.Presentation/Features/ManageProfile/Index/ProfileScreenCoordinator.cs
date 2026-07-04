@@ -16,10 +16,11 @@ public sealed record ProfileScreenRefreshResult(
 /// </summary>
 public sealed class ProfileScreenCoordinator(UserProfileRefreshCoordinator refreshCoordinator)
 {
-    public IReadOnlyList<TechniqueItem> BuildFeaturedTechniques(
+    public Task<IReadOnlyList<TechniqueItem>> BuildFeaturedTechniquesAsync(
         ProfileFeaturedTechniquesBuilder builder,
-        INavigationService navigationService) =>
-        builder.Build(navigationService);
+        INavigationService navigationService,
+        CancellationToken cancellationToken = default) =>
+        builder.BuildAsync(navigationService, cancellationToken);
 
     public async Task<ProfileScreenRefreshResult?> RefreshDashboardAsync(
         ProfileStatsLoader statsLoader,
