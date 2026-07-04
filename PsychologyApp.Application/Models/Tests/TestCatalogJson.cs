@@ -30,7 +30,7 @@ public sealed record JsonSimpleQuestionnaireDefinition(
 
 public sealed record JsonAnswerDefinition(int Ball, string Text);
 
-public sealed record JsonGroupedQuestionDefinition(List<JsonAnswerDefinition> Answers);
+public sealed record JsonGroupedQuestionDefinition(List<JsonAnswerDefinition> Answers, string? Text = null);
 
 public sealed record JsonGroupedQuestionnaireDefinition(
     string Title,

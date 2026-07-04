@@ -18,7 +18,7 @@ public sealed class LuscherTestViewModelTests
     }
 
     [Fact]
-    public async Task StandardMode_AfterEightSelections_PersistsWithStandardTestId()
+    public async Task StandardMode_AfterTwoPasses_PersistsWithStandardTestId()
     {
         var navigation = new Mock<INavigation>();
         var progress = new Mock<IUserProgressService>();
@@ -45,6 +45,14 @@ public sealed class LuscherTestViewModelTests
         ];
 
         foreach (ColourValue color in colors)
+        {
+            InvokeColorHandler(viewModel, color);
+        }
+
+        Assert.False(viewModel.IsFinish);
+        Assert.Equal(2, viewModel.StandardPassNumber);
+
+        foreach (ColourValue color in colors.Reverse())
         {
             InvokeColorHandler(viewModel, color);
         }

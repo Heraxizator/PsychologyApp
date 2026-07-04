@@ -1,5 +1,8 @@
+using PsychologyApp.Domain.Colour;
+using PsychologyApp.Domain.Colour.Enums;
+using PsychologyApp.Domain.Colour.ValueObjects;
+using PsychologyApp.Presentation.Features.RunTests;
 using PsychologyApp.Presentation.Shared.Common;
-using PsychologyApp.Presentation.Entities.Test;
 
 namespace PsychologyApp.Presentation.Pages.RunTests.LuscherTest;
 
@@ -9,7 +12,20 @@ public partial class LuscherTestViewModel
         ? AppStrings.TestsStandardTitle
         : AppStrings.TestsBriefTitle;
 
-    public string ColorInstruction => AppStrings.TestsColorInstruction;
+    public string ColorInstruction
+    {
+        get
+        {
+            if (_mode == LuscherMode.Standard && IsStart)
+            {
+                return string.IsNullOrWhiteSpace(CurrentInstruction)
+                    ? AppStrings.TestsColorInstruction
+                    : CurrentInstruction;
+            }
+
+            return AppStrings.TestsColorInstruction;
+        }
+    }
 
     public string MoreInfoHeader => AppStrings.TestsMoreInfo;
 
@@ -20,6 +36,8 @@ public partial class LuscherTestViewModel
     public string RestartButtonText => AppStrings.TestsRestart;
 
     public string BackToListButtonText => AppStrings.TestsBackToList;
+
+    public string TryTechniqueButtonText => AppStrings.TestTryTechnique;
 
     public string FirstColorLabel => AppStrings.TestsFirstColor;
 
@@ -33,8 +51,23 @@ public partial class LuscherTestViewModel
 
     public bool ShowBriefProgress => IsBriefMode && IsStart;
 
+    public int StandardPassNumber => _passNumber;
+
+    public int StandardPassCount => 2;
+
+    public string StandardPassLabel => AppStrings.TestsLuscherPassOf(StandardPassNumber, StandardPassCount);
+
+    public bool ShowStandardProgress => IsStandardMode && IsStart;
+
     private void NotifyBriefProgress() =>
         Notify(nameof(BriefStep), nameof(BriefStepLabel), nameof(ShowBriefProgress));
+
+    private void NotifyStandardPassProgress() =>
+        Notify(
+            nameof(StandardPassNumber),
+            nameof(StandardPassLabel),
+            nameof(ShowStandardProgress),
+            nameof(ColorInstruction));
 
     protected override void RefreshLocalizedProperties()
     {
@@ -45,9 +78,11 @@ public partial class LuscherTestViewModel
             nameof(MoreInfoBody),
             nameof(RestartButtonText),
             nameof(BackToListButtonText),
+            nameof(TryTechniqueButtonText),
             nameof(FirstColorLabel),
             nameof(SecondColorLabel),
-            nameof(BriefStepLabel));
+            nameof(BriefStepLabel),
+            nameof(StandardPassLabel));
 
         if (_mode == LuscherMode.Brief)
         {
@@ -60,6 +95,7 @@ public partial class LuscherTestViewModel
         else
         {
             RefreshStandardResultLabels();
+            NotifyStandardPassProgress();
         }
     }
 }

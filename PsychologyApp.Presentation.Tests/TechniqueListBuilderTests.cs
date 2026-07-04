@@ -14,7 +14,7 @@ public sealed class TodayRecommendationResolverTests
     [Theory]
     [InlineData(OnboardingConcernKeys.Anxiety, TechniqueId.Spin)]
     [InlineData(OnboardingConcernKeys.Body, TechniqueId.Experience)]
-    [InlineData(OnboardingConcernKeys.Mood, TechniqueId.Paper)]
+    [InlineData(OnboardingConcernKeys.Mood, TechniqueId.SmallStep)]
     public async Task Resolve_MapsConcernToTechnique(string concern, TechniqueId expected)
     {
         Mock<INavigationService> navigation = new();

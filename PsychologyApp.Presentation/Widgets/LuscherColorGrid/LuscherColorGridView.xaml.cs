@@ -1,4 +1,6 @@
-﻿using PsychologyApp.Presentation.Shared.Common;
+﻿using PsychologyApp.Domain.Colour.ValueObjects;
+using PsychologyApp.Presentation.Features.RunTests;
+using PsychologyApp.Presentation.Shared.Common;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -55,8 +57,29 @@ public partial class LuscherColorGridView : ContentView
 
     private void OnLoaded(object? sender, EventArgs e)
     {
+        ApplyDomainColors();
         AttachAnimatedTapHandlers();
         UpdateTileSizes(Width);
+    }
+
+    private void ApplyDomainColors()
+    {
+        SetTileColor(RedTile, ColourValue.Red);
+        SetTileColor(BrownTile, ColourValue.Brown);
+        SetTileColor(YellowTile, ColourValue.Yellow);
+        SetTileColor(GreenTile, ColourValue.Green);
+        SetTileColor(BlueTile, ColourValue.Blue);
+        SetTileColor(PurpleTile, ColourValue.Purple);
+        SetTileColor(GrayTile, ColourValue.Gray);
+        SetTileColor(BlackTile, ColourValue.Black);
+    }
+
+    private static void SetTileColor(Border tile, ColourValue colour)
+    {
+        if (tile.Content is BoxView boxView)
+        {
+            boxView.Color = LuscherColorMapper.ToMauiColor(colour);
+        }
     }
 
     private void OnSizeChanged(object? sender, EventArgs e) => UpdateTileSizes(Width);

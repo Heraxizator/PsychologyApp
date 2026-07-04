@@ -1,4 +1,5 @@
 using PsychologyApp.Application.Models;
+using PsychologyApp.Domain.Practice;
 
 namespace PsychologyApp.Application.Somatic;
 
@@ -13,8 +14,9 @@ public static class SomaticTechniqueRecommendation
         ["живот"] = [TechniqueId.Polarity, TechniqueId.Comparison],
         ["stomach"] = [TechniqueId.Polarity, TechniqueId.Comparison],
         ["брюх"] = [TechniqueId.Polarity, TechniqueId.Comparison],
-        ["сердц"] = [TechniqueId.Future, TechniqueId.Check],
-        ["heart"] = [TechniqueId.Future, TechniqueId.Check],
+        ["сердц"] = [TechniqueId.Breathing, TechniqueId.Grounding],
+        ["heart"] = [TechniqueId.Breathing, TechniqueId.Grounding],
+        ["груд"] = [TechniqueId.Breathing, TechniqueId.Grounding],
         ["горл"] = [TechniqueId.Copied, TechniqueId.Extend],
         ["throat"] = [TechniqueId.Copied, TechniqueId.Extend],
         ["плеч"] = [TechniqueId.Hack, TechniqueId.Spin],
@@ -28,13 +30,23 @@ public static class SomaticTechniqueRecommendation
         ["arm"] = [TechniqueId.Experience, TechniqueId.Comparison],
         ["давлен"] = [TechniqueId.Check, TechniqueId.Polarity],
         ["pressure"] = [TechniqueId.Check, TechniqueId.Polarity],
+        ["дых"] = [TechniqueId.Breathing, TechniqueId.Grounding],
+        ["breath"] = [TechniqueId.Breathing, TechniqueId.Grounding],
+        ["тревог"] = [TechniqueId.Breathing, TechniqueId.Grounding],
+        ["anxiety"] = [TechniqueId.Breathing, TechniqueId.Grounding],
+        ["паник"] = [TechniqueId.Breathing, TechniqueId.Grounding],
+        ["panic"] = [TechniqueId.Breathing, TechniqueId.Grounding],
+        ["устал"] = [TechniqueId.SmallStep, TechniqueId.Paper],
+        ["tired"] = [TechniqueId.SmallStep, TechniqueId.Paper],
+        ["апати"] = [TechniqueId.SmallStep, TechniqueId.Paper],
+        ["apathy"] = [TechniqueId.SmallStep, TechniqueId.Paper],
     };
 
     public static IReadOnlyList<TechniqueId> RecommendForQuery(string query)
     {
         if (string.IsNullOrWhiteSpace(query))
         {
-            return [TechniqueId.Spin, TechniqueId.Paper];
+            return [TechniqueId.Breathing, TechniqueId.Grounding];
         }
 
         foreach ((string keyword, TechniqueId[] techniques) in KeywordMap)

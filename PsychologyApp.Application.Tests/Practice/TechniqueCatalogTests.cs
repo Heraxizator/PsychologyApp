@@ -19,6 +19,10 @@ public class TechniqueCatalogTests
     [InlineData(TechniqueId.Observer, TechniqueUiKind.Entry, "Позиция наблюдателя")]
     [InlineData(TechniqueId.Anchor, TechniqueUiKind.Entry, "Якорь ресурса")]
     [InlineData(TechniqueId.Grounding, TechniqueUiKind.Entry, "Заземление 5-4-3-2-1")]
+    [InlineData(TechniqueId.Breathing, TechniqueUiKind.Entry, "Квадратное дыхание")]
+    [InlineData(TechniqueId.SmallStep, TechniqueUiKind.Entry, "Один маленький шаг")]
+    [InlineData(TechniqueId.ThoughtRecord, TechniqueUiKind.Entry, "Запись мысли")]
+    [InlineData(TechniqueId.SelfCompassion, TechniqueUiKind.Entry, "Добрые слова себе")]
     public async Task GetAsync_returns_expected_ui_kind_and_page_name(TechniqueId id, TechniqueUiKind kind, string pageName)
     {
         BuiltInTechniqueDefinition definition = await CreateCatalog().GetAsync(id);
@@ -29,10 +33,10 @@ public class TechniqueCatalogTests
     }
 
     [Fact]
-    public async Task GetAllAsync_contains_fourteen_builtin_techniques()
+    public async Task GetAllAsync_contains_eighteen_builtin_techniques()
     {
         IReadOnlyList<BuiltInTechniqueDefinition> all = await CreateCatalog().GetAllAsync();
-        Assert.Equal(14, all.Count);
+        Assert.Equal(18, all.Count);
     }
 
     [Fact]
@@ -84,5 +88,23 @@ public class TechniqueCatalogTests
     {
         BuiltInTechniqueDefinition definition = await CreateCatalog().GetAsync(TechniqueId.Comparison);
         Assert.Contains(definition.Entries!, entry => entry.Title.Contains("изменилось", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task ThoughtRecord_includes_cbt_fields()
+    {
+        BuiltInTechniqueDefinition definition = await CreateCatalog().GetAsync(TechniqueId.ThoughtRecord);
+
+        Assert.Contains(definition.Entries!, entry => entry.Title.Contains("Ситуация", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains(definition.Entries!, entry => entry.Title.Contains("Автоматическая мысль", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains(definition.Entries!, entry => entry.Title.Contains("Альтернативная мысль", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task Breathing_includes_before_after_ratings()
+    {
+        BuiltInTechniqueDefinition definition = await CreateCatalog().GetAsync(TechniqueId.Breathing);
+
+        Assert.Equal(2, definition.Entries!.Count(entry => entry.Kind == EntryFieldKind.Rating0To10));
     }
 }

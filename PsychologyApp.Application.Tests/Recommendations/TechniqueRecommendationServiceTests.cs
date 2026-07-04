@@ -1,4 +1,5 @@
 using PsychologyApp.Application.Models;
+using PsychologyApp.Application.Models.Tests;
 using PsychologyApp.Application.Recommendations;
 using PsychologyApp.Domain.Practice;
 using Xunit;
@@ -12,7 +13,7 @@ public sealed class TechniqueRecommendationServiceTests
     [Theory]
     [InlineData(OnboardingConcernKeys.Anxiety, TechniqueId.Spin)]
     [InlineData(OnboardingConcernKeys.Body, TechniqueId.Experience)]
-    [InlineData(OnboardingConcernKeys.Mood, TechniqueId.Paper)]
+    [InlineData(OnboardingConcernKeys.Mood, TechniqueId.SmallStep)]
     public void ResolveFromOnboardingConcern_MapsKnownConcerns(string concern, TechniqueId expected) =>
         Assert.Equal(expected, _service.ResolveFromOnboardingConcern(concern));
 
@@ -42,13 +43,30 @@ public sealed class TechniqueRecommendationServiceTests
     }
 
     [Fact]
+    public void ResolveTodayTechnique_UsesLuscherCoWhenRecentStandardTest()
+    {
+        TodayRecommendationDecision decision = _service.ResolveTodayTechnique(new TodayRecommendationContext(
+            OnboardingConcernKeys.Explore,
+            RecentTestResult: new TestResultDTO
+            {
+                TestId = TestIds.LuscherStandard,
+                Score = 25,
+                CompletedAt = DateTime.UtcNow.AddDays(-1)
+            }));
+
+        Assert.Equal(TechniqueId.Spin, decision.TechniqueId);
+        Assert.Equal(TodayRecommendationSource.RecentTest, decision.Source);
+        Assert.Equal(TestIds.LuscherStandard, decision.TestId);
+    }
+
+    [Fact]
     public void ResolveTodayTechnique_UsesLowMoodWhenNoRecentTest()
     {
         TodayRecommendationDecision decision = _service.ResolveTodayTechnique(new TodayRecommendationContext(
             OnboardingConcernKeys.Body,
             TodayMoodLevel: 2));
 
-        Assert.Equal(TechniqueId.Spin, decision.TechniqueId);
+        Assert.Equal(TechniqueId.Breathing, decision.TechniqueId);
         Assert.Equal(TodayRecommendationSource.LowMood, decision.Source);
     }
 

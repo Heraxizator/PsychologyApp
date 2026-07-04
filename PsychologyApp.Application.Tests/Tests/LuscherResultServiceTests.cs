@@ -23,14 +23,19 @@ public sealed class LuscherResultServiceTests
             "CO: 12; BK: 1.5",
             coValue: 12,
             bkValue: 1.5,
-            [new LuscherColorSelection("#FF0000", "Red")]);
+            [new LuscherColorSelection("#FF0000", "Red")],
+            [new LuscherColorSelection("#0000FF", "Blue")]);
 
         progress.Verify(
             p => p.SaveTestResultAsync(
                 TestIds.LuscherStandard,
                 12,
                 "CO: 12; BK: 1.5",
-                It.Is<string?>(json => json!.Contains("\"co\":12") && json.Contains("\"code\":\"#FF0000\"")),
+                It.Is<string?>(json =>
+                    json!.Contains("\"co\":12") &&
+                    json.Contains("\"firstPassColors\"") &&
+                    json.Contains("\"code\":\"#FF0000\"") &&
+                    json.Contains("\"code\":\"#0000FF\"")),
                 It.IsAny<CancellationToken>()),
             Times.Once);
     }
@@ -40,14 +45,22 @@ public sealed class LuscherResultServiceTests
     {
         Mock<IUserProgressService> progress = new();
 
-        await _service.SaveBriefAsync(progress.Object, "Red / Blue", "Red", "Blue", "First text", "Second text");
+        await _service.SaveBriefAsync(
+            progress.Object,
+            "Red / Blue",
+            "Red",
+            "Blue",
+            "#FF0000",
+            "#0000FF",
+            "First text",
+            "Second text");
 
         progress.Verify(
             p => p.SaveTestResultAsync(
                 TestIds.LuscherBrief,
                 null,
                 "Red / Blue",
-                It.Is<string?>(json => json!.Contains("\"first\"") && json.Contains("\"second\"")),
+                It.Is<string?>(json => json!.Contains("\"first\"") && json.Contains("\"second\"") && json.Contains("\"code\"")),
                 It.IsAny<CancellationToken>()),
             Times.Once);
     }

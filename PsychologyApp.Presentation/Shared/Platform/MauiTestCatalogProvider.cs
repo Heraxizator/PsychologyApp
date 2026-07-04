@@ -10,6 +10,8 @@ public sealed class MauiTestCatalogProvider(ITestAssetReader assetReader, ILogge
     : ITestCatalogProvider
 {
     private const string BeckPath = "tests/beck.json";
+    private const string Pss10Path = "tests/pss10.json";
+    private const string RsesPath = "tests/rses.json";
     private const string LuscherPath = "tests/luscher.json";
     private const string QuestionnairesPath = "tests/questionnaires.json";
 
@@ -17,7 +19,9 @@ public sealed class MauiTestCatalogProvider(ITestAssetReader assetReader, ILogge
     {
         List<TestDefinition> items = [];
 
-        await LoadBeckAsync(items, cancellationToken).ConfigureAwait(false);
+        await LoadGroupedQuestionnaireAsync(BeckPath, items, cancellationToken).ConfigureAwait(false);
+        await LoadGroupedQuestionnaireAsync(Pss10Path, items, cancellationToken).ConfigureAwait(false);
+        await LoadGroupedQuestionnaireAsync(RsesPath, items, cancellationToken).ConfigureAwait(false);
         await LoadLuscherAsync(items, cancellationToken).ConfigureAwait(false);
         await LoadQuestionnairesAsync(items, cancellationToken).ConfigureAwait(false);
 
@@ -30,10 +34,13 @@ public sealed class MauiTestCatalogProvider(ITestAssetReader assetReader, ILogge
         return items;
     }
 
-    private async Task LoadBeckAsync(List<TestDefinition> items, CancellationToken cancellationToken)
+    private async Task LoadGroupedQuestionnaireAsync(
+        string assetPath,
+        List<TestDefinition> items,
+        CancellationToken cancellationToken)
     {
         ParseResult<JsonGroupedQuestionnaireDefinition>? parseResult =
-            await DeserializeGroupedQuestionnaireAsync(BeckPath, cancellationToken)
+            await DeserializeGroupedQuestionnaireAsync(assetPath, cancellationToken)
                 .ConfigureAwait(false);
 
         if (parseResult is null)
@@ -48,7 +55,7 @@ public sealed class MauiTestCatalogProvider(ITestAssetReader assetReader, ILogge
         }
         else
         {
-            logger.LogWarning("Skipped Beck test asset {AssetPath}: {Error}", BeckPath, definition.Error);
+            logger.LogWarning("Skipped grouped test asset {AssetPath}: {Error}", assetPath, definition.Error);
         }
     }
 

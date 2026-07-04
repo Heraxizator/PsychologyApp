@@ -17,14 +17,14 @@
   {
     "title": "Full Lüscher Test",
     "subtitle": "Standard version",
-    "estimatedMinutes": 5,
+    "estimatedMinutes": 7,
     "questionCount": 8,
     "construct": "Emotional state",
     "betterWhen": "lower",
-    "description": "Order 8 colors from most to least pleasant—reflecting how you feel here and now.",
+    "description": "Order 8 colors from most to least pleasant twice—reflecting how you feel here and now.",
     "algorithm": [
-      "1. Choose the most pleasant color",
-      "2. Repeat step 1"
+      "1. Order 8 colors from most to least pleasant",
+      "2. Repeat step 1 without looking at your first result"
     ],
     "comment": "Do not pick favorite colors. The test measures your current emotional state.",
     "navigationTarget": "standard"

@@ -1,0 +1,118 @@
+{
+  "title": "Perceived Stress Scale PSS-10",
+  "subtitle": "Perceived stress",
+  "estimatedMinutes": 3,
+  "questionCount": 10,
+  "construct": "Stress",
+  "betterWhen": "lower",
+  "description": "Ten questions about how often you felt certain stress-related experiences during the last month.",
+  "algorithm": [
+    "1. Think about the last month.",
+    "2. For each question, choose how often it was true for you."
+  ],
+  "comment": "This screens perceived stress; it is not a diagnosis.",
+  "analyzerId": "pss10",
+  "singleAnswer": true,
+  "questions": [
+    {
+      "text": "In the last month, how often have you been upset because of something that happened unexpectedly?",
+      "answers": [
+        { "ball": 0, "text": "Never" },
+        { "ball": 1, "text": "Almost never" },
+        { "ball": 2, "text": "Sometimes" },
+        { "ball": 3, "text": "Fairly often" },
+        { "ball": 4, "text": "Very often" }
+      ]
+    },
+    {
+      "text": "In the last month, how often have you felt that you were unable to control the important things in your life?",
+      "answers": [
+        { "ball": 0, "text": "Never" },
+        { "ball": 1, "text": "Almost never" },
+        { "ball": 2, "text": "Sometimes" },
+        { "ball": 3, "text": "Fairly often" },
+        { "ball": 4, "text": "Very often" }
+      ]
+    },
+    {
+      "text": "In the last month, how often have you felt nervous and stressed?",
+      "answers": [
+        { "ball": 0, "text": "Never" },
+        { "ball": 1, "text": "Almost never" },
+        { "ball": 2, "text": "Sometimes" },
+        { "ball": 3, "text": "Fairly often" },
+        { "ball": 4, "text": "Very often" }
+      ]
+    },
+    {
+      "text": "In the last month, how often have you felt confident about your ability to handle personal problems?",
+      "answers": [
+        { "ball": 4, "text": "Never" },
+        { "ball": 3, "text": "Almost never" },
+        { "ball": 2, "text": "Sometimes" },
+        { "ball": 1, "text": "Fairly often" },
+        { "ball": 0, "text": "Very often" }
+      ]
+    },
+    {
+      "text": "In the last month, how often have you felt that things were going your way?",
+      "answers": [
+        { "ball": 4, "text": "Never" },
+        { "ball": 3, "text": "Almost never" },
+        { "ball": 2, "text": "Sometimes" },
+        { "ball": 1, "text": "Fairly often" },
+        { "ball": 0, "text": "Very often" }
+      ]
+    },
+    {
+      "text": "In the last month, how often have you felt that you could not cope with all the things you had to do?",
+      "answers": [
+        { "ball": 0, "text": "Never" },
+        { "ball": 1, "text": "Almost never" },
+        { "ball": 2, "text": "Sometimes" },
+        { "ball": 3, "text": "Fairly often" },
+        { "ball": 4, "text": "Very often" }
+      ]
+    },
+    {
+      "text": "In the last month, how often have you been able to control irritations in your life?",
+      "answers": [
+        { "ball": 4, "text": "Never" },
+        { "ball": 3, "text": "Almost never" },
+        { "ball": 2, "text": "Sometimes" },
+        { "ball": 1, "text": "Fairly often" },
+        { "ball": 0, "text": "Very often" }
+      ]
+    },
+    {
+      "text": "In the last month, how often have you felt that you were on top of things?",
+      "answers": [
+        { "ball": 4, "text": "Never" },
+        { "ball": 3, "text": "Almost never" },
+        { "ball": 2, "text": "Sometimes" },
+        { "ball": 1, "text": "Fairly often" },
+        { "ball": 0, "text": "Very often" }
+      ]
+    },
+    {
+      "text": "In the last month, how often have you been angered because of things that were outside of your control?",
+      "answers": [
+        { "ball": 0, "text": "Never" },
+        { "ball": 1, "text": "Almost never" },
+        { "ball": 2, "text": "Sometimes" },
+        { "ball": 3, "text": "Fairly often" },
+        { "ball": 4, "text": "Very often" }
+      ]
+    },
+    {
+      "text": "In the last month, how often have you felt difficulties were piling up so high that you could not overcome them?",
+      "answers": [
+        { "ball": 0, "text": "Never" },
+        { "ball": 1, "text": "Almost never" },
+        { "ball": 2, "text": "Sometimes" },
+        { "ball": 3, "text": "Fairly often" },
+        { "ball": 4, "text": "Very often" }
+      ]
+    }
+  ]
+}

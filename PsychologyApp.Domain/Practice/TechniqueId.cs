@@ -15,7 +15,11 @@ public enum TechniqueId
     Check,
     Observer,
     Anchor,
-    Grounding
+    Grounding,
+    Breathing,
+    SmallStep,
+    ThoughtRecord,
+    SelfCompassion
 }
 
 public enum TechniqueUiKind

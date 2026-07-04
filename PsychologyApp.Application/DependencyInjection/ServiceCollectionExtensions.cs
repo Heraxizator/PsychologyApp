@@ -75,6 +75,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<ITechniqueCatalogService, TechniqueCatalogService>();
         services.AddSingleton<ITechniqueRecommendationService, TechniqueRecommendationService>();
         services.AddSingleton<ILuscherResultService, LuscherResultService>();
+        services.AddSingleton<LuscherDetailReader>();
 
         return services;
     }

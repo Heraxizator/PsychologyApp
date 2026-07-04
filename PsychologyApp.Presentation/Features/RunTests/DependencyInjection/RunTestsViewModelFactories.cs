@@ -72,6 +72,7 @@ public interface ILuscherTestViewModelFactory
 public sealed class LuscherTestViewModelFactory(
     IUserProgressService userProgressService,
     ILuscherResultService luscherResultService,
+    TechniqueCatalogGateway techniqueCatalog,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, ILuscherTestViewModelFactory
 {
     public LuscherTestViewModel Create(ContentPage page, LuscherMode mode) =>
@@ -79,7 +80,8 @@ public sealed class LuscherTestViewModelFactory(
             mode,
             ResolveNavigation(navigationServiceFactory, page),
             userProgressService,
-            luscherResultService);
+            luscherResultService,
+            techniqueCatalog);
 }
 
 public interface ITestResultViewModelFactory

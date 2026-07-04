@@ -5,7 +5,8 @@ public static class TestScoreInterpreter
     public static bool IsKnownAnalyzer(string analyzerId) => analyzerId switch
     {
         "heck_hess" or "haer" or "pochebut" or "beck" or "gad7" or "k10" or "who5"
-            or "phq9" or "isi" or "ess" or "phq15" or "scoff" or "swls" => true,
+            or "phq9" or "isi" or "ess" or "phq15" or "scoff" or "swls"
+            or "pss10" or "phq2" or "gad2" or "hads_a" or "hads_d" or "rses" => true,
         _ => false
     };
 
@@ -80,6 +81,32 @@ public static class TestScoreInterpreter
         "swls" => score switch
         {
             <= 20 => 0,
+            <= 25 => 1,
+            _ => 2
+        },
+        "pss10" => score switch
+        {
+            <= 13 => 0,
+            <= 26 => 1,
+            _ => 2
+        },
+        "phq2" => score <= 2 ? 0 : 1,
+        "gad2" => score <= 2 ? 0 : 1,
+        "hads_a" => score switch
+        {
+            <= 7 => 0,
+            <= 10 => 1,
+            _ => 2
+        },
+        "hads_d" => score switch
+        {
+            <= 7 => 0,
+            <= 10 => 1,
+            _ => 2
+        },
+        "rses" => score switch
+        {
+            <= 14 => 0,
             <= 25 => 1,
             _ => 2
         },

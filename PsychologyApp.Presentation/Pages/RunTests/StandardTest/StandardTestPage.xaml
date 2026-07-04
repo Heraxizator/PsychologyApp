@@ -7,6 +7,7 @@
              xmlns:tests="clr-namespace:PsychologyApp.Presentation.Pages.RunTests.LuscherTest"
              xmlns:grid="clr-namespace:PsychologyApp.Presentation.Widgets.LuscherColorGrid"
              xmlns:testUi="clr-namespace:PsychologyApp.Presentation.Widgets.Test"
+             xmlns:profileUi="clr-namespace:PsychologyApp.Presentation.Widgets.ProfileTechniqueCard"
              xmlns:models="clr-namespace:PsychologyApp.Presentation.Pages.RunTests.LuscherTest"
              x:DataType="vm:LuscherTestViewModel"
              Shell.NavBarIsVisible="False"
@@ -29,6 +30,12 @@
                     <VerticalStackLayout.Behaviors>
                         <behaviors:RevealOnAppearingBehavior />
                     </VerticalStackLayout.Behaviors>
+                    <testUi:TestProgressHeaderView
+                        IsVisible="{Binding ShowStandardProgress}"
+                        Step="{Binding StandardPassNumber}"
+                        StepCount="{Binding StandardPassCount}"
+                        StepLabel="{Binding StandardPassLabel}"
+                        ShowStepLabel="True" />
                     <Label
                         HorizontalTextAlignment="Center"
                         Text="{Binding ColorInstruction}"
@@ -53,11 +60,29 @@
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        IsVisible="{Binding HasRecommendation}"
+                        Spacing="{StaticResource CompactSpacing}">
+                        <Label
+                            Text="{Binding RecommendationHint}"
+                            Style="{StaticResource CaptionStyle}" />
+                        <profileUi:ProfileTechniqueCardView
+                            IconName="{Binding RecommendationIconName}"
+                            Title="{Binding RecommendationTitle}"
+                            Subtitle="{Binding RecommendationSubtitle}"
+                            Theme="{Binding RecommendationTheme}"
+                            TapCommand="{Binding TryTechniqueCommand}" />
+                    </VerticalStackLayout>
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>
 
         <VerticalStackLayout Grid.Row="2" IsVisible="{Binding IsFinish}" Spacing="{StaticResource CompactSpacing}">
+            <ui:ButtonView
+                IsVisible="{Binding HasRecommendation}"
+                BodyText="{Binding TryTechniqueButtonText}"
+                TapCommand="{Binding TryTechniqueCommand}" />
             <ui:ButtonView
                 BodyText="{Binding RestartButtonText}"
                 TapCommand="{Binding Restart}" />

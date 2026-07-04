@@ -305,4 +305,98 @@ internal static class TechniqueCatalogContentEn
             "Go through the steps slowly, naming concrete sensations. Breathe evenly between items.",
             "5 see → 4 feel → 3 hear → breathing steadies, thoughts slow down."),
         null, null);
+
+    internal static readonly BuiltInTechniqueDefinition Breathing = new(
+        "Practice", "Box breathing",
+        [
+            "1. Rate tension before the practice",
+            "2. Inhale for 4 counts",
+            "3. Hold for 4 counts",
+            "4. Exhale for 4 counts",
+            "5. Hold for 4 counts — repeat 4 cycles and rate tension after"
+        ],
+        "Rhythmic breathing calms the nervous system and reduces bodily tension.",
+        TechniqueUiKind.Entry, "Technique #15", "04.07.2026", "Box breathing", "Calm the body through breath rhythm", "Episodes", "Psyche", 3, "Air",
+        [
+            new TechniqueEntrySeed("Tension before", "", EntryFieldKind.Rating0To10),
+            new TechniqueEntrySeed("Notes", "What did you notice in your body or breath during the practice?"),
+            new TechniqueEntrySeed("Tension after", "", EntryFieldKind.Rating0To10)
+        ],
+        Theory(
+            "Slow rhythmic breathing lowers sympathetic nervous system activity and helps the body exit fight-or-flight mode.",
+            "During anxiety, panic, racing heart, insomnia, or feeling overwhelmed.",
+            "Sit comfortably, breathe through your nose: 4 in, 4 hold, 4 out, 4 hold. Repeat 4 cycles.",
+            "Anxiety 7/10 → after 4 cycles 4/10. Shoulders drop, pulse slows."),
+        null, null);
+
+    internal static readonly BuiltInTechniqueDefinition SmallStep = new(
+        "Practice", "One small step",
+        [
+            "1. Describe what feels heavy or blocks you from starting",
+            "2. Choose the smallest realistic step for today",
+            "3. Write when you will do it",
+            "4. Rate your energy after writing the step"
+        ],
+        "Behavioral activation: a small action restores a sense of movement and control.",
+        TechniqueUiKind.Entry, "Technique #16", "04.07.2026", "One small step", "Restore momentum through minimal action", "Episodes", "CBT", 5, "DirectionsWalk",
+        [
+            new TechniqueEntrySeed("What feels heavy", "What seems hard, boring, or impossible right now?"),
+            new TechniqueEntrySeed("Smallest step today", "E.g. get up, wash face, send one message"),
+            new TechniqueEntrySeed("When you will do it", "A specific time or moment in the day"),
+            new TechniqueEntrySeed("Energy after", "", EntryFieldKind.Rating0To10)
+        ],
+        Theory(
+            "In apathy the brain waits for motivation to act. A small step creates motivation through action, not the other way around.",
+            "When you have no energy, everything feels pointless, or starting the day is hard.",
+            "Pick a 2–5 minute step without a perfect plan. Write it and the time — that is already movement.",
+            "Clean apartment → put one cup in the kitchen at 10:00. Energy: 2 → 4."),
+        null, null);
+
+    internal static readonly BuiltInTechniqueDefinition ThoughtRecord = new(
+        "Practice", "Thought record",
+        [
+            "1. Describe the situation",
+            "2. Write the automatic thought",
+            "3. Rate the emotion",
+            "4. Formulate a more balanced alternative thought",
+            "5. Rate the emotion again"
+        ],
+        "A structured CBT record helps you see the link between situation, thought, and emotion.",
+        TechniqueUiKind.Entry, "Technique #17", "04.07.2026", "Thought record", "Unpack a thought and reduce emotional charge", "Episodes", "CBT", 7, "EditNote",
+        [
+            new TechniqueEntrySeed("Situation", "What happened? Where and when?"),
+            new TechniqueEntrySeed("Automatic thought", "What did you think in that moment?"),
+            new TechniqueEntrySeed("Emotion", "", EntryFieldKind.Rating0To10),
+            new TechniqueEntrySeed("Alternative thought", "What else might be true? A more balanced view"),
+            new TechniqueEntrySeed("Emotion now", "", EntryFieldKind.Rating0To10)
+        ],
+        Theory(
+            "Automatic thoughts often sound like facts though they are interpretations. Writing them down makes them visible and testable.",
+            "After conflict, criticism, failure, or when one thought keeps looping.",
+            "Describe situation and thought, rate emotion, then find an alternative — not toxic positivity, but something more accurate.",
+            "Situation: no reply to message. Thought: nobody needs me. Alternative: they are busy. Emotion: 8 → 5."),
+        null, null);
+
+    internal static readonly BuiltInTechniqueDefinition SelfCompassion = new(
+        "Practice", "Kind words to yourself",
+        [
+            "1. Write what you are criticizing yourself for",
+            "2. Imagine a close friend said this — what would you tell them?",
+            "3. Formulate the same supportive phrase for yourself",
+            "4. Rate warmth or relief"
+        ],
+        "Self-compassion reduces harsh self-criticism and helps recover after a mistake.",
+        TechniqueUiKind.Entry, "Technique #18", "04.07.2026", "Kind words to yourself", "Soften self-criticism through support", "Episodes", "CBT", 5, "Favorite",
+        [
+            new TechniqueEntrySeed("What you criticize yourself for", "What do you tell yourself or blame yourself for?"),
+            new TechniqueEntrySeed("What you would tell a friend", "How would you support someone close in this situation?"),
+            new TechniqueEntrySeed("Phrase to yourself", "The same kindness, directed at you"),
+            new TechniqueEntrySeed("Warmth / relief", "", EntryFieldKind.Rating0To10)
+        ],
+        Theory(
+            "Self-criticism rarely motivates — it more often fuels shame and paralysis. Self-compassion does not remove responsibility, but gives support.",
+            "After a mistake, comparing yourself to others, or feeling not good enough.",
+            "Write the criticism, then answer yourself as you would a friend — with respect and without dismissal.",
+            "Criticism: I ruined everything again. To friend: you tried, this is fixable. To self: I can learn from this. Warmth: 3 → 6."),
+        null, null);
 }

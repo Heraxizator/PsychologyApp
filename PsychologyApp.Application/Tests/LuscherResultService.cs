@@ -14,7 +14,8 @@ public interface ILuscherResultService
         string summary,
         int coValue,
         double bkValue,
-        IReadOnlyList<LuscherColorSelection> selectedColors,
+        IReadOnlyList<LuscherColorSelection> firstPassColors,
+        IReadOnlyList<LuscherColorSelection> secondPassColors,
         CancellationToken cancellationToken = default);
 
     Task SaveBriefAsync(
@@ -22,6 +23,8 @@ public interface ILuscherResultService
         string summary,
         string? firstName,
         string? secondName,
+        string? firstCode,
+        string? secondCode,
         string? firstResult,
         string? secondResult,
         CancellationToken cancellationToken = default);
@@ -34,7 +37,8 @@ public sealed class LuscherResultService : ILuscherResultService
         string summary,
         int coValue,
         double bkValue,
-        IReadOnlyList<LuscherColorSelection> selectedColors,
+        IReadOnlyList<LuscherColorSelection> firstPassColors,
+        IReadOnlyList<LuscherColorSelection> secondPassColors,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(progress);
@@ -43,13 +47,8 @@ public sealed class LuscherResultService : ILuscherResultService
         {
             Co = coValue,
             Bk = Math.Round(bkValue, 2),
-            Colors = selectedColors
-                .Select(item => new LuscherStandardColorDetail
-                {
-                    Code = item.Code,
-                    Name = item.DisplayName
-                })
-                .ToList()
+            FirstPassColors = MapColors(firstPassColors),
+            Colors = MapColors(secondPassColors)
         };
 
         string detailJson = JsonSerializer.Serialize(detail, TestJsonSerializerContext.Default.LuscherStandardResultDetail);
@@ -62,6 +61,8 @@ public sealed class LuscherResultService : ILuscherResultService
         string summary,
         string? firstName,
         string? secondName,
+        string? firstCode,
+        string? secondCode,
         string? firstResult,
         string? secondResult,
         CancellationToken cancellationToken = default)
@@ -70,12 +71,21 @@ public sealed class LuscherResultService : ILuscherResultService
 
         LuscherBriefResultDetail detail = new()
         {
-            First = new LuscherBriefColorDetail { Name = firstName, Text = firstResult },
-            Second = new LuscherBriefColorDetail { Name = secondName, Text = secondResult }
+            First = new LuscherBriefColorDetail { Code = firstCode, Name = firstName, Text = firstResult },
+            Second = new LuscherBriefColorDetail { Code = secondCode, Name = secondName, Text = secondResult }
         };
 
         string detailJson = JsonSerializer.Serialize(detail, TestJsonSerializerContext.Default.LuscherBriefResultDetail);
 
         return progress.SaveTestResultAsync(TestIds.LuscherBrief, null, summary, detailJson, cancellationToken);
     }
+
+    private static List<LuscherStandardColorDetail> MapColors(IReadOnlyList<LuscherColorSelection> colors) =>
+        colors
+            .Select(item => new LuscherStandardColorDetail
+            {
+                Code = item.Code,
+                Name = item.DisplayName
+            })
+            .ToList();
 }

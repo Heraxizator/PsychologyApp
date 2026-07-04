@@ -29,7 +29,19 @@ public partial class LuscherTestViewModel
             return;
         }
 
-        _lastCoValue = LuscherScoring.CalculateCo(_colourSelectedItems);
+        if (_passNumber == 1)
+        {
+            _firstPassSelections = _colourSelectedItems.ToList();
+            _colourSelectedItems.Clear();
+            _passNumber = 2;
+            SetColorsVisibility();
+            SetStart();
+            CurrentInstruction = AppStrings.TestsLuscherSecondPassInstruction;
+            NotifyStandardPassProgress();
+            return;
+        }
+
+        _lastCoValue = LuscherScoring.CalculateCoBetweenPasses(_firstPassSelections, _colourSelectedItems);
         _lastBkValue = LuscherScoring.CalculateBk(_colourSelectedItems);
 
         ResultItems.Add(new ResultItem
@@ -47,6 +59,7 @@ public partial class LuscherTestViewModel
         });
 
         SetFinish();
+        LoadRecommendationAsync(_lastCoValue).FireAndForget();
         PersistStandardResultAsync(_lastCoValue, _lastBkValue).FireAndForget();
     }
 
@@ -79,11 +92,16 @@ public partial class LuscherTestViewModel
         }
 
         string summary = $"{AppStrings.TestsCoLabel}: {coValue}; {AppStrings.TestsBkLabel}: {Math.Round(bkValue, 2)}";
-        IReadOnlyList<LuscherColorSelection> colors = _colourSelectedItems
-            .Select(item => new LuscherColorSelection(item.Item1.Code, ColourStrings.GetColorName(item.Item1)))
-            .ToList();
+        IReadOnlyList<LuscherColorSelection> firstPass = MapSelections(_firstPassSelections);
+        IReadOnlyList<LuscherColorSelection> secondPass = MapSelections(_colourSelectedItems);
 
-        return _luscherResultService.SaveStandardAsync(_userProgressService, summary, coValue, bkValue, colors);
+        return _luscherResultService.SaveStandardAsync(
+            _userProgressService,
+            summary,
+            coValue,
+            bkValue,
+            firstPass,
+            secondPass);
     }
 
     private Task PersistBriefResultAsync()
@@ -94,6 +112,23 @@ public partial class LuscherTestViewModel
         }
 
         string summary = $"{FirstName} / {SecondName}";
-        return _luscherResultService.SaveBriefAsync(_userProgressService, summary, FirstName, SecondName, FirstResult, SecondResult);
+        string? firstCode = _colourSelectedItems.Count > 0 ? _colourSelectedItems[0].Item1.Code : null;
+        string? secondCode = _colourSelectedItems.Count > 1 ? _colourSelectedItems[1].Item1.Code : null;
+
+        return _luscherResultService.SaveBriefAsync(
+            _userProgressService,
+            summary,
+            FirstName,
+            SecondName,
+            firstCode,
+            secondCode,
+            FirstResult,
+            SecondResult);
     }
+
+    private static IReadOnlyList<LuscherColorSelection> MapSelections(
+        IReadOnlyList<(ColourValue Colour, ColourMeaning Meaning)> selections) =>
+        selections
+            .Select(item => new LuscherColorSelection(item.Colour.Code, ColourStrings.GetColorName(item.Colour)))
+            .ToList();
 }

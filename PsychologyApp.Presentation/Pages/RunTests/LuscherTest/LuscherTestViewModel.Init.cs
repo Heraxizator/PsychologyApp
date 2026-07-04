@@ -9,15 +9,25 @@ public partial class LuscherTestViewModel
 
     private void Init()
     {
+        _passNumber = 1;
+        _firstPassSelections.Clear();
+
         if (_mode == LuscherMode.Brief)
         {
             CurrentInstruction = AppStrings.TestsLuscherFirstInstruction;
         }
+        else
+        {
+            CurrentInstruction = AppStrings.TestsColorInstruction;
+        }
 
         _colourSelectedItems.Clear();
         ResultItems = [];
+        _recommendedTechnique = null;
+        HasRecommendation = false;
         SetColorsVisibility();
         SetStart();
         NotifyBriefProgress();
+        NotifyStandardPassProgress();
     }
 }

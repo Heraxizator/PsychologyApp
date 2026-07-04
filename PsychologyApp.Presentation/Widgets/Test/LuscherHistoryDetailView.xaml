@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Widgets.Test.LuscherHistoryDetailView"
+             x:Name="Root">
+
+    <VerticalStackLayout Spacing="8">
+        <VerticalStackLayout IsVisible="{Binding HasStandardDetail, Source={x:Reference Root}}" Spacing="6">
+            <Label Text="{Binding FirstPassTitle, Source={x:Reference Root}}" Style="{StaticResource CaptionStyle}" TextColor="{DynamicResource Primary}" />
+            <Label Text="{Binding FirstPassText, Source={x:Reference Root}}" Style="{StaticResource BodyStyle}" LineBreakMode="WordWrap" />
+            <Label Text="{Binding SecondPassTitle, Source={x:Reference Root}}" Style="{StaticResource CaptionStyle}" TextColor="{DynamicResource Primary}" />
+            <Label Text="{Binding SecondPassText, Source={x:Reference Root}}" Style="{StaticResource BodyStyle}" LineBreakMode="WordWrap" />
+            <Label Text="{Binding BkText, Source={x:Reference Root}}" Style="{StaticResource CaptionStyle}" />
+        </VerticalStackLayout>
+
+        <VerticalStackLayout IsVisible="{Binding HasBriefDetail, Source={x:Reference Root}}" Spacing="6">
+            <Label Text="{Binding BriefFirstTitle, Source={x:Reference Root}}" Style="{StaticResource CaptionStyle}" TextColor="{DynamicResource Primary}" />
+            <Label Text="{Binding BriefFirstText, Source={x:Reference Root}}" Style="{StaticResource BodyStyle}" LineBreakMode="WordWrap" />
+            <Label Text="{Binding BriefSecondTitle, Source={x:Reference Root}}" Style="{StaticResource CaptionStyle}" TextColor="{DynamicResource Primary}" />
+            <Label Text="{Binding BriefSecondText, Source={x:Reference Root}}" Style="{StaticResource BodyStyle}" LineBreakMode="WordWrap" />
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentView>
