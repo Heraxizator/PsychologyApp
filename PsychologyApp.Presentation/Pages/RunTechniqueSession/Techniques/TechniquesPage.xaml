@@ -70,7 +70,11 @@
                         Title="{Binding TodayTechniqueItem.Title}"
                         Subtitle="{Binding TodayTechniqueItem.Subtitle}"
                         ReasonText="{Binding TodayReasonText}"
-                        TapCommand="{Binding StartTodayPracticeCommand}" />
+                        TapCommand="{Binding StartTodayPracticeCommand}">
+                        <today:TodayPracticeRowView.Behaviors>
+                            <behaviors:RevealOnAppearingBehavior />
+                        </today:TodayPracticeRowView.Behaviors>
+                    </today:TodayPracticeRowView>
 
                     <mood:MoodStripView
                         QuestionText="{Binding TodayMoodQuestion}"

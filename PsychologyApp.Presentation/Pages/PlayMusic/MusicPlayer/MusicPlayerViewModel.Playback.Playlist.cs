@@ -9,6 +9,10 @@ namespace PsychologyApp.Presentation.Pages.PlayMusic.MusicPlayer;
 
 public partial class MusicPlayerViewModel
 {
+    private int _playlistContentVersion;
+
+    public int PlaylistContentVersion => _playlistContentVersion;
+
     public void InitializePlaylist()
     {
         try
@@ -59,5 +63,12 @@ public partial class MusicPlayerViewModel
             _playlistPresenter.Filter(AllItems, _selectedCategoryKey, SearchText));
         OnPropertyChanged(nameof(HasFilteredItems));
         OnPropertyChanged(nameof(IsSearchEmptyVisible));
+        BumpPlaylistContentVersion();
+    }
+
+    private void BumpPlaylistContentVersion()
+    {
+        _playlistContentVersion++;
+        OnPropertyChanged(nameof(PlaylistContentVersion));
     }
 }

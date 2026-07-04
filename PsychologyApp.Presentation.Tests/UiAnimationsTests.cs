@@ -171,4 +171,24 @@ public class UiAnimationsTests
         await task;
         Assert.True(task.IsCompletedSuccessfully);
     }
+
+    [Fact]
+    public void FavoriteIconAnimator_WhenBorderNull_DoesNotThrow()
+    {
+        FavoriteIconAnimator.PulseIfFavoriteChanged(false, true, null);
+    }
+
+    [Fact]
+    public void FavoriteIconAnimator_WhenValueUnchanged_DoesNotThrow()
+    {
+        FavoriteIconAnimator.PulseIfFavoriteChanged(true, true, null);
+    }
+
+    [Fact]
+    public async Task CrossfadeContentRefreshAsync_WithNullView_CompletesWithoutException()
+    {
+        Task task = UiStateAnimator.CrossfadeContentRefreshAsync(null);
+        await task;
+        Assert.True(task.IsCompletedSuccessfully);
+    }
 }

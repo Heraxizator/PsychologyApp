@@ -2,8 +2,10 @@ using CommunityToolkit.Maui.Views;
 using PsychologyApp.Presentation.Features.PlayMusic;
 using PsychologyApp.Presentation.Features.PlayMusic.DependencyInjection;
 using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Pages.PlayMusic.MusicPlayer;
+using System.ComponentModel;
 
 namespace PsychologyApp.Presentation.Pages.PlayMusic.MusicPlayer;
 
@@ -31,6 +33,15 @@ public partial class MusicPlayerPage : ContentPage
 
         EnsurePlayer();
         _animationHelper = new PageAnimationHelper(_viewModel, contentView: Musics);
+        _viewModel.PropertyChanged += OnViewModelPropertyChanged;
+    }
+
+    private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(MusicPlayerViewModel.PlaylistContentVersion))
+        {
+            UiStateAnimator.CrossfadeContentRefreshAsync(Musics).FireAndForget();
+        }
     }
 
     private MediaElement EnsurePlayer()
@@ -73,6 +84,7 @@ public partial class MusicPlayerPage : ContentPage
         {
             StopPositionTimer();
             _playbackService.Detach();
+            _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
             _animationHelper?.Dispose();
             _animationHelper = null;
         }

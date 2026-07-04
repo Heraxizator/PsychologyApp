@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using PsychologyApp.Presentation.Features.SearchPhysics.DependencyInjection;
 using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Pages.SearchPhysics.PhysicsSearch;
 
@@ -36,6 +37,11 @@ public partial class PhysicsSearchPage : ContentPage
         if (e.PropertyName == nameof(PhysicsSearchViewModel.IsSearchNoResultsVisible))
         {
             UiStateAnimator.AnimateVisibilityAsync(SearchNoResults, ViewModel.IsSearchNoResultsVisible).FireAndForget();
+        }
+
+        if (e.PropertyName == nameof(PhysicsSearchViewModel.SearchResultsVersion))
+        {
+            UiStateAnimator.CrossfadeContentRefreshAsync(SearchResultsCollectionView).FireAndForget();
         }
     }
 

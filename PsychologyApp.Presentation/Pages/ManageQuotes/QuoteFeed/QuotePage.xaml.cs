@@ -1,7 +1,9 @@
 using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Features.ManageQuotes.DependencyInjection;
 using PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
+using System.ComponentModel;
 
 namespace PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
 
@@ -9,12 +11,50 @@ public partial class QuotePage : ContentPage
 {
     private QuoteViewModel ViewModel = default!;
     private PageAnimationHelper? _animationHelper;
+    private bool _wasSearching;
 
     public QuotePage(IPageViewModelActivator pageViewModelActivator, IQuoteViewModelFactory quoteViewModelFactory)
     {
         InitializeComponent();
         ViewModel = this.ActivateViewModel(pageViewModelActivator, page => quoteViewModelFactory.Create(page));
         _animationHelper = new PageAnimationHelper(ViewModel, LoadingProgress, QuotesCollectionView);
+        ViewModel.PropertyChanged += OnViewModelPropertyChanged;
+        _wasSearching = ViewModel.IsSearching;
+    }
+
+    private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(QuoteViewModel.FeedContentVersion))
+        {
+            UiStateAnimator.CrossfadeContentRefreshAsync(QuotesCollectionView).FireAndForget();
+        }
+
+        if (e.PropertyName == nameof(QuoteViewModel.IsSearching) && ViewModel.IsSearching != _wasSearching)
+        {
+            AnimateSearchModeCrossfadeAsync().FireAndForget();
+            _wasSearching = ViewModel.IsSearching;
+        }
+    }
+
+    private async Task AnimateSearchModeCrossfadeAsync()
+    {
+        if (ViewModel.IsSearching)
+        {
+            if (FeedFilterBar.IsVisible)
+            {
+                await UiAnimations.SafeHideAsync(FeedFilterBar);
+            }
+
+            await UiStateAnimator.CrossfadeContentRefreshAsync(QuotesCollectionView);
+            return;
+        }
+
+        FeedFilterBar.IsVisible = true;
+        await UiAnimations.SafeRevealLiteAsync(
+            FeedFilterBar,
+            UiAnimations.TabReappearSlideOffset,
+            allowHidden: true);
+        await UiStateAnimator.CrossfadeContentRefreshAsync(QuotesCollectionView);
     }
 
     private void OnRemainingItemsThresholdReached(object? sender, EventArgs e)
@@ -54,6 +94,7 @@ public partial class QuotePage : ContentPage
         base.OnHandlerChanged();
         if (Handler is null)
         {
+            ViewModel.PropertyChanged -= OnViewModelPropertyChanged;
             _animationHelper?.Dispose();
             _animationHelper = null;
         }

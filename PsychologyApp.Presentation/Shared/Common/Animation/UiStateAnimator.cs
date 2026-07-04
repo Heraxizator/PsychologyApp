@@ -43,4 +43,30 @@ public static class UiStateAnimator
         VisualElement? show,
         CancellationToken cancellationToken = default) =>
         UiAnimations.CrossfadeAsync(hide, show, UiAnimations.MediumDuration, allowHidden: true, cancellationToken: cancellationToken);
+
+    public static async Task CrossfadeContentRefreshAsync(
+        VisualElement? view,
+        CancellationToken cancellationToken = default)
+    {
+        if (view is null)
+        {
+            return;
+        }
+
+        if (!UiAnimations.ShouldAnimate(view))
+        {
+            UiAnimations.ResetVisualState(view);
+            return;
+        }
+
+        await view.FadeToAsync(0, UiAnimations.FastDuration, UiAnimations.ExitEasing);
+        view.TranslationY = UiAnimations.TabReappearSlideOffset;
+        view.Opacity = 0;
+        await UiAnimations.SafeRevealPremiumAsync(
+            view,
+            UiAnimations.TabReappearSlideOffset,
+            UiAnimations.MicroDuration,
+            allowHidden: true,
+            cancellationToken: cancellationToken);
+    }
 }

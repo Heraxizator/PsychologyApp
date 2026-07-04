@@ -1,3 +1,5 @@
+using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Shared.UI.Components;
@@ -16,7 +18,12 @@ public partial class FilterChipView : ContentView
     }
 
     public static readonly BindableProperty IsSelectedProperty =
-        BindableProperty.Create(nameof(IsSelected), typeof(bool), typeof(FilterChipView), false);
+        BindableProperty.Create(
+            nameof(IsSelected),
+            typeof(bool),
+            typeof(FilterChipView),
+            false,
+            propertyChanged: OnIsSelectedChanged);
 
     public bool IsSelected
     {
@@ -40,5 +47,15 @@ public partial class FilterChipView : ContentView
     {
         get => GetValue(CommandParameterProperty);
         set => SetValue(CommandParameterProperty, value);
+    }
+
+    private static void OnIsSelectedChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is not FilterChipView chip || newValue is not true || oldValue is true)
+        {
+            return;
+        }
+
+        UiAnimations.SafePulseAsync(chip).FireAndForget();
     }
 }
