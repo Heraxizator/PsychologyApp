@@ -21,6 +21,7 @@ public partial class SettingPickerRowView : ContentView
         VisualElementPressFeedback.Attach(SettingLabel);
         ApplyItemDisplayBinding();
         SyncPickerFromViewModel();
+        RefreshPresentation();
     }
 
     protected override void OnBindingContextChanged()
@@ -43,7 +44,18 @@ public partial class SettingPickerRowView : ContentView
         if (propertyName is nameof(SelectedItem))
         {
             SyncPickerFromViewModel();
+            return;
         }
+
+        if (propertyName is nameof(IsRowEnabled))
+        {
+            RefreshPresentation();
+        }
+    }
+
+    private void RefreshPresentation()
+    {
+        RowOpacity = IsRowEnabled ? 1d : (double)Microsoft.Maui.Controls.Application.Current!.Resources["DisabledOpacity"];
     }
 
     private void ApplyItemDisplayBinding()
@@ -183,5 +195,23 @@ public partial class SettingPickerRowView : ContentView
     {
         get => GetValue(SelectedItemProperty);
         set => SetValue(SelectedItemProperty, value);
+    }
+
+    public static readonly BindableProperty IsRowEnabledProperty =
+        BindableProperty.Create(nameof(IsRowEnabled), typeof(bool), typeof(SettingPickerRowView), true);
+
+    public static readonly BindableProperty RowOpacityProperty =
+        BindableProperty.Create(nameof(RowOpacity), typeof(double), typeof(SettingPickerRowView), 1d);
+
+    public bool IsRowEnabled
+    {
+        get => (bool)GetValue(IsRowEnabledProperty);
+        set => SetValue(IsRowEnabledProperty, value);
+    }
+
+    public double RowOpacity
+    {
+        get => (double)GetValue(RowOpacityProperty);
+        private set => SetValue(RowOpacityProperty, value);
     }
 }

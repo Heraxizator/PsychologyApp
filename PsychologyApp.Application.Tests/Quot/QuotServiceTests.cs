@@ -294,4 +294,30 @@ public class QuotServiceTests
                 It.IsAny<CancellationToken>()),
             Times.Once);
     }
+
+    [Fact]
+    public async Task GetDailyQuoteAsync_WhenNotInDatabase_ReFetchesAfterInsert()
+    {
+        const string quoteText = "Daily quote text";
+        QuotSeed seed = new("Seneca", quoteText, "wisdom");
+
+        var repository = new Mock<IQuotRepository>();
+        repository.SetupSequence(r => r.GetByTextAsync(quoteText, It.IsAny<CancellationToken>()))
+            .ReturnsAsync((DomainQuot?)null)
+            .ReturnsAsync(DomainQuot.Create("Seneca", quoteText, "wisdom", isReaded: false, isFavourite: false));
+        repository.Setup(r => r.AddAsync(It.IsAny<DomainQuot>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(42L);
+
+        var catalogLookup = new Mock<IQuoteCatalogLookup>();
+        catalogLookup.Setup(l => l.GetCountAsync(It.IsAny<CancellationToken>())).ReturnsAsync(10);
+        catalogLookup.Setup(l => l.GetSeedAtAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync(seed);
+
+        var service = QuotServiceTestFactory.Create(repository, catalogLookup: catalogLookup);
+
+        Application.Models.QuotDTO? result = await service.GetDailyQuoteAsync(new DateOnly(2026, 7, 5));
+
+        Assert.NotNull(result);
+        repository.Verify(r => r.AddAsync(It.IsAny<DomainQuot>(), It.IsAny<CancellationToken>()), Times.Once);
+        repository.Verify(r => r.GetByTextAsync(quoteText, It.IsAny<CancellationToken>()), Times.Exactly(2));
+    }
 }

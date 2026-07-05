@@ -26,9 +26,16 @@ public sealed class TechniqueService(ITechniqueRepository techniqueRepository) :
         return TechniqueMapper.GetTechniqueDTO(technique);
     }
 
-    public async Task<IEnumerable<TechniqueDTO>> GetTechniquesListAsync(int count, CancellationToken cancellationToken = default)
+    public Task<IEnumerable<TechniqueDTO>> GetTechniquesListAsync(int count, CancellationToken cancellationToken = default) =>
+        GetTechniquesPageAsync(offset: 0, limit: count, cancellationToken);
+
+    public async Task<IEnumerable<TechniqueDTO>> GetTechniquesPageAsync(
+        int offset,
+        int limit,
+        CancellationToken cancellationToken = default)
     {
-        IEnumerable<global::PsychologyApp.Domain.Entities.Technique> techniques = await techniqueRepository.GetLatestAsync(count, cancellationToken);
+        IEnumerable<global::PsychologyApp.Domain.Entities.Technique> techniques =
+            await techniqueRepository.GetLatestPageAsync(offset, limit, cancellationToken);
         return techniques.Select(TechniqueMapper.GetTechniqueDTO);
     }
 

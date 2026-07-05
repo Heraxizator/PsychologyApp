@@ -47,7 +47,7 @@ public partial class UserViewModel
             _quoteCommandsFactory,
             RefreshProfileQuoteBindingAsync,
             SetQuotesFailed,
-            OpenQuotesTabCommand);
+            OpenQuotesFavoritesCommand);
 
         switch (result.Status)
         {

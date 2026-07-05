@@ -239,7 +239,11 @@ public sealed class QuotService(
 
         global::PsychologyApp.Domain.Entities.Quot quot = CreateQuotFromSeed(seed);
         await quotRepository.AddAsync(quot, cancellationToken);
-        return QuotMapper.GetQuotDTO(quot);
+
+        global::PsychologyApp.Domain.Entities.Quot? inserted =
+            await quotRepository.GetByTextAsync(seed.Text, cancellationToken);
+
+        return inserted is not null ? QuotMapper.GetQuotDTO(inserted) : null;
     }
 
     private sealed class QuoteSeedContext(IReadOnlyList<QuotSeed> seeds, HashSet<string> knownTexts)

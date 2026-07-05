@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using PsychologyApp.Presentation.Entities.Test;
+using PsychologyApp.Presentation.Features.RunTests;
 using System.Collections.ObjectModel;
 
 namespace PsychologyApp.Presentation.Pages.RunTests.TestsList;
@@ -21,18 +22,35 @@ public partial class TestsListViewModel
             await _databaseReadySignal.WaitAsync();
             SetInit();
 
-            IReadOnlyList<TestItem> items = await _testsListLoader.LoadItemsAsync(
+            TestsListLoadResult result = await _testsListLoader.LoadItemsAsync(
                 _navigationService,
                 HandleSelectionAsync);
 
-            TestItemCollection = new ObservableCollection<TestItem>(items);
+            TestItemCollection = new ObservableCollection<TestItem>(result.Items);
             OnPropertyChanged(nameof(TestItemCollection));
             SetDone();
+
+            if (result.ProgressDeferred)
+            {
+                EnrichProgressInBackgroundAsync(result.Items).FireAndForget();
+            }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "TestsListViewModel init failed.");
             SetFail();
+        }
+    }
+
+    private async Task EnrichProgressInBackgroundAsync(IReadOnlyList<TestItem> items)
+    {
+        try
+        {
+            await _testsListLoader.EnrichProgressAsync(items);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Deferred test progress enrichment failed.");
         }
     }
 }

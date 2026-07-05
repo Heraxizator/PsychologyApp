@@ -27,7 +27,9 @@ public partial class UserViewModel
     public bool ShowQuotesEmpty => IsQuotesReady && !HasQuotes;
     public bool ShowQuotesPreview => IsQuotesReady && HasQuotes;
     public string QuotesSectionSubtitle =>
-        HasQuotesSectionSubtitle ? AppStrings.ProfileQuotesPreviewSubtitle : string.Empty;
+        HasQuotesSectionSubtitle
+            ? AppStrings.FormatProfileQuotesPreviewSubtitle(DisplayQuotes.Count, Quotes.Count)
+            : string.Empty;
     public bool HasQuotes => Quotes.Count > 0;
     public bool HasQuotesSectionSubtitle => IsQuotesReady && HasQuotes;
     public string QuotesSearchingText => AppStrings.QuotesSearching;

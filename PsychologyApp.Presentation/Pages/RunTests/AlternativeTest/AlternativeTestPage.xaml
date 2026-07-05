@@ -48,17 +48,16 @@
                         <behaviors:RevealOnAppearingBehavior />
                     </VerticalStackLayout.Behaviors>
 
-                    <testUi:LuscherColorResultView
-                        SectionLabel="{Binding FirstColorLabel}"
-                        Color="{Binding FirstColor}"
-                        ColorName="{Binding FirstName}"
-                        ResultText="{Binding FirstResult}" />
-
-                    <testUi:LuscherColorResultView
-                        SectionLabel="{Binding SecondColorLabel}"
-                        Color="{Binding SecondColor}"
-                        ColorName="{Binding SecondName}"
-                        ResultText="{Binding SecondResult}" />
+                    <testUi:LuscherBriefResultsView
+                        Title="{Binding ResultsTitle}"
+                        FirstColor="{Binding FirstColor}"
+                        FirstName="{Binding FirstName}"
+                        FirstResult="{Binding FirstResult}"
+                        FirstColorRoleLabel="{Binding FirstColorRoleLabel}"
+                        SecondColor="{Binding SecondColor}"
+                        SecondName="{Binding SecondName}"
+                        SecondResult="{Binding SecondResult}"
+                        SecondColorRoleLabel="{Binding SecondColorRoleLabel}" />
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>

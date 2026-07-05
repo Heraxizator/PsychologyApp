@@ -17,12 +17,18 @@ public sealed class TechniqueRepository : BaseRepository<Technique>, ITechniqueR
     {
     }
 
-    public async Task<IEnumerable<Technique>> GetLatestAsync(int count, CancellationToken cancellationToken = default)
+    public Task<IEnumerable<Technique>> GetLatestAsync(int count, CancellationToken cancellationToken = default) =>
+        GetLatestPageAsync(offset: 0, limit: count, cancellationToken);
+
+    public async Task<IEnumerable<Technique>> GetLatestPageAsync(
+        int offset,
+        int limit,
+        CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         return await connection.QueryAsync<Technique>(DapperCommandFactory.Create(
-            "SELECT * FROM Techniques ORDER BY TechniqueId DESC LIMIT @count;",
-            new { count },
+            "SELECT * FROM Techniques ORDER BY TechniqueId DESC LIMIT @limit OFFSET @offset;",
+            new { limit, offset },
             commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken));
     }

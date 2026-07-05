@@ -40,8 +40,9 @@ xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
 | `ListEntryCardView` | List card: title + body; optional `TapCommand` for tappable rows |
 | `TextItemView` | List row with title + body (tests, simple lists) |
 | `SettingsLinkCardView` | Tappable settings menu card: `Title`, `Subtitle`, `TapCommand` |
-| `SettingPickerRowView` | Settings row with label + picker. Set `LabelKind` (`Language`, `Theme`, … or `PassThrough` for raw labels like reminder hours). Default: `PassThrough`. |
-| `SettingSwitchRowView` | Settings row with label + switch: `LabelText`, `IsToggled` (`BodyStyle`, `OnColor=Primary`) |
+| `SettingsSectionView` | Grouped settings card: `TitleText`, optional `SubtitleText`, child rows |
+| `SettingPickerRowView` | iOS-style row: label + value + chevron; tap opens ActionSheet. `HelperText`, `ShowDivider`, `IsRowEnabled` |
+| `SettingSwitchRowView` | Settings row with label + switch: `ShowDivider`, `IsRowEnabled` |
 | `ProgressBarView` | Loading + optional `CancelCommand` (cancel row hidden when command is null) |
 | `RetryView` | Error overlay: `FailedText`, `RetryText`, `RetryCommand` (icon + press feedback) |
 | `FilterChipView` | Single selectable chip with `TapCommand` |
@@ -79,7 +80,16 @@ Test flow widgets (`Widgets/Test/`):
 | `TestResultHeroView` | Result screen: check icon halo, score headline, interpretation, trend badge (`TrendKind` colors) |
 | `TestScoreTrendChartView` | Score-over-time line chart: `ChartPoints`, `Title`. On `TestResultPage` when 2+ results; also `TestHistoryPage`. |
 | `TestResultMetricCardView` | Named metric card (Lüscher standard results) |
-| `LuscherColorResultView` | Brief Lüscher color swatch + interpretation block |
+| `LuscherColorSwatchView` | Compact color tile (`SwatchSize`: `LuscherSwatchSizeSmall` / `Medium`) |
+| `LuscherColorPassRowView` | Horizontal swatch sequence with arrows (`Colors`, `PassTitle`) |
+| `LuscherColorResultView` | Role-labeled result card: accent bar, name, interpretation, small swatch |
+| `LuscherBriefResultsView` | Brief Lüscher finish block: dual summary + two role cards |
+| `LuscherStandardResultsView` | Standard finish: CO/BK metrics, two pass rows, recommendation slot |
+| `LuscherHistoryDetailView` | Expandable history detail with pass rows or brief role cards |
+| `AppDialogPopup` | Branded modal: accent bar, primary/secondary actions; closes via `CloseAsync(result)` |
+| `AppToastPopup` | Bottom toast: accent bar, icon (`AppToastKind`: Info / Success / Error), enter/exit animation |
+
+Overlays (`Shared/UI/Overlays/`): `DialogService` and `ToastService` use CommunityToolkit `Popup` v14 with `AppPopupOptions` (`PageOverlayColor`). Toasts are queued (one at a time); use `IToastService.ShortToast(message, AppToastKind.Success)` etc.
 | `TestFlowMetaStripView` | Duration / question-count chips on test intro |
 | `TestHistoryEntryView` | Single test history row with trend badge and expandable detail |
 
@@ -109,7 +119,7 @@ Onboarding widgets (`Widgets/Onboarding/`):
 3. **Use typography tokens** (`SectionTitleStyle`, `BodyStyle`) and `AppThemeBinding` for text.
 4. **Bind commands** on components — not page-level gesture wrappers.
 5. **Press feedback:** `ButtonView`, `SettingsLinkCardView`, `RetryView`, `FilterChipView`, `MetricTileView`, list-card widgets, `MoodStripView`, `TodayPracticeRowView`, and `PhysicsReasonCardView` attach `PressFeedbackBehavior`; pages use `PressFeedbackHost.AttachToPage` via `PageRegistry`.
-6. **Settings pickers:** always set `LabelKind` on `SettingPickerRowView`; use `PassThrough` when `ItemsSource` already contains display strings (e.g. `07:00`…`22:00`).
+6. **Settings pickers:** always set `LabelKind` on `SettingPickerRowView`; use `PassThrough` when `ItemsSource` already contains display strings (e.g. `07:00`…`22:00`). Selection uses ActionSheet — no native `Picker` on the page.
 7. **Empty states:** prefer `EmptyStateView` with `IconName`; reveal animation is built in via `EmptyStateRevealBehavior`.
 8. **Card shadows:** use `BrandCardShadowLight` / `BrandCardShadowDark` via `AppThemeBinding` in styles — not a single hard-coded shadow color.
 9. **Run `dotnet build`** after adding or migrating a component.

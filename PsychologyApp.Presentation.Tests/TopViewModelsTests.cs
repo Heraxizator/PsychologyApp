@@ -22,6 +22,7 @@ using PsychologyApp.Presentation.Features.ManageProfile;
 using PsychologyApp.Presentation.Features.ManageProfile.Index;
 using PsychologyApp.Presentation.Features.ManageQuotes;
 using PsychologyApp.Presentation.Features.RunTests;
+using PsychologyApp.Presentation.Shared.Services.Clipboard;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.Techniques;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
@@ -151,14 +152,7 @@ public sealed class SettingsViewModelTests
         InMemoryUserPreferencesStore store = new();
         store.CompleteOnboarding(OnboardingConcernKeys.Anxiety);
 
-        SettingsViewModel viewModel = new(
-            dialog.Object,
-            navigation.Object,
-            store,
-            new SettingsPreferencesPresenter(),
-            TopViewModelTestHelpers.CreateLanguageReloader(Mock.Of<IQuotService>()),
-            Mock.Of<IPracticeReminderCoordinator>(),
-            Mock.Of<IQuoteReminderCoordinator>());
+        SettingsViewModel viewModel = CreateSettingsViewModel(store);
 
         viewModel.ReplayOnboardingCommand.Execute(null);
         await Task.Delay(200);
@@ -176,14 +170,7 @@ public sealed class SettingsViewModelTests
         dialog.Setup(d => d.ShowAsync(It.IsAny<string>(), It.IsAny<string>())).Returns(() => Task.CompletedTask);
         InMemoryUserPreferencesStore store = new();
 
-        SettingsViewModel viewModel = new(
-            dialog.Object,
-            navigation.Object,
-            store,
-            new SettingsPreferencesPresenter(),
-            TopViewModelTestHelpers.CreateLanguageReloader(Mock.Of<IQuotService>()),
-            Mock.Of<IPracticeReminderCoordinator>(),
-            Mock.Of<IQuoteReminderCoordinator>());
+        SettingsViewModel viewModel = CreateSettingsViewModel(store);
 
         viewModel.ApplyCommand.Execute(null);
         await Task.Delay(200);
@@ -210,6 +197,12 @@ public sealed class SettingsViewModelTests
             Mock.Of<IQuoteReminderCoordinator>());
     }
 
+    private static SettingsViewModel CreateLoadedSettingsViewModel(
+        IUserPreferencesStore store,
+        Mock<INavigationService>? navigation = null,
+        Mock<IDialogService>? dialog = null) =>
+        CreateSettingsViewModel(store, navigation, dialog);
+
     [Fact]
     public void Constructor_UsesStablePickerKeys()
     {
@@ -223,7 +216,7 @@ public sealed class SettingsViewModelTests
             Size = UserPreferences.DefaultSize
         });
 
-        SettingsViewModel viewModel = CreateSettingsViewModel(store);
+        SettingsViewModel viewModel = CreateLoadedSettingsViewModel(store);
 
         Assert.Equal("en", viewModel.Language);
         Assert.Equal(UserPreferences.DefaultTheme, viewModel.Theme);
@@ -245,7 +238,7 @@ public sealed class SettingsViewModelTests
             Size = "medium"
         });
 
-        SettingsViewModel viewModel = CreateSettingsViewModel(store);
+        SettingsViewModel viewModel = CreateLoadedSettingsViewModel(store);
 
         viewModel.Language = "ru";
 
@@ -263,7 +256,7 @@ public sealed class SettingsViewModelTests
         InMemoryUserPreferencesStore store = new();
         store.Save(new UserPreferencesState { Language = "en" });
 
-        SettingsViewModel viewModel = CreateSettingsViewModel(store);
+        SettingsViewModel viewModel = CreateLoadedSettingsViewModel(store);
 
         viewModel.Language = "Russian";
 
@@ -388,7 +381,7 @@ public sealed class TechniquesViewModelTests
         navigation.Setup(n => n.GoToTechniqueAsync(TechniqueId.Spin)).Returns(Task.CompletedTask);
 
         Mock<ITechniqueService> techniqueService = new();
-        techniqueService.Setup(s => s.GetTechniquesListAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+        techniqueService.Setup(s => s.GetTechniquesPageAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
         PracticeDashboardLoader dashboardLoader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
@@ -417,7 +410,7 @@ public sealed class TechniquesViewModelTests
 
         Mock<INavigationService> navigation = new();
         Mock<ITechniqueService> techniqueService = new();
-        techniqueService.Setup(s => s.GetTechniquesListAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+        techniqueService.Setup(s => s.GetTechniquesPageAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
         PracticeDashboardLoader dashboardLoader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
@@ -459,7 +452,7 @@ public sealed class TechniquesViewModelTests
 
         Mock<INavigationService> navigation = new();
         Mock<ITechniqueService> techniqueService = new();
-        techniqueService.Setup(s => s.GetTechniquesListAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+        techniqueService.Setup(s => s.GetTechniquesPageAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
         PracticeDashboardLoader dashboardLoader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
@@ -480,7 +473,7 @@ public sealed class TechniquesViewModelTests
         await Task.Delay(500);
 
         techniqueService.Verify(
-            s => s.GetTechniquesListAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()),
+            s => s.GetTechniquesPageAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()),
             Times.AtLeastOnce);
     }
 
@@ -521,6 +514,7 @@ file static class TopViewModelTestHelpers
         new(
             quotService,
             new QuotesChangeNotifier(),
+            Mock.Of<IAppClipboardService>(),
             Mock.Of<IToastService>(),
             Options.Create(new AppSettings()),
             NullLogger<QuoteItemCommandsFactory>.Instance);

@@ -10,6 +10,9 @@ public partial class LuscherColorResultView : ContentView
     public static readonly BindableProperty SectionLabelProperty =
         BindableProperty.Create(nameof(SectionLabel), typeof(string), typeof(LuscherColorResultView), string.Empty);
 
+    public static readonly BindableProperty RoleLabelProperty =
+        BindableProperty.Create(nameof(RoleLabel), typeof(string), typeof(LuscherColorResultView), string.Empty);
+
     public static readonly BindableProperty ColorProperty =
         BindableProperty.Create(nameof(Color), typeof(Color), typeof(LuscherColorResultView), Colors.Transparent);
 
@@ -23,6 +26,12 @@ public partial class LuscherColorResultView : ContentView
     {
         get => (string)GetValue(SectionLabelProperty);
         set => SetValue(SectionLabelProperty, value);
+    }
+
+    public string RoleLabel
+    {
+        get => (string)GetValue(RoleLabelProperty);
+        set => SetValue(RoleLabelProperty, value);
     }
 
     public Color Color

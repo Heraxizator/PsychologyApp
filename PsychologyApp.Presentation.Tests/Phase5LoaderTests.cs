@@ -13,6 +13,7 @@ using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Features.ManageProfile;
 using PsychologyApp.Presentation.Features.ManageQuotes;
+using PsychologyApp.Presentation.Shared.Services.Clipboard;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 using Xunit;
 
@@ -113,6 +114,7 @@ public sealed class QuoteFeedCoordinatorLoadTests
         new(
             quotService,
             new QuotesChangeNotifier(),
+            Mock.Of<IAppClipboardService>(),
             Mock.Of<IToastService>(),
             Options.Create(new AppSettings()),
             NullLogger<QuoteItemCommandsFactory>.Instance);
@@ -141,7 +143,7 @@ public sealed class TechniquesListInitializerTests
 
         Mock<ITechniqueService> techniqueService = new();
         techniqueService
-            .Setup(s => s.GetTechniquesListAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .Setup(s => s.GetTechniquesPageAsync(0, It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(
             [
                 new TechniqueDTO

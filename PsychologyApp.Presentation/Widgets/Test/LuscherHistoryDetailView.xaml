@@ -1,23 +1,32 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:testUi="clr-namespace:PsychologyApp.Presentation.Widgets.Test"
              x:Class="PsychologyApp.Presentation.Widgets.Test.LuscherHistoryDetailView"
              x:Name="Root">
 
-    <VerticalStackLayout Spacing="8">
-        <VerticalStackLayout IsVisible="{Binding HasStandardDetail, Source={x:Reference Root}}" Spacing="6">
-            <Label Text="{Binding FirstPassTitle, Source={x:Reference Root}}" Style="{StaticResource CaptionStyle}" TextColor="{DynamicResource Primary}" />
-            <Label Text="{Binding FirstPassText, Source={x:Reference Root}}" Style="{StaticResource BodyStyle}" LineBreakMode="WordWrap" />
-            <Label Text="{Binding SecondPassTitle, Source={x:Reference Root}}" Style="{StaticResource CaptionStyle}" TextColor="{DynamicResource Primary}" />
-            <Label Text="{Binding SecondPassText, Source={x:Reference Root}}" Style="{StaticResource BodyStyle}" LineBreakMode="WordWrap" />
+    <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+        <VerticalStackLayout IsVisible="{Binding HasStandardDetail, Source={x:Reference Root}}" Spacing="{StaticResource CompactSpacing}">
             <Label Text="{Binding BkText, Source={x:Reference Root}}" Style="{StaticResource CaptionStyle}" />
+            <testUi:LuscherColorPassRowView
+                PassTitle="{Binding FirstPassTitle, Source={x:Reference Root}}"
+                Colors="{Binding StandardFirstPassColors, Source={x:Reference Root}}" />
+            <testUi:LuscherColorPassRowView
+                PassTitle="{Binding SecondPassTitle, Source={x:Reference Root}}"
+                Colors="{Binding StandardSecondPassColors, Source={x:Reference Root}}" />
         </VerticalStackLayout>
 
-        <VerticalStackLayout IsVisible="{Binding HasBriefDetail, Source={x:Reference Root}}" Spacing="6">
-            <Label Text="{Binding BriefFirstTitle, Source={x:Reference Root}}" Style="{StaticResource CaptionStyle}" TextColor="{DynamicResource Primary}" />
-            <Label Text="{Binding BriefFirstText, Source={x:Reference Root}}" Style="{StaticResource BodyStyle}" LineBreakMode="WordWrap" />
-            <Label Text="{Binding BriefSecondTitle, Source={x:Reference Root}}" Style="{StaticResource CaptionStyle}" TextColor="{DynamicResource Primary}" />
-            <Label Text="{Binding BriefSecondText, Source={x:Reference Root}}" Style="{StaticResource BodyStyle}" LineBreakMode="WordWrap" />
+        <VerticalStackLayout IsVisible="{Binding HasBriefDetail, Source={x:Reference Root}}" Spacing="{StaticResource CompactSpacing}">
+            <testUi:LuscherColorResultView
+                RoleLabel="{Binding BriefFirstRoleLabel, Source={x:Reference Root}}"
+                Color="{Binding BriefFirstColor, Source={x:Reference Root}}"
+                ColorName="{Binding BriefFirstName, Source={x:Reference Root}}"
+                ResultText="{Binding BriefFirstText, Source={x:Reference Root}}" />
+            <testUi:LuscherColorResultView
+                RoleLabel="{Binding BriefSecondRoleLabel, Source={x:Reference Root}}"
+                Color="{Binding BriefSecondColor, Source={x:Reference Root}}"
+                ColorName="{Binding BriefSecondName, Source={x:Reference Root}}"
+                ResultText="{Binding BriefSecondText, Source={x:Reference Root}}" />
         </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentView>

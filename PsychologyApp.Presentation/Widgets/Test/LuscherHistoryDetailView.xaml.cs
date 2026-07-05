@@ -1,3 +1,7 @@
+using PsychologyApp.Application.Models.Tests;
+using PsychologyApp.Presentation.Entities.Test;
+using PsychologyApp.Presentation.Features.RunTests;
+
 namespace PsychologyApp.Presentation.Widgets.Test;
 
 public partial class LuscherHistoryDetailView : ContentView
@@ -16,26 +20,62 @@ public partial class LuscherHistoryDetailView : ContentView
     public static readonly BindableProperty FirstPassTitleProperty =
         BindableProperty.Create(nameof(FirstPassTitle), typeof(string), typeof(LuscherHistoryDetailView), string.Empty);
 
-    public static readonly BindableProperty FirstPassTextProperty =
-        BindableProperty.Create(nameof(FirstPassText), typeof(string), typeof(LuscherHistoryDetailView), string.Empty);
-
     public static readonly BindableProperty SecondPassTitleProperty =
         BindableProperty.Create(nameof(SecondPassTitle), typeof(string), typeof(LuscherHistoryDetailView), string.Empty);
-
-    public static readonly BindableProperty SecondPassTextProperty =
-        BindableProperty.Create(nameof(SecondPassText), typeof(string), typeof(LuscherHistoryDetailView), string.Empty);
 
     public static readonly BindableProperty BkTextProperty =
         BindableProperty.Create(nameof(BkText), typeof(string), typeof(LuscherHistoryDetailView), string.Empty);
 
-    public static readonly BindableProperty BriefFirstTitleProperty =
-        BindableProperty.Create(nameof(BriefFirstTitle), typeof(string), typeof(LuscherHistoryDetailView), string.Empty);
+    public static readonly BindableProperty StandardDetailProperty =
+        BindableProperty.Create(
+            nameof(StandardDetail),
+            typeof(LuscherStandardResultDetail),
+            typeof(LuscherHistoryDetailView),
+            null,
+            propertyChanged: OnStandardDetailChanged);
+
+    public static readonly BindableProperty BriefDetailProperty =
+        BindableProperty.Create(
+            nameof(BriefDetail),
+            typeof(LuscherBriefResultDetail),
+            typeof(LuscherHistoryDetailView),
+            null,
+            propertyChanged: OnBriefDetailChanged);
+
+    public static readonly BindableProperty StandardFirstPassColorsProperty =
+        BindableProperty.Create(
+            nameof(StandardFirstPassColors),
+            typeof(IReadOnlyList<LuscherColorDisplayItem>),
+            typeof(LuscherHistoryDetailView),
+            Array.Empty<LuscherColorDisplayItem>());
+
+    public static readonly BindableProperty StandardSecondPassColorsProperty =
+        BindableProperty.Create(
+            nameof(StandardSecondPassColors),
+            typeof(IReadOnlyList<LuscherColorDisplayItem>),
+            typeof(LuscherHistoryDetailView),
+            Array.Empty<LuscherColorDisplayItem>());
+
+    public static readonly BindableProperty BriefFirstRoleLabelProperty =
+        BindableProperty.Create(nameof(BriefFirstRoleLabel), typeof(string), typeof(LuscherHistoryDetailView), string.Empty);
+
+    public static readonly BindableProperty BriefSecondRoleLabelProperty =
+        BindableProperty.Create(nameof(BriefSecondRoleLabel), typeof(string), typeof(LuscherHistoryDetailView), string.Empty);
+
+    public static readonly BindableProperty BriefFirstColorProperty =
+        BindableProperty.Create(nameof(BriefFirstColor), typeof(Color), typeof(LuscherHistoryDetailView), Colors.Transparent);
+
+    public static readonly BindableProperty BriefSecondColorProperty =
+        BindableProperty.Create(nameof(BriefSecondColor), typeof(Color), typeof(LuscherHistoryDetailView), Colors.Transparent);
+
+    public static readonly BindableProperty BriefFirstNameProperty =
+        BindableProperty.Create(nameof(BriefFirstName), typeof(string), typeof(LuscherHistoryDetailView), string.Empty);
+
+    public static readonly BindableProperty BriefSecondNameProperty =
+        BindableProperty.Create(nameof(BriefSecondName), typeof(string), typeof(LuscherHistoryDetailView), string.Empty);
 
     public static readonly BindableProperty BriefFirstTextProperty =
         BindableProperty.Create(nameof(BriefFirstText), typeof(string), typeof(LuscherHistoryDetailView), string.Empty);
-
-    public static readonly BindableProperty BriefSecondTitleProperty =
-        BindableProperty.Create(nameof(BriefSecondTitle), typeof(string), typeof(LuscherHistoryDetailView), string.Empty);
 
     public static readonly BindableProperty BriefSecondTextProperty =
         BindableProperty.Create(nameof(BriefSecondText), typeof(string), typeof(LuscherHistoryDetailView), string.Empty);
@@ -58,22 +98,10 @@ public partial class LuscherHistoryDetailView : ContentView
         set => SetValue(FirstPassTitleProperty, value);
     }
 
-    public string FirstPassText
-    {
-        get => (string)GetValue(FirstPassTextProperty);
-        set => SetValue(FirstPassTextProperty, value);
-    }
-
     public string SecondPassTitle
     {
         get => (string)GetValue(SecondPassTitleProperty);
         set => SetValue(SecondPassTitleProperty, value);
-    }
-
-    public string SecondPassText
-    {
-        get => (string)GetValue(SecondPassTextProperty);
-        set => SetValue(SecondPassTextProperty, value);
     }
 
     public string BkText
@@ -82,10 +110,64 @@ public partial class LuscherHistoryDetailView : ContentView
         set => SetValue(BkTextProperty, value);
     }
 
-    public string BriefFirstTitle
+    public LuscherStandardResultDetail? StandardDetail
     {
-        get => (string)GetValue(BriefFirstTitleProperty);
-        set => SetValue(BriefFirstTitleProperty, value);
+        get => (LuscherStandardResultDetail?)GetValue(StandardDetailProperty);
+        set => SetValue(StandardDetailProperty, value);
+    }
+
+    public LuscherBriefResultDetail? BriefDetail
+    {
+        get => (LuscherBriefResultDetail?)GetValue(BriefDetailProperty);
+        set => SetValue(BriefDetailProperty, value);
+    }
+
+    public IReadOnlyList<LuscherColorDisplayItem> StandardFirstPassColors
+    {
+        get => (IReadOnlyList<LuscherColorDisplayItem>)GetValue(StandardFirstPassColorsProperty);
+        set => SetValue(StandardFirstPassColorsProperty, value);
+    }
+
+    public IReadOnlyList<LuscherColorDisplayItem> StandardSecondPassColors
+    {
+        get => (IReadOnlyList<LuscherColorDisplayItem>)GetValue(StandardSecondPassColorsProperty);
+        set => SetValue(StandardSecondPassColorsProperty, value);
+    }
+
+    public string BriefFirstRoleLabel
+    {
+        get => (string)GetValue(BriefFirstRoleLabelProperty);
+        set => SetValue(BriefFirstRoleLabelProperty, value);
+    }
+
+    public string BriefSecondRoleLabel
+    {
+        get => (string)GetValue(BriefSecondRoleLabelProperty);
+        set => SetValue(BriefSecondRoleLabelProperty, value);
+    }
+
+    public Color BriefFirstColor
+    {
+        get => (Color)GetValue(BriefFirstColorProperty);
+        set => SetValue(BriefFirstColorProperty, value);
+    }
+
+    public Color BriefSecondColor
+    {
+        get => (Color)GetValue(BriefSecondColorProperty);
+        set => SetValue(BriefSecondColorProperty, value);
+    }
+
+    public string BriefFirstName
+    {
+        get => (string)GetValue(BriefFirstNameProperty);
+        set => SetValue(BriefFirstNameProperty, value);
+    }
+
+    public string BriefSecondName
+    {
+        get => (string)GetValue(BriefSecondNameProperty);
+        set => SetValue(BriefSecondNameProperty, value);
     }
 
     public string BriefFirstText
@@ -94,15 +176,37 @@ public partial class LuscherHistoryDetailView : ContentView
         set => SetValue(BriefFirstTextProperty, value);
     }
 
-    public string BriefSecondTitle
-    {
-        get => (string)GetValue(BriefSecondTitleProperty);
-        set => SetValue(BriefSecondTitleProperty, value);
-    }
-
     public string BriefSecondText
     {
         get => (string)GetValue(BriefSecondTextProperty);
         set => SetValue(BriefSecondTextProperty, value);
+    }
+
+    private static void OnStandardDetailChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is not LuscherHistoryDetailView view || newValue is not LuscherStandardResultDetail detail)
+        {
+            return;
+        }
+
+        view.StandardFirstPassColors = LuscherColorDisplayFactory.FromStandardPass(detail.FirstPassColors);
+        view.StandardSecondPassColors = LuscherColorDisplayFactory.FromStandardPass(detail.Colors);
+    }
+
+    private static void OnBriefDetailChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is not LuscherHistoryDetailView view || newValue is not LuscherBriefResultDetail detail)
+        {
+            return;
+        }
+
+        LuscherColorDisplayItem first = LuscherColorDisplayFactory.FromBriefColor(detail.First);
+        LuscherColorDisplayItem second = LuscherColorDisplayFactory.FromBriefColor(detail.Second);
+        view.BriefFirstColor = first.MauiColor;
+        view.BriefFirstName = first.Name;
+        view.BriefFirstText = detail.First?.Text ?? string.Empty;
+        view.BriefSecondColor = second.MauiColor;
+        view.BriefSecondName = second.Name;
+        view.BriefSecondText = detail.Second?.Text ?? string.Empty;
     }
 }

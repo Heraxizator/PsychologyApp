@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:testUi="clr-namespace:PsychologyApp.Presentation.Widgets.Test"
+             xmlns:profileUi="clr-namespace:PsychologyApp.Presentation.Widgets.ProfileTechniqueCard"
+             xmlns:models="clr-namespace:PsychologyApp.Presentation.Pages.RunTests.LuscherTest"
+             x:Class="PsychologyApp.Presentation.Widgets.Test.LuscherStandardResultsView"
+             x:Name="Root">
+
+    <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
+        <Label
+            Text="{Binding Title, Source={x:Reference Root}}"
+            Style="{StaticResource SectionTitleStyle}" />
+
+        <VerticalStackLayout
+            Spacing="{StaticResource ListItemSpacing}"
+            BindableLayout.ItemsSource="{Binding ResultItems, Source={x:Reference Root}}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="models:ResultItem">
+                    <testUi:TestResultMetricCardView
+                        MetricName="{Binding PropertyName}"
+                        MetricValue="{Binding PropertyValue}"
+                        MetricDescription="{Binding PropertyText}" />
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+            <testUi:LuscherColorPassRowView
+                PassTitle="{Binding FirstPassTitle, Source={x:Reference Root}}"
+                Colors="{Binding FirstPassColors, Source={x:Reference Root}}" />
+            <testUi:LuscherColorPassRowView
+                PassTitle="{Binding SecondPassTitle, Source={x:Reference Root}}"
+                Colors="{Binding SecondPassColors, Source={x:Reference Root}}" />
+        </VerticalStackLayout>
+
+        <VerticalStackLayout
+            IsVisible="{Binding HasRecommendation, Source={x:Reference Root}}"
+            Spacing="{StaticResource CompactSpacing}">
+            <Label
+                Text="{Binding RecommendationHint, Source={x:Reference Root}}"
+                Style="{StaticResource CaptionStyle}" />
+            <profileUi:ProfileTechniqueCardView
+                IconName="{Binding RecommendationIconName, Source={x:Reference Root}}"
+                Title="{Binding RecommendationTitle, Source={x:Reference Root}}"
+                Subtitle="{Binding RecommendationSubtitle, Source={x:Reference Root}}"
+                Theme="{Binding RecommendationTheme, Source={x:Reference Root}}"
+                TapCommand="{Binding TryTechniqueCommand, Source={x:Reference Root}}" />
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+
+</ContentView>

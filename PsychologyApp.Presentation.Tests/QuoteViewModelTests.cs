@@ -12,6 +12,7 @@ using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Features.ManageQuotes;
 using PsychologyApp.Presentation.Features.RunTests;
+using PsychologyApp.Presentation.Shared.Services.Clipboard;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Entities.Quote;
 using PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
@@ -323,6 +324,7 @@ public sealed class QuoteViewModelTests
             new QuoteItemCommandsFactory(
                 quotService,
                 notifier ?? new QuotesChangeNotifier(),
+                Mock.Of<IAppClipboardService>(),
                 toast.Object,
                 settings,
                 NullLogger<QuoteItemCommandsFactory>.Instance),

@@ -7,8 +7,6 @@
              xmlns:tests="clr-namespace:PsychologyApp.Presentation.Pages.RunTests.LuscherTest"
              xmlns:grid="clr-namespace:PsychologyApp.Presentation.Widgets.LuscherColorGrid"
              xmlns:testUi="clr-namespace:PsychologyApp.Presentation.Widgets.Test"
-             xmlns:profileUi="clr-namespace:PsychologyApp.Presentation.Widgets.ProfileTechniqueCard"
-             xmlns:models="clr-namespace:PsychologyApp.Presentation.Pages.RunTests.LuscherTest"
              x:DataType="vm:LuscherTestViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}"
@@ -48,32 +46,20 @@
                         <behaviors:RevealOnAppearingBehavior />
                     </VerticalStackLayout.Behaviors>
 
-                    <VerticalStackLayout
-                        Spacing="{StaticResource ListItemSpacing}"
-                        BindableLayout.ItemsSource="{Binding ResultItems}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="models:ResultItem">
-                                <testUi:TestResultMetricCardView
-                                    MetricName="{Binding PropertyName}"
-                                    MetricValue="{Binding PropertyValue}"
-                                    MetricDescription="{Binding PropertyText}" />
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </VerticalStackLayout>
-
-                    <VerticalStackLayout
-                        IsVisible="{Binding HasRecommendation}"
-                        Spacing="{StaticResource CompactSpacing}">
-                        <Label
-                            Text="{Binding RecommendationHint}"
-                            Style="{StaticResource CaptionStyle}" />
-                        <profileUi:ProfileTechniqueCardView
-                            IconName="{Binding RecommendationIconName}"
-                            Title="{Binding RecommendationTitle}"
-                            Subtitle="{Binding RecommendationSubtitle}"
-                            Theme="{Binding RecommendationTheme}"
-                            TapCommand="{Binding TryTechniqueCommand}" />
-                    </VerticalStackLayout>
+                    <testUi:LuscherStandardResultsView
+                        Title="{Binding ResultsTitle}"
+                        ResultItems="{Binding ResultItems}"
+                        FirstPassTitle="{Binding StandardFirstPassTitle}"
+                        SecondPassTitle="{Binding StandardSecondPassTitle}"
+                        FirstPassColors="{Binding StandardFirstPassDisplay}"
+                        SecondPassColors="{Binding StandardSecondPassDisplay}"
+                        HasRecommendation="{Binding HasRecommendation}"
+                        RecommendationHint="{Binding RecommendationHint}"
+                        RecommendationTitle="{Binding RecommendationTitle}"
+                        RecommendationSubtitle="{Binding RecommendationSubtitle}"
+                        RecommendationTheme="{Binding RecommendationTheme}"
+                        RecommendationIconName="{Binding RecommendationIconName}"
+                        TryTechniqueCommand="{Binding TryTechniqueCommand}" />
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>

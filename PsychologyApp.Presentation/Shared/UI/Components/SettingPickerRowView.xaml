@@ -4,7 +4,7 @@
              x:Class="PsychologyApp.Presentation.Shared.UI.Components.SettingPickerRowView"
              x:Name="Root">
 
-    <Grid MinimumHeightRequest="48" ColumnSpacing="0">
+    <Grid MinimumHeightRequest="52" ColumnSpacing="0" Opacity="{Binding RowOpacity, Source={x:Reference Root}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
@@ -26,6 +26,7 @@
             BackgroundColor="Transparent"
             HorizontalOptions="End"
             HorizontalTextAlignment="Start"
+            IsEnabled="{Binding IsRowEnabled, Source={x:Reference Root}}"
             ItemsSource="{Binding ItemsSource, Source={x:Reference Root}}"
             SelectedIndexChanged="OnPickerSelectedIndexChanged" />
     </Grid>

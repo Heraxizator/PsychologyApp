@@ -17,6 +17,7 @@ public static class UserPreferences
     public const string HasCompletedOnboardingKey = "HasCompletedOnboarding";
     public const string OnboardingConcernKey = "OnboardingConcern";
     public const string PendingTechniqueKey = "PendingTechnique";
+    public const string PendingQuoteFeedKey = "PendingQuoteFeed";
     public const string PracticeRemindersEnabledKey = "PracticeRemindersEnabled";
     public const string PracticeReminderHourKey = "PracticeReminderHour";
     public const string QuoteRemindersEnabledKey = "QuoteRemindersEnabled";
@@ -124,6 +125,21 @@ public static class UserPreferences
         string value = Preferences.Get(PendingTechniqueKey, string.Empty);
         Preferences.Remove(PendingTechniqueKey);
         return Enum.TryParse(value, out TechniqueId id) ? id : null;
+    }
+
+    public static void SetPendingQuoteFeed(string feedKey) =>
+        Preferences.Set(PendingQuoteFeedKey, feedKey);
+
+    public static string? ConsumePendingQuoteFeed()
+    {
+        if (!Preferences.ContainsKey(PendingQuoteFeedKey))
+        {
+            return null;
+        }
+
+        string value = Preferences.Get(PendingQuoteFeedKey, string.Empty);
+        Preferences.Remove(PendingQuoteFeedKey);
+        return string.IsNullOrWhiteSpace(value) ? null : value;
     }
 
     public static void CompleteOnboarding(string concern)

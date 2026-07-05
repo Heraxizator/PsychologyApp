@@ -5,6 +5,7 @@ using PsychologyApp.Application.Quot;
 using PsychologyApp.Presentation.Entities.Quote;
 using PsychologyApp.Presentation.Features.ManageQuotes;
 using PsychologyApp.Presentation.Features.ManageQuotes.Index;
+using PsychologyApp.Presentation.Shared.Services.Clipboard;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 using Xunit;
 
@@ -94,6 +95,7 @@ public sealed class QuoteSearchControllerTests
         QuoteItemCommandsFactory commandsFactory = new(
             Mock.Of<IQuotService>(),
             new QuotesChangeNotifier(),
+            Mock.Of<IAppClipboardService>(),
             Mock.Of<IToastService>(),
             Microsoft.Extensions.Options.Options.Create(new PsychologyApp.Application.Configuration.AppSettings()),
             NullLogger<QuoteItemCommandsFactory>.Instance);

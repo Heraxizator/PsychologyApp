@@ -8,7 +8,8 @@
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:DataType="vm:SettingsViewModel"
              Shell.NavBarIsVisible="False"
-             Title="{Binding PageTitle}">
+             Title="{Binding PageTitle}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
 
     <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
         <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
@@ -21,89 +22,120 @@
                 TitleText="{Binding PageTitle}"
                 BackCommand="{Binding Finish}" />
 
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <Label Text="{Binding DesignSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
+            <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="0">
+                    <Label
+                        Text="{Binding DesignSectionTitle}"
+                        Style="{StaticResource SectionTitleStyle}"
+                        Margin="0,0,0,10" />
                     <ui:SettingPickerRowView
                         LabelKind="{x:Static converters:PreferenceLabelKind.Language}"
                         LabelText="{Binding LanguageLabel}"
                         PickerTitle="{Binding LanguagePickerTitle}"
                         ItemsSource="{Binding LanguageOptions}"
                         SelectedItem="{Binding Language}" />
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
                     <ui:SettingPickerRowView
                         LabelKind="{x:Static converters:PreferenceLabelKind.Theme}"
                         LabelText="{Binding ThemeLabel}"
                         PickerTitle="{Binding ThemePickerTitle}"
                         ItemsSource="{Binding ThemeOptions}"
                         SelectedItem="{Binding Theme}" />
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
                     <ui:SettingPickerRowView
                         LabelKind="{x:Static converters:PreferenceLabelKind.Color}"
                         LabelText="{Binding ColorLabel}"
                         PickerTitle="{Binding ColorPickerTitle}"
                         ItemsSource="{Binding ColorOptions}"
                         SelectedItem="{Binding Color}" />
-                    <Label Text="{Binding ColorHelperText}" Style="{StaticResource CaptionStyle}" />
+                    <Label
+                        Text="{Binding ColorHelperText}"
+                        Style="{StaticResource CaptionStyle}"
+                        Margin="0,4,0,8" />
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
                     <ui:SettingPickerRowView
                         LabelKind="{x:Static converters:PreferenceLabelKind.Form}"
                         LabelText="{Binding FormLabel}"
                         PickerTitle="{Binding FormPickerTitle}"
                         ItemsSource="{Binding FormOptions}"
                         SelectedItem="{Binding Form}" />
-                    <Label Text="{Binding FormHelperText}" Style="{StaticResource CaptionStyle}" />
+                    <Label
+                        Text="{Binding FormHelperText}"
+                        Style="{StaticResource CaptionStyle}"
+                        Margin="0,4,0,0" />
                 </VerticalStackLayout>
             </Border>
 
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <Label Text="{Binding FontSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
+            <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="0">
+                    <Label
+                        Text="{Binding FontSectionTitle}"
+                        Style="{StaticResource SectionTitleStyle}"
+                        Margin="0,0,0,10" />
                     <ui:SettingPickerRowView
                         LabelKind="{x:Static converters:PreferenceLabelKind.Size}"
                         LabelText="{Binding SizeLabel}"
                         PickerTitle="{Binding SizePickerTitle}"
                         ItemsSource="{Binding SizeOptions}"
                         SelectedItem="{Binding Size}" />
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
                     <ui:SettingSwitchRowView
                         LabelText="{Binding BoldLabel}"
-                        IsToggled="{Binding IsThick}" />
+                        IsToggled="{Binding IsThick}"
+                        ShowDivider="False" />
                 </VerticalStackLayout>
             </Border>
 
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <Label Text="{Binding PracticeSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
+            <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="0">
+                    <Label
+                        Text="{Binding PracticeSectionTitle}"
+                        Style="{StaticResource SectionTitleStyle}"
+                        Margin="0,0,0,10" />
                     <ui:SettingSwitchRowView
                         LabelText="{Binding PracticeRemindersLabel}"
                         IsToggled="{Binding PracticeRemindersEnabled}" />
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
                     <ui:SettingPickerRowView
                         LabelKind="{x:Static converters:PreferenceLabelKind.PassThrough}"
                         LabelText="{Binding PracticeReminderHourLabel}"
                         PickerTitle="{Binding PracticeReminderHourPickerTitle}"
                         ItemsSource="{Binding PracticeReminderHourOptions}"
-                        SelectedItem="{Binding PracticeReminderHour}" />
+                        SelectedItem="{Binding PracticeReminderHour}"
+                        IsRowEnabled="{Binding PracticeRemindersEnabled}" />
                 </VerticalStackLayout>
             </Border>
 
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <Label Text="{Binding QuotesSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
+            <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="0">
+                    <Label
+                        Text="{Binding QuotesSectionTitle}"
+                        Style="{StaticResource SectionTitleStyle}"
+                        Margin="0,0,0,10" />
                     <ui:SettingSwitchRowView
                         LabelText="{Binding QuoteRemindersLabel}"
                         IsToggled="{Binding QuoteRemindersEnabled}" />
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
                     <ui:SettingPickerRowView
                         LabelKind="{x:Static converters:PreferenceLabelKind.PassThrough}"
                         LabelText="{Binding QuoteReminderHourLabel}"
                         PickerTitle="{Binding QuoteReminderHourPickerTitle}"
                         ItemsSource="{Binding QuoteReminderHourOptions}"
-                        SelectedItem="{Binding QuoteReminderHour}" />
+                        SelectedItem="{Binding QuoteReminderHour}"
+                        IsRowEnabled="{Binding QuoteRemindersEnabled}" />
                 </VerticalStackLayout>
             </Border>
 
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <Label Text="{Binding TestsSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
+            <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="0">
+                    <Label
+                        Text="{Binding TestsSectionTitle}"
+                        Style="{StaticResource SectionTitleStyle}"
+                        Margin="0,0,0,10" />
                     <ui:SettingSwitchRowView
                         LabelText="{Binding QuestionnaireAutoAdvanceLabel}"
-                        IsToggled="{Binding QuestionnaireAutoAdvance}" />
+                        IsToggled="{Binding QuestionnaireAutoAdvance}"
+                        ShowDivider="False" />
                 </VerticalStackLayout>
             </Border>
 

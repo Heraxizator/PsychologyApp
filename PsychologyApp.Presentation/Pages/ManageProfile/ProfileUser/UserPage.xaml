@@ -156,7 +156,7 @@
                         TitleText="{Binding BestQuotesLabel}"
                         SubtitleText="{Binding QuotesSectionSubtitle}"
                         ActionText="{Binding QuotesSectionActionText}"
-                        ActionCommand="{Binding OpenQuotesTabCommand}" />
+                        ActionCommand="{Binding OpenQuotesFavoritesCommand}" />
 
                     <ui:ProgressBarView
                         IsVisible="{Binding IsQuotesLoading}"

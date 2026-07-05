@@ -91,7 +91,7 @@ public sealed class PageRegistry(
         WithPressFeedback(reviewPageFactory.CreateFormPage());
 
     public SettingsPage CreateSettingsPage() =>
-        WithPressFeedback(profilePageFactory.CreateSettingsPage());
+        profilePageFactory.CreateSettingsPage();
 
     public PhysicsSearchPage CreatePhysicsSearchPage() =>
         WithPressFeedback(new PhysicsSearchPage(pageViewModelActivator, physicsSearchViewModelFactory));

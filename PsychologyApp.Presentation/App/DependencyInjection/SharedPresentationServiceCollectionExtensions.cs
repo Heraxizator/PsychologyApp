@@ -4,6 +4,8 @@ using PsychologyApp.Presentation.Platforms.Android;
 using PsychologyApp.Presentation.App.Routes;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.Common.Localization;
+using Microsoft.Maui.ApplicationModel.DataTransfer;
+using PsychologyApp.Presentation.Shared.Services.Clipboard;
 using PsychologyApp.Presentation.Shared.Services.Notifications;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
@@ -17,6 +19,7 @@ public static class SharedPresentationServiceCollectionExtensions
     public static IServiceCollection AddSharedPresentation(this IServiceCollection services)
     {
         services.AddSingleton<IToastService, ToastService>();
+        services.AddSingleton<IAppClipboardService, AppClipboardService>();
         services.AddSingleton<IPageHost, MauiPageHost>();
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<GlobalExceptionHandler>();

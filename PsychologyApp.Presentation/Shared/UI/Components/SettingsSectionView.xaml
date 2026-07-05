@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             x:Class="PsychologyApp.Presentation.Shared.UI.Components.SettingsSectionView"
+             x:Name="Root">
+
+    <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+        <VerticalStackLayout Spacing="0">
+            <ui:SectionHeaderView
+                TitleText="{Binding TitleText, Source={x:Reference Root}}"
+                SubtitleText="{Binding SubtitleText, Source={x:Reference Root}}"
+                Margin="0,0,0,8" />
+            <ContentPresenter Content="{Binding SectionContent, Source={x:Reference Root}}" />
+        </VerticalStackLayout>
+    </Border>
+
+</ContentView>

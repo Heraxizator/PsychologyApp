@@ -11,6 +11,7 @@ public partial class TechniquesViewModel
     public ICommand OpenProfileCommand { get; private set; } = default!;
     public ICommand StartTodayPracticeCommand { get; private set; } = default!;
     public ICommand RecordMoodCommand { get; private set; } = default!;
+    public ICommand LoadMoreCustomTechniquesCommand { get; private set; } = default!;
 
     private void WireCommands()
     {
@@ -34,5 +35,6 @@ public partial class TechniquesViewModel
 
         Cancel = new Command(CancelProgress);
         Reload = new AsyncCommand(() => InitializeAsync(showLoadingOverlay: true));
+        LoadMoreCustomTechniquesCommand = new AsyncCommand(LoadMoreCustomTechniquesAsync);
     }
 }

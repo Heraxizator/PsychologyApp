@@ -24,13 +24,18 @@ public class MainActivity : MauiAppCompatActivity
 
     private static void HandleReminderIntent(Intent? intent)
     {
-        if (intent?.GetBooleanExtra(QuoteReminderConstants.ActionReminder, false) == true)
+        if (intent is null || !IsFromOurApp(intent))
+        {
+            return;
+        }
+
+        if (string.Equals(intent.Action, QuoteReminderConstants.ActionOpenFromNotification, StringComparison.Ordinal))
         {
             QuoteReminderTapHandler.Handle();
             return;
         }
 
-        if (intent?.HasExtra(PracticeReminderConstants.ExtraTechniqueId) != true)
+        if (!string.Equals(intent.Action, PracticeReminderConstants.ActionOpenFromNotification, StringComparison.Ordinal))
         {
             return;
         }
@@ -40,5 +45,11 @@ public class MainActivity : MauiAppCompatActivity
         {
             PracticeReminderTapHandler.Handle(techniqueId);
         }
+    }
+
+    private static bool IsFromOurApp(Intent intent)
+    {
+        string? packageName = intent.Package ?? intent.Component?.PackageName;
+        return string.Equals(packageName, global::Android.App.Application.Context.PackageName, StringComparison.Ordinal);
     }
 }
