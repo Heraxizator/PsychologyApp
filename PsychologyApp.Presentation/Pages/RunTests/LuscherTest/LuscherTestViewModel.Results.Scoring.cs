@@ -59,6 +59,7 @@ public partial class LuscherTestViewModel
         });
 
         SetFinish();
+        RefreshStandardPassDisplay();
         LoadRecommendationAsync(_lastCoValue).FireAndForget();
         PersistStandardResultAsync(_lastCoValue, _lastBkValue).FireAndForget();
     }
@@ -81,6 +82,7 @@ public partial class LuscherTestViewModel
         SecondColor = Color.FromArgb(colourValue.Code);
         SecondName = ColourStrings.GetColorName(colourValue);
         SetFinish();
+        NotifyBriefResultDisplay();
         PersistBriefResultAsync().FireAndForget();
     }
 

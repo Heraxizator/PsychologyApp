@@ -1,4 +1,5 @@
 using PsychologyApp.Application.Models.Tests;
+using PsychologyApp.Presentation.Common;
 
 namespace PsychologyApp.Presentation.Entities.Test;
 
@@ -22,6 +23,8 @@ public sealed class TestHistoryEntryItem
     public string LuscherBriefFirstText { get; init; } = string.Empty;
     public string LuscherBriefSecondTitle { get; init; } = string.Empty;
     public string LuscherBriefSecondText { get; init; } = string.Empty;
+    public string LuscherBriefFirstRoleLabel => AppStrings.TestsLuscherWantedRole;
+    public string LuscherBriefSecondRoleLabel => AppStrings.TestsLuscherUnwantedRole;
     public IReadOnlyList<QuestionnaireResultQuestion> DetailQuestions =>
         Detail?.Questions ?? Array.Empty<QuestionnaireResultQuestion>();
     public bool HasScore => !string.IsNullOrWhiteSpace(ScoreText);

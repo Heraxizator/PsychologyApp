@@ -122,8 +122,8 @@ public sealed class AndroidPracticeReminderScheduler : IPracticeReminderSchedule
     internal static PendingIntent CreateTapPendingIntent(Context context, TechniqueId techniqueId)
     {
         Intent intent = new(context, typeof(global::PsychologyApp.Presentation.App.MainActivity));
-        intent.SetAction(Intent.ActionMain);
-        intent.AddCategory(Intent.CategoryLauncher);
+        intent.SetAction(PracticeReminderConstants.ActionOpenFromNotification);
+        intent.SetPackage(context.PackageName);
         intent.PutExtra(PracticeReminderConstants.ExtraTechniqueId, techniqueId.ToString());
         intent.AddFlags(ActivityFlags.ClearTop | ActivityFlags.SingleTop | ActivityFlags.NewTask);
 

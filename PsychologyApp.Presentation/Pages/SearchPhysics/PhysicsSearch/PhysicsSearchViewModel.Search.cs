@@ -103,7 +103,7 @@ public partial class PhysicsSearchViewModel
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Physics search failed for query {SearchText}.", searchText);
+            _logger.LogError(e, "Physics search failed.");
             await ResetSearchingIfCurrentAsync(searchText);
         }
     }

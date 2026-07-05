@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               x:Class="PsychologyApp.Presentation.Shared.UI.Overlays.AppOptionsSheetPopup"
+               BackgroundColor="Transparent"
+               CanBeDismissedByTappingOutsideOfPopup="True">
+
+    <Grid
+        x:Name="SheetHost"
+        RowDefinitions="*,Auto"
+        VerticalOptions="Fill"
+        HorizontalOptions="Fill">
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnDismissTapped" />
+        </Grid.GestureRecognizers>
+
+        <Grid
+            x:Name="SheetCardHost"
+            Grid.Row="1"
+            Margin="16,0,16,20">
+            <Border Style="{StaticResource AppOptionsSheetShadowLayerStyle}" />
+            <Border
+                x:Name="SheetCard"
+                Style="{StaticResource AppOptionsSheetPopupCardStyle}">
+                <VerticalStackLayout Spacing="0">
+                    <Label
+                        x:Name="TitleLabel"
+                        Style="{StaticResource AppOptionsSheetTitleStyle}"
+                        Margin="0,0,0,4" />
+
+                    <BoxView Style="{StaticResource AppDialogDividerStyle}" />
+
+                    <VerticalStackLayout
+                        x:Name="OptionsStack"
+                        Spacing="0" />
+
+                    <BoxView Style="{StaticResource AppDialogDividerStyle}" />
+
+                    <Border
+                        BackgroundColor="Transparent"
+                        Stroke="Transparent"
+                        MinimumHeightRequest="48"
+                        Padding="0,4">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCancelTapped" />
+                        </Border.GestureRecognizers>
+                        <Label
+                            x:Name="CancelLabel"
+                            Style="{StaticResource AppDialogPrimaryActionLabelStyle}"
+                            InputTransparent="True" />
+                    </Border>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </Grid>
+
+</toolkit:Popup>

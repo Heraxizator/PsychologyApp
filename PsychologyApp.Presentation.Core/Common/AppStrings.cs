@@ -513,7 +513,30 @@ public static partial class AppStrings
     public static string ProfileBestQuotes => T("Избранные цитаты", "Favorite quotes");
     public static string ProfileQuotesSeeAll => T("Все избранные цитаты", "All favorite quotes");
     public static string ProfileQuotesSeeAllSubtitle => T("Открыть вкладку «Цитаты»", "Open Quotes tab");
-    public static string ProfileQuotesPreviewSubtitle => T("Показаны 2 избранных", "Showing 2 favorites");
+    public static string FormatProfileQuotesPreviewSubtitle(int shown, int total)
+    {
+        if (shown <= 0 || total <= 0)
+        {
+            return string.Empty;
+        }
+
+        if (IsEnglish(Language))
+        {
+            if (total > shown)
+            {
+                return $"Showing {shown} of {total} favorites";
+            }
+
+            return total == 1 ? "Showing 1 favorite" : $"Showing {total} favorites";
+        }
+
+        if (total > shown)
+        {
+            return $"Показано {shown} из {total} избранных";
+        }
+
+        return shown == 1 ? "Показана 1 избранная" : $"Показано {shown} избранных";
+    }
     public static string QuotesFavoriteAdded => T("Добавлено в избранное", "Added to favorites");
     public static string QuotesFavoriteRemoved => T("Убрано из избранного", "Removed from favorites");
     public static string QuotesGoToTab => T("Перейти к цитатам", "Go to quotes");

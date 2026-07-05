@@ -80,6 +80,7 @@ public partial class TechniquesViewModel
                 TechniqueGroups = snapshot.UiState.Groups;
                 CatalogTechniques = snapshot.UiState.CatalogTechniques;
                 TechniquesItemsSource = snapshot.UiState.ItemsSource;
+                ApplyCustomTechniquesPagingState(snapshot);
                 SetDone();
             });
         }

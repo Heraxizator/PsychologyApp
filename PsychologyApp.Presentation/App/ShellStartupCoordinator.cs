@@ -9,6 +9,7 @@ using PsychologyApp.Presentation.Pages.Onboarding;
 using PsychologyApp.Presentation.Features.Onboarding.DependencyInjection;
 
 using PsychologyApp.Presentation.Shared.Services.Toasts;
+using PsychologyApp.Presentation.Shared.UI.Overlays;
 
 namespace PsychologyApp.Presentation.App;
 
@@ -34,7 +35,7 @@ public sealed class ShellStartupCoordinator(
             databaseReadySignal.SignalFailed(ex);
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
-                toastService.ShortToast(AppStrings.StartupErrorMessage);
+                toastService.ShortToast(AppStrings.StartupErrorMessage, AppToastKind.Error);
                 return Task.CompletedTask;
             });
 

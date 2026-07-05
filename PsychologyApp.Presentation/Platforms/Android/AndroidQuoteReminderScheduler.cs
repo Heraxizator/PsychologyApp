@@ -120,9 +120,8 @@ public sealed class AndroidQuoteReminderScheduler : IQuoteReminderScheduler
     internal static PendingIntent CreateTapPendingIntent(Context context)
     {
         Intent intent = new(context, typeof(global::PsychologyApp.Presentation.App.MainActivity));
-        intent.SetAction(Intent.ActionMain);
-        intent.AddCategory(Intent.CategoryLauncher);
-        intent.PutExtra(QuoteReminderConstants.ActionReminder, true);
+        intent.SetAction(QuoteReminderConstants.ActionOpenFromNotification);
+        intent.SetPackage(context.PackageName);
         intent.AddFlags(ActivityFlags.ClearTop | ActivityFlags.SingleTop | ActivityFlags.NewTask);
 
         return PendingIntent.GetActivity(

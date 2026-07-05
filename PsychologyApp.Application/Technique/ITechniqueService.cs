@@ -5,6 +5,11 @@ namespace PsychologyApp.Application.Technique;
 public interface ITechniqueService
 {
     Task<IEnumerable<TechniqueDTO>> GetTechniquesListAsync(int count, CancellationToken cancellationToken = default);
+
+    Task<IEnumerable<TechniqueDTO>> GetTechniquesPageAsync(
+        int offset,
+        int limit,
+        CancellationToken cancellationToken = default);
     Task<TechniqueDTO> GetTechniqueByIdAsync(long id, CancellationToken cancellationToken = default);
     Task AddNewTechniqueAsync(TechniqueDTO techniqueDTO, CancellationToken cancellationToken = default);
     Task DeleteTechniqueAsync(TechniqueDTO techniqueDTO, CancellationToken cancellationToken = default);

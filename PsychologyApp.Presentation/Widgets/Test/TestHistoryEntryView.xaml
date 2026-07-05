@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:testUi="clr-namespace:PsychologyApp.Presentation.Widgets.Test"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:Class="PsychologyApp.Presentation.Widgets.Test.TestHistoryEntryView"
@@ -58,38 +57,44 @@
                 FontFamily="{StaticResource MediumFontFamily}"
                 TextColor="{DynamicResource Primary}" />
             <Label Text="{Binding SummaryText, Source={x:Reference Root}}" Style="{StaticResource BodyStyle}" />
-            <Expander IsVisible="{Binding HasDetail, Source={x:Reference Root}}">
-                <Expander.Header>
-                    <Label
-                        Text="{Binding DurationText, Source={x:Reference Root}}"
-                        Style="{StaticResource CaptionStyle}"
-                        TextColor="{DynamicResource Primary}" />
-                </Expander.Header>
+
+            <VerticalStackLayout IsVisible="{Binding HasDetail, Source={x:Reference Root}}" Spacing="4">
+                <Label
+                    Text="{Binding DurationText, Source={x:Reference Root}}"
+                    Style="{StaticResource CaptionStyle}"
+                    TextColor="{DynamicResource Primary}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToggleDetailCommand, Source={x:Reference Root}}" />
+                    </Label.GestureRecognizers>
+                </Label>
                 <testUi:QuestionnaireResultDetailView
+                    IsVisible="{Binding IsDetailExpanded, Source={x:Reference Root}}"
                     Questions="{Binding DetailQuestions, Source={x:Reference Root}}"
                     DurationText="{Binding DurationText, Source={x:Reference Root}}"
                     HasDuration="False" />
-            </Expander>
-            <Expander IsVisible="{Binding HasLuscherDetail, Source={x:Reference Root}}">
-                <Expander.Header>
-                    <Label
-                        Text="{Binding SummaryText, Source={x:Reference Root}}"
-                        Style="{StaticResource CaptionStyle}"
-                        TextColor="{DynamicResource Primary}" />
-                </Expander.Header>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout IsVisible="{Binding HasLuscherDetail, Source={x:Reference Root}}" Spacing="4">
+                <Label
+                    Text="{Binding SummaryText, Source={x:Reference Root}}"
+                    Style="{StaticResource CaptionStyle}"
+                    TextColor="{DynamicResource Primary}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToggleLuscherDetailCommand, Source={x:Reference Root}}" />
+                    </Label.GestureRecognizers>
+                </Label>
                 <testUi:LuscherHistoryDetailView
+                    IsVisible="{Binding IsLuscherDetailExpanded, Source={x:Reference Root}}"
                     HasStandardDetail="{Binding HasStandardLuscherDetail, Source={x:Reference Root}}"
                     HasBriefDetail="{Binding HasBriefLuscherDetail, Source={x:Reference Root}}"
+                    StandardDetail="{Binding LuscherStandardDetail, Source={x:Reference Root}}"
+                    BriefDetail="{Binding LuscherBriefDetail, Source={x:Reference Root}}"
                     FirstPassTitle="{Binding LuscherFirstPassTitle, Source={x:Reference Root}}"
-                    FirstPassText="{Binding LuscherFirstPassText, Source={x:Reference Root}}"
                     SecondPassTitle="{Binding LuscherSecondPassTitle, Source={x:Reference Root}}"
-                    SecondPassText="{Binding LuscherSecondPassText, Source={x:Reference Root}}"
                     BkText="{Binding LuscherBkText, Source={x:Reference Root}}"
-                    BriefFirstTitle="{Binding LuscherBriefFirstTitle, Source={x:Reference Root}}"
-                    BriefFirstText="{Binding LuscherBriefFirstText, Source={x:Reference Root}}"
-                    BriefSecondTitle="{Binding LuscherBriefSecondTitle, Source={x:Reference Root}}"
-                    BriefSecondText="{Binding LuscherBriefSecondText, Source={x:Reference Root}}" />
-            </Expander>
+                    BriefFirstRoleLabel="{Binding LuscherBriefFirstRoleLabel, Source={x:Reference Root}}"
+                    BriefSecondRoleLabel="{Binding LuscherBriefSecondRoleLabel, Source={x:Reference Root}}" />
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </Border>
 </ContentView>

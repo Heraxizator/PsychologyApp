@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:testUi="clr-namespace:PsychologyApp.Presentation.Widgets.Test"
+             x:Class="PsychologyApp.Presentation.Widgets.Test.LuscherBriefResultsView"
+             x:Name="Root">
+
+    <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
+        <Label
+            Text="{Binding Title, Source={x:Reference Root}}"
+            Style="{StaticResource SectionTitleStyle}" />
+
+        <HorizontalStackLayout
+            Spacing="{StaticResource SectionSpacing}"
+            HorizontalOptions="Center">
+            <testUi:LuscherColorSwatchView
+                SwatchColor="{Binding FirstColor, Source={x:Reference Root}}"
+                ColorName="{Binding FirstName, Source={x:Reference Root}}"
+                SwatchSize="{StaticResource LuscherSwatchSizeMedium}"
+                ShowName="True" />
+            <testUi:LuscherColorSwatchView
+                SwatchColor="{Binding SecondColor, Source={x:Reference Root}}"
+                ColorName="{Binding SecondName, Source={x:Reference Root}}"
+                SwatchSize="{StaticResource LuscherSwatchSizeMedium}"
+                ShowName="True" />
+        </HorizontalStackLayout>
+
+        <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+            <testUi:LuscherColorResultView
+                RoleLabel="{Binding FirstColorRoleLabel, Source={x:Reference Root}}"
+                Color="{Binding FirstColor, Source={x:Reference Root}}"
+                ColorName="{Binding FirstName, Source={x:Reference Root}}"
+                ResultText="{Binding FirstResult, Source={x:Reference Root}}" />
+            <testUi:LuscherColorResultView
+                RoleLabel="{Binding SecondColorRoleLabel, Source={x:Reference Root}}"
+                Color="{Binding SecondColor, Source={x:Reference Root}}"
+                ColorName="{Binding SecondName, Source={x:Reference Root}}"
+                ResultText="{Binding SecondResult, Source={x:Reference Root}}" />
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+
+</ContentView>

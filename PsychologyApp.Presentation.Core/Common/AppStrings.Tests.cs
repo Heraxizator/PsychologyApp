@@ -22,6 +22,9 @@ public static partial class AppStrings
     public static string TestRetakeButton => T("Пройти снова", "Take again");
     public static string TestsFirstColor => T("Первый цвет", "First color");
     public static string TestsSecondColor => T("Второй цвет", "Second color");
+    public static string TestsLuscherResultsTitle => T("Результаты", "Results");
+    public static string TestsLuscherWantedRole => T("Самый приятный", "Most pleasant");
+    public static string TestsLuscherUnwantedRole => T("Самый неприятный", "Least pleasant");
     public static string TestsLuscherFirstInstruction => T(
         "Выберите самый приятный для вас цвет",
         "Choose the color you find most pleasant");

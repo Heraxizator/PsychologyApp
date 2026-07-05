@@ -82,7 +82,12 @@ public partial class LuscherTestViewModel
             nameof(FirstColorLabel),
             nameof(SecondColorLabel),
             nameof(BriefStepLabel),
-            nameof(StandardPassLabel));
+            nameof(StandardPassLabel),
+            nameof(ResultsTitle),
+            nameof(FirstColorRoleLabel),
+            nameof(SecondColorRoleLabel),
+            nameof(StandardFirstPassTitle),
+            nameof(StandardSecondPassTitle));
 
         if (_mode == LuscherMode.Brief)
         {
@@ -91,11 +96,19 @@ public partial class LuscherTestViewModel
                 : AppStrings.TestsLuscherSecondInstruction;
             NotifyBriefProgress();
             RefreshBriefResultText();
+            if (IsFinish)
+            {
+                NotifyBriefResultDisplay();
+            }
         }
         else
         {
             RefreshStandardResultLabels();
             NotifyStandardPassProgress();
+            if (IsFinish)
+            {
+                RefreshStandardPassDisplay();
+            }
         }
     }
 }

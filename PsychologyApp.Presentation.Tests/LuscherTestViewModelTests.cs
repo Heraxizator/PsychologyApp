@@ -18,6 +18,58 @@ public sealed class LuscherTestViewModelTests
     }
 
     [Fact]
+    public void BriefFinish_ExposesRoleLabels()
+    {
+        var navigation = new Mock<INavigation>();
+        LuscherTestViewModel viewModel = new(
+            LuscherMode.Brief,
+            new TestNavigationService(navigation.Object));
+
+        InvokeColorHandler(viewModel, ColourValue.Red);
+        InvokeColorHandler(viewModel, ColourValue.Blue);
+
+        Assert.True(viewModel.IsFinish);
+        Assert.Equal(AppStrings.TestsLuscherWantedRole, viewModel.FirstColorRoleLabel);
+        Assert.Equal(AppStrings.TestsLuscherUnwantedRole, viewModel.SecondColorRoleLabel);
+        Assert.False(string.IsNullOrWhiteSpace(viewModel.ResultsTitle));
+    }
+
+    [Fact]
+    public void StandardFinish_ExposesEightColorPassRows()
+    {
+        var navigation = new Mock<INavigation>();
+        LuscherTestViewModel viewModel = new(
+            LuscherMode.Standard,
+            new TestNavigationService(navigation.Object));
+
+        ColourValue[] colors =
+        [
+            ColourValue.Red,
+            ColourValue.Blue,
+            ColourValue.Green,
+            ColourValue.Yellow,
+            ColourValue.Purple,
+            ColourValue.Brown,
+            ColourValue.Gray,
+            ColourValue.Black
+        ];
+
+        foreach (ColourValue color in colors)
+        {
+            InvokeColorHandler(viewModel, color);
+        }
+
+        foreach (ColourValue color in colors.Reverse())
+        {
+            InvokeColorHandler(viewModel, color);
+        }
+
+        Assert.True(viewModel.IsFinish);
+        Assert.Equal(8, viewModel.StandardFirstPassDisplay.Count);
+        Assert.Equal(8, viewModel.StandardSecondPassDisplay.Count);
+    }
+
+    [Fact]
     public async Task StandardMode_AfterTwoPasses_PersistsWithStandardTestId()
     {
         var navigation = new Mock<INavigation>();

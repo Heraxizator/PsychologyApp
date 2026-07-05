@@ -160,9 +160,9 @@ public sealed class TestModuleOperationsTests
         TestNavigationService navigationService = new(navigation.Object);
         TestsListLoader loader = TestRunTestHelpers.CreateTestsListLoader(progress.Object, catalog);
 
-        IReadOnlyList<TestItem> items = await loader.LoadItemsAsync(
+        IReadOnlyList<TestItem> items = (await loader.LoadItemsAsync(
             navigationService,
-            _ => Task.CompletedTask);
+            _ => Task.CompletedTask)).Items;
 
         Assert.Single(items);
         Assert.True(items[0].HasMultipleResults);

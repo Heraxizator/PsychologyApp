@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using PsychologyApp.Application.Exceptions;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
+using PsychologyApp.Presentation.Shared.UI.Overlays;
 
 namespace PsychologyApp.Presentation.Shared.Common;
 
@@ -85,7 +86,7 @@ public sealed class GlobalExceptionHandler
                     return;
                 }
 
-                _toastService.ShortToast(userMessage);
+                _toastService.ShortToast(userMessage, AppToastKind.Error);
             }
             catch
             {

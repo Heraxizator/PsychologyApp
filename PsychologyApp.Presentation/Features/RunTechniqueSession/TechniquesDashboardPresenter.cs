@@ -3,6 +3,7 @@ using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
+using PsychologyApp.Presentation.Shared.UI.Overlays;
 
 namespace PsychologyApp.Presentation.Features.RunTechniqueSession;
 
@@ -47,7 +48,7 @@ public sealed class TechniquesDashboardPresenter(
         await dashboardLoader.RecordMoodAsync(moodLevel, cancellationToken);
         int streakDays = await dashboardLoader.LoadStreakDaysAsync(cancellationToken);
         MoodSnapshot moodSnapshot = await dashboardLoader.LoadMoodSnapshotAsync(cancellationToken);
-        toastService.ShortToast(AppStrings.TodayMoodSaved);
+        toastService.ShortToast(AppStrings.TodayMoodSaved, AppToastKind.Success);
         return new MoodRecordResult(streakDays, moodSnapshot);
     }
 }

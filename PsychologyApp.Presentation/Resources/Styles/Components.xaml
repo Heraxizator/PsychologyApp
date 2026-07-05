@@ -428,4 +428,173 @@
         <Setter Property="AutoSize" Value="TextChanges" />
     </Style>
 
+    <Style x:Key="SettingsPickerPillStyle" TargetType="Border">
+        <Setter Property="Padding" Value="10,6" />
+        <Setter Property="MinimumWidthRequest" Value="132" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}" />
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource Gray700}}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
+    </Style>
+
+    <Style x:Key="SettingRowDividerStyle" TargetType="BoxView">
+        <Setter Property="HeightRequest" Value="1" />
+        <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource Gray700}}" />
+        <Setter Property="Margin" Value="0,6,0,0" />
+    </Style>
+
+    <Shadow
+        x:Key="AppToastShadowLight"
+        Brush="#33152238"
+        Offset="0,10"
+        Radius="28"
+        Opacity="0.28" />
+
+    <Shadow
+        x:Key="AppToastShadowDark"
+        Brush="#000000"
+        Offset="0,8"
+        Radius="24"
+        Opacity="0.55" />
+
+    <Shadow
+        x:Key="AppDialogShadowLight"
+        Brush="#40152238"
+        Offset="0,16"
+        Radius="32"
+        Opacity="0.30" />
+
+    <Shadow
+        x:Key="AppDialogShadowDark"
+        Brush="#000000"
+        Offset="0,12"
+        Radius="28"
+        Opacity="0.62" />
+
+    <Style x:Key="AppPopupShadowLayerStyle" TargetType="Border">
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusShape}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#33152238, Dark=#80000000}" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="TranslationY" Value="10" />
+        <Setter Property="VerticalOptions" Value="Fill" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+    </Style>
+
+    <Style x:Key="AppDialogShadowLayerStyle" TargetType="Border" BasedOn="{StaticResource AppPopupShadowLayerStyle}">
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusAlertShape}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#40152238, Dark=#99000000}" />
+        <Setter Property="TranslationY" Value="12" />
+    </Style>
+
+    <Style x:Key="AppToastStyle" TargetType="Border">
+        <Setter Property="Padding" Value="16,14" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="MinimumHeightRequest" Value="52" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceElevatedLight}, Dark={StaticResource SurfaceElevatedDark}}" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusShape}" />
+        <Setter Property="Shadow" Value="{AppThemeBinding Light={StaticResource AppToastShadowLight}, Dark={StaticResource AppToastShadowDark}}" />
+    </Style>
+
+    <Style x:Key="AppToastPopupCardStyle" TargetType="Border" BasedOn="{StaticResource AppToastStyle}">
+        <Setter Property="Shadow" Value="{x:Null}" />
+    </Style>
+
+    <Style x:Key="AppToastMessageStyle" TargetType="Label" BasedOn="{StaticResource BodyStyle}">
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="Start" />
+        <Setter Property="MaxLines" Value="3" />
+        <Setter Property="LineBreakMode" Value="WordWrap" />
+    </Style>
+
+    <Style x:Key="AppOptionsSheetStyle" TargetType="Border">
+        <Setter Property="Padding" Value="0,12,0,8" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceElevatedLight}, Dark={StaticResource SurfaceElevatedDark}}" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusShape}" />
+        <Setter Property="Shadow" Value="{AppThemeBinding Light={StaticResource AppDialogShadowLight}, Dark={StaticResource AppDialogShadowDark}}" />
+    </Style>
+
+    <Style x:Key="AppOptionsSheetPopupCardStyle" TargetType="Border" BasedOn="{StaticResource AppOptionsSheetStyle}">
+        <Setter Property="Shadow" Value="{x:Null}" />
+    </Style>
+
+    <Style x:Key="AppOptionsSheetTitleStyle" TargetType="Label" BasedOn="{StaticResource SectionTitleStyle}">
+        <Setter Property="FontSize" Value="{StaticResource EmphasisBodyFontSize}" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="Margin" Value="16,4,16,8" />
+    </Style>
+
+    <Style x:Key="AppDialogCardStyle" TargetType="Border">
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="MaximumWidthRequest" Value="320" />
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource BorderSubtleLight}, Dark={StaticResource BorderSubtleDark}}" />
+        <Setter Property="StrokeThickness" Value="0.5" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceElevatedLight}, Dark={StaticResource SurfaceElevatedDark}}" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusAlertShape}" />
+        <Setter Property="Shadow" Value="{AppThemeBinding Light={StaticResource AppDialogShadowLight}, Dark={StaticResource AppDialogShadowDark}}" />
+    </Style>
+
+    <Style x:Key="AppDialogPopupCardStyle" TargetType="Border" BasedOn="{StaticResource AppDialogCardStyle}">
+        <Setter Property="Shadow" Value="{x:Null}" />
+    </Style>
+
+    <Style x:Key="AppOptionsSheetShadowLayerStyle" TargetType="Border" BasedOn="{StaticResource AppPopupShadowLayerStyle}">
+        <Setter Property="TranslationY" Value="14" />
+    </Style>
+
+    <Style x:Key="AppDialogTitleStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="{StaticResource EmphasisBodyFontSize}" />
+        <Setter Property="LineHeight" Value="{StaticResource EmphasisBodyLineHeight}" />
+        <Setter Property="FontFamily" Value="{StaticResource SemiBoldFontFamily}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+    </Style>
+
+    <Style x:Key="AppDialogMessageStyle" TargetType="Label" BasedOn="{StaticResource CaptionStyle}">
+        <Setter Property="FontSize" Value="{StaticResource BodyFontSize}" />
+        <Setter Property="LineHeight" Value="{StaticResource BodyLineHeight}" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="Margin" Value="0,2,0,0" />
+    </Style>
+
+    <Style x:Key="AppDialogDividerStyle" TargetType="BoxView">
+        <Setter Property="HeightRequest" Value="0.5" />
+        <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource Gray700}}" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+    </Style>
+
+    <Style x:Key="AppDialogActionDividerStyle" TargetType="BoxView">
+        <Setter Property="WidthRequest" Value="0.5" />
+        <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource Gray700}}" />
+        <Setter Property="VerticalOptions" Value="Fill" />
+        <Setter Property="Margin" Value="0,8" />
+    </Style>
+
+    <Style x:Key="AppDialogActionLabelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="{StaticResource EmphasisBodyFontSize}" />
+        <Setter Property="FontFamily" Value="{StaticResource MediumFontFamily}" />
+        <Setter Property="TextColor" Value="{DynamicResource Primary}" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="AppDialogPrimaryActionLabelStyle" TargetType="Label" BasedOn="{StaticResource AppDialogActionLabelStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource SemiBoldFontFamily}" />
+    </Style>
+
+    <Style x:Key="SettingsSectionCardStyle" TargetType="Border" BasedOn="{StaticResource BrandCardStyle}">
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="16,14" />
+    </Style>
+
 </ResourceDictionary>

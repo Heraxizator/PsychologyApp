@@ -717,4 +717,99 @@ public static class UiAnimations
         int cappedIndex = Math.Max(0, Math.Min(index, cap - 1));
         return (int)(StaggerDelay * Math.Sqrt(cappedIndex));
     }
+
+    public const double AlertScaleFrom = 0.94;
+    public const double ToastScaleFrom = 0.92;
+    public const double ToastSlideOffset = 16;
+
+    public static void PrepareForAlertPop(VisualElement? view)
+    {
+        if (view is null)
+        {
+            return;
+        }
+
+        view.Opacity = 0;
+        view.Scale = AlertScaleFrom;
+        view.TranslationY = 0;
+    }
+
+    public static void PrepareForToastPop(VisualElement? view, double slideOffset = ToastSlideOffset)
+    {
+        if (view is null)
+        {
+            return;
+        }
+
+        view.Opacity = 0;
+        view.Scale = ToastScaleFrom;
+        view.TranslationY = slideOffset;
+    }
+
+    public static async Task AnimateAlertPopInAsync(VisualElement? view)
+    {
+        if (view is null)
+        {
+            return;
+        }
+
+        if (!ShouldAnimate(view))
+        {
+            view.Opacity = 1;
+            view.Scale = 1;
+            return;
+        }
+
+        PrepareForAlertPop(view);
+        await Task.WhenAll(
+            view.FadeTo(1, MicroDuration, EnterOpacityEasing),
+            view.ScaleTo(1, MicroDuration, EnterTransformEasing));
+    }
+
+    public static async Task AnimateAlertPopOutAsync(VisualElement? view)
+    {
+        if (view is null || !ShouldAnimate(view))
+        {
+            return;
+        }
+
+        await Task.WhenAll(
+            view.FadeTo(0, FastDuration, ExitEasing),
+            view.ScaleTo(AlertScaleFrom, FastDuration, ExitEasing));
+    }
+
+    public static async Task AnimateToastPopInAsync(VisualElement? view, double slideOffset = ToastSlideOffset)
+    {
+        if (view is null)
+        {
+            return;
+        }
+
+        if (!ShouldAnimate(view))
+        {
+            view.Opacity = 1;
+            view.Scale = 1;
+            view.TranslationY = 0;
+            return;
+        }
+
+        PrepareForToastPop(view, slideOffset);
+        await Task.WhenAll(
+            view.FadeTo(1, MicroDuration, EnterOpacityEasing),
+            view.ScaleTo(1, MicroDuration, EnterTransformEasing),
+            view.TranslateTo(0, 0, MicroDuration, EnterTransformEasing));
+    }
+
+    public static async Task AnimateToastPopOutAsync(VisualElement? view, double slideOffset = 8)
+    {
+        if (view is null || !ShouldAnimate(view))
+        {
+            return;
+        }
+
+        await Task.WhenAll(
+            view.FadeTo(0, FastDuration, ExitEasing),
+            view.ScaleTo(ToastScaleFrom, FastDuration, ExitEasing),
+            view.TranslateTo(0, slideOffset, FastDuration, ExitEasing));
+    }
 }

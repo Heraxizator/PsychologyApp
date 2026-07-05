@@ -40,6 +40,16 @@ public partial class TechniquesPage : ContentPage
         _viewModel.TryOpenPendingTechniqueAsync().FireAndForget();
     }
 
+    private void OnRemainingItemsThresholdReached(object? sender, EventArgs e)
+    {
+        if (_viewModel is null)
+        {
+            return;
+        }
+
+        _viewModel.LoadMoreCustomTechniquesCommand.Execute(null);
+    }
+
     protected override void OnHandlerChanged()
     {
         base.OnHandlerChanged();

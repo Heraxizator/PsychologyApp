@@ -11,6 +11,7 @@ public partial class UserViewModel
     public ICommand CancelQuotesCommand { get; private set; } = default!;
     public ICommand OpenTestsListCommand { get; private set; } = default!;
     public ICommand OpenQuotesTabCommand { get; private set; } = default!;
+    public ICommand OpenQuotesFavoritesCommand { get; private set; } = default!;
 
     private void WireCommands(INavigationService navigationService)
     {
@@ -19,5 +20,6 @@ public partial class UserViewModel
         CancelQuotesCommand = new Command(CancelQuotesLoading);
         OpenTestsListCommand = new AsyncCommand(() => _navigationService.GoToTestsTabAsync());
         OpenQuotesTabCommand = new AsyncCommand(() => _navigationService.GoToQuotesTabAsync());
+        OpenQuotesFavoritesCommand = new AsyncCommand(() => _navigationService.GoToQuotesFavoritesAsync());
     }
 }

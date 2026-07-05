@@ -27,6 +27,8 @@
             ItemsSource="{Binding TechniquesItemsSource}"
             IsGrouped="{Binding IsTechniquesGrouped}"
             IsVisible="{Binding IsDone}"
+            RemainingItemsThreshold="5"
+            RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
             SelectionMode="Single"
             VerticalScrollBarVisibility="Never"
             HorizontalScrollBarVisibility="Never">

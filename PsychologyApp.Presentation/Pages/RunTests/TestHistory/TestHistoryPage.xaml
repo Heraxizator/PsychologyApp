@@ -52,14 +52,12 @@
                                 IsWorse="{Binding IsWorse}"
                                 DetailQuestions="{Binding DetailQuestions}"
                                 LuscherFirstPassTitle="{Binding LuscherFirstPassTitle}"
-                                LuscherFirstPassText="{Binding LuscherFirstPassText}"
                                 LuscherSecondPassTitle="{Binding LuscherSecondPassTitle}"
-                                LuscherSecondPassText="{Binding LuscherSecondPassText}"
                                 LuscherBkText="{Binding LuscherBkText}"
-                                LuscherBriefFirstTitle="{Binding LuscherBriefFirstTitle}"
-                                LuscherBriefFirstText="{Binding LuscherBriefFirstText}"
-                                LuscherBriefSecondTitle="{Binding LuscherBriefSecondTitle}"
-                                LuscherBriefSecondText="{Binding LuscherBriefSecondText}" />
+                                LuscherStandardDetail="{Binding LuscherStandardDetail}"
+                                LuscherBriefDetail="{Binding LuscherBriefDetail}"
+                                LuscherBriefFirstRoleLabel="{Binding LuscherBriefFirstRoleLabel}"
+                                LuscherBriefSecondRoleLabel="{Binding LuscherBriefSecondRoleLabel}" />
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                     <CollectionView.EmptyView>

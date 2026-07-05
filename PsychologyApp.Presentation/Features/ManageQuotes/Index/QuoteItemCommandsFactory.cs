@@ -7,7 +7,9 @@ using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Entities.Quote;
 using PsychologyApp.Presentation.Features.ManageQuotes;
+using PsychologyApp.Presentation.Shared.Services.Clipboard;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
+using PsychologyApp.Presentation.Shared.UI.Overlays;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Features.ManageQuotes.Index;
@@ -15,6 +17,7 @@ namespace PsychologyApp.Presentation.Features.ManageQuotes.Index;
 public sealed class QuoteItemCommandsFactory(
     IQuotService quotService,
     IQuotesChangeNotifier quotesChangeNotifier,
+    IAppClipboardService clipboardService,
     IToastService toastService,
     IOptions<AppSettings> settings,
     ILogger<QuoteItemCommandsFactory> logger)
@@ -27,11 +30,10 @@ public sealed class QuoteItemCommandsFactory(
         }));
 
     public ICommand CreateCopyCommand(string text, string author) =>
-        new AsyncCommand(async () =>
-        {
-            await Clipboard.Default.SetTextAsync(QuoteShareFormatter.Format(text, author));
-            toastService.ShortToast(AppStrings.QuoteCopied);
-        });
+        new AsyncCommand(() => clipboardService.CopyWithFeedbackAsync(
+            QuoteShareFormatter.Format(text, author),
+            AppStrings.QuoteCopied,
+            AppToastKind.Success));
 
     public QuoteItem CreateQuoteItem(
         QuotDTO quotDTO,
@@ -137,7 +139,8 @@ public sealed class QuoteItemCommandsFactory(
             quotesChangeNotifier.NotifyFavoritesChanged();
             toastService.ShortToast(isFavourite
                 ? AppStrings.QuotesFavoriteAdded
-                : AppStrings.QuotesFavoriteRemoved);
+                : AppStrings.QuotesFavoriteRemoved,
+                AppToastKind.Success);
         }
         catch (Exception ex)
         {

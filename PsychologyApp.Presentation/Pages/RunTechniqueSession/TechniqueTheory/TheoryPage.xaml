@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueTheory.TheoryPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueTheory"
-             xmlns:technique="clr-namespace:PsychologyApp.Presentation.Models.Practice.Techniques;assembly=PsychologyApp.Presentation.Core"
+             xmlns:practice="clr-namespace:PsychologyApp.Application.Models.Practice;assembly=PsychologyApp.Application"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:DataType="vm:TheoryViewModel"
@@ -34,7 +34,7 @@
                 Spacing="{StaticResource ListItemSpacing}"
                 BindableLayout.ItemsSource="{Binding Sections}">
                 <BindableLayout.ItemTemplate>
-                    <DataTemplate x:DataType="technique:TheorySection">
+                    <DataTemplate x:DataType="practice:TheorySection">
                         <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                             <Border.Behaviors>
                                 <behaviors:ListItemRevealBehavior />

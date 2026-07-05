@@ -1,4 +1,5 @@
 using PsychologyApp.Application.Models.Tests;
+using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Widgets.Test;
 
@@ -7,7 +8,13 @@ public partial class TestHistoryEntryView : ContentView
     public TestHistoryEntryView()
     {
         InitializeComponent();
+        ToggleDetailCommand = new Command(() => IsDetailExpanded = !IsDetailExpanded);
+        ToggleLuscherDetailCommand = new Command(() => IsLuscherDetailExpanded = !IsLuscherDetailExpanded);
     }
+
+    public ICommand ToggleDetailCommand { get; }
+
+    public ICommand ToggleLuscherDetailCommand { get; }
 
     public static readonly BindableProperty DateTextProperty =
         BindableProperty.Create(nameof(DateText), typeof(string), typeof(TestHistoryEntryView), string.Empty);
@@ -32,6 +39,12 @@ public partial class TestHistoryEntryView : ContentView
 
     public static readonly BindableProperty HasDetailProperty =
         BindableProperty.Create(nameof(HasDetail), typeof(bool), typeof(TestHistoryEntryView), false);
+
+    public static readonly BindableProperty IsDetailExpandedProperty =
+        BindableProperty.Create(nameof(IsDetailExpanded), typeof(bool), typeof(TestHistoryEntryView), false);
+
+    public static readonly BindableProperty IsLuscherDetailExpandedProperty =
+        BindableProperty.Create(nameof(IsLuscherDetailExpanded), typeof(bool), typeof(TestHistoryEntryView), false);
 
     public static readonly BindableProperty IsWorseProperty =
         BindableProperty.Create(nameof(IsWorse), typeof(bool), typeof(TestHistoryEntryView), false);
@@ -79,6 +92,26 @@ public partial class TestHistoryEntryView : ContentView
     public static readonly BindableProperty LuscherBriefSecondTextProperty =
         BindableProperty.Create(nameof(LuscherBriefSecondText), typeof(string), typeof(TestHistoryEntryView), string.Empty);
 
+    public static readonly BindableProperty LuscherStandardDetailProperty =
+        BindableProperty.Create(
+            nameof(LuscherStandardDetail),
+            typeof(LuscherStandardResultDetail),
+            typeof(TestHistoryEntryView),
+            null);
+
+    public static readonly BindableProperty LuscherBriefDetailProperty =
+        BindableProperty.Create(
+            nameof(LuscherBriefDetail),
+            typeof(LuscherBriefResultDetail),
+            typeof(TestHistoryEntryView),
+            null);
+
+    public static readonly BindableProperty LuscherBriefFirstRoleLabelProperty =
+        BindableProperty.Create(nameof(LuscherBriefFirstRoleLabel), typeof(string), typeof(TestHistoryEntryView), string.Empty);
+
+    public static readonly BindableProperty LuscherBriefSecondRoleLabelProperty =
+        BindableProperty.Create(nameof(LuscherBriefSecondRoleLabel), typeof(string), typeof(TestHistoryEntryView), string.Empty);
+
     public string DateText
     {
         get => (string)GetValue(DateTextProperty);
@@ -125,6 +158,18 @@ public partial class TestHistoryEntryView : ContentView
     {
         get => (bool)GetValue(HasDetailProperty);
         set => SetValue(HasDetailProperty, value);
+    }
+
+    public bool IsDetailExpanded
+    {
+        get => (bool)GetValue(IsDetailExpandedProperty);
+        set => SetValue(IsDetailExpandedProperty, value);
+    }
+
+    public bool IsLuscherDetailExpanded
+    {
+        get => (bool)GetValue(IsLuscherDetailExpandedProperty);
+        set => SetValue(IsLuscherDetailExpandedProperty, value);
     }
 
     public bool IsWorse
@@ -209,5 +254,29 @@ public partial class TestHistoryEntryView : ContentView
     {
         get => (string)GetValue(LuscherBriefSecondTextProperty);
         set => SetValue(LuscherBriefSecondTextProperty, value);
+    }
+
+    public LuscherStandardResultDetail? LuscherStandardDetail
+    {
+        get => (LuscherStandardResultDetail?)GetValue(LuscherStandardDetailProperty);
+        set => SetValue(LuscherStandardDetailProperty, value);
+    }
+
+    public LuscherBriefResultDetail? LuscherBriefDetail
+    {
+        get => (LuscherBriefResultDetail?)GetValue(LuscherBriefDetailProperty);
+        set => SetValue(LuscherBriefDetailProperty, value);
+    }
+
+    public string LuscherBriefFirstRoleLabel
+    {
+        get => (string)GetValue(LuscherBriefFirstRoleLabelProperty);
+        set => SetValue(LuscherBriefFirstRoleLabelProperty, value);
+    }
+
+    public string LuscherBriefSecondRoleLabel
+    {
+        get => (string)GetValue(LuscherBriefSecondRoleLabelProperty);
+        set => SetValue(LuscherBriefSecondRoleLabelProperty, value);
     }
 }

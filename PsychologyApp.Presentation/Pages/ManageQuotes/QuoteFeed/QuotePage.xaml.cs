@@ -90,8 +90,14 @@ public partial class QuotePage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        HandleOnAppearingAsync().FireAndForget();
+    }
+
+    private async Task HandleOnAppearingAsync()
+    {
         _animationHelper?.TryRevealAsync();
-        ViewModel.EnsureInitializedAsync().FireAndForget();
+        await ViewModel.EnsureInitializedAsync();
+        await ViewModel.TryApplyPendingFeedAsync();
     }
 
     protected override void OnHandlerChanged()

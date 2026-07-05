@@ -38,6 +38,7 @@ public interface INavigationService
         CancellationToken cancellationToken = default);
     Task GoToTestsTabAsync();
     Task GoToQuotesTabAsync();
+    Task GoToQuotesFavoritesAsync();
     Task GoToPracticeCompletionAsync(int streakDays);
     Task ShowOnboardingAsync();
 }

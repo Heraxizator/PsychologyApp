@@ -12,6 +12,7 @@ using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Features.ManageProfile;
 using PsychologyApp.Presentation.Features.ManageQuotes;
 using PsychologyApp.Presentation.Features.ManageQuotes.Index;
+using PsychologyApp.Presentation.Shared.Services.Clipboard;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 using System.Collections.ObjectModel;
 using Xunit;
@@ -109,6 +110,7 @@ public sealed class ProfileQuotesLoaderTests
         new(
             quotService,
             notifier ?? new QuotesChangeNotifier(),
+            Mock.Of<IAppClipboardService>(),
             Mock.Of<IToastService>(),
             Options.Create(new AppSettings { SmallTimeoutMs = 5000 }),
             NullLogger<QuoteItemCommandsFactory>.Instance);
@@ -163,6 +165,7 @@ public sealed class QuoteItemCommandsFactoryTests
         QuoteItemCommandsFactory factory = new(
             new Mock<IQuotService>().Object,
             new QuotesChangeNotifier(),
+            Mock.Of<IAppClipboardService>(),
             Mock.Of<IToastService>(),
             Options.Create(new AppSettings()),
             NullLogger<QuoteItemCommandsFactory>.Instance);
@@ -188,6 +191,7 @@ public sealed class QuoteItemCommandsFactoryTests
         QuoteItemCommandsFactory factory = new(
             quotService.Object,
             new QuotesChangeNotifier(),
+            Mock.Of<IAppClipboardService>(),
             Mock.Of<IToastService>(),
             Options.Create(new AppSettings()),
             NullLogger<QuoteItemCommandsFactory>.Instance);
