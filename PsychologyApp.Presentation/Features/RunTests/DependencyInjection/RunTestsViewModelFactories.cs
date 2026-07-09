@@ -5,6 +5,8 @@ using PsychologyApp.Presentation.Pages.RunTests.TestResult;
 using PsychologyApp.Presentation.Pages.RunTests.LuscherTest;
 using PsychologyApp.Presentation.Pages.RunTests.TestHistory;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
@@ -27,6 +29,7 @@ public sealed class TestsListViewModelFactory(
     Func<NavigationContext, INavigationService> navigationServiceFactory,
     IDatabaseReadySignal databaseReadySignal,
     TestsListLoader testsListLoader,
+    IOptions<AppSettings> settings,
     ILogger<TestsListViewModel> logger) : ViewModelFactoryBase, ITestsListViewModelFactory
 {
     public TestsListViewModel Create(ContentPage page) =>
@@ -34,6 +37,7 @@ public sealed class TestsListViewModelFactory(
             ResolveNavigation(navigationServiceFactory, page),
             databaseReadySignal,
             testsListLoader,
+            settings,
             logger);
 }
 

@@ -5,6 +5,7 @@ using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Quot;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Features.ManageQuotes;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
@@ -21,6 +22,7 @@ public sealed class QuoteViewModelFactory(
     IQuotService quotService,
     IQuoteSearchService quoteSearchService,
     ILogger<QuoteViewModel> logger,
+    IToastService toastService,
     IOptions<AppSettings> settings,
     IDatabaseReadySignal databaseReadySignal,
     Func<QuoteFeedCoordinator> feedCoordinatorFactory,
@@ -34,6 +36,7 @@ public sealed class QuoteViewModelFactory(
             quotService,
             quoteSearchService,
             logger,
+            toastService,
             settings,
             feedCoordinatorFactory(),
             quoteCommandsFactory,

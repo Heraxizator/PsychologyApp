@@ -31,6 +31,13 @@ public partial class MaterialIconView : ContentView
             typeof(MaterialIconView),
             24d);
 
+    public static readonly BindableProperty HasResolvedIconProperty =
+        BindableProperty.Create(
+            nameof(HasResolvedIcon),
+            typeof(bool),
+            typeof(MaterialIconView),
+            false);
+
     public string IconName
     {
         get => (string)GetValue(IconNameProperty);
@@ -49,6 +56,12 @@ public partial class MaterialIconView : ContentView
         set => SetValue(IconSizeProperty, value);
     }
 
+    public bool HasResolvedIcon
+    {
+        get => (bool)GetValue(HasResolvedIconProperty);
+        private set => SetValue(HasResolvedIconProperty, value);
+    }
+
     private static void OnIconNameChanged(BindableObject bindable, object oldValue, object newValue)
     {
         var view = (MaterialIconView)bindable;
@@ -57,13 +70,15 @@ public partial class MaterialIconView : ContentView
 
     private void ApplyIcon(string iconName)
     {
-        if (string.IsNullOrWhiteSpace(iconName) || !Enum.TryParse(iconName, out MaterialIcons icon))
+        if (!MaterialIconNames.TryResolve(iconName, out MaterialIcons icon))
         {
+            HasResolvedIcon = false;
             IsVisible = false;
             return;
         }
 
         Icon.Icon = icon;
+        HasResolvedIcon = true;
         IsVisible = true;
     }
 }

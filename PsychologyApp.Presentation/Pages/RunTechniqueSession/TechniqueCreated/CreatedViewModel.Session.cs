@@ -1,9 +1,5 @@
 using Microsoft.Extensions.Logging;
-using PsychologyApp.Application.Configuration;
-using PsychologyApp.Application.Technique;
 using PsychologyApp.Presentation.Shared.Common;
-using PsychologyApp.Presentation.Shared.Navigation;
-using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 
 namespace PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueCreated;
@@ -37,26 +33,27 @@ public partial class CreatedViewModel
         }
     }
 
-    private async Task InitAsync()
+    private async Task InitAsync(CancellationToken cancellationToken)
     {
         try
         {
-            using CancellationTokenSource timeoutSource = OperationCancellation.CreateSmallTimeoutSource(_settings);
+            await UiThread.RunAsync(SetInit);
+
             string[] actions = await _sessionOperations.LoadAlgorithmLinesAsync(
                 _techniqueId,
                 _techniqueService,
-                timeoutSource.Token);
+                cancellationToken);
 
             await UiThread.RunAsync(() =>
             {
                 Algorithm.Clear();
-                foreach (string action in actions)
-                {
-                    Algorithm.Add(action);
-                }
-
+                Algorithm.AddRange(actions);
                 SetDone();
             });
+        }
+        catch (OperationCanceledException)
+        {
+            await UiThread.RunAsync(CancelProgress);
         }
         catch (Exception e)
         {

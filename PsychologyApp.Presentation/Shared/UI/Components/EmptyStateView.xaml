@@ -36,9 +36,10 @@
                     Text="{TemplateBinding BodyText}"
                     Style="{StaticResource BodyStyle}"
                     HorizontalTextAlignment="Center" />
-                <Border Style="{StaticResource EmptyStateActionPillStyle}">
+                <Border
+                    IsVisible="{TemplateBinding HasAction}"
+                    Style="{StaticResource EmptyStateActionPillStyle}">
                     <ui:ButtonView
-                        IsVisible="{TemplateBinding HasAction}"
                         IsCompact="True"
                         BodyText="{TemplateBinding ActionText}"
                         TapCommand="{TemplateBinding ActionCommand}"

@@ -9,6 +9,7 @@ using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Technique;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
+using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueDesigner;
@@ -56,12 +57,21 @@ public sealed class DesignerViewModelFactory(
     ITechniqueService techniqueService,
     ITechniqueMessenger techniqueMessenger,
     DesignerTechniqueOperations techniqueOperations,
+    IToastService toastService,
     ILogger<DesignerViewModel> logger,
     IOptions<AppSettings> settings,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IDesignerViewModelFactory
 {
     public DesignerViewModel Create(ContentPage page, long techniqueId) =>
-        new(techniqueId, techniqueService, techniqueMessenger, techniqueOperations, logger, settings, ResolveNavigation(navigationServiceFactory, page));
+        new(
+            techniqueId,
+            techniqueService,
+            techniqueMessenger,
+            techniqueOperations,
+            toastService,
+            logger,
+            settings,
+            ResolveNavigation(navigationServiceFactory, page));
 }
 
 public interface ITechniqueViewModelFactory

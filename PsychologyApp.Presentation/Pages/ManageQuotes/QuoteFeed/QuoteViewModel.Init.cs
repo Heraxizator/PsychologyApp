@@ -80,4 +80,12 @@ public partial class QuoteViewModel
             _initGate.Release();
         }
     }
+
+    private void CancelInit()
+    {
+        _feedLoadGeneration++;
+        _feedLoadCts?.Cancel();
+        _searchController.CancelPendingSearch();
+        CancelProgress();
+    }
 }

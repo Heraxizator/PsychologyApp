@@ -140,6 +140,27 @@ Startup order in `MauiProgram.cs`:
 2. Platform content providers (Reason, Quot, Tests, Practice catalog)
 3. `AddPsychologyAppPresentation()` — Shared + feature slices
 
+## Presentation lifecycle
+
+List/detail screens follow a shared async lifecycle:
+
+1. **Lazy init** — constructors wire commands only; pages call `EnsureInitializedAsync()` from `OnAppearing` (not `InitAsync().FireAndForget()` in the ctor).
+2. **Gate + timeout** — init is serialized with `SemaphoreSlim` and cancelled via `OperationCancellation` CTS from `appsettings.json` timeouts.
+3. **Overlay cancel** — bind `ProgressBarView.CancelCommand="{Binding Cancel}"` (not ad-hoc `TapGestureRecognizer`). Cancel must abort the CTS / bump a load generation, not only dismiss the overlay.
+4. **Lightweight reappear** — tabs that are already initialized refresh only dashboard/header state on reappear (e.g. Practice streak/mood/today), not a full catalog reload.
+5. **Collections** — prefer in-place `ReplaceRange` / mutate existing groups over assigning new `ObservableCollection` instances on every refresh.
+6. **Search** — debounce with CTS; expose an in-flight filtering flag for inline progress; surface failures with toast/`AppStrings`, not silent empty lists.
+7. **CollectionView sizing** — use `ItemSizingStrategy="MeasureFirstItem"` only for uniform rows (e.g. truncated technique cards). Variable-height lists (Quotes, Physics expandable cards, Tests with optional meta/result rows) must keep the default / `MeasureAllItems`.
+8. **CollectionView.Footer** — when idle, collapse height (`HeightRequest=0`), do not rely on child `IsVisible=false` alone; MAUI often reserves footer space.
+9. **List reveals** — `ListItemRevealBehavior` may run inside `CollectionView` for the first `LiteRevealMaxIndex` items only; deeper rows skip animation to protect scroll performance.
+
 ## UI components
 
 See [PsychologyApp.Presentation/Shared/UI/README.md](PsychologyApp.Presentation/Shared/UI/README.md).
+
+### EmptyStateView contract
+
+- Action pill (`EmptyStateActionPillStyle`) is visible only when both `ActionText` and `ActionCommand` are set (`HasAction`).
+- Icon halo is visible only when `IconName` resolves via `MaterialIconNames.TryResolve` (`HasIcon`); invalid strings must not reserve a tinted square.
+- Reveal animation lives on the control (`EmptyStateRevealBehavior`); pages must not attach a second copy.
+- Canonical empty-state icon strings live in `Shared/UI/Components/MaterialIconNames.cs`.

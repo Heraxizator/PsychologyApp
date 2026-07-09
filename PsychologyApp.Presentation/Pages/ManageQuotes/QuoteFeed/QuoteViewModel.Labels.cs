@@ -22,6 +22,7 @@ public partial class QuoteViewModel
     public string ShowAgainButtonText => AppStrings.QuotesShowAgain;
     public string DailyQuoteTitle => AppStrings.QuotesDailyTitle;
     public string SearchPlaceholder => AppStrings.QuotesSearchPlaceholder;
+    public string SearchFilteringText => AppStrings.QuotesSearching;
     public string SearchEmptyTitle => AppStrings.QuotesSearchEmptyTitle;
     public string SearchEmptyBody => AppStrings.QuotesSearchEmptyBody;
     public string ForYouEmptyTitle => AppStrings.QuotesForYouEmptyTitle;
@@ -49,6 +50,7 @@ public partial class QuoteViewModel
             nameof(ShowAgainButtonText),
             nameof(DailyQuoteTitle),
             nameof(SearchPlaceholder),
+            nameof(SearchFilteringText),
             nameof(SearchEmptyTitle),
             nameof(SearchEmptyBody),
             nameof(ForYouEmptyTitle),

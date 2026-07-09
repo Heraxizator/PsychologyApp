@@ -26,6 +26,10 @@ public partial class TestsListViewModel
             nameof(FailedText),
             nameof(RetryText),
             nameof(ProfileToolbarText));
-        InitAsync().FireAndForget();
+
+        if (_initialized)
+        {
+            ReloadAsync().FireAndForget();
+        }
     }
 }

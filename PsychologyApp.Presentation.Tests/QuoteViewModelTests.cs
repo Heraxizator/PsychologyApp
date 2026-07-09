@@ -319,6 +319,7 @@ public sealed class QuoteViewModelTests
             quotService,
             Mock.Of<IQuoteSearchService>(),
             NullLogger<QuoteViewModel>.Instance,
+            toast.Object,
             settings,
             new QuoteFeedCoordinator(),
             new QuoteItemCommandsFactory(

@@ -35,13 +35,23 @@
                     Margin="0,0,0,8">
                     <ui:TextEntryView
                         PlaceholderText="{Binding SearchPlaceholder}"
-                        BodyText="{Binding SearchQuery, Mode=TwoWay}" />
+                        BodyText="{Binding SearchQuery, Mode=TwoWay}"
+                        SemanticProperties.Description="{Binding SearchPlaceholder}" />
+
+                    <ui:ProgressBarView
+                        x:Name="SearchFilteringProgress"
+                        IsVisible="{Binding IsSearchFilteringVisible}"
+                        IsLoading="{Binding IsSearchFilteringVisible}"
+                        ProgressText="{Binding SearchFilteringText}"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center" />
 
                     <ui:FilterChipTabBarView
                         x:Name="FeedFilterBar"
                         IsVisible="{Binding IsFeedFiltersVisible}"
                         ItemsSource="{Binding FeedFilters}"
-                        TapCommand="{Binding SelectFeedCommand}" />
+                        TapCommand="{Binding SelectFeedCommand}"
+                        SemanticProperties.Description="{Binding FeedAllLabel}" />
                 </VerticalStackLayout>
 
                 <CollectionView
@@ -50,6 +60,7 @@
                     HorizontalScrollBarVisibility="Never"
                     VerticalScrollBarVisibility="Never"
                     VerticalOptions="FillAndExpand"
+                    SelectionMode="None"
                     RemainingItemsThreshold="2"
                     RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
                     ItemsSource="{Binding DisplayItems}">
@@ -86,6 +97,9 @@
                                 CopyCommand="{Binding CopyCommand}"
                                 ShareCommand="{Binding ShareCommand}"
                                 MarkReadCommand="{Binding MarkReadCommand}">
+                                <quoteCard:QuoteCardView.Behaviors>
+                                    <behaviors:ListItemRevealBehavior />
+                                </quoteCard:QuoteCardView.Behaviors>
                             </quoteCard:QuoteCardView>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
@@ -117,7 +131,8 @@
             IsLoading="{Binding IsLoadingOverlayVisible}"
             VerticalOptions="Center"
             HorizontalOptions="Center"
-            ProgressText="{Binding QuotesLoadingText}" />
+            ProgressText="{Binding QuotesLoadingText}"
+            CancelCommand="{Binding Cancel}" />
 
         <ui:RetryView
             VerticalOptions="Center"

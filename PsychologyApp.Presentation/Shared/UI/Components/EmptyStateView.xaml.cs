@@ -112,7 +112,8 @@ public partial class EmptyStateView : ContentView
     private void RefreshPresentationFlags()
     {
         HasTitle = !string.IsNullOrWhiteSpace(TitleText);
-        HasIcon = !string.IsNullOrWhiteSpace(IconName);
+        // Only show the tinted halo when the name resolves to a real MaterialIcons value.
+        HasIcon = MaterialIconNames.TryResolve(IconName, out _);
         HasAction = !string.IsNullOrWhiteSpace(ActionText) && ActionCommand is not null;
     }
 }

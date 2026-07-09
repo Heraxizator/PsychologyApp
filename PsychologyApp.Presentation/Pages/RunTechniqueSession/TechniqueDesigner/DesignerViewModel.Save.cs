@@ -1,6 +1,4 @@
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
@@ -11,13 +9,26 @@ public partial class DesignerViewModel
 {
     private async Task ExecuteOperationAsync()
     {
-        if (_techniqueId <= 0)
+        if (IsSaving)
         {
-            await ToAddTechniqueAsync();
+            return;
         }
-        else
+
+        IsSaving = true;
+        try
         {
-            await ToChangeTechniqueAsync();
+            if (_techniqueId <= 0)
+            {
+                await ToAddTechniqueAsync();
+            }
+            else
+            {
+                await ToChangeTechniqueAsync();
+            }
+        }
+        finally
+        {
+            IsSaving = false;
         }
     }
 
@@ -39,6 +50,7 @@ public partial class DesignerViewModel
         catch (Exception e)
         {
             _logger.LogError(e, "Failed to update technique.");
+            _toastService.ShortToast(AppStrings.DesignerSaveError);
         }
     }
 
@@ -60,6 +72,7 @@ public partial class DesignerViewModel
         catch (Exception e)
         {
             _logger.LogError(e, "Failed to add technique.");
+            _toastService.ShortToast(AppStrings.DesignerSaveError);
         }
     }
 }

@@ -45,8 +45,15 @@ public partial class PhysicsSearchPage : ContentPage
         }
     }
 
-    private void OnRemainingItemsThresholdReached(object? sender, EventArgs e) =>
+    private void OnRemainingItemsThresholdReached(object? sender, EventArgs e)
+    {
+        if (!ViewModel.IsDone || ViewModel.IsInit || ViewModel.IsSearching)
+        {
+            return;
+        }
+
         ViewModel.LoadMoreSearchResultsCommand.Execute(null);
+    }
 
     protected override void OnAppearing()
     {

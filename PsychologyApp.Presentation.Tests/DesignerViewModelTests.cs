@@ -6,6 +6,7 @@ using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Technique;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueDesigner;
 using Xunit;
@@ -39,7 +40,6 @@ public sealed class DesignerViewModelTests
         viewModel.Author = "Author";
         viewModel.Actions = "Step 1";
 
-        await Task.Delay(100);
         viewModel.ExecuteTechnique.Execute(null);
         await Task.Delay(200);
 
@@ -59,6 +59,17 @@ public sealed class DesignerViewModelTests
     {
         Mock<ITechniqueService> techniqueService = new();
         techniqueService
+            .Setup(t => t.GetTechniqueByIdAsync(42, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new TechniqueDTO
+            {
+                TechniqueId = 42,
+                Header = "Updated",
+                Description = "Updated description",
+                Subject = "Theme",
+                Author = "Author",
+                Algorithm = "Step 1"
+            });
+        techniqueService
             .Setup(t => t.UpdateTechniqueAsync(It.IsAny<TechniqueDTO>(), It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
         Mock<ITechniqueMessenger> messenger = new();
@@ -72,6 +83,8 @@ public sealed class DesignerViewModelTests
             messenger.Object,
             navigation.Object,
             settings);
+
+        await viewModel.EnsureInitializedAsync();
 
         viewModel.Name = "Updated";
         viewModel.Description = "Updated description";
@@ -93,6 +106,39 @@ public sealed class DesignerViewModelTests
         navigation.Verify(n => n.GoToRootAsync(), Times.Once);
     }
 
+    [Fact]
+    public async Task EnsureInitializedAsync_LoadsExistingTechnique()
+    {
+        Mock<ITechniqueService> techniqueService = new();
+        techniqueService
+            .Setup(t => t.GetTechniqueByIdAsync(42, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new TechniqueDTO
+            {
+                TechniqueId = 42,
+                Header = "Loaded",
+                Description = "Desc",
+                Subject = "Theme",
+                Author = "Author",
+                Algorithm = "Step"
+            });
+        Mock<ITechniqueMessenger> messenger = new();
+        Mock<INavigationService> navigation = new();
+        IOptions<AppSettings> settings = Options.Create(new AppSettings());
+
+        DesignerViewModel viewModel = CreateViewModel(
+            techniqueId: 42,
+            techniqueService.Object,
+            messenger.Object,
+            navigation.Object,
+            settings);
+
+        await viewModel.EnsureInitializedAsync();
+
+        Assert.True(viewModel.HasInitialized);
+        Assert.True(viewModel.IsDone);
+        Assert.Equal("Loaded", viewModel.Name);
+    }
+
     private static DesignerViewModel CreateViewModel(
         long techniqueId,
         ITechniqueService techniqueService,
@@ -104,6 +150,7 @@ public sealed class DesignerViewModelTests
             techniqueService,
             messenger,
             new DesignerTechniqueOperations(),
+            Mock.Of<IToastService>(),
             NullLogger<DesignerViewModel>.Instance,
             settings,
             navigation);

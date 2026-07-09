@@ -1,5 +1,7 @@
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 using Moq;
+using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Common;
@@ -53,10 +55,13 @@ public sealed class TestsListViewModelTests
             navigationService,
             TestDatabaseReady.CreateSignaled(),
             TestRunTestHelpers.CreateTestsListLoader(progress.Object, catalog),
+            Options.Create(new AppSettings()),
             NullLogger<TestsListViewModel>.Instance);
 
-        await viewModel.InitAsync();
+        await viewModel.EnsureInitializedAsync();
+        await viewModel.EnsureInitializedAsync();
 
+        Assert.True(viewModel.HasInitialized);
         Assert.Single(viewModel.TestItemCollection);
         Assert.Equal("Beck", viewModel.TestItemCollection[0].Title);
         Assert.True(viewModel.TestItemCollection[0].HasLastResult);

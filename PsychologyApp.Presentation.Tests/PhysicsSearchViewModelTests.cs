@@ -242,6 +242,7 @@ public sealed class PhysicsSearchViewModelTests
             coordinator,
             session,
             NullLogger<PhysicsSearchViewModel>.Instance,
+            Mock.Of<PsychologyApp.Presentation.Shared.Services.Toasts.IToastService>(),
             Options.Create(new AppSettings()),
             new TestNavigationService(navigation.Object),
             TestDatabaseReady.CreateSignaled());

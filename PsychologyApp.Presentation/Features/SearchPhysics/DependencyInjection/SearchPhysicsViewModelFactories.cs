@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Reason;
 using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Features.SearchPhysics;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Pages.SearchPhysics.PhysicsSearch;
@@ -21,6 +22,7 @@ public sealed class PhysicsSearchViewModelFactory(
     PhysicsSearchCoordinator searchCoordinator,
     Func<PhysicsSearchSession> searchSessionFactory,
     ILogger<PhysicsSearchViewModel> logger,
+    IToastService toastService,
     IOptions<AppSettings> settings,
     IDatabaseReadySignal databaseReadySignal,
     Func<NavigationContext, INavigationService> navigationServiceFactory)
@@ -32,6 +34,7 @@ public sealed class PhysicsSearchViewModelFactory(
             searchCoordinator,
             searchSessionFactory(),
             logger,
+            toastService,
             settings,
             ResolveNavigation(navigationServiceFactory, page),
             databaseReadySignal);

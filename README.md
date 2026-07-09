@@ -20,12 +20,13 @@ MAUI-приложение по психологии и самопомощи: т�
 ## Структура решения
 
 ```
-PsychologyApp.Domain          — сущности
-PsychologyApp.Application     — сервисы, DTO, интерфейсы репозиториев
-PsychologyApp.Infrastructure  — SQLite/Dapper, API-клиенты
-PsychologyApp.Bootstrap       — AddPsychologyAppCore()
-PsychologyApp.Presentation    — MAUI UI, ViewModels, навигация
-PsychologyApp.*.Tests         — unit-тесты по слоям
+PsychologyApp.Domain             — сущности
+PsychologyApp.Application        — сервисы, DTO, интерфейсы репозиториев
+PsychologyApp.Infrastructure     — SQLite/Dapper, API-клиенты
+PsychologyApp.Bootstrap          — AddPsychologyAppCore()
+PsychologyApp.Presentation.Core  — AppStrings, chart math, MAUI-free helpers
+PsychologyApp.Presentation       — MAUI UI, ViewModels, навигация
+PsychologyApp.*.Tests            — unit-тесты по слоям
 ```
 
 Presentation (FSD): `Features/`, `Pages/` (по feature-слайсам), `Widgets/`, `Entities/`, `Shared/UI/Components/`, `App/` (навигация, DI).

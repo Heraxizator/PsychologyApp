@@ -63,7 +63,7 @@ public sealed class ListItemRevealBehavior : Behavior<VisualElement>
 
     private void OnBindingContextChanged(object? sender, EventArgs e)
     {
-        if (sender is not VisualElement view || IsInsideCollectionView(view))
+        if (sender is not VisualElement view)
         {
             return;
         }
@@ -73,14 +73,28 @@ public sealed class ListItemRevealBehavior : Behavior<VisualElement>
 
         if (view.Handler is not null)
         {
-            RevealAsync(view).FireAndForget();
+            TryReveal(view);
         }
     }
 
     private void OnLoaded(object? sender, EventArgs e)
     {
-        if (_hasRevealed || sender is not VisualElement view || IsInsideCollectionView(view))
+        if (_hasRevealed || sender is not VisualElement view)
         {
+            return;
+        }
+
+        TryReveal(view);
+    }
+
+    private void TryReveal(VisualElement view)
+    {
+        int index = ResolveRevealIndex(view);
+
+        // Throttle CollectionView: only first LiteRevealMaxIndex+1 items animate (protect scroll).
+        if (IsInsideCollectionView(view) && index > UiAnimations.LiteRevealMaxIndex)
+        {
+            _hasRevealed = true;
             return;
         }
 

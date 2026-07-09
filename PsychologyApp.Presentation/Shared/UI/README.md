@@ -33,7 +33,7 @@ xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
 | `TextEntryView` / `TextEditorView` | Single field with label |
 | `EntryBoxView` | List of labeled entries from `BodySource` |
 | `ButtonView` | Action button; `TapCommand`. Use `Variant="Primary"` (default) or `Variant="Secondary"`; `IsCompact="True"` for compact header actions. Attaches `PressFeedbackBehavior`. |
-| `EmptyStateView` | Centered empty list/content: `TitleText`, `BodyText`, optional `IconName` (halo), optional `ActionText` + `ActionCommand`. Auto `EmptyStateRevealBehavior` on appear. |
+| `EmptyStateView` | Centered empty list/content: `TitleText`, `BodyText`, optional `IconName` (halo), optional `ActionText` + `ActionCommand`. Action pill and icon halo are hidden when unused / when `IconName` does not resolve to `MaterialIcons`. Built-in `EmptyStateRevealBehavior` — do not add another on the page. Prefer names from `MaterialIconNames`. |
 | `CompletionCelebrationView` | Full-screen celebration moment: icon halo, title/body, optional streak (`StreakValueText`, `HasStreak`), primary + secondary actions. Used by `PracticeCompletionPage`. |
 | `MetricTileView` | Profile-style stat: `ValueText` + `LabelText`, optional `TapCommand` |
 | `SectionHeaderView` | Section title + optional `SubtitleText` + optional compact `ActionText` / `ActionCommand` |
@@ -58,17 +58,24 @@ Profile widgets (`Widgets/Profile/`):
 |--------|----------|
 | `ProfileHistoryEntryView` | Single practice completion row on profile (technique icon, name, date, optional duration pill) |
 
+### Empty state contract
+
+- **Action chrome:** `HasAction` requires both `ActionText` and `ActionCommand`; the action `Border` is not shown otherwise (avoids empty beige pills).
+- **Icon halo:** `HasIcon` is true only when `MaterialIconNames.TryResolve(IconName)` succeeds. Invalid or blank names hide the halo.
+- **Reveal:** `EmptyStateView` already attaches `EmptyStateRevealBehavior`. Do not nest another on call sites.
+- **Names:** use `MaterialIconNames` constants (or exact `MaterialIcons` enum names). `MaterialIconView` exposes `HasResolvedIcon` for the same rule.
+
 ### Empty state icons (by screen)
 
 | Screen | `IconName` |
 |--------|------------|
 | Techniques | `SelfImprovement` |
 | Tests list | `Assignment` |
-| Quotes (empty / all read) | `FormatQuote` / `DoneAll` |
+| Quotes (empty / all read / search) | `FormatQuote` / `DoneAll` / `Search` |
 | Music search | `SearchOff` |
 | Profile favorites | `FavoriteBorder` |
 | Profile practice history | `History` |
-| Physics search (no results) | `SearchOff` |
+| Physics search (prompt / no results) | `Search` / `SearchOff` |
 | Test history | `History` |
 
 Test flow widgets (`Widgets/Test/`):
@@ -120,7 +127,7 @@ Onboarding widgets (`Widgets/Onboarding/`):
 4. **Bind commands** on components — not page-level gesture wrappers.
 5. **Press feedback:** `ButtonView`, `SettingsLinkCardView`, `RetryView`, `FilterChipView`, `MetricTileView`, list-card widgets, `MoodStripView`, `TodayPracticeRowView`, and `PhysicsReasonCardView` attach `PressFeedbackBehavior`; pages use `PressFeedbackHost.AttachToPage` via `PageRegistry`.
 6. **Settings pickers:** always set `LabelKind` on `SettingPickerRowView`; use `PassThrough` when `ItemsSource` already contains display strings (e.g. `07:00`…`22:00`). Selection uses ActionSheet — no native `Picker` on the page.
-7. **Empty states:** prefer `EmptyStateView` with `IconName`; reveal animation is built in via `EmptyStateRevealBehavior`.
+7. **Empty states:** prefer `EmptyStateView` with a resolvable `IconName` from `MaterialIconNames`; do not re-attach `EmptyStateRevealBehavior` on the page.
 8. **Card shadows:** use `BrandCardShadowLight` / `BrandCardShadowDark` via `AppThemeBinding` in styles — not a single hard-coded shadow color.
 9. **Run `dotnet build`** after adding or migrating a component.
 
@@ -133,7 +140,7 @@ Onboarding widgets (`Widgets/Onboarding/`):
 | Quotes (tab) | Shell | `ProgressBarView` | `EmptyStateView` | `RetryView` |
 | Music player (tab) | Shell | `ProgressBarView` | `EmptyStateView` / `SearchOff` | `RetryView` |
 | Start physics | `NavigationBarSimpleView` | — | — | — |
-| Physics search | `NavigationBarSimpleView` | `ProgressBarView` | `EmptyStateView` / `SearchOff` | `RetryView` |
+| Physics search | `NavigationBarSimpleView` | `ProgressBarView` | `EmptyStateView` / `Search` + `SearchOff` | `RetryView` |
 | Profile user | `NavigationBarSimpleView` | `ProgressBarView` (init) | `EmptyStateView` (quotes, history) | `RetryView` (quotes) |
 | Settings / Options / Info / Donate | `NavigationBarSimpleView` | — | — | — |
 | Review form | `NavigationBarSimpleView` | — | — | — |

@@ -7,10 +7,17 @@ namespace PsychologyApp.Presentation.Pages.RunTechniqueSession.Techniques;
 public partial class TechniquesViewModel
 {
     public void SubscribeToTechniqueChanges() =>
-        _techniqueMessenger.Subscribe(this, message => OnTechniqueMessageAsync(message).FireAndForget());
+        _techniqueMessenger.Subscribe(this, message => ApplyTechniqueMessageAsync(message).FireAndForget());
 
-    public Task RefreshOnAppearAsync() =>
-        InitializeAsync(showLoadingOverlay: false);
+    public Task RefreshOnAppearAsync()
+    {
+        if (!_initialized)
+        {
+            return EnsureInitializedAsync();
+        }
+
+        return RefreshDashboardOnAppearAsync();
+    }
 
     public async Task TryOpenPendingTechniqueAsync()
     {

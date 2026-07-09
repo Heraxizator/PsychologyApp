@@ -91,6 +91,14 @@ public static partial class AppStrings
     public static string Edit => T("Изменить", "Edit");
     public static string Remove => T("Удалить", "Delete");
     public static string NameLabel => T("Название", "Name");
+    public static string DescriptionLabel => T("Описание", "Description");
+    public static string Saving => T("Сохранение…", "Saving…");
+    public static string DesignerLoadError => T(
+        "Не удалось загрузить технику",
+        "Could not load technique");
+    public static string DesignerSaveError => T(
+        "Не удалось сохранить технику",
+        "Could not save technique");
     public static string ThemeLabel => T("Тема", "Theme");
     public static string AuthorLabel => T("Автор", "Author");
     public static string MessageLabel => T("Сообщение", "Message");
@@ -106,7 +114,11 @@ public static partial class AppStrings
     public static string PracticeCreate => T("Создать", "Create");
     public static string PracticeTechniquesList => T("Список техник", "Techniques list");
     public static string PracticeInitError => T("Ошибка при инициализации", "Initialization failed");
+    public static string PracticeLoadMoreError => T(
+        "Не удалось подгрузить техники",
+        "Could not load more techniques");
     public static string PracticeLoadingText => T("Загрузка практик", "Loading practices");
+    public static string PracticeLoadingMoreText => T("Загрузка…", "Loading…");
     public static string PracticeCustomTechniqueNumber(long id) =>
         T($"Своя техника №{id}", $"Custom technique #{id}");
     public static string PracticeDesignTitle => T("Создание техники", "Create technique");
@@ -499,6 +511,12 @@ public static partial class AppStrings
     public static string PhysicsNoResultsHint => T("Ничего не найдено", "No results found");
     public static string PhysicsLoadingText => T("Поиск причин", "Searching causes");
     public static string PhysicsSearchFilteringText => T("Подбор результатов", "Filtering results");
+    public static string PhysicsSearchError => T(
+        "Не удалось выполнить поиск",
+        "Search failed");
+    public static string QuotesSearchError => T(
+        "Не удалось выполнить поиск цитат",
+        "Quote search failed");
     public static string LoadFailed => T("Не удалось загрузить", "Failed to load");
     public static string RetryQuestion => T("Попробовать ещё раз?", "Try again?");
     public static string LoadError => T("Ошибка при загрузке", "Failed to load");

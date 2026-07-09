@@ -24,6 +24,11 @@ public partial class CreatedViewModel : BaseViewModel
     private readonly CustomTechniqueSessionOperations _sessionOperations;
     private readonly TechniqueSessionCompletionService _sessionCompletionService;
     private readonly DateTime _sessionStartedAt = DateTime.UtcNow;
+    private readonly SemaphoreSlim _initGate = new(1, 1);
+    private bool _initialized;
+    private CancellationTokenSource? _initCts;
+
+    public bool HasInitialized => _initialized;
 
     public CreatedViewModel(
         long techniqueId,
@@ -37,30 +42,67 @@ public partial class CreatedViewModel : BaseViewModel
         CustomTechniqueSessionOperations sessionOperations,
         TechniqueSessionCompletionService sessionCompletionService)
     {
+        _techniqueId = techniqueId;
+        _dialogService = dialogService;
+        _techniqueService = techniqueService;
+        _techniqueMessenger = techniqueMessenger;
+        _logger = logger;
+        _settings = settings;
+        _navigationService = navigationService;
+        _userProgressService = userProgressService;
+        _sessionOperations = sessionOperations;
+        _sessionCompletionService = sessionCompletionService;
+
+        ModuleName = AppStrings.ShellTabPractice;
+        PageName = AppStrings.PracticeCustomTechnique;
+
+        BindNavigation(_navigationService);
+        WireCommands();
+        Cancel = new Command(CancelInit);
+        Reload = new AsyncCommand(ReloadAsync);
+    }
+
+    public Task EnsureInitializedAsync()
+    {
+        if (_initialized && !IsFail)
+        {
+            return Task.CompletedTask;
+        }
+
+        return InitializeAsync();
+    }
+
+    private async Task InitializeAsync()
+    {
+        await _initGate.WaitAsync();
         try
         {
-            _techniqueId = techniqueId;
-            _dialogService = dialogService;
-            _techniqueService = techniqueService;
-            _techniqueMessenger = techniqueMessenger;
-            _logger = logger;
-            _settings = settings;
-            _navigationService = navigationService;
-            _userProgressService = userProgressService;
-            _sessionOperations = sessionOperations;
-            _sessionCompletionService = sessionCompletionService;
+            if (_initialized && !IsFail)
+            {
+                return;
+            }
 
-            ModuleName = AppStrings.ShellTabPractice;
-            PageName = AppStrings.PracticeCustomTechnique;
-
-            BindNavigation(_navigationService);
-            WireCommands();
-            InitAsync().FireAndForget();
+            _initCts?.Cancel();
+            _initCts?.Dispose();
+            _initCts = OperationCancellation.CreateSmallTimeoutSource(_settings);
+            await InitAsync(_initCts.Token);
+            _initialized = !IsFail;
         }
-        catch (Exception e)
+        finally
         {
-            SetFail();
-            _logger.LogError(e, "Failed to initialize CreatedViewModel.");
+            _initGate.Release();
         }
+    }
+
+    private async Task ReloadAsync()
+    {
+        _initialized = false;
+        await EnsureInitializedAsync();
+    }
+
+    private void CancelInit()
+    {
+        _initCts?.Cancel();
+        CancelProgress();
     }
 }

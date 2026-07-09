@@ -1,4 +1,5 @@
 using PsychologyApp.Presentation.Entities.Quote;
+using PsychologyApp.Presentation.Shared.UI.Components;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
@@ -91,6 +92,9 @@ public partial class QuoteViewModel
 
     public bool IsSearching => _searchController.IsSearching;
 
+    public bool IsSearchFilteringVisible =>
+        IsDone && IsSearching && _searchController.IsSearchInFlight;
+
     public bool IsFeedFiltersVisible => !IsSearching;
 
     public string EmptyTitleText =>
@@ -122,9 +126,9 @@ public partial class QuoteViewModel
         Reload;
 
     public string EmptyIconName =>
-        ShowAllReadEmpty ? "DoneAll" :
-        ShowForYouEmpty ? "AutoAwesome" :
-        ShowFavoritesEmpty ? "Favorite" :
-        IsSearching ? "Search" :
-        "FormatQuote";
+        ShowAllReadEmpty ? MaterialIconNames.DoneAll :
+        ShowForYouEmpty ? MaterialIconNames.AutoAwesome :
+        ShowFavoritesEmpty ? MaterialIconNames.Favorite :
+        IsSearching ? MaterialIconNames.Search :
+        MaterialIconNames.FormatQuote;
 }
