@@ -61,6 +61,9 @@
             </CollectionView.EmptyView>
             <CollectionView.Header>
                 <VerticalStackLayout Margin="0,0,0,12">
+                    <VerticalStackLayout.Behaviors>
+                        <behaviors:StaggerChildrenBehavior />
+                    </VerticalStackLayout.Behaviors>
                     <Label Text="{Binding SectionSubtitle}" Style="{StaticResource BodyStyle}" />
                 </VerticalStackLayout>
             </CollectionView.Header>
@@ -72,11 +75,8 @@
             HorizontalOptions="Center"
             IsVisible="{Binding IsLoadingOverlayVisible}"
             IsLoading="{Binding IsLoadingOverlayVisible}"
-            ProgressText="{Binding LoadingText}">
-            <ui:ProgressBarView.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding Cancel}" />
-            </ui:ProgressBarView.GestureRecognizers>
-        </ui:ProgressBarView>
+            ProgressText="{Binding LoadingText}"
+            CancelCommand="{Binding Cancel}" />
 
         <ui:RetryView
             VerticalOptions="Center"

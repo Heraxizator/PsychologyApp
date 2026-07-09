@@ -6,6 +6,7 @@ namespace PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
 public partial class QuoteViewModel
 {
     private int _feedLoadGeneration;
+    private CancellationTokenSource? _feedLoadCts;
 
     public QuoteFeedMode FeedMode => _feedCoordinator.FeedMode;
 

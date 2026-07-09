@@ -27,9 +27,10 @@
             ItemsSource="{Binding TechniquesItemsSource}"
             IsGrouped="{Binding IsTechniquesGrouped}"
             IsVisible="{Binding IsDone}"
+            ItemSizingStrategy="MeasureFirstItem"
             RemainingItemsThreshold="5"
             RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
-            SelectionMode="Single"
+            SelectionMode="None"
             VerticalScrollBarVisibility="Never"
             HorizontalScrollBarVisibility="Never">
             <CollectionView.GroupHeaderTemplate>
@@ -124,6 +125,21 @@
                     IconName="SelfImprovement" />
             </CollectionView.EmptyView>
 
+            <CollectionView.Footer>
+                <Grid
+                    HeightRequest="{Binding LoadMoreFooterHeight}"
+                    MinimumHeightRequest="{Binding LoadMoreFooterHeight}"
+                    IsClippedToBounds="True">
+                    <ui:ProgressBarView
+                        IsVisible="{Binding IsLoadingMoreCustomTechniques}"
+                        IsLoading="{Binding IsLoadingMoreCustomTechniques}"
+                        ProgressText="{Binding LoadingMoreText}"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"
+                        Margin="0,8" />
+                </Grid>
+            </CollectionView.Footer>
+
         </CollectionView>
 
         <ui:ProgressBarView
@@ -132,11 +148,8 @@
             HorizontalOptions="Center"
             IsVisible="{Binding IsLoadingOverlayVisible}"
             IsLoading="{Binding IsLoadingOverlayVisible}"
-            ProgressText="{Binding LoadingText}">
-            <ui:ProgressBarView.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding Cancel}" />
-            </ui:ProgressBarView.GestureRecognizers>
-        </ui:ProgressBarView>
+            ProgressText="{Binding LoadingText}"
+            CancelCommand="{Binding Cancel}" />
 
         <ui:RetryView
             VerticalOptions="Center"

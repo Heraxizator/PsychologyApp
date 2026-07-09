@@ -91,7 +91,7 @@ public partial class PhysicsSearchViewModel
 
             await UiThread.RunAsync(() =>
             {
-                ResultsObservableCollection.ReplaceRange(page.Items.ToList());
+                ResultsObservableCollection.ReplaceRange(page.Items);
                 IsSearching = false;
                 UpdateSearchUiState();
                 BumpSearchResultsVersion();
@@ -105,6 +105,10 @@ public partial class PhysicsSearchViewModel
         {
             _logger.LogError(e, "Physics search failed.");
             await ResetSearchingIfCurrentAsync(searchText);
+            if (string.Equals(SearchText, searchText, StringComparison.Ordinal))
+            {
+                _toastService.ShortToast(AppStrings.PhysicsSearchError);
+            }
         }
     }
 
@@ -122,13 +126,18 @@ public partial class PhysicsSearchViewModel
 
     private void LoadMoreSearchResults()
     {
+        if (!IsDone || IsInit || IsSearching)
+        {
+            return;
+        }
+
         PhysicsSearchPageSlice page = _searchSession.LoadNextPage();
         if (page.Items.Count == 0)
         {
             return;
         }
 
-        ResultsObservableCollection.AddRange(page.Items.ToList());
+        ResultsObservableCollection.AddRange(page.Items);
     }
 
     private void BumpSearchResultsVersion()

@@ -8,6 +8,7 @@ using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Entities.Physics;
 using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Features.SearchPhysics;
 using PsychologyApp.Presentation.Shared.ViewModels;
 using System.Windows.Input;
@@ -20,6 +21,7 @@ public partial class PhysicsSearchViewModel : BaseViewModel
     private readonly PhysicsSearchCoordinator _searchCoordinator;
     private readonly PhysicsSearchSession _searchSession;
     private readonly ILogger<PhysicsSearchViewModel> _logger;
+    private readonly IToastService _toastService;
     private readonly IOptions<AppSettings> _settings;
     private readonly INavigationService _navigationService;
     private readonly IDatabaseReadySignal _databaseReadySignal;
@@ -38,6 +40,7 @@ public partial class PhysicsSearchViewModel : BaseViewModel
         PhysicsSearchCoordinator searchCoordinator,
         PhysicsSearchSession searchSession,
         ILogger<PhysicsSearchViewModel> logger,
+        IToastService toastService,
         IOptions<AppSettings> settings,
         INavigationService navigationService,
         IDatabaseReadySignal databaseReadySignal)
@@ -48,6 +51,7 @@ public partial class PhysicsSearchViewModel : BaseViewModel
             _searchCoordinator = searchCoordinator;
             _searchSession = searchSession;
             _logger = logger;
+            _toastService = toastService;
             _settings = settings;
             _navigationService = navigationService;
             _databaseReadySignal = databaseReadySignal;

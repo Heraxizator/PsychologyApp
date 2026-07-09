@@ -12,11 +12,13 @@ public partial class QuoteViewModel
 {
     private async Task<bool> LoadFeedAsync(bool seedNewQuote, bool isInitialLoad, int generation)
     {
+        _feedLoadCts?.Cancel();
+        _feedLoadCts?.Dispose();
+        _feedLoadCts = OperationCancellation.CreateMiddleTimeoutSource(_settings);
+        CancellationToken cancellationToken = _feedLoadCts.Token;
+
         try
         {
-            using CancellationTokenSource timeoutSource = OperationCancellation.CreateMiddleTimeoutSource(_settings);
-            CancellationToken cancellationToken = timeoutSource.Token;
-
             if (isInitialLoad)
             {
                 await _databaseReadySignal.WaitAsync(cancellationToken);
@@ -59,6 +61,15 @@ public partial class QuoteViewModel
             });
 
             return true;
+        }
+        catch (OperationCanceledException)
+        {
+            if (generation == _feedLoadGeneration)
+            {
+                await UiThread.RunAsync(CancelProgress);
+            }
+
+            return false;
         }
         catch (Exception e)
         {
@@ -124,11 +135,18 @@ public partial class QuoteViewModel
                 SetFail,
                 effectiveToken);
 
-            await UiThread.RunAsync(async () =>
-            {
-                _feedState.AppendItems(items);
-                await UpdateAllReadEmptyStateAsync(effectiveToken);
-            });
+            await UiThread.RunAsync(() => _feedState.AppendItems(items));
+
+            bool allReadEmpty = await _feedCoordinator.ShouldShowAllReadEmptyAsync(
+                _feedState.FeedItemCount,
+                IsDone,
+                _quotService,
+                effectiveToken);
+
+            await UiThread.RunAsync(() => ShowAllReadEmpty = allReadEmpty);
+        }
+        catch (OperationCanceledException)
+        {
         }
         catch (Exception e)
         {

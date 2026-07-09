@@ -38,7 +38,8 @@
                     x:Name="SearchEmptyPrompt"
                     IsVisible="{Binding IsSearchEmptyPromptVisible}"
                     TitleText="{Binding EmptySearchHint}"
-                    BodyText="{Binding EmptySearchSubhint}" />
+                    BodyText="{Binding EmptySearchSubhint}"
+                    IconName="Search" />
 
                 <ui:ProgressBarView
                     x:Name="SearchFilteringProgress"
@@ -95,11 +96,8 @@
             HorizontalOptions="Center"
             IsVisible="{Binding IsLoadingOverlayVisible}"
             IsLoading="{Binding IsLoadingOverlayVisible}"
-            ProgressText="{Binding LoadingText}">
-            <ui:ProgressBarView.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding Cancel}"/>
-            </ui:ProgressBarView.GestureRecognizers>
-        </ui:ProgressBarView>
+            ProgressText="{Binding LoadingText}"
+            CancelCommand="{Binding Cancel}" />
 
         <ui:RetryView
             VerticalOptions="Center"

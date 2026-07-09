@@ -10,56 +10,78 @@
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
-    <ScrollView VerticalScrollBarVisibility="Never">
-        <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
-            <VerticalStackLayout.Behaviors>
-                <behaviors:StaggerChildrenBehavior />
-            </VerticalStackLayout.Behaviors>
+    <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <ScrollView
+            x:Name="TheoryContent"
+            VerticalScrollBarVisibility="Never"
+            IsVisible="{Binding IsDone}">
+            <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+                <VerticalStackLayout.Behaviors>
+                    <behaviors:StaggerChildrenBehavior />
+                </VerticalStackLayout.Behaviors>
 
-            <ui:NavigationBarSimpleView
-                TitleText="{Binding PageTitle}"
-                BackText="{Binding BackText}"
-                BackCommand="{Binding Finish}" />
+                <ui:NavigationBarSimpleView
+                    TitleText="{Binding PageTitle}"
+                    BackText="{Binding BackText}"
+                    BackCommand="{Binding Finish}" />
 
-            <Label
-                IsVisible="{Binding HasTechniqueSubtitle}"
-                Text="{Binding TechniqueSubtitle}"
-                Style="{StaticResource CaptionStyle}"
-                TextColor="{DynamicResource Primary}"
-                MaxLines="2"
-                LineBreakMode="TailTruncation" />
-
-            <VerticalStackLayout
-                IsVisible="{Binding HasSections}"
-                Spacing="{StaticResource ListItemSpacing}"
-                BindableLayout.ItemsSource="{Binding Sections}">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate x:DataType="practice:TheorySection">
-                        <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                            <Border.Behaviors>
-                                <behaviors:ListItemRevealBehavior />
-                            </Border.Behaviors>
-                            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                                <Label Text="{Binding Heading}" Style="{StaticResource SectionTitleStyle}" />
-                                <Label
-                                    Text="{Binding Body}"
-                                    Style="{StaticResource BodyStyle}"
-                                    HorizontalTextAlignment="Justify" />
-                            </VerticalStackLayout>
-                        </Border>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </VerticalStackLayout>
-
-            <Border
-                IsVisible="{Binding HasLegacyText}"
-                Style="{StaticResource BrandCardStyle}"
-                Margin="0">
                 <Label
-                    Text="{Binding Text}"
-                    Style="{StaticResource BodyStyle}"
-                    HorizontalTextAlignment="Justify" />
-            </Border>
-        </VerticalStackLayout>
-    </ScrollView>
+                    IsVisible="{Binding HasTechniqueSubtitle}"
+                    Text="{Binding TechniqueSubtitle}"
+                    Style="{StaticResource CaptionStyle}"
+                    TextColor="{DynamicResource Primary}"
+                    MaxLines="2"
+                    LineBreakMode="TailTruncation" />
+
+                <VerticalStackLayout
+                    IsVisible="{Binding HasSections}"
+                    Spacing="{StaticResource ListItemSpacing}"
+                    BindableLayout.ItemsSource="{Binding Sections}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="practice:TheorySection">
+                            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                                <Border.Behaviors>
+                                    <behaviors:ListItemRevealBehavior />
+                                </Border.Behaviors>
+                                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                                    <Label Text="{Binding Heading}" Style="{StaticResource SectionTitleStyle}" />
+                                    <Label
+                                        Text="{Binding Body}"
+                                        Style="{StaticResource BodyStyle}"
+                                        HorizontalTextAlignment="Justify" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <Border
+                    IsVisible="{Binding HasLegacyText}"
+                    Style="{StaticResource BrandCardStyle}"
+                    Margin="0">
+                    <Label
+                        Text="{Binding Text}"
+                        Style="{StaticResource BodyStyle}"
+                        HorizontalTextAlignment="Justify" />
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <ui:ProgressBarView
+            x:Name="LoadingProgress"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsLoadingOverlayVisible}"
+            IsLoading="{Binding IsLoadingOverlayVisible}"
+            ProgressText="{Binding LoadingText}"
+            CancelCommand="{Binding Cancel}" />
+
+        <ui:RetryView
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsFail}"
+            FailedText="{Binding FailedText}"
+            RetryText="{Binding RetryText}"
+            RetryCommand="{Binding Reload}" />
+    </Grid>
 </ContentPage>

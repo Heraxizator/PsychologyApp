@@ -39,6 +39,11 @@ public partial class QuotePage : ContentPage
             AnimateSearchModeCrossfadeAsync().FireAndForget();
             _wasSearching = ViewModel.IsSearching;
         }
+
+        if (e.PropertyName == nameof(QuoteViewModel.IsSearchFilteringVisible))
+        {
+            UiStateAnimator.AnimateVisibilityAsync(SearchFilteringProgress, ViewModel.IsSearchFilteringVisible).FireAndForget();
+        }
     }
 
     private async Task AnimateSearchModeCrossfadeAsync()
@@ -50,7 +55,6 @@ public partial class QuotePage : ContentPage
                 await UiAnimations.SafeHideAsync(FeedFilterBar);
             }
 
-            await UiStateAnimator.CrossfadeContentRefreshAsync(QuotesCollectionView);
             return;
         }
 
@@ -59,7 +63,6 @@ public partial class QuotePage : ContentPage
             FeedFilterBar,
             UiAnimations.TabReappearSlideOffset,
             allowHidden: true);
-        await UiStateAnimator.CrossfadeContentRefreshAsync(QuotesCollectionView);
     }
 
     private void OnRemainingItemsThresholdReached(object? sender, EventArgs e)

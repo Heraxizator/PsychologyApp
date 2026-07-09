@@ -161,11 +161,8 @@
                     <ui:ProgressBarView
                         IsVisible="{Binding IsQuotesLoading}"
                         IsLoading="{Binding IsQuotesLoading}"
-                        ProgressText="{Binding QuotesLoadingText}">
-                        <ui:ProgressBarView.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding CancelQuotesCommand}" />
-                        </ui:ProgressBarView.GestureRecognizers>
-                    </ui:ProgressBarView>
+                        ProgressText="{Binding QuotesLoadingText}"
+                        CancelCommand="{Binding CancelQuotesCommand}" />
 
                     <ui:EmptyStateView
                         IsVisible="{Binding ShowQuotesEmpty}"

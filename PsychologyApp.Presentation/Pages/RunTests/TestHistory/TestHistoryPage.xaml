@@ -21,8 +21,14 @@
             TitleText="{Binding PageTitle}"
             BackCommand="{Binding Finish}" />
 
-        <ScrollView Grid.Row="1" IsVisible="{Binding IsDone}">
+        <ScrollView
+            x:Name="HistoryContent"
+            Grid.Row="1"
+            IsVisible="{Binding IsDone}">
             <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
+                <VerticalStackLayout.Behaviors>
+                    <behaviors:StaggerChildrenBehavior />
+                </VerticalStackLayout.Behaviors>
                 <testUi:TestScoreTrendChartView
                     IsVisible="{Binding HasChart}"
                     ChartPoints="{Binding ChartPoints}"
@@ -57,7 +63,11 @@
                                 LuscherStandardDetail="{Binding LuscherStandardDetail}"
                                 LuscherBriefDetail="{Binding LuscherBriefDetail}"
                                 LuscherBriefFirstRoleLabel="{Binding LuscherBriefFirstRoleLabel}"
-                                LuscherBriefSecondRoleLabel="{Binding LuscherBriefSecondRoleLabel}" />
+                                LuscherBriefSecondRoleLabel="{Binding LuscherBriefSecondRoleLabel}">
+                                <testUi:TestHistoryEntryView.Behaviors>
+                                    <behaviors:ListItemRevealBehavior />
+                                </testUi:TestHistoryEntryView.Behaviors>
+                            </testUi:TestHistoryEntryView>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                     <CollectionView.EmptyView>
@@ -76,6 +86,7 @@
             TapCommand="{Binding RetakeCommand}" />
 
         <ui:ProgressBarView
+            x:Name="LoadingProgress"
             Grid.RowSpan="3"
             VerticalOptions="Center"
             HorizontalOptions="Center"

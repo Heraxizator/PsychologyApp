@@ -5,6 +5,9 @@ namespace PsychologyApp.Presentation.Widgets.QuoteCard;
 
 public partial class QuoteCardView : ContentView
 {
+    private bool _markReadRequested;
+    private bool _pressFeedbackAttached;
+
     public QuoteCardView()
     {
         InitializeComponent();
@@ -15,10 +18,21 @@ public partial class QuoteCardView : ContentView
 
     private void OnLoaded(object? sender, EventArgs e)
     {
-        AttachIconPressFeedback(FavoriteActionBorder);
-        AttachIconPressFeedback(CopyActionBorder);
-        AttachIconPressFeedback(ShareActionBorder);
-        MarkReadCommand?.Execute(null);
+        if (!_pressFeedbackAttached)
+        {
+            AttachIconPressFeedback(FavoriteActionBorder);
+            AttachIconPressFeedback(CopyActionBorder);
+            AttachIconPressFeedback(ShareActionBorder);
+            _pressFeedbackAttached = true;
+        }
+
+        if (_markReadRequested || MarkReadCommand is null)
+        {
+            return;
+        }
+
+        _markReadRequested = true;
+        MarkReadCommand.Execute(null);
     }
 
     private static void AttachIconPressFeedback(Border border) =>
@@ -131,12 +145,33 @@ public partial class QuoteCardView : ContentView
     }
 
     public static readonly BindableProperty MarkReadCommandProperty =
-        BindableProperty.Create(nameof(MarkReadCommand), typeof(ICommand), typeof(QuoteCardView), null);
+        BindableProperty.Create(
+            nameof(MarkReadCommand),
+            typeof(ICommand),
+            typeof(QuoteCardView),
+            null,
+            propertyChanged: OnMarkReadCommandChanged);
 
     public ICommand? MarkReadCommand
     {
         get => (ICommand?)GetValue(MarkReadCommandProperty);
         set => SetValue(MarkReadCommandProperty, value);
+    }
+
+    private static void OnMarkReadCommandChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is not QuoteCardView view)
+        {
+            return;
+        }
+
+        // Cell reuse binds a new command for a different quote — allow one mark-read per binding.
+        view._markReadRequested = false;
+        if (view.IsLoaded && newValue is ICommand command)
+        {
+            view._markReadRequested = true;
+            command.Execute(null);
+        }
     }
 
     public static readonly BindableProperty DefaultAuthorTextProperty =

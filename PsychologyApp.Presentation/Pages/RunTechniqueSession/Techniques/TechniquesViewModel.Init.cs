@@ -76,10 +76,7 @@ public partial class TechniquesViewModel
                 TodayTechniqueItem = recommendation.Item;
                 OnPropertyChanged(nameof(TodayReasonText));
                 OnPropertyChanged(nameof(TodayTechniqueItem));
-                IsTechniquesGrouped = snapshot.UiState.IsGrouped;
-                TechniqueGroups = snapshot.UiState.Groups;
-                CatalogTechniques = snapshot.UiState.CatalogTechniques;
-                TechniquesItemsSource = snapshot.UiState.ItemsSource;
+                ApplyUiState(snapshot.UiState);
                 ApplyCustomTechniquesPagingState(snapshot);
                 SetDone();
             });

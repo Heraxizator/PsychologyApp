@@ -21,6 +21,9 @@
                 x:Name="ContentStack"
                 Margin="{StaticResource LayoutTabPageMarginThickness}"
                 Spacing="{StaticResource LayoutSpacing}">
+                    <VerticalStackLayout.Behaviors>
+                        <behaviors:StaggerChildrenBehavior />
+                    </VerticalStackLayout.Behaviors>
                     <ui:TextBoxView
                         HeaderText="{Binding ExplanationHeader}"
                         BodyText="{Binding ExplanationBody}" />

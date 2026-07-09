@@ -1,20 +1,196 @@
+using Microsoft.Extensions.Logging;
+using PsychologyApp.Application.Models;
 using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 
 namespace PsychologyApp.Presentation.Pages.RunTechniqueSession.Techniques;
 
 public partial class TechniquesViewModel
 {
-    private async Task OnTechniqueMessageAsync(TechniqueMessage message)
+    private async Task RefreshDashboardOnAppearAsync()
+    {
+        await _initGate.WaitAsync();
+        try
+        {
+            using CancellationTokenSource timeoutSource = OperationCancellation.CreateMiddleTimeoutSource(_settings);
+            CancellationToken cancellationToken = timeoutSource.Token;
+
+            await _databaseReadySignal.WaitAsync(cancellationToken);
+
+            Task<int> streakTask = _dashboardLoader.LoadStreakDaysAsync(cancellationToken);
+            Task<MoodSnapshot> moodTask = _dashboardLoader.LoadMoodSnapshotAsync(cancellationToken);
+            Task<IReadOnlyList<TechniqueItem>> staticItemsTask =
+                _techniqueListBuilder.BuildStaticItemsAsync(_navigationService, cancellationToken);
+
+            await Task.WhenAll(streakTask, moodTask, staticItemsTask);
+
+            int streakDays = await streakTask;
+            MoodSnapshot mood = await moodTask;
+            IReadOnlyList<TechniqueItem> staticItems = await staticItemsTask;
+
+            TodayRecommendationResult recommendation = await _dashboardPresenter.ResolveTodayRecommendationAsync(
+                streakDays,
+                _navigationService,
+                cancellationToken);
+            await _dashboardPresenter.ApplyCatalogDateAsync(
+                recommendation.Item,
+                recommendation.TechniqueId,
+                staticItems,
+                streakDays > 0,
+                cancellationToken);
+
+            await UiThread.RunAsync(() =>
+            {
+                StreakDays = streakDays;
+                ApplyMoodSnapshot(mood);
+                _todayTechniqueId = recommendation.TechniqueId;
+                TodayReasonText = recommendation.ReasonText;
+                TodayTechniqueItem = recommendation.Item;
+                OnPropertyChanged(nameof(TodayReasonText));
+                OnPropertyChanged(nameof(TodayTechniqueItem));
+            });
+        }
+        catch (OperationCanceledException)
+        {
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Practice tab dashboard refresh failed.");
+        }
+        finally
+        {
+            _initGate.Release();
+        }
+    }
+
+    private async Task ApplyTechniqueMessageAsync(TechniqueMessage message)
     {
         if (message.MessageType is not (TechniqueMessageType.Add or TechniqueMessageType.Remove or TechniqueMessageType.Change))
         {
             return;
         }
 
-        await InitializeAsync(showLoadingOverlay: false);
+        if (!_initialized)
+        {
+            return;
+        }
+
+        await _initGate.WaitAsync();
+        try
+        {
+            switch (message.MessageType)
+            {
+                case TechniqueMessageType.Add:
+                    await ApplyTechniqueAddedAsync(message.Technique);
+                    break;
+                case TechniqueMessageType.Remove:
+                    await ApplyTechniqueRemovedAsync(message.Technique.TechniqueId);
+                    break;
+                case TechniqueMessageType.Change:
+                    await ApplyTechniqueChangedAsync(message.Technique);
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to apply technique list message surgically; falling back to full reload.");
+            using CancellationTokenSource timeoutSource = OperationCancellation.CreateMiddleTimeoutSource(_settings);
+            await InitAsync(timeoutSource.Token, showLoadingOverlay: false);
+        }
+        finally
+        {
+            _initGate.Release();
+        }
+    }
+
+    private async Task ApplyTechniqueAddedAsync(TechniqueDTO dto)
+    {
+        TechniqueItem item = _techniqueListBuilder
+            .MapCustomItems([dto], _navigationService)
+            .Single();
+
+        await UiThread.RunAsync(() =>
+        {
+            if (!IsTechniquesGrouped || _customTechniquesGroup is null)
+            {
+                IReadOnlyList<TechniqueItem> staticItems = ExtractCurrentStaticItems();
+                TechniqueListLayout layout = _techniqueListBuilder.BuildLayout(
+                    staticItems,
+                    [item],
+                    MyTechniquesLabel);
+                ApplyLayout(layout, hasMore: _hasMoreCustomTechniques, offset: 1);
+                return;
+            }
+
+            if (_customTechniquesGroup.Any(existing => existing.Id == item.Id))
+            {
+                return;
+            }
+
+            _customTechniquesGroup.Insert(0, item);
+            _customTechniquesOffset++;
+        });
+    }
+
+    private async Task ApplyTechniqueRemovedAsync(long techniqueId)
+    {
+        await UiThread.RunAsync(() =>
+        {
+            TechniqueGroup? group = _customTechniquesGroup;
+            if (group is null)
+            {
+                return;
+            }
+
+            TechniqueItem? existing = group.FirstOrDefault(i => i.Id == techniqueId);
+            if (existing is null)
+            {
+                return;
+            }
+
+            group.Remove(existing);
+            _customTechniquesOffset = Math.Max(0, _customTechniquesOffset - 1);
+
+            if (group.Count == 0)
+            {
+                IReadOnlyList<TechniqueItem> staticItems = ExtractCurrentStaticItems();
+                TechniqueListLayout layout = _techniqueListBuilder.BuildLayout(
+                    staticItems,
+                    [],
+                    MyTechniquesLabel);
+                ApplyLayout(layout, hasMore: false, offset: 0);
+            }
+        });
+    }
+
+    private async Task ApplyTechniqueChangedAsync(TechniqueDTO dto)
+    {
+        TechniqueItem mapped = _techniqueListBuilder
+            .MapCustomItems([dto], _navigationService)
+            .Single();
+
+        await UiThread.RunAsync(() =>
+        {
+            TechniqueGroup? group = _customTechniquesGroup;
+            if (group is null)
+            {
+                return;
+            }
+
+            for (int index = 0; index < group.Count; index++)
+            {
+                if (group[index].Id != dto.TechniqueId)
+                {
+                    continue;
+                }
+
+                group[index] = mapped;
+                return;
+            }
+        });
     }
 
     private void UpdateTodayRecommendation(IReadOnlyList<TechniqueItem>? staticItems = null) =>
@@ -60,5 +236,26 @@ public partial class TechniquesViewModel
         StreakDays = result.StreakDays;
         ApplyMoodSnapshot(result.MoodSnapshot);
         UpdateTodayRecommendation();
+    }
+
+    private IReadOnlyList<TechniqueItem> ExtractCurrentStaticItems()
+    {
+        if (IsTechniquesGrouped && TechniqueGroups.Count > 0)
+        {
+            return TechniqueGroups[0].ToList();
+        }
+
+        return CatalogTechniques.ToList();
+    }
+
+    private void ApplyLayout(TechniqueListLayout layout, bool hasMore, int offset)
+    {
+        TechniqueDashboardUiState ui = TechniqueDashboardApplier.CreateUiState(layout);
+        ApplyUiState(ui);
+        _hasMoreCustomTechniques = hasMore;
+        _customTechniquesOffset = offset;
+        _customTechniquesGroup = IsTechniquesGrouped && TechniqueGroups.Count > 1
+            ? TechniqueGroups[^1]
+            : null;
     }
 }

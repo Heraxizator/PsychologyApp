@@ -4,12 +4,16 @@
              x:Class="PsychologyApp.Presentation.Pages.RunTechniqueSession.PracticeCompletion.PracticeCompletionPage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:mood="clr-namespace:PsychologyApp.Presentation.Widgets.MoodStrip"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.RunTechniqueSession.PracticeCompletion"
              x:DataType="vm:PracticeCompletionViewModel"
              Shell.NavBarIsVisible="False"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource Gray950}}">
 
     <Grid RowDefinitions="*,Auto">
+        <Grid.Behaviors>
+            <behaviors:RevealOnAppearingBehavior />
+        </Grid.Behaviors>
         <ui:CompletionCelebrationView
             Grid.Row="0"
             TitleText="{Binding TitleText}"
@@ -26,6 +30,9 @@
             Grid.Row="1"
             Padding="{StaticResource LayoutPageMarginThickness}"
             Spacing="{StaticResource CompactSpacing}">
+            <VerticalStackLayout.Behaviors>
+                <behaviors:StaggerChildrenBehavior />
+            </VerticalStackLayout.Behaviors>
             <mood:MoodStripView
                 QuestionText="{Binding ReflectionQuestion}"
                 RecordMoodCommand="{Binding RecordMoodCommand}"

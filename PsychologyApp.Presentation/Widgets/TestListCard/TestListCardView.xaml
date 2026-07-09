@@ -20,21 +20,21 @@
                         <Label
                             Text="{TemplateBinding Title}"
                             Style="{StaticResource ListRowTitleStyle}"
-                            MaxLines="2"
-                            LineBreakMode="TailTruncation" />
+                            MaxLines="3"
+                            LineBreakMode="WordWrap" />
                         <Label
                             Text="{TemplateBinding Subtitle}"
                             Style="{StaticResource CaptionStyle}"
-                            MaxLines="2"
-                            LineBreakMode="TailTruncation" />
+                            MaxLines="4"
+                            LineBreakMode="WordWrap" />
                         <Label
                             IsVisible="{TemplateBinding HasMetaText}"
                             Text="{TemplateBinding MetaText}"
                             Style="{StaticResource CaptionStyle}"
                             FontFamily="{StaticResource SemiBoldFontFamily}"
                             TextColor="{DynamicResource Primary}"
-                            MaxLines="1"
-                            LineBreakMode="TailTruncation" />
+                            MaxLines="2"
+                            LineBreakMode="WordWrap" />
                         <Grid ColumnDefinitions="*,Auto" IsVisible="{TemplateBinding HasLastResult}">
                             <Label
                                 Grid.Column="0"
@@ -42,8 +42,8 @@
                                 Style="{StaticResource CaptionStyle}"
                                 FontFamily="{StaticResource MediumFontFamily}"
                                 TextColor="{DynamicResource Primary}"
-                                MaxLines="1"
-                                LineBreakMode="TailTruncation">
+                                MaxLines="2"
+                                LineBreakMode="WordWrap">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Command="{TemplateBinding OpenHistoryCommand}" />
                                 </Label.GestureRecognizers>

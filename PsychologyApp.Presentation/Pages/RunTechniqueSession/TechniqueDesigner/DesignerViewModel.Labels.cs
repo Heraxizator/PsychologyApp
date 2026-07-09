@@ -9,12 +9,16 @@ public partial class DesignerViewModel
     public string BackText => AppStrings.Back;
     public string DescriptionSection => AppStrings.TestsDescriptionHeader;
     public string NameFieldLabel => AppStrings.NameLabel;
-    public string DescriptionFieldLabel => AppStrings.TestsDescriptionHeader;
+    public string DescriptionFieldLabel => AppStrings.DescriptionLabel;
     public string ThemeFieldLabel => AppStrings.ThemeLabel;
     public string AuthorFieldLabel => AppStrings.AuthorLabel;
     public string AlgorithmSection => AppStrings.TechniqueAlgorithm;
     public string ActionsFieldLabel => AppStrings.ActionsListLabel;
-    public string SaveButtonText => AppStrings.Save;
+    public string SaveButtonText => IsSaving ? AppStrings.Saving : AppStrings.Save;
+    public string LoadingText => AppStrings.PracticeLoadingText;
+    public string FailedText => AppStrings.LoadFailed;
+    public string RetryText => AppStrings.RetryQuestion;
+
     public string NamePlaceholder => AppStrings.DesignerNamePlaceholder;
     public string DescriptionPlaceholder => AppStrings.DesignerDescriptionPlaceholder;
     public string ThemePlaceholder => AppStrings.DesignerThemePlaceholder;
@@ -34,6 +38,9 @@ public partial class DesignerViewModel
             nameof(AlgorithmSection),
             nameof(ActionsFieldLabel),
             nameof(SaveButtonText),
+            nameof(LoadingText),
+            nameof(FailedText),
+            nameof(RetryText),
             nameof(NamePlaceholder),
             nameof(DescriptionPlaceholder),
             nameof(ThemePlaceholder),

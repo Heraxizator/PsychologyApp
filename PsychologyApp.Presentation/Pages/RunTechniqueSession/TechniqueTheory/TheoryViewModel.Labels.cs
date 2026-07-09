@@ -6,4 +6,7 @@ public partial class TheoryViewModel
 {
     public string PageTitle => AppStrings.TechniqueTheory;
     public string BackText => AppStrings.Back;
+    public string LoadingText => AppStrings.PracticeLoadingText;
+    public string FailedText => AppStrings.LoadFailed;
+    public string RetryText => AppStrings.RetryQuestion;
 }

@@ -12,7 +12,9 @@
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Border Style="{StaticResource TechniqueListCardStyle}">
+            <Border
+                Style="{StaticResource TechniqueListCardStyle}"
+                SemanticProperties.Description="Expand or collapse psychosomatic reason details">
                 <VerticalStackLayout Spacing="8">
                     <VerticalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{TemplateBinding ToggleExpandCommand}" />
@@ -20,7 +22,8 @@
                     <VerticalStackLayout Spacing="4">
                         <Label
                             FormattedText="{TemplateBinding TitleFormatted}"
-                            Style="{StaticResource ListRowTitleStyle}" />
+                            Style="{StaticResource ListRowTitleStyle}"
+                            SemanticProperties.HeadingLevel="Level2" />
                         <Label
                             FormattedText="{TemplateBinding SubtitleFormatted}"
                             Style="{StaticResource CaptionStyle}" />

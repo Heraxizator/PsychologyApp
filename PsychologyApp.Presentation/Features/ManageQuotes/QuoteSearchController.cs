@@ -15,8 +15,10 @@ public sealed class QuoteSearchController
     private readonly Action _onStateChanged;
     private readonly Action _onSearchCleared;
     private readonly Action _onFail;
+    private readonly Action? _onSearchFailed;
     private CancellationTokenSource? _searchDebounceCts;
     private string _query = string.Empty;
+    private bool _isSearchInFlight;
 
     public QuoteSearchController(
         IQuoteSearchService quoteSearchService,
@@ -25,7 +27,8 @@ public sealed class QuoteSearchController
         ILogger logger,
         Action onStateChanged,
         Action onSearchCleared,
-        Action onFail)
+        Action onFail,
+        Action? onSearchFailed = null)
     {
         _quoteSearchService = quoteSearchService;
         _quoteCommandsFactory = quoteCommandsFactory;
@@ -34,6 +37,7 @@ public sealed class QuoteSearchController
         _onStateChanged = onStateChanged;
         _onSearchCleared = onSearchCleared;
         _onFail = onFail;
+        _onSearchFailed = onSearchFailed;
     }
 
     public string Query
@@ -54,6 +58,8 @@ public sealed class QuoteSearchController
 
     public bool IsSearching => !string.IsNullOrWhiteSpace(_query);
 
+    public bool IsSearchInFlight => _isSearchInFlight;
+
     public void ClearSilently()
     {
         CancelPendingSearch();
@@ -64,6 +70,7 @@ public sealed class QuoteSearchController
         }
 
         _query = string.Empty;
+        SetSearchInFlight(false);
         _onStateChanged();
     }
 
@@ -72,12 +79,25 @@ public sealed class QuoteSearchController
         _searchDebounceCts?.Cancel();
         _searchDebounceCts?.Dispose();
         _searchDebounceCts = null;
+        SetSearchInFlight(false);
+    }
+
+    private void SetSearchInFlight(bool value)
+    {
+        if (_isSearchInFlight == value)
+        {
+            return;
+        }
+
+        _isSearchInFlight = value;
+        _onStateChanged();
     }
 
     private async Task SearchAsync()
     {
         if (!IsSearching)
         {
+            SetSearchInFlight(false);
             await UiThread.RunAsync(() =>
             {
                 _feedState.RestoreFeedDisplay();
@@ -90,6 +110,7 @@ public sealed class QuoteSearchController
         CancelPendingSearch();
         _searchDebounceCts = new CancellationTokenSource();
         CancellationToken token = _searchDebounceCts.Token;
+        SetSearchInFlight(true);
 
         try
         {
@@ -118,6 +139,14 @@ public sealed class QuoteSearchController
         catch (Exception ex)
         {
             _logger.LogError(ex, "Quote search failed.");
+            _onSearchFailed?.Invoke();
+        }
+        finally
+        {
+            if (!token.IsCancellationRequested)
+            {
+                SetSearchInFlight(false);
+            }
         }
     }
 

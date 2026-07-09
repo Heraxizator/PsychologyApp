@@ -428,7 +428,49 @@ public sealed class TechniquesViewModelTests
     }
 
     [Fact]
-    public async Task TechniqueMessage_TriggersReload()
+    public async Task RefreshOnAppear_DoesNotReloadCustomTechniquesPage()
+    {
+        Mock<IUserProgressService> progress = new();
+        progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
+        progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(2);
+        progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+        progress
+            .Setup(p => p.GetLastPracticeDatesAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new Dictionary<string, DateTime>(StringComparer.Ordinal));
+        progress
+            .Setup(p => p.GetSessionDraftKeysAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new HashSet<string>(StringComparer.Ordinal));
+
+        Mock<IUserPreferencesStore> preferences = new();
+        preferences.Setup(p => p.Load()).Returns(new UserPreferencesState());
+
+        Mock<INavigationService> navigation = new();
+        Mock<ITechniqueService> techniqueService = new();
+        techniqueService.Setup(s => s.GetTechniquesPageAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+
+        PracticeDashboardLoader dashboardLoader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
+        TechniquesViewModel viewModel = CreateViewModel(
+            techniqueService.Object,
+            navigation.Object,
+            dashboardLoader,
+            preferences.Object,
+            progress.Object);
+
+        await viewModel.EnsureInitializedAsync();
+        techniqueService.Invocations.Clear();
+
+        await viewModel.RefreshOnAppearAsync();
+
+        techniqueService.Verify(
+            s => s.GetTechniquesPageAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()),
+            Times.Never);
+        Assert.Equal(2, viewModel.StreakDays);
+    }
+
+    [Fact]
+    public async Task TechniqueMessage_AppliesSurgicalAdd()
     {
         Action<TechniqueMessage>? messageHandler = null;
         Mock<ITechniqueMessenger> messenger = new();
@@ -469,12 +511,26 @@ public sealed class TechniquesViewModelTests
 
         techniqueService.Invocations.Clear();
 
-        messageHandler!(new TechniqueMessage { MessageType = TechniqueMessageType.Add });
+        messageHandler!(new TechniqueMessage
+        {
+            MessageType = TechniqueMessageType.Add,
+            Technique = new TechniqueDTO
+            {
+                TechniqueId = 42,
+                Header = "Custom",
+                Description = "Desc",
+                Subject = "Theme",
+                Author = "Author",
+                Date = "Today"
+            }
+        });
         await Task.Delay(500);
 
         techniqueService.Verify(
             s => s.GetTechniquesPageAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()),
-            Times.AtLeastOnce);
+            Times.Never);
+        Assert.True(viewModel.IsTechniquesGrouped);
+        Assert.Contains(viewModel.TechniqueGroups.SelectMany(g => g), item => item.Id == 42);
     }
 
     private static TechniquesViewModel CreateViewModel(

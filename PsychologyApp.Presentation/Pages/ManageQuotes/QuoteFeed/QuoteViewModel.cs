@@ -8,6 +8,7 @@ using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Entities.FilterChip;
 using PsychologyApp.Presentation.Entities.Quote;
 using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Features.ManageQuotes;
 using PsychologyApp.Presentation.Shared.ViewModels;
 using System.Collections.ObjectModel;
@@ -31,6 +32,7 @@ public partial class QuoteViewModel : BaseViewModel
 
     private readonly IQuotService _quotService;
     private readonly ILogger<QuoteViewModel> _logger;
+    private readonly IToastService _toastService;
     private readonly IOptions<AppSettings> _settings;
     private readonly IDatabaseReadySignal _databaseReadySignal;
     private readonly QuoteFeedCoordinator _feedCoordinator;
@@ -43,6 +45,7 @@ public partial class QuoteViewModel : BaseViewModel
         IQuotService quotService,
         IQuoteSearchService quoteSearchService,
         ILogger<QuoteViewModel> logger,
+        IToastService toastService,
         IOptions<AppSettings> settings,
         QuoteFeedCoordinator feedCoordinator,
         QuoteItemCommandsFactory quoteCommandsFactory,
@@ -53,6 +56,7 @@ public partial class QuoteViewModel : BaseViewModel
         {
             _quotService = quotService;
             _logger = logger;
+            _toastService = toastService;
             _settings = settings;
             _databaseReadySignal = databaseReadySignal;
             _feedCoordinator = feedCoordinator;
@@ -65,10 +69,11 @@ public partial class QuoteViewModel : BaseViewModel
                 logger,
                 NotifySearchRelatedProperties,
                 () => ShowAllReadEmpty = false,
-                SetFail);
+                SetFail,
+                () => _toastService.ShortToast(AppStrings.QuotesSearchError));
             BindNavigation(navigationService);
             OpenProfileCommand = new AsyncCommand(() => navigationService.GoToUserProfileAsync());
-            Cancel = new Command(CancelProgress);
+            Cancel = new Command(CancelInit);
             LoadMoreQuotesCommand = new AsyncCommand(() => AddFreshQuotesAsync());
             SelectFeedCommand = new Command<string?>(key => SelectFeedAsync(key).FireAndForget());
             ShowFavoritesCommand = new AsyncCommand(() => SwitchFeedAsync(QuoteFeedMode.Favorites));
@@ -87,6 +92,7 @@ public partial class QuoteViewModel : BaseViewModel
         Notify(
             nameof(SearchQuery),
             nameof(IsSearching),
+            nameof(IsSearchFilteringVisible),
             nameof(IsFeedFiltersVisible),
             nameof(ShowDailyQuoteHeader),
             nameof(ShowForYouEmpty),

@@ -16,6 +16,7 @@ public partial class TechniquesViewModel
     public string PracticeEmptyTitle => AppStrings.PracticeEmptyTitle;
     public string PracticeEmptyBody => AppStrings.PracticeEmptyBody;
     public string LoadingText => AppStrings.PracticeLoadingText;
+    public string LoadingMoreText => AppStrings.PracticeLoadingMoreText;
     public string FailedText => AppStrings.LoadFailed;
     public string RetryText => AppStrings.RetryQuestion;
 
@@ -39,6 +40,7 @@ public partial class TechniquesViewModel
             nameof(PracticeEmptyTitle),
             nameof(PracticeEmptyBody),
             nameof(LoadingText),
+            nameof(LoadingMoreText),
             nameof(FailedText),
             nameof(RetryText));
         UpdateTodayRecommendation();

@@ -10,6 +10,9 @@ public partial class CreatedViewModel
     public string FinishButtonText => AppStrings.TechniqueFinish;
     public string EditToolbarText => AppStrings.Edit;
     public string RemoveToolbarText => AppStrings.Remove;
+    public string LoadingText => AppStrings.PracticeLoadingText;
+    public string FailedText => AppStrings.LoadFailed;
+    public string RetryText => AppStrings.RetryQuestion;
 
     protected override void RefreshLocalizedProperties()
     {
@@ -19,6 +22,9 @@ public partial class CreatedViewModel
             nameof(AlgorithmTitle),
             nameof(FinishButtonText),
             nameof(EditToolbarText),
-            nameof(RemoveToolbarText));
+            nameof(RemoveToolbarText),
+            nameof(LoadingText),
+            nameof(FailedText),
+            nameof(RetryText));
     }
 }

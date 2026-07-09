@@ -12,7 +12,10 @@
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Border Style="{StaticResource TechniqueListCardStyle}" IsVisible="{TemplateBinding Active}">
+            <Border
+                Style="{StaticResource TechniqueListCardStyle}"
+                IsVisible="{TemplateBinding Active}"
+                SemanticProperties.Description="{TemplateBinding Title}">
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
                 </Border.GestureRecognizers>
