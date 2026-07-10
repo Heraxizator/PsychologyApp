@@ -1,6 +1,9 @@
+using System.Globalization;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Recommendations;
 using PsychologyApp.Application.UserProgress;
+using PsychologyApp.Domain.Practice;
+using PsychologyApp.Domain.UserProgress;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
@@ -15,6 +18,12 @@ public sealed class MoodSnapshot
     public string MoodHistorySummary { get; init; } = string.Empty;
 }
 
+public sealed class WeeklyInsightSnapshot
+{
+    public string DisplayText { get; init; } = string.Empty;
+    public bool HasInsight => !string.IsNullOrWhiteSpace(DisplayText);
+}
+
 public sealed class PracticeDashboardLoader(
     IUserProgressService userProgressService,
     IUserPreferencesStore userPreferencesStore,
@@ -22,6 +31,36 @@ public sealed class PracticeDashboardLoader(
 {
     public async Task<int> LoadStreakDaysAsync(CancellationToken cancellationToken = default) =>
         await userProgressService.GetStreakDaysAsync(cancellationToken);
+
+    public async Task<int> LoadAtRiskStreakDaysAsync(CancellationToken cancellationToken = default) =>
+        await userProgressService.GetAtRiskStreakDaysAsync(cancellationToken);
+
+    public async Task<DateTime?> LoadLastPracticeUtcAsync(CancellationToken cancellationToken = default) =>
+        await userProgressService.GetLastTechniqueCompletionDateAsync(cancellationToken);
+
+    public async Task<string?> LoadLastTechniqueNameAsync(CancellationToken cancellationToken = default)
+    {
+        IReadOnlyList<CompletionDTO> recent =
+            await userProgressService.GetRecentTechniqueCompletionsAsync(1, cancellationToken);
+        if (recent.Count == 0)
+        {
+            return null;
+        }
+
+        CompletionDTO last = recent[0];
+        if (!string.IsNullOrWhiteSpace(last.PageName))
+        {
+            return last.PageName.Trim();
+        }
+
+        return string.IsNullOrWhiteSpace(last.ItemKey) ? null : last.ItemKey;
+    }
+
+    public async Task<bool> HasSessionDraftAsync(TechniqueId techniqueId, CancellationToken cancellationToken = default)
+    {
+        string? draft = await userProgressService.GetSessionDraftAsync(techniqueId.ToString(), cancellationToken);
+        return !string.IsNullOrWhiteSpace(draft);
+    }
 
     public async Task<MoodSnapshot> LoadMoodSnapshotAsync(CancellationToken cancellationToken = default)
     {
@@ -57,6 +96,38 @@ public sealed class PracticeDashboardLoader(
         };
     }
 
+    public async Task<WeeklyInsightSnapshot> LoadWeeklyInsightAsync(CancellationToken cancellationToken = default)
+    {
+        DateOnly weekStart = GetWeekStart(DateOnly.FromDateTime(DateTime.Today));
+        DateTime weekStartLocal = weekStart.ToDateTime(TimeOnly.MinValue);
+
+        Task<IReadOnlyList<CompletionDTO>> completionsTask =
+            userProgressService.GetRecentTechniqueCompletionsAsync(50, cancellationToken);
+        Task<IReadOnlyList<MoodEntryDTO>> moodsTask =
+            userProgressService.GetRecentMoodsAsync(30, cancellationToken);
+        await Task.WhenAll(completionsTask, moodsTask);
+
+        int practiceCount = (await completionsTask)
+            .Count(completion => completion.CompletedAt.ToLocalTime() >= weekStartLocal);
+
+        List<MoodEntryDTO> weekMoods = (await moodsTask)
+            .Where(mood => mood.RecordedAt.ToLocalTime() >= weekStartLocal)
+            .OrderBy(mood => mood.RecordedAt)
+            .ToList();
+
+        if (practiceCount == 0 && weekMoods.Count == 0)
+        {
+            return new WeeklyInsightSnapshot();
+        }
+
+        string moodTrend = ResolveMoodTrend(weekMoods);
+        string display = practiceCount == 0
+            ? AppStrings.WeeklyInsightMoodOnly(moodTrend)
+            : AppStrings.WeeklyInsightLine(practiceCount, moodTrend);
+
+        return new WeeklyInsightSnapshot { DisplayText = display };
+    }
+
     public async Task RecordMoodAsync(int moodLevel, CancellationToken cancellationToken = default)
     {
         await userProgressService.RecordMoodAsync(moodLevel, cancellationToken: cancellationToken);
@@ -81,4 +152,38 @@ public sealed class PracticeDashboardLoader(
     }
 
     public TechniqueId? ConsumePendingTechnique() => userPreferencesStore.ConsumePendingTechnique();
+
+    private static DateOnly GetWeekStart(DateOnly today)
+    {
+        DayOfWeek firstDay = CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+        int offset = (7 + (today.DayOfWeek - firstDay)) % 7;
+        return today.AddDays(-offset);
+    }
+
+    private static string ResolveMoodTrend(IReadOnlyList<MoodEntryDTO> weekMoods)
+    {
+        if (weekMoods.Count == 0)
+        {
+            return string.Empty;
+        }
+
+        if (weekMoods.Count == 1)
+        {
+            return AppStrings.MoodTrendFlat;
+        }
+
+        int first = weekMoods[0].MoodLevel;
+        int last = weekMoods[^1].MoodLevel;
+        if (last > first)
+        {
+            return AppStrings.MoodTrendUp;
+        }
+
+        if (last < first)
+        {
+            return AppStrings.MoodTrendDown;
+        }
+
+        return AppStrings.MoodTrendFlat;
+    }
 }

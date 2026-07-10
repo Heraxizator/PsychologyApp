@@ -82,8 +82,8 @@ public partial class UserViewModel : BaseViewModel
         }
         catch (Exception e)
         {
-            SetQuotesFailed();
-            _logger.LogError(e, "UserViewModel initialization failed.");
+            SetFail();
+            _logger?.LogError(e, "UserViewModel initialization failed.");
         }
     }
 

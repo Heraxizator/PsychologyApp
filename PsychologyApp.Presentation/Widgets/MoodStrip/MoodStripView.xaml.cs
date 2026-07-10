@@ -1,4 +1,5 @@
 using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Widgets.MoodStrip;
@@ -8,7 +9,7 @@ public partial class MoodStripView : ContentView
     public MoodStripView()
     {
         InitializeComponent();
-        VisualElementPressFeedback.AttachToTemplateRoot(this, new PressFeedbackOptions { HapticOnRelease = true, ScaleOnly = true });
+        VisualElementPressFeedback.AttachToTemplateRoot(this, new PressFeedbackOptions { HapticOnRelease = true });
     }
 
     public static readonly BindableProperty QuestionTextProperty =
@@ -30,7 +31,12 @@ public partial class MoodStripView : ContentView
     }
 
     public static readonly BindableProperty SelectedMoodLevelProperty =
-        BindableProperty.Create(nameof(SelectedMoodLevel), typeof(int), typeof(MoodStripView), 0);
+        BindableProperty.Create(
+            nameof(SelectedMoodLevel),
+            typeof(int),
+            typeof(MoodStripView),
+            0,
+            propertyChanged: OnSelectedMoodLevelChanged);
 
     public int SelectedMoodLevel
     {
@@ -72,5 +78,25 @@ public partial class MoodStripView : ContentView
     {
         get => (bool)GetValue(HasMoodHistorySummaryProperty);
         set => SetValue(HasMoodHistorySummaryProperty, value);
+    }
+
+    private static void OnSelectedMoodLevelChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is not MoodStripView strip)
+        {
+            return;
+        }
+
+        if (newValue is int level && level >= 1 && level <= 5 && !Equals(oldValue, newValue))
+        {
+            strip.PulseSelectedChip(level);
+        }
+    }
+
+    private void PulseSelectedChip(int level)
+    {
+        VisualElement? chip = GetTemplateChild($"MoodChip{level}") as VisualElement
+            ?? FindByName($"MoodChip{level}") as VisualElement;
+        UiAnimations.SafePulseAsync(chip ?? this).FireAndForget();
     }
 }

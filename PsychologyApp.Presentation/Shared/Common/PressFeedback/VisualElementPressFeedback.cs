@@ -53,6 +53,26 @@ public static class VisualElementPressFeedback
     public static void AttachToTemplateRoot(ContentView contentView, PressFeedbackOptions? options = null) =>
         TemplatePressFeedback.Attach(contentView, options);
 
+    /// <summary>
+    /// Decides what Tapped should do after optional PointerPressed/Released.
+    /// </summary>
+    public static TapFeedbackAction ResolveTapFeedbackAction(
+        bool pointerCycleCompletedForCurrentPress,
+        bool hasVisiblePressOrAnimating) =>
+        pointerCycleCompletedForCurrentPress
+            ? TapFeedbackAction.None
+            : hasVisiblePressOrAnimating
+                ? TapFeedbackAction.ReleaseOnly
+                : TapFeedbackAction.FullBounce;
+
+    public static bool HasVisiblePress(VisualElement target) =>
+        Math.Abs(target.Scale - 1) > 0.01
+        || Math.Abs(target.Opacity - 1) > 0.01
+        || Math.Abs(target.TranslationY) > 0.01;
+
+    private static bool IsAnimating(VisualElement target) =>
+        AnimatingViews.TryGetValue(target, out _);
+
     private static PressFeedbackOptions GetOptions(VisualElement target) =>
         Options.TryGetValue(target, out PressFeedbackOptions? options)
             ? options
@@ -72,17 +92,47 @@ public static class VisualElementPressFeedback
         }
     }
 
-    private static async Task AnimatePressAsync(VisualElement target)
+    private static async Task<bool> AnimatePressAsync(VisualElement target)
     {
+        if (!TryClaimPressAnimation(target, out PressFeedbackOptions opts, out double scale))
+        {
+            return false;
+        }
+
+        try
+        {
+            await RunClaimedPressAnimationAsync(target, opts, scale);
+            return true;
+        }
+        catch
+        {
+            EndAnimation(target);
+            throw;
+        }
+    }
+
+    private static bool TryClaimPressAnimation(
+        VisualElement target,
+        out PressFeedbackOptions opts,
+        out double scale)
+    {
+        opts = GetOptions(target);
+        scale = opts.PressScale();
+
         if (!UiAnimations.ShouldAnimate(target) || !TryBeginAnimation(target))
         {
-            return;
+            return false;
         }
 
         AnimatingViews.Add(target, new AnimationLock());
-        PressFeedbackOptions opts = GetOptions(target);
-        double scale = opts.PressScale();
+        return true;
+    }
 
+    private static async Task RunClaimedPressAnimationAsync(
+        VisualElement target,
+        PressFeedbackOptions opts,
+        double scale)
+    {
         try
         {
             if (opts.ScaleOnly)
@@ -179,9 +229,7 @@ public static class VisualElementPressFeedback
 
     private static void ResetInstant(VisualElement target)
     {
-        if (Math.Abs(target.Scale - 1) > 0.01
-            || Math.Abs(target.Opacity - 1) > 0.01
-            || Math.Abs(target.TranslationY) > 0.01)
+        if (HasVisiblePress(target))
         {
             UiAnimations.ResetVisualState(target);
         }
@@ -192,7 +240,9 @@ public static class VisualElementPressFeedback
         private readonly View _target;
         private readonly PointerGestureRecognizer _pointer;
         private readonly List<TapGestureRecognizer> _subscribedTaps = [];
-        private bool _pointerGestureActive;
+        private int _pointerPressGeneration;
+        private int _completedPointerCycle;
+        private bool _pressActive;
 
         public AttachmentState(View target)
         {
@@ -217,40 +267,66 @@ public static class VisualElementPressFeedback
                 return;
             }
 
-            _pointerGestureActive = true;
-            AnimatePressAsync(target).FireAndForget();
+            HandlePointerPressedAsync(target).FireAndForget();
         }
 
-        private void OnPointerReleased(object? sender, PointerEventArgs e)
+        private async Task HandlePointerPressedAsync(View target)
         {
-            if (sender is not View target)
+            // Claim synchronously so Tapped cannot FullBounce while press is in flight.
+            if (!TryClaimPressAnimation(target, out PressFeedbackOptions opts, out double scale))
             {
                 return;
             }
 
-            _pointerGestureActive = false;
+            _pointerPressGeneration++;
+            _pressActive = true;
+            await RunClaimedPressAnimationAsync(target, opts, scale);
+        }
+
+        private void OnPointerReleased(object? sender, PointerEventArgs e)
+        {
+            if (sender is not View target || !_pressActive)
+            {
+                return;
+            }
+
+            _pressActive = false;
+            _completedPointerCycle = _pointerPressGeneration;
             AnimateReleaseAsync(target).FireAndForget();
         }
 
         private void OnPointerExited(object? sender, PointerEventArgs e)
         {
-            if (sender is not View target)
+            if (sender is not View target || !_pressActive)
             {
                 return;
             }
 
-            _pointerGestureActive = false;
+            _pressActive = false;
+            _completedPointerCycle = _pointerPressGeneration;
             AnimateReleaseAsync(target).FireAndForget();
         }
 
         private void OnTapped(object? sender, TappedEventArgs e)
         {
-            if (_pointerGestureActive)
-            {
-                return;
-            }
+            bool pointerCycleCompleted =
+                _pointerPressGeneration > 0 && _completedPointerCycle == _pointerPressGeneration;
+            bool hasVisiblePressOrAnimating = _pressActive || HasVisiblePress(_target) || IsAnimating(_target);
 
-            PlayTapFeedbackAsync(_target).FireAndForget();
+            TapFeedbackAction action = ResolveTapFeedbackAction(pointerCycleCompleted, hasVisiblePressOrAnimating);
+            switch (action)
+            {
+                case TapFeedbackAction.None:
+                    return;
+                case TapFeedbackAction.ReleaseOnly:
+                    _pressActive = false;
+                    _completedPointerCycle = _pointerPressGeneration;
+                    AnimateReleaseAsync(_target).FireAndForget();
+                    return;
+                default:
+                    PlayTapFeedbackAsync(_target).FireAndForget();
+                    return;
+            }
         }
 
         public void Detach(View target)
@@ -268,4 +344,11 @@ public static class VisualElementPressFeedback
             _subscribedTaps.Clear();
         }
     }
+}
+
+public enum TapFeedbackAction
+{
+    None,
+    ReleaseOnly,
+    FullBounce
 }

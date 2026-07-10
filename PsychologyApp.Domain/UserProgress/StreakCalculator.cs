@@ -29,4 +29,33 @@ public static class StreakCalculator
 
         return streak;
     }
+
+    /// <summary>
+    /// Days that would be lost if the user skips today. Zero when already practiced today
+    /// or when there is no consecutive run ending yesterday.
+    /// </summary>
+    public static int CalculateAtRiskDays(IReadOnlyList<DateOnly> datesDescending, DateOnly today)
+    {
+        if (datesDescending.Count == 0)
+        {
+            return 0;
+        }
+
+        if (datesDescending[0] == today)
+        {
+            return 0;
+        }
+
+        return CalculateFromCompletionDates(datesDescending, today.AddDays(-1));
+    }
+
+    public static int CalculateIdleDays(DateOnly? lastPracticeLocal, DateOnly today)
+    {
+        if (lastPracticeLocal is null)
+        {
+            return int.MaxValue;
+        }
+
+        return Math.Max(0, today.DayNumber - lastPracticeLocal.Value.DayNumber);
+    }
 }

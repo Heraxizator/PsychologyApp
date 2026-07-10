@@ -40,14 +40,15 @@
             <CollectionView
                 Grid.Row="1"
                 x:Name="Musics"
+                SelectionMode="None"
                 VerticalOptions="FillAndExpand"
                 VerticalScrollBarVisibility="Never"
                 ItemsSource="{Binding FilteredItems}">
                 <CollectionView.EmptyView>
                     <ui:EmptyStateView
-                        IsVisible="{Binding IsSearchEmptyVisible}"
-                        BodyText="{Binding NoPrayersFoundText}"
-                        IconName="SearchOff" />
+                        IsVisible="{Binding IsListEmptyVisible}"
+                        BodyText="{Binding ListEmptyBodyText}"
+                        IconName="{Binding ListEmptyIconName}" />
                 </CollectionView.EmptyView>
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
@@ -158,11 +159,8 @@
             HorizontalOptions="Center"
             IsVisible="{Binding IsLoadingOverlayVisible}"
             IsLoading="{Binding IsLoadingOverlayVisible}"
-            ProgressText="{Binding LoadingText}">
-            <ui:ProgressBarView.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding Cancel}" />
-            </ui:ProgressBarView.GestureRecognizers>
-        </ui:ProgressBarView>
+            ProgressText="{Binding LoadingText}"
+            CancelCommand="{Binding Cancel}" />
 
         <ui:RetryView
             VerticalOptions="Center"

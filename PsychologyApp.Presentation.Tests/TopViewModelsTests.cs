@@ -53,10 +53,13 @@ public sealed class SettingsPreferencesPresenterTests
             questionnaireAutoAdvance: true,
             practiceRemindersEnabled: true,
             practiceReminderHour: UserPreferences.DefaultPracticeReminderHour,
+            quoteRemindersEnabled: false,
+            quoteReminderHour: UserPreferences.DefaultQuoteReminderHour,
+            onboardingConcern: OnboardingConcernKeys.Anxiety,
             saved);
 
         Assert.True(built.HasCompletedOnboarding);
-        Assert.Equal(OnboardingConcernKeys.Mood, built.OnboardingConcern);
+        Assert.Equal(OnboardingConcernKeys.Anxiety, built.OnboardingConcern);
     }
 
     [Fact]
@@ -90,6 +93,9 @@ public sealed class SettingsPreferencesPresenterTests
             value => size = value,
             value => isBold = value,
             value => questionnaireAutoAdvance = value,
+            _ => { },
+            _ => { },
+            _ => { },
             _ => { },
             _ => { });
 
@@ -127,6 +133,9 @@ public sealed class SettingsPreferencesPresenterTests
             value => color = value,
             value => form = value,
             value => size = value,
+            _ => { },
+            _ => { },
+            _ => { },
             _ => { },
             _ => { },
             _ => { },
@@ -194,7 +203,8 @@ public sealed class SettingsViewModelTests
             new SettingsPreferencesPresenter(),
             TopViewModelTestHelpers.CreateLanguageReloader(Mock.Of<IQuotService>()),
             Mock.Of<IPracticeReminderCoordinator>(),
-            Mock.Of<IQuoteReminderCoordinator>());
+            Mock.Of<IQuoteReminderCoordinator>(),
+            new NullPracticeReminderScheduler());
     }
 
     private static SettingsViewModel CreateLoadedSettingsViewModel(

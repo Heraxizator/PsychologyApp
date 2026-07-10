@@ -29,6 +29,7 @@ public partial class QuoteViewModel : BaseViewModel
     public ICommand ShowFavoritesCommand { get; private set; } = default!;
     public ICommand ShowAgainCommand { get; private set; } = default!;
     public ICommand OpenProfileCommand { get; private set; } = default!;
+    public ICommand CancelSearchCommand { get; private set; } = default!;
 
     private readonly IQuotService _quotService;
     private readonly ILogger<QuoteViewModel> _logger;
@@ -74,6 +75,7 @@ public partial class QuoteViewModel : BaseViewModel
             BindNavigation(navigationService);
             OpenProfileCommand = new AsyncCommand(() => navigationService.GoToUserProfileAsync());
             Cancel = new Command(CancelInit);
+            CancelSearchCommand = new Command(() => _searchController.CancelPendingSearch());
             LoadMoreQuotesCommand = new AsyncCommand(() => AddFreshQuotesAsync());
             SelectFeedCommand = new Command<string?>(key => SelectFeedAsync(key).FireAndForget());
             ShowFavoritesCommand = new AsyncCommand(() => SwitchFeedAsync(QuoteFeedMode.Favorites));
@@ -93,6 +95,7 @@ public partial class QuoteViewModel : BaseViewModel
             nameof(SearchQuery),
             nameof(IsSearching),
             nameof(IsSearchFilteringVisible),
+            nameof(IsQuoteListVisible),
             nameof(IsFeedFiltersVisible),
             nameof(ShowDailyQuoteHeader),
             nameof(ShowForYouEmpty),

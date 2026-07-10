@@ -73,6 +73,7 @@ Profile widgets (`Widgets/Profile/`):
 | Tests list | `Assignment` |
 | Quotes (empty / all read / search) | `FormatQuote` / `DoneAll` / `Search` |
 | Music search | `SearchOff` |
+| Music catalog empty | `LibraryMusic` |
 | Profile favorites | `FavoriteBorder` |
 | Profile practice history | `History` |
 | Physics search (prompt / no results) | `Search` / `SearchOff` |

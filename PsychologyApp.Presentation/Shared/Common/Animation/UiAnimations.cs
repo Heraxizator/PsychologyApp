@@ -13,12 +13,12 @@ public static class UiAnimations
     public const int PremiumRevealMaxIndex = 2;
     public const int LiteRevealMaxIndex = 8;
     public const int MaxConcurrentListReveals = 12;
-    public const uint PressDuration = 100;
+    public const uint PressDuration = 120;
     public const uint ReleaseDuration = 200;
-    public const double PressScale = 0.97;
-    public const double PressScalePrimary = 0.97;
-    public const double PressScaleSecondary = 0.98;
-    public const double PressOpacity = 0.94;
+    public const double PressScale = 0.94;
+    public const double PressScalePrimary = 0.94;
+    public const double PressScaleSecondary = 0.96;
+    public const double PressOpacity = 0.90;
     public const double PressTranslationY = 1;
     public const double PulseScaleTo = 1.04;
     public const double ShakeOffset = 4;

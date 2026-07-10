@@ -15,7 +15,6 @@
         <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
             <VerticalStackLayout.Behaviors>
                 <behaviors:StaggerChildrenBehavior />
-                <behaviors:RevealOnAppearingBehavior />
             </VerticalStackLayout.Behaviors>
 
             <ui:NavigationBarSimpleView
@@ -89,6 +88,24 @@
             <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
                 <VerticalStackLayout Spacing="0">
                     <Label
+                        Text="{Binding PrimaryConcernSectionTitle}"
+                        Style="{StaticResource SectionTitleStyle}"
+                        Margin="0,0,0,10" />
+                    <ui:SettingPickerRowView
+                        LabelKind="{x:Static converters:PreferenceLabelKind.Concern}"
+                        LabelText="{Binding PrimaryConcernLabel}"
+                        PickerTitle="{Binding PrimaryConcernPickerTitle}"
+                        ItemsSource="{Binding OnboardingConcernOptions}"
+                        SelectedItem="{Binding OnboardingConcern}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border
+                IsVisible="{Binding AreRemindersSupported}"
+                Style="{StaticResource SettingsSectionCardStyle}"
+                Margin="0">
+                <VerticalStackLayout Spacing="0">
+                    <Label
                         Text="{Binding PracticeSectionTitle}"
                         Style="{StaticResource SectionTitleStyle}"
                         Margin="0,0,0,10" />
@@ -106,7 +123,10 @@
                 </VerticalStackLayout>
             </Border>
 
-            <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+            <Border
+                IsVisible="{Binding AreRemindersSupported}"
+                Style="{StaticResource SettingsSectionCardStyle}"
+                Margin="0">
                 <VerticalStackLayout Spacing="0">
                     <Label
                         Text="{Binding QuotesSectionTitle}"

@@ -23,6 +23,7 @@ public sealed class PreferenceLabelConverter : IValueConverter
             PreferenceLabelKind.Color => UserPreferences.GetColorLabel(key, uiLanguage),
             PreferenceLabelKind.Form => UserPreferences.GetFormLabel(key, uiLanguage),
             PreferenceLabelKind.Size => UserPreferences.GetSizeLabel(key, uiLanguage),
+            PreferenceLabelKind.Concern => UserPreferences.GetOnboardingConcernLabel(key, uiLanguage),
             _ => value
         };
     }

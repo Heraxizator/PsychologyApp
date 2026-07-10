@@ -1,3 +1,5 @@
+using PsychologyApp.Application.Models;
+using PsychologyApp.Application.Quot;
 using PsychologyApp.Domain.Notifications;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
@@ -6,7 +8,8 @@ namespace PsychologyApp.Presentation.Shared.Services.Notifications;
 
 public sealed class QuoteReminderCoordinator(
     IUserPreferencesStore preferencesStore,
-    IQuoteReminderScheduler scheduler) : IQuoteReminderCoordinator
+    IQuoteReminderScheduler scheduler,
+    IQuotService quotService) : IQuoteReminderCoordinator
 {
     public Task SyncAsync(CancellationToken cancellationToken = default)
     {
@@ -37,9 +40,24 @@ public sealed class QuoteReminderCoordinator(
             return;
         }
 
+        string body = AppStrings.QuoteReminderBody;
+        try
+        {
+            QuotDTO? daily =
+                await quotService.GetDailyQuoteAsync(DateOnly.FromDateTime(DateTime.Today), cancellationToken);
+            if (daily is { Text: { Length: > 0 } text })
+            {
+                body = AppStrings.QuoteReminderBodySnippet(text);
+            }
+        }
+        catch
+        {
+            // Keep generic body if catalog lookup fails.
+        }
+
         scheduler.Schedule(
             nextFireLocal.Value,
             AppStrings.QuoteReminderTitle,
-            AppStrings.QuoteReminderBody);
+            body);
     }
 }

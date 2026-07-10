@@ -95,6 +95,11 @@ public partial class QuoteViewModel
     public bool IsSearchFilteringVisible =>
         IsDone && IsSearching && _searchController.IsSearchInFlight;
 
+    /// <summary>
+    /// Hide the feed while a search filter is in flight so stale results are not shown.
+    /// </summary>
+    public bool IsQuoteListVisible => IsDone && !IsSearchFilteringVisible;
+
     public bool IsFeedFiltersVisible => !IsSearching;
 
     public string EmptyTitleText =>

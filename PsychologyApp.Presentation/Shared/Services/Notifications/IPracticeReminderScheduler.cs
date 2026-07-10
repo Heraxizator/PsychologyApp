@@ -4,6 +4,8 @@ namespace PsychologyApp.Presentation.Shared.Services.Notifications;
 
 public interface IPracticeReminderScheduler
 {
+    bool IsSupported { get; }
+
     Task RequestPermissionIfNeededAsync(CancellationToken cancellationToken = default);
 
     void Cancel();

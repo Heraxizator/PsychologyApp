@@ -60,6 +60,17 @@ public static partial class AppStrings
     public static string PracticeReminderBody => T(
         "Уделите несколько минут практике — это поддержит ваш прогресс.",
         "Take a few minutes to practice and keep your progress going.");
+    public static string PracticeReminderTitleNamed(string techniqueName) =>
+        T($"Пора: {techniqueName}", $"Time for {techniqueName}");
+    public static string PracticeReminderBodyNamed(string techniqueName, string reason) =>
+        string.IsNullOrWhiteSpace(reason)
+            ? T(
+                $"Сегодня: {techniqueName}. Уделите несколько минут практике.",
+                $"Today: {techniqueName}. Take a few minutes to practice.")
+            : T($"{reason} — {techniqueName}", $"{reason} — {techniqueName}");
+    public static string SettingsPrimaryConcernLabel => T("Главный запрос", "Primary concern");
+    public static string SettingsPrimaryConcernPickerTitle => T("Что вас беспокоит?", "What troubles you?");
+    public static string SettingsPrimaryConcernSection => T("Персонализация", "Personalization");
     public static string SettingsQuestionnaireAutoAdvanceLabel => T(
         "Автопереход к следующему вопросу",
         "Auto-advance to the next question");
@@ -252,6 +263,9 @@ public static partial class AppStrings
         "The great doxology to God");
     public static string CleanerSearchPlaceholder => T("Поиск молитвы", "Search prayers");
     public static string CleanerNoPrayersFound => T("Ничего не найдено", "No prayers found");
+    public static string CleanerCatalogEmpty => T(
+        "Пока нет молитв в каталоге",
+        "No prayers in the catalog yet");
     public static string CleanerNowPlaying => T("Сейчас играет", "Now playing");
 
     public static string DesignerNamePlaceholder => T("Крутилка Славинского", "Slavinski spin technique");
@@ -326,6 +340,38 @@ public static partial class AppStrings
     public static string TodayForYou => T("Сегодня для вас", "Today for you");
     public static string TodayRecommended => T("Рекомендуемая практика", "Recommended practice");
     public static string TodayStartPractice => T("Начать", "Start");
+    public static string StreakAtRiskBanner(int days) => T(
+        $"Сохраните серию из {days} дн. — позанимайтесь сегодня",
+        $"Keep your {days}-day streak — practice today");
+    public static string ComebackBanner => T(
+        "С возвращением — начните с короткой практики",
+        "Welcome back — start with a short practice");
+    public static string ComebackBannerWithTechnique(string name) => T(
+        $"С возвращением — продолжите «{name}»",
+        $"Welcome back — continue {name}");
+    public static string WeeklyInsightLine(int practiceCount, string moodTrend) =>
+        string.IsNullOrEmpty(moodTrend)
+            ? T($"На этой неделе: {practiceCount} {PracticeCountWord(practiceCount)}",
+                $"This week: {practiceCount} {PracticeCountWordEn(practiceCount)}")
+            : T($"На этой неделе: {practiceCount} {PracticeCountWord(practiceCount)} · настроение {moodTrend}",
+                $"This week: {practiceCount} {PracticeCountWordEn(practiceCount)} · mood {moodTrend}");
+    public static string WeeklyInsightMoodOnly(string moodTrend) => T(
+        $"На этой неделе: настроение {moodTrend}",
+        $"This week: mood {moodTrend}");
+    public static string MoodTrendUp => "↑";
+    public static string MoodTrendFlat => "→";
+    public static string MoodTrendDown => "↓";
+    private static string PracticeCountWord(int count) => count switch
+    {
+        1 => "практика",
+        >= 2 and <= 4 => "практики",
+        _ => "практик"
+    };
+    private static string PracticeCountWordEn(int count) => count == 1 ? "practice" : "practices";
+    public static string OnboardingRemindersLabel => T(
+        "Напоминать о практике",
+        "Remind me to practice");
+    public static string OnboardingReminderHourLabel => T("Время напоминания", "Reminder time");
     public static string TodayRecommendationReason(string concern) => concern switch
     {
         "anxiety" => T("Подходит при тревоге", "Good for anxiety"),
@@ -368,6 +414,28 @@ public static partial class AppStrings
     public static string PracticeCompletedTitle => T("Готово!", "Done!");
     public static string PracticeCompletedBody(int streak) =>
         T($"Отличная работа! Серия: {streak} дн.", $"Great job! Streak: {streak} days");
+    public static bool IsStreakMilestone(int streak) =>
+        streak is 3 or 7 or 14 or 30;
+    public static string PracticeMilestoneTitle(int streak) => streak switch
+    {
+        3 => T("3 дня подряд!", "3 days in a row!"),
+        7 => T("Неделя подряд!", "A full week!"),
+        14 => T("2 недели подряд!", "2 weeks in a row!"),
+        30 => T("Месяц подряд!", "A full month!"),
+        _ => PracticeCompletedTitle
+    };
+    public static string PracticeMilestoneBody(int streak) => streak switch
+    {
+        3 => T("Хорошее начало — так держать.", "A solid start — keep it going."),
+        7 => T("7 дней подряд — отличный ритм.", "7 days in a row — great rhythm."),
+        14 => T("14 дней — сильная привычка.", "14 days — a strong habit."),
+        30 => T("30 дней — впечатляющая серия.", "30 days — an impressive streak."),
+        _ => PracticeCompletedBody(streak)
+    };
+    public static string PracticeMoodDelta(int before, int after) =>
+        T($"Было {MoodEmoji(before)} {before}/5 → стало {MoodEmoji(after)} {after}/5",
+            $"Was {MoodEmoji(before)} {before}/5 → now {MoodEmoji(after)} {after}/5");
+    public static string ProfileMoodNotesTitle => T("Заметки к настроению", "Mood notes");
     public static string PracticeGoHomeButton => T("На главную", "Go home");
     public static string PracticeMoreButton => T("Ещё практика", "More practice");
     public static string PracticeHistoryTitle => T("Недавние практики", "Recent practices");
@@ -581,6 +649,22 @@ public static partial class AppStrings
     public static string QuoteReminderBody => T(
         "Откройте приложение и прочитайте мысль дня.",
         "Open the app and read today's thought.");
+    public static string QuoteReminderBodySnippet(string quoteText)
+    {
+        string trimmed = quoteText.Trim();
+        if (trimmed.Length == 0)
+        {
+            return QuoteReminderBody;
+        }
+
+        const int maxLen = 100;
+        if (trimmed.Length <= maxLen)
+        {
+            return trimmed;
+        }
+
+        return trimmed.Substring(0, maxLen - 1).TrimEnd() + "…";
+    }
     public static string QuoteThemeWisdom => T("Мудрость", "Wisdom");
     public static string QuoteThemeMotivation => T("Мотивация", "Motivation");
     public static string QuoteThemeResilience => T("Стойкость", "Resilience");

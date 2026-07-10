@@ -7,5 +7,6 @@ public enum PreferenceLabelKind
     Theme,
     Color,
     Form,
-    Size
+    Size,
+    Concern
 }

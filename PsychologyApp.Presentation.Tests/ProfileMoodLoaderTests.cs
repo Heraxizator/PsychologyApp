@@ -26,6 +26,7 @@ public sealed class ProfileMoodLoaderTests
         Assert.True(snapshot.HasTrendChart);
         Assert.Equal(2, snapshot.ChartPoints.Count);
         Assert.NotEmpty(snapshot.ChartSubtitle);
+        Assert.Empty(snapshot.RecentNotes);
     }
 
     [Fact]
@@ -44,5 +45,47 @@ public sealed class ProfileMoodLoaderTests
 
         Assert.False(snapshot.HasTrendChart);
         Assert.Single(snapshot.ChartPoints);
+    }
+
+    [Fact]
+    public async Task LoadAsync_ReturnsNonEmptyNotes_Only()
+    {
+        Mock<IUserProgressService> progress = new();
+        progress
+            .Setup(p => p.GetRecentMoodsAsync(30, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<MoodEntryDTO>
+            {
+                new()
+                {
+                    MoodLevel = 4,
+                    Note = "  Felt calmer  ",
+                    RecordedAt = new DateTime(2026, 1, 3, 12, 0, 0, DateTimeKind.Utc)
+                },
+                new()
+                {
+                    MoodLevel = 3,
+                    Note = "   ",
+                    RecordedAt = new DateTime(2026, 1, 2, 12, 0, 0, DateTimeKind.Utc)
+                },
+                new()
+                {
+                    MoodLevel = 2,
+                    Note = null,
+                    RecordedAt = new DateTime(2026, 1, 1, 12, 0, 0, DateTimeKind.Utc)
+                },
+                new()
+                {
+                    MoodLevel = 5,
+                    Note = "Good day",
+                    RecordedAt = new DateTime(2025, 12, 31, 12, 0, 0, DateTimeKind.Utc)
+                }
+            });
+
+        ProfileMoodLoader loader = new(progress.Object);
+        ProfileMoodSnapshot snapshot = await loader.LoadAsync();
+
+        Assert.Equal(2, snapshot.RecentNotes.Count);
+        Assert.Equal("Felt calmer", snapshot.RecentNotes[0].NoteText);
+        Assert.Equal("Good day", snapshot.RecentNotes[1].NoteText);
     }
 }

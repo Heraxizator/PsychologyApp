@@ -93,6 +93,30 @@
                         ChartPoints="{Binding MoodChartPoints}"
                         Subtitle="{Binding MoodChartSubtitle}"
                         Title="{Binding MoodTrendTitle}" />
+                    <VerticalStackLayout
+                        IsVisible="{Binding HasMoodNotes}"
+                        Spacing="{StaticResource CompactSpacing}">
+                        <ui:SectionHeaderView TitleText="{Binding MoodNotesTitle}" />
+                        <VerticalStackLayout
+                            BindableLayout.ItemsSource="{Binding MoodNotes}"
+                            Spacing="{StaticResource ListItemSpacing}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="profile:MoodNoteItem">
+                                    <VerticalStackLayout Spacing="2">
+                                        <VerticalStackLayout.Behaviors>
+                                            <behaviors:ListItemRevealBehavior />
+                                        </VerticalStackLayout.Behaviors>
+                                        <Label
+                                            Text="{Binding DateText}"
+                                            Style="{StaticResource CaptionStyle}" />
+                                        <Label
+                                            Text="{Binding NoteText}"
+                                            Style="{StaticResource BodyStyle}" />
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
                 </VerticalStackLayout>
 
                 <ui:SettingsLinkCardView
@@ -132,6 +156,7 @@
                     <ui:SectionHeaderView TitleText="{Binding RecommendedLabel}" />
                     <CollectionView
                         HeightRequest="156"
+                        SelectionMode="None"
                         HorizontalScrollBarVisibility="Never"
                         ItemsSource="{Binding Techniques}">
                         <CollectionView.ItemsLayout>
@@ -195,6 +220,14 @@
 
             </VerticalStackLayout>
         </ScrollView>
+
+        <ui:RetryView
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsFail}"
+            FailedText="{Binding LoadErrorText}"
+            RetryText="{Binding RetryText}"
+            RetryCommand="{Binding ReloadCommand}" />
 
         <ui:RetryView
             VerticalOptions="Center"

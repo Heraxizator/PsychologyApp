@@ -17,6 +17,7 @@ public interface IUserProgressService
     Task<long> CountTechniqueCompletionsAsync(CancellationToken cancellationToken = default);
     Task<IReadOnlyList<CompletionDTO>> GetRecentTechniqueCompletionsAsync(int limit = 20, CancellationToken cancellationToken = default);
     Task<int> GetStreakDaysAsync(CancellationToken cancellationToken = default);
+    Task<int> GetAtRiskStreakDaysAsync(CancellationToken cancellationToken = default);
     Task<DateTime?> GetLastPracticeDateAsync(string itemKey, CancellationToken cancellationToken = default);
     Task<IReadOnlyDictionary<string, DateTime>> GetLastPracticeDatesAsync(IReadOnlyList<string> itemKeys, CancellationToken cancellationToken = default);
 

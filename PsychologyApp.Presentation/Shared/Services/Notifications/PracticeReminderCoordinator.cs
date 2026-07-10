@@ -1,3 +1,5 @@
+using PsychologyApp.Application.Models.Practice;
+using PsychologyApp.Application.Practice;
 using PsychologyApp.Application.Recommendations;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Domain.Notifications;
@@ -11,6 +13,7 @@ public sealed class PracticeReminderCoordinator(
     IUserProgressService progress,
     IUserPreferencesStore preferencesStore,
     ITechniqueRecommendationService recommendationService,
+    ITechniqueCatalogService techniqueCatalog,
     IPracticeReminderScheduler scheduler) : IPracticeReminderCoordinator
 {
     public async Task SyncAsync(CancellationToken cancellationToken = default)
@@ -40,12 +43,26 @@ public sealed class PracticeReminderCoordinator(
             return;
         }
 
-        TechniqueId techniqueId = recommendationService.ResolveTodayTechnique(
-            await TodayRecommendationContextBuilder.BuildAsync(progress, state.OnboardingConcern, cancellationToken)).TechniqueId;
+        TodayRecommendationContext context =
+            await TodayRecommendationContextBuilder.BuildAsync(progress, state.OnboardingConcern, cancellationToken);
+        TodayRecommendationDecision decision = recommendationService.ResolveTodayTechnique(context);
+        TechniqueId techniqueId = decision.TechniqueId;
+        BuiltInTechniqueDefinition definition = await techniqueCatalog.GetAsync(techniqueId, cancellationToken);
+        string reason = ResolveReasonText(decision, context);
+
         scheduler.Schedule(
             nextFireLocal.Value,
             techniqueId,
-            AppStrings.PracticeReminderTitle,
-            AppStrings.PracticeReminderBody);
+            AppStrings.PracticeReminderTitleNamed(definition.ListTitle),
+            AppStrings.PracticeReminderBodyNamed(definition.ListTitle, reason));
     }
+
+    private static string ResolveReasonText(TodayRecommendationDecision decision, TodayRecommendationContext context) =>
+        decision.Source switch
+        {
+            TodayRecommendationSource.RecentTest =>
+                AppStrings.TodayRecommendationReasonFromTest(decision.TestId ?? context.RecentTestResult?.TestId ?? string.Empty),
+            TodayRecommendationSource.LowMood => AppStrings.TodayRecommendationReasonLowMood(),
+            _ => AppStrings.TodayRecommendationReason(context.Concern)
+        };
 }

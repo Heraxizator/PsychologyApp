@@ -18,7 +18,10 @@ public partial class SettingsViewModel : BaseViewModel
     private readonly LanguageContentReloader _languageContentReloader;
     private readonly IPracticeReminderCoordinator _practiceReminderCoordinator;
     private readonly IQuoteReminderCoordinator _quoteReminderCoordinator;
+    private readonly bool _areRemindersSupported;
     private UserPreferencesState _savedState;
+
+    public bool AreRemindersSupported => _areRemindersSupported;
 
     public SettingsViewModel(
         IDialogService dialogService,
@@ -27,7 +30,8 @@ public partial class SettingsViewModel : BaseViewModel
         SettingsPreferencesPresenter presenter,
         LanguageContentReloader languageContentReloader,
         IPracticeReminderCoordinator practiceReminderCoordinator,
-        IQuoteReminderCoordinator quoteReminderCoordinator)
+        IQuoteReminderCoordinator quoteReminderCoordinator,
+        IPracticeReminderScheduler practiceReminderScheduler)
     {
         BindPreferences(userPreferencesStore);
         _dialogService = dialogService;
@@ -37,6 +41,7 @@ public partial class SettingsViewModel : BaseViewModel
         _languageContentReloader = languageContentReloader;
         _practiceReminderCoordinator = practiceReminderCoordinator;
         _quoteReminderCoordinator = quoteReminderCoordinator;
+        _areRemindersSupported = practiceReminderScheduler.IsSupported;
         ModuleName = AppStrings.ShellTabPractice;
         PageName = AppStrings.SettingsTitle;
 

@@ -11,7 +11,10 @@ public interface IUserPreferencesStore
     void Save(UserPreferencesState state);
     void ApplyAll();
     void ApplyPreview(UserPreferencesState state);
-    void CompleteOnboarding(string concern);
+    void CompleteOnboarding(
+        string concern,
+        bool? practiceRemindersEnabled = null,
+        int? practiceReminderHour = null);
     void ResetOnboardingCompletion();
     void SetPendingTechnique(TechniqueId techniqueId);
     TechniqueId? ConsumePendingTechnique();
@@ -33,7 +36,11 @@ public sealed class MauiUserPreferencesStore : IUserPreferencesStore
 
     public void ApplyPreview(UserPreferencesState state) => UserPreferences.ApplyPreview(state);
 
-    public void CompleteOnboarding(string concern) => UserPreferences.CompleteOnboarding(concern);
+    public void CompleteOnboarding(
+        string concern,
+        bool? practiceRemindersEnabled = null,
+        int? practiceReminderHour = null) =>
+        UserPreferences.CompleteOnboarding(concern, practiceRemindersEnabled, practiceReminderHour);
 
     public void ResetOnboardingCompletion() => UserPreferences.ResetOnboardingCompletion();
 

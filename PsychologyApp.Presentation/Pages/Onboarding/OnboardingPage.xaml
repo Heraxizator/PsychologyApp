@@ -5,6 +5,7 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.Onboarding"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:onboarding="clr-namespace:PsychologyApp.Presentation.Widgets.Onboarding"
+             xmlns:converters="clr-namespace:PsychologyApp.Presentation.Shared.UI.Converters"
              x:DataType="vm:OnboardingViewModel"
              Shell.NavBarIsVisible="False">
 
@@ -125,6 +126,21 @@
                             Title="{Binding RecommendedTitle}"
                             Subtitle="{Binding RecommendedSubtitle}"
                             ReasonText="{Binding RecommendedReason}" />
+                        <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                            <VerticalStackLayout Spacing="0">
+                                <ui:SettingSwitchRowView
+                                    LabelText="{Binding OnboardingRemindersLabel}"
+                                    IsToggled="{Binding PracticeRemindersEnabled}" />
+                                <BoxView Style="{StaticResource SettingRowDividerStyle}" />
+                                <ui:SettingPickerRowView
+                                    LabelKind="{x:Static converters:PreferenceLabelKind.PassThrough}"
+                                    LabelText="{Binding OnboardingReminderHourLabel}"
+                                    PickerTitle="{Binding OnboardingReminderHourPickerTitle}"
+                                    ItemsSource="{Binding PracticeReminderHourOptions}"
+                                    SelectedItem="{Binding PracticeReminderHour}"
+                                    IsRowEnabled="{Binding PracticeRemindersEnabled}" />
+                            </VerticalStackLayout>
+                        </Border>
                         <ui:TextBoxView
                             HeaderText="{Binding DisclaimerTitle}"
                             BodyText="{Binding DisclaimerBody}" />

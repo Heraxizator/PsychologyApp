@@ -95,4 +95,20 @@ public sealed class PressFeedbackBehaviorTests
         Grid root = (Grid)page.Content;
         Assert.Contains(root.Behaviors, b => b is PressFeedbackBehavior { AttachToAllTapTargets: true });
     }
+
+    [Theory]
+    [InlineData(true, false, TapFeedbackAction.None)]
+    [InlineData(false, true, TapFeedbackAction.ReleaseOnly)]
+    [InlineData(false, false, TapFeedbackAction.FullBounce)]
+    public void ResolveTapFeedbackAction_MatchesPointerRaceCases(
+        bool pointerCycleCompleted,
+        bool hasVisiblePressOrAnimating,
+        TapFeedbackAction expected)
+    {
+        TapFeedbackAction action = VisualElementPressFeedback.ResolveTapFeedbackAction(
+            pointerCycleCompleted,
+            hasVisiblePressOrAnimating);
+
+        Assert.Equal(expected, action);
+    }
 }
