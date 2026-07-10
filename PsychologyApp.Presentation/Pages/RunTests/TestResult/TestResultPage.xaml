@@ -37,7 +37,8 @@
                     HasTrendBadge="{Binding HasTrendBadge}" />
 
                 <testUi:TestScoreTrendChartView
-                    IsVisible="{Binding HasTrendChart}"
+                    x:Name="TrendChartView"
+                    IsVisible="False"
                     Title="{Binding ChartTitle}"
                     ChartPoints="{Binding ChartPoints}" />
 
@@ -53,7 +54,8 @@
                 </Border>
 
                 <VerticalStackLayout
-                    IsVisible="{Binding HasRecommendation}"
+                    x:Name="RecommendationSection"
+                    IsVisible="False"
                     Spacing="{StaticResource CompactSpacing}">
                     <Label
                         Text="{Binding RecommendationHint}"
@@ -83,7 +85,8 @@
 
         <VerticalStackLayout Grid.Row="2" Spacing="8" Padding="0,0,0,8">
             <ui:ButtonView
-                IsVisible="{Binding HasRecommendation}"
+                x:Name="RecommendationPrimaryButton"
+                IsVisible="False"
                 BodyText="{Binding TryTechniqueButtonText}"
                 TapCommand="{Binding TryTechniqueCommand}" />
             <Grid ColumnDefinitions="*,*" ColumnSpacing="8">

@@ -17,7 +17,7 @@ public interface ITechniquePageFactory
     CreatedPage CreateCreatedPage(long techniqueId);
     DesignerPage CreateDesignerPage(long techniqueId);
     TechniqueSessionPage CreateTechniqueSessionPage(TechniqueId techniqueId, INavigation hostNavigation);
-    PracticeCompletionPage CreatePracticeCompletionPage(int streakDays);
+    PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null);
 }
 
 public sealed class TechniquePageFactory(
@@ -42,6 +42,6 @@ public sealed class TechniquePageFactory(
     public TechniqueSessionPage CreateTechniqueSessionPage(TechniqueId techniqueId, INavigation hostNavigation) =>
         new(techniqueViewModelFactory, pageAnalyticsService, techniqueCatalog, techniqueId, hostNavigation);
 
-    public PracticeCompletionPage CreatePracticeCompletionPage(int streakDays) =>
-        new(practiceCompletionViewModelFactory, streakDays);
+    public PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null) =>
+        new(practiceCompletionViewModelFactory, streakDays, completedItemKey);
 }

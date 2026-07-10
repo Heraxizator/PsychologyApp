@@ -1,4 +1,3 @@
-using PsychologyApp.Presentation.Shared.Common;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Widgets.TestListCard;
@@ -8,7 +7,6 @@ public partial class TestListCardView : ContentView
     public TestListCardView()
     {
         InitializeComponent();
-        VisualElementPressFeedback.AttachToTemplateRoot(this, new PressFeedbackOptions { HapticOnRelease = true, ScaleOnly = true });
     }
 
     public static readonly BindableProperty TitleProperty =

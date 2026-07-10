@@ -6,10 +6,13 @@ namespace PsychologyApp.Application.Recommendations;
 public sealed record TodayRecommendationContext(
     string Concern,
     TestResultDTO? RecentTestResult = null,
-    int? TodayMoodLevel = null);
+    int? TodayMoodLevel = null,
+    IReadOnlyDictionary<string, DateTime>? LastPracticeDatesUtc = null,
+    TechniqueId? DraftTechniqueId = null);
 
 public enum TodayRecommendationSource
 {
+    SessionDraft,
     RecentTest,
     LowMood,
     OnboardingConcern,

@@ -52,5 +52,5 @@ public interface IPageFactory
     CreatedPage CreateCreatedPage(long techniqueId);
     DesignerPage CreateDesignerPage(long techniqueId);
     TechniqueSessionPage CreateTechniqueSessionPage(TechniqueId techniqueId, INavigation hostNavigation);
-    PracticeCompletionPage CreatePracticeCompletionPage(int streakDays);
+    PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null);
 }

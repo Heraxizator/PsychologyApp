@@ -123,8 +123,8 @@ public sealed class PageRegistry(
     public TechniqueSessionPage CreateTechniqueSessionPage(TechniqueId techniqueId, INavigation hostNavigation) =>
         WithPressFeedback(techniquePageFactory.CreateTechniqueSessionPage(techniqueId, hostNavigation));
 
-    public PracticeCompletionPage CreatePracticeCompletionPage(int streakDays) =>
-        WithPressFeedback(techniquePageFactory.CreatePracticeCompletionPage(streakDays));
+    public PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null) =>
+        WithPressFeedback(techniquePageFactory.CreatePracticeCompletionPage(streakDays, completedItemKey));
 
     private static TPage WithPressFeedback<TPage>(TPage page) where TPage : ContentPage
     {

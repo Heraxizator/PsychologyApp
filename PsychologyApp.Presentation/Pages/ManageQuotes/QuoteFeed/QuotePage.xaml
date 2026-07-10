@@ -67,6 +67,10 @@
                     RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
                     ItemsSource="{Binding DisplayItems}">
 
+                    <CollectionView.Behaviors>
+                        <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
+                    </CollectionView.Behaviors>
+
                     <CollectionView.Header>
                         <VerticalStackLayout
                             BindingContext="{Binding Source={x:Reference page}, Path=BindingContext}">

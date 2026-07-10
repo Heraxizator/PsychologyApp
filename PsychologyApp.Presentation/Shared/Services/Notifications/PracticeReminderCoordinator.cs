@@ -4,6 +4,7 @@ using PsychologyApp.Application.Recommendations;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Domain.Notifications;
 using PsychologyApp.Domain.Practice;
+using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 
@@ -48,7 +49,7 @@ public sealed class PracticeReminderCoordinator(
         TodayRecommendationDecision decision = recommendationService.ResolveTodayTechnique(context);
         TechniqueId techniqueId = decision.TechniqueId;
         BuiltInTechniqueDefinition definition = await techniqueCatalog.GetAsync(techniqueId, cancellationToken);
-        string reason = ResolveReasonText(decision, context);
+        string reason = TodayRecommendationReasonFormatter.Format(decision, context);
 
         scheduler.Schedule(
             nextFireLocal.Value,
@@ -56,13 +57,4 @@ public sealed class PracticeReminderCoordinator(
             AppStrings.PracticeReminderTitleNamed(definition.ListTitle),
             AppStrings.PracticeReminderBodyNamed(definition.ListTitle, reason));
     }
-
-    private static string ResolveReasonText(TodayRecommendationDecision decision, TodayRecommendationContext context) =>
-        decision.Source switch
-        {
-            TodayRecommendationSource.RecentTest =>
-                AppStrings.TodayRecommendationReasonFromTest(decision.TestId ?? context.RecentTestResult?.TestId ?? string.Empty),
-            TodayRecommendationSource.LowMood => AppStrings.TodayRecommendationReasonLowMood(),
-            _ => AppStrings.TodayRecommendationReason(context.Concern)
-        };
 }

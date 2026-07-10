@@ -1,12 +1,18 @@
-namespace PsychologyApp.Presentation.Widgets.Test;
-
 using PsychologyApp.Domain.Tests;
+using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
+using PsychologyApp.Presentation.Shared.Navigation;
+
+namespace PsychologyApp.Presentation.Widgets.Test;
 
 public partial class TestResultHeroView : ContentView
 {
+    private bool _iconPulseStarted;
+
     public TestResultHeroView()
     {
         InitializeComponent();
+        Loaded += OnLoaded;
     }
 
     public static readonly BindableProperty ScoreTitleProperty =
@@ -74,5 +80,20 @@ public partial class TestResultHeroView : ContentView
         {
             view.IsTrendWorse = kind is TestTrendKind.Worse;
         }
+    }
+
+    private void OnLoaded(object? sender, EventArgs e) =>
+        TryPulseIconAsync().FireAndForget();
+
+    private async Task TryPulseIconAsync()
+    {
+        if (_iconPulseStarted || !IsLoaded)
+        {
+            return;
+        }
+
+        _iconPulseStarted = true;
+        await Task.Delay((int)UiAnimations.MicroDuration);
+        await UiAnimations.SafePulseAsync(IconHalo);
     }
 }

@@ -3,6 +3,7 @@ using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Recommendations;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Domain.Practice;
+using PsychologyApp.Domain.Tests;
 using PsychologyApp.Domain.UserProgress;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
@@ -105,7 +106,10 @@ public sealed class PracticeDashboardLoader(
             userProgressService.GetRecentTechniqueCompletionsAsync(50, cancellationToken);
         Task<IReadOnlyList<MoodEntryDTO>> moodsTask =
             userProgressService.GetRecentMoodsAsync(30, cancellationToken);
-        await Task.WhenAll(completionsTask, moodsTask);
+        Task<int> streakTask = userProgressService.GetStreakDaysAsync(cancellationToken);
+        Task<TestResultDTO?> recentTestTask =
+            userProgressService.GetMostRecentTestResultAsync(TimeSpan.FromDays(7), cancellationToken);
+        await Task.WhenAll(completionsTask, moodsTask, streakTask, recentTestTask);
 
         int practiceCount = (await completionsTask)
             .Count(completion => completion.CompletedAt.ToLocalTime() >= weekStartLocal);
@@ -121,11 +125,58 @@ public sealed class PracticeDashboardLoader(
         }
 
         string moodTrend = ResolveMoodTrend(weekMoods);
-        string display = practiceCount == 0
+        string baseLine = practiceCount == 0
             ? AppStrings.WeeklyInsightMoodOnly(moodTrend)
             : AppStrings.WeeklyInsightLine(practiceCount, moodTrend);
 
-        return new WeeklyInsightSnapshot { DisplayText = display };
+        string extra = await ResolveWeeklyExtraAsync(
+            await streakTask,
+            await recentTestTask,
+            weekStartLocal,
+            cancellationToken);
+
+        return new WeeklyInsightSnapshot
+        {
+            DisplayText = AppStrings.WeeklyInsightWithExtra(baseLine, extra)
+        };
+    }
+
+    private async Task<string> ResolveWeeklyExtraAsync(
+        int streakDays,
+        TestResultDTO? recentTest,
+        DateTime weekStartLocal,
+        CancellationToken cancellationToken)
+    {
+        if (streakDays > 0)
+        {
+            return AppStrings.WeeklyInsightStreakPart(streakDays);
+        }
+
+        if (recentTest is null || string.IsNullOrWhiteSpace(recentTest.TestId))
+        {
+            return string.Empty;
+        }
+
+        IReadOnlyList<TestResultDTO> history =
+            await userProgressService.GetTestResultHistoryAsync(recentTest.TestId, 2, cancellationToken);
+        if (history.Count < 2)
+        {
+            return string.Empty;
+        }
+
+        bool bothThisWeek = history.Take(2).All(item => item.CompletedAt.ToLocalTime() >= weekStartLocal);
+        if (!bothThisWeek)
+        {
+            return string.Empty;
+        }
+
+        TestTrendKind kind = TestTrendEvaluator.CompareScores(history[0].Score, history[1].Score);
+        return kind switch
+        {
+            TestTrendKind.Improved => AppStrings.WeeklyInsightTestImprovedPart(),
+            TestTrendKind.Worse => AppStrings.WeeklyInsightTestWorsePart(),
+            _ => string.Empty
+        };
     }
 
     public async Task RecordMoodAsync(int moodLevel, CancellationToken cancellationToken = default)

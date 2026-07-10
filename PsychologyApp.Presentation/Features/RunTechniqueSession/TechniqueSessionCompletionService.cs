@@ -30,7 +30,7 @@ public sealed class TechniqueSessionCompletionService(IPracticeReminderCoordinat
             await progress.DeleteSessionDraftAsync(itemKey, cancellationToken);
         }
 
-        await PracticeCompletionNavigator.NavigateAfterCompletionAsync(navigation, progress);
+        await PracticeCompletionNavigator.NavigateAfterCompletionAsync(navigation, progress, itemKey);
 
         await practiceReminderCoordinator.SyncAsync(cancellationToken);
     }
