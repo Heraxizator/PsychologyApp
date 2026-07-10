@@ -17,8 +17,13 @@ public static class MaterialIconNames
     public const string FormatQuote = nameof(MaterialIcons.FormatQuote);
     public const string DoneAll = nameof(MaterialIcons.DoneAll);
     public const string AutoAwesome = nameof(MaterialIcons.AutoAwesome);
+    public const string CheckCircle = nameof(MaterialIcons.CheckCircle);
+    public const string Whatshot = nameof(MaterialIcons.Whatshot);
+    public const string EmojiEvents = nameof(MaterialIcons.EmojiEvents);
+    public const string WorkspacePremium = nameof(MaterialIcons.WorkspacePremium);
     public const string Favorite = nameof(MaterialIcons.Favorite);
     public const string Insights = nameof(MaterialIcons.Insights);
+    public const string LibraryMusic = nameof(MaterialIcons.LibraryMusic);
 
     public static bool TryResolve(string? iconName, out MaterialIcons icon)
     {

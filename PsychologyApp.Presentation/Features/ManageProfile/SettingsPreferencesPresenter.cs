@@ -24,7 +24,8 @@ public sealed class SettingsPreferencesPresenter
         Action<bool> setPracticeRemindersEnabled,
         Action<int> setPracticeReminderHour,
         Action<bool> setQuoteRemindersEnabled,
-        Action<int> setQuoteReminderHour)
+        Action<int> setQuoteReminderHour,
+        Action<string> setOnboardingConcern)
     {
         setLanguage(UserPreferences.ParseLanguageKey(state.Language));
         setTheme(UserPreferences.ParseThemeKey(state.Theme));
@@ -37,6 +38,7 @@ public sealed class SettingsPreferencesPresenter
         setPracticeReminderHour(UserPreferences.NormalizePracticeReminderHour(state.PracticeReminderHour));
         setQuoteRemindersEnabled(state.QuoteRemindersEnabled);
         setQuoteReminderHour(UserPreferences.NormalizeQuoteReminderHour(state.QuoteReminderHour));
+        setOnboardingConcern(UserPreferences.NormalizeOnboardingConcernKey(state.OnboardingConcern));
     }
 
     public UserPreferencesState BuildState(
@@ -51,6 +53,7 @@ public sealed class SettingsPreferencesPresenter
         int practiceReminderHour,
         bool quoteRemindersEnabled,
         int quoteReminderHour,
+        string onboardingConcern,
         UserPreferencesState savedState) =>
         new()
         {
@@ -66,7 +69,7 @@ public sealed class SettingsPreferencesPresenter
             QuoteRemindersEnabled = quoteRemindersEnabled,
             QuoteReminderHour = UserPreferences.NormalizeQuoteReminderHour(quoteReminderHour),
             HasCompletedOnboarding = savedState.HasCompletedOnboarding,
-            OnboardingConcern = savedState.OnboardingConcern
+            OnboardingConcern = UserPreferences.NormalizeOnboardingConcernKey(onboardingConcern)
         };
 
     public void ApplyLivePreview(IUserPreferencesStore store, UserPreferencesState state) =>

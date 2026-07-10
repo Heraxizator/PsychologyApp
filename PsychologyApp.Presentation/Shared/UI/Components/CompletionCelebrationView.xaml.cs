@@ -1,13 +1,19 @@
+using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Shared.UI.Components;
 
 public partial class CompletionCelebrationView : ContentView
 {
+    private VisualElement? _iconHalo;
+    private bool _milestonePulseStarted;
+
     public CompletionCelebrationView()
     {
         InitializeComponent();
-        IconName = "CheckCircle";
+        IconName = MaterialIconNames.CheckCircle;
+        Loaded += OnLoaded;
     }
 
     public static readonly BindableProperty TitleTextProperty =
@@ -17,7 +23,15 @@ public partial class CompletionCelebrationView : ContentView
         BindableProperty.Create(nameof(BodyText), typeof(string), typeof(CompletionCelebrationView), string.Empty);
 
     public static readonly BindableProperty IconNameProperty =
-        BindableProperty.Create(nameof(IconName), typeof(string), typeof(CompletionCelebrationView), "CheckCircle");
+        BindableProperty.Create(nameof(IconName), typeof(string), typeof(CompletionCelebrationView), MaterialIconNames.CheckCircle);
+
+    public static readonly BindableProperty IsMilestoneProperty =
+        BindableProperty.Create(
+            nameof(IsMilestone),
+            typeof(bool),
+            typeof(CompletionCelebrationView),
+            false,
+            propertyChanged: OnIsMilestoneChanged);
 
     public static readonly BindableProperty StreakValueTextProperty =
         BindableProperty.Create(nameof(StreakValueText), typeof(string), typeof(CompletionCelebrationView), string.Empty);
@@ -56,6 +70,12 @@ public partial class CompletionCelebrationView : ContentView
     {
         get => (string)GetValue(IconNameProperty);
         set => SetValue(IconNameProperty, value);
+    }
+
+    public bool IsMilestone
+    {
+        get => (bool)GetValue(IsMilestoneProperty);
+        set => SetValue(IsMilestoneProperty, value);
     }
 
     public string StreakValueText
@@ -98,5 +118,37 @@ public partial class CompletionCelebrationView : ContentView
     {
         get => (ICommand?)GetValue(SecondaryCommandProperty);
         set => SetValue(SecondaryCommandProperty, value);
+    }
+
+    protected override void OnApplyTemplate()
+    {
+        base.OnApplyTemplate();
+        _iconHalo = GetTemplateChild("IconHalo") as VisualElement;
+    }
+
+    private static void OnIsMilestoneChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is CompletionCelebrationView view && newValue is true)
+        {
+            view.TryPulseMilestoneAsync().FireAndForget();
+        }
+    }
+
+    private void OnLoaded(object? sender, EventArgs e) =>
+        TryPulseMilestoneAsync().FireAndForget();
+
+    private async Task TryPulseMilestoneAsync()
+    {
+        if (!IsMilestone || _milestonePulseStarted || !IsLoaded)
+        {
+            return;
+        }
+
+        _milestonePulseStarted = true;
+        await Task.Delay((int)UiAnimations.MicroDuration);
+        VisualElement? target = _iconHalo
+            ?? GetTemplateChild("IconHalo") as VisualElement
+            ?? this;
+        await UiAnimations.SafePulseAsync(target);
     }
 }

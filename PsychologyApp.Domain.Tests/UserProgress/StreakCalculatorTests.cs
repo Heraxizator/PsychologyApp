@@ -34,4 +34,31 @@ public sealed class StreakCalculatorTests
 
         Assert.Equal(1, StreakCalculator.CalculateFromCompletionDates(dates, today));
     }
+
+    [Fact]
+    public void CalculateAtRiskDays_WhenPracticedToday_ReturnsZero()
+    {
+        DateOnly today = new(2026, 6, 30);
+        IReadOnlyList<DateOnly> dates = [today, today.AddDays(-1)];
+
+        Assert.Equal(0, StreakCalculator.CalculateAtRiskDays(dates, today));
+    }
+
+    [Fact]
+    public void CalculateAtRiskDays_WhenPracticedYesterday_ReturnsStreakEndingYesterday()
+    {
+        DateOnly today = new(2026, 6, 30);
+        IReadOnlyList<DateOnly> dates = [today.AddDays(-1), today.AddDays(-2)];
+
+        Assert.Equal(2, StreakCalculator.CalculateAtRiskDays(dates, today));
+    }
+
+    [Fact]
+    public void CalculateIdleDays_CountsDaysSinceLastPractice()
+    {
+        DateOnly today = new(2026, 6, 30);
+        Assert.Equal(3, StreakCalculator.CalculateIdleDays(today.AddDays(-3), today));
+        Assert.Equal(0, StreakCalculator.CalculateIdleDays(today, today));
+        Assert.Equal(int.MaxValue, StreakCalculator.CalculateIdleDays(null, today));
+    }
 }

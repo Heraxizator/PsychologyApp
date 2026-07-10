@@ -20,7 +20,7 @@
                     <HorizontalStackLayout
                         HorizontalOptions="Center"
                         Spacing="8">
-                        <Border Style="{StaticResource MoodChipStyle}">
+                        <Border x:Name="MoodChip1" Style="{StaticResource MoodChipStyle}">
                             <Border.Triggers>
                                 <DataTrigger
                                     Binding="{TemplateBinding SelectedMoodLevel}"
@@ -34,7 +34,7 @@
                             </Border.GestureRecognizers>
                             <Label Text="😞" Style="{StaticResource MoodChipEmojiStyle}" />
                         </Border>
-                        <Border Style="{StaticResource MoodChipStyle}">
+                        <Border x:Name="MoodChip2" Style="{StaticResource MoodChipStyle}">
                             <Border.Triggers>
                                 <DataTrigger
                                     Binding="{TemplateBinding SelectedMoodLevel}"
@@ -48,7 +48,7 @@
                             </Border.GestureRecognizers>
                             <Label Text="😕" Style="{StaticResource MoodChipEmojiStyle}" />
                         </Border>
-                        <Border Style="{StaticResource MoodChipStyle}">
+                        <Border x:Name="MoodChip3" Style="{StaticResource MoodChipStyle}">
                             <Border.Triggers>
                                 <DataTrigger
                                     Binding="{TemplateBinding SelectedMoodLevel}"
@@ -62,7 +62,7 @@
                             </Border.GestureRecognizers>
                             <Label Text="😐" Style="{StaticResource MoodChipEmojiStyle}" />
                         </Border>
-                        <Border Style="{StaticResource MoodChipStyle}">
+                        <Border x:Name="MoodChip4" Style="{StaticResource MoodChipStyle}">
                             <Border.Triggers>
                                 <DataTrigger
                                     Binding="{TemplateBinding SelectedMoodLevel}"
@@ -76,7 +76,7 @@
                             </Border.GestureRecognizers>
                             <Label Text="🙂" Style="{StaticResource MoodChipEmojiStyle}" />
                         </Border>
-                        <Border Style="{StaticResource MoodChipStyle}">
+                        <Border x:Name="MoodChip5" Style="{StaticResource MoodChipStyle}">
                             <Border.Triggers>
                                 <DataTrigger
                                     Binding="{TemplateBinding SelectedMoodLevel}"

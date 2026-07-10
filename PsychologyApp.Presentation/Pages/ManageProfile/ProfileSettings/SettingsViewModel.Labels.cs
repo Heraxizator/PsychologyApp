@@ -22,6 +22,9 @@ public partial class SettingsViewModel
     public string QuoteRemindersLabel => AppStrings.SettingsQuoteRemindersLabel;
     public string QuoteReminderHourLabel => AppStrings.SettingsQuoteReminderHourLabel;
     public string QuoteReminderHourPickerTitle => AppStrings.SettingsQuoteReminderHourPickerTitle;
+    public string PrimaryConcernSectionTitle => AppStrings.SettingsPrimaryConcernSection;
+    public string PrimaryConcernLabel => AppStrings.SettingsPrimaryConcernLabel;
+    public string PrimaryConcernPickerTitle => AppStrings.SettingsPrimaryConcernPickerTitle;
     public string QuestionnaireAutoAdvanceLabel => AppStrings.SettingsQuestionnaireAutoAdvanceLabel;
     public string ApplyButtonText => AppStrings.SettingsApplyButton;
     public string ReplayOnboardingText => AppStrings.SettingsReplayOnboarding;

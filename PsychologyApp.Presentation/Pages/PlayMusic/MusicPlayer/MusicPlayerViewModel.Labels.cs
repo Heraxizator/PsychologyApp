@@ -1,4 +1,5 @@
 using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.UI.Components;
 
 namespace PsychologyApp.Presentation.Pages.PlayMusic.MusicPlayer;
 
@@ -9,6 +10,7 @@ public partial class MusicPlayerViewModel
     public string SearchPlaceholder => AppStrings.CleanerSearchPlaceholder;
     public string LoadingText => AppStrings.CleanerSearchingPrayers;
     public string NoPrayersFoundText => AppStrings.CleanerNoPrayersFound;
+    public string CatalogEmptyText => AppStrings.CleanerCatalogEmpty;
     public string NowPlayingLabel => AppStrings.CleanerNowPlaying;
     public string BufferingText => AppStrings.CleanerPreparingAudio;
     public string OfflineBadgeText => AppStrings.CleanerOfflineBadge;
@@ -23,6 +25,8 @@ public partial class MusicPlayerViewModel
             nameof(SearchPlaceholder),
             nameof(LoadingText),
             nameof(NoPrayersFoundText),
+            nameof(CatalogEmptyText),
+            nameof(ListEmptyBodyText),
             nameof(NowPlayingLabel),
             nameof(BufferingText),
             nameof(OfflineBadgeText),

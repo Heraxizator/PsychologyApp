@@ -38,6 +38,18 @@ public partial class PhysicsSearchViewModel
     private void CancelPendingSearch() =>
         _searchCoordinator.CancelPendingSearch(ref _searchDebounceCts);
 
+    private void CancelActiveSearch()
+    {
+        CancelPendingSearch();
+        if (!IsSearching)
+        {
+            return;
+        }
+
+        IsSearching = false;
+        UpdateSearchUiState();
+    }
+
     private async Task ReloadAsync()
     {
         await _initGate.WaitAsync();

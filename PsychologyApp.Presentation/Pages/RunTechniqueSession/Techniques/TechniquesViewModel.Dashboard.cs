@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using PsychologyApp.Application.Models;
+using PsychologyApp.Domain.UserProgress;
 using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
@@ -21,14 +22,29 @@ public partial class TechniquesViewModel
             await _databaseReadySignal.WaitAsync(cancellationToken);
 
             Task<int> streakTask = _dashboardLoader.LoadStreakDaysAsync(cancellationToken);
+            Task<int> atRiskTask = _dashboardLoader.LoadAtRiskStreakDaysAsync(cancellationToken);
+            Task<DateTime?> lastPracticeTask = _dashboardLoader.LoadLastPracticeUtcAsync(cancellationToken);
             Task<MoodSnapshot> moodTask = _dashboardLoader.LoadMoodSnapshotAsync(cancellationToken);
+            Task<WeeklyInsightSnapshot> weeklyInsightTask = _dashboardLoader.LoadWeeklyInsightAsync(cancellationToken);
+            Task<string?> lastTechniqueNameTask = _dashboardLoader.LoadLastTechniqueNameAsync(cancellationToken);
             Task<IReadOnlyList<TechniqueItem>> staticItemsTask =
                 _techniqueListBuilder.BuildStaticItemsAsync(_navigationService, cancellationToken);
 
-            await Task.WhenAll(streakTask, moodTask, staticItemsTask);
+            await Task.WhenAll(
+                streakTask,
+                atRiskTask,
+                lastPracticeTask,
+                moodTask,
+                weeklyInsightTask,
+                lastTechniqueNameTask,
+                staticItemsTask);
 
             int streakDays = await streakTask;
+            int atRiskDays = await atRiskTask;
+            DateTime? lastPracticeUtc = await lastPracticeTask;
             MoodSnapshot mood = await moodTask;
+            WeeklyInsightSnapshot weeklyInsight = await weeklyInsightTask;
+            string? lastTechniqueName = await lastTechniqueNameTask;
             IReadOnlyList<TechniqueItem> staticItems = await staticItemsTask;
 
             TodayRecommendationResult recommendation = await _dashboardPresenter.ResolveTodayRecommendationAsync(
@@ -42,15 +58,26 @@ public partial class TechniquesViewModel
                 streakDays > 0,
                 cancellationToken);
 
+            bool hasDraft = await _dashboardLoader.HasSessionDraftAsync(recommendation.TechniqueId, cancellationToken);
+            int idleDays = StreakCalculator.CalculateIdleDays(
+                lastPracticeUtc is null ? null : DateOnly.FromDateTime(lastPracticeUtc.Value.ToLocalTime()),
+                DateOnly.FromDateTime(DateTime.Today));
+
             await UiThread.RunAsync(() =>
             {
                 StreakDays = streakDays;
+                AtRiskStreakDays = atRiskDays;
+                IdleDays = idleDays;
+                LastTechniqueName = lastTechniqueName;
+                HasTodayDraft = hasDraft;
                 ApplyMoodSnapshot(mood);
+                WeeklyInsightText = weeklyInsight.DisplayText;
                 _todayTechniqueId = recommendation.TechniqueId;
                 TodayReasonText = recommendation.ReasonText;
                 TodayTechniqueItem = recommendation.Item;
                 OnPropertyChanged(nameof(TodayReasonText));
                 OnPropertyChanged(nameof(TodayTechniqueItem));
+                OnPropertyChanged(nameof(TodayActionText));
             });
         }
         catch (OperationCanceledException)
@@ -202,10 +229,14 @@ public partial class TechniquesViewModel
             StreakDays,
             _navigationService);
 
+        bool hasDraft = await _dashboardLoader.HasSessionDraftAsync(recommendation.TechniqueId);
+
         _todayTechniqueId = recommendation.TechniqueId;
         TodayReasonText = recommendation.ReasonText;
         TodayTechniqueItem = recommendation.Item;
+        HasTodayDraft = hasDraft;
         OnPropertyChanged(nameof(TodayReasonText));
+        OnPropertyChanged(nameof(TodayActionText));
 
         if (staticItems is not null)
         {

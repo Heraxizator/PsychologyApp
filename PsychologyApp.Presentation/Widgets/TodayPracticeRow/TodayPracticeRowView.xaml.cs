@@ -8,7 +8,7 @@ public partial class TodayPracticeRowView : ContentView
     public TodayPracticeRowView()
     {
         InitializeComponent();
-        VisualElementPressFeedback.AttachToTemplateRoot(this, new PressFeedbackOptions { HapticOnRelease = true, ScaleOnly = true });
+        VisualElementPressFeedback.AttachToTemplateRoot(this, new PressFeedbackOptions { HapticOnRelease = true });
     }
 
     public static readonly BindableProperty CaptionTextProperty =
@@ -72,6 +72,15 @@ public partial class TodayPracticeRowView : ContentView
     {
         get => (string)GetValue(ReasonTextProperty);
         set => SetValue(ReasonTextProperty, value);
+    }
+
+    public static readonly BindableProperty ActionTextProperty =
+        BindableProperty.Create(nameof(ActionText), typeof(string), typeof(TodayPracticeRowView), string.Empty);
+
+    public string ActionText
+    {
+        get => (string)GetValue(ActionTextProperty);
+        set => SetValue(ActionTextProperty, value);
     }
 
     public static readonly BindableProperty TapCommandProperty =

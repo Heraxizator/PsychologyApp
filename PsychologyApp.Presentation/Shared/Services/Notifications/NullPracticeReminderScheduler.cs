@@ -4,6 +4,8 @@ namespace PsychologyApp.Presentation.Shared.Services.Notifications;
 
 public sealed class NullPracticeReminderScheduler : IPracticeReminderScheduler
 {
+    public bool IsSupported => false;
+
     public Task RequestPermissionIfNeededAsync(CancellationToken cancellationToken = default) =>
         Task.CompletedTask;
 

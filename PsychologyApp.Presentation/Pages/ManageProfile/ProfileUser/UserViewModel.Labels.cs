@@ -74,7 +74,12 @@ public partial class UserViewModel
             nameof(PracticeHistoryTitle),
             nameof(PracticeHistoryEmpty),
             nameof(HasPracticeHistory),
-            nameof(ShowPracticeHistoryEmpty));
+            nameof(ShowPracticeHistoryEmpty),
+            nameof(MoodTrendTitle),
+            nameof(MoodTrendHint),
+            nameof(ShowMoodTrendHint),
+            nameof(MoodNotesTitle),
+            nameof(HasMoodNotes));
         InitTechniques();
 
         string currentLanguage = UserPreferences.GetPersistedLanguage();

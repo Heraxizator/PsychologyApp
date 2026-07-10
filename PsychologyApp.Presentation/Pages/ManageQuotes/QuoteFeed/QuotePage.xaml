@@ -43,6 +43,7 @@
                         IsVisible="{Binding IsSearchFilteringVisible}"
                         IsLoading="{Binding IsSearchFilteringVisible}"
                         ProgressText="{Binding SearchFilteringText}"
+                        CancelCommand="{Binding CancelSearchCommand}"
                         VerticalOptions="Center"
                         HorizontalOptions="Center" />
 
@@ -57,6 +58,7 @@
                 <CollectionView
                     Grid.Row="1"
                     x:Name="QuotesCollectionView"
+                    IsVisible="{Binding IsQuoteListVisible}"
                     HorizontalScrollBarVisibility="Never"
                     VerticalScrollBarVisibility="Never"
                     VerticalOptions="FillAndExpand"

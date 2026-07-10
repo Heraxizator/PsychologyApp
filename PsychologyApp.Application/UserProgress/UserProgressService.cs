@@ -98,6 +98,12 @@ public sealed class UserProgressService(IUserProgressRepository repository) : IU
         return StreakCalculator.CalculateFromCompletionDates(dates, DateOnly.FromDateTime(DateTime.Today));
     }
 
+    public async Task<int> GetAtRiskStreakDaysAsync(CancellationToken cancellationToken = default)
+    {
+        IReadOnlyList<DateOnly> dates = await repository.GetCompletionDatesAsync(cancellationToken);
+        return StreakCalculator.CalculateAtRiskDays(dates, DateOnly.FromDateTime(DateTime.Today));
+    }
+
     public Task<DateTime?> GetLastPracticeDateAsync(string itemKey, CancellationToken cancellationToken = default) =>
         repository.GetLastCompletionForItemAsync(itemKey, cancellationToken);
 

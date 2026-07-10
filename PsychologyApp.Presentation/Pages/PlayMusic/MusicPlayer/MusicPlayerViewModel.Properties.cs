@@ -1,4 +1,5 @@
 using PsychologyApp.Presentation.Entities.Audio;
+using PsychologyApp.Presentation.Shared.UI.Components;
 
 namespace PsychologyApp.Presentation.Pages.PlayMusic.MusicPlayer;
 
@@ -77,7 +78,15 @@ public partial class MusicPlayerViewModel
     }
 
     public bool HasFilteredItems => FilteredItems.Count > 0;
+    public bool IsCatalogEmpty => IsDone && AllItems.Count == 0;
     public bool IsSearchEmptyVisible => IsDone && !HasFilteredItems && AllItems.Count > 0;
+    public bool IsListEmptyVisible => IsCatalogEmpty || IsSearchEmptyVisible;
+
+    public string ListEmptyBodyText =>
+        IsCatalogEmpty ? CatalogEmptyText : NoPrayersFoundText;
+
+    public string ListEmptyIconName =>
+        IsCatalogEmpty ? MaterialIconNames.LibraryMusic : MaterialIconNames.SearchOff;
 
     public string SearchText
     {

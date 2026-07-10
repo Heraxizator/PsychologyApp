@@ -50,7 +50,11 @@ public partial class MusicPlayerViewModel
             key => _selectedCategoryKey = key);
 
         OnPropertyChanged(nameof(HasFilteredItems));
+        OnPropertyChanged(nameof(IsCatalogEmpty));
         OnPropertyChanged(nameof(IsSearchEmptyVisible));
+        OnPropertyChanged(nameof(IsListEmptyVisible));
+        OnPropertyChanged(nameof(ListEmptyBodyText));
+        OnPropertyChanged(nameof(ListEmptyIconName));
     }
 
     private void SelectCategory(string? key) =>
@@ -62,7 +66,11 @@ public partial class MusicPlayerViewModel
             FilteredItems,
             _playlistPresenter.Filter(AllItems, _selectedCategoryKey, SearchText));
         OnPropertyChanged(nameof(HasFilteredItems));
+        OnPropertyChanged(nameof(IsCatalogEmpty));
         OnPropertyChanged(nameof(IsSearchEmptyVisible));
+        OnPropertyChanged(nameof(IsListEmptyVisible));
+        OnPropertyChanged(nameof(ListEmptyBodyText));
+        OnPropertyChanged(nameof(ListEmptyIconName));
         BumpPlaylistContentVersion();
     }
 

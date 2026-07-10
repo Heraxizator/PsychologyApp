@@ -72,11 +72,23 @@
                                 MaxLines="1"
                                 LineBreakMode="TailTruncation" />
                         </VerticalStackLayout>
-                        <Label
+                        <VerticalStackLayout
                             Grid.Column="3"
+                            Spacing="2"
                             VerticalOptions="Center"
-                            TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                            Text="{mi:Material Icon=KeyboardArrowRight}" />
+                            HorizontalOptions="End">
+                            <Label
+                                Text="{TemplateBinding ActionText}"
+                                Style="{StaticResource CaptionStyle}"
+                                TextColor="{DynamicResource Primary}"
+                                HorizontalTextAlignment="End"
+                                MaxLines="1"
+                                LineBreakMode="TailTruncation" />
+                            <Label
+                                HorizontalOptions="End"
+                                TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                Text="{mi:Material Icon=KeyboardArrowRight}" />
+                        </VerticalStackLayout>
                     </Grid>
                 </Border>
             </VerticalStackLayout>

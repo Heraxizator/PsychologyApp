@@ -1,6 +1,7 @@
 using System.Globalization;
 using Microsoft.Maui.Controls.Shapes;
 using PsychologyApp.Domain.Notifications;
+using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 
 namespace PsychologyApp.Presentation.Shared.Common;
@@ -28,6 +29,7 @@ public static class UserPreferences
     public const string DefaultColor = "blue";
     public const string DefaultForm = "rounded";
     public const string DefaultSize = "medium";
+    public const string DefaultOnboardingConcern = OnboardingConcernKeys.Explore;
     public const int DefaultPracticeReminderHour = 19;
     public const int DefaultQuoteReminderHour = 9;
 
@@ -142,7 +144,10 @@ public static class UserPreferences
         return string.IsNullOrWhiteSpace(value) ? null : value;
     }
 
-    public static void CompleteOnboarding(string concern)
+    public static void CompleteOnboarding(
+        string concern,
+        bool? practiceRemindersEnabled = null,
+        int? practiceReminderHour = null)
     {
         UserPreferencesState current = Load();
         Save(new UserPreferencesState
@@ -155,9 +160,11 @@ public static class UserPreferences
             IsBold = current.IsBold,
             QuestionnaireAutoAdvance = current.QuestionnaireAutoAdvance,
             HasCompletedOnboarding = true,
-            OnboardingConcern = concern,
-            PracticeRemindersEnabled = current.PracticeRemindersEnabled,
-            PracticeReminderHour = current.PracticeReminderHour,
+            OnboardingConcern = NormalizeOnboardingConcernKey(concern),
+            PracticeRemindersEnabled = practiceRemindersEnabled ?? current.PracticeRemindersEnabled,
+            PracticeReminderHour = practiceReminderHour is int hour
+                ? NormalizePracticeReminderHour(hour)
+                : current.PracticeReminderHour,
             QuoteRemindersEnabled = current.QuoteRemindersEnabled,
             QuoteReminderHour = current.QuoteReminderHour
         });
@@ -471,6 +478,43 @@ public static class UserPreferences
         SizeKeys.Select(key => GetSizeLabel(key, language)).ToArray();
 
     public static string ParseLanguageKey(string displayOrKey) => NormalizeLanguageKey(displayOrKey);
+
+    public static IReadOnlyList<string> OnboardingConcernKeysList { get; } =
+    [
+        OnboardingConcernKeys.Anxiety,
+        OnboardingConcernKeys.Body,
+        OnboardingConcernKeys.Mood,
+        OnboardingConcernKeys.Explore
+    ];
+
+    public static string NormalizeOnboardingConcernKey(string value) => value switch
+    {
+        OnboardingConcernKeys.Anxiety or "Anxiety" or "Тревога" =>
+            OnboardingConcernKeys.Anxiety,
+        OnboardingConcernKeys.Body or "Body" or "Тело / симптомы" =>
+            OnboardingConcernKeys.Body,
+        OnboardingConcernKeys.Mood or "Mood" or "Настроение" =>
+            OnboardingConcernKeys.Mood,
+        OnboardingConcernKeys.Explore or "Explore" or "Just exploring" or "Просто попробовать" =>
+            OnboardingConcernKeys.Explore,
+        _ => OnboardingConcernKeys.Default
+    };
+
+    public static string GetOnboardingConcernLabel(string key, string? language = null)
+    {
+        string ui = language ?? GetPersistedLanguage();
+        bool en = IsEnglish(ui);
+        return NormalizeOnboardingConcernKey(key) switch
+        {
+            OnboardingConcernKeys.Anxiety => en ? "Anxiety" : "Тревога",
+            OnboardingConcernKeys.Body => en ? "Body / symptoms" : "Тело / симптомы",
+            OnboardingConcernKeys.Mood => en ? "Mood" : "Настроение",
+            _ => en ? "Just exploring" : "Просто попробовать"
+        };
+    }
+
+    public static string ParseOnboardingConcernKey(string displayOrKey) =>
+        NormalizeOnboardingConcernKey(displayOrKey);
 
     public static string ParseThemeKey(string displayOrKey) => NormalizeThemeKey(displayOrKey);
 

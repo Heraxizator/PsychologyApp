@@ -34,6 +34,7 @@ public partial class PhysicsSearchViewModel : BaseViewModel
 
     public ICommand SearchCommand { get; private set; } = default!;
     public ICommand LoadMoreSearchResultsCommand { get; private set; } = default!;
+    public ICommand CancelSearchCommand { get; private set; } = default!;
 
     public PhysicsSearchViewModel(
         IReasonSearchService reasonSearchService,
@@ -61,6 +62,7 @@ public partial class PhysicsSearchViewModel : BaseViewModel
             BindNavigation(navigationService);
             Reload = new AsyncCommand(ReloadAsync);
             Cancel = new Command(CancelInit);
+            CancelSearchCommand = new Command(CancelActiveSearch);
             SearchCommand = new Command(() => ExecuteSearch(SearchText));
             LoadMoreSearchResultsCommand = new Command(LoadMoreSearchResults);
             ResultsObservableCollection.CollectionChanged += (_, _) => UpdateSearchUiState();

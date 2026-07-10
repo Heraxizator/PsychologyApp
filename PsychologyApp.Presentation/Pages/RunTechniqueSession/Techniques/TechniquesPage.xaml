@@ -27,7 +27,6 @@
             ItemsSource="{Binding TechniquesItemsSource}"
             IsGrouped="{Binding IsTechniquesGrouped}"
             IsVisible="{Binding IsDone}"
-            ItemSizingStrategy="MeasureFirstItem"
             RemainingItemsThreshold="5"
             RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
             SelectionMode="None"
@@ -65,6 +64,22 @@
                         <behaviors:StaggerChildrenBehavior />
                     </VerticalStackLayout.Behaviors>
 
+                    <Border
+                        x:Name="EngagementNudgeBanner"
+                        IsVisible="False"
+                        Style="{StaticResource TodayBannerStyle}"
+                        Margin="0,0,0,4">
+                        <Border.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </Border.Behaviors>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding StartTodayPracticeCommand}" />
+                        </Border.GestureRecognizers>
+                        <Label
+                            Text="{Binding EngagementNudgeText}"
+                            Style="{StaticResource BodyStyle}" />
+                    </Border>
+
                     <today:TodayPracticeRowView
                         CaptionText="{Binding TodayForYouLabel}"
                         StreakText="{Binding StreakDisplay}"
@@ -73,6 +88,7 @@
                         Title="{Binding TodayTechniqueItem.Title}"
                         Subtitle="{Binding TodayTechniqueItem.Subtitle}"
                         ReasonText="{Binding TodayReasonText}"
+                        ActionText="{Binding TodayActionText}"
                         TapCommand="{Binding StartTodayPracticeCommand}">
                         <today:TodayPracticeRowView.Behaviors>
                             <behaviors:RevealOnAppearingBehavior />
@@ -87,6 +103,16 @@
                         HasTodayMood="{Binding HasTodayMood}"
                         MoodHistorySummary="{Binding MoodHistorySummary}"
                         HasMoodHistorySummary="{Binding HasMoodHistorySummary}" />
+
+                    <Border
+                        x:Name="WeeklyInsightBanner"
+                        IsVisible="False"
+                        Style="{StaticResource TodayBannerStyle}"
+                        Margin="0,0,0,4">
+                        <Label
+                            Text="{Binding WeeklyInsightText}"
+                            Style="{StaticResource BodyStyle}" />
+                    </Border>
 
                     <ui:SectionHeaderView
                         Margin="0,4,0,0"

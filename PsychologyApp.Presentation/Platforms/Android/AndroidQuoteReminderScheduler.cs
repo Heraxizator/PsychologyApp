@@ -10,6 +10,8 @@ namespace PsychologyApp.Presentation.Platforms.Android;
 
 public sealed class AndroidQuoteReminderScheduler : IQuoteReminderScheduler
 {
+    public bool IsSupported => true;
+
     public Task RequestPermissionIfNeededAsync(CancellationToken cancellationToken = default)
     {
         if (Build.VERSION.SdkInt < BuildVersionCodes.Tiramisu)

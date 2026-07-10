@@ -191,6 +191,24 @@ public partial class SettingsViewModel
         }
     }
 
+    private string onboardingConcern = UserPreferences.DefaultOnboardingConcern;
+    public string OnboardingConcern
+    {
+        get => onboardingConcern;
+        set
+        {
+            string normalized = UserPreferences.ParseOnboardingConcernKey(value);
+            if (_isSyncingPickers || string.Equals(onboardingConcern, normalized, StringComparison.Ordinal))
+            {
+                return;
+            }
+
+            onboardingConcern = normalized;
+            OnPropertyChanged(nameof(OnboardingConcern));
+            ApplyLivePreview();
+        }
+    }
+
     private UserPreferencesState BuildCurrentState() =>
         _presenter.BuildState(
             Language,
@@ -204,6 +222,7 @@ public partial class SettingsViewModel
             practiceReminderHour,
             QuoteRemindersEnabled,
             quoteReminderHour,
+            OnboardingConcern,
             _savedState);
 
     private void ApplyLivePreview()

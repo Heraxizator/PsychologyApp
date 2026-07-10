@@ -1,6 +1,8 @@
+using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Shared.UI.Components;
 using PsychologyApp.Presentation.Shared.ViewModels;
 using System.Windows.Input;
 
@@ -32,12 +34,26 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         });
         MorePracticeCommand = new AsyncCommand(MorePracticeAsync);
         GoHomeCommand = new AsyncCommand(() => _navigationService.GoToRootAsync());
+        LoadBeforeMoodAsync().FireAndForget();
     }
 
     public int StreakDays { get; }
 
-    public string TitleText => AppStrings.PracticeCompletedTitle;
-    public string BodyText => AppStrings.PracticeCompletedBody(StreakDays);
+    public bool IsMilestone => AppStrings.IsStreakMilestone(StreakDays);
+    public string CelebrationIconName => StreakDays switch
+    {
+        3 => MaterialIconNames.Whatshot,
+        7 => MaterialIconNames.AutoAwesome,
+        14 => MaterialIconNames.EmojiEvents,
+        30 => MaterialIconNames.WorkspacePremium,
+        _ => MaterialIconNames.CheckCircle
+    };
+    public string TitleText => IsMilestone
+        ? AppStrings.PracticeMilestoneTitle(StreakDays)
+        : AppStrings.PracticeCompletedTitle;
+    public string BodyText => IsMilestone
+        ? AppStrings.PracticeMilestoneBody(StreakDays)
+        : AppStrings.PracticeCompletedBody(StreakDays);
     public string StreakValueText => StreakDays > 0 ? AppStrings.ProfileStreakCount(StreakDays) : string.Empty;
     public string StreakLabelText => AppStrings.ProfileStreakDays;
     public bool HasStreak => StreakDays > 0;
@@ -46,12 +62,38 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
     public string ReflectionQuestion => AppStrings.PracticeReflectionQuestion;
     public string ReflectionNotePlaceholder => AppStrings.PracticeReflectionNotePlaceholder;
 
+    private int _beforeMoodLevel;
+    public int BeforeMoodLevel
+    {
+        get => _beforeMoodLevel;
+        private set
+        {
+            if (SetProperty(ref _beforeMoodLevel, value))
+            {
+                NotifyMoodDelta();
+            }
+        }
+    }
+
     private int _selectedMoodLevel;
     public int SelectedMoodLevel
     {
         get => _selectedMoodLevel;
-        private set => SetProperty(ref _selectedMoodLevel, value);
+        private set
+        {
+            if (SetProperty(ref _selectedMoodLevel, value))
+            {
+                NotifyMoodDelta();
+            }
+        }
     }
+
+    public bool HasMoodDelta =>
+        BeforeMoodLevel >= 1 && SelectedMoodLevel >= 1 && BeforeMoodLevel != SelectedMoodLevel;
+
+    public string MoodDeltaText => HasMoodDelta
+        ? AppStrings.PracticeMoodDelta(BeforeMoodLevel, SelectedMoodLevel)
+        : string.Empty;
 
     private string _reflectionNote = string.Empty;
     public string ReflectionNote
@@ -67,6 +109,8 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
     protected override void RefreshLocalizedProperties()
     {
         Notify(
+            nameof(IsMilestone),
+            nameof(CelebrationIconName),
             nameof(TitleText),
             nameof(BodyText),
             nameof(StreakValueText),
@@ -75,7 +119,32 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
             nameof(MorePracticeText),
             nameof(GoHomeText),
             nameof(ReflectionQuestion),
-            nameof(ReflectionNotePlaceholder));
+            nameof(ReflectionNotePlaceholder),
+            nameof(HasMoodDelta),
+            nameof(MoodDeltaText));
+    }
+
+    private void NotifyMoodDelta()
+    {
+        OnPropertyChanged(nameof(HasMoodDelta));
+        OnPropertyChanged(nameof(MoodDeltaText));
+    }
+
+    private async Task LoadBeforeMoodAsync()
+    {
+        try
+        {
+            IReadOnlyList<MoodEntryDTO> recent = await _userProgressService.GetRecentMoodsAsync(3);
+            MoodEntryDTO? today = recent.FirstOrDefault(entry => entry.RecordedAt.ToLocalTime().Date == DateTime.Today);
+            if (today is not null && today.MoodLevel >= 1)
+            {
+                BeforeMoodLevel = today.MoodLevel;
+            }
+        }
+        catch
+        {
+            // Pre-mood is optional; completion still works without delta.
+        }
     }
 
     private async Task RecordMoodAsync(int moodLevel)

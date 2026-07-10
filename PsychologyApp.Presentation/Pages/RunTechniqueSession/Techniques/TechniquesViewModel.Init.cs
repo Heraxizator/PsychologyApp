@@ -66,16 +66,23 @@ public partial class TechniquesViewModel
                 snapshot.StaticItems,
                 snapshot.StreakDays > 0,
                 cancellationToken);
+            bool hasDraft = await _dashboardLoader.HasSessionDraftAsync(recommendation.TechniqueId, cancellationToken);
 
             await UiThread.RunAsync(() =>
             {
                 StreakDays = snapshot.StreakDays;
+                AtRiskStreakDays = snapshot.AtRiskStreakDays;
+                IdleDays = snapshot.IdleDays;
+                LastTechniqueName = snapshot.LastTechniqueName;
+                HasTodayDraft = hasDraft;
                 ApplyMoodSnapshot(snapshot.Mood);
+                WeeklyInsightText = snapshot.WeeklyInsight.DisplayText;
                 _todayTechniqueId = recommendation.TechniqueId;
                 TodayReasonText = recommendation.ReasonText;
                 TodayTechniqueItem = recommendation.Item;
                 OnPropertyChanged(nameof(TodayReasonText));
                 OnPropertyChanged(nameof(TodayTechniqueItem));
+                OnPropertyChanged(nameof(TodayActionText));
                 ApplyUiState(snapshot.UiState);
                 ApplyCustomTechniquesPagingState(snapshot);
                 SetDone();

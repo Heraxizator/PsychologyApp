@@ -21,7 +21,9 @@
                     HorizontalOptions="Center"
                     Spacing="16"
                     MaximumWidthRequest="320">
-                    <Border Style="{StaticResource EmptyStateIconHaloStyle}">
+                    <Border
+                        x:Name="IconHalo"
+                        Style="{StaticResource EmptyStateIconHaloStyle}">
                         <ui:MaterialIconView
                             IconName="{TemplateBinding IconName}"
                             IconSize="32"

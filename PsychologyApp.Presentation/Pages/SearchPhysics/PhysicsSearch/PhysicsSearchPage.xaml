@@ -46,6 +46,7 @@
                     IsVisible="{Binding IsSearchFilteringVisible}"
                     IsLoading="{Binding IsSearchFilteringVisible}"
                     ProgressText="{Binding SearchFilteringText}"
+                    CancelCommand="{Binding CancelSearchCommand}"
                     VerticalOptions="Center"
                     HorizontalOptions="Center" />
 

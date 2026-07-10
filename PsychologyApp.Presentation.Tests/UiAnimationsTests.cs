@@ -12,9 +12,11 @@ public class UiAnimationsTests
         Assert.Equal(320u, UiAnimations.MediumDuration);
         Assert.Equal(120u, UiAnimations.FastDuration);
         Assert.Equal(40u, UiAnimations.StaggerDelay);
-        Assert.Equal(0.97, UiAnimations.PressScale);
-        Assert.Equal(0.97, UiAnimations.PressScalePrimary);
-        Assert.Equal(0.98, UiAnimations.PressScaleSecondary);
+        Assert.Equal(0.94, UiAnimations.PressScale);
+        Assert.Equal(0.94, UiAnimations.PressScalePrimary);
+        Assert.Equal(0.96, UiAnimations.PressScaleSecondary);
+        Assert.Equal(0.90, UiAnimations.PressOpacity);
+        Assert.Equal(120u, UiAnimations.PressDuration);
         Assert.Equal(1.04, UiAnimations.PulseScaleTo);
         Assert.Equal(11, UiAnimations.SlideOffset);
         Assert.Equal(10, UiAnimations.StaggerCap);

@@ -1,10 +1,11 @@
 using PsychologyApp.Domain.Practice;
 using Moq;
+using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Quot;
+using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Entities.Audio;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Entities.Technique;
-using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Features.PlayMusic;
 using PsychologyApp.Presentation.Features.SearchPhysics;
@@ -34,6 +35,64 @@ public sealed class PracticeDashboardLoaderTests
 
         Assert.Equal(string.Empty, snapshot.TodayMoodDisplay);
         Assert.Equal(0, snapshot.SelectedMoodLevel);
+    }
+
+    [Fact]
+    public async Task LoadWeeklyInsight_HidesWhenNoWeekData()
+    {
+        Mock<IUserProgressService> progress = new();
+        progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+        progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+        Mock<IUserPreferencesStore> preferences = new();
+
+        PracticeDashboardLoader loader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
+        WeeklyInsightSnapshot insight = await loader.LoadWeeklyInsightAsync();
+
+        Assert.False(insight.HasInsight);
+    }
+
+    [Fact]
+    public async Task LoadWeeklyInsight_ShowsPracticeCount_WhenCompletionsThisWeek()
+    {
+        Mock<IUserProgressService> progress = new();
+        progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(
+            [
+                new CompletionDTO
+                {
+                    ItemKey = "Spin",
+                    PageName = "Spin",
+                    CompletedAt = DateTime.UtcNow
+                }
+            ]);
+        progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+        Mock<IUserPreferencesStore> preferences = new();
+
+        PracticeDashboardLoader loader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
+        WeeklyInsightSnapshot insight = await loader.LoadWeeklyInsightAsync();
+
+        Assert.True(insight.HasInsight);
+        Assert.Contains("1", insight.DisplayText, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task LoadLastTechniqueName_ReturnsPageName()
+    {
+        Mock<IUserProgressService> progress = new();
+        progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(1, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(
+            [
+                new CompletionDTO { ItemKey = "Spin", PageName = "Вращение", CompletedAt = DateTime.UtcNow }
+            ]);
+        Mock<IUserPreferencesStore> preferences = new();
+
+        PracticeDashboardLoader loader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
+        string? name = await loader.LoadLastTechniqueNameAsync();
+
+        Assert.Equal("Вращение", name);
     }
 
     [Fact]

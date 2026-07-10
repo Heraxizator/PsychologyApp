@@ -14,8 +14,8 @@ public partial class UserViewModel
 {
     private async Task RefreshCoreAsync(int generation, bool forceQuotesReload)
     {
-        bool isInitialLoad = !_initialized;
-        if (isInitialLoad)
+        bool showLoading = !_initialized || IsFail;
+        if (showLoading)
         {
             SetInit();
         }
@@ -42,6 +42,11 @@ public partial class UserViewModel
 
             if (result is null)
             {
+                if (showLoading && generation == Volatile.Read(ref _initGeneration))
+                {
+                    SetDone();
+                }
+
                 return;
             }
 
@@ -49,6 +54,7 @@ public partial class UserViewModel
             MoodChartPoints = moodSnapshot.ChartPoints;
             MoodChartSubtitle = moodSnapshot.ChartSubtitle;
             HasMoodTrendChart = moodSnapshot.HasTrendChart;
+            MoodNotes = moodSnapshot.RecentNotes;
 
             TechniquesCompletedCount = result.Stats.TechniquesCompletedCount;
             TestsCompletedCount = result.Stats.TestsCompletedCount;
@@ -76,22 +82,22 @@ public partial class UserViewModel
             {
                 await LoadQuotesAsync(generation, cancellationToken);
             }
-        }
-        catch (Exception e)
-        {
-            if (generation == Volatile.Read(ref _initGeneration))
-            {
-                await UiThread.RunAsync(SetQuotesFailed);
-            }
 
-            _logger.LogError(e, "UserViewModel refresh failed.");
-        }
-        finally
-        {
-            if (isInitialLoad && generation == Volatile.Read(ref _initGeneration))
+            if (generation == Volatile.Read(ref _initGeneration))
             {
                 SetDone();
             }
+        }
+        catch (Exception e)
+        {
+            // Quotes failures are handled inside LoadQuotesAsync via SetQuotesFailed.
+            // Dashboard/history failures must not masquerade as a quotes-only error.
+            if (generation == Volatile.Read(ref _initGeneration))
+            {
+                await UiThread.RunAsync(SetFail);
+            }
+
+            _logger.LogError(e, "UserViewModel refresh failed.");
         }
     }
 
