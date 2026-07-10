@@ -4,6 +4,7 @@
              x:Class="PsychologyApp.Presentation.Pages.RunTechniqueSession.PracticeCompletion.PracticeCompletionPage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:mood="clr-namespace:PsychologyApp.Presentation.Widgets.MoodStrip"
+             xmlns:today="clr-namespace:PsychologyApp.Presentation.Widgets.TodayPracticeRow"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.RunTechniqueSession.PracticeCompletion"
              x:DataType="vm:PracticeCompletionViewModel"
@@ -35,12 +36,23 @@
             <VerticalStackLayout.Behaviors>
                 <behaviors:StaggerChildrenBehavior />
             </VerticalStackLayout.Behaviors>
+            <today:TodayPracticeRowView
+                x:Name="NextPracticeRow"
+                IsVisible="False"
+                CaptionText="{Binding NextPracticeCaption}"
+                Title="{Binding NextPracticeTitle}"
+                Subtitle="{Binding NextPracticeSubtitle}"
+                ReasonText="{Binding NextPracticeReason}"
+                IconName="{Binding NextPracticeIcon}"
+                ActionText="{Binding NextPracticeActionText}"
+                TapCommand="{Binding NextPracticeCommand}" />
             <mood:MoodStripView
                 QuestionText="{Binding ReflectionQuestion}"
                 RecordMoodCommand="{Binding RecordMoodCommand}"
                 SelectedMoodLevel="{Binding SelectedMoodLevel}" />
             <Label
-                IsVisible="{Binding HasMoodDelta}"
+                x:Name="MoodDeltaLabel"
+                IsVisible="False"
                 Text="{Binding MoodDeltaText}"
                 Style="{StaticResource EmphasisBodyStyle}"
                 TextColor="{DynamicResource Primary}"

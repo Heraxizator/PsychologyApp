@@ -1,5 +1,7 @@
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
+using PsychologyApp.Domain.Practice;
+using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.UI.Components;
@@ -12,14 +14,19 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
 {
     private readonly INavigationService _navigationService;
     private readonly IUserProgressService _userProgressService;
+    private readonly NextPracticeResolver _nextPracticeResolver;
+    private TechniqueId? _nextTechniqueId;
 
     public PracticeCompletionViewModel(
         INavigationService navigationService,
         IUserProgressService userProgressService,
-        int streakDays)
+        NextPracticeResolver nextPracticeResolver,
+        int streakDays,
+        string? completedItemKey = null)
     {
         _navigationService = navigationService;
         _userProgressService = userProgressService;
+        _nextPracticeResolver = nextPracticeResolver;
         StreakDays = streakDays;
         RecordMoodCommand = new Command<object?>(parameter =>
         {
@@ -33,8 +40,10 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
             }
         });
         MorePracticeCommand = new AsyncCommand(MorePracticeAsync);
+        NextPracticeCommand = new AsyncCommand(StartNextPracticeAsync);
         GoHomeCommand = new AsyncCommand(() => _navigationService.GoToRootAsync());
         LoadBeforeMoodAsync().FireAndForget();
+        LoadNextPracticeAsync(completedItemKey).FireAndForget();
     }
 
     public int StreakDays { get; }
@@ -61,6 +70,55 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
     public string GoHomeText => AppStrings.PracticeGoHomeButton;
     public string ReflectionQuestion => AppStrings.PracticeReflectionQuestion;
     public string ReflectionNotePlaceholder => AppStrings.PracticeReflectionNotePlaceholder;
+
+    private bool _hasNextPractice;
+    public bool HasNextPractice
+    {
+        get => _hasNextPractice;
+        private set => SetProperty(ref _hasNextPractice, value);
+    }
+
+    private string _nextPracticeCaption = string.Empty;
+    public string NextPracticeCaption
+    {
+        get => _nextPracticeCaption;
+        private set => SetProperty(ref _nextPracticeCaption, value);
+    }
+
+    private string _nextPracticeTitle = string.Empty;
+    public string NextPracticeTitle
+    {
+        get => _nextPracticeTitle;
+        private set => SetProperty(ref _nextPracticeTitle, value);
+    }
+
+    private string _nextPracticeSubtitle = string.Empty;
+    public string NextPracticeSubtitle
+    {
+        get => _nextPracticeSubtitle;
+        private set => SetProperty(ref _nextPracticeSubtitle, value);
+    }
+
+    private string _nextPracticeReason = string.Empty;
+    public string NextPracticeReason
+    {
+        get => _nextPracticeReason;
+        private set => SetProperty(ref _nextPracticeReason, value);
+    }
+
+    private string _nextPracticeIcon = string.Empty;
+    public string NextPracticeIcon
+    {
+        get => _nextPracticeIcon;
+        private set => SetProperty(ref _nextPracticeIcon, value);
+    }
+
+    private string _nextPracticeActionText = string.Empty;
+    public string NextPracticeActionText
+    {
+        get => _nextPracticeActionText;
+        private set => SetProperty(ref _nextPracticeActionText, value);
+    }
 
     private int _beforeMoodLevel;
     public int BeforeMoodLevel
@@ -104,6 +162,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
 
     public ICommand RecordMoodCommand { get; }
     public ICommand MorePracticeCommand { get; }
+    public ICommand NextPracticeCommand { get; }
     public ICommand GoHomeCommand { get; }
 
     protected override void RefreshLocalizedProperties()
@@ -121,7 +180,10 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
             nameof(ReflectionQuestion),
             nameof(ReflectionNotePlaceholder),
             nameof(HasMoodDelta),
-            nameof(MoodDeltaText));
+            nameof(MoodDeltaText),
+            nameof(NextPracticeCaption),
+            nameof(NextPracticeReason),
+            nameof(NextPracticeActionText));
     }
 
     private void NotifyMoodDelta()
@@ -147,6 +209,38 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         }
     }
 
+    private async Task LoadNextPracticeAsync(string? completedItemKey)
+    {
+        if (string.IsNullOrWhiteSpace(completedItemKey)
+            || completedItemKey.StartsWith("custom_", StringComparison.OrdinalIgnoreCase)
+            || !Enum.TryParse(completedItemKey, out TechniqueId completedTechniqueId))
+        {
+            return;
+        }
+
+        try
+        {
+            NextPracticeResult? result = await _nextPracticeResolver.ResolveAsync(completedTechniqueId);
+            if (result is null)
+            {
+                return;
+            }
+
+            _nextTechniqueId = result.TechniqueId;
+            NextPracticeCaption = result.Caption;
+            NextPracticeTitle = result.Title;
+            NextPracticeSubtitle = result.Subtitle;
+            NextPracticeReason = result.ReasonText;
+            NextPracticeIcon = result.IconName;
+            NextPracticeActionText = result.ActionText;
+            HasNextPractice = true;
+        }
+        catch
+        {
+            // Next practice is optional; completion still works without it.
+        }
+    }
+
     private async Task RecordMoodAsync(int moodLevel)
     {
         SelectedMoodLevel = moodLevel;
@@ -156,7 +250,25 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
 
     private async Task MorePracticeAsync()
     {
+        if (HasNextPractice && _nextTechniqueId is not null)
+        {
+            await StartNextPracticeAsync();
+            return;
+        }
+
         await _navigationService.GoBackAsync();
         await _navigationService.GoBackAsync();
+    }
+
+    private async Task StartNextPracticeAsync()
+    {
+        if (!HasNextPractice || _nextTechniqueId is null)
+        {
+            return;
+        }
+
+        await _navigationService.GoBackAsync();
+        await _navigationService.GoBackAsync();
+        await _navigationService.GoToTechniqueAsync(_nextTechniqueId.Value);
     }
 }

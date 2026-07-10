@@ -23,6 +23,7 @@
                 Spacing="{StaticResource LayoutSpacing}">
                     <VerticalStackLayout.Behaviors>
                         <behaviors:StaggerChildrenBehavior />
+                        <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
                     </VerticalStackLayout.Behaviors>
                     <ui:TextBoxView
                         HeaderText="{Binding ExplanationHeader}"

@@ -1,5 +1,6 @@
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.App.Providers;
+using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.PracticeCompletion;
 using PsychologyApp.Presentation.Shared.Navigation;
 
@@ -7,13 +8,14 @@ namespace PsychologyApp.Presentation.Features.RunTechniqueSession.DependencyInje
 
 public interface IPracticeCompletionViewModelFactory
 {
-    PracticeCompletionViewModel Create(ContentPage page, int streakDays);
+    PracticeCompletionViewModel Create(ContentPage page, int streakDays, string? completedItemKey = null);
 }
 
 public sealed class PracticeCompletionViewModelFactory(
     IUserProgressService userProgressService,
+    NextPracticeResolver nextPracticeResolver,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IPracticeCompletionViewModelFactory
 {
-    public PracticeCompletionViewModel Create(ContentPage page, int streakDays) =>
-        new(ResolveNavigation(navigationServiceFactory, page), userProgressService, streakDays);
+    public PracticeCompletionViewModel Create(ContentPage page, int streakDays, string? completedItemKey = null) =>
+        new(ResolveNavigation(navigationServiceFactory, page), userProgressService, nextPracticeResolver, streakDays, completedItemKey);
 }

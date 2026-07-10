@@ -385,6 +385,15 @@ public static partial class AppStrings
 
     public static string TodayRecommendationReasonLowMood() =>
         T("Когда настроение низкое", "When mood is low");
+    public static string TodayRecommendationReasonContinueDraft() => T(
+        "Продолжите с того места, где остановились",
+        "Continue where you left off");
+    public static string WeeklyInsightStreakPart(int days) =>
+        T($"серия {days}", $"streak {days}");
+    public static string WeeklyInsightTestImprovedPart() => T("тест ↑", "test ↑");
+    public static string WeeklyInsightTestWorsePart() => T("тест ↓", "test ↓");
+    public static string WeeklyInsightWithExtra(string baseLine, string extra) =>
+        string.IsNullOrWhiteSpace(extra) ? baseLine : $"{baseLine} · {extra}";
     public static string TodayMoodQuestion => T("Как настроение?", "How are you feeling?");
     public static string TodayMoodSaved => T("Настроение сохранено", "Mood saved");
     public static string TodayMoodLine(int level, int max) =>
@@ -438,6 +447,8 @@ public static partial class AppStrings
     public static string ProfileMoodNotesTitle => T("Заметки к настроению", "Mood notes");
     public static string PracticeGoHomeButton => T("На главную", "Go home");
     public static string PracticeMoreButton => T("Ещё практика", "More practice");
+    public static string PracticeNextCaption => T("Следующая практика", "Next practice");
+    public static string PracticeNextReason => T("Продолжим серию", "Keep the momentum");
     public static string PracticeHistoryTitle => T("Недавние практики", "Recent practices");
     public static string PracticeHistoryEmpty => T("Пока нет завершённых практик", "No completed practices yet");
     public static string PracticeHistoryEntry(string date, string name) =>

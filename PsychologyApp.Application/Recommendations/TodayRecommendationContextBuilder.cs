@@ -1,24 +1,52 @@
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
+using PsychologyApp.Domain.Practice;
 
 namespace PsychologyApp.Application.Recommendations;
 
 public static class TodayRecommendationContextBuilder
 {
+    private static readonly string[] CatalogTechniqueKeys =
+        Enum.GetNames<TechniqueId>();
+
     public static async Task<TodayRecommendationContext> BuildAsync(
         IUserProgressService progress,
         string concern,
         CancellationToken cancellationToken = default)
     {
-        TestResultDTO? recentTest = await progress.GetMostRecentTestResultAsync(TimeSpan.FromDays(7), cancellationToken);
+        Task<TestResultDTO?> recentTestTask =
+            progress.GetMostRecentTestResultAsync(TimeSpan.FromDays(7), cancellationToken);
+        Task<IReadOnlyList<MoodEntryDTO>> moodsTask =
+            progress.GetRecentMoodsAsync(1, cancellationToken);
+        Task<IReadOnlyDictionary<string, DateTime>> datesTask =
+            progress.GetLastPracticeDatesAsync(CatalogTechniqueKeys, cancellationToken);
+        Task<IReadOnlySet<string>> draftsTask =
+            progress.GetSessionDraftKeysAsync(CatalogTechniqueKeys, cancellationToken);
+
+        await Task.WhenAll(recentTestTask, moodsTask, datesTask, draftsTask);
 
         int? todayMood = null;
-        IReadOnlyList<MoodEntryDTO> moods = await progress.GetRecentMoodsAsync(1, cancellationToken);
+        IReadOnlyList<MoodEntryDTO> moods = await moodsTask;
         if (moods.Count > 0 && moods[0].RecordedAt.ToLocalTime().Date == DateTime.Today)
         {
             todayMood = moods[0].MoodLevel;
         }
 
-        return new TodayRecommendationContext(concern, recentTest, todayMood);
+        TechniqueId? draftTechniqueId = null;
+        foreach (string key in await draftsTask)
+        {
+            if (Enum.TryParse(key, out TechniqueId techniqueId))
+            {
+                draftTechniqueId = techniqueId;
+                break;
+            }
+        }
+
+        return new TodayRecommendationContext(
+            concern,
+            await recentTestTask,
+            todayMood,
+            await datesTask,
+            draftTechniqueId);
     }
 }

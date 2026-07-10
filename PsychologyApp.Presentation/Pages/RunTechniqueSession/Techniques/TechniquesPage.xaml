@@ -32,6 +32,9 @@
             SelectionMode="None"
             VerticalScrollBarVisibility="Never"
             HorizontalScrollBarVisibility="Never">
+            <CollectionView.Behaviors>
+                <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
+            </CollectionView.Behaviors>
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate x:DataType="technique:TechniqueGroup">
                     <Grid>

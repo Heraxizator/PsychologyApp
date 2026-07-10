@@ -1,4 +1,3 @@
-using PsychologyApp.Presentation.Shared.Common;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Widgets.ProfileTechniqueCard;
@@ -8,7 +7,6 @@ public partial class ProfileTechniqueCardView : ContentView
     public ProfileTechniqueCardView()
     {
         InitializeComponent();
-        VisualElementPressFeedback.AttachToTemplateRoot(this, new PressFeedbackOptions { HapticOnRelease = true, ScaleOnly = true });
     }
 
     public static readonly BindableProperty ImageProperty =

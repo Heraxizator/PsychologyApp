@@ -45,6 +45,9 @@ public sealed class PracticeDashboardLoaderTests
             .ReturnsAsync([]);
         progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
+        progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
+        progress.Setup(p => p.GetMostRecentTestResultAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((TestResultDTO?)null);
         Mock<IUserPreferencesStore> preferences = new();
 
         PracticeDashboardLoader loader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
@@ -69,6 +72,9 @@ public sealed class PracticeDashboardLoaderTests
             ]);
         progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
+        progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(3);
+        progress.Setup(p => p.GetMostRecentTestResultAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((TestResultDTO?)null);
         Mock<IUserPreferencesStore> preferences = new();
 
         PracticeDashboardLoader loader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
@@ -76,6 +82,7 @@ public sealed class PracticeDashboardLoaderTests
 
         Assert.True(insight.HasInsight);
         Assert.Contains("1", insight.DisplayText, StringComparison.Ordinal);
+        Assert.Contains("3", insight.DisplayText, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -99,6 +106,14 @@ public sealed class PracticeDashboardLoaderTests
     public async Task ResolveTodayRecommendation_UsesOnboardingConcern()
     {
         Mock<IUserProgressService> progress = new();
+        progress.Setup(p => p.GetMostRecentTestResultAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((TestResultDTO?)null);
+        progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+        progress.Setup(p => p.GetLastPracticeDatesAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new Dictionary<string, DateTime>(StringComparer.Ordinal));
+        progress.Setup(p => p.GetSessionDraftKeysAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new HashSet<string>(StringComparer.Ordinal));
         Mock<IUserPreferencesStore> preferences = new();
         preferences.Setup(p => p.Load()).Returns(new UserPreferencesState { OnboardingConcern = OnboardingConcernKeys.Mood });
         Mock<INavigationService> navigation = new();

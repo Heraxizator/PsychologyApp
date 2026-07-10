@@ -1,9 +1,13 @@
+using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Shared.UI.Components;
 
 public partial class MetricTileView : ContentView
 {
+    private bool _hasDisplayedValue;
+
     public MetricTileView()
     {
         InitializeComponent();
@@ -49,10 +53,41 @@ public partial class MetricTileView : ContentView
 
     private static void OnPresentationChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        if (bindable is MetricTileView view)
+        if (bindable is not MetricTileView view)
         {
-            view.UpdateSemantics();
+            return;
         }
+
+        view.UpdateSemantics();
+
+        if (oldValue is not string oldText || newValue is not string newText)
+        {
+            return;
+        }
+
+        view.TryPulseOnValueChange(oldText, newText);
+    }
+
+    private void TryPulseOnValueChange(string oldText, string newText)
+    {
+        if (!_hasDisplayedValue)
+        {
+            if (!string.IsNullOrWhiteSpace(newText))
+            {
+                _hasDisplayedValue = true;
+            }
+
+            return;
+        }
+
+        if (string.Equals(oldText, newText, StringComparison.Ordinal)
+            || string.IsNullOrWhiteSpace(oldText)
+            || string.IsNullOrWhiteSpace(newText))
+        {
+            return;
+        }
+
+        UiAnimations.SafePulseAsync(this).FireAndForget();
     }
 
     private void UpdateSemantics()

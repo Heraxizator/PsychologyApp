@@ -81,7 +81,19 @@ public partial class AppShell : Shell
         if (!ReduceMotion.IsEnabled)
         {
             TryPerformTabHaptic();
+            TryRefreshTabContentMotion();
         }
+    }
+
+    private void TryRefreshTabContentMotion()
+    {
+        if (GetCurrentTabIndex() is not int index)
+        {
+            return;
+        }
+
+        ContentPage? tabPage = GetTabRootPage(GetTabShellContent(index));
+        TabContentMotion.RefreshAsync(tabPage).FireAndForget();
     }
 
     private static void TryPerformTabHaptic()

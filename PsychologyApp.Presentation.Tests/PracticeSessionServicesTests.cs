@@ -21,7 +21,7 @@ public sealed class TechniqueSessionCompletionServiceTests
         Mock<IUserProgressService> progress = new();
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(3);
         Mock<INavigationService> navigation = new();
-        navigation.Setup(n => n.GoToPracticeCompletionAsync(It.IsAny<int>())).Returns(Task.CompletedTask);
+        navigation.Setup(n => n.GoToPracticeCompletionAsync(It.IsAny<int>(), It.IsAny<string?>())).Returns(Task.CompletedTask);
         TechniqueSessionCompletionService service = new(Mock.Of<IPracticeReminderCoordinator>());
         DateTime startedAt = DateTime.UtcNow.AddMinutes(-2);
 
@@ -42,7 +42,7 @@ public sealed class TechniqueSessionCompletionServiceTests
                 It.IsAny<CancellationToken>()),
             Times.Once);
         progress.Verify(p => p.DeleteSessionDraftAsync("Paper", It.IsAny<CancellationToken>()), Times.Once);
-        navigation.Verify(n => n.GoToPracticeCompletionAsync(3), Times.Once);
+        navigation.Verify(n => n.GoToPracticeCompletionAsync(3, "Paper"), Times.Once);
     }
 
     [Fact]
@@ -51,7 +51,7 @@ public sealed class TechniqueSessionCompletionServiceTests
         Mock<IUserProgressService> progress = new();
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
         Mock<INavigationService> navigation = new();
-        navigation.Setup(n => n.GoToPracticeCompletionAsync(It.IsAny<int>())).Returns(Task.CompletedTask);
+        navigation.Setup(n => n.GoToPracticeCompletionAsync(It.IsAny<int>(), It.IsAny<string?>())).Returns(Task.CompletedTask);
         TechniqueSessionCompletionService service = new(Mock.Of<IPracticeReminderCoordinator>());
 
         await service.CompleteStandardSessionAsync(
@@ -64,7 +64,7 @@ public sealed class TechniqueSessionCompletionServiceTests
             deleteDraft: false);
 
         progress.Verify(p => p.DeleteSessionDraftAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Never);
-        navigation.Verify(n => n.GoToPracticeCompletionAsync(1), Times.Once);
+        navigation.Verify(n => n.GoToPracticeCompletionAsync(1, "custom_5"), Times.Once);
     }
 }
 

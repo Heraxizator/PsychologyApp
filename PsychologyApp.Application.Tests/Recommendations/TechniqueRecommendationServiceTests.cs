@@ -79,4 +79,108 @@ public sealed class TechniqueRecommendationServiceTests
         Assert.Equal(TechniqueId.Spin, decision.TechniqueId);
         Assert.Equal(TodayRecommendationSource.OnboardingConcern, decision.Source);
     }
+
+    [Fact]
+    public void ResolveTodayTechnique_PrefersDraftOverTestAndMood()
+    {
+        TodayRecommendationDecision decision = _service.ResolveTodayTechnique(new TodayRecommendationContext(
+            OnboardingConcernKeys.Anxiety,
+            RecentTestResult: new TestResultDTO
+            {
+                TestId = "beck",
+                Score = 12,
+                CompletedAt = DateTime.UtcNow
+            },
+            TodayMoodLevel: 1,
+            DraftTechniqueId: TechniqueId.Paper));
+
+        Assert.Equal(TechniqueId.Paper, decision.TechniqueId);
+        Assert.Equal(TodayRecommendationSource.SessionDraft, decision.Source);
+    }
+
+    [Fact]
+    public void ResolveTodayTechnique_RotatesAwayFromYesterdayConcernPick()
+    {
+        Dictionary<string, DateTime> dates = new(StringComparer.Ordinal)
+        {
+            [TechniqueId.Spin.ToString()] = DateTime.Today.AddDays(-1).ToUniversalTime()
+        };
+
+        TodayRecommendationDecision decision = _service.ResolveTodayTechnique(new TodayRecommendationContext(
+            OnboardingConcernKeys.Anxiety,
+            LastPracticeDatesUtc: dates));
+
+        Assert.NotEqual(TechniqueId.Spin, decision.TechniqueId);
+        Assert.Equal(TodayRecommendationSource.OnboardingConcern, decision.Source);
+    }
+
+    [Fact]
+    public void PickFromPool_PrefersNeverPracticed()
+    {
+        Dictionary<string, DateTime> dates = new(StringComparer.Ordinal)
+        {
+            [TechniqueId.Breathing.ToString()] = DateTime.UtcNow.AddDays(-10),
+            [TechniqueId.Grounding.ToString()] = DateTime.UtcNow.AddDays(-3)
+        };
+
+        TechniqueId picked = TechniqueRecommendationService.PickFromPool(
+            [TechniqueId.Breathing, TechniqueId.Grounding, TechniqueId.SmallStep],
+            dates);
+
+        Assert.Equal(TechniqueId.SmallStep, picked);
+    }
+
+    [Fact]
+    public void ResolveNextAfterCompletion_ExcludesCompletedTechnique()
+    {
+        TodayRecommendationContext context = new(OnboardingConcernKeys.Anxiety);
+
+        TechniqueId next = _service.ResolveNextAfterCompletion(context, TechniqueId.Spin);
+
+        Assert.NotEqual(TechniqueId.Spin, next);
+        Assert.Contains(next, new[] { TechniqueId.Breathing, TechniqueId.Grounding, TechniqueId.ThoughtRecord });
+    }
+
+    [Fact]
+    public void ResolveNextAfterCompletion_UsesLowMoodPoolWhenMoodLow()
+    {
+        TodayRecommendationContext context = new(
+            OnboardingConcernKeys.Anxiety,
+            TodayMoodLevel: 1);
+
+        TechniqueId next = _service.ResolveNextAfterCompletion(context, TechniqueId.Breathing);
+
+        Assert.NotEqual(TechniqueId.Breathing, next);
+        Assert.Contains(next, new[] { TechniqueId.Grounding, TechniqueId.SmallStep });
+    }
+
+    [Fact]
+    public void ResolveNextAfterCompletion_FallsBackToExploreWhenConcernPoolFullyCompleted()
+    {
+        Dictionary<string, DateTime> dates = new(StringComparer.Ordinal)
+        {
+            [TechniqueId.Breathing.ToString()] = DateTime.UtcNow.AddDays(-5),
+            [TechniqueId.Grounding.ToString()] = DateTime.UtcNow.AddDays(-4),
+            [TechniqueId.ThoughtRecord.ToString()] = DateTime.UtcNow.AddDays(-3)
+        };
+        TodayRecommendationContext context = new(
+            OnboardingConcernKeys.Anxiety,
+            LastPracticeDatesUtc: dates);
+
+        TechniqueId next = _service.ResolveNextAfterCompletion(context, TechniqueId.Spin);
+
+        Assert.NotEqual(TechniqueId.Spin, next);
+        Assert.Contains(next, ExploreRotationExcept(TechniqueId.Spin));
+    }
+
+    private static IEnumerable<TechniqueId> ExploreRotationExcept(TechniqueId exclude) =>
+        new[]
+        {
+            TechniqueId.Spin,
+            TechniqueId.Paper,
+            TechniqueId.Experience,
+            TechniqueId.Breathing,
+            TechniqueId.Grounding,
+            TechniqueId.SmallStep
+        }.Where(id => id != exclude);
 }

@@ -44,6 +44,9 @@
                 VerticalOptions="FillAndExpand"
                 VerticalScrollBarVisibility="Never"
                 ItemsSource="{Binding FilteredItems}">
+                <CollectionView.Behaviors>
+                    <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
+                </CollectionView.Behaviors>
                 <CollectionView.EmptyView>
                     <ui:EmptyStateView
                         IsVisible="{Binding IsListEmptyVisible}"

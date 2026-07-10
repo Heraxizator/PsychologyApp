@@ -76,11 +76,5 @@ public sealed class TodayRecommendationResolver(
     }
 
     private static string ResolveReasonText(TodayRecommendationDecision decision, TodayRecommendationContext context) =>
-        decision.Source switch
-        {
-            TodayRecommendationSource.RecentTest =>
-                AppStrings.TodayRecommendationReasonFromTest(decision.TestId ?? context.RecentTestResult?.TestId ?? string.Empty),
-            TodayRecommendationSource.LowMood => AppStrings.TodayRecommendationReasonLowMood(),
-            _ => AppStrings.TodayRecommendationReason(context.Concern)
-        };
+        TodayRecommendationReasonFormatter.Format(decision, context);
 }

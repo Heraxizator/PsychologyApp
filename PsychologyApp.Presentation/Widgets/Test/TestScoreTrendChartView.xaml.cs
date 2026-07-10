@@ -1,5 +1,7 @@
 using PsychologyApp.Application.Models.Tests;
 using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
+using PsychologyApp.Presentation.Shared.Navigation;
 
 namespace PsychologyApp.Presentation.Widgets.Test;
 
@@ -99,6 +101,11 @@ public partial class TestScoreTrendChartView : ContentView
         view._drawable.DomainMin = view.DomainMin;
         view._drawable.DomainMax = view.DomainMax;
         view.ChartView.Invalidate();
+
+        if (view.ChartPoints.Count >= 2)
+        {
+            UiAnimations.SafeFadeInAsync(view, allowHidden: true).FireAndForget();
+        }
     }
 
     private static void OnSubtitleChanged(BindableObject bindable, object oldValue, object newValue)

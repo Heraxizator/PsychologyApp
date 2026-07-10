@@ -12,6 +12,8 @@ public interface ITechniqueRecommendationService
 
     TodayRecommendationDecision ResolveTodayTechnique(TodayRecommendationContext context);
 
+    TechniqueId ResolveNextAfterCompletion(TodayRecommendationContext context, TechniqueId completedTechniqueId);
+
     IReadOnlyList<TechniqueId> RecommendForSomaticQuery(string query);
 }
 
@@ -22,6 +24,37 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
         TechniqueId.Spin,
         TechniqueId.Paper,
         TechniqueId.Experience,
+        TechniqueId.Breathing,
+        TechniqueId.Grounding,
+        TechniqueId.SmallStep
+    ];
+
+    private static readonly TechniqueId[] AnxietyPool =
+    [
+        TechniqueId.Spin,
+        TechniqueId.Breathing,
+        TechniqueId.Grounding,
+        TechniqueId.ThoughtRecord
+    ];
+
+    private static readonly TechniqueId[] BodyPool =
+    [
+        TechniqueId.Experience,
+        TechniqueId.Grounding,
+        TechniqueId.Breathing,
+        TechniqueId.Check
+    ];
+
+    private static readonly TechniqueId[] MoodPool =
+    [
+        TechniqueId.SmallStep,
+        TechniqueId.ThoughtRecord,
+        TechniqueId.SelfCompassion,
+        TechniqueId.Paper
+    ];
+
+    private static readonly TechniqueId[] LowMoodPool =
+    [
         TechniqueId.Breathing,
         TechniqueId.Grounding,
         TechniqueId.SmallStep
@@ -38,34 +71,125 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
 
     public TodayRecommendationDecision ResolveTodayTechnique(TodayRecommendationContext context)
     {
+        if (context.DraftTechniqueId is TechniqueId draftId)
+        {
+            return new TodayRecommendationDecision(draftId, TodayRecommendationSource.SessionDraft);
+        }
+
         if (context.RecentTestResult is { Score: not null } test &&
             test.CompletedAt >= DateTime.UtcNow.AddDays(-7))
         {
-            if (test.TestId == TestIds.LuscherStandard)
-            {
-                TechniqueId fromLuscher = LuscherScoreRecommendation.RecommendTechnique(test.Score.Value);
-                return new TodayRecommendationDecision(fromLuscher, TodayRecommendationSource.RecentTest, test.TestId);
-            }
+            TechniqueId fromTest = test.TestId == TestIds.LuscherStandard
+                ? LuscherScoreRecommendation.RecommendTechnique(test.Score.Value)
+                : TestScoreRecommendation.RecommendTechnique(test.TestId, test.Score.Value)
+                    ?? TechniqueId.Experience;
 
-            TechniqueId? fromTest = TestScoreRecommendation.RecommendTechnique(test.TestId, test.Score.Value);
-            if (fromTest is TechniqueId techniqueId)
-            {
-                return new TodayRecommendationDecision(techniqueId, TodayRecommendationSource.RecentTest, test.TestId);
-            }
+            TechniqueId picked = PickFromPool([fromTest], context.LastPracticeDatesUtc);
+            return new TodayRecommendationDecision(picked, TodayRecommendationSource.RecentTest, test.TestId);
         }
 
         if (context.TodayMoodLevel is int mood && mood <= 2)
         {
-            return new TodayRecommendationDecision(TechniqueId.Breathing, TodayRecommendationSource.LowMood);
+            TechniqueId picked = PickFromPool(LowMoodPool, context.LastPracticeDatesUtc);
+            return new TodayRecommendationDecision(picked, TodayRecommendationSource.LowMood);
         }
 
-        TechniqueId fromConcern = ResolveFromOnboardingConcern(context.Concern);
+        TechniqueId[] pool = ResolveConcernPool(context.Concern);
+        TechniqueId fromPool = PickFromPool(pool, context.LastPracticeDatesUtc);
         TodayRecommendationSource source = context.Concern == OnboardingConcernKeys.Explore
             ? TodayRecommendationSource.Explore
             : TodayRecommendationSource.OnboardingConcern;
-        return new TodayRecommendationDecision(fromConcern, source);
+        return new TodayRecommendationDecision(fromPool, source);
+    }
+
+    public TechniqueId ResolveNextAfterCompletion(
+        TodayRecommendationContext context,
+        TechniqueId completedTechniqueId)
+    {
+        TechniqueId[] pool = context.TodayMoodLevel is int mood && mood <= 2
+            ? LowMoodPool
+            : ResolveConcernPool(context.Concern);
+
+        TechniqueId[] filtered = pool
+            .Where(id => id != completedTechniqueId)
+            .ToArray();
+
+        if (filtered.Length == 0)
+        {
+            filtered = ExploreRotation
+                .Where(id => id != completedTechniqueId)
+                .ToArray();
+        }
+
+        return PickFromPool(filtered, context.LastPracticeDatesUtc);
     }
 
     public IReadOnlyList<TechniqueId> RecommendForSomaticQuery(string query) =>
         SomaticTechniqueRecommendation.RecommendForQuery(query);
+
+    private static TechniqueId[] ResolveConcernPool(string concern) => concern switch
+    {
+        OnboardingConcernKeys.Anxiety => AnxietyPool,
+        OnboardingConcernKeys.Body => BodyPool,
+        OnboardingConcernKeys.Mood => MoodPool,
+        _ => ExploreRotation
+    };
+
+    /// <summary>
+    /// Prefers never/least-recently practiced; avoids yesterday's or today's pick when an alternative exists.
+    /// </summary>
+    public static TechniqueId PickFromPool(
+        IReadOnlyList<TechniqueId> pool,
+        IReadOnlyDictionary<string, DateTime>? lastPracticeDatesUtc)
+    {
+        if (pool.Count == 0)
+        {
+            return TechniqueId.Spin;
+        }
+
+        if (pool.Count == 1)
+        {
+            return pool[0];
+        }
+
+        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+        DateOnly yesterday = today.AddDays(-1);
+
+        List<(TechniqueId Id, int Index)> ranked = pool
+            .Select((id, index) => (Id: id, Index: index))
+            .OrderBy(item => GetLastLocalDate(item.Id, lastPracticeDatesUtc) ?? DateOnly.MinValue)
+            .ThenBy(item => item.Index)
+            .ToList();
+
+        TechniqueId best = ranked[0].Id;
+        DateOnly? bestDate = GetLastLocalDate(best, lastPracticeDatesUtc);
+        if (bestDate is null || (bestDate != yesterday && bestDate != today))
+        {
+            return best;
+        }
+
+        foreach ((TechniqueId candidate, _) in ranked.Skip(1))
+        {
+            DateOnly? date = GetLastLocalDate(candidate, lastPracticeDatesUtc);
+            if (date is null || (date != yesterday && date != today))
+            {
+                return candidate;
+            }
+        }
+
+        return ranked[1].Id;
+    }
+
+    private static DateOnly? GetLastLocalDate(
+        TechniqueId techniqueId,
+        IReadOnlyDictionary<string, DateTime>? lastPracticeDatesUtc)
+    {
+        if (lastPracticeDatesUtc is null
+            || !lastPracticeDatesUtc.TryGetValue(techniqueId.ToString(), out DateTime utc))
+        {
+            return null;
+        }
+
+        return DateOnly.FromDateTime(utc.ToLocalTime());
+    }
 }
