@@ -89,6 +89,12 @@
                 IsVisible="False"
                 BodyText="{Binding TryTechniqueButtonText}"
                 TapCommand="{Binding TryTechniqueCommand}" />
+            <ui:ButtonView
+                x:Name="ExplorePracticeButton"
+                IsVisible="False"
+                Variant="Secondary"
+                BodyText="{Binding ExplorePracticeButtonText}"
+                TapCommand="{Binding ExplorePracticeCommand}" />
             <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
                 <ui:ButtonView
                     Grid.Column="0"

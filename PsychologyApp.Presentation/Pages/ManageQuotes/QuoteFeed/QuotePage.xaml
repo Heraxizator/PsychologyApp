@@ -53,6 +53,13 @@
                         ItemsSource="{Binding FeedFilters}"
                         TapCommand="{Binding SelectFeedCommand}"
                         SemanticProperties.Description="{Binding FeedAllLabel}" />
+
+                    <ui:FilterChipTabBarView
+                        x:Name="ThemeFilterBar"
+                        IsVisible="{Binding IsThemeFiltersVisible}"
+                        ItemsSource="{Binding ThemeFilters}"
+                        TapCommand="{Binding SelectThemeCommand}"
+                        SemanticProperties.Description="{Binding ThemeAllLabel}" />
                 </VerticalStackLayout>
 
                 <CollectionView

@@ -55,6 +55,7 @@ public static partial class AppStrings
     public static string TestsResultRecommendationHint => T(
         "На основе результата мы подобрали практику, которая может помочь",
         "Based on your result, we picked a practice that may help");
+    public static string TestResultExplorePractice => T("Попробуйте практику", "Try a practice");
     public static string TestDuration(int minutes) => T($"~{minutes} мин", $"~{minutes} min");
     public static string TestQuestionCount(int count) => T($"{count} вопр.", $"{count} questions");
     public static string TestRecommendationFor(string techniqueTitle) =>

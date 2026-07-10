@@ -37,6 +37,7 @@ public interface INavigationService
         QuestionnaireResultDetail? detail = null,
         CancellationToken cancellationToken = default);
     Task GoToTestsTabAsync();
+    Task GoToPracticeTabAsync();
     Task GoToQuotesTabAsync();
     Task GoToQuotesFavoritesAsync();
     Task GoToPracticeCompletionAsync(int streakDays, string? completedItemKey = null);

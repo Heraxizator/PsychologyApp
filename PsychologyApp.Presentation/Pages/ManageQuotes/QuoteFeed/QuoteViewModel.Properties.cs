@@ -102,6 +102,8 @@ public partial class QuoteViewModel
 
     public bool IsFeedFiltersVisible => !IsSearching;
 
+    public bool IsThemeFiltersVisible => !IsSearching;
+
     public string EmptyTitleText =>
         ShowAllReadEmpty ? AllReadTitle :
         ShowForYouEmpty ? ForYouEmptyTitle :

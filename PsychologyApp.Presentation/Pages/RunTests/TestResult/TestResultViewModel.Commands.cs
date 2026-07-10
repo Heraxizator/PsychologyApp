@@ -15,6 +15,17 @@ public partial class TestResultViewModel
         return NavigationService!.GoToTechniqueAsync(techniqueId);
     }
 
+    private async Task ExplorePracticeAsync()
+    {
+        if (NavigationService is null)
+        {
+            return;
+        }
+
+        await NavigationService.GoToRootAsync();
+        await NavigationService.GoToPracticeTabAsync();
+    }
+
     private Task RetakeAsync() =>
         string.IsNullOrWhiteSpace(_result.TestId)
             ? Task.CompletedTask
