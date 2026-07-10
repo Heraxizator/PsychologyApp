@@ -48,4 +48,30 @@ public sealed class QuotePersonalizationPolicyTests
         Assert.Contains("anxiety", themes);
         Assert.Contains("calm", themes);
     }
+
+    [Fact]
+    public void ResolveThemes_LowMood_PrefersCalmThemes()
+    {
+        IReadOnlyList<string> themes = QuotePersonalizationPolicy.ResolveThemes("anxiety", todayMoodLevel: 1);
+        Assert.Contains("calm", themes);
+        Assert.Contains("acceptance", themes);
+        Assert.DoesNotContain("anxiety", themes);
+    }
+
+    [Fact]
+    public void ResolveThemes_HighMood_PrefersUpliftingThemes()
+    {
+        IReadOnlyList<string> themes = QuotePersonalizationPolicy.ResolveThemes("anxiety", todayMoodLevel: 5);
+        Assert.Contains("motivation", themes);
+        Assert.Contains("happiness", themes);
+        Assert.DoesNotContain("anxiety", themes);
+    }
+
+    [Fact]
+    public void ResolveThemes_NeutralMood_KeepsConcernThemes()
+    {
+        IReadOnlyList<string> themes = QuotePersonalizationPolicy.ResolveThemes("anxiety", todayMoodLevel: 3);
+        Assert.Contains("anxiety", themes);
+        Assert.Contains("calm", themes);
+    }
 }

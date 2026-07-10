@@ -16,6 +16,7 @@ public partial class QuoteViewModel
     public string FeedAllLabel => AppStrings.QuotesFeedAll;
     public string FeedForYouLabel => AppStrings.QuotesFeedForYou;
     public string FeedFavoritesLabel => AppStrings.QuotesFeedFavorites;
+    public string ThemeAllLabel => AppStrings.QuotesThemeAll;
     public string AllReadTitle => AppStrings.QuotesAllReadTitle;
     public string AllReadBody => AppStrings.QuotesAllReadBody;
     public string ShowFavoritesButtonText => AppStrings.QuotesShowFavorites;
@@ -44,6 +45,7 @@ public partial class QuoteViewModel
             nameof(FeedAllLabel),
             nameof(FeedForYouLabel),
             nameof(FeedFavoritesLabel),
+            nameof(ThemeAllLabel),
             nameof(AllReadTitle),
             nameof(AllReadBody),
             nameof(ShowFavoritesButtonText),
@@ -59,6 +61,7 @@ public partial class QuoteViewModel
             nameof(FavoritesEmptyBody));
         NotifyEmptyStateProperties();
         EnsureFeedFilters();
+        EnsureThemeFilters();
 
         string currentLanguage = UserPreferences.GetPersistedLanguage();
         if (!_initialized)

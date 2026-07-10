@@ -8,7 +8,7 @@ namespace PsychologyApp.Presentation.Tests;
 
 public sealed class QuoteCatalogContentTests
 {
-    private const int MinimumCount = 975;
+    private const int MinimumCount = 1073;
 
     [Theory]
     [InlineData("quotes/quotes.ru.json")]
@@ -44,7 +44,7 @@ public sealed class QuoteCatalogContentTests
     [Fact]
     public void QuoteCatalogPolicy_CurrentVersionIsAtLeastTwo()
     {
-        Assert.True(QuoteCatalogPolicy.CurrentVersion >= 6);
+        Assert.True(QuoteCatalogPolicy.CurrentVersion >= 7);
     }
 
     [Fact]
@@ -53,8 +53,8 @@ public sealed class QuoteCatalogContentTests
         List<QuoteJsonEntry> en = await LoadAsync("quotes/quotes.en.json");
         List<QuoteJsonEntry> ru = await LoadAsync("quotes/quotes.ru.json");
 
-        Assert.Equal(975, en.Count);
-        Assert.Equal(975, ru.Count);
+        Assert.Equal(1073, en.Count);
+        Assert.Equal(1073, ru.Count);
         Assert.Contains(en, e => e.Author == "John Chrysostom");
         Assert.Contains(en, e => e.Author == "Alexander Pushkin");
         Assert.Contains(ru, e => e.Author == "Иоанн Золотоуст");

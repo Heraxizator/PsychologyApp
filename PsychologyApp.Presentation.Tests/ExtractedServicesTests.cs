@@ -127,10 +127,37 @@ public sealed class PracticeDashboardLoaderTests
 
 public sealed class QuoteFeedCoordinatorTests
 {
+    private static QuoteFeedCoordinator CreateCoordinator(
+        int? todayMoodLevel = null)
+    {
+        Mock<IUserProgressService> progress = new();
+        if (todayMoodLevel is int mood)
+        {
+            progress
+                .Setup(p => p.GetRecentMoodsAsync(1, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(
+                [
+                    new MoodEntryDTO
+                    {
+                        MoodLevel = mood,
+                        RecordedAt = DateTime.UtcNow
+                    }
+                ]);
+        }
+        else
+        {
+            progress
+                .Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Array.Empty<MoodEntryDTO>());
+        }
+
+        return new QuoteFeedCoordinator(progress.Object);
+    }
+
     [Fact]
     public void TrySwitchFeed_ReturnsTrueWhenModeChanges()
     {
-        QuoteFeedCoordinator coordinator = new();
+        QuoteFeedCoordinator coordinator = CreateCoordinator();
 
         Assert.True(coordinator.TrySwitchFeed(QuoteFeedMode.Favorites));
         Assert.False(coordinator.TrySwitchFeed(QuoteFeedMode.Favorites));
@@ -139,7 +166,7 @@ public sealed class QuoteFeedCoordinatorTests
     [Fact]
     public async Task ShouldShowAllReadEmptyAsync_OnlyForAllFeedWithNoItems()
     {
-        QuoteFeedCoordinator coordinator = new();
+        QuoteFeedCoordinator coordinator = CreateCoordinator();
         Mock<IQuotService> quotService = new();
         quotService.Setup(s => s.IsAllCaughtUpAsync(It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
@@ -151,7 +178,7 @@ public sealed class QuoteFeedCoordinatorTests
     [Fact]
     public async Task FetchQuotesAsync_ForYou_DoesNotFallbackToUnreadLatest()
     {
-        QuoteFeedCoordinator coordinator = new();
+        QuoteFeedCoordinator coordinator = CreateCoordinator();
         coordinator.SetFeedMode(QuoteFeedMode.ForYou);
         Mock<IQuotService> quotService = new();
         quotService
@@ -171,6 +198,53 @@ public sealed class QuoteFeedCoordinatorTests
         quotService.Verify(
             s => s.GetUnreadAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()),
             Times.Never);
+    }
+
+    [Fact]
+    public async Task FetchQuotesAsync_ForYou_LowMood_UsesCalmThemes()
+    {
+        QuoteFeedCoordinator coordinator = CreateCoordinator(todayMoodLevel: 1);
+        coordinator.SetFeedMode(QuoteFeedMode.ForYou);
+        Mock<IQuotService> quotService = new();
+        quotService
+            .Setup(s => s.GetUnreadByThemesAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Array.Empty<QuotDTO>());
+        quotService
+            .Setup(s => s.EnsureThemedQuotesInFeedAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+
+        await coordinator.FetchQuotesAsync(quotService.Object, 20, CancellationToken.None);
+
+        quotService.Verify(
+            s => s.EnsureThemedQuotesInFeedAsync(
+                It.Is<IReadOnlyList<string>>(themes =>
+                    themes.Contains("calm") && themes.Contains("acceptance") && !themes.Contains("anxiety")),
+                20,
+                It.IsAny<CancellationToken>()),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task FetchQuotesAsync_WithThemeFilter_UsesSelectedTheme()
+    {
+        QuoteFeedCoordinator coordinator = CreateCoordinator();
+        coordinator.TrySelectTheme("anxiety");
+        Mock<IQuotService> quotService = new();
+        quotService
+            .Setup(s => s.GetUnreadByThemesAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Array.Empty<QuotDTO>());
+        quotService
+            .Setup(s => s.EnsureThemedQuotesInFeedAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+
+        await coordinator.FetchQuotesAsync(quotService.Object, 20, CancellationToken.None);
+
+        quotService.Verify(
+            s => s.EnsureThemedQuotesInFeedAsync(
+                It.Is<IReadOnlyList<string>>(themes => themes.Count == 1 && themes[0] == "anxiety"),
+                20,
+                It.IsAny<CancellationToken>()),
+            Times.Once);
     }
 }
 

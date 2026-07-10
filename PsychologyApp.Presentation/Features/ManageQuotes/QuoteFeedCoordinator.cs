@@ -1,5 +1,6 @@
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Quot;
+using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Entities.FilterChip;
 using PsychologyApp.Presentation.Entities.Quote;
 using PsychologyApp.Presentation.Features.ManageQuotes.Index;
@@ -10,10 +11,17 @@ namespace PsychologyApp.Presentation.Features.ManageQuotes;
 
 public sealed class QuoteFeedCoordinator
 {
+    private readonly IUserProgressService _userProgressService;
     private readonly HashSet<string> _knownQuoteTexts = new(StringComparer.Ordinal);
     private QuoteFeedMode _feedMode = QuoteFeedMode.All;
+    private string? _selectedThemeKey;
+
+    public QuoteFeedCoordinator(IUserProgressService userProgressService) =>
+        _userProgressService = userProgressService;
 
     public QuoteFeedMode FeedMode => _feedMode;
+
+    public string? SelectedThemeKey => _selectedThemeKey;
 
     public void ResetKnownQuotes() => _knownQuoteTexts.Clear();
 
@@ -29,6 +37,58 @@ public sealed class QuoteFeedCoordinator
     }
 
     public void SetFeedMode(QuoteFeedMode mode) => _feedMode = mode;
+
+    public bool TrySelectTheme(string? key)
+    {
+        string? normalized = string.IsNullOrWhiteSpace(key) || string.Equals(key, "all", StringComparison.OrdinalIgnoreCase)
+            ? null
+            : key;
+
+        if (string.Equals(_selectedThemeKey, normalized, StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        _selectedThemeKey = normalized;
+        return true;
+    }
+
+    public void EnsureThemeFilters(
+        ObservableCollection<FilterChipTabItem> filters,
+        string allThemesLabel)
+    {
+        IReadOnlyList<(string Key, string Title)> themes = QuoteThemeLabels.GetFilterThemes();
+        int expectedCount = themes.Count + 1;
+
+        if (filters.Count != expectedCount)
+        {
+            filters.Clear();
+            filters.Add(new FilterChipTabItem { Key = "all", Title = allThemesLabel });
+            foreach ((string key, string title) in themes)
+            {
+                filters.Add(new FilterChipTabItem { Key = key, Title = title });
+            }
+        }
+        else
+        {
+            filters[0].Title = allThemesLabel;
+            for (int index = 0; index < themes.Count; index++)
+            {
+                filters[index + 1].Title = themes[index].Title;
+            }
+        }
+
+        SyncThemeFilterSelection(filters);
+    }
+
+    public void SyncThemeFilterSelection(ObservableCollection<FilterChipTabItem> filters)
+    {
+        string selectedKey = _selectedThemeKey ?? "all";
+        foreach (FilterChipTabItem filter in filters)
+        {
+            filter.IsSelected = string.Equals(filter.Key, selectedKey, StringComparison.OrdinalIgnoreCase);
+        }
+    }
 
     public QuoteFeedMode ParseFeedKey(string? key) =>
         key switch
@@ -210,12 +270,22 @@ public sealed class QuoteFeedCoordinator
         if (_feedMode == QuoteFeedMode.Favorites)
         {
             IEnumerable<QuotDTO> favorites = await quotService.GetFavouritesAsync(count, cancellationToken);
-            return favorites.Where(quotDTO => quotDTO.IsFavourite);
+            IEnumerable<QuotDTO> favouriteItems = favorites.Where(quotDTO => quotDTO.IsFavourite);
+            return FilterBySelectedTheme(favouriteItems);
+        }
+
+        if (!string.IsNullOrWhiteSpace(_selectedThemeKey))
+        {
+            await quotService.EnsureThemedQuotesInFeedAsync([_selectedThemeKey], count, cancellationToken);
+            return await quotService.GetUnreadByThemesAsync([_selectedThemeKey], count, cancellationToken);
         }
 
         if (_feedMode == QuoteFeedMode.ForYou)
         {
-            IReadOnlyList<string> themes = QuotePersonalizationPolicy.ResolveThemes(UserPreferences.OnboardingConcern);
+            int? todayMood = await ResolveTodayMoodLevelAsync(cancellationToken);
+            IReadOnlyList<string> themes = QuotePersonalizationPolicy.ResolveThemes(
+                UserPreferences.OnboardingConcern,
+                todayMood);
             await quotService.EnsureThemedQuotesInFeedAsync(themes, count, cancellationToken);
             return await quotService.GetUnreadByThemesAsync(themes, count, cancellationToken);
         }
@@ -223,11 +293,42 @@ public sealed class QuoteFeedCoordinator
         return await quotService.GetUnreadAsync(count, cancellationToken);
     }
 
+    private IEnumerable<QuotDTO> FilterBySelectedTheme(IEnumerable<QuotDTO> quotes)
+    {
+        if (string.IsNullOrWhiteSpace(_selectedThemeKey))
+        {
+            return quotes;
+        }
+
+        return quotes.Where(quote =>
+            string.Equals(quote.Theme, _selectedThemeKey, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private async Task<int?> ResolveTodayMoodLevelAsync(CancellationToken cancellationToken)
+    {
+        IReadOnlyList<MoodEntryDTO> moods = await _userProgressService.GetRecentMoodsAsync(1, cancellationToken);
+        if (moods.Count == 0 || moods[0].RecordedAt.ToLocalTime().Date != DateTime.Today)
+        {
+            return null;
+        }
+
+        return moods[0].MoodLevel;
+    }
+
     private async Task SeedSingleQuoteAsync(IQuotService quotService, CancellationToken cancellationToken)
     {
+        if (!string.IsNullOrWhiteSpace(_selectedThemeKey))
+        {
+            await quotService.TryLoadThemedSingleAsync([_selectedThemeKey], cancellationToken);
+            return;
+        }
+
         if (_feedMode == QuoteFeedMode.ForYou)
         {
-            IReadOnlyList<string> themes = QuotePersonalizationPolicy.ResolveThemes(UserPreferences.OnboardingConcern);
+            int? todayMood = await ResolveTodayMoodLevelAsync(cancellationToken);
+            IReadOnlyList<string> themes = QuotePersonalizationPolicy.ResolveThemes(
+                UserPreferences.OnboardingConcern,
+                todayMood);
             await quotService.TryLoadThemedSingleAsync(themes, cancellationToken);
             return;
         }

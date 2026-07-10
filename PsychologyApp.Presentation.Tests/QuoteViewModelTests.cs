@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Moq;
+using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
@@ -321,7 +322,7 @@ public sealed class QuoteViewModelTests
             NullLogger<QuoteViewModel>.Instance,
             toast.Object,
             settings,
-            new QuoteFeedCoordinator(),
+            new QuoteFeedCoordinator(Mock.Of<IUserProgressService>()),
             new QuoteItemCommandsFactory(
                 quotService,
                 notifier ?? new QuotesChangeNotifier(),

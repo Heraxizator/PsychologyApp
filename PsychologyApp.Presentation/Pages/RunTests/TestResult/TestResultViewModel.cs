@@ -24,6 +24,7 @@ public partial class TestResultViewModel : BaseViewModel
     private readonly TestResultInfo _result;
 
     public ICommand TryTechniqueCommand { get; }
+    public ICommand ExplorePracticeCommand { get; }
     public ICommand RetakeCommand { get; }
     public ICommand BackToListCommand { get; }
 
@@ -51,6 +52,7 @@ public partial class TestResultViewModel : BaseViewModel
         BindNavigation(navigationService);
 
         TryTechniqueCommand = new AsyncCommand(TryTechniqueAsync, () => _result.RecommendedTechnique is not null);
+        ExplorePracticeCommand = new AsyncCommand(ExplorePracticeAsync, () => _result.RecommendedTechnique is null);
         RetakeCommand = new AsyncCommand(RetakeAsync, () => !string.IsNullOrWhiteSpace(_result.TestId));
         BackToListCommand = new AsyncCommand(GoToRootAsync);
 
@@ -63,6 +65,7 @@ public partial class TestResultViewModel : BaseViewModel
     public string InterpretationDetail { get; private set; } = string.Empty;
     public bool HasInterpretationDetail { get; private set; }
     public bool HasRecommendation { get; private set; }
+    public bool ShowExplorePractice => !HasRecommendation;
     public string TrendText { get; private set; } = string.Empty;
     public TestTrendKind TrendKind { get; private set; } = TestTrendKind.None;
     public bool HasTrendBadge { get; private set; }
@@ -86,7 +89,8 @@ public partial class TestResultViewModel : BaseViewModel
             nameof(Interpretation),
             nameof(InterpretationDetail),
             nameof(HasInterpretationDetail),
-            nameof(HasRecommendation));
+            nameof(HasRecommendation),
+            nameof(ShowExplorePractice));
     }
 
     private async Task LoadTrendAsync()

@@ -7,6 +7,7 @@ public partial class TestResultViewModel
 {
     public string PageTitle => AppStrings.TestsResultPageTitle;
     public string TryTechniqueButtonText => AppStrings.TestTryTechnique;
+    public string ExplorePracticeButtonText => AppStrings.TestResultExplorePractice;
     public string RetakeButtonText => AppStrings.TestRetakeButton;
     public string BackToListButtonText => AppStrings.TestsBackToList;
 
@@ -16,6 +17,7 @@ public partial class TestResultViewModel
         Notify(
             nameof(PageTitle),
             nameof(TryTechniqueButtonText),
+            nameof(ExplorePracticeButtonText),
             nameof(RetakeButtonText),
             nameof(BackToListButtonText),
             nameof(RecommendationHint),

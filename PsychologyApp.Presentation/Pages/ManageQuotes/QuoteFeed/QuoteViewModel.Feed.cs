@@ -19,6 +19,29 @@ public partial class QuoteViewModel
     private void EnsureFeedFilters() =>
         _feedCoordinator.EnsureFeedFilters(FeedFilters, FeedAllLabel, FeedFavoritesLabel, FeedForYouLabel);
 
+    private void EnsureThemeFilters() =>
+        _feedCoordinator.EnsureThemeFilters(ThemeFilters, ThemeAllLabel);
+
+    private async Task SelectThemeAsync(string? key)
+    {
+        if (!_feedCoordinator.TrySelectTheme(key))
+        {
+            return;
+        }
+
+        _feedCoordinator.SyncThemeFilterSelection(ThemeFilters);
+        ClearSearchQuerySilently();
+
+        await UiThread.RunAsync(() =>
+        {
+            _feedState.ClearFeed();
+            ShowAllReadEmpty = false;
+            NotifySearchRelatedProperties();
+        });
+
+        await ReloadFeedAsync(seedNewQuote: false);
+    }
+
     private async Task SwitchFeedAsync(QuoteFeedMode mode)
     {
         _feedCoordinator.SetFeedMode(mode);

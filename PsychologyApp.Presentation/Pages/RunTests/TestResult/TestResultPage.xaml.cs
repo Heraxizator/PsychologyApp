@@ -48,6 +48,13 @@ public partial class TestResultPage : ContentPage
         {
             UiStateAnimator.AnimateVisibilityAsync(RecommendationSection, _viewModel.HasRecommendation).FireAndForget();
             UiStateAnimator.AnimateVisibilityAsync(RecommendationPrimaryButton, _viewModel.HasRecommendation).FireAndForget();
+            UiStateAnimator.AnimateVisibilityAsync(ExplorePracticeButton, _viewModel.ShowExplorePractice).FireAndForget();
+            UiStateAnimator.AnimateVisibilityAsync(ExplorePracticeButton, _viewModel.ShowExplorePractice).FireAndForget();
+        }
+
+        if (e.PropertyName == nameof(TestResultViewModel.ShowExplorePractice))
+        {
+            UiStateAnimator.AnimateVisibilityAsync(ExplorePracticeButton, _viewModel.ShowExplorePractice).FireAndForget();
         }
     }
 
@@ -63,12 +70,14 @@ public partial class TestResultPage : ContentPage
             UiStateAnimator.AnimateVisibilityAsync(TrendChartView, _viewModel.HasTrendChart).FireAndForget();
             UiStateAnimator.AnimateVisibilityAsync(RecommendationSection, _viewModel.HasRecommendation).FireAndForget();
             UiStateAnimator.AnimateVisibilityAsync(RecommendationPrimaryButton, _viewModel.HasRecommendation).FireAndForget();
+            UiStateAnimator.AnimateVisibilityAsync(ExplorePracticeButton, _viewModel.ShowExplorePractice).FireAndForget();
             return;
         }
 
         TrendChartView.IsVisible = _viewModel.HasTrendChart;
         RecommendationSection.IsVisible = _viewModel.HasRecommendation;
         RecommendationPrimaryButton.IsVisible = _viewModel.HasRecommendation;
+        ExplorePracticeButton.IsVisible = _viewModel.ShowExplorePractice;
 
         if (!_viewModel.HasTrendChart)
         {
@@ -79,6 +88,11 @@ public partial class TestResultPage : ContentPage
         {
             UiAnimations.ResetVisualState(RecommendationSection);
             UiAnimations.ResetVisualState(RecommendationPrimaryButton);
+        }
+
+        if (!_viewModel.ShowExplorePractice)
+        {
+            UiAnimations.ResetVisualState(ExplorePracticeButton);
         }
     }
 

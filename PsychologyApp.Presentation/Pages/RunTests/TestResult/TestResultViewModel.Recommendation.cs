@@ -44,6 +44,7 @@ public partial class TestResultViewModel
             nameof(RecommendationSubtitle),
             nameof(RecommendationTheme),
             nameof(RecommendationIconName),
-            nameof(HasRecommendation));
+            nameof(HasRecommendation),
+            nameof(ShowExplorePractice));
     }
 }

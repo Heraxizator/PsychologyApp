@@ -26,7 +26,12 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
         TechniqueId.Experience,
         TechniqueId.Breathing,
         TechniqueId.Grounding,
-        TechniqueId.SmallStep
+        TechniqueId.SmallStep,
+        TechniqueId.Future,
+        TechniqueId.Hack,
+        TechniqueId.Observer,
+        TechniqueId.Anchor,
+        TechniqueId.Comparison
     ];
 
     private static readonly TechniqueId[] AnxietyPool =
@@ -34,7 +39,9 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
         TechniqueId.Spin,
         TechniqueId.Breathing,
         TechniqueId.Grounding,
-        TechniqueId.ThoughtRecord
+        TechniqueId.ThoughtRecord,
+        TechniqueId.Observer,
+        TechniqueId.Anchor
     ];
 
     private static readonly TechniqueId[] BodyPool =
@@ -42,7 +49,9 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
         TechniqueId.Experience,
         TechniqueId.Grounding,
         TechniqueId.Breathing,
-        TechniqueId.Check
+        TechniqueId.Check,
+        TechniqueId.Hack,
+        TechniqueId.Observer
     ];
 
     private static readonly TechniqueId[] MoodPool =
@@ -50,14 +59,19 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
         TechniqueId.SmallStep,
         TechniqueId.ThoughtRecord,
         TechniqueId.SelfCompassion,
-        TechniqueId.Paper
+        TechniqueId.Paper,
+        TechniqueId.Future,
+        TechniqueId.Hack,
+        TechniqueId.Comparison
     ];
 
     private static readonly TechniqueId[] LowMoodPool =
     [
         TechniqueId.Breathing,
         TechniqueId.Grounding,
-        TechniqueId.SmallStep
+        TechniqueId.SmallStep,
+        TechniqueId.SelfCompassion,
+        TechniqueId.Observer
     ];
 
     public TechniqueId ResolveFromOnboardingConcern(string concern) => concern switch

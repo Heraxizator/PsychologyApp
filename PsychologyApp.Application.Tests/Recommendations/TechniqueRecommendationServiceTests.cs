@@ -181,6 +181,11 @@ public sealed class TechniqueRecommendationServiceTests
             TechniqueId.Experience,
             TechniqueId.Breathing,
             TechniqueId.Grounding,
-            TechniqueId.SmallStep
+            TechniqueId.SmallStep,
+            TechniqueId.Future,
+            TechniqueId.Hack,
+            TechniqueId.Observer,
+            TechniqueId.Anchor,
+            TechniqueId.Comparison
         }.Where(id => id != exclude);
 }

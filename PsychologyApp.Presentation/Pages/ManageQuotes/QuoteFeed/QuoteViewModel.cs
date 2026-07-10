@@ -24,8 +24,10 @@ public partial class QuoteViewModel : BaseViewModel
 
     public ObservableRangeCollection<QuoteItem> DisplayItems => _feedState.DisplayItems;
     public ObservableCollection<FilterChipTabItem> FeedFilters { get; } = [];
+    public ObservableCollection<FilterChipTabItem> ThemeFilters { get; } = [];
     public ICommand LoadMoreQuotesCommand { get; private set; } = default!;
     public ICommand SelectFeedCommand { get; private set; } = default!;
+    public ICommand SelectThemeCommand { get; private set; } = default!;
     public ICommand ShowFavoritesCommand { get; private set; } = default!;
     public ICommand ShowAgainCommand { get; private set; } = default!;
     public ICommand OpenProfileCommand { get; private set; } = default!;
@@ -78,10 +80,12 @@ public partial class QuoteViewModel : BaseViewModel
             CancelSearchCommand = new Command(() => _searchController.CancelPendingSearch());
             LoadMoreQuotesCommand = new AsyncCommand(() => AddFreshQuotesAsync());
             SelectFeedCommand = new Command<string?>(key => SelectFeedAsync(key).FireAndForget());
+            SelectThemeCommand = new Command<string?>(key => SelectThemeAsync(key).FireAndForget());
             ShowFavoritesCommand = new AsyncCommand(() => SwitchFeedAsync(QuoteFeedMode.Favorites));
             ShowAgainCommand = new AsyncCommand(ResetReadStateAsync);
             Reload = new AsyncCommand(() => RunInitAsync(seedNewQuote: false));
             EnsureFeedFilters();
+            EnsureThemeFilters();
         }
         catch (Exception e)
         {
@@ -97,6 +101,7 @@ public partial class QuoteViewModel : BaseViewModel
             nameof(IsSearchFilteringVisible),
             nameof(IsQuoteListVisible),
             nameof(IsFeedFiltersVisible),
+            nameof(IsThemeFiltersVisible),
             nameof(ShowDailyQuoteHeader),
             nameof(ShowForYouEmpty),
             nameof(ShowFavoritesEmpty),
