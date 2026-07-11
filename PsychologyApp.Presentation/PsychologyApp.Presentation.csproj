@@ -30,8 +30,8 @@
 		<ApplicationId>com.subconscious.psychologyapp</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>2.001</ApplicationDisplayVersion>
-		<ApplicationVersion>2001</ApplicationVersion>
+		<ApplicationDisplayVersion>2.002</ApplicationDisplayVersion>
+		<ApplicationVersion>2002</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
