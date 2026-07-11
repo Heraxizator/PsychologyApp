@@ -13,10 +13,11 @@
         <ControlTemplate>
             <Grid
                 Padding="{StaticResource LayoutPageMarginThickness}"
-                RowDefinitions="*,Auto"
+                RowDefinitions="*, *"
                 VerticalOptions="FillAndExpand">
                 <VerticalStackLayout
                     Grid.Row="0"
+                    Padding="0, 16, 0, 0"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Spacing="16"
@@ -57,7 +58,7 @@
                 <VerticalStackLayout
                     Grid.Row="1"
                     Spacing="8"
-                    Padding="0,0,0,8">
+                    Padding="0,8,0,8">
                     <ui:ButtonView
                         BodyText="{TemplateBinding PrimaryActionText}"
                         TapCommand="{TemplateBinding PrimaryCommand}" />
