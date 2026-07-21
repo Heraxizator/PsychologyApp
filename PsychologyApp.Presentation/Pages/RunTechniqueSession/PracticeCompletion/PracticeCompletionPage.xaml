@@ -12,7 +12,7 @@
              BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
 
     <ScrollView>
-        <Grid RowDefinitions="*, *">
+        <Grid RowDefinitions="Auto,Auto">
             <Grid.Behaviors>
                 <behaviors:RevealOnAppearingBehavior />
             </Grid.Behaviors>
@@ -26,14 +26,12 @@
                 StreakLabelText="{Binding StreakLabelText}"
                 HasStreak="{Binding HasStreak}"
                 PrimaryActionText="{Binding MorePracticeText}"
-                PrimaryCommand="{Binding MorePracticeCommand}"
-                SecondaryActionText="{Binding GoHomeText}"
-                SecondaryCommand="{Binding GoHomeCommand}" />
+                PrimaryCommand="{Binding MorePracticeCommand}" />
 
             <VerticalStackLayout
                 Grid.Row="1"
                 Padding="{StaticResource LayoutPageMarginThickness}"
-                Spacing="{StaticResource CompactSpacing}">
+                Spacing="{StaticResource LayoutSpacing}">
                 <VerticalStackLayout.Behaviors>
                     <behaviors:StaggerChildrenBehavior />
                 </VerticalStackLayout.Behaviors>
@@ -47,21 +45,31 @@
                     IconName="{Binding NextPracticeIcon}"
                     ActionText="{Binding NextPracticeActionText}"
                     TapCommand="{Binding NextPracticeCommand}" />
-                <mood:MoodStripView
-                    QuestionText="{Binding ReflectionQuestion}"
-                    RecordMoodCommand="{Binding RecordMoodCommand}"
-                    SelectedMoodLevel="{Binding SelectedMoodLevel}" />
-                <Label
-                    x:Name="MoodDeltaLabel"
-                    IsVisible="False"
-                    Text="{Binding MoodDeltaText}"
-                    Style="{StaticResource EmphasisBodyStyle}"
-                    TextColor="{DynamicResource Primary}"
-                    FontFamily="{StaticResource SemiBoldFontFamily}"
-                    HorizontalTextAlignment="Center" />
-                <ui:TextEntryView
-                    TitleText="{Binding ReflectionNotePlaceholder}"
-                    BodyText="{Binding ReflectionNote}" />
+                <Border Style="{StaticResource BrandCardStyle}">
+                    <VerticalStackLayout Spacing="{StaticResource SectionSpacing}">
+                        <mood:MoodStripView
+                            QuestionText="{Binding ReflectionQuestion}"
+                            RecordMoodCommand="{Binding RecordMoodCommand}"
+                            SelectedMoodLevel="{Binding SelectedMoodLevel}" />
+                        <Label
+                            x:Name="MoodDeltaLabel"
+                            IsVisible="False"
+                            Text="{Binding MoodDeltaText}"
+                            Style="{StaticResource EmphasisBodyStyle}"
+                            TextColor="{DynamicResource Primary}"
+                            FontFamily="{StaticResource SemiBoldFontFamily}"
+                            HorizontalTextAlignment="Center"
+                            Margin="{StaticResource FieldTopMargin}" />
+                        <ui:TextEntryView
+                            TitleText="{Binding ReflectionNotePlaceholder}"
+                            BodyText="{Binding ReflectionNote}"
+                            Margin="{StaticResource FieldTopMargin}" />
+                    </VerticalStackLayout>
+                </Border>
+                <ui:ButtonView
+                    Variant="Secondary"
+                    BodyText="{Binding GoHomeText}"
+                    TapCommand="{Binding GoHomeCommand}" />
             </VerticalStackLayout>
         </Grid>
     </ScrollView>

@@ -71,16 +71,41 @@
                         x:Name="EngagementNudgeBanner"
                         IsVisible="False"
                         Style="{StaticResource TodayBannerStyle}"
-                        Margin="0,0,0,4">
+                        Margin="{StaticResource CardBottomMargin}">
                         <Border.Behaviors>
                             <behaviors:PressFeedbackBehavior />
                         </Border.Behaviors>
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding StartTodayPracticeCommand}" />
                         </Border.GestureRecognizers>
-                        <Label
-                            Text="{Binding EngagementNudgeText}"
-                            Style="{StaticResource BodyStyle}" />
+                        <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="12">
+                            <Border
+                                Grid.Column="0"
+                                Style="{StaticResource HeroAccentBarStyle}" />
+                            <Border
+                                Grid.Column="1"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                StrokeThickness="0"
+                                BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}"
+                                VerticalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12" />
+                                </Border.StrokeShape>
+                                <ui:MaterialIconView
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    IconName="AutoAwesome"
+                                    IconSize="22"
+                                    IconColor="{DynamicResource Primary}" />
+                            </Border>
+                            <Label
+                                Grid.Column="2"
+                                VerticalOptions="Center"
+                                Text="{Binding EngagementNudgeText}"
+                                Style="{StaticResource BodyStyle}"
+                                LineBreakMode="WordWrap" />
+                        </Grid>
                     </Border>
 
                     <today:TodayPracticeRowView
