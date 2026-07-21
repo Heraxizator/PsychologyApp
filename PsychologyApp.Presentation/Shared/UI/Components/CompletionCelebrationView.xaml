@@ -13,14 +13,14 @@
         <ControlTemplate>
             <Grid
                 Padding="{StaticResource LayoutPageMarginThickness}"
-                RowDefinitions="*, *"
-                VerticalOptions="FillAndExpand">
+                RowDefinitions="Auto,Auto"
+                VerticalOptions="Start">
                 <VerticalStackLayout
                     Grid.Row="0"
-                    Padding="0, 16, 0, 0"
+                    Padding="0,12,0,0"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
-                    Spacing="16"
+                    Spacing="{StaticResource SectionSpacing}"
                     MaximumWidthRequest="320">
                     <Border
                         x:Name="IconHalo"
@@ -42,7 +42,7 @@
                         HorizontalTextAlignment="Center" />
                     <VerticalStackLayout
                         IsVisible="{TemplateBinding HasStreak}"
-                        Spacing="4"
+                        Spacing="2"
                         HorizontalOptions="Center">
                         <Label
                             Text="{TemplateBinding StreakValueText}"
@@ -57,15 +57,11 @@
                 </VerticalStackLayout>
                 <VerticalStackLayout
                     Grid.Row="1"
-                    Spacing="8"
-                    Padding="0,8,0,8">
+                    Spacing="{StaticResource CompactSpacing}"
+                    Padding="0,6,0,0">
                     <ui:ButtonView
                         BodyText="{TemplateBinding PrimaryActionText}"
                         TapCommand="{TemplateBinding PrimaryCommand}" />
-                    <ui:ButtonView
-                        Variant="Secondary"
-                        BodyText="{TemplateBinding SecondaryActionText}"
-                        TapCommand="{TemplateBinding SecondaryCommand}" />
                 </VerticalStackLayout>
             </Grid>
         </ControlTemplate>
