@@ -25,6 +25,7 @@ public partial class TechniqueSessionViewModel
             _techniqueId.ToString(),
             ModuleName,
             PageName,
-            _sessionStartedAt);
+            _sessionStartedAt,
+            TryGetPreIntensity());
     }
 }

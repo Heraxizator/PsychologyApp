@@ -141,6 +141,29 @@ public sealed class ClinicalCareService(
         return TherapyProgramCatalog.GetWeekPlan(program.ProgramType, program.CurrentWeek);
     }
 
+    public async Task<TherapyProgramAdherence?> GetActiveWeekAdherenceAsync(CancellationToken cancellationToken = default)
+    {
+        TherapyProgramStateDTO? program = await AdvanceProgramWeekIfDueAsync(cancellationToken);
+        if (program is null || !program.IsActive)
+        {
+            return null;
+        }
+
+        TherapyProgramWeekPlan weekPlan = TherapyProgramCatalog.GetWeekPlan(program.ProgramType, program.CurrentWeek);
+        DateTime weekStartUtc = program.StartedAt.ToUniversalTime().Date.AddDays((program.CurrentWeek - 1) * 7);
+        DateTime weekEndUtc = weekStartUtc.AddDays(7);
+        IReadOnlyList<string> poolKeys = weekPlan.TechniquePool
+            .Select(technique => technique.ToString())
+            .ToList();
+        int completed = await userProgressService.CountDistinctTechniqueCompletionsForItemsBetweenAsync(
+            poolKeys,
+            weekStartUtc,
+            weekEndUtc,
+            cancellationToken);
+
+        return new TherapyProgramAdherence(program, weekPlan, completed);
+    }
+
     public async Task<ClinicalScorecardDTO> BuildWeeklyScorecardAsync(CancellationToken cancellationToken = default)
     {
         DateOnly today = DateOnly.FromDateTime(DateTime.Today);

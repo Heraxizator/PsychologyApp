@@ -122,16 +122,20 @@
                         <Label Text="{Binding ClinicalRiskBanner}" Style="{StaticResource BodyStyle}" />
                     </Border>
 
-                    <Label
+                    <Border
                         IsVisible="{Binding HasTherapyProgramBanner}"
-                        Text="{Binding TherapyProgramBanner}"
-                        Style="{StaticResource CaptionStyle}"
-                        TextColor="{DynamicResource Primary}"
+                        Style="{StaticResource MetaPillStyle}"
+                        HorizontalOptions="Start"
                         Margin="{StaticResource CardBottomMargin}">
-                        <Label.Behaviors>
+                        <Border.Behaviors>
                             <behaviors:RevealOnAppearingBehavior />
-                        </Label.Behaviors>
-                    </Label>
+                        </Border.Behaviors>
+                        <Label
+                            Text="{Binding TherapyProgramBanner}"
+                            Style="{StaticResource CaptionStyle}"
+                            TextColor="{DynamicResource Primary}"
+                            FontFamily="{StaticResource SemiBoldFontFamily}" />
+                    </Border>
 
                     <today:TodayPracticeRowView
                         CaptionText="{Binding TodayForYouLabel}"

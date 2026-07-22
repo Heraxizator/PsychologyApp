@@ -16,17 +16,21 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
     private readonly IUserProgressService _userProgressService;
     private readonly NextPracticeResolver _nextPracticeResolver;
     private TechniqueId? _nextTechniqueId;
+    private long? _sessionResultId;
+    private int? _preIntensity;
 
     public PracticeCompletionViewModel(
         INavigationService navigationService,
         IUserProgressService userProgressService,
         NextPracticeResolver nextPracticeResolver,
         int streakDays,
-        string? completedItemKey = null)
+        string? completedItemKey = null,
+        long? sessionResultId = null)
     {
         _navigationService = navigationService;
         _userProgressService = userProgressService;
         _nextPracticeResolver = nextPracticeResolver;
+        _sessionResultId = sessionResultId;
         StreakDays = streakDays;
         RecordMoodCommand = new Command<object?>(parameter =>
         {
@@ -43,6 +47,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         NextPracticeCommand = new AsyncCommand(StartNextPracticeAsync);
         GoHomeCommand = new AsyncCommand(() => _navigationService.GoToRootAsync());
         LoadBeforeMoodAsync().FireAndForget();
+        LoadSessionOutcomeAsync().FireAndForget();
         LoadNextPracticeAsync(completedItemKey).FireAndForget();
     }
 
@@ -70,6 +75,34 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
     public string GoHomeText => AppStrings.PracticeGoHomeButton;
     public string ReflectionQuestion => AppStrings.PracticeReflectionQuestion;
     public string ReflectionNotePlaceholder => AppStrings.PracticeReflectionNotePlaceholder;
+    public string PostSudsLabel => AppStrings.PracticePostSudsLabel;
+    public string SudsSectionTitle => AppStrings.PracticeSudsSectionTitle;
+    public string MoodSectionTitle => AppStrings.PracticeReflectionSectionTitle;
+
+    private string _postIntensityText = string.Empty;
+    public string PostIntensityText
+    {
+        get => _postIntensityText;
+        set
+        {
+            if (SetProperty(ref _postIntensityText, value)
+                && int.TryParse(value, out int parsed)
+                && parsed is >= 0 and <= 10)
+            {
+                SavePostIntensityAsync(parsed).FireAndForget();
+                NotifySudsDelta();
+            }
+        }
+    }
+
+    public bool HasSudsDelta =>
+        _preIntensity is >= 0 and <= 10
+        && int.TryParse(_postIntensityText, out int post)
+        && post is >= 0 and <= 10;
+
+    public string SudsDeltaText => HasSudsDelta && int.TryParse(_postIntensityText, out int post) && _preIntensity is int pre
+        ? AppStrings.PracticeSudsDelta(pre, post)
+        : string.Empty;
 
     private bool _hasNextPractice;
     public bool HasNextPractice
@@ -179,6 +212,11 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
             nameof(GoHomeText),
             nameof(ReflectionQuestion),
             nameof(ReflectionNotePlaceholder),
+            nameof(PostSudsLabel),
+            nameof(SudsSectionTitle),
+            nameof(MoodSectionTitle),
+            nameof(HasSudsDelta),
+            nameof(SudsDeltaText),
             nameof(HasMoodDelta),
             nameof(MoodDeltaText),
             nameof(NextPracticeCaption),
@@ -190,6 +228,58 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
     {
         OnPropertyChanged(nameof(HasMoodDelta));
         OnPropertyChanged(nameof(MoodDeltaText));
+    }
+
+    private void NotifySudsDelta()
+    {
+        OnPropertyChanged(nameof(HasSudsDelta));
+        OnPropertyChanged(nameof(SudsDeltaText));
+    }
+
+    private async Task LoadSessionOutcomeAsync()
+    {
+        if (_sessionResultId is null)
+        {
+            return;
+        }
+
+        try
+        {
+            SessionResultDTO? result = await _userProgressService.GetSessionResultAsync(_sessionResultId.Value);
+            if (result?.PreIntensity is >= 0 and <= 10)
+            {
+                _preIntensity = result.PreIntensity.Value;
+                NotifySudsDelta();
+            }
+
+            if (result?.PostIntensity is >= 0 and <= 10)
+            {
+                _postIntensityText = result.PostIntensity.Value.ToString();
+                OnPropertyChanged(nameof(PostIntensityText));
+                NotifySudsDelta();
+            }
+        }
+        catch
+        {
+            // Pre-SUDS is optional on the completion screen.
+        }
+    }
+
+    private async Task SavePostIntensityAsync(int postIntensity)
+    {
+        if (_sessionResultId is null)
+        {
+            return;
+        }
+
+        try
+        {
+            await _userProgressService.UpdateSessionResultPostIntensityAsync(_sessionResultId.Value, postIntensity);
+        }
+        catch
+        {
+            // Post-SUDS is optional; completion still works without persistence.
+        }
     }
 
     private async Task LoadBeforeMoodAsync()

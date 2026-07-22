@@ -133,4 +133,74 @@ internal static class UserProgressSql
         ORDER BY MoodEntryId DESC
         LIMIT @limit;
         """;
+
+    internal const string InsertSessionResult = """
+        INSERT INTO SessionResults (
+            ItemKey,
+            CompletedAt,
+            DurationSeconds,
+            PayloadJson,
+            PreIntensity,
+            PostIntensity,
+            ProgramType,
+            ProgramWeek)
+        VALUES (
+            @ItemKey,
+            @CompletedAt,
+            @DurationSeconds,
+            @PayloadJson,
+            @PreIntensity,
+            @PostIntensity,
+            @ProgramType,
+            @ProgramWeek);
+        """;
+
+    internal const string SelectLastInsertRowId = "SELECT last_insert_rowid();";
+
+    internal const string UpdateSessionResultPostIntensity = """
+        UPDATE SessionResults
+        SET PostIntensity = @postIntensity
+        WHERE SessionResultId = @sessionResultId;
+        """;
+
+    internal const string SelectSessionResultById = """
+        SELECT
+            SessionResultId,
+            ItemKey,
+            CompletedAt,
+            DurationSeconds,
+            PayloadJson,
+            PreIntensity,
+            PostIntensity,
+            ProgramType,
+            ProgramWeek
+        FROM SessionResults
+        WHERE SessionResultId = @sessionResultId
+        LIMIT 1;
+        """;
+
+    internal const string SelectRecentSessionResults = """
+        SELECT
+            SessionResultId,
+            ItemKey,
+            CompletedAt,
+            DurationSeconds,
+            PayloadJson,
+            PreIntensity,
+            PostIntensity,
+            ProgramType,
+            ProgramWeek
+        FROM SessionResults
+        ORDER BY SessionResultId DESC
+        LIMIT @limit;
+        """;
+
+    internal const string CountDistinctTechniqueCompletionsForItemsBetween = """
+        SELECT COUNT(DISTINCT ItemKey)
+        FROM Completions
+        WHERE CompletionKind = 'technique'
+          AND ItemKey IN @itemKeys
+          AND datetime(CompletedAt) >= datetime(@sinceUtc)
+          AND datetime(CompletedAt) < datetime(@beforeUtc);
+        """;
 }

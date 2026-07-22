@@ -147,7 +147,7 @@ public sealed class PracticeSessionViewModelTests
     {
         Mock<INavigationService> navigation = new();
         return new ListTechniqueSessionHelper(
-            new TechniqueSessionCompletionService(Mock.Of<IPracticeReminderCoordinator>()),
+            new TechniqueSessionCompletionService(Mock.Of<IPracticeReminderCoordinator>(), Mock.Of<PsychologyApp.Application.ClinicalCare.IClinicalCareService>()),
             progress,
             navigation.Object);
     }

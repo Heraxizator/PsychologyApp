@@ -48,22 +48,32 @@
                     Style="{StaticResource CaptionStyle}" />
             </VerticalStackLayout>
 
-            <Border
+            <VerticalStackLayout
                 Grid.Column="2"
-                IsVisible="{Binding HasDuration, Source={x:Reference Root}}"
-                Padding="8,4"
-                StrokeThickness="0"
+                Spacing="6"
                 VerticalOptions="Center"
-                BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="6" />
-                </Border.StrokeShape>
-                <Label
-                    Text="{Binding DurationText, Source={x:Reference Root}}"
-                    Style="{StaticResource CaptionStyle}"
-                    TextColor="{DynamicResource Primary}"
-                    FontFamily="{StaticResource SemiBoldFontFamily}" />
-            </Border>
+                HorizontalOptions="End">
+                <Border
+                    Style="{StaticResource MetaPillStyle}"
+                    IsVisible="{Binding HasSudsDelta, Source={x:Reference Root}}"
+                    HorizontalOptions="End">
+                    <Label
+                        Text="{Binding SudsDeltaText, Source={x:Reference Root}}"
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{DynamicResource Primary}"
+                        FontFamily="{StaticResource SemiBoldFontFamily}" />
+                </Border>
+                <Border
+                    Style="{StaticResource MetaPillStyle}"
+                    IsVisible="{Binding HasDuration, Source={x:Reference Root}}"
+                    HorizontalOptions="End">
+                    <Label
+                        Text="{Binding DurationText, Source={x:Reference Root}}"
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{DynamicResource Primary}"
+                        FontFamily="{StaticResource SemiBoldFontFamily}" />
+                </Border>
+            </VerticalStackLayout>
         </Grid>
     </Border>
 </ContentView>

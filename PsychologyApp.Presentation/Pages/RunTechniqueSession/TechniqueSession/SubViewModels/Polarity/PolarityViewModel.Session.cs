@@ -32,7 +32,8 @@ public partial class PolarityViewModel
             TechniqueId.Polarity.ToString(),
             ModuleName,
             PageName,
-            _sessionStartedAt);
+            _sessionStartedAt,
+            TryGetPreIntensity());
 
     private void DeleteItem(Models.Practice.Techniques.Polarity item)
     {

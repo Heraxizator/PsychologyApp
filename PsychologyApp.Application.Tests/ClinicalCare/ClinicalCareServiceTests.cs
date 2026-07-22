@@ -146,6 +146,7 @@ public sealed class ClinicalCareServiceTests
         public Task<long> CountTestResultsAsync(CancellationToken cancellationToken = default) => Task.FromResult(0L);
         public Task<DateTime?> GetLastTechniqueCompletionDateAsync(CancellationToken cancellationToken = default) => Task.FromResult<DateTime?>(null);
         public Task RecordTechniqueCompletionAsync(string itemKey, string moduleName, string pageName, int durationSeconds = 0, CancellationToken cancellationToken = default) => Task.CompletedTask;
+        public Task<long> RecordSessionOutcomeAsync(SessionOutcomeRequest request, CancellationToken cancellationToken = default) => Task.FromResult(1L);
         public Task<long> CountTechniqueCompletionsAsync(CancellationToken cancellationToken = default) => Task.FromResult(0L);
         public Task<IReadOnlyList<CompletionDTO>> GetRecentTechniqueCompletionsAsync(int limit = 20, CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyList<CompletionDTO>>([]);
         public Task<int> GetStreakDaysAsync(CancellationToken cancellationToken = default) => Task.FromResult(0);
@@ -158,5 +159,9 @@ public sealed class ClinicalCareServiceTests
         public Task DeleteSessionDraftAsync(string techniqueKey, CancellationToken cancellationToken = default) => Task.CompletedTask;
         public Task RecordMoodAsync(int moodLevel, string? note = null, CancellationToken cancellationToken = default) => Task.CompletedTask;
         public Task<IReadOnlyList<MoodEntryDTO>> GetRecentMoodsAsync(int limit = 7, CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyList<MoodEntryDTO>>([]);
+        public Task UpdateSessionResultPostIntensityAsync(long sessionResultId, int postIntensity, CancellationToken cancellationToken = default) => Task.CompletedTask;
+        public Task<SessionResultDTO?> GetSessionResultAsync(long sessionResultId, CancellationToken cancellationToken = default) => Task.FromResult<SessionResultDTO?>(null);
+        public Task<IReadOnlyList<SessionResultDTO>> GetRecentSessionResultsAsync(int limit = 20, CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyList<SessionResultDTO>>([]);
+        public Task<int> CountDistinctTechniqueCompletionsForItemsBetweenAsync(IReadOnlyList<string> itemKeys, DateTime sinceUtc, DateTime beforeUtc, CancellationToken cancellationToken = default) => Task.FromResult(0);
     }
 }

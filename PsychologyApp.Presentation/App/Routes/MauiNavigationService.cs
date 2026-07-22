@@ -133,9 +133,9 @@ public sealed class MauiNavigationService : INavigationService
                 animated: false);
         });
 
-    public Task GoToPracticeCompletionAsync(int streakDays, string? completedItemKey = null) =>
+    public Task GoToPracticeCompletionAsync(int streakDays, string? completedItemKey = null, long? sessionResultId = null) =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(
-            _pageFactory.CreatePracticeCompletionPage(streakDays, completedItemKey),
+            _pageFactory.CreatePracticeCompletionPage(streakDays, completedItemKey, sessionResultId),
             true));
 
     public Task GoToTestsTabAsync() =>

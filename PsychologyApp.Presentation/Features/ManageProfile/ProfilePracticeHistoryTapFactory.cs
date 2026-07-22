@@ -25,6 +25,8 @@ public static class ProfilePracticeHistoryTapFactory
             HasDuration = item.HasDuration,
             DisplayText = item.DisplayText,
             ItemKey = item.ItemKey,
+            SudsDeltaText = item.SudsDeltaText,
+            HasSudsDelta = item.HasSudsDelta,
             CanOpen = true,
             TapCommand = tapCommand
         };

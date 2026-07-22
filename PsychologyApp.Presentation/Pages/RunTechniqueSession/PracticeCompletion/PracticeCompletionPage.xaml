@@ -49,11 +49,36 @@
                         <behaviors:ListItemRevealBehavior RevealIndex="0" />
                     </today:TodayPracticeRowView.Behaviors>
                 </today:TodayPracticeRowView>
+
                 <Border Style="{StaticResource BrandCardStyle}">
                     <Border.Behaviors>
                         <behaviors:ListItemRevealBehavior RevealIndex="1" />
                     </Border.Behaviors>
                     <VerticalStackLayout Spacing="{StaticResource SectionSpacing}">
+                        <Label
+                            Text="{Binding SudsSectionTitle}"
+                            Style="{StaticResource SectionTitleStyle}" />
+                        <ui:RatingEntryView
+                            TitleText="{Binding PostSudsLabel}"
+                            BodyText="{Binding PostIntensityText, Mode=TwoWay}" />
+                        <Border
+                            x:Name="SudsDeltaPill"
+                            Style="{StaticResource MetaPillStyle}"
+                            IsVisible="False"
+                            HorizontalOptions="Center">
+                            <Label
+                                Text="{Binding SudsDeltaText}"
+                                Style="{StaticResource CaptionStyle}"
+                                TextColor="{DynamicResource Primary}"
+                                FontFamily="{StaticResource SemiBoldFontFamily}"
+                                HorizontalTextAlignment="Center" />
+                        </Border>
+
+                        <BoxView Style="{StaticResource SubtleDividerStyle}" Margin="{StaticResource FieldTopMargin}" />
+
+                        <Label
+                            Text="{Binding MoodSectionTitle}"
+                            Style="{StaticResource SectionTitleStyle}" />
                         <mood:MoodStripView
                             QuestionText="{Binding ReflectionQuestion}"
                             RecordMoodCommand="{Binding RecordMoodCommand}"

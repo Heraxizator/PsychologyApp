@@ -84,6 +84,7 @@ public partial class CreatedViewModel
             ModuleName,
             PageName,
             _sessionStartedAt,
+            TryGetPreIntensity(),
             deleteDraft: false);
     }
 }

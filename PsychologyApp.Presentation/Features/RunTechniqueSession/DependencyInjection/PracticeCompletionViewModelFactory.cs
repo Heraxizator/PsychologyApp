@@ -8,7 +8,7 @@ namespace PsychologyApp.Presentation.Features.RunTechniqueSession.DependencyInje
 
 public interface IPracticeCompletionViewModelFactory
 {
-    PracticeCompletionViewModel Create(ContentPage page, int streakDays, string? completedItemKey = null);
+    PracticeCompletionViewModel Create(ContentPage page, int streakDays, string? completedItemKey = null, long? sessionResultId = null);
 }
 
 public sealed class PracticeCompletionViewModelFactory(
@@ -16,6 +16,16 @@ public sealed class PracticeCompletionViewModelFactory(
     NextPracticeResolver nextPracticeResolver,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IPracticeCompletionViewModelFactory
 {
-    public PracticeCompletionViewModel Create(ContentPage page, int streakDays, string? completedItemKey = null) =>
-        new(ResolveNavigation(navigationServiceFactory, page), userProgressService, nextPracticeResolver, streakDays, completedItemKey);
+    public PracticeCompletionViewModel Create(
+        ContentPage page,
+        int streakDays,
+        string? completedItemKey = null,
+        long? sessionResultId = null) =>
+        new(
+            ResolveNavigation(navigationServiceFactory, page),
+            userProgressService,
+            nextPracticeResolver,
+            streakDays,
+            completedItemKey,
+            sessionResultId);
 }

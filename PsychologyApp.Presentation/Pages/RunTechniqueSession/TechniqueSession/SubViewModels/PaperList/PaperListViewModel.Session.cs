@@ -22,7 +22,8 @@ public partial class PaperListViewModel
             _techniqueId.ToString(),
             ModuleName,
             PageName,
-            _sessionStartedAt);
+            _sessionStartedAt,
+            TryGetPreIntensity());
 
     private void SetCollection(bool visible) => IsFull = visible;
 

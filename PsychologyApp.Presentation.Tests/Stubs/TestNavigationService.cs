@@ -66,7 +66,7 @@ public class TestNavigationService(INavigation navigation) : INavigationService
 
     public Task GoToPracticeTabAsync() => Task.CompletedTask;
 
-    public Task GoToPracticeCompletionAsync(int streakDays, string? completedItemKey = null) => Task.CompletedTask;
+    public Task GoToPracticeCompletionAsync(int streakDays, string? completedItemKey = null, long? sessionResultId = null) => Task.CompletedTask;
 
     public Task GoToQuotesTabAsync() => Task.CompletedTask;
 

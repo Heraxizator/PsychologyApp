@@ -11,10 +11,15 @@ public partial class PracticeCompletionPage : ContentPage
     private PracticeCompletionViewModel? _viewModel;
     private bool _motionSynced;
     private bool _hadMoodDelta;
+    private bool _hadSudsDelta;
 
-    public PracticeCompletionPage(IPracticeCompletionViewModelFactory factory, int streakDays, string? completedItemKey = null)
+    public PracticeCompletionPage(
+        IPracticeCompletionViewModelFactory factory,
+        int streakDays,
+        string? completedItemKey = null,
+        long? sessionResultId = null)
     {
-        _viewModel = factory.Create(this, streakDays, completedItemKey);
+        _viewModel = factory.Create(this, streakDays, completedItemKey, sessionResultId);
         BindingContext = _viewModel;
         InitializeComponent();
         _viewModel.PropertyChanged += OnViewModelPropertyChanged;
@@ -33,6 +38,7 @@ public partial class PracticeCompletionPage : ContentPage
             SyncMotionVisibility(animate: false);
             _motionSynced = true;
             _hadMoodDelta = _viewModel.HasMoodDelta;
+            _hadSudsDelta = _viewModel.HasSudsDelta;
         }
     }
 
@@ -53,6 +59,13 @@ public partial class PracticeCompletionPage : ContentPage
             or nameof(PracticeCompletionViewModel.BeforeMoodLevel))
         {
             HandleMoodDeltaMotionAsync().FireAndForget();
+        }
+
+        if (e.PropertyName is nameof(PracticeCompletionViewModel.HasSudsDelta)
+            or nameof(PracticeCompletionViewModel.SudsDeltaText)
+            or nameof(PracticeCompletionViewModel.PostIntensityText))
+        {
+            HandleSudsDeltaMotionAsync().FireAndForget();
         }
     }
 
@@ -75,6 +88,24 @@ public partial class PracticeCompletionPage : ContentPage
         _hadMoodDelta = hasMoodDelta;
     }
 
+    private async Task HandleSudsDeltaMotionAsync()
+    {
+        if (_viewModel is null)
+        {
+            return;
+        }
+
+        bool hasSudsDelta = _viewModel.HasSudsDelta;
+        await UiStateAnimator.AnimateVisibilityAsync(SudsDeltaPill, hasSudsDelta);
+
+        if (hasSudsDelta && !_hadSudsDelta)
+        {
+            await UiAnimations.SafePulseAsync(SudsDeltaPill);
+        }
+
+        _hadSudsDelta = hasSudsDelta;
+    }
+
     private void SyncMotionVisibility(bool animate)
     {
         if (_viewModel is null)
@@ -86,11 +117,13 @@ public partial class PracticeCompletionPage : ContentPage
         {
             UiStateAnimator.AnimateVisibilityAsync(NextPracticeRow, _viewModel.HasNextPractice).FireAndForget();
             UiStateAnimator.AnimateVisibilityAsync(MoodDeltaLabel, _viewModel.HasMoodDelta).FireAndForget();
+            UiStateAnimator.AnimateVisibilityAsync(SudsDeltaPill, _viewModel.HasSudsDelta).FireAndForget();
             return;
         }
 
         NextPracticeRow.IsVisible = _viewModel.HasNextPractice;
         MoodDeltaLabel.IsVisible = _viewModel.HasMoodDelta;
+        SudsDeltaPill.IsVisible = _viewModel.HasSudsDelta;
 
         if (!_viewModel.HasNextPractice)
         {
@@ -100,6 +133,11 @@ public partial class PracticeCompletionPage : ContentPage
         if (!_viewModel.HasMoodDelta)
         {
             UiAnimations.ResetVisualState(MoodDeltaLabel);
+        }
+
+        if (!_viewModel.HasSudsDelta)
+        {
+            UiAnimations.ResetVisualState(SudsDeltaPill);
         }
     }
 

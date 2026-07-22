@@ -1,7 +1,6 @@
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Common;
-using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Entities.Profile;
 
 namespace PsychologyApp.Presentation.Features.ManageProfile;
@@ -14,23 +13,26 @@ public sealed class ProfilePracticeHistoryLoader(
         int count = 10,
         CancellationToken cancellationToken = default)
     {
-        IReadOnlyList<CompletionDTO> completions =
-            await userProgressService.GetRecentTechniqueCompletionsAsync(count, cancellationToken);
+        IReadOnlyList<SessionResultDTO> sessionResults =
+            await userProgressService.GetRecentSessionResultsAsync(count, cancellationToken);
 
         List<PracticeHistoryItem> items = [];
-        foreach (CompletionDTO completion in completions)
+        foreach (SessionResultDTO result in sessionResults)
         {
-            string date = completion.CompletedAt.ToLocalTime().ToString("g");
-            string name = await practiceHistoryFormatter.ResolveNameAsync(completion, cancellationToken);
-            (string durationText, bool hasDuration) = practiceHistoryFormatter.ResolveDuration(completion);
+            string date = result.CompletedAt.ToLocalTime().ToString("g");
+            string name = await practiceHistoryFormatter.ResolveNameAsync(result.ItemKey, cancellationToken: cancellationToken);
+            (string durationText, bool hasDuration) = practiceHistoryFormatter.ResolveDuration(result);
+            (string sudsDeltaText, bool hasSudsDelta) = practiceHistoryFormatter.ResolveSudsDelta(result);
             items.Add(new PracticeHistoryItem
             {
                 DateText = date,
                 TechniqueName = name,
-                IconName = await practiceHistoryFormatter.ResolveIconAsync(completion, cancellationToken),
+                IconName = await practiceHistoryFormatter.ResolveIconAsync(result.ItemKey, cancellationToken),
                 DurationText = durationText,
                 HasDuration = hasDuration,
-                ItemKey = completion.ItemKey,
+                ItemKey = result.ItemKey,
+                SudsDeltaText = sudsDeltaText,
+                HasSudsDelta = hasSudsDelta,
                 DisplayText = AppStrings.PracticeHistoryEntry(date, name)
             });
         }

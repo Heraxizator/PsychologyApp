@@ -18,10 +18,10 @@ public sealed class ListTechniqueSessionHelperTests
         Mock<IUserProgressService> progress = new();
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(2);
         Mock<INavigationService> navigation = new();
-        navigation.Setup(n => n.GoToPracticeCompletionAsync(It.IsAny<int>(), It.IsAny<string?>())).Returns(Task.CompletedTask);
+        navigation.Setup(n => n.GoToPracticeCompletionAsync(It.IsAny<int>(), It.IsAny<string?>(), It.IsAny<long?>())).Returns(Task.CompletedTask);
 
         ListTechniqueSessionHelper helper = new(
-            new TechniqueSessionCompletionService(Mock.Of<IPracticeReminderCoordinator>()),
+            new TechniqueSessionCompletionService(Mock.Of<IPracticeReminderCoordinator>(), Mock.Of<PsychologyApp.Application.ClinicalCare.IClinicalCareService>()),
             progress.Object,
             navigation.Object);
         DateTime startedAt = DateTime.UtcNow.AddMinutes(-1);

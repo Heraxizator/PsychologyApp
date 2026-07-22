@@ -168,7 +168,7 @@ public partial class TechniquesViewModel
 
     private TechniqueId _todayTechniqueId = TechniqueId.Spin;
 
-    private static string FormatProgramBanner(TherapyProgramStateDTO program)
+    private static string FormatProgramBanner(TherapyProgramStateDTO program, int completedInWeek = 0, int targetPractices = 0)
     {
         string name = program.ProgramType switch
         {
@@ -177,7 +177,9 @@ public partial class TechniquesViewModel
             _ => AppStrings.TherapyProgramStress
         };
         string goal = AppStrings.TherapyProgramWeekGoal(program.CurrentWeek);
-        return AppStrings.TherapyProgramBanner(name, program.CurrentWeek, goal);
+        return targetPractices > 0
+            ? AppStrings.TherapyProgramBanner(name, program.CurrentWeek, goal, completedInWeek, targetPractices)
+            : AppStrings.TherapyProgramBanner(name, program.CurrentWeek, goal);
     }
 
     private static string FormatRiskBanner(RiskLevel level) => level switch

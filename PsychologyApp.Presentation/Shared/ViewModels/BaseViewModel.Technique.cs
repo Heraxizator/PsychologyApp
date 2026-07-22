@@ -28,6 +28,20 @@ public partial class BaseViewModel
 
     public List<EntryItem> Entries { get; protected set; } = [];
 
+    private string _preIntensityText = string.Empty;
+    public string PreIntensityText
+    {
+        get => _preIntensityText;
+        set => SetProperty(ref _preIntensityText, value);
+    }
+
+    public string PreIntensityLabel => AppStrings.PracticePreSudsLabel;
+
+    protected int? TryGetPreIntensity() =>
+        int.TryParse(PreIntensityText, out int parsed) && parsed is >= 0 and <= 10
+            ? parsed
+            : null;
+
     protected void BindNavigation(INavigationService navigationService)
     {
         NavigationService = navigationService;
@@ -51,7 +65,8 @@ public partial class BaseViewModel
             nameof(TechniquePageTitle),
             nameof(TheoryToolbarText),
             nameof(FormSectionTitle),
-            nameof(AddButtonText));
+            nameof(AddButtonText),
+            nameof(PreIntensityLabel));
 
         if (_appliedTechniqueId is TechniqueId techniqueId)
         {

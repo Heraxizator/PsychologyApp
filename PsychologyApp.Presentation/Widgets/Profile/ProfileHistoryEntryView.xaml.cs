@@ -27,6 +27,12 @@ public partial class ProfileHistoryEntryView : ContentView
     public static readonly BindableProperty TapCommandProperty =
         BindableProperty.Create(nameof(TapCommand), typeof(ICommand), typeof(ProfileHistoryEntryView), null);
 
+    public static readonly BindableProperty SudsDeltaTextProperty =
+        BindableProperty.Create(nameof(SudsDeltaText), typeof(string), typeof(ProfileHistoryEntryView), string.Empty);
+
+    public static readonly BindableProperty HasSudsDeltaProperty =
+        BindableProperty.Create(nameof(HasSudsDelta), typeof(bool), typeof(ProfileHistoryEntryView), false);
+
     public string DateText
     {
         get => (string)GetValue(DateTextProperty);
@@ -61,5 +67,17 @@ public partial class ProfileHistoryEntryView : ContentView
     {
         get => (ICommand?)GetValue(TapCommandProperty);
         set => SetValue(TapCommandProperty, value);
+    }
+
+    public string SudsDeltaText
+    {
+        get => (string)GetValue(SudsDeltaTextProperty);
+        set => SetValue(SudsDeltaTextProperty, value);
+    }
+
+    public bool HasSudsDelta
+    {
+        get => (bool)GetValue(HasSudsDeltaProperty);
+        set => SetValue(HasSudsDeltaProperty, value);
     }
 }

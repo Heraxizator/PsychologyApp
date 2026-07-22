@@ -19,6 +19,9 @@
             <ui:AlgorithmBoxView
                 TitleText="{Binding Source={x:Reference Root}, Path=AlgorithmTitleText}"
                 BodySource="{Binding Source={x:Reference Root}, Path=Algorithm}" />
+            <ui:RatingEntryView
+                TitleText="{Binding PreIntensityLabel}"
+                BodyText="{Binding PreIntensityText, Mode=TwoWay}" />
             <Grid x:Name="BodyHost" />
             <ui:ButtonView
                 BodyText="{Binding Source={x:Reference Root}, Path=FinishText}"

@@ -21,4 +21,8 @@ public sealed class PracticeHistoryItem
     public ICommand? TapCommand { get; init; }
 
     public string DisplayText { get; init; } = string.Empty;
+
+    public string SudsDeltaText { get; init; } = string.Empty;
+
+    public bool HasSudsDelta { get; init; }
 }
