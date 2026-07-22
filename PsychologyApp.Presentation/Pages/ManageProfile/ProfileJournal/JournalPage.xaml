@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.ManageProfile.ProfileJournal.JournalPage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:mood="clr-namespace:PsychologyApp.Presentation.Widgets.MoodStrip"
+             xmlns:moodTrend="clr-namespace:PsychologyApp.Presentation.Widgets.Profile"
+             xmlns:profile="clr-namespace:PsychologyApp.Presentation.Entities.Profile"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ManageProfile.ProfileJournal"
+             x:DataType="vm:JournalViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}">
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+        <VerticalStackLayout
+            Margin="{StaticResource LayoutPageMarginThickness}"
+            Spacing="{StaticResource LayoutSpacing}">
+            <VerticalStackLayout.Behaviors>
+                <behaviors:StaggerChildrenBehavior />
+            </VerticalStackLayout.Behaviors>
+
+            <ui:NavigationBarSimpleView
+                TitleText="{Binding PageTitle}"
+                BackCommand="{Binding BackCommand}" />
+
+            <Border Style="{StaticResource BrandCardStyle}">
+                <Border.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="0" />
+                </Border.Behaviors>
+                <VerticalStackLayout Spacing="{StaticResource SectionSpacing}">
+                    <mood:MoodStripView
+                        QuestionText="{Binding MoodCheckInTitle}"
+                        RecordMoodCommand="{Binding RecordMoodCommand}"
+                        SelectedMoodLevel="{Binding SelectedMoodLevel}"
+                        TodayMoodDisplay="{Binding TodayMoodDisplay}"
+                        HasTodayMood="{Binding HasTodayMood}"
+                        MoodHistorySummary="{Binding MoodHistorySummary}"
+                        HasMoodHistorySummary="{Binding HasMoodHistorySummary}" />
+                    <ui:TextEntryView
+                        TitleText="{Binding NotePlaceholder}"
+                        BodyText="{Binding JournalNote}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border
+                IsVisible="{Binding HasWeeklyInsight}"
+                Style="{StaticResource BrandCardStyle}">
+                <Border.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="1" />
+                </Border.Behaviors>
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <Label Text="{Binding WeeklyInsightTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <Label Text="{Binding WeeklyInsightText}" Style="{StaticResource BodyStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                <ui:SectionHeaderView TitleText="{Binding MoodTrendTitle}" />
+                <ui:EmptyStateView
+                    IsVisible="{Binding ShowMoodTrendHint}"
+                    BodyText="{Binding MoodTrendHint}"
+                    IconName="SelfImprovement" />
+                <moodTrend:MoodTrendChartView
+                    IsVisible="{Binding HasMoodTrendChart}"
+                    ChartPoints="{Binding MoodChartPoints}"
+                    Subtitle="{Binding MoodChartSubtitle}"
+                    Title="{Binding MoodTrendTitle}" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout
+                IsVisible="{Binding HasMoodNotes}"
+                Spacing="{StaticResource CompactSpacing}">
+                <ui:SectionHeaderView TitleText="{Binding MoodNotesTitle}" />
+                <VerticalStackLayout
+                    BindableLayout.ItemsSource="{Binding MoodNotes}"
+                    Spacing="{StaticResource ListItemSpacing}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="profile:MoodNoteItem">
+                            <Border Style="{StaticResource ListEntryCardStyle}">
+                                <Border.Behaviors>
+                                    <behaviors:ListItemRevealBehavior />
+                                </Border.Behaviors>
+                                <VerticalStackLayout Spacing="4">
+                                    <Label
+                                        Text="{Binding DateText}"
+                                        Style="{StaticResource CaptionStyle}" />
+                                    <Label
+                                        Text="{Binding NoteText}"
+                                        Style="{StaticResource BodyStyle}" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

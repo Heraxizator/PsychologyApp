@@ -10,7 +10,6 @@
              xmlns:quoteCard="clr-namespace:PsychologyApp.Presentation.Widgets.QuoteCard"
              xmlns:profileUi="clr-namespace:PsychologyApp.Presentation.Widgets.ProfileTechniqueCard"
              xmlns:profileHistory="clr-namespace:PsychologyApp.Presentation.Widgets.Profile"
-             xmlns:moodTrend="clr-namespace:PsychologyApp.Presentation.Widgets.Profile"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:DataType="vm:UserViewModel"
              Shell.NavBarIsVisible="False"
@@ -97,49 +96,21 @@
                     </Border>
                 </VerticalStackLayout>
 
-                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <ui:SectionHeaderView TitleText="{Binding MoodTrendTitle}" />
-                    <ui:EmptyStateView
-                        IsVisible="{Binding ShowMoodTrendHint}"
-                        BodyText="{Binding MoodTrendHint}"
-                        IconName="SelfImprovement" />
-                    <moodTrend:MoodTrendChartView
-                        IsVisible="{Binding HasMoodTrendChart}"
-                        ChartPoints="{Binding MoodChartPoints}"
-                        Subtitle="{Binding MoodChartSubtitle}"
-                        Title="{Binding MoodTrendTitle}" />
-                    <VerticalStackLayout
-                        IsVisible="{Binding HasMoodNotes}"
-                        Spacing="{StaticResource CompactSpacing}">
-                        <ui:SectionHeaderView TitleText="{Binding MoodNotesTitle}" />
-                        <VerticalStackLayout
-                            BindableLayout.ItemsSource="{Binding MoodNotes}"
-                            Spacing="{StaticResource ListItemSpacing}">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="profile:MoodNoteItem">
-                                    <VerticalStackLayout Spacing="2">
-                                        <VerticalStackLayout.Behaviors>
-                                            <behaviors:ListItemRevealBehavior />
-                                        </VerticalStackLayout.Behaviors>
-                                        <Label
-                                            Text="{Binding DateText}"
-                                            Style="{StaticResource CaptionStyle}" />
-                                        <Label
-                                            Text="{Binding NoteText}"
-                                            Style="{StaticResource BodyStyle}" />
-                                    </VerticalStackLayout>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </VerticalStackLayout>
-                    </VerticalStackLayout>
-                </VerticalStackLayout>
+                <ui:SettingsLinkCardView
+                    Title="{Binding JournalLabel}"
+                    Subtitle="{Binding JournalCardSubtitle}"
+                    TapCommand="{Binding OpenJournalCommand}">
+                    <ui:SettingsLinkCardView.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="1" />
+                    </ui:SettingsLinkCardView.Behaviors>
+                </ui:SettingsLinkCardView>
 
                 <ui:SettingsLinkCardView
                     Title="{Binding OptionsLabel}"
                     Subtitle="{Binding OptionsCardSubtitle}"
                     TapCommand="{Binding OpenOptionsCommand}">
                     <ui:SettingsLinkCardView.Behaviors>
-                        <behaviors:ListItemRevealBehavior RevealIndex="1" />
+                        <behaviors:ListItemRevealBehavior RevealIndex="2" />
                     </ui:SettingsLinkCardView.Behaviors>
                 </ui:SettingsLinkCardView>
 

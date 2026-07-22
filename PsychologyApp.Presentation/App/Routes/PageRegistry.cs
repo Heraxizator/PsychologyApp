@@ -17,6 +17,7 @@ using PsychologyApp.Presentation.Pages.ManageProfile.ProfileInfo;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileOptions;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileSettings;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
+using PsychologyApp.Presentation.Pages.ManageProfile.ProfileJournal;
 using PsychologyApp.Presentation.Pages.RunTests.Question;
 using PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
 using PsychologyApp.Presentation.Features.SendReviewForm;
@@ -78,6 +79,9 @@ public sealed class PageRegistry(
 
     public UserPage CreateUserPage() =>
         WithPressFeedback(profilePageFactory.CreateUserPage());
+
+    public JournalPage CreateJournalPage() =>
+        WithPressFeedback(profilePageFactory.CreateJournalPage());
 
     public OptionsPage CreateOptionsPage() =>
         WithPressFeedback(profilePageFactory.CreateOptionsPage());

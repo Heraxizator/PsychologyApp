@@ -51,6 +51,9 @@ public sealed class MauiNavigationService : INavigationService
     public Task GoToUserProfileAsync() =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateUserPage(), true));
 
+    public Task GoToJournalAsync() =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateJournalPage(), true));
+
     public Task GoToOptionsAsync() =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateOptionsPage(), true));
 

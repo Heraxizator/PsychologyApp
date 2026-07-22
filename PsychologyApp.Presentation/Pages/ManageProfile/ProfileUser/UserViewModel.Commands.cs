@@ -6,6 +6,7 @@ namespace PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
 
 public partial class UserViewModel
 {
+    public ICommand OpenJournalCommand { get; private set; } = default!;
     public ICommand OpenOptionsCommand { get; private set; } = default!;
     public ICommand ReloadCommand { get; private set; } = default!;
     public ICommand ReloadQuotesCommand { get; private set; } = default!;
@@ -16,6 +17,7 @@ public partial class UserViewModel
 
     private void WireCommands(INavigationService navigationService)
     {
+        OpenJournalCommand = new AsyncCommand(() => navigationService.GoToJournalAsync());
         OpenOptionsCommand = new AsyncCommand(() => navigationService.GoToOptionsAsync());
         ReloadCommand = new AsyncCommand(() => RefreshAsync(forceQuotesReload: true));
         ReloadQuotesCommand = new AsyncCommand(() => ReloadQuotesAsync());

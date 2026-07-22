@@ -12,7 +12,6 @@ public partial class TechniquesViewModel
     public string ProfileToolbarText => AppStrings.ProfileTitle;
     public string TodayForYouLabel => AppStrings.TodayForYou;
     public string TodayStartPracticeText => AppStrings.TodayStartPractice;
-    public string TodayMoodQuestion => AppStrings.TodayMoodQuestion;
     public string PracticeEmptyTitle => AppStrings.PracticeEmptyTitle;
     public string PracticeEmptyBody => AppStrings.PracticeEmptyBody;
     public string LoadingText => AppStrings.PracticeLoadingText;
@@ -31,16 +30,10 @@ public partial class TechniquesViewModel
             nameof(ProfileToolbarText),
             nameof(TodayForYouLabel),
             nameof(TodayReasonText),
+            nameof(TodayPrimaryReason),
             nameof(TodayActionText),
             nameof(EngagementNudgeText),
             nameof(ShowEngagementNudge),
-            nameof(TodayMoodQuestion),
-            nameof(TodayMoodDisplay),
-            nameof(HasTodayMood),
-            nameof(MoodHistorySummary),
-            nameof(HasMoodHistorySummary),
-            nameof(WeeklyInsightText),
-            nameof(HasWeeklyInsight),
             nameof(TherapyProgramBanner),
             nameof(HasTherapyProgramBanner),
             nameof(ClinicalRiskBanner),

@@ -7,6 +7,8 @@ public partial class UserViewModel
 {
     public string PageTitle => AppStrings.ProfileTitle;
     public string LoadingText => AppStrings.ProfileLoadingText;
+    public string JournalLabel => AppStrings.JournalTitle;
+    public string JournalCardSubtitle => AppStrings.JournalCardSubtitle;
     public string OptionsLabel => AppStrings.OptionsTitle;
     public string OptionsCardSubtitle => AppStrings.ProfileOptionsCardSubtitle;
     public string UserLabel => AppStrings.ProfileUserLabel;
@@ -46,6 +48,8 @@ public partial class UserViewModel
         Notify(
             nameof(PageTitle),
             nameof(LoadingText),
+            nameof(JournalLabel),
+            nameof(JournalCardSubtitle),
             nameof(OptionsLabel),
             nameof(OptionsCardSubtitle),
             nameof(UserLabel),
@@ -74,12 +78,7 @@ public partial class UserViewModel
             nameof(PracticeHistoryTitle),
             nameof(PracticeHistoryEmpty),
             nameof(HasPracticeHistory),
-            nameof(ShowPracticeHistoryEmpty),
-            nameof(MoodTrendTitle),
-            nameof(MoodTrendHint),
-            nameof(ShowMoodTrendHint),
-            nameof(MoodNotesTitle),
-            nameof(HasMoodNotes));
+            nameof(ShowPracticeHistoryEmpty));
         InitTechniques();
 
         string currentLanguage = UserPreferences.GetPersistedLanguage();

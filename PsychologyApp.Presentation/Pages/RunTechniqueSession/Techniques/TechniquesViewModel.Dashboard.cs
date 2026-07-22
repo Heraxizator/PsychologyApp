@@ -25,8 +25,6 @@ public partial class TechniquesViewModel
             Task<int> streakTask = _dashboardLoader.LoadStreakDaysAsync(cancellationToken);
             Task<int> atRiskTask = _dashboardLoader.LoadAtRiskStreakDaysAsync(cancellationToken);
             Task<DateTime?> lastPracticeTask = _dashboardLoader.LoadLastPracticeUtcAsync(cancellationToken);
-            Task<MoodSnapshot> moodTask = _dashboardLoader.LoadMoodSnapshotAsync(cancellationToken);
-            Task<WeeklyInsightSnapshot> weeklyInsightTask = _dashboardLoader.LoadWeeklyInsightAsync(cancellationToken);
             Task<string?> lastTechniqueNameTask = _dashboardLoader.LoadLastTechniqueNameAsync(cancellationToken);
             Task<IReadOnlyList<TechniqueItem>> staticItemsTask =
                 _techniqueListBuilder.BuildStaticItemsAsync(_navigationService, cancellationToken);
@@ -35,16 +33,12 @@ public partial class TechniquesViewModel
                 streakTask,
                 atRiskTask,
                 lastPracticeTask,
-                moodTask,
-                weeklyInsightTask,
                 lastTechniqueNameTask,
                 staticItemsTask);
 
             int streakDays = await streakTask;
             int atRiskDays = await atRiskTask;
             DateTime? lastPracticeUtc = await lastPracticeTask;
-            MoodSnapshot mood = await moodTask;
-            WeeklyInsightSnapshot weeklyInsight = await weeklyInsightTask;
             string? lastTechniqueName = await lastTechniqueNameTask;
             IReadOnlyList<TechniqueItem> staticItems = await staticItemsTask;
 
@@ -86,8 +80,6 @@ public partial class TechniquesViewModel
                 IdleDays = idleDays;
                 LastTechniqueName = lastTechniqueName;
                 HasTodayDraft = hasDraft;
-                ApplyMoodSnapshot(mood);
-                WeeklyInsightText = weeklyInsight.DisplayText;
                 TherapyProgramBanner = adherence is not null
                     ? FormatProgramBanner(
                         adherence.Program,
@@ -103,6 +95,7 @@ public partial class TechniquesViewModel
                 TodayReasonText = recommendation.ReasonText;
                 TodayTechniqueItem = recommendation.Item;
                 OnPropertyChanged(nameof(TodayReasonText));
+                OnPropertyChanged(nameof(TodayPrimaryReason));
                 OnPropertyChanged(nameof(TodayTechniqueItem));
                 OnPropertyChanged(nameof(TodayActionText));
             });
@@ -263,6 +256,7 @@ public partial class TechniquesViewModel
         TodayTechniqueItem = recommendation.Item;
         HasTodayDraft = hasDraft;
         OnPropertyChanged(nameof(TodayReasonText));
+        OnPropertyChanged(nameof(TodayPrimaryReason));
         OnPropertyChanged(nameof(TodayActionText));
 
         if (staticItems is not null)
@@ -274,26 +268,6 @@ public partial class TechniquesViewModel
                 HasStreak);
             OnPropertyChanged(nameof(TodayTechniqueItem));
         }
-    }
-
-    private void ApplyMoodSnapshot(MoodSnapshot snapshot)
-    {
-        TodayMoodDisplay = snapshot.TodayMoodDisplay;
-        SelectedMoodLevel = snapshot.SelectedMoodLevel;
-        MoodHistorySummary = snapshot.MoodHistorySummary;
-        OnPropertyChanged(nameof(TodayMoodDisplay));
-        OnPropertyChanged(nameof(HasTodayMood));
-        OnPropertyChanged(nameof(MoodHistorySummary));
-        OnPropertyChanged(nameof(HasMoodHistorySummary));
-    }
-
-    private async Task RecordMoodAsync(int moodLevel)
-    {
-        MoodRecordResult result = await _dashboardPresenter.RecordMoodAsync(moodLevel);
-        SelectedMoodLevel = moodLevel;
-        StreakDays = result.StreakDays;
-        ApplyMoodSnapshot(result.MoodSnapshot);
-        UpdateTodayRecommendation();
     }
 
     private IReadOnlyList<TechniqueItem> ExtractCurrentStaticItems()
