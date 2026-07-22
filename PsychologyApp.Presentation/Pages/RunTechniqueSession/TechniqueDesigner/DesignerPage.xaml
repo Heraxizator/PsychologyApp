@@ -27,6 +27,9 @@
                     BackCommand="{Binding Finish}" />
 
                 <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="1" />
+                    </Border.Behaviors>
                     <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                         <Label Text="{Binding DescriptionSection}" Style="{StaticResource SectionTitleStyle}" />
                         <ui:TextEntryView
@@ -49,6 +52,9 @@
                 </Border>
 
                 <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="2" />
+                    </Border.Behaviors>
                     <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                         <Label Text="{Binding AlgorithmSection}" Style="{StaticResource SectionTitleStyle}" />
                         <ui:TextEntryView

@@ -1,3 +1,4 @@
+﻿using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Domain.Practice;
 using Moq;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
@@ -16,6 +17,7 @@ public sealed class OnboardingViewModelTests
             navigation.Object,
             new InMemoryUserPreferencesStore(),
             TechniqueCatalogTestHelper.CreateOnboardingRecommendationResolver(),
+            new Mock<IClinicalCareService>().Object,
             _ => Task.CompletedTask);
     }
 
@@ -161,3 +163,4 @@ public sealed class OnboardingViewModelTests
         Assert.Equal(AppStrings.OnboardingStart, viewModel.StartLabel);
     }
 }
+

@@ -6,6 +6,7 @@ using PsychologyApp.Presentation.Pages.ManageProfile.ProfileOptions;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileAlice;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Quot;
 using PsychologyApp.Presentation.Shared.Common;
@@ -28,6 +29,7 @@ public interface IUserViewModelFactory
 }
 
 public sealed class UserViewModelFactory(
+
     ILogger<UserViewModel> logger,
     IOptions<AppSettings> settings,
     IQuotesChangeNotifier quotesChangeNotifier,
@@ -39,6 +41,7 @@ public sealed class UserViewModelFactory(
     QuoteItemCommandsFactory quoteCommandsFactory,
     ProfileScreenCoordinator profileScreenCoordinator,
     LanguageContentReloader languageContentReloader,
+    IClinicalCareService clinicalCareService,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IUserViewModelFactory
 {
     public UserViewModel Create(ContentPage page) =>
@@ -54,7 +57,8 @@ public sealed class UserViewModelFactory(
             featuredTechniquesBuilder,
             quoteCommandsFactory,
             profileScreenCoordinator,
-            languageContentReloader);
+            languageContentReloader,
+            clinicalCareService);
 }
 
 public interface IOptionsViewModelFactory

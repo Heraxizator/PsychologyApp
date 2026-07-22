@@ -2,12 +2,22 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:Class="PsychologyApp.Presentation.Widgets.Test.TestAnswerOptionView"
              x:Name="Root">
 
+    <ContentView.Behaviors>
+        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+    </ContentView.Behaviors>
+
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Border x:Name="OptionBorder" Style="{StaticResource TestFlatCardStyle}" Margin="{StaticResource CardBottomMargin}">
+            <Border
+                x:Name="OptionBorder"
+                Style="{StaticResource TestFlatCardStyle}"
+                Margin="2,0,2,8"
+                Stroke="Transparent"
+                StrokeThickness="1.5">
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnOptionTapped" />
                 </Border.GestureRecognizers>
@@ -17,9 +27,7 @@
                         TargetType="Border"
                         Value="True">
                         <Setter Property="Stroke" Value="{DynamicResource Primary}" />
-                        <Setter Property="StrokeThickness" Value="1.5" />
                         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
-                        <Setter Property="Shadow" Value="{AppThemeBinding Light={StaticResource BrandCardShadowLight}, Dark={StaticResource BrandCardShadowDark}}" />
                     </DataTrigger>
                 </Border.Triggers>
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" MinimumHeightRequest="{StaticResource TestAnswerOptionMinHeight}">

@@ -6,6 +6,7 @@ using PsychologyApp.Presentation.Features.RunTests.DependencyInjection;
 using PsychologyApp.Presentation.Features.ManageProfile.DependencyInjection;
 using PsychologyApp.Presentation.Features.RunTechniqueSession.DependencyInjection;
 using PsychologyApp.Presentation.Features.SendReviewForm.DependencyInjection;
+using PsychologyApp.Presentation.Features.ClinicalCare.DependencyInjection;
 
 namespace PsychologyApp.Presentation.App.DependencyInjection;
 
@@ -16,6 +17,7 @@ public static class PresentationServiceCollectionExtensions
         services.AddSharedPresentation();
         services.AddSendReviewFormFeature();
         services.AddOnboardingFeature();
+        services.AddClinicalCareFeature();
         services.AddPlayMusicFeature();
         services.AddSearchPhysicsFeature();
         services.AddManageQuotesFeature();

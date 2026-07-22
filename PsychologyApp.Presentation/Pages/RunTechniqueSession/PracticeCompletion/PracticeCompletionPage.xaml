@@ -44,8 +44,15 @@
                     ReasonText="{Binding NextPracticeReason}"
                     IconName="{Binding NextPracticeIcon}"
                     ActionText="{Binding NextPracticeActionText}"
-                    TapCommand="{Binding NextPracticeCommand}" />
+                    TapCommand="{Binding NextPracticeCommand}">
+                    <today:TodayPracticeRowView.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="0" />
+                    </today:TodayPracticeRowView.Behaviors>
+                </today:TodayPracticeRowView>
                 <Border Style="{StaticResource BrandCardStyle}">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="1" />
+                    </Border.Behaviors>
                     <VerticalStackLayout Spacing="{StaticResource SectionSpacing}">
                         <mood:MoodStripView
                             QuestionText="{Binding ReflectionQuestion}"

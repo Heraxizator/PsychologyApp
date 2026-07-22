@@ -1,5 +1,6 @@
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Technique;
 using PsychologyApp.Application.UserProgress;
@@ -25,6 +26,7 @@ public partial class TechniquesViewModel : BaseViewModel
     private readonly TechniquesDashboardPresenter _dashboardPresenter;
     private readonly TodayRecommendationResolver _todayRecommendationResolver;
     private readonly TechniquesListInitializer _listInitializer;
+    private readonly IClinicalCareService _clinicalCareService;
     private readonly IOptions<AppSettings> _settings;
     private readonly ILogger<TechniquesViewModel> _logger;
 
@@ -40,6 +42,7 @@ public partial class TechniquesViewModel : BaseViewModel
         TechniquesDashboardPresenter dashboardPresenter,
         TodayRecommendationResolver todayRecommendationResolver,
         TechniquesListInitializer listInitializer,
+        IClinicalCareService clinicalCareService,
         IOptions<AppSettings> settings,
         ILogger<TechniquesViewModel> logger)
     {
@@ -54,6 +57,7 @@ public partial class TechniquesViewModel : BaseViewModel
         _dashboardPresenter = dashboardPresenter;
         _todayRecommendationResolver = todayRecommendationResolver;
         _listInitializer = listInitializer;
+        _clinicalCareService = clinicalCareService;
         _settings = settings;
         _logger = logger;
         ModuleName = AppStrings.ShellTabPractice;

@@ -83,6 +83,9 @@
                 IsVisible="{Binding HasActiveTrack}"
                 Style="{StaticResource BrandCardStyle}"
                 Padding="14,12">
+                <Border.Behaviors>
+                    <behaviors:RevealOnAppearingBehavior />
+                </Border.Behaviors>
                 <VerticalStackLayout Spacing="{StaticResource PlayerControlSpacing}">
                     <Slider
                         x:Name="ProgressSlider"

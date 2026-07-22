@@ -2,10 +2,14 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:testUi="clr-namespace:PsychologyApp.Presentation.Widgets.Test"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:Class="PsychologyApp.Presentation.Widgets.Test.LuscherBriefResultsView"
              x:Name="Root">
 
     <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
+        <VerticalStackLayout.Behaviors>
+            <behaviors:StaggerChildrenBehavior />
+        </VerticalStackLayout.Behaviors>
         <Label
             Text="{Binding Title, Source={x:Reference Root}}"
             Style="{StaticResource SectionTitleStyle}" />

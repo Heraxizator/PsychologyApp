@@ -1,3 +1,5 @@
+﻿using PsychologyApp.Application.ClinicalCare;
+using PsychologyApp.Application.Models;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
@@ -126,6 +128,36 @@ public partial class TechniquesViewModel
         }
     }
 
+    private string _therapyProgramBanner = string.Empty;
+    public string TherapyProgramBanner
+    {
+        get => _therapyProgramBanner;
+        private set
+        {
+            if (SetProperty(ref _therapyProgramBanner, value))
+            {
+                OnPropertyChanged(nameof(HasTherapyProgramBanner));
+            }
+        }
+    }
+
+    public bool HasTherapyProgramBanner => !string.IsNullOrWhiteSpace(TherapyProgramBanner);
+
+    private string _clinicalRiskBanner = string.Empty;
+    public string ClinicalRiskBanner
+    {
+        get => _clinicalRiskBanner;
+        private set
+        {
+            if (SetProperty(ref _clinicalRiskBanner, value))
+            {
+                OnPropertyChanged(nameof(HasClinicalRiskBanner));
+            }
+        }
+    }
+
+    public bool HasClinicalRiskBanner => !string.IsNullOrWhiteSpace(ClinicalRiskBanner);
+
     private void NotifyEngagementNudge()
     {
         OnPropertyChanged(nameof(ShowStreakAtRiskBanner));
@@ -135,4 +167,23 @@ public partial class TechniquesViewModel
     }
 
     private TechniqueId _todayTechniqueId = TechniqueId.Spin;
+
+    private static string FormatProgramBanner(TherapyProgramStateDTO program)
+    {
+        string name = program.ProgramType switch
+        {
+            TherapyProgramType.Anxiety => AppStrings.TherapyProgramAnxiety,
+            TherapyProgramType.Mood => AppStrings.TherapyProgramMood,
+            _ => AppStrings.TherapyProgramStress
+        };
+        string goal = AppStrings.TherapyProgramWeekGoal(program.CurrentWeek);
+        return AppStrings.TherapyProgramBanner(name, program.CurrentWeek, goal);
+    }
+
+    private static string FormatRiskBanner(RiskLevel level) => level switch
+    {
+        RiskLevel.Red => AppStrings.ClinicalRedBanner,
+        RiskLevel.Amber => AppStrings.ClinicalAmberBanner,
+        _ => string.Empty
+    };
 }

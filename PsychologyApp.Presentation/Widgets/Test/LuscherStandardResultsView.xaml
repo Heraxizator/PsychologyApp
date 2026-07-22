@@ -3,11 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:testUi="clr-namespace:PsychologyApp.Presentation.Widgets.Test"
              xmlns:profileUi="clr-namespace:PsychologyApp.Presentation.Widgets.ProfileTechniqueCard"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:models="clr-namespace:PsychologyApp.Presentation.Pages.RunTests.LuscherTest"
              x:Class="PsychologyApp.Presentation.Widgets.Test.LuscherStandardResultsView"
              x:Name="Root">
 
     <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
+        <VerticalStackLayout.Behaviors>
+            <behaviors:StaggerChildrenBehavior />
+        </VerticalStackLayout.Behaviors>
         <Label
             Text="{Binding Title, Source={x:Reference Root}}"
             Style="{StaticResource SectionTitleStyle}" />
@@ -20,7 +24,11 @@
                     <testUi:TestResultMetricCardView
                         MetricName="{Binding PropertyName}"
                         MetricValue="{Binding PropertyValue}"
-                        MetricDescription="{Binding PropertyText}" />
+                        MetricDescription="{Binding PropertyText}">
+                        <testUi:TestResultMetricCardView.Behaviors>
+                            <behaviors:ListItemRevealBehavior />
+                        </testUi:TestResultMetricCardView.Behaviors>
+                    </testUi:TestResultMetricCardView>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </VerticalStackLayout>
@@ -37,6 +45,9 @@
         <VerticalStackLayout
             IsVisible="{Binding HasRecommendation, Source={x:Reference Root}}"
             Spacing="{StaticResource CompactSpacing}">
+            <VerticalStackLayout.Behaviors>
+                <behaviors:ListItemRevealBehavior RevealIndex="2" />
+            </VerticalStackLayout.Behaviors>
             <Label
                 Text="{Binding RecommendationHint, Source={x:Reference Root}}"
                 Style="{StaticResource CaptionStyle}" />

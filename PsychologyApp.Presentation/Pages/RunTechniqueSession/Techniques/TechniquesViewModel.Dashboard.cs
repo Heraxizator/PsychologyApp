@@ -63,6 +63,19 @@ public partial class TechniquesViewModel
                 lastPracticeUtc is null ? null : DateOnly.FromDateTime(lastPracticeUtc.Value.ToLocalTime()),
                 DateOnly.FromDateTime(DateTime.Today));
 
+            TherapyProgramStateDTO? program = null;
+            RiskAssessmentDTO? latestRisk = null;
+            try
+            {
+                await _clinicalCareService.AdjustProgramFromScorecardAsync(cancellationToken);
+                program = await _clinicalCareService.GetActiveProgramAsync(cancellationToken);
+                latestRisk = await _clinicalCareService.GetLatestRiskAssessmentAsync(cancellationToken);
+            }
+            catch (Exception clinicalEx)
+            {
+                _logger.LogDebug(clinicalEx, "Clinical care dashboard enrichment skipped.");
+            }
+
             await UiThread.RunAsync(() =>
             {
                 StreakDays = streakDays;
@@ -72,6 +85,12 @@ public partial class TechniquesViewModel
                 HasTodayDraft = hasDraft;
                 ApplyMoodSnapshot(mood);
                 WeeklyInsightText = weeklyInsight.DisplayText;
+                TherapyProgramBanner = program is { IsActive: true }
+                    ? FormatProgramBanner(program)
+                    : string.Empty;
+                ClinicalRiskBanner = latestRisk is null
+                    ? string.Empty
+                    : FormatRiskBanner(latestRisk.RiskLevel);
                 _todayTechniqueId = recommendation.TechniqueId;
                 TodayReasonText = recommendation.ReasonText;
                 TodayTechniqueItem = recommendation.Item;

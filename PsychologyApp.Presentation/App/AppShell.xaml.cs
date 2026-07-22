@@ -388,6 +388,7 @@ public partial class AppShell : Shell
         {
             await _startupCoordinator.InitializeAsync();
             await ShowOnboardingIfNeededAsync();
+            await ShowClinicalGateIfNeededAsync();
             SyncRemindersFireAndForget();
         }
         catch (Exception ex)
@@ -431,5 +432,21 @@ public partial class AppShell : Shell
 
             await Task.CompletedTask;
         });
+    }
+
+    private async Task ShowClinicalGateIfNeededAsync()
+    {
+        if (!UserPreferences.Load().HasCompletedOnboarding)
+        {
+            return;
+        }
+
+        Page? currentPage = Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault()?.Page;
+        if (currentPage?.Navigation is not INavigation navigation)
+        {
+            return;
+        }
+
+        await _startupCoordinator.ShowClinicalGateIfNeededAsync(navigation);
     }
 }

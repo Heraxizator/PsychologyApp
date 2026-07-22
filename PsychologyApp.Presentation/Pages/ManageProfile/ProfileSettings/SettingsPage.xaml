@@ -22,6 +22,9 @@
                 BackCommand="{Binding Finish}" />
 
             <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                <Border.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="0" />
+                </Border.Behaviors>
                 <VerticalStackLayout Spacing="0">
                     <Label
                         Text="{Binding DesignSectionTitle}"
@@ -66,6 +69,9 @@
             </Border>
 
             <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                <Border.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="1" />
+                </Border.Behaviors>
                 <VerticalStackLayout Spacing="0">
                     <Label
                         Text="{Binding FontSectionTitle}"
@@ -86,6 +92,9 @@
             </Border>
 
             <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                <Border.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="2" />
+                </Border.Behaviors>
                 <VerticalStackLayout Spacing="0">
                     <Label
                         Text="{Binding PrimaryConcernSectionTitle}"
@@ -104,6 +113,9 @@
                 IsVisible="{Binding AreRemindersSupported}"
                 Style="{StaticResource SettingsSectionCardStyle}"
                 Margin="0">
+                <Border.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="3" />
+                </Border.Behaviors>
                 <VerticalStackLayout Spacing="0">
                     <Label
                         Text="{Binding PracticeSectionTitle}"
@@ -127,6 +139,9 @@
                 IsVisible="{Binding AreRemindersSupported}"
                 Style="{StaticResource SettingsSectionCardStyle}"
                 Margin="0">
+                <Border.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="4" />
+                </Border.Behaviors>
                 <VerticalStackLayout Spacing="0">
                     <Label
                         Text="{Binding QuotesSectionTitle}"
@@ -147,6 +162,9 @@
             </Border>
 
             <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                <Border.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="5" />
+                </Border.Behaviors>
                 <VerticalStackLayout Spacing="0">
                     <Label
                         Text="{Binding TestsSectionTitle}"

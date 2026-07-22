@@ -20,6 +20,9 @@
             IsVisible="{Binding IsDone}"
             Margin="{StaticResource LayoutPageMarginThickness}"
             RowDefinitions="Auto,Auto,*">
+            <Grid.Behaviors>
+                <behaviors:RevealOnAppearingBehavior />
+            </Grid.Behaviors>
 
             <ui:NavigationBarSimpleView
                 Grid.Row="0"

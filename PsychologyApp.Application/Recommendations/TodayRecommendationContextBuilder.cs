@@ -1,3 +1,4 @@
+using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Domain.Practice;
@@ -9,9 +10,16 @@ public static class TodayRecommendationContextBuilder
     private static readonly string[] CatalogTechniqueKeys =
         Enum.GetNames<TechniqueId>();
 
+    public static Task<TodayRecommendationContext> BuildAsync(
+        IUserProgressService progress,
+        string concern,
+        CancellationToken cancellationToken = default) =>
+        BuildAsync(progress, concern, clinicalCare: null, cancellationToken);
+
     public static async Task<TodayRecommendationContext> BuildAsync(
         IUserProgressService progress,
         string concern,
+        IClinicalCareService? clinicalCare,
         CancellationToken cancellationToken = default)
     {
         Task<TestResultDTO?> recentTestTask =
@@ -22,8 +30,16 @@ public static class TodayRecommendationContextBuilder
             progress.GetLastPracticeDatesAsync(CatalogTechniqueKeys, cancellationToken);
         Task<IReadOnlySet<string>> draftsTask =
             progress.GetSessionDraftKeysAsync(CatalogTechniqueKeys, cancellationToken);
+        Task<TherapyProgramStateDTO?>? programTask = clinicalCare?.GetActiveProgramAsync(cancellationToken);
 
-        await Task.WhenAll(recentTestTask, moodsTask, datesTask, draftsTask);
+        if (programTask is null)
+        {
+            await Task.WhenAll(recentTestTask, moodsTask, datesTask, draftsTask);
+        }
+        else
+        {
+            await Task.WhenAll(recentTestTask, moodsTask, datesTask, draftsTask, programTask);
+        }
 
         int? todayMood = null;
         IReadOnlyList<MoodEntryDTO> moods = await moodsTask;
@@ -42,11 +58,15 @@ public static class TodayRecommendationContextBuilder
             }
         }
 
+        TherapyProgramStateDTO? program = programTask is null ? null : await programTask;
+
         return new TodayRecommendationContext(
             concern,
             await recentTestTask,
             todayMood,
             await datesTask,
-            draftTechniqueId);
+            draftTechniqueId,
+            program?.IsActive == true ? program.ProgramType : null,
+            program?.IsActive == true ? program.CurrentWeek : 0);
     }
 }

@@ -1,3 +1,4 @@
+using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Recommendations;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Domain.Practice;
@@ -23,7 +24,8 @@ public sealed class NextPracticeResolver(
     IUserProgressService userProgressService,
     IUserPreferencesStore userPreferencesStore,
     ITechniqueRecommendationService techniqueRecommendationService,
-    TechniqueCatalogGateway techniqueCatalog)
+    TechniqueCatalogGateway techniqueCatalog,
+    IClinicalCareService clinicalCareService)
 {
     public async Task<NextPracticeResult?> ResolveAsync(
         TechniqueId completedTechniqueId,
@@ -33,6 +35,7 @@ public sealed class NextPracticeResolver(
         TodayRecommendationContext context = await TodayRecommendationContextBuilder.BuildAsync(
             userProgressService,
             concern,
+            clinicalCareService,
             cancellationToken);
 
         TechniqueId nextId = techniqueRecommendationService.ResolveNextAfterCompletion(

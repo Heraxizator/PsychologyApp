@@ -32,6 +32,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IFavoriteQuoteTextStore, FavoriteQuoteTextStore>();
         services.AddSingleton<IStatisticRepository, StatisticRepository>();
         services.AddSingleton<IUserProgressRepository, UserProgressRepository>();
+        services.AddSingleton<IClinicalCareRepository, ClinicalCareRepository>();
 
         return services;
     }

@@ -1,4 +1,5 @@
 ﻿using PsychologyApp.Presentation.Features.Onboarding;
+using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Core.Common;
@@ -14,6 +15,7 @@ public partial class OnboardingViewModel : BaseViewModel
     private readonly INavigationService _navigationService;
     private readonly IUserPreferencesStore _userPreferencesStore;
     private readonly OnboardingRecommendationResolver _onboardingRecommendationResolver;
+    private readonly IClinicalCareService _clinicalCareService;
     private readonly Func<TechniqueId?, Task> _onCompleted;
 
     public ICommand NextCommand { get; }
@@ -29,6 +31,7 @@ public partial class OnboardingViewModel : BaseViewModel
         INavigationService navigationService,
         IUserPreferencesStore userPreferencesStore,
         OnboardingRecommendationResolver onboardingRecommendationResolver,
+        IClinicalCareService clinicalCareService,
         Func<TechniqueId?, Task> onCompleted)
     {
         BindPreferences(userPreferencesStore);
@@ -37,6 +40,7 @@ public partial class OnboardingViewModel : BaseViewModel
         _navigationService = navigationService;
         _userPreferencesStore = userPreferencesStore;
         _onboardingRecommendationResolver = onboardingRecommendationResolver;
+        _clinicalCareService = clinicalCareService;
 
         NextCommand = new Command(GoNext);
         BackCommand = new Command(GoBack);

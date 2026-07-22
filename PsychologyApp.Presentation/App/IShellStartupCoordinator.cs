@@ -13,4 +13,6 @@ public interface IShellStartupCoordinator
     Task ShowOnboardingAsync(
         INavigation navigation,
         Func<TechniqueId?, Task> onTechniqueSelected);
+
+    Task ShowClinicalGateIfNeededAsync(INavigation navigation);
 }

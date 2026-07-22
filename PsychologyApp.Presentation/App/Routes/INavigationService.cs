@@ -42,4 +42,6 @@ public interface INavigationService
     Task GoToQuotesFavoritesAsync();
     Task GoToPracticeCompletionAsync(int streakDays, string? completedItemKey = null);
     Task ShowOnboardingAsync();
+    Task GoToCrisisHubAsync();
+    Task GoToRiskCheckAsync(string source);
 }

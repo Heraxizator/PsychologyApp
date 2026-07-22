@@ -193,6 +193,12 @@ public sealed class MauiNavigationService : INavigationService
             ResolveNavigation(),
             CompleteOnboardingWithTechniqueAsync));
 
+    public Task GoToCrisisHubAsync() =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateCrisisHubPage(), true));
+
+    public Task GoToRiskCheckAsync(string source) =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateRiskCheckPage(source), true));
+
     private Task CompleteOnboardingWithTechniqueAsync(TechniqueId? techniqueId)
     {
         if (techniqueId is null)

@@ -712,6 +712,87 @@ public static partial class AppStrings
     public static string QuotesLoading => T("Загрузка цитат", "Loading quotes");
     public static string QuoteShareTitle => T("Цитата", "Quote");
     public static string UnknownAuthor => T("Неизвестный автор", "Unknown author");
+
+    public static string CrisisHubTitle => T("Срочная помощь", "Crisis help");
+    public static string CrisisHubLead => T(
+        "Если вам тяжело прямо сейчас, сначала позаботьтесь о безопасности. Это приложение не заменяет экстренную помощь.",
+        "If you are struggling right now, prioritize safety first. This app does not replace emergency care.");
+    public static string CrisisHubSafetyPlanTitle => T("План безопасности", "Safety plan");
+    public static string CrisisHubSafetyPlanBody => T(
+        "1. Отойдите от триггеров.\n2. Свяжитесь с кем-то надёжным.\n3. Если есть угроза жизни — звоните в экстренные службы.",
+        "1. Step away from triggers.\n2. Reach a trusted person.\n3. If life is at risk — call emergency services.");
+    public static string CrisisHubHotlineTitle => T("Горячие линии", "Hotlines");
+    public static string CrisisHubHotlineRu => T(
+        "Россия: 8-800-2000-122 (детский телефон доверия), 112 — экстренные службы",
+        "Russia: 8-800-2000-122 (child helpline), 112 — emergency services");
+    public static string CrisisHubHotlineIntl => T(
+        "Международно: findahelpline.com",
+        "International: findahelpline.com");
+    public static string CrisisHubOpenHelpline => T("Открыть findahelpline.com", "Open findahelpline.com");
+    public static string CrisisHubContinueSoft => T("Вернуться к мягким практикам", "Return to gentle practices");
+    public static string CrisisHubSpecialistHint => T(
+        "Рекомендуем обратиться к психологу или врачу. Самопомощь подходит для лёгких и умеренных состояний.",
+        "Please consider a psychologist or doctor. Self-help fits mild to moderate states.");
+
+    public static string RiskCheckTitle => T("Проверка безопасности", "Safety check");
+    public static string RiskCheckSubtitle => T(
+        "Ответьте честно. Это помогает подобрать безопасный сценарий.",
+        "Answer honestly. This helps choose a safe path.");
+    public static string RiskCheckSelfHarm => T(
+        "Есть мысли о самоповреждении или суициде",
+        "Thoughts of self-harm or suicide");
+    public static string RiskCheckDisorientation => T(
+        "Сильная дезориентация или потеря связи с реальностью",
+        "Severe disorientation or loss of contact with reality");
+    public static string RiskCheckSubstance => T(
+        "Риск, связанный с веществами / алкоголем",
+        "Substance or alcohol-related risk");
+    public static string RiskCheckInsomnia => T(
+        "Тяжёлая бессонница и истощение",
+        "Severe insomnia and exhaustion");
+    public static string RiskCheckSubmit => T("Продолжить", "Continue");
+    public static string RiskCheckSourceOnboarding => "onboarding";
+    public static string RiskCheckSourcePeriodic => "periodic";
+    public static string RiskCheckSourceManual => "manual";
+
+    public static string OptionsCrisisTitle => T("Срочная помощь", "Crisis help");
+    public static string OptionsCrisisSubtitle => T(
+        "План безопасности и горячие линии",
+        "Safety plan and hotlines");
+
+    public static string ClinicalScorecardTitle => T("Недельный обзор", "Weekly overview");
+    public static string ClinicalScorecardEmpty => T(
+        "Пока мало данных — практики и настроение появятся здесь",
+        "Not enough data yet — practices and mood will appear here");
+    public static string ClinicalScorecardSummary(int practices, int moods, string riskLabel) => T(
+        $"За неделю: {practices} практик, {moods} отметок настроения · риск: {riskLabel}",
+        $"This week: {practices} practices, {moods} mood check-ins · risk: {riskLabel}");
+    public static string ClinicalRiskGreen => T("низкий", "low");
+    public static string ClinicalRiskAmber => T("повышенный", "elevated");
+    public static string ClinicalRiskRed => T("высокий", "high");
+
+    public static string TherapyProgramTitle => T("Ваш протокол", "Your program");
+    public static string TherapyProgramAnxiety => T("Тревога", "Anxiety");
+    public static string TherapyProgramMood => T("Настроение", "Mood");
+    public static string TherapyProgramStress => T("Стресс", "Stress");
+    public static string TherapyProgramWeekLabel(int week) => T($"Неделя {week}", $"Week {week}");
+    public static string TherapyProgramWeekGoal(int week) => week switch
+    {
+        1 => T("Стабилизация: короткие ежедневные практики", "Stabilize with short daily practices"),
+        2 => T("Наблюдение за мыслями и телом", "Observe thoughts and body signals"),
+        3 => T("Гибкость: пробовать разные техники", "Flexibility: try varied techniques"),
+        _ => T("Закрепление и самостоятельный выбор", "Consolidate and choose independently")
+    };
+    public static string TherapyProgramBanner(string programName, int week, string goal) => T(
+        $"{programName} · неделя {week}: {goal}",
+        $"{programName} · week {week}: {goal}");
+    public static string ClinicalAmberBanner => T(
+        "Состояние требует внимания — доступна срочная помощь",
+        "Your state needs attention — crisis help is available");
+    public static string ClinicalRedBanner => T(
+        "Сначала откройте срочную помощь",
+        "Open crisis help first");
+
     private static string T(string russian, string english) =>
         IsEnglish(Language) ? english : russian;
 

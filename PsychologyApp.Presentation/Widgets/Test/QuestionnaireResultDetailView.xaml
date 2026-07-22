@@ -2,6 +2,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:PsychologyApp.Application.Models.Tests;assembly=PsychologyApp.Application"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:Class="PsychologyApp.Presentation.Widgets.Test.QuestionnaireResultDetailView"
              x:Name="Root">
 
@@ -13,6 +14,9 @@
         <BindableLayout.ItemTemplate>
             <DataTemplate x:DataType="models:QuestionnaireResultQuestion">
                 <VerticalStackLayout Spacing="4" Margin="0,0,0,8">
+                    <VerticalStackLayout.Behaviors>
+                        <behaviors:ListItemRevealBehavior />
+                    </VerticalStackLayout.Behaviors>
                     <Label Style="{StaticResource CaptionStyle}" TextColor="{DynamicResource Primary}">
                         <Label.FormattedText>
                             <FormattedString>

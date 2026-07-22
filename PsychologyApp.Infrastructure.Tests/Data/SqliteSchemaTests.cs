@@ -36,7 +36,7 @@ public class SqliteSchemaTests
         int indexCount = await connection.ExecuteScalarAsync<int>(
             "SELECT COUNT(*) FROM sqlite_master WHERE type='index' AND name='IX_Statistics_PageName';");
 
-        Assert.Equal(6, version);
+        Assert.Equal(7, version);
         Assert.Equal(1, indexCount);
     }
 
@@ -50,7 +50,22 @@ public class SqliteSchemaTests
 
         Assert.Equal(1, await TableExistsAsync(connection, "AppMetadata"));
         int version = await connection.ExecuteScalarAsync<int>("SELECT MAX(Version) FROM SchemaVersion;");
-        Assert.Equal(6, version);
+        Assert.Equal(7, version);
+    }
+
+    [Fact]
+    public async Task EnsureSchema_CreatesClinicalCareTablesForVersion7()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+
+        await SqliteSchema.EnsureSchemaAsync(connection);
+
+        Assert.Equal(1, await TableExistsAsync(connection, "RiskAssessments"));
+        Assert.Equal(1, await TableExistsAsync(connection, "TherapyPrograms"));
+        Assert.Equal(1, await TableExistsAsync(connection, "EscalationEvents"));
+        int version = await connection.ExecuteScalarAsync<int>("SELECT MAX(Version) FROM SchemaVersion;");
+        Assert.Equal(7, version);
     }
 
     [Fact]

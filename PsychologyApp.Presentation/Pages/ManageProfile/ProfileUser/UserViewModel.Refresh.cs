@@ -55,6 +55,7 @@ public partial class UserViewModel
             MoodChartSubtitle = moodSnapshot.ChartSubtitle;
             HasMoodTrendChart = moodSnapshot.HasTrendChart;
             MoodNotes = moodSnapshot.RecentNotes;
+            await RefreshClinicalScorecardAsync(cancellationToken);
 
             TechniquesCompletedCount = result.Stats.TechniquesCompletedCount;
             TestsCompletedCount = result.Stats.TestsCompletedCount;

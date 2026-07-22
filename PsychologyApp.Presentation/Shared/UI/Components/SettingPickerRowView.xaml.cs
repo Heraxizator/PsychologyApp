@@ -144,6 +144,7 @@ public partial class SettingPickerRowView : ContentView
             PreferenceLabelKind.Color => UserPreferences.ParseColorKey(value?.ToString() ?? string.Empty),
             PreferenceLabelKind.Form => UserPreferences.ParseFormKey(value?.ToString() ?? string.Empty),
             PreferenceLabelKind.Size => UserPreferences.ParseSizeKey(value?.ToString() ?? string.Empty),
+            PreferenceLabelKind.Concern => UserPreferences.ParseOnboardingConcernKey(value?.ToString() ?? string.Empty),
             _ => value?.ToString() ?? string.Empty
         };
 

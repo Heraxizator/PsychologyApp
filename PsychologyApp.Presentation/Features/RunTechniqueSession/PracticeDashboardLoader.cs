@@ -1,4 +1,5 @@
 using System.Globalization;
+using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Recommendations;
 using PsychologyApp.Application.UserProgress;
@@ -28,7 +29,8 @@ public sealed class WeeklyInsightSnapshot
 public sealed class PracticeDashboardLoader(
     IUserProgressService userProgressService,
     IUserPreferencesStore userPreferencesStore,
-    TodayRecommendationResolver todayRecommendationResolver)
+    TodayRecommendationResolver todayRecommendationResolver,
+    IClinicalCareService clinicalCareService)
 {
     public async Task<int> LoadStreakDaysAsync(CancellationToken cancellationToken = default) =>
         await userProgressService.GetStreakDaysAsync(cancellationToken);
@@ -193,7 +195,11 @@ public sealed class PracticeDashboardLoader(
         bool hasStreak = streakDays > 0;
         string concern = userPreferencesStore.Load().OnboardingConcern;
         TodayRecommendationContext context =
-            await TodayRecommendationContextBuilder.BuildAsync(userProgressService, concern, cancellationToken);
+            await TodayRecommendationContextBuilder.BuildAsync(
+                userProgressService,
+                concern,
+                clinicalCareService,
+                cancellationToken);
         return await todayRecommendationResolver.ResolveAsync(
             context,
             streakDisplay,

@@ -1,13 +1,13 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Abstractions.Startup;
+using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Pages.Onboarding;
 using PsychologyApp.Presentation.Features.Onboarding.DependencyInjection;
-
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Shared.UI.Overlays;
 
@@ -16,6 +16,8 @@ namespace PsychologyApp.Presentation.App;
 public sealed class ShellStartupCoordinator(
     IAppStartupService startupService,
     IOnboardingViewModelFactory onboardingViewModelFactory,
+    IClinicalCareService clinicalCareService,
+    IPageFactory pageFactory,
     IOptions<AppSettings> settings,
     IDatabaseReadySignal databaseReadySignal,
     IToastService toastService,
@@ -78,6 +80,45 @@ public sealed class ShellStartupCoordinator(
         catch (Exception ex)
         {
             logger.LogWarning(ex, "Onboarding presentation skipped.");
+        }
+    }
+
+    public async Task ShowClinicalGateIfNeededAsync(INavigation navigation)
+    {
+        if (!UserPreferences.Load().HasCompletedOnboarding)
+        {
+            return;
+        }
+
+        await ShowClinicalGateAsync(navigation);
+    }
+
+    private async Task ShowClinicalGateAsync(INavigation navigation)
+    {
+        try
+        {
+            if (await clinicalCareService.ShouldRouteToCrisisHubAsync())
+            {
+                await MainThread.InvokeOnMainThreadAsync(async () =>
+                {
+                    await navigation.PushAsync(pageFactory.CreateCrisisHubPage(), true);
+                });
+                return;
+            }
+
+            if (await clinicalCareService.IsRiskCheckDueAsync(ClinicalCareService.DefaultRiskCheckInterval))
+            {
+                await MainThread.InvokeOnMainThreadAsync(async () =>
+                {
+                    await navigation.PushAsync(
+                        pageFactory.CreateRiskCheckPage(AppStrings.RiskCheckSourcePeriodic),
+                        true);
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "Clinical care gate skipped.");
         }
     }
 }

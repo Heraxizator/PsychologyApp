@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:Class="PsychologyApp.Presentation.Widgets.LuscherColorGrid.LuscherColorGridView"
              x:Name="Root">
 
@@ -17,38 +18,59 @@
             ColumnSpacing="12"
             RowSpacing="12"
             HorizontalOptions="Center">
+            <Grid.Behaviors>
+                <behaviors:StaggerChildrenBehavior />
+            </Grid.Behaviors>
 
             <Border x:Name="RedTile" Grid.Row="0" Grid.Column="0" StrokeThickness="0" IsVisible="{Binding IsRed}">
+                <Border.Behaviors>
+                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                </Border.Behaviors>
                 <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
                 <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding RedHandler}" /></Border.GestureRecognizers>
                 <BoxView Color="Red" CornerRadius="16" Opacity="0.92" />
             </Border>
 
             <Border x:Name="BrownTile" Grid.Row="0" Grid.Column="1" StrokeThickness="0" IsVisible="{Binding IsBrown}">
+                <Border.Behaviors>
+                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                </Border.Behaviors>
                 <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
                 <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding BrownHandler}" /></Border.GestureRecognizers>
                 <BoxView Color="Brown" CornerRadius="16" Opacity="0.92" />
             </Border>
 
             <Border x:Name="YellowTile" Grid.Row="0" Grid.Column="2" StrokeThickness="0" IsVisible="{Binding IsYellow}">
+                <Border.Behaviors>
+                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                </Border.Behaviors>
                 <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
                 <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding YellowHandler}" /></Border.GestureRecognizers>
                 <BoxView Color="Yellow" CornerRadius="16" Opacity="0.92" />
             </Border>
 
             <Border x:Name="GreenTile" Grid.Row="1" Grid.Column="0" StrokeThickness="0" IsVisible="{Binding IsGreen}">
+                <Border.Behaviors>
+                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                </Border.Behaviors>
                 <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
                 <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding GreenHandler}" /></Border.GestureRecognizers>
                 <BoxView Color="Green" CornerRadius="16" Opacity="0.92" />
             </Border>
 
             <Border x:Name="BlueTile" Grid.Row="1" Grid.Column="1" StrokeThickness="0" IsVisible="{Binding IsBlue}">
+                <Border.Behaviors>
+                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                </Border.Behaviors>
                 <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
                 <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding BlueHandler}" /></Border.GestureRecognizers>
                 <BoxView Color="Blue" CornerRadius="16" Opacity="0.92" />
             </Border>
 
             <Border x:Name="PurpleTile" Grid.Row="1" Grid.Column="2" StrokeThickness="0" IsVisible="{Binding IsPurple}">
+                <Border.Behaviors>
+                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                </Border.Behaviors>
                 <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
                 <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding PurpleHandler}" /></Border.GestureRecognizers>
                 <BoxView Color="Purple" CornerRadius="16" Opacity="0.92" />
@@ -61,11 +83,17 @@
                 Spacing="12"
                 HorizontalOptions="Center">
                 <Border x:Name="GrayTile" StrokeThickness="0" IsVisible="{Binding IsGray}">
+                    <Border.Behaviors>
+                        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                    </Border.Behaviors>
                     <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
                     <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding GrayHandler}" /></Border.GestureRecognizers>
                     <BoxView Color="Gray" CornerRadius="16" Opacity="0.92" />
                 </Border>
                 <Border x:Name="BlackTile" StrokeThickness="0" IsVisible="{Binding IsBlack}">
+                    <Border.Behaviors>
+                        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                    </Border.Behaviors>
                     <Border.StrokeShape><RoundRectangle CornerRadius="16" /></Border.StrokeShape>
                     <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding BlackHandler}" /></Border.GestureRecognizers>
                     <BoxView Color="Black" CornerRadius="16" Opacity="0.92" />

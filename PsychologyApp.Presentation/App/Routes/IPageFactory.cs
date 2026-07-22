@@ -24,6 +24,8 @@ using PsychologyApp.Presentation.Pages.RunTests.TestsList;
 using PsychologyApp.Presentation.Pages.SearchPhysics.PhysicsSearch;
 using PsychologyApp.Presentation.Pages.PlayMusic.MusicPlayer;
 using PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
+using PsychologyApp.Presentation.Pages.ClinicalCare.CrisisHub;
+using PsychologyApp.Presentation.Pages.ClinicalCare.RiskCheck;
 
 namespace PsychologyApp.Presentation.App.Routes;
 
@@ -53,4 +55,6 @@ public interface IPageFactory
     DesignerPage CreateDesignerPage(long techniqueId);
     TechniqueSessionPage CreateTechniqueSessionPage(TechniqueId techniqueId, INavigation hostNavigation);
     PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null);
+    CrisisHubPage CreateCrisisHubPage();
+    RiskCheckPage CreateRiskCheckPage(string source);
 }
