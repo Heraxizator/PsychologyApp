@@ -6,10 +6,11 @@ namespace PsychologyApp.Infrastructure.Data.Context;
 
 public static class SqliteSchema
 {
-    public const int CurrentVersion = 7;
+    public const int CurrentVersion = 8;
 
     private static readonly string[] DropTablesSql =
     [
+        "DROP TABLE IF EXISTS SessionResults;",
         "DROP TABLE IF EXISTS EscalationEvents;",
         "DROP TABLE IF EXISTS TherapyPrograms;",
         "DROP TABLE IF EXISTS RiskAssessments;",
@@ -92,7 +93,35 @@ public static class SqliteSchema
         if (version < 7)
         {
             await ApplyMigrationAsync(connection, 7, MigrateToVersion7Async, cancellationToken);
+            version = 7;
         }
+
+        if (version < 8)
+        {
+            await ApplyMigrationAsync(connection, 8, MigrateToVersion8Async, cancellationToken);
+        }
+    }
+
+    private static async Task MigrateToVersion8Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)
+    {
+        await connection.ExecuteAsync(
+            """
+            CREATE TABLE IF NOT EXISTS SessionResults (
+                SessionResultId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                ItemKey TEXT NOT NULL,
+                CompletedAt TEXT NOT NULL,
+                DurationSeconds INTEGER NOT NULL,
+                PayloadJson TEXT,
+                PreIntensity INTEGER,
+                PostIntensity INTEGER,
+                ProgramType TEXT,
+                ProgramWeek INTEGER
+            );
+
+            CREATE INDEX IF NOT EXISTS IX_SessionResults_CompletedAt ON SessionResults(CompletedAt);
+            CREATE INDEX IF NOT EXISTS IX_SessionResults_ItemKey ON SessionResults(ItemKey);
+            """,
+            transaction: transaction);
     }
 
     private static async Task MigrateToVersion7Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)

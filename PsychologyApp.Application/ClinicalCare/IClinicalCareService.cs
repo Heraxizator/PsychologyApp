@@ -13,6 +13,7 @@ public interface IClinicalCareService
     Task<TherapyProgramStateDTO?> GetActiveProgramAsync(CancellationToken cancellationToken = default);
     Task<TherapyProgramStateDTO?> AdvanceProgramWeekIfDueAsync(CancellationToken cancellationToken = default);
     Task<TherapyProgramWeekPlan?> GetActiveWeekPlanAsync(CancellationToken cancellationToken = default);
+    Task<TherapyProgramAdherence?> GetActiveWeekAdherenceAsync(CancellationToken cancellationToken = default);
 
     Task<ClinicalScorecardDTO> BuildWeeklyScorecardAsync(CancellationToken cancellationToken = default);
     Task<TherapyProgramStateDTO?> AdjustProgramFromScorecardAsync(CancellationToken cancellationToken = default);

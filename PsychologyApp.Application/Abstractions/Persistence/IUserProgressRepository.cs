@@ -14,6 +14,7 @@ public interface IUserProgressRepository
     Task<DateTime?> GetLastTechniqueCompletionDateAsync(CancellationToken cancellationToken = default);
 
     Task RecordCompletionAsync(CompletionDTO completion, CancellationToken cancellationToken = default);
+    Task<long> RecordSessionOutcomeAsync(SessionOutcomeRequest request, CancellationToken cancellationToken = default);
     Task<long> CountTechniqueCompletionsAsync(CancellationToken cancellationToken = default);
     Task<IReadOnlyList<CompletionDTO>> GetRecentTechniqueCompletionsAsync(int limit, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<DateOnly>> GetCompletionDatesAsync(CancellationToken cancellationToken = default);
@@ -27,4 +28,13 @@ public interface IUserProgressRepository
 
     Task RecordMoodAsync(MoodEntryDTO entry, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<MoodEntryDTO>> GetRecentMoodsAsync(int limit, CancellationToken cancellationToken = default);
+
+    Task UpdateSessionResultPostIntensityAsync(long sessionResultId, int postIntensity, CancellationToken cancellationToken = default);
+    Task<SessionResultDTO?> GetSessionResultAsync(long sessionResultId, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<SessionResultDTO>> GetRecentSessionResultsAsync(int limit, CancellationToken cancellationToken = default);
+    Task<int> CountDistinctTechniqueCompletionsForItemsBetweenAsync(
+        IReadOnlyList<string> itemKeys,
+        DateTime sinceUtc,
+        DateTime beforeUtc,
+        CancellationToken cancellationToken = default);
 }

@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
+using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Technique;
 using PsychologyApp.Application.UserProgress;
@@ -15,14 +16,24 @@ namespace PsychologyApp.Presentation.Tests;
 
 public sealed class TechniqueSessionCompletionServiceTests
 {
+    private static TechniqueSessionCompletionService CreateService(Mock<IClinicalCareService>? clinicalCare = null)
+    {
+        Mock<IClinicalCareService> clinical = clinicalCare ?? new Mock<IClinicalCareService>();
+        clinical.Setup(s => s.GetActiveProgramAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync((TherapyProgramStateDTO?)null);
+        return new TechniqueSessionCompletionService(Mock.Of<IPracticeReminderCoordinator>(), clinical.Object);
+    }
+
     [Fact]
     public async Task CompleteStandardSessionAsync_RecordsProgress_DeletesDraft_AndNavigates()
     {
         Mock<IUserProgressService> progress = new();
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(3);
+        progress.Setup(p => p.GetSessionDraftAsync("Paper", It.IsAny<CancellationToken>())).ReturnsAsync((string?)null);
+        progress.Setup(p => p.RecordSessionOutcomeAsync(It.IsAny<SessionOutcomeRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(42L);
         Mock<INavigationService> navigation = new();
-        navigation.Setup(n => n.GoToPracticeCompletionAsync(It.IsAny<int>(), It.IsAny<string?>())).Returns(Task.CompletedTask);
-        TechniqueSessionCompletionService service = new(Mock.Of<IPracticeReminderCoordinator>());
+        navigation.Setup(n => n.GoToPracticeCompletionAsync(It.IsAny<int>(), It.IsAny<string?>(), It.IsAny<long?>())).Returns(Task.CompletedTask);
+        TechniqueSessionCompletionService service = CreateService();
         DateTime startedAt = DateTime.UtcNow.AddMinutes(-2);
 
         await service.CompleteStandardSessionAsync(
@@ -31,18 +42,21 @@ public sealed class TechniqueSessionCompletionServiceTests
             "Paper",
             "Practice",
             "Paper technique",
-            startedAt);
+            startedAt,
+            preIntensity: 7);
 
         progress.Verify(
-            p => p.RecordTechniqueCompletionAsync(
-                "Paper",
-                "Practice",
-                "Paper technique",
-                It.IsInRange(110, 130, Moq.Range.Inclusive),
+            p => p.RecordSessionOutcomeAsync(
+                It.Is<SessionOutcomeRequest>(request =>
+                    request.ItemKey == "Paper"
+                    && request.ModuleName == "Practice"
+                    && request.PageName == "Paper technique"
+                    && request.PreIntensity == 7
+                    && request.DeleteDraft
+                    && request.DurationSeconds is >= 110 and <= 130),
                 It.IsAny<CancellationToken>()),
             Times.Once);
-        progress.Verify(p => p.DeleteSessionDraftAsync("Paper", It.IsAny<CancellationToken>()), Times.Once);
-        navigation.Verify(n => n.GoToPracticeCompletionAsync(3, "Paper"), Times.Once);
+        navigation.Verify(n => n.GoToPracticeCompletionAsync(3, "Paper", 42L), Times.Once);
     }
 
     [Fact]
@@ -50,9 +64,11 @@ public sealed class TechniqueSessionCompletionServiceTests
     {
         Mock<IUserProgressService> progress = new();
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
+        progress.Setup(p => p.GetSessionDraftAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync((string?)null);
+        progress.Setup(p => p.RecordSessionOutcomeAsync(It.IsAny<SessionOutcomeRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(7L);
         Mock<INavigationService> navigation = new();
-        navigation.Setup(n => n.GoToPracticeCompletionAsync(It.IsAny<int>(), It.IsAny<string?>())).Returns(Task.CompletedTask);
-        TechniqueSessionCompletionService service = new(Mock.Of<IPracticeReminderCoordinator>());
+        navigation.Setup(n => n.GoToPracticeCompletionAsync(It.IsAny<int>(), It.IsAny<string?>(), It.IsAny<long?>())).Returns(Task.CompletedTask);
+        TechniqueSessionCompletionService service = CreateService();
 
         await service.CompleteStandardSessionAsync(
             progress.Object,
@@ -63,8 +79,12 @@ public sealed class TechniqueSessionCompletionServiceTests
             DateTime.UtcNow,
             deleteDraft: false);
 
-        progress.Verify(p => p.DeleteSessionDraftAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Never);
-        navigation.Verify(n => n.GoToPracticeCompletionAsync(1, "custom_5"), Times.Once);
+        progress.Verify(
+            p => p.RecordSessionOutcomeAsync(
+                It.Is<SessionOutcomeRequest>(request => request.ItemKey == "custom_5" && !request.DeleteDraft),
+                It.IsAny<CancellationToken>()),
+            Times.Once);
+        navigation.Verify(n => n.GoToPracticeCompletionAsync(1, "custom_5", 7L), Times.Once);
     }
 }
 

@@ -420,6 +420,11 @@ public static partial class AppStrings
         date.ToString("dd MMM", System.Globalization.CultureInfo.CurrentCulture);
     public static string PracticeReflectionQuestion => T("Как вы себя чувствуете?", "How do you feel now?");
     public static string PracticeReflectionNotePlaceholder => T("Короткая заметка (необязательно)", "Short note (optional)");
+    public static string PracticePreSudsLabel => T("Интенсивность до (0–10)", "Intensity before (0–10)");
+    public static string PracticePostSudsLabel => T("Интенсивность после (0–10)", "Intensity after (0–10)");
+    public static string PracticeSudsDelta(int before, int after) => $"{before} → {after}";
+    public static string PracticeSudsSectionTitle => T("Как изменилась интенсивность?", "How did intensity change?");
+    public static string PracticeReflectionSectionTitle => T("Настроение", "Mood");
     public static string PracticeCompletedTitle => T("Готово!", "Done!");
     public static string PracticeCompletedBody(int streak) =>
         T($"Отличная работа! Серия: {streak} дн.", $"Great job! Streak: {streak} days");
@@ -783,9 +788,19 @@ public static partial class AppStrings
         3 => T("Гибкость: пробовать разные техники", "Flexibility: try varied techniques"),
         _ => T("Закрепление и самостоятельный выбор", "Consolidate and choose independently")
     };
-    public static string TherapyProgramBanner(string programName, int week, string goal) => T(
-        $"{programName} · неделя {week}: {goal}",
-        $"{programName} · week {week}: {goal}");
+    public static string TherapyProgramBanner(string programName, int week, string goal, int? completed = null, int? target = null)
+    {
+        if (completed is null or < 0 || target is null or <= 0)
+        {
+            return T(
+                $"{programName} · неделя {week}: {goal}",
+                $"{programName} · week {week}: {goal}");
+        }
+
+        return T(
+            $"{programName} · нед. {week} · {completed}/{target}",
+            $"{programName} · wk {week} · {completed}/{target}");
+    }
     public static string ClinicalAmberBanner => T(
         "Состояние требует внимания — доступна срочная помощь",
         "Your state needs attention — crisis help is available");

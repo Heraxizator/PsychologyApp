@@ -12,12 +12,14 @@ public sealed class ListTechniqueSessionHelper(
         string techniqueKey,
         string moduleName,
         string pageName,
-        DateTime sessionStartedAt) =>
+        DateTime sessionStartedAt,
+        int? preIntensity = null) =>
         sessionCompletionService.CompleteStandardSessionAsync(
             progress,
             navigation,
             techniqueKey,
             moduleName,
             pageName,
-            sessionStartedAt);
+            sessionStartedAt,
+            preIntensity);
 }

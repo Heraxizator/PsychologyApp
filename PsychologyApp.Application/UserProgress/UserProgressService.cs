@@ -86,6 +86,9 @@ public sealed class UserProgressService(IUserProgressRepository repository) : IU
             DurationSeconds = durationSeconds
         }, cancellationToken);
 
+    public Task<long> RecordSessionOutcomeAsync(SessionOutcomeRequest request, CancellationToken cancellationToken = default) =>
+        repository.RecordSessionOutcomeAsync(request, cancellationToken);
+
     public Task<long> CountTechniqueCompletionsAsync(CancellationToken cancellationToken = default) =>
         repository.CountTechniqueCompletionsAsync(cancellationToken);
 
@@ -136,4 +139,20 @@ public sealed class UserProgressService(IUserProgressRepository repository) : IU
 
     public Task<IReadOnlyList<MoodEntryDTO>> GetRecentMoodsAsync(int limit = 7, CancellationToken cancellationToken = default) =>
         repository.GetRecentMoodsAsync(limit, cancellationToken);
+
+    public Task UpdateSessionResultPostIntensityAsync(long sessionResultId, int postIntensity, CancellationToken cancellationToken = default) =>
+        repository.UpdateSessionResultPostIntensityAsync(sessionResultId, postIntensity, cancellationToken);
+
+    public Task<SessionResultDTO?> GetSessionResultAsync(long sessionResultId, CancellationToken cancellationToken = default) =>
+        repository.GetSessionResultAsync(sessionResultId, cancellationToken);
+
+    public Task<IReadOnlyList<SessionResultDTO>> GetRecentSessionResultsAsync(int limit = 20, CancellationToken cancellationToken = default) =>
+        repository.GetRecentSessionResultsAsync(limit, cancellationToken);
+
+    public Task<int> CountDistinctTechniqueCompletionsForItemsBetweenAsync(
+        IReadOnlyList<string> itemKeys,
+        DateTime sinceUtc,
+        DateTime beforeUtc,
+        CancellationToken cancellationToken = default) =>
+        repository.CountDistinctTechniqueCompletionsForItemsBetweenAsync(itemKeys, sinceUtc, beforeUtc, cancellationToken);
 }

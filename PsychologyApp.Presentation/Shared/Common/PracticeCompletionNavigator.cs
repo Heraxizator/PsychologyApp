@@ -8,9 +8,10 @@ public static class PracticeCompletionNavigator
     public static async Task NavigateAfterCompletionAsync(
         INavigationService navigation,
         IUserProgressService progress,
-        string? completedItemKey = null)
+        string? completedItemKey = null,
+        long? sessionResultId = null)
     {
         int streak = await progress.GetStreakDaysAsync();
-        await navigation.GoToPracticeCompletionAsync(streak, completedItemKey);
+        await navigation.GoToPracticeCompletionAsync(streak, completedItemKey, sessionResultId);
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Domain.UserProgress;
 using PsychologyApp.Presentation.Entities.Technique;
@@ -65,11 +66,13 @@ public partial class TechniquesViewModel
 
             TherapyProgramStateDTO? program = null;
             RiskAssessmentDTO? latestRisk = null;
+            TherapyProgramAdherence? adherence = null;
             try
             {
                 await _clinicalCareService.AdjustProgramFromScorecardAsync(cancellationToken);
                 program = await _clinicalCareService.GetActiveProgramAsync(cancellationToken);
                 latestRisk = await _clinicalCareService.GetLatestRiskAssessmentAsync(cancellationToken);
+                adherence = await _clinicalCareService.GetActiveWeekAdherenceAsync(cancellationToken);
             }
             catch (Exception clinicalEx)
             {
@@ -85,9 +88,14 @@ public partial class TechniquesViewModel
                 HasTodayDraft = hasDraft;
                 ApplyMoodSnapshot(mood);
                 WeeklyInsightText = weeklyInsight.DisplayText;
-                TherapyProgramBanner = program is { IsActive: true }
-                    ? FormatProgramBanner(program)
-                    : string.Empty;
+                TherapyProgramBanner = adherence is not null
+                    ? FormatProgramBanner(
+                        adherence.Program,
+                        adherence.CompletedDistinctTechniques,
+                        adherence.WeekPlan.TechniquePool.Count)
+                    : program is { IsActive: true }
+                        ? FormatProgramBanner(program)
+                        : string.Empty;
                 ClinicalRiskBanner = latestRisk is null
                     ? string.Empty
                     : FormatRiskBanner(latestRisk.RiskLevel);

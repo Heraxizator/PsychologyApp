@@ -143,6 +143,73 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             cancellationToken: cancellationToken));
     }
 
+    public async Task<long> RecordSessionOutcomeAsync(SessionOutcomeRequest request, CancellationToken cancellationToken = default)
+    {
+        DateTime completedAt = DateTime.UtcNow;
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteTransaction transaction =
+            (SqliteTransaction)await connection.BeginTransactionAsync(cancellationToken);
+
+        try
+        {
+            await connection.ExecuteAsync(DapperCommandFactory.Create(
+                UserProgressSql.InsertCompletion,
+                new
+                {
+                    CompletionKind = "technique",
+                    request.ItemKey,
+                    request.ModuleName,
+                    request.PageName,
+                    CompletedAt = completedAt.ToString("O"),
+                    request.DurationSeconds
+                },
+                transaction,
+                CommandTimeoutSeconds,
+                cancellationToken));
+
+            await connection.ExecuteAsync(DapperCommandFactory.Create(
+                UserProgressSql.InsertSessionResult,
+                new
+                {
+                    request.ItemKey,
+                    CompletedAt = completedAt.ToString("O"),
+                    request.DurationSeconds,
+                    request.PayloadJson,
+                    request.PreIntensity,
+                    PostIntensity = (int?)null,
+                    request.ProgramType,
+                    request.ProgramWeek
+                },
+                transaction,
+                CommandTimeoutSeconds,
+                cancellationToken));
+
+            long sessionResultId = await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
+                UserProgressSql.SelectLastInsertRowId,
+                transaction: transaction,
+                commandTimeout: CommandTimeoutSeconds,
+                cancellationToken: cancellationToken));
+
+            if (request.DeleteDraft)
+            {
+                await connection.ExecuteAsync(DapperCommandFactory.Create(
+                    UserProgressSql.DeleteSessionDraft,
+                    new { techniqueKey = request.ItemKey },
+                    transaction,
+                    CommandTimeoutSeconds,
+                    cancellationToken));
+            }
+
+            await transaction.CommitAsync(cancellationToken);
+            return sessionResultId;
+        }
+        catch
+        {
+            await transaction.RollbackAsync(cancellationToken);
+            throw;
+        }
+    }
+
     public async Task<long> CountTechniqueCompletionsAsync(CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
@@ -320,6 +387,65 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             cancellationToken: cancellationToken));
 
         return rows.ToList();
+    }
+
+    public async Task UpdateSessionResultPostIntensityAsync(
+        long sessionResultId,
+        int postIntensity,
+        CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
+            UserProgressSql.UpdateSessionResultPostIntensity,
+            new { sessionResultId, postIntensity },
+            commandTimeout: CommandTimeoutSeconds,
+            cancellationToken: cancellationToken));
+    }
+
+    public async Task<SessionResultDTO?> GetSessionResultAsync(long sessionResultId, CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        return await connection.QuerySingleOrDefaultAsync<SessionResultDTO>(DapperCommandFactory.Create(
+            UserProgressSql.SelectSessionResultById,
+            new { sessionResultId },
+            commandTimeout: CommandTimeoutSeconds,
+            cancellationToken: cancellationToken));
+    }
+
+    public async Task<IReadOnlyList<SessionResultDTO>> GetRecentSessionResultsAsync(int limit, CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        IEnumerable<SessionResultDTO> rows = await connection.QueryAsync<SessionResultDTO>(DapperCommandFactory.Create(
+            UserProgressSql.SelectRecentSessionResults,
+            new { limit },
+            commandTimeout: CommandTimeoutSeconds,
+            cancellationToken: cancellationToken));
+
+        return rows.ToList();
+    }
+
+    public async Task<int> CountDistinctTechniqueCompletionsForItemsBetweenAsync(
+        IReadOnlyList<string> itemKeys,
+        DateTime sinceUtc,
+        DateTime beforeUtc,
+        CancellationToken cancellationToken = default)
+    {
+        if (itemKeys.Count == 0)
+        {
+            return 0;
+        }
+
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        return await connection.ExecuteScalarAsync<int>(DapperCommandFactory.Create(
+            UserProgressSql.CountDistinctTechniqueCompletionsForItemsBetween,
+            new
+            {
+                itemKeys,
+                sinceUtc = sinceUtc.ToString("O"),
+                beforeUtc = beforeUtc.ToString("O")
+            },
+            commandTimeout: CommandTimeoutSeconds,
+            cancellationToken: cancellationToken));
     }
 
     private static DateTime? ParseOptionalUtcDateTime(string? value) =>

@@ -161,6 +161,8 @@
                                     IconName="{Binding IconName}"
                                     DurationText="{Binding DurationText}"
                                     HasDuration="{Binding HasDuration}"
+                                    SudsDeltaText="{Binding SudsDeltaText}"
+                                    HasSudsDelta="{Binding HasSudsDelta}"
                                     TapCommand="{Binding TapCommand}" />
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
