@@ -19,6 +19,8 @@ public class TestNavigationService(INavigation navigation) : INavigationService
 
     public Task GoToUserProfileAsync() => Task.CompletedTask;
 
+    public Task GoToJournalAsync() => Task.CompletedTask;
+
     public Task GoToOptionsAsync() => Task.CompletedTask;
 
     public Task GoToInfoAsync() => Task.CompletedTask;
@@ -73,4 +75,8 @@ public class TestNavigationService(INavigation navigation) : INavigationService
     public Task GoToQuotesFavoritesAsync() => Task.CompletedTask;
 
     public Task ShowOnboardingAsync() => Task.CompletedTask;
+
+    public Task GoToCrisisHubAsync() => Task.CompletedTask;
+
+    public Task GoToRiskCheckAsync(string source) => Task.CompletedTask;
 }

@@ -75,12 +75,11 @@ public partial class TechniquesViewModel
                 IdleDays = snapshot.IdleDays;
                 LastTechniqueName = snapshot.LastTechniqueName;
                 HasTodayDraft = hasDraft;
-                ApplyMoodSnapshot(snapshot.Mood);
-                WeeklyInsightText = snapshot.WeeklyInsight.DisplayText;
                 _todayTechniqueId = recommendation.TechniqueId;
                 TodayReasonText = recommendation.ReasonText;
                 TodayTechniqueItem = recommendation.Item;
                 OnPropertyChanged(nameof(TodayReasonText));
+                OnPropertyChanged(nameof(TodayPrimaryReason));
                 OnPropertyChanged(nameof(TodayTechniqueItem));
                 OnPropertyChanged(nameof(TodayActionText));
                 ApplyUiState(snapshot.UiState);

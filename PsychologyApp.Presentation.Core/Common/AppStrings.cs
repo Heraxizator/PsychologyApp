@@ -402,9 +402,18 @@ public static partial class AppStrings
     public static string MoodHistoryEntry(string date, int level, int max) =>
         T($"{date}: {MoodEmoji(level)} {level}/{max}", $"{date}: {MoodEmoji(level)} {level}/{max}");
     public static string ProfileMoodTrendTitle => T("Настроение", "Mood");
+    public static string ProfileMoodCheckInTitle => T("Как настроение сегодня?", "How are you feeling today?");
+    public static string ProfileWeeklyInsightTitle => T("На этой неделе", "This week");
+    public static string JournalTitle => T("Дневник", "Journal");
+    public static string JournalCardSubtitle => T(
+        "Настроение, заметки и динамика недели",
+        "Mood, notes, and weekly trends");
+    public static string JournalNotePlaceholder => T(
+        "Заметка к сегодняшнему дню (необязательно)",
+        "Note for today (optional)");
     public static string ProfileMoodTrendHint => T(
-        "Отмечайте настроение на вкладке «Практика», чтобы увидеть динамику",
-        "Track mood on the Practice tab to see your trend");
+        "Отмечайте настроение здесь, чтобы увидеть динамику",
+        "Track mood here to see your trend");
     public static string ChartFirstMeasurement => T("Первое измерение", "First measurement");
     public static string ChartSparseHint(int count) => T(
         $"{count} измерения — тренд уточняется",

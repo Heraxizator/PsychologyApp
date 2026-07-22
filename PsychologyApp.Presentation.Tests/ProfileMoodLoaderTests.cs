@@ -2,12 +2,23 @@ using Moq;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Features.ManageProfile;
+using PsychologyApp.Presentation.Shared.Services.Progress;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
 
 public sealed class ProfileMoodLoaderTests
 {
+    private static ProfileMoodLoader CreateLoader(Mock<IUserProgressService> progress)
+    {
+        progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+        progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
+        progress.Setup(p => p.GetMostRecentTestResultAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((TestResultDTO?)null);
+        return new ProfileMoodLoader(progress.Object, new WeeklyInsightLoader(progress.Object));
+    }
+
     [Fact]
     public async Task LoadAsync_ShowsChart_WhenTwoMoodsExist()
     {
@@ -20,7 +31,7 @@ public sealed class ProfileMoodLoaderTests
                 new() { MoodLevel = 3, RecordedAt = new DateTime(2026, 1, 1, 12, 0, 0, DateTimeKind.Utc) }
             });
 
-        ProfileMoodLoader loader = new(progress.Object);
+        ProfileMoodLoader loader = CreateLoader(progress);
         ProfileMoodSnapshot snapshot = await loader.LoadAsync();
 
         Assert.True(snapshot.HasTrendChart);
@@ -40,7 +51,7 @@ public sealed class ProfileMoodLoaderTests
                 new() { MoodLevel = 4, RecordedAt = new DateTime(2026, 1, 2, 12, 0, 0, DateTimeKind.Utc) }
             });
 
-        ProfileMoodLoader loader = new(progress.Object);
+        ProfileMoodLoader loader = CreateLoader(progress);
         ProfileMoodSnapshot snapshot = await loader.LoadAsync();
 
         Assert.False(snapshot.HasTrendChart);
@@ -81,7 +92,7 @@ public sealed class ProfileMoodLoaderTests
                 }
             });
 
-        ProfileMoodLoader loader = new(progress.Object);
+        ProfileMoodLoader loader = CreateLoader(progress);
         ProfileMoodSnapshot snapshot = await loader.LoadAsync();
 
         Assert.Equal(2, snapshot.RecentNotes.Count);

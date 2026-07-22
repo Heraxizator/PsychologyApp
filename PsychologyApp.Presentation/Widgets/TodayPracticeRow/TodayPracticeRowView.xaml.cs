@@ -74,6 +74,24 @@ public partial class TodayPracticeRowView : ContentView
         set => SetValue(ReasonTextProperty, value);
     }
 
+    public static readonly BindableProperty MetaTextProperty =
+        BindableProperty.Create(nameof(MetaText), typeof(string), typeof(TodayPracticeRowView), string.Empty);
+
+    public string MetaText
+    {
+        get => (string)GetValue(MetaTextProperty);
+        set => SetValue(MetaTextProperty, value);
+    }
+
+    public static readonly BindableProperty HasMetaProperty =
+        BindableProperty.Create(nameof(HasMeta), typeof(bool), typeof(TodayPracticeRowView), false);
+
+    public bool HasMeta
+    {
+        get => (bool)GetValue(HasMetaProperty);
+        set => SetValue(HasMetaProperty, value);
+    }
+
     public static readonly BindableProperty ActionTextProperty =
         BindableProperty.Create(nameof(ActionText), typeof(string), typeof(TodayPracticeRowView), string.Empty);
 

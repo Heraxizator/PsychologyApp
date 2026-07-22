@@ -4,6 +4,7 @@ using PsychologyApp.Domain.UserProgress;
 using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Features;
 using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Shared.Services.Progress;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 
 namespace PsychologyApp.Presentation.Features.RunTechniqueSession;

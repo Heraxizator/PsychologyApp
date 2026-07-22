@@ -11,6 +11,7 @@ using PsychologyApp.Presentation.Features.PlayMusic;
 using PsychologyApp.Presentation.Features.SearchPhysics;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
+using PsychologyApp.Presentation.Shared.Services.Progress;
 using PsychologyApp.Presentation.Features.ManageProfile;
 using PsychologyApp.Presentation.Features.ManageProfile.Index;
 using PsychologyApp.Presentation.Features.ManageQuotes;

@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Moq;
 using PsychologyApp.Application.Abstractions.Integration;
+using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Practice;
@@ -306,7 +307,8 @@ public sealed class UserViewModelTests
                 TechniqueCatalogTestHelper.CreateRecommendationService()),
             TopViewModelTestHelpers.CreateQuoteCommandsFactory(quotService.Object),
             new ProfileScreenCoordinator(new UserProfileRefreshCoordinator()),
-            TopViewModelTestHelpers.CreateLanguageReloader(quotService.Object));
+            TopViewModelTestHelpers.CreateLanguageReloader(quotService.Object),
+            Mock.Of<IClinicalCareService>());
 
         Assert.Equal(4, viewModel.Techniques.Count);
         Assert.Equal("0", viewModel.TechniquesCompletedCount);
@@ -346,7 +348,8 @@ public sealed class UserViewModelTests
                 TechniqueCatalogTestHelper.CreateRecommendationService()),
             TopViewModelTestHelpers.CreateQuoteCommandsFactory(quotService.Object),
             new ProfileScreenCoordinator(new UserProfileRefreshCoordinator()),
-            TopViewModelTestHelpers.CreateLanguageReloader(quotService.Object));
+            TopViewModelTestHelpers.CreateLanguageReloader(quotService.Object),
+            Mock.Of<IClinicalCareService>());
 
         await viewModel.InitAsync();
         await Task.Delay(100);

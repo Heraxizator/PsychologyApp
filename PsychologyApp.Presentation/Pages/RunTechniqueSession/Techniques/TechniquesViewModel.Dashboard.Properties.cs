@@ -10,32 +10,6 @@ namespace PsychologyApp.Presentation.Pages.RunTechniqueSession.Techniques;
 public partial class TechniquesViewModel
 {
     public string TodayReasonText { get; private set; } = string.Empty;
-    public string TodayMoodDisplay { get; private set; } = string.Empty;
-    public bool HasTodayMood => !string.IsNullOrWhiteSpace(TodayMoodDisplay);
-    public string MoodHistorySummary { get; private set; } = string.Empty;
-    public bool HasMoodHistorySummary => !string.IsNullOrWhiteSpace(MoodHistorySummary);
-
-    private string _weeklyInsightText = string.Empty;
-    public string WeeklyInsightText
-    {
-        get => _weeklyInsightText;
-        private set
-        {
-            if (SetProperty(ref _weeklyInsightText, value))
-            {
-                OnPropertyChanged(nameof(HasWeeklyInsight));
-            }
-        }
-    }
-
-    public bool HasWeeklyInsight => !string.IsNullOrWhiteSpace(WeeklyInsightText);
-
-    private int _selectedMoodLevel;
-    public int SelectedMoodLevel
-    {
-        get => _selectedMoodLevel;
-        private set => SetProperty(ref _selectedMoodLevel, value);
-    }
 
     public string StreakDisplay => AppStrings.ProfileStreakCount(StreakDays);
     public bool HasStreak => StreakDays > 0;
@@ -103,6 +77,9 @@ public partial class TechniquesViewModel
                 ? AppStrings.ComebackBannerWithTechnique(LastTechniqueName)
                 : AppStrings.ComebackBanner;
 
+    public string TodayPrimaryReason =>
+        ShowEngagementNudge ? EngagementNudgeText : TodayReasonText;
+
     public string TodayActionText =>
         HasTodayDraft ? AppStrings.TechniqueContinueBadge : AppStrings.TodayStartPractice;
 
@@ -164,6 +141,7 @@ public partial class TechniquesViewModel
         OnPropertyChanged(nameof(ShowComebackBanner));
         OnPropertyChanged(nameof(ShowEngagementNudge));
         OnPropertyChanged(nameof(EngagementNudgeText));
+        OnPropertyChanged(nameof(TodayPrimaryReason));
     }
 
     private TechniqueId _todayTechniqueId = TechniqueId.Spin;

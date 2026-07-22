@@ -6,7 +6,6 @@
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:practiceUi="clr-namespace:PsychologyApp.Presentation.Widgets.TechniqueListCard"
              xmlns:today="clr-namespace:PsychologyApp.Presentation.Widgets.TodayPracticeRow"
-             xmlns:mood="clr-namespace:PsychologyApp.Presentation.Widgets.MoodStrip"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:technique="clr-namespace:PsychologyApp.Presentation.Entities.Technique"
              x:DataType="vm:TechniquesViewModel"
@@ -68,47 +67,6 @@
                     </VerticalStackLayout.Behaviors>
 
                     <Border
-                        x:Name="EngagementNudgeBanner"
-                        IsVisible="False"
-                        Style="{StaticResource TodayBannerStyle}"
-                        Margin="{StaticResource CardBottomMargin}">
-                        <Border.Behaviors>
-                            <behaviors:PressFeedbackBehavior />
-                        </Border.Behaviors>
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding StartTodayPracticeCommand}" />
-                        </Border.GestureRecognizers>
-                        <Grid ColumnDefinitions="Auto,Auto,*" ColumnSpacing="12">
-                            <Border
-                                Grid.Column="0"
-                                Style="{StaticResource HeroAccentBarStyle}" />
-                            <Border
-                                Grid.Column="1"
-                                WidthRequest="40"
-                                HeightRequest="40"
-                                StrokeThickness="0"
-                                BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}"
-                                VerticalOptions="Center">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="12" />
-                                </Border.StrokeShape>
-                                <ui:MaterialIconView
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center"
-                                    IconName="AutoAwesome"
-                                    IconSize="22"
-                                    IconColor="{DynamicResource Primary}" />
-                            </Border>
-                            <Label
-                                Grid.Column="2"
-                                VerticalOptions="Center"
-                                Text="{Binding EngagementNudgeText}"
-                                Style="{StaticResource BodyStyle}"
-                                LineBreakMode="WordWrap" />
-                        </Grid>
-                    </Border>
-
-                    <Border
                         IsVisible="{Binding HasClinicalRiskBanner}"
                         Style="{StaticResource TodayBannerStyle}"
                         Margin="{StaticResource CardBottomMargin}">
@@ -122,21 +80,6 @@
                         <Label Text="{Binding ClinicalRiskBanner}" Style="{StaticResource BodyStyle}" />
                     </Border>
 
-                    <Border
-                        IsVisible="{Binding HasTherapyProgramBanner}"
-                        Style="{StaticResource MetaPillStyle}"
-                        HorizontalOptions="Start"
-                        Margin="{StaticResource CardBottomMargin}">
-                        <Border.Behaviors>
-                            <behaviors:RevealOnAppearingBehavior />
-                        </Border.Behaviors>
-                        <Label
-                            Text="{Binding TherapyProgramBanner}"
-                            Style="{StaticResource CaptionStyle}"
-                            TextColor="{DynamicResource Primary}"
-                            FontFamily="{StaticResource SemiBoldFontFamily}" />
-                    </Border>
-
                     <today:TodayPracticeRowView
                         CaptionText="{Binding TodayForYouLabel}"
                         StreakText="{Binding StreakDisplay}"
@@ -144,35 +87,15 @@
                         IconName="{Binding TodayTechniqueItem.IconName}"
                         Title="{Binding TodayTechniqueItem.Title}"
                         Subtitle="{Binding TodayTechniqueItem.Subtitle}"
-                        ReasonText="{Binding TodayReasonText}"
+                        ReasonText="{Binding TodayPrimaryReason}"
+                        MetaText="{Binding TherapyProgramBanner}"
+                        HasMeta="{Binding HasTherapyProgramBanner}"
                         ActionText="{Binding TodayActionText}"
                         TapCommand="{Binding StartTodayPracticeCommand}">
                         <today:TodayPracticeRowView.Behaviors>
                             <behaviors:RevealOnAppearingBehavior />
                         </today:TodayPracticeRowView.Behaviors>
                     </today:TodayPracticeRowView>
-
-                    <mood:MoodStripView
-                        QuestionText="{Binding TodayMoodQuestion}"
-                        RecordMoodCommand="{Binding RecordMoodCommand}"
-                        SelectedMoodLevel="{Binding SelectedMoodLevel}"
-                        TodayMoodDisplay="{Binding TodayMoodDisplay}"
-                        HasTodayMood="{Binding HasTodayMood}"
-                        MoodHistorySummary="{Binding MoodHistorySummary}"
-                        HasMoodHistorySummary="{Binding HasMoodHistorySummary}" />
-
-                    <Border
-                        x:Name="WeeklyInsightBanner"
-                        IsVisible="False"
-                        Style="{StaticResource TodayBannerStyle}"
-                        Margin="0,0,0,4">
-                        <Border.Behaviors>
-                            <behaviors:ListItemRevealBehavior />
-                        </Border.Behaviors>
-                        <Label
-                            Text="{Binding WeeklyInsightText}"
-                            Style="{StaticResource BodyStyle}" />
-                    </Border>
 
                     <ui:SectionHeaderView
                         Margin="0,4,0,0"

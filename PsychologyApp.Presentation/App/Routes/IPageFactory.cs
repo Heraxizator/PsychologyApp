@@ -16,6 +16,7 @@ using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.Techniques;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
+using PsychologyApp.Presentation.Pages.ManageProfile.ProfileJournal;
 using PsychologyApp.Presentation.Pages.SendReviewForm.ReviewForm;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueSession;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueDesigner;
@@ -38,6 +39,7 @@ public interface IPageFactory
     MusicPlayerPage CreateMusicPlayerPage();
     QuotePage CreateQuotePage();
     UserPage CreateUserPage();
+    JournalPage CreateJournalPage();
     OptionsPage CreateOptionsPage();
     InfoPage CreateInfoPage();
     DonatePage CreateDonatePage();

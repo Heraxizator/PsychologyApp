@@ -50,11 +50,6 @@ public partial class UserViewModel
                 return;
             }
 
-            ProfileMoodSnapshot moodSnapshot = await _profileMoodLoader.LoadAsync(cancellationToken);
-            MoodChartPoints = moodSnapshot.ChartPoints;
-            MoodChartSubtitle = moodSnapshot.ChartSubtitle;
-            HasMoodTrendChart = moodSnapshot.HasTrendChart;
-            MoodNotes = moodSnapshot.RecentNotes;
             await RefreshClinicalScorecardAsync(cancellationToken);
 
             TechniquesCompletedCount = result.Stats.TechniquesCompletedCount;

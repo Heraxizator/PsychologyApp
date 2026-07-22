@@ -69,8 +69,21 @@
                                 Text="{TemplateBinding ReasonText}"
                                 Style="{StaticResource CaptionStyle}"
                                 TextColor="{DynamicResource Primary}"
-                                MaxLines="1"
+                                MaxLines="2"
                                 LineBreakMode="TailTruncation" />
+                            <Border
+                                IsVisible="{TemplateBinding HasMeta}"
+                                Style="{StaticResource MetaPillStyle}"
+                                HorizontalOptions="Start"
+                                Padding="8,4">
+                                <Label
+                                    Text="{TemplateBinding MetaText}"
+                                    Style="{StaticResource CaptionStyle}"
+                                    TextColor="{DynamicResource Primary}"
+                                    FontFamily="{StaticResource SemiBoldFontFamily}"
+                                    MaxLines="1"
+                                    LineBreakMode="TailTruncation" />
+                            </Border>
                         </VerticalStackLayout>
                         <VerticalStackLayout
                             Grid.Column="3"
