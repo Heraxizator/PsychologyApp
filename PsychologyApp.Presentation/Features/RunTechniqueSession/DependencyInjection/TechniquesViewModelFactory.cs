@@ -1,6 +1,7 @@
-using PsychologyApp.Presentation.App.Providers;
+﻿using PsychologyApp.Presentation.App.Providers;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Technique;
 using PsychologyApp.Application.UserProgress;
@@ -25,10 +26,11 @@ public sealed class TechniquesViewModelFactory(
     IUserProgressService userProgressService,
     TechniqueListBuilder techniqueListBuilder,
     IDatabaseReadySignal databaseReadySignal,
-        PracticeDashboardLoader dashboardLoader,
-        TechniquesDashboardPresenter dashboardPresenter,
-        TodayRecommendationResolver todayRecommendationResolver,
+    PracticeDashboardLoader dashboardLoader,
+    TechniquesDashboardPresenter dashboardPresenter,
+    TodayRecommendationResolver todayRecommendationResolver,
     TechniquesListInitializer listInitializer,
+    IClinicalCareService clinicalCareService,
     IOptions<AppSettings> settings,
     ILogger<TechniquesViewModel> logger) : ViewModelFactoryBase, ITechniquesViewModelFactory
 {
@@ -45,6 +47,7 @@ public sealed class TechniquesViewModelFactory(
             dashboardPresenter,
             todayRecommendationResolver,
             listInitializer,
+            clinicalCareService,
             settings,
             logger);
 }

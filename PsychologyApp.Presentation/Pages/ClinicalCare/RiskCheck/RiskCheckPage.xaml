@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.ClinicalCare.RiskCheck.RiskCheckPage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ClinicalCare.RiskCheck"
+             x:DataType="vm:RiskCheckViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}">
+
+    <Grid
+        Padding="{StaticResource LayoutPageMarginThickness}"
+        RowDefinitions="Auto,*,Auto"
+        RowSpacing="{StaticResource LayoutSpacing}">
+
+        <ui:NavigationBarSimpleView
+            Grid.Row="0"
+            TitleText="{Binding PageTitle}"
+            BackCommand="{Binding BackCommand}" />
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
+                <VerticalStackLayout.Behaviors>
+                    <behaviors:StaggerChildrenBehavior />
+                </VerticalStackLayout.Behaviors>
+
+                <Label Text="{Binding Subtitle}" Style="{StaticResource BodyStyle}">
+                    <Label.Behaviors>
+                        <behaviors:RevealOnAppearingBehavior />
+                    </Label.Behaviors>
+                </Label>
+
+                <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="1" />
+                    </Border.Behaviors>
+                    <VerticalStackLayout Spacing="0">
+                        <ui:SettingSwitchRowView
+                            LabelText="{Binding SelfHarmLabel}"
+                            IsToggled="{Binding HasSelfHarmThoughts}" />
+                        <ui:SettingSwitchRowView
+                            LabelText="{Binding DisorientationLabel}"
+                            IsToggled="{Binding HasSevereDisorientation}" />
+                        <ui:SettingSwitchRowView
+                            LabelText="{Binding SubstanceLabel}"
+                            IsToggled="{Binding HasSubstanceRisk}" />
+                        <ui:SettingSwitchRowView
+                            LabelText="{Binding InsomniaLabel}"
+                            IsToggled="{Binding HasSevereInsomnia}"
+                            ShowDivider="False" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <ui:ButtonView
+            Grid.Row="2"
+            BodyText="{Binding SubmitText}"
+            TapCommand="{Binding SubmitCommand}">
+            <ui:ButtonView.Behaviors>
+                <behaviors:ListItemRevealBehavior RevealIndex="2" />
+            </ui:ButtonView.Behaviors>
+        </ui:ButtonView>
+    </Grid>
+</ContentPage>

@@ -31,6 +31,9 @@
                     BackCommand="{Binding Finish}" />
 
                 <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="0" />
+                    </Border.Behaviors>
                     <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
                             <Border
@@ -81,6 +84,18 @@
                             Text="{Binding LastPracticeDisplay}" />
                     </VerticalStackLayout>
                 </Border>
+
+                <VerticalStackLayout
+                    IsVisible="{Binding HasClinicalScorecard}"
+                    Spacing="{StaticResource CompactSpacing}">
+                    <ui:SectionHeaderView TitleText="{Binding ClinicalScorecardTitle}" />
+                    <Border Style="{StaticResource BrandCardStyle}">
+                        <Border.Behaviors>
+                            <behaviors:ListItemRevealBehavior />
+                        </Border.Behaviors>
+                        <Label Text="{Binding ClinicalScorecardSummary}" Style="{StaticResource BodyStyle}" />
+                    </Border>
+                </VerticalStackLayout>
 
                 <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                     <ui:SectionHeaderView TitleText="{Binding MoodTrendTitle}" />
@@ -170,7 +185,11 @@
                                     Title="{Binding Title}"
                                     Subtitle="{Binding Subtitle}"
                                     Theme="{Binding Theme}"
-                                    TapCommand="{Binding TapCommand}" />
+                                    TapCommand="{Binding TapCommand}">
+                                    <profileUi:ProfileTechniqueCardView.Behaviors>
+                                        <behaviors:ListItemRevealBehavior />
+                                    </profileUi:ProfileTechniqueCardView.Behaviors>
+                                </profileUi:ProfileTechniqueCardView>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>

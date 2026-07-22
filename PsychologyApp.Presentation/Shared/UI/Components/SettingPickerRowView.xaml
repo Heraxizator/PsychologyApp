@@ -4,28 +4,29 @@
              x:Class="PsychologyApp.Presentation.Shared.UI.Components.SettingPickerRowView"
              x:Name="Root">
 
-    <Grid MinimumHeightRequest="52" ColumnSpacing="0" Opacity="{Binding RowOpacity, Source={x:Reference Root}}">
+    <Grid MinimumHeightRequest="52" ColumnSpacing="12" Opacity="{Binding RowOpacity, Source={x:Reference Root}}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Label
             x:Name="SettingLabel"
             Grid.Column="0"
             Text="{Binding LabelText, Source={x:Reference Root}}"
             Style="{StaticResource BodyStyle}"
-            VerticalOptions="Center" />
+            VerticalOptions="Center"
+            LineBreakMode="TailTruncation"
+            MaxLines="2" />
         <Picker
             x:Name="SettingPicker"
             Grid.Column="1"
-            WidthRequest="125"
             FontSize="15"
             Title="{Binding PickerTitle, Source={x:Reference Root}}"
             TitleColor="{DynamicResource Primary}"
             TextColor="{DynamicResource Secondary}"
             BackgroundColor="Transparent"
-            HorizontalOptions="End"
-            HorizontalTextAlignment="Start"
+            HorizontalOptions="Fill"
+            HorizontalTextAlignment="End"
             IsEnabled="{Binding IsRowEnabled, Source={x:Reference Root}}"
             ItemsSource="{Binding ItemsSource, Source={x:Reference Root}}"
             SelectedIndexChanged="OnPickerSelectedIndexChanged" />

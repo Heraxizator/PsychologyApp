@@ -1,3 +1,4 @@
+using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Features.Onboarding;
 using PsychologyApp.Presentation.Shared.Common;
@@ -41,7 +42,7 @@ public partial class OnboardingViewModel
     {
         OnboardingRecommendationResult recommendation =
             await _onboardingRecommendationResolver.ResolveAsync(SelectedConcern);
-        PersistOnboardingCompletion(recommendation.Concern);
+        await PersistOnboardingCompletionAsync(recommendation.Concern);
         await _onCompleted(recommendation.TechniqueId);
     }
 
@@ -49,13 +50,24 @@ public partial class OnboardingViewModel
     {
         OnboardingRecommendationResult recommendation =
             await _onboardingRecommendationResolver.ResolveAsync(SelectedConcern);
-        PersistOnboardingCompletion(recommendation.Concern);
+        await PersistOnboardingCompletionAsync(recommendation.Concern);
         await _onCompleted(null);
     }
 
-    private void PersistOnboardingCompletion(string concern) =>
+    private async Task PersistOnboardingCompletionAsync(string concern)
+    {
         _userPreferencesStore.CompleteOnboarding(
             concern,
             PracticeRemindersEnabled,
             _practiceReminderHour);
+
+        try
+        {
+            await _clinicalCareService.EnsureProgramAsync(concern);
+        }
+        catch
+        {
+            // Program seed is best-effort; onboarding still completes.
+        }
+    }
 }

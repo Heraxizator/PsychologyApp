@@ -22,9 +22,16 @@
 
             <ui:TextBoxView
                 HeaderText="{Binding ExplanationHeader}"
-                BodyText="{Binding ExplanationBody}" />
+                BodyText="{Binding ExplanationBody}">
+                <ui:TextBoxView.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="1" />
+                </ui:TextBoxView.Behaviors>
+            </ui:TextBoxView>
 
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <Border.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="2" />
+                </Border.Behaviors>
                 <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                     <Label Text="{Binding FormSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
                     <ui:TextEditorView

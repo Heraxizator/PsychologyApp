@@ -108,6 +108,31 @@
                         </Grid>
                     </Border>
 
+                    <Border
+                        IsVisible="{Binding HasClinicalRiskBanner}"
+                        Style="{StaticResource TodayBannerStyle}"
+                        Margin="{StaticResource CardBottomMargin}">
+                        <Border.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                            <behaviors:ListItemRevealBehavior />
+                        </Border.Behaviors>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenCrisisHubCommand}" />
+                        </Border.GestureRecognizers>
+                        <Label Text="{Binding ClinicalRiskBanner}" Style="{StaticResource BodyStyle}" />
+                    </Border>
+
+                    <Label
+                        IsVisible="{Binding HasTherapyProgramBanner}"
+                        Text="{Binding TherapyProgramBanner}"
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{DynamicResource Primary}"
+                        Margin="{StaticResource CardBottomMargin}">
+                        <Label.Behaviors>
+                            <behaviors:RevealOnAppearingBehavior />
+                        </Label.Behaviors>
+                    </Label>
+
                     <today:TodayPracticeRowView
                         CaptionText="{Binding TodayForYouLabel}"
                         StreakText="{Binding StreakDisplay}"
@@ -137,6 +162,9 @@
                         IsVisible="False"
                         Style="{StaticResource TodayBannerStyle}"
                         Margin="0,0,0,4">
+                        <Border.Behaviors>
+                            <behaviors:ListItemRevealBehavior />
+                        </Border.Behaviors>
                         <Label
                             Text="{Binding WeeklyInsightText}"
                             Style="{StaticResource BodyStyle}" />

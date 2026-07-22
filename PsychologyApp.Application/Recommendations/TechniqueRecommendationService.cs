@@ -1,3 +1,4 @@
+using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Models.Tests;
 using PsychologyApp.Application.Somatic;
@@ -108,6 +109,14 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
             return new TodayRecommendationDecision(picked, TodayRecommendationSource.LowMood);
         }
 
+        if (context.ActiveProgramType is TherapyProgramType programType && context.ActiveProgramWeek > 0)
+        {
+            IReadOnlyList<TechniqueId> programPool =
+                TherapyProgramCatalog.ResolvePool(programType, context.ActiveProgramWeek);
+            TechniqueId fromProgram = PickFromPool(programPool, context.LastPracticeDatesUtc);
+            return new TodayRecommendationDecision(fromProgram, TodayRecommendationSource.OnboardingConcern);
+        }
+
         TechniqueId[] pool = ResolveConcernPool(context.Concern);
         TechniqueId fromPool = PickFromPool(pool, context.LastPracticeDatesUtc);
         TodayRecommendationSource source = context.Concern == OnboardingConcernKeys.Explore
@@ -120,9 +129,19 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
         TodayRecommendationContext context,
         TechniqueId completedTechniqueId)
     {
-        TechniqueId[] pool = context.TodayMoodLevel is int mood && mood <= 2
-            ? LowMoodPool
-            : ResolveConcernPool(context.Concern);
+        TechniqueId[] pool;
+        if (context.TodayMoodLevel is int mood && mood <= 2)
+        {
+            pool = LowMoodPool;
+        }
+        else if (context.ActiveProgramType is TherapyProgramType programType && context.ActiveProgramWeek > 0)
+        {
+            pool = TherapyProgramCatalog.ResolvePool(programType, context.ActiveProgramWeek).ToArray();
+        }
+        else
+        {
+            pool = ResolveConcernPool(context.Concern);
+        }
 
         TechniqueId[] filtered = pool
             .Where(id => id != completedTechniqueId)

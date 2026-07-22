@@ -1,7 +1,10 @@
+using PsychologyApp.Presentation.Features.ClinicalCare;
 using PsychologyApp.Presentation.Features.ManageProfile;
 using PsychologyApp.Presentation.Features.PlayMusic;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Features.RunTests;
+using PsychologyApp.Presentation.Pages.ClinicalCare.CrisisHub;
+using PsychologyApp.Presentation.Pages.ClinicalCare.RiskCheck;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Pages.RunTests.AlternativeTest;
@@ -46,6 +49,7 @@ public sealed class PageRegistry(
     IReviewPageFactory reviewPageFactory,
     ITestPageFactory testPageFactory,
     ITechniquePageFactory techniquePageFactory,
+    IClinicalCarePageFactory clinicalCarePageFactory,
     IPracticeTheoryNavigator practiceTheoryNavigator,
     IStartPhysicsViewModelFactory startPhysicsViewModelFactory,
     IMusicPlayerViewModelFactory musicPlayerViewModelFactory,
@@ -125,6 +129,12 @@ public sealed class PageRegistry(
 
     public PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null) =>
         WithPressFeedback(techniquePageFactory.CreatePracticeCompletionPage(streakDays, completedItemKey));
+
+    public CrisisHubPage CreateCrisisHubPage() =>
+        WithPressFeedback(clinicalCarePageFactory.CreateCrisisHubPage());
+
+    public RiskCheckPage CreateRiskCheckPage(string source) =>
+        WithPressFeedback(clinicalCarePageFactory.CreateRiskCheckPage(source));
 
     private static TPage WithPressFeedback<TPage>(TPage page) where TPage : ContentPage
     {

@@ -12,6 +12,7 @@ using PsychologyApp.Application.Analytics;
 using PsychologyApp.Application.Recommendations;
 using PsychologyApp.Application.Practice;
 using PsychologyApp.Application.Tests;
+using PsychologyApp.Application.ClinicalCare;
 
 namespace PsychologyApp.Application.DependencyInjection;
 
@@ -76,6 +77,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<ITechniqueRecommendationService, TechniqueRecommendationService>();
         services.AddSingleton<ILuscherResultService, LuscherResultService>();
         services.AddSingleton<LuscherDetailReader>();
+        services.AddSingleton<IClinicalCareService, ClinicalCareService>();
 
         return services;
     }

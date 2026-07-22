@@ -35,6 +35,9 @@
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
                 <Border Style="{StaticResource MoodStripStyle}">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="0" />
+                    </Border.Behaviors>
                     <VerticalStackLayout Spacing="{StaticResource CompactSpacing}" HorizontalOptions="Center">
                         <ui:MaterialIconView
                             IconName="Insights"

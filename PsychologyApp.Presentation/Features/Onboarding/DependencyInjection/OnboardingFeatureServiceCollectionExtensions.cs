@@ -1,3 +1,4 @@
+using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Presentation.App.Providers;
 using PsychologyApp.Presentation.Features.Onboarding;
 using PsychologyApp.Presentation.Pages.Onboarding;
@@ -24,6 +25,7 @@ public interface IOnboardingViewModelFactory
 public sealed class OnboardingViewModelFactory(
     IUserPreferencesStore userPreferencesStore,
     OnboardingRecommendationResolver onboardingRecommendationResolver,
+    IClinicalCareService clinicalCareService,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IOnboardingViewModelFactory
 {
     public OnboardingViewModel Create(ContentPage page, Func<TechniqueId?, Task> onCompleted) =>
@@ -31,5 +33,6 @@ public sealed class OnboardingViewModelFactory(
             ResolveNavigation(navigationServiceFactory, page),
             userPreferencesStore,
             onboardingRecommendationResolver,
+            clinicalCareService,
             onCompleted);
 }

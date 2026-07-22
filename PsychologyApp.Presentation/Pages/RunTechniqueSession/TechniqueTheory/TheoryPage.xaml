@@ -59,6 +59,9 @@
                     IsVisible="{Binding HasLegacyText}"
                     Style="{StaticResource BrandCardStyle}"
                     Margin="0">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior />
+                    </Border.Behaviors>
                     <Label
                         Text="{Binding Text}"
                         Style="{StaticResource BodyStyle}"

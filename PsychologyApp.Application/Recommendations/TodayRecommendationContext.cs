@@ -8,7 +8,9 @@ public sealed record TodayRecommendationContext(
     TestResultDTO? RecentTestResult = null,
     int? TodayMoodLevel = null,
     IReadOnlyDictionary<string, DateTime>? LastPracticeDatesUtc = null,
-    TechniqueId? DraftTechniqueId = null);
+    TechniqueId? DraftTechniqueId = null,
+    TherapyProgramType? ActiveProgramType = null,
+    int ActiveProgramWeek = 0);
 
 public enum TodayRecommendationSource
 {

@@ -6,10 +6,13 @@ namespace PsychologyApp.Infrastructure.Data.Context;
 
 public static class SqliteSchema
 {
-    public const int CurrentVersion = 6;
+    public const int CurrentVersion = 7;
 
     private static readonly string[] DropTablesSql =
     [
+        "DROP TABLE IF EXISTS EscalationEvents;",
+        "DROP TABLE IF EXISTS TherapyPrograms;",
+        "DROP TABLE IF EXISTS RiskAssessments;",
         "DROP TABLE IF EXISTS MoodEntries;",
         "DROP TABLE IF EXISTS SessionDrafts;",
         "DROP TABLE IF EXISTS Completions;",
@@ -83,7 +86,48 @@ public static class SqliteSchema
         if (version < 6)
         {
             await ApplyMigrationAsync(connection, 6, MigrateToVersion6Async, cancellationToken);
+            version = 6;
         }
+
+        if (version < 7)
+        {
+            await ApplyMigrationAsync(connection, 7, MigrateToVersion7Async, cancellationToken);
+        }
+    }
+
+    private static async Task MigrateToVersion7Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)
+    {
+        await connection.ExecuteAsync(
+            """
+            CREATE TABLE IF NOT EXISTS RiskAssessments (
+                RiskAssessmentId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                AssessedAt TEXT NOT NULL,
+                Source TEXT NOT NULL,
+                Notes TEXT NOT NULL,
+                HasSelfHarmThoughts INTEGER NOT NULL,
+                HasSevereDisorientation INTEGER NOT NULL,
+                HasSubstanceRisk INTEGER NOT NULL,
+                HasSevereInsomnia INTEGER NOT NULL,
+                RiskLevel TEXT NOT NULL
+            );
+
+            CREATE TABLE IF NOT EXISTS TherapyPrograms (
+                ProgramKey TEXT NOT NULL PRIMARY KEY,
+                StartedAt TEXT NOT NULL,
+                CurrentWeek INTEGER NOT NULL,
+                IsActive INTEGER NOT NULL
+            );
+
+            CREATE TABLE IF NOT EXISTS EscalationEvents (
+                EscalationEventId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                CreatedAt TEXT NOT NULL,
+                RiskLevel TEXT NOT NULL,
+                TriggerSource TEXT NOT NULL,
+                Action TEXT NOT NULL,
+                Notes TEXT NOT NULL
+            );
+            """,
+            transaction: transaction);
     }
 
     private static async Task MigrateToVersion6Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)
