@@ -315,6 +315,64 @@ public sealed class UserProgressRepositoryTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task GetMoodsAsync_FiltersByRange()
+    {
+        DateTime inside = DateTime.UtcNow.AddDays(-1);
+        DateTime outside = DateTime.UtcNow.AddDays(-10);
+        await _repository.RecordMoodAsync(new MoodEntryDTO { MoodLevel = 2, Note = "old", RecordedAt = outside });
+        await _repository.RecordMoodAsync(new MoodEntryDTO { MoodLevel = 4, Note = "recent", RecordedAt = inside });
+
+        IReadOnlyList<MoodEntryDTO> moods = await _repository.GetMoodsAsync(
+            DateTime.UtcNow.Date.AddDays(-3),
+            DateTime.UtcNow.Date.AddDays(1),
+            20);
+
+        Assert.Single(moods);
+        Assert.Equal(4, moods[0].MoodLevel);
+        Assert.Equal("recent", moods[0].Note);
+    }
+
+    [Fact]
+    public async Task UpdateMoodEntryAsync_UpdatesLevelAndNote()
+    {
+        await _repository.RecordMoodAsync(new MoodEntryDTO
+        {
+            MoodLevel = 2,
+            Note = "before",
+            RecordedAt = DateTime.UtcNow
+        });
+
+        IReadOnlyList<MoodEntryDTO> created = await _repository.GetRecentMoodsAsync(1);
+        long id = created[0].MoodEntryId;
+
+        await _repository.UpdateMoodEntryAsync(id, 5, "after");
+
+        IReadOnlyList<MoodEntryDTO> updated = await _repository.GetRecentMoodsAsync(1);
+        Assert.Equal(5, updated[0].MoodLevel);
+        Assert.Equal("after", updated[0].Note);
+        Assert.Equal(id, updated[0].MoodEntryId);
+    }
+
+    [Fact]
+    public async Task DeleteMoodEntryAsync_RemovesEntry()
+    {
+        await _repository.RecordMoodAsync(new MoodEntryDTO
+        {
+            MoodLevel = 3,
+            Note = "gone",
+            RecordedAt = DateTime.UtcNow
+        });
+
+        IReadOnlyList<MoodEntryDTO> created = await _repository.GetRecentMoodsAsync(1);
+        long id = created[0].MoodEntryId;
+
+        await _repository.DeleteMoodEntryAsync(id);
+
+        IReadOnlyList<MoodEntryDTO> remaining = await _repository.GetRecentMoodsAsync(5);
+        Assert.Empty(remaining);
+    }
+
+    [Fact]
     public async Task DropAllTablesAsync_RemovesV5Data()
     {
         await _repository.SaveTestResultAsync(new TestResultDTO

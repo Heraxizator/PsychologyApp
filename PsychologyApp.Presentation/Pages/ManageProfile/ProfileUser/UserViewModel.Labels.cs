@@ -8,6 +8,7 @@ public partial class UserViewModel
     public string PageTitle => AppStrings.ProfileTitle;
     public string LoadingText => AppStrings.ProfileLoadingText;
     public string JournalLabel => AppStrings.JournalTitle;
+    public string OpenJournalLabel => AppStrings.OpenJournalLabel;
     public string JournalCardSubtitle => AppStrings.JournalCardSubtitle;
     public string OptionsLabel => AppStrings.OptionsTitle;
     public string OptionsCardSubtitle => AppStrings.ProfileOptionsCardSubtitle;
@@ -49,6 +50,7 @@ public partial class UserViewModel
             nameof(PageTitle),
             nameof(LoadingText),
             nameof(JournalLabel),
+            nameof(OpenJournalLabel),
             nameof(JournalCardSubtitle),
             nameof(OptionsLabel),
             nameof(OptionsCardSubtitle),
@@ -78,7 +80,19 @@ public partial class UserViewModel
             nameof(PracticeHistoryTitle),
             nameof(PracticeHistoryEmpty),
             nameof(HasPracticeHistory),
-            nameof(ShowPracticeHistoryEmpty));
+            nameof(ShowPracticeHistoryEmpty),
+            nameof(ClinicalScorecardTitle),
+            nameof(ClinicalScorecardEmpty),
+            nameof(WeekPracticesLabel),
+            nameof(WeekAvgMoodLabel),
+            nameof(WeekRiskLabel),
+            nameof(WeekRangeSubtitle),
+            nameof(WeekPracticeCount),
+            nameof(WeekAverageMoodDisplay),
+            nameof(WeekRiskDisplay),
+            nameof(HasClinicalScorecard),
+            nameof(HasClinicalScorecardMetrics),
+            nameof(ShowClinicalScorecardEmpty));
         InitTechniques();
 
         string currentLanguage = UserPreferences.GetPersistedLanguage();

@@ -416,7 +416,7 @@ public sealed class TechniquesViewModelTests
         Mock<IUserProgressService> progress = new();
         progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
-        progress.Setup(p => p.RecordMoodAsync(It.IsAny<int>(), It.IsAny<string?>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+        progress.Setup(p => p.RecordMoodAsync(It.IsAny<int>(), It.IsAny<string?>(), It.IsAny<DateTime?>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
         Mock<IUserPreferencesStore> preferences = new();
         preferences.Setup(p => p.Load()).Returns(new UserPreferencesState());
@@ -437,7 +437,7 @@ public sealed class TechniquesViewModelTests
         viewModel.RecordMoodCommand.Execute(4);
         await Task.Delay(500);
 
-        progress.Verify(p => p.RecordMoodAsync(4, It.IsAny<string?>(), It.IsAny<CancellationToken>()), Times.Once);
+        progress.Verify(p => p.RecordMoodAsync(4, It.IsAny<string?>(), It.IsAny<DateTime?>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]

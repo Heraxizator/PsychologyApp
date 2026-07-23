@@ -19,7 +19,6 @@ using PsychologyApp.Presentation.Features.ManageProfile.Index;
 using PsychologyApp.Presentation.Features.ManageQuotes;
 using PsychologyApp.Presentation.Features.ManageQuotes.Index;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
-using PsychologyApp.Presentation.Pages.ManageProfile.ProfileJournal;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 
 namespace PsychologyApp.Presentation.Features.ManageProfile.DependencyInjection;
@@ -133,17 +132,4 @@ public sealed class InfoViewModelFactory(Func<NavigationContext, INavigationServ
 {
     public InfoViewModel Create(ContentPage page) =>
         new(ResolveNavigation(navigationServiceFactory, page));
-}
-
-public interface IJournalViewModelFactory
-{
-    JournalViewModel Create(ContentPage page);
-}
-
-public sealed class JournalViewModelFactory(
-    ProfileMoodLoader profileMoodLoader,
-    Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IJournalViewModelFactory
-{
-    public JournalViewModel Create(ContentPage page) =>
-        new(profileMoodLoader, ResolveNavigation(navigationServiceFactory, page));
 }

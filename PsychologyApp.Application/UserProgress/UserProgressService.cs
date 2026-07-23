@@ -129,16 +129,37 @@ public sealed class UserProgressService(IUserProgressRepository repository) : IU
     public Task DeleteSessionDraftAsync(string techniqueKey, CancellationToken cancellationToken = default) =>
         repository.DeleteSessionDraftAsync(techniqueKey, cancellationToken);
 
-    public Task RecordMoodAsync(int moodLevel, string? note = null, CancellationToken cancellationToken = default) =>
+    public Task RecordMoodAsync(
+        int moodLevel,
+        string? note = null,
+        DateTime? recordedAtUtc = null,
+        CancellationToken cancellationToken = default) =>
         repository.RecordMoodAsync(new MoodEntryDTO
         {
             MoodLevel = moodLevel,
             Note = note,
-            RecordedAt = DateTime.UtcNow
+            RecordedAt = recordedAtUtc ?? DateTime.UtcNow
         }, cancellationToken);
+
+    public Task UpdateMoodEntryAsync(
+        long moodEntryId,
+        int moodLevel,
+        string? note = null,
+        CancellationToken cancellationToken = default) =>
+        repository.UpdateMoodEntryAsync(moodEntryId, moodLevel, note, cancellationToken);
+
+    public Task DeleteMoodEntryAsync(long moodEntryId, CancellationToken cancellationToken = default) =>
+        repository.DeleteMoodEntryAsync(moodEntryId, cancellationToken);
 
     public Task<IReadOnlyList<MoodEntryDTO>> GetRecentMoodsAsync(int limit = 7, CancellationToken cancellationToken = default) =>
         repository.GetRecentMoodsAsync(limit, cancellationToken);
+
+    public Task<IReadOnlyList<MoodEntryDTO>> GetMoodsAsync(
+        DateTime? fromUtc = null,
+        DateTime? toUtc = null,
+        int limit = 60,
+        CancellationToken cancellationToken = default) =>
+        repository.GetMoodsAsync(fromUtc, toUtc, limit, cancellationToken);
 
     public Task UpdateSessionResultPostIntensityAsync(long sessionResultId, int postIntensity, CancellationToken cancellationToken = default) =>
         repository.UpdateSessionResultPostIntensityAsync(sessionResultId, postIntensity, cancellationToken);

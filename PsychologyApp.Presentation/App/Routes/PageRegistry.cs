@@ -1,4 +1,5 @@
 using PsychologyApp.Presentation.Features.ClinicalCare;
+using PsychologyApp.Presentation.Features.ManageJournal.DependencyInjection;
 using PsychologyApp.Presentation.Features.ManageProfile;
 using PsychologyApp.Presentation.Features.PlayMusic;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
@@ -17,7 +18,7 @@ using PsychologyApp.Presentation.Pages.ManageProfile.ProfileInfo;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileOptions;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileSettings;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
-using PsychologyApp.Presentation.Pages.ManageProfile.ProfileJournal;
+using PsychologyApp.Presentation.Pages.ManageJournal.Journal;
 using PsychologyApp.Presentation.Pages.RunTests.Question;
 using PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
 using PsychologyApp.Presentation.Features.SendReviewForm;
@@ -47,6 +48,7 @@ namespace PsychologyApp.Presentation.App.Routes;
 /// </summary>
 public sealed class PageRegistry(
     IProfilePageFactory profilePageFactory,
+    IJournalPageFactory journalPageFactory,
     IReviewPageFactory reviewPageFactory,
     ITestPageFactory testPageFactory,
     ITechniquePageFactory techniquePageFactory,
@@ -81,7 +83,7 @@ public sealed class PageRegistry(
         WithPressFeedback(profilePageFactory.CreateUserPage());
 
     public JournalPage CreateJournalPage() =>
-        WithPressFeedback(profilePageFactory.CreateJournalPage());
+        WithPressFeedback(journalPageFactory.CreateJournalPage());
 
     public OptionsPage CreateOptionsPage() =>
         WithPressFeedback(profilePageFactory.CreateOptionsPage());

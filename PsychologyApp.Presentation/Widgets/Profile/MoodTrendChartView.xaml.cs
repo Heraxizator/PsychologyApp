@@ -11,6 +11,7 @@ public partial class MoodTrendChartView : ContentView
     {
         InitializeComponent();
         Title = AppStrings.ProfileMoodTrendTitle;
+        HasTitle = true;
         ChartView.Drawable = _drawable;
     }
 
@@ -31,10 +32,18 @@ public partial class MoodTrendChartView : ContentView
             propertyChanged: OnSubtitleChanged);
 
     public static readonly BindableProperty TitleProperty =
-        BindableProperty.Create(nameof(Title), typeof(string), typeof(MoodTrendChartView), string.Empty);
+        BindableProperty.Create(
+            nameof(Title),
+            typeof(string),
+            typeof(MoodTrendChartView),
+            string.Empty,
+            propertyChanged: OnTitleChanged);
 
     public static readonly BindableProperty HasSubtitleProperty =
         BindableProperty.Create(nameof(HasSubtitle), typeof(bool), typeof(MoodTrendChartView), false);
+
+    public static readonly BindableProperty HasTitleProperty =
+        BindableProperty.Create(nameof(HasTitle), typeof(bool), typeof(MoodTrendChartView), false);
 
     public IReadOnlyList<MoodChartPoint> ChartPoints
     {
@@ -60,6 +69,12 @@ public partial class MoodTrendChartView : ContentView
         private set => SetValue(HasSubtitleProperty, value);
     }
 
+    public bool HasTitle
+    {
+        get => (bool)GetValue(HasTitleProperty);
+        private set => SetValue(HasTitleProperty, value);
+    }
+
     private static void OnChartPointsChanged(BindableObject bindable, object oldValue, object newValue)
     {
         if (bindable is MoodTrendChartView view && newValue is IReadOnlyList<MoodChartPoint> points)
@@ -74,6 +89,14 @@ public partial class MoodTrendChartView : ContentView
         if (bindable is MoodTrendChartView view)
         {
             view.HasSubtitle = newValue is string subtitle && !string.IsNullOrWhiteSpace(subtitle);
+        }
+    }
+
+    private static void OnTitleChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is MoodTrendChartView view)
+        {
+            view.HasTitle = newValue is string title && !string.IsNullOrWhiteSpace(title);
         }
     }
 }

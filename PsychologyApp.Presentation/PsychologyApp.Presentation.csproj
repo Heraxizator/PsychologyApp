@@ -52,7 +52,6 @@
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>portable</DebugType>
 	  <AndroidIncludeDebugSymbols>true</AndroidIncludeDebugSymbols>
-	  <TrimMode>link</TrimMode>
 	  <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
 	  <AndroidPackageFormat>apk</AndroidPackageFormat>
 	  <PublishTrimmed>False</PublishTrimmed>

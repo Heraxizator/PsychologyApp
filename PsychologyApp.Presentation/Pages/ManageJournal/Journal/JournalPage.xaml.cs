@@ -1,7 +1,7 @@
-using PsychologyApp.Presentation.Features.ManageProfile.DependencyInjection;
+using PsychologyApp.Presentation.Features.ManageJournal.DependencyInjection;
 using PsychologyApp.Presentation.Shared.Common;
 
-namespace PsychologyApp.Presentation.Pages.ManageProfile.ProfileJournal;
+namespace PsychologyApp.Presentation.Pages.ManageJournal.Journal;
 
 public partial class JournalPage : ContentPage
 {
