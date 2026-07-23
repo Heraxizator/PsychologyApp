@@ -4,6 +4,7 @@ using PsychologyApp.Presentation.Features.SearchPhysics.DependencyInjection;
 using PsychologyApp.Presentation.Features.ManageQuotes.DependencyInjection;
 using PsychologyApp.Presentation.Features.RunTests.DependencyInjection;
 using PsychologyApp.Presentation.Features.ManageProfile.DependencyInjection;
+using PsychologyApp.Presentation.Features.ManageJournal.DependencyInjection;
 using PsychologyApp.Presentation.Features.RunTechniqueSession.DependencyInjection;
 using PsychologyApp.Presentation.Features.SendReviewForm.DependencyInjection;
 using PsychologyApp.Presentation.Features.ClinicalCare.DependencyInjection;
@@ -23,6 +24,7 @@ public static class PresentationServiceCollectionExtensions
         services.AddManageQuotesFeature();
         services.AddRunTestsFeature();
         services.AddManageProfileFeature();
+        services.AddManageJournalFeature();
         services.AddRunTechniqueSessionFeature();
         return services;
     }

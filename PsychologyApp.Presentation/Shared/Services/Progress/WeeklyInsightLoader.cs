@@ -9,16 +9,26 @@ namespace PsychologyApp.Presentation.Shared.Services.Progress;
 public sealed class WeeklyInsightSnapshot
 {
     public string DisplayText { get; init; } = string.Empty;
+    public int PracticeCount { get; init; }
+    public int MoodEntriesCount { get; init; }
+    public string MoodTrendLabel { get; init; } = string.Empty;
+    public int StreakDays { get; init; }
+    public string ExtraPillText { get; init; } = string.Empty;
+    public string WeekRangeLabel { get; init; } = string.Empty;
 
-    public bool HasInsight => !string.IsNullOrWhiteSpace(DisplayText);
+    public bool HasInsight => PracticeCount > 0 || MoodEntriesCount > 0;
+    public bool HasMoodTrend => !string.IsNullOrWhiteSpace(MoodTrendLabel);
+    public bool HasExtraPill => !string.IsNullOrWhiteSpace(ExtraPillText);
 }
 
 public sealed class WeeklyInsightLoader(IUserProgressService userProgressService)
 {
     public async Task<WeeklyInsightSnapshot> LoadAsync(CancellationToken cancellationToken = default)
     {
-        DateOnly weekStart = GetWeekStart(DateOnly.FromDateTime(DateTime.Today));
+        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+        DateOnly weekStart = GetWeekStart(today);
         DateTime weekStartLocal = weekStart.ToDateTime(TimeOnly.MinValue);
+        string weekRange = AppStrings.WeekRangeLabel(weekStart, today);
 
         Task<IReadOnlyList<CompletionDTO>> completionsTask =
             userProgressService.GetRecentTechniqueCompletionsAsync(50, cancellationToken);
@@ -37,9 +47,20 @@ public sealed class WeeklyInsightLoader(IUserProgressService userProgressService
             .OrderBy(mood => mood.RecordedAt)
             .ToList();
 
+        int streakDays = await streakTask;
+        string testPill = await ResolveTestPillAsync(
+            await recentTestTask,
+            weekStartLocal,
+            cancellationToken);
+
         if (practiceCount == 0 && weekMoods.Count == 0)
         {
-            return new WeeklyInsightSnapshot();
+            return new WeeklyInsightSnapshot
+            {
+                WeekRangeLabel = weekRange,
+                StreakDays = streakDays,
+                ExtraPillText = testPill
+            };
         }
 
         string moodTrend = ResolveMoodTrend(weekMoods);
@@ -47,29 +68,28 @@ public sealed class WeeklyInsightLoader(IUserProgressService userProgressService
             ? AppStrings.WeeklyInsightMoodOnly(moodTrend)
             : AppStrings.WeeklyInsightLine(practiceCount, moodTrend);
 
-        string extra = await ResolveWeeklyExtraAsync(
-            await streakTask,
-            await recentTestTask,
-            weekStartLocal,
-            cancellationToken);
+        string streakPart = streakDays > 0
+            ? AppStrings.WeeklyInsightStreakPart(streakDays)
+            : string.Empty;
+        string extraForDisplay = !string.IsNullOrWhiteSpace(streakPart) ? streakPart : testPill;
 
         return new WeeklyInsightSnapshot
         {
-            DisplayText = AppStrings.WeeklyInsightWithExtra(baseLine, extra)
+            DisplayText = AppStrings.WeeklyInsightWithExtra(baseLine, extraForDisplay),
+            PracticeCount = practiceCount,
+            MoodEntriesCount = weekMoods.Count,
+            MoodTrendLabel = moodTrend,
+            StreakDays = streakDays,
+            ExtraPillText = testPill,
+            WeekRangeLabel = weekRange
         };
     }
 
-    private async Task<string> ResolveWeeklyExtraAsync(
-        int streakDays,
+    private async Task<string> ResolveTestPillAsync(
         TestResultDTO? recentTest,
         DateTime weekStartLocal,
         CancellationToken cancellationToken)
     {
-        if (streakDays > 0)
-        {
-            return AppStrings.WeeklyInsightStreakPart(streakDays);
-        }
-
         if (recentTest is null || string.IsNullOrWhiteSpace(recentTest.TestId))
         {
             return string.Empty;

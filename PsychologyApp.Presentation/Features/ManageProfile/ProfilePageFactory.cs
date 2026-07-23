@@ -6,7 +6,6 @@ using PsychologyApp.Presentation.Pages.ManageProfile.ProfileOptions;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileAlice;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
-using PsychologyApp.Presentation.Pages.ManageProfile.ProfileJournal;
 
 namespace PsychologyApp.Presentation.Features.ManageProfile;
 
@@ -18,7 +17,6 @@ public interface IProfilePageFactory
     DonatePage CreateDonatePage();
     AlicePage CreateAlicePage();
     SettingsPage CreateSettingsPage();
-    JournalPage CreateJournalPage();
 }
 
 public sealed class ProfilePageFactory(
@@ -28,8 +26,7 @@ public sealed class ProfilePageFactory(
     IInfoViewModelFactory infoViewModelFactory,
     IDonateViewModelFactory donateViewModelFactory,
     IAliceViewModelFactory aliceViewModelFactory,
-    ISettingsViewModelFactory settingsViewModelFactory,
-    IJournalViewModelFactory journalViewModelFactory) : IProfilePageFactory
+    ISettingsViewModelFactory settingsViewModelFactory) : IProfilePageFactory
 {
     public UserPage CreateUserPage() =>
         new(pageViewModelActivator, userViewModelFactory);
@@ -48,7 +45,4 @@ public sealed class ProfilePageFactory(
 
     public SettingsPage CreateSettingsPage() =>
         new(pageViewModelActivator, settingsViewModelFactory);
-
-    public JournalPage CreateJournalPage() =>
-        new(journalViewModelFactory);
 }

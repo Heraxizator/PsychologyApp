@@ -405,15 +405,97 @@ public static partial class AppStrings
     public static string ProfileMoodCheckInTitle => T("Как настроение сегодня?", "How are you feeling today?");
     public static string ProfileWeeklyInsightTitle => T("На этой неделе", "This week");
     public static string JournalTitle => T("Дневник", "Journal");
+    public static string OpenJournalLabel => T("Открыть дневник", "Open journal");
     public static string JournalCardSubtitle => T(
-        "Настроение, заметки и динамика недели",
-        "Mood, notes, and weekly trends");
+        "Настроение, заметки и динамика",
+        "Mood, notes, and trends");
+    public static string JournalTodayTitle => T("Сегодня", "Today");
+    public static string JournalEntriesTitle => T("Записи", "Entries");
+    public static string JournalWeekEmpty => T(
+        "Пока мало данных за неделю — отметьте настроение",
+        "Not much this week yet — log a mood check-in");
     public static string JournalNotePlaceholder => T(
-        "Заметка к сегодняшнему дню (необязательно)",
-        "Note for today (optional)");
+        "Заметка к этому дню (необязательно)",
+        "Note for this day (optional)");
+    public static string JournalNoteSaveHint => T(
+        "Выберите настроение и нажмите «Сохранить»",
+        "Pick a mood, then tap Save");
+    public static string JournalSaveLabel => T("Сохранить", "Save");
+    public static string JournalDeleteLabel => T("Удалить", "Delete");
+    public static string JournalDeleteConfirmTitle => T("Удалить запись?", "Delete entry?");
+    public static string JournalDeleteConfirmMessage => T(
+        "Отметка настроения и заметка за этот день будут удалены.",
+        "This day's mood check-in and note will be removed.");
+    public static string JournalDeleteConfirmAccept => T("Удалить", "Delete");
+    public static string JournalDeleteConfirmCancel => T("Отмена", "Cancel");
+    public static string JournalNoNoteCaption => T("Без заметки", "No note");
+    public static string JournalEditTodayHint => T(
+        "Изменить сегодня",
+        "Edit today");
+    public static string JournalDayEmptyHint(DateOnly day) =>
+        T($"Нет записи за {day:d} — можно добавить", $"No entry for {day:d} — you can add one");
+    public static string JournalDayMoodLine(DateOnly day, int level, int max) =>
+        T($"{day:d}: {MoodEmoji(level)} {level}/{max}", $"{day:d}: {MoodEmoji(level)} {level}/{max}");
+    public static string JournalMoodStatsTitle => T("Обзор", "Overview");
+    public static string JournalMoodStreakLabel => T("Серия дней", "Day streak");
+    public static string JournalFilter7Days => T("7 дней", "7 days");
+    public static string JournalFilter30Days => T("30 дней", "30 days");
+    public static string JournalFilter90Days => T("90 дней", "90 days");
+    public static string JournalYesterdayTitle => T("Вчера", "Yesterday");
+    public static string JournalEditorDayTitle(DateOnly day)
+    {
+        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+        if (day == today)
+        {
+            return JournalTodayTitle;
+        }
+
+        if (day == today.AddDays(-1))
+        {
+            return JournalYesterdayTitle;
+        }
+
+        return day.ToDateTime(TimeOnly.MinValue).ToString("d MMM");
+    }
+    public static string JournalPastDayCheckInTitle => T(
+        "Как было настроение в этот день?",
+        "How was your mood that day?");
+    public static string JournalPromptHelped => T("Что помогло?", "What helped?");
+    public static string JournalPromptBlocked => T("Что мешало?", "What got in the way?");
+    public static string JournalPromptGrateful => T("За что благодарен?", "Grateful for?");
+    public static string JournalPromptNext => T("Что сделаю дальше?", "What next?");
+    public static string JournalSearchPlaceholder => T("Поиск по заметкам", "Search notes");
+    public static string JournalSearchEmpty => T(
+        "Ничего не найдено",
+        "No matching notes");
+    public static string JournalBestWorstPill(int best, int worst) =>
+        T($"Лучший {MoodEmoji(best)} {best} · Худший {MoodEmoji(worst)} {worst}",
+            $"Best {MoodEmoji(best)} {best} · Worst {MoodEmoji(worst)} {worst}");
+    public static string JournalTimelineEmpty => T(
+        "Пока нет отметок настроения в этом периоде",
+        "No mood check-ins in this period yet");
+    public static string MoodNotesEmpty => T(
+        "Пока нет отметок настроения — сделайте check-in выше",
+        "No mood check-ins yet — log one above");
+    public static string JournalNeedMoodToSave => T(
+        "Сначала выберите настроение",
+        "Choose a mood first");
+    public static string WeekRangeLabel(DateOnly start, DateOnly end) =>
+        T($"{start:dd MMM} – {end:dd MMM}", $"{start:dd MMM} – {end:dd MMM}");
+    public static string WeekPracticesLabel => T("Практики", "Practices");
+    public static string WeekMoodCheckInsLabel => T("Отметки", "Check-ins");
+    public static string WeekAvgMoodLabel => T("Ср. настроение", "Avg mood");
+    public static string WeekRiskLabel => T("Риск", "Risk");
+    public static string WeekStreakLabel => T("Серия", "Streak");
+    public static string MetricEmptyValue => "—";
+    public static string FormatAverageMood(double average) =>
+        average <= 0 ? MetricEmptyValue : average.ToString("0.0");
+    public static string MoodLevelPill(int level, int max = 5) =>
+        $"{MoodEmoji(level)} {level}/{max}";
     public static string ProfileMoodTrendHint => T(
         "Отмечайте настроение здесь, чтобы увидеть динамику",
         "Track mood here to see your trend");
+
     public static string ChartFirstMeasurement => T("Первое измерение", "First measurement");
     public static string ChartSparseHint(int count) => T(
         $"{count} измерения — тренд уточняется",
@@ -490,6 +572,8 @@ public static partial class AppStrings
         5 => "😊",
         _ => "😐"
     };
+
+    public static string MoodEmojiFor(int level) => MoodEmoji(level);
     public static string TechniqueContinueBadge => T("Продолжить", "Continue");
     public static string TechniqueLastPractice(string date) => T($"Последняя практика: {date}", $"Last practice: {date}");
     public static string TechniqueNotTriedYet => T("Не пробовали", "Not tried yet");

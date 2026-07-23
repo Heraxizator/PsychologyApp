@@ -389,6 +389,56 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
         return rows.ToList();
     }
 
+    public async Task<IReadOnlyList<MoodEntryDTO>> GetMoodsAsync(
+        DateTime? fromUtc,
+        DateTime? toUtc,
+        int limit,
+        CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        IEnumerable<MoodEntryDTO> rows = await connection.QueryAsync<MoodEntryDTO>(DapperCommandFactory.Create(
+            UserProgressSql.SelectMoodsInRange,
+            new
+            {
+                fromUtc = fromUtc?.ToString("O"),
+                toUtc = toUtc?.ToString("O"),
+                limit
+            },
+            commandTimeout: CommandTimeoutSeconds,
+            cancellationToken: cancellationToken));
+
+        return rows.ToList();
+    }
+
+    public async Task UpdateMoodEntryAsync(
+        long moodEntryId,
+        int moodLevel,
+        string? note,
+        CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
+            UserProgressSql.UpdateMoodEntry,
+            new
+            {
+                MoodEntryId = moodEntryId,
+                MoodLevel = moodLevel,
+                Note = note
+            },
+            commandTimeout: CommandTimeoutSeconds,
+            cancellationToken: cancellationToken));
+    }
+
+    public async Task DeleteMoodEntryAsync(long moodEntryId, CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
+            UserProgressSql.DeleteMoodEntry,
+            new { MoodEntryId = moodEntryId },
+            commandTimeout: CommandTimeoutSeconds,
+            cancellationToken: cancellationToken));
+    }
+
     public async Task UpdateSessionResultPostIntensityAsync(
         long sessionResultId,
         int postIntensity,

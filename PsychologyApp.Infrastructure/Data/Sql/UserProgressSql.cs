@@ -134,6 +134,25 @@ internal static class UserProgressSql
         LIMIT @limit;
         """;
 
+    internal const string SelectMoodsInRange = """
+        SELECT MoodEntryId, MoodLevel, Note, RecordedAt
+        FROM MoodEntries
+        WHERE (@fromUtc IS NULL OR RecordedAt >= @fromUtc)
+          AND (@toUtc IS NULL OR RecordedAt < @toUtc)
+        ORDER BY RecordedAt DESC
+        LIMIT @limit;
+        """;
+
+    internal const string UpdateMoodEntry = """
+        UPDATE MoodEntries
+        SET MoodLevel = @MoodLevel,
+            Note = @Note
+        WHERE MoodEntryId = @MoodEntryId;
+        """;
+
+    internal const string DeleteMoodEntry =
+        "DELETE FROM MoodEntries WHERE MoodEntryId = @MoodEntryId;";
+
     internal const string InsertSessionResult = """
         INSERT INTO SessionResults (
             ItemKey,

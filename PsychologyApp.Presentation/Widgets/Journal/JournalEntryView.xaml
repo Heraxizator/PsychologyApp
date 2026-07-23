@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:Class="PsychologyApp.Presentation.Widgets.Journal.JournalEntryView"
+             x:Name="Root">
+
+    <ContentView.Behaviors>
+        <behaviors:ListItemRevealBehavior />
+        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+    </ContentView.Behaviors>
+
+    <Border Style="{StaticResource ListEntryCardStyle}">
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer
+                Command="{Binding TapCommand, Source={x:Reference Root}}"
+                CommandParameter="{Binding CommandParameter, Source={x:Reference Root}}" />
+        </Border.GestureRecognizers>
+        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+            <Border
+                Grid.Column="0"
+                WidthRequest="52"
+                HeightRequest="52"
+                StrokeThickness="0"
+                BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}"
+                VerticalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12" />
+                </Border.StrokeShape>
+                <ui:MaterialIconView
+                    WidthRequest="28"
+                    HeightRequest="28"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    IconName="Edit"
+                    IconColor="{DynamicResource Primary}" />
+            </Border>
+
+            <VerticalStackLayout
+                Grid.Column="1"
+                Spacing="4"
+                VerticalOptions="Center">
+                <HorizontalStackLayout Spacing="8">
+                    <Label
+                        Text="{Binding DateText, Source={x:Reference Root}}"
+                        Style="{StaticResource CaptionStyle}" />
+                    <Label
+                        Text="{Binding TimeText, Source={x:Reference Root}}"
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                </HorizontalStackLayout>
+                <Label
+                    Text="{Binding NoteText, Source={x:Reference Root}}"
+                    Style="{StaticResource ListRowTitleStyle}"
+                    LineBreakMode="WordWrap">
+                    <Label.Triggers>
+                        <DataTrigger
+                            TargetType="Label"
+                            Binding="{Binding HasNote, Source={x:Reference Root}}"
+                            Value="False">
+                            <Setter
+                                Property="TextColor"
+                                Value="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </VerticalStackLayout>
+
+            <Border
+                Grid.Column="2"
+                Style="{StaticResource MetaPillStyle}"
+                VerticalOptions="Center"
+                HorizontalOptions="End">
+                <Label
+                    Text="{Binding MoodDisplay, Source={x:Reference Root}}"
+                    Style="{StaticResource CaptionStyle}"
+                    TextColor="{DynamicResource Primary}"
+                    FontFamily="{StaticResource SemiBoldFontFamily}" />
+            </Border>
+        </Grid>
+    </Border>
+</ContentView>
