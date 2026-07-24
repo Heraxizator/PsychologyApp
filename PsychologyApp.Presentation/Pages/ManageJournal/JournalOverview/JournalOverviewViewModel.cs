@@ -17,6 +17,7 @@ public sealed class JournalOverviewViewModel : BaseViewModel
     private readonly INavigationService _navigationService;
     private int _loadGeneration;
     private int _rangeDays = 7;
+    private DateOnly _weekStripEnd = DateOnly.FromDateTime(DateTime.Today);
 
     public JournalOverviewViewModel(
         JournalMoodLoader journalMoodLoader,
@@ -28,6 +29,8 @@ public sealed class JournalOverviewViewModel : BaseViewModel
         _navigationService = navigationService;
         BindNavigation(navigationService);
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
+        PrevWeekCommand = new Command(() => ShiftWeek(-7));
+        NextWeekCommand = new Command(() => ShiftWeek(7), () => CanGoNextWeek);
         SelectRangeCommand = new Command<object?>(parameter =>
         {
             int days = parameter switch
@@ -78,7 +81,12 @@ public sealed class JournalOverviewViewModel : BaseViewModel
     public string MoodTrendTitle => AppStrings.JournalDynamicsTitle;
     public string MoodTrendHint => AppStrings.ProfileMoodTrendHint;
     public bool ShowMoodTrendHint => !HasMoodTrendChart;
-    public string WeekStripTitle => AppStrings.JournalRecentDaysTitle;
+    public string WeekStripTitle =>
+        AppStrings.WeekRangeLabel(_weekStripEnd.AddDays(-6), _weekStripEnd);
+    public string WeekNavPrevLabel => AppStrings.JournalWeekNavPrev;
+    public string WeekNavNextLabel => AppStrings.JournalWeekNavNext;
+    public bool CanGoNextWeek =>
+        _weekStripEnd < DateOnly.FromDateTime(DateTime.Today);
     public string WeekEmptyText => AppStrings.JournalWeekEmpty;
     public string WeekMoodCheckInsLabel => AppStrings.WeekMoodCheckInsLabel;
     public string WeekAvgMoodLabel => AppStrings.WeekAvgMoodLabel;
@@ -86,6 +94,8 @@ public sealed class JournalOverviewViewModel : BaseViewModel
     public ICommand BackCommand { get; }
     public ICommand SelectRangeCommand { get; }
     public ICommand SelectDayCommand { get; }
+    public ICommand PrevWeekCommand { get; }
+    public ICommand NextWeekCommand { get; }
     public ObservableCollection<FilterChipTabItem> RangeFilters { get; }
 
     private IReadOnlyList<JournalDayChip> _weekDays = [];
@@ -202,6 +212,21 @@ public sealed class JournalOverviewViewModel : BaseViewModel
         private set => SetProperty(ref _overviewInsightText, value);
     }
 
+    private string _practiceMoodInsightText = string.Empty;
+    public string PracticeMoodInsightText
+    {
+        get => _practiceMoodInsightText;
+        private set
+        {
+            if (SetProperty(ref _practiceMoodInsightText, value))
+            {
+                OnPropertyChanged(nameof(HasPracticeMoodInsight));
+            }
+        }
+    }
+
+    public bool HasPracticeMoodInsight => !string.IsNullOrWhiteSpace(PracticeMoodInsightText);
+
     public string CheckInPillText =>
         $"{WeekMoodCheckInsLabel}: {CheckInCountDisplay}";
 
@@ -216,6 +241,9 @@ public sealed class JournalOverviewViewModel : BaseViewModel
             nameof(MoodTrendHint),
             nameof(ShowMoodTrendHint),
             nameof(WeekStripTitle),
+            nameof(WeekNavPrevLabel),
+            nameof(WeekNavNextLabel),
+            nameof(CanGoNextWeek),
             nameof(WeekEmptyText),
             nameof(WeekMoodCheckInsLabel),
             nameof(WeekAvgMoodLabel),
@@ -230,8 +258,11 @@ public sealed class JournalOverviewViewModel : BaseViewModel
             nameof(BestWorstLabel),
             nameof(HasBestWorstPill),
             nameof(OverviewInsightText),
+            nameof(PracticeMoodInsightText),
+            nameof(HasPracticeMoodInsight),
             nameof(CheckInPillText),
             nameof(AverageMoodPillText));
+        (NextWeekCommand as Command)?.ChangeCanExecute();
 
         foreach (FilterChipTabItem filter in RangeFilters)
         {
@@ -246,6 +277,16 @@ public sealed class JournalOverviewViewModel : BaseViewModel
 
     public Task ReloadAsync() => LoadAsync();
 
+    private void ShiftWeek(int dayDelta)
+    {
+        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+        _weekStripEnd = JournalMoodLoader.ClampStripEnd(_weekStripEnd.AddDays(dayDelta), today);
+        OnPropertyChanged(nameof(WeekStripTitle));
+        OnPropertyChanged(nameof(CanGoNextWeek));
+        (NextWeekCommand as Command)?.ChangeCanExecute();
+        LoadAsync().FireAndForget();
+    }
+
     private void SyncRangeFilters()
     {
         foreach (FilterChipTabItem filter in RangeFilters)
@@ -259,7 +300,9 @@ public sealed class JournalOverviewViewModel : BaseViewModel
         int generation = Interlocked.Increment(ref _loadGeneration);
         try
         {
-            JournalMoodSnapshot snapshot = await _journalMoodLoader.LoadAsync(_rangeDays);
+            JournalMoodSnapshot snapshot = await _journalMoodLoader.LoadAsync(
+                _rangeDays,
+                weekStripEnd: _weekStripEnd);
             if (generation != Volatile.Read(ref _loadGeneration))
             {
                 return;
@@ -267,6 +310,7 @@ public sealed class JournalOverviewViewModel : BaseViewModel
 
             await UiThread.RunAsync(() =>
             {
+                _weekStripEnd = snapshot.WeekStripEnd;
                 WeekDays = snapshot.WeekDays;
                 MoodChartPoints = snapshot.ChartPoints;
                 MoodChartSubtitle = snapshot.ChartSubtitle;
@@ -288,8 +332,12 @@ public sealed class JournalOverviewViewModel : BaseViewModel
                         stats.MoodTrendLabel,
                         stats.MoodStreakDisplay)
                     : AppStrings.JournalOverviewInsightEmpty;
+                PracticeMoodInsightText = snapshot.PracticeMoodInsight;
                 OnPropertyChanged(nameof(CheckInPillText));
                 OnPropertyChanged(nameof(AverageMoodPillText));
+                OnPropertyChanged(nameof(WeekStripTitle));
+                OnPropertyChanged(nameof(CanGoNextWeek));
+                (NextWeekCommand as Command)?.ChangeCanExecute();
             });
         }
         catch

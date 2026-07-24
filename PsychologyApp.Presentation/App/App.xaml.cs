@@ -1,5 +1,6 @@
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
+using PsychologyApp.Presentation.Shared.Lib.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Notifications;
 
 namespace PsychologyApp.Presentation.App;
@@ -19,7 +20,7 @@ public partial class App : Microsoft.Maui.Controls.Application
     protected override Window CreateWindow(IActivationState? activationState)
     {
         AppShell shell = _services.GetRequiredService<AppShell>();
-        var tabNavigator = new AppShellTabNavigator(shell);
+        IShellTabNavigator tabNavigator = _services.GetRequiredService<IShellTabNavigator>();
         PracticeReminderTapHandler.Configure(tabNavigator);
         QuoteReminderTapHandler.Configure(tabNavigator);
         MoodReminderTapHandler.Configure(tabNavigator);

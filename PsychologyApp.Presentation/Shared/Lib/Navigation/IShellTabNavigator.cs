@@ -9,5 +9,7 @@ public interface IShellTabNavigator
 
     void OpenPracticeTabAndPendingJournal();
 
+    void OpenPracticeTab();
+
     void OpenQuotesTab();
 }

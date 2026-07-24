@@ -14,6 +14,7 @@ using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.Abstractions;
 using PsychologyApp.Presentation.Shared.Platform;
 using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Shared.Lib.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Notifications;
 
 namespace PsychologyApp.Presentation.App;
@@ -78,6 +79,8 @@ public static class MauiProgram
         builder.Services.AddCachedTechniqueCatalogProvider();
         builder.Services.AddPsychologyAppPresentation();
         builder.Services.AddSingleton<AppShell>();
+        builder.Services.AddSingleton<IShellTabNavigator>(sp =>
+            new AppShellTabNavigator(() => sp.GetRequiredService<AppShell>()));
 
         MauiApp app = builder.Build();
         NavigationCoordinator.SetLogger(

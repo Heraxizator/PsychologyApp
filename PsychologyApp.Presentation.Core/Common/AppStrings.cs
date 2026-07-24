@@ -436,6 +436,9 @@ public static partial class AppStrings
         "Edit today");
     public static string JournalDayEmptyHint(DateOnly day) =>
         T($"Нет записи за {day:d} — можно добавить", $"No entry for {day:d} — you can add one");
+    public static string JournalPickMoodHint => T(
+        "Выберите настроение выше",
+        "Pick a mood above");
     public static string JournalDayMoodLine(DateOnly day, int level, int max) =>
         T($"{day:d}: {MoodEmoji(level)} {level}/{max}", $"{day:d}: {MoodEmoji(level)} {level}/{max}");
     public static string JournalMoodStatsTitle => T("Обзор", "Overview");
@@ -444,6 +447,14 @@ public static partial class AppStrings
     public static string JournalOverviewInsightEmpty => T(
         "Пока мало отметок — отметьте настроение на этой неделе",
         "Not many check-ins yet — log your mood this week");
+    public static string JournalPracticeMoodInsight(int practiceDays, string averageMood) =>
+        T(
+            $"После практик ({practiceDays} дн.): ср. настроение {averageMood}",
+            $"After practice ({practiceDays} days): avg mood {averageMood}");
+    public static string JournalQuestionsSectionTitle => T("Вопросы", "Questions");
+    public static string JournalFactorsSectionTitle => T("Факторы дня", "Day factors");
+    public static string JournalWeekNavPrev => T("Предыдущая неделя", "Previous week");
+    public static string JournalWeekNavNext => T("Следующая неделя", "Next week");
     public static string JournalOverviewInsightLine(
         int checkIns,
         string averageMood,
@@ -537,8 +548,23 @@ public static partial class AppStrings
         T($"Лучший {MoodEmoji(best)} {best} · Худший {MoodEmoji(worst)} {worst}",
             $"Best {MoodEmoji(best)} {best} · Worst {MoodEmoji(worst)} {worst}");
     public static string JournalTimelineEmpty => T(
-        "Пока нет отметок настроения в этом периоде",
-        "No mood check-ins in this period yet");
+        "Ещё нет отметок — сделайте check-in в дневнике, чтобы начать серию",
+        "No check-ins yet — log a mood in the journal to start a streak");
+    public static string JournalTimelineStreakLine(string streak) =>
+        string.IsNullOrWhiteSpace(streak) || streak == MetricEmptyValue
+            ? string.Empty
+            : T($"Серия check-in: {streak}", $"Check-in streak: {streak}");
+    public static string JournalTryShortPractice => T(
+        "Короткая практика может помочь",
+        "A short practice may help");
+    public static string JournalPromptBlockedShort => T("Что мешало", "What blocked");
+    public static string JournalPromptGratefulShort => T("Благодарность", "Grateful");
+    public static string JournalFactorSleep => T("Сон: ", "Sleep: ");
+    public static string JournalFactorPeople => T("Люди: ", "People: ");
+    public static string JournalFactorPractice => T("Практика: ", "Practice: ");
+    public static string JournalFactorSleepLabel => T("Сон", "Sleep");
+    public static string JournalFactorPeopleLabel => T("Люди", "People");
+    public static string JournalFactorPracticeLabel => T("Практика", "Practice");
     public static string MoodNotesEmpty => T(
         "Пока нет отметок настроения — сделайте check-in выше",
         "No mood check-ins yet — log one above");
@@ -881,8 +907,8 @@ public static partial class AppStrings
 
     public static string CrisisHubTitle => T("Срочная помощь", "Crisis help");
     public static string CrisisHubLead => T(
-        "Если вам тяжело прямо сейчас, сначала позаботьтесь о безопасности. Это приложение не заменяет экстренную помощь.",
-        "If you are struggling right now, prioritize safety first. This app does not replace emergency care.");
+        "Сначала безопасность. Приложение не заменяет экстренную помощь.",
+        "Safety first. This app does not replace emergency care.");
     public static string CrisisHubSafetyPlanTitle => T("План безопасности", "Safety plan");
     public static string CrisisHubSafetyPlanStep1 => T(
         "Отойдите от триггеров и займите безопасное место.",
@@ -909,6 +935,7 @@ public static partial class AppStrings
         "International: findahelpline.com");
     public static string CrisisHubCallHotlineRu => T("Позвонить на 8-800-2000-122", "Call 8-800-2000-122");
     public static string CrisisHubCallEmergency => T("Позвонить в 112", "Call 112");
+    public static string CrisisHubEmergencyBadge => "112";
     public static string CrisisHubOpenHelpline => T("Открыть findahelpline.com", "Open findahelpline.com");
     public static string CrisisHubRecheck => T("Перепроверить состояние", "Recheck how I'm doing");
     public static string CrisisHubContinueSoft => T("Вернуться к мягким практикам", "Return to gentle practices");
@@ -972,6 +999,44 @@ public static partial class AppStrings
         string.IsNullOrWhiteSpace(note)
             ? T($"{day}: настроение {mood}", $"{day}: mood {mood}")
             : T($"{day}: настроение {mood}\n{note}", $"{day}: mood {mood}\n{note}");
+    public static string JournalShareEntryWithFactors(string day, int moodLevel, string? note, IReadOnlyList<string> factorLabels)
+    {
+        string emoji = MoodEmojiFor(moodLevel);
+        string mood = FormatAverageMood(moodLevel);
+        string header = T($"{day}: {emoji} {mood}", $"{day}: {emoji} {mood}");
+        List<string> parts = [header];
+        if (factorLabels.Count > 0)
+        {
+            parts.Add(T($"Факторы: {string.Join(", ", factorLabels)}", $"Factors: {string.Join(", ", factorLabels)}"));
+        }
+
+        string body = StripFactorLines(note);
+        if (!string.IsNullOrWhiteSpace(body))
+        {
+            parts.Add(body);
+        }
+
+        return string.Join('\n', parts);
+    }
+
+    private static string StripFactorLines(string? note)
+    {
+        if (string.IsNullOrWhiteSpace(note))
+        {
+            return string.Empty;
+        }
+
+        string sleep = JournalFactorSleep;
+        string people = JournalFactorPeople;
+        string practice = JournalFactorPractice;
+        return string.Join(
+            Environment.NewLine,
+            note.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Where(line =>
+                    !line.StartsWith(sleep, StringComparison.OrdinalIgnoreCase) &&
+                    !line.StartsWith(people, StringComparison.OrdinalIgnoreCase) &&
+                    !line.StartsWith(practice, StringComparison.OrdinalIgnoreCase)));
+    }
     public static string JournalReminderToggle => T("Напоминать о check-in", "Remind me to check in");
     public static string JournalReminderHint => T(
         "Время можно изменить в настройках",

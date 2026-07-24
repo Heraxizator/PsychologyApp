@@ -29,23 +29,31 @@ public sealed record JournalMoodSnapshot(
     string EditorMoodDisplay,
     string MoodHistorySummary,
     string RangeSubtitle,
-    JournalMoodStats Stats);
+    JournalMoodStats Stats,
+    string PracticeMoodInsight,
+    DateOnly WeekStripEnd);
 
 public sealed class JournalMoodLoader(IUserProgressService userProgressService)
 {
     private const int TimelineLimit = 120;
+    private const int MaxWeekLookbackDays = 84;
 
     public async Task<JournalMoodSnapshot> LoadAsync(
         int rangeDays = 7,
         DateOnly? filterDay = null,
         DateOnly? editorDay = null,
+        DateOnly? weekStripEnd = null,
         CancellationToken cancellationToken = default)
     {
         int clampedRange = Math.Clamp(rangeDays, 1, 90);
         DateOnly today = DateOnly.FromDateTime(DateTime.Today);
         DateOnly rangeStart = today.AddDays(-(clampedRange - 1));
         DateOnly resolvedEditorDay = editorDay ?? filterDay ?? today;
-        DateTime fromUtc = rangeStart.ToDateTime(TimeOnly.MinValue).ToUniversalTime();
+        DateOnly stripEnd = ClampStripEnd(weekStripEnd ?? today, today);
+        DateOnly stripStart = stripEnd.AddDays(-6);
+        DateOnly fetchStart = stripStart < rangeStart ? stripStart : rangeStart;
+
+        DateTime fromUtc = fetchStart.ToDateTime(TimeOnly.MinValue).ToUniversalTime();
         DateTime toUtcExclusive = today.AddDays(1).ToDateTime(TimeOnly.MinValue).ToUniversalTime();
 
         IReadOnlyList<MoodEntryDTO> moods =
@@ -66,7 +74,7 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
             .ToList();
 
         List<JournalTimelineDayGroup> groups = BuildTimelineGroups(timeline);
-        List<JournalDayChip> weekDays = BuildWeekDays(today, byDay, filterDay ?? editorDay);
+        List<JournalDayChip> weekDays = BuildWeekDays(stripEnd, byDay, filterDay ?? editorDay);
 
         byDay.TryGetValue(resolvedEditorDay, out MoodEntryDTO? editorEntry);
         long? editorEntryId = editorEntry?.MoodEntryId;
@@ -86,7 +94,20 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
             .Select(mood => AppStrings.MoodHistoryEntry(mood.RecordedAt.ToLocalTime().ToString("d"), mood.MoodLevel, 5))
             .ToArray();
 
-        JournalMoodStats stats = BuildStats(orderedNewestFirst, today);
+        IReadOnlyList<MoodEntryDTO> statsSource = orderedNewestFirst
+            .Where(entry =>
+            {
+                DateOnly day = DateOnly.FromDateTime(entry.RecordedAt.ToLocalTime());
+                return day >= rangeStart && day <= today;
+            })
+            .ToList();
+        JournalMoodStats stats = BuildStats(statsSource, today);
+
+        string practiceInsight = await BuildPracticeMoodInsightAsync(
+            rangeStart,
+            today,
+            byDay,
+            cancellationToken);
 
         return new JournalMoodSnapshot(
             points,
@@ -102,7 +123,9 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
             editorDisplay,
             historyEntries.Length == 0 ? string.Empty : string.Join(" · ", historyEntries),
             AppStrings.WeekRangeLabel(rangeStart, today),
-            stats);
+            stats,
+            practiceInsight,
+            stripEnd);
     }
 
     public async Task SaveMoodAsync(
@@ -133,6 +156,17 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
     public Task DeleteMoodAsync(long moodEntryId, CancellationToken cancellationToken = default) =>
         userProgressService.DeleteMoodEntryAsync(moodEntryId, cancellationToken);
 
+    public static DateOnly ClampStripEnd(DateOnly stripEnd, DateOnly today)
+    {
+        DateOnly earliest = today.AddDays(-(MaxWeekLookbackDays - 1));
+        if (stripEnd > today)
+        {
+            return today;
+        }
+
+        return stripEnd < earliest ? earliest : stripEnd;
+    }
+
     public static IReadOnlyList<JournalTimelineDayGroup> FilterGroupsByNoteSearch(
         IReadOnlyList<JournalTimelineDayGroup> groups,
         string? query)
@@ -157,6 +191,47 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
             .Where(group => group is not null)
             .Select(group => group!)
             .ToList();
+    }
+
+    private async Task<string> BuildPracticeMoodInsightAsync(
+        DateOnly rangeStart,
+        DateOnly today,
+        IReadOnlyDictionary<DateOnly, MoodEntryDTO> byDay,
+        CancellationToken cancellationToken)
+    {
+        IReadOnlyList<CompletionDTO> completions;
+        try
+        {
+            completions = await userProgressService.GetRecentTechniqueCompletionsAsync(50, cancellationToken)
+                ?? Array.Empty<CompletionDTO>();
+        }
+        catch
+        {
+            return string.Empty;
+        }
+
+        HashSet<DateOnly> practiceDays = completions
+            .Select(completion => DateOnly.FromDateTime(completion.CompletedAt.ToLocalTime()))
+            .Where(day => day >= rangeStart && day <= today)
+            .ToHashSet();
+        if (practiceDays.Count == 0)
+        {
+            return string.Empty;
+        }
+
+        List<int> moodsOnPracticeDays = practiceDays
+            .Where(byDay.ContainsKey)
+            .Select(day => byDay[day].MoodLevel)
+            .ToList();
+        if (moodsOnPracticeDays.Count == 0)
+        {
+            return string.Empty;
+        }
+
+        double average = moodsOnPracticeDays.Average();
+        return AppStrings.JournalPracticeMoodInsight(
+            practiceDays.Count,
+            AppStrings.FormatAverageMood(average));
     }
 
     private static List<JournalTimelineDayGroup> BuildTimelineGroups(IReadOnlyList<MoodNoteItem> timeline) =>
@@ -285,14 +360,14 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
     }
 
     private static List<JournalDayChip> BuildWeekDays(
-        DateOnly today,
+        DateOnly stripEnd,
         IReadOnlyDictionary<DateOnly, MoodEntryDTO> byDay,
         DateOnly? selectedDay)
     {
         List<JournalDayChip> chips = [];
         for (int offset = 6; offset >= 0; offset--)
         {
-            DateOnly date = today.AddDays(-offset);
+            DateOnly date = stripEnd.AddDays(-offset);
             byDay.TryGetValue(date, out MoodEntryDTO? entry);
             chips.Add(new JournalDayChip
             {

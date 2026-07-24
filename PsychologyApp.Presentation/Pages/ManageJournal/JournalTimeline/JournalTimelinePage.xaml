@@ -28,6 +28,11 @@
             <ui:TextEntryView
                 PlaceholderText="{Binding SearchPlaceholder}"
                 BodyText="{Binding SearchQuery}" />
+            <Label
+                IsVisible="{Binding HasTimelineStreak}"
+                Text="{Binding TimelineStreakText}"
+                Style="{StaticResource CaptionStyle}"
+                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
             <ui:EmptyStateView
                 IsVisible="{Binding ShowMoodNotesEmpty}"
                 BodyText="{Binding MoodNotesEmpty}"
