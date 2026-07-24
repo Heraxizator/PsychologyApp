@@ -34,6 +34,9 @@ public sealed class CrisisHubViewModel : BaseViewModel
     public string SafetyPlanStep1 => AppStrings.CrisisHubSafetyPlanStep1;
     public string SafetyPlanStep2 => AppStrings.CrisisHubSafetyPlanStep2;
     public string SafetyPlanStep3 => AppStrings.CrisisHubSafetyPlanStep3;
+    public string SafetyPlanStepNumber1 => AppStrings.CrisisHubSafetyPlanStepNumber1;
+    public string SafetyPlanStepNumber2 => AppStrings.CrisisHubSafetyPlanStepNumber2;
+    public string SafetyPlanStepNumber3 => AppStrings.CrisisHubSafetyPlanStepNumber3;
     public string HotlineTitle => AppStrings.CrisisHubHotlineTitle;
     public string HotlineRu => AppStrings.CrisisHubHotlineRu;
     public string HotlineIntl => AppStrings.CrisisHubHotlineIntl;
@@ -75,6 +78,9 @@ public sealed class CrisisHubViewModel : BaseViewModel
             nameof(SafetyPlanStep1),
             nameof(SafetyPlanStep2),
             nameof(SafetyPlanStep3),
+            nameof(SafetyPlanStepNumber1),
+            nameof(SafetyPlanStepNumber2),
+            nameof(SafetyPlanStepNumber3),
             nameof(HotlineTitle),
             nameof(HotlineRu),
             nameof(HotlineIntl),

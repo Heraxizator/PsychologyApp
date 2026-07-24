@@ -280,6 +280,7 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
             hasNote,
             entry.MoodLevel,
             AppStrings.MoodLevelPill(entry.MoodLevel),
+            AppStrings.MoodEmojiFor(entry.MoodLevel),
             local.Date == DateTime.Today);
     }
 

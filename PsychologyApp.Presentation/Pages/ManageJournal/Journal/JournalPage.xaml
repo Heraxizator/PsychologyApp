@@ -94,6 +94,12 @@
                 SelectDayCommand="{Binding SelectDayCommand}"
                 IsInteractive="True" />
 
+            <Label
+                IsVisible="{Binding HasWeekInsight}"
+                Text="{Binding WeekInsightText}"
+                Style="{StaticResource CaptionStyle}"
+                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+
             <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                 <Label
                     Text="{Binding NoteSectionTitle}"
@@ -143,55 +149,37 @@
             <ui:ButtonView
                 BodyText="{Binding SaveLabel}"
                 TapCommand="{Binding SaveMoodCommand}"
-                Variant="Primary" />
+                Variant="Secondary" />
 
             <HorizontalStackLayout
                 Spacing="{StaticResource LayoutSpacing}"
-                HorizontalOptions="Start">
-                <HorizontalStackLayout
+                HorizontalOptions="End">
+                <Label
                     IsVisible="{Binding CanShareEntry}"
-                    Spacing="6"
-                    VerticalOptions="Center">
-                    <HorizontalStackLayout.GestureRecognizers>
+                    Style="{StaticResource IconActionStyle}"
+                    WidthRequest="40"
+                    Text="{mi:Material Icon=Share}"
+                    SemanticProperties.Description="{Binding ShareLabel}">
+                    <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ShareCommand}" />
-                    </HorizontalStackLayout.GestureRecognizers>
-                    <HorizontalStackLayout.Behaviors>
+                    </Label.GestureRecognizers>
+                    <Label.Behaviors>
                         <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
-                    </HorizontalStackLayout.Behaviors>
-                    <Label
-                        Style="{StaticResource CaptionStyle}"
-                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                        Text="{mi:Material Icon=Share}"
-                        FontSize="18"
-                        VerticalOptions="Center" />
-                    <Label
-                        Text="{Binding ShareLabel}"
-                        Style="{StaticResource CaptionStyle}"
-                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                        VerticalOptions="Center" />
-                </HorizontalStackLayout>
-                <HorizontalStackLayout
+                    </Label.Behaviors>
+                </Label>
+                <Label
                     IsVisible="{Binding CanDeleteEntry}"
-                    Spacing="6"
-                    VerticalOptions="Center">
-                    <HorizontalStackLayout.GestureRecognizers>
+                    Style="{StaticResource IconActionStyle}"
+                    WidthRequest="40"
+                    Text="{mi:Material Icon=Delete}"
+                    SemanticProperties.Description="{Binding DeleteLabel}">
+                    <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding DeleteMoodCommand}" />
-                    </HorizontalStackLayout.GestureRecognizers>
-                    <HorizontalStackLayout.Behaviors>
+                    </Label.GestureRecognizers>
+                    <Label.Behaviors>
                         <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
-                    </HorizontalStackLayout.Behaviors>
-                    <Label
-                        Style="{StaticResource CaptionStyle}"
-                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                        Text="{mi:Material Icon=Delete}"
-                        FontSize="18"
-                        VerticalOptions="Center" />
-                    <Label
-                        Text="{Binding DeleteLabel}"
-                        Style="{StaticResource CaptionStyle}"
-                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                        VerticalOptions="Center" />
-                </HorizontalStackLayout>
+                    </Label.Behaviors>
+                </Label>
             </HorizontalStackLayout>
         </VerticalStackLayout>
     </ScrollView>

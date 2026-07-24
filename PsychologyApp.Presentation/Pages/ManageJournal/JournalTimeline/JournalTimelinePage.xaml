@@ -41,36 +41,25 @@
                         <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                             <Label
                                 Text="{Binding DateLabel}"
-                                Style="{StaticResource SectionTitleStyle}" />
+                                Style="{StaticResource CaptionStyle}"
+                                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
                             <VerticalStackLayout
                                 BindableLayout.ItemsSource="{Binding Entries}"
                                 Spacing="{StaticResource ListItemSpacing}">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate x:DataType="profile:MoodNoteItem">
-                                        <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                                            <journalUi:JournalEntryView
-                                                DateText="{Binding DateText}"
-                                                TimeText="{Binding TimeText}"
-                                                NoteText="{Binding NoteText}"
-                                                HasNote="{Binding HasNote}"
-                                                MoodDisplay="{Binding MoodDisplay}"
-                                                TapCommand="{Binding Source={x:Reference TimelineRoot}, Path=BindingContext.SelectTimelineEntryCommand}"
-                                                CommandParameter="{Binding .}" />
-                                            <Border Style="{StaticResource OutlinedActionBorderStyle}">
-                                                <Border.GestureRecognizers>
-                                                    <TapGestureRecognizer
-                                                        Command="{Binding Source={x:Reference TimelineRoot}, Path=BindingContext.ShareEntryCommand}"
-                                                        CommandParameter="{Binding .}" />
-                                                </Border.GestureRecognizers>
-                                                <Border.Behaviors>
-                                                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
-                                                </Border.Behaviors>
-                                                <Label
-                                                    Text="{Binding Source={x:Reference TimelineRoot}, Path=BindingContext.ShareLabel}"
-                                                    Style="{StaticResource OutlinedActionLabelStyle}"
-                                                    HorizontalOptions="Center" />
-                                            </Border>
-                                        </VerticalStackLayout>
+                                        <journalUi:JournalEntryView
+                                            DateText="{Binding DateText}"
+                                            TimeText="{Binding TimeText}"
+                                            NoteText="{Binding NoteText}"
+                                            HasNote="{Binding HasNote}"
+                                            MoodDisplay="{Binding MoodDisplay}"
+                                            MoodGlyph="{Binding MoodGlyph}"
+                                            TapCommand="{Binding Source={x:Reference TimelineRoot}, Path=BindingContext.SelectTimelineEntryCommand}"
+                                            CommandParameter="{Binding .}"
+                                            ShareCommand="{Binding Source={x:Reference TimelineRoot}, Path=BindingContext.ShareEntryCommand}"
+                                            ShareCommandParameter="{Binding .}"
+                                            ShareDescription="{Binding Source={x:Reference TimelineRoot}, Path=BindingContext.ShareLabel}" />
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
                             </VerticalStackLayout>

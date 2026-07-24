@@ -153,9 +153,9 @@ public sealed class JournalMoodLoaderTests
                 "Today",
                 [
                     new PsychologyApp.Presentation.Entities.Profile.MoodNoteItem(
-                        1, today, "d", "t", "Felt calmer", true, 4, "🙂 4/5", true),
+                        1, today, "d", "t", "Felt calmer", true, 4, "🙂 4/5", "🙂", true),
                     new PsychologyApp.Presentation.Entities.Profile.MoodNoteItem(
-                        2, today, "d", "t", "Без заметки", false, 3, "😐 3/5", true)
+                        2, today, "d", "t", "Без заметки", false, 3, "😐 3/5", "😐", true)
                 ])
         };
 
