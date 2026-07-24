@@ -9,4 +9,5 @@ public sealed record MoodNoteItem(
     bool HasNote,
     int MoodLevel,
     string MoodDisplay,
+    string MoodGlyph,
     bool IsToday);

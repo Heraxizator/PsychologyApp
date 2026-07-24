@@ -25,50 +25,198 @@
                     <behaviors:StaggerChildrenBehavior />
                 </VerticalStackLayout.Behaviors>
 
-                <Label Text="{Binding LeadText}" Style="{StaticResource BodyStyle}">
-                    <Label.Behaviors>
-                        <behaviors:RevealOnAppearingBehavior />
-                    </Label.Behaviors>
-                </Label>
-
-                <Label Text="{Binding Subtitle}" Style="{StaticResource CaptionStyle}" />
-
-                <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                <Border Style="{StaticResource HeroCardStyle}">
                     <Border.Behaviors>
-                        <behaviors:ListItemRevealBehavior RevealIndex="1" />
+                        <behaviors:RevealOnAppearingBehavior />
                     </Border.Behaviors>
-                    <VerticalStackLayout Spacing="0">
-                        <ui:SettingSwitchRowView
-                            LabelText="{Binding SelfHarmLabel}"
-                            IsToggled="{Binding HasSelfHarmThoughts}" />
-                        <ui:SettingSwitchRowView
-                            LabelText="{Binding DisorientationLabel}"
-                            IsToggled="{Binding HasSevereDisorientation}" />
-                        <ui:SettingSwitchRowView
-                            LabelText="{Binding SubstanceLabel}"
-                            IsToggled="{Binding HasSubstanceRisk}" />
-                        <ui:SettingSwitchRowView
-                            LabelText="{Binding InsomniaLabel}"
-                            IsToggled="{Binding HasSevereInsomnia}"
-                            ShowDivider="False" />
+                    <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                        <Label Text="{Binding LeadText}" Style="{StaticResource BodyStyle}" />
+                        <Label Text="{Binding Subtitle}" Style="{StaticResource CaptionStyle}" />
                     </VerticalStackLayout>
                 </Border>
 
-                <ui:ButtonView
-                    IsVisible="{Binding ShowOpenHelpNow}"
-                    BodyText="{Binding OpenHelpNowText}"
-                    TapCommand="{Binding OpenHelpNowCommand}"
-                    Variant="Primary" />
+                <!-- Self-harm -->
+                <Border Style="{StaticResource BrandCardStyle}">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="1" />
+                    </Border.Behaviors>
+                    <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                        <Label Text="{Binding SelfHarmLabel}" Style="{StaticResource BodyStyle}" />
+                        <HorizontalStackLayout Spacing="{StaticResource CompactSpacing}">
+                            <Border Style="{StaticResource MetaPillStyle}" MinimumWidthRequest="72" Padding="16,8">
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding HasSelfHarmThoughts}" Value="True">
+                                        <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                        <Setter Property="StrokeThickness" Value="2" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SetSelfHarmCommand}" CommandParameter="yes" />
+                                </Border.GestureRecognizers>
+                                <Border.Behaviors>
+                                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                                </Border.Behaviors>
+                                <Label Text="{Binding YesLabel}" Style="{StaticResource CaptionStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" TextColor="{DynamicResource Primary}" HorizontalTextAlignment="Center" />
+                            </Border>
+                            <Border Style="{StaticResource MetaPillStyle}" MinimumWidthRequest="72" Padding="16,8">
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding HasSelfHarmNo}" Value="True">
+                                        <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                        <Setter Property="StrokeThickness" Value="2" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SetSelfHarmCommand}" CommandParameter="no" />
+                                </Border.GestureRecognizers>
+                                <Border.Behaviors>
+                                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                                </Border.Behaviors>
+                                <Label Text="{Binding NoLabel}" Style="{StaticResource CaptionStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" TextColor="{DynamicResource Primary}" HorizontalTextAlignment="Center" />
+                            </Border>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Disorientation -->
+                <Border Style="{StaticResource BrandCardStyle}">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="2" />
+                    </Border.Behaviors>
+                    <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                        <Label Text="{Binding DisorientationLabel}" Style="{StaticResource BodyStyle}" />
+                        <HorizontalStackLayout Spacing="{StaticResource CompactSpacing}">
+                            <Border Style="{StaticResource MetaPillStyle}" MinimumWidthRequest="72" Padding="16,8">
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding HasSevereDisorientation}" Value="True">
+                                        <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                        <Setter Property="StrokeThickness" Value="2" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SetDisorientationCommand}" CommandParameter="yes" />
+                                </Border.GestureRecognizers>
+                                <Border.Behaviors>
+                                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                                </Border.Behaviors>
+                                <Label Text="{Binding YesLabel}" Style="{StaticResource CaptionStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" TextColor="{DynamicResource Primary}" HorizontalTextAlignment="Center" />
+                            </Border>
+                            <Border Style="{StaticResource MetaPillStyle}" MinimumWidthRequest="72" Padding="16,8">
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding HasSevereDisorientationNo}" Value="True">
+                                        <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                        <Setter Property="StrokeThickness" Value="2" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SetDisorientationCommand}" CommandParameter="no" />
+                                </Border.GestureRecognizers>
+                                <Border.Behaviors>
+                                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                                </Border.Behaviors>
+                                <Label Text="{Binding NoLabel}" Style="{StaticResource CaptionStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" TextColor="{DynamicResource Primary}" HorizontalTextAlignment="Center" />
+                            </Border>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Substance -->
+                <Border Style="{StaticResource BrandCardStyle}">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="3" />
+                    </Border.Behaviors>
+                    <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                        <Label Text="{Binding SubstanceLabel}" Style="{StaticResource BodyStyle}" />
+                        <HorizontalStackLayout Spacing="{StaticResource CompactSpacing}">
+                            <Border Style="{StaticResource MetaPillStyle}" MinimumWidthRequest="72" Padding="16,8">
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding HasSubstanceRisk}" Value="True">
+                                        <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                        <Setter Property="StrokeThickness" Value="2" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SetSubstanceCommand}" CommandParameter="yes" />
+                                </Border.GestureRecognizers>
+                                <Border.Behaviors>
+                                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                                </Border.Behaviors>
+                                <Label Text="{Binding YesLabel}" Style="{StaticResource CaptionStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" TextColor="{DynamicResource Primary}" HorizontalTextAlignment="Center" />
+                            </Border>
+                            <Border Style="{StaticResource MetaPillStyle}" MinimumWidthRequest="72" Padding="16,8">
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding HasSubstanceRiskNo}" Value="True">
+                                        <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                        <Setter Property="StrokeThickness" Value="2" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SetSubstanceCommand}" CommandParameter="no" />
+                                </Border.GestureRecognizers>
+                                <Border.Behaviors>
+                                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                                </Border.Behaviors>
+                                <Label Text="{Binding NoLabel}" Style="{StaticResource CaptionStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" TextColor="{DynamicResource Primary}" HorizontalTextAlignment="Center" />
+                            </Border>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Insomnia -->
+                <Border Style="{StaticResource BrandCardStyle}">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="4" />
+                    </Border.Behaviors>
+                    <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                        <Label Text="{Binding InsomniaLabel}" Style="{StaticResource BodyStyle}" />
+                        <HorizontalStackLayout Spacing="{StaticResource CompactSpacing}">
+                            <Border Style="{StaticResource MetaPillStyle}" MinimumWidthRequest="72" Padding="16,8">
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding HasSevereInsomnia}" Value="True">
+                                        <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                        <Setter Property="StrokeThickness" Value="2" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SetInsomniaCommand}" CommandParameter="yes" />
+                                </Border.GestureRecognizers>
+                                <Border.Behaviors>
+                                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                                </Border.Behaviors>
+                                <Label Text="{Binding YesLabel}" Style="{StaticResource CaptionStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" TextColor="{DynamicResource Primary}" HorizontalTextAlignment="Center" />
+                            </Border>
+                            <Border Style="{StaticResource MetaPillStyle}" MinimumWidthRequest="72" Padding="16,8">
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding HasSevereInsomniaNo}" Value="True">
+                                        <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                        <Setter Property="StrokeThickness" Value="2" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SetInsomniaCommand}" CommandParameter="no" />
+                                </Border.GestureRecognizers>
+                                <Border.Behaviors>
+                                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                                </Border.Behaviors>
+                                <Label Text="{Binding NoLabel}" Style="{StaticResource CaptionStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" TextColor="{DynamicResource Primary}" HorizontalTextAlignment="Center" />
+                            </Border>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
             </VerticalStackLayout>
         </ScrollView>
 
-        <ui:ButtonView
+        <VerticalStackLayout
             Grid.Row="2"
-            BodyText="{Binding SubmitText}"
-            TapCommand="{Binding SubmitCommand}">
-            <ui:ButtonView.Behaviors>
-                <behaviors:ListItemRevealBehavior RevealIndex="2" />
-            </ui:ButtonView.Behaviors>
-        </ui:ButtonView>
+            Spacing="{StaticResource CompactSpacing}">
+            <ui:ButtonView
+                IsVisible="{Binding ShowOpenHelpNow}"
+                BodyText="{Binding OpenHelpNowText}"
+                TapCommand="{Binding OpenHelpNowCommand}"
+                Variant="Primary" />
+            <ui:ButtonView
+                BodyText="{Binding SubmitText}"
+                TapCommand="{Binding SubmitCommand}"
+                Variant="Secondary" />
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

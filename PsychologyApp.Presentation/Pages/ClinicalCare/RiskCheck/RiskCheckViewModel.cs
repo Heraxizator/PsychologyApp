@@ -27,6 +27,10 @@ public sealed class RiskCheckViewModel : BaseViewModel
         SubmitCommand = new AsyncCommand(SubmitAsync);
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
         OpenHelpNowCommand = new AsyncCommand(OpenHelpNowAsync);
+        SetSelfHarmCommand = new Command<object?>(parameter => HasSelfHarmThoughts = ParseYes(parameter));
+        SetDisorientationCommand = new Command<object?>(parameter => HasSevereDisorientation = ParseYes(parameter));
+        SetSubstanceCommand = new Command<object?>(parameter => HasSubstanceRisk = ParseYes(parameter));
+        SetInsomniaCommand = new Command<object?>(parameter => HasSevereInsomnia = ParseYes(parameter));
     }
 
     public string PageTitle => AppStrings.RiskCheckTitle;
@@ -38,6 +42,8 @@ public sealed class RiskCheckViewModel : BaseViewModel
     public string InsomniaLabel => AppStrings.RiskCheckInsomnia;
     public string SubmitText => AppStrings.RiskCheckSubmit;
     public string OpenHelpNowText => AppStrings.RiskCheckOpenHelpNow;
+    public string YesLabel => AppStrings.RiskCheckYes;
+    public string NoLabel => AppStrings.RiskCheckNo;
 
     private bool _hasSelfHarmThoughts;
     public bool HasSelfHarmThoughts
@@ -48,36 +54,67 @@ public sealed class RiskCheckViewModel : BaseViewModel
             if (SetProperty(ref _hasSelfHarmThoughts, value))
             {
                 OnPropertyChanged(nameof(ShowOpenHelpNow));
+                OnPropertyChanged(nameof(HasSelfHarmNo));
             }
         }
     }
+
+    public bool HasSelfHarmNo => !HasSelfHarmThoughts;
 
     private bool _hasSevereDisorientation;
     public bool HasSevereDisorientation
     {
         get => _hasSevereDisorientation;
-        set => SetProperty(ref _hasSevereDisorientation, value);
+        set
+        {
+            if (SetProperty(ref _hasSevereDisorientation, value))
+            {
+                OnPropertyChanged(nameof(HasSevereDisorientationNo));
+            }
+        }
     }
+
+    public bool HasSevereDisorientationNo => !HasSevereDisorientation;
 
     private bool _hasSubstanceRisk;
     public bool HasSubstanceRisk
     {
         get => _hasSubstanceRisk;
-        set => SetProperty(ref _hasSubstanceRisk, value);
+        set
+        {
+            if (SetProperty(ref _hasSubstanceRisk, value))
+            {
+                OnPropertyChanged(nameof(HasSubstanceRiskNo));
+            }
+        }
     }
+
+    public bool HasSubstanceRiskNo => !HasSubstanceRisk;
 
     private bool _hasSevereInsomnia;
     public bool HasSevereInsomnia
     {
         get => _hasSevereInsomnia;
-        set => SetProperty(ref _hasSevereInsomnia, value);
+        set
+        {
+            if (SetProperty(ref _hasSevereInsomnia, value))
+            {
+                OnPropertyChanged(nameof(HasSevereInsomniaNo));
+            }
+        }
     }
+
+    public bool HasSevereInsomniaNo => !HasSevereInsomnia;
 
     public bool ShowOpenHelpNow => HasSelfHarmThoughts;
 
     public ICommand SubmitCommand { get; }
     public ICommand BackCommand { get; }
     public ICommand OpenHelpNowCommand { get; }
+    public ICommand SetSelfHarmCommand { get; }
+    public ICommand SetDisorientationCommand { get; }
+    public ICommand SetSubstanceCommand { get; }
+    public ICommand SetInsomniaCommand { get; }
 
     protected override void RefreshLocalizedProperties()
     {
@@ -91,8 +128,20 @@ public sealed class RiskCheckViewModel : BaseViewModel
             nameof(InsomniaLabel),
             nameof(SubmitText),
             nameof(OpenHelpNowText),
+            nameof(YesLabel),
+            nameof(NoLabel),
             nameof(ShowOpenHelpNow));
     }
+
+    private static bool ParseYes(object? parameter) =>
+        parameter switch
+        {
+            bool value => value,
+            string text when bool.TryParse(text, out bool parsed) => parsed,
+            "yes" => true,
+            "no" => false,
+            _ => false
+        };
 
     private async Task OpenHelpNowAsync()
     {

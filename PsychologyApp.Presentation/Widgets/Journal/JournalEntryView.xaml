@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:Class="PsychologyApp.Presentation.Widgets.Journal.JournalEntryView"
              x:Name="Root">
@@ -28,13 +28,13 @@
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="12" />
                 </Border.StrokeShape>
-                <ui:MaterialIconView
-                    WidthRequest="28"
-                    HeightRequest="28"
-                    VerticalOptions="Center"
+                <Label
+                    Text="{Binding MoodGlyph, Source={x:Reference Root}}"
+                    FontSize="24"
                     HorizontalOptions="Center"
-                    IconName="Edit"
-                    IconColor="{DynamicResource Primary}" />
+                    VerticalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center" />
             </Border>
 
             <VerticalStackLayout
@@ -53,7 +53,8 @@
                 <Label
                     Text="{Binding NoteText, Source={x:Reference Root}}"
                     Style="{StaticResource ListRowTitleStyle}"
-                    LineBreakMode="WordWrap">
+                    LineBreakMode="WordWrap"
+                    MaxLines="3">
                     <Label.Triggers>
                         <DataTrigger
                             TargetType="Label"
@@ -65,19 +66,27 @@
                         </DataTrigger>
                     </Label.Triggers>
                 </Label>
-            </VerticalStackLayout>
-
-            <Border
-                Grid.Column="2"
-                Style="{StaticResource MetaPillStyle}"
-                VerticalOptions="Center"
-                HorizontalOptions="End">
                 <Label
                     Text="{Binding MoodDisplay, Source={x:Reference Root}}"
                     Style="{StaticResource CaptionStyle}"
                     TextColor="{DynamicResource Primary}"
                     FontFamily="{StaticResource SemiBoldFontFamily}" />
-            </Border>
+            </VerticalStackLayout>
+
+            <Label
+                Grid.Column="2"
+                IsVisible="{Binding HasShareCommand, Source={x:Reference Root}}"
+                Style="{StaticResource IconActionStyle}"
+                WidthRequest="40"
+                VerticalOptions="Center"
+                Text="{mi:Material Icon=Share}"
+                SemanticProperties.Description="{Binding ShareDescription, Source={x:Reference Root}}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding ShareCommand, Source={x:Reference Root}}"
+                        CommandParameter="{Binding ShareCommandParameter, Source={x:Reference Root}}" />
+                </Label.GestureRecognizers>
+            </Label>
         </Grid>
     </Border>
 </ContentView>

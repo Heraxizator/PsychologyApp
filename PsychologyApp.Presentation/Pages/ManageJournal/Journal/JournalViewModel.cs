@@ -46,6 +46,7 @@ public sealed class JournalViewModel : BaseViewModel
             if (level is >= 1 and <= 5)
             {
                 SelectedMoodLevel = level;
+                SaveMoodAsync().FireAndForget();
             }
         });
         SaveMoodCommand = new AsyncCommand(SaveMoodAsync);
@@ -106,6 +107,21 @@ public sealed class JournalViewModel : BaseViewModel
     public string PromptHelpedLabel => AppStrings.JournalPromptHelpedShort;
     public string PromptNextLabel => AppStrings.JournalPromptNextShort;
     public string WeekStripTitle => AppStrings.JournalRecentDaysTitle;
+
+    private string _weekInsightText = string.Empty;
+    public string WeekInsightText
+    {
+        get => _weekInsightText;
+        private set
+        {
+            if (SetProperty(ref _weekInsightText, value))
+            {
+                OnPropertyChanged(nameof(HasWeekInsight));
+            }
+        }
+    }
+
+    public bool HasWeekInsight => !string.IsNullOrWhiteSpace(WeekInsightText);
 
     public ICommand BackCommand { get; }
     public ICommand OpenOverviewCommand { get; }
@@ -188,6 +204,8 @@ public sealed class JournalViewModel : BaseViewModel
             nameof(PromptHelpedLabel),
             nameof(PromptNextLabel),
             nameof(WeekStripTitle),
+            nameof(WeekInsightText),
+            nameof(HasWeekInsight),
             nameof(TodayMoodDisplay),
             nameof(HasTodayMood),
             nameof(MoodHistorySummary),
@@ -247,6 +265,10 @@ public sealed class JournalViewModel : BaseViewModel
         TodayMoodDisplay = snapshot.EditorMoodDisplay;
         MoodHistorySummary = snapshot.MoodHistorySummary;
         JournalNote = snapshot.EditorNote ?? string.Empty;
+        WeekInsightText = AppStrings.JournalWeekInsightLine(
+            snapshot.Stats.CheckInCount,
+            snapshot.Stats.MoodTrendLabel,
+            snapshot.Stats.MoodStreakDisplay);
 
         OnPropertyChanged(nameof(HasEditorEntry));
         OnPropertyChanged(nameof(CanDeleteEntry));

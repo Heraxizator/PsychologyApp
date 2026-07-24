@@ -21,60 +21,105 @@
                 TitleText="{Binding PageTitle}"
                 BackCommand="{Binding BackCommand}" />
 
-            <Border Style="{StaticResource BrandCardStyle}">
+            <Border Style="{StaticResource HeroCardStyle}">
                 <Border.Behaviors>
                     <behaviors:RevealOnAppearingBehavior />
                 </Border.Behaviors>
-                <VerticalStackLayout Spacing="{StaticResource SectionSpacing}">
-                    <ui:MaterialIconView
-                        IconName="HealthAndSafety"
-                        IconSize="32"
-                        IconColor="{DynamicResource Primary}"
-                        HorizontalOptions="Center" />
-                    <Label Text="{Binding LeadText}" Style="{StaticResource BodyStyle}" HorizontalTextAlignment="Center" />
-                    <Label Text="{Binding SpecialistHint}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
-                </VerticalStackLayout>
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                    <Border
+                        Grid.Column="0"
+                        Style="{StaticResource HeroAccentBarStyle}" />
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        Spacing="{StaticResource CompactSpacing}">
+                        <Label Text="{Binding LeadText}" Style="{StaticResource BodyStyle}" />
+                        <Label Text="{Binding SpecialistHint}" Style="{StaticResource CaptionStyle}" />
+                    </VerticalStackLayout>
+                </Grid>
             </Border>
 
-            <ui:SectionHeaderView TitleText="{Binding SafetyPlanTitle}" />
-            <Border Style="{StaticResource BrandCardStyle}">
-                <Border.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="1" />
-                </Border.Behaviors>
-                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <Label Text="{Binding SafetyPlanStep1}" Style="{StaticResource BodyStyle}" />
-                    <Label Text="{Binding SafetyPlanStep2}" Style="{StaticResource BodyStyle}" />
-                    <Label Text="{Binding SafetyPlanStep3}" Style="{StaticResource BodyStyle}" />
-                </VerticalStackLayout>
-            </Border>
+            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                <ui:SectionHeaderView TitleText="{Binding HotlineTitle}" />
+                <ui:ButtonView
+                    BodyText="{Binding CallEmergencyText}"
+                    TapCommand="{Binding CallEmergencyCommand}"
+                    Variant="Primary" />
+                <ui:ButtonView
+                    BodyText="{Binding CallHotlineRuText}"
+                    TapCommand="{Binding CallHotlineRuCommand}"
+                    Variant="Secondary" />
+                <Label
+                    Text="{Binding HotlineIntl}"
+                    Style="{StaticResource CaptionStyle}" />
+            </VerticalStackLayout>
 
-            <ui:SectionHeaderView TitleText="{Binding HotlineTitle}" />
-            <Border Style="{StaticResource BrandCardStyle}">
-                <Border.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="2" />
-                </Border.Behaviors>
-                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <Label Text="{Binding HotlineRu}" Style="{StaticResource BodyStyle}" />
-                    <Label Text="{Binding HotlineIntl}" Style="{StaticResource CaptionStyle}" />
-                    <ui:ButtonView
-                        BodyText="{Binding CallHotlineRuText}"
-                        TapCommand="{Binding CallHotlineRuCommand}"
-                        Variant="Primary"
-                        IsCompact="True" />
-                    <ui:ButtonView
-                        BodyText="{Binding CallEmergencyText}"
-                        TapCommand="{Binding CallEmergencyCommand}"
-                        Variant="Secondary"
-                        IsCompact="True" />
-                </VerticalStackLayout>
-            </Border>
+            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                <ui:SectionHeaderView TitleText="{Binding SafetyPlanTitle}" />
+                <Border Style="{StaticResource BrandCardStyle}">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="1" />
+                    </Border.Behaviors>
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border Grid.Column="0" Style="{StaticResource MetaPillStyle}" VerticalOptions="Start">
+                            <Label
+                                Text="{Binding SafetyPlanStepNumber1}"
+                                Style="{StaticResource CaptionStyle}"
+                                FontFamily="{StaticResource SemiBoldFontFamily}"
+                                TextColor="{DynamicResource Primary}" />
+                        </Border>
+                        <Label
+                            Grid.Column="1"
+                            Text="{Binding SafetyPlanStep1}"
+                            Style="{StaticResource BodyStyle}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+                <Border Style="{StaticResource BrandCardStyle}">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="2" />
+                    </Border.Behaviors>
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border Grid.Column="0" Style="{StaticResource MetaPillStyle}" VerticalOptions="Start">
+                            <Label
+                                Text="{Binding SafetyPlanStepNumber2}"
+                                Style="{StaticResource CaptionStyle}"
+                                FontFamily="{StaticResource SemiBoldFontFamily}"
+                                TextColor="{DynamicResource Primary}" />
+                        </Border>
+                        <Label
+                            Grid.Column="1"
+                            Text="{Binding SafetyPlanStep2}"
+                            Style="{StaticResource BodyStyle}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+                <Border Style="{StaticResource BrandCardStyle}">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="3" />
+                    </Border.Behaviors>
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border Grid.Column="0" Style="{StaticResource MetaPillStyle}" VerticalOptions="Start">
+                            <Label
+                                Text="{Binding SafetyPlanStepNumber3}"
+                                Style="{StaticResource CaptionStyle}"
+                                FontFamily="{StaticResource SemiBoldFontFamily}"
+                                TextColor="{DynamicResource Primary}" />
+                        </Border>
+                        <Label
+                            Grid.Column="1"
+                            Text="{Binding SafetyPlanStep3}"
+                            Style="{StaticResource BodyStyle}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
 
             <ui:ButtonView
                 BodyText="{Binding OpenHelplineText}"
                 TapCommand="{Binding OpenHelplineCommand}"
                 Variant="Secondary">
                 <ui:ButtonView.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="3" />
+                    <behaviors:ListItemRevealBehavior RevealIndex="4" />
                 </ui:ButtonView.Behaviors>
             </ui:ButtonView>
 
@@ -83,7 +128,7 @@
                 TapCommand="{Binding RecheckCommand}"
                 Variant="Secondary">
                 <ui:ButtonView.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="4" />
+                    <behaviors:ListItemRevealBehavior RevealIndex="5" />
                 </ui:ButtonView.Behaviors>
             </ui:ButtonView>
 
@@ -93,7 +138,7 @@
                 BodyText="{Binding ContinueSoftText}"
                 TapCommand="{Binding ContinueSoftCommand}">
                 <ui:ButtonView.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="5" />
+                    <behaviors:ListItemRevealBehavior RevealIndex="6" />
                 </ui:ButtonView.Behaviors>
             </ui:ButtonView>
         </VerticalStackLayout>

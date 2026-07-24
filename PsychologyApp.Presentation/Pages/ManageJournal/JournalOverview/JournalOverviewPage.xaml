@@ -30,61 +30,52 @@
                 SelectDayCommand="{Binding SelectDayCommand}"
                 IsInteractive="True" />
 
-            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                <ui:SectionHeaderView
-                    TitleText="{Binding StatsSectionTitle}"
-                    SubtitleText="{Binding WeekRangeSubtitle}" />
-                <ui:FilterChipTabBarView
-                    ItemsSource="{Binding RangeFilters}"
-                    TapCommand="{Binding SelectRangeCommand}" />
-                <ui:EmptyStateView
-                    IsVisible="{Binding ShowStatsEmpty}"
-                    BodyText="{Binding WeekEmptyText}"
-                    IconName="SelfImprovement" />
-                <Border
-                    IsVisible="{Binding HasMoodStats}"
-                    Style="{StaticResource BrandCardStyle}">
-                    <Border.Behaviors>
-                        <behaviors:ListItemRevealBehavior RevealIndex="0" />
-                    </Border.Behaviors>
-                    <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="{StaticResource CompactSpacing}">
-                            <ui:MetricTileView
-                                Grid.Column="0"
-                                ValueText="{Binding CheckInCountDisplay}"
-                                LabelText="{Binding WeekMoodCheckInsLabel}" />
-                            <ui:MetricTileView
-                                Grid.Column="1"
-                                ValueText="{Binding AverageMoodDisplay}"
-                                LabelText="{Binding WeekAvgMoodLabel}" />
-                            <ui:MetricTileView
-                                Grid.Column="2"
-                                ValueText="{Binding MoodStreakDisplay}"
-                                LabelText="{Binding WeekMoodStreakLabel}" />
-                        </Grid>
-                        <HorizontalStackLayout Spacing="{StaticResource CompactSpacing}">
-                            <Border
-                                Style="{StaticResource MetaPillStyle}"
-                                IsVisible="{Binding HasMoodTrendPill}">
-                                <Label
-                                    Text="{Binding MoodTrendLabel}"
-                                    Style="{StaticResource CaptionStyle}"
-                                    TextColor="{DynamicResource Primary}"
-                                    FontFamily="{StaticResource SemiBoldFontFamily}" />
-                            </Border>
-                            <Border
-                                Style="{StaticResource MetaPillStyle}"
-                                IsVisible="{Binding HasBestWorstPill}">
-                                <Label
-                                    Text="{Binding BestWorstLabel}"
-                                    Style="{StaticResource CaptionStyle}"
-                                    TextColor="{DynamicResource Primary}"
-                                    FontFamily="{StaticResource SemiBoldFontFamily}" />
-                            </Border>
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
+            <Border Style="{StaticResource HeroCardStyle}">
+                <Border.Behaviors>
+                    <behaviors:RevealOnAppearingBehavior />
+                </Border.Behaviors>
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <Label
+                        Text="{Binding WeekRangeSubtitle}"
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                    <Label
+                        Text="{Binding OverviewInsightText}"
+                        Style="{StaticResource BodyStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <ui:FilterChipTabBarView
+                ItemsSource="{Binding RangeFilters}"
+                TapCommand="{Binding SelectRangeCommand}" />
+
+            <HorizontalStackLayout
+                IsVisible="{Binding HasMoodStats}"
+                Spacing="{StaticResource CompactSpacing}">
+                <Border Style="{StaticResource MetaPillStyle}">
+                    <Label
+                        Text="{Binding CheckInPillText}"
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{DynamicResource Primary}"
+                        FontFamily="{StaticResource SemiBoldFontFamily}" />
                 </Border>
-            </VerticalStackLayout>
+                <Border Style="{StaticResource MetaPillStyle}">
+                    <Label
+                        Text="{Binding AverageMoodPillText}"
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{DynamicResource Primary}"
+                        FontFamily="{StaticResource SemiBoldFontFamily}" />
+                </Border>
+                <Border
+                    Style="{StaticResource MetaPillStyle}"
+                    IsVisible="{Binding HasBestWorstPill}">
+                    <Label
+                        Text="{Binding BestWorstLabel}"
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{DynamicResource Primary}"
+                        FontFamily="{StaticResource SemiBoldFontFamily}" />
+                </Border>
+            </HorizontalStackLayout>
 
             <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                 <ui:SectionHeaderView TitleText="{Binding MoodTrendTitle}" />

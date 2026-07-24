@@ -420,9 +420,9 @@ public static partial class AppStrings
         "Note for this day (optional)");
     public static string JournalNoteSectionTitle => T("Заметка", "Note");
     public static string JournalNoteSaveHint => T(
-        "Выберите настроение и нажмите «Сохранить»",
-        "Pick a mood, then tap Save");
-    public static string JournalSaveLabel => T("Сохранить", "Save");
+        "Настроение сохраняется сразу. Заметку — кнопкой ниже.",
+        "Mood saves instantly. Use the button below for the note.");
+    public static string JournalSaveLabel => T("Сохранить заметку", "Save note");
     public static string JournalDeleteLabel => T("Удалить", "Delete");
     public static string JournalDeleteConfirmTitle => T("Удалить запись?", "Delete entry?");
     public static string JournalDeleteConfirmMessage => T(
@@ -440,6 +440,69 @@ public static partial class AppStrings
         T($"{day:d}: {MoodEmoji(level)} {level}/{max}", $"{day:d}: {MoodEmoji(level)} {level}/{max}");
     public static string JournalMoodStatsTitle => T("Обзор", "Overview");
     public static string JournalMoodStreakLabel => T("Серия дней", "Day streak");
+    public static string JournalDynamicsTitle => T("Динамика", "Trend");
+    public static string JournalOverviewInsightEmpty => T(
+        "Пока мало отметок — отметьте настроение на этой неделе",
+        "Not many check-ins yet — log your mood this week");
+    public static string JournalOverviewInsightLine(
+        int checkIns,
+        string averageMood,
+        string trend,
+        string streak)
+    {
+        string baseLine = string.IsNullOrWhiteSpace(trend)
+            ? T(
+                $"{checkIns} {MoodCheckInWord(checkIns)} · ср. {averageMood}",
+                $"{checkIns} {MoodCheckInWordEn(checkIns)} · avg {averageMood}")
+            : T(
+                $"{checkIns} {MoodCheckInWord(checkIns)} · ср. {averageMood} · настроение {trend}",
+                $"{checkIns} {MoodCheckInWordEn(checkIns)} · avg {averageMood} · mood {trend}");
+
+        if (string.IsNullOrWhiteSpace(streak) || streak == MetricEmptyValue)
+        {
+            return baseLine;
+        }
+
+        return T($"{baseLine} · серия {streak}", $"{baseLine} · streak {streak}");
+    }
+
+    public static string JournalWeekInsightLine(int checkIns, string trend, string streak)
+    {
+        if (checkIns <= 0)
+        {
+            return string.Empty;
+        }
+
+        List<string> parts = [];
+        if (!string.IsNullOrWhiteSpace(trend))
+        {
+            parts.Add(T($"настроение {trend}", $"mood {trend}"));
+        }
+
+        if (!string.IsNullOrWhiteSpace(streak) && streak != MetricEmptyValue)
+        {
+            parts.Add(T($"серия {streak}", $"streak {streak}"));
+        }
+
+        if (parts.Count == 0)
+        {
+            return T(
+                $"{checkIns} {MoodCheckInWord(checkIns)} за неделю",
+                $"{checkIns} {MoodCheckInWordEn(checkIns)} this week");
+        }
+
+        return string.Join(" · ", parts);
+    }
+
+    private static string MoodCheckInWord(int count) => count switch
+    {
+        1 => "отметка",
+        >= 2 and <= 4 => "отметки",
+        _ => "отметок"
+    };
+
+    private static string MoodCheckInWordEn(int count) => count == 1 ? "check-in" : "check-ins";
+
     public static string JournalFilter7Days => T("7 дней", "7 days");
     public static string JournalFilter30Days => T("30 дней", "30 days");
     public static string JournalFilter90Days => T("90 дней", "90 days");
@@ -822,17 +885,20 @@ public static partial class AppStrings
         "If you are struggling right now, prioritize safety first. This app does not replace emergency care.");
     public static string CrisisHubSafetyPlanTitle => T("План безопасности", "Safety plan");
     public static string CrisisHubSafetyPlanStep1 => T(
-        "1. Отойдите от триггеров и займите безопасное место.",
-        "1. Step away from triggers and find a safer place.");
+        "Отойдите от триггеров и займите безопасное место.",
+        "Step away from triggers and find a safer place.");
     public static string CrisisHubSafetyPlanStep2 => T(
-        "2. Свяжитесь с кем-то надёжным — другом, родным или специалистом.",
-        "2. Reach a trusted person — a friend, relative, or specialist.");
+        "Свяжитесь с кем-то надёжным — другом, родным или специалистом.",
+        "Reach a trusted person — a friend, relative, or specialist.");
     public static string CrisisHubSafetyPlanStep3 => T(
-        "3. Если есть угроза жизни — звоните в экстренные службы (112).",
-        "3. If life is at risk — call emergency services (112).");
+        "Если есть угроза жизни — звоните в экстренные службы (112).",
+        "If life is at risk — call emergency services (112).");
+    public static string CrisisHubSafetyPlanStepNumber1 => "1";
+    public static string CrisisHubSafetyPlanStepNumber2 => "2";
+    public static string CrisisHubSafetyPlanStepNumber3 => "3";
     public static string CrisisHubSafetyPlanBody =>
-        $"{CrisisHubSafetyPlanStep1}\n{CrisisHubSafetyPlanStep2}\n{CrisisHubSafetyPlanStep3}";
-    public static string CrisisHubHotlineTitle => T("Горячие линии", "Hotlines");
+        $"{CrisisHubSafetyPlanStepNumber1}. {CrisisHubSafetyPlanStep1}\n{CrisisHubSafetyPlanStepNumber2}. {CrisisHubSafetyPlanStep2}\n{CrisisHubSafetyPlanStepNumber3}. {CrisisHubSafetyPlanStep3}";
+    public static string CrisisHubHotlineTitle => T("Позвонить сейчас", "Call now");
     public static string CrisisHubHotlineRu => T(
         "Россия: 8-800-2000-122 (телефон доверия), 112 — экстренные службы",
         "Russia: 8-800-2000-122 (helpline), 112 — emergency services");
@@ -869,8 +935,10 @@ public static partial class AppStrings
     public static string RiskCheckInsomnia => T(
         "Тяжёлая бессонница и истощение",
         "Severe insomnia and exhaustion");
-    public static string RiskCheckSubmit => T("Сохранить", "Save");
+    public static string RiskCheckSubmit => T("Готово", "Done");
     public static string RiskCheckOpenHelpNow => T("Открыть помощь сейчас", "Open help now");
+    public static string RiskCheckYes => T("Да", "Yes");
+    public static string RiskCheckNo => T("Нет", "No");
     public static string RiskCheckSourceOnboarding => "onboarding";
     public static string RiskCheckSourcePeriodic => "periodic";
     public static string RiskCheckSourceManual => "manual";
@@ -884,10 +952,10 @@ public static partial class AppStrings
     public static string ClinicalScorecardTitle => T("Недельный обзор", "Weekly overview");
     public static string PracticeHistorySeeAll => T("Все", "All");
     public static string PracticeHistoryPageTitle => T("История практик", "Practice history");
-    public static string ProfileRiskCheckLabel => T("Проверить состояние", "Check how I'm doing");
+    public static string ProfileRiskCheckLabel => T("Как я сейчас?", "How am I right now?");
     public static string ProfileRiskCheckSubtitle => T(
-        "Краткий check-in состояния",
-        "A short wellbeing check-in");
+        "Короткие вопросы о безопасности",
+        "Short questions about safety");
     public static string ProfileMoodTrendPreview(string avgMood, string risk) =>
         T($"Настроение: {avgMood} · риск: {risk}", $"Mood: {avgMood} · risk: {risk}");
 

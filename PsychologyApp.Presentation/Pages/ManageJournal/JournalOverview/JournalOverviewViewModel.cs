@@ -75,15 +75,13 @@ public sealed class JournalOverviewViewModel : BaseViewModel
     }
 
     public string PageTitle => AppStrings.JournalOverviewTitle;
-    public string MoodTrendTitle => AppStrings.ProfileMoodTrendTitle;
+    public string MoodTrendTitle => AppStrings.JournalDynamicsTitle;
     public string MoodTrendHint => AppStrings.ProfileMoodTrendHint;
     public bool ShowMoodTrendHint => !HasMoodTrendChart;
-    public string StatsSectionTitle => AppStrings.JournalMoodStatsTitle;
     public string WeekStripTitle => AppStrings.JournalRecentDaysTitle;
     public string WeekEmptyText => AppStrings.JournalWeekEmpty;
     public string WeekMoodCheckInsLabel => AppStrings.WeekMoodCheckInsLabel;
     public string WeekAvgMoodLabel => AppStrings.WeekAvgMoodLabel;
-    public string WeekMoodStreakLabel => AppStrings.JournalMoodStreakLabel;
 
     public ICommand BackCommand { get; }
     public ICommand SelectRangeCommand { get; }
@@ -197,6 +195,19 @@ public sealed class JournalOverviewViewModel : BaseViewModel
 
     public bool HasBestWorstPill => !string.IsNullOrWhiteSpace(BestWorstLabel);
 
+    private string _overviewInsightText = string.Empty;
+    public string OverviewInsightText
+    {
+        get => _overviewInsightText;
+        private set => SetProperty(ref _overviewInsightText, value);
+    }
+
+    public string CheckInPillText =>
+        $"{WeekMoodCheckInsLabel}: {CheckInCountDisplay}";
+
+    public string AverageMoodPillText =>
+        $"{WeekAvgMoodLabel}: {AverageMoodDisplay}";
+
     protected override void RefreshLocalizedProperties()
     {
         Notify(
@@ -204,12 +215,10 @@ public sealed class JournalOverviewViewModel : BaseViewModel
             nameof(MoodTrendTitle),
             nameof(MoodTrendHint),
             nameof(ShowMoodTrendHint),
-            nameof(StatsSectionTitle),
             nameof(WeekStripTitle),
             nameof(WeekEmptyText),
             nameof(WeekMoodCheckInsLabel),
             nameof(WeekAvgMoodLabel),
-            nameof(WeekMoodStreakLabel),
             nameof(HasMoodStats),
             nameof(ShowStatsEmpty),
             nameof(WeekRangeSubtitle),
@@ -219,7 +228,10 @@ public sealed class JournalOverviewViewModel : BaseViewModel
             nameof(MoodTrendLabel),
             nameof(HasMoodTrendPill),
             nameof(BestWorstLabel),
-            nameof(HasBestWorstPill));
+            nameof(HasBestWorstPill),
+            nameof(OverviewInsightText),
+            nameof(CheckInPillText),
+            nameof(AverageMoodPillText));
 
         foreach (FilterChipTabItem filter in RangeFilters)
         {
@@ -269,6 +281,15 @@ public sealed class JournalOverviewViewModel : BaseViewModel
                 MoodStreakDisplay = stats.MoodStreakDisplay;
                 MoodTrendLabel = stats.MoodTrendLabel;
                 BestWorstLabel = stats.BestWorstLabel;
+                OverviewInsightText = stats.HasStats
+                    ? AppStrings.JournalOverviewInsightLine(
+                        stats.CheckInCount,
+                        stats.AverageMoodDisplay,
+                        stats.MoodTrendLabel,
+                        stats.MoodStreakDisplay)
+                    : AppStrings.JournalOverviewInsightEmpty;
+                OnPropertyChanged(nameof(CheckInPillText));
+                OnPropertyChanged(nameof(AverageMoodPillText));
             });
         }
         catch
