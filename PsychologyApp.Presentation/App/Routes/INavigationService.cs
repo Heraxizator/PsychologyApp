@@ -12,7 +12,10 @@ public interface INavigationService
     Task GoToCreatedAsync(long techniqueId);
     Task GoToDesignerAsync(long techniqueId);
     Task GoToUserProfileAsync();
+    Task GoToPracticeHistoryAsync();
     Task GoToJournalAsync();
+    Task GoToJournalOverviewAsync();
+    Task GoToJournalTimelineAsync();
     Task GoToOptionsAsync();
     Task GoToInfoAsync();
     Task GoToDonateAsync();

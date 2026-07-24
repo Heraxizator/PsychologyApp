@@ -41,7 +41,11 @@
                 <Border.Behaviors>
                     <behaviors:ListItemRevealBehavior RevealIndex="1" />
                 </Border.Behaviors>
-                <Label Text="{Binding SafetyPlanBody}" Style="{StaticResource BodyStyle}" />
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <Label Text="{Binding SafetyPlanStep1}" Style="{StaticResource BodyStyle}" />
+                    <Label Text="{Binding SafetyPlanStep2}" Style="{StaticResource BodyStyle}" />
+                    <Label Text="{Binding SafetyPlanStep3}" Style="{StaticResource BodyStyle}" />
+                </VerticalStackLayout>
             </Border>
 
             <ui:SectionHeaderView TitleText="{Binding HotlineTitle}" />
@@ -52,14 +56,34 @@
                 <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                     <Label Text="{Binding HotlineRu}" Style="{StaticResource BodyStyle}" />
                     <Label Text="{Binding HotlineIntl}" Style="{StaticResource CaptionStyle}" />
+                    <ui:ButtonView
+                        BodyText="{Binding CallHotlineRuText}"
+                        TapCommand="{Binding CallHotlineRuCommand}"
+                        Variant="Primary"
+                        IsCompact="True" />
+                    <ui:ButtonView
+                        BodyText="{Binding CallEmergencyText}"
+                        TapCommand="{Binding CallEmergencyCommand}"
+                        Variant="Secondary"
+                        IsCompact="True" />
                 </VerticalStackLayout>
             </Border>
 
             <ui:ButtonView
                 BodyText="{Binding OpenHelplineText}"
-                TapCommand="{Binding OpenHelplineCommand}">
+                TapCommand="{Binding OpenHelplineCommand}"
+                Variant="Secondary">
                 <ui:ButtonView.Behaviors>
                     <behaviors:ListItemRevealBehavior RevealIndex="3" />
+                </ui:ButtonView.Behaviors>
+            </ui:ButtonView>
+
+            <ui:ButtonView
+                BodyText="{Binding RecheckText}"
+                TapCommand="{Binding RecheckCommand}"
+                Variant="Secondary">
+                <ui:ButtonView.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="4" />
                 </ui:ButtonView.Behaviors>
             </ui:ButtonView>
 
@@ -69,7 +93,7 @@
                 BodyText="{Binding ContinueSoftText}"
                 TapCommand="{Binding ContinueSoftCommand}">
                 <ui:ButtonView.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="4" />
+                    <behaviors:ListItemRevealBehavior RevealIndex="5" />
                 </ui:ButtonView.Behaviors>
             </ui:ButtonView>
         </VerticalStackLayout>

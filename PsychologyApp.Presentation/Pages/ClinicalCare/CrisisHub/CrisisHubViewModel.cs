@@ -21,6 +21,9 @@ public sealed class CrisisHubViewModel : BaseViewModel
         _clinicalCareService = clinicalCareService;
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
         OpenHelplineCommand = new AsyncCommand(OpenHelplineAsync);
+        CallHotlineRuCommand = new AsyncCommand(() => DialAsync(AppStrings.CrisisHubHotlineRuNumber));
+        CallEmergencyCommand = new AsyncCommand(() => DialAsync(AppStrings.CrisisHubEmergencyNumber));
+        RecheckCommand = new AsyncCommand(() => _navigationService.GoToRiskCheckAsync(AppStrings.RiskCheckSourceManual));
         ContinueSoftCommand = new AsyncCommand(ContinueSoftAsync);
         LoadAsync().FireAndForget();
     }
@@ -28,11 +31,16 @@ public sealed class CrisisHubViewModel : BaseViewModel
     public string PageTitle => AppStrings.CrisisHubTitle;
     public string LeadText => AppStrings.CrisisHubLead;
     public string SafetyPlanTitle => AppStrings.CrisisHubSafetyPlanTitle;
-    public string SafetyPlanBody => AppStrings.CrisisHubSafetyPlanBody;
+    public string SafetyPlanStep1 => AppStrings.CrisisHubSafetyPlanStep1;
+    public string SafetyPlanStep2 => AppStrings.CrisisHubSafetyPlanStep2;
+    public string SafetyPlanStep3 => AppStrings.CrisisHubSafetyPlanStep3;
     public string HotlineTitle => AppStrings.CrisisHubHotlineTitle;
     public string HotlineRu => AppStrings.CrisisHubHotlineRu;
     public string HotlineIntl => AppStrings.CrisisHubHotlineIntl;
+    public string CallHotlineRuText => AppStrings.CrisisHubCallHotlineRu;
+    public string CallEmergencyText => AppStrings.CrisisHubCallEmergency;
     public string OpenHelplineText => AppStrings.CrisisHubOpenHelpline;
+    public string RecheckText => AppStrings.CrisisHubRecheck;
     public string ContinueSoftText => AppStrings.CrisisHubContinueSoft;
     public string SpecialistHint => AppStrings.CrisisHubSpecialistHint;
 
@@ -53,6 +61,9 @@ public sealed class CrisisHubViewModel : BaseViewModel
 
     public ICommand BackCommand { get; }
     public ICommand OpenHelplineCommand { get; }
+    public ICommand CallHotlineRuCommand { get; }
+    public ICommand CallEmergencyCommand { get; }
+    public ICommand RecheckCommand { get; }
     public ICommand ContinueSoftCommand { get; }
 
     protected override void RefreshLocalizedProperties()
@@ -61,13 +72,19 @@ public sealed class CrisisHubViewModel : BaseViewModel
             nameof(PageTitle),
             nameof(LeadText),
             nameof(SafetyPlanTitle),
-            nameof(SafetyPlanBody),
+            nameof(SafetyPlanStep1),
+            nameof(SafetyPlanStep2),
+            nameof(SafetyPlanStep3),
             nameof(HotlineTitle),
             nameof(HotlineRu),
             nameof(HotlineIntl),
+            nameof(CallHotlineRuText),
+            nameof(CallEmergencyText),
             nameof(OpenHelplineText),
+            nameof(RecheckText),
             nameof(ContinueSoftText),
-            nameof(SpecialistHint));
+            nameof(SpecialistHint),
+            nameof(ShowContinueSoft));
     }
 
     private async Task LoadAsync()
@@ -95,5 +112,27 @@ public sealed class CrisisHubViewModel : BaseViewModel
         }
     }
 
-    private Task ContinueSoftAsync() => _navigationService.GoToPracticeTabAsync();
+    private static async Task DialAsync(string number)
+    {
+        try
+        {
+            if (PhoneDialer.Default.IsSupported)
+            {
+                PhoneDialer.Default.Open(number);
+                return;
+            }
+
+            await Launcher.Default.OpenAsync($"tel:{number}");
+        }
+        catch
+        {
+            // Best-effort dial.
+        }
+    }
+
+    private async Task ContinueSoftAsync()
+    {
+        await _navigationService.GoBackAsync();
+        await _navigationService.GoToPracticeTabAsync();
+    }
 }

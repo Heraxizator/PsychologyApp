@@ -141,35 +141,23 @@
                                     LabelText="{Binding WeekRiskLabel}" />
                             </Grid>
 
-                            <BoxView Style="{StaticResource SubtleDividerStyle}" />
-
-                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding OpenJournalCommand}" />
-                                </Grid.GestureRecognizers>
-                                <Grid.Behaviors>
-                                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
-                                </Grid.Behaviors>
-                                <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
-                                    <Label Text="{Binding OpenJournalLabel}" Style="{StaticResource SectionTitleStyle}" />
-                                    <Label
-                                        Text="{Binding JournalCardSubtitle}"
-                                        Style="{StaticResource CaptionStyle}"
-                                        MaxLines="2"
-                                        LineBreakMode="TailTruncation" />
-                                </VerticalStackLayout>
-                                <Label
-                                    Grid.Column="1"
-                                    VerticalOptions="Center"
-                                    TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                                    Text="{mi:Material Icon=KeyboardArrowRight}" />
-                            </Grid>
+                            <ui:ButtonView
+                                BodyText="{Binding OpenJournalLabel}"
+                                TapCommand="{Binding OpenJournalCommand}"
+                                Variant="Primary" />
+                            <ui:ButtonView
+                                BodyText="{Binding ProfileRiskCheckLabel}"
+                                TapCommand="{Binding OpenRiskCheckCommand}"
+                                Variant="Secondary" />
                         </VerticalStackLayout>
                     </Border>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <ui:SectionHeaderView TitleText="{Binding PracticeHistoryTitle}" />
+                    <ui:SectionHeaderView
+                        TitleText="{Binding PracticeHistoryTitle}"
+                        ActionText="{Binding PracticeHistoryActionText}"
+                        ActionCommand="{Binding OpenPracticeHistoryCommand}" />
                     <ui:EmptyStateView
                         IsVisible="{Binding ShowPracticeHistoryEmpty}"
                         BodyText="{Binding PracticeHistoryEmpty}"

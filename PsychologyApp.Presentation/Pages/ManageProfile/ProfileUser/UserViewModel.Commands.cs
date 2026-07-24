@@ -7,6 +7,8 @@ namespace PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
 public partial class UserViewModel
 {
     public ICommand OpenJournalCommand { get; private set; } = default!;
+    public ICommand OpenRiskCheckCommand { get; private set; } = default!;
+    public ICommand OpenPracticeHistoryCommand { get; private set; } = default!;
     public ICommand OpenOptionsCommand { get; private set; } = default!;
     public ICommand ReloadCommand { get; private set; } = default!;
     public ICommand ReloadQuotesCommand { get; private set; } = default!;
@@ -18,6 +20,8 @@ public partial class UserViewModel
     private void WireCommands(INavigationService navigationService)
     {
         OpenJournalCommand = new AsyncCommand(() => navigationService.GoToJournalAsync());
+        OpenRiskCheckCommand = new AsyncCommand(() => navigationService.GoToRiskCheckAsync(AppStrings.RiskCheckSourceProfile));
+        OpenPracticeHistoryCommand = new AsyncCommand(() => navigationService.GoToPracticeHistoryAsync());
         OpenOptionsCommand = new AsyncCommand(() => navigationService.GoToOptionsAsync());
         ReloadCommand = new AsyncCommand(() => RefreshAsync(forceQuotesReload: true));
         ReloadQuotesCommand = new AsyncCommand(() => ReloadQuotesAsync());

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.ManageProfile.ProfilePracticeHistory.PracticeHistoryPage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:profile="clr-namespace:PsychologyApp.Presentation.Entities.Profile"
+             xmlns:profileHistory="clr-namespace:PsychologyApp.Presentation.Widgets.Profile"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ManageProfile.ProfilePracticeHistory"
+             x:DataType="vm:PracticeHistoryViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}">
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+        <VerticalStackLayout
+            Margin="{StaticResource LayoutPageMarginThickness}"
+            Spacing="{StaticResource LayoutSpacing}">
+            <ui:NavigationBarSimpleView
+                TitleText="{Binding PageTitle}"
+                BackCommand="{Binding BackCommand}" />
+
+            <ui:EmptyStateView
+                IsVisible="{Binding ShowEmpty}"
+                BodyText="{Binding EmptyText}"
+                IconName="History" />
+
+            <VerticalStackLayout
+                IsVisible="{Binding HasItems}"
+                BindableLayout.ItemsSource="{Binding Items}"
+                Spacing="{StaticResource ListItemSpacing}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="profile:PracticeHistoryItem">
+                        <profileHistory:ProfileHistoryEntryView
+                            DateText="{Binding DateText}"
+                            TechniqueName="{Binding TechniqueName}"
+                            IconName="{Binding IconName}"
+                            DurationText="{Binding DurationText}"
+                            HasDuration="{Binding HasDuration}"
+                            SudsDeltaText="{Binding SudsDeltaText}"
+                            HasSudsDelta="{Binding HasSudsDelta}"
+                            TapCommand="{Binding TapCommand}" />
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

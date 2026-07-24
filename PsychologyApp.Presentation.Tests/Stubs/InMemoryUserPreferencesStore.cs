@@ -25,7 +25,10 @@ public sealed class InMemoryUserPreferencesStore : IUserPreferencesStore
 
     public void ApplyPreview(UserPreferencesState state) => _state = state;
 
-    public void CompleteOnboarding(string concern)
+    public void CompleteOnboarding(
+        string concern,
+        bool? practiceRemindersEnabled = null,
+        int? practiceReminderHour = null)
     {
         _state = new UserPreferencesState
         {
@@ -38,10 +41,12 @@ public sealed class InMemoryUserPreferencesStore : IUserPreferencesStore
             QuestionnaireAutoAdvance = _state.QuestionnaireAutoAdvance,
             HasCompletedOnboarding = true,
             OnboardingConcern = concern,
-            PracticeRemindersEnabled = _state.PracticeRemindersEnabled,
-            PracticeReminderHour = _state.PracticeReminderHour,
+            PracticeRemindersEnabled = practiceRemindersEnabled ?? _state.PracticeRemindersEnabled,
+            PracticeReminderHour = practiceReminderHour ?? _state.PracticeReminderHour,
             QuoteRemindersEnabled = _state.QuoteRemindersEnabled,
-            QuoteReminderHour = _state.QuoteReminderHour
+            QuoteReminderHour = _state.QuoteReminderHour,
+            MoodRemindersEnabled = _state.MoodRemindersEnabled,
+            MoodReminderHour = _state.MoodReminderHour
         };
         Changed?.Invoke();
     }
@@ -62,7 +67,9 @@ public sealed class InMemoryUserPreferencesStore : IUserPreferencesStore
             PracticeRemindersEnabled = _state.PracticeRemindersEnabled,
             PracticeReminderHour = _state.PracticeReminderHour,
             QuoteRemindersEnabled = _state.QuoteRemindersEnabled,
-            QuoteReminderHour = _state.QuoteReminderHour
+            QuoteReminderHour = _state.QuoteReminderHour,
+            MoodRemindersEnabled = _state.MoodRemindersEnabled,
+            MoodReminderHour = _state.MoodReminderHour
         };
         Changed?.Invoke();
     }
