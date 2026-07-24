@@ -24,6 +24,9 @@ public sealed class JournalMoodLoaderTests
                 new() { MoodEntryId = 2, MoodLevel = 4, RecordedAt = now },
                 new() { MoodEntryId = 1, MoodLevel = 3, RecordedAt = now.AddDays(-1) }
             });
+        progress
+            .Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
 
         JournalMoodLoader loader = new(progress.Object);
         JournalMoodSnapshot snapshot = await loader.LoadAsync();
@@ -74,6 +77,9 @@ public sealed class JournalMoodLoaderTests
                     RecordedAt = now.AddDays(-2)
                 }
             });
+        progress
+            .Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
 
         JournalMoodLoader loader = new(progress.Object);
         JournalMoodSnapshot snapshot = await loader.LoadAsync();
@@ -98,6 +104,9 @@ public sealed class JournalMoodLoaderTests
                 It.IsAny<int>(),
                 It.IsAny<CancellationToken>()))
             .Callback<DateTime?, DateTime?, int, CancellationToken>((from, _, _, _) => capturedFrom = from)
+            .ReturnsAsync([]);
+        progress
+            .Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
         JournalMoodLoader loader = new(progress.Object);
@@ -132,6 +141,9 @@ public sealed class JournalMoodLoaderTests
                     RecordedAt = recorded
                 }
             });
+        progress
+            .Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
 
         JournalMoodLoader loader = new(progress.Object);
         JournalMoodSnapshot snapshot = await loader.LoadAsync(editorDay: day);

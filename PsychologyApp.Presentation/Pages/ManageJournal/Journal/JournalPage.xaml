@@ -88,17 +88,85 @@
                 </mood:MoodStripView.Behaviors>
             </mood:MoodStripView>
 
-            <journalStrip:JournalWeekStripView
-                CaptionText="{Binding WeekStripTitle}"
-                ItemsSource="{Binding WeekDays}"
-                SelectDayCommand="{Binding SelectDayCommand}"
-                IsInteractive="True" />
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource CompactSpacing}">
+                <Label
+                    Grid.Column="0"
+                    Style="{StaticResource IconActionStyle}"
+                    WidthRequest="40"
+                    VerticalOptions="Center"
+                    Text="{mi:Material Icon=KeyboardArrowLeft}"
+                    SemanticProperties.Description="{Binding WeekNavPrevLabel}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding PrevWeekCommand}" />
+                    </Label.GestureRecognizers>
+                    <Label.Behaviors>
+                        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                    </Label.Behaviors>
+                </Label>
+                <journalStrip:JournalWeekStripView
+                    Grid.Column="1"
+                    CaptionText="{Binding WeekStripTitle}"
+                    ItemsSource="{Binding WeekDays}"
+                    SelectDayCommand="{Binding SelectDayCommand}"
+                    IsInteractive="True" />
+                <Label
+                    Grid.Column="2"
+                    Style="{StaticResource IconActionStyle}"
+                    WidthRequest="40"
+                    VerticalOptions="Center"
+                    IsEnabled="{Binding CanGoNextWeek}"
+                    Opacity="0.35"
+                    Text="{mi:Material Icon=KeyboardArrowRight}"
+                    SemanticProperties.Description="{Binding WeekNavNextLabel}">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding CanGoNextWeek}" Value="True">
+                            <Setter Property="Opacity" Value="1" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NextWeekCommand}" />
+                    </Label.GestureRecognizers>
+                    <Label.Behaviors>
+                        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                    </Label.Behaviors>
+                </Label>
+            </Grid>
 
             <Label
                 IsVisible="{Binding HasWeekInsight}"
                 Text="{Binding WeekInsightText}"
                 Style="{StaticResource CaptionStyle}"
                 TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+
+            <Label
+                IsVisible="{Binding ShowDayEmptyCaption}"
+                Text="{Binding DayEmptyCaption}"
+                Style="{StaticResource CaptionStyle}"
+                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+
+            <Border
+                IsVisible="{Binding ShowPracticeSuggest}"
+                Style="{StaticResource BrandCardStyle}"
+                Margin="0">
+                <Border.Behaviors>
+                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                </Border.Behaviors>
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenPracticeSuggestCommand}" />
+                    </Grid.GestureRecognizers>
+                    <Label
+                        Grid.Column="0"
+                        Text="{Binding PracticeSuggestText}"
+                        Style="{StaticResource BodyStyle}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Column="1"
+                        VerticalOptions="Center"
+                        TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                        Text="{mi:Material Icon=KeyboardArrowRight}" />
+                </Grid>
+            </Border>
 
             <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                 <Label
@@ -108,8 +176,16 @@
                 <ui:TextEditorView
                     PlaceholderText="{Binding NotePlaceholder}"
                     BodyText="{Binding JournalNote}" />
-                <HorizontalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <Border Style="{StaticResource MetaPillStyle}">
+                <Label
+                    Text="{Binding QuestionsSectionTitle}"
+                    Style="{StaticResource CaptionStyle}"
+                    TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                <FlexLayout
+                    Wrap="Wrap"
+                    Direction="Row"
+                    AlignItems="Start"
+                    JustifyContent="Start">
+                    <Border Style="{StaticResource MetaPillStyle}" Margin="0,0,8,8">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer
                                 Command="{Binding ApplyPromptCommand}"
@@ -124,7 +200,37 @@
                             FontFamily="{StaticResource SemiBoldFontFamily}"
                             TextColor="{DynamicResource Primary}" />
                     </Border>
-                    <Border Style="{StaticResource MetaPillStyle}">
+                    <Border Style="{StaticResource MetaPillStyle}" Margin="0,0,8,8">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding ApplyPromptCommand}"
+                                CommandParameter="blocked" />
+                        </Border.GestureRecognizers>
+                        <Border.Behaviors>
+                            <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                        </Border.Behaviors>
+                        <Label
+                            Text="{Binding PromptBlockedLabel}"
+                            Style="{StaticResource CaptionStyle}"
+                            FontFamily="{StaticResource SemiBoldFontFamily}"
+                            TextColor="{DynamicResource Primary}" />
+                    </Border>
+                    <Border Style="{StaticResource MetaPillStyle}" Margin="0,0,8,8">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding ApplyPromptCommand}"
+                                CommandParameter="grateful" />
+                        </Border.GestureRecognizers>
+                        <Border.Behaviors>
+                            <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                        </Border.Behaviors>
+                        <Label
+                            Text="{Binding PromptGratefulLabel}"
+                            Style="{StaticResource CaptionStyle}"
+                            FontFamily="{StaticResource SemiBoldFontFamily}"
+                            TextColor="{DynamicResource Primary}" />
+                    </Border>
+                    <Border Style="{StaticResource MetaPillStyle}" Margin="0,0,8,8">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer
                                 Command="{Binding ApplyPromptCommand}"
@@ -139,11 +245,80 @@
                             FontFamily="{StaticResource SemiBoldFontFamily}"
                             TextColor="{DynamicResource Primary}" />
                     </Border>
-                </HorizontalStackLayout>
+                </FlexLayout>
                 <Label
-                    Text="{Binding NoteSaveHint}"
+                    Text="{Binding FactorsSectionTitle}"
                     Style="{StaticResource CaptionStyle}"
                     TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                <FlexLayout
+                    Wrap="Wrap"
+                    Direction="Row"
+                    AlignItems="Start"
+                    JustifyContent="Start">
+                    <Border Style="{StaticResource MetaPillStyle}" Margin="0,0,8,8" StrokeThickness="0">
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsSleepFactorActive}" Value="True">
+                                <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                <Setter Property="StrokeThickness" Value="2" />
+                            </DataTrigger>
+                        </Border.Triggers>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding ToggleFactorCommand}"
+                                CommandParameter="sleep" />
+                        </Border.GestureRecognizers>
+                        <Border.Behaviors>
+                            <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                        </Border.Behaviors>
+                        <Label
+                            Text="{Binding FactorSleepLabel}"
+                            Style="{StaticResource CaptionStyle}"
+                            FontFamily="{StaticResource SemiBoldFontFamily}"
+                            TextColor="{DynamicResource Primary}" />
+                    </Border>
+                    <Border Style="{StaticResource MetaPillStyle}" Margin="0,0,8,8" StrokeThickness="0">
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsPeopleFactorActive}" Value="True">
+                                <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                <Setter Property="StrokeThickness" Value="2" />
+                            </DataTrigger>
+                        </Border.Triggers>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding ToggleFactorCommand}"
+                                CommandParameter="people" />
+                        </Border.GestureRecognizers>
+                        <Border.Behaviors>
+                            <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                        </Border.Behaviors>
+                        <Label
+                            Text="{Binding FactorPeopleLabel}"
+                            Style="{StaticResource CaptionStyle}"
+                            FontFamily="{StaticResource SemiBoldFontFamily}"
+                            TextColor="{DynamicResource Primary}" />
+                    </Border>
+                    <Border Style="{StaticResource MetaPillStyle}" Margin="0,0,8,8" StrokeThickness="0">
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsPracticeFactorActive}" Value="True">
+                                <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                <Setter Property="StrokeThickness" Value="2" />
+                            </DataTrigger>
+                        </Border.Triggers>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding ToggleFactorCommand}"
+                                CommandParameter="practice" />
+                        </Border.GestureRecognizers>
+                        <Border.Behaviors>
+                            <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                        </Border.Behaviors>
+                        <Label
+                            Text="{Binding FactorPracticeLabel}"
+                            Style="{StaticResource CaptionStyle}"
+                            FontFamily="{StaticResource SemiBoldFontFamily}"
+                            TextColor="{DynamicResource Primary}" />
+                    </Border>
+                </FlexLayout>
             </VerticalStackLayout>
 
             <ui:ButtonView

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Pages.ManageJournal.JournalOverview.JournalOverviewPage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:moodTrend="clr-namespace:PsychologyApp.Presentation.Widgets.Profile"
              xmlns:journalStrip="clr-namespace:PsychologyApp.Presentation.Widgets.Journal"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
@@ -24,11 +25,49 @@
                 TitleText="{Binding PageTitle}"
                 BackCommand="{Binding BackCommand}" />
 
-            <journalStrip:JournalWeekStripView
-                CaptionText="{Binding WeekStripTitle}"
-                ItemsSource="{Binding WeekDays}"
-                SelectDayCommand="{Binding SelectDayCommand}"
-                IsInteractive="True" />
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource CompactSpacing}">
+                <Label
+                    Grid.Column="0"
+                    Style="{StaticResource IconActionStyle}"
+                    WidthRequest="40"
+                    VerticalOptions="Center"
+                    Text="{mi:Material Icon=KeyboardArrowLeft}"
+                    SemanticProperties.Description="{Binding WeekNavPrevLabel}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding PrevWeekCommand}" />
+                    </Label.GestureRecognizers>
+                    <Label.Behaviors>
+                        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                    </Label.Behaviors>
+                </Label>
+                <journalStrip:JournalWeekStripView
+                    Grid.Column="1"
+                    CaptionText="{Binding WeekStripTitle}"
+                    ItemsSource="{Binding WeekDays}"
+                    SelectDayCommand="{Binding SelectDayCommand}"
+                    IsInteractive="True" />
+                <Label
+                    Grid.Column="2"
+                    Style="{StaticResource IconActionStyle}"
+                    WidthRequest="40"
+                    VerticalOptions="Center"
+                    IsEnabled="{Binding CanGoNextWeek}"
+                    Opacity="0.35"
+                    Text="{mi:Material Icon=KeyboardArrowRight}"
+                    SemanticProperties.Description="{Binding WeekNavNextLabel}">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding CanGoNextWeek}" Value="True">
+                            <Setter Property="Opacity" Value="1" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NextWeekCommand}" />
+                    </Label.GestureRecognizers>
+                    <Label.Behaviors>
+                        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                    </Label.Behaviors>
+                </Label>
+            </Grid>
 
             <Border Style="{StaticResource HeroCardStyle}">
                 <Border.Behaviors>
@@ -42,6 +81,11 @@
                     <Label
                         Text="{Binding OverviewInsightText}"
                         Style="{StaticResource BodyStyle}" />
+                    <Label
+                        IsVisible="{Binding HasPracticeMoodInsight}"
+                        Text="{Binding PracticeMoodInsightText}"
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
                 </VerticalStackLayout>
             </Border>
 

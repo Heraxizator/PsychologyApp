@@ -16,6 +16,7 @@ public sealed class JournalTimelineViewModel : BaseViewModel
     private readonly INavigationService _navigationService;
     private int _loadGeneration;
     private IReadOnlyList<JournalTimelineDayGroup> _allTimelineGroups = [];
+    private string _moodStreakDisplay = AppStrings.MetricEmptyValue;
 
     public JournalTimelineViewModel(
         JournalMoodLoader journalMoodLoader,
@@ -57,6 +58,22 @@ public sealed class JournalTimelineViewModel : BaseViewModel
 
     public bool HasMoodNotes => TimelineGroups.Count > 0;
     public bool ShowMoodNotesEmpty => !HasMoodNotes;
+
+    private string _timelineStreakText = string.Empty;
+    public string TimelineStreakText
+    {
+        get => _timelineStreakText;
+        private set
+        {
+            if (SetProperty(ref _timelineStreakText, value))
+            {
+                OnPropertyChanged(nameof(HasTimelineStreak));
+            }
+        }
+    }
+
+    public bool HasTimelineStreak => !string.IsNullOrWhiteSpace(TimelineStreakText);
+
     public string MoodNotesEmpty =>
         string.IsNullOrWhiteSpace(SearchQuery)
             ? AppStrings.JournalTimelineEmpty
@@ -77,13 +94,16 @@ public sealed class JournalTimelineViewModel : BaseViewModel
 
     protected override void RefreshLocalizedProperties()
     {
+        TimelineStreakText = AppStrings.JournalTimelineStreakLine(_moodStreakDisplay);
         Notify(
             nameof(PageTitle),
             nameof(SearchPlaceholder),
             nameof(ShareLabel),
             nameof(MoodNotesEmpty),
             nameof(HasMoodNotes),
-            nameof(ShowMoodNotesEmpty));
+            nameof(ShowMoodNotesEmpty),
+            nameof(TimelineStreakText),
+            nameof(HasTimelineStreak));
     }
 
     public Task ReloadAsync() => LoadAsync();
@@ -107,6 +127,8 @@ public sealed class JournalTimelineViewModel : BaseViewModel
             await UiThread.RunAsync(() =>
             {
                 _allTimelineGroups = snapshot.TimelineGroups;
+                _moodStreakDisplay = snapshot.Stats.MoodStreakDisplay;
+                TimelineStreakText = AppStrings.JournalTimelineStreakLine(_moodStreakDisplay);
                 ApplySearchFilter();
             });
         }
@@ -133,12 +155,12 @@ public sealed class JournalTimelineViewModel : BaseViewModel
             return;
         }
 
-        string mood = AppStrings.FormatAverageMood(entry.MoodLevel);
         string note = entry.HasNote ? entry.NoteText : string.Empty;
+        IReadOnlyList<string> factors = JournalNoteFactors.ExtractActiveLabels(note);
         await Share.Default.RequestAsync(new ShareTextRequest
         {
             Title = AppStrings.JournalShareTitle,
-            Text = AppStrings.JournalShareText(entry.DateText, mood, note)
+            Text = AppStrings.JournalShareEntryWithFactors(entry.DateText, entry.MoodLevel, note, factors)
         });
     }
 }

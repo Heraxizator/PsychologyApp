@@ -4,6 +4,7 @@ using PsychologyApp.Presentation.Features.ManageJournal;
 using PsychologyApp.Presentation.Pages.ManageJournal.Journal;
 using PsychologyApp.Presentation.Pages.ManageJournal.JournalOverview;
 using PsychologyApp.Presentation.Pages.ManageJournal.JournalTimeline;
+using PsychologyApp.Presentation.Shared.Lib.Navigation;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Shared.ViewModels;
@@ -19,6 +20,7 @@ public sealed class JournalViewModelFactory(
     JournalMoodLoader journalMoodLoader,
     JournalEditorContext editorContext,
     IDialogService dialogService,
+    IShellTabNavigator shellTabNavigator,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IJournalViewModelFactory
 {
     public JournalViewModel Create(ContentPage page) =>
@@ -26,6 +28,7 @@ public sealed class JournalViewModelFactory(
             journalMoodLoader,
             editorContext,
             dialogService,
+            shellTabNavigator,
             ResolveNavigation(navigationServiceFactory, page));
 }
 

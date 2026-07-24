@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Pages.ClinicalCare.CrisisHub.CrisisHubPage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ClinicalCare.CrisisHub"
              x:DataType="vm:CrisisHubViewModel"
@@ -40,14 +41,81 @@
 
             <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                 <ui:SectionHeaderView TitleText="{Binding HotlineTitle}" />
-                <ui:ButtonView
-                    BodyText="{Binding CallEmergencyText}"
-                    TapCommand="{Binding CallEmergencyCommand}"
-                    Variant="Primary" />
-                <ui:ButtonView
-                    BodyText="{Binding CallHotlineRuText}"
-                    TapCommand="{Binding CallHotlineRuCommand}"
-                    Variant="Secondary" />
+
+                <Border Style="{StaticResource HeroCardStyle}">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="1" />
+                        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                    </Border.Behaviors>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CallEmergencyCommand}" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="12">
+                        <Border
+                            Grid.Column="0"
+                            Style="{StaticResource HeroAccentBarStyle}" />
+                        <Border
+                            Grid.Column="1"
+                            Style="{StaticResource MetaPillStyle}"
+                            VerticalOptions="Center">
+                            <Label
+                                Text="{Binding EmergencyBadge}"
+                                Style="{StaticResource CaptionStyle}"
+                                FontFamily="{StaticResource SemiBoldFontFamily}"
+                                TextColor="{DynamicResource Primary}" />
+                        </Border>
+                        <Label
+                            Grid.Column="2"
+                            Text="{Binding CallEmergencyText}"
+                            Style="{StaticResource ListRowTitleStyle}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Column="3"
+                            VerticalOptions="Center"
+                            TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                            Text="{mi:Material Icon=KeyboardArrowRight}" />
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource BrandCardStyle}">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="2" />
+                        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                    </Border.Behaviors>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CallHotlineRuCommand}" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                        <Border
+                            Grid.Column="0"
+                            WidthRequest="44"
+                            HeightRequest="44"
+                            StrokeThickness="0"
+                            BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}"
+                            VerticalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <ui:MaterialIconView
+                                IconName="Phone"
+                                IconSize="22"
+                                IconColor="{DynamicResource Primary}"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                        </Border>
+                        <Label
+                            Grid.Column="1"
+                            Text="{Binding CallHotlineRuText}"
+                            Style="{StaticResource ListRowTitleStyle}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Column="2"
+                            VerticalOptions="Center"
+                            TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                            Text="{mi:Material Icon=KeyboardArrowRight}" />
+                    </Grid>
+                </Border>
+
                 <Label
                     Text="{Binding HotlineIntl}"
                     Style="{StaticResource CaptionStyle}" />
@@ -57,7 +125,7 @@
                 <ui:SectionHeaderView TitleText="{Binding SafetyPlanTitle}" />
                 <Border Style="{StaticResource BrandCardStyle}">
                     <Border.Behaviors>
-                        <behaviors:ListItemRevealBehavior RevealIndex="1" />
+                        <behaviors:ListItemRevealBehavior RevealIndex="3" />
                     </Border.Behaviors>
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
                         <Border Grid.Column="0" Style="{StaticResource MetaPillStyle}" VerticalOptions="Start">
@@ -76,7 +144,7 @@
                 </Border>
                 <Border Style="{StaticResource BrandCardStyle}">
                     <Border.Behaviors>
-                        <behaviors:ListItemRevealBehavior RevealIndex="2" />
+                        <behaviors:ListItemRevealBehavior RevealIndex="4" />
                     </Border.Behaviors>
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
                         <Border Grid.Column="0" Style="{StaticResource MetaPillStyle}" VerticalOptions="Start">
@@ -95,7 +163,7 @@
                 </Border>
                 <Border Style="{StaticResource BrandCardStyle}">
                     <Border.Behaviors>
-                        <behaviors:ListItemRevealBehavior RevealIndex="3" />
+                        <behaviors:ListItemRevealBehavior RevealIndex="5" />
                     </Border.Behaviors>
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
                         <Border Grid.Column="0" Style="{StaticResource MetaPillStyle}" VerticalOptions="Start">
@@ -114,33 +182,74 @@
                 </Border>
             </VerticalStackLayout>
 
-            <ui:ButtonView
-                BodyText="{Binding OpenHelplineText}"
-                TapCommand="{Binding OpenHelplineCommand}"
-                Variant="Secondary">
-                <ui:ButtonView.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="4" />
-                </ui:ButtonView.Behaviors>
-            </ui:ButtonView>
-
-            <ui:ButtonView
-                BodyText="{Binding RecheckText}"
-                TapCommand="{Binding RecheckCommand}"
-                Variant="Secondary">
-                <ui:ButtonView.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="5" />
-                </ui:ButtonView.Behaviors>
-            </ui:ButtonView>
-
-            <ui:ButtonView
-                IsVisible="{Binding ShowContinueSoft}"
-                Variant="Secondary"
-                BodyText="{Binding ContinueSoftText}"
-                TapCommand="{Binding ContinueSoftCommand}">
-                <ui:ButtonView.Behaviors>
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <Border.Behaviors>
                     <behaviors:ListItemRevealBehavior RevealIndex="6" />
-                </ui:ButtonView.Behaviors>
-            </ui:ButtonView>
+                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                </Border.Behaviors>
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenHelplineCommand}" />
+                    </Grid.GestureRecognizers>
+                    <Label
+                        Grid.Column="0"
+                        Text="{Binding OpenHelplineText}"
+                        Style="{StaticResource BodyStyle}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Column="1"
+                        VerticalOptions="Center"
+                        TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                        Text="{mi:Material Icon=KeyboardArrowRight}" />
+                </Grid>
+            </Border>
+
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <Border.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="7" />
+                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                </Border.Behaviors>
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RecheckCommand}" />
+                    </Grid.GestureRecognizers>
+                    <Label
+                        Grid.Column="0"
+                        Text="{Binding RecheckText}"
+                        Style="{StaticResource BodyStyle}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Column="1"
+                        VerticalOptions="Center"
+                        TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                        Text="{mi:Material Icon=KeyboardArrowRight}" />
+                </Grid>
+            </Border>
+
+            <Border
+                IsVisible="{Binding ShowContinueSoft}"
+                Style="{StaticResource BrandCardStyle}"
+                Margin="0">
+                <Border.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="8" />
+                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                </Border.Behaviors>
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ContinueSoftCommand}" />
+                    </Grid.GestureRecognizers>
+                    <Label
+                        Grid.Column="0"
+                        Text="{Binding ContinueSoftText}"
+                        Style="{StaticResource BodyStyle}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Column="1"
+                        VerticalOptions="Center"
+                        TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                        Text="{mi:Material Icon=KeyboardArrowRight}" />
+                </Grid>
+            </Border>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

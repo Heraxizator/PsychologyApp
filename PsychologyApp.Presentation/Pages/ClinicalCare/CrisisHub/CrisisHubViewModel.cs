@@ -42,6 +42,7 @@ public sealed class CrisisHubViewModel : BaseViewModel
     public string HotlineIntl => AppStrings.CrisisHubHotlineIntl;
     public string CallHotlineRuText => AppStrings.CrisisHubCallHotlineRu;
     public string CallEmergencyText => AppStrings.CrisisHubCallEmergency;
+    public string EmergencyBadge => AppStrings.CrisisHubEmergencyBadge;
     public string OpenHelplineText => AppStrings.CrisisHubOpenHelpline;
     public string RecheckText => AppStrings.CrisisHubRecheck;
     public string ContinueSoftText => AppStrings.CrisisHubContinueSoft;
@@ -86,6 +87,7 @@ public sealed class CrisisHubViewModel : BaseViewModel
             nameof(HotlineIntl),
             nameof(CallHotlineRuText),
             nameof(CallEmergencyText),
+            nameof(EmergencyBadge),
             nameof(OpenHelplineText),
             nameof(RecheckText),
             nameof(ContinueSoftText),

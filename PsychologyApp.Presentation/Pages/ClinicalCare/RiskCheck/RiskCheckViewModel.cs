@@ -45,8 +45,8 @@ public sealed class RiskCheckViewModel : BaseViewModel
     public string YesLabel => AppStrings.RiskCheckYes;
     public string NoLabel => AppStrings.RiskCheckNo;
 
-    private bool _hasSelfHarmThoughts;
-    public bool HasSelfHarmThoughts
+    private bool? _hasSelfHarmThoughts;
+    public bool? HasSelfHarmThoughts
     {
         get => _hasSelfHarmThoughts;
         set
@@ -54,59 +54,67 @@ public sealed class RiskCheckViewModel : BaseViewModel
             if (SetProperty(ref _hasSelfHarmThoughts, value))
             {
                 OnPropertyChanged(nameof(ShowOpenHelpNow));
-                OnPropertyChanged(nameof(HasSelfHarmNo));
+                OnPropertyChanged(nameof(IsSelfHarmYes));
+                OnPropertyChanged(nameof(IsSelfHarmNo));
             }
         }
     }
 
-    public bool HasSelfHarmNo => !HasSelfHarmThoughts;
+    public bool IsSelfHarmYes => HasSelfHarmThoughts == true;
+    public bool IsSelfHarmNo => HasSelfHarmThoughts == false;
 
-    private bool _hasSevereDisorientation;
-    public bool HasSevereDisorientation
+    private bool? _hasSevereDisorientation;
+    public bool? HasSevereDisorientation
     {
         get => _hasSevereDisorientation;
         set
         {
             if (SetProperty(ref _hasSevereDisorientation, value))
             {
-                OnPropertyChanged(nameof(HasSevereDisorientationNo));
+                OnPropertyChanged(nameof(IsDisorientationYes));
+                OnPropertyChanged(nameof(IsDisorientationNo));
             }
         }
     }
 
-    public bool HasSevereDisorientationNo => !HasSevereDisorientation;
+    public bool IsDisorientationYes => HasSevereDisorientation == true;
+    public bool IsDisorientationNo => HasSevereDisorientation == false;
 
-    private bool _hasSubstanceRisk;
-    public bool HasSubstanceRisk
+    private bool? _hasSubstanceRisk;
+    public bool? HasSubstanceRisk
     {
         get => _hasSubstanceRisk;
         set
         {
             if (SetProperty(ref _hasSubstanceRisk, value))
             {
-                OnPropertyChanged(nameof(HasSubstanceRiskNo));
+                OnPropertyChanged(nameof(IsSubstanceYes));
+                OnPropertyChanged(nameof(IsSubstanceNo));
             }
         }
     }
 
-    public bool HasSubstanceRiskNo => !HasSubstanceRisk;
+    public bool IsSubstanceYes => HasSubstanceRisk == true;
+    public bool IsSubstanceNo => HasSubstanceRisk == false;
 
-    private bool _hasSevereInsomnia;
-    public bool HasSevereInsomnia
+    private bool? _hasSevereInsomnia;
+    public bool? HasSevereInsomnia
     {
         get => _hasSevereInsomnia;
         set
         {
             if (SetProperty(ref _hasSevereInsomnia, value))
             {
-                OnPropertyChanged(nameof(HasSevereInsomniaNo));
+                OnPropertyChanged(nameof(IsInsomniaYes));
+                OnPropertyChanged(nameof(IsInsomniaNo));
             }
         }
     }
 
-    public bool HasSevereInsomniaNo => !HasSevereInsomnia;
+    public bool IsInsomniaYes => HasSevereInsomnia == true;
+    public bool IsInsomniaNo => HasSevereInsomnia == false;
 
-    public bool ShowOpenHelpNow => HasSelfHarmThoughts;
+    public bool ShowOpenHelpNow => HasSelfHarmThoughts == true;
 
     public ICommand SubmitCommand { get; }
     public ICommand BackCommand { get; }
@@ -153,10 +161,10 @@ public sealed class RiskCheckViewModel : BaseViewModel
         RiskAssessmentDTO assessment = await _clinicalCareService.AssessRiskAsync(
             new RiskAssessmentInput
             {
-                HasSelfHarmThoughts = HasSelfHarmThoughts,
-                HasSevereDisorientation = HasSevereDisorientation,
-                HasSubstanceRisk = HasSubstanceRisk,
-                HasSevereInsomnia = HasSevereInsomnia,
+                HasSelfHarmThoughts = HasSelfHarmThoughts ?? false,
+                HasSevereDisorientation = HasSevereDisorientation ?? false,
+                HasSubstanceRisk = HasSubstanceRisk ?? false,
+                HasSevereInsomnia = HasSevereInsomnia ?? false,
                 Source = _source
             });
 
