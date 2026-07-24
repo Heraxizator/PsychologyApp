@@ -7,7 +7,7 @@ public class TestNavigationService(INavigation navigation) : INavigationService
 {
     public INavigation Navigation => navigation;
 
-    public Task GoBackAsync() => navigation.PopAsync(false);
+    public virtual Task GoBackAsync() => navigation.PopAsync(false);
 
     public virtual Task GoToRootAsync() => navigation.PopToRootAsync(true);
 
@@ -21,7 +21,9 @@ public class TestNavigationService(INavigation navigation) : INavigationService
 
     public Task GoToPracticeHistoryAsync() => Task.CompletedTask;
 
-    public Task GoToJournalAsync() => Task.CompletedTask;
+    public virtual Task GoToJournalAsync() => Task.CompletedTask;
+
+    public Task GoToJournalDayAsync(DateOnly day) => Task.CompletedTask;
 
     public Task GoToJournalOverviewAsync() => Task.CompletedTask;
 

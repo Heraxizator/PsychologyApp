@@ -1,9 +1,10 @@
+using PsychologyApp.Presentation.Features.ManageJournal;
 using PsychologyApp.Presentation.Features.ManageJournal.DependencyInjection;
 using PsychologyApp.Presentation.Shared.Common;
 
 namespace PsychologyApp.Presentation.Pages.ManageJournal.Journal;
 
-public partial class JournalPage : ContentPage
+public partial class JournalPage : ContentPage, IJournalHubPage
 {
     private readonly JournalViewModel _viewModel;
 

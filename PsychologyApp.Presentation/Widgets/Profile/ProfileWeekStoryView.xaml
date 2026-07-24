@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:journal="clr-namespace:PsychologyApp.Presentation.Widgets.Journal"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:Class="PsychologyApp.Presentation.Widgets.Profile.ProfileWeekStoryView"
+             x:Name="Root">
+
+    <ContentView.Behaviors>
+        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+    </ContentView.Behaviors>
+
+    <Border Style="{StaticResource HeroCardStyle}">
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding TapCommand, Source={x:Reference Root}}" />
+        </Border.GestureRecognizers>
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+            <VerticalStackLayout
+                Grid.Column="0"
+                Spacing="{StaticResource CompactSpacing}">
+                <journal:JournalWeekStripView
+                    ItemsSource="{Binding WeekDays, Source={x:Reference Root}}"
+                    IsInteractive="False" />
+                <Label
+                    IsVisible="{Binding ShowEmptyText, Source={x:Reference Root}}"
+                    Text="{Binding EmptyText, Source={x:Reference Root}}"
+                    Style="{StaticResource BodyStyle}" />
+                <Label
+                    IsVisible="{Binding ShowSummaryText, Source={x:Reference Root}}"
+                    Text="{Binding SummaryText, Source={x:Reference Root}}"
+                    Style="{StaticResource BodyStyle}" />
+            </VerticalStackLayout>
+            <Label
+                Grid.Column="1"
+                VerticalOptions="Center"
+                TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                Text="{mi:Material Icon=KeyboardArrowRight}" />
+        </Grid>
+    </Border>
+</ContentView>

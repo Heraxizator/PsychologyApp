@@ -83,20 +83,65 @@
                                 TextColor="{DynamicResource Primary}"
                                 Text="{Binding LastPracticeDisplay}" />
                         </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
 
-                        <BoxView Style="{StaticResource SubtleDividerStyle}" />
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="1" />
+                    </Border.Behaviors>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenOptionsCommand}" />
+                        </Grid.GestureRecognizers>
+                        <Grid.Behaviors>
+                            <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                        </Grid.Behaviors>
+                        <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
+                            <Label Text="{Binding OptionsLabel}" Style="{StaticResource SectionTitleStyle}" />
+                            <Label
+                                Text="{Binding OptionsCardSubtitle}"
+                                Style="{StaticResource CaptionStyle}"
+                                MaxLines="2"
+                                LineBreakMode="TailTruncation" />
+                        </VerticalStackLayout>
+                        <Label
+                            Grid.Column="1"
+                            VerticalOptions="Center"
+                            TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                            Text="{mi:Material Icon=KeyboardArrowRight}" />
+                    </Grid>
+                </Border>
 
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <ui:SectionHeaderView
+                        TitleText="{Binding ClinicalScorecardTitle}"
+                        SubtitleText="{Binding WeekRangeSubtitle}" />
+                    <profileHistory:ProfileWeekStoryView
+                        WeekDays="{Binding WeekDays}"
+                        SummaryText="{Binding WeekSummaryText}"
+                        EmptyText="{Binding ClinicalScorecardEmpty}"
+                        ShowEmpty="{Binding ShowClinicalScorecardEmpty}"
+                        TapCommand="{Binding OpenJournalCommand}">
+                        <profileHistory:ProfileWeekStoryView.Behaviors>
+                            <behaviors:ListItemRevealBehavior RevealIndex="2" />
+                        </profileHistory:ProfileWeekStoryView.Behaviors>
+                    </profileHistory:ProfileWeekStoryView>
+                    <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                        <Border.Behaviors>
+                            <behaviors:ListItemRevealBehavior RevealIndex="3" />
+                        </Border.Behaviors>
                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
                             <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding OpenOptionsCommand}" />
+                                <TapGestureRecognizer Command="{Binding OpenRiskCheckCommand}" />
                             </Grid.GestureRecognizers>
                             <Grid.Behaviors>
                                 <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
                             </Grid.Behaviors>
                             <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
-                                <Label Text="{Binding OptionsLabel}" Style="{StaticResource SectionTitleStyle}" />
+                                <Label Text="{Binding ProfileRiskCheckLabel}" Style="{StaticResource SectionTitleStyle}" />
                                 <Label
-                                    Text="{Binding OptionsCardSubtitle}"
+                                    Text="{Binding ProfileRiskCheckSubtitle}"
                                     Style="{StaticResource CaptionStyle}"
                                     MaxLines="2"
                                     LineBreakMode="TailTruncation" />
@@ -107,49 +152,6 @@
                                 TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
                                 Text="{mi:Material Icon=KeyboardArrowRight}" />
                         </Grid>
-                    </VerticalStackLayout>
-                </Border>
-
-                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <ui:SectionHeaderView
-                        TitleText="{Binding ClinicalScorecardTitle}"
-                        SubtitleText="{Binding WeekRangeSubtitle}" />
-                    <Border Style="{StaticResource BrandCardStyle}">
-                        <Border.Behaviors>
-                            <behaviors:ListItemRevealBehavior RevealIndex="1" />
-                        </Border.Behaviors>
-                        <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                            <Label
-                                IsVisible="{Binding ShowClinicalScorecardEmpty}"
-                                Text="{Binding ClinicalScorecardEmpty}"
-                                Style="{StaticResource BodyStyle}" />
-                            <Grid
-                                IsVisible="{Binding HasClinicalScorecardMetrics}"
-                                ColumnDefinitions="*,*,*"
-                                ColumnSpacing="{StaticResource CompactSpacing}">
-                                <ui:MetricTileView
-                                    Grid.Column="0"
-                                    ValueText="{Binding WeekPracticeCount}"
-                                    LabelText="{Binding WeekPracticesLabel}" />
-                                <ui:MetricTileView
-                                    Grid.Column="1"
-                                    ValueText="{Binding WeekAverageMoodDisplay}"
-                                    LabelText="{Binding WeekAvgMoodLabel}" />
-                                <ui:MetricTileView
-                                    Grid.Column="2"
-                                    ValueText="{Binding WeekRiskDisplay}"
-                                    LabelText="{Binding WeekRiskLabel}" />
-                            </Grid>
-
-                            <ui:ButtonView
-                                BodyText="{Binding OpenJournalLabel}"
-                                TapCommand="{Binding OpenJournalCommand}"
-                                Variant="Primary" />
-                            <ui:ButtonView
-                                BodyText="{Binding ProfileRiskCheckLabel}"
-                                TapCommand="{Binding OpenRiskCheckCommand}"
-                                Variant="Secondary" />
-                        </VerticalStackLayout>
                     </Border>
                 </VerticalStackLayout>
 

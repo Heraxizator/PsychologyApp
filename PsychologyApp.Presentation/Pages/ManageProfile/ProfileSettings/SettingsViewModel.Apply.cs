@@ -20,6 +20,7 @@ public partial class SettingsViewModel
         await _languageContentReloader.EnsureReloadedAsync();
         await _practiceReminderCoordinator.SyncAsync();
         await _quoteReminderCoordinator.SyncAsync();
+        await _moodReminderCoordinator.SyncAsync();
         await _dialogService.ShowAsync(AppStrings.SettingsAppliedTitle, AppStrings.SettingsAppliedMessage);
         await _navigationService.GoBackAsync();
     }

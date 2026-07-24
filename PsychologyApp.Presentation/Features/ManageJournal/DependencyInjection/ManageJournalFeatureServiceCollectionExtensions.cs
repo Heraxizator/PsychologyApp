@@ -13,6 +13,7 @@ public static class ManageJournalFeatureServiceCollectionExtensions
     {
         services.AddFeatureSingleton<JournalMoodLoader>();
         services.AddFeatureSingleton<JournalEditorContext>();
+        services.AddFeatureSingleton<JournalScreenCoordinator>();
         services.AddFeatureViewModelFactory<IJournalViewModelFactory, JournalViewModelFactory>();
         services.AddFeatureViewModelFactory<IJournalOverviewViewModelFactory, JournalOverviewViewModelFactory>();
         services.AddFeatureViewModelFactory<IJournalTimelineViewModelFactory, JournalTimelineViewModelFactory>();

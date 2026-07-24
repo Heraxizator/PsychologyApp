@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using PsychologyApp.Presentation.Entities.FilterChip;
+using PsychologyApp.Presentation.Entities.Journal;
 using PsychologyApp.Presentation.Entities.Profile;
 using PsychologyApp.Presentation.Features.ManageJournal;
 using PsychologyApp.Presentation.Shared.Common;
@@ -12,14 +13,19 @@ namespace PsychologyApp.Presentation.Pages.ManageJournal.JournalOverview;
 public sealed class JournalOverviewViewModel : BaseViewModel
 {
     private readonly JournalMoodLoader _journalMoodLoader;
+    private readonly JournalScreenCoordinator _journalScreenCoordinator;
+    private readonly INavigationService _navigationService;
     private int _loadGeneration;
     private int _rangeDays = 7;
 
     public JournalOverviewViewModel(
         JournalMoodLoader journalMoodLoader,
+        JournalScreenCoordinator journalScreenCoordinator,
         INavigationService navigationService)
     {
         _journalMoodLoader = journalMoodLoader;
+        _journalScreenCoordinator = journalScreenCoordinator;
+        _navigationService = navigationService;
         BindNavigation(navigationService);
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
         SelectRangeCommand = new Command<object?>(parameter =>
@@ -41,6 +47,22 @@ public sealed class JournalOverviewViewModel : BaseViewModel
             SyncRangeFilters();
             LoadAsync().FireAndForget();
         });
+        SelectDayCommand = new Command<object?>(parameter =>
+        {
+            DateOnly? day = parameter switch
+            {
+                DateOnly date => date,
+                JournalDayChip chip => chip.Date,
+                _ => null
+            };
+
+            if (day is null)
+            {
+                return;
+            }
+
+            _journalScreenCoordinator.OpenEditorDayAsync(day.Value, _navigationService).FireAndForget();
+        });
 
         RangeFilters =
         [
@@ -57,6 +79,7 @@ public sealed class JournalOverviewViewModel : BaseViewModel
     public string MoodTrendHint => AppStrings.ProfileMoodTrendHint;
     public bool ShowMoodTrendHint => !HasMoodTrendChart;
     public string StatsSectionTitle => AppStrings.JournalMoodStatsTitle;
+    public string WeekStripTitle => AppStrings.JournalRecentDaysTitle;
     public string WeekEmptyText => AppStrings.JournalWeekEmpty;
     public string WeekMoodCheckInsLabel => AppStrings.WeekMoodCheckInsLabel;
     public string WeekAvgMoodLabel => AppStrings.WeekAvgMoodLabel;
@@ -64,7 +87,15 @@ public sealed class JournalOverviewViewModel : BaseViewModel
 
     public ICommand BackCommand { get; }
     public ICommand SelectRangeCommand { get; }
+    public ICommand SelectDayCommand { get; }
     public ObservableCollection<FilterChipTabItem> RangeFilters { get; }
+
+    private IReadOnlyList<JournalDayChip> _weekDays = [];
+    public IReadOnlyList<JournalDayChip> WeekDays
+    {
+        get => _weekDays;
+        private set => SetProperty(ref _weekDays, value);
+    }
 
     private IReadOnlyList<MoodChartPoint> _moodChartPoints = [];
     public IReadOnlyList<MoodChartPoint> MoodChartPoints
@@ -174,6 +205,7 @@ public sealed class JournalOverviewViewModel : BaseViewModel
             nameof(MoodTrendHint),
             nameof(ShowMoodTrendHint),
             nameof(StatsSectionTitle),
+            nameof(WeekStripTitle),
             nameof(WeekEmptyText),
             nameof(WeekMoodCheckInsLabel),
             nameof(WeekAvgMoodLabel),
@@ -223,6 +255,7 @@ public sealed class JournalOverviewViewModel : BaseViewModel
 
             await UiThread.RunAsync(() =>
             {
+                WeekDays = snapshot.WeekDays;
                 MoodChartPoints = snapshot.ChartPoints;
                 MoodChartSubtitle = snapshot.ChartSubtitle;
                 HasMoodTrendChart = snapshot.HasTrendChart;

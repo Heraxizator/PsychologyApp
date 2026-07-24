@@ -14,6 +14,7 @@ public interface INavigationService
     Task GoToUserProfileAsync();
     Task GoToPracticeHistoryAsync();
     Task GoToJournalAsync();
+    Task GoToJournalDayAsync(DateOnly day);
     Task GoToJournalOverviewAsync();
     Task GoToJournalTimelineAsync();
     Task GoToOptionsAsync();

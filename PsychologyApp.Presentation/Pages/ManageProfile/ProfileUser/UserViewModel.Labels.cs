@@ -45,6 +45,7 @@ public partial class UserViewModel
     public bool ShowPracticeHistoryEmpty => !HasPracticeHistory;
     public string PracticeHistoryActionText => HasPracticeHistory ? PracticeHistorySeeAll : string.Empty;
     public string ProfileRiskCheckLabel => AppStrings.ProfileRiskCheckLabel;
+    public string ProfileRiskCheckSubtitle => AppStrings.ProfileRiskCheckSubtitle;
 
     protected override void RefreshLocalizedProperties()
     {
@@ -85,15 +86,12 @@ public partial class UserViewModel
             nameof(ShowPracticeHistoryEmpty),
             nameof(PracticeHistoryActionText),
             nameof(ProfileRiskCheckLabel),
+            nameof(ProfileRiskCheckSubtitle),
             nameof(ClinicalScorecardTitle),
             nameof(ClinicalScorecardEmpty),
-            nameof(WeekPracticesLabel),
-            nameof(WeekAvgMoodLabel),
-            nameof(WeekRiskLabel),
             nameof(WeekRangeSubtitle),
-            nameof(WeekPracticeCount),
-            nameof(WeekAverageMoodDisplay),
-            nameof(WeekRiskDisplay),
+            nameof(WeekSummaryText),
+            nameof(WeekDays),
             nameof(HasClinicalScorecard),
             nameof(HasClinicalScorecardMetrics),
             nameof(ShowClinicalScorecardEmpty));
