@@ -22,6 +22,7 @@ public partial class App : Microsoft.Maui.Controls.Application
         var tabNavigator = new AppShellTabNavigator(shell);
         PracticeReminderTapHandler.Configure(tabNavigator);
         QuoteReminderTapHandler.Configure(tabNavigator);
+        MoodReminderTapHandler.Configure(tabNavigator);
         return new(shell);
     }
 
@@ -31,5 +32,6 @@ public partial class App : Microsoft.Maui.Controls.Application
         ReduceMotion.Refresh();
         _services.GetRequiredService<IPracticeReminderCoordinator>().SyncAsync().FireAndForget();
         _services.GetRequiredService<IQuoteReminderCoordinator>().SyncAsync().FireAndForget();
+        _services.GetRequiredService<IMoodReminderCoordinator>().SyncAsync().FireAndForget();
     }
 }

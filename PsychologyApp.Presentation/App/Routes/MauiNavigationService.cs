@@ -51,8 +51,17 @@ public sealed class MauiNavigationService : INavigationService
     public Task GoToUserProfileAsync() =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateUserPage(), true));
 
+    public Task GoToPracticeHistoryAsync() =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreatePracticeHistoryPage(), true));
+
     public Task GoToJournalAsync() =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateJournalPage(), true));
+
+    public Task GoToJournalOverviewAsync() =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateJournalOverviewPage(), true));
+
+    public Task GoToJournalTimelineAsync() =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateJournalTimelinePage(), true));
 
     public Task GoToOptionsAsync() =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateOptionsPage(), true));

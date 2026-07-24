@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.ManageJournal.JournalOverview.JournalOverviewPage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:moodTrend="clr-namespace:PsychologyApp.Presentation.Widgets.Profile"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ManageJournal.JournalOverview"
+             x:DataType="vm:JournalOverviewViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}">
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+        <VerticalStackLayout
+            Margin="{StaticResource LayoutPageMarginThickness}"
+            Spacing="{StaticResource LayoutSpacing}">
+            <VerticalStackLayout.Behaviors>
+                <behaviors:StaggerChildrenBehavior />
+            </VerticalStackLayout.Behaviors>
+
+            <ui:NavigationBarSimpleView
+                TitleText="{Binding PageTitle}"
+                BackCommand="{Binding BackCommand}" />
+
+            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                <ui:SectionHeaderView
+                    TitleText="{Binding StatsSectionTitle}"
+                    SubtitleText="{Binding WeekRangeSubtitle}" />
+                <ui:FilterChipTabBarView
+                    ItemsSource="{Binding RangeFilters}"
+                    TapCommand="{Binding SelectRangeCommand}" />
+                <ui:EmptyStateView
+                    IsVisible="{Binding ShowStatsEmpty}"
+                    BodyText="{Binding WeekEmptyText}"
+                    IconName="SelfImprovement" />
+                <Border
+                    IsVisible="{Binding HasMoodStats}"
+                    Style="{StaticResource BrandCardStyle}">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="0" />
+                    </Border.Behaviors>
+                    <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="{StaticResource CompactSpacing}">
+                            <ui:MetricTileView
+                                Grid.Column="0"
+                                ValueText="{Binding CheckInCountDisplay}"
+                                LabelText="{Binding WeekMoodCheckInsLabel}" />
+                            <ui:MetricTileView
+                                Grid.Column="1"
+                                ValueText="{Binding AverageMoodDisplay}"
+                                LabelText="{Binding WeekAvgMoodLabel}" />
+                            <ui:MetricTileView
+                                Grid.Column="2"
+                                ValueText="{Binding MoodStreakDisplay}"
+                                LabelText="{Binding WeekMoodStreakLabel}" />
+                        </Grid>
+                        <HorizontalStackLayout Spacing="{StaticResource CompactSpacing}">
+                            <Border
+                                Style="{StaticResource MetaPillStyle}"
+                                IsVisible="{Binding HasMoodTrendPill}">
+                                <Label
+                                    Text="{Binding MoodTrendLabel}"
+                                    Style="{StaticResource CaptionStyle}"
+                                    TextColor="{DynamicResource Primary}"
+                                    FontFamily="{StaticResource SemiBoldFontFamily}" />
+                            </Border>
+                            <Border
+                                Style="{StaticResource MetaPillStyle}"
+                                IsVisible="{Binding HasBestWorstPill}">
+                                <Label
+                                    Text="{Binding BestWorstLabel}"
+                                    Style="{StaticResource CaptionStyle}"
+                                    TextColor="{DynamicResource Primary}"
+                                    FontFamily="{StaticResource SemiBoldFontFamily}" />
+                            </Border>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                <ui:SectionHeaderView TitleText="{Binding MoodTrendTitle}" />
+                <ui:EmptyStateView
+                    IsVisible="{Binding ShowMoodTrendHint}"
+                    BodyText="{Binding MoodTrendHint}"
+                    IconName="SelfImprovement" />
+                <moodTrend:MoodTrendChartView
+                    IsVisible="{Binding HasMoodTrendChart}"
+                    ChartPoints="{Binding MoodChartPoints}"
+                    Subtitle="{Binding MoodChartSubtitle}"
+                    Title="" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

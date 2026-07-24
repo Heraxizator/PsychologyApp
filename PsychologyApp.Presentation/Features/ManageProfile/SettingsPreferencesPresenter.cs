@@ -68,6 +68,8 @@ public sealed class SettingsPreferencesPresenter
             PracticeReminderHour = UserPreferences.NormalizePracticeReminderHour(practiceReminderHour),
             QuoteRemindersEnabled = quoteRemindersEnabled,
             QuoteReminderHour = UserPreferences.NormalizeQuoteReminderHour(quoteReminderHour),
+            MoodRemindersEnabled = savedState.MoodRemindersEnabled,
+            MoodReminderHour = savedState.MoodReminderHour,
             HasCompletedOnboarding = savedState.HasCompletedOnboarding,
             OnboardingConcern = UserPreferences.NormalizeOnboardingConcernKey(onboardingConcern)
         };

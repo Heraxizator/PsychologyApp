@@ -9,7 +9,6 @@ public partial class UserViewModel
     public string LoadingText => AppStrings.ProfileLoadingText;
     public string JournalLabel => AppStrings.JournalTitle;
     public string OpenJournalLabel => AppStrings.OpenJournalLabel;
-    public string JournalCardSubtitle => AppStrings.JournalCardSubtitle;
     public string OptionsLabel => AppStrings.OptionsTitle;
     public string OptionsCardSubtitle => AppStrings.ProfileOptionsCardSubtitle;
     public string UserLabel => AppStrings.ProfileUserLabel;
@@ -41,8 +40,11 @@ public partial class UserViewModel
     public string RetryText => AppStrings.RetryQuestion;
     public string PracticeHistoryTitle => AppStrings.PracticeHistoryTitle;
     public string PracticeHistoryEmpty => AppStrings.PracticeHistoryEmpty;
+    public string PracticeHistorySeeAll => AppStrings.PracticeHistorySeeAll;
     public bool HasPracticeHistory => PracticeHistory.Count > 0;
     public bool ShowPracticeHistoryEmpty => !HasPracticeHistory;
+    public string PracticeHistoryActionText => HasPracticeHistory ? PracticeHistorySeeAll : string.Empty;
+    public string ProfileRiskCheckLabel => AppStrings.ProfileRiskCheckLabel;
 
     protected override void RefreshLocalizedProperties()
     {
@@ -51,7 +53,6 @@ public partial class UserViewModel
             nameof(LoadingText),
             nameof(JournalLabel),
             nameof(OpenJournalLabel),
-            nameof(JournalCardSubtitle),
             nameof(OptionsLabel),
             nameof(OptionsCardSubtitle),
             nameof(UserLabel),
@@ -79,8 +80,11 @@ public partial class UserViewModel
             nameof(RetryText),
             nameof(PracticeHistoryTitle),
             nameof(PracticeHistoryEmpty),
+            nameof(PracticeHistorySeeAll),
             nameof(HasPracticeHistory),
             nameof(ShowPracticeHistoryEmpty),
+            nameof(PracticeHistoryActionText),
+            nameof(ProfileRiskCheckLabel),
             nameof(ClinicalScorecardTitle),
             nameof(ClinicalScorecardEmpty),
             nameof(WeekPracticesLabel),

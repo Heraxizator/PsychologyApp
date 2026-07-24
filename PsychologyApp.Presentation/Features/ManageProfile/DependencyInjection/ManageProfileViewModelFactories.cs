@@ -19,6 +19,7 @@ using PsychologyApp.Presentation.Features.ManageProfile.Index;
 using PsychologyApp.Presentation.Features.ManageQuotes;
 using PsychologyApp.Presentation.Features.ManageQuotes.Index;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
+using PsychologyApp.Presentation.Pages.ManageProfile.ProfilePracticeHistory;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 
 namespace PsychologyApp.Presentation.Features.ManageProfile.DependencyInjection;
@@ -132,4 +133,17 @@ public sealed class InfoViewModelFactory(Func<NavigationContext, INavigationServ
 {
     public InfoViewModel Create(ContentPage page) =>
         new(ResolveNavigation(navigationServiceFactory, page));
+}
+
+public interface IPracticeHistoryViewModelFactory
+{
+    PracticeHistoryViewModel Create(ContentPage page);
+}
+
+public sealed class PracticeHistoryViewModelFactory(
+    ProfilePracticeHistoryLoader practiceHistoryLoader,
+    Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IPracticeHistoryViewModelFactory
+{
+    public PracticeHistoryViewModel Create(ContentPage page) =>
+        new(practiceHistoryLoader, ResolveNavigation(navigationServiceFactory, page));
 }

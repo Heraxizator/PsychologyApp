@@ -28,4 +28,14 @@ public partial class TechniquesViewModel
 
         await _navigationService.GoToTechniqueAsync(techniqueId);
     }
+
+    public async Task TryOpenPendingJournalAsync()
+    {
+        if (!UserPreferences.ConsumePendingOpenJournal())
+        {
+            return;
+        }
+
+        await _navigationService.GoToJournalAsync();
+    }
 }

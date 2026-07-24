@@ -17,8 +17,11 @@ using PsychologyApp.Presentation.Pages.ManageProfile.ProfileAlice;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileInfo;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileOptions;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileSettings;
+using PsychologyApp.Presentation.Pages.ManageProfile.ProfilePracticeHistory;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
 using PsychologyApp.Presentation.Pages.ManageJournal.Journal;
+using PsychologyApp.Presentation.Pages.ManageJournal.JournalOverview;
+using PsychologyApp.Presentation.Pages.ManageJournal.JournalTimeline;
 using PsychologyApp.Presentation.Pages.RunTests.Question;
 using PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
 using PsychologyApp.Presentation.Features.SendReviewForm;
@@ -82,8 +85,17 @@ public sealed class PageRegistry(
     public UserPage CreateUserPage() =>
         WithPressFeedback(profilePageFactory.CreateUserPage());
 
+    public PracticeHistoryPage CreatePracticeHistoryPage() =>
+        WithPressFeedback(profilePageFactory.CreatePracticeHistoryPage());
+
     public JournalPage CreateJournalPage() =>
         WithPressFeedback(journalPageFactory.CreateJournalPage());
+
+    public JournalOverviewPage CreateJournalOverviewPage() =>
+        WithPressFeedback(journalPageFactory.CreateJournalOverviewPage());
+
+    public JournalTimelinePage CreateJournalTimelinePage() =>
+        WithPressFeedback(journalPageFactory.CreateJournalTimelinePage());
 
     public OptionsPage CreateOptionsPage() =>
         WithPressFeedback(profilePageFactory.CreateOptionsPage());

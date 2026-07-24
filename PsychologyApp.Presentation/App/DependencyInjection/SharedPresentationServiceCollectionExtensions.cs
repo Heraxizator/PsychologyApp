@@ -29,12 +29,15 @@ public static class SharedPresentationServiceCollectionExtensions
         services.AddSingleton<IUserPreferencesStore, MauiUserPreferencesStore>();
         services.AddSingleton<IPracticeReminderCoordinator, PracticeReminderCoordinator>();
         services.AddSingleton<IQuoteReminderCoordinator, QuoteReminderCoordinator>();
+        services.AddSingleton<IMoodReminderCoordinator, MoodReminderCoordinator>();
 #if ANDROID
         services.AddSingleton<IPracticeReminderScheduler, AndroidPracticeReminderScheduler>();
         services.AddSingleton<IQuoteReminderScheduler, AndroidQuoteReminderScheduler>();
+        services.AddSingleton<IMoodReminderScheduler, AndroidMoodReminderScheduler>();
 #else
         services.AddSingleton<IPracticeReminderScheduler, NullPracticeReminderScheduler>();
         services.AddSingleton<IQuoteReminderScheduler, NullQuoteReminderScheduler>();
+        services.AddSingleton<IMoodReminderScheduler, NullMoodReminderScheduler>();
 #endif
         services.AddSingleton<IDatabaseReadySignal, DatabaseReadySignal>();
         services.AddSingleton<LanguageContentReloader>();

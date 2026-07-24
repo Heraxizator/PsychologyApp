@@ -38,6 +38,7 @@ public partial class TechniquesPage : ContentPage
         }
 
         _viewModel.TryOpenPendingTechniqueAsync().FireAndForget();
+        _viewModel.TryOpenPendingJournalAsync().FireAndForget();
     }
 
     private void OnRemainingItemsThresholdReached(object? sender, EventArgs e)

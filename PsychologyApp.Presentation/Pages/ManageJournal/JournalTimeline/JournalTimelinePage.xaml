@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.ManageJournal.JournalTimeline.JournalTimelinePage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:journalUi="clr-namespace:PsychologyApp.Presentation.Widgets.Journal"
+             xmlns:profile="clr-namespace:PsychologyApp.Presentation.Entities.Profile"
+             xmlns:journal="clr-namespace:PsychologyApp.Presentation.Entities.Journal"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ManageJournal.JournalTimeline"
+             x:Name="TimelineRoot"
+             x:DataType="vm:JournalTimelineViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}">
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+        <VerticalStackLayout
+            Margin="{StaticResource LayoutPageMarginThickness}"
+            Spacing="{StaticResource LayoutSpacing}">
+            <VerticalStackLayout.Behaviors>
+                <behaviors:StaggerChildrenBehavior />
+            </VerticalStackLayout.Behaviors>
+
+            <ui:NavigationBarSimpleView
+                TitleText="{Binding PageTitle}"
+                BackCommand="{Binding BackCommand}" />
+
+            <ui:TextEntryView
+                PlaceholderText="{Binding SearchPlaceholder}"
+                BodyText="{Binding SearchQuery}" />
+            <ui:EmptyStateView
+                IsVisible="{Binding ShowMoodNotesEmpty}"
+                BodyText="{Binding MoodNotesEmpty}"
+                IconName="Edit" />
+            <VerticalStackLayout
+                IsVisible="{Binding HasMoodNotes}"
+                BindableLayout.ItemsSource="{Binding TimelineGroups}"
+                Spacing="{StaticResource LayoutSpacing}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="journal:JournalTimelineDayGroup">
+                        <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                            <Label
+                                Text="{Binding DateLabel}"
+                                Style="{StaticResource SectionTitleStyle}" />
+                            <VerticalStackLayout
+                                BindableLayout.ItemsSource="{Binding Entries}"
+                                Spacing="{StaticResource ListItemSpacing}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="profile:MoodNoteItem">
+                                        <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                                            <journalUi:JournalEntryView
+                                                DateText="{Binding DateText}"
+                                                TimeText="{Binding TimeText}"
+                                                NoteText="{Binding NoteText}"
+                                                HasNote="{Binding HasNote}"
+                                                MoodDisplay="{Binding MoodDisplay}"
+                                                TapCommand="{Binding Source={x:Reference TimelineRoot}, Path=BindingContext.SelectTimelineEntryCommand}"
+                                                CommandParameter="{Binding .}" />
+                                            <Border Style="{StaticResource OutlinedActionBorderStyle}">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={x:Reference TimelineRoot}, Path=BindingContext.ShareEntryCommand}"
+                                                        CommandParameter="{Binding .}" />
+                                                </Border.GestureRecognizers>
+                                                <Border.Behaviors>
+                                                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                                                </Border.Behaviors>
+                                                <Label
+                                                    Text="{Binding Source={x:Reference TimelineRoot}, Path=BindingContext.ShareLabel}"
+                                                    Style="{StaticResource OutlinedActionLabelStyle}"
+                                                    HorizontalOptions="Center" />
+                                            </Border>
+                                        </VerticalStackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

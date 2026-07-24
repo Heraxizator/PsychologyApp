@@ -25,11 +25,13 @@
                     <behaviors:StaggerChildrenBehavior />
                 </VerticalStackLayout.Behaviors>
 
-                <Label Text="{Binding Subtitle}" Style="{StaticResource BodyStyle}">
+                <Label Text="{Binding LeadText}" Style="{StaticResource BodyStyle}">
                     <Label.Behaviors>
                         <behaviors:RevealOnAppearingBehavior />
                     </Label.Behaviors>
                 </Label>
+
+                <Label Text="{Binding Subtitle}" Style="{StaticResource CaptionStyle}" />
 
                 <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
                     <Border.Behaviors>
@@ -51,6 +53,12 @@
                             ShowDivider="False" />
                     </VerticalStackLayout>
                 </Border>
+
+                <ui:ButtonView
+                    IsVisible="{Binding ShowOpenHelpNow}"
+                    BodyText="{Binding OpenHelpNowText}"
+                    TapCommand="{Binding OpenHelpNowCommand}"
+                    Variant="Primary" />
             </VerticalStackLayout>
         </ScrollView>
 

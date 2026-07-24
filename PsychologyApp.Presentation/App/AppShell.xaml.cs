@@ -35,6 +35,7 @@ public partial class AppShell : Shell
     private readonly IShellStartupCoordinator _startupCoordinator;
     private readonly IPracticeReminderCoordinator _practiceReminderCoordinator;
     private readonly IQuoteReminderCoordinator _quoteReminderCoordinator;
+    private readonly IMoodReminderCoordinator _moodReminderCoordinator;
     private readonly ILogger<AppShell> _logger;
     private readonly bool[] _tabsMaterialized = new bool[5];
     private bool _lazyTabsReady;
@@ -44,12 +45,14 @@ public partial class AppShell : Shell
         IShellStartupCoordinator startupCoordinator,
         IPracticeReminderCoordinator practiceReminderCoordinator,
         IQuoteReminderCoordinator quoteReminderCoordinator,
+        IMoodReminderCoordinator moodReminderCoordinator,
         ILogger<AppShell> logger)
     {
         _pageFactory = pageFactory;
         _startupCoordinator = startupCoordinator;
         _practiceReminderCoordinator = practiceReminderCoordinator;
         _quoteReminderCoordinator = quoteReminderCoordinator;
+        _moodReminderCoordinator = moodReminderCoordinator;
         _logger = logger;
         InitializeComponent();
         ApplyLocalization();
@@ -382,6 +385,16 @@ public partial class AppShell : Shell
         viewModel.TryOpenPendingTechniqueAsync().FireAndForget();
     }
 
+    public void OpenPendingJournalIfNeeded()
+    {
+        if (GetTabRootPage(PracticeTab) is not ContentPage { BindingContext: TechniquesViewModel viewModel })
+        {
+            return;
+        }
+
+        viewModel.TryOpenPendingJournalAsync().FireAndForget();
+    }
+
     private async Task InitializeAppAsync()
     {
         try
@@ -405,7 +418,8 @@ public partial class AppShell : Shell
             {
                 await Task.WhenAll(
                     _practiceReminderCoordinator.SyncAsync(),
-                    _quoteReminderCoordinator.SyncAsync()).ConfigureAwait(false);
+                    _quoteReminderCoordinator.SyncAsync(),
+                    _moodReminderCoordinator.SyncAsync()).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

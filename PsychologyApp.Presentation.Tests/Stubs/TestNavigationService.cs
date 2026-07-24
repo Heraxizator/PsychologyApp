@@ -19,7 +19,13 @@ public class TestNavigationService(INavigation navigation) : INavigationService
 
     public Task GoToUserProfileAsync() => Task.CompletedTask;
 
+    public Task GoToPracticeHistoryAsync() => Task.CompletedTask;
+
     public Task GoToJournalAsync() => Task.CompletedTask;
+
+    public Task GoToJournalOverviewAsync() => Task.CompletedTask;
+
+    public Task GoToJournalTimelineAsync() => Task.CompletedTask;
 
     public Task GoToOptionsAsync() => Task.CompletedTask;
 

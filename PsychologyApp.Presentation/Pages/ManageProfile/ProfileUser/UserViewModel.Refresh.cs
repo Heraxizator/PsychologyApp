@@ -72,6 +72,7 @@ public partial class UserViewModel
                 OnPropertyChanged(nameof(PracticeHistory));
                 OnPropertyChanged(nameof(HasPracticeHistory));
                 OnPropertyChanged(nameof(ShowPracticeHistoryEmpty));
+                OnPropertyChanged(nameof(PracticeHistoryActionText));
             });
 
             if (result.ShouldLoadQuotes)

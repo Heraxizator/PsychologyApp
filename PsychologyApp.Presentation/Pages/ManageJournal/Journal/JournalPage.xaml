@@ -4,9 +4,6 @@
              x:Class="PsychologyApp.Presentation.Pages.ManageJournal.Journal.JournalPage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:mood="clr-namespace:PsychologyApp.Presentation.Widgets.MoodStrip"
-             xmlns:moodTrend="clr-namespace:PsychologyApp.Presentation.Widgets.Profile"
-             xmlns:journalUi="clr-namespace:PsychologyApp.Presentation.Widgets.Journal"
-             xmlns:profile="clr-namespace:PsychologyApp.Presentation.Entities.Profile"
              xmlns:journal="clr-namespace:PsychologyApp.Presentation.Entities.Journal"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ManageJournal.Journal"
@@ -26,6 +23,17 @@
             <ui:NavigationBarSimpleView
                 TitleText="{Binding PageTitle}"
                 BackCommand="{Binding BackCommand}" />
+
+            <HorizontalStackLayout Spacing="{StaticResource CompactSpacing}">
+                <ui:ButtonView
+                    BodyText="{Binding OpenOverviewLabel}"
+                    TapCommand="{Binding OpenOverviewCommand}"
+                    Variant="Secondary" />
+                <ui:ButtonView
+                    BodyText="{Binding OpenTimelineLabel}"
+                    TapCommand="{Binding OpenTimelineCommand}"
+                    Variant="Secondary" />
+            </HorizontalStackLayout>
 
             <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                 <ui:SectionHeaderView TitleText="{Binding EditorDayTitle}" />
@@ -57,6 +65,11 @@
                             TapCommand="{Binding SaveMoodCommand}"
                             Variant="Primary" />
                         <ui:ButtonView
+                            IsVisible="{Binding CanShareEntry}"
+                            BodyText="{Binding ShareLabel}"
+                            TapCommand="{Binding ShareCommand}"
+                            Variant="Secondary" />
+                        <ui:ButtonView
                             IsVisible="{Binding CanDeleteEntry}"
                             BodyText="{Binding DeleteLabel}"
                             TapCommand="{Binding DeleteMoodCommand}"
@@ -66,9 +79,7 @@
             </VerticalStackLayout>
 
             <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                <ui:SectionHeaderView
-                    TitleText="{Binding StatsSectionTitle}"
-                    SubtitleText="{Binding WeekRangeSubtitle}" />
+                <ui:SectionHeaderView TitleText="{Binding WeekStripTitle}" />
                 <CollectionView
                     HeightRequest="72"
                     SelectionMode="None"
@@ -115,111 +126,12 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-                <ui:FilterChipTabBarView
-                    ItemsSource="{Binding RangeFilters}"
-                    TapCommand="{Binding SelectRangeCommand}" />
-                <ui:EmptyStateView
-                    IsVisible="{Binding ShowStatsEmpty}"
-                    BodyText="{Binding WeekEmptyText}"
-                    IconName="SelfImprovement" />
-                <Border
-                    IsVisible="{Binding HasMoodStats}"
-                    Style="{StaticResource BrandCardStyle}">
-                    <Border.Behaviors>
-                        <behaviors:ListItemRevealBehavior RevealIndex="1" />
-                    </Border.Behaviors>
-                    <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="{StaticResource CompactSpacing}">
-                            <ui:MetricTileView
-                                Grid.Column="0"
-                                ValueText="{Binding CheckInCountDisplay}"
-                                LabelText="{Binding WeekMoodCheckInsLabel}" />
-                            <ui:MetricTileView
-                                Grid.Column="1"
-                                ValueText="{Binding AverageMoodDisplay}"
-                                LabelText="{Binding WeekAvgMoodLabel}" />
-                            <ui:MetricTileView
-                                Grid.Column="2"
-                                ValueText="{Binding MoodStreakDisplay}"
-                                LabelText="{Binding WeekMoodStreakLabel}" />
-                        </Grid>
-                        <HorizontalStackLayout Spacing="{StaticResource CompactSpacing}">
-                            <Border
-                                Style="{StaticResource MetaPillStyle}"
-                                IsVisible="{Binding HasMoodTrendPill}">
-                                <Label
-                                    Text="{Binding MoodTrendLabel}"
-                                    Style="{StaticResource CaptionStyle}"
-                                    TextColor="{DynamicResource Primary}"
-                                    FontFamily="{StaticResource SemiBoldFontFamily}" />
-                            </Border>
-                            <Border
-                                Style="{StaticResource MetaPillStyle}"
-                                IsVisible="{Binding HasBestWorstPill}">
-                                <Label
-                                    Text="{Binding BestWorstLabel}"
-                                    Style="{StaticResource CaptionStyle}"
-                                    TextColor="{DynamicResource Primary}"
-                                    FontFamily="{StaticResource SemiBoldFontFamily}" />
-                            </Border>
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
-                </Border>
             </VerticalStackLayout>
 
-            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                <ui:SectionHeaderView TitleText="{Binding MoodTrendTitle}" />
-                <ui:EmptyStateView
-                    IsVisible="{Binding ShowMoodTrendHint}"
-                    BodyText="{Binding MoodTrendHint}"
-                    IconName="SelfImprovement" />
-                <moodTrend:MoodTrendChartView
-                    IsVisible="{Binding HasMoodTrendChart}"
-                    ChartPoints="{Binding MoodChartPoints}"
-                    Subtitle="{Binding MoodChartSubtitle}"
-                    Title="" />
-            </VerticalStackLayout>
-
-            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                <ui:SectionHeaderView TitleText="{Binding EntriesTitle}" />
-                <ui:TextEntryView
-                    PlaceholderText="{Binding SearchPlaceholder}"
-                    BodyText="{Binding SearchQuery}" />
-                <ui:EmptyStateView
-                    IsVisible="{Binding ShowMoodNotesEmpty}"
-                    BodyText="{Binding MoodNotesEmpty}"
-                    IconName="Edit" />
-                <VerticalStackLayout
-                    IsVisible="{Binding HasMoodNotes}"
-                    BindableLayout.ItemsSource="{Binding TimelineGroups}"
-                    Spacing="{StaticResource LayoutSpacing}">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="journal:JournalTimelineDayGroup">
-                            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                                <Label
-                                    Text="{Binding DateLabel}"
-                                    Style="{StaticResource SectionTitleStyle}" />
-                                <VerticalStackLayout
-                                    BindableLayout.ItemsSource="{Binding Entries}"
-                                    Spacing="{StaticResource ListItemSpacing}">
-                                    <BindableLayout.ItemTemplate>
-                                        <DataTemplate x:DataType="profile:MoodNoteItem">
-                                            <journalUi:JournalEntryView
-                                                DateText="{Binding DateText}"
-                                                TimeText="{Binding TimeText}"
-                                                NoteText="{Binding NoteText}"
-                                                HasNote="{Binding HasNote}"
-                                                MoodDisplay="{Binding MoodDisplay}"
-                                                TapCommand="{Binding Source={x:Reference JournalRoot}, Path=BindingContext.SelectTimelineEntryCommand}"
-                                                CommandParameter="{Binding .}" />
-                                        </DataTemplate>
-                                    </BindableLayout.ItemTemplate>
-                                </VerticalStackLayout>
-                            </VerticalStackLayout>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </VerticalStackLayout>
-            </VerticalStackLayout>
+                    <ui:SettingSwitchRowView
+                        LabelText="{Binding ReminderToggleLabel}"
+                        IsToggled="{Binding MoodRemindersEnabled}"
+                        ShowDivider="False" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

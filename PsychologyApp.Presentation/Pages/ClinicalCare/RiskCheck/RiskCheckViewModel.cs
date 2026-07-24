@@ -26,21 +26,30 @@ public sealed class RiskCheckViewModel : BaseViewModel
         _onCompleted = onCompleted;
         SubmitCommand = new AsyncCommand(SubmitAsync);
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
+        OpenHelpNowCommand = new AsyncCommand(OpenHelpNowAsync);
     }
 
     public string PageTitle => AppStrings.RiskCheckTitle;
+    public string LeadText => AppStrings.RiskCheckLead;
     public string Subtitle => AppStrings.RiskCheckSubtitle;
     public string SelfHarmLabel => AppStrings.RiskCheckSelfHarm;
     public string DisorientationLabel => AppStrings.RiskCheckDisorientation;
     public string SubstanceLabel => AppStrings.RiskCheckSubstance;
     public string InsomniaLabel => AppStrings.RiskCheckInsomnia;
     public string SubmitText => AppStrings.RiskCheckSubmit;
+    public string OpenHelpNowText => AppStrings.RiskCheckOpenHelpNow;
 
     private bool _hasSelfHarmThoughts;
     public bool HasSelfHarmThoughts
     {
         get => _hasSelfHarmThoughts;
-        set => SetProperty(ref _hasSelfHarmThoughts, value);
+        set
+        {
+            if (SetProperty(ref _hasSelfHarmThoughts, value))
+            {
+                OnPropertyChanged(nameof(ShowOpenHelpNow));
+            }
+        }
     }
 
     private bool _hasSevereDisorientation;
@@ -64,19 +73,30 @@ public sealed class RiskCheckViewModel : BaseViewModel
         set => SetProperty(ref _hasSevereInsomnia, value);
     }
 
+    public bool ShowOpenHelpNow => HasSelfHarmThoughts;
+
     public ICommand SubmitCommand { get; }
     public ICommand BackCommand { get; }
+    public ICommand OpenHelpNowCommand { get; }
 
     protected override void RefreshLocalizedProperties()
     {
         Notify(
             nameof(PageTitle),
+            nameof(LeadText),
             nameof(Subtitle),
             nameof(SelfHarmLabel),
             nameof(DisorientationLabel),
             nameof(SubstanceLabel),
             nameof(InsomniaLabel),
-            nameof(SubmitText));
+            nameof(SubmitText),
+            nameof(OpenHelpNowText),
+            nameof(ShowOpenHelpNow));
+    }
+
+    private async Task OpenHelpNowAsync()
+    {
+        await _navigationService.GoToCrisisHubAsync();
     }
 
     private async Task SubmitAsync()

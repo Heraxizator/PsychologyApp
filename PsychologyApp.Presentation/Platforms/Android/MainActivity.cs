@@ -35,6 +35,12 @@ public class MainActivity : MauiAppCompatActivity
             return;
         }
 
+        if (string.Equals(intent.Action, MoodReminderConstants.ActionOpenFromNotification, StringComparison.Ordinal))
+        {
+            MoodReminderTapHandler.Handle();
+            return;
+        }
+
         if (!string.Equals(intent.Action, PracticeReminderConstants.ActionOpenFromNotification, StringComparison.Ordinal))
         {
             return;

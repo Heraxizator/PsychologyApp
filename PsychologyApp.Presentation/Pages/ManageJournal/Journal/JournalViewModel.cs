@@ -1,11 +1,13 @@
+using Microsoft.Maui.ApplicationModel.DataTransfer;
 using System.Collections.ObjectModel;
 using PsychologyApp.Presentation.Entities.FilterChip;
 using PsychologyApp.Presentation.Entities.Journal;
-using PsychologyApp.Presentation.Entities.Profile;
 using PsychologyApp.Presentation.Features.ManageJournal;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
+using PsychologyApp.Presentation.Shared.Services.Notifications;
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Shared.ViewModels;
 using System.Windows.Input;
 
@@ -14,25 +16,34 @@ namespace PsychologyApp.Presentation.Pages.ManageJournal.Journal;
 public sealed class JournalViewModel : BaseViewModel
 {
     private readonly JournalMoodLoader _journalMoodLoader;
+    private readonly JournalEditorContext _editorContext;
     private readonly IDialogService _dialogService;
+    private readonly IUserPreferencesStore _preferencesStore;
+    private readonly IMoodReminderCoordinator _moodReminderCoordinator;
     private int _loadGeneration;
     private long? _editorEntryId;
-    private int _rangeDays = 7;
-    private DateOnly? _filterDay;
     private DateOnly _editorDay = DateOnly.FromDateTime(DateTime.Today);
-    private IReadOnlyList<JournalTimelineDayGroup> _allTimelineGroups = [];
 
     public JournalViewModel(
         JournalMoodLoader journalMoodLoader,
+        JournalEditorContext editorContext,
         IDialogService dialogService,
+        IUserPreferencesStore preferencesStore,
+        IMoodReminderCoordinator moodReminderCoordinator,
         INavigationService navigationService)
     {
         _journalMoodLoader = journalMoodLoader;
+        _editorContext = editorContext;
         _dialogService = dialogService;
+        _preferencesStore = preferencesStore;
+        _moodReminderCoordinator = moodReminderCoordinator;
         BindNavigation(navigationService);
         ModuleName = AppStrings.JournalTitle;
         PageName = AppStrings.JournalTitle;
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
+        OpenOverviewCommand = new AsyncCommand(() => navigationService.GoToJournalOverviewAsync());
+        OpenTimelineCommand = new AsyncCommand(() => navigationService.GoToJournalTimelineAsync());
+        ShareCommand = new AsyncCommand(ShareAsync);
         RecordMoodCommand = new Command<object?>(parameter =>
         {
             int level = parameter switch
@@ -67,30 +78,6 @@ public sealed class JournalViewModel : BaseViewModel
                 ? prompt
                 : $"{JournalNote.TrimEnd()}\n{prompt}";
         });
-        SelectRangeCommand = new Command<object?>(parameter =>
-        {
-            int days = parameter switch
-            {
-                int value => value,
-                string text when int.TryParse(text, out int parsed) => parsed,
-                _ => 0
-            };
-
-            if (days is not (7 or 30 or 90))
-            {
-                return;
-            }
-
-            if (days == _rangeDays && _filterDay is null)
-            {
-                return;
-            }
-
-            _rangeDays = days;
-            _filterDay = null;
-            SyncRangeFilters();
-            LoadAsync().FireAndForget();
-        });
         SelectDayCommand = new Command<object?>(parameter =>
         {
             DateOnly? day = parameter switch
@@ -105,48 +92,9 @@ public sealed class JournalViewModel : BaseViewModel
                 return;
             }
 
-            if (_filterDay == day)
-            {
-                _filterDay = null;
-                _editorDay = DateOnly.FromDateTime(DateTime.Today);
-            }
-            else
-            {
-                _filterDay = day;
-                _editorDay = day.Value;
-            }
-
-            SyncRangeFilters();
+            _editorDay = day.Value;
             LoadAsync().FireAndForget();
         });
-        SelectTimelineEntryCommand = new Command<object?>(parameter =>
-        {
-            if (parameter is not MoodNoteItem entry)
-            {
-                return;
-            }
-
-            _editorDay = entry.Day;
-            _filterDay = entry.Day;
-            _editorEntryId = entry.MoodEntryId;
-            SelectedMoodLevel = entry.MoodLevel;
-            JournalNote = entry.HasNote ? entry.NoteText : string.Empty;
-            TodayMoodDisplay = entry.IsToday
-                ? AppStrings.JournalEditTodayHint
-                : AppStrings.JournalDayMoodLine(entry.Day, entry.MoodLevel, 5);
-            OnPropertyChanged(nameof(HasEditorEntry));
-            OnPropertyChanged(nameof(CanDeleteEntry));
-            OnPropertyChanged(nameof(EditorDayTitle));
-            OnPropertyChanged(nameof(MoodCheckInTitle));
-            LoadAsync().FireAndForget();
-        });
-
-        RangeFilters =
-        [
-            new FilterChipTabItem { Key = "7", Title = AppStrings.JournalFilter7Days, IsSelected = true },
-            new FilterChipTabItem { Key = "30", Title = AppStrings.JournalFilter30Days, IsSelected = false },
-            new FilterChipTabItem { Key = "90", Title = AppStrings.JournalFilter90Days, IsSelected = false }
-        ];
 
         PromptChips =
         [
@@ -156,6 +104,7 @@ public sealed class JournalViewModel : BaseViewModel
             new FilterChipTabItem { Key = "next", Title = AppStrings.JournalPromptNext }
         ];
 
+        MoodRemindersEnabled = preferencesStore.Load().MoodRemindersEnabled;
         LoadAsync().FireAndForget();
     }
 
@@ -165,81 +114,27 @@ public sealed class JournalViewModel : BaseViewModel
         _editorDay == DateOnly.FromDateTime(DateTime.Today)
             ? AppStrings.ProfileMoodCheckInTitle
             : AppStrings.JournalPastDayCheckInTitle;
-    public string MoodTrendTitle => AppStrings.ProfileMoodTrendTitle;
-    public string MoodTrendHint => AppStrings.ProfileMoodTrendHint;
-    public bool ShowMoodTrendHint => !HasMoodTrendChart;
-    public string EntriesTitle => AppStrings.JournalEntriesTitle;
-    public string StatsSectionTitle => AppStrings.JournalMoodStatsTitle;
-    public string WeekEmptyText => AppStrings.JournalWeekEmpty;
     public string NotePlaceholder => AppStrings.JournalNotePlaceholder;
     public string NoteSaveHint => AppStrings.JournalNoteSaveHint;
     public string SaveLabel => AppStrings.JournalSaveLabel;
     public string DeleteLabel => AppStrings.JournalDeleteLabel;
-    public string SearchPlaceholder => AppStrings.JournalSearchPlaceholder;
-    public string WeekMoodCheckInsLabel => AppStrings.WeekMoodCheckInsLabel;
-    public string WeekAvgMoodLabel => AppStrings.WeekAvgMoodLabel;
-    public string WeekMoodStreakLabel => AppStrings.JournalMoodStreakLabel;
+    public string ShareLabel => AppStrings.JournalShareLabel;
+    public string OpenOverviewLabel => AppStrings.JournalOpenOverview;
+    public string OpenTimelineLabel => AppStrings.JournalOpenTimeline;
+    public string ReminderToggleLabel => AppStrings.JournalReminderToggle;
+    public string WeekStripTitle => AppStrings.JournalMoodStatsTitle;
 
     public ICommand BackCommand { get; }
+    public ICommand OpenOverviewCommand { get; }
+    public ICommand OpenTimelineCommand { get; }
+    public ICommand ShareCommand { get; }
     public ICommand RecordMoodCommand { get; }
     public ICommand SaveMoodCommand { get; }
     public ICommand DeleteMoodCommand { get; }
     public ICommand ApplyPromptCommand { get; }
-    public ICommand SelectRangeCommand { get; }
     public ICommand SelectDayCommand { get; }
-    public ICommand SelectTimelineEntryCommand { get; }
 
-    public ObservableCollection<FilterChipTabItem> RangeFilters { get; }
     public ObservableCollection<FilterChipTabItem> PromptChips { get; }
-
-    private IReadOnlyList<MoodChartPoint> _moodChartPoints = [];
-    public IReadOnlyList<MoodChartPoint> MoodChartPoints
-    {
-        get => _moodChartPoints;
-        private set => SetProperty(ref _moodChartPoints, value);
-    }
-
-    private string _moodChartSubtitle = string.Empty;
-    public string MoodChartSubtitle
-    {
-        get => _moodChartSubtitle;
-        private set => SetProperty(ref _moodChartSubtitle, value);
-    }
-
-    private bool _hasMoodTrendChart;
-    public bool HasMoodTrendChart
-    {
-        get => _hasMoodTrendChart;
-        private set
-        {
-            if (SetProperty(ref _hasMoodTrendChart, value))
-            {
-                OnPropertyChanged(nameof(ShowMoodTrendHint));
-            }
-        }
-    }
-
-    private IReadOnlyList<JournalTimelineDayGroup> _timelineGroups = [];
-    public IReadOnlyList<JournalTimelineDayGroup> TimelineGroups
-    {
-        get => _timelineGroups;
-        private set
-        {
-            if (SetProperty(ref _timelineGroups, value))
-            {
-                OnPropertyChanged(nameof(HasMoodNotes));
-                OnPropertyChanged(nameof(ShowMoodNotesEmpty));
-                OnPropertyChanged(nameof(MoodNotesEmpty));
-            }
-        }
-    }
-
-    public bool HasMoodNotes => TimelineGroups.Count > 0;
-    public bool ShowMoodNotesEmpty => !HasMoodNotes;
-    public string MoodNotesEmpty =>
-        string.IsNullOrWhiteSpace(SearchQuery)
-            ? AppStrings.JournalTimelineEmpty
-            : AppStrings.JournalSearchEmpty;
 
     private IReadOnlyList<JournalDayChip> _weekDays = [];
     public IReadOnlyList<JournalDayChip> WeekDays
@@ -285,79 +180,6 @@ public sealed class JournalViewModel : BaseViewModel
 
     public bool HasMoodHistorySummary => !string.IsNullOrWhiteSpace(MoodHistorySummary);
 
-    private bool _hasMoodStats;
-    public bool HasMoodStats
-    {
-        get => _hasMoodStats;
-        private set
-        {
-            if (SetProperty(ref _hasMoodStats, value))
-            {
-                OnPropertyChanged(nameof(ShowStatsEmpty));
-            }
-        }
-    }
-
-    public bool ShowStatsEmpty => !HasMoodStats;
-
-    private string _weekRangeSubtitle = string.Empty;
-    public string WeekRangeSubtitle
-    {
-        get => _weekRangeSubtitle;
-        private set => SetProperty(ref _weekRangeSubtitle, value);
-    }
-
-    private string _checkInCountDisplay = AppStrings.MetricEmptyValue;
-    public string CheckInCountDisplay
-    {
-        get => _checkInCountDisplay;
-        private set => SetProperty(ref _checkInCountDisplay, value);
-    }
-
-    private string _averageMoodDisplay = AppStrings.MetricEmptyValue;
-    public string AverageMoodDisplay
-    {
-        get => _averageMoodDisplay;
-        private set => SetProperty(ref _averageMoodDisplay, value);
-    }
-
-    private string _moodStreakDisplay = AppStrings.MetricEmptyValue;
-    public string MoodStreakDisplay
-    {
-        get => _moodStreakDisplay;
-        private set => SetProperty(ref _moodStreakDisplay, value);
-    }
-
-    private string _moodTrendLabel = string.Empty;
-    public string MoodTrendLabel
-    {
-        get => _moodTrendLabel;
-        private set
-        {
-            if (SetProperty(ref _moodTrendLabel, value))
-            {
-                OnPropertyChanged(nameof(HasMoodTrendPill));
-            }
-        }
-    }
-
-    public bool HasMoodTrendPill => !string.IsNullOrWhiteSpace(MoodTrendLabel);
-
-    private string _bestWorstLabel = string.Empty;
-    public string BestWorstLabel
-    {
-        get => _bestWorstLabel;
-        private set
-        {
-            if (SetProperty(ref _bestWorstLabel, value))
-            {
-                OnPropertyChanged(nameof(HasBestWorstPill));
-            }
-        }
-    }
-
-    public bool HasBestWorstPill => !string.IsNullOrWhiteSpace(BestWorstLabel);
-
     private string _journalNote = string.Empty;
     public string JournalNote
     {
@@ -365,21 +187,24 @@ public sealed class JournalViewModel : BaseViewModel
         set => SetProperty(ref _journalNote, value);
     }
 
-    private string _searchQuery = string.Empty;
-    public string SearchQuery
+    private bool _moodRemindersEnabled;
+    public bool MoodRemindersEnabled
     {
-        get => _searchQuery;
+        get => _moodRemindersEnabled;
         set
         {
-            if (SetProperty(ref _searchQuery, value))
+            if (!SetProperty(ref _moodRemindersEnabled, value))
             {
-                ApplySearchFilter();
+                return;
             }
+
+            PersistReminderPreferenceAsync(value).FireAndForget();
         }
     }
 
     public bool HasEditorEntry => _editorEntryId is > 0;
     public bool CanDeleteEntry => HasEditorEntry;
+    public bool CanShareEntry => SelectedMoodLevel is >= 1 and <= 5;
 
     protected override void RefreshLocalizedProperties()
     {
@@ -387,47 +212,22 @@ public sealed class JournalViewModel : BaseViewModel
             nameof(PageTitle),
             nameof(EditorDayTitle),
             nameof(MoodCheckInTitle),
-            nameof(MoodTrendTitle),
-            nameof(MoodTrendHint),
-            nameof(ShowMoodTrendHint),
-            nameof(EntriesTitle),
-            nameof(MoodNotesEmpty),
-            nameof(StatsSectionTitle),
-            nameof(WeekEmptyText),
             nameof(NotePlaceholder),
             nameof(NoteSaveHint),
             nameof(SaveLabel),
             nameof(DeleteLabel),
-            nameof(SearchPlaceholder),
-            nameof(WeekMoodCheckInsLabel),
-            nameof(WeekAvgMoodLabel),
-            nameof(WeekMoodStreakLabel),
+            nameof(ShareLabel),
+            nameof(OpenOverviewLabel),
+            nameof(OpenTimelineLabel),
+            nameof(ReminderToggleLabel),
+            nameof(WeekStripTitle),
             nameof(TodayMoodDisplay),
             nameof(HasTodayMood),
             nameof(MoodHistorySummary),
             nameof(HasMoodHistorySummary),
-            nameof(HasMoodStats),
-            nameof(ShowStatsEmpty),
-            nameof(WeekRangeSubtitle),
-            nameof(CheckInCountDisplay),
-            nameof(AverageMoodDisplay),
-            nameof(MoodStreakDisplay),
-            nameof(MoodTrendLabel),
-            nameof(HasMoodTrendPill),
-            nameof(BestWorstLabel),
-            nameof(HasBestWorstPill),
             nameof(HasEditorEntry),
-            nameof(CanDeleteEntry));
-
-        foreach (FilterChipTabItem filter in RangeFilters)
-        {
-            filter.Title = filter.Key switch
-            {
-                "90" => AppStrings.JournalFilter90Days,
-                "30" => AppStrings.JournalFilter30Days,
-                _ => AppStrings.JournalFilter7Days
-            };
-        }
+            nameof(CanDeleteEntry),
+            nameof(CanShareEntry));
 
         foreach (FilterChipTabItem prompt in PromptChips)
         {
@@ -441,7 +241,15 @@ public sealed class JournalViewModel : BaseViewModel
         }
     }
 
-    public Task ReloadAsync() => LoadAsync();
+    public Task ReloadAsync()
+    {
+        if (_editorContext.ConsumePendingEditorDay() is DateOnly pendingDay)
+        {
+            _editorDay = pendingDay;
+        }
+
+        return LoadAsync();
+    }
 
     private static string? ResolvePromptText(string key) => key switch
     {
@@ -452,28 +260,15 @@ public sealed class JournalViewModel : BaseViewModel
         _ => key
     };
 
-    private void SyncRangeFilters()
-    {
-        foreach (FilterChipTabItem filter in RangeFilters)
-        {
-            filter.IsSelected = filter.Key == _rangeDays.ToString();
-        }
-    }
-
-    private void ApplySearchFilter()
-    {
-        TimelineGroups = JournalMoodLoader.FilterGroupsByNoteSearch(_allTimelineGroups, SearchQuery);
-    }
-
     private async Task LoadAsync()
     {
         int generation = Interlocked.Increment(ref _loadGeneration);
         try
         {
             JournalMoodSnapshot snapshot = await _journalMoodLoader.LoadAsync(
-                _rangeDays,
-                _filterDay,
-                _editorDay);
+                rangeDays: 7,
+                filterDay: null,
+                editorDay: _editorDay);
             if (generation != Volatile.Read(ref _loadGeneration))
             {
                 return;
@@ -489,11 +284,6 @@ public sealed class JournalViewModel : BaseViewModel
 
     private void ApplySnapshot(JournalMoodSnapshot snapshot)
     {
-        MoodChartPoints = snapshot.ChartPoints;
-        MoodChartSubtitle = snapshot.ChartSubtitle;
-        HasMoodTrendChart = snapshot.HasTrendChart;
-        _allTimelineGroups = snapshot.TimelineGroups;
-        ApplySearchFilter();
         WeekDays = snapshot.WeekDays;
         _editorEntryId = snapshot.EditorEntryId;
         _editorDay = snapshot.EditorDay;
@@ -501,20 +291,10 @@ public sealed class JournalViewModel : BaseViewModel
         TodayMoodDisplay = snapshot.EditorMoodDisplay;
         MoodHistorySummary = snapshot.MoodHistorySummary;
         JournalNote = snapshot.EditorNote ?? string.Empty;
-        WeekRangeSubtitle = snapshot.RangeSubtitle;
-
-        JournalMoodStats stats = snapshot.Stats;
-        HasMoodStats = stats.HasStats;
-        CheckInCountDisplay = stats.HasStats
-            ? stats.CheckInCount.ToString()
-            : AppStrings.MetricEmptyValue;
-        AverageMoodDisplay = stats.AverageMoodDisplay;
-        MoodStreakDisplay = stats.MoodStreakDisplay;
-        MoodTrendLabel = stats.MoodTrendLabel;
-        BestWorstLabel = stats.BestWorstLabel;
 
         OnPropertyChanged(nameof(HasEditorEntry));
         OnPropertyChanged(nameof(CanDeleteEntry));
+        OnPropertyChanged(nameof(CanShareEntry));
         OnPropertyChanged(nameof(EditorDayTitle));
         OnPropertyChanged(nameof(MoodCheckInTitle));
     }
@@ -530,6 +310,7 @@ public sealed class JournalViewModel : BaseViewModel
         string? note = string.IsNullOrWhiteSpace(JournalNote) ? null : JournalNote.Trim();
         await _journalMoodLoader.SaveMoodAsync(SelectedMoodLevel, note, _editorEntryId, _editorDay);
         TodayMoodDisplay = AppStrings.TodayMoodSaved;
+        OnPropertyChanged(nameof(CanShareEntry));
         await LoadAsync();
     }
 
@@ -555,6 +336,48 @@ public sealed class JournalViewModel : BaseViewModel
         SelectedMoodLevel = 0;
         JournalNote = string.Empty;
         TodayMoodDisplay = string.Empty;
+        OnPropertyChanged(nameof(CanShareEntry));
         await LoadAsync();
+    }
+
+    private async Task ShareAsync()
+    {
+        if (SelectedMoodLevel is < 1 or > 5)
+        {
+            return;
+        }
+
+        string mood = AppStrings.FormatAverageMood(SelectedMoodLevel);
+        string day = _editorDay.ToString("d");
+        string note = JournalNote?.Trim() ?? string.Empty;
+        await Share.Default.RequestAsync(new ShareTextRequest
+        {
+            Title = AppStrings.JournalShareTitle,
+            Text = AppStrings.JournalShareText(day, mood, note)
+        });
+    }
+
+    private async Task PersistReminderPreferenceAsync(bool enabled)
+    {
+        UserPreferencesState current = _preferencesStore.Load();
+        _preferencesStore.Save(new UserPreferencesState
+        {
+            Language = current.Language,
+            Theme = current.Theme,
+            Color = current.Color,
+            Form = current.Form,
+            Size = current.Size,
+            IsBold = current.IsBold,
+            QuestionnaireAutoAdvance = current.QuestionnaireAutoAdvance,
+            HasCompletedOnboarding = current.HasCompletedOnboarding,
+            OnboardingConcern = current.OnboardingConcern,
+            PracticeRemindersEnabled = current.PracticeRemindersEnabled,
+            PracticeReminderHour = current.PracticeReminderHour,
+            QuoteRemindersEnabled = current.QuoteRemindersEnabled,
+            QuoteReminderHour = current.QuoteReminderHour,
+            MoodRemindersEnabled = enabled,
+            MoodReminderHour = current.MoodReminderHour
+        });
+        await _moodReminderCoordinator.SyncAsync();
     }
 }
