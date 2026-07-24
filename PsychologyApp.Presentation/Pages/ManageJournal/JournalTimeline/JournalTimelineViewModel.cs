@@ -12,18 +12,18 @@ namespace PsychologyApp.Presentation.Pages.ManageJournal.JournalTimeline;
 public sealed class JournalTimelineViewModel : BaseViewModel
 {
     private readonly JournalMoodLoader _journalMoodLoader;
-    private readonly JournalEditorContext _editorContext;
+    private readonly JournalScreenCoordinator _journalScreenCoordinator;
     private readonly INavigationService _navigationService;
     private int _loadGeneration;
     private IReadOnlyList<JournalTimelineDayGroup> _allTimelineGroups = [];
 
     public JournalTimelineViewModel(
         JournalMoodLoader journalMoodLoader,
-        JournalEditorContext editorContext,
+        JournalScreenCoordinator journalScreenCoordinator,
         INavigationService navigationService)
     {
         _journalMoodLoader = journalMoodLoader;
-        _editorContext = editorContext;
+        _journalScreenCoordinator = journalScreenCoordinator;
         _navigationService = navigationService;
         BindNavigation(navigationService);
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
@@ -123,8 +123,7 @@ public sealed class JournalTimelineViewModel : BaseViewModel
             return;
         }
 
-        _editorContext.PendingEditorDay = entry.Day;
-        await _navigationService.GoBackAsync();
+        await _journalScreenCoordinator.OpenEditorDayAsync(entry.Day, _navigationService);
     }
 
     private async Task ShareEntryAsync(object? parameter)

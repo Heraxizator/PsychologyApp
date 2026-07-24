@@ -54,6 +54,7 @@ public static partial class AppStrings
     public static string SettingsPracticeSection => T("Практика", "Practice");
     public static string SettingsPracticeRemindersLabel => T("Напоминания о практике", "Practice reminders");
     public static string SettingsQuotesSection => T("Цитаты", "Quotes");
+    public static string SettingsJournalSection => T("Дневник", "Journal");
     public static string SettingsPracticeReminderHourLabel => T("Время напоминания", "Reminder time");
     public static string SettingsPracticeReminderHourPickerTitle => T("Время", "Time");
     public static string PracticeReminderTitle => T("Пора позаниматься", "Time to practice");
@@ -417,6 +418,7 @@ public static partial class AppStrings
     public static string JournalNotePlaceholder => T(
         "Заметка к этому дню (необязательно)",
         "Note for this day (optional)");
+    public static string JournalNoteSectionTitle => T("Заметка", "Note");
     public static string JournalNoteSaveHint => T(
         "Выберите настроение и нажмите «Сохранить»",
         "Pick a mood, then tap Save");
@@ -754,6 +756,9 @@ public static partial class AppStrings
     public static string SettingsQuoteRemindersLabel => T("Цитата дня", "Daily quote");
     public static string SettingsQuoteReminderHourLabel => T("Время цитаты", "Quote time");
     public static string SettingsQuoteReminderHourPickerTitle => T("Время", "Time");
+    public static string SettingsMoodRemindersLabel => T("Напоминать о check-in", "Remind me to check in");
+    public static string SettingsMoodReminderHourLabel => T("Время check-in", "Check-in time");
+    public static string SettingsMoodReminderHourPickerTitle => T("Время", "Time");
     public static string QuoteReminderTitle => T("Цитата дня", "Quote of the day");
     public static string QuoteReminderBody => T(
         "Откройте приложение и прочитайте мысль дня.",
@@ -880,13 +885,19 @@ public static partial class AppStrings
     public static string PracticeHistorySeeAll => T("Все", "All");
     public static string PracticeHistoryPageTitle => T("История практик", "Practice history");
     public static string ProfileRiskCheckLabel => T("Проверить состояние", "Check how I'm doing");
+    public static string ProfileRiskCheckSubtitle => T(
+        "Краткий check-in состояния",
+        "A short wellbeing check-in");
     public static string ProfileMoodTrendPreview(string avgMood, string risk) =>
         T($"Настроение: {avgMood} · риск: {risk}", $"Mood: {avgMood} · risk: {risk}");
 
     public static string JournalOverviewTitle => T("Обзор", "Overview");
     public static string JournalTimelineTitle => T("Записи", "Entries");
     public static string JournalOpenOverview => T("Обзор", "Overview");
-    public static string JournalOpenTimeline => T("Все записи", "All entries");
+    public static string JournalOpenTimeline => T("Записи", "Entries");
+    public static string JournalRecentDaysTitle => T("Эта неделя", "This week");
+    public static string JournalPromptHelpedShort => T("Что помогло", "What helped");
+    public static string JournalPromptNextShort => T("Что дальше", "What's next");
     public static string JournalShareLabel => T("Поделиться", "Share");
     public static string JournalShareTitle => T("Запись дневника", "Journal entry");
     public static string JournalShareText(string day, string mood, string note) =>
@@ -894,6 +905,9 @@ public static partial class AppStrings
             ? T($"{day}: настроение {mood}", $"{day}: mood {mood}")
             : T($"{day}: настроение {mood}\n{note}", $"{day}: mood {mood}\n{note}");
     public static string JournalReminderToggle => T("Напоминать о check-in", "Remind me to check in");
+    public static string JournalReminderHint => T(
+        "Время можно изменить в настройках",
+        "Change the time in Settings");
     public static string MoodReminderTitle => T("Дневник", "Journal");
     public static string MoodReminderBody => T(
         "Как настроение сегодня? Отметьте в дневнике.",

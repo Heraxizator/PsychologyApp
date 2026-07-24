@@ -1,13 +1,9 @@
 using Microsoft.Maui.ApplicationModel.DataTransfer;
-using System.Collections.ObjectModel;
-using PsychologyApp.Presentation.Entities.FilterChip;
 using PsychologyApp.Presentation.Entities.Journal;
 using PsychologyApp.Presentation.Features.ManageJournal;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
-using PsychologyApp.Presentation.Shared.Services.Notifications;
-using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Shared.ViewModels;
 using System.Windows.Input;
 
@@ -18,8 +14,6 @@ public sealed class JournalViewModel : BaseViewModel
     private readonly JournalMoodLoader _journalMoodLoader;
     private readonly JournalEditorContext _editorContext;
     private readonly IDialogService _dialogService;
-    private readonly IUserPreferencesStore _preferencesStore;
-    private readonly IMoodReminderCoordinator _moodReminderCoordinator;
     private int _loadGeneration;
     private long? _editorEntryId;
     private DateOnly _editorDay = DateOnly.FromDateTime(DateTime.Today);
@@ -28,15 +22,11 @@ public sealed class JournalViewModel : BaseViewModel
         JournalMoodLoader journalMoodLoader,
         JournalEditorContext editorContext,
         IDialogService dialogService,
-        IUserPreferencesStore preferencesStore,
-        IMoodReminderCoordinator moodReminderCoordinator,
         INavigationService navigationService)
     {
         _journalMoodLoader = journalMoodLoader;
         _editorContext = editorContext;
         _dialogService = dialogService;
-        _preferencesStore = preferencesStore;
-        _moodReminderCoordinator = moodReminderCoordinator;
         BindNavigation(navigationService);
         ModuleName = AppStrings.JournalTitle;
         PageName = AppStrings.JournalTitle;
@@ -64,8 +54,9 @@ public sealed class JournalViewModel : BaseViewModel
         {
             string? prompt = parameter switch
             {
+                "helped" => AppStrings.JournalPromptHelped,
+                "next" => AppStrings.JournalPromptNext,
                 string key => ResolvePromptText(key),
-                FilterChipTabItem chip => chip.Title,
                 _ => null
             };
 
@@ -96,33 +87,25 @@ public sealed class JournalViewModel : BaseViewModel
             LoadAsync().FireAndForget();
         });
 
-        PromptChips =
-        [
-            new FilterChipTabItem { Key = "helped", Title = AppStrings.JournalPromptHelped },
-            new FilterChipTabItem { Key = "blocked", Title = AppStrings.JournalPromptBlocked },
-            new FilterChipTabItem { Key = "grateful", Title = AppStrings.JournalPromptGrateful },
-            new FilterChipTabItem { Key = "next", Title = AppStrings.JournalPromptNext }
-        ];
-
-        MoodRemindersEnabled = preferencesStore.Load().MoodRemindersEnabled;
         LoadAsync().FireAndForget();
     }
 
     public string PageTitle => AppStrings.JournalTitle;
-    public string EditorDayTitle => AppStrings.JournalEditorDayTitle(_editorDay);
     public string MoodCheckInTitle =>
         _editorDay == DateOnly.FromDateTime(DateTime.Today)
             ? AppStrings.ProfileMoodCheckInTitle
             : AppStrings.JournalPastDayCheckInTitle;
     public string NotePlaceholder => AppStrings.JournalNotePlaceholder;
+    public string NoteSectionTitle => AppStrings.JournalNoteSectionTitle;
     public string NoteSaveHint => AppStrings.JournalNoteSaveHint;
     public string SaveLabel => AppStrings.JournalSaveLabel;
     public string DeleteLabel => AppStrings.JournalDeleteLabel;
     public string ShareLabel => AppStrings.JournalShareLabel;
     public string OpenOverviewLabel => AppStrings.JournalOpenOverview;
     public string OpenTimelineLabel => AppStrings.JournalOpenTimeline;
-    public string ReminderToggleLabel => AppStrings.JournalReminderToggle;
-    public string WeekStripTitle => AppStrings.JournalMoodStatsTitle;
+    public string PromptHelpedLabel => AppStrings.JournalPromptHelpedShort;
+    public string PromptNextLabel => AppStrings.JournalPromptNextShort;
+    public string WeekStripTitle => AppStrings.JournalRecentDaysTitle;
 
     public ICommand BackCommand { get; }
     public ICommand OpenOverviewCommand { get; }
@@ -133,8 +116,6 @@ public sealed class JournalViewModel : BaseViewModel
     public ICommand DeleteMoodCommand { get; }
     public ICommand ApplyPromptCommand { get; }
     public ICommand SelectDayCommand { get; }
-
-    public ObservableCollection<FilterChipTabItem> PromptChips { get; }
 
     private IReadOnlyList<JournalDayChip> _weekDays = [];
     public IReadOnlyList<JournalDayChip> WeekDays
@@ -187,21 +168,6 @@ public sealed class JournalViewModel : BaseViewModel
         set => SetProperty(ref _journalNote, value);
     }
 
-    private bool _moodRemindersEnabled;
-    public bool MoodRemindersEnabled
-    {
-        get => _moodRemindersEnabled;
-        set
-        {
-            if (!SetProperty(ref _moodRemindersEnabled, value))
-            {
-                return;
-            }
-
-            PersistReminderPreferenceAsync(value).FireAndForget();
-        }
-    }
-
     public bool HasEditorEntry => _editorEntryId is > 0;
     public bool CanDeleteEntry => HasEditorEntry;
     public bool CanShareEntry => SelectedMoodLevel is >= 1 and <= 5;
@@ -210,16 +176,17 @@ public sealed class JournalViewModel : BaseViewModel
     {
         Notify(
             nameof(PageTitle),
-            nameof(EditorDayTitle),
             nameof(MoodCheckInTitle),
             nameof(NotePlaceholder),
+            nameof(NoteSectionTitle),
             nameof(NoteSaveHint),
             nameof(SaveLabel),
             nameof(DeleteLabel),
             nameof(ShareLabel),
             nameof(OpenOverviewLabel),
             nameof(OpenTimelineLabel),
-            nameof(ReminderToggleLabel),
+            nameof(PromptHelpedLabel),
+            nameof(PromptNextLabel),
             nameof(WeekStripTitle),
             nameof(TodayMoodDisplay),
             nameof(HasTodayMood),
@@ -228,17 +195,6 @@ public sealed class JournalViewModel : BaseViewModel
             nameof(HasEditorEntry),
             nameof(CanDeleteEntry),
             nameof(CanShareEntry));
-
-        foreach (FilterChipTabItem prompt in PromptChips)
-        {
-            prompt.Title = prompt.Key switch
-            {
-                "helped" => AppStrings.JournalPromptHelped,
-                "blocked" => AppStrings.JournalPromptBlocked,
-                "grateful" => AppStrings.JournalPromptGrateful,
-                _ => AppStrings.JournalPromptNext
-            };
-        }
     }
 
     public Task ReloadAsync()
@@ -295,7 +251,6 @@ public sealed class JournalViewModel : BaseViewModel
         OnPropertyChanged(nameof(HasEditorEntry));
         OnPropertyChanged(nameof(CanDeleteEntry));
         OnPropertyChanged(nameof(CanShareEntry));
-        OnPropertyChanged(nameof(EditorDayTitle));
         OnPropertyChanged(nameof(MoodCheckInTitle));
     }
 
@@ -355,29 +310,5 @@ public sealed class JournalViewModel : BaseViewModel
             Title = AppStrings.JournalShareTitle,
             Text = AppStrings.JournalShareText(day, mood, note)
         });
-    }
-
-    private async Task PersistReminderPreferenceAsync(bool enabled)
-    {
-        UserPreferencesState current = _preferencesStore.Load();
-        _preferencesStore.Save(new UserPreferencesState
-        {
-            Language = current.Language,
-            Theme = current.Theme,
-            Color = current.Color,
-            Form = current.Form,
-            Size = current.Size,
-            IsBold = current.IsBold,
-            QuestionnaireAutoAdvance = current.QuestionnaireAutoAdvance,
-            HasCompletedOnboarding = current.HasCompletedOnboarding,
-            OnboardingConcern = current.OnboardingConcern,
-            PracticeRemindersEnabled = current.PracticeRemindersEnabled,
-            PracticeReminderHour = current.PracticeReminderHour,
-            QuoteRemindersEnabled = current.QuoteRemindersEnabled,
-            QuoteReminderHour = current.QuoteReminderHour,
-            MoodRemindersEnabled = enabled,
-            MoodReminderHour = current.MoodReminderHour
-        });
-        await _moodReminderCoordinator.SyncAsync();
     }
 }

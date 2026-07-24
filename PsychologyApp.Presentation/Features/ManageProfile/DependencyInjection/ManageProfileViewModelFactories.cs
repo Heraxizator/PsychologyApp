@@ -42,6 +42,7 @@ public sealed class UserViewModelFactory(
     ProfileScreenCoordinator profileScreenCoordinator,
     LanguageContentReloader languageContentReloader,
     IClinicalCareService clinicalCareService,
+    ProfileWeekDaysLoader profileWeekDaysLoader,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IUserViewModelFactory
 {
     public UserViewModel Create(ContentPage page) =>
@@ -57,7 +58,8 @@ public sealed class UserViewModelFactory(
             quoteCommandsFactory,
             profileScreenCoordinator,
             languageContentReloader,
-            clinicalCareService);
+            clinicalCareService,
+            profileWeekDaysLoader);
 }
 
 public interface IOptionsViewModelFactory
@@ -109,6 +111,7 @@ public sealed class SettingsViewModelFactory(
     LanguageContentReloader languageContentReloader,
     IPracticeReminderCoordinator practiceReminderCoordinator,
     IQuoteReminderCoordinator quoteReminderCoordinator,
+    IMoodReminderCoordinator moodReminderCoordinator,
     IPracticeReminderScheduler practiceReminderScheduler,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, ISettingsViewModelFactory
 {
@@ -121,6 +124,7 @@ public sealed class SettingsViewModelFactory(
             languageContentReloader,
             practiceReminderCoordinator,
             quoteReminderCoordinator,
+            moodReminderCoordinator,
             practiceReminderScheduler);
 }
 

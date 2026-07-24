@@ -22,6 +22,10 @@ public partial class SettingsViewModel
     public string QuoteRemindersLabel => AppStrings.SettingsQuoteRemindersLabel;
     public string QuoteReminderHourLabel => AppStrings.SettingsQuoteReminderHourLabel;
     public string QuoteReminderHourPickerTitle => AppStrings.SettingsQuoteReminderHourPickerTitle;
+    public string JournalSectionTitle => AppStrings.SettingsJournalSection;
+    public string MoodRemindersLabel => AppStrings.SettingsMoodRemindersLabel;
+    public string MoodReminderHourLabel => AppStrings.SettingsMoodReminderHourLabel;
+    public string MoodReminderHourPickerTitle => AppStrings.SettingsMoodReminderHourPickerTitle;
     public string PrimaryConcernSectionTitle => AppStrings.SettingsPrimaryConcernSection;
     public string PrimaryConcernLabel => AppStrings.SettingsPrimaryConcernLabel;
     public string PrimaryConcernPickerTitle => AppStrings.SettingsPrimaryConcernPickerTitle;

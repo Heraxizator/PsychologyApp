@@ -1,3 +1,4 @@
+using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Services.Notifications;
 using Xunit;
@@ -87,6 +88,38 @@ public sealed class MoodReminderCoordinatorTests
         {
             UserPreferences.ResetInMemoryStorage();
         }
+    }
+
+    [Fact]
+    public void SettingsPresenter_BuildState_PersistsMoodReminderFields()
+    {
+        var presenter = new PsychologyApp.Presentation.Features.ManageProfile.SettingsPreferencesPresenter();
+        UserPreferencesState saved = new()
+        {
+            HasCompletedOnboarding = true,
+            MoodRemindersEnabled = false,
+            MoodReminderHour = 9
+        };
+
+        UserPreferencesState built = presenter.BuildState(
+            UserPreferences.DefaultLanguage,
+            UserPreferences.DefaultTheme,
+            UserPreferences.DefaultColor,
+            UserPreferences.DefaultForm,
+            UserPreferences.DefaultSize,
+            isBold: false,
+            questionnaireAutoAdvance: true,
+            practiceRemindersEnabled: true,
+            practiceReminderHour: UserPreferences.DefaultPracticeReminderHour,
+            quoteRemindersEnabled: false,
+            quoteReminderHour: UserPreferences.DefaultQuoteReminderHour,
+            moodRemindersEnabled: true,
+            moodReminderHour: 20,
+            onboardingConcern: OnboardingConcernKeys.Anxiety,
+            saved);
+
+        Assert.True(built.MoodRemindersEnabled);
+        Assert.Equal(20, built.MoodReminderHour);
     }
 
     private sealed class RecordingMoodReminderScheduler : IMoodReminderScheduler

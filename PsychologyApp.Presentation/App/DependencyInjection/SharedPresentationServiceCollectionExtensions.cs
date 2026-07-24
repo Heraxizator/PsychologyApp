@@ -46,7 +46,8 @@ public static class SharedPresentationServiceCollectionExtensions
             context.NavigationService ?? new MauiNavigationService(
                 context,
                 sp.GetRequiredService<IPageFactory>(),
-                sp.GetRequiredService<IShellStartupCoordinator>()));
+                sp.GetRequiredService<IShellStartupCoordinator>(),
+                sp.GetRequiredService<PsychologyApp.Presentation.Features.ManageJournal.JournalScreenCoordinator>()));
 
         return services;
     }

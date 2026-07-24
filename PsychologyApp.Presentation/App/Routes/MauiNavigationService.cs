@@ -1,4 +1,5 @@
 ﻿using PsychologyApp.Application.Models;
+using PsychologyApp.Presentation.Features.ManageJournal;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Shared.Common;
@@ -13,16 +14,19 @@ public sealed class MauiNavigationService : INavigationService
     private readonly WeakReference<ContentPage>? _ownerPage;
     private readonly IPageFactory _pageFactory;
     private readonly IShellStartupCoordinator _shellStartupCoordinator;
+    private readonly JournalScreenCoordinator _journalScreenCoordinator;
 
     public MauiNavigationService(
         NavigationContext context,
         IPageFactory pageFactory,
-        IShellStartupCoordinator shellStartupCoordinator)
+        IShellStartupCoordinator shellStartupCoordinator,
+        JournalScreenCoordinator journalScreenCoordinator)
     {
         _navigation = context.Navigation;
         _ownerPage = context.OwnerPage is { } page ? new WeakReference<ContentPage>(page) : null;
         _pageFactory = pageFactory;
         _shellStartupCoordinator = shellStartupCoordinator;
+        _journalScreenCoordinator = journalScreenCoordinator;
     }
 
     public INavigation Navigation => ResolveNavigation();
@@ -56,6 +60,9 @@ public sealed class MauiNavigationService : INavigationService
 
     public Task GoToJournalAsync() =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateJournalPage(), true));
+
+    public Task GoToJournalDayAsync(DateOnly day) =>
+        _journalScreenCoordinator.OpenEditorDayAsync(day, this);
 
     public Task GoToJournalOverviewAsync() =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateJournalOverviewPage(), true));

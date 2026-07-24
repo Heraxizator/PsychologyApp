@@ -25,6 +25,8 @@ public sealed class SettingsPreferencesPresenter
         Action<int> setPracticeReminderHour,
         Action<bool> setQuoteRemindersEnabled,
         Action<int> setQuoteReminderHour,
+        Action<bool> setMoodRemindersEnabled,
+        Action<int> setMoodReminderHour,
         Action<string> setOnboardingConcern)
     {
         setLanguage(UserPreferences.ParseLanguageKey(state.Language));
@@ -38,6 +40,8 @@ public sealed class SettingsPreferencesPresenter
         setPracticeReminderHour(UserPreferences.NormalizePracticeReminderHour(state.PracticeReminderHour));
         setQuoteRemindersEnabled(state.QuoteRemindersEnabled);
         setQuoteReminderHour(UserPreferences.NormalizeQuoteReminderHour(state.QuoteReminderHour));
+        setMoodRemindersEnabled(state.MoodRemindersEnabled);
+        setMoodReminderHour(UserPreferences.NormalizeMoodReminderHour(state.MoodReminderHour));
         setOnboardingConcern(UserPreferences.NormalizeOnboardingConcernKey(state.OnboardingConcern));
     }
 
@@ -53,6 +57,8 @@ public sealed class SettingsPreferencesPresenter
         int practiceReminderHour,
         bool quoteRemindersEnabled,
         int quoteReminderHour,
+        bool moodRemindersEnabled,
+        int moodReminderHour,
         string onboardingConcern,
         UserPreferencesState savedState) =>
         new()
@@ -68,8 +74,8 @@ public sealed class SettingsPreferencesPresenter
             PracticeReminderHour = UserPreferences.NormalizePracticeReminderHour(practiceReminderHour),
             QuoteRemindersEnabled = quoteRemindersEnabled,
             QuoteReminderHour = UserPreferences.NormalizeQuoteReminderHour(quoteReminderHour),
-            MoodRemindersEnabled = savedState.MoodRemindersEnabled,
-            MoodReminderHour = savedState.MoodReminderHour,
+            MoodRemindersEnabled = moodRemindersEnabled,
+            MoodReminderHour = UserPreferences.NormalizeMoodReminderHour(moodReminderHour),
             HasCompletedOnboarding = savedState.HasCompletedOnboarding,
             OnboardingConcern = UserPreferences.NormalizeOnboardingConcernKey(onboardingConcern)
         };

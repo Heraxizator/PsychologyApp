@@ -4,8 +4,10 @@
              x:Class="PsychologyApp.Presentation.Pages.ManageJournal.JournalOverview.JournalOverviewPage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:moodTrend="clr-namespace:PsychologyApp.Presentation.Widgets.Profile"
+             xmlns:journalStrip="clr-namespace:PsychologyApp.Presentation.Widgets.Journal"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ManageJournal.JournalOverview"
+             x:Name="OverviewRoot"
              x:DataType="vm:JournalOverviewViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
@@ -21,6 +23,12 @@
             <ui:NavigationBarSimpleView
                 TitleText="{Binding PageTitle}"
                 BackCommand="{Binding BackCommand}" />
+
+            <journalStrip:JournalWeekStripView
+                CaptionText="{Binding WeekStripTitle}"
+                ItemsSource="{Binding WeekDays}"
+                SelectDayCommand="{Binding SelectDayCommand}"
+                IsInteractive="True" />
 
             <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                 <ui:SectionHeaderView

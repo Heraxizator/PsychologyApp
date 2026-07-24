@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Pages.ManageJournal.Journal.JournalPage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:mood="clr-namespace:PsychologyApp.Presentation.Widgets.MoodStrip"
-             xmlns:journal="clr-namespace:PsychologyApp.Presentation.Entities.Journal"
+             xmlns:journalStrip="clr-namespace:PsychologyApp.Presentation.Widgets.Journal"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ManageJournal.Journal"
              x:Name="JournalRoot"
@@ -20,118 +21,178 @@
                 <behaviors:StaggerChildrenBehavior />
             </VerticalStackLayout.Behaviors>
 
-            <ui:NavigationBarSimpleView
-                TitleText="{Binding PageTitle}"
-                BackCommand="{Binding BackCommand}" />
+            <Grid
+                Margin="{StaticResource NavBarBottomMargin}"
+                ColumnDefinitions="44,*,Auto"
+                ColumnSpacing="{StaticResource CompactSpacing}"
+                MinimumHeightRequest="48">
+                <Grid.Behaviors>
+                    <behaviors:PressFeedbackBehavior AttachToTappableLabels="True" />
+                </Grid.Behaviors>
+                <BoxView
+                    Grid.ColumnSpan="3"
+                    HeightRequest="1"
+                    VerticalOptions="End"
+                    Color="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}" />
+                <Label
+                    Grid.Column="0"
+                    Style="{StaticResource NavBackIconStyle}"
+                    Text="{mi:Material Icon=KeyboardArrowLeft}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding BackCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label
+                    Grid.Column="1"
+                    Text="{Binding PageTitle}"
+                    Style="{StaticResource NavTitleStyle}"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    LineBreakMode="TailTruncation"
+                    MaxLines="1" />
+                <HorizontalStackLayout
+                    Grid.Column="2"
+                    Spacing="4"
+                    VerticalOptions="Center">
+                    <Label
+                        Style="{StaticResource IconActionStyle}"
+                        WidthRequest="40"
+                        Text="{mi:Material Icon=Insights}"
+                        SemanticProperties.Description="{Binding OpenOverviewLabel}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenOverviewCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label
+                        Style="{StaticResource IconActionStyle}"
+                        WidthRequest="40"
+                        Text="{mi:Material Icon=History}"
+                        SemanticProperties.Description="{Binding OpenTimelineLabel}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenTimelineCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </HorizontalStackLayout>
+            </Grid>
 
-            <HorizontalStackLayout Spacing="{StaticResource CompactSpacing}">
-                <ui:ButtonView
-                    BodyText="{Binding OpenOverviewLabel}"
-                    TapCommand="{Binding OpenOverviewCommand}"
-                    Variant="Secondary" />
-                <ui:ButtonView
-                    BodyText="{Binding OpenTimelineLabel}"
-                    TapCommand="{Binding OpenTimelineCommand}"
-                    Variant="Secondary" />
-            </HorizontalStackLayout>
+            <mood:MoodStripView
+                QuestionText="{Binding MoodCheckInTitle}"
+                RecordMoodCommand="{Binding RecordMoodCommand}"
+                SelectedMoodLevel="{Binding SelectedMoodLevel}"
+                TodayMoodDisplay="{Binding TodayMoodDisplay}"
+                HasTodayMood="{Binding HasTodayMood}"
+                MoodHistorySummary="{Binding MoodHistorySummary}"
+                HasMoodHistorySummary="{Binding HasMoodHistorySummary}">
+                <mood:MoodStripView.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="0" />
+                </mood:MoodStripView.Behaviors>
+            </mood:MoodStripView>
+
+            <journalStrip:JournalWeekStripView
+                CaptionText="{Binding WeekStripTitle}"
+                ItemsSource="{Binding WeekDays}"
+                SelectDayCommand="{Binding SelectDayCommand}"
+                IsInteractive="True" />
 
             <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                <ui:SectionHeaderView TitleText="{Binding EditorDayTitle}" />
-                <Border Style="{StaticResource BrandCardStyle}">
-                    <Border.Behaviors>
-                        <behaviors:ListItemRevealBehavior RevealIndex="0" />
-                    </Border.Behaviors>
-                    <VerticalStackLayout Spacing="{StaticResource SectionSpacing}">
-                        <mood:MoodStripView
-                            QuestionText="{Binding MoodCheckInTitle}"
-                            RecordMoodCommand="{Binding RecordMoodCommand}"
-                            SelectedMoodLevel="{Binding SelectedMoodLevel}"
-                            TodayMoodDisplay="{Binding TodayMoodDisplay}"
-                            HasTodayMood="{Binding HasTodayMood}"
-                            MoodHistorySummary="{Binding MoodHistorySummary}"
-                            HasMoodHistorySummary="{Binding HasMoodHistorySummary}" />
+                <Label
+                    Text="{Binding NoteSectionTitle}"
+                    Style="{StaticResource CaptionStyle}"
+                    TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                <ui:TextEditorView
+                    PlaceholderText="{Binding NotePlaceholder}"
+                    BodyText="{Binding JournalNote}" />
+                <HorizontalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <Border Style="{StaticResource MetaPillStyle}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding ApplyPromptCommand}"
+                                CommandParameter="helped" />
+                        </Border.GestureRecognizers>
+                        <Border.Behaviors>
+                            <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                        </Border.Behaviors>
                         <Label
-                            Text="{Binding NoteSaveHint}"
+                            Text="{Binding PromptHelpedLabel}"
                             Style="{StaticResource CaptionStyle}"
-                            TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
-                        <ui:FilterChipTabBarView
-                            ItemsSource="{Binding PromptChips}"
-                            TapCommand="{Binding ApplyPromptCommand}" />
-                        <ui:TextEditorView
-                            PlaceholderText="{Binding NotePlaceholder}"
-                            BodyText="{Binding JournalNote}" />
-                        <ui:ButtonView
-                            BodyText="{Binding SaveLabel}"
-                            TapCommand="{Binding SaveMoodCommand}"
-                            Variant="Primary" />
-                        <ui:ButtonView
-                            IsVisible="{Binding CanShareEntry}"
-                            BodyText="{Binding ShareLabel}"
-                            TapCommand="{Binding ShareCommand}"
-                            Variant="Secondary" />
-                        <ui:ButtonView
-                            IsVisible="{Binding CanDeleteEntry}"
-                            BodyText="{Binding DeleteLabel}"
-                            TapCommand="{Binding DeleteMoodCommand}"
-                            Variant="Secondary" />
-                    </VerticalStackLayout>
-                </Border>
+                            FontFamily="{StaticResource SemiBoldFontFamily}"
+                            TextColor="{DynamicResource Primary}" />
+                    </Border>
+                    <Border Style="{StaticResource MetaPillStyle}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding ApplyPromptCommand}"
+                                CommandParameter="next" />
+                        </Border.GestureRecognizers>
+                        <Border.Behaviors>
+                            <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                        </Border.Behaviors>
+                        <Label
+                            Text="{Binding PromptNextLabel}"
+                            Style="{StaticResource CaptionStyle}"
+                            FontFamily="{StaticResource SemiBoldFontFamily}"
+                            TextColor="{DynamicResource Primary}" />
+                    </Border>
+                </HorizontalStackLayout>
+                <Label
+                    Text="{Binding NoteSaveHint}"
+                    Style="{StaticResource CaptionStyle}"
+                    TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
             </VerticalStackLayout>
 
-            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                <ui:SectionHeaderView TitleText="{Binding WeekStripTitle}" />
-                <CollectionView
-                    HeightRequest="72"
-                    SelectionMode="None"
-                    HorizontalScrollBarVisibility="Never"
-                    ItemsSource="{Binding WeekDays}">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="{StaticResource CompactSpacing}" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="journal:JournalDayChip">
-                            <Border
-                                WidthRequest="52"
-                                HeightRequest="64"
-                                Padding="4"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
-                                Stroke="Transparent"
-                                StrokeThickness="2">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="16" />
-                                </Border.StrokeShape>
-                                <Border.Triggers>
-                                    <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
-                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
-                                        <Setter Property="Stroke" Value="{DynamicResource Primary}" />
-                                    </DataTrigger>
-                                </Border.Triggers>
-                                <Border.GestureRecognizers>
-                                    <TapGestureRecognizer
-                                        Command="{Binding Source={x:Reference JournalRoot}, Path=BindingContext.SelectDayCommand}"
-                                        CommandParameter="{Binding .}" />
-                                </Border.GestureRecognizers>
-                                <VerticalStackLayout Spacing="2" VerticalOptions="Center" HorizontalOptions="Center">
-                                    <Label
-                                        Text="{Binding DayLabel}"
-                                        Style="{StaticResource CaptionStyle}"
-                                        FontSize="11"
-                                        HorizontalTextAlignment="Center" />
-                                    <Label
-                                        Text="{Binding MoodGlyph}"
-                                        FontSize="18"
-                                        HorizontalTextAlignment="Center" />
-                                </VerticalStackLayout>
-                            </Border>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </VerticalStackLayout>
+            <ui:ButtonView
+                BodyText="{Binding SaveLabel}"
+                TapCommand="{Binding SaveMoodCommand}"
+                Variant="Primary" />
 
-                    <ui:SettingSwitchRowView
-                        LabelText="{Binding ReminderToggleLabel}"
-                        IsToggled="{Binding MoodRemindersEnabled}"
-                        ShowDivider="False" />
+            <HorizontalStackLayout
+                Spacing="{StaticResource LayoutSpacing}"
+                HorizontalOptions="Start">
+                <HorizontalStackLayout
+                    IsVisible="{Binding CanShareEntry}"
+                    Spacing="6"
+                    VerticalOptions="Center">
+                    <HorizontalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ShareCommand}" />
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <HorizontalStackLayout.Behaviors>
+                        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                    </HorizontalStackLayout.Behaviors>
+                    <Label
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                        Text="{mi:Material Icon=Share}"
+                        FontSize="18"
+                        VerticalOptions="Center" />
+                    <Label
+                        Text="{Binding ShareLabel}"
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout
+                    IsVisible="{Binding CanDeleteEntry}"
+                    Spacing="6"
+                    VerticalOptions="Center">
+                    <HorizontalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding DeleteMoodCommand}" />
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <HorizontalStackLayout.Behaviors>
+                        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                    </HorizontalStackLayout.Behaviors>
+                    <Label
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                        Text="{mi:Material Icon=Delete}"
+                        FontSize="18"
+                        VerticalOptions="Center" />
+                    <Label
+                        Text="{Binding DeleteLabel}"
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                        VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </HorizontalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

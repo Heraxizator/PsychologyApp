@@ -6,8 +6,6 @@ using PsychologyApp.Presentation.Pages.ManageJournal.JournalOverview;
 using PsychologyApp.Presentation.Pages.ManageJournal.JournalTimeline;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
-using PsychologyApp.Presentation.Shared.Services.Notifications;
-using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Shared.ViewModels;
 
 namespace PsychologyApp.Presentation.Features.ManageJournal.DependencyInjection;
@@ -21,8 +19,6 @@ public sealed class JournalViewModelFactory(
     JournalMoodLoader journalMoodLoader,
     JournalEditorContext editorContext,
     IDialogService dialogService,
-    IUserPreferencesStore preferencesStore,
-    IMoodReminderCoordinator moodReminderCoordinator,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IJournalViewModelFactory
 {
     public JournalViewModel Create(ContentPage page) =>
@@ -30,8 +26,6 @@ public sealed class JournalViewModelFactory(
             journalMoodLoader,
             editorContext,
             dialogService,
-            preferencesStore,
-            moodReminderCoordinator,
             ResolveNavigation(navigationServiceFactory, page));
 }
 
@@ -42,10 +36,11 @@ public interface IJournalOverviewViewModelFactory
 
 public sealed class JournalOverviewViewModelFactory(
     JournalMoodLoader journalMoodLoader,
+    JournalScreenCoordinator journalScreenCoordinator,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IJournalOverviewViewModelFactory
 {
     public JournalOverviewViewModel Create(ContentPage page) =>
-        new(journalMoodLoader, ResolveNavigation(navigationServiceFactory, page));
+        new(journalMoodLoader, journalScreenCoordinator, ResolveNavigation(navigationServiceFactory, page));
 }
 
 public interface IJournalTimelineViewModelFactory
@@ -55,9 +50,9 @@ public interface IJournalTimelineViewModelFactory
 
 public sealed class JournalTimelineViewModelFactory(
     JournalMoodLoader journalMoodLoader,
-    JournalEditorContext editorContext,
+    JournalScreenCoordinator journalScreenCoordinator,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IJournalTimelineViewModelFactory
 {
     public JournalTimelineViewModel Create(ContentPage page) =>
-        new(journalMoodLoader, editorContext, ResolveNavigation(navigationServiceFactory, page));
+        new(journalMoodLoader, journalScreenCoordinator, ResolveNavigation(navigationServiceFactory, page));
 }

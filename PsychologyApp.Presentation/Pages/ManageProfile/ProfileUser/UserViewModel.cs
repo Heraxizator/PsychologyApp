@@ -24,6 +24,7 @@ public partial class UserViewModel : BaseViewModel
     private readonly ProfileScreenCoordinator _profileScreenCoordinator;
     private readonly LanguageContentReloader _languageContentReloader;
     private readonly IClinicalCareService _clinicalCareService;
+    private readonly ProfileWeekDaysLoader _profileWeekDaysLoader;
     private readonly ILogger<UserViewModel> _logger;
     private readonly IOptions<AppSettings> _settings;
     private int _initGeneration;
@@ -56,7 +57,8 @@ public partial class UserViewModel : BaseViewModel
         QuoteItemCommandsFactory quoteCommandsFactory,
         ProfileScreenCoordinator profileScreenCoordinator,
         LanguageContentReloader languageContentReloader,
-        IClinicalCareService clinicalCareService)
+        IClinicalCareService clinicalCareService,
+        ProfileWeekDaysLoader profileWeekDaysLoader)
     {
         try
         {
@@ -70,6 +72,7 @@ public partial class UserViewModel : BaseViewModel
             _profileScreenCoordinator = profileScreenCoordinator;
             _languageContentReloader = languageContentReloader;
             _clinicalCareService = clinicalCareService;
+            _profileWeekDaysLoader = profileWeekDaysLoader;
             _logger = logger;
             _settings = settings;
             _quotesChangeNotifier.FavoritesChanged += OnFavoritesChanged;

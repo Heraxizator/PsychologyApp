@@ -191,6 +191,39 @@ public partial class SettingsViewModel
         }
     }
 
+    public bool moodRemindersEnabled;
+    public bool MoodRemindersEnabled
+    {
+        get => moodRemindersEnabled;
+        set
+        {
+            if (moodRemindersEnabled != value)
+            {
+                moodRemindersEnabled = value;
+                OnPropertyChanged(nameof(MoodRemindersEnabled));
+                ApplyLivePreview();
+            }
+        }
+    }
+
+    private int moodReminderHour = UserPreferences.DefaultMoodReminderHour;
+    public string MoodReminderHour
+    {
+        get => UserPreferences.GetQuoteReminderHourLabel(moodReminderHour);
+        set
+        {
+            int normalized = UserPreferences.ParseQuoteReminderHourKey(value);
+            if (_isSyncingPickers || moodReminderHour == normalized)
+            {
+                return;
+            }
+
+            moodReminderHour = normalized;
+            OnPropertyChanged(nameof(MoodReminderHour));
+            ApplyLivePreview();
+        }
+    }
+
     private string onboardingConcern = UserPreferences.DefaultOnboardingConcern;
     public string OnboardingConcern
     {
@@ -222,6 +255,8 @@ public partial class SettingsViewModel
             practiceReminderHour,
             QuoteRemindersEnabled,
             quoteReminderHour,
+            MoodRemindersEnabled,
+            moodReminderHour,
             OnboardingConcern,
             _savedState);
 

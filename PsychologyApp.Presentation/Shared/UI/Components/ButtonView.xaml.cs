@@ -85,6 +85,15 @@ public partial class ButtonView : ContentView
         set => SetValue(TapCommandProperty, value);
     }
 
+    public static readonly BindableProperty CommandParameterProperty =
+        BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(ButtonView));
+
+    public object? CommandParameter
+    {
+        get => GetValue(CommandParameterProperty);
+        set => SetValue(CommandParameterProperty, value);
+    }
+
     public static readonly BindableProperty VariantProperty =
         BindableProperty.Create(nameof(Variant), typeof(string), typeof(ButtonView), "Primary");
 

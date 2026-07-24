@@ -161,9 +161,35 @@
                 </VerticalStackLayout>
             </Border>
 
-            <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+            <Border
+                IsVisible="{Binding AreRemindersSupported}"
+                Style="{StaticResource SettingsSectionCardStyle}"
+                Margin="0">
                 <Border.Behaviors>
                     <behaviors:ListItemRevealBehavior RevealIndex="5" />
+                </Border.Behaviors>
+                <VerticalStackLayout Spacing="0">
+                    <Label
+                        Text="{Binding JournalSectionTitle}"
+                        Style="{StaticResource SectionTitleStyle}"
+                        Margin="0,0,0,10" />
+                    <ui:SettingSwitchRowView
+                        LabelText="{Binding MoodRemindersLabel}"
+                        IsToggled="{Binding MoodRemindersEnabled}" />
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
+                    <ui:SettingPickerRowView
+                        LabelKind="{x:Static converters:PreferenceLabelKind.PassThrough}"
+                        LabelText="{Binding MoodReminderHourLabel}"
+                        PickerTitle="{Binding MoodReminderHourPickerTitle}"
+                        ItemsSource="{Binding MoodReminderHourOptions}"
+                        SelectedItem="{Binding MoodReminderHour}"
+                        IsRowEnabled="{Binding MoodRemindersEnabled}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                <Border.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="6" />
                 </Border.Behaviors>
                 <VerticalStackLayout Spacing="0">
                     <Label

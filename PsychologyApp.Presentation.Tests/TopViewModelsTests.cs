@@ -56,6 +56,8 @@ public sealed class SettingsPreferencesPresenterTests
             practiceReminderHour: UserPreferences.DefaultPracticeReminderHour,
             quoteRemindersEnabled: false,
             quoteReminderHour: UserPreferences.DefaultQuoteReminderHour,
+            moodRemindersEnabled: false,
+            moodReminderHour: UserPreferences.DefaultMoodReminderHour,
             onboardingConcern: OnboardingConcernKeys.Anxiety,
             saved);
 
@@ -98,6 +100,8 @@ public sealed class SettingsPreferencesPresenterTests
             _ => { },
             _ => { },
             _ => { },
+            _ => { },
+            _ => { },
             _ => { });
 
         Assert.Equal("en", language);
@@ -134,6 +138,7 @@ public sealed class SettingsPreferencesPresenterTests
             value => color = value,
             value => form = value,
             value => size = value,
+            _ => { },
             _ => { },
             _ => { },
             _ => { },
@@ -205,6 +210,7 @@ public sealed class SettingsViewModelTests
             TopViewModelTestHelpers.CreateLanguageReloader(Mock.Of<IQuotService>()),
             Mock.Of<IPracticeReminderCoordinator>(),
             Mock.Of<IQuoteReminderCoordinator>(),
+            Mock.Of<IMoodReminderCoordinator>(),
             new NullPracticeReminderScheduler());
     }
 

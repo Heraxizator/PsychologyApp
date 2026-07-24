@@ -14,7 +14,9 @@
                 x:Name="ActionBorder"
                 Style="{StaticResource PrimaryActionBorderStyle}">
                 <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
+                    <TapGestureRecognizer
+                        Command="{TemplateBinding TapCommand}"
+                        CommandParameter="{TemplateBinding CommandParameter}" />
                 </Border.GestureRecognizers>
                 <Border.Triggers>
                     <DataTrigger
