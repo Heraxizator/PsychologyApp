@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using Microsoft.Maui.ApplicationModel.DataTransfer;
 using PsychologyApp.Presentation.Entities.FilterChip;
 using PsychologyApp.Presentation.Entities.Journal;
 using PsychologyApp.Presentation.Features.ManageJournal;
@@ -44,7 +43,6 @@ public sealed class JournalViewModel : BaseViewModel
         OpenTimelineCommand = new AsyncCommand(() => navigationService.GoToJournalTimelineAsync());
         OpenPracticeSuggestCommand = new Command(() => _shellTabNavigator.OpenPracticeTab());
         OpenQuotesSuggestCommand = new Command(() => _shellTabNavigator.OpenQuotesTab());
-        ShareCommand = new AsyncCommand(ShareAsync);
         PrevWeekCommand = new Command(() => ShiftWeek(-7));
         NextWeekCommand = new Command(() => ShiftWeek(7), () => CanGoNextWeek);
         SelectSlotCommand = new Command<object?>(parameter =>
@@ -81,7 +79,6 @@ public sealed class JournalViewModel : BaseViewModel
             }
         });
         SaveMoodCommand = new AsyncCommand(SaveMoodAsync);
-        DeleteMoodCommand = new AsyncCommand(DeleteMoodAsync);
         ApplyPromptCommand = new Command<object?>(parameter =>
         {
             string? prompt = parameter switch
@@ -184,8 +181,6 @@ public sealed class JournalViewModel : BaseViewModel
     public string FactorsSectionTitle => AppStrings.JournalFactorsSectionTitle;
     public string DayEmptyCaption => AppStrings.JournalPickMoodHint;
     public string SaveLabel => AppStrings.JournalSaveLabel;
-    public string DeleteLabel => AppStrings.JournalDeleteLabel;
-    public string ShareLabel => AppStrings.JournalShareLabel;
     public string OpenOverviewLabel => AppStrings.JournalOpenOverview;
     public string OpenTimelineLabel => AppStrings.JournalOpenTimeline;
     public string PromptHelpedLabel => AppStrings.JournalPromptHelpedShort;
@@ -261,13 +256,11 @@ public sealed class JournalViewModel : BaseViewModel
     public ICommand OpenTimelineCommand { get; }
     public ICommand OpenPracticeSuggestCommand { get; }
     public ICommand OpenQuotesSuggestCommand { get; }
-    public ICommand ShareCommand { get; }
     public ICommand PrevWeekCommand { get; }
     public ICommand NextWeekCommand { get; }
     public ICommand SelectSlotCommand { get; }
     public ICommand RecordMoodCommand { get; }
     public ICommand SaveMoodCommand { get; }
-    public ICommand DeleteMoodCommand { get; }
     public ICommand ApplyPromptCommand { get; }
     public ICommand ToggleFactorCommand { get; }
     public ICommand SelectDayCommand { get; }
@@ -289,11 +282,9 @@ public sealed class JournalViewModel : BaseViewModel
             if (SetProperty(ref _selectedMoodLevel, value))
             {
                 OnPropertyChanged(nameof(ShowPracticeSuggest));
-                OnPropertyChanged(nameof(CanShareEntry));
                 OnPropertyChanged(nameof(HasMoodSelected));
                 OnPropertyChanged(nameof(ShowAddNoteButton));
                 OnPropertyChanged(nameof(ShowNoteEditor));
-                OnPropertyChanged(nameof(ShowEntryActions));
             }
         }
     }
@@ -336,7 +327,6 @@ public sealed class JournalViewModel : BaseViewModel
 
     public bool ShowAddNoteButton => HasMoodSelected && !IsNoteExpanded;
     public bool ShowNoteEditor => HasMoodSelected && IsNoteExpanded;
-    public bool ShowEntryActions => CanShareEntry || CanDeleteEntry;
 
     private string _moodHistorySummary = string.Empty;
     public string MoodHistorySummary
@@ -366,10 +356,6 @@ public sealed class JournalViewModel : BaseViewModel
         }
     }
 
-    public bool HasEditorEntry => _editorEntryId is > 0;
-    public bool CanDeleteEntry => HasEditorEntry;
-    public bool CanShareEntry => SelectedMoodLevel is >= 1 and <= 5;
-
     protected override void RefreshLocalizedProperties()
     {
         Notify(
@@ -383,8 +369,6 @@ public sealed class JournalViewModel : BaseViewModel
             nameof(FactorsSectionTitle),
             nameof(DayEmptyCaption),
             nameof(SaveLabel),
-            nameof(DeleteLabel),
-            nameof(ShareLabel),
             nameof(OpenOverviewLabel),
             nameof(OpenTimelineLabel),
             nameof(PromptHelpedLabel),
@@ -407,12 +391,8 @@ public sealed class JournalViewModel : BaseViewModel
             nameof(HasMoodSelected),
             nameof(ShowAddNoteButton),
             nameof(ShowNoteEditor),
-            nameof(ShowEntryActions),
             nameof(MoodHistorySummary),
             nameof(HasMoodHistorySummary),
-            nameof(HasEditorEntry),
-            nameof(CanDeleteEntry),
-            nameof(CanShareEntry),
             nameof(CanGoNextWeek));
         foreach (JournalActivityChip chip in ActivityChips)
         {
@@ -534,9 +514,6 @@ public sealed class JournalViewModel : BaseViewModel
         IsNoteExpanded = !string.IsNullOrWhiteSpace(snapshot.EditorNote);
         SyncSlotFilters();
 
-        OnPropertyChanged(nameof(HasEditorEntry));
-        OnPropertyChanged(nameof(CanDeleteEntry));
-        OnPropertyChanged(nameof(ShowEntryActions));
         OnPropertyChanged(nameof(MoodCheckInTitle));
         OnPropertyChanged(nameof(MoodQuestionText));
         OnPropertyChanged(nameof(DayHeaderText));
@@ -564,46 +541,5 @@ public sealed class JournalViewModel : BaseViewModel
         TodayMoodDisplay = AppStrings.TodayMoodSaved;
         OnPropertyChanged(nameof(ShowPracticeSuggest));
         await LoadAsync();
-    }
-
-    private async Task DeleteMoodAsync()
-    {
-        if (_editorEntryId is not > 0)
-        {
-            return;
-        }
-
-        bool confirmed = await _dialogService.AskAsync(
-            AppStrings.JournalDeleteConfirmTitle,
-            AppStrings.JournalDeleteConfirmMessage,
-            AppStrings.JournalDeleteConfirmAccept,
-            AppStrings.JournalDeleteConfirmCancel);
-        if (!confirmed)
-        {
-            return;
-        }
-
-        await _journalMoodLoader.DeleteMoodAsync(_editorEntryId.Value);
-        _editorEntryId = null;
-        SelectedMoodLevel = 0;
-        JournalNote = string.Empty;
-        TodayMoodDisplay = string.Empty;
-        await LoadAsync();
-    }
-
-    private async Task ShareAsync()
-    {
-        if (SelectedMoodLevel is < 1 or > 5)
-        {
-            return;
-        }
-
-        string day = _editorDay.ToString("d");
-        IReadOnlyList<string> factors = JournalNoteFactors.ExtractActiveLabels(JournalNote);
-        await Share.Default.RequestAsync(new ShareTextRequest
-        {
-            Title = AppStrings.JournalShareTitle,
-            Text = AppStrings.JournalShareEntryWithFactors(day, SelectedMoodLevel, JournalNote, factors)
-        });
     }
 }
