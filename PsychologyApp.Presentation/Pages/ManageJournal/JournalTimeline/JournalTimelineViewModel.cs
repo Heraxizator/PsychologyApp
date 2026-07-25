@@ -41,13 +41,13 @@ public sealed class JournalTimelineViewModel : BaseViewModel
     public ICommand SelectTimelineEntryCommand { get; }
     public ICommand ShareEntryCommand { get; }
 
-    private IReadOnlyList<JournalTimelineDayGroup> _timelineGroups = [];
-    public IReadOnlyList<JournalTimelineDayGroup> TimelineGroups
+    private IReadOnlyList<object> _timelineItems = [];
+    public IReadOnlyList<object> TimelineItems
     {
-        get => _timelineGroups;
+        get => _timelineItems;
         private set
         {
-            if (SetProperty(ref _timelineGroups, value))
+            if (SetProperty(ref _timelineItems, value))
             {
                 OnPropertyChanged(nameof(HasMoodNotes));
                 OnPropertyChanged(nameof(ShowMoodNotesEmpty));
@@ -56,7 +56,7 @@ public sealed class JournalTimelineViewModel : BaseViewModel
         }
     }
 
-    public bool HasMoodNotes => TimelineGroups.Count > 0;
+    public bool HasMoodNotes => TimelineItems.Count > 0;
     public bool ShowMoodNotesEmpty => !HasMoodNotes;
 
     private string _timelineStreakText = string.Empty;
@@ -110,7 +110,24 @@ public sealed class JournalTimelineViewModel : BaseViewModel
 
     private void ApplySearchFilter()
     {
-        TimelineGroups = JournalMoodLoader.FilterGroupsByNoteSearch(_allTimelineGroups, SearchQuery);
+        IReadOnlyList<JournalTimelineDayGroup> groups =
+            JournalMoodLoader.FilterGroupsByNoteSearch(_allTimelineGroups, SearchQuery);
+        TimelineItems = FlattenGroups(groups);
+    }
+
+    private static IReadOnlyList<object> FlattenGroups(IReadOnlyList<JournalTimelineDayGroup> groups)
+    {
+        List<object> items = [];
+        foreach (JournalTimelineDayGroup group in groups)
+        {
+            items.Add(new JournalTimelineHeaderItem(group.Day, group.DateLabel));
+            foreach (MoodNoteItem entry in group.Entries)
+            {
+                items.Add(entry);
+            }
+        }
+
+        return items;
     }
 
     private async Task LoadAsync()

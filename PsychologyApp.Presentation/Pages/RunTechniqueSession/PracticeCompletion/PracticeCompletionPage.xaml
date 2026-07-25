@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Pages.RunTechniqueSession.PracticeCompletion.PracticeCompletionPage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:mood="clr-namespace:PsychologyApp.Presentation.Widgets.MoodStrip"
              xmlns:today="clr-namespace:PsychologyApp.Presentation.Widgets.TodayPracticeRow"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
@@ -97,6 +98,27 @@
                             BodyText="{Binding ReflectionNote}"
                             Margin="{StaticResource FieldTopMargin}" />
                     </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="2" />
+                        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                    </Border.Behaviors>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenJournalCommand}" />
+                        </Grid.GestureRecognizers>
+                        <Label
+                            Grid.Column="0"
+                            Text="{Binding OpenJournalText}"
+                            Style="{StaticResource BodyStyle}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Column="1"
+                            VerticalOptions="Center"
+                            TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                            Text="{mi:Material Icon=KeyboardArrowRight}" />
+                    </Grid>
                 </Border>
                 <ui:ButtonView
                     Variant="Secondary"

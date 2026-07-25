@@ -40,10 +40,15 @@ public interface IJournalOverviewViewModelFactory
 public sealed class JournalOverviewViewModelFactory(
     JournalMoodLoader journalMoodLoader,
     JournalScreenCoordinator journalScreenCoordinator,
+    IDialogService dialogService,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IJournalOverviewViewModelFactory
 {
     public JournalOverviewViewModel Create(ContentPage page) =>
-        new(journalMoodLoader, journalScreenCoordinator, ResolveNavigation(navigationServiceFactory, page));
+        new(
+            journalMoodLoader,
+            journalScreenCoordinator,
+            ResolveNavigation(navigationServiceFactory, page),
+            dialogService);
 }
 
 public interface IJournalTimelineViewModelFactory

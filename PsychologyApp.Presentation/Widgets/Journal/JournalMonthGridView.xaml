@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:journal="clr-namespace:PsychologyApp.Presentation.Entities.Journal"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:Class="PsychologyApp.Presentation.Widgets.Journal.JournalMonthGridView"
+             x:Name="Root">
+
+    <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+        <Label
+            IsVisible="{Binding HasCaptionText, Source={x:Reference Root}}"
+            Text="{Binding CaptionText, Source={x:Reference Root}}"
+            Style="{StaticResource CaptionStyle}"
+            TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+        <CollectionView
+            SelectionMode="None"
+            ItemsSource="{Binding ItemsSource, Source={x:Reference Root}}">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout
+                    Orientation="Vertical"
+                    Span="7"
+                    HorizontalItemSpacing="4"
+                    VerticalItemSpacing="4" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="journal:JournalMonthCell">
+                    <Border
+                        HeightRequest="44"
+                        Padding="2"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
+                        Stroke="Transparent"
+                        StrokeThickness="2"
+                        Opacity="1"
+                        IsEnabled="{Binding IsEnabled}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12" />
+                        </Border.StrokeShape>
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsPlaceholder}" Value="True">
+                                <Setter Property="BackgroundColor" Value="Transparent" />
+                                <Setter Property="Opacity" Value="0" />
+                                <Setter Property="InputTransparent" Value="True" />
+                            </DataTrigger>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
+                            </DataTrigger>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsEnabled}" Value="False">
+                                <Setter Property="Opacity" Value="0.35" />
+                            </DataTrigger>
+                        </Border.Triggers>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding SelectDayCommand, Source={x:Reference Root}}"
+                                CommandParameter="{Binding .}" />
+                        </Border.GestureRecognizers>
+                        <Border.Behaviors>
+                            <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                        </Border.Behaviors>
+                        <VerticalStackLayout Spacing="0" VerticalOptions="Center" HorizontalOptions="Center">
+                            <Label
+                                Text="{Binding DayNumber}"
+                                Style="{StaticResource CaptionStyle}"
+                                FontSize="11"
+                                HorizontalTextAlignment="Center" />
+                            <Label
+                                Text="{Binding MoodGlyph}"
+                                FontSize="14"
+                                HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentView>

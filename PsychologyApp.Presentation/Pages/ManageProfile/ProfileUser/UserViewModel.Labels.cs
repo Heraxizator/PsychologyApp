@@ -92,6 +92,8 @@ public partial class UserViewModel
             nameof(WeekRangeSubtitle),
             nameof(WeekSummaryText),
             nameof(WeekDays),
+            nameof(ShowMoodCheckInBanner),
+            nameof(MoodCheckInBannerText),
             nameof(HasClinicalScorecard),
             nameof(HasClinicalScorecardMetrics),
             nameof(ShowClinicalScorecardEmpty));

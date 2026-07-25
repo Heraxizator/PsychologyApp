@@ -1,0 +1,41 @@
+---
+description: Prefer AppStrings for all user-facing UI copy (RU/EN)
+alwaysApply: true
+---
+
+# UI Copy via AppStrings
+
+All user-facing text (labels, titles, buttons, placeholders, alerts, empty states) must come from `PsychologyApp.Presentation.Common.AppStrings`.
+
+Do not hardcode UI strings in ViewModels, pages, or XAML bindings when the copy is shown to users.
+
+## Rules
+
+- Bind / assign UI text from `AppStrings` properties or methods
+- Add missing strings to `AppStrings.cs` using `T(russian, english)`
+- Prefer descriptive PascalCase names (`JournalNotePlaceholder`, `PracticeGoHomeButton`)
+- Parameterized copy uses methods: `AppStrings.ProfileStreakCount(days)`
+- Non-UI strings (logs, exception messages for developers, keys, IDs) may stay inline
+
+## Examples
+
+```csharp
+// ❌ BAD
+Title = "Дневник";
+NotePlaceholder = "Write a note…";
+
+// ✅ GOOD
+Title = AppStrings.JournalTitle;
+NotePlaceholder = AppStrings.JournalNotePlaceholder;
+```
+
+```csharp
+// ❌ BAD — new copy invented in the ViewModel
+public string SaveLabel => "Сохранить";
+
+// ✅ GOOD — add to AppStrings, then use
+// AppStrings.cs:
+public static string SaveButton => T("Сохранить", "Save");
+// ViewModel:
+public string SaveLabel => AppStrings.SaveButton;
+```

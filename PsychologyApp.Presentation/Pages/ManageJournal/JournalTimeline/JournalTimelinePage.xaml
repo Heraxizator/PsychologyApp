@@ -13,18 +13,16 @@
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
-    <ScrollView VerticalScrollBarVisibility="Never">
-        <VerticalStackLayout
-            Margin="{StaticResource LayoutPageMarginThickness}"
-            Spacing="{StaticResource LayoutSpacing}">
-            <VerticalStackLayout.Behaviors>
-                <behaviors:StaggerChildrenBehavior />
-            </VerticalStackLayout.Behaviors>
+    <Grid
+        Margin="{StaticResource LayoutPageMarginThickness}"
+        RowDefinitions="Auto,Auto,Auto,*"
+        RowSpacing="{StaticResource LayoutSpacing}">
+        <ui:NavigationBarSimpleView
+            Grid.Row="0"
+            TitleText="{Binding PageTitle}"
+            BackCommand="{Binding BackCommand}" />
 
-            <ui:NavigationBarSimpleView
-                TitleText="{Binding PageTitle}"
-                BackCommand="{Binding BackCommand}" />
-
+        <VerticalStackLayout Grid.Row="1" Spacing="{StaticResource CompactSpacing}">
             <ui:TextEntryView
                 PlaceholderText="{Binding SearchPlaceholder}"
                 BodyText="{Binding SearchQuery}" />
@@ -33,45 +31,48 @@
                 Text="{Binding TimelineStreakText}"
                 Style="{StaticResource CaptionStyle}"
                 TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
-            <ui:EmptyStateView
-                IsVisible="{Binding ShowMoodNotesEmpty}"
-                BodyText="{Binding MoodNotesEmpty}"
-                IconName="Edit" />
-            <VerticalStackLayout
-                IsVisible="{Binding HasMoodNotes}"
-                BindableLayout.ItemsSource="{Binding TimelineGroups}"
-                Spacing="{StaticResource LayoutSpacing}">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate x:DataType="journal:JournalTimelineDayGroup">
-                        <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                            <Label
-                                Text="{Binding DateLabel}"
-                                Style="{StaticResource CaptionStyle}"
-                                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
-                            <VerticalStackLayout
-                                BindableLayout.ItemsSource="{Binding Entries}"
-                                Spacing="{StaticResource ListItemSpacing}">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="profile:MoodNoteItem">
-                                        <journalUi:JournalEntryView
-                                            DateText="{Binding DateText}"
-                                            TimeText="{Binding TimeText}"
-                                            NoteText="{Binding NoteText}"
-                                            HasNote="{Binding HasNote}"
-                                            MoodDisplay="{Binding MoodDisplay}"
-                                            MoodGlyph="{Binding MoodGlyph}"
-                                            TapCommand="{Binding Source={x:Reference TimelineRoot}, Path=BindingContext.SelectTimelineEntryCommand}"
-                                            CommandParameter="{Binding .}"
-                                            ShareCommand="{Binding Source={x:Reference TimelineRoot}, Path=BindingContext.ShareEntryCommand}"
-                                            ShareCommandParameter="{Binding .}"
-                                            ShareDescription="{Binding Source={x:Reference TimelineRoot}, Path=BindingContext.ShareLabel}" />
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </VerticalStackLayout>
-                        </VerticalStackLayout>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </VerticalStackLayout>
         </VerticalStackLayout>
-    </ScrollView>
+
+        <ui:EmptyStateView
+            Grid.Row="2"
+            IsVisible="{Binding ShowMoodNotesEmpty}"
+            BodyText="{Binding MoodNotesEmpty}"
+            IconName="Edit" />
+
+        <CollectionView
+            Grid.Row="3"
+            IsVisible="{Binding HasMoodNotes}"
+            ItemsSource="{Binding TimelineItems}"
+            SelectionMode="None"
+            VerticalScrollBarVisibility="Never">
+            <CollectionView.ItemTemplate>
+                <vm:JournalTimelineItemTemplateSelector>
+                    <vm:JournalTimelineItemTemplateSelector.HeaderTemplate>
+                        <DataTemplate x:DataType="journal:JournalTimelineHeaderItem">
+                            <ui:SectionHeaderView
+                                Margin="0,8,0,4"
+                                TitleText="{Binding DateLabel}" />
+                        </DataTemplate>
+                    </vm:JournalTimelineItemTemplateSelector.HeaderTemplate>
+                    <vm:JournalTimelineItemTemplateSelector.EntryTemplate>
+                        <DataTemplate x:DataType="profile:MoodNoteItem">
+                            <journalUi:JournalEntryView
+                                Margin="0,0,0,8"
+                                DateText="{Binding DateText}"
+                                TimeText="{Binding TimeText}"
+                                NoteText="{Binding NoteText}"
+                                HasNote="{Binding HasNote}"
+                                MoodDisplay="{Binding MoodDisplay}"
+                                MoodGlyph="{Binding MoodGlyph}"
+                                TapCommand="{Binding Source={x:Reference TimelineRoot}, Path=BindingContext.SelectTimelineEntryCommand}"
+                                CommandParameter="{Binding .}"
+                                ShareCommand="{Binding Source={x:Reference TimelineRoot}, Path=BindingContext.ShareEntryCommand}"
+                                ShareCommandParameter="{Binding .}"
+                                ShareDescription="{Binding Source={x:Reference TimelineRoot}, Path=BindingContext.ShareLabel}" />
+                        </DataTemplate>
+                    </vm:JournalTimelineItemTemplateSelector.EntryTemplate>
+                </vm:JournalTimelineItemTemplateSelector>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>

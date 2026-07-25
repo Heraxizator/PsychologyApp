@@ -419,6 +419,7 @@ public static partial class AppStrings
         "Заметка к этому дню (необязательно)",
         "Note for this day (optional)");
     public static string JournalNoteSectionTitle => T("Заметка", "Note");
+    public static string JournalAddNoteLabel => T("Добавить заметку", "Add a note");
     public static string JournalNoteSaveHint => T(
         "Настроение сохраняется сразу. Заметку — кнопкой ниже.",
         "Mood saves instantly. Use the button below for the note.");
@@ -451,10 +452,32 @@ public static partial class AppStrings
         T(
             $"После практик ({practiceDays} дн.): ср. настроение {averageMood}",
             $"After practice ({practiceDays} days): avg mood {averageMood}");
+    public static string JournalPracticeMoodCompareInsight(
+        int practiceDays,
+        string averageOnPractice,
+        string averageWithoutPractice) =>
+        T(
+            $"С практикой ср. {averageOnPractice} · без практики ср. {averageWithoutPractice} ({practiceDays} дн. с практикой)",
+            $"With practice avg {averageOnPractice} · without avg {averageWithoutPractice} ({practiceDays} practice days)");
+    public static string ProfileMoodCheckInBanner => T(
+        "Сегодня ещё нет отметки настроения",
+        "No mood check-in for today yet");
+    public static string JournalTryQuietQuote => T(
+        "Короткая цитата может поддержать",
+        "A short quote may help");
+    public static string PracticeOpenJournalRow => T(
+        "Дописать в дневник",
+        "Add a journal note");
     public static string JournalQuestionsSectionTitle => T("Вопросы", "Questions");
     public static string JournalFactorsSectionTitle => T("Факторы дня", "Day factors");
     public static string JournalWeekNavPrev => T("Предыдущая неделя", "Previous week");
     public static string JournalWeekNavNext => T("Следующая неделя", "Next week");
+    public static string JournalMonthNavPrev => T("Предыдущий месяц", "Previous month");
+    public static string JournalMonthNavNext => T("Следующий месяц", "Next month");
+    public static string JournalMonthTitle(DateOnly month) =>
+        month.ToDateTime(TimeOnly.MinValue).ToString("MMMM yyyy", System.Globalization.CultureInfo.CurrentCulture);
+    public static string JournalFactorCountPill(string label, int count) =>
+        T($"{label} · {count}", $"{label} · {count}");
     public static string JournalOverviewInsightLine(
         int checkIns,
         string averageMood,
@@ -562,9 +585,58 @@ public static partial class AppStrings
     public static string JournalFactorSleep => T("Сон: ", "Sleep: ");
     public static string JournalFactorPeople => T("Люди: ", "People: ");
     public static string JournalFactorPractice => T("Практика: ", "Practice: ");
+    public static string JournalFactorWalk => T("Прогулка: ", "Walk: ");
+    public static string JournalFactorWork => T("Работа: ", "Work: ");
+    public static string JournalFactorSport => T("Спорт: ", "Sport: ");
+    public static string JournalFactorRest => T("Отдых: ", "Rest: ");
+    public static string JournalFactorStress => T("Стресс: ", "Stress: ");
+    public static string JournalFactorHome => T("Дом: ", "Home: ");
     public static string JournalFactorSleepLabel => T("Сон", "Sleep");
     public static string JournalFactorPeopleLabel => T("Люди", "People");
     public static string JournalFactorPracticeLabel => T("Практика", "Practice");
+    public static string JournalFactorWalkLabel => T("Прогулка", "Walk");
+    public static string JournalFactorWorkLabel => T("Работа", "Work");
+    public static string JournalFactorSportLabel => T("Спорт", "Sport");
+    public static string JournalFactorRestLabel => T("Отдых", "Rest");
+    public static string JournalFactorStressLabel => T("Стресс", "Stress");
+    public static string JournalFactorHomeLabel => T("Дом", "Home");
+    public static string JournalActivityCorrelationPill(string label, int count, string averageMood) =>
+        T($"{label} · {count} · ср. {averageMood}", $"{label} · {count} · avg {averageMood}");
+    public static string JournalYearNavPrev => T("Предыдущий год", "Previous year");
+    public static string JournalYearNavNext => T("Следующий год", "Next year");
+    public static string JournalYearTitle(int year) =>
+        T($"Год {year}", $"Year {year}");
+    public static string JournalYearHeatmapTitle => T("Год в пикселях", "Year in pixels");
+    public static string JournalCalendarScaleWeek => T("Неделя", "Week");
+    public static string JournalCalendarScaleMonth => T("Месяц", "Month");
+    public static string JournalCalendarScaleYear => T("Год", "Year");
+    public static string JournalCalendarSectionTitle => T("Календарь", "Calendar");
+    public static string JournalStatsSectionTitle => T("Сводка", "Summary");
+    public static string JournalStreakMetricLabel => T("Серия", "Streak");
+    public static string JournalPeriodNavPrev => T("Назад", "Previous");
+    public static string JournalPeriodNavNext => T("Вперёд", "Next");
+    public static string JournalOnThisDayLastYearEmpty => string.Empty;
+    public static string JournalOnThisDayLastYear(int moodLevel, string? noteSnippet)
+    {
+        string mood = MoodLevelPill(moodLevel);
+        if (string.IsNullOrWhiteSpace(noteSnippet))
+        {
+            return T($"Год назад: {mood}", $"A year ago: {mood}");
+        }
+
+        string snippet = noteSnippet.Length > 80 ? noteSnippet[..80].TrimEnd() + "…" : noteSnippet;
+        return T($"Год назад: {mood} · {snippet}", $"A year ago: {mood} · {snippet}");
+    }
+    public static string JournalSlotMorning => T("Утро", "Morning");
+    public static string JournalSlotEvening => T("Вечер", "Evening");
+    public static string JournalExportLabel => T("Экспорт CSV", "Export CSV");
+    public static string JournalExportTitle => T("Дневник настроения", "Mood journal");
+    public static string JournalExportEmpty => T(
+        "Нет записей для экспорта",
+        "No entries to export");
+    public static string JournalSlotFullHint => T(
+        "В этот день уже две отметки — выберите Утро или Вечер",
+        "This day already has two check-ins — pick Morning or Evening");
     public static string MoodNotesEmpty => T(
         "Пока нет отметок настроения — сделайте check-in выше",
         "No mood check-ins yet — log one above");
@@ -1026,16 +1098,23 @@ public static partial class AppStrings
             return string.Empty;
         }
 
-        string sleep = JournalFactorSleep;
-        string people = JournalFactorPeople;
-        string practice = JournalFactorPractice;
+        string[] prefixes =
+        [
+            JournalFactorSleep,
+            JournalFactorPeople,
+            JournalFactorPractice,
+            JournalFactorWalk,
+            JournalFactorWork,
+            JournalFactorSport,
+            JournalFactorRest,
+            JournalFactorStress,
+            JournalFactorHome
+        ];
         return string.Join(
             Environment.NewLine,
             note.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                .Where(line =>
-                    !line.StartsWith(sleep, StringComparison.OrdinalIgnoreCase) &&
-                    !line.StartsWith(people, StringComparison.OrdinalIgnoreCase) &&
-                    !line.StartsWith(practice, StringComparison.OrdinalIgnoreCase)));
+                .Where(line => !prefixes.Any(prefix =>
+                    line.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))));
     }
     public static string JournalReminderToggle => T("Напоминать о check-in", "Remind me to check in");
     public static string JournalReminderHint => T(
