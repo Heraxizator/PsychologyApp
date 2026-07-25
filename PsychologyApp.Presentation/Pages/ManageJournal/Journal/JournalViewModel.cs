@@ -175,6 +175,8 @@ public sealed class JournalViewModel : BaseViewModel
         _editorDay == DateOnly.FromDateTime(DateTime.Today)
             ? AppStrings.ProfileMoodCheckInTitle
             : AppStrings.JournalPastDayCheckInTitle;
+
+    public string MoodQuestionText => HasTodayMood ? string.Empty : MoodCheckInTitle;
     public string NotePlaceholder => AppStrings.JournalNotePlaceholder;
     public string NoteSectionTitle => AppStrings.JournalNoteSectionTitle;
     public string AddNoteLabel => AppStrings.JournalAddNoteLabel;
@@ -291,6 +293,7 @@ public sealed class JournalViewModel : BaseViewModel
                 OnPropertyChanged(nameof(HasMoodSelected));
                 OnPropertyChanged(nameof(ShowAddNoteButton));
                 OnPropertyChanged(nameof(ShowNoteEditor));
+                OnPropertyChanged(nameof(ShowEntryActions));
             }
         }
     }
@@ -305,6 +308,7 @@ public sealed class JournalViewModel : BaseViewModel
             {
                 OnPropertyChanged(nameof(HasTodayMood));
                 OnPropertyChanged(nameof(ShowDayEmptyCaption));
+                OnPropertyChanged(nameof(MoodQuestionText));
             }
         }
     }
@@ -332,6 +336,7 @@ public sealed class JournalViewModel : BaseViewModel
 
     public bool ShowAddNoteButton => HasMoodSelected && !IsNoteExpanded;
     public bool ShowNoteEditor => HasMoodSelected && IsNoteExpanded;
+    public bool ShowEntryActions => CanShareEntry || CanDeleteEntry;
 
     private string _moodHistorySummary = string.Empty;
     public string MoodHistorySummary
@@ -370,6 +375,7 @@ public sealed class JournalViewModel : BaseViewModel
         Notify(
             nameof(PageTitle),
             nameof(MoodCheckInTitle),
+            nameof(MoodQuestionText),
             nameof(NotePlaceholder),
             nameof(NoteSectionTitle),
             nameof(AddNoteLabel),
@@ -401,6 +407,7 @@ public sealed class JournalViewModel : BaseViewModel
             nameof(HasMoodSelected),
             nameof(ShowAddNoteButton),
             nameof(ShowNoteEditor),
+            nameof(ShowEntryActions),
             nameof(MoodHistorySummary),
             nameof(HasMoodHistorySummary),
             nameof(HasEditorEntry),
@@ -529,7 +536,9 @@ public sealed class JournalViewModel : BaseViewModel
 
         OnPropertyChanged(nameof(HasEditorEntry));
         OnPropertyChanged(nameof(CanDeleteEntry));
+        OnPropertyChanged(nameof(ShowEntryActions));
         OnPropertyChanged(nameof(MoodCheckInTitle));
+        OnPropertyChanged(nameof(MoodQuestionText));
         OnPropertyChanged(nameof(DayHeaderText));
         OnPropertyChanged(nameof(ShowPracticeSuggest));
         OnPropertyChanged(nameof(WeekStripTitle));

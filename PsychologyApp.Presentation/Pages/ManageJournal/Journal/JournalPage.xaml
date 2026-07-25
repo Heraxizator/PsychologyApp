@@ -25,7 +25,7 @@
             <Grid
                 Margin="{StaticResource NavBarBottomMargin}"
                 ColumnDefinitions="44,*,Auto,Auto"
-                ColumnSpacing="8"
+                ColumnSpacing="4"
                 MinimumHeightRequest="48">
                 <Grid.Behaviors>
                     <behaviors:PressFeedbackBehavior AttachToTappableLabels="True" />
@@ -53,9 +53,10 @@
                     MaxLines="1" />
                 <Label
                     Grid.Column="2"
-                    Text="{Binding OpenOverviewLabel}"
-                    Style="{StaticResource NavActionLabelStyle}"
+                    Style="{StaticResource IconActionStyle}"
+                    WidthRequest="40"
                     VerticalOptions="Center"
+                    Text="{mi:Material Icon=Insights}"
                     SemanticProperties.Description="{Binding OpenOverviewLabel}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding OpenOverviewCommand}" />
@@ -87,7 +88,7 @@
 
                 <mood:MoodStripView
                     UsePlainLayout="True"
-                    QuestionText="{Binding MoodCheckInTitle}"
+                    QuestionText="{Binding MoodQuestionText}"
                     RecordMoodCommand="{Binding RecordMoodCommand}"
                     SelectedMoodLevel="{Binding SelectedMoodLevel}"
                     TodayMoodDisplay="{Binding TodayMoodDisplay}"
@@ -118,12 +119,20 @@
                 Title="{Binding PracticeSuggestText}"
                 TapCommand="{Binding OpenPracticeSuggestCommand}" />
 
-            <ui:ButtonView
+            <Label
                 IsVisible="{Binding ShowAddNoteButton}"
-                BodyText="{Binding AddNoteLabel}"
-                TapCommand="{Binding ExpandNoteCommand}"
-                Variant="Secondary"
-                IsCompact="True" />
+                Text="{Binding AddNoteLabel}"
+                Style="{StaticResource NavActionLabelStyle}"
+                HorizontalOptions="Center"
+                TextColor="{DynamicResource Primary}"
+                SemanticProperties.Description="{Binding AddNoteLabel}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ExpandNoteCommand}" />
+                </Label.GestureRecognizers>
+                <Label.Behaviors>
+                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                </Label.Behaviors>
+            </Label>
 
             <Border
                 IsVisible="{Binding ShowNoteEditor}"
@@ -182,38 +191,75 @@
                     <ui:ButtonView
                         BodyText="{Binding SaveLabel}"
                         TapCommand="{Binding SaveMoodCommand}"
-                        Variant="Secondary" />
+                        Variant="Primary" />
 
-                    <HorizontalStackLayout
-                        Spacing="{StaticResource LayoutSpacing}"
-                        HorizontalOptions="End">
-                        <Label
+                    <BoxView
+                        IsVisible="{Binding ShowEntryActions}"
+                        Style="{StaticResource SubtleDividerStyle}" />
+
+                    <Grid
+                        IsVisible="{Binding ShowEntryActions}"
+                        ColumnDefinitions="*,*"
+                        ColumnSpacing="{StaticResource CompactSpacing}">
+                        <Border
+                            Grid.Column="0"
+                            Style="{StaticResource TestFlatCardStyle}"
                             IsVisible="{Binding CanShareEntry}"
-                            Style="{StaticResource IconActionStyle}"
-                            WidthRequest="40"
-                            Text="{mi:Material Icon=Share}"
-                            SemanticProperties.Description="{Binding ShareLabel}">
-                            <Label.GestureRecognizers>
+                            Margin="0"
+                            Padding="12,10">
+                            <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ShareCommand}" />
-                            </Label.GestureRecognizers>
-                            <Label.Behaviors>
+                            </Border.GestureRecognizers>
+                            <Border.Behaviors>
                                 <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
-                            </Label.Behaviors>
-                        </Label>
-                        <Label
+                            </Border.Behaviors>
+                            <HorizontalStackLayout
+                                Spacing="8"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+                                <Label
+                                    Style="{StaticResource IconActionStyle}"
+                                    Text="{mi:Material Icon=Share}"
+                                    TextColor="{DynamicResource Primary}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Text="{Binding ShareLabel}"
+                                    Style="{StaticResource CaptionStyle}"
+                                    FontFamily="{StaticResource SemiBoldFontFamily}"
+                                    TextColor="{DynamicResource Primary}"
+                                    VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Border>
+                        <Border
+                            Grid.Column="1"
+                            Style="{StaticResource TestFlatCardStyle}"
                             IsVisible="{Binding CanDeleteEntry}"
-                            Style="{StaticResource IconActionStyle}"
-                            WidthRequest="40"
-                            Text="{mi:Material Icon=Delete}"
-                            SemanticProperties.Description="{Binding DeleteLabel}">
-                            <Label.GestureRecognizers>
+                            Margin="0"
+                            Padding="12,10">
+                            <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding DeleteMoodCommand}" />
-                            </Label.GestureRecognizers>
-                            <Label.Behaviors>
+                            </Border.GestureRecognizers>
+                            <Border.Behaviors>
                                 <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
-                            </Label.Behaviors>
-                        </Label>
-                    </HorizontalStackLayout>
+                            </Border.Behaviors>
+                            <HorizontalStackLayout
+                                Spacing="8"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+                                <Label
+                                    Style="{StaticResource IconActionStyle}"
+                                    Text="{mi:Material Icon=Delete}"
+                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Text="{Binding DeleteLabel}"
+                                    Style="{StaticResource CaptionStyle}"
+                                    FontFamily="{StaticResource SemiBoldFontFamily}"
+                                    TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                    VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Border>
+                    </Grid>
                 </VerticalStackLayout>
             </Border>
         </VerticalStackLayout>
