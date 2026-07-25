@@ -45,6 +45,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         });
         MorePracticeCommand = new AsyncCommand(MorePracticeAsync);
         NextPracticeCommand = new AsyncCommand(StartNextPracticeAsync);
+        OpenJournalCommand = new AsyncCommand(() => _navigationService.GoToJournalAsync());
         GoHomeCommand = new AsyncCommand(() => _navigationService.GoToRootAsync());
         LoadBeforeMoodAsync().FireAndForget();
         LoadSessionOutcomeAsync().FireAndForget();
@@ -72,6 +73,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
     public string StreakLabelText => AppStrings.ProfileStreakDays;
     public bool HasStreak => StreakDays > 0;
     public string MorePracticeText => AppStrings.PracticeMoreButton;
+    public string OpenJournalText => AppStrings.PracticeOpenJournalRow;
     public string GoHomeText => AppStrings.PracticeGoHomeButton;
     public string ReflectionQuestion => AppStrings.PracticeReflectionQuestion;
     public string ReflectionNotePlaceholder => AppStrings.PracticeReflectionNotePlaceholder;
@@ -196,6 +198,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
     public ICommand RecordMoodCommand { get; }
     public ICommand MorePracticeCommand { get; }
     public ICommand NextPracticeCommand { get; }
+    public ICommand OpenJournalCommand { get; }
     public ICommand GoHomeCommand { get; }
 
     protected override void RefreshLocalizedProperties()
@@ -209,6 +212,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
             nameof(StreakLabelText),
             nameof(HasStreak),
             nameof(MorePracticeText),
+            nameof(OpenJournalText),
             nameof(GoHomeText),
             nameof(ReflectionQuestion),
             nameof(ReflectionNotePlaceholder),

@@ -80,6 +80,15 @@ public partial class MoodStripView : ContentView
         set => SetValue(HasMoodHistorySummaryProperty, value);
     }
 
+    public static readonly BindableProperty UsePlainLayoutProperty =
+        BindableProperty.Create(nameof(UsePlainLayout), typeof(bool), typeof(MoodStripView), false);
+
+    public bool UsePlainLayout
+    {
+        get => (bool)GetValue(UsePlainLayoutProperty);
+        set => SetValue(UsePlainLayoutProperty, value);
+    }
+
     private static void OnSelectedMoodLevelChanged(BindableObject bindable, object oldValue, object newValue)
     {
         if (bindable is not MoodStripView strip)

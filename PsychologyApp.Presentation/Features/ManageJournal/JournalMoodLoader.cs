@@ -22,8 +22,18 @@ public sealed record JournalMoodSnapshot(
     IReadOnlyList<MoodNoteItem> TimelineEntries,
     IReadOnlyList<JournalTimelineDayGroup> TimelineGroups,
     IReadOnlyList<JournalDayChip> WeekDays,
+    IReadOnlyList<JournalMonthCell> MonthCells,
+    DateOnly MonthCursor,
+    string MonthTitle,
+    IReadOnlyList<JournalYearCell> YearCells,
+    int YearCursor,
+    string YearTitle,
+    JournalCalendarScale CalendarScale,
     long? EditorEntryId,
     DateOnly EditorDay,
+    JournalCheckInSlot EditorSlot,
+    bool HasMorningEntry,
+    bool HasEveningEntry,
     string? EditorNote,
     int SelectedMoodLevel,
     string EditorMoodDisplay,
@@ -31,18 +41,27 @@ public sealed record JournalMoodSnapshot(
     string RangeSubtitle,
     JournalMoodStats Stats,
     string PracticeMoodInsight,
-    DateOnly WeekStripEnd);
+    string OnThisDayLastYearText,
+    DateOnly WeekStripEnd,
+    IReadOnlyList<JournalActivityInsight> ActivityInsights);
 
 public sealed class JournalMoodLoader(IUserProgressService userProgressService)
 {
-    private const int TimelineLimit = 120;
+    private const int TimelineLimit = 500;
     private const int MaxWeekLookbackDays = 84;
+    private const int MaxMonthLookbackMonths = 12;
+    private const int MaxYearLookbackYears = 2;
+    private const int MorningHourCutoff = 15;
 
     public async Task<JournalMoodSnapshot> LoadAsync(
         int rangeDays = 7,
         DateOnly? filterDay = null,
         DateOnly? editorDay = null,
         DateOnly? weekStripEnd = null,
+        DateOnly? monthCursor = null,
+        int? yearCursor = null,
+        JournalCheckInSlot editorSlot = JournalCheckInSlot.Morning,
+        JournalCalendarScale calendarScale = JournalCalendarScale.Week,
         CancellationToken cancellationToken = default)
     {
         int clampedRange = Math.Clamp(rangeDays, 1, 90);
@@ -51,7 +70,26 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
         DateOnly resolvedEditorDay = editorDay ?? filterDay ?? today;
         DateOnly stripEnd = ClampStripEnd(weekStripEnd ?? today, today);
         DateOnly stripStart = stripEnd.AddDays(-6);
+        DateOnly resolvedMonth = ClampMonth(monthCursor ?? new DateOnly(today.Year, today.Month, 1), today);
+        DateOnly monthStart = new(resolvedMonth.Year, resolvedMonth.Month, 1);
+        int resolvedYear = ClampYear(yearCursor ?? today.Year, today);
+        DateOnly yearStart = new(resolvedYear, 1, 1);
+        DateOnly lastYearSameDay = resolvedEditorDay.AddYears(-1);
         DateOnly fetchStart = stripStart < rangeStart ? stripStart : rangeStart;
+        if (calendarScale == JournalCalendarScale.Month && monthStart < fetchStart)
+        {
+            fetchStart = monthStart;
+        }
+
+        if (calendarScale == JournalCalendarScale.Year && yearStart < fetchStart)
+        {
+            fetchStart = yearStart;
+        }
+
+        if ((editorDay is not null || filterDay is not null) && lastYearSameDay < fetchStart)
+        {
+            fetchStart = lastYearSameDay;
+        }
 
         DateTime fromUtc = fetchStart.ToDateTime(TimeOnly.MinValue).ToUniversalTime();
         DateTime toUtcExclusive = today.AddDays(1).ToDateTime(TimeOnly.MinValue).ToUniversalTime();
@@ -63,6 +101,7 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
             .ToList();
 
         Dictionary<DateOnly, MoodEntryDTO> byDay = BuildByDay(orderedNewestFirst);
+        Dictionary<DateOnly, List<MoodEntryDTO>> dayEntries = BuildDayEntries(orderedNewestFirst);
 
         List<MoodNoteItem> timeline = FilterForDay(orderedNewestFirst, filterDay)
             .Select(ToTimelineItem)
@@ -74,9 +113,22 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
             .ToList();
 
         List<JournalTimelineDayGroup> groups = BuildTimelineGroups(timeline);
-        List<JournalDayChip> weekDays = BuildWeekDays(stripEnd, byDay, filterDay ?? editorDay);
+        List<JournalDayChip> weekDays = calendarScale == JournalCalendarScale.Week
+            ? BuildWeekDays(stripEnd, byDay, filterDay ?? editorDay)
+            : [];
+        List<JournalMonthCell> monthCells = calendarScale == JournalCalendarScale.Month
+            ? BuildMonthCells(monthStart, today, byDay, filterDay ?? editorDay)
+            : [];
+        List<JournalYearCell> yearCells = calendarScale == JournalCalendarScale.Year
+            ? BuildYearCells(resolvedYear, today, byDay, filterDay ?? editorDay)
+            : [];
 
-        byDay.TryGetValue(resolvedEditorDay, out MoodEntryDTO? editorEntry);
+        dayEntries.TryGetValue(resolvedEditorDay, out List<MoodEntryDTO>? editorDayList);
+        editorDayList ??= [];
+        (MoodEntryDTO? morningEntry, MoodEntryDTO? eveningEntry) = SplitDaySlots(editorDayList);
+        JournalCheckInSlot resolvedSlot = ResolveEditorSlot(editorSlot, morningEntry, eveningEntry);
+        MoodEntryDTO? editorEntry = resolvedSlot == JournalCheckInSlot.Morning ? morningEntry : eveningEntry;
+
         long? editorEntryId = editorEntry?.MoodEntryId;
         string? editorNote = string.IsNullOrWhiteSpace(editorEntry?.Note) ? null : editorEntry!.Note!.Trim();
         int selectedLevel = editorEntry?.MoodLevel ?? 0;
@@ -102,12 +154,16 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
             })
             .ToList();
         JournalMoodStats stats = BuildStats(statsSource, today);
+        IReadOnlyList<JournalActivityInsight> activityInsights = JournalNoteFactors.Analyze(
+            statsSource.Select(entry => (entry.Note, entry.MoodLevel)));
 
         string practiceInsight = await BuildPracticeMoodInsightAsync(
             rangeStart,
             today,
             byDay,
             cancellationToken);
+
+        string onThisDay = BuildOnThisDayLastYear(lastYearSameDay, dayEntries);
 
         return new JournalMoodSnapshot(
             points,
@@ -116,8 +172,18 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
             timeline,
             groups,
             weekDays,
+            monthCells,
+            monthStart,
+            AppStrings.JournalMonthTitle(monthStart),
+            yearCells,
+            resolvedYear,
+            AppStrings.JournalYearTitle(resolvedYear),
+            calendarScale,
             editorEntryId,
             resolvedEditorDay,
+            resolvedSlot,
+            morningEntry is not null,
+            eveningEntry is not null,
             editorNote,
             selectedLevel,
             editorDisplay,
@@ -125,7 +191,9 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
             AppStrings.WeekRangeLabel(rangeStart, today),
             stats,
             practiceInsight,
-            stripEnd);
+            onThisDay,
+            stripEnd,
+            activityInsights);
     }
 
     public async Task SaveMoodAsync(
@@ -133,6 +201,7 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
         string? note,
         long? entryId,
         DateOnly day,
+        JournalCheckInSlot slot,
         CancellationToken cancellationToken = default)
     {
         if (entryId is > 0)
@@ -141,11 +210,7 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
             return;
         }
 
-        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
-        DateTime recordedAtUtc = day == today
-            ? DateTime.UtcNow
-            : day.ToDateTime(new TimeOnly(23, 59, 59)).ToUniversalTime();
-
+        DateTime recordedAtUtc = ResolveSlotTimestamp(day, slot);
         await userProgressService.RecordMoodAsync(
             moodLevel,
             note,
@@ -156,6 +221,16 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
     public Task DeleteMoodAsync(long moodEntryId, CancellationToken cancellationToken = default) =>
         userProgressService.DeleteMoodEntryAsync(moodEntryId, cancellationToken);
 
+    public async Task<IReadOnlyList<MoodEntryDTO>> GetExportMoodsAsync(
+        CancellationToken cancellationToken = default)
+    {
+        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+        DateOnly from = today.AddYears(-1);
+        DateTime fromUtc = from.ToDateTime(TimeOnly.MinValue).ToUniversalTime();
+        DateTime toUtcExclusive = today.AddDays(1).ToDateTime(TimeOnly.MinValue).ToUniversalTime();
+        return await userProgressService.GetMoodsAsync(fromUtc, toUtcExclusive, TimelineLimit, cancellationToken);
+    }
+
     public static DateOnly ClampStripEnd(DateOnly stripEnd, DateOnly today)
     {
         DateOnly earliest = today.AddDays(-(MaxWeekLookbackDays - 1));
@@ -165,6 +240,31 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
         }
 
         return stripEnd < earliest ? earliest : stripEnd;
+    }
+
+    public static DateOnly ClampMonth(DateOnly month, DateOnly today)
+    {
+        DateOnly currentMonth = new(today.Year, today.Month, 1);
+        DateOnly earliest = currentMonth.AddMonths(-(MaxMonthLookbackMonths - 1));
+        DateOnly normalized = new(month.Year, month.Month, 1);
+        if (normalized > currentMonth)
+        {
+            return currentMonth;
+        }
+
+        return normalized < earliest ? earliest : normalized;
+    }
+
+    public static int ClampYear(int year, DateOnly today)
+    {
+        int current = today.Year;
+        int earliest = current - (MaxYearLookbackYears - 1);
+        if (year > current)
+        {
+            return current;
+        }
+
+        return year < earliest ? earliest : year;
     }
 
     public static IReadOnlyList<JournalTimelineDayGroup> FilterGroupsByNoteSearch(
@@ -228,10 +328,35 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
             return string.Empty;
         }
 
-        double average = moodsOnPracticeDays.Average();
-        return AppStrings.JournalPracticeMoodInsight(
-            practiceDays.Count,
-            AppStrings.FormatAverageMood(average));
+        List<int> moodsWithoutPractice = byDay
+            .Where(pair => pair.Key >= rangeStart && pair.Key <= today && !practiceDays.Contains(pair.Key))
+            .Select(pair => pair.Value.MoodLevel)
+            .ToList();
+
+        string averageOnPractice = AppStrings.FormatAverageMood(moodsOnPracticeDays.Average());
+        if (moodsWithoutPractice.Count > 0)
+        {
+            return AppStrings.JournalPracticeMoodCompareInsight(
+                practiceDays.Count,
+                averageOnPractice,
+                AppStrings.FormatAverageMood(moodsWithoutPractice.Average()));
+        }
+
+        return AppStrings.JournalPracticeMoodInsight(practiceDays.Count, averageOnPractice);
+    }
+
+    private static string BuildOnThisDayLastYear(
+        DateOnly lastYearDay,
+        IReadOnlyDictionary<DateOnly, List<MoodEntryDTO>> dayEntries)
+    {
+        if (!dayEntries.TryGetValue(lastYearDay, out List<MoodEntryDTO>? entries) || entries.Count == 0)
+        {
+            return string.Empty;
+        }
+
+        MoodEntryDTO best = entries.OrderByDescending(entry => entry.RecordedAt).First();
+        string snippet = JournalNoteFactors.StripFactorLines(best.Note);
+        return AppStrings.JournalOnThisDayLastYear(best.MoodLevel, snippet);
     }
 
     private static List<JournalTimelineDayGroup> BuildTimelineGroups(IReadOnlyList<MoodNoteItem> timeline) =>
@@ -329,6 +454,96 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
                 group => group.Key,
                 group => group.OrderByDescending(entry => entry.RecordedAt).First());
 
+    private static Dictionary<DateOnly, List<MoodEntryDTO>> BuildDayEntries(IReadOnlyList<MoodEntryDTO> moods) =>
+        moods
+            .GroupBy(entry => DateOnly.FromDateTime(entry.RecordedAt.ToLocalTime()))
+            .ToDictionary(
+                group => group.Key,
+                group => group.OrderBy(entry => entry.RecordedAt).ToList());
+
+    internal static (MoodEntryDTO? Morning, MoodEntryDTO? Evening) SplitDaySlots(
+        IReadOnlyList<MoodEntryDTO> dayEntries)
+    {
+        if (dayEntries.Count == 0)
+        {
+            return (null, null);
+        }
+
+        List<MoodEntryDTO> ordered = dayEntries.OrderBy(entry => entry.RecordedAt).ToList();
+        if (ordered.Count == 1)
+        {
+            int hour = ordered[0].RecordedAt.ToLocalTime().Hour;
+            return hour < MorningHourCutoff
+                ? (ordered[0], null)
+                : (null, ordered[0]);
+        }
+
+        return (ordered[0], ordered[^1]);
+    }
+
+    private static JournalCheckInSlot ResolveEditorSlot(
+        JournalCheckInSlot requested,
+        MoodEntryDTO? morning,
+        MoodEntryDTO? evening)
+    {
+        if (requested == JournalCheckInSlot.Morning && morning is not null)
+        {
+            return JournalCheckInSlot.Morning;
+        }
+
+        if (requested == JournalCheckInSlot.Evening && evening is not null)
+        {
+            return JournalCheckInSlot.Evening;
+        }
+
+        if (requested == JournalCheckInSlot.Morning && morning is null)
+        {
+            return JournalCheckInSlot.Morning;
+        }
+
+        if (requested == JournalCheckInSlot.Evening && evening is null)
+        {
+            return JournalCheckInSlot.Evening;
+        }
+
+        if (morning is not null)
+        {
+            return JournalCheckInSlot.Morning;
+        }
+
+        if (evening is not null)
+        {
+            return JournalCheckInSlot.Evening;
+        }
+
+        return DateTime.Now.Hour < MorningHourCutoff
+            ? JournalCheckInSlot.Morning
+            : JournalCheckInSlot.Evening;
+    }
+
+    private static DateTime ResolveSlotTimestamp(DateOnly day, JournalCheckInSlot slot)
+    {
+        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+        int hourNow = DateTime.Now.Hour;
+        if (day == today)
+        {
+            if (slot == JournalCheckInSlot.Morning && hourNow < MorningHourCutoff)
+            {
+                return DateTime.UtcNow;
+            }
+
+            if (slot == JournalCheckInSlot.Evening && hourNow >= MorningHourCutoff)
+            {
+                return DateTime.UtcNow;
+            }
+        }
+
+        TimeOnly time = slot == JournalCheckInSlot.Morning
+            ? new TimeOnly(9, 0)
+            : new TimeOnly(21, 0);
+        return day.ToDateTime(time).ToUniversalTime();
+    }
+
     private static IEnumerable<MoodEntryDTO> FilterForDay(
         IEnumerable<MoodEntryDTO> moods,
         DateOnly? filterDay)
@@ -382,5 +597,73 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
         }
 
         return chips;
+    }
+
+    private static List<JournalMonthCell> BuildMonthCells(
+        DateOnly monthStart,
+        DateOnly today,
+        IReadOnlyDictionary<DateOnly, MoodEntryDTO> byDay,
+        DateOnly? selectedDay)
+    {
+        List<JournalMonthCell> cells = [];
+        int leading = ((int)monthStart.DayOfWeek + 6) % 7; // Monday-first
+        for (int i = 0; i < leading; i++)
+        {
+            cells.Add(new JournalMonthCell());
+        }
+
+        int daysInMonth = DateTime.DaysInMonth(monthStart.Year, monthStart.Month);
+        for (int day = 1; day <= daysInMonth; day++)
+        {
+            DateOnly date = new(monthStart.Year, monthStart.Month, day);
+            byDay.TryGetValue(date, out MoodEntryDTO? entry);
+            bool enabled = date <= today;
+            cells.Add(new JournalMonthCell
+            {
+                Date = date,
+                DayNumber = day.ToString(CultureInfo.InvariantCulture),
+                MoodGlyph = entry is null ? (enabled ? "·" : string.Empty) : AppStrings.MoodEmojiFor(entry.MoodLevel),
+                HasEntry = entry is not null,
+                IsEnabled = enabled,
+                IsSelected = selectedDay == date
+            });
+        }
+
+        return cells;
+    }
+
+    private static List<JournalYearCell> BuildYearCells(
+        int year,
+        DateOnly today,
+        IReadOnlyDictionary<DateOnly, MoodEntryDTO> byDay,
+        DateOnly? selectedDay)
+    {
+        DateOnly yearStart = new(year, 1, 1);
+        DateOnly yearEnd = new(year, 12, 31);
+        List<JournalYearCell> cells = [];
+        int leading = ((int)yearStart.DayOfWeek + 6) % 7;
+        for (int i = 0; i < leading; i++)
+        {
+            cells.Add(new JournalYearCell());
+        }
+
+        for (DateOnly date = yearStart; date <= yearEnd; date = date.AddDays(1))
+        {
+            byDay.TryGetValue(date, out MoodEntryDTO? entry);
+            bool enabled = date <= today;
+            cells.Add(new JournalYearCell
+            {
+                Date = date,
+                MoodGlyph = entry is null
+                    ? (enabled ? "·" : string.Empty)
+                    : AppStrings.MoodEmojiFor(entry.MoodLevel),
+                MoodLevel = entry?.MoodLevel,
+                HasEntry = entry is not null,
+                IsEnabled = enabled,
+                IsSelected = selectedDay == date
+            });
+        }
+
+        return cells;
     }
 }

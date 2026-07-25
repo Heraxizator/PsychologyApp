@@ -21,55 +21,13 @@
                 <behaviors:StaggerChildrenBehavior />
             </VerticalStackLayout.Behaviors>
 
-            <ui:NavigationBarSimpleView
+            <ui:NavigationBarExtendedView
                 TitleText="{Binding PageTitle}"
-                BackCommand="{Binding BackCommand}" />
+                BackCommand="{Binding BackCommand}"
+                ExtensionText="{Binding ExportLabel}"
+                ExtensionCommand="{Binding ExportCommand}" />
 
-            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource CompactSpacing}">
-                <Label
-                    Grid.Column="0"
-                    Style="{StaticResource IconActionStyle}"
-                    WidthRequest="40"
-                    VerticalOptions="Center"
-                    Text="{mi:Material Icon=KeyboardArrowLeft}"
-                    SemanticProperties.Description="{Binding WeekNavPrevLabel}">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding PrevWeekCommand}" />
-                    </Label.GestureRecognizers>
-                    <Label.Behaviors>
-                        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
-                    </Label.Behaviors>
-                </Label>
-                <journalStrip:JournalWeekStripView
-                    Grid.Column="1"
-                    CaptionText="{Binding WeekStripTitle}"
-                    ItemsSource="{Binding WeekDays}"
-                    SelectDayCommand="{Binding SelectDayCommand}"
-                    IsInteractive="True" />
-                <Label
-                    Grid.Column="2"
-                    Style="{StaticResource IconActionStyle}"
-                    WidthRequest="40"
-                    VerticalOptions="Center"
-                    IsEnabled="{Binding CanGoNextWeek}"
-                    Opacity="0.35"
-                    Text="{mi:Material Icon=KeyboardArrowRight}"
-                    SemanticProperties.Description="{Binding WeekNavNextLabel}">
-                    <Label.Triggers>
-                        <DataTrigger TargetType="Label" Binding="{Binding CanGoNextWeek}" Value="True">
-                            <Setter Property="Opacity" Value="1" />
-                        </DataTrigger>
-                    </Label.Triggers>
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NextWeekCommand}" />
-                    </Label.GestureRecognizers>
-                    <Label.Behaviors>
-                        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
-                    </Label.Behaviors>
-                </Label>
-            </Grid>
-
-            <Border Style="{StaticResource HeroCardStyle}">
+            <Border Style="{StaticResource HeroCardStyle}" Margin="0">
                 <Border.Behaviors>
                     <behaviors:RevealOnAppearingBehavior />
                 </Border.Behaviors>
@@ -89,37 +47,133 @@
                 </VerticalStackLayout>
             </Border>
 
-            <ui:FilterChipTabBarView
-                ItemsSource="{Binding RangeFilters}"
-                TapCommand="{Binding SelectRangeCommand}" />
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <Border.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="0" />
+                </Border.Behaviors>
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <ui:FilterChipTabBarView
+                        ItemsSource="{Binding CalendarScaleFilters}"
+                        TapCommand="{Binding SelectCalendarScaleCommand}" />
 
-            <HorizontalStackLayout
-                IsVisible="{Binding HasMoodStats}"
-                Spacing="{StaticResource CompactSpacing}">
-                <Border Style="{StaticResource MetaPillStyle}">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource CompactSpacing}">
+                        <Label
+                            Grid.Column="0"
+                            Style="{StaticResource IconActionStyle}"
+                            WidthRequest="40"
+                            VerticalOptions="Center"
+                            Text="{mi:Material Icon=KeyboardArrowLeft}"
+                            SemanticProperties.Description="{Binding PeriodNavPrevLabel}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding PrevPeriodCommand}" />
+                            </Label.GestureRecognizers>
+                            <Label.Behaviors>
+                                <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                            </Label.Behaviors>
+                        </Label>
+                        <Label
+                            Grid.Column="1"
+                            Text="{Binding PeriodTitle}"
+                            Style="{StaticResource SectionTitleStyle}"
+                            HorizontalTextAlignment="Center"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Column="2"
+                            Style="{StaticResource IconActionStyle}"
+                            WidthRequest="40"
+                            VerticalOptions="Center"
+                            IsEnabled="{Binding CanGoNextPeriod}"
+                            Opacity="0.35"
+                            Text="{mi:Material Icon=KeyboardArrowRight}"
+                            SemanticProperties.Description="{Binding PeriodNavNextLabel}">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding CanGoNextPeriod}" Value="True">
+                                    <Setter Property="Opacity" Value="1" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NextPeriodCommand}" />
+                            </Label.GestureRecognizers>
+                            <Label.Behaviors>
+                                <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                            </Label.Behaviors>
+                        </Label>
+                    </Grid>
+
+                    <journalStrip:JournalWeekStripView
+                        IsVisible="{Binding IsWeekScale}"
+                        CaptionText=""
+                        ItemsSource="{Binding WeekDays}"
+                        SelectDayCommand="{Binding SelectDayCommand}"
+                        IsInteractive="True" />
+                    <journalStrip:JournalMonthGridView
+                        IsVisible="{Binding IsMonthScale}"
+                        CaptionText=""
+                        ItemsSource="{Binding MonthCells}"
+                        SelectDayCommand="{Binding SelectDayCommand}" />
+                    <journalStrip:JournalYearHeatmapView
+                        IsVisible="{Binding IsYearScale}"
+                        CaptionText=""
+                        ItemsSource="{Binding YearCells}"
+                        SelectDayCommand="{Binding SelectDayCommand}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <Border.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="1" />
+                </Border.Behaviors>
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <ui:FilterChipTabBarView
+                        ItemsSource="{Binding RangeFilters}"
+                        TapCommand="{Binding SelectRangeCommand}" />
+
+                    <Grid
+                        IsVisible="{Binding HasMoodStats}"
+                        ColumnDefinitions="*,*,*"
+                        ColumnSpacing="{StaticResource CompactSpacing}">
+                        <ui:MetricTileView
+                            Grid.Column="0"
+                            ValueText="{Binding CheckInCountDisplay}"
+                            LabelText="{Binding WeekMoodCheckInsLabel}" />
+                        <ui:MetricTileView
+                            Grid.Column="1"
+                            ValueText="{Binding AverageMoodDisplay}"
+                            LabelText="{Binding WeekAvgMoodLabel}" />
+                        <ui:MetricTileView
+                            Grid.Column="2"
+                            ValueText="{Binding MoodStreakDisplay}"
+                            LabelText="{Binding StreakMetricLabel}" />
+                    </Grid>
+
                     <Label
-                        Text="{Binding CheckInPillText}"
-                        Style="{StaticResource CaptionStyle}"
-                        TextColor="{DynamicResource Primary}"
-                        FontFamily="{StaticResource SemiBoldFontFamily}" />
-                </Border>
-                <Border Style="{StaticResource MetaPillStyle}">
-                    <Label
-                        Text="{Binding AverageMoodPillText}"
-                        Style="{StaticResource CaptionStyle}"
-                        TextColor="{DynamicResource Primary}"
-                        FontFamily="{StaticResource SemiBoldFontFamily}" />
-                </Border>
-                <Border
-                    Style="{StaticResource MetaPillStyle}"
-                    IsVisible="{Binding HasBestWorstPill}">
-                    <Label
+                        IsVisible="{Binding HasBestWorstPill}"
                         Text="{Binding BestWorstLabel}"
                         Style="{StaticResource CaptionStyle}"
-                        TextColor="{DynamicResource Primary}"
-                        FontFamily="{StaticResource SemiBoldFontFamily}" />
-                </Border>
-            </HorizontalStackLayout>
+                        HorizontalTextAlignment="Center"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+
+                    <FlexLayout
+                        IsVisible="{Binding HasFactorPills}"
+                        Wrap="Wrap"
+                        Direction="Row"
+                        AlignItems="Start"
+                        JustifyContent="Start"
+                        BindableLayout.ItemsSource="{Binding ActivityPills}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <Border Style="{StaticResource MetaPillStyle}" Margin="0,0,8,8">
+                                    <Label
+                                        Text="{Binding .}"
+                                        Style="{StaticResource CaptionStyle}"
+                                        TextColor="{DynamicResource Primary}"
+                                        FontFamily="{StaticResource SemiBoldFontFamily}" />
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </VerticalStackLayout>
+            </Border>
 
             <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                 <ui:SectionHeaderView TitleText="{Binding MoodTrendTitle}" />

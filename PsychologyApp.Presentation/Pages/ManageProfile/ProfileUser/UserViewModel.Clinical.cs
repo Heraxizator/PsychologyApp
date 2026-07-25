@@ -51,8 +51,26 @@ public partial class UserViewModel
     public IReadOnlyList<JournalDayChip> WeekDays
     {
         get => _weekDays;
-        private set => SetProperty(ref _weekDays, value);
+        private set
+        {
+            if (SetProperty(ref _weekDays, value))
+            {
+                OnPropertyChanged(nameof(ShowMoodCheckInBanner));
+            }
+        }
     }
+
+    public bool ShowMoodCheckInBanner
+    {
+        get
+        {
+            DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+            JournalDayChip? todayChip = WeekDays.FirstOrDefault(day => day.Date == today);
+            return todayChip is null || !todayChip.HasEntry;
+        }
+    }
+
+    public string MoodCheckInBannerText => AppStrings.ProfileMoodCheckInBanner;
 
     private async Task RefreshClinicalScorecardAsync(CancellationToken cancellationToken)
     {

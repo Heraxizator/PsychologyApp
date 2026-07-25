@@ -117,6 +117,30 @@
                     <ui:SectionHeaderView
                         TitleText="{Binding ClinicalScorecardTitle}"
                         SubtitleText="{Binding WeekRangeSubtitle}" />
+                    <Border
+                        IsVisible="{Binding ShowMoodCheckInBanner}"
+                        Style="{StaticResource BrandCardStyle}"
+                        Margin="0">
+                        <Border.Behaviors>
+                            <behaviors:ListItemRevealBehavior RevealIndex="2" />
+                            <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                        </Border.Behaviors>
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenJournalCommand}" />
+                            </Grid.GestureRecognizers>
+                            <Label
+                                Grid.Column="0"
+                                Text="{Binding MoodCheckInBannerText}"
+                                Style="{StaticResource BodyStyle}"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="1"
+                                VerticalOptions="Center"
+                                TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                Text="{mi:Material Icon=KeyboardArrowRight}" />
+                        </Grid>
+                    </Border>
                     <profileHistory:ProfileWeekStoryView
                         WeekDays="{Binding WeekDays}"
                         SummaryText="{Binding WeekSummaryText}"
@@ -124,12 +148,12 @@
                         ShowEmpty="{Binding ShowClinicalScorecardEmpty}"
                         TapCommand="{Binding OpenJournalCommand}">
                         <profileHistory:ProfileWeekStoryView.Behaviors>
-                            <behaviors:ListItemRevealBehavior RevealIndex="2" />
+                            <behaviors:ListItemRevealBehavior RevealIndex="3" />
                         </profileHistory:ProfileWeekStoryView.Behaviors>
                     </profileHistory:ProfileWeekStoryView>
                     <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                         <Border.Behaviors>
-                            <behaviors:ListItemRevealBehavior RevealIndex="3" />
+                            <behaviors:ListItemRevealBehavior RevealIndex="4" />
                         </Border.Behaviors>
                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
                             <Grid.GestureRecognizers>

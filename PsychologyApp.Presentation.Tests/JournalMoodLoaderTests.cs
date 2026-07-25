@@ -187,7 +187,12 @@ public sealed class JournalMoodLoaderTests
             .Returns(Task.CompletedTask);
 
         JournalMoodLoader loader = new(progress.Object);
-        await loader.SaveMoodAsync(5, "updated", 9, DateOnly.FromDateTime(DateTime.Today));
+        await loader.SaveMoodAsync(
+            5,
+            "updated",
+            9,
+            DateOnly.FromDateTime(DateTime.Today),
+            JournalCheckInSlot.Morning);
 
         progress.Verify(p => p.UpdateMoodEntryAsync(9, 5, "updated", It.IsAny<CancellationToken>()), Times.Once);
         progress.Verify(
@@ -212,11 +217,70 @@ public sealed class JournalMoodLoaderTests
             .Returns(Task.CompletedTask);
 
         JournalMoodLoader loader = new(progress.Object);
-        await loader.SaveMoodAsync(4, "note", null, DateOnly.FromDateTime(DateTime.Today));
+        await loader.SaveMoodAsync(
+            4,
+            "note",
+            null,
+            DateOnly.FromDateTime(DateTime.Today),
+            JournalCheckInSlot.Morning);
 
         progress.Verify(
             p => p.RecordMoodAsync(4, "note", It.IsAny<DateTime?>(), It.IsAny<CancellationToken>()),
             Times.Once);
+    }
+
+    [Fact]
+    public async Task LoadAsync_WeekScale_DoesNotBuildYearCells()
+    {
+        Mock<IUserProgressService> progress = new();
+        progress
+            .Setup(p => p.GetMoodsAsync(
+                It.IsAny<DateTime?>(),
+                It.IsAny<DateTime?>(),
+                It.IsAny<int>(),
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<MoodEntryDTO>
+            {
+                new() { MoodEntryId = 1, MoodLevel = 3, RecordedAt = DateTime.UtcNow }
+            });
+        progress
+            .Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+
+        JournalMoodLoader loader = new(progress.Object);
+        JournalMoodSnapshot snapshot = await loader.LoadAsync(calendarScale: JournalCalendarScale.Week);
+
+        Assert.Equal(JournalCalendarScale.Week, snapshot.CalendarScale);
+        Assert.NotEmpty(snapshot.WeekDays);
+        Assert.Empty(snapshot.MonthCells);
+        Assert.Empty(snapshot.YearCells);
+    }
+
+    [Fact]
+    public async Task LoadAsync_YearScale_BuildsYearCells()
+    {
+        Mock<IUserProgressService> progress = new();
+        progress
+            .Setup(p => p.GetMoodsAsync(
+                It.IsAny<DateTime?>(),
+                It.IsAny<DateTime?>(),
+                It.IsAny<int>(),
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<MoodEntryDTO>
+            {
+                new() { MoodEntryId = 1, MoodLevel = 4, RecordedAt = DateTime.UtcNow }
+            });
+        progress
+            .Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+
+        JournalMoodLoader loader = new(progress.Object);
+        JournalMoodSnapshot snapshot = await loader.LoadAsync(calendarScale: JournalCalendarScale.Year);
+
+        Assert.Equal(JournalCalendarScale.Year, snapshot.CalendarScale);
+        Assert.Empty(snapshot.WeekDays);
+        Assert.Empty(snapshot.MonthCells);
+        Assert.True(snapshot.YearCells.Count > 300);
     }
 
     [Fact]

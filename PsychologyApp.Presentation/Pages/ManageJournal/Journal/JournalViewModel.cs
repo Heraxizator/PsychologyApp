@@ -1,4 +1,6 @@
+using System.Collections.ObjectModel;
 using Microsoft.Maui.ApplicationModel.DataTransfer;
+using PsychologyApp.Presentation.Entities.FilterChip;
 using PsychologyApp.Presentation.Entities.Journal;
 using PsychologyApp.Presentation.Features.ManageJournal;
 using PsychologyApp.Presentation.Shared.Common;
@@ -20,6 +22,8 @@ public sealed class JournalViewModel : BaseViewModel
     private long? _editorEntryId;
     private DateOnly _editorDay = DateOnly.FromDateTime(DateTime.Today);
     private DateOnly _weekStripEnd = DateOnly.FromDateTime(DateTime.Today);
+    private JournalCheckInSlot _editorSlot =
+        DateTime.Now.Hour < 15 ? JournalCheckInSlot.Morning : JournalCheckInSlot.Evening;
 
     public JournalViewModel(
         JournalMoodLoader journalMoodLoader,
@@ -39,9 +43,28 @@ public sealed class JournalViewModel : BaseViewModel
         OpenOverviewCommand = new AsyncCommand(() => navigationService.GoToJournalOverviewAsync());
         OpenTimelineCommand = new AsyncCommand(() => navigationService.GoToJournalTimelineAsync());
         OpenPracticeSuggestCommand = new Command(() => _shellTabNavigator.OpenPracticeTab());
+        OpenQuotesSuggestCommand = new Command(() => _shellTabNavigator.OpenQuotesTab());
         ShareCommand = new AsyncCommand(ShareAsync);
         PrevWeekCommand = new Command(() => ShiftWeek(-7));
         NextWeekCommand = new Command(() => ShiftWeek(7), () => CanGoNextWeek);
+        SelectSlotCommand = new Command<object?>(parameter =>
+        {
+            JournalCheckInSlot? slot = parameter switch
+            {
+                JournalCheckInSlot value => value,
+                string key when key == "morning" => JournalCheckInSlot.Morning,
+                string key when key == "evening" => JournalCheckInSlot.Evening,
+                FilterChipTabItem chip when chip.Key == "morning" => JournalCheckInSlot.Morning,
+                FilterChipTabItem chip when chip.Key == "evening" => JournalCheckInSlot.Evening,
+                _ => null
+            };
+            if (slot is null)
+            {
+                return;
+            }
+
+            SelectSlot(slot.Value);
+        });
         RecordMoodCommand = new Command<object?>(parameter =>
         {
             int level = parameter switch
@@ -76,19 +99,27 @@ public sealed class JournalViewModel : BaseViewModel
                 return;
             }
 
+            IsNoteExpanded = true;
             JournalNote = string.IsNullOrWhiteSpace(JournalNote)
                 ? prompt
                 : $"{JournalNote.TrimEnd()}\n{prompt}";
         });
+        ExpandNoteCommand = new Command(() => IsNoteExpanded = true);
         ToggleFactorCommand = new Command<object?>(parameter =>
         {
-            if (parameter is not string key)
+            string? key = parameter switch
+            {
+                string text => text,
+                JournalActivityChip chip => chip.Key,
+                _ => null
+            };
+            if (string.IsNullOrWhiteSpace(key))
             {
                 return;
             }
 
             JournalNote = JournalNoteFactors.ToggleFactor(JournalNote, key);
-            NotifyFactorSelection();
+            SyncActivityChips();
         });
         SelectDayCommand = new Command<object?>(parameter =>
         {
@@ -114,6 +145,28 @@ public sealed class JournalViewModel : BaseViewModel
             LoadAsync().FireAndForget();
         });
 
+        ActivityChips = new ObservableCollection<JournalActivityChip>(
+            JournalNoteFactors.PrimaryKeys.Select(key => new JournalActivityChip
+            {
+                Key = key,
+                Label = JournalNoteFactors.GetLabel(key)
+            }));
+        SlotFilters =
+        [
+            new FilterChipTabItem
+            {
+                Key = "morning",
+                Title = AppStrings.JournalSlotMorning,
+                IsSelected = _editorSlot == JournalCheckInSlot.Morning
+            },
+            new FilterChipTabItem
+            {
+                Key = "evening",
+                Title = AppStrings.JournalSlotEvening,
+                IsSelected = _editorSlot == JournalCheckInSlot.Evening
+            }
+        ];
+
         LoadAsync().FireAndForget();
     }
 
@@ -124,6 +177,7 @@ public sealed class JournalViewModel : BaseViewModel
             : AppStrings.JournalPastDayCheckInTitle;
     public string NotePlaceholder => AppStrings.JournalNotePlaceholder;
     public string NoteSectionTitle => AppStrings.JournalNoteSectionTitle;
+    public string AddNoteLabel => AppStrings.JournalAddNoteLabel;
     public string QuestionsSectionTitle => AppStrings.JournalQuestionsSectionTitle;
     public string FactorsSectionTitle => AppStrings.JournalFactorsSectionTitle;
     public string DayEmptyCaption => AppStrings.JournalPickMoodHint;
@@ -136,12 +190,16 @@ public sealed class JournalViewModel : BaseViewModel
     public string PromptNextLabel => AppStrings.JournalPromptNextShort;
     public string PromptBlockedLabel => AppStrings.JournalPromptBlockedShort;
     public string PromptGratefulLabel => AppStrings.JournalPromptGratefulShort;
-    public string FactorSleepLabel => AppStrings.JournalFactorSleepLabel;
-    public string FactorPeopleLabel => AppStrings.JournalFactorPeopleLabel;
-    public string FactorPracticeLabel => AppStrings.JournalFactorPracticeLabel;
     public string PracticeSuggestText => AppStrings.JournalTryShortPractice;
+    public string QuotesSuggestText => AppStrings.JournalTryQuietQuote;
     public string WeekNavPrevLabel => AppStrings.JournalWeekNavPrev;
     public string WeekNavNextLabel => AppStrings.JournalWeekNavNext;
+    public string SlotMorningLabel => AppStrings.JournalSlotMorning;
+    public string SlotEveningLabel => AppStrings.JournalSlotEvening;
+    public string TimelineLinkSubtitle => AppStrings.JournalCardSubtitle;
+
+    public string DayHeaderText =>
+        $"{AppStrings.JournalEditorDayTitle(_editorDay)} · {(_editorSlot == JournalCheckInSlot.Evening ? SlotEveningLabel : SlotMorningLabel)}";
 
     public string WeekStripTitle =>
         AppStrings.WeekRangeLabel(_weekStripEnd.AddDays(-6), _weekStripEnd);
@@ -149,9 +207,19 @@ public sealed class JournalViewModel : BaseViewModel
     public bool CanGoNextWeek =>
         _weekStripEnd < DateOnly.FromDateTime(DateTime.Today);
 
-    public bool IsSleepFactorActive => JournalNoteFactors.HasFactor(JournalNote, JournalNoteFactors.SleepKey);
-    public bool IsPeopleFactorActive => JournalNoteFactors.HasFactor(JournalNote, JournalNoteFactors.PeopleKey);
-    public bool IsPracticeFactorActive => JournalNoteFactors.HasFactor(JournalNote, JournalNoteFactors.PracticeKey);
+    private bool _hasMorningEntry;
+    public bool HasMorningEntry
+    {
+        get => _hasMorningEntry;
+        private set => SetProperty(ref _hasMorningEntry, value);
+    }
+
+    private bool _hasEveningEntry;
+    public bool HasEveningEntry
+    {
+        get => _hasEveningEntry;
+        private set => SetProperty(ref _hasEveningEntry, value);
+    }
 
     private string _weekInsightText = string.Empty;
     public string WeekInsightText
@@ -168,19 +236,40 @@ public sealed class JournalViewModel : BaseViewModel
 
     public bool HasWeekInsight => !string.IsNullOrWhiteSpace(WeekInsightText);
 
+    private string _onThisDayLastYearText = string.Empty;
+    public string OnThisDayLastYearText
+    {
+        get => _onThisDayLastYearText;
+        private set
+        {
+            if (SetProperty(ref _onThisDayLastYearText, value))
+            {
+                OnPropertyChanged(nameof(HasOnThisDayLastYear));
+            }
+        }
+    }
+
+    public bool HasOnThisDayLastYear => !string.IsNullOrWhiteSpace(OnThisDayLastYearText);
+
+    public ObservableCollection<JournalActivityChip> ActivityChips { get; }
+    public ObservableCollection<FilterChipTabItem> SlotFilters { get; }
+
     public ICommand BackCommand { get; }
     public ICommand OpenOverviewCommand { get; }
     public ICommand OpenTimelineCommand { get; }
     public ICommand OpenPracticeSuggestCommand { get; }
+    public ICommand OpenQuotesSuggestCommand { get; }
     public ICommand ShareCommand { get; }
     public ICommand PrevWeekCommand { get; }
     public ICommand NextWeekCommand { get; }
+    public ICommand SelectSlotCommand { get; }
     public ICommand RecordMoodCommand { get; }
     public ICommand SaveMoodCommand { get; }
     public ICommand DeleteMoodCommand { get; }
     public ICommand ApplyPromptCommand { get; }
     public ICommand ToggleFactorCommand { get; }
     public ICommand SelectDayCommand { get; }
+    public ICommand ExpandNoteCommand { get; }
 
     private IReadOnlyList<JournalDayChip> _weekDays = [];
     public IReadOnlyList<JournalDayChip> WeekDays
@@ -199,6 +288,9 @@ public sealed class JournalViewModel : BaseViewModel
             {
                 OnPropertyChanged(nameof(ShowPracticeSuggest));
                 OnPropertyChanged(nameof(CanShareEntry));
+                OnPropertyChanged(nameof(HasMoodSelected));
+                OnPropertyChanged(nameof(ShowAddNoteButton));
+                OnPropertyChanged(nameof(ShowNoteEditor));
             }
         }
     }
@@ -219,9 +311,27 @@ public sealed class JournalViewModel : BaseViewModel
 
     public bool HasTodayMood => !string.IsNullOrWhiteSpace(TodayMoodDisplay);
     public bool ShowDayEmptyCaption => !HasTodayMood;
+    public bool HasMoodSelected => SelectedMoodLevel is >= 1 and <= 5;
     public bool ShowPracticeSuggest =>
         _editorDay == DateOnly.FromDateTime(DateTime.Today)
         && SelectedMoodLevel is 1 or 2;
+
+    private bool _isNoteExpanded;
+    public bool IsNoteExpanded
+    {
+        get => _isNoteExpanded;
+        private set
+        {
+            if (SetProperty(ref _isNoteExpanded, value))
+            {
+                OnPropertyChanged(nameof(ShowAddNoteButton));
+                OnPropertyChanged(nameof(ShowNoteEditor));
+            }
+        }
+    }
+
+    public bool ShowAddNoteButton => HasMoodSelected && !IsNoteExpanded;
+    public bool ShowNoteEditor => HasMoodSelected && IsNoteExpanded;
 
     private string _moodHistorySummary = string.Empty;
     public string MoodHistorySummary
@@ -246,7 +356,7 @@ public sealed class JournalViewModel : BaseViewModel
         {
             if (SetProperty(ref _journalNote, value))
             {
-                NotifyFactorSelection();
+                SyncActivityChips();
             }
         }
     }
@@ -262,6 +372,7 @@ public sealed class JournalViewModel : BaseViewModel
             nameof(MoodCheckInTitle),
             nameof(NotePlaceholder),
             nameof(NoteSectionTitle),
+            nameof(AddNoteLabel),
             nameof(QuestionsSectionTitle),
             nameof(FactorsSectionTitle),
             nameof(DayEmptyCaption),
@@ -274,28 +385,40 @@ public sealed class JournalViewModel : BaseViewModel
             nameof(PromptNextLabel),
             nameof(PromptBlockedLabel),
             nameof(PromptGratefulLabel),
-            nameof(FactorSleepLabel),
-            nameof(FactorPeopleLabel),
-            nameof(FactorPracticeLabel),
             nameof(PracticeSuggestText),
+            nameof(QuotesSuggestText),
             nameof(WeekNavPrevLabel),
             nameof(WeekNavNextLabel),
+            nameof(SlotMorningLabel),
+            nameof(SlotEveningLabel),
+            nameof(TimelineLinkSubtitle),
+            nameof(DayHeaderText),
             nameof(WeekStripTitle),
-            nameof(WeekInsightText),
-            nameof(HasWeekInsight),
             nameof(TodayMoodDisplay),
             nameof(HasTodayMood),
             nameof(ShowDayEmptyCaption),
             nameof(ShowPracticeSuggest),
+            nameof(HasMoodSelected),
+            nameof(ShowAddNoteButton),
+            nameof(ShowNoteEditor),
             nameof(MoodHistorySummary),
             nameof(HasMoodHistorySummary),
             nameof(HasEditorEntry),
             nameof(CanDeleteEntry),
             nameof(CanShareEntry),
-            nameof(CanGoNextWeek),
-            nameof(IsSleepFactorActive),
-            nameof(IsPeopleFactorActive),
-            nameof(IsPracticeFactorActive));
+            nameof(CanGoNextWeek));
+        foreach (JournalActivityChip chip in ActivityChips)
+        {
+            chip.Label = JournalNoteFactors.GetLabel(chip.Key);
+        }
+
+        foreach (FilterChipTabItem slot in SlotFilters)
+        {
+            slot.Title = slot.Key == "evening"
+                ? AppStrings.JournalSlotEvening
+                : AppStrings.JournalSlotMorning;
+        }
+
         (NextWeekCommand as Command)?.ChangeCanExecute();
     }
 
@@ -320,6 +443,27 @@ public sealed class JournalViewModel : BaseViewModel
         _ => null
     };
 
+    private void SelectSlot(JournalCheckInSlot slot)
+    {
+        if (_editorSlot == slot)
+        {
+            return;
+        }
+
+        _editorSlot = slot;
+        SyncSlotFilters();
+        OnPropertyChanged(nameof(DayHeaderText));
+        LoadAsync().FireAndForget();
+    }
+
+    private void SyncSlotFilters()
+    {
+        foreach (FilterChipTabItem slot in SlotFilters)
+        {
+            slot.IsSelected = slot.Key == (_editorSlot == JournalCheckInSlot.Evening ? "evening" : "morning");
+        }
+    }
+
     private void ShiftWeek(int dayDelta)
     {
         DateOnly today = DateOnly.FromDateTime(DateTime.Today);
@@ -335,11 +479,12 @@ public sealed class JournalViewModel : BaseViewModel
         LoadAsync().FireAndForget();
     }
 
-    private void NotifyFactorSelection()
+    private void SyncActivityChips()
     {
-        OnPropertyChanged(nameof(IsSleepFactorActive));
-        OnPropertyChanged(nameof(IsPeopleFactorActive));
-        OnPropertyChanged(nameof(IsPracticeFactorActive));
+        foreach (JournalActivityChip chip in ActivityChips)
+        {
+            chip.IsActive = JournalNoteFactors.HasFactor(JournalNote, chip.Key);
+        }
     }
 
     private async Task LoadAsync()
@@ -351,7 +496,8 @@ public sealed class JournalViewModel : BaseViewModel
                 rangeDays: 7,
                 filterDay: null,
                 editorDay: _editorDay,
-                weekStripEnd: _weekStripEnd);
+                weekStripEnd: _weekStripEnd,
+                editorSlot: _editorSlot);
             if (generation != Volatile.Read(ref _loadGeneration))
             {
                 return;
@@ -371,18 +517,20 @@ public sealed class JournalViewModel : BaseViewModel
         _weekStripEnd = snapshot.WeekStripEnd;
         _editorEntryId = snapshot.EditorEntryId;
         _editorDay = snapshot.EditorDay;
+        _editorSlot = snapshot.EditorSlot;
+        HasMorningEntry = snapshot.HasMorningEntry;
+        HasEveningEntry = snapshot.HasEveningEntry;
         SelectedMoodLevel = snapshot.SelectedMoodLevel;
         TodayMoodDisplay = snapshot.EditorMoodDisplay;
         MoodHistorySummary = snapshot.MoodHistorySummary;
         JournalNote = snapshot.EditorNote ?? string.Empty;
-        WeekInsightText = AppStrings.JournalWeekInsightLine(
-            snapshot.Stats.CheckInCount,
-            snapshot.Stats.MoodTrendLabel,
-            snapshot.Stats.MoodStreakDisplay);
+        IsNoteExpanded = !string.IsNullOrWhiteSpace(snapshot.EditorNote);
+        SyncSlotFilters();
 
         OnPropertyChanged(nameof(HasEditorEntry));
         OnPropertyChanged(nameof(CanDeleteEntry));
         OnPropertyChanged(nameof(MoodCheckInTitle));
+        OnPropertyChanged(nameof(DayHeaderText));
         OnPropertyChanged(nameof(ShowPracticeSuggest));
         OnPropertyChanged(nameof(WeekStripTitle));
         OnPropertyChanged(nameof(CanGoNextWeek));
@@ -398,7 +546,12 @@ public sealed class JournalViewModel : BaseViewModel
         }
 
         string? note = string.IsNullOrWhiteSpace(JournalNote) ? null : JournalNote.Trim();
-        await _journalMoodLoader.SaveMoodAsync(SelectedMoodLevel, note, _editorEntryId, _editorDay);
+        await _journalMoodLoader.SaveMoodAsync(
+            SelectedMoodLevel,
+            note,
+            _editorEntryId,
+            _editorDay,
+            _editorSlot);
         TodayMoodDisplay = AppStrings.TodayMoodSaved;
         OnPropertyChanged(nameof(ShowPracticeSuggest));
         await LoadAsync();
