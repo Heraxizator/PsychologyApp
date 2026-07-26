@@ -4,8 +4,8 @@ using PsychologyApp.Application.Recommendations;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Domain.Notifications;
 using PsychologyApp.Domain.Practice;
-using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Lib.Recommendations;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 
 namespace PsychologyApp.Presentation.Shared.Services.Notifications;
@@ -15,6 +15,7 @@ public sealed class PracticeReminderCoordinator(
     IUserPreferencesStore preferencesStore,
     ITechniqueRecommendationService recommendationService,
     ITechniqueCatalogService techniqueCatalog,
+    ITodayRecommendationReasonFormatter reasonFormatter,
     IPracticeReminderScheduler scheduler) : IPracticeReminderCoordinator
 {
     public async Task SyncAsync(CancellationToken cancellationToken = default)
@@ -49,7 +50,7 @@ public sealed class PracticeReminderCoordinator(
         TodayRecommendationDecision decision = recommendationService.ResolveTodayTechnique(context);
         TechniqueId techniqueId = decision.TechniqueId;
         BuiltInTechniqueDefinition definition = await techniqueCatalog.GetAsync(techniqueId, cancellationToken);
-        string reason = TodayRecommendationReasonFormatter.Format(decision, context);
+        string reason = reasonFormatter.Format(decision, context);
 
         scheduler.Schedule(
             nextFireLocal.Value,

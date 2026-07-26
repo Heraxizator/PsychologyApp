@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
+using PsychologyApp.Domain.ClinicalCare;
 using PsychologyApp.Infrastructure.Data;
 using PsychologyApp.Infrastructure.Data.Repositories.Base;
 using PsychologyApp.Infrastructure.Data.Sql;

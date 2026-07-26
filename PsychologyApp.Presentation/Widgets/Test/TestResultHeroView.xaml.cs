@@ -21,6 +21,12 @@ public partial class TestResultHeroView : ContentView
     public static readonly BindableProperty InterpretationProperty =
         BindableProperty.Create(nameof(Interpretation), typeof(string), typeof(TestResultHeroView), string.Empty);
 
+    public static readonly BindableProperty CompletedAtTextProperty =
+        BindableProperty.Create(nameof(CompletedAtText), typeof(string), typeof(TestResultHeroView), string.Empty);
+
+    public static readonly BindableProperty HasCompletedAtProperty =
+        BindableProperty.Create(nameof(HasCompletedAt), typeof(bool), typeof(TestResultHeroView), false);
+
     public static readonly BindableProperty TrendTextProperty =
         BindableProperty.Create(nameof(TrendText), typeof(string), typeof(TestResultHeroView), string.Empty);
 
@@ -48,6 +54,18 @@ public partial class TestResultHeroView : ContentView
     {
         get => (string)GetValue(InterpretationProperty);
         set => SetValue(InterpretationProperty, value);
+    }
+
+    public string CompletedAtText
+    {
+        get => (string)GetValue(CompletedAtTextProperty);
+        set => SetValue(CompletedAtTextProperty, value);
+    }
+
+    public bool HasCompletedAt
+    {
+        get => (bool)GetValue(HasCompletedAtProperty);
+        set => SetValue(HasCompletedAtProperty, value);
     }
 
     public string TrendText

@@ -1,6 +1,6 @@
-using System.Globalization;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
+using PsychologyApp.Domain.UserProgress;
 using PsychologyApp.Presentation.Entities.Journal;
 using PsychologyApp.Presentation.Entities.Profile;
 using PsychologyApp.Presentation.Shared.Common;
@@ -51,7 +51,6 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
     private const int MaxWeekLookbackDays = 84;
     private const int MaxMonthLookbackMonths = 12;
     private const int MaxYearLookbackYears = 2;
-    private const int MorningHourCutoff = 15;
 
     public async Task<JournalMoodSnapshot> LoadAsync(
         int rangeDays = 7,
@@ -113,20 +112,28 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
             .ToList();
 
         List<JournalTimelineDayGroup> groups = BuildTimelineGroups(timeline);
+        Dictionary<DateOnly, int> moodLevelByDay = byDay.ToDictionary(
+            pair => pair.Key,
+            pair => pair.Value.MoodLevel);
+        DateOnly? selectedCalendarDay = filterDay ?? editorDay;
         List<JournalDayChip> weekDays = calendarScale == JournalCalendarScale.Week
-            ? BuildWeekDays(stripEnd, byDay, filterDay ?? editorDay)
+            ? JournalCalendarBuilder.BuildWeekDays(stripEnd, moodLevelByDay, selectedCalendarDay)
             : [];
         List<JournalMonthCell> monthCells = calendarScale == JournalCalendarScale.Month
-            ? BuildMonthCells(monthStart, today, byDay, filterDay ?? editorDay)
+            ? JournalCalendarBuilder.BuildMonthCells(monthStart, today, moodLevelByDay, selectedCalendarDay)
             : [];
         List<JournalYearCell> yearCells = calendarScale == JournalCalendarScale.Year
-            ? BuildYearCells(resolvedYear, today, byDay, filterDay ?? editorDay)
+            ? JournalCalendarBuilder.BuildYearCells(resolvedYear, today, moodLevelByDay, selectedCalendarDay)
             : [];
 
         dayEntries.TryGetValue(resolvedEditorDay, out List<MoodEntryDTO>? editorDayList);
         editorDayList ??= [];
         (MoodEntryDTO? morningEntry, MoodEntryDTO? eveningEntry) = SplitDaySlots(editorDayList);
-        JournalCheckInSlot resolvedSlot = ResolveEditorSlot(editorSlot, morningEntry, eveningEntry);
+        JournalCheckInSlot resolvedSlot = JournalEditorSlotResolver.Resolve(
+            editorSlot,
+            morningEntry,
+            eveningEntry,
+            DateTime.Now.Hour);
         MoodEntryDTO? editorEntry = resolvedSlot == JournalCheckInSlot.Morning ? morningEntry : eveningEntry;
 
         long? editorEntryId = editorEntry?.MoodEntryId;
@@ -312,37 +319,30 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
 
         HashSet<DateOnly> practiceDays = completions
             .Select(completion => DateOnly.FromDateTime(completion.CompletedAt.ToLocalTime()))
-            .Where(day => day >= rangeStart && day <= today)
             .ToHashSet();
-        if (practiceDays.Count == 0)
+        Dictionary<DateOnly, int> moodLevelByDay = byDay.ToDictionary(
+            pair => pair.Key,
+            pair => pair.Value.MoodLevel);
+        JournalPracticeMoodInsightResult insight = JournalPracticeMoodInsightBuilder.Build(
+            rangeStart,
+            today,
+            practiceDays,
+            moodLevelByDay);
+        if (!insight.HasInsight || insight.AverageMoodOnPracticeDays is null)
         {
             return string.Empty;
         }
 
-        List<int> moodsOnPracticeDays = practiceDays
-            .Where(byDay.ContainsKey)
-            .Select(day => byDay[day].MoodLevel)
-            .ToList();
-        if (moodsOnPracticeDays.Count == 0)
-        {
-            return string.Empty;
-        }
-
-        List<int> moodsWithoutPractice = byDay
-            .Where(pair => pair.Key >= rangeStart && pair.Key <= today && !practiceDays.Contains(pair.Key))
-            .Select(pair => pair.Value.MoodLevel)
-            .ToList();
-
-        string averageOnPractice = AppStrings.FormatAverageMood(moodsOnPracticeDays.Average());
-        if (moodsWithoutPractice.Count > 0)
+        string averageOnPractice = AppStrings.FormatAverageMood(insight.AverageMoodOnPracticeDays.Value);
+        if (insight.AverageMoodWithoutPractice is not null)
         {
             return AppStrings.JournalPracticeMoodCompareInsight(
-                practiceDays.Count,
+                insight.PracticeDayCount,
                 averageOnPractice,
-                AppStrings.FormatAverageMood(moodsWithoutPractice.Average()));
+                AppStrings.FormatAverageMood(insight.AverageMoodWithoutPractice.Value));
         }
 
-        return AppStrings.JournalPracticeMoodInsight(practiceDays.Count, averageOnPractice);
+        return AppStrings.JournalPracticeMoodInsight(insight.PracticeDayCount, averageOnPractice);
     }
 
     private static string BuildOnThisDayLastYear(
@@ -383,8 +383,12 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
         }
 
         double average = moods.Average(entry => entry.MoodLevel);
-        int streak = ComputeMoodStreak(moods, today);
-        string trend = ResolveMoodTrend(moods.OrderBy(entry => entry.RecordedAt).ToList());
+        HashSet<DateOnly> daysWithMood = moods
+            .Select(entry => DateOnly.FromDateTime(entry.RecordedAt.ToLocalTime()))
+            .ToHashSet();
+        int streak = MoodStreakCalculator.Calculate(daysWithMood, today);
+        JournalMoodTrend trend = JournalMoodTrendResolver.Resolve(
+            moods.OrderBy(entry => entry.RecordedAt).Select(entry => entry.MoodLevel).ToList());
         int best = moods.Max(entry => entry.MoodLevel);
         int worst = moods.Min(entry => entry.MoodLevel);
         string bestWorst = AppStrings.JournalBestWorstPill(best, worst);
@@ -393,59 +397,18 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
             moods.Count,
             AppStrings.FormatAverageMood(average),
             streak > 0 ? streak.ToString() : AppStrings.MetricEmptyValue,
-            trend,
+            FormatMoodTrend(trend),
             bestWorst,
             true);
     }
 
-    private static int ComputeMoodStreak(IReadOnlyList<MoodEntryDTO> moods, DateOnly today)
+    private static string FormatMoodTrend(JournalMoodTrend trend) => trend switch
     {
-        HashSet<DateOnly> daysWithMood = moods
-            .Select(entry => DateOnly.FromDateTime(entry.RecordedAt.ToLocalTime()))
-            .ToHashSet();
-
-        int streak = 0;
-        DateOnly cursor = today;
-        if (!daysWithMood.Contains(today))
-        {
-            cursor = today.AddDays(-1);
-        }
-
-        while (daysWithMood.Contains(cursor))
-        {
-            streak++;
-            cursor = cursor.AddDays(-1);
-        }
-
-        return streak;
-    }
-
-    private static string ResolveMoodTrend(IReadOnlyList<MoodEntryDTO> orderedOldestFirst)
-    {
-        if (orderedOldestFirst.Count == 0)
-        {
-            return string.Empty;
-        }
-
-        if (orderedOldestFirst.Count == 1)
-        {
-            return AppStrings.MoodTrendFlat;
-        }
-
-        int first = orderedOldestFirst[0].MoodLevel;
-        int last = orderedOldestFirst[^1].MoodLevel;
-        if (last > first)
-        {
-            return AppStrings.MoodTrendUp;
-        }
-
-        if (last < first)
-        {
-            return AppStrings.MoodTrendDown;
-        }
-
-        return AppStrings.MoodTrendFlat;
-    }
+        JournalMoodTrend.Up => AppStrings.MoodTrendUp,
+        JournalMoodTrend.Down => AppStrings.MoodTrendDown,
+        JournalMoodTrend.Flat => AppStrings.MoodTrendFlat,
+        _ => string.Empty
+    };
 
     private static Dictionary<DateOnly, MoodEntryDTO> BuildByDay(IReadOnlyList<MoodEntryDTO> moods) =>
         moods
@@ -473,52 +436,12 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
         if (ordered.Count == 1)
         {
             int hour = ordered[0].RecordedAt.ToLocalTime().Hour;
-            return hour < MorningHourCutoff
+            return MoodCheckInSlotPolicy.IsMorningLocalHour(hour)
                 ? (ordered[0], null)
                 : (null, ordered[0]);
         }
 
         return (ordered[0], ordered[^1]);
-    }
-
-    private static JournalCheckInSlot ResolveEditorSlot(
-        JournalCheckInSlot requested,
-        MoodEntryDTO? morning,
-        MoodEntryDTO? evening)
-    {
-        if (requested == JournalCheckInSlot.Morning && morning is not null)
-        {
-            return JournalCheckInSlot.Morning;
-        }
-
-        if (requested == JournalCheckInSlot.Evening && evening is not null)
-        {
-            return JournalCheckInSlot.Evening;
-        }
-
-        if (requested == JournalCheckInSlot.Morning && morning is null)
-        {
-            return JournalCheckInSlot.Morning;
-        }
-
-        if (requested == JournalCheckInSlot.Evening && evening is null)
-        {
-            return JournalCheckInSlot.Evening;
-        }
-
-        if (morning is not null)
-        {
-            return JournalCheckInSlot.Morning;
-        }
-
-        if (evening is not null)
-        {
-            return JournalCheckInSlot.Evening;
-        }
-
-        return DateTime.Now.Hour < MorningHourCutoff
-            ? JournalCheckInSlot.Morning
-            : JournalCheckInSlot.Evening;
     }
 
     private static DateTime ResolveSlotTimestamp(DateOnly day, JournalCheckInSlot slot)
@@ -527,12 +450,12 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
         int hourNow = DateTime.Now.Hour;
         if (day == today)
         {
-            if (slot == JournalCheckInSlot.Morning && hourNow < MorningHourCutoff)
+            if (slot == JournalCheckInSlot.Morning && MoodCheckInSlotPolicy.IsMorningLocalHour(hourNow))
             {
                 return DateTime.UtcNow;
             }
 
-            if (slot == JournalCheckInSlot.Evening && hourNow >= MorningHourCutoff)
+            if (slot == JournalCheckInSlot.Evening && MoodCheckInSlotPolicy.IsEveningLocalHour(hourNow))
             {
                 return DateTime.UtcNow;
             }
@@ -572,98 +495,5 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
             AppStrings.MoodLevelPill(entry.MoodLevel),
             AppStrings.MoodEmojiFor(entry.MoodLevel),
             local.Date == DateTime.Today);
-    }
-
-    private static List<JournalDayChip> BuildWeekDays(
-        DateOnly stripEnd,
-        IReadOnlyDictionary<DateOnly, MoodEntryDTO> byDay,
-        DateOnly? selectedDay)
-    {
-        List<JournalDayChip> chips = [];
-        for (int offset = 6; offset >= 0; offset--)
-        {
-            DateOnly date = stripEnd.AddDays(-offset);
-            byDay.TryGetValue(date, out MoodEntryDTO? entry);
-            chips.Add(new JournalDayChip
-            {
-                Date = date,
-                DayLabel = date.ToDateTime(TimeOnly.MinValue)
-                    .ToString("ddd", CultureInfo.CurrentCulture),
-                MoodGlyph = entry is null ? "·" : AppStrings.MoodEmojiFor(entry.MoodLevel),
-                MoodLevel = entry?.MoodLevel,
-                HasEntry = entry is not null,
-                IsSelected = selectedDay == date
-            });
-        }
-
-        return chips;
-    }
-
-    private static List<JournalMonthCell> BuildMonthCells(
-        DateOnly monthStart,
-        DateOnly today,
-        IReadOnlyDictionary<DateOnly, MoodEntryDTO> byDay,
-        DateOnly? selectedDay)
-    {
-        List<JournalMonthCell> cells = [];
-        int leading = ((int)monthStart.DayOfWeek + 6) % 7; // Monday-first
-        for (int i = 0; i < leading; i++)
-        {
-            cells.Add(new JournalMonthCell());
-        }
-
-        int daysInMonth = DateTime.DaysInMonth(monthStart.Year, monthStart.Month);
-        for (int day = 1; day <= daysInMonth; day++)
-        {
-            DateOnly date = new(monthStart.Year, monthStart.Month, day);
-            byDay.TryGetValue(date, out MoodEntryDTO? entry);
-            bool enabled = date <= today;
-            cells.Add(new JournalMonthCell
-            {
-                Date = date,
-                DayNumber = day.ToString(CultureInfo.InvariantCulture),
-                MoodGlyph = entry is null ? (enabled ? "·" : string.Empty) : AppStrings.MoodEmojiFor(entry.MoodLevel),
-                HasEntry = entry is not null,
-                IsEnabled = enabled,
-                IsSelected = selectedDay == date
-            });
-        }
-
-        return cells;
-    }
-
-    private static List<JournalYearCell> BuildYearCells(
-        int year,
-        DateOnly today,
-        IReadOnlyDictionary<DateOnly, MoodEntryDTO> byDay,
-        DateOnly? selectedDay)
-    {
-        DateOnly yearStart = new(year, 1, 1);
-        DateOnly yearEnd = new(year, 12, 31);
-        List<JournalYearCell> cells = [];
-        int leading = ((int)yearStart.DayOfWeek + 6) % 7;
-        for (int i = 0; i < leading; i++)
-        {
-            cells.Add(new JournalYearCell());
-        }
-
-        for (DateOnly date = yearStart; date <= yearEnd; date = date.AddDays(1))
-        {
-            byDay.TryGetValue(date, out MoodEntryDTO? entry);
-            bool enabled = date <= today;
-            cells.Add(new JournalYearCell
-            {
-                Date = date,
-                MoodGlyph = entry is null
-                    ? (enabled ? "·" : string.Empty)
-                    : AppStrings.MoodEmojiFor(entry.MoodLevel),
-                MoodLevel = entry?.MoodLevel,
-                HasEntry = entry is not null,
-                IsEnabled = enabled,
-                IsSelected = selectedDay == date
-            });
-        }
-
-        return cells;
     }
 }

@@ -442,6 +442,101 @@ public sealed class UserProgressRepositoryTests : IAsyncLifetime
         Assert.Contains(counts, row => row.TestId == "gad7" && row.Count == 1);
     }
 
+    [Fact]
+    public async Task RecordSessionOutcomeAsync_PersistsCompletionAndSessionResult_AndDeletesDraft()
+    {
+        const string key = "Paper";
+        await _repository.SaveSessionDraftAsync(key, """{"draft":true}""");
+
+        long sessionResultId = await _repository.RecordSessionOutcomeAsync(new SessionOutcomeRequest
+        {
+            ItemKey = key,
+            ModuleName = "module",
+            PageName = "page",
+            DurationSeconds = 90,
+            PayloadJson = """{"done":true}""",
+            PreIntensity = 3,
+            DeleteDraft = true
+        });
+
+        Assert.True(sessionResultId > 0);
+        SessionResultDTO? session = await _repository.GetSessionResultAsync(sessionResultId);
+        Assert.NotNull(session);
+        Assert.Equal(key, session!.ItemKey);
+        Assert.Equal(90, session.DurationSeconds);
+        Assert.Equal(3, session.PreIntensity);
+        Assert.Equal("""{"done":true}""", session.PayloadJson);
+
+        IReadOnlyList<CompletionDTO> completions = await _repository.GetRecentTechniqueCompletionsAsync(5);
+        Assert.Contains(completions, row => row.ItemKey == key && row.DurationSeconds == 90);
+        Assert.Null(await _repository.GetSessionDraftAsync(key));
+    }
+
+    [Fact]
+    public async Task GetRecentTechniqueCompletionsAsync_ReturnsNewestFirstWithLimit()
+    {
+        await _repository.RecordCompletionAsync(new CompletionDTO
+        {
+            CompletionKind = "technique",
+            ItemKey = "old",
+            ModuleName = "m",
+            PageName = "p",
+            CompletedAt = DateTime.UtcNow.AddHours(-2),
+            DurationSeconds = 10
+        });
+        await _repository.RecordCompletionAsync(new CompletionDTO
+        {
+            CompletionKind = "technique",
+            ItemKey = "mid",
+            ModuleName = "m",
+            PageName = "p",
+            CompletedAt = DateTime.UtcNow.AddHours(-1),
+            DurationSeconds = 20
+        });
+        await _repository.RecordCompletionAsync(new CompletionDTO
+        {
+            CompletionKind = "technique",
+            ItemKey = "new",
+            ModuleName = "m",
+            PageName = "p",
+            CompletedAt = DateTime.UtcNow,
+            DurationSeconds = 30
+        });
+
+        IReadOnlyList<CompletionDTO> recent = await _repository.GetRecentTechniqueCompletionsAsync(2);
+
+        Assert.Equal(2, recent.Count);
+        Assert.Equal("new", recent[0].ItemKey);
+        Assert.Equal("mid", recent[1].ItemKey);
+    }
+
+    [Fact]
+    public async Task GetMostRecentTestResultAsync_RespectsTimeWindow()
+    {
+        await _repository.SaveTestResultAsync(new TestResultDTO
+        {
+            TestId = "beck",
+            Score = 1,
+            Summary = "old",
+            CompletedAt = DateTime.UtcNow.AddDays(-10)
+        });
+        await _repository.SaveTestResultAsync(new TestResultDTO
+        {
+            TestId = "gad7",
+            Score = 9,
+            Summary = "recent",
+            CompletedAt = DateTime.UtcNow.AddHours(-1)
+        });
+
+        TestResultDTO? withinWeek = await _repository.GetMostRecentTestResultAsync(TimeSpan.FromDays(7));
+        TestResultDTO? withinHour = await _repository.GetMostRecentTestResultAsync(TimeSpan.FromMinutes(30));
+
+        Assert.NotNull(withinWeek);
+        Assert.Equal("gad7", withinWeek!.TestId);
+        Assert.Equal(9, withinWeek.Score);
+        Assert.Null(withinHour);
+    }
+
     public Task InitializeAsync() => Task.CompletedTask;
 
     public async Task DisposeAsync() => await _connectionFactory.DisposeAsync();

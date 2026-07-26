@@ -2,6 +2,7 @@
 using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
+using PsychologyApp.Domain.ClinicalCare;
 using PsychologyApp.Domain.Practice;
 using Xunit;
 
@@ -9,30 +10,6 @@ namespace PsychologyApp.Application.Tests.ClinicalCare;
 
 public sealed class ClinicalCareServiceTests
 {
-    [Theory]
-    [InlineData(true, false, false, false, RiskLevel.Red)]
-    [InlineData(false, true, false, false, RiskLevel.Red)]
-    [InlineData(false, false, true, false, RiskLevel.Red)]
-    [InlineData(false, false, false, true, RiskLevel.Amber)]
-    [InlineData(false, false, false, false, RiskLevel.Green)]
-    public void ClassifyRisk_ReturnsExpectedLevel(
-        bool selfHarm,
-        bool disorientation,
-        bool substance,
-        bool insomnia,
-        RiskLevel expected)
-    {
-        RiskLevel actual = ClinicalCareService.ClassifyRisk(new RiskAssessmentInput
-        {
-            HasSelfHarmThoughts = selfHarm,
-            HasSevereDisorientation = disorientation,
-            HasSubstanceRisk = substance,
-            HasSevereInsomnia = insomnia
-        });
-
-        Assert.Equal(expected, actual);
-    }
-
     [Fact]
     public async Task AssessRiskAsync_Red_SavesCrisisEscalation()
     {

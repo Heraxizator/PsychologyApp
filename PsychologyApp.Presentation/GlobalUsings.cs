@@ -2,6 +2,7 @@
 global using PsychologyApp.Application.Models.Tests;
 global using TestQuestion = PsychologyApp.Application.Models.Tests.Question;
 global using PsychologyApp.Application.Tests;
+global using PsychologyApp.Domain.ClinicalCare;
 global using TechniqueId = PsychologyApp.Domain.Practice.TechniqueId;
 global using TechniqueUiKind = PsychologyApp.Domain.Practice.TechniqueUiKind;
 global using PsychologyApp.Domain.Tests;

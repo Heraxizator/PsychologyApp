@@ -15,6 +15,9 @@ public class OptionsViewModel : BaseViewModel
     public ICommand BackCommand { get; private set; } = default!;
 
     public string PageTitle => AppStrings.OptionsTitle;
+    public string AppSectionTitle => AppStrings.OptionsAppSection;
+    public string SafetySectionTitle => AppStrings.OptionsSafetySection;
+    public string SupportSectionTitle => AppStrings.OptionsSupportSection;
     public string SettingsTitle => AppStrings.OptionsSettingsTitle;
     public string SettingsSubtitle => AppStrings.ProfileSettingsCardSubtitle;
     public string AliceTitle => AppStrings.OptionsAliceTitle;
@@ -45,6 +48,9 @@ public class OptionsViewModel : BaseViewModel
     {
         Notify(
             nameof(PageTitle),
+            nameof(AppSectionTitle),
+            nameof(SafetySectionTitle),
+            nameof(SupportSectionTitle),
             nameof(SettingsTitle),
             nameof(SettingsSubtitle),
             nameof(AliceTitle),

@@ -1,11 +1,6 @@
-namespace PsychologyApp.Application.Models;
+using PsychologyApp.Domain.ClinicalCare;
 
-public enum RiskLevel
-{
-    Green = 0,
-    Amber = 1,
-    Red = 2
-}
+namespace PsychologyApp.Application.Models;
 
 public enum TherapyProgramType
 {

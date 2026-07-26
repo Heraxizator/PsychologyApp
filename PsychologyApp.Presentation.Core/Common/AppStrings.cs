@@ -17,6 +17,9 @@ public static partial class AppStrings
     public static string OptionsTitle => T("Параметры", "Options");
     public static string OptionsSettingsTitle => T("Настройки", "Settings");
     public static string OptionsSettingsSubtitle => T("Тема, цвет и параметры отображения", "Theme, color, and display options");
+    public static string OptionsAppSection => T("Приложение", "App");
+    public static string OptionsSafetySection => T("Безопасность", "Safety");
+    public static string OptionsSupportSection => T("Поддержка", "Support");
     public static string ProfileSettingsCardSubtitle => T("Тема, язык, шрифт", "Theme, language, and font");
     public static string OptionsAboutTitle => T("О приложении", "About");
     public static string OptionsAboutSubtitle => T("Информация о приложении", "App information");
@@ -314,8 +317,9 @@ public static partial class AppStrings
         "Create your first technique in the designer");
     public static string TestsEmptyTitle => T("Тесты пока недоступны", "Tests are not available yet");
     public static string TestsEmptyBody => T(
-        "Попробуйте обновить список или вернитесь позже",
-        "Try refreshing the list or come back later");
+        "Нажмите «Обновить», чтобы загрузить список снова",
+        "Tap Refresh to load the list again");
+    public static string TestsEmptyRefresh => T("Обновить", "Refresh");
     public static string TestsLoadingText => T("Загрузка тестов", "Loading tests");
     public static string QuotesEmptyTitle => T("Цитаты не найдены", "No quotes found");
     public static string QuotesEmptyBody => T(
@@ -751,6 +755,10 @@ public static partial class AppStrings
     public static string TechniqueRatingNegValue(int value) => T($"Оценка: {value} (от −10 до 10)", $"Rating: {value} (from −10 to 10)");
 
     public static string TestLastResult(string summary) => T($"Последний результат: {summary}", $"Last result: {summary}");
+    public static string TestLastResultDated(string summary, string date) =>
+        T($"Последний результат · {date}: {summary}", $"Last result · {date}: {summary}");
+    public static string TestNeverTakenYet => T("Ещё не проходили", "Not taken yet");
+    public static string TestCompletedAt(string date) => T($"Пройдено: {date}", $"Completed: {date}");
     public static string TestTryTechnique => T("Попробовать технику", "Try a technique");
     public static string TestResultImproved => T("Лучше прошлого раза", "Better than last time");
     public static string TestResultWorse => T("Хуже прошлого раза", "Worse than last time");
@@ -1139,6 +1147,35 @@ public static partial class AppStrings
     public static string ClinicalRiskGreen => T("низкий", "low");
     public static string ClinicalRiskAmber => T("повышенный", "elevated");
     public static string ClinicalRiskRed => T("высокий", "high");
+
+    public static string LuscherCoStable => T(
+        "Отсутствие непродуктивной (не связанной с какой-либо полезной деятельностью) напряженности, высокая нервно-психическая устойчивость.\r\nДействия обследуемого целесообразны, экономичны, имеют высокий коэффициент полезного действия. Общий эмоциональный настрой – оптимистичный. Обследуемый верит в свои силы и в целом готов преодолевать препятствия и трудности. Высок уровень волевого самоконтроля, предопределяющего поступки и способствующего развитию личности.\r\nПри наличии соответствующей мотивации обследуемый способен интенсивно работать длительное время. В экстремальных ситуациях эффективно мобилизуется, сосредотачивается на выполнении задачи.",
+        "No unproductive tension; high emotional stability. Actions are purposeful and efficient. Overall mood is optimistic.");
+    public static string LuscherCoMildTension => T(
+        "Незначительный уровень непродуктивной напряженности, нервно-психическая устойчивость хорошая.\r\nПреобладает установка на активность и действие. Энергоресурсов достаточно для более или менее регулярных «подвигов» в работе, вспышек активности и напряжения, недоступных большинству других людей. Способен свободно управлять своим вниманием. В условиях мотивированной (интересной) деятельности не испытывает трудностей с оперативным и долговременным запоминанием и последующим воспроизведением. К острым ощущениям, в общем, не стремится. Из стрессовых ситуаций, как правило, выходит с достоинством.",
+        "Moderate tension that may reduce efficiency. Emotional stability is generally adequate with occasional strain.");
+    public static string LuscherCoModerateTension => T(
+        "Средний уровень непродуктивной напряженности.\r\nОбследуемый справляется со своими обязанностями в пределах сложившихся в обществе требований. В привычной для него обстановке, имея достаточно времени для переключения, переходит от работы к отдыху и обратно, от одного вида деятельности к другому без существенных затруднений. В случае необходимости способен преодолевать усталость волевым усилием, однако после этого работоспособность надолго снижается. Необходимо относительно четко субъективно разделять время работы и время отдыха.",
+        "Noticeable tension and emotional strain. Efficiency may drop; recovery and rest are recommended.");
+    public static string LuscherCoElevatedTension => T(
+        "Повышенный уровень непродуктивной напряженности, сниженная нервно-психическая устойчивость.\r\nПотенциал целесообразной активности снижен, что побуждает насильно заставлять себя делать те или иные необходимые дела. Постоянно действующий волевой самоконтроль, с одной стороны, и сам регулярно истощается. А с другой – не будучи связанным с непосредственным удовлетворением от процесса и результатов деятельности. Дополнительно усиливает психическое переутомление. Интенсивная длительная работа, скорее всего, потребует слишком большого напряжения от нервной системы и психики. При этом производительность работы и качество ее выполнения будут неравноценными в разные периоды времени. Общий эмоциональный тонус: повышенная возбудимость, тревожность, неуверенность. В стрессовой ситуации вероятно нарушение деятельности.",
+        "Elevated tension and reduced emotional stability. Sustained effort may feel forced; rest and support are recommended.");
+    public static string LuscherCoHighTension => T(
+        "Выраженная непродуктивная напряженность, низкая нервно-психическая устойчивость.\r\nВысокая утомляемость. Внимание легко отвлекается посторонними вещами, надолго может «застрять» на эмоциональном переживании. В связи с этим поведение непрогнозируемо и субъективно. Отсутствие устойчивой иерархии мотивов делает деятельность испытуемого реактивной и нецеленаправленной. Коммуникативность снижена, ограничена рамками формального общения. Эмоциональный фон может быстро колебаться между восторженно-возбужденным состоянием и подавленностью, раздражительностью и бессилием. Часто испытывает тревогу, предчувствие неприятностей, бессилие и отсутствие желания что-либо делать. В экстремальных ситуациях очень низкая надежность.",
+        "High tension and emotional instability. Significant strain; professional support may be helpful.");
+
+    public static string LuscherBkExhausted => T(
+        "Истощенность, установка на бездействие. Хроническое переутомление. В связи с этим характерно пассивное реагирование на трудности, неготовность к напряжению и адекватным действиям в стрессовых ситуациях. Необходимы разноплановые и объемные восстановительные мероприятия.",
+        "Low vegetative coefficient: exhaustion, passivity, and need for substantial recovery.");
+    public static string LuscherBkConserving => T(
+        "Установка на оптимизацию расходования сил. Умеренная потребность в восстановлении и отдыхе. Энергетический потенциал невысок, но вполне достаточен для успешной деятельности в привычных спокойных условиях. В экстремальной ситуации вероятно запаздывание с ориентировкой и принятием решений.",
+        "Balanced vegetative coefficient: moderate need for rest with enough energy for familiar routines.");
+    public static string LuscherBkOptimal => T(
+        "Мобилизованность, установка на активное действие. Оптимальная мобилизованность физических и психических ресурсов. В экстремальной ситуации наиболее вероятна высокая скорость ориентировки и принятия решений, целесообразность и успешность действий.",
+        "Optimal mobilization: physical and mental resources are well aligned for action.");
+    public static string LuscherBkOveraroused => T(
+        "Избыточное возбуждение, суетливость. Уровень возбуждения избыточно высок. Нередки случаи, когда испытуемый что-либо делает не ради самого дела, а лишь для того, чтобы разрядиться. В сложных ситуациях легко формируются лихорадочные реакции: импульсивность, нетерпеливость, снижение эмоционального самоконтроля, необдуманные поступки. В экстремальных ситуациях наиболее вероятна низкая эффективность действий, панические реакции. Необходимы разноплановые релаксирующие и успокаивающие процедуры.",
+        "High vegetative coefficient: strong emotional arousal and autonomic reactivity.");
 
     public static string TherapyProgramTitle => T("Ваш протокол", "Your program");
     public static string TherapyProgramAnxiety => T("Тревога", "Anxiety");

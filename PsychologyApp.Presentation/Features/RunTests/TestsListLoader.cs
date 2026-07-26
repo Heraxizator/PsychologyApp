@@ -56,11 +56,31 @@ public sealed class TestsListLoader(
         {
             if (latestByTestId.TryGetValue(item.TestId, out TestResultDTO? latest))
             {
-                item.LastResultSummary = AppStrings.TestLastResult(latest.Summary);
+                string summary = ResolveSummary(item.AnalyzerId, latest);
+                string date = latest.CompletedAt.ToLocalTime().ToString("d");
+                item.LastResultSummary = AppStrings.TestLastResultDated(summary, date);
+            }
+            else
+            {
+                item.LastResultSummary = null;
             }
 
             item.HasMultipleResults = countsByTestId.TryGetValue(item.TestId, out int count) && count > 1;
         }
+    }
+
+    private static string ResolveSummary(string? analyzerId, TestResultDTO latest)
+    {
+        if (latest.Score is int score)
+        {
+            string? mapped = TestScoreLabelMapper.GetSummary(analyzerId, score);
+            if (!string.IsNullOrWhiteSpace(mapped))
+            {
+                return mapped;
+            }
+        }
+
+        return string.IsNullOrWhiteSpace(latest.Summary) ? "—" : latest.Summary;
     }
 
     private async Task<IReadOnlyList<TestItem>> LoadCatalogItemsAsync(
@@ -83,6 +103,8 @@ public sealed class TestsListLoader(
             item.TapCommand = new AsyncCommand(() => handleSelectionAsync(selected));
             item.OpenHistoryCommand = new AsyncCommand(() =>
                 navigationService.GoToTestHistoryAsync(selected.TestId, selected.Title));
+            item.RetakeCommand = new AsyncCommand(() =>
+                testRunCoordinator.RetakeAsync(selected.TestId, testCatalogService, navigationService));
 
             items.Add(item);
         }

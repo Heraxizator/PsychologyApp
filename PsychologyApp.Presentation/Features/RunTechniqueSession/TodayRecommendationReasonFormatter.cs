@@ -1,5 +1,4 @@
 using PsychologyApp.Application.Recommendations;
-using PsychologyApp.Presentation.Features.RunTests;
 using PsychologyApp.Presentation.Shared.Common;
 
 namespace PsychologyApp.Presentation.Features.RunTechniqueSession;

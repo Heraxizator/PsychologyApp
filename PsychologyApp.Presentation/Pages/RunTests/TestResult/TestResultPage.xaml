@@ -32,6 +32,8 @@
                 <testUi:TestResultHeroView
                     ScoreTitle="{Binding ScoreTitle}"
                     Interpretation="{Binding Interpretation}"
+                    CompletedAtText="{Binding CompletedAtText}"
+                    HasCompletedAt="{Binding HasCompletedAt}"
                     TrendText="{Binding TrendText}"
                     TrendKind="{Binding TrendKind}"
                     HasTrendBadge="{Binding HasTrendBadge}" />

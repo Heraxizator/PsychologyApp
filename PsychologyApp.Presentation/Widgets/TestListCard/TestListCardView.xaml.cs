@@ -69,6 +69,24 @@ public partial class TestListCardView : ContentView
         set => SetValue(HasLastResultProperty, value);
     }
 
+    public static readonly BindableProperty ShowNeverTakenProperty =
+        BindableProperty.Create(nameof(ShowNeverTaken), typeof(bool), typeof(TestListCardView), false);
+
+    public bool ShowNeverTaken
+    {
+        get => (bool)GetValue(ShowNeverTakenProperty);
+        set => SetValue(ShowNeverTakenProperty, value);
+    }
+
+    public static readonly BindableProperty NeverTakenLabelProperty =
+        BindableProperty.Create(nameof(NeverTakenLabel), typeof(string), typeof(TestListCardView), string.Empty);
+
+    public string NeverTakenLabel
+    {
+        get => (string)GetValue(NeverTakenLabelProperty);
+        set => SetValue(NeverTakenLabelProperty, value);
+    }
+
     public static readonly BindableProperty TapCommandProperty =
         BindableProperty.Create(nameof(TapCommand), typeof(ICommand), typeof(TestListCardView), null);
 
@@ -87,6 +105,15 @@ public partial class TestListCardView : ContentView
         set => SetValue(OpenHistoryCommandProperty, value);
     }
 
+    public static readonly BindableProperty RetakeCommandProperty =
+        BindableProperty.Create(nameof(RetakeCommand), typeof(ICommand), typeof(TestListCardView), null);
+
+    public ICommand? RetakeCommand
+    {
+        get => (ICommand?)GetValue(RetakeCommandProperty);
+        set => SetValue(RetakeCommandProperty, value);
+    }
+
     public static readonly BindableProperty HasMultipleResultsProperty =
         BindableProperty.Create(nameof(HasMultipleResults), typeof(bool), typeof(TestListCardView), false);
 
@@ -103,5 +130,14 @@ public partial class TestListCardView : ContentView
     {
         get => (string)GetValue(HistoryLabelProperty);
         set => SetValue(HistoryLabelProperty, value);
+    }
+
+    public static readonly BindableProperty RetakeLabelProperty =
+        BindableProperty.Create(nameof(RetakeLabel), typeof(string), typeof(TestListCardView), string.Empty);
+
+    public string RetakeLabel
+    {
+        get => (string)GetValue(RetakeLabelProperty);
+        set => SetValue(RetakeLabelProperty, value);
     }
 }

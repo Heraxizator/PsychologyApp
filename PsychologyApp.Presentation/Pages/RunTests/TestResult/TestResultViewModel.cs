@@ -64,6 +64,8 @@ public partial class TestResultViewModel : BaseViewModel
     public string Interpretation { get; private set; } = string.Empty;
     public string InterpretationDetail { get; private set; } = string.Empty;
     public bool HasInterpretationDetail { get; private set; }
+    public string CompletedAtText { get; private set; } = string.Empty;
+    public bool HasCompletedAt { get; private set; }
     public bool HasRecommendation { get; private set; }
     public bool ShowExplorePractice => !HasRecommendation;
     public string TrendText { get; private set; } = string.Empty;
@@ -77,9 +79,14 @@ public partial class TestResultViewModel : BaseViewModel
     private void ApplyResult()
     {
         ScoreTitle = AppStrings.TestsResultTitle(_result.Score);
-        Interpretation = _result.Interpretation;
-        InterpretationDetail = _result.InterpretationDetail ?? string.Empty;
-        HasInterpretationDetail = !string.IsNullOrWhiteSpace(_result.InterpretationDetail);
+        Interpretation = TestScoreLabelMapper.GetSummary(_result.AnalyzerId, _result.Score)
+            ?? _result.Interpretation;
+        InterpretationDetail = TestScoreLabelMapper.GetDetail(_result.AnalyzerId, _result.Score)
+            ?? _result.InterpretationDetail
+            ?? string.Empty;
+        HasInterpretationDetail = !string.IsNullOrWhiteSpace(InterpretationDetail);
+        CompletedAtText = AppStrings.TestCompletedAt(_result.CompletedAtUtc.ToLocalTime().ToString("g"));
+        HasCompletedAt = true;
         HasRecommendation = _result.RecommendedTechnique is not null;
         ApplyAnswerDetail(_result.Detail);
         RefreshRecommendationCopy();
@@ -89,6 +96,8 @@ public partial class TestResultViewModel : BaseViewModel
             nameof(Interpretation),
             nameof(InterpretationDetail),
             nameof(HasInterpretationDetail),
+            nameof(CompletedAtText),
+            nameof(HasCompletedAt),
             nameof(HasRecommendation),
             nameof(ShowExplorePractice));
     }

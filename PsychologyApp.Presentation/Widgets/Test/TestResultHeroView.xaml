@@ -63,6 +63,12 @@
                 HorizontalTextAlignment="Center" />
 
             <Label
+                IsVisible="{Binding HasCompletedAt, Source={x:Reference Root}}"
+                Text="{Binding CompletedAtText, Source={x:Reference Root}}"
+                Style="{StaticResource CaptionStyle}"
+                HorizontalTextAlignment="Center" />
+
+            <Label
                 Text="{Binding Interpretation, Source={x:Reference Root}}"
                 Style="{StaticResource SectionTitleStyle}"
                 HorizontalTextAlignment="Center"

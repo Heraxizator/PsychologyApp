@@ -144,7 +144,8 @@ public sealed class MauiNavigationService : INavigationService
                 AnalyzerId = analyzerId,
                 RecommendedTechnique = recommendedTechnique,
                 TestId = testId,
-                Detail = detail
+                Detail = detail,
+                CompletedAtUtc = DateTime.UtcNow
             };
 
             await ResolveNavigation().PushAsync(

@@ -35,7 +35,14 @@
                             TextColor="{DynamicResource Primary}"
                             MaxLines="2"
                             LineBreakMode="WordWrap" />
-                        <Grid ColumnDefinitions="*,Auto" IsVisible="{TemplateBinding HasLastResult}">
+                        <Label
+                            IsVisible="{TemplateBinding ShowNeverTaken}"
+                            Text="{TemplateBinding NeverTakenLabel}"
+                            Style="{StaticResource CaptionStyle}"
+                            TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                            MaxLines="1"
+                            LineBreakMode="TailTruncation" />
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" IsVisible="{TemplateBinding HasLastResult}">
                             <Label
                                 Grid.Column="0"
                                 Text="{TemplateBinding LastResultText}"
@@ -48,17 +55,30 @@
                                     <TapGestureRecognizer Command="{TemplateBinding OpenHistoryCommand}" />
                                 </Label.GestureRecognizers>
                             </Label>
-                            <Label
+                            <HorizontalStackLayout
                                 Grid.Column="1"
-                                IsVisible="{TemplateBinding HasMultipleResults}"
-                                Text="{TemplateBinding HistoryLabel}"
-                                Style="{StaticResource CaptionStyle}"
-                                TextColor="{DynamicResource Primary}"
-                                FontFamily="{StaticResource SemiBoldFontFamily}">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{TemplateBinding OpenHistoryCommand}" />
-                                </Label.GestureRecognizers>
-                            </Label>
+                                Spacing="10"
+                                VerticalOptions="Start">
+                                <Label
+                                    Text="{TemplateBinding RetakeLabel}"
+                                    Style="{StaticResource CaptionStyle}"
+                                    TextColor="{DynamicResource Primary}"
+                                    FontFamily="{StaticResource SemiBoldFontFamily}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{TemplateBinding RetakeCommand}" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label
+                                    IsVisible="{TemplateBinding HasMultipleResults}"
+                                    Text="{TemplateBinding HistoryLabel}"
+                                    Style="{StaticResource CaptionStyle}"
+                                    TextColor="{DynamicResource Primary}"
+                                    FontFamily="{StaticResource SemiBoldFontFamily}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{TemplateBinding OpenHistoryCommand}" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </HorizontalStackLayout>
                         </Grid>
                     </VerticalStackLayout>
                     <Label

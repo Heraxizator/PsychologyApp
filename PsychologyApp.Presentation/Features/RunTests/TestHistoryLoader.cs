@@ -4,6 +4,7 @@ using PsychologyApp.Application.Tests;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Entities.Test;
+using PsychologyApp.Presentation.Shared.Common;
 
 namespace PsychologyApp.Presentation.Features.RunTests;
 
@@ -57,7 +58,7 @@ public sealed class TestHistoryLoader(
             entries.Add(new TestHistoryEntryItem
             {
                 DateText = item.CompletedAt.ToLocalTime().ToString("g"),
-                SummaryText = item.Summary,
+                SummaryText = ResolveHistorySummary(definition?.AnalyzerId, item),
                 ScoreText = item.Score is int score ? AppStrings.TestHistoryScore(score) : string.Empty,
                 TrendText = TestTrendComparer.ToLabel(trend),
                 TrendKind = trend,
@@ -83,6 +84,20 @@ public sealed class TestHistoryLoader(
             TestScoreChartRangeResolver.ResolveDomain(definition?.AnalyzerId ?? testId, chartValues);
         string chartSubtitle = AppStrings.ResolveChartSubtitle(chartPoints.Count);
         return new TestHistoryLoadResult(entries, chartPoints, chartDomainMin, chartDomainMax, chartSubtitle, title);
+    }
+
+    private static string ResolveHistorySummary(string? analyzerId, TestResultDTO item)
+    {
+        if (item.Score is int score)
+        {
+            string? mapped = TestScoreLabelMapper.GetSummary(analyzerId, score);
+            if (!string.IsNullOrWhiteSpace(mapped))
+            {
+                return mapped;
+            }
+        }
+
+        return item.Summary;
     }
 
     private static string FormatColorPass(IReadOnlyList<LuscherStandardColorDetail>? colors) =>

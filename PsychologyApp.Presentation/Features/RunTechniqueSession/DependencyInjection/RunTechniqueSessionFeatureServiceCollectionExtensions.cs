@@ -3,6 +3,7 @@ using PsychologyApp.Presentation.App.DependencyInjection;
 using PsychologyApp.Presentation.App.Routes;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Lib.Navigation;
+using PsychologyApp.Presentation.Shared.Lib.Recommendations;
 using PsychologyApp.Presentation.Features.RunTechniqueSession.Index;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 
@@ -16,6 +17,7 @@ public static class RunTechniqueSessionFeatureServiceCollectionExtensions
         services.AddSingleton<ITechniqueMessenger, TechniqueMessengerService>();
         services.AddSingleton<TechniqueCatalogGateway>();
         services.AddSingleton<TodayRecommendationResolver>();
+        services.AddSingleton<ITodayRecommendationReasonFormatter, TodayRecommendationReasonFormatterAdapter>();
         services.AddSingleton<NextPracticeResolver>();
         services.AddSingleton<TechniqueListBuilder>();
         services.AddSingleton<DesignerTechniqueOperations>();

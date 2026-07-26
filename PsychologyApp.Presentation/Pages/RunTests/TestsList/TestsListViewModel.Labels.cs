@@ -9,6 +9,7 @@ public partial class TestsListViewModel
     public string SectionSubtitle => AppStrings.TestsListSectionSubtitle;
     public string EmptyTitle => AppStrings.TestsEmptyTitle;
     public string EmptyBody => AppStrings.TestsEmptyBody;
+    public string EmptyRefreshText => AppStrings.TestsEmptyRefresh;
     public string LoadingText => AppStrings.TestsLoadingText;
     public string FailedText => AppStrings.LoadFailed;
     public string RetryText => AppStrings.RetryQuestion;
@@ -22,6 +23,7 @@ public partial class TestsListViewModel
             nameof(SectionSubtitle),
             nameof(EmptyTitle),
             nameof(EmptyBody),
+            nameof(EmptyRefreshText),
             nameof(LoadingText),
             nameof(FailedText),
             nameof(RetryText),

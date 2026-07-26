@@ -46,9 +46,13 @@
                         MetaText="{Binding MetaText}"
                         LastResultText="{Binding LastResultSummary}"
                         HasLastResult="{Binding HasLastResult}"
+                        ShowNeverTaken="{Binding ShowNeverTaken}"
+                        NeverTakenLabel="{Binding NeverTakenLabel}"
                         HasMultipleResults="{Binding HasMultipleResults}"
                         HistoryLabel="{Binding HistoryLabel}"
+                        RetakeLabel="{Binding RetakeLabel}"
                         OpenHistoryCommand="{Binding OpenHistoryCommand}"
+                        RetakeCommand="{Binding RetakeCommand}"
                         TapCommand="{Binding TapCommand}">
                         <testsUi:TestListCardView.Behaviors>
                             <behaviors:ListItemRevealBehavior />
@@ -60,7 +64,9 @@
                 <ui:EmptyStateView
                     TitleText="{Binding EmptyTitle}"
                     BodyText="{Binding EmptyBody}"
-                    IconName="Assignment" />
+                    IconName="Assignment"
+                    ActionText="{Binding EmptyRefreshText}"
+                    ActionCommand="{Binding Reload}" />
             </CollectionView.EmptyView>
             <CollectionView.Header>
                 <VerticalStackLayout Margin="0,0,0,12">

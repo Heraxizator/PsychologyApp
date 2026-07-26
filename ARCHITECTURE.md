@@ -48,7 +48,7 @@ PsychologyApp.Presentation/
 
 ### Page folder layout
 
-All screens live under `Pages/{Slice}/` — one of the eight canonical slices listed below. Legacy flat folders (e.g. `Pages/Question/`, `Pages/ReviewForm/`) have been removed; do not add new top-level folders under `Pages/`. Session sub-ViewModels live under `Pages/{Slice}/{Screen}/SubViewModels/`.
+All screens live under `Pages/{Slice}/` — one of the canonical slices listed below (~10). Legacy flat folders (e.g. `Pages/Question/`, `Pages/ReviewForm/`) have been removed; do not add new top-level folders under `Pages/`. Session sub-ViewModels live under `Pages/{Slice}/{Screen}/SubViewModels/`.
 
 ### GlobalUsings policy
 
@@ -58,9 +58,11 @@ All screens live under `Pages/{Slice}/` — one of the eight canonical slices li
 
 | Slice | Pages | Application | Domain |
 |-------|-------|-------------|--------|
-| **RunTests** | TestsList, TestHistory, FindProblem, Question, StandardTest, AlternativeTest, LuscherTest, TestResult | `Tests/*`, `Models/Tests/` | `Tests/`, `Colour/` |
+| **RunTests** | TestsList, TestHistory, FindProblem, Question, StandardTest, AlternativeTest, LuscherTest, TestResult | `Tests/*`, `Models/Tests/` | `Tests/` (`TestScoreBandClassifier`), `Colour/` (`LuscherInterpretationBands`) |
 | **RunTechniqueSession** | Techniques, TechniqueSession, TechniqueCreated, TechniqueDesigner, TechniqueTheory, PracticeCompletion | `Practice/`, `Technique/`, `Recommendations/` | `Practice/`, `Technique/` |
 | **ManageProfile** | ProfileUser, ProfileOptions, ProfileSettings, ProfileInfo, ProfileDonate | `UserProgress/`, `Statistic/` | `UserProgress/`, `Statistic/` |
+| **ManageJournal** | Journal, JournalOverview, JournalTimeline | `UserProgress/` (mood ports), journal UI loaders in Features | `UserProgress/` (`MoodStreakCalculator`, `MoodCheckInSlotPolicy`) |
+| **ClinicalCare** | CrisisHub, RiskCheck | `ClinicalCare/` | `ClinicalCare/` (`RiskClassifier`, `RiskLevel`) |
 | **ManageQuotes** | QuoteFeed | `Quot/` | `Quot/` |
 | **SearchPhysics** | StartPhysics, PhysicsSearch | `Reason/` | `Reason/` |
 | **Onboarding** | Onboarding | `Recommendations/` | `Practice/OnboardingConcernKeys` |
@@ -96,9 +98,9 @@ All other cross-feature imports are forbidden and enforced by architecture tests
 - `Shared/Services/` — toasts, dialogs, notifications
 - `Shared/Platform/` — MAUI content providers (Reason, Quot, Test catalog)
 - `Shared/Navigation/` — navigation coordinator, page activator
-- `Shared/Lib/` — shared ports usable from Shared layer (e.g. `IShellTabNavigator`, `INavigateToTheory`)
+- `Shared/Lib/` — shared ports usable from Shared layer (e.g. `IShellTabNavigator`, `INavigateToTheory`, `ITodayRecommendationReasonFormatter`)
 
-Feature-specific logic (loaders, mappers, presenters) belongs in `Features/{Slice}/`, not Shared.
+Feature-specific logic (loaders, mappers, presenters) belongs in `Features/{Slice}/`, not Shared. Shared must not import `Features.*`; inject slice implementations of `Shared.Lib` ports instead.
 
 ## Backend feature folders
 
@@ -106,7 +108,7 @@ Application and Domain group code by feature area:
 
 ```
 Application/
-├── Abstractions/     Persistence, Integration, Analytics, Startup ports
+├── Abstractions/     Persistence (incl. IMood/ITestResult/IPractice progress ports), Integration, Analytics, Startup
 ├── Tests/
 ├── Practice/
 ├── Technique/
@@ -114,6 +116,7 @@ Application/
 ├── Reason/
 ├── Statistic/
 ├── UserProgress/
+├── ClinicalCare/
 ├── Recommendations/
 └── Models/           Read models (Tests/, Practice/, Quot/)
 ```

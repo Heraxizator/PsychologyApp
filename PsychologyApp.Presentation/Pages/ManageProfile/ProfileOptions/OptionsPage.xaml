@@ -20,6 +20,10 @@
                     <behaviors:StaggerChildrenBehavior />
                 </VerticalStackLayout.Behaviors>
 
+                <Label
+                    Text="{Binding AppSectionTitle}"
+                    Style="{StaticResource SectionTitleStyle}" />
+
                 <ui:SettingsLinkCardView
                     Title="{Binding SettingsTitle}"
                     Subtitle="{Binding SettingsSubtitle}"
@@ -38,6 +42,10 @@
                     </ui:SettingsLinkCardView.Behaviors>
                 </ui:SettingsLinkCardView>
 
+                <Label
+                    Text="{Binding SafetySectionTitle}"
+                    Style="{StaticResource SectionTitleStyle}" />
+
                 <ui:SettingsLinkCardView
                     Title="{Binding CrisisTitle}"
                     Subtitle="{Binding CrisisSubtitle}"
@@ -46,6 +54,10 @@
                         <behaviors:ListItemRevealBehavior RevealIndex="2" />
                     </ui:SettingsLinkCardView.Behaviors>
                 </ui:SettingsLinkCardView>
+
+                <Label
+                    Text="{Binding SupportSectionTitle}"
+                    Style="{StaticResource SectionTitleStyle}" />
 
                 <ui:SettingsLinkCardView
                     Title="{Binding FeedbackTitle}"

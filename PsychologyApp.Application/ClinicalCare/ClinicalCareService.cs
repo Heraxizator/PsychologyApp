@@ -1,6 +1,7 @@
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
+using PsychologyApp.Domain.ClinicalCare;
 using PsychologyApp.Domain.Practice;
 
 namespace PsychologyApp.Application.ClinicalCare;
@@ -15,7 +16,11 @@ public sealed class ClinicalCareService(
         RiskAssessmentInput input,
         CancellationToken cancellationToken = default)
     {
-        RiskLevel riskLevel = ClassifyRisk(input);
+        RiskLevel riskLevel = RiskClassifier.Classify(new RiskAssessmentSignals(
+            input.HasSelfHarmThoughts,
+            input.HasSevereDisorientation,
+            input.HasSubstanceRisk,
+            input.HasSevereInsomnia));
         RiskAssessmentDTO assessment = new()
         {
             AssessedAt = DateTime.UtcNow,
@@ -184,7 +189,8 @@ public sealed class ClinicalCareService(
         int testCount = (int)Math.Min(int.MaxValue, testCountTotal);
 
         RiskAssessmentDTO? latestRisk = await repository.GetLatestRiskAssessmentAsync(cancellationToken);
-        RiskLevel riskLevel = latestRisk?.RiskLevel ?? DeriveRiskFromSignals(avgMood, practiceCount);
+        RiskLevel riskLevel = latestRisk?.RiskLevel
+            ?? RiskClassifier.DeriveFromMoodPracticeSignals(avgMood, practiceCount);
 
         return new ClinicalScorecardDTO
         {
@@ -263,36 +269,6 @@ public sealed class ClinicalCareService(
             OnboardingConcernKeys.Mood => TherapyProgramType.Mood,
             _ => TherapyProgramType.Stress
         };
-
-    public static RiskLevel ClassifyRisk(RiskAssessmentInput input)
-    {
-        if (input.HasSelfHarmThoughts || input.HasSevereDisorientation || input.HasSubstanceRisk)
-        {
-            return RiskLevel.Red;
-        }
-
-        if (input.HasSevereInsomnia)
-        {
-            return RiskLevel.Amber;
-        }
-
-        return RiskLevel.Green;
-    }
-
-    private static RiskLevel DeriveRiskFromSignals(double avgMood, int practiceCount)
-    {
-        if (avgMood > 0 && avgMood <= 2.0)
-        {
-            return RiskLevel.Amber;
-        }
-
-        if (avgMood > 0 && avgMood <= 2.6 && practiceCount <= 1)
-        {
-            return RiskLevel.Amber;
-        }
-
-        return RiskLevel.Green;
-    }
 
     private static string BuildSummary(int practiceCount, int moodCount, double avgMood, RiskLevel riskLevel)
     {

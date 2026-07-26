@@ -39,6 +39,7 @@ public sealed class FsdArchitectureTests
         "RunTechniqueSession",
         "ManageProfile",
         "ManageJournal",
+        "ClinicalCare",
         "ManageQuotes",
         "SearchPhysics",
         "SendReviewForm",

@@ -31,7 +31,11 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IQuoteCatalogVersionStore, QuoteCatalogVersionStore>();
         services.AddSingleton<IFavoriteQuoteTextStore, FavoriteQuoteTextStore>();
         services.AddSingleton<IStatisticRepository, StatisticRepository>();
-        services.AddSingleton<IUserProgressRepository, UserProgressRepository>();
+        services.AddSingleton<UserProgressRepository>();
+        services.AddSingleton<IUserProgressRepository>(sp => sp.GetRequiredService<UserProgressRepository>());
+        services.AddSingleton<IMoodProgressRepository>(sp => sp.GetRequiredService<UserProgressRepository>());
+        services.AddSingleton<ITestResultProgressRepository>(sp => sp.GetRequiredService<UserProgressRepository>());
+        services.AddSingleton<IPracticeProgressRepository>(sp => sp.GetRequiredService<UserProgressRepository>());
         services.AddSingleton<IClinicalCareRepository, ClinicalCareRepository>();
 
         return services;

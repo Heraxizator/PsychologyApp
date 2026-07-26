@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
+using PsychologyApp.Domain.UserProgress;
 using PsychologyApp.Presentation.Entities.Journal;
 using PsychologyApp.Presentation.Features.ManageJournal;
 using PsychologyApp.Presentation.Shared.Common;
@@ -23,7 +24,9 @@ public sealed class JournalViewModel : BaseViewModel
     private DateOnly _editorDay = DateOnly.FromDateTime(DateTime.Today);
     private DateOnly _weekStripEnd = DateOnly.FromDateTime(DateTime.Today);
     private JournalCheckInSlot _editorSlot =
-        DateTime.Now.Hour < 15 ? JournalCheckInSlot.Morning : JournalCheckInSlot.Evening;
+        MoodCheckInSlotPolicy.IsMorningLocalHour(DateTime.Now.Hour)
+            ? JournalCheckInSlot.Morning
+            : JournalCheckInSlot.Evening;
     private CancellationTokenSource? _noteSaveCts;
     private bool _suppressNoteAutosave;
     private bool _noteDirty;
