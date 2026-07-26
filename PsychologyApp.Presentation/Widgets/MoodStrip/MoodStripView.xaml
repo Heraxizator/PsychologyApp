@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:Class="PsychologyApp.Presentation.Widgets.MoodStrip.MoodStripView"
-             x:Name="Root">
+             x:Name="Root"
+             HorizontalOptions="Fill">
 
     <ContentView.Behaviors>
         <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
@@ -11,7 +12,7 @@
 
     <ContentView.ControlTemplate>
         <ControlTemplate>
-            <Border x:Name="StripBorder" Style="{StaticResource MoodStripStyle}">
+            <Border x:Name="StripBorder" Style="{StaticResource MoodStripStyle}" HorizontalOptions="Fill">
                 <Border.Triggers>
                     <DataTrigger
                         TargetType="Border"
@@ -23,145 +24,218 @@
                         <Setter Property="Shadow" Value="{x:Null}" />
                     </DataTrigger>
                 </Border.Triggers>
-                <VerticalStackLayout Spacing="12">
+                <VerticalStackLayout Spacing="12" HorizontalOptions="Fill">
                     <Label
                         Text="{TemplateBinding QuestionText}"
                         Style="{StaticResource CaptionStyle}"
                         HorizontalTextAlignment="Center"
-                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
-                    <HorizontalStackLayout
-                        x:Name="MoodRow"
-                        HorizontalOptions="Center"
-                        Spacing="8">
-                        <HorizontalStackLayout.Triggers>
-                            <DataTrigger
-                                TargetType="HorizontalStackLayout"
-                                Binding="{Binding UsePlainLayout, Source={RelativeSource Mode=TemplatedParent}}"
-                                Value="True">
-                                <Setter Property="Spacing" Value="12" />
+                        LineBreakMode="WordWrap"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{TemplateBinding QuestionText}" Value="">
+                                <Setter Property="IsVisible" Value="False" />
                             </DataTrigger>
-                        </HorizontalStackLayout.Triggers>
-                        <Border x:Name="MoodChip1" Style="{StaticResource MoodChipStyle}">
+                            <DataTrigger TargetType="Label" Binding="{TemplateBinding QuestionText}" Value="{x:Null}">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+
+                    <!-- Equal columns so five chips always fit the page width. -->
+                    <Grid
+                        x:Name="MoodRow"
+                        ColumnDefinitions="*,*,*,*,*"
+                        ColumnSpacing="4"
+                        HorizontalOptions="Fill">
+                        <Border
+                            x:Name="MoodChip1"
+                            Grid.Column="0"
+                            Style="{StaticResource MoodChipStyle}">
                             <Border.Triggers>
                                 <DataTrigger
                                     Binding="{TemplateBinding SelectedMoodLevel}"
                                     TargetType="Border"
                                     Value="1">
-                                    <Setter Property="Style" Value="{StaticResource MoodChipSelectedStyle}" />
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
+                                    <Setter Property="Stroke" Value="{DynamicResource Primary}" />
                                 </DataTrigger>
                                 <DataTrigger
                                     TargetType="Border"
                                     Binding="{Binding UsePlainLayout, Source={RelativeSource Mode=TemplatedParent}}"
                                     Value="True">
-                                    <Setter Property="WidthRequest" Value="56" />
-                                    <Setter Property="HeightRequest" Value="56" />
+                                    <Setter Property="WidthRequest" Value="52" />
+                                    <Setter Property="HeightRequest" Value="52" />
                                 </DataTrigger>
                             </Border.Triggers>
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{TemplateBinding RecordMoodCommand}" CommandParameter="1" />
                             </Border.GestureRecognizers>
-                            <Label Text="😞" Style="{StaticResource MoodChipEmojiStyle}" FontSize="28" />
+                            <Label Text="😞" Style="{StaticResource MoodChipEmojiStyle}">
+                                <Label.Triggers>
+                                    <DataTrigger
+                                        TargetType="Label"
+                                        Binding="{Binding UsePlainLayout, Source={RelativeSource Mode=TemplatedParent}}"
+                                        Value="True">
+                                        <Setter Property="FontSize" Value="26" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
                         </Border>
-                        <Border x:Name="MoodChip2" Style="{StaticResource MoodChipStyle}">
+                        <Border
+                            x:Name="MoodChip2"
+                            Grid.Column="1"
+                            Style="{StaticResource MoodChipStyle}">
                             <Border.Triggers>
                                 <DataTrigger
                                     Binding="{TemplateBinding SelectedMoodLevel}"
                                     TargetType="Border"
                                     Value="2">
-                                    <Setter Property="Style" Value="{StaticResource MoodChipSelectedStyle}" />
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
+                                    <Setter Property="Stroke" Value="{DynamicResource Primary}" />
                                 </DataTrigger>
                                 <DataTrigger
                                     TargetType="Border"
                                     Binding="{Binding UsePlainLayout, Source={RelativeSource Mode=TemplatedParent}}"
                                     Value="True">
-                                    <Setter Property="WidthRequest" Value="56" />
-                                    <Setter Property="HeightRequest" Value="56" />
+                                    <Setter Property="WidthRequest" Value="52" />
+                                    <Setter Property="HeightRequest" Value="52" />
                                 </DataTrigger>
                             </Border.Triggers>
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{TemplateBinding RecordMoodCommand}" CommandParameter="2" />
                             </Border.GestureRecognizers>
-                            <Label Text="😕" Style="{StaticResource MoodChipEmojiStyle}" FontSize="28" />
+                            <Label Text="😕" Style="{StaticResource MoodChipEmojiStyle}">
+                                <Label.Triggers>
+                                    <DataTrigger
+                                        TargetType="Label"
+                                        Binding="{Binding UsePlainLayout, Source={RelativeSource Mode=TemplatedParent}}"
+                                        Value="True">
+                                        <Setter Property="FontSize" Value="26" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
                         </Border>
-                        <Border x:Name="MoodChip3" Style="{StaticResource MoodChipStyle}">
+                        <Border
+                            x:Name="MoodChip3"
+                            Grid.Column="2"
+                            Style="{StaticResource MoodChipStyle}">
                             <Border.Triggers>
                                 <DataTrigger
                                     Binding="{TemplateBinding SelectedMoodLevel}"
                                     TargetType="Border"
                                     Value="3">
-                                    <Setter Property="Style" Value="{StaticResource MoodChipSelectedStyle}" />
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
+                                    <Setter Property="Stroke" Value="{DynamicResource Primary}" />
                                 </DataTrigger>
                                 <DataTrigger
                                     TargetType="Border"
                                     Binding="{Binding UsePlainLayout, Source={RelativeSource Mode=TemplatedParent}}"
                                     Value="True">
-                                    <Setter Property="WidthRequest" Value="56" />
-                                    <Setter Property="HeightRequest" Value="56" />
+                                    <Setter Property="WidthRequest" Value="52" />
+                                    <Setter Property="HeightRequest" Value="52" />
                                 </DataTrigger>
                             </Border.Triggers>
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{TemplateBinding RecordMoodCommand}" CommandParameter="3" />
                             </Border.GestureRecognizers>
-                            <Label Text="😐" Style="{StaticResource MoodChipEmojiStyle}" FontSize="28" />
+                            <Label Text="😐" Style="{StaticResource MoodChipEmojiStyle}">
+                                <Label.Triggers>
+                                    <DataTrigger
+                                        TargetType="Label"
+                                        Binding="{Binding UsePlainLayout, Source={RelativeSource Mode=TemplatedParent}}"
+                                        Value="True">
+                                        <Setter Property="FontSize" Value="26" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
                         </Border>
-                        <Border x:Name="MoodChip4" Style="{StaticResource MoodChipStyle}">
+                        <Border
+                            x:Name="MoodChip4"
+                            Grid.Column="3"
+                            Style="{StaticResource MoodChipStyle}">
                             <Border.Triggers>
                                 <DataTrigger
                                     Binding="{TemplateBinding SelectedMoodLevel}"
                                     TargetType="Border"
                                     Value="4">
-                                    <Setter Property="Style" Value="{StaticResource MoodChipSelectedStyle}" />
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
+                                    <Setter Property="Stroke" Value="{DynamicResource Primary}" />
                                 </DataTrigger>
                                 <DataTrigger
                                     TargetType="Border"
                                     Binding="{Binding UsePlainLayout, Source={RelativeSource Mode=TemplatedParent}}"
                                     Value="True">
-                                    <Setter Property="WidthRequest" Value="56" />
-                                    <Setter Property="HeightRequest" Value="56" />
+                                    <Setter Property="WidthRequest" Value="52" />
+                                    <Setter Property="HeightRequest" Value="52" />
                                 </DataTrigger>
                             </Border.Triggers>
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{TemplateBinding RecordMoodCommand}" CommandParameter="4" />
                             </Border.GestureRecognizers>
-                            <Label Text="🙂" Style="{StaticResource MoodChipEmojiStyle}" FontSize="28" />
+                            <Label Text="🙂" Style="{StaticResource MoodChipEmojiStyle}">
+                                <Label.Triggers>
+                                    <DataTrigger
+                                        TargetType="Label"
+                                        Binding="{Binding UsePlainLayout, Source={RelativeSource Mode=TemplatedParent}}"
+                                        Value="True">
+                                        <Setter Property="FontSize" Value="26" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
                         </Border>
-                        <Border x:Name="MoodChip5" Style="{StaticResource MoodChipStyle}">
+                        <Border
+                            x:Name="MoodChip5"
+                            Grid.Column="4"
+                            Style="{StaticResource MoodChipStyle}">
                             <Border.Triggers>
                                 <DataTrigger
                                     Binding="{TemplateBinding SelectedMoodLevel}"
                                     TargetType="Border"
                                     Value="5">
-                                    <Setter Property="Style" Value="{StaticResource MoodChipSelectedStyle}" />
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
+                                    <Setter Property="Stroke" Value="{DynamicResource Primary}" />
                                 </DataTrigger>
                                 <DataTrigger
                                     TargetType="Border"
                                     Binding="{Binding UsePlainLayout, Source={RelativeSource Mode=TemplatedParent}}"
                                     Value="True">
-                                    <Setter Property="WidthRequest" Value="56" />
-                                    <Setter Property="HeightRequest" Value="56" />
+                                    <Setter Property="WidthRequest" Value="52" />
+                                    <Setter Property="HeightRequest" Value="52" />
                                 </DataTrigger>
                             </Border.Triggers>
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{TemplateBinding RecordMoodCommand}" CommandParameter="5" />
                             </Border.GestureRecognizers>
-                            <Label Text="😊" Style="{StaticResource MoodChipEmojiStyle}" FontSize="28" />
+                            <Label Text="😊" Style="{StaticResource MoodChipEmojiStyle}">
+                                <Label.Triggers>
+                                    <DataTrigger
+                                        TargetType="Label"
+                                        Binding="{Binding UsePlainLayout, Source={RelativeSource Mode=TemplatedParent}}"
+                                        Value="True">
+                                        <Setter Property="FontSize" Value="26" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
                         </Border>
-                    </HorizontalStackLayout>
+                    </Grid>
+
                     <Label
                         IsVisible="{TemplateBinding HasTodayMood}"
                         Text="{TemplateBinding TodayMoodDisplay}"
                         HorizontalTextAlignment="Center"
+                        HorizontalOptions="Fill"
                         Style="{StaticResource EmphasisBodyStyle}"
                         TextColor="{DynamicResource Primary}"
-                        FontFamily="{StaticResource SemiBoldFontFamily}" />
+                        FontFamily="{StaticResource SemiBoldFontFamily}"
+                        LineBreakMode="WordWrap" />
                     <Label
                         IsVisible="{TemplateBinding HasMoodHistorySummary}"
                         Text="{TemplateBinding MoodHistorySummary}"
                         HorizontalTextAlignment="Center"
+                        HorizontalOptions="Fill"
                         Style="{StaticResource CaptionStyle}"
                         TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                        MaxLines="2"
-                        LineBreakMode="TailTruncation" />
+                        LineBreakMode="WordWrap" />
                 </VerticalStackLayout>
             </Border>
         </ControlTemplate>

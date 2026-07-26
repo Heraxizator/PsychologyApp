@@ -18,7 +18,9 @@
         <Grid
             x:Name="SheetCardHost"
             Grid.Row="1"
-            Margin="16,0,16,20">
+            Margin="16,0,16,48"
+            HorizontalOptions="Fill"
+            VerticalOptions="End">
             <Border Style="{StaticResource AppOptionsSheetShadowLayerStyle}" />
             <Border
                 x:Name="SheetCard"

@@ -49,6 +49,15 @@ public partial class TextEditorView : ContentView
         set => SetValue(BodyTextProperty, value);
     }
 
+    public static readonly BindableProperty UnfocusedCommandProperty =
+        BindableProperty.Create(nameof(UnfocusedCommand), typeof(System.Windows.Input.ICommand), typeof(TextEditorView));
+
+    public System.Windows.Input.ICommand? UnfocusedCommand
+    {
+        get => (System.Windows.Input.ICommand?)GetValue(UnfocusedCommandProperty);
+        set => SetValue(UnfocusedCommandProperty, value);
+    }
+
     private void OnHandlerChanged(object? sender, EventArgs e)
     {
         if (Handler is null)
@@ -89,6 +98,12 @@ public partial class TextEditorView : ContentView
     private void OnInputFocused(object? sender, FocusEventArgs e) =>
         InputFieldChrome.ApplyFocusAsync(InputBorder, Variant).FireAndForget();
 
-    private void OnInputUnfocused(object? sender, FocusEventArgs e) =>
+    private void OnInputUnfocused(object? sender, FocusEventArgs e)
+    {
         InputFieldChrome.ApplyBlurAsync(InputBorder, Variant).FireAndForget();
+        if (UnfocusedCommand?.CanExecute(null) == true)
+        {
+            UnfocusedCommand.Execute(null);
+        }
+    }
 }

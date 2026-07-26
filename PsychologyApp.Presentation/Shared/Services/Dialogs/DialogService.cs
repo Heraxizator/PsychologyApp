@@ -28,6 +28,14 @@ public class DialogService(IPageHost pageHost) : IDialogService
         return popup.DialogResult == true;
     }
 
+    public async Task<string?> PickOptionAsync(string title, IReadOnlyList<string> options, string cancel)
+    {
+        Page page = RequireActivePage();
+        var popup = new AppOptionsSheetPopup(title, options, cancel);
+        await page.ShowPopupAsync(popup, AppPopupOptions.OptionsSheet);
+        return popup.SelectedOption;
+    }
+
     private static PopupOptions CreateDialogOptions(AppDialogPopup popup) =>
         new()
         {

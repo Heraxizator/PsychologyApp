@@ -20,4 +20,10 @@ public partial class JournalPage : ContentPage, IJournalHubPage
         base.OnAppearing();
         _viewModel.ReloadAsync().FireAndForget();
     }
+
+    protected override void OnDisappearing()
+    {
+        _viewModel.FlushPendingNoteSaveAsync().FireAndForget();
+        base.OnDisappearing();
+    }
 }
