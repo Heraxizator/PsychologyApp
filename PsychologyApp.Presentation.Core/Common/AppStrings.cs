@@ -416,10 +416,15 @@ public static partial class AppStrings
         "Пока мало данных за неделю — отметьте настроение",
         "Not much this week yet — log a mood check-in");
     public static string JournalNotePlaceholder => T(
-        "Заметка к этому дню (необязательно)",
-        "Note for this day (optional)");
+        "Что повлияло? (необязательно)",
+        "What shaped this? (optional)");
     public static string JournalNoteSectionTitle => T("Заметка", "Note");
     public static string JournalAddNoteLabel => T("Добавить заметку", "Add a note");
+    public static string JournalShowHintsLabel => T("Подсказки", "Prompts");
+    public static string JournalHideHintsLabel => T("Скрыть подсказки", "Hide prompts");
+    public static string JournalHowNowQuestion => T("Как сейчас?", "How are you right now?");
+    public static string JournalMoreMenuLabel => T("Ещё", "More");
+    public static string JournalSlotPickerTitle => T("Время check-in", "Check-in time");
     public static string JournalNoteSaveHint => T(
         "Настроение сохраняется сразу. Заметку — кнопкой ниже.",
         "Mood saves instantly. Use the button below for the note.");

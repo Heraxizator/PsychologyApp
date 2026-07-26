@@ -29,14 +29,34 @@ public partial class AppOptionsSheetPopup : Popup
     private void OnLoaded(object? sender, EventArgs e)
     {
         ApplyHostSize();
-        UiAnimations.AnimateToastPopInAsync(SheetCardHost, slideOffset: 24).FireAndForget();
+        UiAnimations.AnimateToastPopInAsync(SheetCardHost, slideOffset: 12).FireAndForget();
     }
 
     private void ApplyHostSize()
     {
+        // Use the MAUI window (usable area), not raw display pixels — full display
+        // height pushes the bottom Auto row under the system gesture/nav inset.
+        if (GetUsableWindowSize() is (double width, double height))
+        {
+            SheetHost.WidthRequest = width;
+            SheetHost.HeightRequest = height;
+            return;
+        }
+
         DisplayInfo display = DeviceDisplay.MainDisplayInfo;
-        SheetHost.HeightRequest = display.Height / display.Density;
         SheetHost.WidthRequest = display.Width / display.Density;
+        SheetHost.HeightRequest = display.Height / display.Density;
+    }
+
+    private static (double Width, double Height)? GetUsableWindowSize()
+    {
+        Window? window = Microsoft.Maui.Controls.Application.Current?.Windows.FirstOrDefault();
+        if (window is null || window.Width <= 0 || window.Height <= 0)
+        {
+            return null;
+        }
+
+        return (window.Width, window.Height);
     }
 
     private void AddOptionRow(string option)

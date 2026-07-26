@@ -47,10 +47,10 @@
                     Grid.Column="1"
                     Text="{Binding PageTitle}"
                     Style="{StaticResource NavTitleStyle}"
-                    HorizontalOptions="Center"
+                    HorizontalOptions="Fill"
                     HorizontalTextAlignment="Center"
-                    LineBreakMode="TailTruncation"
-                    MaxLines="1" />
+                    LineBreakMode="WordWrap"
+                    MaxLines="2" />
                 <Label
                     Grid.Column="2"
                     Style="{StaticResource IconActionStyle}"
@@ -75,125 +75,95 @@
                 </Label>
             </Grid>
 
-            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                <Label
-                    Text="{Binding DayHeaderText}"
-                    Style="{StaticResource SectionTitleStyle}"
-                    HorizontalTextAlignment="Center" />
-
-                <ui:FilterChipTabBarView
-                    HorizontalOptions="Center"
-                    ItemsSource="{Binding SlotFilters}"
-                    TapCommand="{Binding SelectSlotCommand}" />
-
-                <mood:MoodStripView
-                    UsePlainLayout="True"
-                    QuestionText="{Binding MoodQuestionText}"
-                    RecordMoodCommand="{Binding RecordMoodCommand}"
-                    SelectedMoodLevel="{Binding SelectedMoodLevel}"
-                    TodayMoodDisplay="{Binding TodayMoodDisplay}"
-                    HasTodayMood="{Binding HasTodayMood}"
-                    MoodHistorySummary=""
-                    HasMoodHistorySummary="False">
-                    <mood:MoodStripView.Behaviors>
-                        <behaviors:RevealOnAppearingBehavior />
-                    </mood:MoodStripView.Behaviors>
-                </mood:MoodStripView>
-
-                <Label
-                    IsVisible="{Binding ShowDayEmptyCaption}"
-                    Text="{Binding DayEmptyCaption}"
-                    Style="{StaticResource CaptionStyle}"
-                    HorizontalTextAlignment="Center"
-                    TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
-
-                <journalStrip:JournalWeekStripView
-                    CaptionText=""
-                    ItemsSource="{Binding WeekDays}"
-                    SelectDayCommand="{Binding SelectDayCommand}"
-                    IsInteractive="True" />
-            </VerticalStackLayout>
-
-            <ui:SettingsLinkCardView
-                IsVisible="{Binding ShowPracticeSuggest}"
-                Title="{Binding PracticeSuggestText}"
-                TapCommand="{Binding OpenPracticeSuggestCommand}" />
-
             <Label
-                IsVisible="{Binding ShowAddNoteButton}"
-                Text="{Binding AddNoteLabel}"
-                Style="{StaticResource NavActionLabelStyle}"
-                HorizontalOptions="Center"
+                Text="{Binding DayHeaderText}"
+                Style="{StaticResource CaptionStyle}"
+                HorizontalOptions="Fill"
+                HorizontalTextAlignment="Center"
+                LineBreakMode="WordWrap"
                 TextColor="{DynamicResource Primary}"
-                SemanticProperties.Description="{Binding AddNoteLabel}">
+                FontFamily="{StaticResource SemiBoldFontFamily}"
+                SemanticProperties.Description="{Binding DayHeaderText}">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ExpandNoteCommand}" />
+                    <TapGestureRecognizer Command="{Binding PickSlotCommand}" />
                 </Label.GestureRecognizers>
                 <Label.Behaviors>
                     <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
                 </Label.Behaviors>
             </Label>
 
-            <Border
+            <Label
+                IsVisible="{Binding ShowMoodQuestion}"
+                Text="{Binding MoodQuestionHero}"
+                Style="{StaticResource SectionTitleStyle}"
+                HorizontalOptions="Fill"
+                HorizontalTextAlignment="Center"
+                LineBreakMode="WordWrap" />
+
+            <mood:MoodStripView
+                UsePlainLayout="True"
+                HorizontalOptions="Fill"
+                QuestionText=""
+                RecordMoodCommand="{Binding RecordMoodCommand}"
+                SelectedMoodLevel="{Binding SelectedMoodLevel}"
+                TodayMoodDisplay="{Binding MoodSavedStatus}"
+                HasTodayMood="{Binding HasMoodSelected}"
+                MoodHistorySummary=""
+                HasMoodHistorySummary="False">
+                <mood:MoodStripView.Behaviors>
+                    <behaviors:RevealOnAppearingBehavior />
+                </mood:MoodStripView.Behaviors>
+            </mood:MoodStripView>
+
+            <journalStrip:JournalWeekStripView
+                CaptionText=""
+                ItemsSource="{Binding WeekDays}"
+                SelectDayCommand="{Binding SelectDayCommand}"
+                IsInteractive="True" />
+
+            <VerticalStackLayout
                 IsVisible="{Binding ShowNoteEditor}"
-                Style="{StaticResource BrandCardStyle}"
-                Margin="0">
-                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <ui:TextEditorView
-                        PlaceholderText="{Binding NotePlaceholder}"
-                        BodyText="{Binding JournalNote}" />
+                Spacing="{StaticResource CompactSpacing}">
+                <ui:TextEditorView
+                    PlaceholderText="{Binding NotePlaceholder}"
+                    BodyText="{Binding JournalNote, Mode=TwoWay}"
+                    UnfocusedCommand="{Binding FlushNoteCommand}" />
 
-                    <FlexLayout
-                        Wrap="Wrap"
-                        Direction="Row"
-                        AlignItems="Start"
-                        JustifyContent="Start">
-                        <ui:FilterChipView
-                            Margin="0,0,8,8"
-                            TitleText="{Binding PromptHelpedLabel}"
-                            TapCommand="{Binding ApplyPromptCommand}"
-                            CommandParameter="helped" />
-                        <ui:FilterChipView
-                            Margin="0,0,8,8"
-                            TitleText="{Binding PromptBlockedLabel}"
-                            TapCommand="{Binding ApplyPromptCommand}"
-                            CommandParameter="blocked" />
-                        <ui:FilterChipView
-                            Margin="0,0,8,8"
-                            TitleText="{Binding PromptGratefulLabel}"
-                            TapCommand="{Binding ApplyPromptCommand}"
-                            CommandParameter="grateful" />
-                        <ui:FilterChipView
-                            Margin="0,0,8,8"
-                            TitleText="{Binding PromptNextLabel}"
-                            TapCommand="{Binding ApplyPromptCommand}"
-                            CommandParameter="next" />
-                    </FlexLayout>
+                <FlexLayout
+                    Wrap="Wrap"
+                    Direction="Row"
+                    AlignItems="Start"
+                    JustifyContent="Start"
+                    BindableLayout.ItemsSource="{Binding ActivityChips}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="journal:JournalActivityChip">
+                            <ui:FilterChipView
+                                Margin="0,0,8,8"
+                                TitleText="{Binding Label}"
+                                IsSelected="{Binding IsActive}"
+                                TapCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:JournalViewModel}}, Path=ToggleFactorCommand}"
+                                CommandParameter="{Binding .}" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+            </VerticalStackLayout>
 
-                    <FlexLayout
-                        Wrap="Wrap"
-                        Direction="Row"
-                        AlignItems="Start"
-                        JustifyContent="Start"
-                        BindableLayout.ItemsSource="{Binding ActivityChips}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="journal:JournalActivityChip">
-                                <ui:FilterChipView
-                                    Margin="0,0,8,8"
-                                    TitleText="{Binding Label}"
-                                    IsSelected="{Binding IsActive}"
-                                    TapCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:JournalViewModel}}, Path=ToggleFactorCommand}"
-                                    CommandParameter="{Binding .}" />
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </FlexLayout>
-
-                    <ui:ButtonView
-                        BodyText="{Binding SaveLabel}"
-                        TapCommand="{Binding SaveMoodCommand}"
-                        Variant="Primary" />
-                </VerticalStackLayout>
-            </Border>
+            <Label
+                IsVisible="{Binding ShowPracticeSuggest}"
+                Text="{Binding PracticeSuggestText}"
+                Style="{StaticResource CaptionStyle}"
+                HorizontalOptions="Fill"
+                HorizontalTextAlignment="Center"
+                LineBreakMode="WordWrap"
+                TextColor="{DynamicResource Primary}"
+                SemanticProperties.Description="{Binding PracticeSuggestText}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenPracticeSuggestCommand}" />
+                </Label.GestureRecognizers>
+                <Label.Behaviors>
+                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                </Label.Behaviors>
+            </Label>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

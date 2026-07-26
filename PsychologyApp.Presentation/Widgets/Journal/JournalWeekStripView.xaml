@@ -13,7 +13,7 @@
             Style="{StaticResource CaptionStyle}"
             TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
         <CollectionView
-            HeightRequest="72"
+            HeightRequest="68"
             SelectionMode="None"
             HorizontalScrollBarVisibility="Never"
             InputTransparent="{Binding IsInteractionBlocked, Source={x:Reference Root}}"
@@ -24,14 +24,14 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="journal:JournalDayChip">
                     <Border
-                        WidthRequest="52"
-                        HeightRequest="64"
-                        Padding="4"
+                        WidthRequest="44"
+                        HeightRequest="60"
+                        Padding="2"
                         BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
                         Stroke="Transparent"
                         StrokeThickness="2">
                         <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="16" />
+                            <RoundRectangle CornerRadius="14" />
                         </Border.StrokeShape>
                         <Border.Triggers>
                             <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
@@ -52,10 +52,11 @@
                                 Text="{Binding DayLabel}"
                                 Style="{StaticResource CaptionStyle}"
                                 FontSize="11"
-                                HorizontalTextAlignment="Center" />
+                                HorizontalTextAlignment="Center"
+                                LineBreakMode="NoWrap" />
                             <Label
                                 Text="{Binding MoodGlyph}"
-                                FontSize="18"
+                                FontSize="16"
                                 HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
                     </Border>
