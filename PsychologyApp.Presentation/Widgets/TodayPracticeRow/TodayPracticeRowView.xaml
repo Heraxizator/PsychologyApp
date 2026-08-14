@@ -66,6 +66,19 @@
                                 MaxLines="2"
                                 LineBreakMode="TailTruncation" />
                             <Label
+                                Text="{TemplateBinding DateText}"
+                                Style="{StaticResource CaptionStyle}"
+                                MaxLines="1"
+                                LineBreakMode="TailTruncation" />
+                            <Label
+                                IsVisible="{TemplateBinding HasNudge}"
+                                Text="{TemplateBinding NudgeText}"
+                                Style="{StaticResource CaptionStyle}"
+                                TextColor="{DynamicResource Primary}"
+                                FontFamily="{StaticResource SemiBoldFontFamily}"
+                                MaxLines="2"
+                                LineBreakMode="TailTruncation" />
+                            <Label
                                 Text="{TemplateBinding ReasonText}"
                                 Style="{StaticResource CaptionStyle}"
                                 TextColor="{DynamicResource Primary}"

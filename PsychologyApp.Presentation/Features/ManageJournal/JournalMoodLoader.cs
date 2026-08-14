@@ -484,12 +484,15 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
     {
         DateTime local = entry.RecordedAt.ToLocalTime();
         bool hasNote = !string.IsNullOrWhiteSpace(entry.Note);
+        string formattedNote = hasNote
+            ? JournalNoteFactors.FormatDisplayNote(entry.Note)
+            : AppStrings.JournalNoNoteCaption;
         return new MoodNoteItem(
             entry.MoodEntryId,
             DateOnly.FromDateTime(local),
             local.ToString("d"),
             local.ToString("t"),
-            hasNote ? entry.Note!.Trim() : AppStrings.JournalNoNoteCaption,
+            formattedNote,
             hasNote,
             entry.MoodLevel,
             AppStrings.MoodLevelPill(entry.MoodLevel),

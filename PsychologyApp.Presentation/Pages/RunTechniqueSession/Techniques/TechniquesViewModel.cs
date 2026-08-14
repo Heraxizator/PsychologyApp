@@ -3,7 +3,6 @@ using Microsoft.Extensions.Options;
 using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Technique;
-using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Common;
@@ -19,13 +18,12 @@ public partial class TechniquesViewModel : BaseViewModel
     private readonly IToastService _toastService;
     private readonly ITechniqueMessenger _techniqueMessenger;
     private readonly INavigationService _navigationService;
-    private readonly IUserProgressService _userProgressService;
     private readonly TechniqueListBuilder _techniqueListBuilder;
     private readonly IDatabaseReadySignal _databaseReadySignal;
     private readonly PracticeDashboardLoader _dashboardLoader;
-    private readonly TechniquesDashboardPresenter _dashboardPresenter;
     private readonly TodayRecommendationResolver _todayRecommendationResolver;
     private readonly TechniquesListInitializer _listInitializer;
+    private readonly PracticeClinicalDashboardEnricher _clinicalDashboardEnricher;
     private readonly IClinicalCareService _clinicalCareService;
     private readonly IOptions<AppSettings> _settings;
     private readonly ILogger<TechniquesViewModel> _logger;
@@ -35,13 +33,12 @@ public partial class TechniquesViewModel : BaseViewModel
         IToastService toastService,
         ITechniqueMessenger techniqueMessenger,
         INavigationService navigationService,
-        IUserProgressService userProgressService,
         TechniqueListBuilder techniqueListBuilder,
         IDatabaseReadySignal databaseReadySignal,
         PracticeDashboardLoader dashboardLoader,
-        TechniquesDashboardPresenter dashboardPresenter,
         TodayRecommendationResolver todayRecommendationResolver,
         TechniquesListInitializer listInitializer,
+        PracticeClinicalDashboardEnricher clinicalDashboardEnricher,
         IClinicalCareService clinicalCareService,
         IOptions<AppSettings> settings,
         ILogger<TechniquesViewModel> logger)
@@ -50,13 +47,12 @@ public partial class TechniquesViewModel : BaseViewModel
         _toastService = toastService;
         _techniqueMessenger = techniqueMessenger;
         _navigationService = navigationService;
-        _userProgressService = userProgressService;
         _techniqueListBuilder = techniqueListBuilder;
         _databaseReadySignal = databaseReadySignal;
         _dashboardLoader = dashboardLoader;
-        _dashboardPresenter = dashboardPresenter;
         _todayRecommendationResolver = todayRecommendationResolver;
         _listInitializer = listInitializer;
+        _clinicalDashboardEnricher = clinicalDashboardEnricher;
         _clinicalCareService = clinicalCareService;
         _settings = settings;
         _logger = logger;

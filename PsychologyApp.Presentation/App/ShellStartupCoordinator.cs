@@ -118,7 +118,12 @@ public sealed class ShellStartupCoordinator(
         }
         catch (Exception ex)
         {
-            logger.LogWarning(ex, "Clinical care gate skipped.");
+            logger.LogError(ex, "Clinical care gate failed, opening crisis fallback.");
+            await MainThread.InvokeOnMainThreadAsync(async () =>
+            {
+                toastService.ShortToast(AppStrings.StartupErrorMessage, AppToastKind.Error);
+                await navigation.PushAsync(pageFactory.CreateCrisisHubPage(), true);
+            });
         }
     }
 }

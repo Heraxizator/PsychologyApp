@@ -4,8 +4,6 @@ using PsychologyApp.Domain.UserProgress;
 using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Features;
 using PsychologyApp.Presentation.Shared.Navigation;
-using PsychologyApp.Presentation.Shared.Services.Progress;
-using PsychologyApp.Presentation.Features.RunTechniqueSession;
 
 namespace PsychologyApp.Presentation.Features.RunTechniqueSession;
 
@@ -13,9 +11,6 @@ public sealed record TechniquesInitSnapshot(
     int StreakDays,
     int AtRiskStreakDays,
     int IdleDays,
-    MoodSnapshot Mood,
-    WeeklyInsightSnapshot WeeklyInsight,
-    string? LastTechniqueName,
     TechniqueDashboardUiState UiState,
     IReadOnlyList<TechniqueItem> StaticItems,
     bool HasMoreCustomTechniques,
@@ -36,9 +31,6 @@ public sealed class TechniquesListInitializer
         Task<int> streakTask = dashboardLoader.LoadStreakDaysAsync(cancellationToken);
         Task<int> atRiskTask = dashboardLoader.LoadAtRiskStreakDaysAsync(cancellationToken);
         Task<DateTime?> lastPracticeTask = dashboardLoader.LoadLastPracticeUtcAsync(cancellationToken);
-        Task<MoodSnapshot> moodTask = dashboardLoader.LoadMoodSnapshotAsync(cancellationToken);
-        Task<WeeklyInsightSnapshot> weeklyInsightTask = dashboardLoader.LoadWeeklyInsightAsync(cancellationToken);
-        Task<string?> lastTechniqueNameTask = dashboardLoader.LoadLastTechniqueNameAsync(cancellationToken);
         Task<IReadOnlyList<TechniqueItem>> staticItemsTask =
             listBuilder.BuildStaticItemsAsync(navigation, cancellationToken);
         Task<IEnumerable<TechniqueDTO>> customTechniquesTask =
@@ -48,9 +40,6 @@ public sealed class TechniquesListInitializer
             streakTask,
             atRiskTask,
             lastPracticeTask,
-            moodTask,
-            weeklyInsightTask,
-            lastTechniqueNameTask,
             staticItemsTask,
             customTechniquesTask);
 
@@ -72,9 +61,6 @@ public sealed class TechniquesListInitializer
             await streakTask,
             await atRiskTask,
             idleDays,
-            await moodTask,
-            await weeklyInsightTask,
-            await lastTechniqueNameTask,
             uiState,
             staticItems,
             hasMoreCustomTechniques,

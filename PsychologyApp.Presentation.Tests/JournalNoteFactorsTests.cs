@@ -61,4 +61,21 @@ public sealed class JournalNoteFactorsTests
 
         Assert.Equal("body text", JournalNoteFactors.StripFactorLines(note));
     }
+
+    [Fact]
+    public void FormatDisplayNote_AddsReadableFactorsSummary()
+    {
+        string note = string.Join(
+            Environment.NewLine,
+            "Felt steadier",
+            JournalNoteFactors.GetPrefix(JournalNoteFactors.SleepKey),
+            JournalNoteFactors.GetPrefix(JournalNoteFactors.WalkKey));
+
+        string formatted = JournalNoteFactors.FormatDisplayNote(note);
+
+        Assert.Contains("Felt steadier", formatted, StringComparison.Ordinal);
+        Assert.Contains(AppStrings.JournalFactorSleepLabel, formatted, StringComparison.Ordinal);
+        Assert.Contains(AppStrings.JournalFactorWalkLabel, formatted, StringComparison.Ordinal);
+        Assert.DoesNotContain(AppStrings.JournalFactorSleep.Trim(), formatted, StringComparison.OrdinalIgnoreCase);
+    }
 }

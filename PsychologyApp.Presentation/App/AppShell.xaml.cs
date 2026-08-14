@@ -58,10 +58,20 @@ public partial class AppShell : Shell
         ApplyLocalization();
         EnsureLazyTabsReady();
         UserPreferences.Changed += OnPreferencesChanged;
+        if (Microsoft.Maui.Controls.Application.Current is { } app)
+        {
+            app.RequestedThemeChanged += OnRequestedThemeChanged;
+        }
         HandlerChanged += OnShellHandlerChanged;
         Navigating += OnShellNavigating;
         Navigated += OnShellNavigated;
         _ = InitializeAppAsync();
+    }
+
+    private void OnRequestedThemeChanged(object? sender, AppThemeChangedEventArgs e)
+    {
+        ApplyTabBarChrome();
+        ApplyStatusBarChrome(e.RequestedTheme == AppTheme.Dark);
     }
 
     private void OnShellNavigating(object? sender, ShellNavigatingEventArgs e)

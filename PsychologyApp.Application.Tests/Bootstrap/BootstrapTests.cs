@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Technique;
 using PsychologyApp.Bootstrap;
 using Xunit;
@@ -14,5 +15,6 @@ public class BootstrapTests
         services.AddPsychologyAppCore();
         ServiceProvider provider = services.BuildServiceProvider();
         Assert.NotNull(provider.GetService<ITechniqueService>());
+        Assert.NotNull(provider.GetService<ITechniqueCatalogProvider>());
     }
 }

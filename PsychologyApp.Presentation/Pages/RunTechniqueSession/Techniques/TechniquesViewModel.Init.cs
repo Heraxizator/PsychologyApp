@@ -56,15 +56,13 @@ public partial class TechniquesViewModel
                 MyTechniquesLabel,
                 cancellationToken);
 
-            TodayRecommendationResult recommendation = await _dashboardPresenter.ResolveTodayRecommendationAsync(
-                snapshot.StreakDays,
+            TodayRecommendationResult recommendation = await _dashboardLoader.ResolveTodayRecommendationAsync(
                 _navigationService,
                 cancellationToken);
-            await _dashboardPresenter.ApplyCatalogDateAsync(
+            await _todayRecommendationResolver.ApplyCatalogDateAsync(
                 recommendation.Item,
                 recommendation.TechniqueId,
                 snapshot.StaticItems,
-                snapshot.StreakDays > 0,
                 cancellationToken);
             bool hasDraft = await _dashboardLoader.HasSessionDraftAsync(recommendation.TechniqueId, cancellationToken);
 
@@ -73,13 +71,11 @@ public partial class TechniquesViewModel
                 StreakDays = snapshot.StreakDays;
                 AtRiskStreakDays = snapshot.AtRiskStreakDays;
                 IdleDays = snapshot.IdleDays;
-                LastTechniqueName = snapshot.LastTechniqueName;
                 HasTodayDraft = hasDraft;
                 _todayTechniqueId = recommendation.TechniqueId;
                 TodayReasonText = recommendation.ReasonText;
                 TodayTechniqueItem = recommendation.Item;
                 OnPropertyChanged(nameof(TodayReasonText));
-                OnPropertyChanged(nameof(TodayPrimaryReason));
                 OnPropertyChanged(nameof(TodayTechniqueItem));
                 OnPropertyChanged(nameof(TodayActionText));
                 ApplyUiState(snapshot.UiState);

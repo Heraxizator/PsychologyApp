@@ -87,7 +87,10 @@
                         IconName="{Binding TodayTechniqueItem.IconName}"
                         Title="{Binding TodayTechniqueItem.Title}"
                         Subtitle="{Binding TodayTechniqueItem.Subtitle}"
-                        ReasonText="{Binding TodayPrimaryReason}"
+                        DateText="{Binding TodayTechniqueItem.Date}"
+                        NudgeText="{Binding EngagementNudgeText}"
+                        HasNudge="{Binding ShowEngagementNudge}"
+                        ReasonText="{Binding TodayReasonText}"
                         MetaText="{Binding TherapyProgramBanner}"
                         HasMeta="{Binding HasTherapyProgramBanner}"
                         ActionText="{Binding TodayActionText}"
@@ -131,7 +134,9 @@
                 <ui:EmptyStateView
                     TitleText="{Binding PracticeEmptyTitle}"
                     BodyText="{Binding PracticeEmptyBody}"
-                    IconName="SelfImprovement" />
+                    IconName="SelfImprovement"
+                    ActionText="{Binding CreateButtonText}"
+                    ActionCommand="{Binding ConstructorTapped}" />
             </CollectionView.EmptyView>
 
             <CollectionView.Footer>

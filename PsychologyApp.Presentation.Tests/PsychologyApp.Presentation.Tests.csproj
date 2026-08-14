@@ -38,6 +38,7 @@
   <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
     <Compile Include="Architecture\**\*.cs" />
     <Compile Include="Charts\**\*.cs" />
+    <Compile Include="Serialization\**\*.cs" />
     <Compile Include="QuoteCatalogContentTests.cs" />
     <Compile Include="NavigationCoordinatorTests.cs" />
     <Compile Include="NavigationRetryTests.cs" />
@@ -46,6 +47,10 @@
     <Compile Include="StreakMilestoneCopyTests.cs" />
     <Compile Include="JournalHelpersTests.cs" />
     <Compile Include="TestScoreLabelMapperTests.cs" />
+    <Compile Include="AppStringsErrorTests.cs" />
+    <Compile Include="EntryDraftTests.cs" />
+    <Compile Include="UserQuotesRefreshPolicyTests.cs" />
+    <Compile Include="PracticeClinicalDashboardEnricherTests.cs" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">

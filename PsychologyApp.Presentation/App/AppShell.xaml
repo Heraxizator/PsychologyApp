@@ -6,6 +6,10 @@
        xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
        xmlns:common="clr-namespace:PsychologyApp.Presentation.Common;assembly=PsychologyApp.Presentation.Core"
        NavigationPage.HasNavigationBar="False"
+       Shell.TabBarBackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray950}}"
+       Shell.TabBarForegroundColor="{StaticResource Primary}"
+       Shell.TabBarTitleColor="{StaticResource Primary}"
+       Shell.TabBarUnselectedColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray500}}"
        Shell.NavBarIsVisible="False">
 
     <Shell.Behaviors>

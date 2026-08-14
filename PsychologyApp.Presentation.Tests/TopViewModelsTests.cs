@@ -387,10 +387,17 @@ public sealed class TechniquesViewModelTests
     public async Task TryOpenPendingTechniqueAsync_NavigatesWhenPendingExists()
     {
         Mock<IUserProgressService> progress = new();
-        progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
-        progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync([]);
+        progress.Setup(p => p.GetAtRiskStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
+        progress.Setup(p => p.GetLastTechniqueCompletionDateAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync((DateTime?)null);
+        progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
+        progress.Setup(p => p.GetLastPracticeDatesAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new Dictionary<string, DateTime>(StringComparer.Ordinal));
+        progress.Setup(p => p.GetSessionDraftKeysAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new HashSet<string>(StringComparer.Ordinal));
+        progress.Setup(p => p.GetMostRecentTestResultAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((TestResultDTO?)null);
 
         Mock<IUserPreferencesStore> preferences = new();
         preferences.Setup(p => p.Load()).Returns(new UserPreferencesState { OnboardingConcern = OnboardingConcernKeys.Body });
@@ -403,12 +410,11 @@ public sealed class TechniquesViewModelTests
         techniqueService.Setup(s => s.GetTechniquesPageAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
-        PracticeDashboardLoader dashboardLoader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
+        PracticeDashboardLoader dashboardLoader = CreateDashboardLoader(progress.Object, preferences.Object);
         TechniquesViewModel viewModel = CreateViewModel(
             techniqueService.Object,
             navigation.Object,
             dashboardLoader,
-            preferences.Object,
             progress.Object);
 
         await viewModel.TryOpenPendingTechniqueAsync();
@@ -417,49 +423,24 @@ public sealed class TechniquesViewModelTests
     }
 
     [Fact]
-    public async Task RecordMoodCommand_UpdatesSelectedLevel()
-    {
-        Mock<IUserProgressService> progress = new();
-        progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
-        progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
-        progress.Setup(p => p.RecordMoodAsync(It.IsAny<int>(), It.IsAny<string?>(), It.IsAny<DateTime?>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
-
-        Mock<IUserPreferencesStore> preferences = new();
-        preferences.Setup(p => p.Load()).Returns(new UserPreferencesState());
-
-        Mock<INavigationService> navigation = new();
-        Mock<ITechniqueService> techniqueService = new();
-        techniqueService.Setup(s => s.GetTechniquesPageAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync([]);
-
-        PracticeDashboardLoader dashboardLoader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
-        TechniquesViewModel viewModel = CreateViewModel(
-            techniqueService.Object,
-            navigation.Object,
-            dashboardLoader,
-            preferences.Object,
-            progress.Object);
-
-        viewModel.RecordMoodCommand.Execute(4);
-        await Task.Delay(500);
-
-        progress.Verify(p => p.RecordMoodAsync(4, It.IsAny<string?>(), It.IsAny<DateTime?>(), It.IsAny<CancellationToken>()), Times.Once);
-    }
-
-    [Fact]
     public async Task RefreshOnAppear_DoesNotReloadCustomTechniquesPage()
     {
         Mock<IUserProgressService> progress = new();
         progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(2);
-        progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync([]);
+        progress.Setup(p => p.GetAtRiskStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
+        progress.Setup(p => p.GetLastTechniqueCompletionDateAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(DateTime.UtcNow);
+        progress.Setup(p => p.GetMostRecentTestResultAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((TestResultDTO?)null);
         progress
             .Setup(p => p.GetLastPracticeDatesAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new Dictionary<string, DateTime>(StringComparer.Ordinal));
         progress
             .Setup(p => p.GetSessionDraftKeysAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new HashSet<string>(StringComparer.Ordinal));
+        progress.Setup(p => p.GetSessionDraftAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((string?)null);
 
         Mock<IUserPreferencesStore> preferences = new();
         preferences.Setup(p => p.Load()).Returns(new UserPreferencesState());
@@ -469,12 +450,11 @@ public sealed class TechniquesViewModelTests
         techniqueService.Setup(s => s.GetTechniquesPageAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
-        PracticeDashboardLoader dashboardLoader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
+        PracticeDashboardLoader dashboardLoader = CreateDashboardLoader(progress.Object, preferences.Object);
         TechniquesViewModel viewModel = CreateViewModel(
             techniqueService.Object,
             navigation.Object,
             dashboardLoader,
-            preferences.Object,
             progress.Object);
 
         await viewModel.EnsureInitializedAsync();
@@ -499,14 +479,19 @@ public sealed class TechniquesViewModelTests
         Mock<IUserProgressService> progress = new();
         progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
-        progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync([]);
+        progress.Setup(p => p.GetAtRiskStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
+        progress.Setup(p => p.GetLastTechniqueCompletionDateAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync((DateTime?)null);
+        progress.Setup(p => p.GetMostRecentTestResultAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((TestResultDTO?)null);
         progress
             .Setup(p => p.GetLastPracticeDatesAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new Dictionary<string, DateTime>(StringComparer.Ordinal));
         progress
             .Setup(p => p.GetSessionDraftKeysAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new HashSet<string>(StringComparer.Ordinal));
+        progress.Setup(p => p.GetSessionDraftAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((string?)null);
 
         Mock<IUserPreferencesStore> preferences = new();
         preferences.Setup(p => p.Load()).Returns(new UserPreferencesState());
@@ -516,12 +501,11 @@ public sealed class TechniquesViewModelTests
         techniqueService.Setup(s => s.GetTechniquesPageAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
-        PracticeDashboardLoader dashboardLoader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
+        PracticeDashboardLoader dashboardLoader = CreateDashboardLoader(progress.Object, preferences.Object);
         TechniquesViewModel viewModel = CreateViewModel(
             techniqueService.Object,
             navigation.Object,
             dashboardLoader,
-            preferences.Object,
             progress.Object,
             messenger.Object);
 
@@ -552,11 +536,19 @@ public sealed class TechniquesViewModelTests
         Assert.Contains(viewModel.TechniqueGroups.SelectMany(g => g), item => item.Id == 42);
     }
 
+    private static PracticeDashboardLoader CreateDashboardLoader(
+        IUserProgressService progress,
+        IUserPreferencesStore preferences) =>
+        new(
+            progress,
+            preferences,
+            TechniqueCatalogTestHelper.CreateTodayRecommendationResolver(),
+            Mock.Of<IClinicalCareService>());
+
     private static TechniquesViewModel CreateViewModel(
         ITechniqueService techniqueService,
         INavigationService navigationService,
         PracticeDashboardLoader dashboardLoader,
-        IUserPreferencesStore preferencesStore,
         IUserProgressService userProgressService,
         ITechniqueMessenger? techniqueMessenger = null)
     {
@@ -568,16 +560,15 @@ public sealed class TechniquesViewModelTests
             Mock.Of<IToastService>(),
             techniqueMessenger ?? Mock.Of<ITechniqueMessenger>(),
             navigationService,
-            userProgressService,
             new TechniqueListBuilder(userProgressService, TechniqueCatalogTestHelper.CreateGateway()),
             databaseReady.Object,
             dashboardLoader,
-            new TechniquesDashboardPresenter(
-                dashboardLoader,
-                TechniqueCatalogTestHelper.CreateTodayRecommendationResolver(),
-                Mock.Of<IToastService>()),
             TechniqueCatalogTestHelper.CreateTodayRecommendationResolver(),
             new TechniquesListInitializer(),
+            new PracticeClinicalDashboardEnricher(
+                Mock.Of<IClinicalCareService>(),
+                Mock.Of<Microsoft.Extensions.Logging.ILogger<PracticeClinicalDashboardEnricher>>()),
+            Mock.Of<IClinicalCareService>(),
             Options.Create(new AppSettings()),
             Mock.Of<Microsoft.Extensions.Logging.ILogger<TechniquesViewModel>>());
     }

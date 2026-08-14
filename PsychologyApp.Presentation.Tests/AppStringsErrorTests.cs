@@ -1,4 +1,4 @@
-using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Common;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

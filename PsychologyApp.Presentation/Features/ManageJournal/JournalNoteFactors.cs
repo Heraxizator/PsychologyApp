@@ -141,6 +141,21 @@ public static class JournalNoteFactors
                     line.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))));
     }
 
+    public static string FormatDisplayNote(string? note)
+    {
+        string body = StripFactorLines(note);
+        IReadOnlyList<string> labels = ExtractActiveLabels(note);
+        if (labels.Count == 0)
+        {
+            return body;
+        }
+
+        string factorsLine = AppStrings.JournalFactorsSummaryLine(string.Join(", ", labels));
+        return string.IsNullOrWhiteSpace(body)
+            ? factorsLine
+            : $"{body}{Environment.NewLine}{factorsLine}";
+    }
+
     public static IReadOnlyList<JournalActivityInsight> Analyze(
         IEnumerable<(string? Note, int MoodLevel)> entries)
     {

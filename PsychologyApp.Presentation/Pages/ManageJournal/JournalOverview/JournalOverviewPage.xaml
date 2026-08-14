@@ -167,7 +167,9 @@
                                         Text="{Binding .}"
                                         Style="{StaticResource CaptionStyle}"
                                         TextColor="{DynamicResource Primary}"
-                                        FontFamily="{StaticResource SemiBoldFontFamily}" />
+                                        FontFamily="{StaticResource SemiBoldFontFamily}"
+                                        LineBreakMode="WordWrap"
+                                        MaxLines="2" />
                                 </Border>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>

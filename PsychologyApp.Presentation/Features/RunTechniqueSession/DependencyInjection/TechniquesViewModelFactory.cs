@@ -4,7 +4,6 @@ using Microsoft.Extensions.Options;
 using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Technique;
-using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
@@ -23,13 +22,12 @@ public sealed class TechniquesViewModelFactory(
     IToastService toastService,
     ITechniqueMessenger techniqueMessenger,
     Func<NavigationContext, INavigationService> navigationServiceFactory,
-    IUserProgressService userProgressService,
     TechniqueListBuilder techniqueListBuilder,
     IDatabaseReadySignal databaseReadySignal,
     PracticeDashboardLoader dashboardLoader,
-    TechniquesDashboardPresenter dashboardPresenter,
     TodayRecommendationResolver todayRecommendationResolver,
     TechniquesListInitializer listInitializer,
+    PracticeClinicalDashboardEnricher clinicalDashboardEnricher,
     IClinicalCareService clinicalCareService,
     IOptions<AppSettings> settings,
     ILogger<TechniquesViewModel> logger) : ViewModelFactoryBase, ITechniquesViewModelFactory
@@ -40,13 +38,12 @@ public sealed class TechniquesViewModelFactory(
             toastService,
             techniqueMessenger,
             ResolveNavigation(navigationServiceFactory, page),
-            userProgressService,
             techniqueListBuilder,
             databaseReadySignal,
             dashboardLoader,
-            dashboardPresenter,
             todayRecommendationResolver,
             listInitializer,
+            clinicalDashboardEnricher,
             clinicalCareService,
             settings,
             logger);

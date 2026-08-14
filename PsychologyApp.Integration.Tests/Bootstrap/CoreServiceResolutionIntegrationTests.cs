@@ -34,6 +34,7 @@ public sealed class CoreServiceResolutionIntegrationTests : IAsyncLifetime
         Assert.NotNull(_provider.GetRequiredService<IUserProgressService>());
         Assert.NotNull(_provider.GetRequiredService<IStatisticService>());
         Assert.NotNull(_provider.GetRequiredService<IAppStartupService>());
+        Assert.NotNull(_provider.GetRequiredService<ITechniqueCatalogProvider>());
     }
 
     public async Task DisposeAsync()

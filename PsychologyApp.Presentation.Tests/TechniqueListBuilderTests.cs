@@ -23,8 +23,6 @@ public sealed class TodayRecommendationResolverTests
 
         TodayRecommendationResult result = await resolver.ResolveAsync(
             new TodayRecommendationContext(concern),
-            "3 дн.",
-            hasStreak: true,
             navigation.Object);
 
         Assert.Equal(expected, result.TechniqueId);

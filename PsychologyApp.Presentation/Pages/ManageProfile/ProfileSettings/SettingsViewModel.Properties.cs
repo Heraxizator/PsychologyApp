@@ -19,7 +19,7 @@ public partial class SettingsViewModel
 
             language = normalized;
             OnPropertyChanged(nameof(Language));
-            ApplyLivePreview();
+            OnSettingsChanged();
         }
     }
 
@@ -37,7 +37,7 @@ public partial class SettingsViewModel
 
             theme = normalized;
             OnPropertyChanged(nameof(Theme));
-            ApplyLivePreview();
+            OnSettingsChanged();
         }
     }
 
@@ -55,7 +55,7 @@ public partial class SettingsViewModel
 
             color = normalized;
             OnPropertyChanged(nameof(Color));
-            ApplyLivePreview();
+            OnSettingsChanged();
         }
     }
 
@@ -73,7 +73,7 @@ public partial class SettingsViewModel
 
             form = normalized;
             OnPropertyChanged(nameof(Form));
-            ApplyLivePreview();
+            OnSettingsChanged();
         }
     }
 
@@ -91,7 +91,7 @@ public partial class SettingsViewModel
 
             size = normalized;
             OnPropertyChanged(nameof(Size));
-            ApplyLivePreview();
+            OnSettingsChanged();
         }
     }
 
@@ -105,7 +105,7 @@ public partial class SettingsViewModel
             {
                 isThick = value;
                 OnPropertyChanged(nameof(IsThick));
-                ApplyLivePreview();
+                OnSettingsChanged();
             }
         }
     }
@@ -120,7 +120,7 @@ public partial class SettingsViewModel
             {
                 questionnaireAutoAdvance = value;
                 OnPropertyChanged(nameof(QuestionnaireAutoAdvance));
-                ApplyLivePreview();
+                OnSettingsChanged();
             }
         }
     }
@@ -135,7 +135,7 @@ public partial class SettingsViewModel
             {
                 practiceRemindersEnabled = value;
                 OnPropertyChanged(nameof(PracticeRemindersEnabled));
-                ApplyLivePreview();
+                OnSettingsChanged();
             }
         }
     }
@@ -154,7 +154,7 @@ public partial class SettingsViewModel
 
             practiceReminderHour = normalized;
             OnPropertyChanged(nameof(PracticeReminderHour));
-            ApplyLivePreview();
+            OnSettingsChanged();
         }
     }
 
@@ -168,7 +168,7 @@ public partial class SettingsViewModel
             {
                 quoteRemindersEnabled = value;
                 OnPropertyChanged(nameof(QuoteRemindersEnabled));
-                ApplyLivePreview();
+                OnSettingsChanged();
             }
         }
     }
@@ -187,7 +187,7 @@ public partial class SettingsViewModel
 
             quoteReminderHour = normalized;
             OnPropertyChanged(nameof(QuoteReminderHour));
-            ApplyLivePreview();
+            OnSettingsChanged();
         }
     }
 
@@ -201,7 +201,7 @@ public partial class SettingsViewModel
             {
                 moodRemindersEnabled = value;
                 OnPropertyChanged(nameof(MoodRemindersEnabled));
-                ApplyLivePreview();
+                OnSettingsChanged();
             }
         }
     }
@@ -220,7 +220,7 @@ public partial class SettingsViewModel
 
             moodReminderHour = normalized;
             OnPropertyChanged(nameof(MoodReminderHour));
-            ApplyLivePreview();
+            OnSettingsChanged();
         }
     }
 
@@ -238,7 +238,7 @@ public partial class SettingsViewModel
 
             onboardingConcern = normalized;
             OnPropertyChanged(nameof(OnboardingConcern));
-            ApplyLivePreview();
+            OnSettingsChanged();
         }
     }
 
@@ -271,5 +271,11 @@ public partial class SettingsViewModel
         {
             _isApplyingLivePreview = false;
         }
+    }
+
+    private void OnSettingsChanged()
+    {
+        ApplyLivePreview();
+        QueueAutoSave();
     }
 }

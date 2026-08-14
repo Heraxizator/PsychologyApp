@@ -22,8 +22,6 @@ public sealed class TodayRecommendationResolver(
 {
     public async Task<TodayRecommendationResult> ResolveAsync(
         TodayRecommendationContext context,
-        string streakDisplay,
-        bool hasStreak,
         INavigationService navigationService,
         CancellationToken cancellationToken = default)
     {
@@ -39,7 +37,7 @@ public sealed class TodayRecommendationResolver(
             Item = new TechniqueItem
             {
                 Number = definition.ListNumber,
-                Date = hasStreak ? streakDisplay : definition.ListDate,
+                Date = AppStrings.TechniqueNotTriedYet,
                 IconName = definition.ListIcon,
                 DurationText = durationText,
                 MetaText = AppStrings.TechniqueMetaLine(durationText, definition.Theme),
@@ -57,14 +55,8 @@ public sealed class TodayRecommendationResolver(
         TechniqueItem todayItem,
         TechniqueId techniqueId,
         IEnumerable<TechniqueItem> staticItems,
-        bool hasStreak,
         CancellationToken cancellationToken = default)
     {
-        if (hasStreak)
-        {
-            return;
-        }
-
         IReadOnlyList<TechniqueListEntry> entries =
             await techniqueCatalog.GetBuiltInListEntriesAsync(cancellationToken);
         TechniqueListEntry entry = entries.First(e => e.TechniqueId == techniqueId);

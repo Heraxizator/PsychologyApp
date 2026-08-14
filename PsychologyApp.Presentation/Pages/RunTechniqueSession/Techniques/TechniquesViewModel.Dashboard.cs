@@ -1,6 +1,4 @@
 using Microsoft.Extensions.Logging;
-using PsychologyApp.Application.ClinicalCare;
-using PsychologyApp.Application.Models;
 using PsychologyApp.Domain.UserProgress;
 using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
@@ -25,7 +23,6 @@ public partial class TechniquesViewModel
             Task<int> streakTask = _dashboardLoader.LoadStreakDaysAsync(cancellationToken);
             Task<int> atRiskTask = _dashboardLoader.LoadAtRiskStreakDaysAsync(cancellationToken);
             Task<DateTime?> lastPracticeTask = _dashboardLoader.LoadLastPracticeUtcAsync(cancellationToken);
-            Task<string?> lastTechniqueNameTask = _dashboardLoader.LoadLastTechniqueNameAsync(cancellationToken);
             Task<IReadOnlyList<TechniqueItem>> staticItemsTask =
                 _techniqueListBuilder.BuildStaticItemsAsync(_navigationService, cancellationToken);
 
@@ -33,24 +30,20 @@ public partial class TechniquesViewModel
                 streakTask,
                 atRiskTask,
                 lastPracticeTask,
-                lastTechniqueNameTask,
                 staticItemsTask);
 
             int streakDays = await streakTask;
             int atRiskDays = await atRiskTask;
             DateTime? lastPracticeUtc = await lastPracticeTask;
-            string? lastTechniqueName = await lastTechniqueNameTask;
             IReadOnlyList<TechniqueItem> staticItems = await staticItemsTask;
 
-            TodayRecommendationResult recommendation = await _dashboardPresenter.ResolveTodayRecommendationAsync(
-                streakDays,
+            TodayRecommendationResult recommendation = await _dashboardLoader.ResolveTodayRecommendationAsync(
                 _navigationService,
                 cancellationToken);
-            await _dashboardPresenter.ApplyCatalogDateAsync(
+            await _todayRecommendationResolver.ApplyCatalogDateAsync(
                 recommendation.Item,
                 recommendation.TechniqueId,
                 staticItems,
-                streakDays > 0,
                 cancellationToken);
 
             bool hasDraft = await _dashboardLoader.HasSessionDraftAsync(recommendation.TechniqueId, cancellationToken);
@@ -58,44 +51,21 @@ public partial class TechniquesViewModel
                 lastPracticeUtc is null ? null : DateOnly.FromDateTime(lastPracticeUtc.Value.ToLocalTime()),
                 DateOnly.FromDateTime(DateTime.Today));
 
-            TherapyProgramStateDTO? program = null;
-            RiskAssessmentDTO? latestRisk = null;
-            TherapyProgramAdherence? adherence = null;
-            try
-            {
-                await _clinicalCareService.AdjustProgramFromScorecardAsync(cancellationToken);
-                program = await _clinicalCareService.GetActiveProgramAsync(cancellationToken);
-                latestRisk = await _clinicalCareService.GetLatestRiskAssessmentAsync(cancellationToken);
-                adherence = await _clinicalCareService.GetActiveWeekAdherenceAsync(cancellationToken);
-            }
-            catch (Exception clinicalEx)
-            {
-                _logger.LogDebug(clinicalEx, "Clinical care dashboard enrichment skipped.");
-            }
+            PracticeClinicalDashboardSnapshot clinical =
+                await _clinicalDashboardEnricher.LoadAsync(cancellationToken);
 
             await UiThread.RunAsync(() =>
             {
                 StreakDays = streakDays;
                 AtRiskStreakDays = atRiskDays;
                 IdleDays = idleDays;
-                LastTechniqueName = lastTechniqueName;
                 HasTodayDraft = hasDraft;
-                TherapyProgramBanner = adherence is not null
-                    ? FormatProgramBanner(
-                        adherence.Program,
-                        adherence.CompletedDistinctTechniques,
-                        adherence.WeekPlan.TechniquePool.Count)
-                    : program is { IsActive: true }
-                        ? FormatProgramBanner(program)
-                        : string.Empty;
-                ClinicalRiskBanner = latestRisk is null
-                    ? string.Empty
-                    : FormatRiskBanner(latestRisk.RiskLevel);
+                TherapyProgramBanner = clinical.TherapyProgramBanner;
+                ClinicalRiskBanner = clinical.ClinicalRiskBanner;
                 _todayTechniqueId = recommendation.TechniqueId;
                 TodayReasonText = recommendation.ReasonText;
                 TodayTechniqueItem = recommendation.Item;
                 OnPropertyChanged(nameof(TodayReasonText));
-                OnPropertyChanged(nameof(TodayPrimaryReason));
                 OnPropertyChanged(nameof(TodayTechniqueItem));
                 OnPropertyChanged(nameof(TodayActionText));
             });
@@ -245,29 +215,26 @@ public partial class TechniquesViewModel
 
     private async Task UpdateTodayRecommendationCoreAsync(IReadOnlyList<TechniqueItem>? staticItems = null)
     {
-        TodayRecommendationResult recommendation = await _dashboardPresenter.ResolveTodayRecommendationAsync(
-            StreakDays,
+        TodayRecommendationResult recommendation = await _dashboardLoader.ResolveTodayRecommendationAsync(
             _navigationService);
 
         bool hasDraft = await _dashboardLoader.HasSessionDraftAsync(recommendation.TechniqueId);
+
+        if (staticItems is not null)
+        {
+            await _todayRecommendationResolver.ApplyCatalogDateAsync(
+                recommendation.Item,
+                recommendation.TechniqueId,
+                staticItems);
+        }
 
         _todayTechniqueId = recommendation.TechniqueId;
         TodayReasonText = recommendation.ReasonText;
         TodayTechniqueItem = recommendation.Item;
         HasTodayDraft = hasDraft;
         OnPropertyChanged(nameof(TodayReasonText));
-        OnPropertyChanged(nameof(TodayPrimaryReason));
         OnPropertyChanged(nameof(TodayActionText));
-
-        if (staticItems is not null)
-        {
-            await _dashboardPresenter.ApplyCatalogDateAsync(
-                TodayTechniqueItem,
-                _todayTechniqueId,
-                staticItems,
-                HasStreak);
-            OnPropertyChanged(nameof(TodayTechniqueItem));
-        }
+        NotifyEngagementNudge();
     }
 
     private IReadOnlyList<TechniqueItem> ExtractCurrentStaticItems()

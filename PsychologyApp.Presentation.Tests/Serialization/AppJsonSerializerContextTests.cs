@@ -1,6 +1,7 @@
 using System.Text.Json;
 using PsychologyApp.Application.Models.Quot;
-using PsychologyApp.Presentation.Entities.Test;
+using PsychologyApp.Application.Models.Tests;
+using PsychologyApp.Application.Tests;
 using PsychologyApp.Presentation.Serialization;
 using Xunit;
 

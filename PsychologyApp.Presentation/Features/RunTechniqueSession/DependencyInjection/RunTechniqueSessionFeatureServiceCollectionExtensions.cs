@@ -27,7 +27,7 @@ public static class RunTechniqueSessionFeatureServiceCollectionExtensions
         SharedPresentationServiceCollectionExtensions.AddTransientFactory<PolarityListDraftCoordinator>(services);
         services.AddSingleton<CustomTechniqueSessionOperations>();
         services.AddSingleton<PracticeDashboardLoader>();
-        services.AddSingleton<TechniquesDashboardPresenter>();
+        services.AddSingleton<PracticeClinicalDashboardEnricher>();
         services.AddSingleton<TechniquesListInitializer>();
         services.AddSingleton<ITheoryViewModelFactory, TheoryViewModelFactory>();
         services.AddSingleton<IPracticeTheoryNavigator, PracticeTheoryNavigator>();

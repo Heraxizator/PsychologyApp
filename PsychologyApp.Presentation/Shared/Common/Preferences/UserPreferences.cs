@@ -77,8 +77,8 @@ public static class UserPreferences
 
         return new UserPreferencesState
         {
-            Language = NormalizeLanguageKey(Preferences.Get(LanguageKey, DefaultLanguage)),
-            Theme = NormalizeThemeKey(Preferences.Get(ThemeKey, DefaultTheme)),
+            Language = ResolveLanguagePreference(),
+            Theme = ResolveThemePreference(),
             Color = NormalizeColorKey(Preferences.Get(ColorKey, DefaultColor)),
             Form = NormalizeFormKey(Preferences.Get(FormKey, DefaultForm)),
             Size = NormalizeSizeKey(Preferences.Get(SizeKey, DefaultSize)),
@@ -554,6 +554,30 @@ public static class UserPreferences
     public static string ParseFormKey(string displayOrKey) => NormalizeFormKey(displayOrKey);
 
     public static string ParseSizeKey(string displayOrKey) => NormalizeSizeKey(displayOrKey);
+
+    private static string ResolveLanguagePreference()
+    {
+        if (Preferences.ContainsKey(LanguageKey))
+        {
+            return NormalizeLanguageKey(Preferences.Get(LanguageKey, DefaultLanguage));
+        }
+
+        string systemLanguage = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        return string.Equals(systemLanguage, "en", StringComparison.OrdinalIgnoreCase)
+            ? "en"
+            : "ru";
+    }
+
+    private static string ResolveThemePreference()
+    {
+        if (Preferences.ContainsKey(ThemeKey))
+        {
+            return NormalizeThemeKey(Preferences.Get(ThemeKey, DefaultTheme));
+        }
+
+        AppTheme requestedTheme = Microsoft.Maui.Controls.Application.Current?.RequestedTheme ?? AppTheme.Light;
+        return requestedTheme == AppTheme.Dark ? "dark" : "light";
+    }
 
     private static bool IsRoundedForm(string form) =>
         NormalizeFormKey(form) == "rounded";

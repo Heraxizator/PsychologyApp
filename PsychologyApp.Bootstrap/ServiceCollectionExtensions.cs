@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.DependencyInjection;
+using PsychologyApp.Application.Practice;
 using PsychologyApp.Infrastructure.DependencyInjection;
 
 namespace PsychologyApp.Bootstrap;
@@ -13,6 +14,8 @@ public static class ServiceCollectionExtensions
     {
         services.AddPsychologyAppInfrastructure(configureSettings);
         services.AddPsychologyAppApplication();
+        services.AddSingleton<BuiltInTechniqueCatalogProvider>();
+        services.AddCachedTechniqueCatalogProvider();
         return services;
     }
 }

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Moq;
+using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Quot;
@@ -166,7 +167,11 @@ public sealed class TechniquesListInitializerTests
         Mock<IUserPreferencesStore> preferences = new();
         preferences.Setup(p => p.Load()).Returns(new UserPreferencesState());
 
-        PracticeDashboardLoader dashboardLoader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
+        PracticeDashboardLoader dashboardLoader = new(
+            progress.Object,
+            preferences.Object,
+            TechniqueCatalogTestHelper.CreateTodayRecommendationResolver(),
+            Mock.Of<IClinicalCareService>());
         TechniqueListBuilder listBuilder = new(progress.Object, TechniqueCatalogTestHelper.CreateGateway());
         TechniquesListInitializer initializer = new();
         Mock<INavigationService> navigation = new();

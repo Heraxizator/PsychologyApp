@@ -14,6 +14,7 @@ public sealed class SqliteConnectionFactory : IDbConnectionFactory
         var connection = new SqliteConnection($"Data Source={DatabasePath};Cache=Shared");
         await connection.OpenAsync(cancellationToken);
         await SqliteSchema.ConfigureConnectionAsync(connection, cancellationToken);
+        SqlitePaths.TryProtectDatabaseFile(DatabasePath);
         return connection;
     }
 }

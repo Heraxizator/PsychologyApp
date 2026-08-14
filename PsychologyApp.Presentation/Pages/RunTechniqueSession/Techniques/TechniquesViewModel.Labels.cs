@@ -30,7 +30,6 @@ public partial class TechniquesViewModel
             nameof(ProfileToolbarText),
             nameof(TodayForYouLabel),
             nameof(TodayReasonText),
-            nameof(TodayPrimaryReason),
             nameof(TodayActionText),
             nameof(EngagementNudgeText),
             nameof(ShowEngagementNudge),

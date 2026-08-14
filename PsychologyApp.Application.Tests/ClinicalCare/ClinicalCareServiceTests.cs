@@ -65,6 +65,87 @@ public sealed class ClinicalCareServiceTests
     }
 
     [Fact]
+    public async Task AdjustProgramFromScorecardAsync_WhenNoProgram_ReturnsNull()
+    {
+        var service = new ClinicalCareService(new FakeClinicalCareRepository(), new FakeUserProgressService());
+        Assert.Null(await service.AdjustProgramFromScorecardAsync());
+    }
+
+    [Fact]
+    public async Task AdjustProgramFromScorecardAsync_WhenRedRisk_EscalatesWithoutChangingWeek()
+    {
+        var repo = new FakeClinicalCareRepository();
+        repo.ActiveProgram = new TherapyProgramStateDTO
+        {
+            ProgramType = TherapyProgramType.Anxiety,
+            StartedAt = DateTime.UtcNow.AddDays(-3),
+            CurrentWeek = 2,
+            IsActive = true
+        };
+        repo.Assessments.Add(new RiskAssessmentDTO
+        {
+            AssessedAt = DateTime.UtcNow,
+            RiskLevel = RiskLevel.Red,
+            Source = "test"
+        });
+        var service = new ClinicalCareService(repo, new FakeUserProgressService());
+
+        TherapyProgramStateDTO? result = await service.AdjustProgramFromScorecardAsync();
+
+        Assert.NotNull(result);
+        Assert.Equal(2, result.CurrentWeek);
+        Assert.Contains(repo.Escalations, e =>
+            e.Action == EscalationActions.RouteToCrisisHub &&
+            e.TriggerSource == "weekly_scorecard");
+    }
+
+    [Fact]
+    public async Task AdjustProgramFromScorecardAsync_WhenAmberRisk_HoldsWeekAndOffersHelp()
+    {
+        var repo = new FakeClinicalCareRepository();
+        repo.ActiveProgram = new TherapyProgramStateDTO
+        {
+            ProgramType = TherapyProgramType.Mood,
+            StartedAt = DateTime.UtcNow.AddDays(-10),
+            CurrentWeek = 3,
+            IsActive = true
+        };
+        repo.Assessments.Add(new RiskAssessmentDTO
+        {
+            AssessedAt = DateTime.UtcNow,
+            RiskLevel = RiskLevel.Amber,
+            Source = "test"
+        });
+        var service = new ClinicalCareService(repo, new FakeUserProgressService());
+
+        TherapyProgramStateDTO? result = await service.AdjustProgramFromScorecardAsync();
+
+        Assert.NotNull(result);
+        Assert.Equal(3, result.CurrentWeek);
+        Assert.Contains(repo.Escalations, e => e.Action == EscalationActions.OfferSpecialistHelp);
+    }
+
+    [Fact]
+    public async Task AdjustProgramFromScorecardAsync_WhenGreen_AdvancesWeekIfDue()
+    {
+        var repo = new FakeClinicalCareRepository();
+        repo.ActiveProgram = new TherapyProgramStateDTO
+        {
+            ProgramType = TherapyProgramType.Stress,
+            StartedAt = DateTime.UtcNow.AddDays(-14),
+            CurrentWeek = 1,
+            IsActive = true
+        };
+        var service = new ClinicalCareService(repo, new FakeUserProgressService());
+
+        TherapyProgramStateDTO? result = await service.AdjustProgramFromScorecardAsync();
+
+        Assert.NotNull(result);
+        Assert.True(result.CurrentWeek >= 2);
+        Assert.Empty(repo.Escalations);
+    }
+
+    [Fact]
     public void TherapyProgramCatalog_HasPoolsForAllPrograms()
     {
         foreach (TherapyProgramType type in Enum.GetValues<TherapyProgramType>())
@@ -82,7 +163,7 @@ public sealed class ClinicalCareServiceTests
     {
         public List<RiskAssessmentDTO> Assessments { get; } = [];
         public List<EscalationEventDTO> Escalations { get; } = [];
-        public TherapyProgramStateDTO? ActiveProgram { get; private set; }
+        public TherapyProgramStateDTO? ActiveProgram { get; set; }
 
         public Task SaveRiskAssessmentAsync(RiskAssessmentDTO assessment, CancellationToken cancellationToken = default)
         {

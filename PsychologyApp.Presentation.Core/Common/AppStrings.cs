@@ -313,8 +313,8 @@ public static partial class AppStrings
 
     public static string PracticeEmptyTitle => T("Пока нет техник", "No techniques yet");
     public static string PracticeEmptyBody => T(
-        "Создайте свою первую технику в конструкторе",
-        "Create your first technique in the designer");
+        "Нажмите «Создать», чтобы добавить первую технику",
+        "Tap Create to add your first technique");
     public static string TestsEmptyTitle => T("Тесты пока недоступны", "Tests are not available yet");
     public static string TestsEmptyBody => T(
         "Нажмите «Обновить», чтобы загрузить список снова",
@@ -352,8 +352,8 @@ public static partial class AppStrings
         "С возвращением — начните с короткой практики",
         "Welcome back — start with a short practice");
     public static string ComebackBannerWithTechnique(string name) => T(
-        $"С возвращением — продолжите «{name}»",
-        $"Welcome back — continue {name}");
+        $"С возвращением — начните с «{name}»",
+        $"Welcome back — start with {name}");
     public static string WeeklyInsightLine(int practiceCount, string moodTrend) =>
         string.IsNullOrEmpty(moodTrend)
             ? T($"На этой неделе: {practiceCount} {PracticeCountWord(practiceCount)}",
@@ -479,6 +479,8 @@ public static partial class AppStrings
         "Add a journal note");
     public static string JournalQuestionsSectionTitle => T("Вопросы", "Questions");
     public static string JournalFactorsSectionTitle => T("Факторы дня", "Day factors");
+    public static string JournalFactorsSummaryLine(string labels) =>
+        T($"Факторы: {labels}", $"Factors: {labels}");
     public static string JournalWeekNavPrev => T("Предыдущая неделя", "Previous week");
     public static string JournalWeekNavNext => T("Следующая неделя", "Next week");
     public static string JournalMonthNavPrev => T("Предыдущий месяц", "Previous month");
@@ -1208,6 +1210,9 @@ public static partial class AppStrings
     public static string ClinicalRedBanner => T(
         "Сначала откройте срочную помощь",
         "Open crisis help first");
+    public static string ClinicalStatusUnavailableBanner => T(
+        "Не удалось загрузить статус безопасности — откройте срочную помощь",
+        "Could not load safety status - open crisis help");
 
     private static string T(string russian, string english) =>
         IsEnglish(Language) ? english : russian;

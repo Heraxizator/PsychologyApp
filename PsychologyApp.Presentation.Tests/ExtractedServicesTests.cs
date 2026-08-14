@@ -1,5 +1,6 @@
 using PsychologyApp.Domain.Practice;
 using Moq;
+using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Quot;
 using PsychologyApp.Application.UserProgress;
@@ -23,84 +24,26 @@ namespace PsychologyApp.Presentation.Tests;
 
 public sealed class PracticeDashboardLoaderTests
 {
-    [Fact]
-    public async Task LoadMoodSnapshot_ReturnsEmptyWhenNoMoods()
-    {
-        Mock<IUserProgressService> progress = new();
-        progress.Setup(p => p.GetRecentMoodsAsync(3, It.IsAny<CancellationToken>())).ReturnsAsync([]);
-        Mock<IUserPreferencesStore> preferences = new();
-        preferences.Setup(p => p.Load()).Returns(new UserPreferencesState { OnboardingConcern = OnboardingConcernKeys.Anxiety });
-
-        PracticeDashboardLoader loader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
-        MoodSnapshot snapshot = await loader.LoadMoodSnapshotAsync();
-
-        Assert.Equal(string.Empty, snapshot.TodayMoodDisplay);
-        Assert.Equal(0, snapshot.SelectedMoodLevel);
-    }
+    private static PracticeDashboardLoader CreateLoader(
+        IUserProgressService progress,
+        IUserPreferencesStore preferences) =>
+        new(
+            progress,
+            preferences,
+            TechniqueCatalogTestHelper.CreateTodayRecommendationResolver(),
+            Mock.Of<IClinicalCareService>());
 
     [Fact]
-    public async Task LoadWeeklyInsight_HidesWhenNoWeekData()
+    public async Task LoadStreakDays_ReturnsProgressValue()
     {
         Mock<IUserProgressService> progress = new();
-        progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync([]);
-        progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync([]);
-        progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
-        progress.Setup(p => p.GetMostRecentTestResultAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync((TestResultDTO?)null);
+        progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(5);
         Mock<IUserPreferencesStore> preferences = new();
 
-        PracticeDashboardLoader loader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
-        WeeklyInsightSnapshot insight = await loader.LoadWeeklyInsightAsync();
+        PracticeDashboardLoader loader = CreateLoader(progress.Object, preferences.Object);
+        int streak = await loader.LoadStreakDaysAsync();
 
-        Assert.False(insight.HasInsight);
-    }
-
-    [Fact]
-    public async Task LoadWeeklyInsight_ShowsPracticeCount_WhenCompletionsThisWeek()
-    {
-        Mock<IUserProgressService> progress = new();
-        progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(
-            [
-                new CompletionDTO
-                {
-                    ItemKey = "Spin",
-                    PageName = "Spin",
-                    CompletedAt = DateTime.UtcNow
-                }
-            ]);
-        progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync([]);
-        progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(3);
-        progress.Setup(p => p.GetMostRecentTestResultAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync((TestResultDTO?)null);
-        Mock<IUserPreferencesStore> preferences = new();
-
-        PracticeDashboardLoader loader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
-        WeeklyInsightSnapshot insight = await loader.LoadWeeklyInsightAsync();
-
-        Assert.True(insight.HasInsight);
-        Assert.Contains("1", insight.DisplayText, StringComparison.Ordinal);
-        Assert.Contains("3", insight.DisplayText, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public async Task LoadLastTechniqueName_ReturnsPageName()
-    {
-        Mock<IUserProgressService> progress = new();
-        progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(1, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(
-            [
-                new CompletionDTO { ItemKey = "Spin", PageName = "Вращение", CompletedAt = DateTime.UtcNow }
-            ]);
-        Mock<IUserPreferencesStore> preferences = new();
-
-        PracticeDashboardLoader loader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
-        string? name = await loader.LoadLastTechniqueNameAsync();
-
-        Assert.Equal("Вращение", name);
+        Assert.Equal(5, streak);
     }
 
     [Fact]
@@ -119,10 +62,59 @@ public sealed class PracticeDashboardLoaderTests
         preferences.Setup(p => p.Load()).Returns(new UserPreferencesState { OnboardingConcern = OnboardingConcernKeys.Mood });
         Mock<INavigationService> navigation = new();
 
-        PracticeDashboardLoader loader = new(progress.Object, preferences.Object, TechniqueCatalogTestHelper.CreateTodayRecommendationResolver());
-        TodayRecommendationResult result = await loader.ResolveTodayRecommendationAsync(streakDays: 0, navigation.Object);
+        PracticeDashboardLoader loader = CreateLoader(progress.Object, preferences.Object);
+        TodayRecommendationResult result = await loader.ResolveTodayRecommendationAsync(navigation.Object);
 
         Assert.Equal(TechniqueId.SmallStep, result.TechniqueId);
+    }
+}
+
+public sealed class WeeklyInsightLoaderTests
+{
+    [Fact]
+    public async Task Load_HidesWhenNoWeekData()
+    {
+        Mock<IUserProgressService> progress = new();
+        progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+        progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+        progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
+        progress.Setup(p => p.GetMostRecentTestResultAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((TestResultDTO?)null);
+
+        WeeklyInsightLoader loader = new(progress.Object);
+        WeeklyInsightSnapshot insight = await loader.LoadAsync();
+
+        Assert.False(insight.HasInsight);
+    }
+
+    [Fact]
+    public async Task Load_ShowsPracticeCount_WhenCompletionsThisWeek()
+    {
+        Mock<IUserProgressService> progress = new();
+        progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(
+            [
+                new CompletionDTO
+                {
+                    ItemKey = "Spin",
+                    PageName = "Spin",
+                    CompletedAt = DateTime.UtcNow
+                }
+            ]);
+        progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+        progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(3);
+        progress.Setup(p => p.GetMostRecentTestResultAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((TestResultDTO?)null);
+
+        WeeklyInsightLoader loader = new(progress.Object);
+        WeeklyInsightSnapshot insight = await loader.LoadAsync();
+
+        Assert.True(insight.HasInsight);
+        Assert.Contains("1", insight.DisplayText, StringComparison.Ordinal);
+        Assert.Contains("3", insight.DisplayText, StringComparison.Ordinal);
     }
 }
 

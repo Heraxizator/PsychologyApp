@@ -11,6 +11,7 @@ namespace PsychologyApp.Presentation.Pages.ManageProfile.ProfileSettings;
 
 public partial class SettingsViewModel : BaseViewModel
 {
+    private static readonly TimeSpan AutoSaveDebounceDelay = TimeSpan.FromMilliseconds(700);
     private readonly IDialogService _dialogService;
     private readonly INavigationService _navigationService;
     private readonly IUserPreferencesStore _userPreferencesStore;
@@ -20,6 +21,8 @@ public partial class SettingsViewModel : BaseViewModel
     private readonly IQuoteReminderCoordinator _quoteReminderCoordinator;
     private readonly IMoodReminderCoordinator _moodReminderCoordinator;
     private readonly bool _areRemindersSupported;
+    private readonly SemaphoreSlim _saveLock = new(1, 1);
+    private CancellationTokenSource? _autoSaveDebounceCts;
     private UserPreferencesState _savedState;
 
     public bool AreRemindersSupported => _areRemindersSupported;

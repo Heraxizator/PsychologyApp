@@ -76,7 +76,6 @@ public static class MauiProgram
                 () => AppStrings.IsEnglish(AppStrings.Language) ? "en" : "ru"));
         builder.Services.AddSingleton(sp => new BuiltInTechniqueCatalogProvider(
             () => AppStrings.IsEnglish(AppStrings.Language) ? "en" : "ru"));
-        builder.Services.AddCachedTechniqueCatalogProvider();
         builder.Services.AddPsychologyAppPresentation();
         builder.Services.AddSingleton<AppShell>();
         builder.Services.AddSingleton<IShellTabNavigator>(sp =>

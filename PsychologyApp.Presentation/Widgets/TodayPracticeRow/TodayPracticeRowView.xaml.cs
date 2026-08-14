@@ -65,6 +65,33 @@ public partial class TodayPracticeRowView : ContentView
         set => SetValue(SubtitleProperty, value);
     }
 
+    public static readonly BindableProperty DateTextProperty =
+        BindableProperty.Create(nameof(DateText), typeof(string), typeof(TodayPracticeRowView), string.Empty);
+
+    public string DateText
+    {
+        get => (string)GetValue(DateTextProperty);
+        set => SetValue(DateTextProperty, value);
+    }
+
+    public static readonly BindableProperty NudgeTextProperty =
+        BindableProperty.Create(nameof(NudgeText), typeof(string), typeof(TodayPracticeRowView), string.Empty);
+
+    public string NudgeText
+    {
+        get => (string)GetValue(NudgeTextProperty);
+        set => SetValue(NudgeTextProperty, value);
+    }
+
+    public static readonly BindableProperty HasNudgeProperty =
+        BindableProperty.Create(nameof(HasNudge), typeof(bool), typeof(TodayPracticeRowView), false);
+
+    public bool HasNudge
+    {
+        get => (bool)GetValue(HasNudgeProperty);
+        set => SetValue(HasNudgeProperty, value);
+    }
+
     public static readonly BindableProperty ReasonTextProperty =
         BindableProperty.Create(nameof(ReasonText), typeof(string), typeof(TodayPracticeRowView), string.Empty);
 

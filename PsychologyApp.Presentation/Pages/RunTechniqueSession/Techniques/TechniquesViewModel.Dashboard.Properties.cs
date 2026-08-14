@@ -1,9 +1,6 @@
-﻿using PsychologyApp.Application.ClinicalCare;
-using PsychologyApp.Application.Models;
-using PsychologyApp.Presentation.Shared.Common;
+﻿using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
-using PsychologyApp.Domain.Practice;
 
 namespace PsychologyApp.Presentation.Pages.RunTechniqueSession.Techniques;
 
@@ -40,19 +37,6 @@ public partial class TechniquesViewModel
         }
     }
 
-    private string? _lastTechniqueName;
-    public string? LastTechniqueName
-    {
-        get => _lastTechniqueName;
-        private set
-        {
-            if (SetProperty(ref _lastTechniqueName, value))
-            {
-                NotifyEngagementNudge();
-            }
-        }
-    }
-
     private bool _hasTodayDraft;
     public bool HasTodayDraft
     {
@@ -73,12 +57,9 @@ public partial class TechniquesViewModel
     public string EngagementNudgeText =>
         ShowStreakAtRiskBanner
             ? AppStrings.StreakAtRiskBanner(AtRiskStreakDays)
-            : !string.IsNullOrWhiteSpace(LastTechniqueName)
-                ? AppStrings.ComebackBannerWithTechnique(LastTechniqueName)
+            : !string.IsNullOrWhiteSpace(TodayTechniqueItem?.Title)
+                ? AppStrings.ComebackBannerWithTechnique(TodayTechniqueItem.Title)
                 : AppStrings.ComebackBanner;
-
-    public string TodayPrimaryReason =>
-        ShowEngagementNudge ? EngagementNudgeText : TodayReasonText;
 
     public string TodayActionText =>
         HasTodayDraft ? AppStrings.TechniqueContinueBadge : AppStrings.TodayStartPractice;
@@ -87,7 +68,13 @@ public partial class TechniquesViewModel
     public TechniqueItem? TodayTechniqueItem
     {
         get => _todayTechniqueItem;
-        private set => SetProperty(ref _todayTechniqueItem, value);
+        private set
+        {
+            if (SetProperty(ref _todayTechniqueItem, value))
+            {
+                NotifyEngagementNudge();
+            }
+        }
     }
 
     private int _streakDays;
@@ -141,29 +128,7 @@ public partial class TechniquesViewModel
         OnPropertyChanged(nameof(ShowComebackBanner));
         OnPropertyChanged(nameof(ShowEngagementNudge));
         OnPropertyChanged(nameof(EngagementNudgeText));
-        OnPropertyChanged(nameof(TodayPrimaryReason));
     }
 
     private TechniqueId _todayTechniqueId = TechniqueId.Spin;
-
-    private static string FormatProgramBanner(TherapyProgramStateDTO program, int completedInWeek = 0, int targetPractices = 0)
-    {
-        string name = program.ProgramType switch
-        {
-            TherapyProgramType.Anxiety => AppStrings.TherapyProgramAnxiety,
-            TherapyProgramType.Mood => AppStrings.TherapyProgramMood,
-            _ => AppStrings.TherapyProgramStress
-        };
-        string goal = AppStrings.TherapyProgramWeekGoal(program.CurrentWeek);
-        return targetPractices > 0
-            ? AppStrings.TherapyProgramBanner(name, program.CurrentWeek, goal, completedInWeek, targetPractices)
-            : AppStrings.TherapyProgramBanner(name, program.CurrentWeek, goal);
-    }
-
-    private static string FormatRiskBanner(RiskLevel level) => level switch
-    {
-        RiskLevel.Red => AppStrings.ClinicalRedBanner,
-        RiskLevel.Amber => AppStrings.ClinicalAmberBanner,
-        _ => string.Empty
-    };
 }
