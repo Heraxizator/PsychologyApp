@@ -54,6 +54,13 @@
 
 ---
 
+## 🔗 Project Meta
+
+- Release notes: [`CHANGELOG.md`](CHANGELOG.md)
+- Contribution guide: [`CONTRIBUTING.md`](CONTRIBUTING.md)
+
+---
+
 ## 📋 Содержание
 
 - [Описание проекта](#-описание-проекта)
