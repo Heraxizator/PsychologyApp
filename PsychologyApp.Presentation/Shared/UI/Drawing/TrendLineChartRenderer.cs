@@ -31,10 +31,10 @@ public static class TrendLineChartRenderer
         float plotBottom = plotTop + plotHeight;
 
         Color primary = ResolveColor("Primary", Colors.SteelBlue);
-        Color primaryTint = ResolveColor("PrimaryTint", primary.WithAlpha(0.25f));
-        Color gridColor = ResolveColor("NeutralBorder", Colors.Gray.WithAlpha(0.35f));
-        Color labelColor = ResolveColor("TextSecondary", Colors.Gray);
-        Color surfaceColor = ResolveColor("SurfaceElevatedLight", Colors.White);
+        Color primaryTint = ResolveThemedColor("PrimaryTint", "PrimaryTintDark", primary.WithAlpha(0.25f));
+        Color gridColor = ResolveThemedColor("NeutralBorder", "InputBorderDark", Colors.Gray.WithAlpha(0.35f));
+        Color labelColor = ResolveThemedColor("TextSecondaryLight", "TextSecondaryDark", Colors.Gray);
+        Color surfaceColor = ResolveThemedColor("SurfaceElevatedLight", "SurfaceElevatedDark", Colors.White);
 
         DrawGrid(canvas, plotLeft, plotTop, plotWidth, plotHeight, plotRight, plotBottom, layout, gridColor, labelColor, options.FormatScore);
 
@@ -185,5 +185,22 @@ public static class TrendLineChartRenderer
         }
 
         return fallback;
+    }
+
+    private static Color ResolveThemedColor(string lightKey, string darkKey, Color fallback)
+    {
+        Microsoft.Maui.Controls.Application? app = Microsoft.Maui.Controls.Application.Current;
+        if (app is null)
+        {
+            return fallback;
+        }
+
+        string selectedKey = app.RequestedTheme == AppTheme.Dark ? darkKey : lightKey;
+        if (app.Resources.TryGetValue(selectedKey, out object? value) && value is Color color)
+        {
+            return color;
+        }
+
+        return ResolveColor(lightKey, fallback);
     }
 }

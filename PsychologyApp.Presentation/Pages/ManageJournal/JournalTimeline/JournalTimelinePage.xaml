@@ -43,6 +43,7 @@
             Grid.Row="3"
             IsVisible="{Binding HasMoodNotes}"
             ItemsSource="{Binding TimelineItems}"
+            ItemSizingStrategy="MeasureAllItems"
             SelectionMode="None"
             VerticalScrollBarVisibility="Never">
             <CollectionView.ItemTemplate>

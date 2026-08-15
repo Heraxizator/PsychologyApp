@@ -9,12 +9,18 @@
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
-    <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+    <Grid
+        Margin="{StaticResource LayoutPageMarginThickness}"
+        RowDefinitions="Auto,*"
+        RowSpacing="{StaticResource LayoutSpacing}">
         <ui:NavigationBarSimpleView
+            Grid.Row="0"
             TitleText="{Binding PageTitle}"
             BackCommand="{Binding BackCommand}" />
 
-        <ScrollView VerticalScrollBarVisibility="Never">
+        <ScrollView
+            Grid.Row="1"
+            VerticalScrollBarVisibility="Never">
             <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
                 <VerticalStackLayout.Behaviors>
                     <behaviors:StaggerChildrenBehavior />
@@ -87,5 +93,5 @@
                 </ui:SettingsLinkCardView>
             </VerticalStackLayout>
         </ScrollView>
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

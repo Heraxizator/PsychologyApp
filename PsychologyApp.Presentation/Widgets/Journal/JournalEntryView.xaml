@@ -53,8 +53,7 @@
                 <Label
                     Text="{Binding NoteText, Source={x:Reference Root}}"
                     Style="{StaticResource ListRowTitleStyle}"
-                    LineBreakMode="WordWrap"
-                    MaxLines="3">
+                    LineBreakMode="WordWrap">
                     <Label.Triggers>
                         <DataTrigger
                             TargetType="Label"

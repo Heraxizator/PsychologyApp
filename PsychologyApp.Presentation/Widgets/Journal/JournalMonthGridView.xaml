@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:journal="clr-namespace:PsychologyApp.Presentation.Entities.Journal"
+             xmlns:journal="clr-namespace:PsychologyApp.Presentation.Entities.Journal;assembly=PsychologyApp.Presentation.Core"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:Class="PsychologyApp.Presentation.Widgets.Journal.JournalMonthGridView"
              x:Name="Root">
