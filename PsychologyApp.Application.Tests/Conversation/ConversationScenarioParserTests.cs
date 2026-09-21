@@ -17,17 +17,38 @@ public class ConversationScenarioParserTests
     }
     """;
 
-    [Theory]
-    [InlineData("ru")]
-    [InlineData("en")]
-    public void Shipped_observer_scenarios_are_valid(string language)
+    public static TheoryData<string> ShippedScenarioFiles()
     {
-        string json = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "conversations", language == "ru" ? "Observer.json" : $"Observer.{language}.json"));
+        TheoryData<string> data = [];
+        foreach (string path in Directory.GetFiles(Path.Combine(AppContext.BaseDirectory, "conversations"), "*.json"))
+        {
+            data.Add(Path.GetFileName(path));
+        }
+
+        return data;
+    }
+
+    [Theory]
+    [MemberData(nameof(ShippedScenarioFiles))]
+    public void Shipped_scenarios_are_valid_and_match_their_file_name(string fileName)
+    {
+        string json = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "conversations", fileName));
 
         ParseResult<ConversationScenario> result = ConversationScenarioParser.Parse(json);
 
         Assert.True(result.IsSuccess, result.Error);
-        Assert.Equal("Observer", result.Value!.Id);
+        Assert.Equal(fileName.Split('.')[0], result.Value!.Id);
+    }
+
+    [Theory]
+    [InlineData(TechniqueId.Observer)]
+    [InlineData(TechniqueId.Grounding)]
+    public void Every_dialogue_technique_ships_russian_and_english_scenarios(TechniqueId id)
+    {
+        string dir = Path.Combine(AppContext.BaseDirectory, "conversations");
+
+        Assert.True(File.Exists(Path.Combine(dir, $"{id}.json")));
+        Assert.True(File.Exists(Path.Combine(dir, $"{id}.en.json")));
     }
 
     [Fact]

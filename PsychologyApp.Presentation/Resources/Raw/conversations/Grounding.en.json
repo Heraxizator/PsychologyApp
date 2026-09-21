@@ -1,0 +1,155 @@
+{
+  "id": "Grounding",
+  "title": "5-4-3-2-1 grounding",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "I'm here. We'll come back to the present moment through your senses. It takes about three minutes.",
+        "Let's calmly return to the present together. Three minutes, step by step."
+      ],
+      "next": "intro_breath"
+    },
+    {
+      "id": "intro_breath",
+      "kind": "say",
+      "text": [ "First, take one slow breath out, longer than the breath in. Nothing else is needed." ],
+      "next": "ask_before"
+    },
+    {
+      "id": "ask_before",
+      "kind": "askRating",
+      "text": [
+        "How strong is your anxiety or tension right now? From 0 to 10.",
+        "Rate your tension right now: 0 is calm, 10 is very hard."
+      ],
+      "capture": "rating_before",
+      "next": "step_see"
+    },
+    {
+      "id": "step_see",
+      "kind": "say",
+      "text": [ "Okay. Let's begin. Look around, no rush." ],
+      "next": "ask_see"
+    },
+    {
+      "id": "ask_see",
+      "kind": "askText",
+      "text": [ "Name 5 things you can see. Commas are fine." ],
+      "hint": "For example: window, cup, book, lamp, my hand",
+      "capture": "see",
+      "next": "react_see"
+    },
+    {
+      "id": "react_see",
+      "kind": "say",
+      "text": [
+        "You see: {see}. Great. Breathe out.",
+        "{see}. Good, you can see all of that right now. Breathe out."
+      ],
+      "next": "ask_touch"
+    },
+    {
+      "id": "ask_touch",
+      "kind": "askText",
+      "text": [ "Now 4 things you feel with your body: what supports you, clothes on your skin, the air." ],
+      "hint": "For example: chair, floor, fabric, cool air",
+      "capture": "touch",
+      "next": "react_touch"
+    },
+    {
+      "id": "react_touch",
+      "kind": "say",
+      "text": [ "You feel: {touch}. Your body is here, and it is supported." ],
+      "next": "ask_hear"
+    },
+    {
+      "id": "ask_hear",
+      "kind": "askText",
+      "text": [ "Listen. Name 3 sounds around you, even the quietest. You can hear your own breathing." ],
+      "hint": "For example: clock, street, breathing",
+      "capture": "hear",
+      "next": "react_hear"
+    },
+    {
+      "id": "react_hear",
+      "kind": "say",
+      "text": [ "You hear: {hear}. Notice that the sounds simply exist, and you can tell them apart." ],
+      "next": "ask_smell"
+    },
+    {
+      "id": "ask_smell",
+      "kind": "askText",
+      "text": [ "Now 2 smells. If you can't smell anything right now, recall your favourites." ],
+      "hint": "For example: coffee, fresh air",
+      "capture": "smell",
+      "next": "ask_taste"
+    },
+    {
+      "id": "ask_taste",
+      "kind": "askText",
+      "text": [ "And the last one: 1 taste or pleasant sensation. For example, water in your mouth or soft fabric under your fingers." ],
+      "hint": "For example: the taste of water",
+      "capture": "taste",
+      "next": "wrap"
+    },
+    {
+      "id": "wrap",
+      "kind": "say",
+      "text": [
+        "You went through all five channels. Take one more slow breath in and out.",
+        "Done: five channels complete. One more calm breath in and out."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "How is the tension now? From 0 to 10.",
+        "Rate your tension once more, from 0 to 10."
+      ],
+      "capture": "rating_after",
+      "routes": [
+        { "below": "rating_before", "next": "end_better" },
+        { "same": "rating_before", "next": "end_same" },
+        { "next": "end_worse" }
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [ "It was {rating_before}, now {rating_after}. Your attention is back in the present. You can repeat this anywhere: 5-4-3-2-1 is always with you." ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [ "The tension stayed at {rating_after}. That happens: try again more slowly, or run warm water over your hands for a minute." ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [ "The tension went up (was {rating_before}, now {rating_after}), and that isn't your fault. If it feels severe or doesn't pass, reach out to someone close or a professional. If your life is at risk, call your local emergency number." ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [ "I'm very sorry you're in so much pain right now. What you wrote matters more than any technique, so I'm stopping the exercise." ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [ "Please talk to a real person right now. If your life may be at risk, call your local emergency number (112 in the EU, 911 in the US, 988 for the US Suicide and Crisis Lifeline). If someone is nearby, tell them you're not okay." ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [ "I'm an app, not a professional, and I can't keep you safe. You deserve support. Please reach out for it." ]
+    }
+  ]
+}

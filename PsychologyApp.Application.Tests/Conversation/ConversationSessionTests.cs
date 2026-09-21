@@ -170,6 +170,45 @@ public class ConversationSessionTests
         Assert.True(greetings.Count > 1);
     }
 
+    [Theory]
+    [InlineData("Grounding.json", "Было 8, стало 3")]
+    [InlineData("Grounding.en.json", "It was 8, now 3")]
+    public void Grounding_walks_all_five_senses_and_compares_ratings(string fileName, string expectedFinal)
+    {
+        ParseResult<ConversationScenario> parsed = ConversationScenarioParser.Parse(
+            File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "conversations", fileName)));
+        Assert.True(parsed.IsSuccess, parsed.Error);
+        ConversationSession session = new(parsed.Value!, new KeywordCrisisDetector(), new Random(1));
+        session.Start();
+
+        session.SubmitRating(8);
+        ConversationTurn turn = session.SubmitText("окно, чашка, книга, лампа, рука");
+        Assert.Contains(turn.BotMessages, m => m.Contains("окно, чашка"));
+        session.SubmitText("стул");
+        session.SubmitText("часы");
+        session.SubmitText("кофе");
+        turn = session.SubmitText("вода");
+        Assert.Equal(ConversationInputKind.Rating, turn.Prompt!.Kind);
+
+        turn = session.SubmitRating(3);
+
+        Assert.Equal(ConversationStatus.Completed, turn.Status);
+        Assert.Contains(expectedFinal, turn.BotMessages[^1]);
+    }
+
+    [Fact]
+    public void Grounding_high_tension_does_not_stop_the_exercise()
+    {
+        ParseResult<ConversationScenario> parsed = ConversationScenarioParser.Parse(
+            File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "conversations", "Grounding.json")));
+        ConversationSession session = new(parsed.Value!, new KeywordCrisisDetector(), new Random(1));
+        session.Start();
+
+        ConversationTurn turn = session.SubmitRating(10);
+
+        Assert.Equal(ConversationInputKind.Text, turn.Prompt!.Kind);
+    }
+
     [Fact]
     public void English_scenario_runs_end_to_end()
     {

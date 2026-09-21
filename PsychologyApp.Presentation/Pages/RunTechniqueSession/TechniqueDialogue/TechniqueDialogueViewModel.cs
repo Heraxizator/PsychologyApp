@@ -267,7 +267,12 @@ public sealed class TechniqueDialogueViewModel : BaseViewModel
     {
         _inputKind = null;
         IsCrisis = status == ConversationStatus.Interrupted;
-        FinishText = status == ConversationStatus.Completed ? AppStrings.DialogueFinish : AppStrings.DialogueClose;
+        FinishText = status switch
+        {
+            ConversationStatus.Completed => AppStrings.DialogueFinish,
+            ConversationStatus.Interrupted => AppStrings.CrisisHubTitle,
+            _ => AppStrings.DialogueClose
+        };
         _finalStatus = status;
         IsFinished = true;
     }
@@ -281,6 +286,12 @@ public sealed class TechniqueDialogueViewModel : BaseViewModel
     private async Task FinishAsync()
     {
         _isClosed = true;
+
+        if (_finalStatus == ConversationStatus.Interrupted)
+        {
+            await NavigationService!.GoToCrisisHubAsync();
+            return;
+        }
 
         if (_finalStatus != ConversationStatus.Completed)
         {
