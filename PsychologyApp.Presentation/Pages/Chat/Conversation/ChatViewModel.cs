@@ -8,9 +8,16 @@ using PsychologyApp.Presentation.Shared.ViewModels;
 
 namespace PsychologyApp.Presentation.Pages.Chat.Conversation;
 
-public sealed record ChatBubble(string Text, bool IsUser, string TimeText)
+/// <param name="TimeText">Clock time shown inside the bubble.</param>
+/// <param name="DateText">Set on the first message of a day: the divider shown above it ("Today", "21 September").</param>
+/// <param name="StartsGroup">First bubble of a run from the same sender: gets more space above it, like in real messengers.</param>
+public sealed record ChatBubble(string Text, bool IsUser, string TimeText, string? DateText = null, bool StartsGroup = true)
 {
     public LayoutOptions Alignment => IsUser ? LayoutOptions.End : LayoutOptions.Start;
+
+    public bool HasDate => DateText is not null;
+
+    public Thickness OuterMargin => new(0, StartsGroup ? 10 : 2, 0, 0);
 }
 
 /// <summary>A suggestion chip under the last companion message. Carries its own command so the template needs no ancestor binding.</summary>
@@ -38,6 +45,8 @@ public sealed class ChatViewModel : BaseViewModel
     private string _title = string.Empty;
     private string _draftText = string.Empty;
     private bool _isTyping;
+    private DateTime? _lastCreatedUtc;
+    private bool? _lastWasUser;
 
     public ChatViewModel(
         IChatService chat,
@@ -75,16 +84,34 @@ public sealed class ChatViewModel : BaseViewModel
     public string DraftText
     {
         get => _draftText;
-        set => SetProperty(ref _draftText, value);
+        set
+        {
+            if (SetProperty(ref _draftText, value))
+            {
+                OnPropertyChanged(nameof(CanSend));
+            }
+        }
     }
 
     public bool IsTyping
     {
         get => _isTyping;
-        private set => SetProperty(ref _isTyping, value);
+        private set
+        {
+            if (SetProperty(ref _isTyping, value))
+            {
+                OnPropertyChanged(nameof(StatusText));
+            }
+        }
     }
 
     public bool HasQuickReplies => QuickReplies.Count > 0;
+
+    /// <summary>The send button is lit only when there is something to send.</summary>
+    public bool CanSend => !string.IsNullOrWhiteSpace(_draftText);
+
+    /// <summary>Subtitle under the chat name: "typing..." while the companion answers, otherwise a privacy reminder.</summary>
+    public string StatusText => IsTyping ? AppStrings.DialogueTyping : AppStrings.ChatStatusIdle;
 
     public string Placeholder => AppStrings.ChatInputPlaceholder;
     public string SendText => AppStrings.Send;
@@ -114,7 +141,7 @@ public sealed class ChatViewModel : BaseViewModel
         IReadOnlyList<ChatMessageDTO> history = await _chat.GetMessagesAsync(_sessionId.Value, _lifetime.Token);
         foreach (ChatMessageDTO message in history)
         {
-            Messages.Add(ToBubble(message));
+            AddBubble(message.Text, message.Role == ChatRole.User, message.CreatedAt);
         }
 
         ChatMessageDTO? last = history.LastOrDefault();
@@ -153,7 +180,7 @@ public sealed class ChatViewModel : BaseViewModel
     public void Close() => _lifetime.Cancel();
 
     protected override void RefreshLocalizedProperties() =>
-        Notify(nameof(Placeholder), nameof(SendText), nameof(TypingText));
+        Notify(nameof(Placeholder), nameof(SendText), nameof(TypingText), nameof(StatusText));
 
     private void Run(Func<Task> action)
     {
@@ -204,7 +231,7 @@ public sealed class ChatViewModel : BaseViewModel
 
     private async Task TakeTurnAsync(string userText, Func<Task<ChatTurnResult>> send)
     {
-        Messages.Add(new ChatBubble(userText, IsUser: true, ChatTimeFormatter.Short(Now(), Now(), _language.IsEnglish)));
+        AddBubble(userText, isUser: true, Now());
         SetQuickReplies([]);
         IsTyping = true;
 
@@ -223,7 +250,7 @@ public sealed class ChatViewModel : BaseViewModel
             IsTyping = true;
             await Task.Delay(Math.Clamp(message.Text.Length * PerCharacterDelayMs, MinTypingDelayMs, MaxTypingDelayMs), _lifetime.Token);
             IsTyping = false;
-            Messages.Add(ToBubble(message));
+            AddBubble(message.Text, message.Role == ChatRole.User, message.CreatedAt);
         }
 
         IsTyping = false;
@@ -257,8 +284,20 @@ public sealed class ChatViewModel : BaseViewModel
         OnPropertyChanged(nameof(HasQuickReplies));
     }
 
-    private ChatBubble ToBubble(ChatMessageDTO message) =>
-        new(message.Text, message.Role == ChatRole.User, ChatTimeFormatter.Short(message.CreatedAt, Now(), _language.IsEnglish));
+    /// <summary>Adds a bubble, putting a day divider above the first message of a day and tightening the spacing inside a run from one sender.</summary>
+    private void AddBubble(string text, bool isUser, DateTime createdUtc)
+    {
+        DateTime now = Now();
+        bool newDay = _lastCreatedUtc is not { } last || !ChatTimeFormatter.SameDay(last, createdUtc);
+        Messages.Add(new ChatBubble(
+            text,
+            isUser,
+            ChatTimeFormatter.Clock(createdUtc),
+            newDay ? ChatTimeFormatter.DayLabel(createdUtc, now, _language.IsEnglish) : null,
+            StartsGroup: newDay || _lastWasUser != isUser));
+        _lastCreatedUtc = createdUtc;
+        _lastWasUser = isUser;
+    }
 
     private DateTime Now() => _time.GetUtcNow().UtcDateTime;
 }

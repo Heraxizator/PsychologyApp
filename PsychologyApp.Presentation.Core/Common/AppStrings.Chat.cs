@@ -29,5 +29,6 @@ public static partial class AppStrings
     public static string ChatHeroStart => T("Начать разговор", "Start talking");
     public static string ChatHeroAllChats => T("Все чаты", "All chats");
     public static string ChatHeroNewChat => T("Новый чат", "New chat");
+    public static string ChatStatusIdle => T("Собеседник · всё остаётся на вашем телефоне", "Companion · everything stays on your phone");
     public static string ChatError => T("Не удалось отправить сообщение. Попробуйте ещё раз.", "Could not send the message. Please try again.");
 }
