@@ -23,5 +23,7 @@ public static class LocalModelCatalog
         ],
         // Evaluated on 21 realistic messages (see docs/local-llm.md): English replies are usable, Russian replies from a 1B model are
         // often ungrammatical or invented. Add "ru" only after a Russian-capable model passes tools/PsychologyApp.LlmEval and a native-speaker review.
-        Languages: ["en"]);
+        Languages: ["en"],
+        // The 1B weights need roughly 1.5 GB resident; keep generous headroom for the rest of the app.
+        MinTotalMemoryBytes: 3L * 1024 * 1024 * 1024);
 }

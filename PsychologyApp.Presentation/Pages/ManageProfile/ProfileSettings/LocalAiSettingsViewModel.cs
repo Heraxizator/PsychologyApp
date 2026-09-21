@@ -13,6 +13,7 @@ public sealed class LocalAiSettingsViewModel : BaseViewModel
 
     private readonly ILocalModelInstaller _installer;
     private readonly ILocalLanguageModel _model;
+    private readonly IDeviceCapabilities _device;
     private readonly IDialogService _dialogs;
 
     private CancellationTokenSource? _download;
@@ -21,10 +22,11 @@ public sealed class LocalAiSettingsViewModel : BaseViewModel
     private double _progress;
     private string _statusText = string.Empty;
 
-    public LocalAiSettingsViewModel(ILocalModelInstaller installer, ILocalLanguageModel model, IDialogService dialogs)
+    public LocalAiSettingsViewModel(ILocalModelInstaller installer, ILocalLanguageModel model, IDeviceCapabilities device, IDialogService dialogs)
     {
         _installer = installer;
         _model = model;
+        _device = device;
         _dialogs = dialogs;
         _isInstalled = installer.IsInstalled;
 
@@ -48,7 +50,19 @@ public sealed class LocalAiSettingsViewModel : BaseViewModel
     public string CancelText => AppStrings.LocalAiCancelDownload;
     public string DeleteText => AppStrings.LocalAiDeleteAction;
 
-    public bool CanDownload => !_isInstalled && !_isDownloading;
+    public LocalModelEligibility Eligibility => LocalModelEligibilityChecker.Check(_installer.Manifest, _device);
+
+    public bool CanDownload => !_isInstalled && !_isDownloading && Eligibility == LocalModelEligibility.Eligible;
+
+    /// <summary>Explains why the download is not offered on this device, instead of silently hiding the button.</summary>
+    public string IneligibleText => Eligibility switch
+    {
+        LocalModelEligibility.NotEnoughMemory => AppStrings.LocalAiNotEnoughMemory(_installer.Manifest.MinTotalMemoryBytes / (1024 * 1024 * 1024)),
+        LocalModelEligibility.NotEnoughStorage => AppStrings.LocalAiNotEnoughStorage(ModelMegabytes),
+        _ => string.Empty
+    };
+
+    public bool ShowIneligible => !_isInstalled && !_isDownloading && Eligibility != LocalModelEligibility.Eligible;
     public bool ShowStatus => _statusText.Length > 0;
 
     public bool IsDownloading
@@ -58,7 +72,7 @@ public sealed class LocalAiSettingsViewModel : BaseViewModel
         {
             if (SetProperty(ref _isDownloading, value))
             {
-                Notify(nameof(CanDownload));
+                Notify(nameof(CanDownload), nameof(ShowIneligible));
             }
         }
     }
@@ -70,7 +84,7 @@ public sealed class LocalAiSettingsViewModel : BaseViewModel
         {
             if (SetProperty(ref _isInstalled, value))
             {
-                Notify(nameof(CanDownload));
+                Notify(nameof(CanDownload), nameof(ShowIneligible));
             }
         }
     }
@@ -96,7 +110,7 @@ public sealed class LocalAiSettingsViewModel : BaseViewModel
     private long ModelMegabytes => Math.Max(1, _installer.Manifest.TotalBytes / BytesPerMegabyte);
 
     protected override void RefreshLocalizedProperties() =>
-        Notify(nameof(IsSupported), nameof(Title), nameof(Description), nameof(ExperimentalNote), nameof(DownloadText), nameof(CancelText), nameof(DeleteText));
+        Notify(nameof(IsSupported), nameof(IneligibleText), nameof(Title), nameof(Description), nameof(ExperimentalNote), nameof(DownloadText), nameof(CancelText), nameof(DeleteText));
 
     private async Task DownloadAsync()
     {

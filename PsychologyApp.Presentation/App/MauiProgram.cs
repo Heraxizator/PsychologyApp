@@ -62,6 +62,7 @@ public static class MauiProgram
         });
 
         builder.Services.AddPsychologyAppLocalModel(System.IO.Path.Combine(FileSystem.AppDataDirectory, "llm"));
+        builder.Services.AddSingleton<IDeviceCapabilities, DeviceCapabilities>();
         builder.Services.AddSingleton<MauiReasonContentProvider>();
         builder.Services.AddPsychologyAppCachedReasonContent(sp =>
             new CachedReasonContentProvider(

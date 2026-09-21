@@ -116,6 +116,7 @@ public sealed class SettingsViewModelFactory(
     IPracticeReminderScheduler practiceReminderScheduler,
     ILocalModelInstaller localModelInstaller,
     ILocalLanguageModel localLanguageModel,
+    IDeviceCapabilities deviceCapabilities,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, ISettingsViewModelFactory
 {
     public SettingsViewModel Create(ContentPage page) =>
@@ -129,7 +130,7 @@ public sealed class SettingsViewModelFactory(
             quoteReminderCoordinator,
             moodReminderCoordinator,
             practiceReminderScheduler,
-            new LocalAiSettingsViewModel(localModelInstaller, localLanguageModel, dialogService));
+            new LocalAiSettingsViewModel(localModelInstaller, localLanguageModel, deviceCapabilities, dialogService));
 }
 
 public interface IInfoViewModelFactory

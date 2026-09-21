@@ -40,5 +40,13 @@ public static partial class AppStrings
         "Не удалось скачать модель. Проверьте соединение и свободное место, затем попробуйте снова: загрузка продолжится с того же места.",
         "Could not download the model. Check your connection and free space, then try again: the download resumes where it stopped.");
 
+    public static string LocalAiNotEnoughMemory(long gigabytes) => T(
+        $"Для локальной модели нужно не меньше {gigabytes} ГБ оперативной памяти, на этом устройстве её меньше. Собеседник работает и без неё.",
+        $"The on-device model needs at least {gigabytes} GB of RAM and this device has less. The companion works without it.");
+
+    public static string LocalAiNotEnoughStorage(long megabytes) => T(
+        $"Не хватает места: нужно около {megabytes} МБ свободного пространства. Освободите место и вернитесь сюда.",
+        $"Not enough space: about {megabytes} MB of free storage is needed. Free some up and come back.");
+
     public static string LocalAiCanceled => T("Загрузка остановлена. Её можно продолжить позже.", "Download stopped. You can resume it later.");
 }

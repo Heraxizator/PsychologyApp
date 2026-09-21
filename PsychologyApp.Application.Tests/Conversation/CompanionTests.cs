@@ -148,6 +148,23 @@ public class CompanionReplyGuardTests
         Assert.Null(CompanionReplyGuard.Sanitize("Солнце в комнате кажется таким тусклым и серым сегодня.", english: false, user));
     }
 
+
+    [Fact]
+    public void Reasoning_blocks_and_special_tokens_are_removed()
+    {
+        string? result = CompanionReplyGuard.Sanitize(
+            "<think>\nОна расстроена, надо ответить мягко.\n</think>\n\nСлышу, как вам тяжело перед встречей. Это очень выматывает.<|im_end|>",
+            english: false);
+
+        Assert.Equal("Слышу, как вам тяжело перед встречей. Это очень выматывает.", result);
+    }
+
+    [Fact]
+    public void Unfinished_reasoning_block_rejects_the_reply()
+    {
+        Assert.Null(CompanionReplyGuard.Sanitize("<think>\nНадо подумать, что ответить этому человеку и как именно", english: false));
+    }
+
     [Fact]
     public void Wrong_language_is_rejected()
     {

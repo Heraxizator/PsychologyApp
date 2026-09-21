@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
-using Microsoft.ML.OnnxRuntimeGenAI;
+using PsychologyApp.LocalLlm;
 using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Conversation.Companion;
 
@@ -30,7 +30,7 @@ EvalPrompt[] prompts = JsonSerializer.Deserialize<EvalPrompt[]>(
 
 Console.WriteLine($"Loading model from {modelDir} ...");
 Stopwatch load = Stopwatch.StartNew();
-using DesktopModel model = new(modelDir);
+using OnnxGenAiEngine model = new(modelDir);
 model.Load();
 Console.WriteLine($"Loaded in {load.Elapsed.TotalSeconds:F1}s");
 
@@ -77,7 +77,7 @@ foreach (EvalPrompt prompt in prompts)
 request = temperature is { } t ? request with { Temperature = t } : request;
 
     Stopwatch sw = Stopwatch.StartNew();
-    string? raw = await model.GenerateAsync(request);
+    string raw = model.Generate(request, CancellationToken.None);
     sw.Stop();
 
     string? safe = CompanionReplyGuard.Sanitize(raw, english, prompt.Text);
@@ -118,73 +118,3 @@ static string Trim(string? text) =>
 
 internal sealed record EvalPrompt(string Lang, string Expected, string Text);
 
-/// <summary>Desktop twin of the Android adapter: same prompt formatting and sampling options, so results transfer (speed does not).</summary>
-internal sealed class DesktopModel(string directory) : IDisposable
-{
-    private Model? _model;
-    private Tokenizer? _tokenizer;
-
-    public void Load()
-    {
-        _model = new Model(directory);
-        _tokenizer = new Tokenizer(_model);
-    }
-
-    public Task<string?> GenerateAsync(LlmRequest request)
-    {
-        string prompt = _tokenizer!.ApplyChatTemplate(string.Empty, BuildMessagesJson(request), string.Empty, true);
-        using Sequences input = _tokenizer.Encode(prompt);
-
-        using GeneratorParams options = new(_model!);
-        options.SetSearchOption("max_length", input[0].Length + request.MaxNewTokens);
-        options.SetSearchOption("do_sample", true);
-        options.SetSearchOption("temperature", request.Temperature);
-        options.SetSearchOption("top_p", 0.9);
-
-        using Generator generator = new(_model!, options);
-        generator.AppendTokenSequences(input);
-        using TokenizerStream stream = _tokenizer.CreateStream();
-
-        StringBuilder output = new();
-        while (!generator.IsDone())
-        {
-            generator.GenerateNextToken();
-            ReadOnlySpan<int> sequence = generator.GetSequence(0);
-            output.Append(stream.Decode(sequence[^1]));
-        }
-
-        return Task.FromResult<string?>(output.ToString().Trim());
-    }
-
-    public void Dispose()
-    {
-        _tokenizer?.Dispose();
-        _model?.Dispose();
-    }
-
-    private static string BuildMessagesJson(LlmRequest request)
-    {
-        using MemoryStream buffer = new();
-        using (Utf8JsonWriter writer = new(buffer))
-        {
-            writer.WriteStartArray();
-            Write(writer, "system", request.SystemPrompt);
-            foreach (LlmMessage message in request.Messages)
-            {
-                Write(writer, message.Role == LlmRole.User ? "user" : "assistant", message.Content);
-            }
-
-            writer.WriteEndArray();
-        }
-
-        return Encoding.UTF8.GetString(buffer.ToArray());
-    }
-
-    private static void Write(Utf8JsonWriter writer, string role, string content)
-    {
-        writer.WriteStartObject();
-        writer.WriteString("role", role);
-        writer.WriteString("content", content);
-        writer.WriteEndObject();
-    }
-}

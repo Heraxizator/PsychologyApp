@@ -8,7 +8,8 @@ public sealed record LocalModelManifest(
     string DisplayName,
     string LicenseUrl,
     IReadOnlyList<LocalModelFile> Files,
-    IReadOnlyList<string> Languages)
+    IReadOnlyList<string> Languages,
+    long MinTotalMemoryBytes)
 {
     public long TotalBytes => Files.Sum(f => f.SizeBytes);
 
@@ -32,4 +33,37 @@ public interface ILocalModelInstaller
     Task InstallAsync(IProgress<ModelInstallProgress>? progress = null, CancellationToken cancellationToken = default);
 
     Task DeleteAsync(CancellationToken cancellationToken = default);
+}
+
+/// <summary>What the phone can offer to a large on-device model. Zero means "unknown / not supported".</summary>
+public interface IDeviceCapabilities
+{
+    long TotalMemoryBytes { get; }
+
+    long FreeStorageBytes { get; }
+}
+
+public enum LocalModelEligibility
+{
+    Eligible,
+    NotEnoughMemory,
+    NotEnoughStorage
+}
+
+public static class LocalModelEligibilityChecker
+{
+    /// <summary>Extra room beyond the model itself for temporary files and normal app use.</summary>
+    private const double StorageHeadroom = 1.15;
+
+    public static LocalModelEligibility Check(LocalModelManifest manifest, IDeviceCapabilities device)
+    {
+        if (device.TotalMemoryBytes < manifest.MinTotalMemoryBytes)
+        {
+            return LocalModelEligibility.NotEnoughMemory;
+        }
+
+        return device.FreeStorageBytes < manifest.TotalBytes * StorageHeadroom
+            ? LocalModelEligibility.NotEnoughStorage
+            : LocalModelEligibility.Eligible;
+    }
 }

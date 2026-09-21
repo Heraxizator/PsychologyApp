@@ -53,7 +53,8 @@ public sealed class HttpLocalModelInstallerTests : IDisposable
             new LocalModelFile("genai_config.json", "https://example.test/genai_config.json", ConfigBytes.Length),
             new LocalModelFile("model.onnx.data", "https://example.test/model.onnx.data", weightsSize ?? WeightsBytes.Length, weightsSha ?? Convert.ToHexString(SHA256.HashData(WeightsBytes)))
         ],
-        ["en"]);
+        ["en"],
+        MinTotalMemoryBytes: 0);
 
     private string Target => Path.Combine(_root, "llm");
 
@@ -184,7 +185,7 @@ public sealed class HttpLocalModelInstallerTests : IDisposable
     {
         FakeServer server = new();
         server.Files["https://example.test/evil"] = [1, 2, 3];
-        LocalModelManifest evil = new("evil", "Evil", "x", [new LocalModelFile("../outside.bin", "https://example.test/evil", 3)], ["en"]);
+        LocalModelManifest evil = new("evil", "Evil", "x", [new LocalModelFile("../outside.bin", "https://example.test/evil", 3)], ["en"], 0);
         HttpLocalModelInstaller installer = Create(server, evil);
 
         await Assert.ThrowsAsync<InvalidOperationException>(() => installer.InstallAsync());

@@ -36,6 +36,12 @@ public static partial class CompanionReplyGuard
         "ты", "тебе", "тебя", "тобой", "твой", "твоя", "твое", "твои", "твоих", "твоей", "твоим", "твоего"
     ];
 
+    [GeneratedRegex(@"<think>.*?</think>", RegexOptions.CultureInvariant | RegexOptions.Singleline | RegexOptions.IgnoreCase)]
+    private static partial Regex ThinkBlock();
+
+    [GeneratedRegex(@"<\|[^|>]*\|>", RegexOptions.CultureInvariant)]
+    private static partial Regex SpecialToken();
+
     [GeneratedRegex(@"(?<=[.!?…])\s+", RegexOptions.CultureInvariant)]
     private static partial Regex SentenceSplit();
 
@@ -58,6 +64,13 @@ public static partial class CompanionReplyGuard
     public static string? Sanitize(string? raw, bool english, string? userText = null)
     {
         if (string.IsNullOrWhiteSpace(raw))
+        {
+            return null;
+        }
+
+        // Reasoning models emit a <think> monologue that must never reach the user; an unfinished one means the reply is unusable.
+        raw = SpecialToken().Replace(ThinkBlock().Replace(raw, string.Empty), string.Empty);
+        if (raw.Contains("<think", StringComparison.OrdinalIgnoreCase))
         {
             return null;
         }

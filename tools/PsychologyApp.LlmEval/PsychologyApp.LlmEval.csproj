@@ -8,11 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI" Version="0.16.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\PsychologyApp.Application\PsychologyApp.Application.csproj" />
+    <ProjectReference Include="..\..\PsychologyApp.LocalLlm\PsychologyApp.LocalLlm.csproj" />
   </ItemGroup>
 
   <ItemGroup>

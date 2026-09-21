@@ -225,6 +225,11 @@
                         Text="{Binding StatusText}"
                         Style="{StaticResource CaptionStyle}" />
 
+                    <Label
+                        IsVisible="{Binding ShowIneligible}"
+                        Text="{Binding IneligibleText}"
+                        Style="{StaticResource CaptionStyle}" />
+
                     <ui:ButtonView
                         IsVisible="{Binding CanDownload}"
                         BodyText="{Binding DownloadText}"
