@@ -38,7 +38,7 @@ Reason: evaluation on a real model (below). Add `"ru"` only after a Russian-capa
 dotnet run -c Release --project tools/PsychologyApp.LlmEval -- <model-dir> report.md [--temperature 0.3]
 ```
 
-It runs 24 realistic messages (20 Russian, 4 English, including crisis phrasings) and writes a markdown report with the analyzer's guess,
+It runs 24 realistic messages (20 Russian, 4 English, including crisis phrasings; `--limit N` and `--max-tokens N` shorten a run) and writes a markdown report with the analyzer's guess,
 the raw model reply, whether the guard accepted it, and timing. Add your own cases to `prompts.json`.
 The project is intentionally not in `PsychologyApp.sln` (it restores the native ONNX runtimes).
 
@@ -53,9 +53,22 @@ The project is intentionally not in `PsychologyApp.sln` (it restores the native 
 | Guard acceptance with the strict guard | 9/21; the guard removes unsafe text but cannot make bad Russian good |
 | Speed | ~4-8 s per reply on a desktop CPU. **Phone speed was not measured** and will be slower |
 
-Conclusions: a 1B model is too weak for Russian emotional support. The next candidate to evaluate is a 3-4B multilingual instruct
-model (roughly 2-2.5 GB int4); it must also be measured on a real phone (speed, RAM, battery) before it is offered.
+### Result: Qwen3-4B (int4, ONNX GenAI, 3.8 GB, community conversion), desktop CPU
 
+| Check | Result |
+|-------|--------|
+| Russian reply quality | Grammatical and mostly on topic, but not trustworthy: advice ("Просто держите себя в руках"), non-sequiturs ("Злость - это нормально, когда кто-то делает так, как хотите"), invented details, mixing "вы" and "ты", code-switching to English mid-sentence ("Гrief", "nobody") |
+| Guard acceptance (first 8 messages, 70 new tokens) | 5/8; rejected replies were mostly correct rejections, accepted ones still contained flaws the guard could not detect |
+| Speed | **~30 s per reply** of 70 tokens on a desktop CPU (plus 12-19 s to load). A phone will be several times slower |
+
+Qwen3 also needs its reasoning mode disabled (`/no_think`); the engine does this and the guard strips any `<think>` remains.
+
+### Conclusions
+
+1. **1B models are unusable for Russian emotional support** (Gemma 3 1B).
+2. **A 4B model is the first with acceptable Russian grammar, but it is too slow for an interactive chat** (tens of seconds on a desktop, likely minutes on a phone) **and still makes content mistakes** that a rule-based guard cannot catch. It needs 8+ GB RAM and a 4 GB download.
+3. Therefore the model stays **English-only** and off by default. The Russian companion runs on scripted replies until a model clears *both* bars: acceptable speed on a real phone, and review of its Russian output by a native speaker / psychologist.
+4. Options for a better Russian conversation: improve the scripted companion (more of the person's own words, follow-up questions, more varied reflective listening), an opt-in cloud mode with explicit consent (breaks the "fully offline" promise), or revisit on-device models when faster / better ones exist.
 ## Installing a model
 
 ### From the app (English only for now)

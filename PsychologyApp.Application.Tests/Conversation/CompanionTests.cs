@@ -165,6 +165,22 @@ public class CompanionReplyGuardTests
         Assert.Null(CompanionReplyGuard.Sanitize("<think>\nНадо подумать, что ответить этому человеку и как именно", english: false));
     }
 
+
+    [Theory]
+    [InlineData("Слышу, как вам тяжело. Гrief — это чувство, которое сложно нести.")]
+    [InlineData("Видите, как тяжело, когда в семье nobody делает своё.")]
+    [InlineData("Слышу вас очень хорошо. Просто держите себя в руках сейчас.")]
+    public void Code_switching_and_disguised_advice_are_rejected_in_russian(string raw)
+    {
+        Assert.Null(CompanionReplyGuard.Sanitize(raw, english: false));
+    }
+
+    [Fact]
+    public void Latin_words_are_fine_in_english_replies()
+    {
+        Assert.NotNull(CompanionReplyGuard.Sanitize("It sounds like the exam is weighing heavily on you right now.", english: true));
+    }
+
     [Fact]
     public void Wrong_language_is_rejected()
     {

@@ -36,6 +36,9 @@ public static partial class CompanionReplyGuard
         "ты", "тебе", "тебя", "тобой", "твой", "твоя", "твое", "твои", "твоих", "твоей", "твоим", "твоего"
     ];
 
+    [GeneratedRegex(@"[A-Za-z]{2,}", RegexOptions.CultureInvariant)]
+    private static partial Regex LatinWord();
+
     [GeneratedRegex(@"<think>.*?</think>", RegexOptions.CultureInvariant | RegexOptions.Singleline | RegexOptions.IgnoreCase)]
     private static partial Regex ThinkBlock();
 
@@ -120,6 +123,17 @@ public static partial class CompanionReplyGuard
             return null;
         }
 
+        // A Russian reply must not contain Latin words: small multilingual models code-switch mid-sentence ("Гrief", "nobody").
+        if (!english && ContainsLatinWord(text))
+        {
+            return null;
+        }
+
+        if (!english && StartsAnySentenceWithJust(text))
+        {
+            return null;
+        }
+
         if (!english && UsesInformalYou(lowered))
         {
             return null;
@@ -132,6 +146,12 @@ public static partial class CompanionReplyGuard
 
         return userText is not null && !SharesTopicWith(lowered, userText) ? null : text;
     }
+
+    private static bool ContainsLatinWord(string text) => LatinWord().IsMatch(text);
+
+    /// <summary>"Просто держитесь", "Просто дайте себе время": advice in disguise, which the prompt forbids.</summary>
+    private static bool StartsAnySentenceWithJust(string text) =>
+        SentenceSplit().Split(text).Any(s => s.TrimStart().StartsWith("Просто ", StringComparison.OrdinalIgnoreCase));
 
     private static bool UsesInformalYou(string lowered)
     {

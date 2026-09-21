@@ -5,7 +5,7 @@ using PsychologyApp.LocalLlm;
 using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Conversation.Companion;
 
-// Usage: dotnet run -c Release --project tools/PsychologyApp.LlmEval -- <model-dir> [report.md] [--temperature 0.5]
+// Usage: dotnet run -c Release --project tools/PsychologyApp.LlmEval -- <model-dir> [report.md] [--temperature 0.3] [--max-tokens 70] [--limit 6]
 // Runs the companion prompt set through a real GenAI-format model with exactly the app's prompt, guard and analyzer,
 // and writes a markdown report for human review (psychologist / native speaker).
 
@@ -22,6 +22,14 @@ int tempIndex = Array.IndexOf(args, "--temperature");
 if (tempIndex >= 0 && tempIndex + 1 < args.Length)
 {
     temperature = float.Parse(args[tempIndex + 1], System.Globalization.CultureInfo.InvariantCulture);
+}
+
+int? maxTokens = ReadIntOption("--max-tokens");
+int? limit = ReadIntOption("--limit");
+int? ReadIntOption(string name)
+{
+    int at = Array.IndexOf(args, name);
+    return at >= 0 && at + 1 < args.Length ? int.Parse(args[at + 1]) : null;
 }
 
 EvalPrompt[] prompts = JsonSerializer.Deserialize<EvalPrompt[]>(
@@ -48,7 +56,7 @@ report.AppendLine();
 int analyzerHits = 0, analyzerTotal = 0, accepted = 0, generated = 0, crisisHits = 0, crisisTotal = 0;
 double totalSeconds = 0;
 
-foreach (EvalPrompt prompt in prompts)
+foreach (EvalPrompt prompt in limit is { } n ? prompts.Where(p => p.Expected != "Crisis").Take(n).ToArray() : prompts)
 {
     bool english = prompt.Lang == "en";
     report.AppendLine($"## {prompt.Text}");
@@ -75,6 +83,7 @@ foreach (EvalPrompt prompt in prompts)
         [new LlmMessage(LlmRole.User, prompt.Text)],
         analysis);
 request = temperature is { } t ? request with { Temperature = t } : request;
+request = maxTokens is { } m ? request with { MaxNewTokens = m } : request;
 
     Stopwatch sw = Stopwatch.StartNew();
     string raw = model.Generate(request, CancellationToken.None);
@@ -97,7 +106,7 @@ request = temperature is { } t ? request with { Temperature = t } : request;
         report.AppendLine();
     }
 
-    Console.WriteLine($"[{prompt.Expected,-14}] {sw.Elapsed.TotalSeconds,5:F1}s  {(safe is not null ? "ok  " : "REJ ")} {Trim(raw)}");
+    Console.WriteLine($"[{prompt.Expected,-14}] {sw.Elapsed.TotalSeconds,5:F1}s  {(safe is not null ? "ok  " : "REJ ")} {raw.Replace('\n', ' ')}");
 }
 
 report.Insert(0,
