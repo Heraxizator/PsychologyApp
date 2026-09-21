@@ -281,6 +281,34 @@ public class ChatServiceTests
         Assert.Empty(blank.NewMessages);
     }
 
+
+    [Fact]
+    public async Task A_manual_title_survives_later_taps_on_suggestion_chips()
+    {
+        ChatService service = CreateService();
+        long id = (await service.StartNewChatAsync()).Session.Id;
+        await service.SendTextAsync(id, "Паническая атака, не могу дышать, сердце колотится");
+        await service.RenameAsync(id, "Мой разговор");
+
+        await service.SendQuickReplyAsync(id, new ChatQuickReply(ChatQuickReplyKinds.More, "Хочу ещё рассказать"));
+
+        Assert.Equal("Мой разговор", (await service.GetChatAsync(id))!.Title);
+    }
+
+    [Fact]
+    public async Task A_chat_that_starts_with_hello_is_named_after_the_first_real_message()
+    {
+        ChatService service = CreateService();
+        long id = (await service.StartNewChatAsync()).Session.Id;
+
+        ChatTurnResult hello = await service.SendTextAsync(id, "Привет");
+        Assert.Equal("Новый чат", hello.Session.Title);
+        Assert.True((await service.GetChatAsync(id))!.HasConversation());
+
+        ChatTurnResult real = await service.SendTextAsync(id, "Мне очень тревожно из-за работы");
+        Assert.Equal("Тревога · работа", real.Session.Title);
+    }
+
     [Fact]
     public async Task English_chats_use_english_titles_and_wording()
     {

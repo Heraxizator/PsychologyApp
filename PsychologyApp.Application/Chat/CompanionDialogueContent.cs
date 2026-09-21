@@ -37,7 +37,9 @@ public static class CompanionDialogueContent
         return null;
     }
 
-    public static string Question(string id, bool english) => id switch
+    public static string Question(string id, bool english) => CompanionActContent.TargetedQuestion(id, english) ?? BankQuestion(id, english);
+
+    private static string BankQuestion(string id, bool english) => id switch
     {
         "trigger" => english ? "What happened that set this off?" : "Что произошло, из-за чего это началось?",
         "worst_case" => english ? "What exactly are you afraid might happen?" : "Чего именно вы боитесь? Что, по-вашему, может случиться?",

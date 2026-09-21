@@ -18,6 +18,8 @@ public static class ChatQuickReplyKinds
     public const string Rating = "rating";
     public const string CheckIn = "checkin";
     public const string Emotion = "emotion";
+    public const string Act = "act";
+    public const string Recap = "recap";
 }
 
 public sealed class ChatMessageDTO

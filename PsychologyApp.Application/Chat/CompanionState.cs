@@ -41,6 +41,23 @@ public sealed record CompanionState
     public string? OfferedPrimary { get; init; }
     public string? OfferedAlternative { get; init; }
 
+    /// <summary>Who the conversation is about (a <c>CompanionPerson</c> name), if it has come up.</summary>
+    public string? Person { get; init; }
+
+    /// <summary>The second state of a mixed feeling (a <c>CompanionEmotion</c> name), or Unknown.</summary>
+    public string Secondary { get; init; } = "Unknown";
+
+    /// <summary>The first thing the person said, quoted back later ("at the start you said...").</summary>
+    public string? FirstQuote { get; init; }
+
+    /// <summary>User turn at which the last summary was offered.</summary>
+    public int LastRecapTurn { get; init; }
+
+    public bool CallbackAsked { get; init; }
+
+    /// <summary>The companion's last message asked something, so a bare "yes" / "no" is an answer to it.</summary>
+    public bool QuestionPending { get; init; }
+
     public CompanionState WithText(string text) => this with
     {
         Turns = Turns + 1,
@@ -73,6 +90,12 @@ public sealed record CompanionState
             WriteOptional(w, "pendingAt", PendingPracticeStartedUtc?.ToUniversalTime().ToString("O"));
             WriteOptional(w, "primary", OfferedPrimary);
             WriteOptional(w, "alternative", OfferedAlternative);
+            WriteOptional(w, "person", Person);
+            w.WriteString("secondary", Secondary);
+            WriteOptional(w, "firstQuote", FirstQuote);
+            w.WriteNumber("lastRecap", LastRecapTurn);
+            w.WriteBoolean("callbackAsked", CallbackAsked);
+            w.WriteBoolean("questionPending", QuestionPending);
             w.WriteEndObject();
         }
 
@@ -110,7 +133,13 @@ public sealed record CompanionState
                         ? parsed.ToUniversalTime()
                         : null,
                 OfferedPrimary = Str(r, "primary"),
-                OfferedAlternative = Str(r, "alternative")
+                OfferedAlternative = Str(r, "alternative"),
+                Person = Str(r, "person"),
+                Secondary = Str(r, "secondary") ?? "Unknown",
+                FirstQuote = Str(r, "firstQuote"),
+                LastRecapTurn = Int(r, "lastRecap") ?? 0,
+                CallbackAsked = Bool(r, "callbackAsked"),
+                QuestionPending = Bool(r, "questionPending")
             };
         }
         catch (Exception ex) when (ex is JsonException or InvalidOperationException)

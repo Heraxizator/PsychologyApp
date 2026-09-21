@@ -149,6 +149,14 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
             .Select(x => x.Theme)
             .ToArray();
 
+        IReadOnlyList<CompanionPerson> persons = PersonTerms
+            .Select(pair => (Person: pair.Key, Hits: pair.Value.Count(term => Matches(term, respectNegation: false))))
+            .Where(x => x.Hits > 0)
+            .OrderByDescending(x => x.Hits)
+            .Take(2)
+            .Select(x => x.Person)
+            .ToArray();
+
         // Equal scores are broken by whichever state the person mentioned first.
         List<KeyValuePair<CompanionEmotion, double>> ranked = scores
             .OrderByDescending(p => p.Value)
@@ -156,12 +164,13 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
             .ToList();
         if (ranked.Count == 0 || ranked[0].Value < MinScore)
         {
-            return new SituationAnalysis(CompanionEmotion.Unknown, 0, hasBody, intense, themes);
+            return new SituationAnalysis(CompanionEmotion.Unknown, 0, hasBody, intense, themes, CompanionEmotion.Unknown, persons);
         }
 
         double top = ranked[0].Value;
         double second = ranked.Count > 1 ? ranked[1].Value : 0;
-        return new SituationAnalysis(ranked[0].Key, top / (top + second + 1), hasBody, intense, themes);
+        CompanionEmotion secondary = ranked.Count > 1 && ranked[1].Value >= 2 && ranked[1].Value >= top * 0.6 ? ranked[1].Key : CompanionEmotion.Unknown;
+        return new SituationAnalysis(ranked[0].Key, top / (top + second + 1), hasBody, intense, themes, secondary, persons);
     }
 
     private static string Normalize(string text)

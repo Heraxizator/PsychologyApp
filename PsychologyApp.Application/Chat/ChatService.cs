@@ -185,7 +185,8 @@ public sealed class ChatService(
         }
 
         bool becameKnown = emotionWasUnknown && reply.Emotion != CompanionEmotion.Unknown;
-        if (reply.State.Turns == 1 || becameKnown)
+        bool firstFreeText = firstText is not null && reply.State.RecentTexts.Count == 1;
+        if (firstFreeText || becameKnown)
         {
             string source = firstText ?? reply.State.RecentTexts.FirstOrDefault() ?? session.Title;
             session.Title = CompanionDialogueContent.Title(reply.Emotion, reply.Theme, source, language.IsEnglish);
