@@ -13,20 +13,17 @@ public sealed class CompanionViewModel : ChatViewModelBase
 
     private readonly ISituationAnalyzer _analyzer;
     private readonly ICrisisDetector _crisisDetector;
-    private readonly ILocalLanguageModel _model;
-    private readonly LocalModelManifest _modelManifest;
+    private readonly ILanguageModel _model;
 
     public CompanionViewModel(
         INavigationService navigationService,
         ISituationAnalyzer analyzer,
         ICrisisDetector crisisDetector,
-        ILocalLanguageModel model,
-        LocalModelManifest modelManifest) : base(navigationService)
+        ILanguageModel model) : base(navigationService)
     {
         _analyzer = analyzer;
         _crisisDetector = crisisDetector;
         _model = model;
-        _modelManifest = modelManifest;
         PageName = AppStrings.CompanionTitle;
     }
 
@@ -41,7 +38,7 @@ public sealed class CompanionViewModel : ChatViewModelBase
     {
         try
         {
-            if (UsesModel)
+            if (_model.IsAvailable)
             {
                 await _model.WarmUpAsync(Lifetime);
             }
@@ -52,14 +49,12 @@ public sealed class CompanionViewModel : ChatViewModelBase
         }
     }
 
-    /// <summary>The model is used only in languages it was evaluated for; everywhere else the companion stays on reviewed scripted replies.</summary>
-    private bool UsesModel => _modelManifest.SupportsLanguage(AppStrings.IsEnglish(AppStrings.Language));
 
     protected override Task<IDialogueSession?> CreateSessionAsync() =>
         Task.FromResult<IDialogueSession?>(new CompanionSession(
             _analyzer,
             _crisisDetector,
-            UsesModel ? _model : new NullLanguageModel(),
+            _model,
             AppStrings.IsEnglish(AppStrings.Language)));
 
     protected override string GetFinishText(ConversationStatus status, DialogueAction? action) =>

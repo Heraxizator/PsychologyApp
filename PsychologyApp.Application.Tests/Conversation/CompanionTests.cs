@@ -198,7 +198,7 @@ public class CompanionReplyGuardTests
 
 public class CompanionSessionTests
 {
-    private sealed class FakeModel(Func<LlmRequest, CancellationToken, Task<string?>> reply, bool available = true) : ILocalLanguageModel
+    private sealed class FakeModel(Func<LlmRequest, CancellationToken, Task<string?>> reply, bool available = true) : ILanguageModel
     {
         public List<LlmRequest> Requests { get; } = [];
 
@@ -211,7 +211,7 @@ public class CompanionSessionTests
         }
     }
 
-    private static CompanionSession Create(ILocalLanguageModel? model = null, bool english = false, TimeSpan? timeout = null) =>
+    private static CompanionSession Create(ILanguageModel? model = null, bool english = false, TimeSpan? timeout = null) =>
         new(new LexiconSituationAnalyzer(), new KeywordCrisisDetector(), model ?? new NullLanguageModel(), english, new Random(1), timeout);
 
     [Fact]

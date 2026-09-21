@@ -27,8 +27,6 @@ public partial class SettingsViewModel : BaseViewModel
 
     public bool AreRemindersSupported => _areRemindersSupported;
 
-    /// <summary>On-device AI section; null when the host does not provide one.</summary>
-    public LocalAiSettingsViewModel? LocalAi { get; }
 
     public SettingsViewModel(
         IDialogService dialogService,
@@ -39,11 +37,9 @@ public partial class SettingsViewModel : BaseViewModel
         IPracticeReminderCoordinator practiceReminderCoordinator,
         IQuoteReminderCoordinator quoteReminderCoordinator,
         IMoodReminderCoordinator moodReminderCoordinator,
-        IPracticeReminderScheduler practiceReminderScheduler,
-        LocalAiSettingsViewModel? localAi = null)
+        IPracticeReminderScheduler practiceReminderScheduler)
     {
         BindPreferences(userPreferencesStore);
-        LocalAi = localAi;
         _dialogService = dialogService;
         _navigationService = navigationService;
         _userPreferencesStore = userPreferencesStore;

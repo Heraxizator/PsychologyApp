@@ -61,8 +61,6 @@ public static class MauiProgram
             settings.LargeTimeoutMs = settings.LargeTimeoutMs > 0 ? settings.LargeTimeoutMs : Constants.LargeBaseTimeout;
         });
 
-        builder.Services.AddPsychologyAppLocalModel(System.IO.Path.Combine(FileSystem.AppDataDirectory, "llm"));
-        builder.Services.AddSingleton<IDeviceCapabilities, DeviceCapabilities>();
         builder.Services.AddSingleton<MauiReasonContentProvider>();
         builder.Services.AddPsychologyAppCachedReasonContent(sp =>
             new CachedReasonContentProvider(
@@ -73,12 +71,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<MauiTestAssetReader>();
         builder.Services.AddSingleton<ITestAssetReader>(sp => sp.GetRequiredService<MauiTestAssetReader>());
         builder.Services.AddSingleton<IConversationScenarioProvider, MauiConversationScenarioProvider>();
-        // Without an installed model (or off Android) the companion runs on scripted replies.
-#if ANDROID
-        builder.Services.AddSingleton<ILocalLanguageModel, PsychologyApp.Presentation.Platforms.Android.OnnxGenAiLanguageModel>();
-#else
-        builder.Services.AddSingleton<ILocalLanguageModel, NullLanguageModel>();
-#endif
+        builder.Services.AddSingleton<ILanguageModel, NullLanguageModel>();
         builder.Services.AddSingleton<MauiTestCatalogProvider>();
         builder.Services.AddPsychologyAppCachedTestCatalog(sp =>
             new CachedTestCatalogProvider(

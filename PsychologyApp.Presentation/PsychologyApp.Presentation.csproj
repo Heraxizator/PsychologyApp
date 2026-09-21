@@ -171,9 +171,6 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.3" />
 		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
-		<!-- On-device LLM runtime for the offline companion. Android only: other platforms fall back to scripted replies. -->
-		<PackageReference Include="Microsoft.ML.OnnxRuntimeGenAI" Version="0.16.0" Condition="$(TargetFramework.Contains('-android'))" />
-		<ProjectReference Include="..\PsychologyApp.LocalLlm\PsychologyApp.LocalLlm.csproj" Condition="$(TargetFramework.Contains('-android'))" />
 
 		<TrimmerRootAssembly Include="Microsoft.Maui" RootMode="All" />
 		<TrimmerRootAssembly Include="Microsoft.Maui.Controls" RootMode="All" />

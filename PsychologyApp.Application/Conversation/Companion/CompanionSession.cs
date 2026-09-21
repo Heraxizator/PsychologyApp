@@ -21,7 +21,7 @@ public sealed class CompanionSession : IDialogueSession
 
     private readonly ISituationAnalyzer _analyzer;
     private readonly ICrisisDetector _crisisDetector;
-    private readonly ILocalLanguageModel _model;
+    private readonly ILanguageModel _model;
     private readonly bool _english;
     private readonly Random _random;
     private readonly TimeSpan _modelTimeout;
@@ -36,7 +36,7 @@ public sealed class CompanionSession : IDialogueSession
     public CompanionSession(
         ISituationAnalyzer analyzer,
         ICrisisDetector crisisDetector,
-        ILocalLanguageModel model,
+        ILanguageModel model,
         bool english,
         Random? random = null,
         TimeSpan? modelTimeout = null)

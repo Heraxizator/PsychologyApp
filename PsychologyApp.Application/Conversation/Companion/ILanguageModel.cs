@@ -18,7 +18,7 @@ public sealed record LlmRequest(
 /// On-device language model. Nothing here may touch the network: the user's words never leave the phone.
 /// Implementations return <c>null</c> (or throw) when the model is missing or fails; callers must fall back to scripted text.
 /// </summary>
-public interface ILocalLanguageModel
+public interface ILanguageModel
 {
     /// <summary>True when a model is installed and can answer right now.</summary>
     bool IsAvailable { get; }
@@ -32,7 +32,7 @@ public interface ILocalLanguageModel
     Task ReleaseAsync() => Task.CompletedTask;
 }
 
-public sealed class NullLanguageModel : ILocalLanguageModel
+public sealed class NullLanguageModel : ILanguageModel
 {
     public bool IsAvailable => false;
 

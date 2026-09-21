@@ -13,7 +13,7 @@ model download the user starts explicitly.
 | `KeywordCrisisDetector` | `Application/Conversation` | Runs on every free-text answer **before** anything else. On a hit the model is never called and the crisis hub opens. |
 | `LexiconSituationAnalyzer` | `Application/Conversation/Companion` | RU/EN weighted lexicon -> state (panic, anxiety, anger...), theme, body symptoms, intensity. Ties go to the state named first. |
 | `TechniqueSuggester` | same | Closed, hand-reviewed state -> practices mapping. **The model never chooses what the app launches.** |
-| `ILocalLanguageModel` | same | Port for an on-device model. Optional. |
+| `ILanguageModel` | same | Port for an on-device model. Optional. |
 | `CompanionPromptBuilder` | same | System prompt + two example exchanges + the last 6 turns. |
 | `CompanionReplyGuard` | same | Drops replies with diagnoses, medication talk, advice, dismissive phrases, lists, questions, URLs, informal "ты", wrong language, "as an AI", or no link to what the person wrote. |
 | `CompanionContent` | same | Scripted wording. Used when there is no model, on timeout, or when the guard rejects a reply. |
