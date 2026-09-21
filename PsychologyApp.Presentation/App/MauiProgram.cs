@@ -71,8 +71,12 @@ public static class MauiProgram
         builder.Services.AddSingleton<MauiTestAssetReader>();
         builder.Services.AddSingleton<ITestAssetReader>(sp => sp.GetRequiredService<MauiTestAssetReader>());
         builder.Services.AddSingleton<IConversationScenarioProvider, MauiConversationScenarioProvider>();
-        // Swap for a real on-device model registration once one is installed; the companion falls back to scripted replies without it.
+        // Without an installed model (or off Android) the companion runs on scripted replies.
+#if ANDROID
+        builder.Services.AddSingleton<ILocalLanguageModel, PsychologyApp.Presentation.Platforms.Android.OnnxGenAiLanguageModel>();
+#else
         builder.Services.AddSingleton<ILocalLanguageModel, NullLanguageModel>();
+#endif
         builder.Services.AddSingleton<MauiTestCatalogProvider>();
         builder.Services.AddPsychologyAppCachedTestCatalog(sp =>
             new CachedTestCatalogProvider(

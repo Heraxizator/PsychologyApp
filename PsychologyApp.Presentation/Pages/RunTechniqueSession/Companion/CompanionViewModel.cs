@@ -27,6 +27,25 @@ public sealed class CompanionViewModel : ChatViewModelBase
         PageName = AppStrings.CompanionTitle;
     }
 
+    protected override Task OnStartingAsync()
+    {
+        // Load the model while the person is still reading the greeting and typing.
+        _ = WarmUpModelAsync();
+        return Task.CompletedTask;
+    }
+
+    private async Task WarmUpModelAsync()
+    {
+        try
+        {
+            await _model.WarmUpAsync(Lifetime);
+        }
+        catch (Exception)
+        {
+            // Warm-up is an optimisation only; generation reports its own failures.
+        }
+    }
+
     protected override Task<IDialogueSession?> CreateSessionAsync() =>
         Task.FromResult<IDialogueSession?>(new CompanionSession(
             _analyzer,

@@ -24,6 +24,9 @@ public interface ILocalLanguageModel
     bool IsAvailable { get; }
 
     Task<string?> GenerateAsync(LlmRequest request, CancellationToken cancellationToken = default);
+
+    /// <summary>Loads the model ahead of the first request so the first reply is not slowed by loading. Safe to ignore.</summary>
+    Task WarmUpAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
 }
 
 public sealed class NullLanguageModel : ILocalLanguageModel

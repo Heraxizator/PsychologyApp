@@ -21,6 +21,8 @@
 			</intent-filter>
 		</receiver>
 	</application>
+	<!-- The on-device LLM runtime (ai.onnxruntime, ai.onnxruntime.genai) declares minSdk 24; the app still supports 21. OnnxGenAiLanguageModel refuses to load below API 24. -->
+	<uses-sdk tools:overrideLibrary="ai.onnxruntime,ai.onnxruntime.genai" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.VIBRATE" />
