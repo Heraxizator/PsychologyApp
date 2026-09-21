@@ -69,6 +69,7 @@ public static class MauiProgram
         builder.Services.AddPsychologyAppCachedQuotContent<MauiQuotContentProvider>();
         builder.Services.AddSingleton<MauiTestAssetReader>();
         builder.Services.AddSingleton<ITestAssetReader>(sp => sp.GetRequiredService<MauiTestAssetReader>());
+        builder.Services.AddSingleton<IConversationScenarioProvider, MauiConversationScenarioProvider>();
         builder.Services.AddSingleton<MauiTestCatalogProvider>();
         builder.Services.AddPsychologyAppCachedTestCatalog(sp =>
             new CachedTestCatalogProvider(

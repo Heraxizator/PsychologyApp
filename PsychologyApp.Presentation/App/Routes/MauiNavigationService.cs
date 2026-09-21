@@ -42,7 +42,7 @@ public sealed class MauiNavigationService : INavigationService
         {
             INavigation hostNavigation = ResolveNavigation();
             return hostNavigation.PushAsync(
-                PrepareSecondaryPage(_pageFactory.CreateTechniqueSessionPage(techniqueId, hostNavigation)),
+                PrepareSecondaryPage(_pageFactory.CreateTechniquePage(techniqueId, hostNavigation)),
                 true);
         });
 

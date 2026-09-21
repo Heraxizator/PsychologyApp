@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueDialogue.TechniqueDialoguePage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueDialogue"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:DataType="vm:TechniqueDialogueViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageName}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource Gray950}}">
+
+    <ContentPage.Behaviors>
+        <behaviors:PageAnalyticsBehavior />
+    </ContentPage.Behaviors>
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="{StaticResource LayoutPageMarginThickness}" RowSpacing="12">
+
+        <ui:NavigationBarSimpleView
+            Grid.Row="0"
+            TitleText="{Binding PageName}"
+            BackCommand="{Binding BackCommand}" />
+
+        <CollectionView
+            x:Name="MessageList"
+            Grid.Row="1"
+            ItemsSource="{Binding Messages}"
+            SelectionMode="None"
+            VerticalScrollBarVisibility="Never">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:DialogueMessage">
+                    <Border
+                        HorizontalOptions="{Binding Alignment}"
+                        MaximumWidthRequest="320"
+                        Padding="14,10"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 18"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsUser}" Value="True">
+                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PrimaryTint}, Dark={StaticResource PrimaryTintDark}}" />
+                            </DataTrigger>
+                        </Border.Triggers>
+                        <Label Text="{Binding Text}" Style="{StaticResource BodyStyle}" LineBreakMode="WordWrap" />
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.Footer>
+                <Label
+                    Text="{Binding TypingText}"
+                    IsVisible="{Binding IsTyping}"
+                    Style="{StaticResource CaptionStyle}"
+                    Margin="6,10,0,0" />
+            </CollectionView.Footer>
+        </CollectionView>
+
+        <VerticalStackLayout Grid.Row="2" Spacing="10">
+
+            <!-- Free text answer -->
+            <Grid IsVisible="{Binding IsTextInput}" ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <Border Grid.Column="0" Style="{StaticResource InputBorderStyle}">
+                    <Editor
+                        Text="{Binding DraftText, Mode=TwoWay}"
+                        Placeholder="{Binding InputPlaceholder}"
+                        AutoSize="TextChanges"
+                        MaxLength="1000"
+                        MaximumHeightRequest="120"
+                        BackgroundColor="Transparent" />
+                </Border>
+                <ui:ButtonView
+                    Grid.Column="1"
+                    VerticalOptions="End"
+                    BodyText="{Binding SendText}"
+                    TapCommand="{Binding SendCommand}" />
+            </Grid>
+
+            <!-- Choice chips -->
+            <FlexLayout
+                IsVisible="{Binding IsChoiceInput}"
+                Wrap="Wrap"
+                JustifyContent="Start"
+                BindableLayout.ItemsSource="{Binding Choices}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="vm:DialogueChoiceItem">
+                        <Border Style="{StaticResource FilterChipStyle}" Margin="0,0,8,8">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding ChooseCommand, Source={RelativeSource AncestorType={x:Type vm:TechniqueDialogueViewModel}}}"
+                                    CommandParameter="{Binding Index}" />
+                            </Border.GestureRecognizers>
+                            <Label Text="{Binding Label}" Style="{StaticResource FilterChipLabelStyle}" />
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+
+            <!-- 0..10 rating chips -->
+            <VerticalStackLayout IsVisible="{Binding IsRatingInput}" Spacing="6">
+                <Label Text="{Binding RatingScaleText}" Style="{StaticResource CaptionStyle}" />
+                <FlexLayout
+                    Wrap="Wrap"
+                    JustifyContent="Start"
+                    BindableLayout.ItemsSource="{Binding RatingValues}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="x:Int32">
+                            <Border Style="{StaticResource FilterChipStyle}" Margin="0,0,8,8" MinimumWidthRequest="44">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding RateCommand, Source={RelativeSource AncestorType={x:Type vm:TechniqueDialogueViewModel}}}"
+                                        CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                                <Label Text="{Binding .}" Style="{StaticResource FilterChipLabelStyle}" />
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+            </VerticalStackLayout>
+
+            <!-- End of conversation -->
+            <ui:ButtonView
+                IsVisible="{Binding IsFinished}"
+                BodyText="{Binding FinishText}"
+                TapCommand="{Binding FinishCommand}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

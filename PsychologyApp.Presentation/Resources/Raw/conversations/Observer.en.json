@@ -1,0 +1,205 @@
+{
+  "id": "Observer",
+  "title": "Observer position",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "Let's look at your situation from the outside together. It takes about five minutes.",
+        "Hi. We'll step a couple of paces back from what's bothering you and see it differently. Five minutes, no more."
+      ],
+      "next": "intro_note"
+    },
+    {
+      "id": "intro_note",
+      "kind": "say",
+      "text": [ "Answer however it comes, there are no right answers. Everything stays on your device." ],
+      "next": "ask_situation"
+    },
+    {
+      "id": "ask_situation",
+      "kind": "askText",
+      "text": [
+        "What happened, or what are you replaying in your head? Two or three sentences is enough.",
+        "Which situation would you like to think about? Tell me briefly, in your own words."
+      ],
+      "hint": "For example: yesterday's talk with my manager",
+      "capture": "situation",
+      "next": "ask_feeling"
+    },
+    {
+      "id": "ask_feeling",
+      "kind": "askChoice",
+      "text": [
+        "Thank you for sharing. What do you feel most strongly when you think about it?",
+        "I see. Which feeling is the main one here?"
+      ],
+      "capture": "feeling",
+      "choices": [
+        { "label": "Anxiety", "value": "anxiety", "next": "ask_body" },
+        { "label": "Hurt", "value": "hurt", "next": "ask_body" },
+        { "label": "Anger", "value": "anger", "next": "ask_body" },
+        { "label": "Guilt", "value": "guilt", "next": "ask_body" },
+        { "label": "Sadness", "value": "sadness", "next": "ask_body" },
+        { "label": "Something else", "next": "ask_feeling_other" }
+      ]
+    },
+    {
+      "id": "ask_feeling_other",
+      "kind": "askText",
+      "text": [ "What would you call this feeling? One or two words is enough." ],
+      "capture": "feeling",
+      "next": "ask_body"
+    },
+    {
+      "id": "ask_body",
+      "kind": "askText",
+      "text": [
+        "The feeling is \"{feeling}\". Where does it live in your body: chest, stomach, shoulders? A few words.",
+        "Notice where \"{feeling}\" shows up in your body. What do you sense there?"
+      ],
+      "hint": "For example: tightness in my chest",
+      "capture": "body",
+      "next": "ask_before"
+    },
+    {
+      "id": "ask_before",
+      "kind": "askRating",
+      "text": [
+        "How strongly is this weighing on you right now? From 0 (not at all) to 10 (couldn't be stronger).",
+        "Rate your tension now: 0 is calm, 10 is very hard."
+      ],
+      "capture": "rating_before",
+      "routes": [
+        { "max": 2, "next": "before_low" },
+        { "max": 8, "next": "observer_intro" },
+        { "next": "before_high" }
+      ]
+    },
+    {
+      "id": "before_low",
+      "kind": "say",
+      "text": [ "The tension is low, which is good. The technique will still help you build the skill of distance." ],
+      "next": "observer_intro"
+    },
+    {
+      "id": "before_high",
+      "kind": "say",
+      "text": [ "That is very strong tension. Before we go on, breathe out slowly, longer than you breathe in, three times. I'll wait." ],
+      "next": "before_high_ready"
+    },
+    {
+      "id": "before_high_ready",
+      "kind": "askChoice",
+      "text": [ "Ready to continue?" ],
+      "choices": [
+        { "label": "Yes, let's continue", "next": "observer_intro" },
+        { "label": "I need a break", "next": "end_pause" }
+      ]
+    },
+    {
+      "id": "observer_intro",
+      "kind": "say",
+      "text": [
+        "Now imagine you've stepped back a few paces. You watch this scene from the side, like a calm person who knows neither you nor your story. They see only what is happening.",
+        "Take a small mental step back. It's the same scene, but you are no longer in it, you're a viewer who judges nothing."
+      ],
+      "next": "ask_observer"
+    },
+    {
+      "id": "ask_observer",
+      "kind": "askText",
+      "text": [
+        "What does this observer see? Describe the situation in the third person, neutrally: \"A person...\", without \"should\", \"always\", \"never\".",
+        "Describe the same thing through the observer's eyes: who does and says what. Only facts, third person."
+      ],
+      "hint": "For example: two people are talking in raised voices",
+      "capture": "observer",
+      "next": "reflect"
+    },
+    {
+      "id": "reflect",
+      "kind": "say",
+      "text": [
+        "From inside it was: \"{situation}\". From outside: \"{observer}\". Notice how these two descriptions differ.",
+        "Inside the situation you said: \"{situation}\". The observer says: \"{observer}\". Do you feel the difference?"
+      ],
+      "next": "ask_advice"
+    },
+    {
+      "id": "ask_advice",
+      "kind": "askText",
+      "text": [
+        "What would this calm observer say to the person in this scene? One kind sentence.",
+        "If the observer could say one supportive sentence to the person in this situation, what would it be?"
+      ],
+      "hint": "For example: you're doing better than you think",
+      "capture": "advice",
+      "next": "advice_echo"
+    },
+    {
+      "id": "advice_echo",
+      "kind": "say",
+      "text": [
+        "\"{advice}\". Remember that sentence, it's yours.",
+        "\"{advice}\". Good words. Keep them."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "Now honestly: how strong is the tension right now? From 0 to 10.",
+        "Rate your tension from 0 to 10 again. What has changed?"
+      ],
+      "capture": "rating_after",
+      "routes": [
+        { "below": "rating_before", "next": "end_better" },
+        { "same": "rating_before", "next": "end_same" },
+        { "next": "end_worse" }
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [ "It was {rating_before}, now {rating_after}. So the distance worked. You can return to the observer position any time emotions take over." ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [ "The tension stayed the same ({rating_after}). That's normal: sometimes once is not enough. Take a breather and return to this technique later, maybe with a different situation." ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [ "It got stronger: it was {rating_before}, now {rating_after}. That happens when you touch a hard topic, and it isn't your fault. Take three slow breaths out. If the heaviness doesn't pass, talk to someone close or a professional." ]
+    },
+    {
+      "id": "end_pause",
+      "kind": "end",
+      "pause": true,
+      "text": [ "Okay, let's stop here. Take a break, drink some water, and come back any time. Well done for getting this far." ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [ "I'm very sorry you're in so much pain right now. What you wrote matters more than any technique, so I'm stopping the exercise." ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [ "Please talk to a real person right now. If your life may be at risk, call your local emergency number (112 in the EU, 911 in the US, 988 for the US Suicide and Crisis Lifeline). You can find local helplines at findahelpline.com. If someone is nearby, tell them you're not okay." ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [ "I'm an app, not a professional, and I can't keep you safe. You deserve support. Please reach out for it." ]
+    }
+  ]
+}

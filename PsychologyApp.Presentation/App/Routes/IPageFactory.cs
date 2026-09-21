@@ -62,6 +62,8 @@ public interface IPageFactory
     CreatedPage CreateCreatedPage(long techniqueId);
     DesignerPage CreateDesignerPage(long techniqueId);
     TechniqueSessionPage CreateTechniqueSessionPage(TechniqueId techniqueId, INavigation hostNavigation);
+    /// <summary>Opens the dialogue page for techniques that have a conversation scenario, otherwise the classic form session.</summary>
+    ContentPage CreateTechniquePage(TechniqueId techniqueId, INavigation hostNavigation);
     PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null, long? sessionResultId = null);
     CrisisHubPage CreateCrisisHubPage();
     RiskCheckPage CreateRiskCheckPage(string source);
