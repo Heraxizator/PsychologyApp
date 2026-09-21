@@ -1,3 +1,10 @@
+> **Status (current):** the app no longer ships an on-device LLM. ONNX Runtime GenAI, the Android adapter, the Settings download
+> section and device checks were removed after the evaluations below (Gemma 3 1B unusable in Russian, Qwen3-4B too slow and still
+> unreliable). The messenger companion (`CompanionDialogue`, see `companion-understanding.md`) is fully scripted and deterministic.
+> What remains in the repository, unwired and tested, is reusable when a suitable model exists: `ILanguageModel`, the prompt builder and
+> reply guard, `HttpLocalModelInstaller` + `LocalModelCatalog`, `PsychologyApp.LocalLlm` (ONNX engine) and `tools/PsychologyApp.LlmEval`.
+> Sections about installing a model and the Settings screen describe that dormant path.
+
 # Offline companion and the on-device LLM
 
 The **Talk** card at the top of the practice list opens the companion: the person describes what is going on in free text,

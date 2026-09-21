@@ -4,7 +4,7 @@ namespace PsychologyApp.Application.Conversation.Companion;
 /// Offline, dependency-free analyzer: weighted stem lexicon (Russian and English) with simple negation handling.
 /// Term syntax: <c>stem</c> matches any word that starts with it, <c>=word</c> matches exactly, and a term containing a space is a phrase.
 /// </summary>
-public sealed class LexiconSituationAnalyzer : ISituationAnalyzer
+public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
 {
     private const double MinScore = 1.0;
 
@@ -106,8 +106,9 @@ public sealed class LexiconSituationAnalyzer : ISituationAnalyzer
 
         Dictionary<CompanionEmotion, double> scores = [];
         Dictionary<CompanionEmotion, int> firstMention = [];
-        foreach ((CompanionEmotion emotion, Entry[] entries) in Emotions)
+        foreach ((CompanionEmotion emotion, Entry[] baseEntries) in Emotions)
         {
+            Entry[] entries = [.. baseEntries, .. Colloquial.GetValueOrDefault(emotion, [])];
             double score = 0;
             int first = int.MaxValue;
             foreach (Entry entry in entries)
