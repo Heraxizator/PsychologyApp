@@ -28,12 +28,13 @@ public sealed record ConversationPrompt(
 public sealed record ConversationTurn(
     IReadOnlyList<string> BotMessages,
     ConversationPrompt? Prompt,
-    ConversationStatus Status);
+    ConversationStatus Status,
+    DialogueAction? Action = null);
 
 /// <summary>
 /// One run of a scenario. Pure state machine: no I/O, no UI, deterministic given the same <see cref="Random"/>.
 /// </summary>
-public sealed class ConversationSession
+public sealed class ConversationSession : IDialogueSession
 {
     private const int MaxAutoSteps = 200;
 
@@ -117,6 +118,17 @@ public sealed class ConversationSession
         string next = node.Routes?.FirstOrDefault(r => RouteMatches(r, rating))?.Next ?? node.Next!;
         return Run(next);
     }
+
+    Task<ConversationTurn> IDialogueSession.StartAsync(CancellationToken cancellationToken) => Task.FromResult(Start());
+
+    Task<ConversationTurn> IDialogueSession.SubmitTextAsync(string text, CancellationToken cancellationToken) =>
+        Task.FromResult(SubmitText(text));
+
+    Task<ConversationTurn> IDialogueSession.SubmitChoiceAsync(int index, CancellationToken cancellationToken) =>
+        Task.FromResult(SubmitChoice(index));
+
+    Task<ConversationTurn> IDialogueSession.SubmitRatingAsync(int rating, CancellationToken cancellationToken) =>
+        Task.FromResult(SubmitRating(rating));
 
     private bool RouteMatches(ConversationRoute route, int rating)
     {
