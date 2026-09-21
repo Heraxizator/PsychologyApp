@@ -182,74 +182,33 @@
                 </Border>
             </VerticalStackLayout>
 
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <Border.Behaviors>
+            <ui:SettingsLinkCardView
+                Title="{Binding OpenHelplineText}"
+                IconName="SupportAgent"
+                TapCommand="{Binding OpenHelplineCommand}">
+                <ui:SettingsLinkCardView.Behaviors>
                     <behaviors:ListItemRevealBehavior RevealIndex="6" />
-                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
-                </Border.Behaviors>
-                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding OpenHelplineCommand}" />
-                    </Grid.GestureRecognizers>
-                    <Label
-                        Grid.Column="0"
-                        Text="{Binding OpenHelplineText}"
-                        Style="{StaticResource BodyStyle}"
-                        VerticalOptions="Center" />
-                    <Label
-                        Grid.Column="1"
-                        VerticalOptions="Center"
-                        TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                        Text="{mi:Material Icon=KeyboardArrowRight}" />
-                </Grid>
-            </Border>
+                </ui:SettingsLinkCardView.Behaviors>
+            </ui:SettingsLinkCardView>
 
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <Border.Behaviors>
+            <ui:SettingsLinkCardView
+                Title="{Binding RecheckText}"
+                IconName="FactCheck"
+                TapCommand="{Binding RecheckCommand}">
+                <ui:SettingsLinkCardView.Behaviors>
                     <behaviors:ListItemRevealBehavior RevealIndex="7" />
-                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
-                </Border.Behaviors>
-                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding RecheckCommand}" />
-                    </Grid.GestureRecognizers>
-                    <Label
-                        Grid.Column="0"
-                        Text="{Binding RecheckText}"
-                        Style="{StaticResource BodyStyle}"
-                        VerticalOptions="Center" />
-                    <Label
-                        Grid.Column="1"
-                        VerticalOptions="Center"
-                        TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                        Text="{mi:Material Icon=KeyboardArrowRight}" />
-                </Grid>
-            </Border>
+                </ui:SettingsLinkCardView.Behaviors>
+            </ui:SettingsLinkCardView>
 
-            <Border
+            <ui:SettingsLinkCardView
                 IsVisible="{Binding ShowContinueSoft}"
-                Style="{StaticResource BrandCardStyle}"
-                Margin="0">
-                <Border.Behaviors>
+                Title="{Binding ContinueSoftText}"
+                IconName="SelfImprovement"
+                TapCommand="{Binding ContinueSoftCommand}">
+                <ui:SettingsLinkCardView.Behaviors>
                     <behaviors:ListItemRevealBehavior RevealIndex="8" />
-                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
-                </Border.Behaviors>
-                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ContinueSoftCommand}" />
-                    </Grid.GestureRecognizers>
-                    <Label
-                        Grid.Column="0"
-                        Text="{Binding ContinueSoftText}"
-                        Style="{StaticResource BodyStyle}"
-                        VerticalOptions="Center" />
-                    <Label
-                        Grid.Column="1"
-                        VerticalOptions="Center"
-                        TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                        Text="{mi:Material Icon=KeyboardArrowRight}" />
-                </Grid>
-            </Border>
+                </ui:SettingsLinkCardView.Behaviors>
+            </ui:SettingsLinkCardView>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

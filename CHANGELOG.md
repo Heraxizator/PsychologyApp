@@ -7,6 +7,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 ## [Unreleased]
 
 ### Changed
+- UI/usability pass over all non-chat screens: 44 dp back button with a screen-reader label, icon tiles on navigation rows (profile, options, crisis hub, practice completion), pinned primary actions on Settings, Feedback, Designer and Donate, a segmented yes/no control in the risk check, pill-sized retake/history actions on test cards, clear button and `Done` key on text fields, left-aligned body text instead of justified, and test history rendered without a nested `CollectionView`.
+- Second UI pass: colored profile hero with stats, restructured quote cards (theme pill and favourite on top, author with copy/share below), hero intro and pinned Start button on the somatic screen, icon tiles on test cards, pinned nav bar on theory and created-technique screens, and a lighter pinned action bar on the test result.
 - Standardized release documentation and contribution guidelines for cleaner, more professional history going forward.
 
 ## [2.002] - 2026-08-14

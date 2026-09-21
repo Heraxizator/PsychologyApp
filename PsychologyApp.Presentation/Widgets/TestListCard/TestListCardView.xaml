@@ -2,6 +2,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:Class="PsychologyApp.Presentation.Widgets.TestListCard.TestListCardView">
 
@@ -15,8 +16,19 @@
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
                 </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                    <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                    <Border
+                        Grid.Column="0"
+                        Style="{StaticResource IconTileStyle}"
+                        VerticalOptions="Start">
+                        <ui:MaterialIconView
+                            IconName="Quiz"
+                            IconSize="22"
+                            IconColor="{DynamicResource Primary}"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
                         <Label
                             Text="{TemplateBinding Title}"
                             Style="{StaticResource ListRowTitleStyle}"
@@ -42,9 +54,8 @@
                             TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
                             MaxLines="1"
                             LineBreakMode="TailTruncation" />
-                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" IsVisible="{TemplateBinding HasLastResult}">
+                        <VerticalStackLayout Spacing="8" IsVisible="{TemplateBinding HasLastResult}">
                             <Label
-                                Grid.Column="0"
                                 Text="{TemplateBinding LastResultText}"
                                 Style="{StaticResource CaptionStyle}"
                                 FontFamily="{StaticResource MediumFontFamily}"
@@ -55,34 +66,41 @@
                                     <TapGestureRecognizer Command="{TemplateBinding OpenHistoryCommand}" />
                                 </Label.GestureRecognizers>
                             </Label>
-                            <HorizontalStackLayout
-                                Grid.Column="1"
-                                Spacing="10"
-                                VerticalOptions="Start">
-                                <Label
-                                    Text="{TemplateBinding RetakeLabel}"
-                                    Style="{StaticResource CaptionStyle}"
-                                    TextColor="{DynamicResource Primary}"
-                                    FontFamily="{StaticResource SemiBoldFontFamily}">
-                                    <Label.GestureRecognizers>
+                            <HorizontalStackLayout Spacing="8">
+                                <Border
+                                    Style="{StaticResource MetaPillStyle}"
+                                    Padding="14,8"
+                                    MinimumHeightRequest="36">
+                                    <Border.GestureRecognizers>
                                         <TapGestureRecognizer Command="{TemplateBinding RetakeCommand}" />
-                                    </Label.GestureRecognizers>
-                                </Label>
-                                <Label
+                                    </Border.GestureRecognizers>
+                                    <Label
+                                        Text="{TemplateBinding RetakeLabel}"
+                                        Style="{StaticResource CaptionStyle}"
+                                        VerticalOptions="Center"
+                                        TextColor="{DynamicResource Primary}"
+                                        FontFamily="{StaticResource SemiBoldFontFamily}" />
+                                </Border>
+                                <Border
                                     IsVisible="{TemplateBinding HasMultipleResults}"
-                                    Text="{TemplateBinding HistoryLabel}"
-                                    Style="{StaticResource CaptionStyle}"
-                                    TextColor="{DynamicResource Primary}"
-                                    FontFamily="{StaticResource SemiBoldFontFamily}">
-                                    <Label.GestureRecognizers>
+                                    Style="{StaticResource MetaPillStyle}"
+                                    Padding="14,8"
+                                    MinimumHeightRequest="36">
+                                    <Border.GestureRecognizers>
                                         <TapGestureRecognizer Command="{TemplateBinding OpenHistoryCommand}" />
-                                    </Label.GestureRecognizers>
-                                </Label>
+                                    </Border.GestureRecognizers>
+                                    <Label
+                                        Text="{TemplateBinding HistoryLabel}"
+                                        Style="{StaticResource CaptionStyle}"
+                                        VerticalOptions="Center"
+                                        TextColor="{DynamicResource Primary}"
+                                        FontFamily="{StaticResource SemiBoldFontFamily}" />
+                                </Border>
                             </HorizontalStackLayout>
-                        </Grid>
+                        </VerticalStackLayout>
                     </VerticalStackLayout>
                     <Label
-                        Grid.Column="1"
+                        Grid.Column="2"
                         VerticalOptions="Center"
                         TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
                         Text="{mi:Material Icon=KeyboardArrowRight}" />

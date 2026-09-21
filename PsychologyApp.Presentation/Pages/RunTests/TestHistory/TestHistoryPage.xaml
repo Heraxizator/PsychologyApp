@@ -35,13 +35,10 @@
                     DomainMin="{Binding ChartDomainMin}"
                     DomainMax="{Binding ChartDomainMax}"
                     Subtitle="{Binding ChartSubtitle}" />
-                <CollectionView
-                    ItemsSource="{Binding HistoryEntries}"
-                    SelectionMode="None">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
+                <VerticalStackLayout
+                    Spacing="{StaticResource ListItemSpacing}"
+                    BindableLayout.ItemsSource="{Binding HistoryEntries}">
+                    <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="models:TestHistoryEntryItem">
                             <testUi:TestHistoryEntryView
                                 DateText="{Binding DateText}"
@@ -69,13 +66,13 @@
                                 </testUi:TestHistoryEntryView.Behaviors>
                             </testUi:TestHistoryEntryView>
                         </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                    <CollectionView.EmptyView>
+                    </BindableLayout.ItemTemplate>
+                    <BindableLayout.EmptyView>
                         <ui:EmptyStateView
                             BodyText="{Binding EmptyText}"
                             IconName="History" />
-                    </CollectionView.EmptyView>
-                </CollectionView>
+                    </BindableLayout.EmptyView>
+                </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>
 

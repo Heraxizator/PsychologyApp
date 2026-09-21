@@ -8,26 +8,34 @@
              x:DataType="vm:InfoViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
-    <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
-        <VerticalStackLayout.Behaviors>
-            <behaviors:StaggerChildrenBehavior />
-        </VerticalStackLayout.Behaviors>
-
+    <Grid
+        Margin="{StaticResource LayoutPageMarginThickness}"
+        RowDefinitions="Auto,*"
+        RowSpacing="{StaticResource CompactSpacing}">
         <ui:NavigationBarSimpleView
+            Grid.Row="0"
             BackCommand="{Binding BackCommand}"
             TitleText="{Binding PageTitle}" />
 
-        <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                <Label
-                    HorizontalTextAlignment="Justify"
-                    Text="{Binding AboutBody}"
-                    Style="{StaticResource BodyStyle}" />
-                <Label
-                    Text="{Binding AppVersionText}"
-                    Style="{StaticResource CaptionStyle}"
-                    TextColor="{DynamicResource Primary}" />
+        <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}" Padding="0,0,0,8">
+                <VerticalStackLayout.Behaviors>
+                    <behaviors:StaggerChildrenBehavior />
+                </VerticalStackLayout.Behaviors>
+
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                    <VerticalStackLayout Spacing="{StaticResource SectionSpacing}">
+                        <Label
+                            Text="{Binding AboutBody}"
+                            Style="{StaticResource BodyStyle}" />
+                        <BoxView Style="{StaticResource SubtleDividerStyle}" />
+                        <Label
+                            Text="{Binding AppVersionText}"
+                            Style="{StaticResource CaptionStyle}"
+                            TextColor="{DynamicResource Primary}" />
+                    </VerticalStackLayout>
+                </Border>
             </VerticalStackLayout>
-        </Border>
-    </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

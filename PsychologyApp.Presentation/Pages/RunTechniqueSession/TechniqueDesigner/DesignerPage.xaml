@@ -10,21 +10,26 @@
              Title="{Binding PageTitle}">
 
     <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <Grid
+            IsVisible="{Binding IsDone}"
+            Margin="{StaticResource LayoutPageMarginThickness}"
+            RowDefinitions="Auto,*,Auto"
+            RowSpacing="{StaticResource CompactSpacing}">
+            <ui:NavigationBarSimpleView
+                Grid.Row="0"
+                TitleText="{Binding DesignTitle}"
+                BackText="{Binding BackText}"
+                BackCommand="{Binding Finish}" />
+
         <ScrollView
             x:Name="DesignerContent"
-            VerticalOptions="FillAndExpand"
+            Grid.Row="1"
             VerticalScrollBarVisibility="Never"
-            HorizontalScrollBarVisibility="Never"
-            IsVisible="{Binding IsDone}">
-            <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+            HorizontalScrollBarVisibility="Never">
+            <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}" Padding="0,0,0,8">
                 <VerticalStackLayout.Behaviors>
                     <behaviors:StaggerChildrenBehavior />
                 </VerticalStackLayout.Behaviors>
-
-                <ui:NavigationBarSimpleView
-                    TitleText="{Binding DesignTitle}"
-                    BackText="{Binding BackText}"
-                    BackCommand="{Binding Finish}" />
 
                 <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                     <Border.Behaviors>
@@ -62,12 +67,14 @@
                             BodyText="{Binding Actions}" />
                     </VerticalStackLayout>
                 </Border>
-
-                <ui:ButtonView
-                    BodyText="{Binding SaveButtonText}"
-                    TapCommand="{Binding ExecuteTechnique}" />
             </VerticalStackLayout>
         </ScrollView>
+
+            <ui:ButtonView
+                Grid.Row="2"
+                BodyText="{Binding SaveButtonText}"
+                TapCommand="{Binding ExecuteTechnique}" />
+        </Grid>
 
         <ui:ProgressBarView
             x:Name="LoadingProgress"

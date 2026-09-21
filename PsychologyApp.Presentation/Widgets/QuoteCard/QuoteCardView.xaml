@@ -10,43 +10,35 @@
         <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
     </ContentView.Behaviors>
 
-    <Border Style="{StaticResource QuoteListCardStyle}">
-        <VerticalStackLayout Spacing="8">
-            <Label
-                HorizontalTextAlignment="Start"
-                Style="{StaticResource QuoteDisplayStyle}"
-                Text="{Binding Text, Source={x:Reference Root}}" />
-
-            <Label
-                Style="{StaticResource CaptionStyle}"
-                TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                Text="{Binding ThemeLabel, Source={x:Reference Root}}">
-                <Label.Triggers>
-                    <DataTrigger
-                        Binding="{Binding ThemeLabel, Source={x:Reference Root}}"
-                        TargetType="Label"
-                        Value="">
-                        <Setter Property="IsVisible" Value="False" />
-                    </DataTrigger>
-                </Label.Triggers>
-            </Label>
-
-            <Label
-                FontAttributes="Italic"
-                Style="{StaticResource CaptionStyle}"
-                Text="{Binding AuthorLine, Source={x:Reference Root}}" />
-
-            <Grid
-                ColumnSpacing="4"
-                HorizontalOptions="Center">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+    <Border Style="{StaticResource QuoteListCardStyle}" Padding="16,8,8,8">
+        <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="4">
+            <!-- Top row: theme pill + favourite -->
+            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                <Border
+                    Grid.Column="0"
+                    Style="{StaticResource MetaPillStyle}"
+                    Padding="10,4"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center">
+                    <Border.Triggers>
+                        <DataTrigger
+                            Binding="{Binding ThemeLabel, Source={x:Reference Root}}"
+                            TargetType="Border"
+                            Value="">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Label
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{DynamicResource Primary}"
+                        FontFamily="{StaticResource SemiBoldFontFamily}"
+                        MaxLines="1"
+                        LineBreakMode="TailTruncation"
+                        Text="{Binding ThemeLabel, Source={x:Reference Root}}" />
+                </Border>
                 <Border
                     x:Name="FavoriteActionBorder"
-                    Grid.Column="0"
+                    Grid.Column="1"
                     WidthRequest="44"
                     HeightRequest="44"
                     StrokeThickness="0"
@@ -70,6 +62,26 @@
                         </ui:MaterialIconView.Triggers>
                     </ui:MaterialIconView>
                 </Border>
+            </Grid>
+
+            <!-- Quote body -->
+            <Label
+                Grid.Row="1"
+                Margin="0,0,8,0"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource QuoteDisplayStyle}"
+                Text="{Binding Text, Source={x:Reference Root}}" />
+
+            <!-- Footer: author + copy / share -->
+            <Grid Grid.Row="2" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="0">
+                <Label
+                    Grid.Column="0"
+                    VerticalOptions="Center"
+                    FontAttributes="Italic"
+                    Style="{StaticResource CaptionStyle}"
+                    MaxLines="2"
+                    LineBreakMode="TailTruncation"
+                    Text="{Binding AuthorLine, Source={x:Reference Root}}" />
                 <Border
                     x:Name="CopyActionBorder"
                     Grid.Column="1"
@@ -82,7 +94,7 @@
                     </Border.GestureRecognizers>
                     <ui:MaterialIconView
                         IconName="ContentCopy"
-                        IconSize="24"
+                        IconSize="22"
                         SemanticProperties.Description="{Binding CopyHint, Source={x:Reference Root}}"
                         IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
                 </Border>
@@ -98,12 +110,12 @@
                     </Border.GestureRecognizers>
                     <ui:MaterialIconView
                         IconName="Share"
-                        IconSize="24"
+                        IconSize="22"
                         SemanticProperties.Description="{Binding ShareHint, Source={x:Reference Root}}"
                         IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
                 </Border>
             </Grid>
-        </VerticalStackLayout>
+        </Grid>
     </Border>
 
 </ContentView>

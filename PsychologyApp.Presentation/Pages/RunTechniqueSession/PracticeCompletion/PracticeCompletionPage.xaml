@@ -99,27 +99,14 @@
                             Margin="{StaticResource FieldTopMargin}" />
                     </VerticalStackLayout>
                 </Border>
-                <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                    <Border.Behaviors>
+                <ui:SettingsLinkCardView
+                    Title="{Binding OpenJournalText}"
+                    IconName="Edit"
+                    TapCommand="{Binding OpenJournalCommand}">
+                    <ui:SettingsLinkCardView.Behaviors>
                         <behaviors:ListItemRevealBehavior RevealIndex="2" />
-                        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
-                    </Border.Behaviors>
-                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding OpenJournalCommand}" />
-                        </Grid.GestureRecognizers>
-                        <Label
-                            Grid.Column="0"
-                            Text="{Binding OpenJournalText}"
-                            Style="{StaticResource BodyStyle}"
-                            VerticalOptions="Center" />
-                        <Label
-                            Grid.Column="1"
-                            VerticalOptions="Center"
-                            TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                            Text="{mi:Material Icon=KeyboardArrowRight}" />
-                    </Grid>
-                </Border>
+                    </ui:SettingsLinkCardView.Behaviors>
+                </ui:SettingsLinkCardView>
                 <ui:ButtonView
                     Variant="Secondary"
                     BodyText="{Binding GoHomeText}"

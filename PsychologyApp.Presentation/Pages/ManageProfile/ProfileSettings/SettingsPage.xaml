@@ -11,15 +11,20 @@
              Title="{Binding PageTitle}"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
 
-    <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
-        <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+    <Grid
+        Margin="{StaticResource LayoutPageMarginThickness}"
+        RowDefinitions="Auto,*,Auto"
+        RowSpacing="{StaticResource CompactSpacing}">
+        <ui:NavigationBarSimpleView
+            Grid.Row="0"
+            TitleText="{Binding PageTitle}"
+            BackCommand="{Binding Finish}" />
+
+        <ScrollView Grid.Row="1" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never">
+        <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}" Padding="0,0,0,8">
             <VerticalStackLayout.Behaviors>
                 <behaviors:StaggerChildrenBehavior />
             </VerticalStackLayout.Behaviors>
-
-            <ui:NavigationBarSimpleView
-                TitleText="{Binding PageTitle}"
-                BackCommand="{Binding Finish}" />
 
             <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
                 <Border.Behaviors>
@@ -203,15 +208,16 @@
                 </VerticalStackLayout>
             </Border>
 
-
-            <ui:ButtonView
-                BodyText="{Binding ApplyButtonText}"
-                TapCommand="{Binding ApplyCommand}" />
-
             <ui:ButtonView
                 Variant="Secondary"
                 BodyText="{Binding ReplayOnboardingText}"
                 TapCommand="{Binding ReplayOnboardingCommand}" />
         </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
+
+        <ui:ButtonView
+            Grid.Row="2"
+            BodyText="{Binding ApplyButtonText}"
+            TapCommand="{Binding ApplyCommand}" />
+    </Grid>
 </ContentPage>

@@ -9,20 +9,29 @@
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
-    <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
-        <VerticalStackLayout.Behaviors>
-            <behaviors:StaggerChildrenBehavior />
-        </VerticalStackLayout.Behaviors>
+    <Grid
+        Margin="{StaticResource LayoutPageMarginThickness}"
+        RowDefinitions="Auto,*,Auto"
+        RowSpacing="{StaticResource CompactSpacing}">
         <ui:NavigationBarSimpleView
+            Grid.Row="0"
             TitleText="{Binding PageTitle}"
             BackCommand="{Binding BackCommand}" />
 
-        <ui:TextBoxView
-            HeaderText="{Binding MoreInfoHeader}"
-            BodyText="{Binding MoreInfoBody}" />
+        <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}" Padding="0,0,0,8">
+                <VerticalStackLayout.Behaviors>
+                    <behaviors:StaggerChildrenBehavior />
+                </VerticalStackLayout.Behaviors>
+                <ui:TextBoxView
+                    HeaderText="{Binding MoreInfoHeader}"
+                    BodyText="{Binding MoreInfoBody}" />
+            </VerticalStackLayout>
+        </ScrollView>
 
         <ui:ButtonView
+            Grid.Row="2"
             BodyText="{Binding DonateButtonText}"
             TapCommand="{Binding DonateCommand}" />
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

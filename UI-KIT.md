@@ -46,6 +46,18 @@ Prefer kit components over raw MAUI controls:
 - Inputs: `TextEntryView`, `SettingPickerRowView`, `SettingSwitchRowView`
 - Chrome: `NavigationBarSimpleView`, `SectionHeaderView`, `EmptyStateView`
 - Filters: `FilterChipView`, `FilterChipTabBarView`
+- Navigation rows: `SettingsLinkCardView` (optional `IconName`, optional `Subtitle`) for every "tap to open" row
+- Binary choice: `YesNoSelectorView` (segmented yes/no; `SelectCommand` receives `"yes"` / `"no"`)
+
+## Screen layout pattern
+
+Forms and settings-like pages pin the nav bar at the top and the primary action (Save, Apply, Send) at the bottom
+with the content in a `ScrollView` between them, so the action stays reachable without scrolling to the end.
+
+## Tap targets
+
+Icon-only actions are at least 44x44 (`IconActionStyle`, `NavBackButtonStyle`) and carry a
+`SemanticProperties.Description`. Use `IconTileStyle` for the tinted rounded icon square.
 
 Set `AccessibilityLabel` / `AccessibilityHint` on `ButtonView` when button text alone is ambiguous.
 

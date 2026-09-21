@@ -10,22 +10,27 @@
              Title="{Binding PageTitle}">
 
     <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-        <ScrollView
+        <Grid
             x:Name="CreatedContent"
-            VerticalOptions="FillAndExpand"
-            VerticalScrollBarVisibility="Never"
-            IsVisible="{Binding IsDone}">
-            <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
-                <VerticalStackLayout.Behaviors>
-                    <behaviors:RevealOnAppearingBehavior />
-                    <behaviors:StaggerChildrenBehavior />
-                </VerticalStackLayout.Behaviors>
+            IsVisible="{Binding IsDone}"
+            Margin="{StaticResource LayoutPageMarginThickness}"
+            RowDefinitions="Auto,*,Auto"
+            RowSpacing="{StaticResource CompactSpacing}">
+            <Grid.Behaviors>
+                <behaviors:RevealOnAppearingBehavior />
+            </Grid.Behaviors>
+            <ui:NavigationBarSimpleView
+                Grid.Row="0"
+                TitleText="{Binding CustomTechniqueTitle}"
+                BackCommand="{Binding BackCommand}" />
 
-                <ui:NavigationBarSimpleView
-                    TitleText="{Binding CustomTechniqueTitle}"
-                    BackCommand="{Binding BackCommand}" />
+            <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never">
+                <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}" Padding="0,0,0,8">
+                    <VerticalStackLayout.Behaviors>
+                        <behaviors:StaggerChildrenBehavior />
+                    </VerticalStackLayout.Behaviors>
 
-                <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="{StaticResource CompactSpacing}">
+                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="{StaticResource CompactSpacing}">
                     <ui:ButtonView
                         Grid.Column="1"
                         IsCompact="True"
@@ -40,14 +45,17 @@
                         TapCommand="{Binding Remove}" />
                 </Grid>
 
-                <ui:AlgorithmBoxView
+                    <ui:AlgorithmBoxView
                     TitleText="{Binding AlgorithmTitle}"
                     BodySource="{Binding Algorithm}" />
-                <ui:ButtonView
-                    BodyText="{Binding FinishButtonText}"
-                    TapCommand="{Binding Finish}" />
-            </VerticalStackLayout>
-        </ScrollView>
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <ui:ButtonView
+                Grid.Row="2"
+                BodyText="{Binding FinishButtonText}"
+                TapCommand="{Binding Finish}" />
+        </Grid>
 
         <ui:ProgressBarView
             x:Name="LoadingProgress"

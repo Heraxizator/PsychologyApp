@@ -2,11 +2,12 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:common="clr-namespace:PsychologyApp.Presentation.Common;assembly=PsychologyApp.Presentation.Core"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:Class="PsychologyApp.Presentation.Shared.UI.Components.NavigationBarSimpleView">
 
     <ContentView.Behaviors>
-        <behaviors:PressFeedbackBehavior AttachToTappableLabels="True" />
+        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
     </ContentView.Behaviors>
 
     <ContentView.ControlTemplate>
@@ -21,14 +22,20 @@
                     HeightRequest="1"
                     VerticalOptions="End"
                     Color="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}" />
-                <Label
+                <Border
                     Grid.Column="0"
-                    Style="{StaticResource NavBackIconStyle}"
-                    Text="{mi:Material Icon=KeyboardArrowLeft}">
-                    <Label.GestureRecognizers>
+                    Style="{StaticResource NavBackButtonStyle}"
+                    SemanticProperties.Description="{x:Static common:AppStrings.Back}">
+                    <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{TemplateBinding BackCommand}" />
-                    </Label.GestureRecognizers>
-                </Label>
+                    </Border.GestureRecognizers>
+                    <Label
+                        Style="{StaticResource NavBackIconStyle}"
+                        WidthRequest="-1"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Text="{mi:Material Icon=KeyboardArrowLeft}" />
+                </Border>
                 <Label
                     Grid.Column="1"
                     Text="{TemplateBinding TitleText}"

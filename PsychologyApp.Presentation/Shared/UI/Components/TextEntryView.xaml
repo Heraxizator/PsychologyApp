@@ -35,6 +35,8 @@
                 x:Name="InputEntry"
                 Style="{StaticResource InputTextStyle}"
                 Keyboard="Text"
+                ReturnType="Done"
+                ClearButtonVisibility="WhileEditing"
                 Placeholder="{Binding PlaceholderText, Source={x:Reference Root}}"
                 Text="{Binding BodyText, Source={x:Reference Root}, Mode=TwoWay}"
                 Focused="OnInputFocused"

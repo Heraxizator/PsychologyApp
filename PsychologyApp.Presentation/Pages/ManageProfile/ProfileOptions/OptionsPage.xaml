@@ -32,6 +32,7 @@
 
                 <ui:SettingsLinkCardView
                     Title="{Binding SettingsTitle}"
+                    IconName="Tune"
                     Subtitle="{Binding SettingsSubtitle}"
                     TapCommand="{Binding OpenSettingsPageCommand}">
                     <ui:SettingsLinkCardView.Behaviors>
@@ -41,6 +42,7 @@
 
                 <ui:SettingsLinkCardView
                     Title="{Binding AliceTitle}"
+                    IconName="SmartToy"
                     Subtitle="{Binding AliceSubtitle}"
                     TapCommand="{Binding OpenAlicePageCommand}">
                     <ui:SettingsLinkCardView.Behaviors>
@@ -54,6 +56,7 @@
 
                 <ui:SettingsLinkCardView
                     Title="{Binding CrisisTitle}"
+                    IconName="HealthAndSafety"
                     Subtitle="{Binding CrisisSubtitle}"
                     TapCommand="{Binding OpenCrisisHubCommand}">
                     <ui:SettingsLinkCardView.Behaviors>
@@ -67,6 +70,7 @@
 
                 <ui:SettingsLinkCardView
                     Title="{Binding FeedbackTitle}"
+                    IconName="Feedback"
                     Subtitle="{Binding FeedbackSubtitle}"
                     TapCommand="{Binding OpenFeedbackPageCommand}">
                     <ui:SettingsLinkCardView.Behaviors>
@@ -76,6 +80,7 @@
 
                 <ui:SettingsLinkCardView
                     Title="{Binding DonateTitle}"
+                    IconName="VolunteerActivism"
                     Subtitle="{Binding DonateSubtitle}"
                     TapCommand="{Binding OpenDonatePageCommand}">
                     <ui:SettingsLinkCardView.Behaviors>
@@ -85,6 +90,7 @@
 
                 <ui:SettingsLinkCardView
                     Title="{Binding AboutTitle}"
+                    IconName="Psychology"
                     Subtitle="{Binding AboutSubtitle}"
                     TapCommand="{Binding OpenAboutPageCommand}">
                     <ui:SettingsLinkCardView.Behaviors>

@@ -249,6 +249,56 @@
         <Setter Property="HorizontalOptions" Value="Center" />
     </Style>
 
+    <!-- Segmented yes/no style choice (RiskCheck and similar) -->
+    <Style x:Key="ChoiceOptionBorderStyle" TargetType="Border">
+        <Setter Property="Padding" Value="12,10" />
+        <Setter Property="MinimumHeightRequest" Value="48" />
+        <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
+        <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource InputBackgroundLight}, Dark={StaticResource InputBackgroundDark}}" />
+    </Style>
+
+    <Style x:Key="ChoiceOptionSelectedBorderStyle" TargetType="Border" BasedOn="{StaticResource ChoiceOptionBorderStyle}">
+        <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
+    </Style>
+
+    <Style x:Key="ChoiceOptionLabelStyle" TargetType="Label">
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="{DynamicResource BodyFontSize}" />
+        <Setter Property="FontFamily" Value="{StaticResource MediumFontFamily}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+    </Style>
+
+    <Style x:Key="ChoiceOptionSelectedLabelStyle" TargetType="Label" BasedOn="{StaticResource ChoiceOptionLabelStyle}">
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontFamily" Value="{StaticResource SemiBoldFontFamily}" />
+    </Style>
+
+    <Style x:Key="IconTileStyle" TargetType="Border">
+        <Setter Property="WidthRequest" Value="44" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="NavBackButtonStyle" TargetType="Border">
+        <Setter Property="WidthRequest" Value="44" />
+        <Setter Property="HeightRequest" Value="44" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 22" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
     <Style x:Key="EmptyStateIconHaloStyle" TargetType="Border">
         <Setter Property="WidthRequest" Value="72" />
         <Setter Property="HeightRequest" Value="72" />

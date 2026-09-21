@@ -8,42 +8,50 @@
              x:DataType="reviewForm:FormViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
-    <ScrollView VerticalScrollBarVisibility="Never">
-        <VerticalStackLayout
-            Margin="{StaticResource LayoutPageMarginThickness}"
-            Spacing="{StaticResource LayoutSpacing}">
-            <VerticalStackLayout.Behaviors>
-                <behaviors:StaggerChildrenBehavior />
-            </VerticalStackLayout.Behaviors>
+    <Grid
+        Margin="{StaticResource LayoutPageMarginThickness}"
+        RowDefinitions="Auto,*,Auto"
+        RowSpacing="{StaticResource CompactSpacing}">
+        <ui:NavigationBarSimpleView
+            Grid.Row="0"
+            TitleText="{Binding PageTitle}"
+            BackCommand="{Binding BackCommand}" />
 
-            <ui:NavigationBarSimpleView
-                TitleText="{Binding PageTitle}"
-                BackCommand="{Binding BackCommand}" />
+        <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout
+                Spacing="{StaticResource LayoutSpacing}"
+                Padding="0,0,0,8">
+                <VerticalStackLayout.Behaviors>
+                    <behaviors:StaggerChildrenBehavior />
+                </VerticalStackLayout.Behaviors>
 
-            <ui:TextBoxView
-                HeaderText="{Binding ExplanationHeader}"
-                BodyText="{Binding ExplanationBody}">
-                <ui:TextBoxView.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="1" />
-                </ui:TextBoxView.Behaviors>
-            </ui:TextBoxView>
+                <ui:TextBoxView
+                    HeaderText="{Binding ExplanationHeader}"
+                    BodyText="{Binding ExplanationBody}">
+                    <ui:TextBoxView.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="1" />
+                    </ui:TextBoxView.Behaviors>
+                </ui:TextBoxView>
 
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <Border.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="2" />
-                </Border.Behaviors>
-                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <Label Text="{Binding FormSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
-                    <ui:TextEditorView
-                        Variant="Plain"
-                        PlaceholderText="{Binding MessagePlaceholder}"
-                        BodyText="{Binding MessageText}"
-                        TitleText="{Binding MessageFieldLabel}" />
-                    <ui:ButtonView
-                        BodyText="{Binding SendButtonText}"
-                        TapCommand="{Binding Send}" />
-                </VerticalStackLayout>
-            </Border>
-        </VerticalStackLayout>
-    </ScrollView>
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                    <Border.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="2" />
+                    </Border.Behaviors>
+                    <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                        <Label Text="{Binding FormSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
+                        <ui:TextEditorView
+                            Variant="Plain"
+                            PlaceholderText="{Binding MessagePlaceholder}"
+                            BodyText="{Binding MessageText}"
+                            TitleText="{Binding MessageFieldLabel}" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <ui:ButtonView
+            Grid.Row="2"
+            BodyText="{Binding SendButtonText}"
+            TapCommand="{Binding Send}" />
+    </Grid>
 </ContentPage>

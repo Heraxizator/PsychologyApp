@@ -39,5 +39,9 @@ public static class UiTokenCatalog
         "SubtleDividerStyle",
         "PrimaryActionBorderStyle",
         "FilterChipSelectedStyle",
+        "IconTileStyle",
+        "NavBackButtonStyle",
+        "ChoiceOptionBorderStyle",
+        "ChoiceOptionSelectedBorderStyle",
     ];
 }

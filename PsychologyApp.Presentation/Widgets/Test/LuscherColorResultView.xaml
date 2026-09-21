@@ -27,7 +27,7 @@
                 <Label
                     Text="{Binding ResultText, Source={x:Reference Root}}"
                     Style="{StaticResource BodyStyle}"
-                    HorizontalTextAlignment="Justify"
+                    HorizontalTextAlignment="Start"
                     LineBreakMode="WordWrap" />
             </VerticalStackLayout>
 

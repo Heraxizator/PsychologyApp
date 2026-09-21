@@ -54,7 +54,7 @@
                     <Label
                         Text="{Binding InterpretationDetail}"
                         Style="{StaticResource BodyStyle}"
-                        HorizontalTextAlignment="Justify"
+                        HorizontalTextAlignment="Start"
                         LineBreakMode="WordWrap" />
                 </Border>
 
@@ -75,6 +75,13 @@
                         Theme="{Binding RecommendationTheme}"
                         TapCommand="{Binding TryTechniqueCommand}" />
                 </VerticalStackLayout>
+
+                <ui:ButtonView
+                    x:Name="ExplorePracticeButton"
+                    IsVisible="False"
+                    Variant="Secondary"
+                    BodyText="{Binding ExplorePracticeButtonText}"
+                    TapCommand="{Binding ExplorePracticeCommand}" />
 
                 <Border
                     IsVisible="{Binding HasAnswerDetail}"
@@ -100,12 +107,6 @@
                 IsVisible="False"
                 BodyText="{Binding TryTechniqueButtonText}"
                 TapCommand="{Binding TryTechniqueCommand}" />
-            <ui:ButtonView
-                x:Name="ExplorePracticeButton"
-                IsVisible="False"
-                Variant="Secondary"
-                BodyText="{Binding ExplorePracticeButtonText}"
-                TapCommand="{Binding ExplorePracticeCommand}" />
             <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
                 <ui:ButtonView
                     Grid.Column="0"

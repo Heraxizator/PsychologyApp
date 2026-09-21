@@ -7,6 +7,7 @@
              xmlns:mood="clr-namespace:PsychologyApp.Presentation.Widgets.MoodStrip"
              xmlns:journalStrip="clr-namespace:PsychologyApp.Presentation.Widgets.Journal"
              xmlns:journal="clr-namespace:PsychologyApp.Presentation.Entities.Journal"
+             xmlns:common="clr-namespace:PsychologyApp.Presentation.Common;assembly=PsychologyApp.Presentation.Core"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ManageJournal.Journal"
              x:Name="JournalRoot"
@@ -28,21 +29,27 @@
                 ColumnSpacing="4"
                 MinimumHeightRequest="48">
                 <Grid.Behaviors>
-                    <behaviors:PressFeedbackBehavior AttachToTappableLabels="True" />
+                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
                 </Grid.Behaviors>
                 <BoxView
                     Grid.ColumnSpan="4"
                     HeightRequest="1"
                     VerticalOptions="End"
                     Color="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}" />
-                <Label
+                <Border
                     Grid.Column="0"
-                    Style="{StaticResource NavBackIconStyle}"
-                    Text="{mi:Material Icon=KeyboardArrowLeft}">
-                    <Label.GestureRecognizers>
+                    Style="{StaticResource NavBackButtonStyle}"
+                    SemanticProperties.Description="{x:Static common:AppStrings.Back}">
+                    <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding BackCommand}" />
-                    </Label.GestureRecognizers>
-                </Label>
+                    </Border.GestureRecognizers>
+                    <Label
+                        Style="{StaticResource NavBackIconStyle}"
+                        WidthRequest="-1"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Text="{mi:Material Icon=KeyboardArrowLeft}" />
+                </Border>
                 <Label
                     Grid.Column="1"
                     Text="{Binding PageTitle}"

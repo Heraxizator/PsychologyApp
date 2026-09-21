@@ -14,31 +14,59 @@
     </ContentPage.ToolbarItems>
 
     <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-        <ScrollView
+        <Grid
             IsVisible="{Binding IsDone}"
-            VerticalScrollBarVisibility="Never">
-            <VerticalStackLayout
-                x:Name="ContentStack"
-                Margin="{StaticResource LayoutTabPageMarginThickness}"
-                Spacing="{StaticResource LayoutSpacing}">
+            Margin="{StaticResource LayoutTabPageMarginThickness}"
+            RowDefinitions="*,Auto"
+            RowSpacing="{StaticResource SectionSpacing}">
+
+            <ScrollView Grid.Row="0" VerticalScrollBarVisibility="Never">
+                <VerticalStackLayout
+                    x:Name="ContentStack"
+                    Spacing="{StaticResource LayoutSpacing}"
+                    Padding="0,0,0,8">
                     <VerticalStackLayout.Behaviors>
                         <behaviors:StaggerChildrenBehavior />
                         <behaviors:RevealOnAppearingBehavior RevealOnTabAppearOnly="True" />
                     </VerticalStackLayout.Behaviors>
-                    <ui:TextBoxView
-                        HeaderText="{Binding ExplanationHeader}"
-                        BodyText="{Binding ExplanationBody}" />
+
+                    <!-- Hero: what the tool is for -->
+                    <Border Style="{StaticResource HeroCardStyle}" Margin="0" Padding="16">
+                        <VerticalStackLayout Spacing="{StaticResource SectionSpacing}">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                                <Border Grid.Column="0" Style="{StaticResource IconTileStyle}" WidthRequest="52" HeightRequest="52">
+                                    <ui:MaterialIconView
+                                        IconName="Favorite"
+                                        IconSize="28"
+                                        IconColor="{DynamicResource Primary}"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center" />
+                                </Border>
+                                <Label
+                                    Grid.Column="1"
+                                    Text="{Binding ExplanationHeader}"
+                                    Style="{StaticResource SectionTitleStyle}"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                            <Label Text="{Binding ExplanationBody}" Style="{StaticResource BodyStyle}" />
+                        </VerticalStackLayout>
+                    </Border>
+
                     <ui:TextBoxView
                         HeaderText="{Binding DescriptionHeader}"
                         BodyText="{Binding DescriptionBody}" />
+
                     <ui:AlgorithmBoxView
                         TitleText="{Binding AlgorithmHeader}"
                         BodySource="{Binding AlgorithmSteps}" />
-                    <ui:ButtonView
-                        BodyText="{Binding StartButtonText}"
-                        TapCommand="{Binding StartCommand}" />
-            </VerticalStackLayout>
-        </ScrollView>
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <ui:ButtonView
+                Grid.Row="1"
+                BodyText="{Binding StartButtonText}"
+                TapCommand="{Binding StartCommand}" />
+        </Grid>
 
         <ui:ProgressBarView
             x:Name="LoadingProgress"
