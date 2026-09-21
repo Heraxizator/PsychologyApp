@@ -1,18 +1,15 @@
 using PsychologyApp.Presentation.Features.RunTechniqueSession.DependencyInjection;
 
-namespace PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueDialogue;
+namespace PsychologyApp.Presentation.Pages.RunTechniqueSession.Companion;
 
-public partial class TechniqueDialoguePage : ContentPage
+public partial class CompanionPage : ContentPage
 {
-    private readonly TechniqueDialogueViewModel _viewModel;
+    private readonly CompanionViewModel _viewModel;
 
-    public TechniqueDialoguePage(
-        ITechniqueDialogueViewModelFactory viewModelFactory,
-        TechniqueId techniqueId,
-        INavigation hostNavigation)
+    public CompanionPage(ICompanionViewModelFactory viewModelFactory, INavigation hostNavigation)
     {
         InitializeComponent();
-        _viewModel = viewModelFactory.Create(techniqueId, hostNavigation);
+        _viewModel = viewModelFactory.Create(hostNavigation);
         BindingContext = _viewModel;
 
         // Unloaded (page popped), not Disappearing: the latter also fires when the app is merely backgrounded.

@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Pages.RunTechniqueSession.Companion;
 using PsychologyApp.Presentation.Features.ClinicalCare;
 using PsychologyApp.Presentation.Features.ManageJournal.DependencyInjection;
 using PsychologyApp.Presentation.Features.ManageProfile;
@@ -152,6 +153,9 @@ public sealed class PageRegistry(
 
     public PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null, long? sessionResultId = null) =>
         WithPressFeedback(techniquePageFactory.CreatePracticeCompletionPage(streakDays, completedItemKey, sessionResultId));
+
+    public CompanionPage CreateCompanionPage(INavigation hostNavigation) =>
+        WithPressFeedback(techniquePageFactory.CreateCompanionPage(hostNavigation));
 
     public CrisisHubPage CreateCrisisHubPage() =>
         WithPressFeedback(clinicalCarePageFactory.CreateCrisisHubPage());

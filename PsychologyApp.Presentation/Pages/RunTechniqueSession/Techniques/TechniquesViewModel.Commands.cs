@@ -11,6 +11,7 @@ public partial class TechniquesViewModel
     public ICommand OpenProfileCommand { get; private set; } = default!;
     public ICommand StartTodayPracticeCommand { get; private set; } = default!;
     public ICommand OpenCrisisHubCommand { get; private set; } = default!;
+    public ICommand OpenCompanionCommand { get; private set; } = default!;
     public ICommand LoadMoreCustomTechniquesCommand { get; private set; } = default!;
 
     private void WireCommands()
@@ -19,6 +20,7 @@ public partial class TechniquesViewModel
         OpenProfileCommand = new AsyncCommand(() => _navigationService.GoToUserProfileAsync());
         StartTodayPracticeCommand = new AsyncCommand(StartTodayPracticeAsync);
         OpenCrisisHubCommand = new AsyncCommand(() => _navigationService.GoToCrisisHubAsync());
+        OpenCompanionCommand = new AsyncCommand(() => _navigationService.GoToCompanionAsync());
 
         Cancel = new Command(CancelProgress);
         Reload = new AsyncCommand(() => InitializeAsync(showLoadingOverlay: true));

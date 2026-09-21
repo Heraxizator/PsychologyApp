@@ -3,6 +3,7 @@ using MauiIcons.Material;
 using Microsoft.Extensions.Logging;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Abstractions.Integration;
+using PsychologyApp.Application.Conversation.Companion;
 using PsychologyApp.Application.DependencyInjection;
 using PsychologyApp.Application.Reason;
 using PsychologyApp.Application.Practice;
@@ -70,6 +71,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<MauiTestAssetReader>();
         builder.Services.AddSingleton<ITestAssetReader>(sp => sp.GetRequiredService<MauiTestAssetReader>());
         builder.Services.AddSingleton<IConversationScenarioProvider, MauiConversationScenarioProvider>();
+        // Swap for a real on-device model registration once one is installed; the companion falls back to scripted replies without it.
+        builder.Services.AddSingleton<ILocalLanguageModel, NullLanguageModel>();
         builder.Services.AddSingleton<MauiTestCatalogProvider>();
         builder.Services.AddPsychologyAppCachedTestCatalog(sp =>
             new CachedTestCatalogProvider(

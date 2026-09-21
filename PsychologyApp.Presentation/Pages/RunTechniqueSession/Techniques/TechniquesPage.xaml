@@ -80,6 +80,20 @@
                         <Label Text="{Binding ClinicalRiskBanner}" Style="{StaticResource BodyStyle}" />
                     </Border>
 
+                    <Border Style="{StaticResource TodayBannerStyle}">
+                        <Border.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                            <behaviors:ListItemRevealBehavior />
+                        </Border.Behaviors>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenCompanionCommand}" />
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="{Binding CompanionCardTitle}" Style="{StaticResource ListRowTitleStyle}" />
+                            <Label Text="{Binding CompanionCardSubtitle}" Style="{StaticResource CaptionStyle}" />
+                        </VerticalStackLayout>
+                    </Border>
+
                     <today:TodayPracticeRowView
                         CaptionText="{Binding TodayForYouLabel}"
                         StreakText="{Binding StreakDisplay}"
