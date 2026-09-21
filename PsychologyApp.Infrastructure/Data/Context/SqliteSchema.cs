@@ -6,10 +6,12 @@ namespace PsychologyApp.Infrastructure.Data.Context;
 
 public static class SqliteSchema
 {
-    public const int CurrentVersion = 8;
+    public const int CurrentVersion = 9;
 
     private static readonly string[] DropTablesSql =
     [
+        "DROP TABLE IF EXISTS ChatMessages;",
+        "DROP TABLE IF EXISTS ChatSessions;",
         "DROP TABLE IF EXISTS SessionResults;",
         "DROP TABLE IF EXISTS EscalationEvents;",
         "DROP TABLE IF EXISTS TherapyPrograms;",
@@ -99,7 +101,44 @@ public static class SqliteSchema
         if (version < 8)
         {
             await ApplyMigrationAsync(connection, 8, MigrateToVersion8Async, cancellationToken);
+            version = 8;
         }
+
+        if (version < 9)
+        {
+            await ApplyMigrationAsync(connection, 9, MigrateToVersion9Async, cancellationToken);
+        }
+    }
+
+    private static async Task MigrateToVersion9Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)
+    {
+        await connection.ExecuteAsync(
+            """
+            CREATE TABLE IF NOT EXISTS ChatSessions (
+                SessionId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                Title TEXT NOT NULL,
+                CreatedAt TEXT NOT NULL,
+                UpdatedAt TEXT NOT NULL,
+                Emotion TEXT,
+                Theme TEXT,
+                FirstIntensity INTEGER,
+                LastIntensity INTEGER,
+                StateJson TEXT
+            );
+
+            CREATE TABLE IF NOT EXISTS ChatMessages (
+                MessageId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                SessionId INTEGER NOT NULL,
+                Role INTEGER NOT NULL,
+                Text TEXT NOT NULL,
+                CreatedAt TEXT NOT NULL,
+                QuickRepliesJson TEXT
+            );
+
+            CREATE INDEX IF NOT EXISTS IX_ChatMessages_Session ON ChatMessages(SessionId, MessageId);
+            CREATE INDEX IF NOT EXISTS IX_ChatSessions_UpdatedAt ON ChatSessions(UpdatedAt);
+            """,
+            transaction: transaction);
     }
 
     private static async Task MigrateToVersion8Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)

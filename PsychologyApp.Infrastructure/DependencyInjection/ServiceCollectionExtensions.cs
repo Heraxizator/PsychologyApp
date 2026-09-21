@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Infrastructure.Data.Context;
+using PsychologyApp.Infrastructure.Data.Repositories.Chat;
 using PsychologyApp.Infrastructure.Data.Repositories.Quots;
 using PsychologyApp.Infrastructure.Data.Repositories.Statistics;
 using PsychologyApp.Infrastructure.Data.Repositories.Techniques;
@@ -37,6 +38,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<ITestResultProgressRepository>(sp => sp.GetRequiredService<UserProgressRepository>());
         services.AddSingleton<IPracticeProgressRepository>(sp => sp.GetRequiredService<UserProgressRepository>());
         services.AddSingleton<IClinicalCareRepository, ClinicalCareRepository>();
+        services.AddSingleton<IChatRepository, ChatRepository>();
 
         return services;
     }

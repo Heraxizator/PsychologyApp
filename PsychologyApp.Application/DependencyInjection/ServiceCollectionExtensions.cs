@@ -13,6 +13,7 @@ using PsychologyApp.Application.Recommendations;
 using PsychologyApp.Application.Practice;
 using PsychologyApp.Application.Tests;
 using PsychologyApp.Application.ClinicalCare;
+using PsychologyApp.Application.Chat;
 using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Conversation.Companion;
 
@@ -81,6 +82,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<LuscherDetailReader>();
         services.AddSingleton<IClinicalCareService, ClinicalCareService>();
         services.AddSingleton<ICrisisDetector, KeywordCrisisDetector>();
+        services.AddSingleton<IChatService, ChatService>();
         services.AddSingleton<ISituationAnalyzer, LexiconSituationAnalyzer>();
 
         return services;
