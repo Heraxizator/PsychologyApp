@@ -8,6 +8,7 @@ using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
 
+[Collection("Localization")]
 public sealed class MusicPlayerViewModelTests
 {
     public MusicPlayerViewModelTests()

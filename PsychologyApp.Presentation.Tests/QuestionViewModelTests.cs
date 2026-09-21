@@ -14,6 +14,7 @@ using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
 
+[Collection("Localization")]
 public sealed class QuestionViewModelTests
 {
     private static readonly QuestionnaireSubmissionService SubmissionService = new();

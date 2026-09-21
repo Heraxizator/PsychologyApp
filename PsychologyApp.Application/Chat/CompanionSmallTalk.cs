@@ -202,6 +202,17 @@ public static class CompanionSmallTalk
         : $"Похоже, теперь на первый план вышло другое: {CompanionContent.EmotionName(to, false)}, а не {CompanionContent.EmotionName(from, false)}.";
 
 
+    // ----- what helped before -----
+
+    public static string PreferredNote(TechniqueId id, bool english) => english
+        ? $"Last time “{CompanionContent.TechniqueTitle(id, true)}” helped you."
+        : $"В прошлый раз вам помогла практика «{CompanionContent.TechniqueTitle(id, false)}».";
+
+    public static string Remembered(TechniqueId id, bool english) => english
+        ? $"I'll remember that “{CompanionContent.TechniqueTitle(id, true)}” works for you and suggest it first next time."
+        : $"Запомню, что практика «{CompanionContent.TechniqueTitle(id, false)}» вам помогает, и в следующий раз предложу её первой.";
+
+
     /// <summary>Appreciation for a long message. A person who wrote a lot deserves to hear it was read.</summary>
     public static string LongMessage(bool english, Random random) => Pick(random, english
         ? ["Thank you for telling me so much.", "That was a lot to put into words, thank you.", "I read all of it. Thank you for trusting me with it."]

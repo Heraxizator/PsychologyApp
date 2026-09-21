@@ -5,6 +5,7 @@
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.Chat.Conversation"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:avatar="clr-namespace:PsychologyApp.Presentation.Widgets.CompanionAvatar"
              x:DataType="vm:ChatViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding Title}"
@@ -31,21 +32,22 @@
                     <TapGestureRecognizer Command="{Binding BackCommand}" />
                 </Label.GestureRecognizers>
             </Label>
-            <Border
+            <avatar:CompanionAvatarView
+                x:Name="HeaderAvatar"
                 Grid.Column="1"
-                WidthRequest="42"
-                HeightRequest="42"
-                StrokeThickness="0"
-                StrokeShape="RoundRectangle 21"
-                BackgroundColor="{DynamicResource Primary}">
-                <Label
-                    Text="{mi:Material Icon=Psychology}"
-                    FontSize="24"
-                    TextColor="White"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center" />
-            </Border>
+                WidthRequest="46"
+                HeightRequest="46"
+                VerticalOptions="Center"
+                SemanticProperties.Description="{Binding OpenProfileText}"
+                SemanticProperties.Hint="{Binding OpenProfileText}">
+                <avatar:CompanionAvatarView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenProfileCommand}" />
+                </avatar:CompanionAvatarView.GestureRecognizers>
+            </avatar:CompanionAvatarView>
             <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" Spacing="1">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenProfileCommand}" />
+                </VerticalStackLayout.GestureRecognizers>
                 <Label
                     Text="{Binding Title}"
                     Style="{StaticResource ListRowTitleStyle}"

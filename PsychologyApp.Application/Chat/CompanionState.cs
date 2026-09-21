@@ -70,6 +70,18 @@ public sealed record CompanionState
     /// <summary>Beginnings of the latest companion messages, used to avoid saying the same thing twice in a row.</summary>
     public IReadOnlyList<string> RecentReplies { get; init; } = [];
 
+    /// <summary>The practice whose result the companion asked about last; if the tension dropped, it becomes a helped practice.</summary>
+    public string? LastPractice { get; init; }
+
+    /// <summary>Practices in this chat after which the tension dropped.</summary>
+    public IReadOnlyList<string> HelpedPractices { get; init; } = [];
+
+    /// <summary>The practice that has helped this person most across chats, loaded when the chat starts.</summary>
+    public string? PreferredPractice { get; init; }
+
+    /// <summary>The companion has already said "last time this helped you" in this chat.</summary>
+    public bool PreferredMentioned { get; init; }
+
     public CompanionState WithText(string text) => this with
     {
         Turns = Turns + 1,
@@ -112,6 +124,10 @@ public sealed record CompanionState
             w.WriteBoolean("namePending", NamePending);
             WriteOptional(w, "lastQuestion", LastQuestion);
             WriteArray(w, "recentReplies", RecentReplies);
+            WriteOptional(w, "lastPractice", LastPractice);
+            WriteArray(w, "helped", HelpedPractices);
+            WriteOptional(w, "preferred", PreferredPractice);
+            w.WriteBoolean("preferredMentioned", PreferredMentioned);
             w.WriteEndObject();
         }
 
@@ -159,7 +175,11 @@ public sealed record CompanionState
                 UserName = Str(r, "userName"),
                 NamePending = Bool(r, "namePending"),
                 LastQuestion = Str(r, "lastQuestion"),
-                RecentReplies = Array(r, "recentReplies")
+                RecentReplies = Array(r, "recentReplies"),
+                LastPractice = Str(r, "lastPractice"),
+                HelpedPractices = Array(r, "helped"),
+                PreferredPractice = Str(r, "preferred"),
+                PreferredMentioned = Bool(r, "preferredMentioned")
             };
         }
         catch (Exception ex) when (ex is JsonException or InvalidOperationException)

@@ -1,6 +1,7 @@
 using PsychologyApp.Application.Chat;
 using PsychologyApp.Presentation.Features.Chat.Index;
 using PsychologyApp.Presentation.Pages.Chat.ChatList;
+using PsychologyApp.Presentation.Pages.Chat.Companion;
 using PsychologyApp.Presentation.Pages.Chat.Conversation;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
@@ -13,6 +14,8 @@ public interface IChatViewModelFactory : IChatHeroFactory
     ChatViewModel CreateConversation(long? sessionId, INavigation navigation);
 
     ChatListViewModel CreateList(INavigation navigation);
+
+    CompanionProfileViewModel CreateProfile(INavigation navigation);
 }
 
 public sealed class ChatViewModelFactory(
@@ -27,6 +30,9 @@ public sealed class ChatViewModelFactory(
 
     public ChatListViewModel CreateList(INavigation navigation) =>
         new(chat, Resolve(navigation), language, dialogs, time);
+
+    public CompanionProfileViewModel CreateProfile(INavigation navigation) =>
+        new(chat, Resolve(navigation), language, dialogs);
 
     public ChatHeroViewModel CreateHero(INavigationService navigationService) =>
         new(chat, navigationService);

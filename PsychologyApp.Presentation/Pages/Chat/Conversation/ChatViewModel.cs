@@ -66,6 +66,7 @@ public sealed class ChatViewModel : BaseViewModel
 
         BindNavigation(navigationService);
         BackCommand = new AsyncCommand(GoBackAsync);
+        OpenProfileCommand = new AsyncCommand(() => NavigationService!.GoToCompanionProfileAsync());
         SendCommand = new Command(() => Run(SendDraftAsync));
         QuickReplyCommand = new Command<ChatQuickReply>(reply => Run(() => SendQuickReplyAsync(reply)));
     }
@@ -75,6 +76,7 @@ public sealed class ChatViewModel : BaseViewModel
     public ObservableCollection<QuickReplyItem> QuickReplies { get; } = [];
 
     public ICommand BackCommand { get; }
+    public ICommand OpenProfileCommand { get; }
     public ICommand SendCommand { get; }
     public ICommand QuickReplyCommand { get; }
 
@@ -116,6 +118,7 @@ public sealed class ChatViewModel : BaseViewModel
     /// <summary>Subtitle under the chat name: "typing..." while the companion answers, otherwise a privacy reminder.</summary>
     public string StatusText => IsTyping ? AppStrings.DialogueTyping : AppStrings.ChatStatusIdle;
 
+    public string OpenProfileText => AppStrings.ChatProfileOpen;
     public string Placeholder => AppStrings.ChatInputPlaceholder;
     public string SendText => AppStrings.Send;
     public string TypingText => AppStrings.DialogueTyping;
@@ -192,7 +195,7 @@ public sealed class ChatViewModel : BaseViewModel
     public void Close() => _lifetime.Cancel();
 
     protected override void RefreshLocalizedProperties() =>
-        Notify(nameof(Placeholder), nameof(SendText), nameof(TypingText), nameof(StatusText));
+        Notify(nameof(Placeholder), nameof(SendText), nameof(TypingText), nameof(StatusText), nameof(OpenProfileText));
 
     private void Run(Func<Task> action)
     {

@@ -113,7 +113,7 @@ public sealed partial class CompanionDialogue(
         [CompanionDialogueContent.FollowUpAfterPractice(english)],
         RatingReplies(),
         null,
-        state with { PendingPractice = null, PendingPracticeStartedUtc = null, AwaitingPostPracticeRating = true, ScaleAsked = true },
+        state with { LastPractice = state.PendingPractice ?? state.LastPractice, PendingPractice = null, PendingPracticeStartedUtc = null, AwaitingPostPracticeRating = true, ScaleAsked = true },
         ParseEmotion(state.Emotion),
         null));
 
@@ -186,7 +186,7 @@ public sealed partial class CompanionDialogue(
 
     private CompanionReply Introduce(CompanionState previous, string name)
     {
-        CompanionState state = previous with { UserName = name };
+        CompanionState state = previous with { UserName = name, Turns = previous.Turns + 1 };
         CompanionEmotion emotion = ParseEmotion(state.Emotion);
         return Reply([CompanionSmallTalk.Nice(name, emotion != CompanionEmotion.Unknown, english)], [], state, emotion, ParseTheme(state.Theme));
     }
@@ -450,7 +450,19 @@ public sealed partial class CompanionDialogue(
             int reference = before ?? rating;
             if (rating < reference)
             {
-                return Reply([CompanionDialogueContent.PostPracticeBetter(reference, rating, english)], [], state, emotion, theme);
+                List<string> good = [CompanionDialogueContent.PostPracticeBetter(reference, rating, english)];
+                if (state.LastPractice is { } helpful && Enum.TryParse(helpful, out TechniqueId helpedId))
+                {
+                    // Said once per practice per chat; every drop is still counted.
+                    if (!state.HelpedPractices.Contains(helpful))
+                    {
+                        good.Add(CompanionSmallTalk.Remembered(helpedId, english));
+                    }
+
+                    state = state with { HelpedPractices = [.. state.HelpedPractices, helpful], LastPractice = null };
+                }
+
+                return Reply(good, [], state, emotion, theme);
             }
 
             if (rating == reference)
@@ -537,7 +549,17 @@ public sealed partial class CompanionDialogue(
             ? [TechniqueId.Breathing, TechniqueId.Grounding]
             : TechniqueSuggester.Suggest(analysis with { Emotion = emotion });
 
-        messages.Add(CompanionContent.OfferLine(suggestions[0], english));
+        // What has helped this person before comes first, mentioned once per chat. A panic attack gets the standard help, not an experiment.
+        if (!state.PreferredMentioned && emotion != CompanionEmotion.Panic && Enum.TryParse(state.PreferredPractice, out TechniqueId preferred))
+        {
+            suggestions = [preferred, .. suggestions.Where(s => s != preferred).Take(1)];
+            messages.Add($"{CompanionSmallTalk.PreferredNote(preferred, english)} {CompanionContent.OfferLine(preferred, english)}");
+            state = state with { PreferredMentioned = true };
+        }
+        else
+        {
+            messages.Add(CompanionContent.OfferLine(suggestions[0], english));
+        }
 
         List<ChatQuickReply> quick =
         [

@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.Chat.Companion.CompanionProfilePage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.Chat.Companion"
+             xmlns:avatar="clr-namespace:PsychologyApp.Presentation.Widgets.CompanionAvatar"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:DataType="vm:CompanionProfileViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding Title}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource Gray950}}">
+
+    <ContentPage.Behaviors>
+        <behaviors:PageAnalyticsBehavior />
+    </ContentPage.Behaviors>
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+        <VerticalStackLayout
+            Margin="{StaticResource LayoutPageMarginThickness}"
+            Spacing="{StaticResource LayoutSpacing}">
+            <VerticalStackLayout.Behaviors>
+                <behaviors:StaggerChildrenBehavior />
+            </VerticalStackLayout.Behaviors>
+
+            <ui:NavigationBarSimpleView
+                TitleText="{Binding Title}"
+                BackCommand="{Binding BackCommand}" />
+
+            <!-- Face, name, status and the numbers -->
+            <Border
+                Margin="0"
+                Padding="20,24,20,20"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 28">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="{StaticResource Primary}" Offset="0.0" />
+                        <GradientStop Color="#6E56FF" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <VerticalStackLayout Spacing="12">
+                    <Grid WidthRequest="140" HeightRequest="140" HorizontalOptions="Center">
+                        <Border
+                            x:Name="Halo"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 70"
+                            BackgroundColor="#33FFFFFF" />
+                        <avatar:CompanionAvatarView
+                            WidthRequest="124"
+                            HeightRequest="124"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            IsAlive="True"
+                            SemanticProperties.Description="{Binding Title}" />
+                    </Grid>
+
+                    <Label
+                        Text="{Binding Title}"
+                        Style="{StaticResource PageTitleStyle}"
+                        TextColor="White"
+                        HorizontalTextAlignment="Center" />
+                    <Label
+                        Text="{Binding Tagline}"
+                        Style="{StaticResource BodyStyle}"
+                        TextColor="White"
+                        Opacity="0.9"
+                        HorizontalTextAlignment="Center" />
+
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
+                        <Border Padding="10,5" StrokeThickness="0" StrokeShape="RoundRectangle 14" BackgroundColor="#26FFFFFF">
+                            <HorizontalStackLayout Spacing="6">
+                                <Ellipse WidthRequest="8" HeightRequest="8" Fill="#34C759" VerticalOptions="Center" />
+                                <Label Text="{Binding OnlineText}" FontSize="12" TextColor="White" />
+                            </HorizontalStackLayout>
+                        </Border>
+                        <Border Padding="10,5" StrokeThickness="0" StrokeShape="RoundRectangle 14" BackgroundColor="#26FFFFFF">
+                            <HorizontalStackLayout Spacing="6">
+                                <ui:MaterialIconView IconName="CloudOff" IconSize="14" IconColor="White" VerticalOptions="Center" />
+                                <Label Text="{Binding OfflineText}" FontSize="12" TextColor="White" />
+                            </HorizontalStackLayout>
+                        </Border>
+                    </HorizontalStackLayout>
+
+                    <Label
+                        Text="{Binding Since}"
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="White"
+                        Opacity="0.85"
+                        HorizontalTextAlignment="Center" />
+
+                    <Border
+                        Margin="0,4,0,0"
+                        Padding="6,14"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 16"
+                        BackgroundColor="#26FFFFFF">
+                        <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="2">
+                            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                <Label x:Name="ChatsValue" Text="0" Style="{StaticResource PageTitleStyle}" TextColor="White" HorizontalTextAlignment="Center" />
+                                <Label Text="{Binding StatChatsLabel}" Style="{StaticResource CaptionStyle}" FontSize="11" TextColor="White" Opacity="0.85" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label x:Name="MessagesValue" Text="0" Style="{StaticResource PageTitleStyle}" TextColor="White" HorizontalTextAlignment="Center" />
+                                <Label Text="{Binding StatMessagesLabel}" Style="{StaticResource CaptionStyle}" FontSize="11" TextColor="White" Opacity="0.85" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="2" Spacing="2">
+                                <Label x:Name="DaysValue" Text="0" Style="{StaticResource PageTitleStyle}" TextColor="White" HorizontalTextAlignment="Center" />
+                                <Label Text="{Binding StatDaysLabel}" Style="{StaticResource CaptionStyle}" FontSize="11" TextColor="White" Opacity="0.85" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="3" Spacing="2">
+                                <Label x:Name="StreakValue" Text="0" Style="{StaticResource PageTitleStyle}" TextColor="White" HorizontalTextAlignment="Center" />
+                                <Label Text="{Binding StatStreakLabel}" Style="{StaticResource CaptionStyle}" FontSize="11" TextColor="White" Opacity="0.85" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Level of trust -->
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <Label Grid.Column="0" Text="{Binding TrustTitle}" Style="{StaticResource SectionTitleStyle}" />
+                        <Label
+                            Grid.Column="1"
+                            Text="{Binding TrustName}"
+                            FontFamily="{StaticResource SemiBoldFontFamily}"
+                            TextColor="{DynamicResource Primary}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                    <ProgressBar x:Name="TrustBar" Progress="0" ProgressColor="{DynamicResource Primary}" />
+                    <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="6">
+                        <Border x:Name="TrustDot0" Grid.Column="0" HeightRequest="4" StrokeThickness="0" StrokeShape="RoundRectangle 2" BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}" />
+                        <Border x:Name="TrustDot1" Grid.Column="1" HeightRequest="4" StrokeThickness="0" StrokeShape="RoundRectangle 2" BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}" />
+                        <Border x:Name="TrustDot2" Grid.Column="2" HeightRequest="4" StrokeThickness="0" StrokeShape="RoundRectangle 2" BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}" />
+                        <Border x:Name="TrustDot3" Grid.Column="3" HeightRequest="4" StrokeThickness="0" StrokeShape="RoundRectangle 2" BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}" />
+                    </Grid>
+                    <Label Text="{Binding TrustHint}" Style="{StaticResource CaptionStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Name -->
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="16">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <VerticalStackLayout Grid.Column="0" Spacing="3" VerticalOptions="Center">
+                        <Label Text="{Binding NameTitle}" Style="{StaticResource CaptionStyle}" />
+                        <Label Text="{Binding NameText}" Style="{StaticResource ListRowTitleStyle}" FontSize="18" />
+                        <Label Text="{Binding NameHint}" Style="{StaticResource CaptionStyle}" FontSize="12" />
+                    </VerticalStackLayout>
+                    <Border
+                        Grid.Column="1"
+                        Padding="14,9"
+                        StrokeThickness="1.2"
+                        Stroke="{DynamicResource Primary}"
+                        StrokeShape="RoundRectangle 16"
+                        BackgroundColor="Transparent"
+                        VerticalOptions="Center"
+                        SemanticProperties.Description="{Binding NameEditText}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding EditNameCommand}" />
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="6">
+                            <ui:MaterialIconView IconName="Edit" IconSize="16" IconColor="{DynamicResource Primary}" VerticalOptions="Center" />
+                            <Label Text="{Binding NameEditText}" FontFamily="{StaticResource MediumFontFamily}" TextColor="{DynamicResource Primary}" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- What the numbers say -->
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="{Binding InsightsTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding Insights}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:InsightItem">
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <Border
+                                        Grid.Column="0"
+                                        WidthRequest="32"
+                                        HeightRequest="32"
+                                        VerticalOptions="Start"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 16"
+                                        BackgroundColor="{AppThemeBinding Light=#1A0085FF, Dark=#330085FF}">
+                                        <ui:MaterialIconView IconName="Lightbulb" IconSize="18" IconColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                    </Border>
+                                    <Label Grid.Column="1" Text="{Binding Text}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Tension over time -->
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0" IsVisible="{Binding HasHistory}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="{Binding TensionTitle}" Style="{StaticResource SectionTitleStyle}" />
+
+                    <VerticalStackLayout Spacing="8" IsVisible="{Binding HasTension}">
+                        <HorizontalStackLayout
+                            HorizontalOptions="Center"
+                            Spacing="14"
+                            BindableLayout.ItemsSource="{Binding TensionBars}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="vm:TensionBarItem">
+                                    <VerticalStackLayout Spacing="4" WidthRequest="38">
+                                        <Grid HeightRequest="118" ColumnDefinitions="*,*" ColumnSpacing="3">
+                                            <VerticalStackLayout Grid.Column="0" VerticalOptions="End" Spacing="2">
+                                                <Label Text="{Binding BeforeText}" FontSize="10" HorizontalTextAlignment="Center" Style="{StaticResource CaptionStyle}" />
+                                                <Border
+                                                    StyleId="before"
+                                                    HeightRequest="{Binding BeforeHeight}"
+                                                    AnchorY="1"
+                                                    StrokeThickness="0"
+                                                    StrokeShape="RoundRectangle 5,5,2,2"
+                                                    BackgroundColor="{AppThemeBinding Light=#B7D9FF, Dark=#3A5F8F}"
+                                                    BindingContextChanged="OnBarContextChanged" />
+                                            </VerticalStackLayout>
+                                            <VerticalStackLayout Grid.Column="1" VerticalOptions="End" Spacing="2">
+                                                <Label Text="{Binding AfterText}" FontSize="10" HorizontalTextAlignment="Center" Style="{StaticResource CaptionStyle}" />
+                                                <Border
+                                                    StyleId="after"
+                                                    HeightRequest="{Binding AfterHeight}"
+                                                    AnchorY="1"
+                                                    StrokeThickness="0"
+                                                    StrokeShape="RoundRectangle 5,5,2,2"
+                                                    BackgroundColor="{DynamicResource Primary}"
+                                                    BindingContextChanged="OnBarContextChanged">
+                                                    <Border.Triggers>
+                                                        <DataTrigger TargetType="Border" Binding="{Binding Improved}" Value="True">
+                                                            <Setter Property="BackgroundColor" Value="#2E9E5B" />
+                                                        </DataTrigger>
+                                                    </Border.Triggers>
+                                                </Border>
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                        <Label Text="{Binding Label}" FontSize="10" HorizontalTextAlignment="Center" Style="{StaticResource CaptionStyle}" />
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="18">
+                            <HorizontalStackLayout Spacing="6">
+                                <Border WidthRequest="12" HeightRequest="12" StrokeThickness="0" StrokeShape="RoundRectangle 3" BackgroundColor="{AppThemeBinding Light=#B7D9FF, Dark=#3A5F8F}" VerticalOptions="Center" />
+                                <Label Text="{Binding TensionStartText}" Style="{StaticResource CaptionStyle}" />
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout Spacing="6">
+                                <Border WidthRequest="12" HeightRequest="12" StrokeThickness="0" StrokeShape="RoundRectangle 3" BackgroundColor="#2E9E5B" VerticalOptions="Center" />
+                                <Label Text="{Binding TensionEndText}" Style="{StaticResource CaptionStyle}" />
+                            </HorizontalStackLayout>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <Label Text="{Binding TensionCaption}" Style="{StaticResource BodyStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- What helps -->
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0" IsVisible="{Binding HasHistory}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="{Binding PracticesTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <Label IsVisible="{Binding HasNoPractices}" Text="{Binding PracticesEmptyText}" Style="{StaticResource BodyStyle}" />
+                    <VerticalStackLayout Spacing="14" IsVisible="{Binding HasPractices}" BindableLayout.ItemsSource="{Binding Practices}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:PracticeRowItem">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" RowDefinitions="Auto,Auto,Auto" RowSpacing="4">
+                                    <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Spacing="8">
+                                        <Label Text="{Binding Title}" Style="{StaticResource ListRowTitleStyle}" VerticalOptions="Center" />
+                                        <Border
+                                            IsVisible="{Binding IsBest}"
+                                            Padding="8,2"
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 9"
+                                            BackgroundColor="#2E9E5B"
+                                            VerticalOptions="Center">
+                                            <Label Text="{Binding BestText}" FontSize="11" TextColor="White" />
+                                        </Border>
+                                    </HorizontalStackLayout>
+                                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding Detail}" Style="{StaticResource CaptionStyle}" />
+                                    <ProgressBar Grid.Row="2" Grid.Column="0" Progress="{Binding HelpedFraction}" ProgressColor="#2E9E5B" />
+                                    <Border
+                                        Grid.Row="0"
+                                        Grid.RowSpan="3"
+                                        Grid.Column="1"
+                                        Padding="14,8"
+                                        StrokeThickness="1.2"
+                                        Stroke="{DynamicResource Primary}"
+                                        StrokeShape="RoundRectangle 16"
+                                        BackgroundColor="Transparent"
+                                        VerticalOptions="Center">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding StartCommand}" />
+                                        </Border.GestureRecognizers>
+                                        <Label Text="{Binding StartText}" FontFamily="{StaticResource MediumFontFamily}" TextColor="{DynamicResource Primary}" />
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- What the person talks about -->
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0" IsVisible="{Binding HasEmotions}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="{Binding EmotionsTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding Emotions}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:EmotionRowItem">
+                                <VerticalStackLayout Spacing="4">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Grid.Column="0" Text="{Binding Name}" Style="{StaticResource BodyStyle}" />
+                                        <Label Grid.Column="1" Text="{Binding PercentText}" Style="{StaticResource CaptionStyle}" VerticalOptions="Center" />
+                                    </Grid>
+                                    <ProgressBar Progress="{Binding Share}" ProgressColor="{DynamicResource Primary}" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- About -->
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="{Binding AboutTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Abilities}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:InsightItem">
+                                <HorizontalStackLayout Spacing="10">
+                                    <ui:MaterialIconView IconName="CheckCircle" IconSize="18" IconColor="#2E9E5B" VerticalOptions="Center" />
+                                    <Label Text="{Binding Text}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <Label Text="{Binding PrivacyLine}" Style="{StaticResource CaptionStyle}" />
+                    <Label Text="{Binding Disclaimer}" Style="{StaticResource CaptionStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Manage -->
+            <Label Text="{Binding ActionsTitle}" Style="{StaticResource SectionTitleStyle}" />
+            <ui:ButtonView BodyText="{Binding NewChatText}" TapCommand="{Binding NewChatCommand}" />
+            <ui:ButtonView BodyText="{Binding AllChatsText}" TapCommand="{Binding AllChatsCommand}" Variant="Secondary" />
+            <ui:ButtonView BodyText="{Binding ForgetText}" TapCommand="{Binding ForgetCommand}" Variant="Secondary" />
+            <ui:ButtonView BodyText="{Binding DeleteAllText}" TapCommand="{Binding DeleteAllCommand}" Variant="Secondary" IsVisible="{Binding HasHistory}" />
+            <BoxView HeightRequest="16" Color="Transparent" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,5 +1,6 @@
 using PsychologyApp.Presentation.Features.Chat;
 using PsychologyApp.Presentation.Pages.Chat.ChatList;
+using PsychologyApp.Presentation.Pages.Chat.Companion;
 using PsychologyApp.Presentation.Pages.Chat.Conversation;
 using PsychologyApp.Presentation.Features.ClinicalCare;
 using PsychologyApp.Presentation.Features.ManageJournal.DependencyInjection;
@@ -162,6 +163,9 @@ public sealed class PageRegistry(
 
     public ChatPage CreateChatPage(long? sessionId, INavigation hostNavigation) =>
         WithPressFeedback(chatPageFactory.CreateChatPage(sessionId, hostNavigation));
+
+    public CompanionProfilePage CreateCompanionProfilePage(INavigation hostNavigation) =>
+        WithPressFeedback(chatPageFactory.CreateCompanionProfilePage(hostNavigation));
 
     public CrisisHubPage CreateCrisisHubPage() =>
         WithPressFeedback(clinicalCarePageFactory.CreateCrisisHubPage());

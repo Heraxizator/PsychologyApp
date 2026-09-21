@@ -139,4 +139,62 @@ public sealed class ChatRepositoryTests
         Assert.Empty(ChatQuickReplyJson.Deserialize(null));
         Assert.Null(ChatQuickReplyJson.Serialize([]));
     }
+
+    [Fact]
+    public async Task User_messages_are_counted_apart_from_the_companions()
+    {
+        long id = await _repository.CreateSessionAsync("t", T0);
+        await _repository.AddMessagesAsync(
+        [
+            new ChatMessageDTO { SessionId = id, Role = ChatRole.Companion, Text = "Привет", CreatedAt = T0 },
+            new ChatMessageDTO { SessionId = id, Role = ChatRole.User, Text = "Мне тревожно", CreatedAt = T0 },
+            new ChatMessageDTO { SessionId = id, Role = ChatRole.Companion, Text = "Слышу вас", CreatedAt = T0 }
+        ]);
+
+        ChatSessionDTO? session = await _repository.GetSessionAsync(id);
+
+        Assert.Equal(3, session!.MessageCount);
+        Assert.Equal(1, session.UserMessageCount);
+    }
+
+    [Fact]
+    public async Task Memory_stores_values_and_counts()
+    {
+        await _repository.SetMemoryAsync("name", "Аня");
+        await _repository.SetMemoryAsync("name", "Вера");
+        await _repository.IncrementMemoryAsync("helped:Breathing");
+        await _repository.IncrementMemoryAsync("helped:Breathing");
+
+        IReadOnlyDictionary<string, string> memory = await _repository.GetMemoryAsync();
+
+        Assert.Equal("Вера", memory["name"]);
+        Assert.Equal("2", memory["helped:Breathing"]);
+    }
+
+    [Fact]
+    public async Task Memory_can_be_forgotten_key_by_key_or_all_at_once()
+    {
+        await _repository.SetMemoryAsync("name", "Аня");
+        await _repository.IncrementMemoryAsync("tried:Grounding");
+
+        await _repository.DeleteMemoryAsync("name");
+        Assert.DoesNotContain("name", (await _repository.GetMemoryAsync()).Keys);
+
+        await _repository.ClearMemoryAsync();
+        Assert.Empty(await _repository.GetMemoryAsync());
+    }
+
+    [Fact]
+    public async Task Deleting_all_chats_keeps_what_the_companion_remembers()
+    {
+        long id = await _repository.CreateSessionAsync("t", T0);
+        await _repository.AddMessageAsync(new ChatMessageDTO { SessionId = id, Role = ChatRole.User, Text = "Привет", CreatedAt = T0 });
+        await _repository.SetMemoryAsync("name", "Аня");
+
+        await _repository.DeleteAllSessionsAsync();
+
+        Assert.Empty(await _repository.GetSessionsAsync());
+        Assert.Empty(await _repository.GetMessagesAsync(id));
+        Assert.Equal("Аня", (await _repository.GetMemoryAsync())["name"]);
+    }
 }

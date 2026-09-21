@@ -14,6 +14,7 @@ using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
 
+[Collection("Localization")]
 public sealed class PracticeSessionViewModelTests
 {
     public PracticeSessionViewModelTests()

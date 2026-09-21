@@ -83,7 +83,7 @@ public class SqliteSchemaTests
 
 
     [Fact]
-    public async Task EnsureSchema_CreatesChatTablesForVersion9()
+    public async Task EnsureSchema_CreatesChatTablesForVersions9And10()
     {
         await using var connection = new SqliteConnection("Data Source=:memory:");
         await connection.OpenAsync();
@@ -92,7 +92,8 @@ public class SqliteSchemaTests
 
         Assert.Equal(1, await TableExistsAsync(connection, "ChatSessions"));
         Assert.Equal(1, await TableExistsAsync(connection, "ChatMessages"));
-        Assert.Equal(9, SqliteSchema.CurrentVersion);
+        Assert.Equal(10, SqliteSchema.CurrentVersion);
+        Assert.Equal(1, await TableExistsAsync(connection, "ChatMemory"));
     }
     [Fact]
     public async Task EnsureSchema_CreatesProgressTablesForVersion4()

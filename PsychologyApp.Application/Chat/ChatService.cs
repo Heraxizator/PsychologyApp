@@ -40,6 +40,17 @@ public interface IChatService
     Task RenameAsync(long sessionId, string title, CancellationToken cancellationToken = default);
 
     Task DeleteAsync(long sessionId, CancellationToken cancellationToken = default);
+
+    /// <summary>Statistics and memory shown on the companion's profile screen.</summary>
+    Task<CompanionProfile> GetProfileAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>Sets how the companion addresses the person. A blank name makes it forget the name.</summary>
+    Task SetUserNameAsync(string? name, CancellationToken cancellationToken = default);
+
+    Task DeleteAllChatsAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>Forgets the name and which practices helped. Chats are kept.</summary>
+    Task ForgetMemoryAsync(CancellationToken cancellationToken = default);
 }
 
 public sealed class ChatService(
@@ -51,6 +62,7 @@ public sealed class ChatService(
     TimeProvider time) : IChatService
 {
     private const int MaxTitleLength = 60;
+    private const int MaxNameLength = 30;
 
     public async Task<ChatTurnResult> StartNewChatAsync(CancellationToken cancellationToken = default)
     {
@@ -69,7 +81,7 @@ public sealed class ChatService(
         long id = await repository.CreateSessionAsync(DefaultTitle(), now, cancellationToken);
         ChatSessionDTO session = (await repository.GetSessionAsync(id, cancellationToken))!;
 
-        CompanionReply reply = Dialogue().Open(new CompanionState(), previous);
+        CompanionReply reply = Dialogue().Open(await WithMemoryAsync(new CompanionState(), cancellationToken), previous);
         session.StateJson = reply.State.Serialize();
         IReadOnlyList<ChatMessageDTO> added = await StoreAsync(CompanionMessages(session, reply, now), cancellationToken);
         await repository.UpdateSessionAsync(session, cancellationToken);
@@ -144,6 +156,64 @@ public sealed class ChatService(
     public Task DeleteAsync(long sessionId, CancellationToken cancellationToken = default) =>
         repository.DeleteSessionAsync(sessionId, cancellationToken);
 
+    public async Task<CompanionProfile> GetProfileAsync(CancellationToken cancellationToken = default)
+    {
+        IReadOnlyList<ChatSessionDTO> sessions = await repository.GetSessionsAsync(cancellationToken);
+        IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken);
+        return ChatStatistics.Compute(sessions, memory, Now(), time.LocalTimeZone);
+    }
+
+    public async Task SetUserNameAsync(string? name, CancellationToken cancellationToken = default)
+    {
+        string trimmed = (name ?? string.Empty).Trim();
+        if (trimmed.Length == 0)
+        {
+            await repository.DeleteMemoryAsync(ChatMemoryKeys.Name, cancellationToken);
+            return;
+        }
+
+        await repository.SetMemoryAsync(ChatMemoryKeys.Name, trimmed.Length > MaxNameLength ? trimmed[..MaxNameLength] : trimmed, cancellationToken);
+    }
+
+    public Task DeleteAllChatsAsync(CancellationToken cancellationToken = default) =>
+        repository.DeleteAllSessionsAsync(cancellationToken);
+
+    public Task ForgetMemoryAsync(CancellationToken cancellationToken = default) =>
+        repository.ClearMemoryAsync(cancellationToken);
+
+    /// <summary>What the companion knows from earlier chats: the name and the practice that helped most. Memory wins over the chat's own copy, so a renamed person is renamed everywhere.</summary>
+    private async Task<CompanionState> WithMemoryAsync(CompanionState state, CancellationToken cancellationToken)
+    {
+        IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken);
+        return state with
+        {
+            UserName = memory.TryGetValue(ChatMemoryKeys.Name, out string? name) && !string.IsNullOrWhiteSpace(name) ? name : state.UserName,
+            PreferredPractice = ChatMemoryKeys.MostHelped(memory)?.ToString() ?? state.PreferredPractice
+        };
+    }
+
+    /// <summary>Carries what a turn revealed into the memory that outlives the chat: a new name, a started practice, a practice that helped.</summary>
+    private async Task RememberAsync(CompanionState before, CompanionReply reply, CancellationToken cancellationToken)
+    {
+        if (reply.State.UserName is { } name && name != before.UserName)
+        {
+            await repository.SetMemoryAsync(ChatMemoryKeys.Name, name, cancellationToken);
+        }
+
+        if (reply.Action is { Kind: DialogueActionKind.StartTechnique, TechniqueId: { } started })
+        {
+            await repository.IncrementMemoryAsync(ChatMemoryKeys.Tried(started), cancellationToken);
+        }
+
+        for (int i = before.HelpedPractices.Count; i < reply.State.HelpedPractices.Count; i++)
+        {
+            if (Enum.TryParse(reply.State.HelpedPractices[i], out TechniqueId helped))
+            {
+                await repository.IncrementMemoryAsync(ChatMemoryKeys.Helped(helped), cancellationToken);
+            }
+        }
+    }
+
     private async Task<ChatTurnResult> TakeTurnAsync(long sessionId, string userText, CompanionInput input, CancellationToken cancellationToken)
     {
         ChatSessionDTO session = await repository.GetSessionAsync(sessionId, cancellationToken)
@@ -153,10 +223,11 @@ public sealed class ChatService(
             return new ChatTurnResult(session, [], null);
         }
 
-        CompanionState state = CompanionState.Deserialize(session.StateJson);
+        CompanionState state = await WithMemoryAsync(CompanionState.Deserialize(session.StateJson), cancellationToken);
         DateTime now = Now();
 
         CompanionReply reply = Dialogue().Respond(state, input);
+        await RememberAsync(state, reply, cancellationToken);
         ApplyReply(session, reply, now, firstText: input is CompanionInput.FreeText ? userText : null);
 
         // The user's message and the whole reply are stored in one transaction: a turn is saved completely or not at all.

@@ -75,6 +75,53 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
         await transaction.CommitAsync(cancellationToken);
     }
 
+    public async Task DeleteAllSessionsAsync(CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteTransaction transaction = connection.BeginTransaction();
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
+            ChatSql.DeleteAllMessages, transaction: transaction, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken));
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
+            ChatSql.DeleteAllSessions, transaction: transaction, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken));
+        await transaction.CommitAsync(cancellationToken);
+    }
+
+    public async Task<IReadOnlyDictionary<string, string>> GetMemoryAsync(CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        IEnumerable<MemoryRow> rows = await connection.QueryAsync<MemoryRow>(DapperCommandFactory.Create(
+            ChatSql.SelectMemory, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken));
+        return rows.ToDictionary(r => r.Key, r => r.Value);
+    }
+
+    public async Task SetMemoryAsync(string key, string value, CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
+            ChatSql.UpsertMemory, new { Key = key, Value = value }, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken));
+    }
+
+    public async Task IncrementMemoryAsync(string key, CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
+            ChatSql.IncrementMemory, new { Key = key }, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken));
+    }
+
+    public async Task DeleteMemoryAsync(string key, CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
+            ChatSql.DeleteMemoryKey, new { Key = key }, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken));
+    }
+
+    public async Task ClearMemoryAsync(CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
+            ChatSql.ClearMemory, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken));
+    }
+
     public async Task<long> AddMessageAsync(ChatMessageDTO message, CancellationToken cancellationToken = default) =>
         (await AddMessagesAsync([message], cancellationToken))[0];
 
@@ -140,7 +187,8 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
         LastIntensity = r.LastIntensity,
         StateJson = r.StateJson,
         Preview = r.Preview,
-        MessageCount = r.MessageCount
+        MessageCount = r.MessageCount,
+        UserMessageCount = r.UserMessageCount
     };
 
     private static string ToIso(DateTime value) => value.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture);
@@ -161,6 +209,13 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
         public string? StateJson { get; set; }
         public string? Preview { get; set; }
         public int MessageCount { get; set; }
+        public int UserMessageCount { get; set; }
+    }
+
+    private sealed class MemoryRow
+    {
+        public string Key { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
     }
 
     private sealed class MessageRow

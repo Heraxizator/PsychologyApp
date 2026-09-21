@@ -21,4 +21,19 @@ public interface IChatRepository
     Task<IReadOnlyList<long>> AddMessagesAsync(IReadOnlyList<ChatMessageDTO> messages, CancellationToken cancellationToken = default);
 
     Task<IReadOnlyList<ChatMessageDTO>> GetMessagesAsync(long sessionId, CancellationToken cancellationToken = default);
+
+    /// <summary>Removes every chat and message. What the companion remembers about the person is kept, see <see cref="ClearMemoryAsync"/>.</summary>
+    Task DeleteAllSessionsAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>Everything the companion remembers between chats, by key.</summary>
+    Task<IReadOnlyDictionary<string, string>> GetMemoryAsync(CancellationToken cancellationToken = default);
+
+    Task SetMemoryAsync(string key, string value, CancellationToken cancellationToken = default);
+
+    /// <summary>Adds one to a counter kept under <paramref name="key"/> (created at 1).</summary>
+    Task IncrementMemoryAsync(string key, CancellationToken cancellationToken = default);
+
+    Task DeleteMemoryAsync(string key, CancellationToken cancellationToken = default);
+
+    Task ClearMemoryAsync(CancellationToken cancellationToken = default);
 }

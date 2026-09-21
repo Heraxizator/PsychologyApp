@@ -65,12 +65,49 @@ public class ChatServiceTests
         public Task<IReadOnlyList<ChatMessageDTO>> GetMessagesAsync(long sessionId, CancellationToken cancellationToken = default) =>
             Task.FromResult<IReadOnlyList<ChatMessageDTO>>(_messages.Where(m => m.SessionId == sessionId).ToList());
 
+        private readonly Dictionary<string, string> _memory = [];
+
+        public Task DeleteAllSessionsAsync(CancellationToken cancellationToken = default)
+        {
+            _sessions.Clear();
+            _messages.Clear();
+            return Task.CompletedTask;
+        }
+
+        public Task<IReadOnlyDictionary<string, string>> GetMemoryAsync(CancellationToken cancellationToken = default) =>
+            Task.FromResult<IReadOnlyDictionary<string, string>>(new Dictionary<string, string>(_memory));
+
+        public Task SetMemoryAsync(string key, string value, CancellationToken cancellationToken = default)
+        {
+            _memory[key] = value;
+            return Task.CompletedTask;
+        }
+
+        public Task IncrementMemoryAsync(string key, CancellationToken cancellationToken = default)
+        {
+            _memory[key] = (_memory.TryGetValue(key, out string? v) && int.TryParse(v, out int n) ? n + 1 : 1).ToString();
+            return Task.CompletedTask;
+        }
+
+        public Task DeleteMemoryAsync(string key, CancellationToken cancellationToken = default)
+        {
+            _memory.Remove(key);
+            return Task.CompletedTask;
+        }
+
+        public Task ClearMemoryAsync(CancellationToken cancellationToken = default)
+        {
+            _memory.Clear();
+            return Task.CompletedTask;
+        }
+
         private ChatSessionDTO Snapshot(ChatSessionDTO s) => new()
         {
             Id = s.Id, Title = s.Title, CreatedAt = s.CreatedAt, UpdatedAt = s.UpdatedAt, Emotion = s.Emotion, Theme = s.Theme,
             FirstIntensity = s.FirstIntensity, LastIntensity = s.LastIntensity, StateJson = s.StateJson,
             Preview = _messages.LastOrDefault(m => m.SessionId == s.Id)?.Text,
-            MessageCount = _messages.Count(m => m.SessionId == s.Id)
+            MessageCount = _messages.Count(m => m.SessionId == s.Id),
+            UserMessageCount = _messages.Count(m => m.SessionId == s.Id && m.Role == ChatRole.User)
         };
     }
 
@@ -330,5 +367,101 @@ public class ChatServiceTests
 
         Assert.Equal("New chat", started.Session.Title);
         Assert.Equal("Anxiety · work", sent.Session.Title);
+    }
+
+    [Fact]
+    public async Task A_name_told_in_one_chat_is_used_in_the_next()
+    {
+        ChatService service = CreateService();
+        long first = (await service.StartNewChatAsync()).Session.Id;
+        await service.SendTextAsync(first, "Меня зовут Аня");
+
+        ChatTurnResult second = await service.StartNewChatAsync();
+
+        Assert.NotEqual(first, second.Session.Id);
+        Assert.Contains("Аня", second.NewMessages[0].Text);
+        Assert.Equal("Аня", (await service.GetProfileAsync()).UserName);
+    }
+
+    [Fact]
+    public async Task The_name_can_be_changed_and_forgotten_from_the_profile()
+    {
+        ChatService service = CreateService();
+        await service.SetUserNameAsync("  Вера  ");
+        Assert.Equal("Вера", (await service.GetProfileAsync()).UserName);
+
+        long id = (await service.StartNewChatAsync()).Session.Id;
+        ChatTurnResult bye = await service.SendTextAsync(id, "Пока");
+        Assert.Contains("Вера", bye.NewMessages[^1].Text);
+
+        await service.SetUserNameAsync("   ");
+        Assert.Null((await service.GetProfileAsync()).UserName);
+    }
+
+    [Fact]
+    public async Task A_practice_that_lowered_the_tension_is_remembered_and_offered_first_in_the_next_chat()
+    {
+        ChatService service = CreateService();
+        long id = (await service.StartNewChatAsync()).Session.Id;
+        await service.SendTextAsync(id, "Мне тревожно из-за работы");
+        await service.SendQuickReplyAsync(id, new ChatQuickReply(ChatQuickReplyKinds.Rating, "8", "8"));
+        await service.SendQuickReplyAsync(id, new ChatQuickReply(ChatQuickReplyKinds.Practice, "Начнём", "Grounding"));
+        _progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([new CompletionDTO { ItemKey = "Grounding", CompletedAt = _clock.Utc.AddMinutes(4) }]);
+        await service.CheckPracticeFollowUpAsync(id);
+
+        ChatTurnResult better = await service.SendQuickReplyAsync(id, new ChatQuickReply(ChatQuickReplyKinds.Rating, "3", "3"));
+
+        Assert.Contains(better.NewMessages, m => m.Text.StartsWith("Запомню", StringComparison.Ordinal));
+        CompanionProfile profile = await service.GetProfileAsync();
+        Assert.Equal(1, profile.PracticesTried);
+        Assert.Equal(1, profile.PracticesHelped);
+        Assert.Equal(TechniqueId.Grounding, profile.Practices[0].Technique);
+
+        long next = (await service.StartNewChatAsync()).Session.Id;
+        ChatTurnResult offer = await service.SendTextAsync(next, "Мне тревожно из-за завтрашней встречи");
+        offer = await service.SendTextAsync(next, "Я думаю о ней весь день");
+        offer = await service.SendTextAsync(next, "И ночью тоже не могу перестать");
+
+        Assert.Contains(offer.NewMessages, m => m.Text.Contains("В прошлый раз вам помогла практика", StringComparison.Ordinal));
+        Assert.Equal("Grounding", offer.NewMessages[^1].QuickReplies.First(q => q.Kind == ChatQuickReplyKinds.Practice).Payload);
+    }
+
+    [Fact]
+    public async Task The_profile_counts_chats_messages_and_days()
+    {
+        ChatService service = CreateService();
+        long first = (await service.StartNewChatAsync()).Session.Id;
+        await service.SendTextAsync(first, "Мне тревожно из-за работы");
+        await service.SendTextAsync(first, "Начальник опять недоволен");
+        _clock.Utc = _clock.Utc.AddDays(1);
+        long second = (await service.StartNewChatAsync()).Session.Id;
+        await service.SendTextAsync(second, "Я так устала");
+
+        CompanionProfile profile = await service.GetProfileAsync();
+
+        Assert.Equal(2, profile.Chats);
+        Assert.Equal(3, profile.UserMessages);
+        Assert.Equal(2, profile.Days);
+        Assert.Equal(2, profile.StreakDays);
+        Assert.True(profile.HasHistory);
+    }
+
+    [Fact]
+    public async Task Deleting_all_chats_keeps_the_memory_and_forgetting_keeps_the_chats()
+    {
+        ChatService service = CreateService();
+        long id = (await service.StartNewChatAsync()).Session.Id;
+        await service.SendTextAsync(id, "Меня зовут Аня");
+
+        await service.ForgetMemoryAsync();
+        Assert.Null((await service.GetProfileAsync()).UserName);
+        Assert.Single(await service.GetChatsAsync());
+
+        await service.SetUserNameAsync("Аня");
+        await service.DeleteAllChatsAsync();
+
+        Assert.Empty(await service.GetChatsAsync());
+        Assert.Equal("Аня", (await service.GetProfileAsync()).UserName);
     }
 }

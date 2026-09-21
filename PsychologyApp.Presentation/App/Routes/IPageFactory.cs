@@ -1,4 +1,5 @@
 using PsychologyApp.Presentation.Pages.Chat.ChatList;
+using PsychologyApp.Presentation.Pages.Chat.Companion;
 using PsychologyApp.Presentation.Pages.Chat.Conversation;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueCreated;
 using PsychologyApp.Presentation.Pages.RunTests.TestResult;
@@ -69,6 +70,7 @@ public interface IPageFactory
     PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null, long? sessionResultId = null);
     ChatListPage CreateChatListPage(INavigation hostNavigation);
     ChatPage CreateChatPage(long? sessionId, INavigation hostNavigation);
+    CompanionProfilePage CreateCompanionProfilePage(INavigation hostNavigation);
     CrisisHubPage CreateCrisisHubPage();
     RiskCheckPage CreateRiskCheckPage(string source);
 }

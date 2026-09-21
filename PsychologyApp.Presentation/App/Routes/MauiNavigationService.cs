@@ -228,6 +228,13 @@ public sealed class MauiNavigationService : INavigationService
             return hostNavigation.PushAsync(PrepareSecondaryPage(_pageFactory.CreateChatPage(sessionId, hostNavigation)), true);
         });
 
+    public Task GoToCompanionProfileAsync() =>
+        NavigationCoordinator.RunPushAsync(() =>
+        {
+            INavigation hostNavigation = ResolveNavigation();
+            return hostNavigation.PushAsync(PrepareSecondaryPage(_pageFactory.CreateCompanionProfilePage(hostNavigation)), true);
+        });
+
     public Task GoToCrisisHubAsync() =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(PrepareSecondaryPage(_pageFactory.CreateCrisisHubPage()), true));
 

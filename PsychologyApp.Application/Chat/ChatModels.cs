@@ -51,4 +51,7 @@ public sealed class ChatSessionDTO
     /// <summary>Text of the newest message, for the chat list. Filled by queries, not stored.</summary>
     public string? Preview { get; init; }
     public int MessageCount { get; init; }
+
+    /// <summary>How many of the messages were written by the person. Filled by queries, not stored.</summary>
+    public int UserMessageCount { get; init; }
 }

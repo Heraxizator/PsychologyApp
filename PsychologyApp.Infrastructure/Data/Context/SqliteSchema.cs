@@ -6,7 +6,7 @@ namespace PsychologyApp.Infrastructure.Data.Context;
 
 public static class SqliteSchema
 {
-    public const int CurrentVersion = 9;
+    public const int CurrentVersion = 10;
 
     private static readonly string[] DropTablesSql =
     [
@@ -107,7 +107,26 @@ public static class SqliteSchema
         if (version < 9)
         {
             await ApplyMigrationAsync(connection, 9, MigrateToVersion9Async, cancellationToken);
+            version = 9;
         }
+
+        if (version < 10)
+        {
+            await ApplyMigrationAsync(connection, 10, MigrateToVersion10Async, cancellationToken);
+        }
+    }
+
+    /// <summary>What the chat companion remembers between conversations: the name, and which practices helped.</summary>
+    private static async Task MigrateToVersion10Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)
+    {
+        await connection.ExecuteAsync(
+            """
+            CREATE TABLE IF NOT EXISTS ChatMemory (
+                MemoryKey TEXT NOT NULL PRIMARY KEY,
+                MemoryValue TEXT NOT NULL
+            );
+            """,
+            transaction: transaction);
     }
 
     private static async Task MigrateToVersion9Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)

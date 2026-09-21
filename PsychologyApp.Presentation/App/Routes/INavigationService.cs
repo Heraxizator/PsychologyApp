@@ -49,6 +49,7 @@ public interface INavigationService
     Task ShowOnboardingAsync();
     Task GoToChatListAsync();
     Task GoToChatAsync(long? sessionId = null);
+    Task GoToCompanionProfileAsync();
     Task GoToCrisisHubAsync();
     Task GoToRiskCheckAsync(string source);
 }
