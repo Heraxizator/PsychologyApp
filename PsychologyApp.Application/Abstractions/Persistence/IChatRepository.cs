@@ -17,5 +17,8 @@ public interface IChatRepository
 
     Task<long> AddMessageAsync(ChatMessageDTO message, CancellationToken cancellationToken = default);
 
+    /// <summary>Stores the messages in order in one transaction. Returns their ids in the same order.</summary>
+    Task<IReadOnlyList<long>> AddMessagesAsync(IReadOnlyList<ChatMessageDTO> messages, CancellationToken cancellationToken = default);
+
     Task<IReadOnlyList<ChatMessageDTO>> GetMessagesAsync(long sessionId, CancellationToken cancellationToken = default);
 }

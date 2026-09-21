@@ -76,7 +76,7 @@
             VerticalScrollBarVisibility="Never">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:ChatBubble">
-                    <VerticalStackLayout Margin="{Binding OuterMargin}" Spacing="8">
+                    <VerticalStackLayout Margin="{Binding OuterMargin}" Spacing="8" BindingContextChanged="OnBubbleContextChanged">
                         <Border
                             IsVisible="{Binding HasDate}"
                             HorizontalOptions="Center"
@@ -150,6 +150,7 @@
                     <DataTemplate x:DataType="vm:QuickReplyItem">
                         <Border
                             Margin="0,0,8,8"
+                            BindingContextChanged="OnChipContextChanged"
                             Padding="14,8"
                             StrokeThickness="1.2"
                             Stroke="{DynamicResource Primary}"
@@ -177,6 +178,7 @@
                     Stroke="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}"
                     BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource Gray950}}">
                     <Editor
+                        x:Name="InputEditor"
                         Text="{Binding DraftText, Mode=TwoWay}"
                         Placeholder="{Binding Placeholder}"
                         AutoSize="TextChanges"
@@ -201,7 +203,7 @@
                         </DataTrigger>
                     </Border.Triggers>
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SendCommand}" />
+                        <TapGestureRecognizer Command="{Binding SendCommand}" Tapped="OnSendTapped" />
                     </Border.GestureRecognizers>
                     <Label
                         Text="{mi:Material Icon=Send}"

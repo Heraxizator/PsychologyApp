@@ -50,6 +50,24 @@ public sealed class ChatRepositoryTests
     }
 
     [Fact]
+    public async Task A_batch_of_messages_is_stored_in_order_and_returns_matching_ids()
+    {
+        long id = await _repository.CreateSessionAsync("t", T0);
+
+        IReadOnlyList<long> ids = await _repository.AddMessagesAsync(
+        [
+            new ChatMessageDTO { SessionId = id, Role = ChatRole.User, Text = "первое", CreatedAt = T0 },
+            new ChatMessageDTO { SessionId = id, Role = ChatRole.Companion, Text = "второе", CreatedAt = T0 },
+            new ChatMessageDTO { SessionId = id, Role = ChatRole.Companion, Text = "третье", CreatedAt = T0 }
+        ]);
+
+        IReadOnlyList<ChatMessageDTO> messages = await _repository.GetMessagesAsync(id);
+        Assert.Equal(ids, messages.Select(m => m.Id));
+        Assert.Equal(["первое", "второе", "третье"], messages.Select(m => m.Text));
+        Assert.Empty(await _repository.AddMessagesAsync([]));
+    }
+
+    [Fact]
     public async Task Sessions_are_listed_by_latest_activity_with_preview_and_count()
     {
         long older = await _repository.CreateSessionAsync("Старый", T0);

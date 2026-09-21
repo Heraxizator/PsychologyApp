@@ -71,7 +71,7 @@ public sealed class ChatService(
 
         CompanionReply reply = Dialogue().Open(new CompanionState(), previous);
         session.StateJson = reply.State.Serialize();
-        List<ChatMessageDTO> added = await AppendCompanionMessagesAsync(session, reply, now, cancellationToken);
+        IReadOnlyList<ChatMessageDTO> added = await StoreAsync(CompanionMessages(session, reply, now), cancellationToken);
         await repository.UpdateSessionAsync(session, cancellationToken);
 
         return new ChatTurnResult(session, added, null);
@@ -90,8 +90,11 @@ public sealed class ChatService(
     public Task<IReadOnlyList<ChatMessageDTO>> GetMessagesAsync(long sessionId, CancellationToken cancellationToken = default) =>
         repository.GetMessagesAsync(sessionId, cancellationToken);
 
-    public Task<ChatTurnResult> SendTextAsync(long sessionId, string text, CancellationToken cancellationToken = default) =>
-        TakeTurnAsync(sessionId, text.Trim(), new CompanionInput.FreeText(text), cancellationToken);
+    public Task<ChatTurnResult> SendTextAsync(long sessionId, string text, CancellationToken cancellationToken = default)
+    {
+        string capitalized = ChatText.Capitalize(text);
+        return TakeTurnAsync(sessionId, capitalized, new CompanionInput.FreeText(capitalized), cancellationToken);
+    }
 
     public Task<ChatTurnResult> SendQuickReplyAsync(long sessionId, ChatQuickReply reply, CancellationToken cancellationToken = default) =>
         TakeTurnAsync(sessionId, reply.Label, new CompanionInput.QuickReply(reply), cancellationToken);
@@ -120,7 +123,7 @@ public sealed class ChatService(
         DateTime now = Now();
         CompanionReply reply = Dialogue().FollowUpAfterPractice(state);
         ApplyReply(session, reply, now, firstText: null);
-        List<ChatMessageDTO> added = await AppendCompanionMessagesAsync(session, reply, now, cancellationToken);
+        IReadOnlyList<ChatMessageDTO> added = await StoreAsync(CompanionMessages(session, reply, now), cancellationToken);
         await repository.UpdateSessionAsync(session, cancellationToken);
         return new ChatTurnResult(session, added, null);
     }
@@ -153,13 +156,16 @@ public sealed class ChatService(
         CompanionState state = CompanionState.Deserialize(session.StateJson);
         DateTime now = Now();
 
-        List<ChatMessageDTO> added = [];
-        ChatMessageDTO user = new() { SessionId = sessionId, Role = ChatRole.User, Text = userText, CreatedAt = now };
-        added.Add(WithId(user, await repository.AddMessageAsync(user, cancellationToken)));
-
         CompanionReply reply = Dialogue().Respond(state, input);
         ApplyReply(session, reply, now, firstText: input is CompanionInput.FreeText ? userText : null);
-        added.AddRange(await AppendCompanionMessagesAsync(session, reply, now, cancellationToken));
+
+        // The user's message and the whole reply are stored in one transaction: a turn is saved completely or not at all.
+        List<ChatMessageDTO> pending =
+        [
+            new() { SessionId = sessionId, Role = ChatRole.User, Text = userText, CreatedAt = now },
+            .. CompanionMessages(session, reply, now)
+        ];
+        IReadOnlyList<ChatMessageDTO> added = await StoreAsync(pending, cancellationToken);
         await repository.UpdateSessionAsync(session, cancellationToken);
 
         return new ChatTurnResult(session, added, reply.Action);
@@ -193,36 +199,37 @@ public sealed class ChatService(
         }
     }
 
-    private async Task<List<ChatMessageDTO>> AppendCompanionMessagesAsync(
-        ChatSessionDTO session, CompanionReply reply, DateTime now, CancellationToken cancellationToken)
-    {
-        List<ChatMessageDTO> added = [];
-        for (int i = 0; i < reply.Messages.Count; i++)
+    /// <summary>The companion's messages for a reply. Quick replies belong to the last one.</summary>
+    private static IEnumerable<ChatMessageDTO> CompanionMessages(ChatSessionDTO session, CompanionReply reply, DateTime now) =>
+        reply.Messages.Select((text, i) => new ChatMessageDTO
         {
-            bool last = i == reply.Messages.Count - 1;
-            ChatMessageDTO message = new()
-            {
-                SessionId = session.Id,
-                Role = ChatRole.Companion,
-                Text = reply.Messages[i],
-                CreatedAt = now,
-                QuickReplies = last ? reply.QuickReplies : []
-            };
-            added.Add(WithId(message, await repository.AddMessageAsync(message, cancellationToken)));
+            SessionId = session.Id,
+            Role = ChatRole.Companion,
+            Text = text,
+            CreatedAt = now,
+            QuickReplies = i == reply.Messages.Count - 1 ? reply.QuickReplies : []
+        });
+
+    /// <summary>Saves the messages in one transaction and returns them with their ids.</summary>
+    private async Task<IReadOnlyList<ChatMessageDTO>> StoreAsync(IEnumerable<ChatMessageDTO> messages, CancellationToken cancellationToken)
+    {
+        List<ChatMessageDTO> pending = messages.ToList();
+        if (pending.Count == 0)
+        {
+            return pending;
         }
 
-        return added;
+        IReadOnlyList<long> ids = await repository.AddMessagesAsync(pending, cancellationToken);
+        return pending.Select((m, i) => new ChatMessageDTO
+        {
+            Id = ids[i],
+            SessionId = m.SessionId,
+            Role = m.Role,
+            Text = m.Text,
+            CreatedAt = m.CreatedAt,
+            QuickReplies = m.QuickReplies
+        }).ToList();
     }
-
-    private static ChatMessageDTO WithId(ChatMessageDTO message, long id) => new()
-    {
-        Id = id,
-        SessionId = message.SessionId,
-        Role = message.Role,
-        Text = message.Text,
-        CreatedAt = message.CreatedAt,
-        QuickReplies = message.QuickReplies
-    };
 
     private CompanionDialogue Dialogue() => new(analyzer, crisisDetector, language.IsEnglish, time: time);
 

@@ -58,6 +58,18 @@ public sealed record CompanionState
     /// <summary>The companion's last message asked something, so a bare "yes" / "no" is an answer to it.</summary>
     public bool QuestionPending { get; init; }
 
+    /// <summary>How the person asked to be called, if they said so. Used sparingly, like a friend would.</summary>
+    public string? UserName { get; init; }
+
+    /// <summary>The companion has just asked for a name, so a short reply may be one.</summary>
+    public bool NamePending { get; init; }
+
+    /// <summary>The last question the companion asked, so "what?" / "repeat" can be answered.</summary>
+    public string? LastQuestion { get; init; }
+
+    /// <summary>Beginnings of the latest companion messages, used to avoid saying the same thing twice in a row.</summary>
+    public IReadOnlyList<string> RecentReplies { get; init; } = [];
+
     public CompanionState WithText(string text) => this with
     {
         Turns = Turns + 1,
@@ -96,6 +108,10 @@ public sealed record CompanionState
             w.WriteNumber("lastRecap", LastRecapTurn);
             w.WriteBoolean("callbackAsked", CallbackAsked);
             w.WriteBoolean("questionPending", QuestionPending);
+            WriteOptional(w, "userName", UserName);
+            w.WriteBoolean("namePending", NamePending);
+            WriteOptional(w, "lastQuestion", LastQuestion);
+            WriteArray(w, "recentReplies", RecentReplies);
             w.WriteEndObject();
         }
 
@@ -139,7 +155,11 @@ public sealed record CompanionState
                 FirstQuote = Str(r, "firstQuote"),
                 LastRecapTurn = Int(r, "lastRecap") ?? 0,
                 CallbackAsked = Bool(r, "callbackAsked"),
-                QuestionPending = Bool(r, "questionPending")
+                QuestionPending = Bool(r, "questionPending"),
+                UserName = Str(r, "userName"),
+                NamePending = Bool(r, "namePending"),
+                LastQuestion = Str(r, "lastQuestion"),
+                RecentReplies = Array(r, "recentReplies")
             };
         }
         catch (Exception ex) when (ex is JsonException or InvalidOperationException)

@@ -33,7 +33,7 @@ public sealed record CompanionReply(
 /// Every decision is derived from <see cref="CompanionState"/> plus the new input, so a chat resumes after a restart and behaviour is testable.
 /// No language model is involved.
 /// </summary>
-public sealed class CompanionDialogue(
+public sealed partial class CompanionDialogue(
     ISituationAnalyzer analyzer,
     ICrisisDetector crisisDetector,
     bool english,
@@ -46,6 +46,10 @@ public sealed class CompanionDialogue(
     private const int HighTension = 8;
     private const int LowTension = 3;
     private const int RecapEveryTurns = 4;
+    private const int MaxRedraws = 4;
+    private const int RememberedReplies = 8;
+    private const int RememberedPrefixLength = 80;
+    private const int LongMessageWords = 30;
 
     /// <summary>First messages of a new chat. With a previous chat on record the companion remembers it and asks how things are now.</summary>
     public CompanionReply Open(CompanionState state, ChatSessionDTO? previous)
@@ -63,7 +67,7 @@ public sealed class CompanionDialogue(
         }
 
         return WithPending(new CompanionReply(
-            [CompanionContent.Greeting(english, _random), CompanionContent.PrivacyNote(english)],
+            [CompanionSmallTalk.FirstGreeting(Hour(), english, _random, state.UserName), CompanionContent.PrivacyNote(english)],
             [],
             null,
             state,
@@ -71,12 +75,38 @@ public sealed class CompanionDialogue(
             null));
     }
 
-    public CompanionReply Respond(CompanionState state, CompanionInput input) => WithPending(input switch
+    /// <summary>
+    /// One turn. If a reply would repeat something the companion said a moment ago, it is drawn again (a few times at most),
+    /// so answers that have several wordings do not sound like a recording.
+    /// </summary>
+    public CompanionReply Respond(CompanionState state, CompanionInput input)
     {
-        CompanionInput.FreeText text => RespondToText(state, text.Value),
+        CompanionState clean = state with { NamePending = false };
+        CompanionReply reply = Compute(clean, state.NamePending, input);
+        for (int attempt = 0; attempt < MaxRedraws && RepeatsRecent(reply, state); attempt++)
+        {
+            reply = Compute(clean, state.NamePending, input);
+        }
+
+        return reply with { State = reply.State with { RecentReplies = Remember(state.RecentReplies, reply.Messages) } };
+    }
+
+    private CompanionReply Compute(CompanionState state, bool namePending, CompanionInput input) => WithPending(input switch
+    {
+        CompanionInput.FreeText text => RespondToText(state, text.Value, namePending),
         CompanionInput.QuickReply quick => RespondToQuickReply(state, quick.Reply),
         _ => CompanionReply.Empty(state)
     });
+
+    private static string Prefix(string message) => message.Length <= RememberedPrefixLength ? message : message[..RememberedPrefixLength];
+
+    private static bool RepeatsRecent(CompanionReply reply, CompanionState state) =>
+        reply.Messages.Any(m => state.RecentReplies.Contains(Prefix(m)));
+
+    private static IReadOnlyList<string> Remember(IReadOnlyList<string> recent, IReadOnlyList<string> messages) =>
+        [.. recent.Concat(messages.Select(Prefix)).TakeLast(RememberedReplies)];
+
+    private int Hour() => _time.GetLocalNow().Hour;
 
     /// <summary>Message posted when the person comes back from a practice started in this chat.</summary>
     public CompanionReply FollowUpAfterPractice(CompanionState state) => WithPending(new(
@@ -88,12 +118,19 @@ public sealed class CompanionDialogue(
         null));
 
     /// <summary>A bare "yes" or "no" is an answer only if the last thing the companion did was ask something.</summary>
-    private static CompanionReply WithPending(CompanionReply reply) =>
-        reply.Messages.Count == 0
-            ? reply
-            : reply with { State = reply.State with { QuestionPending = reply.Messages[^1].TrimEnd().EndsWith('?') } };
+    private static CompanionReply WithPending(CompanionReply reply)
+    {
+        if (reply.Messages.Count == 0)
+        {
+            return reply;
+        }
 
-    private CompanionReply RespondToText(CompanionState previous, string raw)
+        string last = reply.Messages[^1].TrimEnd();
+        bool asked = last.EndsWith('?');
+        return reply with { State = reply.State with { QuestionPending = asked, LastQuestion = asked ? last : reply.State.LastQuestion } };
+    }
+
+    private CompanionReply RespondToText(CompanionState previous, string raw, bool namePending)
     {
         string text = raw.Trim();
         if (text.Length == 0)
@@ -116,31 +153,93 @@ public sealed class CompanionDialogue(
         Utterance act = UtteranceClassifier.Classify(text, single.Emotion != CompanionEmotion.Unknown);
         if (act is Utterance.Yes or Utterance.No && !previous.QuestionPending)
         {
-            act = Utterance.Statement;
+            act = Utterance.Acknowledge;
+        }
+
+        // "7" typed as text answers the tension question exactly like the chip does.
+        if (TryParseRating(text, out int typedRating) && (previous.AwaitingPostPracticeRating || IsScaleQuestion(previous)))
+        {
+            return RespondToRating(previous, typedRating, ParseEmotion(previous.Emotion), ParseTheme(previous.Theme));
+        }
+
+        // "хорошо" after a question about the problem is agreement; only in a chat with no problem yet it is good news.
+        if (act == Utterance.SharesGoodNews && previous.QuestionPending && ParseEmotion(previous.Emotion) != CompanionEmotion.Unknown && text.Split(' ').Length <= 3)
+        {
+            act = Utterance.Yes;
+        }
+
+        // Right after "what should I call you?" a short reply is a name, unless it is a feeling or another kind of move.
+        if (namePending && act == Utterance.Statement && single.Emotion == CompanionEmotion.Unknown && UtteranceClassifier.LooksLikeBareName(text, out string bareName))
+        {
+            return Introduce(previous, bareName);
+        }
+
+        if (act == Utterance.IntroducesSelf && UtteranceClassifier.TryExtractName(text, out string given))
+        {
+            return Introduce(previous, given);
         }
 
         return act == Utterance.Statement
             ? RespondToStatement(previous, text, single)
-            : RespondToConversationalMove(previous, act);
+            : RespondToConversationalMove(previous, act, text, single);
+    }
+
+    private CompanionReply Introduce(CompanionState previous, string name)
+    {
+        CompanionState state = previous with { UserName = name };
+        CompanionEmotion emotion = ParseEmotion(state.Emotion);
+        return Reply([CompanionSmallTalk.Nice(name, emotion != CompanionEmotion.Unknown, english)], [], state, emotion, ParseTheme(state.Theme));
     }
 
     /// <summary>The person is not describing a feeling: greeting, thanks, "I don't know", "who are you?", "what should I do?".</summary>
-    private CompanionReply RespondToConversationalMove(CompanionState previous, Utterance act)
+    private CompanionReply RespondToConversationalMove(CompanionState previous, Utterance act, string text, SituationAnalysis single)
     {
+        // "What is this, I'm so scared" is a feeling, not a request for a lesson: explain only topics we know.
+        string? explanation = act == Utterance.AsksToExplain ? CompanionKnowledge.Explain(text, english) : null;
+        if (act == Utterance.AsksToExplain && explanation is null && single.Emotion != CompanionEmotion.Unknown)
+        {
+            return RespondToStatement(previous, text, single);
+        }
+
         CompanionState state = previous with
         {
             Turns = previous.Turns + 1,
             TurnsSinceOffer = Math.Min(previous.TurnsSinceOffer + 1, 99),
             AwaitingPostPracticeRating = false
         };
-        CompanionEmotion emotion = ParseEmotion(state.Emotion);
+        CompanionEmotion emotion = single.Emotion != CompanionEmotion.Unknown ? single.Emotion : ParseEmotion(state.Emotion);
         CompanionTheme? theme = ParseTheme(state.Theme);
+
+        // "yes" or "I don't know" to "how strong is it, 0 to 10?" is not an answer: help with the scale instead of moving on.
+        if (act is Utterance.Yes or Utterance.No or Utterance.Acknowledge or Utterance.DontKnow && IsScaleQuestion(previous))
+        {
+            return Reply([CompanionSmallTalk.ScaleHelp(english)], RatingReplies(), state, emotion, theme);
+        }
 
         return act switch
         {
-            Utterance.Greeting => Reply([CompanionActContent.Greeting(english, _random)], [], state, emotion, theme),
-            Utterance.Thanks => Reply([CompanionActContent.Thanks(english)], [CompanionActContent.Continue(english), CompanionActContent.Enough(english)], state, emotion, theme),
-            Utterance.Goodbye => Reply([CompanionActContent.Goodbye(english)], [], state, emotion, theme),
+            Utterance.AsksToExplain => explanation is not null
+                ? Reply([explanation], [], state, emotion, theme)
+                : Reply([CompanionKnowledge.ExplainFallback(english)], CompanionKnowledge.TopicChips(english), state, emotion, theme),
+            Utterance.AsksWhy => Reply([CompanionKnowledge.Why(emotion, english)], [], state, emotion, theme),
+            Utterance.AsksIfNormal => Reply([CompanionKnowledge.Normal(emotion, english)], [], state, emotion, theme),
+            Utterance.AsksForAdvice when emotion != CompanionEmotion.Unknown => Reply(
+                [CompanionKnowledge.WhatHelps(emotion, english), CompanionKnowledge.AdviceOffer(english)],
+                [CompanionKnowledge.PracticeChip(english), CompanionActContent.Understand(english)],
+                state,
+                emotion,
+                theme),
+            Utterance.Acknowledge => Reply([CompanionSmallTalk.Acknowledge(previous.QuestionPending, english, _random)], [], state, emotion, theme),
+            Utterance.Reaction => Reply([CompanionSmallTalk.Reaction(text, UtteranceClassifier.IsSadReaction(text), english, _random)], [], state, emotion, theme),
+            Utterance.SharesGoodNews => Reply([CompanionSmallTalk.GoodNews(english, _random)], CompanionSmallTalk.GoodNewsReplies(english), state, emotion, theme),
+            Utterance.AsksHowAreYou => Reply([CompanionSmallTalk.HowAreYou(english, _random)], [], state, emotion, theme),
+            Utterance.AsksName => Reply([CompanionSmallTalk.Name(english)], [], state with { NamePending = true }, emotion, theme),
+            Utterance.AsksCapabilities => Reply([CompanionSmallTalk.Capabilities(english)], CompanionSmallTalk.CapabilityReplies(english), state, emotion, theme),
+            Utterance.AsksToRepeat => Reply([CompanionSmallTalk.Repeat(previous.LastQuestion, english, _random)], [], state, emotion, theme),
+            Utterance.SkipsQuestion => AskNextQuestion(state, [CompanionSmallTalk.Skipped(english, _random)], emotion, theme),
+            Utterance.Greeting => Reply([CompanionSmallTalk.GreetingReply(Hour(), english, _random, state.UserName)], [], state, emotion, theme),
+            Utterance.Thanks => Reply([CompanionSmallTalk.Thanks(state.UserName, english)], [CompanionActContent.Continue(english), CompanionActContent.Enough(english)], state, emotion, theme),
+            Utterance.Goodbye => Reply([CompanionSmallTalk.Goodbye(state.UserName, english)], [], state, emotion, theme),
             Utterance.DontKnow => Reply([CompanionActContent.DontKnow(english)], EmotionReplies(), state with { UnknownStreak = 0 }, emotion, theme),
             Utterance.RefusesToTalk => Reply(
                 [CompanionActContent.Refuses(english)],
@@ -192,7 +291,15 @@ public sealed class CompanionDialogue(
         };
         analysis = analysis with { Emotion = emotion };
 
-        List<string> messages = [Listen(state, analysis, emotion, quote, firstStatement)];
+        // Parroting a whole one-sentence message back sounds mechanical; a quote is for picking one sentence out of several.
+        string? spoken = quote is not null && text.TrimEnd('.', '!', '?', '…', ' ') == quote ? null : quote;
+        string heard = Listen(state, analysis, emotion, ParseEmotion(previous.Emotion), spoken, firstStatement);
+        if (!firstStatement && text.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length >= LongMessageWords)
+        {
+            heard = $"{CompanionSmallTalk.LongMessage(english, _random)} {heard}";
+        }
+
+        List<string> messages = [heard];
 
         bool urgent = emotion == CompanionEmotion.Panic
             || (emotion == CompanionEmotion.Anxiety && analysis.IsIntense && analysis.HasBodySymptoms);
@@ -305,6 +412,14 @@ public sealed class CompanionDialogue(
             case "understand":
                 return AskNextQuestion(state, [], emotion, theme);
 
+            case "practice":
+                return Offer(state, [], new SituationAnalysis(emotion, 1, false, false, []), emotion, theme, calming: false);
+
+            case { } topic when topic.StartsWith("topic:", StringComparison.Ordinal):
+                return CompanionKnowledge.ExplainById(topic["topic:".Length..], english) is { } explanation
+                    ? Reply([explanation, CompanionActContent.OtherTopic(english)], [], state, emotion, theme)
+                    : CompanionReply.Empty(state);
+
             case "body":
                 return Offer(
                     state,
@@ -364,7 +479,7 @@ public sealed class CompanionDialogue(
             : AskNextQuestion(state, messages, emotion, theme);
     }
 
-    private string Listen(CompanionState state, SituationAnalysis analysis, CompanionEmotion emotion, string? quote, bool firstStatement)
+    private string Listen(CompanionState state, SituationAnalysis analysis, CompanionEmotion emotion, CompanionEmotion before, string? quote, bool firstStatement)
     {
         if (firstStatement)
         {
@@ -374,7 +489,16 @@ public sealed class CompanionDialogue(
             return quote is null ? validation : $"{CompanionDialogueContent.QuoteLine(quote, english, _random)} {validation}";
         }
 
-        string ack = CompanionDialogueContent.Acknowledgement(english, _random);
+        string ack = emotion != CompanionEmotion.Unknown && before != CompanionEmotion.Unknown && emotion != before
+            ? CompanionSmallTalk.Shift(before, emotion, english)
+            : emotion != CompanionEmotion.Unknown && state.Turns % 2 == 0
+                ? CompanionSmallTalk.Validation(emotion, english, _random)
+                : CompanionDialogueContent.Acknowledgement(english, _random);
+        if (state.UserName is not null && state.Turns % 3 == 0)
+        {
+            ack = CompanionSmallTalk.Address(state.UserName, ack);
+        }
+
         if (quote is null || state.RecentTexts.Count % 2 != 0)
         {
             return ack;
@@ -450,15 +574,35 @@ public sealed class CompanionDialogue(
     private static ChatQuickReply PracticeReply(string techniqueId, string label) =>
         new(ChatQuickReplyKinds.Practice, label, techniqueId);
 
-    private static IReadOnlyList<ChatQuickReply> RatingReplies() =>
-        Enumerable.Range(0, 11)
-            .Select(n => new ChatQuickReply(ChatQuickReplyKinds.Rating, n.ToString(System.Globalization.CultureInfo.InvariantCulture), n.ToString(System.Globalization.CultureInfo.InvariantCulture)))
-            .ToArray();
+    private static readonly IReadOnlyList<ChatQuickReply> RatingChips = Enumerable.Range(0, 11)
+        .Select(n => n.ToString(System.Globalization.CultureInfo.InvariantCulture))
+        .Select(label => new ChatQuickReply(ChatQuickReplyKinds.Rating, label, label))
+        .ToArray();
+
+    private static IReadOnlyList<ChatQuickReply> RatingReplies() => RatingChips;
 
     private IReadOnlyList<ChatQuickReply> EmotionReplies() =>
         CompanionContent.ClarifyChoices(english)
             .Select(c => new ChatQuickReply(ChatQuickReplyKinds.Emotion, c.Label, c.Emotion.ToString()))
             .ToArray();
+
+    private static bool IsScaleQuestion(CompanionState state) =>
+        state.QuestionPending
+        && state.LastQuestion is { } question
+        && (question.Contains("от 0 до 10", StringComparison.Ordinal) || question.Contains("from 0 to 10", StringComparison.Ordinal));
+
+    /// <summary>"7", "7/10", "около 6", "about 4": a typed answer to the tension question. Anything longer is a story, not a number.</summary>
+    private static bool TryParseRating(string text, out int rating)
+    {
+        rating = 0;
+        System.Text.RegularExpressions.Match m = RatingPattern().Match(text.Trim());
+        return m.Success && int.TryParse(m.Groups["n"].Value, out rating) && rating is >= 0 and <= 10;
+    }
+
+    [System.Text.RegularExpressions.GeneratedRegex(
+        @"^(?:около|примерно|где-то|наверное|about|around|maybe)?\s*(?<n>\d{1,2})(?:\s*(?:/|из|out of)\s*10)?\s*[.!]*$",
+        System.Text.RegularExpressions.RegexOptions.CultureInvariant | System.Text.RegularExpressions.RegexOptions.IgnoreCase)]
+    private static partial System.Text.RegularExpressions.Regex RatingPattern();
 
     private static CompanionEmotion ParseEmotion(string? name) =>
         Enum.TryParse(name, out CompanionEmotion e) ? e : CompanionEmotion.Unknown;

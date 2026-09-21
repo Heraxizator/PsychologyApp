@@ -15,6 +15,9 @@ public sealed record ChatBubble(string Text, bool IsUser, string TimeText, strin
 {
     public LayoutOptions Alignment => IsUser ? LayoutOptions.End : LayoutOptions.Start;
 
+    /// <summary>True for a message that has just arrived: the page slides it in once, then clears the flag. History is never animated.</summary>
+    public bool Animate { get; set; }
+
     public bool HasDate => DateText is not null;
 
     public Thickness OuterMargin => new(0, StartsGroup ? 10 : 2, 0, 0);
@@ -40,7 +43,7 @@ public sealed class ChatViewModel : BaseViewModel
     private readonly CancellationTokenSource _lifetime = new();
 
     private long? _sessionId;
-    private bool _loaded;
+    private Task? _loading;
     private bool _busy;
     private string _title = string.Empty;
     private string _draftText = string.Empty;
@@ -67,7 +70,7 @@ public sealed class ChatViewModel : BaseViewModel
         QuickReplyCommand = new Command<ChatQuickReply>(reply => Run(() => SendQuickReplyAsync(reply)));
     }
 
-    public ObservableCollection<ChatBubble> Messages { get; } = [];
+    public RangeObservableCollection<ChatBubble> Messages { get; } = [];
 
     public ObservableCollection<QuickReplyItem> QuickReplies { get; } = [];
 
@@ -117,32 +120,36 @@ public sealed class ChatViewModel : BaseViewModel
     public string SendText => AppStrings.Send;
     public string TypingText => AppStrings.DialogueTyping;
 
-    /// <summary>Loads the history (or starts a new chat) once; safe to call on every appearing.</summary>
+    /// <summary>Loads the history (or starts a new chat) once; safe to call on every appearing, also concurrently. A failed load can be retried.</summary>
     public async Task LoadAsync()
     {
-        if (_loaded)
+        Task load = _loading ??= LoadCoreAsync();
+        try
         {
-            return;
+            await load;
         }
-
-        _loaded = true;
-        if (_sessionId is null)
+        catch
         {
-            _sessionId = (await _chat.StartNewChatAsync(_lifetime.Token)).Session.Id;
+            _loading = null;
+            throw;
         }
+    }
 
-        ChatSessionDTO? session = await _chat.GetChatAsync(_sessionId.Value, _lifetime.Token);
+    private async Task LoadCoreAsync()
+    {
+        long id = _sessionId ?? (await _chat.StartNewChatAsync(_lifetime.Token)).Session.Id;
+        ChatSessionDTO? session = await _chat.GetChatAsync(id, _lifetime.Token);
         if (session is null)
         {
             return;
         }
 
+        IReadOnlyList<ChatMessageDTO> history = await _chat.GetMessagesAsync(id, _lifetime.Token);
+
+        // The state changes only after everything has been read, so a failed load leaves nothing half-done.
+        _sessionId = id;
         Title = session.Title;
-        IReadOnlyList<ChatMessageDTO> history = await _chat.GetMessagesAsync(_sessionId.Value, _lifetime.Token);
-        foreach (ChatMessageDTO message in history)
-        {
-            AddBubble(message.Text, message.Role == ChatRole.User, message.CreatedAt);
-        }
+        Messages.AddRange(history.Select(m => CreateBubble(m.Text, m.Role == ChatRole.User, m.CreatedAt, animate: false)).ToList());
 
         ChatMessageDTO? last = history.LastOrDefault();
         SetQuickReplies(last is { Role: ChatRole.Companion } ? last.QuickReplies : []);
@@ -151,8 +158,7 @@ public sealed class ChatViewModel : BaseViewModel
     /// <summary>Called whenever the page appears: after a practice is finished the companion asks how the person feels.</summary>
     public async Task OnAppearedAsync()
     {
-        await LoadAsync();
-        if (_sessionId is not { } id || _busy)
+        if (_busy)
         {
             return;
         }
@@ -160,6 +166,12 @@ public sealed class ChatViewModel : BaseViewModel
         _busy = true;
         try
         {
+            await LoadAsync();
+            if (_sessionId is not { } id)
+            {
+                return;
+            }
+
             ChatTurnResult? followUp = await _chat.CheckPracticeFollowUpAsync(id, _lifetime.Token);
             if (followUp is not null)
             {
@@ -216,7 +228,7 @@ public sealed class ChatViewModel : BaseViewModel
 
     private Task SendDraftAsync()
     {
-        string text = DraftText.Trim();
+        string text = ChatText.Capitalize(DraftText);
         if (text.Length == 0)
         {
             return Task.CompletedTask;
@@ -231,7 +243,7 @@ public sealed class ChatViewModel : BaseViewModel
 
     private async Task TakeTurnAsync(string userText, Func<Task<ChatTurnResult>> send)
     {
-        AddBubble(userText, isUser: true, Now());
+        Messages.Add(CreateBubble(userText, isUser: true, Now(), animate: true));
         SetQuickReplies([]);
         IsTyping = true;
 
@@ -250,7 +262,7 @@ public sealed class ChatViewModel : BaseViewModel
             IsTyping = true;
             await Task.Delay(Math.Clamp(message.Text.Length * PerCharacterDelayMs, MinTypingDelayMs, MaxTypingDelayMs), _lifetime.Token);
             IsTyping = false;
-            AddBubble(message.Text, message.Role == ChatRole.User, message.CreatedAt);
+            Messages.Add(CreateBubble(message.Text, message.Role == ChatRole.User, message.CreatedAt, animate: true));
         }
 
         IsTyping = false;
@@ -284,19 +296,22 @@ public sealed class ChatViewModel : BaseViewModel
         OnPropertyChanged(nameof(HasQuickReplies));
     }
 
-    /// <summary>Adds a bubble, putting a day divider above the first message of a day and tightening the spacing inside a run from one sender.</summary>
-    private void AddBubble(string text, bool isUser, DateTime createdUtc)
+    /// <summary>Builds a bubble with a day divider above the first message of a day and tighter spacing inside a run from one sender. Bubbles must be created in display order.</summary>
+    private ChatBubble CreateBubble(string text, bool isUser, DateTime createdUtc, bool animate)
     {
-        DateTime now = Now();
         bool newDay = _lastCreatedUtc is not { } last || !ChatTimeFormatter.SameDay(last, createdUtc);
-        Messages.Add(new ChatBubble(
+        ChatBubble bubble = new(
             text,
             isUser,
             ChatTimeFormatter.Clock(createdUtc),
-            newDay ? ChatTimeFormatter.DayLabel(createdUtc, now, _language.IsEnglish) : null,
-            StartsGroup: newDay || _lastWasUser != isUser));
+            newDay ? ChatTimeFormatter.DayLabel(createdUtc, Now(), _language.IsEnglish) : null,
+            StartsGroup: newDay || _lastWasUser != isUser)
+        {
+            Animate = animate
+        };
         _lastCreatedUtc = createdUtc;
         _lastWasUser = isUser;
+        return bubble;
     }
 
     private DateTime Now() => _time.GetUtcNow().UtcDateTime;

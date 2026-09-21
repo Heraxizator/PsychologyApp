@@ -19,6 +19,10 @@ public sealed class ChatListItem
     public string MoodText { get; init; } = string.Empty;
 
     public bool HasMood => MoodText.Length > 0;
+
+    /// <summary>First letter of the title, shown in the round avatar.</summary>
+    public string Initial => Title.Length > 0 && char.IsLetterOrDigit(Title[0]) ? char.ToUpperInvariant(Title[0]).ToString() : "•";
+
     public bool IsImproving { get; init; }
     public bool IsWorsening { get; init; }
 
@@ -28,6 +32,9 @@ public sealed class ChatListItem
 
     public string RenameText => AppStrings.ChatRename;
     public string DeleteText => AppStrings.ChatDelete;
+
+    /// <summary>Everything the row shows. Equal signatures mean the row does not need rebuilding.</summary>
+    public string Signature => $"{Id}|{Title}|{Preview}|{TimeText}|{MoodText}";
 }
 
 /// <summary>The messenger's chat list: every conversation with its last message, time and how the tension moved.</summary>
@@ -82,10 +89,16 @@ public sealed class ChatListViewModel : BaseViewModel
         IReadOnlyList<ChatSessionDTO> sessions = await _chat.GetChatsAsync();
         DateTime now = _time.GetUtcNow().UtcDateTime;
 
-        Chats.Clear();
-        foreach (ChatSessionDTO session in sessions.Where(s => s.HasConversation()))
+        List<ChatListItem> fresh = sessions.Where(s => s.HasConversation()).Select(s => ToItem(s, now)).ToList();
+
+        // Coming back from a chat that changed nothing must not rebuild every row.
+        if (!Chats.Select(c => c.Signature).SequenceEqual(fresh.Select(c => c.Signature)))
         {
-            Chats.Add(ToItem(session, now));
+            Chats.Clear();
+            foreach (ChatListItem item in fresh)
+            {
+                Chats.Add(item);
+            }
         }
 
         IsEmpty = Chats.Count == 0;

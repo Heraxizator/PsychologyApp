@@ -75,21 +75,38 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
         await transaction.CommitAsync(cancellationToken);
     }
 
-    public async Task<long> AddMessageAsync(ChatMessageDTO message, CancellationToken cancellationToken = default)
+    public async Task<long> AddMessageAsync(ChatMessageDTO message, CancellationToken cancellationToken = default) =>
+        (await AddMessagesAsync([message], cancellationToken))[0];
+
+    public async Task<IReadOnlyList<long>> AddMessagesAsync(IReadOnlyList<ChatMessageDTO> messages, CancellationToken cancellationToken = default)
     {
+        if (messages.Count == 0)
+        {
+            return [];
+        }
+
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        return await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
-            ChatSql.InsertMessage,
-            new
-            {
-                message.SessionId,
-                Role = (int)message.Role,
-                message.Text,
-                CreatedAt = ToIso(message.CreatedAt),
-                QuickRepliesJson = ChatQuickReplyJson.Serialize(message.QuickReplies)
-            },
-            commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+        await using SqliteTransaction transaction = connection.BeginTransaction();
+        List<long> ids = new(messages.Count);
+        foreach (ChatMessageDTO message in messages)
+        {
+            ids.Add(await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
+                ChatSql.InsertMessage,
+                new
+                {
+                    message.SessionId,
+                    Role = (int)message.Role,
+                    message.Text,
+                    CreatedAt = ToIso(message.CreatedAt),
+                    QuickRepliesJson = ChatQuickReplyJson.Serialize(message.QuickReplies)
+                },
+                transaction,
+                CommandTimeoutSeconds,
+                cancellationToken)));
+        }
+
+        await transaction.CommitAsync(cancellationToken);
+        return ids;
     }
 
     public async Task<IReadOnlyList<ChatMessageDTO>> GetMessagesAsync(long sessionId, CancellationToken cancellationToken = default)

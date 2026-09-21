@@ -51,6 +51,17 @@ public class ChatServiceTests
             return Task.FromResult(id);
         }
 
+        public async Task<IReadOnlyList<long>> AddMessagesAsync(IReadOnlyList<ChatMessageDTO> messages, CancellationToken cancellationToken = default)
+        {
+            List<long> ids = [];
+            foreach (ChatMessageDTO message in messages)
+            {
+                ids.Add(await AddMessageAsync(message, cancellationToken));
+            }
+
+            return ids;
+        }
+
         public Task<IReadOnlyList<ChatMessageDTO>> GetMessagesAsync(long sessionId, CancellationToken cancellationToken = default) =>
             Task.FromResult<IReadOnlyList<ChatMessageDTO>>(_messages.Where(m => m.SessionId == sessionId).ToList());
 

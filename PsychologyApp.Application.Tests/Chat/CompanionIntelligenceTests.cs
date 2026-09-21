@@ -11,6 +11,11 @@ public class UtteranceClassifierTests
     [InlineData("Привет", Utterance.Greeting)]
     [InlineData("Здравствуйте!", Utterance.Greeting)]
     [InlineData("hello there", Utterance.Greeting)]
+    [InlineData("good morning", Utterance.Greeting)]
+    [InlineData("hey", Utterance.Greeting)]
+    [InlineData("hit me", Utterance.Statement)]
+    [InlineData("high stakes", Utterance.Statement)]
+    [InlineData("хайп", Utterance.Statement)]
     [InlineData("Спасибо", Utterance.Thanks)]
     [InlineData("большое спасибо тебе", Utterance.Thanks)]
     [InlineData("thanks a lot", Utterance.Thanks)]
@@ -124,7 +129,7 @@ public class CompanionIntelligenceTests
     [Fact]
     public void Asking_for_advice_gets_an_honest_answer_about_what_the_companion_can_do()
     {
-        CompanionReply reply = Say(Create(), new CompanionState { Turns = 1, Emotion = "Anxiety" }, "Что мне делать?");
+        CompanionReply reply = Say(Create(), new CompanionState { Turns = 1 }, "Что мне делать?");
 
         Assert.Contains("не ставлю диагнозов", reply.Messages[0]);
         Assert.EndsWith("?", reply.Messages[0]);
@@ -163,11 +168,13 @@ public class CompanionIntelligenceTests
     }
 
     [Fact]
-    public void A_bare_yes_without_a_pending_question_is_just_a_statement()
+    public void A_bare_yes_without_a_pending_question_is_a_backchannel_not_a_story()
     {
         CompanionReply reply = Say(Create(), new CompanionState(), "да");
 
-        Assert.NotEmpty(reply.State.RecentTexts);
+        Assert.Empty(reply.State.RecentTexts);
+        Assert.Equal(1, reply.State.Turns);
+        Assert.Single(reply.Messages);
     }
 
     [Fact]

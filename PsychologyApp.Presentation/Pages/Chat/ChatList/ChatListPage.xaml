@@ -45,43 +45,61 @@
                             </SwipeItems>
                         </SwipeView.RightItems>
 
-                        <Border Style="{StaticResource ListCardItemStyle}" Margin="0" Padding="14,12">
+                        <Border Style="{StaticResource ListCardItemStyle}" Margin="0" Padding="14,12" BindingContextChanged="OnChatRowContextChanged">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding OpenCommand}" />
                             </Border.GestureRecognizers>
-                            <VerticalStackLayout Spacing="4">
-                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                <Border
+                                    Grid.Column="0"
+                                    WidthRequest="44"
+                                    HeightRequest="44"
+                                    VerticalOptions="Start"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 22"
+                                    BackgroundColor="{DynamicResource Primary}">
                                     <Label
-                                        Grid.Column="0"
-                                        Text="{Binding Title}"
-                                        Style="{StaticResource ListRowTitleStyle}"
+                                        Text="{Binding Initial}"
+                                        FontSize="19"
+                                        FontFamily="{StaticResource SemiBoldFontFamily}"
+                                        TextColor="White"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" Spacing="4">
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                        <Label
+                                            Grid.Column="0"
+                                            Text="{Binding Title}"
+                                            Style="{StaticResource ListRowTitleStyle}"
+                                            LineBreakMode="TailTruncation"
+                                            MaxLines="1" />
+                                        <Label
+                                            Grid.Column="1"
+                                            Text="{Binding TimeText}"
+                                            Style="{StaticResource CaptionStyle}" />
+                                    </Grid>
+                                    <Label
+                                        Text="{Binding Preview}"
+                                        Style="{StaticResource CaptionStyle}"
                                         LineBreakMode="TailTruncation"
-                                        MaxLines="1" />
+                                        MaxLines="2" />
                                     <Label
-                                        Grid.Column="1"
-                                        Text="{Binding TimeText}"
-                                        Style="{StaticResource CaptionStyle}" />
-                                </Grid>
-                                <Label
-                                    Text="{Binding Preview}"
-                                    Style="{StaticResource CaptionStyle}"
-                                    LineBreakMode="TailTruncation"
-                                    MaxLines="2" />
-                                <Label
-                                    IsVisible="{Binding HasMood}"
-                                    Text="{Binding MoodText}"
-                                    Style="{StaticResource CaptionStyle}"
-                                    TextColor="{StaticResource Primary}">
-                                    <Label.Triggers>
-                                        <DataTrigger TargetType="Label" Binding="{Binding IsImproving}" Value="True">
-                                            <Setter Property="TextColor" Value="#2E9E5B" />
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Label" Binding="{Binding IsWorsening}" Value="True">
-                                            <Setter Property="TextColor" Value="#D64545" />
-                                        </DataTrigger>
-                                    </Label.Triggers>
-                                </Label>
-                            </VerticalStackLayout>
+                                        IsVisible="{Binding HasMood}"
+                                        Text="{Binding MoodText}"
+                                        Style="{StaticResource CaptionStyle}"
+                                        TextColor="{StaticResource Primary}">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsImproving}" Value="True">
+                                                <Setter Property="TextColor" Value="#2E9E5B" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding IsWorsening}" Value="True">
+                                                <Setter Property="TextColor" Value="#D64545" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </VerticalStackLayout>
+                            </Grid>
                         </Border>
                     </SwipeView>
                 </DataTemplate>
