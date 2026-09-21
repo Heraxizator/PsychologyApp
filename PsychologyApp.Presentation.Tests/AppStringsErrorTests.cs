@@ -3,6 +3,7 @@ using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
 
+[Collection("Localization")]
 public sealed class AppStringsErrorTests
 {
     [Fact]
