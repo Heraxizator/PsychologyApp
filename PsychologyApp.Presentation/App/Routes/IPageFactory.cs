@@ -1,4 +1,5 @@
-using PsychologyApp.Presentation.Pages.RunTechniqueSession.Companion;
+using PsychologyApp.Presentation.Pages.Chat.ChatList;
+using PsychologyApp.Presentation.Pages.Chat.Conversation;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueCreated;
 using PsychologyApp.Presentation.Pages.RunTests.TestResult;
 using PsychologyApp.Presentation.Pages.RunTests.AlternativeTest;
@@ -66,7 +67,8 @@ public interface IPageFactory
     /// <summary>Opens the dialogue page for techniques that have a conversation scenario, otherwise the classic form session.</summary>
     ContentPage CreateTechniquePage(TechniqueId techniqueId, INavigation hostNavigation);
     PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null, long? sessionResultId = null);
-    CompanionPage CreateCompanionPage(INavigation hostNavigation);
+    ChatListPage CreateChatListPage(INavigation hostNavigation);
+    ChatPage CreateChatPage(long? sessionId, INavigation hostNavigation);
     CrisisHubPage CreateCrisisHubPage();
     RiskCheckPage CreateRiskCheckPage(string source);
 }

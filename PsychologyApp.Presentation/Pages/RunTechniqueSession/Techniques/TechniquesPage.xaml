@@ -8,6 +8,7 @@
              xmlns:today="clr-namespace:PsychologyApp.Presentation.Widgets.TodayPracticeRow"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:technique="clr-namespace:PsychologyApp.Presentation.Entities.Technique"
+             xmlns:chatHero="clr-namespace:PsychologyApp.Presentation.Widgets.ChatHero"
              x:DataType="vm:TechniquesViewModel"
              Shell.NavBarIsVisible="True"
              Title="{Binding PageTitle}">
@@ -80,19 +81,7 @@
                         <Label Text="{Binding ClinicalRiskBanner}" Style="{StaticResource BodyStyle}" />
                     </Border>
 
-                    <Border Style="{StaticResource TodayBannerStyle}">
-                        <Border.Behaviors>
-                            <behaviors:PressFeedbackBehavior />
-                            <behaviors:ListItemRevealBehavior />
-                        </Border.Behaviors>
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding OpenCompanionCommand}" />
-                        </Border.GestureRecognizers>
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="{Binding CompanionCardTitle}" Style="{StaticResource ListRowTitleStyle}" />
-                            <Label Text="{Binding CompanionCardSubtitle}" Style="{StaticResource CaptionStyle}" />
-                        </VerticalStackLayout>
-                    </Border>
+                    <chatHero:ChatHeroView BindingContext="{Binding ChatHero}" />
 
                     <today:TodayPracticeRowView
                         CaptionText="{Binding TodayForYouLabel}"

@@ -26,6 +26,7 @@ public sealed class FsdArchitectureTests
         ["ManageProfile"] = ["ManageQuotes", "RunTechniqueSession"],
         ["RunTests"] = ["RunTechniqueSession"],
         ["SearchPhysics"] = ["RunTechniqueSession"],
+        ["RunTechniqueSession"] = ["Chat"],
     };
 
     private static readonly Dictionary<string, string[]> AllowedPageCrossImports = new(StringComparer.Ordinal)
@@ -44,7 +45,8 @@ public sealed class FsdArchitectureTests
         "SearchPhysics",
         "SendReviewForm",
         "Onboarding",
-        "PlayMusic"
+        "PlayMusic",
+        "Chat"
     ];
 
     [Fact]

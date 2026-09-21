@@ -37,7 +37,6 @@ public static class RunTechniqueSessionFeatureServiceCollectionExtensions
         services.AddSingleton<IDesignerViewModelFactory, DesignerViewModelFactory>();
         services.AddSingleton<ITechniqueViewModelFactory, TechniqueViewModelFactory>();
         services.AddSingleton<ITechniqueDialogueViewModelFactory, TechniqueDialogueViewModelFactory>();
-        services.AddSingleton<ICompanionViewModelFactory, CompanionViewModelFactory>();
         services.AddSingleton<IPracticeCompletionViewModelFactory, PracticeCompletionViewModelFactory>();
         return services;
     }

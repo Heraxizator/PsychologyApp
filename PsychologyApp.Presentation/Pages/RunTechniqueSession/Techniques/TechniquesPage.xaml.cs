@@ -23,6 +23,7 @@ public partial class TechniquesPage : ContentPage
     {
         base.OnAppearing();
         _animationHelper?.TryRevealAsync();
+        _viewModel?.ChatHero?.RefreshAsync().FireAndForget();
         if (_viewModel is null)
         {
             return;

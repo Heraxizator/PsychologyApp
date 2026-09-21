@@ -1,4 +1,6 @@
-using PsychologyApp.Presentation.Pages.RunTechniqueSession.Companion;
+using PsychologyApp.Presentation.Features.Chat;
+using PsychologyApp.Presentation.Pages.Chat.ChatList;
+using PsychologyApp.Presentation.Pages.Chat.Conversation;
 using PsychologyApp.Presentation.Features.ClinicalCare;
 using PsychologyApp.Presentation.Features.ManageJournal.DependencyInjection;
 using PsychologyApp.Presentation.Features.ManageProfile;
@@ -57,6 +59,7 @@ public sealed class PageRegistry(
     ITestPageFactory testPageFactory,
     ITechniquePageFactory techniquePageFactory,
     IClinicalCarePageFactory clinicalCarePageFactory,
+    IChatPageFactory chatPageFactory,
     IPracticeTheoryNavigator practiceTheoryNavigator,
     IStartPhysicsViewModelFactory startPhysicsViewModelFactory,
     IMusicPlayerViewModelFactory musicPlayerViewModelFactory,
@@ -154,8 +157,11 @@ public sealed class PageRegistry(
     public PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null, long? sessionResultId = null) =>
         WithPressFeedback(techniquePageFactory.CreatePracticeCompletionPage(streakDays, completedItemKey, sessionResultId));
 
-    public CompanionPage CreateCompanionPage(INavigation hostNavigation) =>
-        WithPressFeedback(techniquePageFactory.CreateCompanionPage(hostNavigation));
+    public ChatListPage CreateChatListPage(INavigation hostNavigation) =>
+        WithPressFeedback(chatPageFactory.CreateChatListPage(hostNavigation));
+
+    public ChatPage CreateChatPage(long? sessionId, INavigation hostNavigation) =>
+        WithPressFeedback(chatPageFactory.CreateChatPage(sessionId, hostNavigation));
 
     public CrisisHubPage CreateCrisisHubPage() =>
         WithPressFeedback(clinicalCarePageFactory.CreateCrisisHubPage());

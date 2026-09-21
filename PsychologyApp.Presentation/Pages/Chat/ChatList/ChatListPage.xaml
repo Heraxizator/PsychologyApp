@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.Chat.ChatList.ChatListPage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.Chat.ChatList"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:DataType="vm:ChatListViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding Title}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource Gray950}}">
+
+    <ContentPage.Behaviors>
+        <behaviors:PageAnalyticsBehavior />
+    </ContentPage.Behaviors>
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="{StaticResource LayoutPageMarginThickness}" RowSpacing="12">
+
+        <ui:NavigationBarSimpleView
+            Grid.Row="0"
+            TitleText="{Binding Title}"
+            BackCommand="{Binding BackCommand}" />
+
+        <CollectionView
+            Grid.Row="1"
+            ItemsSource="{Binding Chats}"
+            SelectionMode="None"
+            VerticalScrollBarVisibility="Never">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:ChatListItem">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems Mode="Reveal">
+                                <SwipeItem
+                                    Text="{Binding RenameText}"
+                                    BackgroundColor="{StaticResource Primary}"
+                                    Command="{Binding RenameCommand}" />
+                                <SwipeItem
+                                    Text="{Binding DeleteText}"
+                                    BackgroundColor="#D64545"
+                                    Command="{Binding DeleteCommand}" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+
+                        <Border Style="{StaticResource ListCardItemStyle}" Margin="0" Padding="14,12">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenCommand}" />
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout Spacing="4">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                    <Label
+                                        Grid.Column="0"
+                                        Text="{Binding Title}"
+                                        Style="{StaticResource ListRowTitleStyle}"
+                                        LineBreakMode="TailTruncation"
+                                        MaxLines="1" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Text="{Binding TimeText}"
+                                        Style="{StaticResource CaptionStyle}" />
+                                </Grid>
+                                <Label
+                                    Text="{Binding Preview}"
+                                    Style="{StaticResource CaptionStyle}"
+                                    LineBreakMode="TailTruncation"
+                                    MaxLines="2" />
+                                <Label
+                                    IsVisible="{Binding HasMood}"
+                                    Text="{Binding MoodText}"
+                                    Style="{StaticResource CaptionStyle}"
+                                    TextColor="{StaticResource Primary}">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsImproving}" Value="True">
+                                            <Setter Property="TextColor" Value="#2E9E5B" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsWorsening}" Value="True">
+                                            <Setter Property="TextColor" Value="#D64545" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </VerticalStackLayout>
+                        </Border>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <VerticalStackLayout
+            Grid.Row="1"
+            IsVisible="{Binding IsEmpty}"
+            VerticalOptions="Center"
+            Spacing="8"
+            Padding="24,0">
+            <Label
+                Text="{Binding EmptyTitle}"
+                Style="{StaticResource SectionTitleStyle}"
+                HorizontalTextAlignment="Center" />
+            <Label
+                Text="{Binding EmptyBody}"
+                Style="{StaticResource BodyStyle}"
+                HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+
+        <ui:ButtonView
+            Grid.Row="2"
+            BodyText="{Binding NewChatText}"
+            TapCommand="{Binding NewChatCommand}" />
+    </Grid>
+</ContentPage>

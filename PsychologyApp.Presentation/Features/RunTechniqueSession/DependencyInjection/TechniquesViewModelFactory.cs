@@ -8,6 +8,7 @@ using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Features.Chat.Index;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.Techniques;
 
 namespace PsychologyApp.Presentation.Features.RunTechniqueSession.DependencyInjection;
@@ -30,14 +31,18 @@ public sealed class TechniquesViewModelFactory(
     PracticeClinicalDashboardEnricher clinicalDashboardEnricher,
     IClinicalCareService clinicalCareService,
     IOptions<AppSettings> settings,
-    ILogger<TechniquesViewModel> logger) : ViewModelFactoryBase, ITechniquesViewModelFactory
+    ILogger<TechniquesViewModel> logger,
+    IChatHeroFactory chatHeroFactory) : ViewModelFactoryBase, ITechniquesViewModelFactory
 {
-    public TechniquesViewModel Create(ContentPage page) =>
-        new(
+    public TechniquesViewModel Create(ContentPage page)
+    {
+        INavigationService navigation = ResolveNavigation(navigationServiceFactory, page);
+        TechniquesViewModel viewModel = new(
+
             techniqueService,
             toastService,
             techniqueMessenger,
-            ResolveNavigation(navigationServiceFactory, page),
+            navigation,
             techniqueListBuilder,
             databaseReadySignal,
             dashboardLoader,
@@ -47,4 +52,7 @@ public sealed class TechniquesViewModelFactory(
             clinicalCareService,
             settings,
             logger);
+        viewModel.ChatHero = chatHeroFactory.CreateHero(navigation);
+        return viewModel;
+    }
 }

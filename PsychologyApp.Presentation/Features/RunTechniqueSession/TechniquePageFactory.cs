@@ -9,7 +9,6 @@ using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueSession;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueDesigner;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.PracticeCompletion;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueDialogue;
-using PsychologyApp.Presentation.Pages.RunTechniqueSession.Companion;
 using PsychologyApp.Application.Abstractions.Integration;
 
 namespace PsychologyApp.Presentation.Features.RunTechniqueSession;
@@ -22,7 +21,6 @@ public interface ITechniquePageFactory
     TechniqueSessionPage CreateTechniqueSessionPage(TechniqueId techniqueId, INavigation hostNavigation);
     TechniqueDialoguePage CreateTechniqueDialoguePage(TechniqueId techniqueId, INavigation hostNavigation);
     bool HasDialogue(TechniqueId techniqueId);
-    CompanionPage CreateCompanionPage(INavigation hostNavigation);
     PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null, long? sessionResultId = null);
 }
 
@@ -33,7 +31,6 @@ public sealed class TechniquePageFactory(
     IDesignerViewModelFactory designerViewModelFactory,
     ITechniqueViewModelFactory techniqueViewModelFactory,
     ITechniqueDialogueViewModelFactory dialogueViewModelFactory,
-    ICompanionViewModelFactory companionViewModelFactory,
     IConversationScenarioProvider conversationScenarioProvider,
     IPracticeCompletionViewModelFactory practiceCompletionViewModelFactory,
     IPageAnalyticsService pageAnalyticsService,
@@ -55,9 +52,6 @@ public sealed class TechniquePageFactory(
         new(dialogueViewModelFactory, techniqueId, hostNavigation);
 
     public bool HasDialogue(TechniqueId techniqueId) => conversationScenarioProvider.HasScenario(techniqueId);
-
-    public CompanionPage CreateCompanionPage(INavigation hostNavigation) =>
-        new(companionViewModelFactory, hostNavigation);
 
     public PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null, long? sessionResultId = null) =>
         new(practiceCompletionViewModelFactory, streakDays, completedItemKey, sessionResultId);

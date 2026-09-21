@@ -57,7 +57,7 @@ public sealed class ChatService(
         IReadOnlyList<ChatSessionDTO> sessions = await repository.GetSessionsAsync(cancellationToken);
         DateTime now = Now();
 
-        ChatSessionDTO? untouched = sessions.FirstOrDefault(s => CompanionState.Deserialize(s.StateJson).Turns == 0);
+        ChatSessionDTO? untouched = sessions.FirstOrDefault(s => !s.HasConversation());
         if (untouched is not null)
         {
             return new ChatTurnResult(untouched, [], null);
@@ -82,7 +82,7 @@ public sealed class ChatService(
 
     public async Task<ChatSessionDTO?> GetLastChatAsync(CancellationToken cancellationToken = default) =>
         (await repository.GetSessionsAsync(cancellationToken))
-            .FirstOrDefault(s => CompanionState.Deserialize(s.StateJson).Turns > 0);
+            .FirstOrDefault(s => s.HasConversation());
 
     public Task<ChatSessionDTO?> GetChatAsync(long sessionId, CancellationToken cancellationToken = default) =>
         repository.GetSessionAsync(sessionId, cancellationToken);

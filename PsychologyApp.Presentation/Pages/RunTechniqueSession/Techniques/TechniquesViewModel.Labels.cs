@@ -18,15 +18,11 @@ public partial class TechniquesViewModel
     public string LoadingMoreText => AppStrings.PracticeLoadingMoreText;
     public string FailedText => AppStrings.LoadFailed;
     public string RetryText => AppStrings.RetryQuestion;
-    public string CompanionCardTitle => AppStrings.CompanionCardTitle;
-    public string CompanionCardSubtitle => AppStrings.CompanionCardSubtitle;
 
     protected override void RefreshLocalizedProperties()
     {
         Notify(
             nameof(PageTitle),
-            nameof(CompanionCardTitle),
-            nameof(CompanionCardSubtitle),
             nameof(MyTechniquesLabel),
             nameof(PracticeCatalogLabel),
             nameof(PracticeCatalogHint),

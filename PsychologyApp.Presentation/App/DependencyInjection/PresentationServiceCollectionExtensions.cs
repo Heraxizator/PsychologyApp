@@ -8,6 +8,7 @@ using PsychologyApp.Presentation.Features.ManageJournal.DependencyInjection;
 using PsychologyApp.Presentation.Features.RunTechniqueSession.DependencyInjection;
 using PsychologyApp.Presentation.Features.SendReviewForm.DependencyInjection;
 using PsychologyApp.Presentation.Features.ClinicalCare.DependencyInjection;
+using PsychologyApp.Presentation.Features.Chat.DependencyInjection;
 
 namespace PsychologyApp.Presentation.App.DependencyInjection;
 
@@ -26,6 +27,7 @@ public static class PresentationServiceCollectionExtensions
         services.AddManageProfileFeature();
         services.AddManageJournalFeature();
         services.AddRunTechniqueSessionFeature();
+        services.AddChatFeature();
         return services;
     }
 }
