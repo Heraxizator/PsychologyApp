@@ -235,7 +235,7 @@ public sealed class CompanionSession : IDialogueSession
             try
             {
                 string? raw = await _model.GenerateAsync(CompanionPromptBuilder.Build(_english, _history, _analysis), timeout.Token);
-                string? safe = CompanionReplyGuard.Sanitize(raw, _english);
+                string? safe = CompanionReplyGuard.Sanitize(raw, _english, string.Join(' ', _userTexts));
                 if (safe is not null)
                 {
                     LastReplyFromModel = true;

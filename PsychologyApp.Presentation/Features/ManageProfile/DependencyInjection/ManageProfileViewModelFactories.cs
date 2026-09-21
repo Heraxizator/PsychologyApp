@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Configuration;
+using PsychologyApp.Application.Conversation.Companion;
 using PsychologyApp.Application.Quot;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
@@ -113,6 +114,8 @@ public sealed class SettingsViewModelFactory(
     IQuoteReminderCoordinator quoteReminderCoordinator,
     IMoodReminderCoordinator moodReminderCoordinator,
     IPracticeReminderScheduler practiceReminderScheduler,
+    ILocalModelInstaller localModelInstaller,
+    ILocalLanguageModel localLanguageModel,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, ISettingsViewModelFactory
 {
     public SettingsViewModel Create(ContentPage page) =>
@@ -125,7 +128,8 @@ public sealed class SettingsViewModelFactory(
             practiceReminderCoordinator,
             quoteReminderCoordinator,
             moodReminderCoordinator,
-            practiceReminderScheduler);
+            practiceReminderScheduler,
+            new LocalAiSettingsViewModel(localModelInstaller, localLanguageModel, dialogService));
 }
 
 public interface IInfoViewModelFactory

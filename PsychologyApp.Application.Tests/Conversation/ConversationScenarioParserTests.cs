@@ -1,4 +1,5 @@
 using PsychologyApp.Application.Conversation;
+using PsychologyApp.Application.Conversation.Companion;
 using PsychologyApp.Application.Models.Tests;
 using Xunit;
 
@@ -126,12 +127,40 @@ public class KeywordCrisisDetectorTests
     [InlineData("не хочу больше жить")]
     [InlineData("Мысли о СУИЦИДЕ")]
     [InlineData("i feel suicidal")]
+    [InlineData("I don't want to live anymore.")]
+    [InlineData("I dont want to live")]
+    [InlineData("I do not want to live like this")]
+    [InlineData("I really don't want to keep living")]
+    [InlineData("Не хочу уже совсем жить")]
+    [InlineData("я так устала жить")]
+    [InlineData("Не вижу смысла в жизни")]
+    [InlineData("sometimes I wish I was dead")]
+    [InlineData("I just want to disappear")]
+    [InlineData("Иногда хочется исчезнуть")]
+    [InlineData("Хочу уснуть и не проснуться")]
     public void Detects_crisis_phrases(string text) => Assert.True(_detector.IsCrisis(text));
 
     [Theory]
     [InlineData("Поссорился с коллегой, очень злюсь")]
     [InlineData("Не хочу идти на работу")]
+    [InlineData("Хочу жить лучше и больше путешествовать")]
+    [InlineData("I want to live in Paris")]
+    [InlineData("I don't want to go to work today")]
+    [InlineData("Не хочу больше слушать этот шум, хочу жить в тишине")]
     [InlineData("")]
     [InlineData(null)]
     public void Ignores_ordinary_text(string? text) => Assert.False(_detector.IsCrisis(text));
+}
+
+public class SituationAnalyzerTieBreakTests
+{
+    private readonly LexiconSituationAnalyzer _analyzer = new();
+
+    [Fact]
+    public void When_scores_tie_the_state_mentioned_first_wins()
+    {
+        Assert.Equal(CompanionEmotion.Anger, _analyzer.Analyze("My brother lied to me again and I'm furious. I can't stop thinking about it.").Emotion);
+        Assert.Equal(CompanionEmotion.Overthinking, _analyzer.Analyze("I can't stop thinking about it and I'm furious.").Emotion);
+        Assert.Equal(CompanionEmotion.Exhaustion, _analyzer.Analyze("Кажется, у меня выгорание. Ничего не радует.").Emotion);
+    }
 }

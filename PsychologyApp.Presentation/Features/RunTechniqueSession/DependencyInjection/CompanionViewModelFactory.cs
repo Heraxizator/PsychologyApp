@@ -14,8 +14,9 @@ public sealed class CompanionViewModelFactory(
     Func<NavigationContext, INavigationService> navigationServiceFactory,
     ISituationAnalyzer analyzer,
     ICrisisDetector crisisDetector,
-    ILocalLanguageModel model) : ICompanionViewModelFactory
+    ILocalLanguageModel model,
+    ILocalModelInstaller modelInstaller) : ICompanionViewModelFactory
 {
     public CompanionViewModel Create(INavigation navigation) =>
-        new(navigationServiceFactory(NavigationContext.From(navigation)), analyzer, crisisDetector, model);
+        new(navigationServiceFactory(NavigationContext.From(navigation)), analyzer, crisisDetector, model, modelInstaller.Manifest);
 }

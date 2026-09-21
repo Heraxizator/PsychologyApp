@@ -44,6 +44,23 @@ public sealed class OnnxGenAiLanguageModel(ILogger<OnnxGenAiLanguageModel> logge
         }
     }
 
+    public async Task ReleaseAsync()
+    {
+        await _gate.WaitAsync().ConfigureAwait(false);
+        try
+        {
+            _tokenizer?.Dispose();
+            _model?.Dispose();
+            _tokenizer = null;
+            _model = null;
+            _loadFailed = false;
+        }
+        finally
+        {
+            _gate.Release();
+        }
+    }
+
     public async Task<string?> GenerateAsync(LlmRequest request, CancellationToken cancellationToken = default)
     {
         if (!IsAvailable)

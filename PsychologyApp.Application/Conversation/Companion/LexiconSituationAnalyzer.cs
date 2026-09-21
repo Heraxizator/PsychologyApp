@@ -47,7 +47,7 @@ public sealed class LexiconSituationAnalyzer : ISituationAnalyzer
         [CompanionEmotion.Sadness] =
         [
             new(2, ["груст", "тоск", "печал", "безнадеж", "депресс", "ничего не радует", "хочется плакать", "sad", "hopeless", "depress", "grief"]),
-            new(1, ["плач", "слез", "пустот", "=пусто", "не радует", "тяжело на душе", "унын", "подавлен", "cry", "tears", "empty", "=down"])
+            new(1, ["плач", "слез", "пустот", "=пусто", "тяжело на душе", "унын", "подавлен", "cry", "tears", "empty", "=down"])
         ],
         [CompanionEmotion.Exhaustion] =
         [
@@ -98,37 +98,61 @@ public sealed class LexiconSituationAnalyzer : ISituationAnalyzer
         string normalized = Normalize(text);
         string[] tokens = normalized.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
+        int[] offsets = new int[tokens.Length];
+        for (int i = 1; i < tokens.Length; i++)
+        {
+            offsets[i] = offsets[i - 1] + tokens[i - 1].Length + 1;
+        }
+
         Dictionary<CompanionEmotion, double> scores = [];
+        Dictionary<CompanionEmotion, int> firstMention = [];
         foreach ((CompanionEmotion emotion, Entry[] entries) in Emotions)
         {
             double score = 0;
+            int first = int.MaxValue;
             foreach (Entry entry in entries)
             {
-                score += entry.Weight * entry.Terms.Count(term => Matches(term, normalized, tokens, respectNegation: true));
+                foreach (string term in entry.Terms)
+                {
+                    int at = IndexOf(term, normalized, tokens, offsets, respectNegation: true);
+                    if (at >= 0)
+                    {
+                        score += entry.Weight;
+                        first = Math.Min(first, at);
+                    }
+                }
             }
 
             if (score > 0)
             {
                 scores[emotion] = score;
+                firstMention[emotion] = first;
             }
         }
 
-        bool hasBody = BodyTerms.Any(term => Matches(term, normalized, tokens, respectNegation: false));
+        bool Matches(string term, bool respectNegation) => IndexOf(term, normalized, tokens, offsets, respectNegation) >= 0;
+
+        bool hasBody = BodyTerms.Any(term => Matches(term, respectNegation: false));
         if (hasBody && scores.ContainsKey(CompanionEmotion.Anxiety))
         {
             scores[CompanionEmotion.Panic] = scores.GetValueOrDefault(CompanionEmotion.Panic) + 1;
+            firstMention.TryAdd(CompanionEmotion.Panic, firstMention[CompanionEmotion.Anxiety]);
         }
 
-        bool intense = IntensityTerms.Any(term => Matches(term, normalized, tokens, respectNegation: false));
+        bool intense = IntensityTerms.Any(term => Matches(term, respectNegation: false));
         IReadOnlyList<CompanionTheme> themes = Themes
-            .Select(pair => (Theme: pair.Key, Hits: pair.Value.Count(term => Matches(term, normalized, tokens, respectNegation: false))))
+            .Select(pair => (Theme: pair.Key, Hits: pair.Value.Count(term => Matches(term, respectNegation: false))))
             .Where(x => x.Hits > 0)
             .OrderByDescending(x => x.Hits)
             .Take(2)
             .Select(x => x.Theme)
             .ToArray();
 
-        List<KeyValuePair<CompanionEmotion, double>> ranked = scores.OrderByDescending(p => p.Value).ToList();
+        // Equal scores are broken by whichever state the person mentioned first.
+        List<KeyValuePair<CompanionEmotion, double>> ranked = scores
+            .OrderByDescending(p => p.Value)
+            .ThenBy(p => firstMention[p.Key])
+            .ToList();
         if (ranked.Count == 0 || ranked[0].Value < MinScore)
         {
             return new SituationAnalysis(CompanionEmotion.Unknown, 0, hasBody, intense, themes);
@@ -147,13 +171,14 @@ public sealed class LexiconSituationAnalyzer : ISituationAnalyzer
         return string.Join(' ', new string(chars).Split(' ', StringSplitOptions.RemoveEmptyEntries));
     }
 
-    private static bool Matches(string term, string normalized, string[] tokens, bool respectNegation)
+    /// <returns>Character position of the earliest match in the normalised text, or -1.</returns>
+    private static int IndexOf(string term, string normalized, string[] tokens, int[] offsets, bool respectNegation)
     {
         string t = term.Replace('ё', 'е');
 
         if (t.Contains(' '))
         {
-            return normalized.Contains(t, StringComparison.Ordinal);
+            return normalized.IndexOf(t, StringComparison.Ordinal);
         }
 
         bool exact = t.StartsWith('=');
@@ -171,9 +196,9 @@ public sealed class LexiconSituationAnalyzer : ISituationAnalyzer
                 continue;
             }
 
-            return true;
+            return offsets[i];
         }
 
-        return false;
+        return -1;
     }
 }

@@ -203,6 +203,45 @@
                 </VerticalStackLayout>
             </Border>
 
+            <Border
+                Style="{StaticResource SettingsSectionCardStyle}"
+                Margin="0"
+                BindingContext="{Binding LocalAi}"
+                IsVisible="{Binding IsSupported}"
+                x:DataType="vm:LocalAiSettingsViewModel">
+                <VerticalStackLayout Spacing="8">
+                    <Label
+                        Text="{Binding Title}"
+                        Style="{StaticResource SectionTitleStyle}" />
+                    <Label Text="{Binding Description}" Style="{StaticResource BodyStyle}" />
+                    <Label Text="{Binding ExperimentalNote}" Style="{StaticResource CaptionStyle}" />
+
+                    <ProgressBar
+                        IsVisible="{Binding IsDownloading}"
+                        Progress="{Binding Progress}"
+                        ProgressColor="{DynamicResource Primary}" />
+                    <Label
+                        IsVisible="{Binding ShowStatus}"
+                        Text="{Binding StatusText}"
+                        Style="{StaticResource CaptionStyle}" />
+
+                    <ui:ButtonView
+                        IsVisible="{Binding CanDownload}"
+                        BodyText="{Binding DownloadText}"
+                        TapCommand="{Binding DownloadCommand}" />
+                    <ui:ButtonView
+                        IsVisible="{Binding IsDownloading}"
+                        Variant="Secondary"
+                        BodyText="{Binding CancelText}"
+                        TapCommand="{Binding CancelCommand}" />
+                    <ui:ButtonView
+                        IsVisible="{Binding IsInstalled}"
+                        Variant="Secondary"
+                        BodyText="{Binding DeleteText}"
+                        TapCommand="{Binding DeleteCommand}" />
+                </VerticalStackLayout>
+            </Border>
+
             <ui:ButtonView
                 BodyText="{Binding ApplyButtonText}"
                 TapCommand="{Binding ApplyCommand}" />

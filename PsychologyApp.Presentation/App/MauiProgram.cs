@@ -61,6 +61,7 @@ public static class MauiProgram
             settings.LargeTimeoutMs = settings.LargeTimeoutMs > 0 ? settings.LargeTimeoutMs : Constants.LargeBaseTimeout;
         });
 
+        builder.Services.AddPsychologyAppLocalModel(System.IO.Path.Combine(FileSystem.AppDataDirectory, "llm"));
         builder.Services.AddSingleton<MauiReasonContentProvider>();
         builder.Services.AddPsychologyAppCachedReasonContent(sp =>
             new CachedReasonContentProvider(

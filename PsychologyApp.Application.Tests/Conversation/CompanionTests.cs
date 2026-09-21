@@ -85,17 +85,17 @@ public class CompanionReplyGuardTests
     [Fact]
     public void Formatting_and_questions_are_stripped()
     {
-        string? result = CompanionReplyGuard.Sanitize("**Слышу вас.**\n- Это непросто.\nЧто вы чувствуете?", english: false);
+        string? result = CompanionReplyGuard.Sanitize("**Слышу, как вам непросто.**\n- Это очень выматывает.\nЧто вы чувствуете?", english: false);
 
-        Assert.Equal("Слышу вас. Это непросто.", result);
+        Assert.Equal("Слышу, как вам непросто. Это очень выматывает.", result);
     }
 
     [Fact]
     public void Reply_is_capped_at_three_sentences()
     {
-        string? result = CompanionReplyGuard.Sanitize("Раз. Два. Три. Четыре. Пять.", english: false);
+        string? result = CompanionReplyGuard.Sanitize("Слышу вас очень хорошо. Это правда непросто. Вы много выдержали. Дальше будет проще. Отдыхайте.", english: false);
 
-        Assert.Equal("Раз. Два. Три.", result);
+        Assert.Equal("Слышу вас очень хорошо. Это правда непросто. Вы много выдержали.", result);
     }
 
     [Theory]
@@ -110,6 +110,42 @@ public class CompanionReplyGuardTests
     public void Unsafe_or_empty_replies_are_rejected(string raw)
     {
         Assert.Null(CompanionReplyGuard.Sanitize(raw, english: false));
+    }
+
+
+    [Theory]
+    [InlineData("У тебя сейчас очень тяжело на душе, это понятно.")]
+    [InlineData("Похоже, вам тяжело, и вы чувствуешь усталость.")]
+    [InlineData("Слышу, как вам тревожно. Не бойтесь, это пройдёт.")]
+    [InlineData("Слышу, как вам тревожно. Попробуйте немного отдохнуть.")]
+    [InlineData("Слышу вас, и мне тоже очень тяжело от этого.")]
+    [InlineData("Всё будет хорошо, вы справитесь с этой встречей.")]
+    public void Advice_dismissals_and_informal_register_are_rejected(string raw)
+    {
+        Assert.Null(CompanionReplyGuard.Sanitize(raw, english: false));
+    }
+
+    [Fact]
+    public void Tokenizer_artifacts_and_repeated_punctuation_are_cleaned()
+    {
+        string? result = CompanionReplyGuard.Sanitize("Слышу, как вам тяжело перед встречей.▁▁Это очень выматывает..", english: false);
+
+        Assert.Equal("Слышу, как вам тяжело перед встречей. Это очень выматывает.", result);
+    }
+
+    [Fact]
+    public void Too_short_replies_are_rejected()
+    {
+        Assert.Null(CompanionReplyGuard.Sanitize("Понимаю вас.", english: false));
+    }
+
+    [Fact]
+    public void Reply_must_be_about_what_the_person_wrote_when_the_text_is_given()
+    {
+        const string user = "Завтра важная презентация, я очень тревожусь";
+
+        Assert.NotNull(CompanionReplyGuard.Sanitize("Слышу, как вам тревожно перед презентацией. Это очень выматывает.", english: false, user));
+        Assert.Null(CompanionReplyGuard.Sanitize("Солнце в комнате кажется таким тусклым и серым сегодня.", english: false, user));
     }
 
     [Fact]
@@ -362,7 +398,7 @@ public class CompanionSessionTests
             turns,
             new SituationAnalysis(CompanionEmotion.Anxiety, 0.7, false, false, [CompanionTheme.Work]));
 
-        Assert.Equal(6, request.Messages.Count);
+        Assert.Equal(4 + 6, request.Messages.Count); // two example exchanges + the last six turns
         Assert.Equal("msg 9", request.Messages[^1].Content);
         Assert.Contains("тревога", request.SystemPrompt);
         Assert.Contains("работа", request.SystemPrompt);
