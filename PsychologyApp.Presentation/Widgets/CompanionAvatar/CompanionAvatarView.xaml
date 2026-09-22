@@ -45,7 +45,7 @@
             VerticalOptions="End"
             StrokeThickness="2.4"
             Stroke="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
-            BackgroundColor="#34C759"
+            BackgroundColor="{StaticResource OnlineStatus}"
             StrokeShape="RoundRectangle 8" />
     </Grid>
 </ContentView>

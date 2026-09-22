@@ -75,7 +75,7 @@
                     <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
                         <Border Padding="10,5" StrokeThickness="0" StrokeShape="RoundRectangle 14" BackgroundColor="#26FFFFFF">
                             <HorizontalStackLayout Spacing="6">
-                                <Ellipse WidthRequest="8" HeightRequest="8" Fill="#34C759" VerticalOptions="Center" />
+                                <Ellipse WidthRequest="8" HeightRequest="8" Fill="{StaticResource OnlineStatus}" VerticalOptions="Center" />
                                 <Label Text="{Binding OnlineText}" FontSize="12" TextColor="White" />
                             </HorizontalStackLayout>
                         </Border>
@@ -252,7 +252,7 @@
                                                     BindingContextChanged="OnBarContextChanged">
                                                     <Border.Triggers>
                                                         <DataTrigger TargetType="Border" Binding="{Binding Improved}" Value="True">
-                                                            <Setter Property="BackgroundColor" Value="#2E9E5B" />
+                                                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Success}, Dark={StaticResource SuccessDark}}" />
                                                         </DataTrigger>
                                                     </Border.Triggers>
                                                 </Border>
@@ -270,7 +270,7 @@
                                 <Label Text="{Binding TensionStartText}" Style="{StaticResource CaptionStyle}" />
                             </HorizontalStackLayout>
                             <HorizontalStackLayout Spacing="6">
-                                <Border WidthRequest="12" HeightRequest="12" StrokeThickness="0" StrokeShape="RoundRectangle 3" BackgroundColor="#2E9E5B" VerticalOptions="Center" />
+                                <Border WidthRequest="12" HeightRequest="12" StrokeThickness="0" StrokeShape="RoundRectangle 3" BackgroundColor="{AppThemeBinding Light={StaticResource Success}, Dark={StaticResource SuccessDark}}" VerticalOptions="Center" />
                                 <Label Text="{Binding TensionEndText}" Style="{StaticResource CaptionStyle}" />
                             </HorizontalStackLayout>
                         </HorizontalStackLayout>
@@ -296,13 +296,13 @@
                                             Padding="8,2"
                                             StrokeThickness="0"
                                             StrokeShape="RoundRectangle 9"
-                                            BackgroundColor="#2E9E5B"
+                                            BackgroundColor="{AppThemeBinding Light={StaticResource Success}, Dark={StaticResource SuccessDark}}"
                                             VerticalOptions="Center">
                                             <Label Text="{Binding BestText}" FontSize="11" TextColor="White" />
                                         </Border>
                                     </HorizontalStackLayout>
                                     <Label Grid.Row="1" Grid.Column="0" Text="{Binding Detail}" Style="{StaticResource CaptionStyle}" />
-                                    <ProgressBar Grid.Row="2" Grid.Column="0" Progress="{Binding HelpedFraction}" ProgressColor="#2E9E5B" />
+                                    <ProgressBar Grid.Row="2" Grid.Column="0" Progress="{Binding HelpedFraction}" ProgressColor="{AppThemeBinding Light={StaticResource Success}, Dark={StaticResource SuccessDark}}" />
                                     <Border
                                         Grid.Row="0"
                                         Grid.RowSpan="3"

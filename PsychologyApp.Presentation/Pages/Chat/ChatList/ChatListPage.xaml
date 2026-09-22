@@ -36,11 +36,11 @@
                             <SwipeItems Mode="Reveal">
                                 <SwipeItem
                                     Text="{Binding RenameText}"
-                                    BackgroundColor="{StaticResource Primary}"
+                                    BackgroundColor="{DynamicResource Primary}"
                                     Command="{Binding RenameCommand}" />
                                 <SwipeItem
                                     Text="{Binding DeleteText}"
-                                    BackgroundColor="#D64545"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource Danger}, Dark={StaticResource DangerDark}}"
                                     Command="{Binding DeleteCommand}" />
                             </SwipeItems>
                         </SwipeView.RightItems>
@@ -91,10 +91,10 @@
                                         TextColor="{StaticResource Primary}">
                                         <Label.Triggers>
                                             <DataTrigger TargetType="Label" Binding="{Binding IsImproving}" Value="True">
-                                                <Setter Property="TextColor" Value="#2E9E5B" />
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Success}, Dark={StaticResource SuccessDark}}" />
                                             </DataTrigger>
                                             <DataTrigger TargetType="Label" Binding="{Binding IsWorsening}" Value="True">
-                                                <Setter Property="TextColor" Value="#D64545" />
+                                                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Danger}, Dark={StaticResource DangerDark}}" />
                                             </DataTrigger>
                                         </Label.Triggers>
                                     </Label>

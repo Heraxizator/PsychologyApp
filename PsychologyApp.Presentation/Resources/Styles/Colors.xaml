@@ -13,6 +13,14 @@
     <Color x:Key="Secondary">#0085FF</Color>
     <Color x:Key="SecondaryFill">#96d1ff</Color>
 
+    <!-- Fixed meaning, independent of the person's chosen accent colour above: destructive actions are always this red,
+         improvement/success is always this green, wherever in the app they show up. -->
+    <Color x:Key="Danger">#D64545</Color>
+    <Color x:Key="DangerDark">#E5726B</Color>
+    <Color x:Key="Success">#2E9E5B</Color>
+    <Color x:Key="SuccessDark">#4CAF7D</Color>
+    <Color x:Key="OnlineStatus">#34C759</Color>
+
     <Color x:Key="PageBackground">#F3F4F6</Color>
     <Color x:Key="PageBackgroundDark">#121212</Color>
     <Color x:Key="SurfaceMutedLight">#F3F4F6</Color>

@@ -152,10 +152,10 @@
             <Border
                 x:Name="ScrollToTopButton"
                 IsVisible="False"
-                WidthRequest="42"
-                HeightRequest="42"
+                WidthRequest="44"
+                HeightRequest="44"
                 StrokeThickness="0"
-                StrokeShape="RoundRectangle 21"
+                StrokeShape="RoundRectangle 22"
                 Shadow="{AppThemeBinding Light={StaticResource BrandCardShadowLight}, Dark={StaticResource BrandCardShadowDark}}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
                 SemanticProperties.Description="{Binding ScrollToOldestText}">
@@ -175,10 +175,10 @@
             <Border
                 x:Name="ScrollToBottomButton"
                 IsVisible="False"
-                WidthRequest="42"
-                HeightRequest="42"
+                WidthRequest="44"
+                HeightRequest="44"
                 StrokeThickness="0"
-                StrokeShape="RoundRectangle 21"
+                StrokeShape="RoundRectangle 22"
                 Shadow="{AppThemeBinding Light={StaticResource BrandCardShadowLight}, Dark={StaticResource BrandCardShadowDark}}"
                 BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
                 SemanticProperties.Description="{Binding ScrollToNewestText}">
