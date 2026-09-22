@@ -8,13 +8,11 @@ public partial class CompanionProfilePage : ContentPage
 {
     private const uint CountUpMs = 900;
     private const uint TrustBarMs = 800;
-    private const uint HaloMs = 1800;
     private const uint BarGrowMs = 600;
     private const int BarStaggerMs = 70;
     private const int AfterBarExtraDelayMs = 90;
 
     private readonly CompanionProfileViewModel _viewModel;
-    private CancellationTokenSource? _halo;
 
     public CompanionProfilePage(IChatViewModelFactory viewModelFactory, INavigation hostNavigation)
     {
@@ -24,20 +22,12 @@ public partial class CompanionProfilePage : ContentPage
             DisplayPromptAsync(title, message, accept, cancel, initialValue: initial, maxLength: 30);
         BindingContext = _viewModel;
         _viewModel.ProfileLoaded += (_, _) => PlayNumbers();
-        Unloaded += (_, _) => StopHalo();
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
         _viewModel.RefreshAsync().FireAndForget();
-        StartHalo();
-    }
-
-    protected override void OnDisappearing()
-    {
-        base.OnDisappearing();
-        StopHalo();
     }
 
     /// <summary>Numbers count up from zero, the trust bar fills and the level marks light up. With reduced motion everything is set at once.</summary>
@@ -124,47 +114,6 @@ public partial class CompanionProfilePage : ContentPage
         finally
         {
             bar.ScaleY = 1;
-        }
-    }
-
-    private void StartHalo()
-    {
-        StopHalo();
-        if (ReduceMotion.IsEnabled)
-        {
-            return;
-        }
-
-        _halo = new CancellationTokenSource();
-        PulseAsync(_halo.Token).FireAndForget();
-    }
-
-    private void StopHalo()
-    {
-        _halo?.Cancel();
-        _halo = null;
-        Halo.Scale = 1;
-        Halo.Opacity = 1;
-    }
-
-    /// <summary>A slow ring that breathes out around the face: calm, not attention-grabbing.</summary>
-    private async Task PulseAsync(CancellationToken cancellationToken)
-    {
-        try
-        {
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                Halo.Scale = 0.86;
-                Halo.Opacity = 0.9;
-                await Task.WhenAll(
-                    Halo.ScaleToAsync(1.08, HaloMs, Easing.SinOut),
-                    Halo.FadeToAsync(0.15, HaloMs, Easing.SinIn));
-                await Task.Delay(250, cancellationToken);
-            }
-        }
-        catch (OperationCanceledException)
-        {
-            // Leaving the page.
         }
     }
 }

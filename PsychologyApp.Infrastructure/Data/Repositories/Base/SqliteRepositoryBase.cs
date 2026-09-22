@@ -1,9 +1,7 @@
-using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Configuration;
-using PsychologyApp.Infrastructure.Data.Context;
 
 namespace PsychologyApp.Infrastructure.Data.Repositories.Base;
 
@@ -22,10 +20,9 @@ public abstract class SqliteRepositoryBase
 
     protected int CommandTimeoutSeconds => _commandTimeoutSeconds;
 
-    protected async Task<SqliteConnection> OpenConnectionAsync(CancellationToken cancellationToken = default)
-    {
-        var connection = (SqliteConnection)await _connectionFactory.CreateOpenConnectionAsync(cancellationToken);
-        await SqliteSchema.ConfigureConnectionAsync(connection, cancellationToken);
-        return connection;
-    }
+    // Every IDbConnectionFactory implementation already configures (PRAGMA busy_timeout, WAL) the connection it opens
+    // (see SqliteConnectionFactory / SharedMemoryConnectionFactory), so this used to run the same three PRAGMA statements
+    // a second time on every single repository call. Just hand the already-configured connection back.
+    protected async Task<SqliteConnection> OpenConnectionAsync(CancellationToken cancellationToken = default) =>
+        (SqliteConnection)await _connectionFactory.CreateOpenConnectionAsync(cancellationToken);
 }

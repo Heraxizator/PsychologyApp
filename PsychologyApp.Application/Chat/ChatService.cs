@@ -158,9 +158,11 @@ public sealed class ChatService(
 
     public async Task<CompanionProfile> GetProfileAsync(CancellationToken cancellationToken = default)
     {
-        IReadOnlyList<ChatSessionDTO> sessions = await repository.GetSessionsAsync(cancellationToken);
-        IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken);
-        return ChatStatistics.Compute(sessions, memory, Now(), time.LocalTimeZone);
+        // Independent reads: run them together instead of waiting for one, then the other.
+        Task<IReadOnlyList<ChatSessionDTO>> sessionsTask = repository.GetSessionsAsync(cancellationToken);
+        Task<IReadOnlyDictionary<string, string>> memoryTask = repository.GetMemoryAsync(cancellationToken);
+        await Task.WhenAll(sessionsTask, memoryTask);
+        return ChatStatistics.Compute(sessionsTask.Result, memoryTask.Result, Now(), time.LocalTimeZone);
     }
 
     public async Task SetUserNameAsync(string? name, CancellationToken cancellationToken = default)

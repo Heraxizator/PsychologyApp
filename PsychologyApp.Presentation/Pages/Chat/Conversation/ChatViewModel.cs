@@ -44,6 +44,7 @@ public sealed class ChatViewModel : BaseViewModel
 
     private long? _sessionId;
     private Task? _loading;
+    private bool _isLoading = true;
     private bool _busy;
     private string _title = string.Empty;
     private string _draftText = string.Empty;
@@ -112,6 +113,22 @@ public sealed class ChatViewModel : BaseViewModel
 
     public bool HasQuickReplies => QuickReplies.Count > 0;
 
+    /// <summary>True until the history has loaded once. The page shows a loading state instead of a blank list.</summary>
+    public bool IsLoading
+    {
+        get => _isLoading;
+        private set
+        {
+            if (SetProperty(ref _isLoading, value))
+            {
+                OnPropertyChanged(nameof(HasLoaded));
+            }
+        }
+    }
+
+    public bool HasLoaded => !IsLoading;
+    public string LoadingText => AppStrings.ChatLoadingText;
+
     /// <summary>The send button is lit only when there is something to send.</summary>
     public bool CanSend => !string.IsNullOrWhiteSpace(_draftText);
 
@@ -122,6 +139,8 @@ public sealed class ChatViewModel : BaseViewModel
     public string Placeholder => AppStrings.ChatInputPlaceholder;
     public string SendText => AppStrings.Send;
     public string TypingText => AppStrings.DialogueTyping;
+    public string ScrollToNewestText => AppStrings.ChatScrollToNewest;
+    public string ScrollToOldestText => AppStrings.ChatScrollToOldest;
 
     /// <summary>Loads the history (or starts a new chat) once; safe to call on every appearing, also concurrently. A failed load can be retried.</summary>
     public async Task LoadAsync()
@@ -136,18 +155,28 @@ public sealed class ChatViewModel : BaseViewModel
             _loading = null;
             throw;
         }
+        finally
+        {
+            IsLoading = false;
+        }
     }
 
     private async Task LoadCoreAsync()
     {
         long id = _sessionId ?? (await _chat.StartNewChatAsync(_lifetime.Token)).Session.Id;
-        ChatSessionDTO? session = await _chat.GetChatAsync(id, _lifetime.Token);
+
+        // The session and its history do not depend on each other: read both at once instead of waiting twice.
+        Task<ChatSessionDTO?> sessionTask = _chat.GetChatAsync(id, _lifetime.Token);
+        Task<IReadOnlyList<ChatMessageDTO>> historyTask = _chat.GetMessagesAsync(id, _lifetime.Token);
+        await Task.WhenAll(sessionTask, historyTask);
+
+        ChatSessionDTO? session = sessionTask.Result;
         if (session is null)
         {
             return;
         }
 
-        IReadOnlyList<ChatMessageDTO> history = await _chat.GetMessagesAsync(id, _lifetime.Token);
+        IReadOnlyList<ChatMessageDTO> history = historyTask.Result;
 
         // The state changes only after everything has been read, so a failed load leaves nothing half-done.
         _sessionId = id;
@@ -195,7 +224,8 @@ public sealed class ChatViewModel : BaseViewModel
     public void Close() => _lifetime.Cancel();
 
     protected override void RefreshLocalizedProperties() =>
-        Notify(nameof(Placeholder), nameof(SendText), nameof(TypingText), nameof(StatusText), nameof(OpenProfileText));
+        Notify(nameof(Placeholder), nameof(SendText), nameof(TypingText), nameof(StatusText), nameof(OpenProfileText),
+            nameof(LoadingText), nameof(ScrollToNewestText), nameof(ScrollToOldestText));
 
     private void Run(Func<Task> action)
     {

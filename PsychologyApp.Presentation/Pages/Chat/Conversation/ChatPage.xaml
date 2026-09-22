@@ -6,6 +6,7 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.Chat.Conversation"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:avatar="clr-namespace:PsychologyApp.Presentation.Widgets.CompanionAvatar"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              x:DataType="vm:ChatViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding Title}"
@@ -73,8 +74,10 @@
             x:Name="MessageList"
             Grid.Row="1"
             Margin="12,0"
+            IsVisible="{Binding HasLoaded}"
             ItemsSource="{Binding Messages}"
             SelectionMode="None"
+            Scrolled="OnMessageListScrolled"
             VerticalScrollBarVisibility="Never">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:ChatBubble">
@@ -131,6 +134,69 @@
                 <vm:TypingBubbleView IsVisible="{Binding IsTyping}" IsRunning="{Binding IsTyping}" />
             </CollectionView.Footer>
         </CollectionView>
+
+        <ui:ProgressBarView
+            Grid.Row="1"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsLoading}"
+            IsLoading="{Binding IsLoading}"
+            ProgressText="{Binding LoadingText}" />
+
+        <!-- Jump to the newest or the oldest message. Each appears only while there is somewhere to jump to. -->
+        <VerticalStackLayout
+            Grid.Row="1"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            Margin="0,0,14,14"
+            Spacing="10">
+            <Border
+                x:Name="ScrollToTopButton"
+                IsVisible="False"
+                WidthRequest="42"
+                HeightRequest="42"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 21"
+                Shadow="{AppThemeBinding Light={StaticResource BrandCardShadowLight}, Dark={StaticResource BrandCardShadowDark}}"
+                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
+                SemanticProperties.Description="{Binding ScrollToOldestText}">
+                <Border.Behaviors>
+                    <behaviors:PressFeedbackBehavior />
+                </Border.Behaviors>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnScrollToTopTapped" />
+                </Border.GestureRecognizers>
+                <Label
+                    Text="{mi:Material Icon=KeyboardArrowUp}"
+                    FontSize="22"
+                    TextColor="{DynamicResource Primary}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+            </Border>
+            <Border
+                x:Name="ScrollToBottomButton"
+                IsVisible="False"
+                WidthRequest="42"
+                HeightRequest="42"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 21"
+                Shadow="{AppThemeBinding Light={StaticResource BrandCardShadowLight}, Dark={StaticResource BrandCardShadowDark}}"
+                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
+                SemanticProperties.Description="{Binding ScrollToNewestText}">
+                <Border.Behaviors>
+                    <behaviors:PressFeedbackBehavior />
+                </Border.Behaviors>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnScrollToBottomTapped" />
+                </Border.GestureRecognizers>
+                <Label
+                    Text="{mi:Material Icon=KeyboardArrowDown}"
+                    FontSize="22"
+                    TextColor="{DynamicResource Primary}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+            </Border>
+        </VerticalStackLayout>
 
         <!-- Suggestions and the input bar -->
         <VerticalStackLayout

@@ -12,6 +12,9 @@ public partial class ChatPage : ContentPage
 
     private readonly ChatViewModel _viewModel;
 
+    /// <summary>Whether the bottom of the conversation was on screen at the last scroll event; new messages only pull the view down while this is true.</summary>
+    private bool _isNearBottom = true;
+
     public ChatPage(IChatViewModelFactory viewModelFactory, long? sessionId, INavigation hostNavigation)
     {
         InitializeComponent();
@@ -91,12 +94,94 @@ public partial class ChatPage : ContentPage
         }
     }
 
+    /// <summary>
+    /// Follows new messages to the bottom, but only while the person was already there: reading back through history is
+    /// not interrupted by the companion "typing" a new reply. Sending a message of one's own always follows, and always
+    /// wins. Scrolling is deferred a tick and wrapped defensively: asking Android's CollectionView to scroll to an index
+    /// right after a bulk change (loading history fires one Reset for the whole batch) can hit the list before it has
+    /// finished laying out the new items and crash the native view.
+    /// </summary>
     private void OnMessagesChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
-        int last = _viewModel.Messages.Count - 1;
-        if (last >= 0)
+        if (_viewModel.Messages.Count == 0)
         {
-            MessageList.ScrollTo(last, position: ScrollToPosition.End, animate: e.Action == NotifyCollectionChangedAction.Add && last > 0);
+            return;
+        }
+
+        bool isOwnMessage = e.Action == NotifyCollectionChangedAction.Add
+            && e.NewItems is { Count: > 0 } added
+            && added[^1] is ChatBubble { IsUser: true };
+        if (e.Action == NotifyCollectionChangedAction.Add && !_isNearBottom && !isOwnMessage)
+        {
+            return;
+        }
+
+        bool animate = e.Action == NotifyCollectionChangedAction.Add && _viewModel.Messages.Count > 1;
+        Dispatcher.Dispatch(() => ScrollToBottom(animate));
+    }
+
+    private void OnMessageListScrolled(object? sender, ItemsViewScrolledEventArgs e)
+    {
+        int count = _viewModel.Messages.Count;
+        bool canScrollUp = count > 0 && e.FirstVisibleItemIndex > 0;
+        bool canScrollDown = count > 0 && e.LastVisibleItemIndex >= 0 && e.LastVisibleItemIndex < count - 1;
+        ScrollToTopButton.IsVisible = canScrollUp;
+        ScrollToBottomButton.IsVisible = canScrollDown;
+        _isNearBottom = !canScrollDown;
+    }
+
+    private void OnScrollToTopTapped(object? sender, TappedEventArgs e)
+    {
+        _isNearBottom = false;
+        JumpTo(0, ScrollToPosition.Start, sender);
+    }
+
+    private void OnScrollToBottomTapped(object? sender, TappedEventArgs e)
+    {
+        _isNearBottom = true;
+        JumpTo(_viewModel.Messages.Count - 1, ScrollToPosition.End, sender);
+    }
+
+    private void JumpTo(int index, ScrollToPosition position, object? button)
+    {
+        if (index < 0)
+        {
+            return;
+        }
+
+        try
+        {
+            HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+        }
+        catch (FeatureNotSupportedException)
+        {
+        }
+
+        if (button is VisualElement view)
+        {
+            UiAnimations.SafePulseAsync(view).FireAndForget();
+        }
+
+        SafeScrollTo(index, position, animate: true);
+    }
+
+    private void ScrollToBottom(bool animate) => SafeScrollTo(_viewModel.Messages.Count - 1, ScrollToPosition.End, animate);
+
+    private void SafeScrollTo(int index, ScrollToPosition position, bool animate)
+    {
+        int last = _viewModel.Messages.Count - 1;
+        if (last < 0)
+        {
+            return;
+        }
+
+        try
+        {
+            MessageList.ScrollTo(Math.Clamp(index, 0, last), position: position, animate: animate);
+        }
+        catch (Exception)
+        {
+            // A scroll that Android's list isn't ready for must never crash the chat; the message is safely on screen either way.
         }
     }
 }

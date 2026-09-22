@@ -16,17 +16,28 @@
         <behaviors:PageAnalyticsBehavior />
     </ContentPage.Behaviors>
 
-    <ScrollView VerticalScrollBarVisibility="Never">
+    <Grid RowDefinitions="Auto,*" Margin="{StaticResource LayoutPageMarginThickness}">
+
+        <!-- Kept outside the loading gate below: going back must always work, even while the numbers are still loading. -->
+        <ui:NavigationBarSimpleView
+            Grid.Row="0"
+            TitleText="{Binding Title}"
+            BackCommand="{Binding BackCommand}" />
+
+        <ui:ProgressBarView
+            Grid.Row="1"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsLoading}"
+            IsLoading="{Binding IsLoading}"
+            ProgressText="{Binding LoadingText}" />
+
+    <ScrollView Grid.Row="1" IsVisible="{Binding HasLoaded}" VerticalScrollBarVisibility="Never">
         <VerticalStackLayout
-            Margin="{StaticResource LayoutPageMarginThickness}"
             Spacing="{StaticResource LayoutSpacing}">
             <VerticalStackLayout.Behaviors>
                 <behaviors:StaggerChildrenBehavior />
             </VerticalStackLayout.Behaviors>
-
-            <ui:NavigationBarSimpleView
-                TitleText="{Binding Title}"
-                BackCommand="{Binding BackCommand}" />
 
             <!-- Face, name, status and the numbers -->
             <Border
@@ -36,25 +47,17 @@
                 StrokeShape="RoundRectangle 28">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="{StaticResource Primary}" Offset="0.0" />
+                        <GradientStop Color="{DynamicResource Primary}" Offset="0.0" />
                         <GradientStop Color="#6E56FF" Offset="1.0" />
                     </LinearGradientBrush>
                 </Border.Background>
                 <VerticalStackLayout Spacing="12">
-                    <Grid WidthRequest="140" HeightRequest="140" HorizontalOptions="Center">
-                        <Border
-                            x:Name="Halo"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 70"
-                            BackgroundColor="#33FFFFFF" />
-                        <avatar:CompanionAvatarView
-                            WidthRequest="124"
-                            HeightRequest="124"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"
-                            IsAlive="True"
-                            SemanticProperties.Description="{Binding Title}" />
-                    </Grid>
+                    <avatar:CompanionAvatarView
+                        WidthRequest="124"
+                        HeightRequest="124"
+                        HorizontalOptions="Center"
+                        IsAlive="True"
+                        SemanticProperties.Description="{Binding Title}" />
 
                     <Label
                         Text="{Binding Title}"
@@ -353,4 +356,5 @@
             <BoxView HeightRequest="16" Color="Transparent" />
         </VerticalStackLayout>
     </ScrollView>
+    </Grid>
 </ContentPage>

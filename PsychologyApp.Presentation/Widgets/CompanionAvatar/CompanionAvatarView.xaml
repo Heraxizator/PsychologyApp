@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Widgets.CompanionAvatar.CompanionAvatarView">
+
+    <!--
+        An abstract identity, on purpose: a calm gradient orb with a slow breathing ring, not a cartoon face.
+        A face invites reading expressions into it that were never meant; an orb just says "someone is here".
+    -->
+    <Grid>
+        <Ellipse x:Name="Halo" Opacity="0" Scale="1">
+            <Ellipse.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="{DynamicResource Primary}" Offset="0.0" />
+                    <GradientStop Color="#6E56FF" Offset="1.0" />
+                </LinearGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+
+        <Ellipse>
+            <Ellipse.Fill>
+                <LinearGradientBrush StartPoint="0.1,0" EndPoint="0.9,1">
+                    <GradientStop Color="#6FBBFF" Offset="0.0" />
+                    <GradientStop Color="{DynamicResource Primary}" Offset="0.55" />
+                    <GradientStop Color="#6E56FF" Offset="1.0" />
+                </LinearGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+
+        <Border
+            x:Name="StatusBadge"
+            WidthRequest="15"
+            HeightRequest="15"
+            Margin="0,0,-1,-1"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            StrokeThickness="2.4"
+            Stroke="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
+            BackgroundColor="#34C759"
+            StrokeShape="RoundRectangle 8" />
+    </Grid>
+</ContentView>

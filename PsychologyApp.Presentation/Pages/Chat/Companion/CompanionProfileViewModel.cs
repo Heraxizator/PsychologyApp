@@ -47,6 +47,7 @@ public sealed class CompanionProfileViewModel : BaseViewModel
 
     private CompanionProfile _profile = CompanionProfile.Empty;
     private bool _loaded;
+    private bool _isLoading = true;
 
     public CompanionProfileViewModel(
         IChatService chat,
@@ -112,6 +113,22 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     public bool HasEmotions => Emotions.Count > 0;
     public bool HasHistory => _profile.HasHistory;
 
+    /// <summary>True until the first load has finished. The page shows a loading state instead of a flash of zeroes.</summary>
+    public bool IsLoading
+    {
+        get => _isLoading;
+        private set
+        {
+            if (SetProperty(ref _isLoading, value))
+            {
+                OnPropertyChanged(nameof(HasLoaded));
+            }
+        }
+    }
+
+    public bool HasLoaded => !IsLoading;
+    public string LoadingText => AppStrings.ChatProfileLoadingText;
+
     public string Title => AppStrings.ChatProfileTitle;
     public string OnlineText => AppStrings.ChatProfileOnline;
     public string OfflineText => AppStrings.ChatProfileOffline;
@@ -155,6 +172,7 @@ public sealed class CompanionProfileViewModel : BaseViewModel
 
         NotifyAll();
         _loaded = true;
+        IsLoading = false;
         if (changed)
         {
             ProfileLoaded?.Invoke(this, EventArgs.Empty);
@@ -231,7 +249,7 @@ public sealed class CompanionProfileViewModel : BaseViewModel
         nameof(StatStreakLabel), nameof(TrustTitle), nameof(NameTitle), nameof(NameHint), nameof(NameEditText), nameof(InsightsTitle),
         nameof(TensionTitle), nameof(TensionStartText), nameof(TensionEndText), nameof(PracticesTitle), nameof(PracticesEmptyText),
         nameof(EmotionsTitle), nameof(AboutTitle), nameof(ActionsTitle), nameof(NewChatText), nameof(AllChatsText), nameof(ForgetText),
-        nameof(DeleteAllText));
+        nameof(DeleteAllText), nameof(LoadingText));
 
     private static bool SameNumbers(CompanionProfile a, CompanionProfile b) =>
         a.Chats == b.Chats && a.UserMessages == b.UserMessages && a.Days == b.Days && a.StreakDays == b.StreakDays

@@ -84,7 +84,7 @@ public partial class TodayPracticeRowView : ContentView
     }
 
     public static readonly BindableProperty HasNudgeProperty =
-        BindableProperty.Create(nameof(HasNudge), typeof(bool), typeof(TodayPracticeRowView), false);
+        BindableProperty.Create(nameof(HasNudge), typeof(bool), typeof(TodayPracticeRowView), false, propertyChanged: OnReasonRelevantChanged);
 
     public bool HasNudge
     {
@@ -93,12 +93,32 @@ public partial class TodayPracticeRowView : ContentView
     }
 
     public static readonly BindableProperty ReasonTextProperty =
-        BindableProperty.Create(nameof(ReasonText), typeof(string), typeof(TodayPracticeRowView), string.Empty);
+        BindableProperty.Create(nameof(ReasonText), typeof(string), typeof(TodayPracticeRowView), string.Empty, propertyChanged: OnReasonRelevantChanged);
 
     public string ReasonText
     {
         get => (string)GetValue(ReasonTextProperty);
         set => SetValue(ReasonTextProperty, value);
+    }
+
+    private static readonly BindablePropertyKey HasReasonOnlyPropertyKey =
+        BindableProperty.CreateReadOnly(nameof(HasReasonOnly), typeof(bool), typeof(TodayPracticeRowView), false);
+
+    public static readonly BindableProperty HasReasonOnlyProperty = HasReasonOnlyPropertyKey.BindableProperty;
+
+    /// <summary>The reason line is shown only when there is no nudge: the two never compete for the same row.</summary>
+    public bool HasReasonOnly
+    {
+        get => (bool)GetValue(HasReasonOnlyProperty);
+        private set => SetValue(HasReasonOnlyPropertyKey, value);
+    }
+
+    private static void OnReasonRelevantChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is TodayPracticeRowView view)
+        {
+            view.HasReasonOnly = !view.HasNudge && !string.IsNullOrWhiteSpace(view.ReasonText);
+        }
     }
 
     public static readonly BindableProperty MetaTextProperty =

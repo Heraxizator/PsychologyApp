@@ -31,6 +31,9 @@ public static partial class AppStrings
     public static string ChatHeroNewChat => T("Новый чат", "New chat");
     public static string ChatStatusIdle => T("Собеседник · всё остаётся на вашем телефоне", "Companion · everything stays on your phone");
     public static string ChatError => T("Не удалось отправить сообщение. Попробуйте ещё раз.", "Could not send the message. Please try again.");
+    public static string ChatLoadingText => T("Открываем чат…", "Opening the chat…");
+    public static string ChatScrollToNewest => T("К последним сообщениям", "Jump to newest messages");
+    public static string ChatScrollToOldest => T("К началу разговора", "Jump to the start of the conversation");
 
     // ----- companion profile -----
     public static string ChatProfileTitle => T("Собеседник", "Companion");
@@ -68,4 +71,5 @@ public static partial class AppStrings
     public static string ChatProfileDeleteAllTitle => T("Удалить все чаты?", "Delete all chats?");
     public static string ChatProfileDeleteAllBody => T("Все разговоры будут удалены с устройства без возможности восстановления. Имя и предпочтения сохранятся.", "All conversations will be deleted from this device and cannot be restored. Your name and preferences will stay.");
     public static string ChatProfileConfirm => T("Да", "Yes");
+    public static string ChatProfileLoadingText => T("Считаем вашу статистику…", "Working out your statistics…");
 }
