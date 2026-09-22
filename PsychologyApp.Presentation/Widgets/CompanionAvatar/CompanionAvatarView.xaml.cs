@@ -27,6 +27,13 @@ public partial class CompanionAvatarView : ContentView
         true,
         propertyChanged: (bindable, _, newValue) => ((CompanionAvatarView)bindable).StatusBadge.IsVisible = (bool)newValue);
 
+    public static readonly BindableProperty IconSizeProperty = BindableProperty.Create(
+        nameof(IconSize),
+        typeof(double),
+        typeof(CompanionAvatarView),
+        22.0,
+        propertyChanged: (bindable, _, newValue) => ((CompanionAvatarView)bindable).Icon.IconSize = (double)newValue);
+
     private CancellationTokenSource? _breathing;
 
     public CompanionAvatarView()
@@ -48,6 +55,13 @@ public partial class CompanionAvatarView : ContentView
     {
         get => (bool)GetValue(ShowStatusProperty);
         set => SetValue(ShowStatusProperty, value);
+    }
+
+    /// <summary>Size of the icon at the centre. Scale it with the avatar itself — the default fits a small header avatar.</summary>
+    public double IconSize
+    {
+        get => (double)GetValue(IconSizeProperty);
+        set => SetValue(IconSizeProperty, value);
     }
 
     private void RestartBreathing()

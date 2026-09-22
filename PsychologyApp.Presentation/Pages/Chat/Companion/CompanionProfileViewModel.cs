@@ -33,6 +33,9 @@ public sealed record EmotionRowItem(string Name, string PercentText, double Shar
 
 public sealed record InsightItem(string Text);
 
+/// <summary>One segment of the trust meter: solid once passed, half-lit for the step under way, plain otherwise.</summary>
+public sealed record TrustStepItem(bool IsCompleted, bool IsCurrent);
+
 /// <summary>
 /// The companion's profile: face, level of trust, how the person's tension changed over time, what helped, what they talk about.
 /// Everything is computed from stored chats by <see cref="IChatService.GetProfileAsync"/>; nothing leaves the phone.
@@ -86,17 +89,15 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     public ObservableCollection<EmotionRowItem> Emotions { get; } = [];
     public ObservableCollection<InsightItem> Insights { get; } = [];
     public ObservableCollection<InsightItem> Abilities { get; } = [];
+    public ObservableCollection<TrustStepItem> TrustSteps { get; } = [];
 
     public int Chats => _profile.Chats;
     public int Messages => _profile.UserMessages;
     public int Days => _profile.Days;
     public int Streak => _profile.StreakDays;
 
-    public double TrustProgress => _profile.Trust.Progress;
     public string TrustName => ChatProfileContent.TrustName(_profile.Trust.Index, _language.IsEnglish);
     public string TrustHint => ChatProfileContent.TrustHint(_profile.Trust, _language.IsEnglish);
-    public IReadOnlyList<int> TrustSteps { get; } = Enumerable.Range(0, ChatProfileContent.TrustLevels).ToArray();
-    public int TrustLevel => _profile.Trust.Index;
 
     public bool HasName => _profile.UserName is not null;
     public string NameText => _profile.UserName ?? AppStrings.ChatProfileNameEmpty;
@@ -169,6 +170,11 @@ public sealed class CompanionProfileViewModel : BaseViewModel
             e.Share)));
         Fill(Insights, ChatProfileContent.Insights(fresh, _language.IsEnglish).Select(t => new InsightItem(t)));
         Fill(Abilities, ChatProfileContent.Abilities(_language.IsEnglish).Select(t => new InsightItem(t)));
+        // At the highest level there is no "in progress" step left to half-light; it reads as fully reached instead.
+        bool atMaxTrust = fresh.Trust.MessagesToNext == 0;
+        Fill(TrustSteps, Enumerable.Range(0, ChatProfileContent.TrustLevels).Select(i => new TrustStepItem(
+            IsCompleted: i < fresh.Trust.Index || (i == fresh.Trust.Index && atMaxTrust),
+            IsCurrent: i == fresh.Trust.Index && !atMaxTrust)));
 
         NotifyAll();
         _loaded = true;
@@ -242,7 +248,7 @@ public sealed class CompanionProfileViewModel : BaseViewModel
 
     private void NotifyAll() => Notify(
         nameof(Chats), nameof(Messages), nameof(Days), nameof(Streak),
-        nameof(TrustProgress), nameof(TrustName), nameof(TrustHint), nameof(TrustLevel),
+        nameof(TrustName), nameof(TrustHint),
         nameof(HasName), nameof(NameText), nameof(Since), nameof(Tagline), nameof(PrivacyLine), nameof(Disclaimer),
         nameof(HasTension), nameof(TensionCaption), nameof(HasPractices), nameof(HasNoPractices), nameof(HasEmotions), nameof(HasHistory),
         nameof(Title), nameof(OnlineText), nameof(OfflineText), nameof(StatChatsLabel), nameof(StatMessagesLabel), nameof(StatDaysLabel),

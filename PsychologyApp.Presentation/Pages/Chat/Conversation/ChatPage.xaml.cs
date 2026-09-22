@@ -32,7 +32,17 @@ public partial class ChatPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        _viewModel.OnAppearedAsync().FireAndForget();
+        AppearAsync().FireAndForget();
+    }
+
+    private async Task AppearAsync()
+    {
+        await _viewModel.OnAppearedAsync();
+
+        // Belt and suspenders: the CollectionChanged-driven scroll above should already have landed at the bottom,
+        // but this settles it once more now that the list is guaranteed laid out, in case that first attempt was
+        // too early on a slower device.
+        ScrollToBottom(animate: false);
     }
 
     /// <summary>A message that has just arrived slides up and fades in once; history and recycled rows are left alone.</summary>
