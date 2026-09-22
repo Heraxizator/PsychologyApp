@@ -315,6 +315,26 @@ public sealed class ChatViewModel : BaseViewModel
                 await Task.Delay(HandOverDelayMs, _lifetime.Token);
                 await NavigationService!.GoToCrisisHubAsync();
                 break;
+
+            case { Kind: DialogueActionKind.OpenTests }:
+                await Task.Delay(HandOverDelayMs, _lifetime.Token);
+                await NavigationService!.GoToTestsTabAsync();
+                break;
+
+            case { Kind: DialogueActionKind.OpenSomatic }:
+                await Task.Delay(HandOverDelayMs, _lifetime.Token);
+                await NavigationService!.GoToPhysicsSearchAsync();
+                break;
+
+            case { Kind: DialogueActionKind.OpenPrayers }:
+                await Task.Delay(HandOverDelayMs, _lifetime.Token);
+                await NavigationService!.GoToPrayersTabAsync();
+                break;
+
+            case { Kind: DialogueActionKind.OpenQuotes }:
+                await Task.Delay(HandOverDelayMs, _lifetime.Token);
+                await NavigationService!.GoToQuotesTabAsync();
+                break;
         }
     }
 

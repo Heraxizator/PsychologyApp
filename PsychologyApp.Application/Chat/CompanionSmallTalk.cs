@@ -218,5 +218,25 @@ public static class CompanionSmallTalk
         ? ["Thank you for telling me so much.", "That was a lot to put into words, thank you.", "I read all of it. Thank you for trusting me with it."]
         : ["Спасибо, что так подробно рассказали.", "Это было непросто описать, спасибо вам.", "Прочитано целиком. Спасибо, что доверяете."]);
 
+    // ----- provocation and insults aimed at the companion -----
+
+    /// <summary>
+    /// An insult, a slur or a crude command lands here. No lecture, no scolding, no wounded tone — the companion has no
+    /// body or pride to protect, so it says so plainly, then hands the conversation straight back to the person.
+    /// </summary>
+    public static string Boundary(bool english, Random random) => Pick(random, english
+        ?
+        [
+            "That won't land on me — I'm software, no gender, no body, nothing to offend. If you want to talk for real, I'm here. What's actually going on?",
+            "No hard feelings, I can't be hurt that way. Testing the waters is fine. What's really up?",
+            "Fair enough, sometimes it's tempting to poke at the thing on the other end. I'm not going anywhere. What's actually bothering you?"
+        ]
+        :
+        [
+            "Меня это не заденет — я программа, без тела и без обид. Если захотите поговорить всерьёз, я рядом. Что на самом деле происходит?",
+            "Ничего страшного, проверять границы — это нормально. Обидеть меня так не получится. Что у вас на самом деле случилось?",
+            "Понимаю, иногда хочется зацепить собеседника. Я никуда не денусь. Расскажите, что правда происходит?"
+        ]);
+
     private static string Pick(Random random, string[] variants) => variants[random.Next(variants.Length)];
 }

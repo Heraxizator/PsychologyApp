@@ -82,6 +82,8 @@ public class TestNavigationService(INavigation navigation) : INavigationService
 
     public Task GoToQuotesFavoritesAsync() => Task.CompletedTask;
 
+    public Task GoToPrayersTabAsync() => Task.CompletedTask;
+
     public Task ShowOnboardingAsync() => Task.CompletedTask;
 
     public Task GoToChatListAsync() => Task.CompletedTask;

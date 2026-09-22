@@ -81,8 +81,9 @@ public class CompanionDialogueTests
         CompanionReply reply = Say(Create(), new CompanionState(), "Паническая атака, не могу дышать, сердце колотится");
 
         Assert.Contains(reply.Messages, m => m.Contains("Заземление 5-4-3-2-1"));
-        Assert.Equal(3, reply.QuickReplies.Count);
+        Assert.Equal(4, reply.QuickReplies.Count);
         Assert.Equal("Grounding", reply.QuickReplies[0].Payload);
+        Assert.Contains(reply.QuickReplies, c => c.Payload == "resource:somatic");
         Assert.Equal(ChatQuickReplyKinds.More, reply.QuickReplies[^1].Kind);
     }
 

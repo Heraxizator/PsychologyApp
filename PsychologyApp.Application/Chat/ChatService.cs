@@ -1,3 +1,4 @@
+using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Conversation.Companion;
@@ -59,7 +60,8 @@ public sealed class ChatService(
     ICrisisDetector crisisDetector,
     IUserProgressService progress,
     IChatLanguageProvider language,
-    TimeProvider time) : IChatService
+    TimeProvider time,
+    IQuotContentProvider quotes) : IChatService
 {
     private const int MaxTitleLength = 60;
     private const int MaxNameLength = 30;
@@ -81,7 +83,8 @@ public sealed class ChatService(
         long id = await repository.CreateSessionAsync(DefaultTitle(), now, cancellationToken);
         ChatSessionDTO session = (await repository.GetSessionAsync(id, cancellationToken))!;
 
-        CompanionReply reply = Dialogue().Open(await WithMemoryAsync(new CompanionState(), cancellationToken), previous);
+        CompanionDialogue dialogue = await DialogueAsync(cancellationToken);
+        CompanionReply reply = dialogue.Open(await WithMemoryAsync(new CompanionState(), cancellationToken), previous);
         session.StateJson = reply.State.Serialize();
         IReadOnlyList<ChatMessageDTO> added = await StoreAsync(CompanionMessages(session, reply, now), cancellationToken);
         await repository.UpdateSessionAsync(session, cancellationToken);
@@ -133,7 +136,8 @@ public sealed class ChatService(
         }
 
         DateTime now = Now();
-        CompanionReply reply = Dialogue().FollowUpAfterPractice(state);
+        CompanionDialogue dialogue = await DialogueAsync(cancellationToken);
+        CompanionReply reply = dialogue.FollowUpAfterPractice(state);
         ApplyReply(session, reply, now, firstText: null);
         IReadOnlyList<ChatMessageDTO> added = await StoreAsync(CompanionMessages(session, reply, now), cancellationToken);
         await repository.UpdateSessionAsync(session, cancellationToken);
@@ -228,7 +232,8 @@ public sealed class ChatService(
         CompanionState state = await WithMemoryAsync(CompanionState.Deserialize(session.StateJson), cancellationToken);
         DateTime now = Now();
 
-        CompanionReply reply = Dialogue().Respond(state, input);
+        CompanionDialogue dialogue = await DialogueAsync(cancellationToken);
+        CompanionReply reply = dialogue.Respond(state, input);
         await RememberAsync(state, reply, cancellationToken);
         ApplyReply(session, reply, now, firstText: input is CompanionInput.FreeText ? userText : null);
 
@@ -304,7 +309,10 @@ public sealed class ChatService(
         }).ToList();
     }
 
-    private CompanionDialogue Dialogue() => new(analyzer, crisisDetector, language.IsEnglish, time: time);
+    /// <summary>Builds a dialogue engine with the quote catalog ready for a resource suggestion. The catalog is loaded
+    /// once and cached (<c>CachedQuotContentProvider</c>), so awaiting it on every turn costs nothing after the first.</summary>
+    private async Task<CompanionDialogue> DialogueAsync(CancellationToken cancellationToken) =>
+        new(analyzer, crisisDetector, language.IsEnglish, time: time, quotes: await quotes.LoadAllAsync(cancellationToken));
 
     private DateTime Now() => time.GetUtcNow().UtcDateTime;
 

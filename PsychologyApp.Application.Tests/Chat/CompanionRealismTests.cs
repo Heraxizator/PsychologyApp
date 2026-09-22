@@ -72,6 +72,36 @@ public class SmallTalkClassifierTests
         Assert.True(UtteranceClassifier.IsSadReaction("😭"));
         Assert.False(UtteranceClassifier.IsSadReaction(")))"));
     }
+
+    [Theory]
+    [InlineData("ты педра?")]
+    [InlineData("ты пидор")]
+    [InlineData("ты пидорас")]
+    [InlineData("ты дебил")]
+    [InlineData("ты дура")]
+    [InlineData("иди нахуй")]
+    [InlineData("пошел ты нахуй")]
+    [InlineData("заткнись")]
+    [InlineData("you are an idiot")]
+    [InlineData("fuck you")]
+    public void Insults_and_slurs_aimed_at_the_companion_are_recognised(string text) =>
+        Assert.Equal(Utterance.ProvokesOrInsultsCompanion, UtteranceClassifier.Classify(text, hasFeeling: false));
+
+    [Theory]
+    [InlineData("Какой же я дебил, опять всё испортил")]
+    [InlineData("Мне кажется, я полный придурок")]
+    [InlineData("Начальник вчера обозвал меня идиотом при всех")]
+    [InlineData("Вчера вела себя как настоящая дура на встрече")]
+    public void Self_criticism_and_third_party_insults_stay_statements(string text) =>
+        Assert.Equal(Utterance.Statement, UtteranceClassifier.Classify(text, hasFeeling: false));
+
+    [Theory]
+    [InlineData("Ты гей?")]
+    [InlineData("какой у тебя пол")]
+    [InlineData("сколько тебе лет")]
+    [InlineData("are you gay")]
+    public void Neutral_questions_about_the_companions_identity_are_not_insults(string text) =>
+        Assert.Equal(Utterance.AsksAboutCompanion, UtteranceClassifier.Classify(text, hasFeeling: false));
 }
 
 public class CompanionRealismTests
@@ -394,6 +424,41 @@ public class CompanionRealismTests
         CompanionReply reply = Say(Create(), new CompanionState(), "ок, не хочу больше жить");
 
         Assert.Equal(DialogueActionKind.OpenCrisisHub, reply.Action?.Kind);
+    }
+
+    [Fact]
+    public void An_insult_gets_a_calm_boundary_not_a_lecture_or_a_matching_tone()
+    {
+        CompanionReply reply = Say(Create(), new CompanionState(), "ты педра?");
+
+        Assert.Single(reply.Messages);
+        string message = reply.Messages[0].ToLowerInvariant();
+        Assert.DoesNotContain("нельзя", message);
+        Assert.DoesNotContain("грубо", message);
+        Assert.DoesNotContain("стыдно", message);
+        Assert.Contains(reply.QuickReplies, c => c.Payload == "continue");
+        Assert.Contains(reply.QuickReplies, c => c.Payload == "enough");
+    }
+
+    [Fact]
+    public void An_insult_does_not_derail_a_story_already_in_progress()
+    {
+        CompanionDialogue d = Create();
+        CompanionState state = Say(d, new CompanionState(), "Меня бесит начальник, опять раскритиковал при всех").State;
+
+        CompanionReply reply = Say(d, state, "да ты вообще тупой бесполезный");
+
+        Assert.Equal("Anger", reply.State.Emotion);
+        Assert.Null(reply.Action);
+    }
+
+    [Fact]
+    public void English_provocation_is_answered_calmly_too()
+    {
+        CompanionReply reply = Say(Create(english: true), new CompanionState(), "fuck you, you are useless");
+
+        Assert.Single(reply.Messages);
+        Assert.DoesNotContain("sorry", reply.Messages[0], StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]

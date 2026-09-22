@@ -194,6 +194,18 @@ public sealed class MauiNavigationService : INavigationService
             return Task.CompletedTask;
         });
 
+    public Task GoToPrayersTabAsync() =>
+        NavigationCoordinator.RunAsync(() =>
+        {
+            if (Shell.Current is AppShell appShell)
+            {
+                appShell.MaterializeTab(appShell.PrayersShellTab);
+                appShell.CurrentItem = appShell.PrayersShellTab;
+            }
+
+            return Task.CompletedTask;
+        });
+
     public Task GoToQuotesFavoritesAsync() =>
         NavigationCoordinator.RunAsync(() =>
         {

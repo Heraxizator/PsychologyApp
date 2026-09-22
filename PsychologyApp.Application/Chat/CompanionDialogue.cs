@@ -1,3 +1,4 @@
+using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Conversation.Companion;
 
@@ -38,10 +39,12 @@ public sealed partial class CompanionDialogue(
     ICrisisDetector crisisDetector,
     bool english,
     Random? random = null,
-    TimeProvider? time = null)
+    TimeProvider? time = null,
+    IReadOnlyList<QuotSeed>? quotes = null)
 {
     private readonly Random _random = random ?? Random.Shared;
     private readonly TimeProvider _time = time ?? TimeProvider.System;
+    private readonly IReadOnlyList<QuotSeed> _quotes = quotes ?? [];
 
     private const int HighTension = 8;
     private const int LowTension = 3;
@@ -255,6 +258,12 @@ public sealed partial class CompanionDialogue(
                 state,
                 emotion,
                 theme),
+            Utterance.ProvokesOrInsultsCompanion => Reply(
+                [CompanionSmallTalk.Boundary(english, _random)],
+                [CompanionActContent.Continue(english), CompanionActContent.Enough(english)],
+                state,
+                emotion,
+                theme),
             Utterance.Yes => Reply([CompanionActContent.YesProbe(english, _random)], [], state, emotion, theme),
             Utterance.No => Reply([CompanionActContent.NoProbe(english, _random)], [], state, emotion, theme),
             _ => CompanionReply.Empty(state)
@@ -429,6 +438,22 @@ public sealed partial class CompanionDialogue(
                     theme,
                     calming: true);
 
+            case "resource:test":
+                return new CompanionReply(
+                    [CompanionResourceContent.TestTransition(english)], [], new DialogueAction(DialogueActionKind.OpenTests), state, emotion, theme);
+
+            case "resource:somatic":
+                return new CompanionReply(
+                    [CompanionResourceContent.SomaticTransition(english)], [], new DialogueAction(DialogueActionKind.OpenSomatic), state, emotion, theme);
+
+            case "resource:prayer":
+                return new CompanionReply(
+                    [CompanionResourceContent.PrayerTransition(english)], [], new DialogueAction(DialogueActionKind.OpenPrayers), state, emotion, theme);
+
+            case "resource:quotes":
+                return new CompanionReply(
+                    [CompanionResourceContent.QuotesTransition(english)], [], new DialogueAction(DialogueActionKind.OpenQuotes), state, emotion, theme);
+
             default:
                 return CompanionReply.Empty(state);
         }
@@ -568,6 +593,38 @@ public sealed partial class CompanionDialogue(
         if (suggestions.Count > 1)
         {
             quick.Add(PracticeReply(suggestions[1].ToString(), CompanionContent.AlternativeLabel(suggestions[1], english)));
+        }
+
+        // A complementary resource — a matching quote, the body explorer, a short test, calming audio — offered once per
+        // chat, alongside the practice, never instead of it.
+        if (state.OfferedResource is null)
+        {
+            switch (CompanionResourceSuggester.Suggest(emotion, calming))
+            {
+                case CompanionResourceKind.Quote when CompanionResourceSuggester.PickQuote(_quotes, emotion, _random) is { } quote:
+                    messages.Add(CompanionResourceContent.QuoteLine(quote, english, _random));
+                    quick.Add(CompanionResourceContent.MoreQuotesChip(english));
+                    state = state with { OfferedResource = "quote" };
+                    break;
+
+                case CompanionResourceKind.Somatic:
+                    messages.Add(CompanionResourceContent.SomaticOffer(english));
+                    quick.Add(CompanionResourceContent.SomaticChip(english));
+                    state = state with { OfferedResource = "somatic" };
+                    break;
+
+                case CompanionResourceKind.Test:
+                    messages.Add(CompanionResourceContent.TestOffer(english));
+                    quick.Add(CompanionResourceContent.TestChip(english));
+                    state = state with { OfferedResource = "test" };
+                    break;
+
+                case CompanionResourceKind.Prayer:
+                    messages.Add(CompanionResourceContent.PrayerOffer(english));
+                    quick.Add(CompanionResourceContent.PrayerChip(english));
+                    state = state with { OfferedResource = "prayer" };
+                    break;
+            }
         }
 
         quick.Add(new ChatQuickReply(ChatQuickReplyKinds.More, CompanionContent.MoreLabel(english)));

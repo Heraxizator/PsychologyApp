@@ -82,6 +82,10 @@ public sealed record CompanionState
     /// <summary>The companion has already said "last time this helped you" in this chat.</summary>
     public bool PreferredMentioned { get; init; }
 
+    /// <summary>A complementary resource (test, body check, quote, calming audio) already offered once in this chat,
+    /// so the companion does not repeat the same kind of suggestion at every practice offer.</summary>
+    public string? OfferedResource { get; init; }
+
     public CompanionState WithText(string text) => this with
     {
         Turns = Turns + 1,
@@ -128,6 +132,7 @@ public sealed record CompanionState
             WriteArray(w, "helped", HelpedPractices);
             WriteOptional(w, "preferred", PreferredPractice);
             w.WriteBoolean("preferredMentioned", PreferredMentioned);
+            WriteOptional(w, "offeredResource", OfferedResource);
             w.WriteEndObject();
         }
 
@@ -179,7 +184,8 @@ public sealed record CompanionState
                 LastPractice = Str(r, "lastPractice"),
                 HelpedPractices = Array(r, "helped"),
                 PreferredPractice = Str(r, "preferred"),
-                PreferredMentioned = Bool(r, "preferredMentioned")
+                PreferredMentioned = Bool(r, "preferredMentioned"),
+                OfferedResource = Str(r, "offeredResource")
             };
         }
         catch (Exception ex) when (ex is JsonException or InvalidOperationException)

@@ -15,6 +15,9 @@ public enum Utterance
     AsksForAdvice,
     AsksAboutCompanion,
     ComplainsAboutCompanion,
+    /// <summary>Insults, slurs or a crude command aimed at the companion ("ты дебил", "иди нахуй", "ты пидор").
+    /// One calm boundary, not a lecture and not a matching tone.</summary>
+    ProvokesOrInsultsCompanion,
     /// <summary>"What is a panic attack?", "explain CBT".</summary>
     AsksToExplain,
     /// <summary>"Why do I feel like this?".</summary>
@@ -60,7 +63,9 @@ public static class UtteranceClassifier
     private static readonly string[] AskBotTerms =
     [
         "ты кто", "ты вообще кто", "а ты кто", "вы вообще кто", "кто ты", "ты бот", "ты робот", "ты человек", "ты настоящ", "ты живой", "ты живая", "ты нейросеть", "ты ии", "вы бот", "вы робот", "вы человек", "вы кто", "кто вы",
-        "are you a bot", "are you human", "are you real", "are you a person", "are you an ai", "who are you", "what are you"
+        "ты гей", "ты гетеро", "ты натурал", "ты трансгендер", "ты парень или девушка", "у тебя есть пол", "какой у тебя пол", "ты мужчина или женщина", "ты мальчик или девочка", "сколько тебе лет", "у тебя есть тело",
+        "are you a bot", "are you human", "are you real", "are you a person", "are you an ai", "who are you", "what are you",
+        "are you gay", "are you straight", "are you trans", "what gender are you", "do you have a gender", "how old are you", "do you have a body"
     ];
 
     private static readonly string[] ComplaintTerms =
@@ -68,6 +73,24 @@ public static class UtteranceClassifier
         "ты не понимаешь", "ты меня не понимаешь", "ты ничего не понимаешь", "вы не понимаете", "вы меня не понимаете", "бесполезно", "ерунда какая", "какая ерунда", "тупой бот", "глупый бот",
         "не помогает", "ты тупой", "ты тупая", "толку нет", "you dont understand", "you do not understand", "useless", "this is stupid", "doesnt help", "does not help", "this is pointless"
     ];
+
+    // Aimed at the companion specifically, not at a third party or at themselves: "ты дебил" counts, "какой я дебил" does not.
+    private static readonly string[] InsultPhraseTerms =
+    [
+        "ты дебил", "ты дура", "ты дурак", "ты идиот", "ты идиотка", "ты придурок", "ты придурочная", "ты урод", "ты уродка", "ты сволочь", "ты мудак",
+        "ты гандон", "ты тварь", "ты скотина", "ты ублюдок", "ты долбоеб", "ты конченый", "ты конченная", "ты чмо", "вы дебилы", "вы идиоты", "вы тупые",
+        "you are stupid", "youre stupid", "you are an idiot", "youre an idiot", "you are useless", "youre useless", "you are dumb", "youre dumb", "you are a moron", "youre a moron", "you suck"
+    ];
+
+    // Short, crude commands: essentially never self-referential, so no "ты"/"вы" prefix is needed to stay safe.
+    private static readonly string[] InsultCommandTerms =
+    [
+        "пошел нахуй", "пошла нахуй", "пошел на хуй", "пошла на хуй", "пошел ты нахуй", "пошла ты нахуй", "пошел ты на хуй", "иди нахуй", "иди на хуй", "иди отсюда нахуй", "отъебись", "отвали от меня", "заткнись", "иди в жопу", "иди к черту",
+        "fuck you", "screw you", "go to hell", "shut the fuck up", "piss off"
+    ];
+
+    // Slur forms used as an insult or a provocation, in any phrasing; kept short so they cannot fire inside an unrelated long story.
+    private static readonly string[] IdentitySlurTerms = ["педр", "пидор", "пидр", "пидорас", "пидрил", "гомосек", "fag", "faggot"];
 
     private static readonly string[] AdviceTerms =
     [
@@ -150,6 +173,11 @@ public static class UtteranceClassifier
         if (words <= 6 && ContainsAny(padded, AskBotTerms))
         {
             return Utterance.AsksAboutCompanion;
+        }
+
+        if (words <= 8 && (ContainsAny(padded, InsultPhraseTerms) || ContainsAny(padded, InsultCommandTerms) || (words <= 6 && ContainsAny(padded, IdentitySlurTerms))))
+        {
+            return Utterance.ProvokesOrInsultsCompanion;
         }
 
         if (words <= 6 && ContainsAny(padded, IntroTerms) && TryExtractName(text, out _))

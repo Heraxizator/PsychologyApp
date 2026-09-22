@@ -45,6 +45,7 @@ public interface INavigationService
     Task GoToPracticeTabAsync();
     Task GoToQuotesTabAsync();
     Task GoToQuotesFavoritesAsync();
+    Task GoToPrayersTabAsync();
     Task GoToPracticeCompletionAsync(int streakDays, string? completedItemKey = null, long? sessionResultId = null);
     Task ShowOnboardingAsync();
     Task GoToChatListAsync();

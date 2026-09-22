@@ -21,6 +21,7 @@ public partial class AppShell : Shell
     public ShellContent PracticeShellTab => PracticeTab;
     public ShellContent TestsTab => DetectorTab;
     public ShellContent QuotesShellTab => QuotesTab;
+    public ShellContent PrayersShellTab => CleanerTab;
 
     private static readonly string[] TabRoutes =
     [

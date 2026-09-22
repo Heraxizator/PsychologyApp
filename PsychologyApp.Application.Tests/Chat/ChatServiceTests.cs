@@ -1,4 +1,5 @@
 using Moq;
+using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Chat;
 using PsychologyApp.Application.Conversation;
@@ -123,6 +124,18 @@ public class ChatServiceTests
         public bool IsEnglish { get; } = english;
     }
 
+    private sealed class StubQuotContentProvider : IQuotContentProvider
+    {
+        public Task<IReadOnlyList<QuotSeed>> LoadAllAsync(CancellationToken cancellationToken = default) =>
+            Task.FromResult<IReadOnlyList<QuotSeed>>(
+            [
+                new QuotSeed("Author A", "Grief is love with nowhere to go.", "hope"),
+                new QuotSeed("Author B", "Healing is not linear.", "healing"),
+                new QuotSeed("Author C", "You are worthy of the love you keep giving others.", "self-love"),
+                new QuotSeed("Author D", "General wisdom for a general day.", "general")
+            ]);
+    }
+
     private readonly InMemoryChatRepository _repository = new();
     private readonly Clock _clock = new(new DateTime(2026, 9, 21, 12, 0, 0, DateTimeKind.Utc));
     private readonly Mock<IUserProgressService> _progress = new();
@@ -131,7 +144,7 @@ public class ChatServiceTests
     {
         _progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
-        return new ChatService(_repository, new LexiconSituationAnalyzer(), new KeywordCrisisDetector(), _progress.Object, new Language(english), _clock);
+        return new ChatService(_repository, new LexiconSituationAnalyzer(), new KeywordCrisisDetector(), _progress.Object, new Language(english), _clock, new StubQuotContentProvider());
     }
 
     [Fact]

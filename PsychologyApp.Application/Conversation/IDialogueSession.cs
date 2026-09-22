@@ -3,7 +3,15 @@ namespace PsychologyApp.Application.Conversation;
 public enum DialogueActionKind
 {
     StartTechnique,
-    OpenCrisisHub
+    OpenCrisisHub,
+    /// <summary>Opens the Tests tab so the person can pick a short self-assessment on their own.</summary>
+    OpenTests,
+    /// <summary>Opens the body/psychosomatic explorer.</summary>
+    OpenSomatic,
+    /// <summary>Opens the prayers/calming audio tab.</summary>
+    OpenPrayers,
+    /// <summary>Opens the quotes tab for more like the one just shared.</summary>
+    OpenQuotes
 }
 
 /// <summary>Something the UI must do once the dialogue has said its last words.</summary>
