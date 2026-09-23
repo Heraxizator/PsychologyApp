@@ -117,6 +117,9 @@ public class ChatServiceTests
         public DateTime Utc { get; set; } = start;
 
         public override DateTimeOffset GetUtcNow() => new(Utc, TimeSpan.Zero);
+
+        // Fixed, not the test machine's own zone: "today" must mean the same thing no matter where this test runs.
+        public override TimeZoneInfo LocalTimeZone => TimeZoneInfo.Utc;
     }
 
     private sealed class Language(bool english = false) : IChatLanguageProvider
@@ -144,6 +147,10 @@ public class ChatServiceTests
     {
         _progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
+        _progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+        _progress.Setup(p => p.GetLatestTestResultAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((TestResultDTO?)null);
         return new ChatService(_repository, new LexiconSituationAnalyzer(), new KeywordCrisisDetector(), _progress.Object, new Language(english), _clock, new StubQuotContentProvider());
     }
 
@@ -476,5 +483,89 @@ public class ChatServiceTests
 
         Assert.Empty(await service.GetChatsAsync());
         Assert.Equal("Аня", (await service.GetProfileAsync()).UserName);
+    }
+
+    [Fact]
+    public async Task A_low_mood_logged_today_is_picked_up_by_a_new_chats_greeting()
+    {
+        ChatService service = CreateService();
+        _progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([new MoodEntryDTO { MoodLevel = 2, Note = "тяжёлый день на работе", RecordedAt = _clock.Utc.AddHours(-2) }]);
+
+        ChatTurnResult result = await service.StartNewChatAsync();
+
+        Assert.Contains("тяжёлый день на работе", result.NewMessages[0].Text);
+    }
+
+    [Fact]
+    public async Task Yesterdays_mood_does_not_leak_into_todays_greeting()
+    {
+        ChatService service = CreateService();
+        _progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([new MoodEntryDTO { MoodLevel = 1, Note = "вчера было плохо", RecordedAt = _clock.Utc.AddDays(-1) }]);
+
+        ChatTurnResult result = await service.StartNewChatAsync();
+
+        Assert.DoesNotContain("вчера было плохо", result.NewMessages[0].Text);
+    }
+
+    [Fact]
+    public async Task An_ordinary_mood_today_does_not_change_the_greeting()
+    {
+        ChatService service = CreateService();
+        _progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([new MoodEntryDTO { MoodLevel = 4, RecordedAt = _clock.Utc }]);
+
+        ChatTurnResult result = await service.StartNewChatAsync();
+
+        Assert.Equal(2, result.NewMessages.Count);
+    }
+
+    [Fact]
+    public async Task Tapping_the_journal_chip_writes_a_mood_entry_and_the_action_never_reaches_the_ui()
+    {
+        ChatService service = CreateService();
+        long id = (await service.StartNewChatAsync()).Session.Id;
+        await service.SendTextAsync(id, "Меня бесит начальник, опять раскритиковал при всех");
+        await service.SendQuickReplyAsync(id, new ChatQuickReply(ChatQuickReplyKinds.Rating, "7", "7"));
+        ChatTurnResult thanks = await service.SendTextAsync(id, "Спасибо");
+        ChatQuickReply journalChip = thanks.NewMessages[^1].QuickReplies.First(c => c.Payload == "journal:log");
+
+        ChatTurnResult logged = await service.SendQuickReplyAsync(id, journalChip);
+
+        Assert.Null(logged.Action);
+        _progress.Verify(p => p.RecordMoodAsync(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<DateTime>(), It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    [Fact]
+    public async Task A_recent_stress_test_result_is_referenced_when_the_companion_would_suggest_a_test()
+    {
+        ChatService service = CreateService();
+        _progress.Setup(p => p.GetLatestTestResultAsync(CompanionResourceContent.StressTestId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new TestResultDTO { TestId = "pss10", Summary = "Умеренный стресс", CompletedAt = _clock.Utc.AddDays(-5) });
+        long id = (await service.StartNewChatAsync()).Session.Id;
+        await service.SendTextAsync(id, "Так устала, что уже сил ни на что нет");
+        await service.SendQuickReplyAsync(id, new ChatQuickReply(ChatQuickReplyKinds.Rating, "6", "6"));
+        await service.SendTextAsync(id, "Даже дома продолжаю об этом думать весь вечер");
+
+        ChatTurnResult offer = await service.SendTextAsync(id, "И на следующий день сил всё равно нет совсем");
+
+        Assert.Contains(offer.NewMessages, m => m.Text.Contains("Умеренный стресс"));
+    }
+
+    [Fact]
+    public async Task A_stress_test_result_older_than_a_month_is_not_referenced()
+    {
+        ChatService service = CreateService();
+        _progress.Setup(p => p.GetLatestTestResultAsync(CompanionResourceContent.StressTestId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new TestResultDTO { TestId = "pss10", Summary = "Умеренный стресс", CompletedAt = _clock.Utc.AddDays(-45) });
+        long id = (await service.StartNewChatAsync()).Session.Id;
+        await service.SendTextAsync(id, "Так устала, что уже сил ни на что нет");
+        await service.SendQuickReplyAsync(id, new ChatQuickReply(ChatQuickReplyKinds.Rating, "6", "6"));
+        await service.SendTextAsync(id, "Даже дома продолжаю об этом думать весь вечер");
+
+        ChatTurnResult offer = await service.SendTextAsync(id, "И на следующий день сил всё равно нет совсем");
+
+        Assert.DoesNotContain(offer.NewMessages, m => m.Text.Contains("Умеренный стресс"));
     }
 }

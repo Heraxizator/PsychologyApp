@@ -86,6 +86,10 @@ public sealed record CompanionState
     /// so the companion does not repeat the same kind of suggestion at every practice offer.</summary>
     public string? OfferedResource { get; init; }
 
+    /// <summary>The companion has already logged a mood entry to the journal from this chat, or offered to and been declined
+    /// implicitly by moving on — either way, it does not ask again in the same conversation.</summary>
+    public bool JournalLogged { get; init; }
+
     public CompanionState WithText(string text) => this with
     {
         Turns = Turns + 1,
@@ -133,6 +137,7 @@ public sealed record CompanionState
             WriteOptional(w, "preferred", PreferredPractice);
             w.WriteBoolean("preferredMentioned", PreferredMentioned);
             WriteOptional(w, "offeredResource", OfferedResource);
+            w.WriteBoolean("journalLogged", JournalLogged);
             w.WriteEndObject();
         }
 
@@ -185,7 +190,8 @@ public sealed record CompanionState
                 HelpedPractices = Array(r, "helped"),
                 PreferredPractice = Str(r, "preferred"),
                 PreferredMentioned = Bool(r, "preferredMentioned"),
-                OfferedResource = Str(r, "offeredResource")
+                OfferedResource = Str(r, "offeredResource"),
+                JournalLogged = Bool(r, "journalLogged")
             };
         }
         catch (Exception ex) when (ex is JsonException or InvalidOperationException)

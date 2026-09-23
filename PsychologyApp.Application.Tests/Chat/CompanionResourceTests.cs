@@ -2,6 +2,7 @@ using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Chat;
 using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Conversation.Companion;
+using PsychologyApp.Application.Models;
 using Xunit;
 
 namespace PsychologyApp.Application.Tests.Chat;
@@ -74,8 +75,13 @@ public class CompanionResourceDialogueTests
         new("Author", "Be gentle with the person you are becoming.", "self-love")
     ];
 
-    private static CompanionDialogue Create(bool english = false, IReadOnlyList<QuotSeed>? quotes = null) =>
-        new(new LexiconSituationAnalyzer(), new KeywordCrisisDetector(), english, new Random(3), quotes: quotes ?? Catalog);
+    private static CompanionDialogue Create(
+        bool english = false,
+        IReadOnlyList<QuotSeed>? quotes = null,
+        MoodEntryDTO? todayLowMood = null,
+        TestResultDTO? recentStressTest = null) =>
+        new(new LexiconSituationAnalyzer(), new KeywordCrisisDetector(), english, new Random(3),
+            quotes: quotes ?? Catalog, todayLowMood: todayLowMood, recentStressTest: recentStressTest);
 
     private static CompanionReply Say(CompanionDialogue d, CompanionState state, string text) =>
         d.Respond(state, new CompanionInput.FreeText(text));
@@ -180,5 +186,128 @@ public class CompanionResourceDialogueTests
 
         Assert.Null(reply.State.OfferedResource);
         Assert.NotEmpty(reply.Messages);
+    }
+}
+
+public class CompanionJournalTests
+{
+    private static CompanionDialogue Create(MoodEntryDTO? todayLowMood = null, bool english = false) =>
+        new(new LexiconSituationAnalyzer(), new KeywordCrisisDetector(), english, new Random(3), todayLowMood: todayLowMood);
+
+    private static CompanionReply Say(CompanionDialogue d, CompanionState state, string text) =>
+        d.Respond(state, new CompanionInput.FreeText(text));
+
+    [Fact]
+    public void Opening_with_a_low_mood_already_logged_skips_the_ordinary_greeting()
+    {
+        MoodEntryDTO mood = new() { MoodLevel = 2, RecordedAt = DateTime.UtcNow };
+        CompanionReply reply = Create(mood).Open(new CompanionState(), previous: null);
+
+        Assert.Single(reply.Messages);
+        Assert.Contains("дневник", reply.Messages[0], StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void A_note_left_in_the_journal_is_quoted_back()
+    {
+        MoodEntryDTO mood = new() { MoodLevel = 1, Note = "поругалась с сестрой", RecordedAt = DateTime.UtcNow };
+        CompanionReply reply = Create(mood).Open(new CompanionState(), previous: null);
+
+        Assert.Contains("поругалась с сестрой", reply.Messages[0]);
+    }
+
+    [Fact]
+    public void No_journal_entry_means_the_ordinary_greeting_is_unchanged()
+    {
+        CompanionReply reply = Create().Open(new CompanionState(), previous: null);
+
+        Assert.Equal(2, reply.Messages.Count);
+    }
+
+    [Fact]
+    public void Saying_thanks_offers_to_log_the_journal_once_the_feeling_and_tension_are_known()
+    {
+        CompanionReply reply = Say(Create(), new CompanionState { Turns = 3, Emotion = "Anxiety", LastIntensity = 6 }, "Спасибо");
+
+        Assert.Contains(reply.QuickReplies, c => c.Payload == "journal:log");
+    }
+
+    [Fact]
+    public void The_journal_chip_is_not_offered_without_a_known_feeling()
+    {
+        CompanionReply reply = Say(Create(), new CompanionState { Turns = 3 }, "Спасибо");
+
+        Assert.DoesNotContain(reply.QuickReplies, c => c.Payload == "journal:log");
+    }
+
+    [Fact]
+    public void The_journal_chip_is_not_offered_twice_in_the_same_chat()
+    {
+        CompanionReply reply = Say(
+            Create(),
+            new CompanionState { Turns = 3, Emotion = "Anxiety", LastIntensity = 6, JournalLogged = true },
+            "Спасибо");
+
+        Assert.DoesNotContain(reply.QuickReplies, c => c.Payload == "journal:log");
+    }
+
+    [Fact]
+    public void Tapping_the_journal_chip_logs_a_mood_matched_to_the_tension_and_marks_the_chat_as_logged()
+    {
+        CompanionDialogue d = Create();
+        CompanionState state = new() { Emotion = "Sadness", LastIntensity = 8 };
+
+        CompanionReply reply = d.Respond(state, new CompanionInput.QuickReply(new ChatQuickReply(ChatQuickReplyKinds.Act, "Записать в дневник", "journal:log")));
+
+        Assert.Equal(DialogueActionKind.LogMood, reply.Action?.Kind);
+        Assert.Equal(2, reply.Action!.MoodLevel); // 8/10 tension -> a hard day, near the bottom of the 1..5 scale
+        Assert.Contains("грусть", reply.Action.Note, StringComparison.OrdinalIgnoreCase);
+        Assert.True(reply.State.JournalLogged);
+        Assert.Single(reply.Messages);
+    }
+
+    [Theory]
+    [InlineData(0, 5)]
+    [InlineData(5, 3)]
+    [InlineData(10, 1)]
+    public void Tension_converts_to_the_journals_1_to_5_mood_scale(int tension, int expectedMood) =>
+        Assert.Equal(expectedMood, CompanionResourceContent.IntensityToMoodLevel(tension));
+
+    [Fact]
+    public void A_missing_tension_lands_in_the_middle_of_the_mood_scale() =>
+        Assert.Equal(3, CompanionResourceContent.IntensityToMoodLevel(null));
+}
+
+public class CompanionTestReferenceTests
+{
+    private static CompanionDialogue Create(TestResultDTO? recentStressTest) =>
+        new(new LexiconSituationAnalyzer(), new KeywordCrisisDetector(), english: false, random: new Random(3), recentStressTest: recentStressTest);
+
+    private static CompanionReply Tap(CompanionDialogue d, CompanionState state, string payload) =>
+        d.Respond(state, new CompanionInput.QuickReply(new ChatQuickReply(ChatQuickReplyKinds.Act, "tap", payload)));
+
+    [Fact]
+    public void An_existing_stress_result_is_referenced_instead_of_suggesting_a_fresh_test()
+    {
+        TestResultDTO result = new() { TestId = "pss10", Summary = "Умеренный стресс", CompletedAt = DateTime.UtcNow.AddDays(-3) };
+        CompanionDialogue d = Create(result);
+        CompanionState state = new() { Turns = 2, Emotion = "Overthinking", TurnsSinceOffer = 5, ScaleAsked = true };
+
+        CompanionReply reply = d.Respond(state, new CompanionInput.FreeText("Мысли крутятся по кругу и не дают покоя весь день"));
+
+        Assert.Contains(reply.Messages, m => m.Contains("Умеренный стресс"));
+        Assert.Contains(reply.QuickReplies, c => c.Payload == "resource:test-history");
+        Assert.DoesNotContain(reply.QuickReplies, c => c.Payload == "resource:test");
+    }
+
+    [Fact]
+    public void Tapping_the_test_history_chip_opens_that_specific_tests_history()
+    {
+        CompanionDialogue d = Create(recentStressTest: null);
+
+        CompanionReply reply = Tap(d, new CompanionState { Emotion = "Overthinking" }, "resource:test-history");
+
+        Assert.Equal(DialogueActionKind.OpenTestHistory, reply.Action?.Kind);
+        Assert.Equal(CompanionResourceContent.StressTestId, reply.Action.TestId);
     }
 }

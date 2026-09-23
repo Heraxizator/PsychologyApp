@@ -11,11 +11,25 @@ public enum DialogueActionKind
     /// <summary>Opens the prayers/calming audio tab.</summary>
     OpenPrayers,
     /// <summary>Opens the quotes tab for more like the one just shared.</summary>
-    OpenQuotes
+    OpenQuotes,
+    /// <summary>Opens a specific test's history so the person can compare with an earlier result.</summary>
+    OpenTestHistory,
+    /// <summary>A mood entry should be written to the journal. Handled entirely by ChatService — the tension the person
+    /// already gave the companion becomes the journal's own 1..5 scale, with a short note. Never reaches the UI as a
+    /// navigation instruction.</summary>
+    LogMood
 }
 
 /// <summary>Something the UI must do once the dialogue has said its last words.</summary>
-public sealed record DialogueAction(DialogueActionKind Kind, TechniqueId? TechniqueId = null);
+/// <param name="TestId">Set with <see cref="DialogueActionKind.OpenTestHistory"/>.</param>
+/// <param name="MoodLevel">Set with <see cref="DialogueActionKind.LogMood"/>: 1 (hard day) to 5 (good day).</param>
+/// <param name="Note">Set with <see cref="DialogueActionKind.LogMood"/>: a short, human note of what the entry is about.</param>
+public sealed record DialogueAction(
+    DialogueActionKind Kind,
+    TechniqueId? TechniqueId = null,
+    string? TestId = null,
+    int? MoodLevel = null,
+    string? Note = null);
 
 /// <summary>
 /// A turn-based dialogue the chat UI can drive without knowing whether it is a scripted scenario or the companion.

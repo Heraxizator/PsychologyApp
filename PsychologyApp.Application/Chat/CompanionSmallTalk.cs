@@ -1,4 +1,5 @@
 using PsychologyApp.Application.Conversation.Companion;
+using PsychologyApp.Application.Models;
 
 namespace PsychologyApp.Application.Chat;
 
@@ -237,6 +238,24 @@ public static class CompanionSmallTalk
             "Ничего страшного, проверять границы — это нормально. Обидеть меня так не получится. Что у вас на самом деле случилось?",
             "Понимаю, иногда хочется зацепить собеседника. Я никуда не денусь. Расскажите, что правда происходит?"
         ]);
+
+    // ----- the journal, read at the start of a chat -----
+
+    /// <summary>Opens the chat around a low mood already logged in the journal today, instead of the usual greeting.
+    /// Quotes the person's own note when they left one — the same courtesy as quoting their own words in the chat itself.</summary>
+    public static string JournalReference(MoodEntryDTO mood, bool english, Random random)
+    {
+        if (!string.IsNullOrWhiteSpace(mood.Note))
+        {
+            return english
+                ? $"Hi. I saw today's journal entry: “{mood.Note.Trim()}”. Want to talk about it?"
+                : $"Здравствуйте. Видел(а) сегодняшнюю запись в дневнике: «{mood.Note.Trim()}». Расскажете подробнее?";
+        }
+
+        return Pick(random, english
+            ? ["Hi. Today's journal entry looked heavy. What happened?", "Hello. I noticed today was marked as a hard day in the journal — want to talk about it?"]
+            : ["Здравствуйте. Сегодняшняя запись в дневнике выглядит тяжёлой. Что случилось?", "Привет. Заметил(а), что сегодня в дневнике тяжёлый день — расскажете, что произошло?"]);
+    }
 
     private static string Pick(Random random, string[] variants) => variants[random.Next(variants.Length)];
 }

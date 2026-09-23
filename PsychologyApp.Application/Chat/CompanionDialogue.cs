@@ -1,6 +1,7 @@
 using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Conversation.Companion;
+using PsychologyApp.Application.Models;
 
 namespace PsychologyApp.Application.Chat;
 
@@ -40,11 +41,20 @@ public sealed partial class CompanionDialogue(
     bool english,
     Random? random = null,
     TimeProvider? time = null,
-    IReadOnlyList<QuotSeed>? quotes = null)
+    IReadOnlyList<QuotSeed>? quotes = null,
+    MoodEntryDTO? todayLowMood = null,
+    TestResultDTO? recentStressTest = null)
 {
     private readonly Random _random = random ?? Random.Shared;
     private readonly TimeProvider _time = time ?? TimeProvider.System;
     private readonly IReadOnlyList<QuotSeed> _quotes = quotes ?? [];
+
+    /// <summary>Today's journal entry, when it was a low one (mood 1 or 2) — the greeting can gently pick up on it. Null on every ordinary day.</summary>
+    private readonly MoodEntryDTO? _todayLowMood = todayLowMood;
+
+    /// <summary>The person's most recent stress self-assessment, when it is recent enough to still be relevant, so an offered test
+    /// mentions "you already have one from last week" instead of blindly suggesting a fresh one.</summary>
+    private readonly TestResultDTO? _recentStressTest = recentStressTest;
 
     private const int HighTension = 8;
     private const int LowTension = 3;
@@ -54,9 +64,21 @@ public sealed partial class CompanionDialogue(
     private const int RememberedPrefixLength = 80;
     private const int LongMessageWords = 30;
 
-    /// <summary>First messages of a new chat. With a previous chat on record the companion remembers it and asks how things are now.</summary>
+    /// <summary>First messages of a new chat. With a previous chat on record the companion remembers it and asks how things are now.
+    /// A low mood already logged in the journal today takes priority over both: no point asking how things are when the day already said so.</summary>
     public CompanionReply Open(CompanionState state, ChatSessionDTO? previous)
     {
+        if (_todayLowMood is { } mood)
+        {
+            return WithPending(new CompanionReply(
+                [CompanionSmallTalk.JournalReference(mood, english, _random)],
+                [],
+                null,
+                state,
+                CompanionEmotion.Unknown,
+                null));
+        }
+
         if (previous is { MessageCount: >= 2 } && !string.IsNullOrWhiteSpace(previous.Emotion) && previous.Emotion != nameof(CompanionEmotion.Unknown))
         {
             int days = (int)(_time.GetUtcNow().UtcDateTime - previous.UpdatedAt).TotalDays;
@@ -241,8 +263,11 @@ public sealed partial class CompanionDialogue(
             Utterance.AsksToRepeat => Reply([CompanionSmallTalk.Repeat(previous.LastQuestion, english, _random)], [], state, emotion, theme),
             Utterance.SkipsQuestion => AskNextQuestion(state, [CompanionSmallTalk.Skipped(english, _random)], emotion, theme),
             Utterance.Greeting => Reply([CompanionSmallTalk.GreetingReply(Hour(), english, _random, state.UserName)], [], state, emotion, theme),
-            Utterance.Thanks => Reply([CompanionSmallTalk.Thanks(state.UserName, english)], [CompanionActContent.Continue(english), CompanionActContent.Enough(english)], state, emotion, theme),
-            Utterance.Goodbye => Reply([CompanionSmallTalk.Goodbye(state.UserName, english)], [], state, emotion, theme),
+            Utterance.Thanks => Reply(
+                [CompanionSmallTalk.Thanks(state.UserName, english)],
+                [CompanionActContent.Continue(english), CompanionActContent.Enough(english), .. JournalChipIfFitting(state, emotion)],
+                state, emotion, theme),
+            Utterance.Goodbye => Reply([CompanionSmallTalk.Goodbye(state.UserName, english)], JournalChipIfFitting(state, emotion), state, emotion, theme),
             Utterance.DontKnow => Reply([CompanionActContent.DontKnow(english)], EmotionReplies(), state with { UnknownStreak = 0 }, emotion, theme),
             Utterance.RefusesToTalk => Reply(
                 [CompanionActContent.Refuses(english)],
@@ -454,6 +479,28 @@ public sealed partial class CompanionDialogue(
                 return new CompanionReply(
                     [CompanionResourceContent.QuotesTransition(english)], [], new DialogueAction(DialogueActionKind.OpenQuotes), state, emotion, theme);
 
+            case "resource:test-history":
+                return new CompanionReply(
+                    [CompanionResourceContent.TestTransition(english)],
+                    [],
+                    new DialogueAction(DialogueActionKind.OpenTestHistory, TestId: CompanionResourceContent.StressTestId),
+                    state,
+                    emotion,
+                    theme);
+
+            case "journal:log":
+                int? intensity = state.LastIntensity ?? state.FirstIntensity;
+                return new CompanionReply(
+                    [CompanionResourceContent.JournalLoggedMessage(english)],
+                    [],
+                    new DialogueAction(
+                        DialogueActionKind.LogMood,
+                        MoodLevel: CompanionResourceContent.IntensityToMoodLevel(intensity),
+                        Note: CompanionResourceContent.JournalNote(emotion, english)),
+                    state with { JournalLogged = true },
+                    emotion,
+                    theme);
+
             default:
                 return CompanionReply.Empty(state);
         }
@@ -613,6 +660,12 @@ public sealed partial class CompanionDialogue(
                     state = state with { OfferedResource = "somatic" };
                     break;
 
+                case CompanionResourceKind.Test when _recentStressTest is { } test:
+                    messages.Add(CompanionResourceContent.TestResultOffer(test, _time.GetUtcNow().UtcDateTime, english));
+                    quick.Add(CompanionResourceContent.TestHistoryChip(english));
+                    state = state with { OfferedResource = "test" };
+                    break;
+
                 case CompanionResourceKind.Test:
                     messages.Add(CompanionResourceContent.TestOffer(english));
                     quick.Add(CompanionResourceContent.TestChip(english));
@@ -652,6 +705,13 @@ public sealed partial class CompanionDialogue(
 
     private static ChatQuickReply PracticeReply(string techniqueId, string label) =>
         new(ChatQuickReplyKinds.Practice, label, techniqueId);
+
+    /// <summary>Offers to log the conversation to the journal — once per chat, and only once there is something to log
+    /// (a recognised feeling with a tension value).</summary>
+    private IReadOnlyList<ChatQuickReply> JournalChipIfFitting(CompanionState state, CompanionEmotion emotion) =>
+        !state.JournalLogged && emotion != CompanionEmotion.Unknown && (state.LastIntensity ?? state.FirstIntensity) is not null
+            ? [CompanionResourceContent.JournalChip(english)]
+            : [];
 
     private static readonly IReadOnlyList<ChatQuickReply> RatingChips = Enumerable.Range(0, 11)
         .Select(n => n.ToString(System.Globalization.CultureInfo.InvariantCulture))

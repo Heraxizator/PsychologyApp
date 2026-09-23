@@ -335,6 +335,11 @@ public sealed class ChatViewModel : BaseViewModel
                 await Task.Delay(HandOverDelayMs, _lifetime.Token);
                 await NavigationService!.GoToQuotesTabAsync();
                 break;
+
+            case { Kind: DialogueActionKind.OpenTestHistory, TestId: { } testId }:
+                await Task.Delay(HandOverDelayMs, _lifetime.Token);
+                await NavigationService!.GoToTestHistoryAsync(testId, AppStrings.ChatStressTestTitle);
+                break;
         }
     }
 

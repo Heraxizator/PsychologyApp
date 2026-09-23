@@ -2,6 +2,7 @@ using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Conversation.Companion;
+using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
 
 namespace PsychologyApp.Application.Chat;
@@ -65,6 +66,8 @@ public sealed class ChatService(
 {
     private const int MaxTitleLength = 60;
     private const int MaxNameLength = 30;
+    private const int LowMoodLevel = 2;
+    private const int StressTestRelevantDays = 30;
 
     public async Task<ChatTurnResult> StartNewChatAsync(CancellationToken cancellationToken = default)
     {
@@ -83,7 +86,7 @@ public sealed class ChatService(
         long id = await repository.CreateSessionAsync(DefaultTitle(), now, cancellationToken);
         ChatSessionDTO session = (await repository.GetSessionAsync(id, cancellationToken))!;
 
-        CompanionDialogue dialogue = await DialogueAsync(cancellationToken);
+        CompanionDialogue dialogue = await DialogueAsync(cancellationToken, includeTodayMood: true);
         CompanionReply reply = dialogue.Open(await WithMemoryAsync(new CompanionState(), cancellationToken), previous);
         session.StateJson = reply.State.Serialize();
         IReadOnlyList<ChatMessageDTO> added = await StoreAsync(CompanionMessages(session, reply, now), cancellationToken);
@@ -246,6 +249,13 @@ public sealed class ChatService(
         IReadOnlyList<ChatMessageDTO> added = await StoreAsync(pending, cancellationToken);
         await repository.UpdateSessionAsync(session, cancellationToken);
 
+        // Logging to the journal is a side effect the companion carries out itself; the UI never sees it as a navigation instruction.
+        if (reply.Action is { Kind: DialogueActionKind.LogMood, MoodLevel: { } moodLevel })
+        {
+            await progress.RecordMoodAsync(moodLevel, reply.Action.Note, now, cancellationToken);
+            return new ChatTurnResult(session, added, null);
+        }
+
         return new ChatTurnResult(session, added, reply.Action);
     }
 
@@ -309,10 +319,43 @@ public sealed class ChatService(
         }).ToList();
     }
 
-    /// <summary>Builds a dialogue engine with the quote catalog ready for a resource suggestion. The catalog is loaded
-    /// once and cached (<c>CachedQuotContentProvider</c>), so awaiting it on every turn costs nothing after the first.</summary>
-    private async Task<CompanionDialogue> DialogueAsync(CancellationToken cancellationToken) =>
-        new(analyzer, crisisDetector, language.IsEnglish, time: time, quotes: await quotes.LoadAllAsync(cancellationToken));
+    /// <summary>
+    /// Builds a dialogue engine with everything it might reference ready in advance: the quote catalog (cached after the
+    /// first load), a recent stress self-assessment if there is one, and — only when opening a chat, since nowhere else
+    /// needs it — today's journal entry if it was a low one.
+    /// </summary>
+    private async Task<CompanionDialogue> DialogueAsync(CancellationToken cancellationToken, bool includeTodayMood = false)
+    {
+        Task<IReadOnlyList<QuotSeed>> quotesTask = quotes.LoadAllAsync(cancellationToken);
+        Task<TestResultDTO?> stressTestTask = progress.GetLatestTestResultAsync(CompanionResourceContent.StressTestId, cancellationToken);
+        Task<IReadOnlyList<MoodEntryDTO>> moodsTask = includeTodayMood
+            ? progress.GetRecentMoodsAsync(3, cancellationToken)
+            : Task.FromResult<IReadOnlyList<MoodEntryDTO>>([]);
+        await Task.WhenAll(quotesTask, stressTestTask, moodsTask);
+
+        DateTime now = Now();
+        TestResultDTO? stressTest = stressTestTask.Result is { } result && (now - result.CompletedAt).TotalDays <= StressTestRelevantDays
+            ? result
+            : null;
+        MoodEntryDTO? todayLowMood = moodsTask.Result.FirstOrDefault(m => m.MoodLevel <= LowMoodLevel && IsLocalToday(m.RecordedAt, now));
+
+        return new(
+            analyzer,
+            crisisDetector,
+            language.IsEnglish,
+            time: time,
+            quotes: quotesTask.Result,
+            todayLowMood: todayLowMood,
+            recentStressTest: stressTest);
+    }
+
+    private bool IsLocalToday(DateTime recordedAtUtc, DateTime nowUtc)
+    {
+        TimeZoneInfo zone = time.LocalTimeZone;
+        DateOnly recordedDay = DateOnly.FromDateTime(TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(recordedAtUtc, DateTimeKind.Utc), zone));
+        DateOnly today = DateOnly.FromDateTime(TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(nowUtc, DateTimeKind.Utc), zone));
+        return recordedDay == today;
+    }
 
     private DateTime Now() => time.GetUtcNow().UtcDateTime;
 
