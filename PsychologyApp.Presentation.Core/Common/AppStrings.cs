@@ -288,6 +288,9 @@ public static partial class AppStrings
     public static string PoleNumber(int number) => T($"Полюс №{number}", $"Pole #{number}");
     public static string RecordNumber(int number) => T($"Запись №{number}", $"Entry #{number}");
     public static string PracticeEntryCount(int count) => T($"Записей: {count}", $"{count} entries");
+    public static string TechniqueStepProgress(int step, int total) => T($"Шаг {step} из {total}", $"Step {step} of {total}");
+    public static string TechniqueStepBack => T("Назад", "Back");
+    public static string TechniqueStepNext => T("Далее", "Next");
     public static string ProverbLabel => T("Пословица", "Proverb");
     public static string QuoteAddFavoriteHint => T("Добавить в избранное", "Add to favorites");
     public static string QuoteCopyHint => T("Копировать цитату", "Copy quote");

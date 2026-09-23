@@ -40,5 +40,6 @@ public partial class TechniqueSessionViewModel : BaseViewModel
         BackCommand = new AsyncCommand(GoBackAsync);
         CompleteCommand = new AsyncCommand(CompleteSessionAsync);
         Finish = CompleteCommand;
+        InitializeWizardCommands();
     }
 }
