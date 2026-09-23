@@ -25,7 +25,11 @@ public partial class PaperListViewModel
             _sessionStartedAt,
             TryGetPreIntensity());
 
-    private void SetCollection(bool visible) => IsFull = visible;
+    private void SetCollection(bool visible)
+    {
+        IsFull = visible;
+        OnPropertyChanged(nameof(EntryCountText));
+    }
 
     private void ToAdd(object obj)
     {
@@ -40,6 +44,8 @@ public partial class PaperListViewModel
             Id = AppStrings.RecordNumber(PapersObservableCollection.Count + 1),
             Text = Text
         });
+        OnPropertyChanged(nameof(EntryCountText));
+        TechniqueEntryFeedback.PlayAddFeedback();
 
         if (_clearTextAfterAdd)
         {

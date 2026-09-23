@@ -19,6 +19,11 @@
                     TapCommand="{Binding AddCommand}" />
             </StackLayout>
         </Border>
+        <Label
+            Text="{Binding EntryCountText}"
+            Style="{StaticResource CaptionStyle}"
+            IsVisible="{Binding IsFull}"
+            Margin="{StaticResource SectionTopMargin}" />
         <StackLayout
             x:Name="PaperItemsStack"
             Margin="{StaticResource SectionTopMargin}"

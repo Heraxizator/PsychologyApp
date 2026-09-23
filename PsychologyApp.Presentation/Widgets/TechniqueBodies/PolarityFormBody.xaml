@@ -16,6 +16,10 @@
                     TapCommand="{Binding Add}" />
             </StackLayout>
         </Border>
+        <Label
+            Text="{Binding EntryCountText}"
+            Style="{StaticResource CaptionStyle}"
+            IsVisible="{Binding IsFull}" />
         <StackLayout x:Name="PolarityItemsStack" IsVisible="{Binding IsFull}" Spacing="8" BindableLayout.ItemsSource="{Binding polarities}">
             <BindableLayout.ItemTemplate>
                 <DataTemplate>

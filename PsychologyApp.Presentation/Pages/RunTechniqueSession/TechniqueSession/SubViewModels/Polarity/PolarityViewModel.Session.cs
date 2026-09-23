@@ -15,7 +15,11 @@ public partial class PolarityViewModel
                 Positive = item.Positive,
                 Negative = item.Negative
             },
-            hasItems => IsFull = hasItems);
+            hasItems =>
+            {
+                IsFull = hasItems;
+                OnPropertyChanged(nameof(EntryCountText));
+            });
 
     private Task SaveDraftAsync() =>
         _draftCoordinator.SaveAsync(
@@ -48,6 +52,7 @@ public partial class PolarityViewModel
             IsFull = false;
         }
 
+        OnPropertyChanged(nameof(EntryCountText));
         SaveDraftAsync().FireAndForget();
     }
 
@@ -69,6 +74,8 @@ public partial class PolarityViewModel
         Polarity = item;
         Negative = string.Empty;
         Positive = string.Empty;
+        OnPropertyChanged(nameof(EntryCountText));
+        TechniqueEntryFeedback.PlayAddFeedback();
         SaveDraftAsync().FireAndForget();
     }
 }

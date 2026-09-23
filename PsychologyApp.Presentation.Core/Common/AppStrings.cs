@@ -287,6 +287,7 @@ public static partial class AppStrings
     public static string SecondPolarityLabel => T("Вторая полярность", "Second polarity");
     public static string PoleNumber(int number) => T($"Полюс №{number}", $"Pole #{number}");
     public static string RecordNumber(int number) => T($"Запись №{number}", $"Entry #{number}");
+    public static string PracticeEntryCount(int count) => T($"Записей: {count}", $"{count} entries");
     public static string ProverbLabel => T("Пословица", "Proverb");
     public static string QuoteAddFavoriteHint => T("Добавить в избранное", "Add to favorites");
     public static string QuoteCopyHint => T("Копировать цитату", "Copy quote");

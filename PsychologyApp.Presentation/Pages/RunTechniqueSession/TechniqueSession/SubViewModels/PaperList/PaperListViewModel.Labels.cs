@@ -11,11 +11,16 @@ public partial class PaperListViewModel
         ? Entries[0].Title
         : AppStrings.ConcernLabel;
 
+    public string EntryCountText => PapersObservableCollection.Count == 0
+        ? string.Empty
+        : AppStrings.PracticeEntryCount(PapersObservableCollection.Count);
+
     protected override void OnTechniqueContentChanged()
     {
         OnPropertyChanged(nameof(ThoughtFieldLabel));
         OnPropertyChanged(nameof(ThoughtPlaceholder));
         OnPropertyChanged(nameof(RepeatButtonText));
         OnPropertyChanged(nameof(ConcernFieldLabel));
+        OnPropertyChanged(nameof(EntryCountText));
     }
 }
