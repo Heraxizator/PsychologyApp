@@ -25,6 +25,7 @@ public sealed class CrisisHubViewModel : BaseViewModel
         CallEmergencyCommand = new AsyncCommand(() => DialAsync(AppStrings.CrisisHubEmergencyNumber));
         RecheckCommand = new AsyncCommand(() => _navigationService.GoToRiskCheckAsync(AppStrings.RiskCheckSourceManual));
         ContinueSoftCommand = new AsyncCommand(ContinueSoftAsync);
+        OpenSafetyPlanCommand = new AsyncCommand(() => _navigationService.GoToSafetyPlanAsync());
         LoadAsync().FireAndForget();
     }
 
@@ -47,6 +48,8 @@ public sealed class CrisisHubViewModel : BaseViewModel
     public string RecheckText => AppStrings.CrisisHubRecheck;
     public string ContinueSoftText => AppStrings.CrisisHubContinueSoft;
     public string SpecialistHint => AppStrings.CrisisHubSpecialistHint;
+    public string SafetyPlanLinkTitle => AppStrings.CrisisHubSafetyPlanLinkTitle;
+    public string SafetyPlanLinkSubtitle => AppStrings.CrisisHubSafetyPlanLinkSubtitle;
 
     private bool _isRed;
     public bool IsRed
@@ -69,6 +72,7 @@ public sealed class CrisisHubViewModel : BaseViewModel
     public ICommand CallEmergencyCommand { get; }
     public ICommand RecheckCommand { get; }
     public ICommand ContinueSoftCommand { get; }
+    public ICommand OpenSafetyPlanCommand { get; }
 
     protected override void RefreshLocalizedProperties()
     {
@@ -92,6 +96,8 @@ public sealed class CrisisHubViewModel : BaseViewModel
             nameof(RecheckText),
             nameof(ContinueSoftText),
             nameof(SpecialistHint),
+            nameof(SafetyPlanLinkTitle),
+            nameof(SafetyPlanLinkSubtitle),
             nameof(ShowContinueSoft));
     }
 

@@ -37,6 +37,7 @@ public partial class AppShell : Shell
     private readonly IPracticeReminderCoordinator _practiceReminderCoordinator;
     private readonly IQuoteReminderCoordinator _quoteReminderCoordinator;
     private readonly IMoodReminderCoordinator _moodReminderCoordinator;
+    private readonly IChatReminderCoordinator _chatReminderCoordinator;
     private readonly ILogger<AppShell> _logger;
     private readonly bool[] _tabsMaterialized = new bool[5];
     private bool _lazyTabsReady;
@@ -47,6 +48,7 @@ public partial class AppShell : Shell
         IPracticeReminderCoordinator practiceReminderCoordinator,
         IQuoteReminderCoordinator quoteReminderCoordinator,
         IMoodReminderCoordinator moodReminderCoordinator,
+        IChatReminderCoordinator chatReminderCoordinator,
         ILogger<AppShell> logger)
     {
         _pageFactory = pageFactory;
@@ -54,6 +56,7 @@ public partial class AppShell : Shell
         _practiceReminderCoordinator = practiceReminderCoordinator;
         _quoteReminderCoordinator = quoteReminderCoordinator;
         _moodReminderCoordinator = moodReminderCoordinator;
+        _chatReminderCoordinator = chatReminderCoordinator;
         _logger = logger;
         InitializeComponent();
         ApplyLocalization();
@@ -430,7 +433,8 @@ public partial class AppShell : Shell
                 await Task.WhenAll(
                     _practiceReminderCoordinator.SyncAsync(),
                     _quoteReminderCoordinator.SyncAsync(),
-                    _moodReminderCoordinator.SyncAsync()).ConfigureAwait(false);
+                    _moodReminderCoordinator.SyncAsync(),
+                    _chatReminderCoordinator.SyncAsync()).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

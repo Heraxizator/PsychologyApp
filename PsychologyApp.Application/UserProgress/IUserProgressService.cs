@@ -8,6 +8,7 @@ public interface IUserProgressService
     Task<TestResultDTO?> GetLatestTestResultAsync(string testId, CancellationToken cancellationToken = default);
     Task<TestResultDTO?> GetMostRecentTestResultAsync(TimeSpan within, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<TestResultDTO>> GetTestResultHistoryAsync(string testId, int limit = 20, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<TestResultDTO>> GetAllTestResultsAsync(int limit = 10000, CancellationToken cancellationToken = default);
     Task<IReadOnlyDictionary<string, TestResultDTO>> GetLatestTestResultsAsync(IReadOnlyList<string> testIds, CancellationToken cancellationToken = default);
     Task<IReadOnlyDictionary<string, int>> GetTestResultCountsAsync(IReadOnlyList<string> testIds, CancellationToken cancellationToken = default);
     Task<long> CountTestResultsAsync(CancellationToken cancellationToken = default);

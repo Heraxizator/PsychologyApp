@@ -20,6 +20,7 @@ using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.Techniques;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfilePracticeHistory;
+using PsychologyApp.Presentation.Pages.ManageProfile.ProfileDataBackup;
 using PsychologyApp.Presentation.Pages.ManageJournal.Journal;
 using PsychologyApp.Presentation.Pages.ManageJournal.JournalOverview;
 using PsychologyApp.Presentation.Pages.ManageJournal.JournalTimeline;
@@ -33,6 +34,7 @@ using PsychologyApp.Presentation.Pages.PlayMusic.MusicPlayer;
 using PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
 using PsychologyApp.Presentation.Pages.ClinicalCare.CrisisHub;
 using PsychologyApp.Presentation.Pages.ClinicalCare.RiskCheck;
+using PsychologyApp.Presentation.Pages.ClinicalCare.SafetyPlan;
 
 namespace PsychologyApp.Presentation.App.Routes;
 
@@ -46,6 +48,7 @@ public interface IPageFactory
     QuotePage CreateQuotePage();
     UserPage CreateUserPage();
     PracticeHistoryPage CreatePracticeHistoryPage();
+    DataBackupPage CreateDataBackupPage();
     JournalPage CreateJournalPage();
     JournalOverviewPage CreateJournalOverviewPage();
     JournalTimelinePage CreateJournalTimelinePage();
@@ -73,4 +76,5 @@ public interface IPageFactory
     CompanionProfilePage CreateCompanionProfilePage(INavigation hostNavigation);
     CrisisHubPage CreateCrisisHubPage();
     RiskCheckPage CreateRiskCheckPage(string source);
+    SafetyPlanPage CreateSafetyPlanPage();
 }

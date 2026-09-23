@@ -41,6 +41,12 @@ public class MainActivity : MauiAppCompatActivity
             return;
         }
 
+        if (string.Equals(intent.Action, ChatReminderConstants.ActionOpenFromNotification, StringComparison.Ordinal))
+        {
+            ChatReminderTapHandler.Handle();
+            return;
+        }
+
         if (!string.Equals(intent.Action, PracticeReminderConstants.ActionOpenFromNotification, StringComparison.Ordinal))
         {
             return;

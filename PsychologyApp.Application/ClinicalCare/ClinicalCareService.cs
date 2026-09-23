@@ -262,6 +262,21 @@ public sealed class ClinicalCareService(
         CancellationToken cancellationToken = default) =>
         repository.GetRecentEscalationsAsync(limit, cancellationToken);
 
+    public async Task<SafetyPlanDTO> GetSafetyPlanAsync(CancellationToken cancellationToken = default) =>
+        await repository.GetSafetyPlanAsync(cancellationToken) ?? new SafetyPlanDTO();
+
+    public Task SaveSafetyPlanAsync(SafetyPlanDTO plan, CancellationToken cancellationToken = default) =>
+        repository.SaveSafetyPlanAsync(
+            new SafetyPlanDTO
+            {
+                WarningSigns = plan.WarningSigns,
+                CopingStrategies = plan.CopingStrategies,
+                Contacts = plan.Contacts,
+                Reasons = plan.Reasons,
+                UpdatedAt = DateTime.UtcNow
+            },
+            cancellationToken);
+
     private static TherapyProgramType ResolveProgram(string concern) =>
         concern switch
         {

@@ -935,6 +935,10 @@ public static partial class AppStrings
     public static string SettingsMoodRemindersLabel => T("Напоминать о check-in", "Remind me to check in");
     public static string SettingsMoodReminderHourLabel => T("Время check-in", "Check-in time");
     public static string SettingsMoodReminderHourPickerTitle => T("Время", "Time");
+    public static string SettingsChatSection => T("Собеседник", "Companion");
+    public static string SettingsChatRemindersLabel => T("Напоминать о разговоре", "Remind me to talk");
+    public static string SettingsChatReminderHourLabel => T("Время напоминания", "Reminder time");
+    public static string SettingsChatReminderHourPickerTitle => T("Время", "Time");
     public static string QuoteReminderTitle => T("Цитата дня", "Quote of the day");
     public static string QuoteReminderBody => T(
         "Откройте приложение и прочитайте мысль дня.",
@@ -1029,6 +1033,55 @@ public static partial class AppStrings
     public static string CrisisHubSpecialistHint => T(
         "Рекомендуем обратиться к психологу или врачу. Самопомощь подходит для лёгких и умеренных состояний.",
         "Please consider a psychologist or doctor. Self-help fits mild to moderate states.");
+    public static string DataBackupTitle => T("Данные и резервная копия", "Data & backup");
+    public static string DataBackupLead => T(
+        "Все данные хранятся только на этом устройстве. Сделайте копию, чтобы не потерять их.",
+        "All data stays on this device only. Make a backup so you don't lose it.");
+    public static string DataBackupExportTitle => T("Экспортировать резервную копию", "Export a backup");
+    public static string DataBackupExportSubtitle => T(
+        "Файл со всеми чатами, записями настроения, тестами и практиками.",
+        "A file with all chats, mood entries, tests and practice history.");
+    public static string DataBackupImportTitle => T("Восстановить из копии", "Restore from a backup");
+    public static string DataBackupImportSubtitle => T(
+        "Добавит данные из выбранного файла резервной копии.",
+        "Adds the data from the chosen backup file.");
+    public static string DataBackupSummaryTitle => T("Сводка для специалиста", "Summary for a specialist");
+    public static string DataBackupSummarySubtitle => T(
+        "Текстовый файл за последние 30 дней — можно отправить психологу или врачу.",
+        "A text file covering the last 30 days — share it with a psychologist or doctor.");
+    public static string DataBackupExportedToast => T("Файл готов к отправке", "File is ready to share");
+    public static string DataBackupImportedToast(int moods, int tests, int completions, int chats) => T(
+        $"Добавлено: настроение {moods}, тесты {tests}, практики {completions}, чаты {chats}",
+        $"Added: mood {moods}, tests {tests}, practices {completions}, chats {chats}");
+    public static string DataBackupImportFailedToast => T(
+        "Не удалось прочитать файл резервной копии",
+        "Could not read the backup file");
+    public static string CrisisHubSafetyPlanLinkTitle => T("Мой план безопасности", "My safety plan");
+    public static string CrisisHubSafetyPlanLinkSubtitle => T(
+        "Составьте личный план: признаки, что делать, кому звонить.",
+        "Build a personal plan: warning signs, what helps, who to call.");
+
+    public static string SafetyPlanPageTitle => T("План безопасности", "Safety plan");
+    public static string SafetyPlanLead => T(
+        "Заполните заранее, пока спокойно — план поможет в трудный момент.",
+        "Fill this in while calm — it will help in a hard moment.");
+    public static string SafetyPlanWarningSignsTitle => T("Мои тревожные признаки", "My warning signs");
+    public static string SafetyPlanWarningSignsPlaceholder => T(
+        "Например: не сплю вторую ночь подряд",
+        "For example: haven't slept in two nights");
+    public static string SafetyPlanCopingTitle => T("Что мне помогает", "What helps me");
+    public static string SafetyPlanCopingPlaceholder => T(
+        "Например: выйти на прогулку, позвонить другу",
+        "For example: go for a walk, call a friend");
+    public static string SafetyPlanReasonsTitle => T("Ради чего стоит продолжать", "Reasons to keep going");
+    public static string SafetyPlanReasonsPlaceholder => T(
+        "Например: моя кошка, поездка весной",
+        "For example: my cat, the trip this spring");
+    public static string SafetyPlanContactsTitle => T("Кому позвонить", "Who to call");
+    public static string SafetyPlanContactNamePlaceholder => T("Имя", "Name");
+    public static string SafetyPlanContactPhonePlaceholder => T("Телефон", "Phone");
+    public static string SafetyPlanTapToRemoveHint => T("Нажмите, чтобы удалить", "Tap to remove");
+    public static string SafetyPlanCallAction => T("Позвонить", "Call");
 
     public static string RiskCheckTitle => T("Проверка безопасности", "Safety check");
     public static string RiskCheckLead => T(

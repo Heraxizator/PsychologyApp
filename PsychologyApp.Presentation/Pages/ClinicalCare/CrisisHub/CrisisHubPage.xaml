@@ -183,6 +183,16 @@
             </VerticalStackLayout>
 
             <ui:SettingsLinkCardView
+                Title="{Binding SafetyPlanLinkTitle}"
+                Subtitle="{Binding SafetyPlanLinkSubtitle}"
+                IconName="Checklist"
+                TapCommand="{Binding OpenSafetyPlanCommand}">
+                <ui:SettingsLinkCardView.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="6" />
+                </ui:SettingsLinkCardView.Behaviors>
+            </ui:SettingsLinkCardView>
+
+            <ui:SettingsLinkCardView
                 Title="{Binding OpenHelplineText}"
                 IconName="SupportAgent"
                 TapCommand="{Binding OpenHelplineCommand}">

@@ -36,6 +36,12 @@ public static partial class AppStrings
     public static string ChatScrollToOldest => T("К началу разговора", "Jump to the start of the conversation");
     public static string ChatStressTestTitle => T("Тест на стресс (PSS-10)", "Stress test (PSS-10)");
 
+    public static string ChatReminderTitle => T("Собеседник ждёт", "The companion is here");
+
+    public static string ChatReminderBody => T(
+        "Пару минут назад вы говорили о том, что вас беспокоит. Как сейчас дела?",
+        "It's been a little while. How are things going now?");
+
     // ----- companion profile -----
     public static string ChatProfileTitle => T("Собеседник", "Companion");
     public static string ChatProfileOpen => T("Открыть профиль собеседника", "Open the companion's profile");

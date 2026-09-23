@@ -41,6 +41,16 @@
                 </ui:SettingsLinkCardView>
 
                 <ui:SettingsLinkCardView
+                    Title="{Binding DataBackupTitle}"
+                    IconName="Backup"
+                    Subtitle="{Binding DataBackupSubtitle}"
+                    TapCommand="{Binding OpenDataBackupCommand}">
+                    <ui:SettingsLinkCardView.Behaviors>
+                        <behaviors:ListItemRevealBehavior RevealIndex="1" />
+                    </ui:SettingsLinkCardView.Behaviors>
+                </ui:SettingsLinkCardView>
+
+                <ui:SettingsLinkCardView
                     Title="{Binding AliceTitle}"
                     IconName="SmartToy"
                     Subtitle="{Binding AliceSubtitle}"

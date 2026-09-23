@@ -8,14 +8,56 @@ using PsychologyApp.Domain.ClinicalCare;
 using PsychologyApp.Infrastructure.Data;
 using PsychologyApp.Infrastructure.Data.Repositories.Base;
 using PsychologyApp.Infrastructure.Data.Sql;
+using System.Text.Json;
 
 namespace PsychologyApp.Infrastructure.Data.Repositories.UserProgress;
 
 public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCareRepository
 {
+    private const string SafetyPlanMetadataKey = "SafetyPlan";
+
     public ClinicalCareRepository(IDbConnectionFactory connectionFactory, IOptions<AppSettings> settings)
         : base(connectionFactory, settings)
     {
+    }
+
+    public async Task<SafetyPlanDTO?> GetSafetyPlanAsync(CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        string? json = await connection.ExecuteScalarAsync<string?>(DapperCommandFactory.Create(
+            "SELECT Value FROM AppMetadata WHERE Key = @key;",
+            new { key = SafetyPlanMetadataKey },
+            commandTimeout: CommandTimeoutSeconds,
+            cancellationToken: cancellationToken));
+
+        if (string.IsNullOrWhiteSpace(json))
+        {
+            return null;
+        }
+
+        try
+        {
+            return JsonSerializer.Deserialize<SafetyPlanDTO>(json);
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
+    }
+
+    public async Task SaveSafetyPlanAsync(SafetyPlanDTO plan, CancellationToken cancellationToken = default)
+    {
+        string json = JsonSerializer.Serialize(plan);
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
+            """
+            INSERT INTO AppMetadata (Key, Value)
+            VALUES (@key, @value)
+            ON CONFLICT(Key) DO UPDATE SET Value = excluded.Value;
+            """,
+            new { key = SafetyPlanMetadataKey, value = json },
+            commandTimeout: CommandTimeoutSeconds,
+            cancellationToken: cancellationToken));
     }
 
     public async Task SaveRiskAssessmentAsync(RiskAssessmentDTO assessment, CancellationToken cancellationToken = default)

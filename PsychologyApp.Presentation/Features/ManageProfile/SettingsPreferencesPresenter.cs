@@ -27,6 +27,8 @@ public sealed class SettingsPreferencesPresenter
         Action<int> setQuoteReminderHour,
         Action<bool> setMoodRemindersEnabled,
         Action<int> setMoodReminderHour,
+        Action<bool> setChatRemindersEnabled,
+        Action<int> setChatReminderHour,
         Action<string> setOnboardingConcern)
     {
         setLanguage(UserPreferences.ParseLanguageKey(state.Language));
@@ -42,6 +44,8 @@ public sealed class SettingsPreferencesPresenter
         setQuoteReminderHour(UserPreferences.NormalizeQuoteReminderHour(state.QuoteReminderHour));
         setMoodRemindersEnabled(state.MoodRemindersEnabled);
         setMoodReminderHour(UserPreferences.NormalizeMoodReminderHour(state.MoodReminderHour));
+        setChatRemindersEnabled(state.ChatRemindersEnabled);
+        setChatReminderHour(UserPreferences.NormalizeChatReminderHour(state.ChatReminderHour));
         setOnboardingConcern(UserPreferences.NormalizeOnboardingConcernKey(state.OnboardingConcern));
     }
 
@@ -59,6 +63,8 @@ public sealed class SettingsPreferencesPresenter
         int quoteReminderHour,
         bool moodRemindersEnabled,
         int moodReminderHour,
+        bool chatRemindersEnabled,
+        int chatReminderHour,
         string onboardingConcern,
         UserPreferencesState savedState) =>
         new()
@@ -76,6 +82,8 @@ public sealed class SettingsPreferencesPresenter
             QuoteReminderHour = UserPreferences.NormalizeQuoteReminderHour(quoteReminderHour),
             MoodRemindersEnabled = moodRemindersEnabled,
             MoodReminderHour = UserPreferences.NormalizeMoodReminderHour(moodReminderHour),
+            ChatRemindersEnabled = chatRemindersEnabled,
+            ChatReminderHour = UserPreferences.NormalizeChatReminderHour(chatReminderHour),
             HasCompletedOnboarding = savedState.HasCompletedOnboarding,
             OnboardingConcern = UserPreferences.NormalizeOnboardingConcernKey(onboardingConcern)
         };

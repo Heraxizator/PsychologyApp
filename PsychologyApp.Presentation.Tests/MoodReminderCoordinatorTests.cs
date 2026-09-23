@@ -115,6 +115,8 @@ public sealed class MoodReminderCoordinatorTests
             quoteReminderHour: UserPreferences.DefaultQuoteReminderHour,
             moodRemindersEnabled: true,
             moodReminderHour: 20,
+            chatRemindersEnabled: false,
+            chatReminderHour: UserPreferences.DefaultChatReminderHour,
             onboardingConcern: OnboardingConcernKeys.Anxiety,
             saved);
 

@@ -19,4 +19,7 @@ public interface IClinicalCareService
     Task<TherapyProgramStateDTO?> AdjustProgramFromScorecardAsync(CancellationToken cancellationToken = default);
 
     Task<IReadOnlyList<EscalationEventDTO>> GetRecentEscalationsAsync(int limit = 20, CancellationToken cancellationToken = default);
+
+    Task<SafetyPlanDTO> GetSafetyPlanAsync(CancellationToken cancellationToken = default);
+    Task SaveSafetyPlanAsync(SafetyPlanDTO plan, CancellationToken cancellationToken = default);
 }

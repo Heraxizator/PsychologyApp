@@ -12,6 +12,7 @@ public class OptionsViewModel : BaseViewModel
     public ICommand OpenSettingsPageCommand { get; private set; } = default!;
     public ICommand OpenAlicePageCommand { get; private set; } = default!;
     public ICommand OpenCrisisHubCommand { get; private set; } = default!;
+    public ICommand OpenDataBackupCommand { get; private set; } = default!;
     public ICommand BackCommand { get; private set; } = default!;
 
     public string PageTitle => AppStrings.OptionsTitle;
@@ -30,6 +31,8 @@ public class OptionsViewModel : BaseViewModel
     public string FeedbackSubtitle => AppStrings.OptionsFeedbackSubtitle;
     public string DonateTitle => AppStrings.OptionsDonateTitle;
     public string DonateSubtitle => AppStrings.OptionsDonateSubtitle;
+    public string DataBackupTitle => AppStrings.DataBackupTitle;
+    public string DataBackupSubtitle => AppStrings.DataBackupLead;
 
     public OptionsViewModel(INavigationService navigationService)
     {
@@ -41,6 +44,7 @@ public class OptionsViewModel : BaseViewModel
         OpenSettingsPageCommand = new AsyncCommand(() => navigationService.GoToSettingsAsync());
         OpenAlicePageCommand = new AsyncCommand(() => navigationService.GoToAliceAsync());
         OpenCrisisHubCommand = new AsyncCommand(() => navigationService.GoToCrisisHubAsync());
+        OpenDataBackupCommand = new AsyncCommand(() => navigationService.GoToDataBackupAsync());
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
     }
 
@@ -62,6 +66,8 @@ public class OptionsViewModel : BaseViewModel
             nameof(FeedbackTitle),
             nameof(FeedbackSubtitle),
             nameof(DonateTitle),
-            nameof(DonateSubtitle));
+            nameof(DonateSubtitle),
+            nameof(DataBackupTitle),
+            nameof(DataBackupSubtitle));
     }
 }

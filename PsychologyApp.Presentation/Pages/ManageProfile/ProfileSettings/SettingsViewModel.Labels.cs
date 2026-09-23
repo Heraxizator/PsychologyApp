@@ -26,6 +26,10 @@ public partial class SettingsViewModel
     public string MoodRemindersLabel => AppStrings.SettingsMoodRemindersLabel;
     public string MoodReminderHourLabel => AppStrings.SettingsMoodReminderHourLabel;
     public string MoodReminderHourPickerTitle => AppStrings.SettingsMoodReminderHourPickerTitle;
+    public string ChatSectionTitle => AppStrings.SettingsChatSection;
+    public string ChatRemindersLabel => AppStrings.SettingsChatRemindersLabel;
+    public string ChatReminderHourLabel => AppStrings.SettingsChatReminderHourLabel;
+    public string ChatReminderHourPickerTitle => AppStrings.SettingsChatReminderHourPickerTitle;
     public string PrimaryConcernSectionTitle => AppStrings.SettingsPrimaryConcernSection;
     public string PrimaryConcernLabel => AppStrings.SettingsPrimaryConcernLabel;
     public string PrimaryConcernPickerTitle => AppStrings.SettingsPrimaryConcernPickerTitle;

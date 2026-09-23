@@ -192,6 +192,32 @@
                 </VerticalStackLayout>
             </Border>
 
+            <Border
+                IsVisible="{Binding AreRemindersSupported}"
+                Style="{StaticResource SettingsSectionCardStyle}"
+                Margin="0">
+                <Border.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="6" />
+                </Border.Behaviors>
+                <VerticalStackLayout Spacing="0">
+                    <Label
+                        Text="{Binding ChatSectionTitle}"
+                        Style="{StaticResource SectionTitleStyle}"
+                        Margin="0,0,0,10" />
+                    <ui:SettingSwitchRowView
+                        LabelText="{Binding ChatRemindersLabel}"
+                        IsToggled="{Binding ChatRemindersEnabled}" />
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
+                    <ui:SettingPickerRowView
+                        LabelKind="{x:Static converters:PreferenceLabelKind.PassThrough}"
+                        LabelText="{Binding ChatReminderHourLabel}"
+                        PickerTitle="{Binding ChatReminderHourPickerTitle}"
+                        ItemsSource="{Binding ChatReminderHourOptions}"
+                        SelectedItem="{Binding ChatReminderHour}"
+                        IsRowEnabled="{Binding ChatRemindersEnabled}" />
+                </VerticalStackLayout>
+            </Border>
+
             <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
                 <Border.Behaviors>
                     <behaviors:ListItemRevealBehavior RevealIndex="6" />

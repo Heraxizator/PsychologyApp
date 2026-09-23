@@ -1,8 +1,10 @@
+using PsychologyApp.Presentation.App.Routes;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.Lib.Navigation;
 
 namespace PsychologyApp.Presentation.App;
 
-public sealed class AppShellTabNavigator(Func<AppShell> appShellFactory) : IShellTabNavigator
+public sealed class AppShellTabNavigator(Func<AppShell> appShellFactory, Func<INavigationService> navigationServiceFactory) : IShellTabNavigator
 {
     private AppShell Shell => appShellFactory();
 
@@ -45,6 +47,14 @@ public sealed class AppShellTabNavigator(Func<AppShell> appShellFactory) : IShel
             AppShell appShell = Shell;
             appShell.MaterializeTab(appShell.QuotesShellTab);
             appShell.CurrentItem = appShell.QuotesShellTab;
+        });
+    }
+
+    public void OpenChat()
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            navigationServiceFactory().GoToChatAsync().FireAndForget();
         });
     }
 }

@@ -191,6 +191,17 @@ public sealed class ClinicalCareServiceTests
 
         public Task<IReadOnlyList<EscalationEventDTO>> GetRecentEscalationsAsync(int limit, CancellationToken cancellationToken = default) =>
             Task.FromResult<IReadOnlyList<EscalationEventDTO>>(Escalations.Take(limit).ToList());
+
+        public SafetyPlanDTO? SafetyPlan { get; set; }
+
+        public Task<SafetyPlanDTO?> GetSafetyPlanAsync(CancellationToken cancellationToken = default) =>
+            Task.FromResult(SafetyPlan);
+
+        public Task SaveSafetyPlanAsync(SafetyPlanDTO plan, CancellationToken cancellationToken = default)
+        {
+            SafetyPlan = plan;
+            return Task.CompletedTask;
+        }
     }
 
     private sealed class FakeUserProgressService : IUserProgressService
@@ -199,6 +210,7 @@ public sealed class ClinicalCareServiceTests
         public Task<TestResultDTO?> GetLatestTestResultAsync(string testId, CancellationToken cancellationToken = default) => Task.FromResult<TestResultDTO?>(null);
         public Task<TestResultDTO?> GetMostRecentTestResultAsync(TimeSpan within, CancellationToken cancellationToken = default) => Task.FromResult<TestResultDTO?>(null);
         public Task<IReadOnlyList<TestResultDTO>> GetTestResultHistoryAsync(string testId, int limit = 20, CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyList<TestResultDTO>>([]);
+        public Task<IReadOnlyList<TestResultDTO>> GetAllTestResultsAsync(int limit = 10000, CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyList<TestResultDTO>>([]);
         public Task<IReadOnlyDictionary<string, TestResultDTO>> GetLatestTestResultsAsync(IReadOnlyList<string> testIds, CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyDictionary<string, TestResultDTO>>(new Dictionary<string, TestResultDTO>());
         public Task<IReadOnlyDictionary<string, int>> GetTestResultCountsAsync(IReadOnlyList<string> testIds, CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyDictionary<string, int>>(new Dictionary<string, int>());
         public Task<long> CountTestResultsAsync(CancellationToken cancellationToken = default) => Task.FromResult(0L);

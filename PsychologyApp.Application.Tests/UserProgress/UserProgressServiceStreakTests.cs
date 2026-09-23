@@ -73,6 +73,7 @@ public sealed class UserProgressServiceStreakTests
         public Task<TestResultDTO?> GetLatestTestResultAsync(string testId, CancellationToken cancellationToken = default) => Task.FromResult<TestResultDTO?>(null);
         public Task<TestResultDTO?> GetMostRecentTestResultAsync(TimeSpan within, CancellationToken cancellationToken = default) => Task.FromResult<TestResultDTO?>(null);
         public Task<IReadOnlyList<TestResultDTO>> GetTestResultHistoryAsync(string testId, int limit, CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyList<TestResultDTO>>([]);
+        public Task<IReadOnlyList<TestResultDTO>> GetAllTestResultsAsync(int limit = 10000, CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyList<TestResultDTO>>([]);
         public Task<IReadOnlyList<TestResultDTO>> GetLatestTestResultsAsync(IReadOnlyList<string> testIds, CancellationToken cancellationToken = default) =>
             Task.FromResult<IReadOnlyList<TestResultDTO>>([]);
         public Task<IReadOnlyList<(string TestId, int Count)>> GetTestResultCountsAsync(IReadOnlyList<string> testIds, CancellationToken cancellationToken = default) =>

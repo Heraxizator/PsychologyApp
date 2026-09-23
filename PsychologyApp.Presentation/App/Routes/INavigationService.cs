@@ -53,4 +53,6 @@ public interface INavigationService
     Task GoToCompanionProfileAsync();
     Task GoToCrisisHubAsync();
     Task GoToRiskCheckAsync(string source);
+    Task GoToSafetyPlanAsync();
+    Task GoToDataBackupAsync();
 }

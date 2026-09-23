@@ -12,4 +12,7 @@ public interface IClinicalCareRepository
 
     Task SaveEscalationEventAsync(EscalationEventDTO escalation, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<EscalationEventDTO>> GetRecentEscalationsAsync(int limit, CancellationToken cancellationToken = default);
+
+    Task<SafetyPlanDTO?> GetSafetyPlanAsync(CancellationToken cancellationToken = default);
+    Task SaveSafetyPlanAsync(SafetyPlanDTO plan, CancellationToken cancellationToken = default);
 }

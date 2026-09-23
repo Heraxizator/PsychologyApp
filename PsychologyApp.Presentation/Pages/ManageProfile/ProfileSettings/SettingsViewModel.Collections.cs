@@ -15,6 +15,7 @@ public partial class SettingsViewModel
     public IReadOnlyList<string> PracticeReminderHourOptions { get; private set; } = [];
     public IReadOnlyList<string> QuoteReminderHourOptions { get; private set; } = [];
     public IReadOnlyList<string> MoodReminderHourOptions { get; private set; } = [];
+    public IReadOnlyList<string> ChatReminderHourOptions { get; private set; } = [];
     public IReadOnlyList<string> OnboardingConcernOptions { get; private set; } = [];
 
     private void LoadFromPreferences()
@@ -37,6 +38,8 @@ public partial class SettingsViewModel
                 value => quoteReminderHour = value,
                 value => moodRemindersEnabled = value,
                 value => moodReminderHour = value,
+                value => chatRemindersEnabled = value,
+                value => chatReminderHour = value,
                 value => onboardingConcern = value);
 
             NotifyPickerValuesChanged();
@@ -45,6 +48,7 @@ public partial class SettingsViewModel
             OnPropertyChanged(nameof(PracticeRemindersEnabled));
             OnPropertyChanged(nameof(QuoteRemindersEnabled));
             OnPropertyChanged(nameof(MoodRemindersEnabled));
+            OnPropertyChanged(nameof(ChatRemindersEnabled));
             OnPropertyChanged(nameof(OnboardingConcern));
         }
         finally
@@ -63,6 +67,7 @@ public partial class SettingsViewModel
         PracticeReminderHourOptions = UserPreferences.GetPracticeReminderHourOptions().ToArray();
         QuoteReminderHourOptions = UserPreferences.GetQuoteReminderHourOptions().ToArray();
         MoodReminderHourOptions = UserPreferences.GetQuoteReminderHourOptions().ToArray();
+        ChatReminderHourOptions = UserPreferences.GetChatReminderHourOptions().ToArray();
         OnboardingConcernOptions = UserPreferences.OnboardingConcernKeysList.ToArray();
 
         OnPropertyChanged(nameof(LanguageOptions));
@@ -73,6 +78,7 @@ public partial class SettingsViewModel
         OnPropertyChanged(nameof(PracticeReminderHourOptions));
         OnPropertyChanged(nameof(QuoteReminderHourOptions));
         OnPropertyChanged(nameof(MoodReminderHourOptions));
+        OnPropertyChanged(nameof(ChatReminderHourOptions));
         OnPropertyChanged(nameof(OnboardingConcernOptions));
     }
 
@@ -86,6 +92,7 @@ public partial class SettingsViewModel
         OnPropertyChanged(nameof(PracticeReminderHour));
         OnPropertyChanged(nameof(QuoteReminderHour));
         OnPropertyChanged(nameof(MoodReminderHour));
+        OnPropertyChanged(nameof(ChatReminderHour));
         OnPropertyChanged(nameof(OnboardingConcern));
     }
 
@@ -113,6 +120,10 @@ public partial class SettingsViewModel
         OnPropertyChanged(nameof(MoodRemindersLabel));
         OnPropertyChanged(nameof(MoodReminderHourLabel));
         OnPropertyChanged(nameof(MoodReminderHourPickerTitle));
+        OnPropertyChanged(nameof(ChatSectionTitle));
+        OnPropertyChanged(nameof(ChatRemindersLabel));
+        OnPropertyChanged(nameof(ChatReminderHourLabel));
+        OnPropertyChanged(nameof(ChatReminderHourPickerTitle));
         OnPropertyChanged(nameof(PrimaryConcernSectionTitle));
         OnPropertyChanged(nameof(PrimaryConcernLabel));
         OnPropertyChanged(nameof(PrimaryConcernPickerTitle));

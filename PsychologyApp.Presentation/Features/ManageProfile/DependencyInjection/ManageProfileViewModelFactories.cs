@@ -4,8 +4,10 @@ using PsychologyApp.Presentation.Pages.ManageProfile.ProfileDonate;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileInfo;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileOptions;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileAlice;
+using PsychologyApp.Presentation.Pages.ManageProfile.ProfileDataBackup;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PsychologyApp.Application.DataBackup;
 using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Conversation.Companion;
@@ -87,6 +89,21 @@ public sealed class DonateViewModelFactory(
         new(dialogService, ResolveNavigation(navigationServiceFactory, page));
 }
 
+public interface IDataBackupViewModelFactory
+{
+    DataBackupViewModel Create(ContentPage page);
+}
+
+public sealed class DataBackupViewModelFactory(
+    IBackupService backupService,
+    ISpecialistSummaryService specialistSummaryService,
+    IToastService toastService,
+    Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IDataBackupViewModelFactory
+{
+    public DataBackupViewModel Create(ContentPage page) =>
+        new(ResolveNavigation(navigationServiceFactory, page), backupService, specialistSummaryService, toastService);
+}
+
 public interface IAliceViewModelFactory
 {
     AliceViewModel Create(ContentPage page);
@@ -113,6 +130,7 @@ public sealed class SettingsViewModelFactory(
     IPracticeReminderCoordinator practiceReminderCoordinator,
     IQuoteReminderCoordinator quoteReminderCoordinator,
     IMoodReminderCoordinator moodReminderCoordinator,
+    IChatReminderCoordinator chatReminderCoordinator,
     IPracticeReminderScheduler practiceReminderScheduler,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, ISettingsViewModelFactory
 {
@@ -126,6 +144,7 @@ public sealed class SettingsViewModelFactory(
             practiceReminderCoordinator,
             quoteReminderCoordinator,
             moodReminderCoordinator,
+            chatReminderCoordinator,
             practiceReminderScheduler);
 }
 

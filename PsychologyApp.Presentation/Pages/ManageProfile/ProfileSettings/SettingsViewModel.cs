@@ -20,6 +20,7 @@ public partial class SettingsViewModel : BaseViewModel
     private readonly IPracticeReminderCoordinator _practiceReminderCoordinator;
     private readonly IQuoteReminderCoordinator _quoteReminderCoordinator;
     private readonly IMoodReminderCoordinator _moodReminderCoordinator;
+    private readonly IChatReminderCoordinator _chatReminderCoordinator;
     private readonly bool _areRemindersSupported;
     private readonly SemaphoreSlim _saveLock = new(1, 1);
     private CancellationTokenSource? _autoSaveDebounceCts;
@@ -37,6 +38,7 @@ public partial class SettingsViewModel : BaseViewModel
         IPracticeReminderCoordinator practiceReminderCoordinator,
         IQuoteReminderCoordinator quoteReminderCoordinator,
         IMoodReminderCoordinator moodReminderCoordinator,
+        IChatReminderCoordinator chatReminderCoordinator,
         IPracticeReminderScheduler practiceReminderScheduler)
     {
         BindPreferences(userPreferencesStore);
@@ -48,6 +50,7 @@ public partial class SettingsViewModel : BaseViewModel
         _practiceReminderCoordinator = practiceReminderCoordinator;
         _quoteReminderCoordinator = quoteReminderCoordinator;
         _moodReminderCoordinator = moodReminderCoordinator;
+        _chatReminderCoordinator = chatReminderCoordinator;
         _areRemindersSupported = practiceReminderScheduler.IsSupported;
         ModuleName = AppStrings.ShellTabPractice;
         PageName = AppStrings.SettingsTitle;

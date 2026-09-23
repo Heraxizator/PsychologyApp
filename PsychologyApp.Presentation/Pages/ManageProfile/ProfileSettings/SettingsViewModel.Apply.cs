@@ -67,6 +67,7 @@ public partial class SettingsViewModel
             await _practiceReminderCoordinator.SyncAsync();
             await _quoteReminderCoordinator.SyncAsync();
             await _moodReminderCoordinator.SyncAsync();
+            await _chatReminderCoordinator.SyncAsync();
         }
         finally
         {

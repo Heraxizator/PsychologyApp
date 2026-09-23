@@ -31,6 +31,13 @@ internal static class UserProgressSql
         LIMIT @limit;
         """;
 
+    internal const string SelectAllTestResults = """
+        SELECT TestResultId, TestId, Score, Summary, DetailJson, CompletedAt
+        FROM TestResults
+        ORDER BY TestResultId DESC
+        LIMIT @limit;
+        """;
+
     internal const string SelectLatestTestResults = """
         SELECT tr.TestResultId, tr.TestId, tr.Score, tr.Summary, tr.DetailJson, tr.CompletedAt
         FROM TestResults tr

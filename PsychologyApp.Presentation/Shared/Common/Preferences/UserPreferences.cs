@@ -25,6 +25,8 @@ public static class UserPreferences
     public const string QuoteReminderHourKey = "QuoteReminderHour";
     public const string MoodRemindersEnabledKey = "MoodRemindersEnabled";
     public const string MoodReminderHourKey = "MoodReminderHour";
+    public const string ChatRemindersEnabledKey = "ChatRemindersEnabled";
+    public const string ChatReminderHourKey = "ChatReminderHour";
     public const string PendingOpenJournalKey = "PendingOpenJournal";
 
     public const string DefaultLanguage = "ru";
@@ -36,6 +38,7 @@ public static class UserPreferences
     public const int DefaultPracticeReminderHour = 19;
     public const int DefaultQuoteReminderHour = 9;
     public const int DefaultMoodReminderHour = 20;
+    public const int DefaultChatReminderHour = 19;
 
     public static event Action? Changed;
 
@@ -71,7 +74,9 @@ public static class UserPreferences
                 QuoteRemindersEnabled = _inMemoryState.QuoteRemindersEnabled,
                 QuoteReminderHour = _inMemoryState.QuoteReminderHour,
                 MoodRemindersEnabled = _inMemoryState.MoodRemindersEnabled,
-                MoodReminderHour = _inMemoryState.MoodReminderHour
+                MoodReminderHour = _inMemoryState.MoodReminderHour,
+                ChatRemindersEnabled = _inMemoryState.ChatRemindersEnabled,
+                ChatReminderHour = _inMemoryState.ChatReminderHour
             };
         }
 
@@ -95,7 +100,9 @@ public static class UserPreferences
             QuoteRemindersEnabled = Preferences.Get(QuoteRemindersEnabledKey, false),
             QuoteReminderHour = NormalizeQuoteReminderHour(Preferences.Get(QuoteReminderHourKey, DefaultQuoteReminderHour)),
             MoodRemindersEnabled = Preferences.Get(MoodRemindersEnabledKey, false),
-            MoodReminderHour = NormalizeMoodReminderHour(Preferences.Get(MoodReminderHourKey, DefaultMoodReminderHour))
+            MoodReminderHour = NormalizeMoodReminderHour(Preferences.Get(MoodReminderHourKey, DefaultMoodReminderHour)),
+            ChatRemindersEnabled = Preferences.Get(ChatRemindersEnabledKey, false),
+            ChatReminderHour = NormalizeChatReminderHour(Preferences.Get(ChatReminderHourKey, DefaultChatReminderHour))
         };
     }
 
@@ -122,6 +129,8 @@ public static class UserPreferences
         Preferences.Set(QuoteReminderHourKey, NormalizeQuoteReminderHour(state.QuoteReminderHour));
         Preferences.Set(MoodRemindersEnabledKey, state.MoodRemindersEnabled);
         Preferences.Set(MoodReminderHourKey, NormalizeMoodReminderHour(state.MoodReminderHour));
+        Preferences.Set(ChatRemindersEnabledKey, state.ChatRemindersEnabled);
+        Preferences.Set(ChatReminderHourKey, NormalizeChatReminderHour(state.ChatReminderHour));
     }
 
     public static void SetPendingTechnique(TechniqueId techniqueId) =>
@@ -178,7 +187,9 @@ public static class UserPreferences
             QuoteRemindersEnabled = current.QuoteRemindersEnabled,
             QuoteReminderHour = current.QuoteReminderHour,
             MoodRemindersEnabled = current.MoodRemindersEnabled,
-            MoodReminderHour = current.MoodReminderHour
+            MoodReminderHour = current.MoodReminderHour,
+            ChatRemindersEnabled = current.ChatRemindersEnabled,
+            ChatReminderHour = current.ChatReminderHour
         });
         Changed?.Invoke();
     }
@@ -226,7 +237,9 @@ public static class UserPreferences
             QuoteRemindersEnabled = current.QuoteRemindersEnabled,
             QuoteReminderHour = current.QuoteReminderHour,
             MoodRemindersEnabled = current.MoodRemindersEnabled,
-            MoodReminderHour = current.MoodReminderHour
+            MoodReminderHour = current.MoodReminderHour,
+            ChatRemindersEnabled = current.ChatRemindersEnabled,
+            ChatReminderHour = current.ChatReminderHour
         });
     }
 
@@ -442,6 +455,18 @@ public static class UserPreferences
     public static int NormalizeMoodReminderHour(int hour) =>
         QuoteReminderPolicy.ClampHour(hour);
 
+    public static int NormalizeChatReminderHour(int hour) =>
+        QuoteReminderPolicy.ClampHour(hour);
+
+    public static string GetChatReminderHourLabel(int hour, string? language = null) =>
+        GetPracticeReminderHourLabel(NormalizeChatReminderHour(hour), language);
+
+    public static int ParseChatReminderHourKey(string displayOrKey) =>
+        ParseQuoteReminderHourKey(displayOrKey);
+
+    public static IReadOnlyList<string> GetChatReminderHourOptions(string? language = null) =>
+        QuoteReminderHourKeys.Select(hour => GetChatReminderHourLabel(hour, language)).ToArray();
+
     public static void SetPendingOpenJournal() =>
         Preferences.Set(PendingOpenJournalKey, true);
 
@@ -646,4 +671,6 @@ public sealed class UserPreferencesState
     public int QuoteReminderHour { get; init; } = UserPreferences.DefaultQuoteReminderHour;
     public bool MoodRemindersEnabled { get; init; }
     public int MoodReminderHour { get; init; } = UserPreferences.DefaultMoodReminderHour;
+    public bool ChatRemindersEnabled { get; init; }
+    public int ChatReminderHour { get; init; } = UserPreferences.DefaultChatReminderHour;
 }

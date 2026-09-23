@@ -224,6 +224,39 @@ public partial class SettingsViewModel
         }
     }
 
+    public bool chatRemindersEnabled;
+    public bool ChatRemindersEnabled
+    {
+        get => chatRemindersEnabled;
+        set
+        {
+            if (chatRemindersEnabled != value)
+            {
+                chatRemindersEnabled = value;
+                OnPropertyChanged(nameof(ChatRemindersEnabled));
+                OnSettingsChanged();
+            }
+        }
+    }
+
+    private int chatReminderHour = UserPreferences.DefaultChatReminderHour;
+    public string ChatReminderHour
+    {
+        get => UserPreferences.GetChatReminderHourLabel(chatReminderHour);
+        set
+        {
+            int normalized = UserPreferences.ParseChatReminderHourKey(value);
+            if (_isSyncingPickers || chatReminderHour == normalized)
+            {
+                return;
+            }
+
+            chatReminderHour = normalized;
+            OnPropertyChanged(nameof(ChatReminderHour));
+            OnSettingsChanged();
+        }
+    }
+
     private string onboardingConcern = UserPreferences.DefaultOnboardingConcern;
     public string OnboardingConcern
     {
@@ -257,6 +290,8 @@ public partial class SettingsViewModel
             quoteReminderHour,
             MoodRemindersEnabled,
             moodReminderHour,
+            ChatRemindersEnabled,
+            chatReminderHour,
             OnboardingConcern,
             _savedState);
 

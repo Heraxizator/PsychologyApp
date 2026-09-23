@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.ManageProfile.ProfileDataBackup.DataBackupPage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ManageProfile.ProfileDataBackup"
+             x:DataType="vm:DataBackupViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Margin="{StaticResource LayoutPageMarginThickness}"
+            Spacing="{StaticResource LayoutSpacing}">
+            <VerticalStackLayout.Behaviors>
+                <behaviors:StaggerChildrenBehavior />
+            </VerticalStackLayout.Behaviors>
+
+            <ui:NavigationBarSimpleView
+                TitleText="{Binding PageTitle}"
+                BackCommand="{Binding BackCommand}" />
+
+            <Label Text="{Binding LeadText}" Style="{StaticResource BodyStyle}" />
+
+            <ui:SettingsLinkCardView
+                Title="{Binding ExportTitle}"
+                Subtitle="{Binding ExportSubtitle}"
+                IconName="Download"
+                TapCommand="{Binding ExportBackupCommand}">
+                <ui:SettingsLinkCardView.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="1" />
+                </ui:SettingsLinkCardView.Behaviors>
+            </ui:SettingsLinkCardView>
+
+            <ui:SettingsLinkCardView
+                Title="{Binding ImportTitle}"
+                Subtitle="{Binding ImportSubtitle}"
+                IconName="Upload"
+                TapCommand="{Binding ImportBackupCommand}">
+                <ui:SettingsLinkCardView.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="2" />
+                </ui:SettingsLinkCardView.Behaviors>
+            </ui:SettingsLinkCardView>
+
+            <ui:SettingsLinkCardView
+                Title="{Binding SummaryTitle}"
+                Subtitle="{Binding SummarySubtitle}"
+                IconName="Summarize"
+                TapCommand="{Binding ExportSummaryCommand}">
+                <ui:SettingsLinkCardView.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="3" />
+                </ui:SettingsLinkCardView.Behaviors>
+            </ui:SettingsLinkCardView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

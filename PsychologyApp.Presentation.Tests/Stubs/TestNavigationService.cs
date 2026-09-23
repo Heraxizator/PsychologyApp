@@ -92,4 +92,6 @@ public class TestNavigationService(INavigation navigation) : INavigationService
     public Task GoToCrisisHubAsync() => Task.CompletedTask;
 
     public Task GoToRiskCheckAsync(string source) => Task.CompletedTask;
+    public Task GoToSafetyPlanAsync() => Task.CompletedTask;
+    public Task GoToDataBackupAsync() => Task.CompletedTask;
 }

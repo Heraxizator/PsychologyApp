@@ -66,6 +66,18 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
         return rows.ToList();
     }
 
+    public async Task<IReadOnlyList<TestResultDTO>> GetAllTestResultsAsync(int limit, CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        IEnumerable<TestResultDTO> rows = await connection.QueryAsync<TestResultDTO>(DapperCommandFactory.Create(
+            UserProgressSql.SelectAllTestResults,
+            new { limit },
+            commandTimeout: CommandTimeoutSeconds,
+            cancellationToken: cancellationToken));
+
+        return rows.ToList();
+    }
+
     public async Task<IReadOnlyList<TestResultDTO>> GetLatestTestResultsAsync(
         IReadOnlyList<string> testIds,
         CancellationToken cancellationToken = default)

@@ -10,6 +10,7 @@ using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Features.RunTests;
 using PsychologyApp.Presentation.Pages.ClinicalCare.CrisisHub;
 using PsychologyApp.Presentation.Pages.ClinicalCare.RiskCheck;
+using PsychologyApp.Presentation.Pages.ClinicalCare.SafetyPlan;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Pages.RunTests.AlternativeTest;
@@ -22,6 +23,7 @@ using PsychologyApp.Presentation.Pages.ManageProfile.ProfileInfo;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileOptions;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileSettings;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfilePracticeHistory;
+using PsychologyApp.Presentation.Pages.ManageProfile.ProfileDataBackup;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
 using PsychologyApp.Presentation.Pages.ManageJournal.Journal;
 using PsychologyApp.Presentation.Pages.ManageJournal.JournalOverview;
@@ -120,6 +122,9 @@ public sealed class PageRegistry(
     public SettingsPage CreateSettingsPage() =>
         profilePageFactory.CreateSettingsPage();
 
+    public DataBackupPage CreateDataBackupPage() =>
+        WithPressFeedback(profilePageFactory.CreateDataBackupPage());
+
     public PhysicsSearchPage CreatePhysicsSearchPage() =>
         WithPressFeedback(new PhysicsSearchPage(pageViewModelActivator, physicsSearchViewModelFactory));
 
@@ -172,6 +177,9 @@ public sealed class PageRegistry(
 
     public RiskCheckPage CreateRiskCheckPage(string source) =>
         WithPressFeedback(clinicalCarePageFactory.CreateRiskCheckPage(source));
+
+    public SafetyPlanPage CreateSafetyPlanPage() =>
+        WithPressFeedback(clinicalCarePageFactory.CreateSafetyPlanPage());
 
     private static TPage WithPressFeedback<TPage>(TPage page) where TPage : ContentPage
     {

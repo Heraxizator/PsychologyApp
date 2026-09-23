@@ -30,14 +30,17 @@ public static class SharedPresentationServiceCollectionExtensions
         services.AddSingleton<IPracticeReminderCoordinator, PracticeReminderCoordinator>();
         services.AddSingleton<IQuoteReminderCoordinator, QuoteReminderCoordinator>();
         services.AddSingleton<IMoodReminderCoordinator, MoodReminderCoordinator>();
+        services.AddSingleton<IChatReminderCoordinator, ChatReminderCoordinator>();
 #if ANDROID
         services.AddSingleton<IPracticeReminderScheduler, AndroidPracticeReminderScheduler>();
         services.AddSingleton<IQuoteReminderScheduler, AndroidQuoteReminderScheduler>();
         services.AddSingleton<IMoodReminderScheduler, AndroidMoodReminderScheduler>();
+        services.AddSingleton<IChatReminderScheduler, AndroidChatReminderScheduler>();
 #else
         services.AddSingleton<IPracticeReminderScheduler, NullPracticeReminderScheduler>();
         services.AddSingleton<IQuoteReminderScheduler, NullQuoteReminderScheduler>();
         services.AddSingleton<IMoodReminderScheduler, NullMoodReminderScheduler>();
+        services.AddSingleton<IChatReminderScheduler, NullChatReminderScheduler>();
 #endif
         services.AddSingleton<IDatabaseReadySignal, DatabaseReadySignal>();
         services.AddSingleton<LanguageContentReloader>();

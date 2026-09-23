@@ -58,6 +58,8 @@ public sealed class SettingsPreferencesPresenterTests
             quoteReminderHour: UserPreferences.DefaultQuoteReminderHour,
             moodRemindersEnabled: false,
             moodReminderHour: UserPreferences.DefaultMoodReminderHour,
+            chatRemindersEnabled: false,
+            chatReminderHour: UserPreferences.DefaultChatReminderHour,
             onboardingConcern: OnboardingConcernKeys.Anxiety,
             saved);
 
@@ -102,6 +104,8 @@ public sealed class SettingsPreferencesPresenterTests
             _ => { },
             _ => { },
             _ => { },
+            _ => { },
+            _ => { },
             _ => { });
 
         Assert.Equal("en", language);
@@ -138,6 +142,8 @@ public sealed class SettingsPreferencesPresenterTests
             value => color = value,
             value => form = value,
             value => size = value,
+            _ => { },
+            _ => { },
             _ => { },
             _ => { },
             _ => { },

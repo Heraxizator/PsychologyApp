@@ -253,6 +253,12 @@ public sealed class MauiNavigationService : INavigationService
     public Task GoToRiskCheckAsync(string source) =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(PrepareSecondaryPage(_pageFactory.CreateRiskCheckPage(source)), true));
 
+    public Task GoToSafetyPlanAsync() =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(PrepareSecondaryPage(_pageFactory.CreateSafetyPlanPage()), true));
+
+    public Task GoToDataBackupAsync() =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(PrepareSecondaryPage(_pageFactory.CreateDataBackupPage()), true));
+
     private static ContentPage PrepareSecondaryPage(ContentPage page)
     {
         Shell.SetTabBarIsVisible(page, false);
