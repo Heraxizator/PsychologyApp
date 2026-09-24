@@ -85,6 +85,11 @@ public sealed class BackupService(
             {
                 await progress.UpdateSessionResultPostIntensityAsync(newId, post, cancellationToken);
             }
+
+            if (!string.IsNullOrWhiteSpace(sessionResult.Note))
+            {
+                await progress.UpdateSessionResultNoteAsync(newId, sessionResult.Note, cancellationToken);
+            }
         }
 
         foreach (BackupChatSessionDTO chatSession in backup.ChatSessions)

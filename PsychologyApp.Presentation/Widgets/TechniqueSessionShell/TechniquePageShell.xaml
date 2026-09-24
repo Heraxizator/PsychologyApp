@@ -19,6 +19,21 @@
             <ui:AlgorithmBoxView
                 TitleText="{Binding Source={x:Reference Root}, Path=AlgorithmTitleText}"
                 BodySource="{Binding Source={x:Reference Root}, Path=Algorithm}" />
+            <Border
+                Style="{StaticResource BrandCardStyle}"
+                Margin="0"
+                IsVisible="{Binding HasLastNote}">
+                <VerticalStackLayout Spacing="4">
+                    <Label
+                        Text="{Binding LastNoteTitle}"
+                        Style="{StaticResource CaptionStyle}"
+                        TextColor="{DynamicResource Primary}"
+                        FontFamily="{StaticResource SemiBoldFontFamily}" />
+                    <Label
+                        Text="{Binding LastNoteText}"
+                        Style="{StaticResource BodyStyle}" />
+                </VerticalStackLayout>
+            </Border>
             <ui:RatingEntryView
                 TitleText="{Binding PreIntensityLabel}"
                 BodyText="{Binding PreIntensityText, Mode=TwoWay}" />

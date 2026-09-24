@@ -167,6 +167,12 @@ public sealed class UserProgressService(IUserProgressRepository repository) : IU
     public Task UpdateSessionResultPostIntensityAsync(long sessionResultId, int postIntensity, CancellationToken cancellationToken = default) =>
         repository.UpdateSessionResultPostIntensityAsync(sessionResultId, postIntensity, cancellationToken);
 
+    public Task UpdateSessionResultNoteAsync(long sessionResultId, string note, CancellationToken cancellationToken = default) =>
+        repository.UpdateSessionResultNoteAsync(sessionResultId, note, cancellationToken);
+
+    public Task<string?> GetLastSessionNoteAsync(string itemKey, CancellationToken cancellationToken = default) =>
+        repository.GetLastSessionNoteAsync(itemKey, cancellationToken);
+
     public Task<SessionResultDTO?> GetSessionResultAsync(long sessionResultId, CancellationToken cancellationToken = default) =>
         repository.GetSessionResultAsync(sessionResultId, cancellationToken);
 

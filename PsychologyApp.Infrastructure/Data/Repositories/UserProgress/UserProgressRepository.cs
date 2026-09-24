@@ -464,6 +464,29 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             cancellationToken: cancellationToken));
     }
 
+    public async Task UpdateSessionResultNoteAsync(
+        long sessionResultId,
+        string note,
+        CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
+            UserProgressSql.UpdateSessionResultNote,
+            new { sessionResultId, note },
+            commandTimeout: CommandTimeoutSeconds,
+            cancellationToken: cancellationToken));
+    }
+
+    public async Task<string?> GetLastSessionNoteAsync(string itemKey, CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        return await connection.ExecuteScalarAsync<string?>(DapperCommandFactory.Create(
+            UserProgressSql.SelectLastSessionNoteForItem,
+            new { itemKey },
+            commandTimeout: CommandTimeoutSeconds,
+            cancellationToken: cancellationToken));
+    }
+
     public async Task<SessionResultDTO?> GetSessionResultAsync(long sessionResultId, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);

@@ -6,7 +6,7 @@ namespace PsychologyApp.Infrastructure.Data.Context;
 
 public static class SqliteSchema
 {
-    public const int CurrentVersion = 10;
+    public const int CurrentVersion = 11;
 
     private static readonly string[] DropTablesSql =
     [
@@ -113,7 +113,22 @@ public static class SqliteSchema
         if (version < 10)
         {
             await ApplyMigrationAsync(connection, 10, MigrateToVersion10Async, cancellationToken);
+            version = 10;
         }
+
+        if (version < 11)
+        {
+            await ApplyMigrationAsync(connection, 11, MigrateToVersion11Async, cancellationToken);
+        }
+    }
+
+    /// <summary>Lets a session's own reflection note ("what did you notice") be looked back up next time
+    /// the same technique is opened, instead of only living in the general mood/journal table.</summary>
+    private static async Task MigrateToVersion11Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)
+    {
+        await connection.ExecuteAsync(
+            "ALTER TABLE SessionResults ADD COLUMN Note TEXT;",
+            transaction: transaction);
     }
 
     /// <summary>What the chat companion remembers between conversations: the name, and which practices helped.</summary>

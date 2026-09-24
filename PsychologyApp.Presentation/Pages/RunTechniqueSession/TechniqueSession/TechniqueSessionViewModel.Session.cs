@@ -14,6 +14,8 @@ public partial class TechniqueSessionViewModel
             _entryDraftCoordinator.WireHandlers();
             _entryDraftCoordinator.LoadAsync(() => OnPropertyChanged(nameof(Entries))).FireAndForget();
         }
+
+        LoadLastNoteAsync();
     }
 
     public void SaveEntryDraftIfNeeded() => _entryDraftCoordinator.SaveIfNeeded();

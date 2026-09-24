@@ -19,4 +19,6 @@ public sealed class SessionResultDTO
     public string? ProgramType { get; set; }
 
     public int? ProgramWeek { get; set; }
+
+    public string? Note { get; set; }
 }

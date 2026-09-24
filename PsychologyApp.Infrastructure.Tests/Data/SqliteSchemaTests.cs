@@ -92,9 +92,24 @@ public class SqliteSchemaTests
 
         Assert.Equal(1, await TableExistsAsync(connection, "ChatSessions"));
         Assert.Equal(1, await TableExistsAsync(connection, "ChatMessages"));
-        Assert.Equal(10, SqliteSchema.CurrentVersion);
         Assert.Equal(1, await TableExistsAsync(connection, "ChatMemory"));
     }
+
+    [Fact]
+    public async Task EnsureSchema_AddsSessionResultsNoteColumnForVersion11()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+
+        await SqliteSchema.EnsureSchemaAsync(connection);
+
+        int columnExists = await connection.ExecuteScalarAsync<int>(
+            "SELECT COUNT(*) FROM pragma_table_info('SessionResults') WHERE name = 'Note';");
+        Assert.Equal(1, columnExists);
+        int version = await connection.ExecuteScalarAsync<int>("SELECT MAX(Version) FROM SchemaVersion;");
+        Assert.Equal(SqliteSchema.CurrentVersion, version);
+    }
+
     [Fact]
     public async Task EnsureSchema_CreatesProgressTablesForVersion4()
     {

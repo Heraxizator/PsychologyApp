@@ -99,6 +99,8 @@ public sealed class UserProgressServiceStreakTests
         public Task<IReadOnlyList<MoodEntryDTO>> GetRecentMoodsAsync(int limit, CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyList<MoodEntryDTO>>([]);
         public Task<IReadOnlyList<MoodEntryDTO>> GetMoodsAsync(DateTime? fromUtc, DateTime? toUtc, int limit, CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyList<MoodEntryDTO>>([]);
         public Task UpdateSessionResultPostIntensityAsync(long sessionResultId, int postIntensity, CancellationToken cancellationToken = default) => Task.CompletedTask;
+        public Task UpdateSessionResultNoteAsync(long sessionResultId, string note, CancellationToken cancellationToken = default) => Task.CompletedTask;
+        public Task<string?> GetLastSessionNoteAsync(string itemKey, CancellationToken cancellationToken = default) => Task.FromResult<string?>(null);
         public Task<SessionResultDTO?> GetSessionResultAsync(long sessionResultId, CancellationToken cancellationToken = default) => Task.FromResult<SessionResultDTO?>(null);
         public Task<IReadOnlyList<SessionResultDTO>> GetRecentSessionResultsAsync(int limit, CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyList<SessionResultDTO>>([]);
         public Task<int> CountDistinctTechniqueCompletionsForItemsBetweenAsync(IReadOnlyList<string> itemKeys, DateTime sinceUtc, DateTime beforeUtc, CancellationToken cancellationToken = default) => Task.FromResult(0);

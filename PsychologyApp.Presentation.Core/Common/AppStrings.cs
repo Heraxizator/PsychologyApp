@@ -692,6 +692,7 @@ public static partial class AppStrings
     public static string PracticeSudsDelta(int before, int after) => $"{before} → {after}";
     public static string PracticeSudsSectionTitle => T("Как изменилась интенсивность?", "How did intensity change?");
     public static string PracticeReflectionSectionTitle => T("Настроение", "Mood");
+    public static string PracticeLastNoteTitle => T("Что вы заметили в прошлый раз", "What you noticed last time");
     public static string PracticeCompletedTitle => T("Готово!", "Done!");
     public static string PracticeCompletedBody(int streak) =>
         T($"Отличная работа! Серия: {streak} дн.", $"Great job! Streak: {streak} days");

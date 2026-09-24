@@ -340,6 +340,11 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         SelectedMoodLevel = moodLevel;
         string? note = string.IsNullOrWhiteSpace(ReflectionNote) ? null : ReflectionNote.Trim();
         await _userProgressService.RecordMoodAsync(moodLevel, note);
+
+        if (note is not null && _sessionResultId is long sessionResultId)
+        {
+            await _userProgressService.UpdateSessionResultNoteAsync(sessionResultId, note);
+        }
     }
 
     private async Task MorePracticeAsync()

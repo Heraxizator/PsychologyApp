@@ -189,6 +189,12 @@ internal static class UserProgressSql
         WHERE SessionResultId = @sessionResultId;
         """;
 
+    internal const string UpdateSessionResultNote = """
+        UPDATE SessionResults
+        SET Note = @note
+        WHERE SessionResultId = @sessionResultId;
+        """;
+
     internal const string SelectSessionResultById = """
         SELECT
             SessionResultId,
@@ -199,7 +205,8 @@ internal static class UserProgressSql
             PreIntensity,
             PostIntensity,
             ProgramType,
-            ProgramWeek
+            ProgramWeek,
+            Note
         FROM SessionResults
         WHERE SessionResultId = @sessionResultId
         LIMIT 1;
@@ -215,10 +222,19 @@ internal static class UserProgressSql
             PreIntensity,
             PostIntensity,
             ProgramType,
-            ProgramWeek
+            ProgramWeek,
+            Note
         FROM SessionResults
         ORDER BY SessionResultId DESC
         LIMIT @limit;
+        """;
+
+    internal const string SelectLastSessionNoteForItem = """
+        SELECT Note
+        FROM SessionResults
+        WHERE ItemKey = @itemKey AND Note IS NOT NULL AND Note != ''
+        ORDER BY SessionResultId DESC
+        LIMIT 1;
         """;
 
     internal const string CountDistinctTechniqueCompletionsForItemsBetween = """
