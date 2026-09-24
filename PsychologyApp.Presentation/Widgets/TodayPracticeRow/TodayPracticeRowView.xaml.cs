@@ -65,17 +65,8 @@ public partial class TodayPracticeRowView : ContentView
         set => SetValue(SubtitleProperty, value);
     }
 
-    public static readonly BindableProperty DateTextProperty =
-        BindableProperty.Create(nameof(DateText), typeof(string), typeof(TodayPracticeRowView), string.Empty);
-
-    public string DateText
-    {
-        get => (string)GetValue(DateTextProperty);
-        set => SetValue(DateTextProperty, value);
-    }
-
     public static readonly BindableProperty NudgeTextProperty =
-        BindableProperty.Create(nameof(NudgeText), typeof(string), typeof(TodayPracticeRowView), string.Empty);
+        BindableProperty.Create(nameof(NudgeText), typeof(string), typeof(TodayPracticeRowView), string.Empty, propertyChanged: OnHintRelevantChanged);
 
     public string NudgeText
     {
@@ -84,7 +75,7 @@ public partial class TodayPracticeRowView : ContentView
     }
 
     public static readonly BindableProperty HasNudgeProperty =
-        BindableProperty.Create(nameof(HasNudge), typeof(bool), typeof(TodayPracticeRowView), false, propertyChanged: OnReasonRelevantChanged);
+        BindableProperty.Create(nameof(HasNudge), typeof(bool), typeof(TodayPracticeRowView), false, propertyChanged: OnHintRelevantChanged);
 
     public bool HasNudge
     {
@@ -93,7 +84,7 @@ public partial class TodayPracticeRowView : ContentView
     }
 
     public static readonly BindableProperty ReasonTextProperty =
-        BindableProperty.Create(nameof(ReasonText), typeof(string), typeof(TodayPracticeRowView), string.Empty, propertyChanged: OnReasonRelevantChanged);
+        BindableProperty.Create(nameof(ReasonText), typeof(string), typeof(TodayPracticeRowView), string.Empty, propertyChanged: OnHintRelevantChanged);
 
     public string ReasonText
     {
@@ -101,28 +92,8 @@ public partial class TodayPracticeRowView : ContentView
         set => SetValue(ReasonTextProperty, value);
     }
 
-    private static readonly BindablePropertyKey HasReasonOnlyPropertyKey =
-        BindableProperty.CreateReadOnly(nameof(HasReasonOnly), typeof(bool), typeof(TodayPracticeRowView), false);
-
-    public static readonly BindableProperty HasReasonOnlyProperty = HasReasonOnlyPropertyKey.BindableProperty;
-
-    /// <summary>The reason line is shown only when there is no nudge: the two never compete for the same row.</summary>
-    public bool HasReasonOnly
-    {
-        get => (bool)GetValue(HasReasonOnlyProperty);
-        private set => SetValue(HasReasonOnlyPropertyKey, value);
-    }
-
-    private static void OnReasonRelevantChanged(BindableObject bindable, object oldValue, object newValue)
-    {
-        if (bindable is TodayPracticeRowView view)
-        {
-            view.HasReasonOnly = !view.HasNudge && !string.IsNullOrWhiteSpace(view.ReasonText);
-        }
-    }
-
     public static readonly BindableProperty MetaTextProperty =
-        BindableProperty.Create(nameof(MetaText), typeof(string), typeof(TodayPracticeRowView), string.Empty);
+        BindableProperty.Create(nameof(MetaText), typeof(string), typeof(TodayPracticeRowView), string.Empty, propertyChanged: OnHintRelevantChanged);
 
     public string MetaText
     {
@@ -131,7 +102,7 @@ public partial class TodayPracticeRowView : ContentView
     }
 
     public static readonly BindableProperty HasMetaProperty =
-        BindableProperty.Create(nameof(HasMeta), typeof(bool), typeof(TodayPracticeRowView), false);
+        BindableProperty.Create(nameof(HasMeta), typeof(bool), typeof(TodayPracticeRowView), false, propertyChanged: OnHintRelevantChanged);
 
     public bool HasMeta
     {
@@ -139,13 +110,47 @@ public partial class TodayPracticeRowView : ContentView
         set => SetValue(HasMetaProperty, value);
     }
 
-    public static readonly BindableProperty ActionTextProperty =
-        BindableProperty.Create(nameof(ActionText), typeof(string), typeof(TodayPracticeRowView), string.Empty);
+    private static readonly BindablePropertyKey HintTextPropertyKey =
+        BindableProperty.CreateReadOnly(nameof(HintText), typeof(string), typeof(TodayPracticeRowView), string.Empty);
 
-    public string ActionText
+    public static readonly BindableProperty HintTextProperty = HintTextPropertyKey.BindableProperty;
+
+    /// <summary>The one explanatory line under the title: a nudge, a recommendation reason or the program's status —
+    /// never more than one at a time, so this single slot stands in for what used to be three separate rows.</summary>
+    public string HintText
     {
-        get => (string)GetValue(ActionTextProperty);
-        set => SetValue(ActionTextProperty, value);
+        get => (string)GetValue(HintTextProperty);
+        private set => SetValue(HintTextPropertyKey, value);
+    }
+
+    private static readonly BindablePropertyKey HasHintPropertyKey =
+        BindableProperty.CreateReadOnly(nameof(HasHint), typeof(bool), typeof(TodayPracticeRowView), false);
+
+    public static readonly BindableProperty HasHintProperty = HasHintPropertyKey.BindableProperty;
+
+    public bool HasHint
+    {
+        get => (bool)GetValue(HasHintProperty);
+        private set => SetValue(HasHintPropertyKey, value);
+    }
+
+    private static void OnHintRelevantChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is not TodayPracticeRowView view)
+        {
+            return;
+        }
+
+        string hint = view.HasNudge && !string.IsNullOrWhiteSpace(view.NudgeText)
+            ? view.NudgeText
+            : !string.IsNullOrWhiteSpace(view.ReasonText)
+                ? view.ReasonText
+                : view.HasMeta && !string.IsNullOrWhiteSpace(view.MetaText)
+                    ? view.MetaText
+                    : string.Empty;
+
+        view.HintText = hint;
+        view.HasHint = hint.Length > 0;
     }
 
     public static readonly BindableProperty TapCommandProperty =

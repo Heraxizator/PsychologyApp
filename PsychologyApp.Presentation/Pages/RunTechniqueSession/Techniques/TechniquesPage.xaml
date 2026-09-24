@@ -88,13 +88,11 @@
                         IconName="{Binding TodayTechniqueItem.IconName}"
                         Title="{Binding TodayTechniqueItem.Title}"
                         Subtitle="{Binding TodayTechniqueItem.Subtitle}"
-                        DateText="{Binding TodayTechniqueItem.Date}"
                         NudgeText="{Binding EngagementNudgeText}"
                         HasNudge="{Binding ShowEngagementNudge}"
                         ReasonText="{Binding TodayReasonText}"
                         MetaText="{Binding TherapyProgramBanner}"
                         HasMeta="{Binding HasTherapyProgramBanner}"
-                        ActionText="{Binding TodayActionText}"
                         TapCommand="{Binding StartTodayPracticeCommand}">
                         <today:TodayPracticeRowView.Behaviors>
                             <behaviors:RevealOnAppearingBehavior />

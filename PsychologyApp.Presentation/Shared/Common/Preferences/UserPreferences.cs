@@ -28,6 +28,7 @@ public static class UserPreferences
     public const string ChatRemindersEnabledKey = "ChatRemindersEnabled";
     public const string ChatReminderHourKey = "ChatReminderHour";
     public const string PendingOpenJournalKey = "PendingOpenJournal";
+    public const string HasUsedPhysicsSearchKey = "HasUsedPhysicsSearch";
 
     public const string DefaultLanguage = "ru";
     public const string DefaultTheme = "light";
@@ -466,6 +467,11 @@ public static class UserPreferences
 
     public static IReadOnlyList<string> GetChatReminderHourOptions(string? language = null) =>
         QuoteReminderHourKeys.Select(hour => GetChatReminderHourLabel(hour, language)).ToArray();
+
+    public static bool HasUsedPhysicsSearch => Preferences.Get(HasUsedPhysicsSearchKey, false);
+
+    public static void MarkPhysicsSearchUsed() =>
+        Preferences.Set(HasUsedPhysicsSearchKey, true);
 
     public static void SetPendingOpenJournal() =>
         Preferences.Set(PendingOpenJournalKey, true);

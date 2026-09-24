@@ -1,4 +1,5 @@
 using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.ViewModels;
 using System.Windows.Input;
@@ -35,8 +36,21 @@ public class StartPhysicsViewModel : BaseViewModel
 
         BindNavigation(navigationService);
         OpenProfileCommand = new AsyncCommand(() => navigationService.GoToUserProfileAsync());
-        StartCommand = new AsyncCommand(() => navigationService.GoToPhysicsSearchAsync());
+        StartCommand = new AsyncCommand(() => StartAsync(navigationService));
         SetDone();
+
+        // Returning users already know what this screen explains; jump straight to the search
+        // they actually came here for. First-time users still see the explanation as usual.
+        if (UserPreferences.HasUsedPhysicsSearch)
+        {
+            navigationService.GoToPhysicsSearchAsync().FireAndForget();
+        }
+    }
+
+    private static Task StartAsync(INavigationService navigationService)
+    {
+        UserPreferences.MarkPhysicsSearchUsed();
+        return navigationService.GoToPhysicsSearchAsync();
     }
 
     protected override void RefreshLocalizedProperties()

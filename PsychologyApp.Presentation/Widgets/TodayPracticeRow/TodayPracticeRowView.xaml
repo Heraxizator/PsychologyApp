@@ -22,7 +22,7 @@
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
                 </Border.GestureRecognizers>
-                <Grid RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="4">
+                <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="4">
                     <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
                         <Label
                             Grid.Column="0"
@@ -81,36 +81,13 @@
 
                     <Label
                         Grid.Row="2"
-                        IsVisible="{TemplateBinding HasNudge}"
-                        Text="{TemplateBinding NudgeText}"
+                        IsVisible="{TemplateBinding HasHint}"
+                        Text="{TemplateBinding HintText}"
                         Style="{StaticResource CaptionStyle}"
                         TextColor="{DynamicResource Primary}"
                         FontFamily="{StaticResource SemiBoldFontFamily}"
                         MaxLines="1"
                         LineBreakMode="TailTruncation" />
-                    <Label
-                        Grid.Row="2"
-                        IsVisible="{TemplateBinding HasReasonOnly}"
-                        Text="{TemplateBinding ReasonText}"
-                        Style="{StaticResource CaptionStyle}"
-                        TextColor="{DynamicResource Primary}"
-                        MaxLines="1"
-                        LineBreakMode="TailTruncation" />
-
-                    <Border
-                        Grid.Row="3"
-                        IsVisible="{TemplateBinding HasMeta}"
-                        Style="{StaticResource MetaPillStyle}"
-                        HorizontalOptions="Start"
-                        Padding="8,4">
-                        <Label
-                            Text="{TemplateBinding MetaText}"
-                            Style="{StaticResource CaptionStyle}"
-                            TextColor="{DynamicResource Primary}"
-                            FontFamily="{StaticResource SemiBoldFontFamily}"
-                            MaxLines="1"
-                            LineBreakMode="TailTruncation" />
-                    </Border>
                 </Grid>
             </Border>
         </ControlTemplate>
