@@ -9,7 +9,7 @@
              x:DataType="vm:TechniqueDialogueViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageName}"
-             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource Gray950}}">
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
 
     <ContentPage.Behaviors>
         <behaviors:PageAnalyticsBehavior />

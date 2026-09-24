@@ -10,7 +10,7 @@
              x:DataType="vm:CompanionProfileViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding Title}"
-             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource Gray950}}">
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
 
     <ContentPage.Behaviors>
         <behaviors:PageAnalyticsBehavior />

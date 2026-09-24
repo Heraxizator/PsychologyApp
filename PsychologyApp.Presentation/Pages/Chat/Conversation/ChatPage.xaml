@@ -10,7 +10,7 @@
              x:DataType="vm:ChatViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding Title}"
-             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource Gray950}}">
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
 
     <ContentPage.Behaviors>
         <behaviors:PageAnalyticsBehavior />
@@ -243,7 +243,7 @@
                     StrokeThickness="1"
                     StrokeShape="RoundRectangle 23"
                     Stroke="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource Gray950}}">
+                    BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
                     <Editor
                         x:Name="InputEditor"
                         Text="{Binding DraftText, Mode=TwoWay}"
