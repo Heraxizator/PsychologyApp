@@ -54,10 +54,8 @@ public static partial class AppStrings
     public static string SettingsSizeLabel => T("Размер", "Size");
     public static string SettingsBoldLabel => T("Жирный", "Bold");
     public static string SettingsTestsSection => T("Тесты", "Tests");
-    public static string SettingsPracticeSection => T("Практика", "Practice");
+    public static string SettingsRemindersSection => T("Напоминания", "Reminders");
     public static string SettingsPracticeRemindersLabel => T("Напоминания о практике", "Practice reminders");
-    public static string SettingsQuotesSection => T("Цитаты", "Quotes");
-    public static string SettingsJournalSection => T("Дневник", "Journal");
     public static string SettingsPracticeReminderHourLabel => T("Время напоминания", "Reminder time");
     public static string SettingsPracticeReminderHourPickerTitle => T("Время", "Time");
     public static string PracticeReminderTitle => T("Пора позаниматься", "Time to practice");
@@ -939,7 +937,6 @@ public static partial class AppStrings
     public static string SettingsMoodRemindersLabel => T("Напоминать о check-in", "Remind me to check in");
     public static string SettingsMoodReminderHourLabel => T("Время check-in", "Check-in time");
     public static string SettingsMoodReminderHourPickerTitle => T("Время", "Time");
-    public static string SettingsChatSection => T("Собеседник", "Companion");
     public static string SettingsChatRemindersLabel => T("Напоминать о разговоре", "Remind me to talk");
     public static string SettingsChatReminderHourLabel => T("Время напоминания", "Reminder time");
     public static string SettingsChatReminderHourPickerTitle => T("Время", "Time");

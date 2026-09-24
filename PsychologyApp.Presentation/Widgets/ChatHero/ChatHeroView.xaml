@@ -1,74 +1,44 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:Class="PsychologyApp.Presentation.Widgets.ChatHero.ChatHeroView"
              xmlns:hero="clr-namespace:PsychologyApp.Presentation.Widgets.ChatHero"
              x:DataType="hero:ChatHeroViewModel">
 
-    <Border
-        Margin="4,4,4,14"
-        Padding="20"
-        StrokeThickness="0"
-        StrokeShape="RoundRectangle 22"
-        BackgroundColor="{DynamicResource Primary}">
-        <VerticalStackLayout Spacing="6">
+    <Border Style="{StaticResource BrandCardStyle}" Margin="0,0,0,12" Padding="14,12">
+        <Border.Behaviors>
+            <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+        </Border.Behaviors>
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding PrimaryCommand}" />
+        </Border.GestureRecognizers>
+        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+            <Border Grid.Column="0" Style="{StaticResource IconTileStyle}">
+                <ui:MaterialIconView
+                    IconName="Chat"
+                    IconSize="20"
+                    IconColor="{DynamicResource Primary}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+            </Border>
+            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                <Label
+                    Text="{Binding Title}"
+                    Style="{StaticResource ListRowTitleStyle}" />
+                <Label
+                    Text="{Binding Subtitle}"
+                    Style="{StaticResource CaptionStyle}"
+                    LineBreakMode="TailTruncation"
+                    MaxLines="1" />
+            </VerticalStackLayout>
             <Label
-                Text="{Binding Title}"
-                FontSize="24"
-                FontFamily="{StaticResource SemiBoldFontFamily}"
-                TextColor="White" />
-            <Label
-                Text="{Binding Subtitle}"
-                FontSize="15"
-                TextColor="White"
-                Opacity="0.95"
-                LineBreakMode="TailTruncation"
-                MaxLines="2" />
-            <Label
-                IsVisible="{Binding HasLastChat}"
-                Text="{Binding Preview}"
-                FontSize="13"
-                TextColor="White"
-                Opacity="0.75"
-                LineBreakMode="TailTruncation"
-                MaxLines="2" />
-
-            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16" Margin="0,10,0,0">
-                <Border
-                    Grid.Column="0"
-                    Padding="18,11"
-                    StrokeThickness="0"
-                    StrokeShape="RoundRectangle 14"
-                    BackgroundColor="White">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding PrimaryCommand}" />
-                    </Border.GestureRecognizers>
-                    <Label
-                        Text="{Binding PrimaryText}"
-                        FontFamily="{StaticResource SemiBoldFontFamily}"
-                        TextColor="{StaticResource Primary}" />
-                </Border>
-
-                <HorizontalStackLayout Grid.Column="1" Spacing="16" VerticalOptions="Center">
-                    <Label
-                        IsVisible="{Binding HasLastChat}"
-                        Text="{Binding NewChatText}"
-                        TextColor="White"
-                        FontFamily="{StaticResource MediumFontFamily}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding NewChatCommand}" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label
-                        Text="{Binding AllChatsText}"
-                        TextColor="White"
-                        FontFamily="{StaticResource MediumFontFamily}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding AllChatsCommand}" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                </HorizontalStackLayout>
-            </Grid>
-        </VerticalStackLayout>
+                Grid.Column="2"
+                VerticalOptions="Center"
+                TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                Text="{mi:Material Icon=KeyboardArrowRight}" />
+        </Grid>
     </Border>
 </ContentView>

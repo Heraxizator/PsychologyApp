@@ -123,13 +123,13 @@
                 </Border.Behaviors>
                 <VerticalStackLayout Spacing="0">
                     <Label
-                        Text="{Binding PracticeSectionTitle}"
+                        Text="{Binding RemindersSectionTitle}"
                         Style="{StaticResource SectionTitleStyle}"
                         Margin="0,0,0,10" />
+
                     <ui:SettingSwitchRowView
                         LabelText="{Binding PracticeRemindersLabel}"
                         IsToggled="{Binding PracticeRemindersEnabled}" />
-                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
                     <ui:SettingPickerRowView
                         LabelKind="{x:Static converters:PreferenceLabelKind.PassThrough}"
                         LabelText="{Binding PracticeReminderHourLabel}"
@@ -137,25 +137,11 @@
                         ItemsSource="{Binding PracticeReminderHourOptions}"
                         SelectedItem="{Binding PracticeReminderHour}"
                         IsRowEnabled="{Binding PracticeRemindersEnabled}" />
-                </VerticalStackLayout>
-            </Border>
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
 
-            <Border
-                IsVisible="{Binding AreRemindersSupported}"
-                Style="{StaticResource SettingsSectionCardStyle}"
-                Margin="0">
-                <Border.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="4" />
-                </Border.Behaviors>
-                <VerticalStackLayout Spacing="0">
-                    <Label
-                        Text="{Binding QuotesSectionTitle}"
-                        Style="{StaticResource SectionTitleStyle}"
-                        Margin="0,0,0,10" />
                     <ui:SettingSwitchRowView
                         LabelText="{Binding QuoteRemindersLabel}"
                         IsToggled="{Binding QuoteRemindersEnabled}" />
-                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
                     <ui:SettingPickerRowView
                         LabelKind="{x:Static converters:PreferenceLabelKind.PassThrough}"
                         LabelText="{Binding QuoteReminderHourLabel}"
@@ -163,25 +149,11 @@
                         ItemsSource="{Binding QuoteReminderHourOptions}"
                         SelectedItem="{Binding QuoteReminderHour}"
                         IsRowEnabled="{Binding QuoteRemindersEnabled}" />
-                </VerticalStackLayout>
-            </Border>
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
 
-            <Border
-                IsVisible="{Binding AreRemindersSupported}"
-                Style="{StaticResource SettingsSectionCardStyle}"
-                Margin="0">
-                <Border.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="5" />
-                </Border.Behaviors>
-                <VerticalStackLayout Spacing="0">
-                    <Label
-                        Text="{Binding JournalSectionTitle}"
-                        Style="{StaticResource SectionTitleStyle}"
-                        Margin="0,0,0,10" />
                     <ui:SettingSwitchRowView
                         LabelText="{Binding MoodRemindersLabel}"
                         IsToggled="{Binding MoodRemindersEnabled}" />
-                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
                     <ui:SettingPickerRowView
                         LabelKind="{x:Static converters:PreferenceLabelKind.PassThrough}"
                         LabelText="{Binding MoodReminderHourLabel}"
@@ -189,25 +161,11 @@
                         ItemsSource="{Binding MoodReminderHourOptions}"
                         SelectedItem="{Binding MoodReminderHour}"
                         IsRowEnabled="{Binding MoodRemindersEnabled}" />
-                </VerticalStackLayout>
-            </Border>
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
 
-            <Border
-                IsVisible="{Binding AreRemindersSupported}"
-                Style="{StaticResource SettingsSectionCardStyle}"
-                Margin="0">
-                <Border.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="6" />
-                </Border.Behaviors>
-                <VerticalStackLayout Spacing="0">
-                    <Label
-                        Text="{Binding ChatSectionTitle}"
-                        Style="{StaticResource SectionTitleStyle}"
-                        Margin="0,0,0,10" />
                     <ui:SettingSwitchRowView
                         LabelText="{Binding ChatRemindersLabel}"
                         IsToggled="{Binding ChatRemindersEnabled}" />
-                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
                     <ui:SettingPickerRowView
                         LabelKind="{x:Static converters:PreferenceLabelKind.PassThrough}"
                         LabelText="{Binding ChatReminderHourLabel}"
@@ -220,7 +178,7 @@
 
             <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
                 <Border.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="6" />
+                    <behaviors:ListItemRevealBehavior RevealIndex="4" />
                 </Border.Behaviors>
                 <VerticalStackLayout Spacing="0">
                     <Label

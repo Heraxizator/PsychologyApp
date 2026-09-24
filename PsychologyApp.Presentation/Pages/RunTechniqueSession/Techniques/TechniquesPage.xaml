@@ -81,8 +81,6 @@
                         <Label Text="{Binding ClinicalRiskBanner}" Style="{StaticResource BodyStyle}" />
                     </Border>
 
-                    <chatHero:ChatHeroView BindingContext="{Binding ChatHero}" />
-
                     <today:TodayPracticeRowView
                         CaptionText="{Binding TodayForYouLabel}"
                         StreakText="{Binding StreakDisplay}"
@@ -102,6 +100,8 @@
                             <behaviors:RevealOnAppearingBehavior />
                         </today:TodayPracticeRowView.Behaviors>
                     </today:TodayPracticeRowView>
+
+                    <chatHero:ChatHeroView BindingContext="{Binding ChatHero}" />
 
                     <ui:SectionHeaderView
                         Margin="0,4,0,0"
