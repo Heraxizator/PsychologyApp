@@ -714,6 +714,30 @@ public static partial class AppStrings
         30 => T("30 дней — впечатляющая серия.", "30 days — an impressive streak."),
         _ => PracticeCompletedBody(streak)
     };
+    public static bool IsLifetimeMilestone(long total) =>
+        total is 10 or 25 or 50 or 100 or 250 or 500 or 1000;
+    public static string PracticeLifetimeMilestoneTitle(long total) => total switch
+    {
+        10 => T("10 практик позади!", "10 practices done!"),
+        25 => T("25 практик!", "25 practices!"),
+        50 => T("50 практик!", "50 practices!"),
+        100 => T("100 практик!", "100 practices!"),
+        250 => T("250 практик!", "250 practices!"),
+        500 => T("500 практик!", "500 practices!"),
+        1000 => T("1000 практик!", "1000 practices!"),
+        _ => PracticeCompletedTitle
+    };
+    public static string PracticeLifetimeMilestoneBody(long total) => total switch
+    {
+        10 => T("Первый серьёзный рубеж — вы делаете это регулярно.", "A first real milestone — you're building a habit."),
+        25 => T("25 раз вы выбирали позаботиться о себе.", "25 times you chose to take care of yourself."),
+        50 => T("Полсотни практик — это уже привычка.", "Fifty practices — that's a real habit now."),
+        100 => T("Сотня практик! Впечатляющая работа над собой.", "A hundred practices! Impressive work on yourself."),
+        250 => T("250 практик — вы невероятно последовательны.", "250 practices — you're remarkably consistent."),
+        500 => T("500 практик — это уже часть вашей жизни.", "500 practices — this is truly part of your life now."),
+        1000 => T("1000 практик! Невероятный путь.", "1000 practices! An incredible journey."),
+        _ => PracticeCompletedBody(0)
+    };
     public static string PracticeMoodDelta(int before, int after) =>
         T($"Было {MoodEmoji(before)} {before}/5 → стало {MoodEmoji(after)} {after}/5",
             $"Was {MoodEmoji(before)} {before}/5 → now {MoodEmoji(after)} {after}/5");

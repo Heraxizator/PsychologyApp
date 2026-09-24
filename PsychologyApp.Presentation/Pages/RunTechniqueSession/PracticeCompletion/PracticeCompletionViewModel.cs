@@ -18,6 +18,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
     private TechniqueId? _nextTechniqueId;
     private long? _sessionResultId;
     private int? _preIntensity;
+    private long? _lifetimeCount;
 
     public PracticeCompletionViewModel(
         INavigationService navigationService,
@@ -50,25 +51,44 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         LoadBeforeMoodAsync().FireAndForget();
         LoadSessionOutcomeAsync().FireAndForget();
         LoadNextPracticeAsync(completedItemKey).FireAndForget();
+        LoadLifetimeCountAsync().FireAndForget();
     }
 
     public int StreakDays { get; }
 
-    public bool IsMilestone => AppStrings.IsStreakMilestone(StreakDays);
-    public string CelebrationIconName => StreakDays switch
+    public bool IsLifetimeMilestone => _lifetimeCount is long total && AppStrings.IsLifetimeMilestone(total);
+    public bool IsMilestone => IsLifetimeMilestone || AppStrings.IsStreakMilestone(StreakDays);
+    public string CelebrationIconName => IsLifetimeMilestone
+        ? LifetimeCelebrationIconName(_lifetimeCount!.Value)
+        : StreakDays switch
+        {
+            3 => MaterialIconNames.Whatshot,
+            7 => MaterialIconNames.AutoAwesome,
+            14 => MaterialIconNames.EmojiEvents,
+            30 => MaterialIconNames.WorkspacePremium,
+            _ => MaterialIconNames.CheckCircle
+        };
+    public string TitleText => IsLifetimeMilestone
+        ? AppStrings.PracticeLifetimeMilestoneTitle(_lifetimeCount!.Value)
+        : IsMilestone
+            ? AppStrings.PracticeMilestoneTitle(StreakDays)
+            : AppStrings.PracticeCompletedTitle;
+    public string BodyText => IsLifetimeMilestone
+        ? AppStrings.PracticeLifetimeMilestoneBody(_lifetimeCount!.Value)
+        : IsMilestone
+            ? AppStrings.PracticeMilestoneBody(StreakDays)
+            : AppStrings.PracticeCompletedBody(StreakDays);
+
+    private static string LifetimeCelebrationIconName(long total) => total switch
     {
-        3 => MaterialIconNames.Whatshot,
-        7 => MaterialIconNames.AutoAwesome,
-        14 => MaterialIconNames.EmojiEvents,
-        30 => MaterialIconNames.WorkspacePremium,
+        10 => MaterialIconNames.DoneAll,
+        25 => MaterialIconNames.Insights,
+        50 => MaterialIconNames.AutoAwesome,
+        100 => MaterialIconNames.EmojiEvents,
+        250 => MaterialIconNames.Favorite,
+        500 or 1000 => MaterialIconNames.WorkspacePremium,
         _ => MaterialIconNames.CheckCircle
     };
-    public string TitleText => IsMilestone
-        ? AppStrings.PracticeMilestoneTitle(StreakDays)
-        : AppStrings.PracticeCompletedTitle;
-    public string BodyText => IsMilestone
-        ? AppStrings.PracticeMilestoneBody(StreakDays)
-        : AppStrings.PracticeCompletedBody(StreakDays);
     public string StreakValueText => StreakDays > 0 ? AppStrings.ProfileStreakCount(StreakDays) : string.Empty;
     public string StreakLabelText => AppStrings.ProfileStreakDays;
     public bool HasStreak => StreakDays > 0;
@@ -204,6 +224,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
     protected override void RefreshLocalizedProperties()
     {
         Notify(
+            nameof(IsLifetimeMilestone),
             nameof(IsMilestone),
             nameof(CelebrationIconName),
             nameof(TitleText),
@@ -300,6 +321,23 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         catch
         {
             // Pre-mood is optional; completion still works without delta.
+        }
+    }
+
+    private async Task LoadLifetimeCountAsync()
+    {
+        try
+        {
+            _lifetimeCount = await _userProgressService.CountTechniqueCompletionsAsync();
+            OnPropertyChanged(nameof(IsLifetimeMilestone));
+            OnPropertyChanged(nameof(IsMilestone));
+            OnPropertyChanged(nameof(CelebrationIconName));
+            OnPropertyChanged(nameof(TitleText));
+            OnPropertyChanged(nameof(BodyText));
+        }
+        catch
+        {
+            // Lifetime milestone celebration is a nice-to-have; completion still works without it.
         }
     }
 
