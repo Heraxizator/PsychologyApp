@@ -10,7 +10,9 @@ public sealed record TodayRecommendationContext(
     IReadOnlyDictionary<string, DateTime>? LastPracticeDatesUtc = null,
     TechniqueId? DraftTechniqueId = null,
     TherapyProgramType? ActiveProgramType = null,
-    int ActiveProgramWeek = 0);
+    int ActiveProgramWeek = 0,
+    /// <summary>Average SUDS drop (pre minus post) per technique key, for techniques with enough sessions to trust the number.</summary>
+    IReadOnlyDictionary<string, double>? TechniqueEffectiveness = null);
 
 public enum TodayRecommendationSource
 {

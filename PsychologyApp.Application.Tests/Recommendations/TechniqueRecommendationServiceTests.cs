@@ -131,6 +131,56 @@ public sealed class TechniqueRecommendationServiceTests
     }
 
     [Fact]
+    public void PickFromPool_PrefersTechniqueWithProvenHigherEffectiveness()
+    {
+        Dictionary<string, double> effectiveness = new(StringComparer.Ordinal)
+        {
+            [TechniqueId.Breathing.ToString()] = 4.5,
+            [TechniqueId.Grounding.ToString()] = 1.0
+        };
+
+        TechniqueId picked = TechniqueRecommendationService.PickFromPool(
+            [TechniqueId.Breathing, TechniqueId.Grounding, TechniqueId.SmallStep],
+            lastPracticeDatesUtc: null,
+            effectiveness);
+
+        Assert.Equal(TechniqueId.Breathing, picked);
+    }
+
+    [Fact]
+    public void PickFromPool_RanksUnprovenTechniqueAboveOneProvenNotToHelp()
+    {
+        Dictionary<string, double> effectiveness = new(StringComparer.Ordinal)
+        {
+            [TechniqueId.Grounding.ToString()] = -1.0
+        };
+
+        TechniqueId picked = TechniqueRecommendationService.PickFromPool(
+            [TechniqueId.Grounding, TechniqueId.SmallStep],
+            lastPracticeDatesUtc: null,
+            effectiveness);
+
+        Assert.Equal(TechniqueId.SmallStep, picked);
+    }
+
+    [Fact]
+    public void PickFromPool_FallsBackToRecencyWithoutEffectivenessData()
+    {
+        Dictionary<string, DateTime> dates = new(StringComparer.Ordinal)
+        {
+            [TechniqueId.Breathing.ToString()] = DateTime.UtcNow.AddDays(-10),
+            [TechniqueId.Grounding.ToString()] = DateTime.UtcNow.AddDays(-3)
+        };
+
+        TechniqueId picked = TechniqueRecommendationService.PickFromPool(
+            [TechniqueId.Breathing, TechniqueId.Grounding, TechniqueId.SmallStep],
+            dates,
+            effectiveness: null);
+
+        Assert.Equal(TechniqueId.SmallStep, picked);
+    }
+
+    [Fact]
     public void ResolveNextAfterCompletion_ExcludesCompletedTechnique()
     {
         TodayRecommendationContext context = new(OnboardingConcernKeys.Anxiety);

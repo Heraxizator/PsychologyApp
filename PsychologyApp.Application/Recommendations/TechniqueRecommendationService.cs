@@ -99,13 +99,13 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
                 : TestScoreRecommendation.RecommendTechnique(test.TestId, test.Score.Value)
                     ?? TechniqueId.Experience;
 
-            TechniqueId picked = PickFromPool([fromTest], context.LastPracticeDatesUtc);
+            TechniqueId picked = PickFromPool([fromTest], context.LastPracticeDatesUtc, context.TechniqueEffectiveness);
             return new TodayRecommendationDecision(picked, TodayRecommendationSource.RecentTest, test.TestId);
         }
 
         if (context.TodayMoodLevel is int mood && mood <= 2)
         {
-            TechniqueId picked = PickFromPool(LowMoodPool, context.LastPracticeDatesUtc);
+            TechniqueId picked = PickFromPool(LowMoodPool, context.LastPracticeDatesUtc, context.TechniqueEffectiveness);
             return new TodayRecommendationDecision(picked, TodayRecommendationSource.LowMood);
         }
 
@@ -113,12 +113,12 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
         {
             IReadOnlyList<TechniqueId> programPool =
                 TherapyProgramCatalog.ResolvePool(programType, context.ActiveProgramWeek);
-            TechniqueId fromProgram = PickFromPool(programPool, context.LastPracticeDatesUtc);
+            TechniqueId fromProgram = PickFromPool(programPool, context.LastPracticeDatesUtc, context.TechniqueEffectiveness);
             return new TodayRecommendationDecision(fromProgram, TodayRecommendationSource.OnboardingConcern);
         }
 
         TechniqueId[] pool = ResolveConcernPool(context.Concern);
-        TechniqueId fromPool = PickFromPool(pool, context.LastPracticeDatesUtc);
+        TechniqueId fromPool = PickFromPool(pool, context.LastPracticeDatesUtc, context.TechniqueEffectiveness);
         TodayRecommendationSource source = context.Concern == OnboardingConcernKeys.Explore
             ? TodayRecommendationSource.Explore
             : TodayRecommendationSource.OnboardingConcern;
@@ -154,7 +154,7 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
                 .ToArray();
         }
 
-        return PickFromPool(filtered, context.LastPracticeDatesUtc);
+        return PickFromPool(filtered, context.LastPracticeDatesUtc, context.TechniqueEffectiveness);
     }
 
     public IReadOnlyList<TechniqueId> RecommendForSomaticQuery(string query) =>
@@ -169,11 +169,14 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
     };
 
     /// <summary>
-    /// Prefers never/least-recently practiced; avoids yesterday's or today's pick when an alternative exists.
+    /// Prefers techniques that have measurably helped this person before (higher average SUDS drop);
+    /// among ties or unproven techniques, prefers never/least-recently practiced. Avoids yesterday's or
+    /// today's pick when an alternative exists.
     /// </summary>
     public static TechniqueId PickFromPool(
         IReadOnlyList<TechniqueId> pool,
-        IReadOnlyDictionary<string, DateTime>? lastPracticeDatesUtc)
+        IReadOnlyDictionary<string, DateTime>? lastPracticeDatesUtc,
+        IReadOnlyDictionary<string, double>? effectiveness = null)
     {
         if (pool.Count == 0)
         {
@@ -190,7 +193,8 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
 
         List<(TechniqueId Id, int Index)> ranked = pool
             .Select((id, index) => (Id: id, Index: index))
-            .OrderBy(item => GetLastLocalDate(item.Id, lastPracticeDatesUtc) ?? DateOnly.MinValue)
+            .OrderByDescending(item => GetEffectivenessScore(item.Id, effectiveness))
+            .ThenBy(item => GetLastLocalDate(item.Id, lastPracticeDatesUtc) ?? DateOnly.MinValue)
             .ThenBy(item => item.Index)
             .ToList();
 
@@ -211,6 +215,21 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
         }
 
         return ranked[1].Id;
+    }
+
+    /// <summary>0 (neutral) for techniques with no trustworthy history, so a proven helper (positive average
+    /// SUDS drop) ranks above the unknowns and a proven non-helper (average drop at or below zero) ranks
+    /// below them, without either drowning out the recency-based fallback.</summary>
+    private static double GetEffectivenessScore(
+        TechniqueId techniqueId,
+        IReadOnlyDictionary<string, double>? effectiveness)
+    {
+        if (effectiveness is null || !effectiveness.TryGetValue(techniqueId.ToString(), out double score))
+        {
+            return 0;
+        }
+
+        return score;
     }
 
     private static DateOnly? GetLastLocalDate(
