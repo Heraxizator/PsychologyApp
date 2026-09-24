@@ -19,14 +19,7 @@
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
                     <Border
                         Grid.Column="0"
-                        WidthRequest="52"
-                        HeightRequest="52"
-                        StrokeThickness="0"
-                        BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}"
-                        VerticalOptions="Center">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="12" />
-                        </Border.StrokeShape>
+                        Style="{StaticResource LargeIconTileStyle}">
                         <Grid>
                             <ui:MaterialIconView
                                 IsVisible="{TemplateBinding HasIcon}"

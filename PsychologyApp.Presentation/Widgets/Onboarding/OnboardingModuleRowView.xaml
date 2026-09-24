@@ -23,14 +23,7 @@
                         HorizontalOptions="Start" />
                     <Border
                         Grid.Column="1"
-                        WidthRequest="44"
-                        HeightRequest="44"
-                        StrokeThickness="0"
-                        BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}"
-                        VerticalOptions="Center">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10" />
-                        </Border.StrokeShape>
+                        Style="{StaticResource IconTileStyle}">
                         <ui:MaterialIconView
                             WidthRequest="24"
                             HeightRequest="24"

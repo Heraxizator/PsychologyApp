@@ -88,14 +88,7 @@
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
                         <Border
                             Grid.Column="0"
-                            WidthRequest="44"
-                            HeightRequest="44"
-                            StrokeThickness="0"
-                            BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}"
-                            VerticalOptions="Center">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="12" />
-                            </Border.StrokeShape>
+                            Style="{StaticResource IconTileStyle}">
                             <ui:MaterialIconView
                                 IconName="Phone"
                                 IconSize="22"

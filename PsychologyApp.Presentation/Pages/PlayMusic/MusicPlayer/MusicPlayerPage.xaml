@@ -101,14 +101,7 @@
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource PlayerControlSpacing}">
                         <Border
                             Grid.Column="0"
-                            WidthRequest="48"
-                            HeightRequest="48"
-                            StrokeThickness="0"
-                            BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}"
-                            VerticalOptions="Center">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="12" />
-                            </Border.StrokeShape>
+                            Style="{StaticResource IconTileStyle}">
                             <ui:MaterialIconView
                                 IconName="MenuBook"
                                 IconSize="26"

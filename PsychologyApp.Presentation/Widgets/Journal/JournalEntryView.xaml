@@ -20,14 +20,7 @@
         <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
             <Border
                 Grid.Column="0"
-                WidthRequest="52"
-                HeightRequest="52"
-                StrokeThickness="0"
-                BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}"
-                VerticalOptions="Center">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="12" />
-                </Border.StrokeShape>
+                Style="{StaticResource LargeIconTileStyle}">
                 <Label
                     Text="{Binding MoodGlyph, Source={x:Reference Root}}"
                     FontSize="24"

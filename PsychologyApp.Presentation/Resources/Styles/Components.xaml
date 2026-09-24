@@ -288,6 +288,12 @@
         <Setter Property="VerticalOptions" Value="Center" />
     </Style>
 
+    <!-- Same tile, larger: the icon slot on list-style cards (technique/journal/history rows). -->
+    <Style x:Key="LargeIconTileStyle" TargetType="Border" BasedOn="{StaticResource IconTileStyle}">
+        <Setter Property="WidthRequest" Value="52" />
+        <Setter Property="HeightRequest" Value="52" />
+    </Style>
+
     <Style x:Key="NavBackButtonStyle" TargetType="Border">
         <Setter Property="WidthRequest" Value="44" />
         <Setter Property="HeightRequest" Value="44" />
