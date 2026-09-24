@@ -7,6 +7,7 @@ namespace PsychologyApp.Presentation.Shared.UI.Components;
 public partial class CompletionCelebrationView : ContentView
 {
     private VisualElement? _iconHalo;
+    private ConfettiBurstView? _confetti;
     private bool _milestonePulseStarted;
 
     public CompletionCelebrationView()
@@ -124,6 +125,7 @@ public partial class CompletionCelebrationView : ContentView
     {
         base.OnApplyTemplate();
         _iconHalo = GetTemplateChild("IconHalo") as VisualElement;
+        _confetti = GetTemplateChild("Confetti") as ConfettiBurstView;
     }
 
     private static void OnIsMilestoneChanged(BindableObject bindable, object oldValue, object newValue)
@@ -146,9 +148,14 @@ public partial class CompletionCelebrationView : ContentView
 
         _milestonePulseStarted = true;
         await Task.Delay((int)UiAnimations.MicroDuration);
+        MilestoneCelebrationFeedback.Play();
         VisualElement? target = _iconHalo
             ?? GetTemplateChild("IconHalo") as VisualElement
             ?? this;
-        await UiAnimations.SafePulseAsync(target);
+        ConfettiBurstView? confetti = _confetti
+            ?? GetTemplateChild("Confetti") as ConfettiBurstView;
+        await Task.WhenAll(
+            UiAnimations.SafePulseAsync(target),
+            confetti?.PlayAsync() ?? Task.CompletedTask);
     }
 }

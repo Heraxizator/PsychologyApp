@@ -55,6 +55,11 @@
                             HorizontalTextAlignment="Center" />
                     </VerticalStackLayout>
                 </VerticalStackLayout>
+                <ui:ConfettiBurstView
+                    x:Name="Confetti"
+                    Grid.Row="0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Start" />
                 <VerticalStackLayout
                     Grid.Row="1"
                     Spacing="{StaticResource CompactSpacing}"
