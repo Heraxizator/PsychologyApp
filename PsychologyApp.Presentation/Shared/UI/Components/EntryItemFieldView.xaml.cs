@@ -36,6 +36,7 @@ public partial class EntryItemFieldView : ContentView
         }
 
         view.NotifyFieldKind();
+        view.RatingEntry.ForceSync();
     }
 
     private void OnEntryPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)

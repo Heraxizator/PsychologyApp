@@ -25,7 +25,8 @@
             <Grid x:Name="BodyHost" />
             <ui:ButtonView
                 BodyText="{Binding Source={x:Reference Root}, Path=FinishText}"
-                TapCommand="{Binding Source={x:Reference Root}, Path=FinishCommand}" />
+                TapCommand="{Binding Source={x:Reference Root}, Path=FinishCommand}"
+                IsEnabled="{Binding Source={x:Reference Root}, Path=FinishEnabled}" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentView>

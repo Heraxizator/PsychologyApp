@@ -35,6 +35,9 @@ public partial class TechniqueSessionViewModel
         ? AppStrings.TechniqueStepProgress(CurrentStepIndex + 1, Entries.Count)
         : string.Empty;
 
+    /// <summary>Blocks finishing a multi-step session before the last question has been reached.</summary>
+    public bool CanFinish => !IsWizardMode || !CanGoToNextStep;
+
     public string PreviousStepText => AppStrings.TechniqueStepBack;
     public string NextStepText => AppStrings.TechniqueStepNext;
 
@@ -71,5 +74,6 @@ public partial class TechniqueSessionViewModel
         OnPropertyChanged(nameof(CanGoToPreviousStep));
         OnPropertyChanged(nameof(CanGoToNextStep));
         OnPropertyChanged(nameof(StepProgressText));
+        OnPropertyChanged(nameof(CanFinish));
     }
 }

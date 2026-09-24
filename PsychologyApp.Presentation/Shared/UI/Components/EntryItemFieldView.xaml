@@ -12,6 +12,7 @@
             BodyText="{Binding Entry.Text, Source={x:Reference Root}, Mode=TwoWay}"
             PlaceholderText="{Binding Entry.Placeholder, Source={x:Reference Root}}" />
         <ui:RatingEntryView
+            x:Name="RatingEntry"
             IsVisible="{Binding IsRatingField, Source={x:Reference Root}}"
             TitleText="{Binding Entry.Title, Source={x:Reference Root}}"
             BodyText="{Binding Entry.Text, Source={x:Reference Root}, Mode=TwoWay}"

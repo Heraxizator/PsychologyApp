@@ -5,7 +5,7 @@
              x:Name="Root"
              HorizontalOptions="Fill">
     <Border Style="{StaticResource InputBorderStyle}">
-        <VerticalStackLayout Spacing="4">
+        <VerticalStackLayout Spacing="10">
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
                 <Label
                     Grid.Column="0"
@@ -22,21 +22,49 @@
                         </DataTrigger>
                     </Label.Triggers>
                 </Label>
-                <Label
+                <Border
                     Grid.Column="1"
-                    Text="{Binding ValueDisplay, Source={x:Reference Root}}"
-                    Style="{StaticResource BodyStyle}"
-                    FontFamily="{StaticResource MediumFontFamily}"
-                    VerticalOptions="Center"
-                    HorizontalTextAlignment="End" />
+                    Padding="12,5"
+                    StrokeThickness="0"
+                    BackgroundColor="{Binding AccentColor, Source={x:Reference Root}}"
+                    VerticalOptions="Center">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12" />
+                    </Border.StrokeShape>
+                    <Border.Triggers>
+                        <DataTrigger
+                            Binding="{Binding HasValue, Source={x:Reference Root}}"
+                            TargetType="Border"
+                            Value="False">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Label
+                        Text="{Binding ValueDisplay, Source={x:Reference Root}}"
+                        Style="{StaticResource BodyStyle}"
+                        FontFamily="{StaticResource SemiBoldFontFamily}"
+                        TextColor="{StaticResource White}" />
+                </Border>
             </Grid>
             <Slider
                 x:Name="RatingSlider"
-                Margin="0,-4,0,0"
+                Margin="0,-2,0,0"
                 Minimum="{Binding Minimum, Source={x:Reference Root}}"
                 Maximum="{Binding Maximum, Source={x:Reference Root}}"
                 Value="{Binding SliderValue, Source={x:Reference Root}, Mode=TwoWay}"
+                MinimumTrackColor="{Binding AccentColor, Source={x:Reference Root}}"
+                ThumbColor="{Binding AccentColor, Source={x:Reference Root}}"
                 ValueChanged="OnSliderValueChanged" />
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <Label
+                    Grid.Column="0"
+                    Text="{Binding MinimumCaption, Source={x:Reference Root}}"
+                    Style="{StaticResource CaptionStyle}" />
+                <Label
+                    Grid.Column="2"
+                    Text="{Binding MaximumCaption, Source={x:Reference Root}}"
+                    Style="{StaticResource CaptionStyle}" />
+            </Grid>
         </VerticalStackLayout>
     </Border>
 </ContentView>

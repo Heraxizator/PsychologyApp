@@ -21,6 +21,9 @@ public partial class TechniquePageShell : ContentView
     public static readonly BindableProperty FinishCommandProperty =
         BindableProperty.Create(nameof(FinishCommand), typeof(ICommand), typeof(TechniquePageShell));
 
+    public static readonly BindableProperty FinishEnabledProperty =
+        BindableProperty.Create(nameof(FinishEnabled), typeof(bool), typeof(TechniquePageShell), true);
+
     public static readonly BindableProperty BodyContentProperty =
         BindableProperty.Create(
             nameof(BodyContent),
@@ -65,6 +68,12 @@ public partial class TechniquePageShell : ContentView
     {
         get => (ICommand?)GetValue(FinishCommandProperty);
         set => SetValue(FinishCommandProperty, value);
+    }
+
+    public bool FinishEnabled
+    {
+        get => (bool)GetValue(FinishEnabledProperty);
+        set => SetValue(FinishEnabledProperty, value);
     }
 
     public View? BodyContent

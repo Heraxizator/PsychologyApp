@@ -18,7 +18,8 @@
         Algorithm="{Binding Algorithm}"
         BackCommand="{Binding BackCommand}"
         TheoryCommand="{Binding Theory}"
-        FinishCommand="{Binding CompleteCommand}">
+        FinishCommand="{Binding CompleteCommand}"
+        FinishEnabled="{Binding CanFinish}">
         <controls:TechniquePageShell.Behaviors>
             <behaviors:RevealOnAppearingBehavior />
         </controls:TechniquePageShell.Behaviors>
