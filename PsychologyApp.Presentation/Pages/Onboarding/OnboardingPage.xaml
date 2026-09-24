@@ -10,7 +10,7 @@
              Shell.NavBarIsVisible="False">
 
     <Grid
-        Padding="{StaticResource LayoutTabPageMarginThickness}"
+        Padding="{StaticResource LayoutPageMarginThickness}"
         RowDefinitions="Auto,*,Auto"
         RowSpacing="{StaticResource LayoutSpacing}">
 
