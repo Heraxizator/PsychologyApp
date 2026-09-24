@@ -131,7 +131,6 @@
                                 <ui:SettingSwitchRowView
                                     LabelText="{Binding OnboardingRemindersLabel}"
                                     IsToggled="{Binding PracticeRemindersEnabled}" />
-                                <BoxView Style="{StaticResource SettingRowDividerStyle}" />
                                 <ui:SettingPickerRowView
                                     LabelKind="{x:Static converters:PreferenceLabelKind.PassThrough}"
                                     LabelText="{Binding OnboardingReminderHourLabel}"
