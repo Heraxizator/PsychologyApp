@@ -72,6 +72,56 @@ public class LexiconSituationAnalyzerTests
         Assert.Equal(CompanionEmotion.Sadness, _analyzer.Analyze("мне тяжело на душе").Emotion);
         Assert.Equal(CompanionEmotion.Anger, _analyzer.Analyze("Всё ЗЛОСТЬ").Emotion);
     }
+
+    [Theory]
+    [InlineData("у меня тревжусь весь день")]
+    [InlineData("тревоожусь без причины")]
+    public void Tolerates_one_typo_in_a_stem(string text) =>
+        Assert.Equal(CompanionEmotion.Anxiety, _analyzer.Analyze(text).Emotion);
+
+    [Fact]
+    public void Does_not_fuzzy_match_an_unrelated_word()
+    {
+        // "тренировка" (workout) must not be pulled toward Anxiety just because it shares a prefix shape with "тревога".
+        SituationAnalysis result = _analyzer.Analyze("у меня сегодня тренировка");
+
+        Assert.NotEqual(CompanionEmotion.Anxiety, result.Emotion);
+    }
+
+    [Fact]
+    public void Negation_reaches_across_one_intensity_modifier()
+    {
+        SituationAnalysis result = _analyzer.Analyze("я не сильно тревожусь из-за этого");
+
+        Assert.NotEqual(CompanionEmotion.Anxiety, result.Emotion);
+    }
+
+    [Fact]
+    public void Two_separate_sentences_are_not_treated_as_one_negated_clause()
+    {
+        // Regression guard: normalization drops the period, so "тревожусь. Не могу спать" and
+        // "тревожусь не могу спать" tokenize identically — negation must not reach backward across it.
+        SituationAnalysis result = _analyzer.Analyze("Я очень тревожусь. Не могу нормально спать");
+
+        Assert.Equal(CompanionEmotion.Anxiety, result.Emotion);
+    }
+
+    [Fact]
+    public void Phrase_matches_with_an_inserted_word()
+    {
+        SituationAnalysis result = _analyzer.Analyze("не могу нормально дышать, всё сжалось");
+
+        Assert.Equal(CompanionEmotion.Panic, result.Emotion);
+    }
+
+    [Fact]
+    public void Negated_phrase_is_skipped()
+    {
+        // "крутятся мысли" is a listed Overthinking phrase; negated right before its first word it must not fire.
+        SituationAnalysis result = _analyzer.Analyze("уже не крутятся мысли, стало гораздо спокойнее");
+
+        Assert.NotEqual(CompanionEmotion.Overthinking, result.Emotion);
+    }
 }
 
 public class CompanionReplyGuardTests

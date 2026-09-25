@@ -58,7 +58,7 @@ public class AnalyzerDatasetTests(ITestOutputHelper output)
     {
         double accuracy = Measure("nlu-heldout.json", "Held-out set (never tuned on)");
 
-        // Measured 30% after widening negation lookback and making phrase terms gap-tolerant (was 24%). The floor only detects breakage.
+        // Measured 32% after widening negation, making phrase terms gap-tolerant, and adding typo tolerance (was 24%). The floor only detects breakage.
         Assert.True(accuracy >= 0.20, $"Held-out accuracy fell to {accuracy:P0}.");
     }
 

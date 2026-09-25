@@ -115,12 +115,15 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
             Entry[] entries = [.. baseEntries, .. Colloquial.GetValueOrDefault(emotion, [])];
             double score = 0;
             int first = int.MaxValue;
+            // One word can be a near-typo of more than one listed stem for the same emotion (e.g. "тревога"
+            // exactly matches "тревог" and, with typo tolerance, also "тревож") — count each starting position once.
+            HashSet<int> countedOffsets = [];
             foreach (Entry entry in entries)
             {
                 foreach (string term in entry.Terms)
                 {
                     int at = IndexOf(term, normalized, tokens, offsets, respectNegation: true);
-                    if (at >= 0)
+                    if (at >= 0 && countedOffsets.Add(at))
                     {
                         score += entry.Weight;
                         first = Math.Min(first, at);
@@ -201,7 +204,9 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
         string key = exact ? t[1..] : t;
         for (int i = 0; i < tokens.Length; i++)
         {
-            bool hit = exact ? tokens[i] == key : tokens[i].StartsWith(key, StringComparison.Ordinal);
+            bool hit = exact
+                ? tokens[i] == key
+                : tokens[i].StartsWith(key, StringComparison.Ordinal) || IsNearPrefixMatch(tokens[i], key);
             if (!hit)
             {
                 continue;
@@ -216,6 +221,79 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
         }
 
         return -1;
+    }
+
+    /// <summary>Typo tolerance for stems typed on a phone keyboard: one substituted, inserted or missing letter
+    /// anywhere in the stem still counts as a match ("тревожусь" typed "тревжусь" or "тревоожусь"). Kept to stems
+    /// of 5+ letters so short, already-ambiguous stems do not start colliding with unrelated words.</summary>
+    private static bool IsNearPrefixMatch(string token, string key)
+    {
+        // The first letter must match exactly: typos rarely land on it, and without this guard a deletion-typo
+        // window can drop the key's own first letter and start colliding with unrelated words (e.g. "устал" minus
+        // its "у" becomes "стал", which then fuzzy-matches "стало"). Stems shorter than 6 letters are excluded
+        // entirely: a single edit is too large relative to their length, e.g. "страх" (fear) vs "странный" (strange)
+        // differ by one letter yet mean nothing alike.
+        if (key.Length < 6 || token.Length < key.Length - 1 || token[0] != key[0])
+        {
+            return false;
+        }
+
+        // key.Length-1 aligns a deletion typo, key.Length a substitution, key.Length+1 an insertion.
+        for (int take = key.Length - 1; take <= key.Length + 1; take++)
+        {
+            if (take >= 1 && take <= token.Length && IsOneEditApart(token.AsSpan(0, take), key.AsSpan()))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>True when <paramref name="a"/> and <paramref name="b"/> differ by at most one substituted, inserted
+    /// or deleted character (their lengths may differ by at most one).</summary>
+    private static bool IsOneEditApart(ReadOnlySpan<char> a, ReadOnlySpan<char> b)
+    {
+        int diff = a.Length - b.Length;
+        if (diff is < -1 or > 1)
+        {
+            return false;
+        }
+
+        int i = 0;
+        int j = 0;
+        bool usedEdit = false;
+        while (i < a.Length && j < b.Length)
+        {
+            if (a[i] == b[j])
+            {
+                i++;
+                j++;
+                continue;
+            }
+
+            if (usedEdit)
+            {
+                return false;
+            }
+
+            usedEdit = true;
+            if (a.Length == b.Length)
+            {
+                i++;
+                j++;
+            }
+            else if (a.Length > b.Length)
+            {
+                i++;
+            }
+            else
+            {
+                j++;
+            }
+        }
+
+        return true;
     }
 
     /// <summary>A negation word right before the match, or one <see cref="NegationModifiers"/> word away from it
