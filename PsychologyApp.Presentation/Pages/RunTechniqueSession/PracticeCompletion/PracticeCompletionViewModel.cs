@@ -168,13 +168,6 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         private set => SetProperty(ref _nextPracticeIcon, value);
     }
 
-    private string _nextPracticeActionText = string.Empty;
-    public string NextPracticeActionText
-    {
-        get => _nextPracticeActionText;
-        private set => SetProperty(ref _nextPracticeActionText, value);
-    }
-
     private int _beforeMoodLevel;
     public int BeforeMoodLevel
     {
@@ -245,8 +238,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
             nameof(HasMoodDelta),
             nameof(MoodDeltaText),
             nameof(NextPracticeCaption),
-            nameof(NextPracticeReason),
-            nameof(NextPracticeActionText));
+            nameof(NextPracticeReason));
     }
 
     private void NotifyMoodDelta()
@@ -364,7 +356,6 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
             NextPracticeSubtitle = result.Subtitle;
             NextPracticeReason = result.ReasonText;
             NextPracticeIcon = result.IconName;
-            NextPracticeActionText = result.ActionText;
             HasNextPractice = true;
         }
         catch

@@ -44,7 +44,6 @@
                     Subtitle="{Binding NextPracticeSubtitle}"
                     ReasonText="{Binding NextPracticeReason}"
                     IconName="{Binding NextPracticeIcon}"
-                    ActionText="{Binding NextPracticeActionText}"
                     TapCommand="{Binding NextPracticeCommand}">
                     <today:TodayPracticeRowView.Behaviors>
                         <behaviors:ListItemRevealBehavior RevealIndex="0" />

@@ -115,17 +115,6 @@
 	  <IsPublishable>False</IsPublishable>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
-	  <RunAOTCompilation>False</RunAOTCompilation>
-	  <PublishTrimmed>False</PublishTrimmed>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
-	  <RunAOTCompilation>True</RunAOTCompilation>
-	  <EnableLLVM>True</EnableLLVM>
-	  <PublishTrimmed>True</PublishTrimmed>
-	</PropertyGroup>
-
 	<ItemGroup Condition="'$(Configuration)' == 'Release' And $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
 		<ProguardConfiguration Include="Platforms\Android\proguard-rules.pro" />
 	</ItemGroup>
