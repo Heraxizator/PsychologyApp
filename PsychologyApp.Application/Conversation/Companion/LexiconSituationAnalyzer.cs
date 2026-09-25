@@ -10,6 +10,10 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
 
     private static readonly HashSet<string> Negations = ["не", "нет", "ни", "no", "not", "never", "dont", "cant", "cannot"];
 
+    // A negation is still recognised across one of these ("не сильно тревожусь"), but not across an arbitrary word —
+    // normalization drops sentence punctuation, so an unbounded look-back would misread "Не знаю. Тревожусь" as negated.
+    private static readonly HashSet<string> NegationModifiers = ["сильно", "очень", "так", "особо", "слишком", "совсем", "прямо", "really", "very", "so", "too", "that"];
+
     private sealed record Entry(int Weight, string[] Terms);
 
     private static readonly Dictionary<CompanionEmotion, Entry[]> Emotions = new()
@@ -181,6 +185,8 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
         return string.Join(' ', new string(chars).Split(' ', StringSplitOptions.RemoveEmptyEntries));
     }
 
+    private const int PhraseWordGap = 2;
+
     /// <returns>Character position of the earliest match in the normalised text, or -1.</returns>
     private static int IndexOf(string term, string normalized, string[] tokens, int[] offsets, bool respectNegation)
     {
@@ -188,7 +194,7 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
 
         if (t.Contains(' '))
         {
-            return normalized.IndexOf(t, StringComparison.Ordinal);
+            return IndexOfPhrase(t.Split(' ', StringSplitOptions.RemoveEmptyEntries), tokens, offsets, respectNegation);
         }
 
         bool exact = t.StartsWith('=');
@@ -201,12 +207,75 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
                 continue;
             }
 
-            if (respectNegation && i > 0 && Negations.Contains(tokens[i - 1]))
+            if (respectNegation && IsNegated(tokens, i))
             {
                 continue;
             }
 
             return offsets[i];
+        }
+
+        return -1;
+    }
+
+    /// <summary>A negation word right before the match, or one <see cref="NegationModifiers"/> word away from it
+    /// ("не сильно тревожусь"). Not checked after the match: normalization drops sentence punctuation, so "тревожусь.
+    /// Не могу спать" and "тревожусь не могу спать" become indistinguishable and a look-ahead would misfire on the first.</summary>
+    private static bool IsNegated(string[] tokens, int index)
+    {
+        if (index >= 1 && Negations.Contains(tokens[index - 1]))
+        {
+            return true;
+        }
+
+        return index >= 2 && NegationModifiers.Contains(tokens[index - 1]) && Negations.Contains(tokens[index - 2]);
+    }
+
+    /// <summary>Matches a multi-word term even when up to <see cref="PhraseWordGap"/> extra words are inserted between
+    /// its words ("не могу нормально дышать" still matches "не могу дышать"), and skips it when immediately negated.</summary>
+    /// <returns>Character position of the phrase's first word, or -1.</returns>
+    private static int IndexOfPhrase(string[] words, string[] tokens, int[] offsets, bool respectNegation)
+    {
+        for (int start = 0; start < tokens.Length; start++)
+        {
+            if (!tokens[start].StartsWith(words[0], StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            if (respectNegation && start > 0 && Negations.Contains(tokens[start - 1]))
+            {
+                continue;
+            }
+
+            int cursor = start;
+            bool matched = true;
+            for (int w = 1; w < words.Length; w++)
+            {
+                int next = -1;
+                int limit = Math.Min(tokens.Length - 1, cursor + PhraseWordGap + 1);
+                for (int k = cursor + 1; k <= limit; k++)
+                {
+                    if (tokens[k].StartsWith(words[w], StringComparison.Ordinal))
+                    {
+                        next = k;
+                        break;
+                    }
+                }
+
+                if (next < 0)
+                {
+                    matched = false;
+                    break;
+                }
+
+                cursor = next;
+            }
+
+            if (matched)
+            {
+                return offsets[start];
+            }
         }
 
         return -1;
