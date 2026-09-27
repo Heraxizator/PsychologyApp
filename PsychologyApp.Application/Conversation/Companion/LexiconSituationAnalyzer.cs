@@ -20,60 +20,64 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
     {
         [CompanionEmotion.Panic] =
         [
-            new(2, ["паник", "паническ", "задыха", "не могу дышать", "трудно дышать", "не хватает воздуха", "сердце колотит", "сердце бьется", "сердце выскакива", "накрыло", "накрывает", "умру", "умираю", "приступ", "дереализ", "нереальн",
-                    "panic", "cant breathe", "cannot breathe", "heart racing", "heart pounding", "hyperventilat", "attack"])
+            new(2, ["паник", "паническ", "задыха", "не могу дышать", "трудно дышать", "не хватает воздуха", "нечем дышать", "сердце колотит", "сердце бьется", "сердце выскакива", "накрыло", "накрывает", "умру", "умираю",
+                    "приступ", "дереализ", "нереальн", "=ужас", "такой ужас", "в ужасе", "теряю сознание", "потерять сознание", "пульс зашкаливает",
+                    "panic", "cant breathe", "cannot breathe", "cant get air", "cannot get air", "heart racing", "heart pounding", "hyperventilat", "attack", "going to die"])
         ],
         [CompanionEmotion.Anxiety] =
         [
-            new(2, ["тревог", "тревож", "боюсь", "страшно", "anxi", "afraid", "scared"]),
-            new(1, ["волную", "волнов", "беспокой", "страх", "бояться", "боязн", "переживаю", "нервнича", "неуверен", "не по себе", "worr", "nervous", "fear", "uneasy", "on edge", "stress"])
+            new(2, ["тревог", "тревож", "боюсь", "страшно", "dread", "anxi", "afraid", "scared"]),
+            new(1, ["волную", "волнов", "беспокой", "страх", "бояться", "боязн", "переживаю", "нервнича", "неуверен", "не по себе", "неопределенн", "worr", "nervous", "fear", "uneasy", "on edge", "stress"])
         ],
         [CompanionEmotion.Overthinking] =
         [
-            new(2, ["накручива", "прокручива", "зациклил", "не могу перестать думать", "мысли крутятся", "крутятся мысли", "навязчив", "лезут мысли", "мысли лезут", "постоянно думаю", "все думаю", "не выходит из головы",
-                    "overthink", "ruminat", "cant stop thinking", "cannot stop thinking", "replaying", "spiral", "racing thoughts", "obsess"])
+            new(2, ["накручива", "прокручива", "зациклил", "не могу перестать думать", "не могу переключиться", "мысли крутятся", "крутятся мысли", "навязчив", "лезут мысли", "мысли лезут", "постоянно думаю", "все думаю", "не выходит из головы", "голова гудит",
+                    "overthink", "ruminat", "cant stop thinking", "cannot stop thinking", "replaying", "spiral", "racing thoughts", "obsess"]),
+            new(1, ["обдумыва"])
         ],
         [CompanionEmotion.Anger] =
         [
-            new(2, ["злюсь", "злит", "злост", "=зол", "=зла", "=злой", "бесит", "бешу", "ярост", "ненавиж", "взбес", "выбесил", "angry", "anger", "furious", "rage", "pissed", "hate"]),
-            new(1, ["раздража", "достал", "достаёт", "достает", "irritat", "annoy", "=mad", "mad at"])
+            new(2, ["злюсь", "злит", "злост", "=зол", "=зла", "=злой", "бесит", "бешу", "ярост", "бешенств", "ненавиж", "взбес", "выбесил", "хочется взорваться", "angry", "anger", "furious", "rage", "pissed", "hate"]),
+            new(1, ["раздража", "достал", "достаёт", "достает", "терпеть не могу", "irritat", "annoy", "=mad", "mad at"])
         ],
         [CompanionEmotion.Resentment] =
         [
             new(2, ["обид", "обиж", "несправедлив", "предал", "унизил", "унижен", "resent", "unfair", "betray", "humiliat"]),
-            new(1, ["игнорир", "не ценят", "не уважа", "оскорбил", "обесцен", "пренебрег", "ignored", "disrespect", "=hurt", "offended", "unappreciated"])
+            new(1, ["игнорир", "не ценят", "не уважа", "оскорбил", "обесцен", "пренебрег", "задел", "ignored", "disrespect", "=hurt", "offended", "unappreciated", "sting"])
         ],
         [CompanionEmotion.Guilt] =
         [
-            new(2, ["виноват", "чувство вины", "чувствую вину", "=вину", "винов", "стыд", "guilt", "ashamed", "shame", "my fault"]),
-            new(1, ["жалею", "ошибся", "ошиблась", "косяк", "подвел", "подвела", "не оправдал", "regret", "let down", "screwed up"])
+            // "cant forgive myself" is kept as one phrase, negation and all: the inability to forgive is itself
+            // the guilt signal, unlike most phrases where a preceding negation cancels the match.
+            new(2, ["виноват", "чувство вины", "чувствую вину", "=вину", "винов", "=виню", "=винюсь", "стыд", "казню себя", "cant forgive myself", "cannot forgive myself", "guilt", "ashamed", "shame", "my fault"]),
+            new(1, ["жалею", "ошибся", "ошиблась", "косяк", "подвел", "подвела", "не оправдал", "неловк", "regret", "let down", "screwed up"])
         ],
         [CompanionEmotion.Sadness] =
         [
-            new(2, ["груст", "тоск", "печал", "безнадеж", "депресс", "ничего не радует", "хочется плакать", "sad", "hopeless", "depress", "grief"]),
-            new(1, ["плач", "слез", "пустот", "=пусто", "тяжело на душе", "унын", "подавлен", "cry", "tears", "empty", "=down"])
+            new(2, ["груст", "тоск", "печал", "безнадеж", "депресс", "ничего не радует", "хочется плакать", "не вижу смысла", "sad", "hopeless", "depress", "grief"]),
+            new(1, ["плач", "слез", "пустот", "=пусто", "тяжело на душе", "унын", "подавлен", "нет настроения", "cry", "tears", "empty", "=down"])
         ],
         [CompanionEmotion.Exhaustion] =
         [
-            new(2, ["устал", "выгор", "нет сил", "сил нет", "измотан", "вымотан", "истощ", "tired", "exhaust", "burnout", "burn out", "drained", "no energy"]),
-            new(1, ["не хочу ничего", "апати", "перегруз", "не высыпа", "бессонниц", "не могу уснуть", "не сплю", "не спится", "cant sleep", "cannot sleep", "insomnia", "overwhelm"])
+            new(2, ["устал", "выгор", "сгора", "нет сил", "сил нет", "измотан", "вымотан", "истощ", "батарейка на нуле", "тело отказывает", "спать сутками", "tired", "exhaust", "burnout", "burn out", "drained", "no energy", "wiped out"]),
+            new(1, ["не хочу ничего", "апати", "перегруз", "не высыпа", "бессонниц", "не могу уснуть", "не сплю", "не спится", "без отдыха", "cant sleep", "cannot sleep", "insomnia", "overwhelm"])
         ],
         [CompanionEmotion.Loneliness] =
         [
-            new(2, ["одинок", "никому не нужен", "никому не нужна", "lonely", "isolated"]),
+            new(2, ["одинок", "никому не нужен", "никому не нужна", "никому нет дела", "lonely", "isolated"]),
             new(1, ["я одна", "я один", "никого нет", "никто не понима", "не с кем", "alone", "nobody", "no one cares"])
         ],
         [CompanionEmotion.Procrastination] =
         [
-            new(2, ["прокрастин", "откладыва", "не могу заставить", "не могу начать", "не могу собраться", "procrastinat", "putting off", "cant start", "cannot start"]),
+            new(2, ["прокрастин", "откладыва", "не могу заставить", "не могу начать", "не могу собраться", "не могу подступиться", "procrastinat", "putting off", "cant start", "cannot start"]),
             new(1, ["=лень", "лениться", "дедлайн", "сроки горят", "ничего не делаю", "не получается начать", "cant focus", "deadline", "lazy"])
         ]
     };
 
     private static readonly string[] BodyTerms =
     [
-        "сердц", "давит", "=грудь", "груд", "живот", "желуд", "голов", "тошн", "комок", "зажим", "мышц", "плеч", "дрож", "трясет", "трясу", "потею", "горл", "сжима", "спазм",
-        "chest", "stomach", "heart", "shaking", "trembl", "nausea", "headache", "tight", "lump", "shoulders", "throat", "sweat"
+        "сердц", "давит", "=грудь", "груд", "живот", "желуд", "голов", "тошн", "комок", "зажим", "мышц", "плеч", "дрож", "трясет", "трясу", "потею", "горл", "сжима", "спазм", "пульс", "ледяные руки",
+        "chest", "stomach", "heart", "shaking", "trembl", "nausea", "headache", "tight", "lump", "shoulders", "throat", "sweat", "numb"
     ];
 
     private static readonly string[] IntensityTerms =
@@ -188,16 +192,18 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
         return string.Join(' ', new string(chars).Split(' ', StringSplitOptions.RemoveEmptyEntries));
     }
 
-    private const int PhraseWordGap = 2;
+    private const int PhraseWordGap = 3;
 
     /// <returns>Character position of the earliest match in the normalised text, or -1.</returns>
     private static int IndexOf(string term, string normalized, string[] tokens, int[] offsets, bool respectNegation)
     {
         string t = term.Replace('ё', 'е');
 
-        if (t.Contains(' '))
+        if (t.Contains(' ') || t.Contains('-'))
         {
-            return IndexOfPhrase(t.Split(' ', StringSplitOptions.RemoveEmptyEntries), tokens, offsets, respectNegation);
+            // Normalization turns a hyphen into a token boundary just like a space, so a term written with one
+            // ("вдруг что-то случится") must be split the same way, or its hyphenated word can never match.
+            return IndexOfPhrase(t.Split([' ', '-'], StringSplitOptions.RemoveEmptyEntries), tokens, offsets, respectNegation);
         }
 
         bool exact = t.StartsWith('=');
@@ -223,9 +229,9 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
         return -1;
     }
 
-    /// <summary>Typo tolerance for stems typed on a phone keyboard: one substituted, inserted or missing letter
-    /// anywhere in the stem still counts as a match ("тревожусь" typed "тревжусь" or "тревоожусь"). Kept to stems
-    /// of 5+ letters so short, already-ambiguous stems do not start colliding with unrelated words.</summary>
+    /// <summary>Typo tolerance for stems typed on a phone keyboard: one inserted or missing letter anywhere in the
+    /// stem still counts as a match ("тревожусь" typed "тревжусь" or "тревоожусь"). Kept to stems of 6+ letters so
+    /// short, already-ambiguous stems do not start colliding with unrelated words.</summary>
     private static bool IsNearPrefixMatch(string token, string key)
     {
         // The first letter must match exactly: typos rarely land on it, and without this guard a deletion-typo
@@ -238,8 +244,11 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
             return false;
         }
 
-        // key.Length-1 aligns a deletion typo, key.Length a substitution, key.Length+1 an insertion.
-        for (int take = key.Length - 1; take <= key.Length + 1; take++)
+        // Only insertion (key.Length+1) and deletion (key.Length-1) windows are tried — same-length substitution
+        // is deliberately excluded: Russian's rich vowel inflection means two unrelated words of equal length often
+        // differ by exactly one letter ("пределе", at the limit, vs "предал", betrayed), which made substitution
+        // tolerance a net false-positive source rather than a real typo-catcher.
+        foreach (int take in stackalloc[] { key.Length - 1, key.Length + 1 })
         {
             if (take >= 1 && take <= token.Length && IsOneEditApart(token.AsSpan(0, take), key.AsSpan()))
             {
