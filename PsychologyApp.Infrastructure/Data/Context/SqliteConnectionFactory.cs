@@ -11,7 +11,9 @@ public sealed class SqliteConnectionFactory : IDbConnectionFactory
 
     public async Task<DbConnection> CreateOpenConnectionAsync(CancellationToken cancellationToken = default)
     {
-        var connection = new SqliteConnection($"Data Source={DatabasePath};Cache=Shared");
+        // No Cache=Shared: shared-cache mode swaps WAL's reader/writer concurrency for table-level locks, and Microsoft
+        // advises against combining it with WAL. Pooling already makes opening a fresh connection per operation cheap.
+        var connection = new SqliteConnection($"Data Source={DatabasePath}");
         await connection.OpenAsync(cancellationToken);
         await SqliteSchema.ConfigureConnectionAsync(connection, cancellationToken);
         SqlitePaths.TryProtectDatabaseFile(DatabasePath);

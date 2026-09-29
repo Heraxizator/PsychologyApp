@@ -1,7 +1,9 @@
+using System.Runtime.CompilerServices;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Configuration;
+using PsychologyApp.Infrastructure.Data.Context;
 
 namespace PsychologyApp.Infrastructure.Data.Repositories.Base;
 
@@ -23,6 +25,7 @@ public abstract class SqliteRepositoryBase
     // Every IDbConnectionFactory implementation already configures (PRAGMA busy_timeout, WAL) the connection it opens
     // (see SqliteConnectionFactory / SharedMemoryConnectionFactory), so this used to run the same three PRAGMA statements
     // a second time on every single repository call. Just hand the already-configured connection back.
-    protected async Task<SqliteConnection> OpenConnectionAsync(CancellationToken cancellationToken = default) =>
-        (SqliteConnection)await _connectionFactory.CreateOpenConnectionAsync(cancellationToken);
+    // Returned through the operation lane so the awaiting repository method continues — and queries — off the UI thread.
+    protected ConfiguredTaskAwaitable<SqliteConnection> OpenConnectionAsync(CancellationToken cancellationToken = default) =>
+        SqliteOperationLane.OpenAsync(_connectionFactory, cancellationToken);
 }

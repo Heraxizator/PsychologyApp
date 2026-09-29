@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Options;
@@ -42,10 +43,6 @@ public sealed class QuoteCatalogVersionStore(
             cancellationToken: cancellationToken));
     }
 
-    private async Task<SqliteConnection> OpenConnectionAsync(CancellationToken cancellationToken)
-    {
-        SqliteConnection connection = (SqliteConnection)await connectionFactory.CreateOpenConnectionAsync(cancellationToken);
-        await SqliteSchema.ConfigureConnectionAsync(connection, cancellationToken);
-        return connection;
-    }
+    private ConfiguredTaskAwaitable<SqliteConnection> OpenConnectionAsync(CancellationToken cancellationToken) =>
+        SqliteOperationLane.OpenAsync(connectionFactory, cancellationToken);
 }

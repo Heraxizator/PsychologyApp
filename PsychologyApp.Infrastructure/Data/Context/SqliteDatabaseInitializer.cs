@@ -6,37 +6,37 @@ namespace PsychologyApp.Infrastructure.Data.Context;
 
 public sealed class SqliteDatabaseInitializer(IDbConnectionFactory connectionFactory) : IDatabaseInitializer
 {
-    public async Task InitializeAsync(CancellationToken cancellationToken = default)
-    {
-        await using System.Data.Common.DbConnection connection =
-            await connectionFactory.CreateOpenConnectionAsync(cancellationToken);
+    // The factory already applies the connection PRAGMAs, so neither path repeats them.
+    public Task InitializeAsync(CancellationToken cancellationToken = default) =>
+        SqliteOperationLane.RunAsync(connectionFactory, () => EnsureSchemaAsync(cancellationToken), cancellationToken);
 
-        await SqliteSchema.ConfigureConnectionAsync(connection, cancellationToken);
-        await SqliteSchema.EnsureSchemaAsync(connection, cancellationToken);
-    }
-
-    public async Task RecreateDatabaseAsync(CancellationToken cancellationToken = default)
-    {
-        await using (System.Data.Common.DbConnection checkpointConnection =
-                     await connectionFactory.CreateOpenConnectionAsync(cancellationToken))
+    // One lane slot for the whole sequence: no other operation may run against the database while its files are deleted.
+    public Task RecreateDatabaseAsync(CancellationToken cancellationToken = default) =>
+        SqliteOperationLane.RunAsync(connectionFactory, async () =>
         {
-            await SqliteSchema.ConfigureConnectionAsync(checkpointConnection, cancellationToken);
-            await checkpointConnection.ExecuteScalarAsync<long>("PRAGMA wal_checkpoint(TRUNCATE);", cancellationToken);
-        }
+            await using (System.Data.Common.DbConnection checkpointConnection =
+                         await connectionFactory.CreateOpenConnectionAsync(cancellationToken))
+            {
+                await checkpointConnection.ExecuteScalarAsync<long>("PRAGMA wal_checkpoint(TRUNCATE);", cancellationToken);
+            }
 
-        SqliteConnection.ClearAllPools();
-        SqliteSchema.DeleteDatabaseFiles();
+            SqliteConnection.ClearAllPools();
+            SqliteSchema.DeleteDatabaseFiles();
 
-        await using System.Data.Common.DbConnection connection =
-            await connectionFactory.CreateOpenConnectionAsync(cancellationToken);
-
-        await SqliteSchema.ConfigureConnectionAsync(connection, cancellationToken);
-        await SqliteSchema.EnsureSchemaAsync(connection, cancellationToken);
-    }
+            await EnsureSchemaAsync(cancellationToken);
+        }, cancellationToken);
 
     public Task ApplyMigrationsForAppVersionAsync(string appVersion, CancellationToken cancellationToken = default)
     {
         // Schema migrations are version-based (SchemaVersion table), not tied to app display version.
         return InitializeAsync(cancellationToken);
+    }
+
+    private async Task EnsureSchemaAsync(CancellationToken cancellationToken)
+    {
+        await using System.Data.Common.DbConnection connection =
+            await connectionFactory.CreateOpenConnectionAsync(cancellationToken);
+
+        await SqliteSchema.EnsureSchemaAsync(connection, cancellationToken);
     }
 }

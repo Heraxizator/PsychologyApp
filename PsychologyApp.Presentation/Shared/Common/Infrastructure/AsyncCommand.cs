@@ -34,7 +34,9 @@ public sealed class AsyncCommand : ICommand
         try
         {
             RaiseCanExecuteChanged();
-            await _execute().ConfigureAwait(false);
+            // No ConfigureAwait(false): the finally block raises CanExecuteChanged, which bound controls handle by
+            // updating IsEnabled — that must happen on the UI thread even when _execute completes on the thread pool.
+            await _execute();
         }
         catch (Exception ex)
         {
