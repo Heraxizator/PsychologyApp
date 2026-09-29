@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueSession.SubViewModels.Polarity;
 
-public partial class PolarityViewModel : BaseViewModel
+public partial class PolarityViewModel : BaseViewModel, ITechniqueSessionScreen
 {
     private readonly IUserProgressService _userProgressService;
     private readonly ListTechniqueSessionHelper _sessionHelper;

@@ -20,8 +20,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<!-- Compile bindings that set Source ({x:Reference Root}, TemplatedParent) too; they're most of the app's bindings. -->
+		<MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
 		<!-- ViewModels are DI-only; nullable init warnings are false positives in partial MAUI types. -->
-		<NoWarn>$(NoWarn);CS8618;CS8625;CS8601;CS8604;CS8600;CS8619;XA4304;XC0022;XC0025;XC0045;CA1416;CS0618</NoWarn>
+		<NoWarn>$(NoWarn);CS8618;CS8625;CS8601;CS8604;CS8600;CS8619;XA4304;CA1416;CS0618</NoWarn>
 
 		<!-- Display name -->
 		<ApplicationTitle>Psychology App</ApplicationTitle>

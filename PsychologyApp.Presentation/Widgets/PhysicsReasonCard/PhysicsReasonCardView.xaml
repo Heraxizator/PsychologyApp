@@ -4,6 +4,7 @@
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:physics="clr-namespace:PsychologyApp.Presentation.Entities.Physics"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:self="clr-namespace:PsychologyApp.Presentation.Widgets.PhysicsReasonCard"
              x:Class="PsychologyApp.Presentation.Widgets.PhysicsReasonCard.PhysicsReasonCardView">
 
     <ContentView.Behaviors>
@@ -11,7 +12,7 @@
     </ContentView.Behaviors>
 
     <ContentView.ControlTemplate>
-        <ControlTemplate>
+        <ControlTemplate x:DataType="self:PhysicsReasonCardView">
             <Border
                 Style="{StaticResource TechniqueListCardStyle}"
                 SemanticProperties.Description="Expand or collapse psychosomatic reason details">

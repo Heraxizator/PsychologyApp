@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:self="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              x:Class="PsychologyApp.Presentation.Shared.UI.Components.EmptyStateView">
 
     <ContentView.Behaviors>
@@ -10,7 +11,7 @@
     </ContentView.Behaviors>
 
     <ContentView.ControlTemplate>
-        <ControlTemplate>
+        <ControlTemplate x:DataType="self:EmptyStateView">
             <VerticalStackLayout
                 Padding="{StaticResource LayoutEmptyPaddingThickness}"
                 HorizontalOptions="Center"

@@ -5,6 +5,8 @@
              xmlns:controls="clr-namespace:PsychologyApp.Presentation.Widgets.TechniqueSessionShell"
              xmlns:shellBehaviors="clr-namespace:PsychologyApp.Presentation.Widgets.TechniqueSessionShell"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:session="clr-namespace:PsychologyApp.Presentation.Features.RunTechniqueSession"
+             x:DataType="session:ITechniqueSessionScreen"
              Shell.NavBarIsVisible="False"
              Title="{Binding TechniquePageTitle}">
 

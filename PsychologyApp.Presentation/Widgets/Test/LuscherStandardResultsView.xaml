@@ -5,6 +5,8 @@
              xmlns:profileUi="clr-namespace:PsychologyApp.Presentation.Widgets.ProfileTechniqueCard"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:models="clr-namespace:PsychologyApp.Presentation.Pages.RunTests.LuscherTest"
+             xmlns:self="clr-namespace:PsychologyApp.Presentation.Widgets.Test"
+             x:DataType="self:LuscherStandardResultsView"
              x:Class="PsychologyApp.Presentation.Widgets.Test.LuscherStandardResultsView"
              x:Name="Root">
 

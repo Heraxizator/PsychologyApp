@@ -4,6 +4,7 @@
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:self="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              x:Class="PsychologyApp.Presentation.Shared.UI.Components.SettingsLinkCardView">
 
     <ContentView.Behaviors>
@@ -11,7 +12,7 @@
     </ContentView.Behaviors>
 
     <ContentView.ControlTemplate>
-        <ControlTemplate>
+        <ControlTemplate x:DataType="self:SettingsLinkCardView">
             <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="16">
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />

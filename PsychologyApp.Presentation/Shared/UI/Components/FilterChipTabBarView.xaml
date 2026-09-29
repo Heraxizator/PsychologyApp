@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:common="clr-namespace:PsychologyApp.Presentation.Entities.FilterChip"
+             xmlns:self="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             x:DataType="self:FilterChipTabBarView"
              x:Class="PsychologyApp.Presentation.Shared.UI.Components.FilterChipTabBarView"
              x:Name="BarRoot">
     <CollectionView
@@ -19,7 +21,7 @@
                 <ui:FilterChipView
                     TitleText="{Binding Title}"
                     IsSelected="{Binding IsSelected}"
-                    TapCommand="{Binding TapCommand, Source={x:Reference BarRoot}}"
+                    TapCommand="{Binding TapCommand, Source={x:Reference BarRoot}, x:DataType=self:FilterChipTabBarView}"
                     CommandParameter="{Binding Key}" />
             </DataTemplate>
         </CollectionView.ItemTemplate>

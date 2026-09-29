@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:self="clr-namespace:PsychologyApp.Presentation.Widgets.Audio"
+             x:DataType="self:MusicTransportControlsView"
              x:Class="PsychologyApp.Presentation.Widgets.Audio.MusicTransportControlsView"
              x:Name="Root">
 

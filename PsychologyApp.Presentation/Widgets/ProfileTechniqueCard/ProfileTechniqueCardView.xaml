@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:self="clr-namespace:PsychologyApp.Presentation.Widgets.ProfileTechniqueCard"
              x:Class="PsychologyApp.Presentation.Widgets.ProfileTechniqueCard.ProfileTechniqueCardView"
              x:Name="Root">
 
@@ -11,7 +12,7 @@
     </ContentView.Behaviors>
 
     <ContentView.ControlTemplate>
-        <ControlTemplate>
+        <ControlTemplate x:DataType="self:ProfileTechniqueCardView">
             <Border Style="{StaticResource ProfileTechniqueCardStyle}">
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />

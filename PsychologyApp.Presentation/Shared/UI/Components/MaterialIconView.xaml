@@ -2,6 +2,8 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:self="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             x:DataType="self:MaterialIconView"
              x:Class="PsychologyApp.Presentation.Shared.UI.Components.MaterialIconView"
              x:Name="Root">
 

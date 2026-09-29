@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:testUi="clr-namespace:PsychologyApp.Presentation.Widgets.Test"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:self="clr-namespace:PsychologyApp.Presentation.Widgets.Test"
+             x:DataType="self:LuscherHistoryDetailView"
              x:Class="PsychologyApp.Presentation.Widgets.Test.LuscherHistoryDetailView"
              x:Name="Root">
 

@@ -82,8 +82,8 @@
                                 IsExpanded="{Binding IsExpanded}"
                                 ToggleExpandCommand="{Binding ToggleExpandCommand}"
                                 SuggestedTechniques="{Binding SuggestedTechniques}"
-                                SolutionHeader="{Binding SolutionHeader, Source={x:Reference PageRoot}, Path=BindingContext}"
-                                RecommendedPracticesLabel="{Binding RecommendedPracticesLabel, Source={x:Reference PageRoot}, Path=BindingContext}">
+                                SolutionHeader="{Binding SolutionHeader, Source={RelativeSource AncestorType={x:Type vm:PhysicsSearchViewModel}}, x:DataType=vm:PhysicsSearchViewModel}"
+                                RecommendedPracticesLabel="{Binding RecommendedPracticesLabel, Source={RelativeSource AncestorType={x:Type vm:PhysicsSearchViewModel}}, x:DataType=vm:PhysicsSearchViewModel}">
                                 <physicsUi:PhysicsReasonCardView.Behaviors>
                                     <behaviors:ListItemRevealBehavior />
                                 </physicsUi:PhysicsReasonCardView.Behaviors>

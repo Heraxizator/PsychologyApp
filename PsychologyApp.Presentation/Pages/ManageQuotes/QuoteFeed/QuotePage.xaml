@@ -80,7 +80,7 @@
 
                     <CollectionView.Header>
                         <VerticalStackLayout
-                            BindingContext="{Binding Source={x:Reference page}, Path=BindingContext}">
+                            BindingContext="{Binding BindingContext, Source={x:Reference page}, x:DataType=vm:QuotePage}">
                             <dailyHero:DailyQuoteHeroView
                                 IsVisible="{Binding ShowDailyQuoteHeader}"
                                 CaptionText="{Binding DailyQuoteTitle}"
@@ -120,7 +120,7 @@
                     <CollectionView.EmptyView>
                         <VerticalStackLayout
                             Spacing="8"
-                            BindingContext="{Binding Source={x:Reference page}, Path=BindingContext}">
+                            BindingContext="{Binding BindingContext, Source={x:Reference page}, x:DataType=vm:QuotePage}">
                             <ui:EmptyStateView
                                 TitleText="{Binding EmptyTitleText}"
                                 BodyText="{Binding EmptyBodyText}"

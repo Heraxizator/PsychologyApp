@@ -6,10 +6,11 @@ using PsychologyApp.Application.Practice;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.ViewModels;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueSession.SubViewModels.PaperList;
 
-public partial class PaperListViewModel : BaseViewModel
+public partial class PaperListViewModel : BaseViewModel, ITechniqueSessionScreen
 {
     private readonly bool _clearTextAfterAdd;
     private readonly TechniqueId _techniqueId;
@@ -21,8 +22,8 @@ public partial class PaperListViewModel : BaseViewModel
     public ObservableCollection<Paper> PapersObservableCollection { get; private set; } = [];
     public Command AddCommand { get; private set; } = default!;
     public Command<Paper> DeleteCommand { get; private set; } = default!;
-    public Command BackCommand { get; private set; } = default!;
-    public Command CompleteCommand { get; private set; } = default!;
+    public ICommand BackCommand { get; private set; } = default!;
+    public ICommand CompleteCommand { get; private set; } = default!;
 
     public PaperListViewModel(
         INavigationService navigationService,

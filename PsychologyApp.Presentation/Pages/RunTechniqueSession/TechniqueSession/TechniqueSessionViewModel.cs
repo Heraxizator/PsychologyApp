@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueSession;
 
-public partial class TechniqueSessionViewModel : BaseViewModel
+public partial class TechniqueSessionViewModel : BaseViewModel, ITechniqueSessionScreen
 {
     private readonly TechniqueId _techniqueId;
     private readonly IUserProgressService _userProgressService;

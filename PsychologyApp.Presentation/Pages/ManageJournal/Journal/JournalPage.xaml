@@ -150,7 +150,7 @@
                                 FlexLayout.AlignSelf="Start"
                                 TitleText="{Binding Label}"
                                 IsSelected="{Binding IsActive}"
-                                TapCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:JournalViewModel}}, Path=ToggleFactorCommand}"
+                                TapCommand="{Binding ToggleFactorCommand, Source={RelativeSource AncestorType={x:Type vm:JournalViewModel}}, x:DataType=vm:JournalViewModel}"
                                 CommandParameter="{Binding .}" />
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>

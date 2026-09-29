@@ -65,11 +65,11 @@
                                 HasNote="{Binding HasNote}"
                                 MoodDisplay="{Binding MoodDisplay}"
                                 MoodGlyph="{Binding MoodGlyph}"
-                                TapCommand="{Binding Source={x:Reference TimelineRoot}, Path=BindingContext.SelectTimelineEntryCommand}"
+                                TapCommand="{Binding SelectTimelineEntryCommand, Source={RelativeSource AncestorType={x:Type vm:JournalTimelineViewModel}}, x:DataType=vm:JournalTimelineViewModel}"
                                 CommandParameter="{Binding .}"
-                                ShareCommand="{Binding Source={x:Reference TimelineRoot}, Path=BindingContext.ShareEntryCommand}"
+                                ShareCommand="{Binding ShareEntryCommand, Source={RelativeSource AncestorType={x:Type vm:JournalTimelineViewModel}}, x:DataType=vm:JournalTimelineViewModel}"
                                 ShareCommandParameter="{Binding .}"
-                                ShareDescription="{Binding Source={x:Reference TimelineRoot}, Path=BindingContext.ShareLabel}" />
+                                ShareDescription="{Binding ShareLabel, Source={RelativeSource AncestorType={x:Type vm:JournalTimelineViewModel}}, x:DataType=vm:JournalTimelineViewModel}" />
                         </DataTemplate>
                     </vm:JournalTimelineItemTemplateSelector.EntryTemplate>
                 </vm:JournalTimelineItemTemplateSelector>

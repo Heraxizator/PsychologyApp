@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:session="clr-namespace:PsychologyApp.Presentation.Features.RunTechniqueSession"
+             xmlns:self="clr-namespace:PsychologyApp.Presentation.Widgets.TechniqueSessionShell"
+             x:DataType="self:TechniquePageShell"
              x:Class="PsychologyApp.Presentation.Widgets.TechniqueSessionShell.TechniquePageShell"
              x:Name="Root">
 
@@ -20,6 +23,7 @@
                 TitleText="{Binding Source={x:Reference Root}, Path=AlgorithmTitleText}"
                 BodySource="{Binding Source={x:Reference Root}, Path=Algorithm}" />
             <Border
+                x:DataType="session:ITechniqueSessionScreen"
                 Style="{StaticResource BrandCardStyle}"
                 Margin="0"
                 IsVisible="{Binding HasLastNote}">
@@ -35,6 +39,7 @@
                 </VerticalStackLayout>
             </Border>
             <ui:RatingEntryView
+                x:DataType="session:ITechniqueSessionScreen"
                 TitleText="{Binding PreIntensityLabel}"
                 BodyText="{Binding PreIntensityText, Mode=TwoWay}" />
             <Grid x:Name="BodyHost" />

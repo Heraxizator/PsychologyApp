@@ -4,6 +4,8 @@
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:journal="clr-namespace:PsychologyApp.Presentation.Widgets.Journal"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:self="clr-namespace:PsychologyApp.Presentation.Widgets.Profile"
+             x:DataType="self:ProfileWeekStoryView"
              x:Class="PsychologyApp.Presentation.Widgets.Profile.ProfileWeekStoryView"
              x:Name="Root">
 

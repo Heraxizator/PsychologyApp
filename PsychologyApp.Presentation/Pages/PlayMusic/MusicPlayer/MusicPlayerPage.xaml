@@ -65,7 +65,7 @@
                             IsActive="{Binding IsActive}"
                             IsPlayingThis="{Binding IsPlayingThis}"
                             ShowOfflineBadge="{Binding IsCached}"
-                            OfflineBadgeText="{Binding Source={x:Reference PageRoot}, Path=BindingContext.OfflineBadgeText}"
+                            OfflineBadgeText="{Binding OfflineBadgeText, Source={RelativeSource AncestorType={x:Type vm:MusicPlayerViewModel}}, x:DataType=vm:MusicPlayerViewModel}"
                             TapCommand="{Binding ClickCommand}">
                             <cleanUi:MusicListCardView.Behaviors>
                                 <behaviors:ListItemRevealBehavior />
