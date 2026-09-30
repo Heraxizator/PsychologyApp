@@ -6,6 +6,7 @@ namespace PsychologyApp.Presentation.Features.PlayMusic;
 public sealed class MediaElementAudioPlaybackService : IAudioPlaybackService
 {
     private MediaElement? _player;
+    private Func<MediaElement>? _createPlayer;
     private bool _isPlaying;
 
     public bool IsPlaying => _isPlaying;
@@ -18,21 +19,15 @@ public sealed class MediaElementAudioPlaybackService : IAudioPlaybackService
 
     public event EventHandler? PlaybackFailed;
 
-    public void Attach(MediaElement player)
-    {
-        if (_player is not null)
-        {
-            _player.MediaEnded -= OnMediaEnded;
-            _player.MediaFailed -= OnMediaFailed;
-        }
-
-        _player = player;
-        _player.MediaEnded += OnMediaEnded;
-        _player.MediaFailed += OnMediaFailed;
-    }
+    /// <summary>
+    /// The player is only created on the first play: building a MediaElement spins up ExoPlayer and a media session,
+    /// which froze the music page for seconds on open even when nothing was ever played.
+    /// </summary>
+    public void AttachLazily(Func<MediaElement> createPlayer) => _createPlayer = createPlayer;
 
     public void Detach()
     {
+        _createPlayer = null;
         if (_player is null)
         {
             return;
@@ -87,8 +82,18 @@ public sealed class MediaElementAudioPlaybackService : IAudioPlaybackService
         await player.SeekTo(position);
     }
 
-    private MediaElement RequirePlayer() =>
-        _player ?? throw new InvalidOperationException("MediaElement is not attached.");
+    private MediaElement RequirePlayer()
+    {
+        if (_player is not null)
+        {
+            return _player;
+        }
+
+        _player = _createPlayer?.Invoke() ?? throw new InvalidOperationException("MediaElement is not attached.");
+        _player.MediaEnded += OnMediaEnded;
+        _player.MediaFailed += OnMediaFailed;
+        return _player;
+    }
 
     private void OnMediaEnded(object? sender, EventArgs e)
     {

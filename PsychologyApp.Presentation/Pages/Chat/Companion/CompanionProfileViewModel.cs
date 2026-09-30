@@ -58,6 +58,8 @@ public sealed class CompanionProfileViewModel : BaseViewModel
         IChatLanguageProvider language,
         IDialogService dialogs)
     {
+        ModuleName = AppStrings.ChatsTitle;
+        PageName = AppStrings.ChatProfileTitle;
         _chat = chat;
         _language = language;
         _dialogs = dialogs;

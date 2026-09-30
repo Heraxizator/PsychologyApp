@@ -36,6 +36,8 @@ public partial class TestsListViewModel : BaseViewModel
         IOptions<AppSettings> settings,
         ILogger<TestsListViewModel> logger)
     {
+        ModuleName = AppStrings.TestsDetectorTitle;
+        PageName = AppStrings.TestsListSectionTitle;
         _navigationService = navigationService;
         _databaseReadySignal = databaseReadySignal;
         _testsListLoader = testsListLoader;

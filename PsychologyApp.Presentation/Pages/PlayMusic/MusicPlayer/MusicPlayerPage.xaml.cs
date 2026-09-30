@@ -17,6 +17,7 @@ public partial class MusicPlayerPage : ContentPage
     private PageAnimationHelper? _animationHelper;
     private IDispatcherTimer? _positionTimer;
     private MediaElement? _player;
+    private CancellationTokenSource? _prefetchCts;
     private bool _isSeeking;
 
     public MusicPlayerPage(IMusicPlayerViewModelFactory musicPlayerViewModelFactory, IToastService toastService)
@@ -31,7 +32,7 @@ public partial class MusicPlayerPage : ContentPage
         _viewModel = musicPlayerViewModelFactory.Create(this, _playbackService);
         BindingContext = _viewModel;
 
-        EnsurePlayer();
+        _playbackService.AttachLazily(CreatePlayer);
         _animationHelper = new PageAnimationHelper(_viewModel, contentView: Musics);
         _viewModel.PropertyChanged += OnViewModelPropertyChanged;
     }
@@ -44,34 +45,33 @@ public partial class MusicPlayerPage : ContentPage
         }
     }
 
-    private MediaElement EnsurePlayer()
+    private MediaElement CreatePlayer()
     {
-        if (_player is null)
+        _player = new MediaElement
         {
-            _player = new MediaElement
-            {
-                IsVisible = false,
-                ShouldAutoPlay = true
-            };
-            MainContentGrid.Children.Add(_player);
-        }
-
-        _playbackService.Attach(_player);
+            IsVisible = false,
+            ShouldAutoPlay = true
+        };
+        MainContentGrid.Children.Add(_player);
         return _player;
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        EnsurePlayer();
+        _playbackService.AttachLazily(CreatePlayer);
         _animationHelper?.TryRevealAsync();
-        PrefetchPlaylistAsync().FireAndForget();
+        _prefetchCts = new CancellationTokenSource();
+        PrefetchPlaylistAsync(_prefetchCts.Token).FireAndForget();
         StartPositionTimer();
     }
 
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
+        _prefetchCts?.Cancel();
+        _prefetchCts?.Dispose();
+        _prefetchCts = null;
         StopPositionTimer();
         _playbackService.PauseAsync().FireAndForget();
         _viewModel.SetPlaybackState(false);
@@ -102,14 +102,24 @@ public partial class MusicPlayerPage : ContentPage
         _viewModel.SeekToFractionAsync(ProgressSlider.Value).FireAndForget();
     }
 
-    private async Task PrefetchPlaylistAsync()
+    private async Task PrefetchPlaylistAsync(CancellationToken cancellationToken)
     {
-        IEnumerable<string> urls = _viewModel.AllItems
+        string[] urls = _viewModel.AllItems
             .Select(item => item.URL)
             .Where(url => !string.IsNullOrWhiteSpace(url))
-            .Cast<string>();
+            .Cast<string>()
+            .ToArray();
 
-        await MusicAudioCache.PrefetchAsync(urls);
+        // Downloading and hashing a whole playlist is background work; only the flag refresh needs the UI thread.
+        try
+        {
+            await Task.Run(() => MusicAudioCache.PrefetchAsync(urls, cancellationToken), cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            return;
+        }
+
         _viewModel.RefreshCacheFlags();
     }
 

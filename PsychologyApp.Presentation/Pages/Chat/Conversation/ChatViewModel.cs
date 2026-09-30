@@ -59,6 +59,8 @@ public sealed class ChatViewModel : BaseViewModel
         TimeProvider time,
         long? sessionId)
     {
+        ModuleName = AppStrings.ChatsTitle;
+        PageName = AppStrings.ChatHeroTitle;
         _chat = chat;
         _language = language;
         _time = time;

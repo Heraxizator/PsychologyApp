@@ -42,6 +42,8 @@ public partial class QuestionViewModel : BaseViewModel
         ILogger<QuestionViewModel> logger,
         TestSessionInfo? session = null)
     {
+        ModuleName = AppStrings.TestsDetectorTitle;
+        PageName = AppStrings.TestsQuestionnaireTitle;
         BindNavigation(navigationService);
         _logger = logger;
         _toastService = toastService;

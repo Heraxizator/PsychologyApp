@@ -55,6 +55,8 @@ public sealed class ChatListViewModel : BaseViewModel
         IDialogService dialogs,
         TimeProvider time)
     {
+        ModuleName = AppStrings.ChatsTitle;
+        PageName = AppStrings.ChatsTitle;
         _chat = chat;
         _language = language;
         _dialogs = dialogs;

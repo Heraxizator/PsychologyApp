@@ -30,22 +30,17 @@ public static class MusicAudioCache
             return new AudioCacheResult(cachePath, UsedNetwork: false);
         }
 
+        string partialPath = cachePath + ".part";
         try
         {
             using HttpResponseMessage response = await HttpClient.GetAsync(
                 remoteUrl,
                 HttpCompletionOption.ResponseHeadersRead,
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
 
             response.EnsureSuccessStatusCode();
 
             if (response.Content.Headers.ContentLength is > MaxDownloadBytes)
-            {
-                return new AudioCacheResult(remoteUrl, UsedNetwork: true, DownloadFailed: true);
-            }
-
-            byte[] bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken);
-            if (bytes.Length > MaxDownloadBytes)
             {
                 return new AudioCacheResult(remoteUrl, UsedNetwork: true, DownloadFailed: true);
             }
@@ -56,11 +51,33 @@ public static class MusicAudioCache
                 Directory.CreateDirectory(directory);
             }
 
-            await File.WriteAllBytesAsync(cachePath, bytes, cancellationToken);
+            // Streamed to a temp file rather than buffered whole: a track is several MB, and one large array per
+            // track meant large-object allocations and GC pauses. The rename keeps a partial file from ever
+            // counting as cached.
+            await using (Stream body = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false))
+            await using (FileStream file = File.Create(partialPath))
+            {
+                byte[] buffer = new byte[81920];
+                long total = 0;
+                int read;
+                while ((read = await body.ReadAsync(buffer, cancellationToken).ConfigureAwait(false)) > 0)
+                {
+                    total += read;
+                    if (total > MaxDownloadBytes)
+                    {
+                        throw new InvalidDataException("Audio file too large.");
+                    }
+
+                    await file.WriteAsync(buffer.AsMemory(0, read), cancellationToken).ConfigureAwait(false);
+                }
+            }
+
+            File.Move(partialPath, cachePath, overwrite: true);
             return new AudioCacheResult(cachePath, UsedNetwork: true);
         }
         catch
         {
+            TryDelete(partialPath);
             return new AudioCacheResult(remoteUrl, UsedNetwork: true, DownloadFailed: true);
         }
     }
@@ -79,7 +96,18 @@ public static class MusicAudioCache
                 continue;
             }
 
-            await ResolvePlaybackUriAsync(url, cancellationToken);
+            await ResolvePlaybackUriAsync(url, cancellationToken).ConfigureAwait(false);
+        }
+    }
+
+    private static void TryDelete(string path)
+    {
+        try
+        {
+            File.Delete(path);
+        }
+        catch
+        {
         }
     }
 
