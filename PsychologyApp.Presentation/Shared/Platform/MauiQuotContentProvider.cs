@@ -44,11 +44,12 @@ public sealed class MauiQuotContentProvider : IQuotContentProvider
                 return _cache;
             }
 
-            await using Stream stream = await FileSystem.OpenAppPackageFileAsync(assetPath);
+            // Android asset streams complete synchronously: open on the pool so the 200 KB parse stays off the UI thread.
+            await using Stream stream = await Task.Run(() => FileSystem.OpenAppPackageFileAsync(assetPath), cancellationToken).ConfigureAwait(false);
             List<QuoteJsonEntry>? entries = await JsonSerializer.DeserializeAsync(
                 stream,
                 AppJsonSerializerContext.Default.ListQuoteJsonEntry,
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
 
             if (entries is null || entries.Count == 0)
             {

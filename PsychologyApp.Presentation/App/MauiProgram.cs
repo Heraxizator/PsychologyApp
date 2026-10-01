@@ -39,7 +39,7 @@ public static class MauiProgram
             });
 
         ConfigureHandlers();
-        ReduceMotion.Configure(ReduceMotionDetector.IsEnabled);
+        ReduceMotion.Refresh();
         NavigationThread.InvokeAsync = action => MainThread.InvokeOnMainThreadAsync(action);
         builder.AddPsychologyAppConfiguration();
 

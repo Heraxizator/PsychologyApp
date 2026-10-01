@@ -50,10 +50,11 @@ public sealed class MauiReasonContentProvider : IReasonContentProvider
             }
 
             List<string> lines = [];
-            await using Stream fileStream = await FileSystem.OpenAppPackageFileAsync(assetPath);
+            // Android asset streams complete synchronously: open on the pool so the TSV parse stays off the UI thread.
+            await using Stream fileStream = await Task.Run(() => FileSystem.OpenAppPackageFileAsync(assetPath), cancellationToken).ConfigureAwait(false);
             using StreamReader reader = new(fileStream);
 
-            while (await reader.ReadLineAsync(cancellationToken) is { } line)
+            while (await reader.ReadLineAsync(cancellationToken).ConfigureAwait(false) is { } line)
             {
                 lines.Add(line);
             }

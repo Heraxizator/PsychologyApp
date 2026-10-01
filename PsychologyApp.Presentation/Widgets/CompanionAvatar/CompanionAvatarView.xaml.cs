@@ -35,12 +35,21 @@ public partial class CompanionAvatarView : ContentView
         propertyChanged: (bindable, _, newValue) => ((CompanionAvatarView)bindable).Icon.IconSize = (double)newValue);
 
     private CancellationTokenSource? _breathing;
+    private Page? _page;
 
     public CompanionAvatarView()
     {
         InitializeComponent();
-        Unloaded += (_, _) => StopBreathing();
-        Loaded += (_, _) => RestartBreathing();
+        Unloaded += (_, _) =>
+        {
+            WatchPage(null);
+            StopBreathing();
+        };
+        Loaded += (_, _) =>
+        {
+            WatchPage(FindPage());
+            RestartBreathing();
+        };
     }
 
     /// <summary>Plays the breathing ring. Turn on where the person actually looks at the avatar (chat header, profile); leave off in lists.</summary>
@@ -64,6 +73,38 @@ public partial class CompanionAvatarView : ContentView
         set => SetValue(IconSizeProperty, value);
     }
 
+    // A page covered by a pushed page stays loaded, so the endless pulse would keep drawing frames behind it.
+    private void WatchPage(Page? page)
+    {
+        if (_page is not null)
+        {
+            _page.Appearing -= OnPageAppearing;
+            _page.Disappearing -= OnPageDisappearing;
+        }
+
+        _page = page;
+        if (_page is not null)
+        {
+            _page.Appearing += OnPageAppearing;
+            _page.Disappearing += OnPageDisappearing;
+        }
+    }
+
+    private Page? FindPage()
+    {
+        Element? element = Parent;
+        while (element is not null and not Page)
+        {
+            element = element.Parent;
+        }
+
+        return element as Page;
+    }
+
+    private void OnPageAppearing(object? sender, EventArgs e) => RestartBreathing();
+
+    private void OnPageDisappearing(object? sender, EventArgs e) => StopBreathing();
+
     private void RestartBreathing()
     {
         StopBreathing();
@@ -80,6 +121,7 @@ public partial class CompanionAvatarView : ContentView
     {
         _breathing?.Cancel();
         _breathing = null;
+        Halo.CancelAnimations();
         Halo.Scale = 1;
         Halo.Opacity = 0;
     }
