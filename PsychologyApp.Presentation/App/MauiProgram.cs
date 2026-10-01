@@ -29,7 +29,9 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
+#if !ANDROID
             .UseMauiCommunityToolkitMediaElement(isAndroidForegroundServiceEnabled: false)
+#endif
             .UseMaterialMauiIcons()
             .ConfigureFonts(fonts =>
             {

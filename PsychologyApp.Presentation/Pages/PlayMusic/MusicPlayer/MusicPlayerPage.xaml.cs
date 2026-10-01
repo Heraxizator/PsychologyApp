@@ -1,5 +1,7 @@
 using PsychologyApp.Presentation.Shared.Common.Diagnostics;
+#if !ANDROID
 using CommunityToolkit.Maui.Views;
+#endif
 using PsychologyApp.Presentation.Features.PlayMusic;
 using PsychologyApp.Presentation.Features.PlayMusic.DependencyInjection;
 using PsychologyApp.Presentation.Shared.Common;
@@ -14,10 +16,15 @@ public partial class MusicPlayerPage : ContentPage
 {
     private readonly MusicPlayerViewModel _viewModel;
     private readonly IToastService _toastService;
+#if ANDROID
+    // Android plays through the platform MediaPlayer; MediaElement (ExoPlayer) is only kept for iOS and Mac.
+    private readonly PsychologyApp.Presentation.Platforms.Android.AndroidAudioPlaybackService _playbackService;
+#else
     private readonly MediaElementAudioPlaybackService _playbackService;
+    private MediaElement? _player;
+#endif
     private PageAnimationHelper? _animationHelper;
     private IDispatcherTimer? _positionTimer;
-    private MediaElement? _player;
     private CancellationTokenSource? _prefetchCts;
     private bool _isSeeking;
 
@@ -26,14 +33,20 @@ public partial class MusicPlayerPage : ContentPage
         InitializeComponent();
 
         _toastService = toastService;
+#if ANDROID
+        _playbackService = new PsychologyApp.Presentation.Platforms.Android.AndroidAudioPlaybackService();
+#else
         _playbackService = new MediaElementAudioPlaybackService();
+#endif
         _playbackService.PlaybackFailed += (_, _) =>
             _toastService.LongToast(AppStrings.CleanerPlaybackError);
 
         _viewModel = musicPlayerViewModelFactory.Create(this, _playbackService);
         BindingContext = _viewModel;
 
+#if !ANDROID
         _playbackService.AttachLazily(CreatePlayer);
+#endif
         _animationHelper = new PageAnimationHelper(_viewModel, contentView: Musics);
         _viewModel.PropertyChanged += OnViewModelPropertyChanged;
     }
@@ -46,6 +59,7 @@ public partial class MusicPlayerPage : ContentPage
         }
     }
 
+#if !ANDROID
     private MediaElement CreatePlayer()
     {
         _player = new MediaElement
@@ -56,11 +70,14 @@ public partial class MusicPlayerPage : ContentPage
         MainContentGrid.Children.Add(_player);
         return _player;
     }
+#endif
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
+#if !ANDROID
         _playbackService.AttachLazily(CreatePlayer);
+#endif
         _animationHelper?.TryRevealAsync();
         _prefetchCts = new CancellationTokenSource();
         PrefetchPlaylistAsync(_prefetchCts.Token).FireAndForget();
@@ -88,7 +105,11 @@ public partial class MusicPlayerPage : ContentPage
         if (Handler is null)
         {
             StopPositionTimer();
+#if ANDROID
+            _playbackService.Release();
+#else
             _playbackService.Detach();
+#endif
             _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
             _animationHelper?.Dispose();
             _animationHelper = null;
@@ -152,7 +173,7 @@ public partial class MusicPlayerPage : ContentPage
         _positionTimer.Interval = TimeSpan.FromMilliseconds(500);
         _positionTimer.Tick += (_, _) =>
         {
-            if (_player is null || _isSeeking)
+            if (!_playbackService.IsPlaying || _isSeeking)
             {
                 return;
             }

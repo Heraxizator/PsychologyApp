@@ -1,3 +1,4 @@
+#if !ANDROID
 using CommunityToolkit.Maui.Views;
 using PsychologyApp.Presentation.Shared.Common;
 
@@ -107,3 +108,4 @@ public sealed class MediaElementAudioPlaybackService : IAudioPlaybackService
         PlaybackFailed?.Invoke(this, EventArgs.Empty);
     }
 }
+#endif
