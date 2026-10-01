@@ -63,7 +63,11 @@ public sealed class PressFeedbackBehavior : Behavior<View>
         _attachedView = bindable;
         bindable.Loaded += OnLoaded;
         bindable.HandlerChanged += OnHandlerChanged;
-        TryAttach(bindable);
+        // A whole-page scan waits for Loaded: scanning here and again on HandlerChanged walked the tree three times per page.
+        if (!AttachToAllTapTargets || bindable.IsLoaded)
+        {
+            TryAttach(bindable);
+        }
     }
 
     protected override void OnDetachingFrom(View bindable)
@@ -90,7 +94,7 @@ public sealed class PressFeedbackBehavior : Behavior<View>
 
     private void OnHandlerChanged(object? sender, EventArgs e)
     {
-        if (sender is View view)
+        if (sender is View view && (!AttachToAllTapTargets || view.IsLoaded))
         {
             TryAttach(view);
         }
