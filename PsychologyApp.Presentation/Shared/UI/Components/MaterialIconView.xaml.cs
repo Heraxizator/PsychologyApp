@@ -1,13 +1,20 @@
+using System.Collections.Concurrent;
+using System.ComponentModel;
+using System.Reflection;
 using MauiIcons.Material;
 
 namespace PsychologyApp.Presentation.Shared.UI.Components;
 
-public partial class MaterialIconView : ContentView
+/// <summary>
+/// A Material icon drawn as one glyph Label. The library's MauiIcon wraps its glyph in a ContentView, a stack
+/// layout and a second label; inside list rows that was five native views per icon.
+/// </summary>
+public sealed class MaterialIconView : Label
 {
-    public MaterialIconView()
-    {
-        InitializeComponent();
-    }
+    // Registered by UseMaterialMauiIcons().
+    private const string FontAlias = "MaterialIcons";
+
+    private static readonly ConcurrentDictionary<string, string?> Glyphs = new(StringComparer.Ordinal);
 
     public static readonly BindableProperty IconNameProperty =
         BindableProperty.Create(
@@ -15,21 +22,23 @@ public partial class MaterialIconView : ContentView
             typeof(string),
             typeof(MaterialIconView),
             string.Empty,
-            propertyChanged: OnIconNameChanged);
+            propertyChanged: (bindable, _, newValue) => ((MaterialIconView)bindable).ApplyIcon((string?)newValue));
 
     public static readonly BindableProperty IconColorProperty =
         BindableProperty.Create(
             nameof(IconColor),
             typeof(Color),
             typeof(MaterialIconView),
-            null);
+            null,
+            propertyChanged: (bindable, _, newValue) => ((MaterialIconView)bindable).ApplyColor((Color?)newValue));
 
     public static readonly BindableProperty IconSizeProperty =
         BindableProperty.Create(
             nameof(IconSize),
             typeof(double),
             typeof(MaterialIconView),
-            24d);
+            24d,
+            propertyChanged: (bindable, _, newValue) => ((MaterialIconView)bindable).FontSize = (double)newValue);
 
     public static readonly BindableProperty HasResolvedIconProperty =
         BindableProperty.Create(
@@ -37,6 +46,18 @@ public partial class MaterialIconView : ContentView
             typeof(bool),
             typeof(MaterialIconView),
             false);
+
+    public MaterialIconView()
+    {
+        FontFamily = FontAlias;
+        FontSize = IconSize;
+        HorizontalTextAlignment = TextAlignment.Center;
+        VerticalTextAlignment = TextAlignment.Center;
+        HorizontalOptions = LayoutOptions.Center;
+        VerticalOptions = LayoutOptions.Center;
+        ApplyColor(null);
+        IsVisible = false;
+    }
 
     public string IconName
     {
@@ -62,23 +83,36 @@ public partial class MaterialIconView : ContentView
         private set => SetValue(HasResolvedIconProperty, value);
     }
 
-    private static void OnIconNameChanged(BindableObject bindable, object oldValue, object newValue)
+    private void ApplyIcon(string? iconName)
     {
-        var view = (MaterialIconView)bindable;
-        view.ApplyIcon((string)newValue);
+        string? glyph = string.IsNullOrWhiteSpace(iconName) ? null : Glyphs.GetOrAdd(iconName, ResolveGlyph);
+        Text = glyph;
+        HasResolvedIcon = glyph is not null;
+        IsVisible = glyph is not null;
     }
 
-    private void ApplyIcon(string iconName)
+    private void ApplyColor(Color? color)
     {
-        if (!MaterialIconNames.TryResolve(iconName, out MaterialIcons icon))
+        if (color is null)
         {
-            HasResolvedIcon = false;
-            IsVisible = false;
+            SetDynamicResource(TextColorProperty, "Primary");
             return;
         }
 
-        Icon.Icon = icon;
-        HasResolvedIcon = true;
-        IsVisible = true;
+        TextColor = color;
+    }
+
+    // The library stores each glyph in the enum member's [Description]; read once per icon name, then cached.
+    private static string? ResolveGlyph(string iconName)
+    {
+        if (!MaterialIconNames.TryResolve(iconName, out MaterialIcons icon))
+        {
+            return null;
+        }
+
+        return typeof(MaterialIcons)
+            .GetField(icon.ToString(), BindingFlags.Public | BindingFlags.Static)?
+            .GetCustomAttribute<DescriptionAttribute>()?
+            .Description;
     }
 }

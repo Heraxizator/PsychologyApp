@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System.Collections;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
@@ -7,6 +8,11 @@ namespace PsychologyApp.Presentation.Shared.Common.Behaviors;
 public sealed class ListItemRevealBehavior : Behavior<VisualElement>
 {
     private static int _activeRevealCount;
+
+    // Items of a CollectionView that have already played their entrance: a recycled row scrolled back into view
+    // must not animate again. Weak, so it never keeps an item alive.
+    private static readonly ConditionalWeakTable<object, object> RevealedCollectionItems = new();
+    private static readonly object Revealed = new();
     private static readonly SemaphoreSlim RevealSlot = new(UiAnimations.MaxConcurrentListReveals, UiAnimations.MaxConcurrentListReveals);
 
     public static readonly BindableProperty RevealIndexProperty =
@@ -46,6 +52,7 @@ public sealed class ListItemRevealBehavior : Behavior<VisualElement>
         CancelReveal();
         _attachedView = null;
         _hasRevealed = false;
+        _isInsideCollectionView = false;
         base.OnDetachingFrom(bindable);
     }
 
@@ -92,9 +99,12 @@ public sealed class ListItemRevealBehavior : Behavior<VisualElement>
         int index = ResolveRevealIndex(view);
 
         // Throttle CollectionView: only first LiteRevealMaxIndex+1 items animate (protect scroll).
-        if (IsInsideCollectionView(view) && index > UiAnimations.LiteRevealMaxIndex)
+        if (IsInsideCollectionView(view)
+            && (index > UiAnimations.LiteRevealMaxIndex
+                || (view.BindingContext is { } item && !RevealedCollectionItems.TryAdd(item, Revealed))))
         {
             _hasRevealed = true;
+            UiAnimations.ResetVisualState(view);
             return;
         }
 
@@ -173,7 +183,13 @@ public sealed class ListItemRevealBehavior : Behavior<VisualElement>
         return FindIndexInParentCollection(view);
     }
 
-    private static bool IsInsideCollectionView(VisualElement view)
+    // Only a positive answer is cached: a recycled row may be bound before it is parented.
+    private bool _isInsideCollectionView;
+
+    private bool IsInsideCollectionView(VisualElement view) =>
+        _isInsideCollectionView || (_isInsideCollectionView = HasCollectionViewAncestor(view));
+
+    private static bool HasCollectionViewAncestor(VisualElement view)
     {
         Element? parent = view.Parent;
         while (parent is not null)
@@ -238,12 +254,29 @@ public sealed class ListItemRevealBehavior : Behavior<VisualElement>
         return 0;
     }
 
+    // Runs for every recycled row while a CollectionView scrolls. Only the first StaggerCap positions change the
+    // animation (later ones share the last tier and delay), so the search stops there instead of walking the whole list.
     private static int FindIndexInEnumerable(IEnumerable items, object? bindingContext)
     {
+        const int cap = UiAnimations.StaggerCap;
+        if (items is IList list)
+        {
+            int count = Math.Min(list.Count, cap);
+            for (int i = 0; i < count; i++)
+            {
+                if (ReferenceEquals(list[i], bindingContext))
+                {
+                    return i;
+                }
+            }
+
+            return Math.Min(list.Count, cap - 1);
+        }
+
         int index = 0;
         foreach (object? item in items)
         {
-            if (ReferenceEquals(item, bindingContext))
+            if (ReferenceEquals(item, bindingContext) || index >= cap - 1)
             {
                 return index;
             }
@@ -251,6 +284,6 @@ public sealed class ListItemRevealBehavior : Behavior<VisualElement>
             index++;
         }
 
-        return Math.Min(index, UiAnimations.StaggerCap - 1);
+        return index;
     }
 }
