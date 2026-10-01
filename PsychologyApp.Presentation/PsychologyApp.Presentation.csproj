@@ -66,6 +66,9 @@
 	  <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
 	  <!-- Debug: arm64 for physical devices + x64 for Windows emulator; avoids all 4 ABIs (XAWAS7024). -->
 	  <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
+	  <!-- The SDK interprets all managed code in Debug (for C# Hot Reload), several times slower than JIT and a
+	       large share of the skipped frames seen in Debug runs. JIT keeps breakpoints and stepping. -->
+	  <UseInterpreter>false</UseInterpreter>
 	</PropertyGroup>
 
 	<!-- Release Android: single source of truth for build, run, and publish (no duplicate TFM|Platform overrides). -->
