@@ -9,16 +9,12 @@ public static class MusicPlaylistViewApplier
 {
     public static void ApplyInitState(
         MusicPlaylistState state,
-        ObservableCollection<Audio> allItems,
+        RangeObservableCollection<Audio> allItems,
         ObservableCollection<FilterChipTabItem> categoryFilters,
-        ObservableCollection<Audio> filteredItems,
+        RangeObservableCollection<Audio> filteredItems,
         Action<string> setSelectedCategoryKey)
     {
-        allItems.Clear();
-        foreach (Audio item in state.AllItems)
-        {
-            allItems.Add(item);
-        }
+        allItems.ReplaceAll(state.AllItems);
 
         categoryFilters.Clear();
         foreach (FilterChipTabItem filter in state.CategoryFilters)
@@ -30,13 +26,9 @@ public static class MusicPlaylistViewApplier
         ReplaceFilteredItems(filteredItems, state.FilteredItems);
     }
 
-    public static void ReplaceFilteredItems(ObservableCollection<Audio> filteredItems, IEnumerable<Audio> items)
+    public static void ReplaceFilteredItems(RangeObservableCollection<Audio> filteredItems, IEnumerable<Audio> items)
     {
-        filteredItems.Clear();
-        foreach (Audio item in items)
-        {
-            filteredItems.Add(item);
-        }
+        filteredItems.ReplaceAll(items);
     }
 
     public static void SelectCategory(

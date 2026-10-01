@@ -6,7 +6,7 @@ namespace PsychologyApp.Infrastructure.Data.Context;
 
 public static class SqliteSchema
 {
-    public const int CurrentVersion = 11;
+    public const int CurrentVersion = 12;
 
     private static readonly string[] DropTablesSql =
     [
@@ -119,7 +119,24 @@ public static class SqliteSchema
         if (version < 11)
         {
             await ApplyMigrationAsync(connection, 11, MigrateToVersion11Async, cancellationToken);
+            version = 11;
         }
+
+        if (version < 12)
+        {
+            await ApplyMigrationAsync(connection, 12, MigrateToVersion12Async, cancellationToken);
+        }
+    }
+
+    /// <summary>The journal reads moods by date range and favourites look quotes up by text; both scanned the whole table.</summary>
+    private static async Task MigrateToVersion12Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)
+    {
+        await connection.ExecuteAsync(
+            "CREATE INDEX IF NOT EXISTS IX_MoodEntries_RecordedAt ON MoodEntries (RecordedAt);",
+            transaction: transaction);
+        await connection.ExecuteAsync(
+            "CREATE INDEX IF NOT EXISTS IX_Quots_Text ON Quots (Text);",
+            transaction: transaction);
     }
 
     /// <summary>Lets a session's own reflection note ("what did you notice") be looked back up next time

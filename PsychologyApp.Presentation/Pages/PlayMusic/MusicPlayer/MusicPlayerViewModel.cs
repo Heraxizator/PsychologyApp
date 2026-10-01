@@ -25,8 +25,8 @@ public partial class MusicPlayerViewModel : BaseViewModel
     private string _durationDisplay = "0:00";
     private double _progressFraction;
 
-    public ObservableCollection<Audio> AllItems { get; } = [];
-    public ObservableCollection<Audio> FilteredItems { get; } = [];
+    public RangeObservableCollection<Audio> AllItems { get; } = [];
+    public RangeObservableCollection<Audio> FilteredItems { get; } = [];
     public ObservableCollection<FilterChipTabItem> CategoryFilters { get; } = [];
 
     public ICommand TogglePlayPauseCommand { get; }

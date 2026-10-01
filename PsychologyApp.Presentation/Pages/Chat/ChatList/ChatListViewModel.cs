@@ -70,7 +70,7 @@ public sealed class ChatListViewModel : BaseViewModel
     /// <summary>Set by the page: shows a text prompt and returns the entered text, or null when cancelled.</summary>
     public Func<string, string, string, string, string, Task<string?>>? PromptAsync { get; set; }
 
-    public ObservableCollection<ChatListItem> Chats { get; } = [];
+    public RangeObservableCollection<ChatListItem> Chats { get; } = [];
 
     public ICommand BackCommand { get; }
     public ICommand NewChatCommand { get; }
@@ -96,11 +96,7 @@ public sealed class ChatListViewModel : BaseViewModel
         // Coming back from a chat that changed nothing must not rebuild every row.
         if (!Chats.Select(c => c.Signature).SequenceEqual(fresh.Select(c => c.Signature)))
         {
-            Chats.Clear();
-            foreach (ChatListItem item in fresh)
-            {
-                Chats.Add(item);
-            }
+            Chats.ReplaceAll(fresh);
         }
 
         IsEmpty = Chats.Count == 0;

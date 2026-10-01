@@ -60,9 +60,10 @@ public sealed class QuotService(
 
         QuoteSeedContext context = await CreateSeedContextAsync(cancellationToken);
         List<global::PsychologyApp.Domain.Entities.Quot> themedQuots = [];
+        List<QuotSeed> themedPool = CreateThemedPool(themes, context);
         for (int i = 0; i < needed; i++)
         {
-            if (!TryPickThemedSeed(themes, context, out QuotSeed? seed))
+            if (TakeUnknown(context, themedPool) is not { } seed)
             {
                 break;
             }
@@ -95,7 +96,7 @@ public sealed class QuotService(
         }
 
         QuoteSeedContext context = await CreateSeedContextAsync(cancellationToken);
-        if (TryPickThemedSeed(themes, context, out QuotSeed? seed))
+        if (TakeUnknown(context, CreateThemedPool(themes, context)) is { } seed)
         {
             await quotRepository.AddManyAsync([CreateQuotFromSeed(seed)], cancellationToken);
             return true;
@@ -288,10 +289,13 @@ public sealed class QuotService(
 
         QuoteSeedContext context = await CreateSeedContextAsync(cancellationToken, loadExistingFromDatabase);
         List<global::PsychologyApp.Domain.Entities.Quot> quots = [];
+        List<QuotSeed> available = context.Seeds
+            .Where(seed => !context.KnownTexts.Contains(seed.Text))
+            .ToList();
 
         for (int i = 0; i < count; i++)
         {
-            QuotSeed? seed = await PickRandomSeedAsync(context, cancellationToken);
+            QuotSeed? seed = await PickRandomSeedAsync(context, available, cancellationToken);
             if (seed is null)
             {
                 break;
@@ -303,29 +307,38 @@ public sealed class QuotService(
         await quotRepository.AddManyAsync(quots, cancellationToken);
     }
 
+    // Draws from the shared pool by swap-remove, so a page of N quotes no longer re-filters the whole catalog N times.
     private async Task<QuotSeed?> PickRandomSeedAsync(
         QuoteSeedContext context,
+        List<QuotSeed> available,
         CancellationToken cancellationToken)
     {
-        List<QuotSeed> available = context.Seeds
-            .Where(seed => !context.KnownTexts.Contains(seed.Text))
-            .ToList();
-
-        if (available.Count == 0)
+        if (TakeUnknown(context, available) is { } seed)
         {
-            await quotRepository.DeleteAllAsync(cancellationToken);
-            context.KnownTexts.Clear();
-            available = context.Seeds.ToList();
+            return seed;
         }
 
-        if (available.Count == 0)
+        await quotRepository.DeleteAllAsync(cancellationToken);
+        context.KnownTexts.Clear();
+        available.AddRange(context.Seeds);
+        return TakeUnknown(context, available);
+    }
+
+    private static QuotSeed? TakeUnknown(QuoteSeedContext context, List<QuotSeed> available)
+    {
+        while (available.Count > 0)
         {
-            return null;
+            int index = Random.Shared.Next(available.Count);
+            QuotSeed candidate = available[index];
+            available[index] = available[^1];
+            available.RemoveAt(available.Count - 1);
+            if (context.KnownTexts.Add(candidate.Text))
+            {
+                return candidate;
+            }
         }
 
-        QuotSeed seed = available[Random.Shared.Next(available.Count)];
-        context.KnownTexts.Add(seed.Text);
-        return seed;
+        return null;
     }
 
     private static global::PsychologyApp.Domain.Entities.Quot CreateQuotFromSeed(
@@ -409,25 +422,12 @@ public sealed class QuotService(
         return unread.Count();
     }
 
-    private static bool TryPickThemedSeed(
-        IReadOnlyList<string> themes,
-        QuoteSeedContext context,
-        out QuotSeed seed)
+    private static List<QuotSeed> CreateThemedPool(IReadOnlyList<string> themes, QuoteSeedContext context)
     {
         HashSet<string> themeSet = new(themes, StringComparer.OrdinalIgnoreCase);
-        List<QuotSeed> available = context.Seeds
+        return context.Seeds
             .Where(candidate => themeSet.Contains(candidate.Theme) && !context.KnownTexts.Contains(candidate.Text))
             .ToList();
-
-        if (available.Count == 0)
-        {
-            seed = null!;
-            return false;
-        }
-
-        seed = available[Random.Shared.Next(available.Count)];
-        context.KnownTexts.Add(seed.Text);
-        return true;
     }
 
     private async Task RestoreThemedQuotesAsUnreadAsync(

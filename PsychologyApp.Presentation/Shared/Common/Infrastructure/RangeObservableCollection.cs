@@ -22,4 +22,18 @@ public sealed class RangeObservableCollection<T> : ObservableCollection<T>
         OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs("Item[]"));
         OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
     }
+
+    /// <summary>Swaps the whole contents with one Reset, instead of a Clear plus one Add notification per item.</summary>
+    public void ReplaceAll(IEnumerable<T> items)
+    {
+        Items.Clear();
+        foreach (T item in items)
+        {
+            Items.Add(item);
+        }
+
+        OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(Count)));
+        OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs("Item[]"));
+        OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+    }
 }

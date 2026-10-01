@@ -31,10 +31,10 @@ public sealed class SafetyPlanViewModel : BaseViewModel
     private readonly INavigationService _navigationService;
     private readonly IClinicalCareService _clinicalCareService;
 
-    public ObservableCollection<SafetyPlanTextItem> WarningSigns { get; } = [];
-    public ObservableCollection<SafetyPlanTextItem> CopingStrategies { get; } = [];
-    public ObservableCollection<SafetyPlanTextItem> Reasons { get; } = [];
-    public ObservableCollection<SafetyPlanContactItem> Contacts { get; } = [];
+    public RangeObservableCollection<SafetyPlanTextItem> WarningSigns { get; } = [];
+    public RangeObservableCollection<SafetyPlanTextItem> CopingStrategies { get; } = [];
+    public RangeObservableCollection<SafetyPlanTextItem> Reasons { get; } = [];
+    public RangeObservableCollection<SafetyPlanContactItem> Contacts { get; } = [];
 
     public string NewWarningSignText { get; set; } = string.Empty;
     public string NewCopingStrategyText { get; set; } = string.Empty;
@@ -98,29 +98,10 @@ public sealed class SafetyPlanViewModel : BaseViewModel
     {
         SafetyPlanDTO plan = await _clinicalCareService.GetSafetyPlanAsync();
 
-        WarningSigns.Clear();
-        foreach (string text in plan.WarningSigns)
-        {
-            WarningSigns.Add(BuildTextItem(WarningSigns, text));
-        }
-
-        CopingStrategies.Clear();
-        foreach (string text in plan.CopingStrategies)
-        {
-            CopingStrategies.Add(BuildTextItem(CopingStrategies, text));
-        }
-
-        Reasons.Clear();
-        foreach (string text in plan.Reasons)
-        {
-            Reasons.Add(BuildTextItem(Reasons, text));
-        }
-
-        Contacts.Clear();
-        foreach (SafetyPlanContactDTO contact in plan.Contacts)
-        {
-            Contacts.Add(BuildContactItem(contact.Name, contact.Phone));
-        }
+        WarningSigns.ReplaceAll(plan.WarningSigns.Select(text => BuildTextItem(WarningSigns, text)).ToList());
+        CopingStrategies.ReplaceAll(plan.CopingStrategies.Select(text => BuildTextItem(CopingStrategies, text)).ToList());
+        Reasons.ReplaceAll(plan.Reasons.Select(text => BuildTextItem(Reasons, text)).ToList());
+        Contacts.ReplaceAll(plan.Contacts.Select(contact => BuildContactItem(contact.Name, contact.Phone)).ToList());
     }
 
     private SafetyPlanTextItem BuildTextItem(ObservableCollection<SafetyPlanTextItem> collection, string text)

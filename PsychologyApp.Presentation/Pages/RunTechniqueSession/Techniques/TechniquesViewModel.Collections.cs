@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using System.Collections.ObjectModel;
@@ -6,8 +7,8 @@ namespace PsychologyApp.Presentation.Pages.RunTechniqueSession.Techniques;
 
 public partial class TechniquesViewModel
 {
-    public ObservableCollection<TechniqueGroup> TechniqueGroups { get; private set; } = [];
-    public ObservableCollection<TechniqueItem> CatalogTechniques { get; private set; } = [];
+    public RangeObservableCollection<TechniqueGroup> TechniqueGroups { get; private set; } = [];
+    public RangeObservableCollection<TechniqueItem> CatalogTechniques { get; private set; } = [];
 
     private bool _isTechniquesGrouped;
     private object _techniquesItemsSource = new ObservableCollection<TechniqueItem>();
@@ -50,19 +51,11 @@ public partial class TechniquesViewModel
 
     private void ReplaceGroups(ObservableCollection<TechniqueGroup> sourceGroups)
     {
-        TechniqueGroups.Clear();
-        foreach (TechniqueGroup group in sourceGroups)
-        {
-            TechniqueGroups.Add(new TechniqueGroup(group.Title, group));
-        }
+        TechniqueGroups.ReplaceAll(sourceGroups.Select(group => new TechniqueGroup(group.Title, group)).ToList());
     }
 
     private void ReplaceCatalog(ObservableCollection<TechniqueItem> sourceItems)
     {
-        CatalogTechniques.Clear();
-        foreach (TechniqueItem item in sourceItems)
-        {
-            CatalogTechniques.Add(item);
-        }
+        CatalogTechniques.ReplaceAll(sourceItems);
     }
 }

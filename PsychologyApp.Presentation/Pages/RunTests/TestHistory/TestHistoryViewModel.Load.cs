@@ -24,11 +24,7 @@ public partial class TestHistoryViewModel
             {
                 _testTitle = result.Title;
                 OnPropertyChanged(nameof(PageTitle));
-                HistoryEntries.Clear();
-                foreach (TestHistoryEntryItem item in result.Entries)
-                {
-                    HistoryEntries.Add(item);
-                }
+                HistoryEntries.ReplaceRange(result.Entries);
 
                 ChartPoints = result.ChartPoints;
                 ChartDomainMin = result.ChartDomainMin;

@@ -86,12 +86,12 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     public ICommand ForgetCommand { get; }
     public ICommand DeleteAllCommand { get; }
 
-    public ObservableCollection<TensionBarItem> TensionBars { get; } = [];
-    public ObservableCollection<PracticeRowItem> Practices { get; } = [];
-    public ObservableCollection<EmotionRowItem> Emotions { get; } = [];
-    public ObservableCollection<InsightItem> Insights { get; } = [];
-    public ObservableCollection<InsightItem> Abilities { get; } = [];
-    public ObservableCollection<TrustStepItem> TrustSteps { get; } = [];
+    public RangeObservableCollection<TensionBarItem> TensionBars { get; } = [];
+    public RangeObservableCollection<PracticeRowItem> Practices { get; } = [];
+    public RangeObservableCollection<EmotionRowItem> Emotions { get; } = [];
+    public RangeObservableCollection<InsightItem> Insights { get; } = [];
+    public RangeObservableCollection<InsightItem> Abilities { get; } = [];
+    public RangeObservableCollection<TrustStepItem> TrustSteps { get; } = [];
 
     public int Chats => _profile.Chats;
     public int Messages => _profile.UserMessages;
@@ -263,14 +263,7 @@ public sealed class CompanionProfileViewModel : BaseViewModel
         a.Chats == b.Chats && a.UserMessages == b.UserMessages && a.Days == b.Days && a.StreakDays == b.StreakDays
         && a.Trust.Index == b.Trust.Index && a.PracticesHelped == b.PracticesHelped;
 
-    private static void Fill<T>(ObservableCollection<T> target, IEnumerable<T> items)
-    {
-        target.Clear();
-        foreach (T item in items)
-        {
-            target.Add(item);
-        }
-    }
+    private static void Fill<T>(RangeObservableCollection<T> target, IEnumerable<T> items) => target.ReplaceAll(items);
 
     private static string Capitalize(string value) => value.Length == 0 ? value : char.ToUpperInvariant(value[0]) + value[1..];
 }
