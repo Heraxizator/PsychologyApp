@@ -41,7 +41,6 @@ public static class MauiProgram
         ConfigureHandlers();
         ReduceMotion.Refresh();
         NavigationThread.InvokeAsync = action => MainThread.InvokeOnMainThreadAsync(action);
-        builder.AddPsychologyAppConfiguration();
 
 #if DEBUG
         builder.Logging.AddDebug();

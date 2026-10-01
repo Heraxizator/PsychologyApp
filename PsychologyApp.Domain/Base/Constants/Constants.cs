@@ -8,7 +8,7 @@ namespace PsychologyApp.Domain.Base.Constants;
 
 public class Constants
 {
-    /// <summary>Fallback only; prefer <see cref="PsychologyApp.Application.Configuration.AppSettings.ReviewEmailAddress"/> from appsettings.</summary>
+    /// <summary>Fallback only; prefer <see cref="PsychologyApp.Application.Configuration.AppSettings.ReviewEmailAddress"/> (set in MauiProgram).</summary>
     public const string ReviewEmailAddress = "";
 
     public const string DonateUrl = "https://yoomoney.ru/fundraise/17UP5E1QFCU.250123";
