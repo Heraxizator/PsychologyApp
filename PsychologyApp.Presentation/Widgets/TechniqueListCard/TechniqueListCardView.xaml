@@ -25,7 +25,7 @@
                         <Border
                             Grid.Column="0"
                             Style="{StaticResource LargeIconTileStyle}">
-                            <Grid>
+                            <Grid x:Name="IconHost">
                                 <ui:MaterialIconView
                                     IsVisible="{TemplateBinding HasIcon}"
                                     WidthRequest="28"
@@ -33,14 +33,6 @@
                                     VerticalOptions="Center"
                                     HorizontalOptions="Center"
                                     IconName="{TemplateBinding IconName}" />
-                                <Image
-                                    IsVisible="{TemplateBinding HasImage}"
-                                    WidthRequest="40"
-                                    HeightRequest="40"
-                                    Aspect="AspectFit"
-                                    VerticalOptions="Center"
-                                    HorizontalOptions="Center"
-                                    Source="{TemplateBinding Image}" />
                             </Grid>
                         </Border>
                         <VerticalStackLayout

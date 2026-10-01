@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.UI.Components;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Widgets.TechniqueListCard;
@@ -7,6 +8,15 @@ public partial class TechniqueListCardView : ContentView
     public TechniqueListCardView()
     {
         InitializeComponent();
+    }
+
+    private readonly LazyImageSlot _imageSlot = new(40);
+
+    protected override void OnApplyTemplate()
+    {
+        base.OnApplyTemplate();
+        _imageSlot.Attach(GetTemplateChild("IconHost") as Layout);
+        _imageSlot.Show(Image, HasImage);
     }
 
     public static readonly BindableProperty NumberProperty =
@@ -142,6 +152,7 @@ public partial class TechniqueListCardView : ContentView
         bool hasImage = !hasIcon && !string.IsNullOrWhiteSpace(view.Image);
         view.HasIcon = hasIcon;
         view.HasImage = hasImage;
+        view._imageSlot.Show(view.Image, hasImage);
     }
 
     private static void OnAuthorChanged(BindableObject bindable, object oldValue, object newValue)
