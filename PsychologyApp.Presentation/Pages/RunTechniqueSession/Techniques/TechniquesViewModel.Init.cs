@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Common.Diagnostics;
 using Microsoft.Extensions.Logging;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
@@ -68,6 +69,7 @@ public partial class TechniquesViewModel
 
             await UiThread.RunAsync(() =>
             {
+                long applyStarted = System.Diagnostics.Stopwatch.GetTimestamp();
                 StreakDays = snapshot.StreakDays;
                 AtRiskStreakDays = snapshot.AtRiskStreakDays;
                 IdleDays = snapshot.IdleDays;
@@ -81,6 +83,7 @@ public partial class TechniquesViewModel
                 ApplyUiState(snapshot.UiState);
                 ApplyCustomTechniquesPagingState(snapshot);
                 SetDone();
+                PerfTrace.Measure("Techniques list applied", applyStarted);
             });
         }
         catch (OperationCanceledException)

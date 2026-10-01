@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Common.Diagnostics;
 using CommunityToolkit.Maui.Views;
 using PsychologyApp.Presentation.Features.PlayMusic;
 using PsychologyApp.Presentation.Features.PlayMusic.DependencyInjection;
@@ -106,8 +107,23 @@ public partial class MusicPlayerPage : ContentPage
         _viewModel.SeekToFractionAsync(ProgressSlider.Value).FireAndForget();
     }
 
+    // Only someone who stays on the music tab gets the playlist downloaded. Starting it on every visit meant that
+    // just passing through the tab kicked off DNS, TLS and multi-MB downloads, and the device log showed 1-2 s UI
+    // stalls on the next tab every time.
+    private const int PrefetchDelayMs = 3000;
+
     private async Task PrefetchPlaylistAsync(CancellationToken cancellationToken)
     {
+        try
+        {
+            await Task.Delay(PrefetchDelayMs, cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            return;
+        }
+
+        PerfTrace.Mark("Music prefetch started");
         string[] urls = _viewModel.AllItems
             .Select(item => item.URL)
             .Where(url => !string.IsNullOrWhiteSpace(url))
@@ -121,9 +137,11 @@ public partial class MusicPlayerPage : ContentPage
         }
         catch (OperationCanceledException)
         {
+            PerfTrace.Mark("Music prefetch cancelled");
             return;
         }
 
+        PerfTrace.Mark("Music prefetch finished");
         _viewModel.RefreshCacheFlags();
     }
 

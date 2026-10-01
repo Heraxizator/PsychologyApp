@@ -10,7 +10,7 @@ namespace PsychologyApp.Presentation.Shared.Common.Diagnostics;
 public static class PerfTrace
 {
     private const int StallThresholdMs = 150;
-    private static readonly string?[] RecentMarks = new string?[4];
+    private static readonly string?[] RecentMarks = new string?[8];
     private static int _markIndex;
     private static int _started;
 

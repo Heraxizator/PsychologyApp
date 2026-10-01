@@ -82,6 +82,7 @@ public partial class AppShell : Shell
 
     private void OnShellNavigating(object? sender, ShellNavigatingEventArgs e)
     {
+        PerfTrace.Mark($"Navigating {e.Target?.Location}");
         if (TryResolveTabIndex(e.Target, out int index))
         {
             EnsureTabMaterialized(index);
