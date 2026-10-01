@@ -151,12 +151,11 @@ public sealed class PressFeedbackBehavior : Behavior<View>
     {
         if (!string.IsNullOrWhiteSpace(TargetName))
         {
-            foreach (VisualElement element in bindable.GetVisualTreeDescendants().OfType<VisualElement>())
+            if (VisualTreeSearch.FindFirst<VisualElement>(
+                    bindable,
+                    element => element.StyleId == TargetName || element.AutomationId == TargetName) is { } named)
             {
-                if (element.StyleId == TargetName || element.AutomationId == TargetName)
-                {
-                    return element;
-                }
+                return named;
             }
         }
 

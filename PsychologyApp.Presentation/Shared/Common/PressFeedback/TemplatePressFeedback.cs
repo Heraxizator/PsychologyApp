@@ -58,14 +58,6 @@ public static class TemplatePressFeedback
             return border;
         }
 
-        foreach (VisualElement child in root.GetVisualTreeDescendants().OfType<VisualElement>())
-        {
-            if (child is Border pressBorder)
-            {
-                return pressBorder;
-            }
-        }
-
-        return root;
+        return VisualTreeSearch.FindFirst<Border>(root) ?? root;
     }
 }
