@@ -31,6 +31,10 @@ public static class MauiProgram
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitMediaElement(isAndroidForegroundServiceEnabled: false)
             .UseMaterialMauiIcons()
+#if ANDROID
+            .ConfigureMauiHandlers(handlers =>
+                handlers.AddHandler<Border, PsychologyApp.Presentation.Platforms.Android.ElevatedBorderHandler>())
+#endif
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("Inter-Regular.ttf", "InterRegular");
