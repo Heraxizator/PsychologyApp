@@ -7,31 +7,56 @@ namespace PsychologyApp.Presentation.Widgets.PhysicsReasonCard;
 public partial class PhysicsReasonCardView : ContentView
 {
     private StackLayout? _expandedSection;
+    private Layout? _suggestionsHost;
     private bool _isAnimatingExpand;
 
     public PhysicsReasonCardView()
     {
         InitializeComponent();
-        Loaded += OnLoaded;
         VisualElementPressFeedback.AttachToTemplateRoot(this);
     }
 
-    private void OnLoaded(object? sender, EventArgs e)
+    protected override void OnApplyTemplate()
     {
-        _expandedSection = this.GetVisualTreeDescendants()
-            .OfType<StackLayout>()
-            .FirstOrDefault(layout => layout.StyleId == "ExpandedSection");
+        base.OnApplyTemplate();
+        _expandedSection = GetTemplateChild("ExpandedSection") as StackLayout;
+        _suggestionsHost = GetTemplateChild("SuggestionsHost") as Layout;
 
         if (_expandedSection is not null)
         {
             _expandedSection.IsVisible = IsExpanded;
             _expandedSection.Opacity = IsExpanded ? 1 : 0;
         }
+
+        SyncSuggestions();
+    }
+
+    // The suggestion buttons (composite ButtonViews) exist only once the card has been opened, and follow the bound
+    // list after that, also when a recycled row is rebound to another reason.
+    private void SyncSuggestions()
+    {
+        if (_suggestionsHost is null)
+        {
+            return;
+        }
+
+        IEnumerable? source = IsExpanded || BindableLayout.GetItemsSource(_suggestionsHost) is not null
+            ? SuggestedTechniques
+            : null;
+        if (!ReferenceEquals(BindableLayout.GetItemsSource(_suggestionsHost), source))
+        {
+            BindableLayout.SetItemsSource(_suggestionsHost, source);
+        }
     }
 
     protected override void OnPropertyChanged(string? propertyName = null)
     {
         base.OnPropertyChanged(propertyName);
+
+        if (propertyName is nameof(IsExpanded) or nameof(SuggestedTechniques))
+        {
+            SyncSuggestions();
+        }
 
         if (propertyName != nameof(IsExpanded) || _expandedSection is null || _isAnimatingExpand)
         {

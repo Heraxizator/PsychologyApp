@@ -60,6 +60,9 @@ public static partial class CompanionReplyGuard
     [GeneratedRegex(@"\s+", RegexOptions.CultureInvariant)]
     private static partial Regex Whitespace();
 
+    [GeneratedRegex(@"[^\p{L}]+", RegexOptions.CultureInvariant)]
+    private static partial Regex NonLetterRuns();
+
     /// <param name="raw">Model output.</param>
     /// <param name="english">Expected language.</param>
     /// <param name="userText">When given, the reply must be visibly about what the person wrote (shares a word stem with it).</param>
@@ -155,7 +158,7 @@ public static partial class CompanionReplyGuard
 
     private static bool UsesInformalYou(string lowered)
     {
-        foreach (string word in Regex.Split(lowered, @"[^\p{L}]+"))
+        foreach (string word in NonLetterRuns().Split(lowered))
         {
             if (InformalYou.Contains(word) || InformalVerb().IsMatch(word))
             {
@@ -174,7 +177,7 @@ public static partial class CompanionReplyGuard
     }
 
     private static HashSet<string> Stems(string text) =>
-        Regex.Split(text, @"[^\p{L}]+")
+        NonLetterRuns().Split(text)
             .Where(word => word.Length >= StemLength)
             .Select(word => word[..StemLength])
             .ToHashSet(StringComparer.Ordinal);

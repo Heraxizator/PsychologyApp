@@ -115,8 +115,10 @@ public sealed class QuoteSearchController
         try
         {
             await Task.Delay(300, token);
+            // A query that matches little scans the whole 200 KB catalog; that ran on the UI thread after the debounce.
+            string query = _query;
             IReadOnlyList<Application.Abstractions.Integration.QuotSeed> seeds =
-                await _quoteSearchService.SearchCatalogAsync(_query, cancellationToken: token);
+                await Task.Run(() => _quoteSearchService.SearchCatalogAsync(query, cancellationToken: token), token);
 
             List<QuoteItem> results = seeds
                 .Select(seed => _quoteCommandsFactory.CreateSearchResultItem(

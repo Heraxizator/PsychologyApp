@@ -30,6 +30,7 @@
                             Style="{StaticResource CaptionStyle}" />
                     </VerticalStackLayout>
                     <VerticalStackLayout
+                        x:Name="ExpandedSection"
                         StyleId="ExpandedSection"
                         IsVisible="False"
                         Spacing="6">
@@ -42,7 +43,8 @@
                         <Label
                             Style="{StaticResource ListRowTitleStyle}"
                             Text="{TemplateBinding RecommendedPracticesLabel}" />
-                        <VerticalStackLayout BindableLayout.ItemsSource="{TemplateBinding SuggestedTechniques}">
+                        <!-- Filled on first expand (code-behind): most result cards are never opened. -->
+                        <VerticalStackLayout x:Name="SuggestionsHost">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="physics:PhysicsTechniqueSuggestion">
                                     <ui:ButtonView

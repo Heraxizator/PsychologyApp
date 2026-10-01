@@ -12,8 +12,14 @@ public sealed class PhysicsReasonItem : INotifyPropertyChanged
     public string? Title { get; init; }
     public string? Subtitle { get; init; }
     public string? Solution { get; init; }
-    public FormattedString? HighlightedTitle { get; init; }
-    public FormattedString? HighlightedSubtitle { get; init; }
+    // Built on first display, on the UI thread: a search can match hundreds of reasons, and a FormattedString of
+    // Spans per match was built up front although only the rows scrolled into view are ever shown.
+    private string _searchText = string.Empty;
+    private FormattedString? _highlightedTitle;
+    private FormattedString? _highlightedSubtitle;
+
+    public FormattedString? HighlightedTitle => _highlightedTitle ??= SearchTextHighlighter.Build(Title, _searchText);
+    public FormattedString? HighlightedSubtitle => _highlightedSubtitle ??= SearchTextHighlighter.Build(Subtitle, _searchText);
 
     private bool _isExpanded;
     public bool IsExpanded
@@ -49,8 +55,7 @@ public sealed class PhysicsReasonItem : INotifyPropertyChanged
             Title = dto.Title,
             Subtitle = dto.Subtitle,
             Solution = dto.Solution,
-            HighlightedTitle = SearchTextHighlighter.Build(dto.Title, searchText),
-            HighlightedSubtitle = SearchTextHighlighter.Build(dto.Subtitle, searchText),
+            _searchText = searchText,
             SuggestedTechniques = suggestions
         };
 }

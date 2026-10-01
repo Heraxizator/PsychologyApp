@@ -44,12 +44,17 @@ public sealed class PhysicsSearchSession(PhysicsSearchCoordinator searchCoordina
         Func<ReasonDTO, IReadOnlyList<PhysicsTechniqueSuggestion>, string, PhysicsReasonItem> createItem,
         CancellationToken cancellationToken)
     {
-        List<PhysicsReasonItem> matches = (await searchCoordinator.SearchAsync(
-            Reasons,
-            searchText,
-            navigationService,
-            createItem,
-            cancellationToken)).ToList();
+        // Scoring every reason (case-insensitive scans of ~120 KB of Cyrillic text) and building the items runs on the
+        // pool; it used to run on the UI thread after each debounced keystroke.
+        IReadOnlyList<ReasonDTO> reasons = Reasons;
+        List<PhysicsReasonItem> matches = await Task.Run(
+            async () => (await searchCoordinator.SearchAsync(
+                reasons,
+                searchText,
+                navigationService,
+                createItem,
+                cancellationToken).ConfigureAwait(false)).ToList(),
+            cancellationToken);
 
         if (cancellationToken.IsCancellationRequested || !string.Equals(currentSearchText, searchText, StringComparison.Ordinal))
         {
