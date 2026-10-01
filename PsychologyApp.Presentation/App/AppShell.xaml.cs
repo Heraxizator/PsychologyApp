@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Common.Diagnostics;
 using CommunityToolkit.Maui.Behaviors;
 using CommunityToolkit.Maui.Core;
 using Microsoft.Extensions.Logging;
@@ -67,6 +68,7 @@ public partial class AppShell : Shell
             app.RequestedThemeChanged += OnRequestedThemeChanged;
         }
         HandlerChanged += OnShellHandlerChanged;
+        PerfTrace.StartStallWatchdog(Dispatcher);
         Navigating += OnShellNavigating;
         Navigated += OnShellNavigated;
         _ = InitializeAppAsync();
@@ -88,6 +90,7 @@ public partial class AppShell : Shell
 
     private void OnShellNavigated(object? sender, ShellNavigatedEventArgs e)
     {
+        PerfTrace.Mark($"Navigated {e.Current?.Location}");
         EnsureCurrentTabMaterialized();
 
         if (e.Source != ShellNavigationSource.ShellItemChanged)
@@ -369,7 +372,9 @@ public partial class AppShell : Shell
         }
 
         ShellContent shellContent = GetTabShellContent(index);
+        long started = System.Diagnostics.Stopwatch.GetTimestamp();
         shellContent.Content = CreateTabPage(index);
+        PerfTrace.Measure($"Tab {index} created", started);
         _tabsMaterialized[index] = true;
         UpdateTabPageTitle(shellContent);
 

@@ -69,9 +69,13 @@ public partial class MusicPlayerPage : ContentPage
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        _prefetchCts?.Cancel();
-        _prefetchCts?.Dispose();
-        _prefetchCts = null;
+        // Cancel() runs the token callbacks on this (UI) thread, and those tear down an in-flight HTTPS download
+        // through SslStream/JNI: leaving the tab froze the app for ~2 s. CancelAsync runs them on the pool.
+        if (_prefetchCts is { } prefetch)
+        {
+            _prefetchCts = null;
+            prefetch.CancelAsync().ContinueWith(_ => prefetch.Dispose(), TaskScheduler.Default);
+        }
         StopPositionTimer();
         _playbackService.PauseAsync().FireAndForget();
         _viewModel.SetPlaybackState(false);

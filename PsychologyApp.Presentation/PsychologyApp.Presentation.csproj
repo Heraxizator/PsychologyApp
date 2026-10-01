@@ -50,6 +50,12 @@
 	
 	</PropertyGroup>
 
+	<!-- A 16 MB nursery (SGen default 4 MB) means ~4x fewer minor collections, each of which also forces a Java GC
+	     through the GC bridge: the log showed one about every second while moving between tabs. -->
+	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+	  <AndroidEnvironment Include="Platforms/Android/environment.txt" />
+	</ItemGroup>
+
 	<PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' And '$(Configuration)' == 'Debug'">
 	  <AndroidUseAapt2>True</AndroidUseAapt2>
 	  <IsPublishable>False</IsPublishable>

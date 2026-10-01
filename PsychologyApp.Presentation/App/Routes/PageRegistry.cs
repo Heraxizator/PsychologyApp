@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Common.Diagnostics;
 using PsychologyApp.Presentation.Features.Chat;
 using PsychologyApp.Presentation.Pages.Chat.ChatList;
 using PsychologyApp.Presentation.Pages.Chat.Companion;
@@ -183,6 +184,7 @@ public sealed class PageRegistry(
 
     private static TPage WithPressFeedback<TPage>(TPage page) where TPage : ContentPage
     {
+        PerfTrace.Mark($"Created {typeof(TPage).Name}");
         PressFeedbackHost.AttachToPage(page);
         return page;
     }
