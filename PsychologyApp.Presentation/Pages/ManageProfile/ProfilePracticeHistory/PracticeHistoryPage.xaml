@@ -10,37 +10,39 @@
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
-    <ScrollView VerticalScrollBarVisibility="Never">
-        <VerticalStackLayout
-            Margin="{StaticResource LayoutPageMarginThickness}"
-            Spacing="{StaticResource LayoutSpacing}">
-            <ui:NavigationBarSimpleView
-                TitleText="{Binding PageTitle}"
-                BackCommand="{Binding BackCommand}" />
+    <!-- Virtualised: up to 40 history rows are only built as they scroll into view. -->
+    <CollectionView
+        Margin="{StaticResource LayoutPageMarginThickness}"
+        ItemsSource="{Binding Items}"
+        SelectionMode="None"
+        VerticalScrollBarVisibility="Never">
+        <CollectionView.Header>
+            <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}" Padding="0,0,0,4">
+                <ui:NavigationBarSimpleView
+                    TitleText="{Binding PageTitle}"
+                    BackCommand="{Binding BackCommand}" />
 
-            <ui:EmptyStateView
-                IsVisible="{Binding ShowEmpty}"
-                BodyText="{Binding EmptyText}"
-                IconName="History" />
-
-            <VerticalStackLayout
-                IsVisible="{Binding HasItems}"
-                BindableLayout.ItemsSource="{Binding Items}"
-                Spacing="{StaticResource ListItemSpacing}">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate x:DataType="profile:PracticeHistoryItem">
-                        <profileHistory:ProfileHistoryEntryView
-                            DateText="{Binding DateText}"
-                            TechniqueName="{Binding TechniqueName}"
-                            IconName="{Binding IconName}"
-                            DurationText="{Binding DurationText}"
-                            HasDuration="{Binding HasDuration}"
-                            SudsDeltaText="{Binding SudsDeltaText}"
-                            HasSudsDelta="{Binding HasSudsDelta}"
-                            TapCommand="{Binding TapCommand}" />
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
+                <ui:EmptyStateView
+                    IsVisible="{Binding ShowEmpty}"
+                    BodyText="{Binding EmptyText}"
+                    IconName="History" />
             </VerticalStackLayout>
-        </VerticalStackLayout>
-    </ScrollView>
+        </CollectionView.Header>
+        <CollectionView.ItemsLayout>
+            <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
+        </CollectionView.ItemsLayout>
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="profile:PracticeHistoryItem">
+                <profileHistory:ProfileHistoryEntryView
+                    DateText="{Binding DateText}"
+                    TechniqueName="{Binding TechniqueName}"
+                    IconName="{Binding IconName}"
+                    DurationText="{Binding DurationText}"
+                    HasDuration="{Binding HasDuration}"
+                    SudsDeltaText="{Binding SudsDeltaText}"
+                    HasSudsDelta="{Binding HasSudsDelta}"
+                    TapCommand="{Binding TapCommand}" />
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
 </ContentPage>

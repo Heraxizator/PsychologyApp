@@ -10,7 +10,11 @@ public sealed class ProfileWeekDaysLoader(IUserProgressService userProgressServi
 {
     private const int MoodLookbackLimit = 40;
 
-    public async Task<IReadOnlyList<JournalDayChip>> LoadAsync(CancellationToken cancellationToken = default)
+    // Off the UI thread: building the snapshot after each query would otherwise run there.
+    public Task<IReadOnlyList<JournalDayChip>> LoadAsync(CancellationToken cancellationToken = default) =>
+        Task.Run(() => LoadCoreAsync(cancellationToken), cancellationToken);
+
+    private async Task<IReadOnlyList<JournalDayChip>> LoadCoreAsync(CancellationToken cancellationToken = default)
     {
         DateOnly today = DateOnly.FromDateTime(DateTime.Today);
         DateOnly rangeStart = today.AddDays(-6);

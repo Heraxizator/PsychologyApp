@@ -21,24 +21,27 @@
             TitleText="{Binding PageTitle}"
             BackCommand="{Binding Finish}" />
 
-        <ScrollView
+        <!-- Virtualised: up to 50 heavy result rows are only built as they scroll into view. -->
+        <CollectionView
             x:Name="HistoryContent"
             Grid.Row="1"
-            IsVisible="{Binding IsDone}">
-            <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
-                <VerticalStackLayout.Behaviors>
-                    <behaviors:StaggerChildrenBehavior />
-                </VerticalStackLayout.Behaviors>
+            IsVisible="{Binding IsDone}"
+            ItemsSource="{Binding HistoryEntries}"
+            SelectionMode="None"
+            VerticalScrollBarVisibility="Default">
+            <CollectionView.Header>
                 <testUi:TestScoreTrendChartView
+                    Margin="0,0,0,20"
                     IsVisible="{Binding HasChart}"
                     ChartPoints="{Binding ChartPoints}"
                     DomainMin="{Binding ChartDomainMin}"
                     DomainMax="{Binding ChartDomainMax}"
                     Subtitle="{Binding ChartSubtitle}" />
-                <VerticalStackLayout
-                    Spacing="{StaticResource ListItemSpacing}"
-                    BindableLayout.ItemsSource="{Binding HistoryEntries}">
-                    <BindableLayout.ItemTemplate>
+            </CollectionView.Header>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
+            </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:TestHistoryEntryItem">
                             <testUi:TestHistoryEntryView
                                 DateText="{Binding DateText}"
@@ -66,15 +69,13 @@
                                 </testUi:TestHistoryEntryView.Behaviors>
                             </testUi:TestHistoryEntryView>
                         </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                    <BindableLayout.EmptyView>
-                        <ui:EmptyStateView
-                            BodyText="{Binding EmptyText}"
-                            IconName="History" />
-                    </BindableLayout.EmptyView>
-                </VerticalStackLayout>
-            </VerticalStackLayout>
-        </ScrollView>
+                    </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <ui:EmptyStateView
+                    BodyText="{Binding EmptyText}"
+                    IconName="History" />
+            </CollectionView.EmptyView>
+        </CollectionView>
 
         <ui:ButtonView
             Grid.Row="2"

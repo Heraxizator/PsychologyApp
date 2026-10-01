@@ -21,7 +21,16 @@ public sealed class TestHistoryLoader(
     QuestionnaireDetailReader detailReader,
     LuscherDetailReader luscherDetailReader)
 {
-    public async Task<TestHistoryLoadResult> LoadEntriesAsync(
+    // Off the UI thread: building the snapshot after each query would otherwise run there.
+    public Task<TestHistoryLoadResult> LoadEntriesAsync(
+        string testId,
+        string fallbackTitle,
+        IUserProgressService userProgressService,
+        ITestCatalogService testCatalogService,
+        CancellationToken cancellationToken = default) =>
+        Task.Run(() => LoadEntriesCoreAsync(testId, fallbackTitle, userProgressService, testCatalogService, cancellationToken), cancellationToken);
+
+    private async Task<TestHistoryLoadResult> LoadEntriesCoreAsync(
         string testId,
         string fallbackTitle,
         IUserProgressService userProgressService,

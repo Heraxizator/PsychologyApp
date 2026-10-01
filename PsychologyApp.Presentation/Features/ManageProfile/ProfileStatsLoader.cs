@@ -13,7 +13,11 @@ public sealed class ProfileStatsSnapshot
 
 public sealed class ProfileStatsLoader(IUserProgressService userProgressService)
 {
-    public async Task<ProfileStatsSnapshot> LoadAsync(CancellationToken cancellationToken = default)
+    // Off the UI thread: building the snapshot after each query would otherwise run there.
+    public Task<ProfileStatsSnapshot> LoadAsync(CancellationToken cancellationToken = default) =>
+        Task.Run(() => LoadCoreAsync(cancellationToken), cancellationToken);
+
+    private async Task<ProfileStatsSnapshot> LoadCoreAsync(CancellationToken cancellationToken = default)
     {
         Task<long> techniquesTask = userProgressService.CountTechniqueCompletionsAsync(cancellationToken);
         Task<long> testsTask = userProgressService.CountTestResultsAsync(cancellationToken);

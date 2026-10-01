@@ -52,7 +52,20 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
     private const int MaxMonthLookbackMonths = 12;
     private const int MaxYearLookbackYears = 2;
 
-    public async Task<JournalMoodSnapshot> LoadAsync(
+    // Off the UI thread: building the snapshot after each query would otherwise run there.
+    public Task<JournalMoodSnapshot> LoadAsync(
+        int rangeDays = 7,
+        DateOnly? filterDay = null,
+        DateOnly? editorDay = null,
+        DateOnly? weekStripEnd = null,
+        DateOnly? monthCursor = null,
+        int? yearCursor = null,
+        JournalCheckInSlot editorSlot = JournalCheckInSlot.Morning,
+        JournalCalendarScale calendarScale = JournalCalendarScale.Week,
+        CancellationToken cancellationToken = default) =>
+        Task.Run(() => LoadCoreAsync(rangeDays, filterDay, editorDay, weekStripEnd, monthCursor, yearCursor, editorSlot, calendarScale, cancellationToken), cancellationToken);
+
+    private async Task<JournalMoodSnapshot> LoadCoreAsync(
         int rangeDays = 7,
         DateOnly? filterDay = null,
         DateOnly? editorDay = null,

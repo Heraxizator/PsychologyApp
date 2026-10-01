@@ -9,7 +9,11 @@ public sealed class ProfilePracticeHistoryLoader(
     IUserProgressService userProgressService,
     PracticeHistoryFormatter practiceHistoryFormatter)
 {
-    public async Task<IReadOnlyList<PracticeHistoryItem>> LoadAsync(
+    // Off the UI thread: building the snapshot after each query would otherwise run there.
+    public Task<IReadOnlyList<PracticeHistoryItem>> LoadAsync(int count = 10, CancellationToken cancellationToken = default) =>
+        Task.Run(() => LoadCoreAsync(count, cancellationToken), cancellationToken);
+
+    private async Task<IReadOnlyList<PracticeHistoryItem>> LoadCoreAsync(
         int count = 10,
         CancellationToken cancellationToken = default)
     {
