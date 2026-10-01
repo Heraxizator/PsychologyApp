@@ -165,7 +165,7 @@ public sealed class ChatViewModel : BaseViewModel
 
     private async Task LoadCoreAsync()
     {
-        long id = _sessionId ?? (await _chat.StartNewChatAsync(_lifetime.Token)).Session.Id;
+        long id = _sessionId ?? (await Task.Run(() => _chat.StartNewChatAsync(_lifetime.Token))).Session.Id;
 
         // The session and its history do not depend on each other: read both at once instead of waiting twice.
         Task<ChatSessionDTO?> sessionTask = _chat.GetChatAsync(id, _lifetime.Token);
@@ -206,7 +206,7 @@ public sealed class ChatViewModel : BaseViewModel
                 return;
             }
 
-            ChatTurnResult? followUp = await _chat.CheckPracticeFollowUpAsync(id, _lifetime.Token);
+            ChatTurnResult? followUp = await Task.Run(() => _chat.CheckPracticeFollowUpAsync(id, _lifetime.Token));
             if (followUp is not null)
             {
                 Title = followUp.Session.Title;
@@ -282,7 +282,8 @@ public sealed class ChatViewModel : BaseViewModel
         SetQuickReplies([]);
         IsTyping = true;
 
-        ChatTurnResult result = await send();
+        // The service awaits without ConfigureAwait(false), so understanding the message would run on the UI thread.
+        ChatTurnResult result = await Task.Run(send);
         Title = result.Session.Title;
 
         // NewMessages[0] is the user's own message, which is already on screen.

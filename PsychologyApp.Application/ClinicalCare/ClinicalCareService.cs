@@ -33,7 +33,7 @@ public sealed class ClinicalCareService(
             RiskLevel = riskLevel
         };
 
-        await repository.SaveRiskAssessmentAsync(assessment, cancellationToken);
+        await repository.SaveRiskAssessmentAsync(assessment, cancellationToken).ConfigureAwait(false);
 
         if (riskLevel is RiskLevel.Red)
         {
@@ -46,7 +46,7 @@ public sealed class ClinicalCareService(
                     Action = EscalationActions.RouteToCrisisHub,
                     Notes = assessment.Notes
                 },
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
         }
         else if (riskLevel is RiskLevel.Amber)
         {
@@ -59,7 +59,7 @@ public sealed class ClinicalCareService(
                     Action = EscalationActions.OfferSpecialistHelp,
                     Notes = assessment.Notes
                 },
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
         }
 
         return assessment;
@@ -70,7 +70,7 @@ public sealed class ClinicalCareService(
 
     public async Task<bool> IsRiskCheckDueAsync(TimeSpan maxAge, CancellationToken cancellationToken = default)
     {
-        RiskAssessmentDTO? latest = await repository.GetLatestRiskAssessmentAsync(cancellationToken);
+        RiskAssessmentDTO? latest = await repository.GetLatestRiskAssessmentAsync(cancellationToken).ConfigureAwait(false);
         if (latest is null)
         {
             return true;
@@ -81,7 +81,7 @@ public sealed class ClinicalCareService(
 
     public async Task<bool> ShouldRouteToCrisisHubAsync(CancellationToken cancellationToken = default)
     {
-        RiskAssessmentDTO? latest = await repository.GetLatestRiskAssessmentAsync(cancellationToken);
+        RiskAssessmentDTO? latest = await repository.GetLatestRiskAssessmentAsync(cancellationToken).ConfigureAwait(false);
         return latest?.RiskLevel is RiskLevel.Red;
     }
 
@@ -89,10 +89,10 @@ public sealed class ClinicalCareService(
         string onboardingConcern,
         CancellationToken cancellationToken = default)
     {
-        TherapyProgramStateDTO? existing = await repository.GetActiveProgramAsync(cancellationToken);
+        TherapyProgramStateDTO? existing = await repository.GetActiveProgramAsync(cancellationToken).ConfigureAwait(false);
         if (existing is not null)
         {
-            return await AdvanceProgramWeekIfDueAsync(cancellationToken) ?? existing;
+            return await AdvanceProgramWeekIfDueAsync(cancellationToken).ConfigureAwait(false) ?? existing;
         }
 
         TherapyProgramStateDTO program = new()
@@ -102,7 +102,7 @@ public sealed class ClinicalCareService(
             CurrentWeek = 1,
             IsActive = true
         };
-        await repository.UpsertActiveProgramAsync(program, cancellationToken);
+        await repository.UpsertActiveProgramAsync(program, cancellationToken).ConfigureAwait(false);
         return program;
     }
 
@@ -111,7 +111,7 @@ public sealed class ClinicalCareService(
 
     public async Task<TherapyProgramStateDTO?> AdvanceProgramWeekIfDueAsync(CancellationToken cancellationToken = default)
     {
-        TherapyProgramStateDTO? existing = await repository.GetActiveProgramAsync(cancellationToken);
+        TherapyProgramStateDTO? existing = await repository.GetActiveProgramAsync(cancellationToken).ConfigureAwait(false);
         if (existing is null)
         {
             return null;
@@ -131,13 +131,13 @@ public sealed class ClinicalCareService(
             CurrentWeek = targetWeek,
             IsActive = existing.IsActive
         };
-        await repository.UpsertActiveProgramAsync(advanced, cancellationToken);
+        await repository.UpsertActiveProgramAsync(advanced, cancellationToken).ConfigureAwait(false);
         return advanced;
     }
 
     public async Task<TherapyProgramWeekPlan?> GetActiveWeekPlanAsync(CancellationToken cancellationToken = default)
     {
-        TherapyProgramStateDTO? program = await AdvanceProgramWeekIfDueAsync(cancellationToken);
+        TherapyProgramStateDTO? program = await AdvanceProgramWeekIfDueAsync(cancellationToken).ConfigureAwait(false);
         if (program is null || !program.IsActive)
         {
             return null;
@@ -148,7 +148,7 @@ public sealed class ClinicalCareService(
 
     public async Task<TherapyProgramAdherence?> GetActiveWeekAdherenceAsync(CancellationToken cancellationToken = default)
     {
-        TherapyProgramStateDTO? program = await AdvanceProgramWeekIfDueAsync(cancellationToken);
+        TherapyProgramStateDTO? program = await AdvanceProgramWeekIfDueAsync(cancellationToken).ConfigureAwait(false);
         if (program is null || !program.IsActive)
         {
             return null;
@@ -164,7 +164,7 @@ public sealed class ClinicalCareService(
             poolKeys,
             weekStartUtc,
             weekEndUtc,
-            cancellationToken);
+            cancellationToken).ConfigureAwait(false);
 
         return new TherapyProgramAdherence(program, weekPlan, completed);
     }
@@ -175,20 +175,20 @@ public sealed class ClinicalCareService(
         DateOnly weekStart = today.AddDays(-6);
 
         IReadOnlyList<CompletionDTO> completions =
-            await userProgressService.GetRecentTechniqueCompletionsAsync(50, cancellationToken);
+            await userProgressService.GetRecentTechniqueCompletionsAsync(50, cancellationToken).ConfigureAwait(false);
         int practiceCount = completions.Count(entry =>
             DateOnly.FromDateTime(entry.CompletedAt.ToLocalTime()) >= weekStart);
 
-        IReadOnlyList<MoodEntryDTO> moods = await userProgressService.GetRecentMoodsAsync(21, cancellationToken);
+        IReadOnlyList<MoodEntryDTO> moods = await userProgressService.GetRecentMoodsAsync(21, cancellationToken).ConfigureAwait(false);
         IReadOnlyList<MoodEntryDTO> weekMoods = moods
             .Where(entry => DateOnly.FromDateTime(entry.RecordedAt.ToLocalTime()) >= weekStart)
             .ToList();
         double avgMood = weekMoods.Count == 0 ? 0 : weekMoods.Average(entry => entry.MoodLevel);
 
-        long testCountTotal = await userProgressService.CountTestResultsAsync(cancellationToken);
+        long testCountTotal = await userProgressService.CountTestResultsAsync(cancellationToken).ConfigureAwait(false);
         int testCount = (int)Math.Min(int.MaxValue, testCountTotal);
 
-        RiskAssessmentDTO? latestRisk = await repository.GetLatestRiskAssessmentAsync(cancellationToken);
+        RiskAssessmentDTO? latestRisk = await repository.GetLatestRiskAssessmentAsync(cancellationToken).ConfigureAwait(false);
         RiskLevel riskLevel = latestRisk?.RiskLevel
             ?? RiskClassifier.DeriveFromMoodPracticeSignals(avgMood, practiceCount);
 
@@ -207,8 +207,8 @@ public sealed class ClinicalCareService(
 
     public async Task<TherapyProgramStateDTO?> AdjustProgramFromScorecardAsync(CancellationToken cancellationToken = default)
     {
-        ClinicalScorecardDTO scorecard = await BuildWeeklyScorecardAsync(cancellationToken);
-        TherapyProgramStateDTO? program = await repository.GetActiveProgramAsync(cancellationToken);
+        ClinicalScorecardDTO scorecard = await BuildWeeklyScorecardAsync(cancellationToken).ConfigureAwait(false);
+        TherapyProgramStateDTO? program = await repository.GetActiveProgramAsync(cancellationToken).ConfigureAwait(false);
         if (program is null)
         {
             return null;
@@ -225,7 +225,7 @@ public sealed class ClinicalCareService(
                     Action = EscalationActions.RouteToCrisisHub,
                     Notes = scorecard.Summary
                 },
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
             return program;
         }
 
@@ -240,7 +240,7 @@ public sealed class ClinicalCareService(
                     Action = EscalationActions.OfferSpecialistHelp,
                     Notes = scorecard.Summary
                 },
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
 
             // Hold at current week (gentler pace) when signals worsen.
             TherapyProgramStateDTO held = new()
@@ -250,11 +250,11 @@ public sealed class ClinicalCareService(
                 CurrentWeek = Math.Max(1, program.CurrentWeek),
                 IsActive = true
             };
-            await repository.UpsertActiveProgramAsync(held, cancellationToken);
+            await repository.UpsertActiveProgramAsync(held, cancellationToken).ConfigureAwait(false);
             return held;
         }
 
-        return await AdvanceProgramWeekIfDueAsync(cancellationToken);
+        return await AdvanceProgramWeekIfDueAsync(cancellationToken).ConfigureAwait(false);
     }
 
     public Task<IReadOnlyList<EscalationEventDTO>> GetRecentEscalationsAsync(
@@ -263,7 +263,7 @@ public sealed class ClinicalCareService(
         repository.GetRecentEscalationsAsync(limit, cancellationToken);
 
     public async Task<SafetyPlanDTO> GetSafetyPlanAsync(CancellationToken cancellationToken = default) =>
-        await repository.GetSafetyPlanAsync(cancellationToken) ?? new SafetyPlanDTO();
+        await repository.GetSafetyPlanAsync(cancellationToken).ConfigureAwait(false) ?? new SafetyPlanDTO();
 
     public Task SaveSafetyPlanAsync(SafetyPlanDTO plan, CancellationToken cancellationToken = default) =>
         repository.SaveSafetyPlanAsync(

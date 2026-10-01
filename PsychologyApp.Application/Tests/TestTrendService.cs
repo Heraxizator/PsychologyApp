@@ -28,7 +28,7 @@ public sealed class TestTrendService(ITestCatalogService testCatalogService) : I
 
     public async Task<ScoreDirection> ResolveDirectionAsync(string testId, CancellationToken cancellationToken = default)
     {
-        TestDefinition? definition = await testCatalogService.GetByIdAsync(testId, cancellationToken);
+        TestDefinition? definition = await testCatalogService.GetByIdAsync(testId, cancellationToken).ConfigureAwait(false);
         return definition?.ScoreDirection ?? ScoreDirection.LowerIsBetter;
     }
 
@@ -38,14 +38,14 @@ public sealed class TestTrendService(ITestCatalogService testCatalogService) : I
         CancellationToken cancellationToken = default)
     {
         IReadOnlyList<TestResultDTO> history =
-            await userProgressService.GetTestResultHistoryAsync(testId, 2, cancellationToken);
+            await userProgressService.GetTestResultHistoryAsync(testId, 2, cancellationToken).ConfigureAwait(false);
 
         if (history.Count < 2)
         {
             return null;
         }
 
-        ScoreDirection direction = await ResolveDirectionAsync(testId, cancellationToken);
+        ScoreDirection direction = await ResolveDirectionAsync(testId, cancellationToken).ConfigureAwait(false);
         TestTrendKind kind = Compare(history[0].Score, history[1].Score, direction);
         return new TestTrendEvaluation(kind, kind is not TestTrendKind.None);
     }

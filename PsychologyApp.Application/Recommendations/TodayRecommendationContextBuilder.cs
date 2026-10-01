@@ -42,22 +42,22 @@ public static class TodayRecommendationContextBuilder
 
         if (programTask is null)
         {
-            await Task.WhenAll(recentTestTask, moodsTask, datesTask, draftsTask, sessionResultsTask);
+            await Task.WhenAll(recentTestTask, moodsTask, datesTask, draftsTask, sessionResultsTask).ConfigureAwait(false);
         }
         else
         {
-            await Task.WhenAll(recentTestTask, moodsTask, datesTask, draftsTask, sessionResultsTask, programTask);
+            await Task.WhenAll(recentTestTask, moodsTask, datesTask, draftsTask, sessionResultsTask, programTask).ConfigureAwait(false);
         }
 
         int? todayMood = null;
-        IReadOnlyList<MoodEntryDTO> moods = await moodsTask;
+        IReadOnlyList<MoodEntryDTO> moods = await moodsTask.ConfigureAwait(false);
         if (moods.Count > 0 && moods[0].RecordedAt.ToLocalTime().Date == DateTime.Today)
         {
             todayMood = moods[0].MoodLevel;
         }
 
         TechniqueId? draftTechniqueId = null;
-        foreach (string key in await draftsTask)
+        foreach (string key in await draftsTask.ConfigureAwait(false))
         {
             if (Enum.TryParse(key, out TechniqueId techniqueId))
             {
@@ -66,14 +66,14 @@ public static class TodayRecommendationContextBuilder
             }
         }
 
-        TherapyProgramStateDTO? program = programTask is null ? null : await programTask;
-        IReadOnlyDictionary<string, double> effectiveness = ComputeEffectiveness(await sessionResultsTask);
+        TherapyProgramStateDTO? program = programTask is null ? null : await programTask.ConfigureAwait(false);
+        IReadOnlyDictionary<string, double> effectiveness = ComputeEffectiveness(await sessionResultsTask.ConfigureAwait(false));
 
         return new TodayRecommendationContext(
             concern,
-            await recentTestTask,
+            await recentTestTask.ConfigureAwait(false),
             todayMood,
-            await datesTask,
+            await datesTask.ConfigureAwait(false),
             draftTechniqueId,
             program?.IsActive == true ? program.ProgramType : null,
             program?.IsActive == true ? program.CurrentWeek : 0,

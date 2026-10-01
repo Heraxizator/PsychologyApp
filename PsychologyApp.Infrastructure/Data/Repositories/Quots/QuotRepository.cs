@@ -24,7 +24,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
             "SELECT * FROM Quots WHERE IsReaded = 0 ORDER BY QuotId DESC LIMIT @count;",
             new { count },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<IEnumerable<Quot>> GetLatestAsync(int count, CancellationToken cancellationToken = default)
@@ -34,7 +34,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
             "SELECT * FROM Quots ORDER BY QuotId DESC LIMIT @count;",
             new { count },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<IEnumerable<Quot>> GetFavouritesAsync(int count, CancellationToken cancellationToken = default)
@@ -44,7 +44,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
             "SELECT * FROM Quots WHERE IsFavourite = 1 ORDER BY QuotId DESC LIMIT @count;",
             new { count },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<IEnumerable<Quot>> GetUnreadByThemesAsync(
@@ -62,7 +62,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
             "SELECT * FROM Quots WHERE IsReaded = 0 AND Theme IN @themes ORDER BY QuotId DESC LIMIT @count;",
             new { themes, count },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<IEnumerable<Quot>> GetReadByThemesAsync(
@@ -80,7 +80,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
             "SELECT * FROM Quots WHERE IsReaded = 1 AND Theme IN @themes ORDER BY QuotId DESC LIMIT @count;",
             new { themes, count },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<IEnumerable<Quot>> GetByThemeAsync(
@@ -93,7 +93,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
             "SELECT * FROM Quots WHERE Theme = @theme ORDER BY QuotId DESC LIMIT @count;",
             new { theme, count },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<Quot?> GetByTextAsync(string text, CancellationToken cancellationToken = default)
@@ -103,7 +103,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
             "SELECT * FROM Quots WHERE Text = @text ORDER BY QuotId DESC LIMIT 1;",
             new { text },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<int> CountAllAsync(CancellationToken cancellationToken = default)
@@ -112,7 +112,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
         return await connection.ExecuteScalarAsync<int>(DapperCommandFactory.Create(
             "SELECT COUNT(*) FROM Quots;",
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<int> CountUnreadAsync(CancellationToken cancellationToken = default)
@@ -121,7 +121,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
         return await connection.ExecuteScalarAsync<int>(DapperCommandFactory.Create(
             "SELECT COUNT(*) FROM Quots WHERE IsReaded = 0;",
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task ResetReadStateAsync(CancellationToken cancellationToken = default)
@@ -130,7 +130,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
         await connection.ExecuteAsync(DapperCommandFactory.Create(
             "UPDATE Quots SET IsReaded = 0;",
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task DeleteAllAsync(CancellationToken cancellationToken = default)
@@ -139,7 +139,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
         await connection.ExecuteAsync(DapperCommandFactory.Create(
             "DELETE FROM Quots;",
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<IReadOnlyList<string>> GetExistingTextsAsync(CancellationToken cancellationToken = default)
@@ -148,7 +148,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
         IEnumerable<string> rows = await connection.QueryAsync<string>(DapperCommandFactory.Create(
             "SELECT DISTINCT Text FROM Quots;",
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         return rows.ToList();
     }
@@ -159,7 +159,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
         IEnumerable<string> rows = await connection.QueryAsync<string>(DapperCommandFactory.Create(
             "SELECT DISTINCT Text FROM Quots WHERE IsFavourite = 1;",
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         return rows.ToList();
     }
@@ -173,12 +173,12 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
 
         if (quots.Count == 1)
         {
-            await AddAsync(quots[0], cancellationToken);
+            await AddAsync(quots[0], cancellationToken).ConfigureAwait(false);
             return;
         }
 
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        await using SqliteTransaction transaction = (SqliteTransaction)await connection.BeginTransactionAsync(cancellationToken);
+        await using SqliteTransaction transaction = (SqliteTransaction)await connection.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
 
         try
         {
@@ -187,13 +187,13 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
                 quots,
                 transaction,
                 CommandTimeoutSeconds,
-                cancellationToken));
+                cancellationToken)).ConfigureAwait(false);
 
-            await transaction.CommitAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
         }
         catch
         {
-            await transaction.RollbackAsync(cancellationToken);
+            await transaction.RollbackAsync(cancellationToken).ConfigureAwait(false);
             throw;
         }
     }

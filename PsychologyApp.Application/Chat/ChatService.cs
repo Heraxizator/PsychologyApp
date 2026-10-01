@@ -71,7 +71,7 @@ public sealed class ChatService(
 
     public async Task<ChatTurnResult> StartNewChatAsync(CancellationToken cancellationToken = default)
     {
-        IReadOnlyList<ChatSessionDTO> sessions = await repository.GetSessionsAsync(cancellationToken);
+        IReadOnlyList<ChatSessionDTO> sessions = await repository.GetSessionsAsync(cancellationToken).ConfigureAwait(false);
         DateTime now = Now();
 
         ChatSessionDTO? untouched = sessions.FirstOrDefault(s => !s.HasConversation());
@@ -83,14 +83,14 @@ public sealed class ChatService(
         ChatSessionDTO? previous = sessions.FirstOrDefault(s =>
             !string.IsNullOrWhiteSpace(s.Emotion) && s.Emotion != nameof(CompanionEmotion.Unknown) && s.MessageCount >= 2);
 
-        long id = await repository.CreateSessionAsync(DefaultTitle(), now, cancellationToken);
-        ChatSessionDTO session = (await repository.GetSessionAsync(id, cancellationToken))!;
+        long id = await repository.CreateSessionAsync(DefaultTitle(), now, cancellationToken).ConfigureAwait(false);
+        ChatSessionDTO session = (await repository.GetSessionAsync(id, cancellationToken).ConfigureAwait(false))!;
 
-        CompanionDialogue dialogue = await DialogueAsync(cancellationToken, includeTodayMood: true);
-        CompanionReply reply = dialogue.Open(await WithMemoryAsync(new CompanionState(), cancellationToken), previous);
+        CompanionDialogue dialogue = await DialogueAsync(cancellationToken, includeTodayMood: true).ConfigureAwait(false);
+        CompanionReply reply = dialogue.Open(await WithMemoryAsync(new CompanionState(), cancellationToken).ConfigureAwait(false), previous);
         session.StateJson = reply.State.Serialize();
-        IReadOnlyList<ChatMessageDTO> added = await StoreAsync(CompanionMessages(session, reply, now), cancellationToken);
-        await repository.UpdateSessionAsync(session, cancellationToken);
+        IReadOnlyList<ChatMessageDTO> added = await StoreAsync(CompanionMessages(session, reply, now), cancellationToken).ConfigureAwait(false);
+        await repository.UpdateSessionAsync(session, cancellationToken).ConfigureAwait(false);
 
         return new ChatTurnResult(session, added, null);
     }
@@ -99,7 +99,7 @@ public sealed class ChatService(
         repository.GetSessionsAsync(cancellationToken);
 
     public async Task<ChatSessionDTO?> GetLastChatAsync(CancellationToken cancellationToken = default) =>
-        (await repository.GetSessionsAsync(cancellationToken))
+        (await repository.GetSessionsAsync(cancellationToken).ConfigureAwait(false))
             .FirstOrDefault(s => s.HasConversation());
 
     public Task<ChatSessionDTO?> GetChatAsync(long sessionId, CancellationToken cancellationToken = default) =>
@@ -119,7 +119,7 @@ public sealed class ChatService(
 
     public async Task<ChatTurnResult?> CheckPracticeFollowUpAsync(long sessionId, CancellationToken cancellationToken = default)
     {
-        ChatSessionDTO? session = await repository.GetSessionAsync(sessionId, cancellationToken);
+        ChatSessionDTO? session = await repository.GetSessionAsync(sessionId, cancellationToken).ConfigureAwait(false);
         if (session is null)
         {
             return null;
@@ -131,7 +131,7 @@ public sealed class ChatService(
             return null;
         }
 
-        IReadOnlyList<Models.CompletionDTO> completions = await progress.GetRecentTechniqueCompletionsAsync(20, cancellationToken);
+        IReadOnlyList<Models.CompletionDTO> completions = await progress.GetRecentTechniqueCompletionsAsync(20, cancellationToken).ConfigureAwait(false);
         bool completed = completions.Any(c => c.ItemKey == technique && c.CompletedAt.ToUniversalTime() >= startedAt);
         if (!completed)
         {
@@ -139,17 +139,17 @@ public sealed class ChatService(
         }
 
         DateTime now = Now();
-        CompanionDialogue dialogue = await DialogueAsync(cancellationToken);
+        CompanionDialogue dialogue = await DialogueAsync(cancellationToken).ConfigureAwait(false);
         CompanionReply reply = dialogue.FollowUpAfterPractice(state);
         ApplyReply(session, reply, now, firstText: null);
-        IReadOnlyList<ChatMessageDTO> added = await StoreAsync(CompanionMessages(session, reply, now), cancellationToken);
-        await repository.UpdateSessionAsync(session, cancellationToken);
+        IReadOnlyList<ChatMessageDTO> added = await StoreAsync(CompanionMessages(session, reply, now), cancellationToken).ConfigureAwait(false);
+        await repository.UpdateSessionAsync(session, cancellationToken).ConfigureAwait(false);
         return new ChatTurnResult(session, added, null);
     }
 
     public async Task RenameAsync(long sessionId, string title, CancellationToken cancellationToken = default)
     {
-        ChatSessionDTO? session = await repository.GetSessionAsync(sessionId, cancellationToken);
+        ChatSessionDTO? session = await repository.GetSessionAsync(sessionId, cancellationToken).ConfigureAwait(false);
         string trimmed = title.Trim();
         if (session is null || trimmed.Length == 0)
         {
@@ -157,7 +157,7 @@ public sealed class ChatService(
         }
 
         session.Title = trimmed.Length > MaxTitleLength ? trimmed[..MaxTitleLength] : trimmed;
-        await repository.UpdateSessionAsync(session, cancellationToken);
+        await repository.UpdateSessionAsync(session, cancellationToken).ConfigureAwait(false);
     }
 
     public Task DeleteAsync(long sessionId, CancellationToken cancellationToken = default) =>
@@ -168,7 +168,7 @@ public sealed class ChatService(
         // Independent reads: run them together instead of waiting for one, then the other.
         Task<IReadOnlyList<ChatSessionDTO>> sessionsTask = repository.GetSessionsAsync(cancellationToken);
         Task<IReadOnlyDictionary<string, string>> memoryTask = repository.GetMemoryAsync(cancellationToken);
-        await Task.WhenAll(sessionsTask, memoryTask);
+        await Task.WhenAll(sessionsTask, memoryTask).ConfigureAwait(false);
         return ChatStatistics.Compute(sessionsTask.Result, memoryTask.Result, Now(), time.LocalTimeZone);
     }
 
@@ -177,11 +177,11 @@ public sealed class ChatService(
         string trimmed = (name ?? string.Empty).Trim();
         if (trimmed.Length == 0)
         {
-            await repository.DeleteMemoryAsync(ChatMemoryKeys.Name, cancellationToken);
+            await repository.DeleteMemoryAsync(ChatMemoryKeys.Name, cancellationToken).ConfigureAwait(false);
             return;
         }
 
-        await repository.SetMemoryAsync(ChatMemoryKeys.Name, trimmed.Length > MaxNameLength ? trimmed[..MaxNameLength] : trimmed, cancellationToken);
+        await repository.SetMemoryAsync(ChatMemoryKeys.Name, trimmed.Length > MaxNameLength ? trimmed[..MaxNameLength] : trimmed, cancellationToken).ConfigureAwait(false);
     }
 
     public Task DeleteAllChatsAsync(CancellationToken cancellationToken = default) =>
@@ -193,7 +193,7 @@ public sealed class ChatService(
     /// <summary>What the companion knows from earlier chats: the name and the practice that helped most. Memory wins over the chat's own copy, so a renamed person is renamed everywhere.</summary>
     private async Task<CompanionState> WithMemoryAsync(CompanionState state, CancellationToken cancellationToken)
     {
-        IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken);
+        IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
         return state with
         {
             UserName = memory.TryGetValue(ChatMemoryKeys.Name, out string? name) && !string.IsNullOrWhiteSpace(name) ? name : state.UserName,
@@ -206,38 +206,38 @@ public sealed class ChatService(
     {
         if (reply.State.UserName is { } name && name != before.UserName)
         {
-            await repository.SetMemoryAsync(ChatMemoryKeys.Name, name, cancellationToken);
+            await repository.SetMemoryAsync(ChatMemoryKeys.Name, name, cancellationToken).ConfigureAwait(false);
         }
 
         if (reply.Action is { Kind: DialogueActionKind.StartTechnique, TechniqueId: { } started })
         {
-            await repository.IncrementMemoryAsync(ChatMemoryKeys.Tried(started), cancellationToken);
+            await repository.IncrementMemoryAsync(ChatMemoryKeys.Tried(started), cancellationToken).ConfigureAwait(false);
         }
 
         for (int i = before.HelpedPractices.Count; i < reply.State.HelpedPractices.Count; i++)
         {
             if (Enum.TryParse(reply.State.HelpedPractices[i], out TechniqueId helped))
             {
-                await repository.IncrementMemoryAsync(ChatMemoryKeys.Helped(helped), cancellationToken);
+                await repository.IncrementMemoryAsync(ChatMemoryKeys.Helped(helped), cancellationToken).ConfigureAwait(false);
             }
         }
     }
 
     private async Task<ChatTurnResult> TakeTurnAsync(long sessionId, string userText, CompanionInput input, CancellationToken cancellationToken)
     {
-        ChatSessionDTO session = await repository.GetSessionAsync(sessionId, cancellationToken)
+        ChatSessionDTO session = await repository.GetSessionAsync(sessionId, cancellationToken).ConfigureAwait(false)
             ?? throw new InvalidOperationException($"Chat {sessionId} does not exist.");
         if (userText.Length == 0)
         {
             return new ChatTurnResult(session, [], null);
         }
 
-        CompanionState state = await WithMemoryAsync(CompanionState.Deserialize(session.StateJson), cancellationToken);
+        CompanionState state = await WithMemoryAsync(CompanionState.Deserialize(session.StateJson), cancellationToken).ConfigureAwait(false);
         DateTime now = Now();
 
-        CompanionDialogue dialogue = await DialogueAsync(cancellationToken);
+        CompanionDialogue dialogue = await DialogueAsync(cancellationToken).ConfigureAwait(false);
         CompanionReply reply = dialogue.Respond(state, input);
-        await RememberAsync(state, reply, cancellationToken);
+        await RememberAsync(state, reply, cancellationToken).ConfigureAwait(false);
         ApplyReply(session, reply, now, firstText: input is CompanionInput.FreeText ? userText : null);
 
         // The user's message and the whole reply are stored in one transaction: a turn is saved completely or not at all.
@@ -246,13 +246,13 @@ public sealed class ChatService(
             new() { SessionId = sessionId, Role = ChatRole.User, Text = userText, CreatedAt = now },
             .. CompanionMessages(session, reply, now)
         ];
-        IReadOnlyList<ChatMessageDTO> added = await StoreAsync(pending, cancellationToken);
-        await repository.UpdateSessionAsync(session, cancellationToken);
+        IReadOnlyList<ChatMessageDTO> added = await StoreAsync(pending, cancellationToken).ConfigureAwait(false);
+        await repository.UpdateSessionAsync(session, cancellationToken).ConfigureAwait(false);
 
         // Logging to the journal is a side effect the companion carries out itself; the UI never sees it as a navigation instruction.
         if (reply.Action is { Kind: DialogueActionKind.LogMood, MoodLevel: { } moodLevel })
         {
-            await progress.RecordMoodAsync(moodLevel, reply.Action.Note, now, cancellationToken);
+            await progress.RecordMoodAsync(moodLevel, reply.Action.Note, now, cancellationToken).ConfigureAwait(false);
             return new ChatTurnResult(session, added, null);
         }
 
@@ -307,7 +307,7 @@ public sealed class ChatService(
             return pending;
         }
 
-        IReadOnlyList<long> ids = await repository.AddMessagesAsync(pending, cancellationToken);
+        IReadOnlyList<long> ids = await repository.AddMessagesAsync(pending, cancellationToken).ConfigureAwait(false);
         return pending.Select((m, i) => new ChatMessageDTO
         {
             Id = ids[i],
@@ -331,7 +331,7 @@ public sealed class ChatService(
         Task<IReadOnlyList<MoodEntryDTO>> moodsTask = includeTodayMood
             ? progress.GetRecentMoodsAsync(3, cancellationToken)
             : Task.FromResult<IReadOnlyList<MoodEntryDTO>>([]);
-        await Task.WhenAll(quotesTask, stressTestTask, moodsTask);
+        await Task.WhenAll(quotesTask, stressTestTask, moodsTask).ConfigureAwait(false);
 
         DateTime now = Now();
         TestResultDTO? stressTest = stressTestTask.Result is { } result && (now - result.CompletedAt).TotalDays <= StressTestRelevantDays

@@ -8,9 +8,9 @@ public sealed class StatisticService(IStatisticRepository statisticRepository) :
     public async Task AddSingleAsync(StatisticDTO statisticDTO, CancellationToken cancellationToken = default)
     {
         global::PsychologyApp.Domain.Entities.Statistic statistic = StatisticMapper.GetStatistic(statisticDTO);
-        await statisticRepository.AddAsync(statistic, cancellationToken);
+        await statisticRepository.AddAsync(statistic, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<long> CountPageCompletedAsync(CancellationToken cancellationToken = default) =>
-        await statisticRepository.CountDistinctPagesAsync(cancellationToken);
+        await statisticRepository.CountDistinctPagesAsync(cancellationToken).ConfigureAwait(false);
 }

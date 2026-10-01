@@ -31,7 +31,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                 CompletedAt = result.CompletedAt.ToString("O")
             },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<TestResultDTO?> GetLatestTestResultAsync(string testId, CancellationToken cancellationToken = default)
@@ -41,7 +41,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             UserProgressSql.SelectLatestTestResult,
             new { testId },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<TestResultDTO?> GetMostRecentTestResultAsync(TimeSpan within, CancellationToken cancellationToken = default)
@@ -51,7 +51,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             UserProgressSql.SelectMostRecentTestResultSince,
             new { sinceUtc = DateTime.UtcNow.Subtract(within).ToString("O") },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<IReadOnlyList<TestResultDTO>> GetTestResultHistoryAsync(string testId, int limit, CancellationToken cancellationToken = default)
@@ -61,7 +61,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             UserProgressSql.SelectTestResultHistory,
             new { testId, limit },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         return rows.ToList();
     }
@@ -73,7 +73,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             UserProgressSql.SelectAllTestResults,
             new { limit },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         return rows.ToList();
     }
@@ -92,7 +92,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             UserProgressSql.SelectLatestTestResults,
             new { testIds },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         return rows.ToList();
     }
@@ -112,7 +112,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                 UserProgressSql.SelectTestResultCounts,
                 new { testIds },
                 commandTimeout: CommandTimeoutSeconds,
-                cancellationToken: cancellationToken));
+                cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         return rows.ToList();
     }
@@ -123,7 +123,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
         string? value = await connection.QuerySingleOrDefaultAsync<string>(DapperCommandFactory.Create(
             UserProgressSql.SelectLastTechniqueCompletionDate,
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         return ParseOptionalUtcDateTime(value);
     }
@@ -134,7 +134,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
         return await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
             UserProgressSql.CountTestResults,
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task RecordCompletionAsync(CompletionDTO completion, CancellationToken cancellationToken = default)
@@ -152,7 +152,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                 completion.DurationSeconds
             },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<long> RecordSessionOutcomeAsync(SessionOutcomeRequest request, CancellationToken cancellationToken = default)
@@ -160,7 +160,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
         DateTime completedAt = DateTime.UtcNow;
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         await using SqliteTransaction transaction =
-            (SqliteTransaction)await connection.BeginTransactionAsync(cancellationToken);
+            (SqliteTransaction)await connection.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
 
         try
         {
@@ -177,7 +177,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                 },
                 transaction,
                 CommandTimeoutSeconds,
-                cancellationToken));
+                cancellationToken)).ConfigureAwait(false);
 
             await connection.ExecuteAsync(DapperCommandFactory.Create(
                 UserProgressSql.InsertSessionResult,
@@ -194,13 +194,13 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                 },
                 transaction,
                 CommandTimeoutSeconds,
-                cancellationToken));
+                cancellationToken)).ConfigureAwait(false);
 
             long sessionResultId = await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
                 UserProgressSql.SelectLastInsertRowId,
                 transaction: transaction,
                 commandTimeout: CommandTimeoutSeconds,
-                cancellationToken: cancellationToken));
+                cancellationToken: cancellationToken)).ConfigureAwait(false);
 
             if (request.DeleteDraft)
             {
@@ -209,15 +209,15 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                     new { techniqueKey = request.ItemKey },
                     transaction,
                     CommandTimeoutSeconds,
-                    cancellationToken));
+                    cancellationToken)).ConfigureAwait(false);
             }
 
-            await transaction.CommitAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
             return sessionResultId;
         }
         catch
         {
-            await transaction.RollbackAsync(cancellationToken);
+            await transaction.RollbackAsync(cancellationToken).ConfigureAwait(false);
             throw;
         }
     }
@@ -228,7 +228,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
         return await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
             UserProgressSql.CountTechniqueCompletions,
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<IReadOnlyList<CompletionDTO>> GetRecentTechniqueCompletionsAsync(int limit, CancellationToken cancellationToken = default)
@@ -238,7 +238,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             UserProgressSql.SelectRecentTechniqueCompletions,
             new { limit },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         return rows.ToList();
     }
@@ -249,7 +249,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
         IEnumerable<string> rows = await connection.QueryAsync<string>(DapperCommandFactory.Create(
             UserProgressSql.SelectCompletionDates,
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         return rows
             .Select(day => DateOnly.Parse(day, System.Globalization.CultureInfo.InvariantCulture))
@@ -263,7 +263,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             UserProgressSql.SelectLastCompletionForItem,
             new { itemKey },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         return ParseOptionalUtcDateTime(value);
     }
@@ -283,7 +283,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                 UserProgressSql.SelectLastPracticeDates,
                 new { itemKeys },
                 commandTimeout: CommandTimeoutSeconds,
-                cancellationToken: cancellationToken));
+                cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         Dictionary<string, DateTime> result = new(StringComparer.Ordinal);
         foreach ((string itemKey, string completedAt) in rows)
@@ -306,7 +306,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                 updatedAt = DateTime.UtcNow.ToString("O")
             },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<string?> GetSessionDraftAsync(string techniqueKey, CancellationToken cancellationToken = default)
@@ -316,7 +316,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             UserProgressSql.SelectSessionDraft,
             new { techniqueKey },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<IReadOnlySet<string>> GetSessionDraftKeysAsync(
@@ -333,7 +333,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             UserProgressSql.SelectSessionDraftKeys,
             new { techniqueKeys },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         return rows.ToHashSet(StringComparer.Ordinal);
     }
@@ -345,14 +345,14 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             UserProgressSql.DeleteSessionDraft,
             new { techniqueKey },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task RecordMoodAsync(MoodEntryDTO entry, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         await using SqliteTransaction transaction =
-            (SqliteTransaction)await connection.BeginTransactionAsync(cancellationToken);
+            (SqliteTransaction)await connection.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
 
         try
         {
@@ -366,7 +366,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                 },
                 transaction,
                 CommandTimeoutSeconds,
-                cancellationToken));
+                cancellationToken)).ConfigureAwait(false);
 
             await connection.ExecuteAsync(DapperCommandFactory.Create(
                 UserProgressSql.InsertMoodCompletion,
@@ -378,13 +378,13 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                 },
                 transaction,
                 CommandTimeoutSeconds,
-                cancellationToken));
+                cancellationToken)).ConfigureAwait(false);
 
-            await transaction.CommitAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
         }
         catch
         {
-            await transaction.RollbackAsync(cancellationToken);
+            await transaction.RollbackAsync(cancellationToken).ConfigureAwait(false);
             throw;
         }
     }
@@ -396,7 +396,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             UserProgressSql.SelectRecentMoods,
             new { limit },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         return rows.ToList();
     }
@@ -417,7 +417,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                 limit
             },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         return rows.ToList();
     }
@@ -438,7 +438,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                 Note = note
             },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task DeleteMoodEntryAsync(long moodEntryId, CancellationToken cancellationToken = default)
@@ -448,7 +448,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             UserProgressSql.DeleteMoodEntry,
             new { MoodEntryId = moodEntryId },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task UpdateSessionResultPostIntensityAsync(
@@ -461,7 +461,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             UserProgressSql.UpdateSessionResultPostIntensity,
             new { sessionResultId, postIntensity },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task UpdateSessionResultNoteAsync(
@@ -474,7 +474,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             UserProgressSql.UpdateSessionResultNote,
             new { sessionResultId, note },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<string?> GetLastSessionNoteAsync(string itemKey, CancellationToken cancellationToken = default)
@@ -484,7 +484,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             UserProgressSql.SelectLastSessionNoteForItem,
             new { itemKey },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<SessionResultDTO?> GetSessionResultAsync(long sessionResultId, CancellationToken cancellationToken = default)
@@ -494,7 +494,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             UserProgressSql.SelectSessionResultById,
             new { sessionResultId },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<IReadOnlyList<SessionResultDTO>> GetRecentSessionResultsAsync(int limit, CancellationToken cancellationToken = default)
@@ -504,7 +504,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             UserProgressSql.SelectRecentSessionResults,
             new { limit },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         return rows.ToList();
     }
@@ -530,7 +530,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                 beforeUtc = beforeUtc.ToString("O")
             },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     private static DateTime? ParseOptionalUtcDateTime(string? value) =>

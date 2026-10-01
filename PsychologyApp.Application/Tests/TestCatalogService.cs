@@ -48,7 +48,7 @@ public sealed class CachedTestCatalogProvider(
         await _cache.GetOrLoadAsync(
             async ct =>
             {
-                IReadOnlyList<TestDefinition> loaded = (await innerProvider.LoadAllAsync(ct)).ToList();
+                IReadOnlyList<TestDefinition> loaded = (await innerProvider.LoadAllAsync(ct).ConfigureAwait(false)).ToList();
                 if (loaded.Count == 0)
                 {
                     throw new InvalidOperationException("Embedded test catalog is empty.");
@@ -57,7 +57,7 @@ public sealed class CachedTestCatalogProvider(
                 return loaded;
             },
             languageKeyProvider,
-            cancellationToken);
+            cancellationToken).ConfigureAwait(false);
 
     public void Invalidate() => _cache.Invalidate();
 }

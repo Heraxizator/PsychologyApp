@@ -8,7 +8,7 @@ public sealed class ReasonSearchService(IReasonContentProvider reasonContentProv
     public async Task<IReadOnlyList<ReasonDTO>> LoadReasonsAsync(CancellationToken cancellationToken = default)
     {
         IEnumerable<global::PsychologyApp.Domain.Entities.Reason> reasons =
-            await reasonContentProvider.LoadReasonsAsync(cancellationToken);
+            await reasonContentProvider.LoadReasonsAsync(cancellationToken).ConfigureAwait(false);
 
         return reasons.Select(ReasonMapper.GetReasonDTO).ToList();
     }

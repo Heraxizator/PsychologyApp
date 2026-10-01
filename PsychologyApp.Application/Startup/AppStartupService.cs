@@ -19,29 +19,29 @@ public sealed class AppStartupService(
 {
     public async Task InitializeAsync(CancellationToken cancellationToken = default)
     {
-        await databaseInitializer.InitializeAsync(cancellationToken);
+        await databaseInitializer.InitializeAsync(cancellationToken).ConfigureAwait(false);
 
         using var timeoutSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         timeoutSource.CancelAfter(settings.Value.MiddleTimeoutMs);
 
         await Task.WhenAll(
             SeedQuotesAsync(timeoutSource.Token),
-            PrewarmTechniqueCatalogAsync(timeoutSource.Token));
+            PrewarmTechniqueCatalogAsync(timeoutSource.Token)).ConfigureAwait(false);
     }
 
     private async Task SeedQuotesAsync(CancellationToken cancellationToken)
     {
         try
         {
-            int persistedVersion = await quoteCatalogVersionStore.GetAsync(cancellationToken);
+            int persistedVersion = await quoteCatalogVersionStore.GetAsync(cancellationToken).ConfigureAwait(false);
             if (persistedVersion < QuoteCatalogPolicy.CurrentVersion)
             {
-                await quotService.ReseedFeedAsync(QuoteCatalogPolicy.DefaultFeedSeedCount, cancellationToken);
-                await quoteCatalogVersionStore.SetAsync(QuoteCatalogPolicy.CurrentVersion, cancellationToken);
+                await quotService.ReseedFeedAsync(QuoteCatalogPolicy.DefaultFeedSeedCount, cancellationToken).ConfigureAwait(false);
+                await quoteCatalogVersionStore.SetAsync(QuoteCatalogPolicy.CurrentVersion, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                await quotService.LoadSingleAsync(cancellationToken);
+                await quotService.LoadSingleAsync(cancellationToken).ConfigureAwait(false);
             }
         }
         catch (Exception ex) when (ex is InvalidOperationException or OperationCanceledException or JsonException)
@@ -54,7 +54,7 @@ public sealed class AppStartupService(
     {
         try
         {
-            await techniqueCatalogService.GetAllAsync(cancellationToken);
+            await techniqueCatalogService.GetAllAsync(cancellationToken).ConfigureAwait(false);
         }
         catch (Exception ex) when (ex is InvalidOperationException or OperationCanceledException or JsonException)
         {

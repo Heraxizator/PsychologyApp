@@ -1,0 +1,5 @@
+root = false
+
+[*.cs]
+# Application code never needs the UI thread; continuing on it made service work (dialogue, seeding, statistics) block frames.
+dotnet_diagnostic.CA2007.severity = warning

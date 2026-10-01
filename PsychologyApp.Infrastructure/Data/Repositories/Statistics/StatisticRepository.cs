@@ -23,7 +23,7 @@ public sealed class StatisticRepository : BaseRepository<Statistic>, IStatisticR
         return await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
             "SELECT COUNT(DISTINCT PageName) FROM Statistics;",
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<long> CountByPageNameAsync(string pageName, CancellationToken cancellationToken = default)
@@ -33,7 +33,7 @@ public sealed class StatisticRepository : BaseRepository<Statistic>, IStatisticR
             "SELECT COUNT(*) FROM Statistics WHERE PageName = @pageName;",
             new { pageName },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<IEnumerable<Statistic>> GetRecentAsync(int limit, CancellationToken cancellationToken = default)
@@ -43,6 +43,6 @@ public sealed class StatisticRepository : BaseRepository<Statistic>, IStatisticR
             "SELECT * FROM Statistics ORDER BY StatisticId DESC LIMIT @limit;",
             new { limit },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 }

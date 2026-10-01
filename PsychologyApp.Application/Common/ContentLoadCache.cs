@@ -24,12 +24,12 @@ internal sealed class ContentLoadCache<T>
             return _cache;
         }
 
-        await _gate.WaitAsync(cancellationToken);
+        await _gate.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
             if (_cache is null)
             {
-                _cache = await loader(cancellationToken);
+                _cache = await loader(cancellationToken).ConfigureAwait(false);
                 _scopeKey = scopeKey;
             }
 

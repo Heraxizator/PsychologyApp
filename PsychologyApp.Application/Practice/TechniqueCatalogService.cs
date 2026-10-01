@@ -89,9 +89,9 @@ public sealed class CachedTechniqueCatalogProvider(
 
     public async Task<IReadOnlyList<BuiltInTechniqueDefinition>> LoadAllAsync(CancellationToken cancellationToken = default) =>
         await _cache.GetOrLoadAsync(
-            async ct => (await innerProvider.LoadAllAsync(ct)).ToList(),
+            async ct => (await innerProvider.LoadAllAsync(ct).ConfigureAwait(false)).ToList(),
             languageKeyProvider,
-            cancellationToken);
+            cancellationToken).ConfigureAwait(false);
 
     public void Invalidate() => _cache.Invalidate();
 }

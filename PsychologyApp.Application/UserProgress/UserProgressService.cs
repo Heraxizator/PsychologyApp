@@ -37,7 +37,7 @@ public sealed class UserProgressService(IUserProgressRepository repository) : IU
             return new Dictionary<string, TestResultDTO>(StringComparer.Ordinal);
         }
 
-        IReadOnlyList<TestResultDTO> rows = await repository.GetLatestTestResultsAsync(testIds, cancellationToken);
+        IReadOnlyList<TestResultDTO> rows = await repository.GetLatestTestResultsAsync(testIds, cancellationToken).ConfigureAwait(false);
         Dictionary<string, TestResultDTO> result = new(StringComparer.Ordinal);
         foreach (TestResultDTO row in rows)
         {
@@ -59,7 +59,7 @@ public sealed class UserProgressService(IUserProgressRepository repository) : IU
             return new Dictionary<string, int>(StringComparer.Ordinal);
         }
 
-        IReadOnlyList<(string TestId, int Count)> rows = await repository.GetTestResultCountsAsync(testIds, cancellationToken);
+        IReadOnlyList<(string TestId, int Count)> rows = await repository.GetTestResultCountsAsync(testIds, cancellationToken).ConfigureAwait(false);
         Dictionary<string, int> result = new(StringComparer.Ordinal);
         foreach ((string testId, int count) in rows)
         {
@@ -100,13 +100,13 @@ public sealed class UserProgressService(IUserProgressRepository repository) : IU
 
     public async Task<int> GetStreakDaysAsync(CancellationToken cancellationToken = default)
     {
-        IReadOnlyList<DateOnly> dates = await repository.GetCompletionDatesAsync(cancellationToken);
+        IReadOnlyList<DateOnly> dates = await repository.GetCompletionDatesAsync(cancellationToken).ConfigureAwait(false);
         return StreakCalculator.CalculateFromCompletionDates(dates, DateOnly.FromDateTime(DateTime.Today));
     }
 
     public async Task<int> GetAtRiskStreakDaysAsync(CancellationToken cancellationToken = default)
     {
-        IReadOnlyList<DateOnly> dates = await repository.GetCompletionDatesAsync(cancellationToken);
+        IReadOnlyList<DateOnly> dates = await repository.GetCompletionDatesAsync(cancellationToken).ConfigureAwait(false);
         return StreakCalculator.CalculateAtRiskDays(dates, DateOnly.FromDateTime(DateTime.Today));
     }
 

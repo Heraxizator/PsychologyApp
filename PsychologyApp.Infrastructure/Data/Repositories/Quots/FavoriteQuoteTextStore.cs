@@ -25,7 +25,7 @@ public sealed class FavoriteQuoteTextStore(
             "SELECT Value FROM AppMetadata WHERE Key = @key;",
             new { key = TextsKey },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         return ParseTexts(value);
     }
@@ -37,13 +37,13 @@ public sealed class FavoriteQuoteTextStore(
             return;
         }
 
-        HashSet<string> texts = new(await GetTextsAsync(cancellationToken), StringComparer.Ordinal);
+        HashSet<string> texts = new(await GetTextsAsync(cancellationToken).ConfigureAwait(false), StringComparer.Ordinal);
         if (!texts.Add(text))
         {
             return;
         }
 
-        await SaveTextsInternalAsync(texts, cancellationToken);
+        await SaveTextsInternalAsync(texts, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task RemoveTextAsync(string text, CancellationToken cancellationToken = default)
@@ -53,13 +53,13 @@ public sealed class FavoriteQuoteTextStore(
             return;
         }
 
-        HashSet<string> texts = new(await GetTextsAsync(cancellationToken), StringComparer.Ordinal);
+        HashSet<string> texts = new(await GetTextsAsync(cancellationToken).ConfigureAwait(false), StringComparer.Ordinal);
         if (!texts.Remove(text))
         {
             return;
         }
 
-        await SaveTextsInternalAsync(texts, cancellationToken);
+        await SaveTextsInternalAsync(texts, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task SaveTextsAsync(IReadOnlySet<string> texts, CancellationToken cancellationToken = default)
@@ -73,8 +73,8 @@ public sealed class FavoriteQuoteTextStore(
             }
         }
 
-        await SaveTextsInternalAsync(normalized, cancellationToken);
-        await ClearLegacyIndicesAsync(cancellationToken);
+        await SaveTextsInternalAsync(normalized, cancellationToken).ConfigureAwait(false);
+        await ClearLegacyIndicesAsync(cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<IReadOnlySet<int>> GetLegacyIndicesAsync(CancellationToken cancellationToken = default)
@@ -84,7 +84,7 @@ public sealed class FavoriteQuoteTextStore(
             "SELECT Value FROM AppMetadata WHERE Key = @key;",
             new { key = LegacyIndicesKey },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         return ParseIndices(value);
     }
@@ -96,7 +96,7 @@ public sealed class FavoriteQuoteTextStore(
             "DELETE FROM AppMetadata WHERE Key = @key;",
             new { key = LegacyIndicesKey },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     private async Task SaveTextsInternalAsync(HashSet<string> texts, CancellationToken cancellationToken)
@@ -111,7 +111,7 @@ public sealed class FavoriteQuoteTextStore(
             """,
             new { key = TextsKey, value = serialized },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     private static HashSet<string> ParseTexts(string? value)

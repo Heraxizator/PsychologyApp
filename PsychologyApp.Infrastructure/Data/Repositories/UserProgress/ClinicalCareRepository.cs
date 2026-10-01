@@ -28,7 +28,7 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
             "SELECT Value FROM AppMetadata WHERE Key = @key;",
             new { key = SafetyPlanMetadataKey },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         if (string.IsNullOrWhiteSpace(json))
         {
@@ -57,7 +57,7 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
             """,
             new { key = SafetyPlanMetadataKey, value = json },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task SaveRiskAssessmentAsync(RiskAssessmentDTO assessment, CancellationToken cancellationToken = default)
@@ -77,7 +77,7 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
                 RiskLevel = ToRiskKey(assessment.RiskLevel)
             },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<RiskAssessmentDTO?> GetLatestRiskAssessmentAsync(CancellationToken cancellationToken = default)
@@ -86,7 +86,7 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
         ClinicalRiskRow? row = await connection.QuerySingleOrDefaultAsync<ClinicalRiskRow>(DapperCommandFactory.Create(
             ClinicalCareSql.SelectLatestRiskAssessment,
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
         return row is null
             ? null
             : new RiskAssessmentDTO
@@ -110,7 +110,7 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
         await connection.ExecuteAsync(DapperCommandFactory.Create(
             ClinicalCareSql.DeactivateAllPrograms,
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         await connection.ExecuteAsync(DapperCommandFactory.Create(
             ClinicalCareSql.UpsertActiveProgram,
@@ -122,7 +122,7 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
                 IsActive = program.IsActive ? 1 : 0
             },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<TherapyProgramStateDTO?> GetActiveProgramAsync(CancellationToken cancellationToken = default)
@@ -131,7 +131,7 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
         ProgramRow? row = await connection.QuerySingleOrDefaultAsync<ProgramRow>(DapperCommandFactory.Create(
             ClinicalCareSql.SelectActiveProgram,
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
         if (row is null)
         {
             return null;
@@ -165,7 +165,7 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
                 escalation.Notes
             },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<IReadOnlyList<EscalationEventDTO>> GetRecentEscalationsAsync(int limit, CancellationToken cancellationToken = default)
@@ -175,7 +175,7 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
             ClinicalCareSql.SelectRecentEscalations,
             new { limit },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         return rows.Select(row => new EscalationEventDTO
         {

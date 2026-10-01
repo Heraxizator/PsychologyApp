@@ -14,8 +14,8 @@ public sealed class SqliteConnectionFactory : IDbConnectionFactory
         // No Cache=Shared: shared-cache mode swaps WAL's reader/writer concurrency for table-level locks, and Microsoft
         // advises against combining it with WAL. Pooling already makes opening a fresh connection per operation cheap.
         var connection = new SqliteConnection($"Data Source={DatabasePath}");
-        await connection.OpenAsync(cancellationToken);
-        await SqliteSchema.ConfigureConnectionAsync(connection, cancellationToken);
+        await connection.OpenAsync(cancellationToken).ConfigureAwait(false);
+        await SqliteSchema.ConfigureConnectionAsync(connection, cancellationToken).ConfigureAwait(false);
         SqlitePaths.TryProtectDatabaseFile(DatabasePath);
         return connection;
     }

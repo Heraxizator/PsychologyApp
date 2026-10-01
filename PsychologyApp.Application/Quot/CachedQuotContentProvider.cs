@@ -10,14 +10,14 @@ public sealed class CachedQuotContentProvider(IQuotContentProvider innerProvider
     public async Task<IReadOnlyList<QuotSeed>> LoadAllAsync(CancellationToken cancellationToken = default) =>
         await _cache.GetOrLoadAsync(async ct =>
         {
-            IReadOnlyList<QuotSeed> loaded = (await innerProvider.LoadAllAsync(ct)).ToList();
+            IReadOnlyList<QuotSeed> loaded = (await innerProvider.LoadAllAsync(ct).ConfigureAwait(false)).ToList();
             if (loaded.Count == 0)
             {
                 throw new InvalidOperationException("Embedded quote catalog is empty.");
             }
 
             return loaded;
-        }, cancellationToken: cancellationToken);
+        }, cancellationToken: cancellationToken).ConfigureAwait(false);
 
     public void Invalidate() => _cache.Invalidate();
 }

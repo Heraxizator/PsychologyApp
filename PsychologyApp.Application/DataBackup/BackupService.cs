@@ -16,17 +16,17 @@ public sealed class BackupService(
 
     public async Task<string> ExportAsync(CancellationToken cancellationToken = default)
     {
-        IReadOnlyList<MoodEntryDTO> moods = await progress.GetMoodsAsync(null, null, ExportLimit, cancellationToken);
-        IReadOnlyList<TestResultDTO> testResults = await progress.GetAllTestResultsAsync(ExportLimit, cancellationToken);
-        IReadOnlyList<CompletionDTO> completions = await progress.GetRecentTechniqueCompletionsAsync(ExportLimit, cancellationToken);
-        IReadOnlyList<SessionResultDTO> sessionResults = await progress.GetRecentSessionResultsAsync(ExportLimit, cancellationToken);
-        SafetyPlanDTO? safetyPlan = await clinicalCareRepository.GetSafetyPlanAsync(cancellationToken);
+        IReadOnlyList<MoodEntryDTO> moods = await progress.GetMoodsAsync(null, null, ExportLimit, cancellationToken).ConfigureAwait(false);
+        IReadOnlyList<TestResultDTO> testResults = await progress.GetAllTestResultsAsync(ExportLimit, cancellationToken).ConfigureAwait(false);
+        IReadOnlyList<CompletionDTO> completions = await progress.GetRecentTechniqueCompletionsAsync(ExportLimit, cancellationToken).ConfigureAwait(false);
+        IReadOnlyList<SessionResultDTO> sessionResults = await progress.GetRecentSessionResultsAsync(ExportLimit, cancellationToken).ConfigureAwait(false);
+        SafetyPlanDTO? safetyPlan = await clinicalCareRepository.GetSafetyPlanAsync(cancellationToken).ConfigureAwait(false);
 
-        IReadOnlyList<ChatSessionDTO> sessions = await chatRepository.GetSessionsAsync(cancellationToken);
+        IReadOnlyList<ChatSessionDTO> sessions = await chatRepository.GetSessionsAsync(cancellationToken).ConfigureAwait(false);
         List<BackupChatSessionDTO> chatSessions = new(sessions.Count);
         foreach (ChatSessionDTO session in sessions)
         {
-            IReadOnlyList<ChatMessageDTO> messages = await chatRepository.GetMessagesAsync(session.Id, cancellationToken);
+            IReadOnlyList<ChatMessageDTO> messages = await chatRepository.GetMessagesAsync(session.Id, cancellationToken).ConfigureAwait(false);
             chatSessions.Add(new BackupChatSessionDTO { Session = session, Messages = messages });
         }
 
@@ -51,17 +51,17 @@ public sealed class BackupService(
 
         foreach (MoodEntryDTO mood in backup.MoodEntries)
         {
-            await progress.RecordMoodAsync(mood, cancellationToken);
+            await progress.RecordMoodAsync(mood, cancellationToken).ConfigureAwait(false);
         }
 
         foreach (TestResultDTO result in backup.TestResults)
         {
-            await progress.SaveTestResultAsync(result, cancellationToken);
+            await progress.SaveTestResultAsync(result, cancellationToken).ConfigureAwait(false);
         }
 
         foreach (CompletionDTO completion in backup.Completions)
         {
-            await progress.RecordCompletionAsync(completion, cancellationToken);
+            await progress.RecordCompletionAsync(completion, cancellationToken).ConfigureAwait(false);
         }
 
         foreach (SessionResultDTO sessionResult in backup.SessionResults)
@@ -79,16 +79,16 @@ public sealed class BackupService(
                     ProgramWeek = sessionResult.ProgramWeek,
                     DeleteDraft = false
                 },
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
 
             if (sessionResult.PostIntensity is int post)
             {
-                await progress.UpdateSessionResultPostIntensityAsync(newId, post, cancellationToken);
+                await progress.UpdateSessionResultPostIntensityAsync(newId, post, cancellationToken).ConfigureAwait(false);
             }
 
             if (!string.IsNullOrWhiteSpace(sessionResult.Note))
             {
-                await progress.UpdateSessionResultNoteAsync(newId, sessionResult.Note, cancellationToken);
+                await progress.UpdateSessionResultNoteAsync(newId, sessionResult.Note, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -97,7 +97,7 @@ public sealed class BackupService(
             long newSessionId = await chatRepository.CreateSessionAsync(
                 chatSession.Session.Title,
                 chatSession.Session.CreatedAt,
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
 
             if (chatSession.Messages.Count > 0)
             {
@@ -111,7 +111,7 @@ public sealed class BackupService(
                         QuickReplies = message.QuickReplies
                     })
                     .ToList();
-                await chatRepository.AddMessagesAsync(messages, cancellationToken);
+                await chatRepository.AddMessagesAsync(messages, cancellationToken).ConfigureAwait(false);
             }
 
             await chatRepository.UpdateSessionAsync(
@@ -126,13 +126,13 @@ public sealed class BackupService(
                     LastIntensity = chatSession.Session.LastIntensity,
                     StateJson = chatSession.Session.StateJson
                 },
-                cancellationToken);
+                cancellationToken).ConfigureAwait(false);
         }
 
         bool safetyPlanImported = false;
         if (backup.SafetyPlan is { IsEmpty: false } safetyPlan)
         {
-            await clinicalCareRepository.SaveSafetyPlanAsync(safetyPlan, cancellationToken);
+            await clinicalCareRepository.SaveSafetyPlanAsync(safetyPlan, cancellationToken).ConfigureAwait(false);
             safetyPlanImported = true;
         }
 

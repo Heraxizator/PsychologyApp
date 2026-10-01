@@ -38,7 +38,7 @@ public sealed class QuestionnaireResultDetailService : IQuestionnaireResultDetai
         string? construct = null;
         try
         {
-            TestDefinition? definition = await testCatalogService.GetByIdAsync(request.TestId, cancellationToken);
+            TestDefinition? definition = await testCatalogService.GetByIdAsync(request.TestId, cancellationToken).ConfigureAwait(false);
             construct = definition?.Construct;
         }
         catch

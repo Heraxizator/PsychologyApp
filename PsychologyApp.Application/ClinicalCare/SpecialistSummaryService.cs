@@ -16,12 +16,12 @@ public sealed class SpecialistSummaryService(
         DateTime nowUtc = DateTime.UtcNow;
         DateTime sinceUtc = nowUtc.AddDays(-PeriodDays);
 
-        IReadOnlyList<MoodEntryDTO> moods = await userProgressService.GetMoodsAsync(sinceUtc, nowUtc, 1000, cancellationToken);
-        IReadOnlyList<CompletionDTO> completions = await userProgressService.GetRecentTechniqueCompletionsAsync(1000, cancellationToken);
+        IReadOnlyList<MoodEntryDTO> moods = await userProgressService.GetMoodsAsync(sinceUtc, nowUtc, 1000, cancellationToken).ConfigureAwait(false);
+        IReadOnlyList<CompletionDTO> completions = await userProgressService.GetRecentTechniqueCompletionsAsync(1000, cancellationToken).ConfigureAwait(false);
         int practiceCount = completions.Count(entry => entry.CompletedAt >= sinceUtc);
-        int streakDays = await userProgressService.GetStreakDaysAsync(cancellationToken);
+        int streakDays = await userProgressService.GetStreakDaysAsync(cancellationToken).ConfigureAwait(false);
 
-        IReadOnlyList<TestResultDTO> allTests = await userProgressService.GetAllTestResultsAsync(1000, cancellationToken);
+        IReadOnlyList<TestResultDTO> allTests = await userProgressService.GetAllTestResultsAsync(1000, cancellationToken).ConfigureAwait(false);
         List<TestResultDTO> latestPerTest = allTests
             .Where(result => result.CompletedAt >= sinceUtc)
             .GroupBy(result => result.TestId)
@@ -29,8 +29,8 @@ public sealed class SpecialistSummaryService(
             .OrderByDescending(result => result.CompletedAt)
             .ToList();
 
-        RiskAssessmentDTO? latestRisk = await clinicalCareService.GetLatestRiskAssessmentAsync(cancellationToken);
-        SafetyPlanDTO safetyPlan = await clinicalCareService.GetSafetyPlanAsync(cancellationToken);
+        RiskAssessmentDTO? latestRisk = await clinicalCareService.GetLatestRiskAssessmentAsync(cancellationToken).ConfigureAwait(false);
+        SafetyPlanDTO safetyPlan = await clinicalCareService.GetSafetyPlanAsync(cancellationToken).ConfigureAwait(false);
 
         StringBuilder sb = new();
         sb.AppendLine(english ? "Summary for a specialist" : "Сводка для специалиста");

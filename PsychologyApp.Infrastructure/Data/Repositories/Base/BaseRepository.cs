@@ -26,7 +26,7 @@ public abstract class BaseRepository<TEntity> : SqliteRepositoryBase, IRepositor
     public async Task<long> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        await using SqliteTransaction transaction = (SqliteTransaction)await connection.BeginTransactionAsync(cancellationToken);
+        await using SqliteTransaction transaction = (SqliteTransaction)await connection.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
 
         try
         {
@@ -35,19 +35,19 @@ public abstract class BaseRepository<TEntity> : SqliteRepositoryBase, IRepositor
                 entity,
                 transaction,
                 CommandTimeoutSeconds,
-                cancellationToken));
+                cancellationToken)).ConfigureAwait(false);
             long id = await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
                 "SELECT last_insert_rowid();",
                 transaction: transaction,
                 commandTimeout: CommandTimeoutSeconds,
-                cancellationToken: cancellationToken));
+                cancellationToken: cancellationToken)).ConfigureAwait(false);
 
-            await transaction.CommitAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
             return id;
         }
         catch
         {
-            await transaction.RollbackAsync(cancellationToken);
+            await transaction.RollbackAsync(cancellationToken).ConfigureAwait(false);
             throw;
         }
     }
@@ -59,7 +59,7 @@ public abstract class BaseRepository<TEntity> : SqliteRepositoryBase, IRepositor
             _sql.DeleteSql,
             entity,
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         if (affected == 0)
         {
@@ -76,7 +76,7 @@ public abstract class BaseRepository<TEntity> : SqliteRepositoryBase, IRepositor
             _sql.UpdateSql,
             entity,
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         if (affected == 0)
         {
@@ -93,6 +93,6 @@ public abstract class BaseRepository<TEntity> : SqliteRepositoryBase, IRepositor
             _sql.SelectByKeySql,
             new { id },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 }

@@ -9,18 +9,18 @@ public sealed class TechniqueService(ITechniqueRepository techniqueRepository) :
     public async Task AddNewTechniqueAsync(TechniqueDTO techniqueDTO, CancellationToken cancellationToken = default)
     {
         global::PsychologyApp.Domain.Entities.Technique technique = TechniqueMapper.GetTechnique(techniqueDTO);
-        await techniqueRepository.AddAsync(technique, cancellationToken);
+        await techniqueRepository.AddAsync(technique, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task DeleteTechniqueAsync(TechniqueDTO techniqueDTO, CancellationToken cancellationToken = default)
     {
         global::PsychologyApp.Domain.Entities.Technique technique = TechniqueMapper.GetTechnique(techniqueDTO);
-        await techniqueRepository.DeleteAsync(technique, cancellationToken);
+        await techniqueRepository.DeleteAsync(technique, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<TechniqueDTO> GetTechniqueByIdAsync(long id, CancellationToken cancellationToken = default)
     {
-        global::PsychologyApp.Domain.Entities.Technique? technique = await techniqueRepository.GetByIdAsync(id, cancellationToken)
+        global::PsychologyApp.Domain.Entities.Technique? technique = await techniqueRepository.GetByIdAsync(id, cancellationToken).ConfigureAwait(false)
             ?? throw new TechniqueNotFoundException($"РўРµС…РЅРёРєР° СЃ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРј {id} РЅРµ РЅР°Р№РґРµРЅР°");
 
         return TechniqueMapper.GetTechniqueDTO(technique);
@@ -35,22 +35,22 @@ public sealed class TechniqueService(ITechniqueRepository techniqueRepository) :
         CancellationToken cancellationToken = default)
     {
         IEnumerable<global::PsychologyApp.Domain.Entities.Technique> techniques =
-            await techniqueRepository.GetLatestPageAsync(offset, limit, cancellationToken);
+            await techniqueRepository.GetLatestPageAsync(offset, limit, cancellationToken).ConfigureAwait(false);
         return techniques.Select(TechniqueMapper.GetTechniqueDTO);
     }
 
     public async Task MarkTechniqueAsCompletedAsync(long id, CancellationToken cancellationToken = default)
     {
-        global::PsychologyApp.Domain.Entities.Technique? technique = await techniqueRepository.GetByIdAsync(id, cancellationToken)
+        global::PsychologyApp.Domain.Entities.Technique? technique = await techniqueRepository.GetByIdAsync(id, cancellationToken).ConfigureAwait(false)
             ?? throw new TechniqueNotFoundException($"РўРµС…РЅРёРєР° СЃ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРј {id} РЅРµ РЅР°Р№РґРµРЅР°");
 
         technique.MarkAsCompleted();
-        await techniqueRepository.EditAsync(technique, cancellationToken);
+        await techniqueRepository.EditAsync(technique, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task UpdateTechniqueAsync(TechniqueDTO techniqueDTO, CancellationToken cancellationToken = default)
     {
-        global::PsychologyApp.Domain.Entities.Technique technique = await techniqueRepository.GetByIdAsync(techniqueDTO.TechniqueId, cancellationToken)
+        global::PsychologyApp.Domain.Entities.Technique technique = await techniqueRepository.GetByIdAsync(techniqueDTO.TechniqueId, cancellationToken).ConfigureAwait(false)
             ?? throw new TechniqueNotFoundException($"РўРµС…РЅРёРєР° СЃ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРј {techniqueDTO.TechniqueId} РЅРµ РЅР°Р№РґРµРЅР°");
 
         technique.ApplyContent(
@@ -63,6 +63,6 @@ public sealed class TechniqueService(ITechniqueRepository techniqueRepository) :
             techniqueDTO.Algorithm!,
             techniqueDTO.Image);
 
-        await techniqueRepository.EditAsync(technique, cancellationToken);
+        await techniqueRepository.EditAsync(technique, cancellationToken).ConfigureAwait(false);
     }
 }

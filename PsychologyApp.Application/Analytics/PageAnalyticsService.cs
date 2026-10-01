@@ -17,6 +17,6 @@ public sealed class PageAnalyticsService(IStatisticService statisticService, Tim
             SecondsDuration = seconds
         };
 
-        await statisticService.AddSingleAsync(statisticDto, cancellationToken);
+        await statisticService.AddSingleAsync(statisticDto, cancellationToken).ConfigureAwait(false);
     }
 }

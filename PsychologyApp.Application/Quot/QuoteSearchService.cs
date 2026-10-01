@@ -15,7 +15,7 @@ public sealed class QuoteSearchService(IQuotContentProvider quotContentProvider)
         }
 
         string normalizedQuery = query.Trim();
-        IReadOnlyList<QuotSeed> seeds = await quotContentProvider.LoadAllAsync(cancellationToken);
+        IReadOnlyList<QuotSeed> seeds = await quotContentProvider.LoadAllAsync(cancellationToken).ConfigureAwait(false);
         List<QuotSeed> results = [];
 
         foreach (QuotSeed seed in seeds)

@@ -31,11 +31,11 @@ public static class SqliteSchema
     {
         if (SupportsWal(connection))
         {
-            await connection.ExecuteAsync("PRAGMA journal_mode=WAL;", cancellationToken);
-            await connection.ExecuteAsync("PRAGMA synchronous=NORMAL;", cancellationToken);
+            await connection.ExecuteAsync("PRAGMA journal_mode=WAL;", cancellationToken).ConfigureAwait(false);
+            await connection.ExecuteAsync("PRAGMA synchronous=NORMAL;", cancellationToken).ConfigureAwait(false);
         }
 
-        await connection.ExecuteAsync("PRAGMA busy_timeout=5000;", cancellationToken);
+        await connection.ExecuteAsync("PRAGMA busy_timeout=5000;", cancellationToken).ConfigureAwait(false);
     }
 
     private static bool SupportsWal(DbConnection connection) =>
@@ -50,81 +50,81 @@ public static class SqliteSchema
                 Version INTEGER NOT NULL PRIMARY KEY
             );
             """,
-            cancellationToken);
+            cancellationToken).ConfigureAwait(false);
 
         int version = await connection.ExecuteScalarAsync<int>(
             "SELECT IFNULL(MAX(Version), 0) FROM SchemaVersion;",
-            cancellationToken);
+            cancellationToken).ConfigureAwait(false);
 
         if (version < 1)
         {
-            await ApplyMigrationAsync(connection, 1, CreateVersion1Async, cancellationToken);
+            await ApplyMigrationAsync(connection, 1, CreateVersion1Async, cancellationToken).ConfigureAwait(false);
             version = 1;
         }
 
         if (version < 2)
         {
-            await ApplyMigrationAsync(connection, 2, MigrateToVersion2Async, cancellationToken);
+            await ApplyMigrationAsync(connection, 2, MigrateToVersion2Async, cancellationToken).ConfigureAwait(false);
             version = 2;
         }
 
         if (version < 3)
         {
-            await ApplyMigrationAsync(connection, 3, MigrateToVersion3Async, cancellationToken);
+            await ApplyMigrationAsync(connection, 3, MigrateToVersion3Async, cancellationToken).ConfigureAwait(false);
             version = 3;
         }
 
         if (version < 4)
         {
-            await ApplyMigrationAsync(connection, 4, MigrateToVersion4Async, cancellationToken);
+            await ApplyMigrationAsync(connection, 4, MigrateToVersion4Async, cancellationToken).ConfigureAwait(false);
             version = 4;
         }
 
         if (version < 5)
         {
-            await ApplyMigrationAsync(connection, 5, MigrateToVersion5Async, cancellationToken);
+            await ApplyMigrationAsync(connection, 5, MigrateToVersion5Async, cancellationToken).ConfigureAwait(false);
             version = 5;
         }
 
         if (version < 6)
         {
-            await ApplyMigrationAsync(connection, 6, MigrateToVersion6Async, cancellationToken);
+            await ApplyMigrationAsync(connection, 6, MigrateToVersion6Async, cancellationToken).ConfigureAwait(false);
             version = 6;
         }
 
         if (version < 7)
         {
-            await ApplyMigrationAsync(connection, 7, MigrateToVersion7Async, cancellationToken);
+            await ApplyMigrationAsync(connection, 7, MigrateToVersion7Async, cancellationToken).ConfigureAwait(false);
             version = 7;
         }
 
         if (version < 8)
         {
-            await ApplyMigrationAsync(connection, 8, MigrateToVersion8Async, cancellationToken);
+            await ApplyMigrationAsync(connection, 8, MigrateToVersion8Async, cancellationToken).ConfigureAwait(false);
             version = 8;
         }
 
         if (version < 9)
         {
-            await ApplyMigrationAsync(connection, 9, MigrateToVersion9Async, cancellationToken);
+            await ApplyMigrationAsync(connection, 9, MigrateToVersion9Async, cancellationToken).ConfigureAwait(false);
             version = 9;
         }
 
         if (version < 10)
         {
-            await ApplyMigrationAsync(connection, 10, MigrateToVersion10Async, cancellationToken);
+            await ApplyMigrationAsync(connection, 10, MigrateToVersion10Async, cancellationToken).ConfigureAwait(false);
             version = 10;
         }
 
         if (version < 11)
         {
-            await ApplyMigrationAsync(connection, 11, MigrateToVersion11Async, cancellationToken);
+            await ApplyMigrationAsync(connection, 11, MigrateToVersion11Async, cancellationToken).ConfigureAwait(false);
             version = 11;
         }
 
         if (version < 12)
         {
-            await ApplyMigrationAsync(connection, 12, MigrateToVersion12Async, cancellationToken);
+            await ApplyMigrationAsync(connection, 12, MigrateToVersion12Async, cancellationToken).ConfigureAwait(false);
         }
     }
 
@@ -133,10 +133,10 @@ public static class SqliteSchema
     {
         await connection.ExecuteAsync(
             "CREATE INDEX IF NOT EXISTS IX_MoodEntries_RecordedAt ON MoodEntries (RecordedAt);",
-            transaction: transaction);
+            transaction: transaction).ConfigureAwait(false);
         await connection.ExecuteAsync(
             "CREATE INDEX IF NOT EXISTS IX_Quots_Text ON Quots (Text);",
-            transaction: transaction);
+            transaction: transaction).ConfigureAwait(false);
     }
 
     /// <summary>Lets a session's own reflection note ("what did you notice") be looked back up next time
@@ -145,7 +145,7 @@ public static class SqliteSchema
     {
         await connection.ExecuteAsync(
             "ALTER TABLE SessionResults ADD COLUMN Note TEXT;",
-            transaction: transaction);
+            transaction: transaction).ConfigureAwait(false);
     }
 
     /// <summary>What the chat companion remembers between conversations: the name, and which practices helped.</summary>
@@ -158,7 +158,7 @@ public static class SqliteSchema
                 MemoryValue TEXT NOT NULL
             );
             """,
-            transaction: transaction);
+            transaction: transaction).ConfigureAwait(false);
     }
 
     private static async Task MigrateToVersion9Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)
@@ -189,7 +189,7 @@ public static class SqliteSchema
             CREATE INDEX IF NOT EXISTS IX_ChatMessages_Session ON ChatMessages(SessionId, MessageId);
             CREATE INDEX IF NOT EXISTS IX_ChatSessions_UpdatedAt ON ChatSessions(UpdatedAt);
             """,
-            transaction: transaction);
+            transaction: transaction).ConfigureAwait(false);
     }
 
     private static async Task MigrateToVersion8Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)
@@ -211,7 +211,7 @@ public static class SqliteSchema
             CREATE INDEX IF NOT EXISTS IX_SessionResults_CompletedAt ON SessionResults(CompletedAt);
             CREATE INDEX IF NOT EXISTS IX_SessionResults_ItemKey ON SessionResults(ItemKey);
             """,
-            transaction: transaction);
+            transaction: transaction).ConfigureAwait(false);
     }
 
     private static async Task MigrateToVersion7Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)
@@ -246,7 +246,7 @@ public static class SqliteSchema
                 Notes TEXT NOT NULL
             );
             """,
-            transaction: transaction);
+            transaction: transaction).ConfigureAwait(false);
     }
 
     private static async Task MigrateToVersion6Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)
@@ -258,20 +258,20 @@ public static class SqliteSchema
                 Value TEXT NOT NULL
             );
             """,
-            transaction: transaction);
+            transaction: transaction).ConfigureAwait(false);
     }
 
     private static async Task MigrateToVersion5Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)
     {
         int legacyColumnExists = await connection.ExecuteScalarAsync<int>(
             "SELECT COUNT(*) FROM pragma_table_info('Techniques') WHERE name = 'Describtion';",
-            transaction: transaction);
+            transaction: transaction).ConfigureAwait(false);
 
         if (legacyColumnExists > 0)
         {
             await connection.ExecuteAsync(
                 "ALTER TABLE Techniques RENAME COLUMN Describtion TO Description;",
-                transaction: transaction);
+                transaction: transaction).ConfigureAwait(false);
         }
     }
 
@@ -288,7 +288,7 @@ public static class SqliteSchema
                 CompletedAt TEXT NOT NULL
             );
             """,
-            transaction: transaction);
+            transaction: transaction).ConfigureAwait(false);
 
         await connection.ExecuteAsync(
             """
@@ -302,7 +302,7 @@ public static class SqliteSchema
                 DurationSeconds INTEGER NOT NULL DEFAULT 0
             );
             """,
-            transaction: transaction);
+            transaction: transaction).ConfigureAwait(false);
 
         await connection.ExecuteAsync(
             """
@@ -312,7 +312,7 @@ public static class SqliteSchema
                 UpdatedAt TEXT NOT NULL
             );
             """,
-            transaction: transaction);
+            transaction: transaction).ConfigureAwait(false);
 
         await connection.ExecuteAsync(
             """
@@ -323,15 +323,15 @@ public static class SqliteSchema
                 RecordedAt TEXT NOT NULL
             );
             """,
-            transaction: transaction);
+            transaction: transaction).ConfigureAwait(false);
 
         await connection.ExecuteAsync(
             "CREATE INDEX IF NOT EXISTS IX_TestResults_TestId ON TestResults (TestId);",
-            transaction: transaction);
+            transaction: transaction).ConfigureAwait(false);
 
         await connection.ExecuteAsync(
             "CREATE INDEX IF NOT EXISTS IX_Completions_CompletedAt ON Completions (CompletedAt);",
-            transaction: transaction);
+            transaction: transaction).ConfigureAwait(false);
     }
 
     private static async Task ApplyMigrationAsync(
@@ -340,40 +340,40 @@ public static class SqliteSchema
         Func<DbConnection, DbTransaction, CancellationToken, Task> migrate,
         CancellationToken cancellationToken)
     {
-        await using DbTransaction transaction = await connection.BeginTransactionAsync(cancellationToken);
+        await using DbTransaction transaction = await connection.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
         try
         {
-            await migrate(connection, transaction, cancellationToken);
+            await migrate(connection, transaction, cancellationToken).ConfigureAwait(false);
             await connection.ExecuteAsync(
                 "INSERT OR IGNORE INTO SchemaVersion (Version) VALUES (@version);",
                 new { version },
-                transaction);
-            await transaction.CommitAsync(cancellationToken);
+                transaction).ConfigureAwait(false);
+            await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
         }
         catch
         {
-            await transaction.RollbackAsync(cancellationToken);
+            await transaction.RollbackAsync(cancellationToken).ConfigureAwait(false);
             throw;
         }
     }
 
     private static async Task MigrateToVersion3Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)
     {
-        await connection.ExecuteAsync("DROP TABLE IF EXISTS Reasons;", transaction: transaction);
+        await connection.ExecuteAsync("DROP TABLE IF EXISTS Reasons;", transaction: transaction).ConfigureAwait(false);
     }
 
     private static async Task MigrateToVersion2Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)
     {
         await connection.ExecuteAsync(
             "CREATE INDEX IF NOT EXISTS IX_Statistics_PageName ON Statistics (PageName);",
-            transaction: transaction);
+            transaction: transaction).ConfigureAwait(false);
     }
 
     public static async Task DropAllTablesAsync(DbConnection connection, CancellationToken cancellationToken = default)
     {
         foreach (string sql in DropTablesSql)
         {
-            await connection.ExecuteAsync(sql, cancellationToken);
+            await connection.ExecuteAsync(sql, cancellationToken).ConfigureAwait(false);
         }
     }
 
@@ -406,7 +406,7 @@ public static class SqliteSchema
                 IsCompleted INTEGER NOT NULL DEFAULT 0
             );
             """,
-            transaction: transaction);
+            transaction: transaction).ConfigureAwait(false);
 
         await connection.ExecuteAsync(
             """
@@ -419,7 +419,7 @@ public static class SqliteSchema
                 IsFavourite INTEGER NOT NULL DEFAULT 0
             );
             """,
-            transaction: transaction);
+            transaction: transaction).ConfigureAwait(false);
 
         await connection.ExecuteAsync(
             """
@@ -431,6 +431,6 @@ public static class SqliteSchema
                 SecondsDuration INTEGER NOT NULL
             );
             """,
-            transaction: transaction);
+            transaction: transaction).ConfigureAwait(false);
     }
 }

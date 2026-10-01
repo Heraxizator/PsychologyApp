@@ -15,15 +15,15 @@ public sealed class SqliteDatabaseInitializer(IDbConnectionFactory connectionFac
         SqliteOperationLane.RunAsync(connectionFactory, async () =>
         {
             await using (System.Data.Common.DbConnection checkpointConnection =
-                         await connectionFactory.CreateOpenConnectionAsync(cancellationToken))
+                         await connectionFactory.CreateOpenConnectionAsync(cancellationToken).ConfigureAwait(false))
             {
-                await checkpointConnection.ExecuteScalarAsync<long>("PRAGMA wal_checkpoint(TRUNCATE);", cancellationToken);
+                await checkpointConnection.ExecuteScalarAsync<long>("PRAGMA wal_checkpoint(TRUNCATE);", cancellationToken).ConfigureAwait(false);
             }
 
             SqliteConnection.ClearAllPools();
             SqliteSchema.DeleteDatabaseFiles();
 
-            await EnsureSchemaAsync(cancellationToken);
+            await EnsureSchemaAsync(cancellationToken).ConfigureAwait(false);
         }, cancellationToken);
 
     public Task ApplyMigrationsForAppVersionAsync(string appVersion, CancellationToken cancellationToken = default)
@@ -35,8 +35,8 @@ public sealed class SqliteDatabaseInitializer(IDbConnectionFactory connectionFac
     private async Task EnsureSchemaAsync(CancellationToken cancellationToken)
     {
         await using System.Data.Common.DbConnection connection =
-            await connectionFactory.CreateOpenConnectionAsync(cancellationToken);
+            await connectionFactory.CreateOpenConnectionAsync(cancellationToken).ConfigureAwait(false);
 
-        await SqliteSchema.EnsureSchemaAsync(connection, cancellationToken);
+        await SqliteSchema.EnsureSchemaAsync(connection, cancellationToken).ConfigureAwait(false);
     }
 }

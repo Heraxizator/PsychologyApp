@@ -20,7 +20,7 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
             ChatSql.InsertSession,
             new { Title = title, Now = ToIso(nowUtc) },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<IReadOnlyList<ChatSessionDTO>> GetSessionsAsync(CancellationToken cancellationToken = default)
@@ -29,7 +29,7 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
         IEnumerable<SessionRow> rows = await connection.QueryAsync<SessionRow>(DapperCommandFactory.Create(
             ChatSql.SelectSessions,
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
         return rows.Select(ToDto).ToList();
     }
 
@@ -40,7 +40,7 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
             ChatSql.SelectSession,
             new { SessionId = sessionId },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
         return row is null ? null : ToDto(row);
     }
 
@@ -61,7 +61,7 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
                 session.StateJson
             },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task DeleteSessionAsync(long sessionId, CancellationToken cancellationToken = default)
@@ -69,10 +69,10 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         await using SqliteTransaction transaction = connection.BeginTransaction();
         await connection.ExecuteAsync(DapperCommandFactory.Create(
-            ChatSql.DeleteMessages, new { SessionId = sessionId }, transaction, CommandTimeoutSeconds, cancellationToken));
+            ChatSql.DeleteMessages, new { SessionId = sessionId }, transaction, CommandTimeoutSeconds, cancellationToken)).ConfigureAwait(false);
         await connection.ExecuteAsync(DapperCommandFactory.Create(
-            ChatSql.DeleteSession, new { SessionId = sessionId }, transaction, CommandTimeoutSeconds, cancellationToken));
-        await transaction.CommitAsync(cancellationToken);
+            ChatSql.DeleteSession, new { SessionId = sessionId }, transaction, CommandTimeoutSeconds, cancellationToken)).ConfigureAwait(false);
+        await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
     }
 
     public async Task DeleteAllSessionsAsync(CancellationToken cancellationToken = default)
@@ -80,17 +80,17 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         await using SqliteTransaction transaction = connection.BeginTransaction();
         await connection.ExecuteAsync(DapperCommandFactory.Create(
-            ChatSql.DeleteAllMessages, transaction: transaction, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken));
+            ChatSql.DeleteAllMessages, transaction: transaction, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken)).ConfigureAwait(false);
         await connection.ExecuteAsync(DapperCommandFactory.Create(
-            ChatSql.DeleteAllSessions, transaction: transaction, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken));
-        await transaction.CommitAsync(cancellationToken);
+            ChatSql.DeleteAllSessions, transaction: transaction, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken)).ConfigureAwait(false);
+        await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<IReadOnlyDictionary<string, string>> GetMemoryAsync(CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         IEnumerable<MemoryRow> rows = await connection.QueryAsync<MemoryRow>(DapperCommandFactory.Create(
-            ChatSql.SelectMemory, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken));
+            ChatSql.SelectMemory, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken)).ConfigureAwait(false);
         return rows.ToDictionary(r => r.Key, r => r.Value);
     }
 
@@ -98,32 +98,32 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         await connection.ExecuteAsync(DapperCommandFactory.Create(
-            ChatSql.UpsertMemory, new { Key = key, Value = value }, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken));
+            ChatSql.UpsertMemory, new { Key = key, Value = value }, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task IncrementMemoryAsync(string key, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         await connection.ExecuteAsync(DapperCommandFactory.Create(
-            ChatSql.IncrementMemory, new { Key = key }, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken));
+            ChatSql.IncrementMemory, new { Key = key }, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task DeleteMemoryAsync(string key, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         await connection.ExecuteAsync(DapperCommandFactory.Create(
-            ChatSql.DeleteMemoryKey, new { Key = key }, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken));
+            ChatSql.DeleteMemoryKey, new { Key = key }, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task ClearMemoryAsync(CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         await connection.ExecuteAsync(DapperCommandFactory.Create(
-            ChatSql.ClearMemory, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken));
+            ChatSql.ClearMemory, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     public async Task<long> AddMessageAsync(ChatMessageDTO message, CancellationToken cancellationToken = default) =>
-        (await AddMessagesAsync([message], cancellationToken))[0];
+        (await AddMessagesAsync([message], cancellationToken).ConfigureAwait(false))[0];
 
     public async Task<IReadOnlyList<long>> AddMessagesAsync(IReadOnlyList<ChatMessageDTO> messages, CancellationToken cancellationToken = default)
     {
@@ -149,10 +149,10 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
                 },
                 transaction,
                 CommandTimeoutSeconds,
-                cancellationToken)));
+                cancellationToken)).ConfigureAwait(false));
         }
 
-        await transaction.CommitAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
         return ids;
     }
 
@@ -163,7 +163,7 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
             ChatSql.SelectMessages,
             new { SessionId = sessionId },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
         return rows.Select(r => new ChatMessageDTO
         {
             Id = r.MessageId,

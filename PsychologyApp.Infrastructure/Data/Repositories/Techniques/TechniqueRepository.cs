@@ -30,6 +30,6 @@ public sealed class TechniqueRepository : BaseRepository<Technique>, ITechniqueR
             "SELECT * FROM Techniques ORDER BY TechniqueId DESC LIMIT @limit OFFSET @offset;",
             new { limit, offset },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 }

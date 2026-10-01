@@ -11,11 +11,11 @@ public sealed class CachedReasonContentProvider(
     private readonly ContentLoadCache<global::PsychologyApp.Domain.Entities.Reason> _cache = new();
 
     public async Task<IEnumerable<global::PsychologyApp.Domain.Entities.Reason>> LoadReasonsAsync(CancellationToken cancellationToken = default) =>
-        await EnsureCacheAsync(cancellationToken);
+        await EnsureCacheAsync(cancellationToken).ConfigureAwait(false);
 
     public async Task<IReadOnlyList<global::PsychologyApp.Domain.Entities.Reason>> GetPageAsync(int page, int pageSize, CancellationToken cancellationToken = default)
     {
-        IReadOnlyList<global::PsychologyApp.Domain.Entities.Reason> cache = await EnsureCacheAsync(cancellationToken);
+        IReadOnlyList<global::PsychologyApp.Domain.Entities.Reason> cache = await EnsureCacheAsync(cancellationToken).ConfigureAwait(false);
         return cache
             .Skip(page * pageSize)
             .Take(pageSize)
@@ -26,7 +26,7 @@ public sealed class CachedReasonContentProvider(
 
     private Task<IReadOnlyList<global::PsychologyApp.Domain.Entities.Reason>> EnsureCacheAsync(CancellationToken cancellationToken) =>
         _cache.GetOrLoadAsync(
-            async ct => (await innerProvider.LoadReasonsAsync(ct)).ToList(),
+            async ct => (await innerProvider.LoadReasonsAsync(ct).ConfigureAwait(false)).ToList(),
             languageKeyProvider,
             cancellationToken);
 }

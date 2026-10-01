@@ -24,7 +24,7 @@ public sealed class QuoteCatalogVersionStore(
             "SELECT Value FROM AppMetadata WHERE Key = @key;",
             new { key = Key },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
 
         return int.TryParse(value, out int version) ? version : 0;
     }
@@ -40,7 +40,7 @@ public sealed class QuoteCatalogVersionStore(
             """,
             new { key = Key, value = version.ToString() },
             commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken));
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
     private ConfiguredTaskAwaitable<SqliteConnection> OpenConnectionAsync(CancellationToken cancellationToken) =>
