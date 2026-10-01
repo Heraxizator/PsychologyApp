@@ -64,9 +64,14 @@ public partial class TechniquesViewModel
                 ClinicalRiskBanner = clinical.ClinicalRiskBanner;
                 _todayTechniqueId = recommendation.TechniqueId;
                 TodayReasonText = recommendation.ReasonText;
-                TodayTechniqueItem = recommendation.Item;
+                // Returning to the tab usually yields the same recommendation: keep the bound card instead of rebuilding it.
+                if (!TechniqueItem.SameContent(TodayTechniqueItem, recommendation.Item))
+                {
+                    TodayTechniqueItem = recommendation.Item;
+                    OnPropertyChanged(nameof(TodayTechniqueItem));
+                }
+
                 OnPropertyChanged(nameof(TodayReasonText));
-                OnPropertyChanged(nameof(TodayTechniqueItem));
                 OnPropertyChanged(nameof(TodayActionText));
             });
         }

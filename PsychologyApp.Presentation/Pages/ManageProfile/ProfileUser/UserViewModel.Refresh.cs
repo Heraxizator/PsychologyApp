@@ -61,10 +61,12 @@ public partial class UserViewModel
 
             await UiThread.RunAsync(() =>
             {
-                Techniques.Clear();
-                foreach (TechniqueItem item in featuredTechniques)
+                ReplaceTechniquesIfChanged(featuredTechniques);
+
+                // Coming back to the profile with nothing new must not rebuild every history row.
+                if (SameHistory(PracticeHistory, result.History))
                 {
-                    Techniques.Add(item);
+                    return;
                 }
 
                 PracticeHistory = new ObservableCollection<PracticeHistoryItem>(
@@ -112,13 +114,30 @@ public partial class UserViewModel
             _navigationService,
             cancellationToken);
 
-        await UiThread.RunAsync(() =>
-        {
-            Techniques.Clear();
-            foreach (TechniqueItem item in items)
-            {
-                Techniques.Add(item);
-            }
-        });
+        await UiThread.RunAsync(() => ReplaceTechniquesIfChanged(items));
     }
+
+    private void ReplaceTechniquesIfChanged(IReadOnlyList<TechniqueItem> items)
+    {
+        if (Techniques.Count == items.Count
+            && Techniques.Zip(items).All(pair => TechniqueItem.SameContent(pair.First, pair.Second)))
+        {
+            return;
+        }
+
+        Techniques.Clear();
+        foreach (TechniqueItem item in items)
+        {
+            Techniques.Add(item);
+        }
+    }
+
+    private static bool SameHistory(IReadOnlyList<PracticeHistoryItem> current, IReadOnlyList<PracticeHistoryItem> fresh) =>
+        current.Count == fresh.Count
+        && current.Zip(fresh).All(pair =>
+            pair.First.ItemKey == pair.Second.ItemKey
+            && pair.First.DateText == pair.Second.DateText
+            && pair.First.TechniqueName == pair.Second.TechniqueName
+            && pair.First.DurationText == pair.Second.DurationText
+            && pair.First.SudsDeltaText == pair.Second.SudsDeltaText);
 }

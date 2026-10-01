@@ -21,4 +21,11 @@ public class TechniqueItem
     public bool Active { get; set; }
     public ICommand? TapCommand { get; set; }
 
+    /// <summary>True when both would render identically, so a refresh can keep the bound instance and skip a rebind.</summary>
+    public static bool SameContent(TechniqueItem? a, TechniqueItem? b) =>
+        ReferenceEquals(a, b)
+        || (a is not null && b is not null
+            && a.Id == b.Id && a.Title == b.Title && a.Subtitle == b.Subtitle && a.MetaText == b.MetaText
+            && a.Date == b.Date && a.IconName == b.IconName && a.Image == b.Image && a.Active == b.Active
+            && a.DurationText == b.DurationText && a.Number == b.Number && a.Theme == b.Theme && a.Author == b.Author);
 }

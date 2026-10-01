@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
@@ -12,8 +13,33 @@ public static class MusicAudioCache
     private static readonly TimeSpan HttpTimeout = TimeSpan.FromSeconds(30);
     private static readonly HttpClient HttpClient = CreateHttpClient();
 
-    public static bool IsCached(string remoteUrl) =>
-        !string.IsNullOrWhiteSpace(remoteUrl) && File.Exists(GetCachePath(remoteUrl));
+    // The playlist asks IsCached for every track on the UI thread: the path (a SHA-256 of the URL plus a JNI call
+    // for the cache directory) is computed once per URL, and a track once found on disk is not stat-ed again.
+    // Playback still checks the file itself, so a cache the OS cleared is simply downloaded again.
+    private static readonly ConcurrentDictionary<string, string> CachePaths = new(StringComparer.Ordinal);
+    private static readonly ConcurrentDictionary<string, byte> KnownCached = new(StringComparer.Ordinal);
+    private static string? _cacheDirectory;
+
+    public static bool IsCached(string remoteUrl)
+    {
+        if (string.IsNullOrWhiteSpace(remoteUrl))
+        {
+            return false;
+        }
+
+        if (KnownCached.ContainsKey(remoteUrl))
+        {
+            return true;
+        }
+
+        if (!File.Exists(GetCachePath(remoteUrl)))
+        {
+            return false;
+        }
+
+        KnownCached.TryAdd(remoteUrl, 0);
+        return true;
+    }
 
     public static async Task<AudioCacheResult> ResolvePlaybackUriAsync(
         string remoteUrl,
@@ -29,6 +55,8 @@ public static class MusicAudioCache
         {
             return new AudioCacheResult(cachePath, UsedNetwork: false);
         }
+
+        KnownCached.TryRemove(remoteUrl, out _);
 
         string partialPath = cachePath + ".part";
         try
@@ -73,6 +101,7 @@ public static class MusicAudioCache
             }
 
             File.Move(partialPath, cachePath, overwrite: true);
+            KnownCached.TryAdd(remoteUrl, 0);
             return new AudioCacheResult(cachePath, UsedNetwork: true);
         }
         catch
@@ -119,14 +148,19 @@ public static class MusicAudioCache
             Timeout = HttpTimeout
         };
 
-    private static string GetCachePath(string remoteUrl)
+    private static string GetCachePath(string remoteUrl) =>
+        CachePaths.GetOrAdd(remoteUrl, ComputeCachePath);
+
+    private static string ComputeCachePath(string remoteUrl)
     {
         byte[] hash = SHA256.HashData(Encoding.UTF8.GetBytes(remoteUrl));
         string fileName = Convert.ToHexString(hash).ToLowerInvariant() + ".mp3";
         return Path.Combine(GetCacheDirectory(), fileName);
     }
 
-    private static string GetCacheDirectory()
+    private static string GetCacheDirectory() => _cacheDirectory ??= ResolveCacheDirectory();
+
+    private static string ResolveCacheDirectory()
     {
         try
         {
