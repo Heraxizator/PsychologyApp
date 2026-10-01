@@ -33,7 +33,7 @@ public static class UiStateAnimator
             return;
         }
 
-        await element.FadeToAsync(0, UiAnimations.ExitRevealDuration, UiAnimations.ExitEasing);
+        await element.FadeLayeredAsync(0, UiAnimations.ExitRevealDuration, UiAnimations.ExitEasing);
         element.IsVisible = false;
         UiAnimations.ResetVisualState(element);
     }
@@ -59,7 +59,7 @@ public static class UiStateAnimator
             return;
         }
 
-        await view.FadeToAsync(0, UiAnimations.FastDuration, UiAnimations.ExitEasing);
+        // No fade-out first: the tab is already on screen, and fading a whole list out and back in cost 380 ms of offscreen redraws.
         view.TranslationY = UiAnimations.TabReappearSlideOffset;
         view.Opacity = 0;
         await UiAnimations.SafeRevealPremiumAsync(

@@ -143,7 +143,7 @@ public static class VisualElementPressFeedback
             {
                 await Task.WhenAll(
                     target.ScaleToAsync(scale, UiAnimations.PressDuration, UiAnimations.EnterTransformEasing),
-                    target.FadeToAsync(UiAnimations.PressOpacity, UiAnimations.PressDuration, UiAnimations.EnterOpacityEasing),
+                    target.FadeLayeredAsync(UiAnimations.PressOpacity, UiAnimations.PressDuration, UiAnimations.EnterOpacityEasing),
                     target.TranslateToAsync(0, UiAnimations.PressTranslationY, UiAnimations.PressDuration, UiAnimations.EnterTransformEasing));
             }
         }
@@ -193,7 +193,7 @@ public static class VisualElementPressFeedback
             {
                 await Task.WhenAll(
                     target.ScaleToAsync(1, UiAnimations.ReleaseDuration, UiAnimations.ReleaseEasing),
-                    target.FadeToAsync(1, UiAnimations.ReleaseDuration, UiAnimations.ReleaseEasing),
+                    target.FadeLayeredAsync(1, UiAnimations.ReleaseDuration, UiAnimations.ReleaseEasing),
                     target.TranslateToAsync(0, 0, UiAnimations.ReleaseDuration, UiAnimations.ReleaseEasing));
             }
         }

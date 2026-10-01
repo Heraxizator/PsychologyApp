@@ -215,7 +215,7 @@ public static class UiAnimations
 
         cancellationToken.ThrowIfCancellationRequested();
         view.Opacity = fromOpacity;
-        await view.FadeToAsync(1, duration, EnterOpacityEasing);
+        await view.FadeLayeredAsync(1, duration, EnterOpacityEasing);
         ResetVisualState(view);
     }
 
@@ -324,12 +324,17 @@ public static class UiAnimations
             parent.Add(0, 1, scaleAnimation);
         }
 
+        AnimationLayer.Enter(view);
         parent.Commit(
             view,
             "Reveal",
             length: duration,
             easing: Easing.Linear,
-            finished: (_, cancelled) => tcs.TrySetResult(!cancelled));
+            finished: (_, cancelled) =>
+            {
+                AnimationLayer.Exit(view);
+                tcs.TrySetResult(!cancelled);
+            });
 
         return tcs.Task;
     }
@@ -601,7 +606,7 @@ public static class UiAnimations
         }
 
         cancellationToken.ThrowIfCancellationRequested();
-        await view.FadeToAsync(0, duration, ExitEasing);
+        await view.FadeLayeredAsync(0, duration, ExitEasing);
         ResetVisualState(view);
     }
 
@@ -637,7 +642,7 @@ public static class UiAnimations
         List<Task> tasks = [];
         if (hide is not null && hide.IsVisible && CanAnimate(hide))
         {
-            tasks.Add(hide.FadeToAsync(0, duration, ExitEasing));
+            tasks.Add(hide.FadeLayeredAsync(0, duration, ExitEasing));
         }
 
         if (show is not null)
@@ -647,7 +652,7 @@ public static class UiAnimations
             show.Scale = CrossfadeScaleFrom;
             if (CanAnimate(show))
             {
-                tasks.Add(show.FadeToAsync(1, duration, EnterOpacityEasing));
+                tasks.Add(show.FadeLayeredAsync(1, duration, EnterOpacityEasing));
                 tasks.Add(show.ScaleToAsync(1, duration, EnterTransformEasing));
             }
             else
@@ -762,7 +767,7 @@ public static class UiAnimations
 
         PrepareForAlertPop(view);
         await Task.WhenAll(
-            view.FadeTo(1, MicroDuration, EnterOpacityEasing),
+            view.FadeLayeredAsync(1, MicroDuration, EnterOpacityEasing),
             view.ScaleTo(1, MicroDuration, EnterTransformEasing));
     }
 
@@ -774,7 +779,7 @@ public static class UiAnimations
         }
 
         await Task.WhenAll(
-            view.FadeTo(0, FastDuration, ExitEasing),
+            view.FadeLayeredAsync(0, FastDuration, ExitEasing),
             view.ScaleTo(AlertScaleFrom, FastDuration, ExitEasing));
     }
 
@@ -795,7 +800,7 @@ public static class UiAnimations
 
         PrepareForToastPop(view, slideOffset);
         await Task.WhenAll(
-            view.FadeTo(1, MicroDuration, EnterOpacityEasing),
+            view.FadeLayeredAsync(1, MicroDuration, EnterOpacityEasing),
             view.ScaleTo(1, MicroDuration, EnterTransformEasing),
             view.TranslateTo(0, 0, MicroDuration, EnterTransformEasing));
     }
@@ -808,7 +813,7 @@ public static class UiAnimations
         }
 
         await Task.WhenAll(
-            view.FadeTo(0, FastDuration, ExitEasing),
+            view.FadeLayeredAsync(0, FastDuration, ExitEasing),
             view.ScaleTo(ToastScaleFrom, FastDuration, ExitEasing),
             view.TranslateTo(0, slideOffset, FastDuration, ExitEasing));
     }

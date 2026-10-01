@@ -80,7 +80,7 @@ public partial class OnboardingPage : ContentPage
             {
                 double baseY = previousView.TranslationY;
                 await Task.WhenAll(
-                    previousView.FadeToAsync(0, UiAnimations.ExitRevealDuration, UiAnimations.ExitEasing),
+                    previousView.FadeLayeredAsync(0, UiAnimations.ExitRevealDuration, UiAnimations.ExitEasing),
                     previousView.TranslateToAsync(0, baseY - 8, UiAnimations.ExitRevealDuration, UiAnimations.ExitEasing));
             }
 

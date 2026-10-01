@@ -65,13 +65,13 @@ public partial class PhysicsReasonCardView : ContentView
                 _expandedSection.Opacity = 0;
                 _expandedSection.TranslationY = -UiAnimations.SlideOffset;
                 await Task.WhenAll(
-                    _expandedSection.FadeToAsync(1, UiAnimations.MicroDuration, UiAnimations.StandardEasing),
+                    _expandedSection.FadeLayeredAsync(1, UiAnimations.MicroDuration, UiAnimations.StandardEasing),
                     _expandedSection.TranslateToAsync(0, 0, UiAnimations.MicroDuration, UiAnimations.StandardEasing));
             }
             else
             {
                 await Task.WhenAll(
-                    _expandedSection.FadeToAsync(0, UiAnimations.MicroDuration, UiAnimations.StandardEasing),
+                    _expandedSection.FadeLayeredAsync(0, UiAnimations.MicroDuration, UiAnimations.StandardEasing),
                     _expandedSection.TranslateToAsync(0, -UiAnimations.SlideOffset, UiAnimations.MicroDuration, UiAnimations.StandardEasing));
                 _expandedSection.IsVisible = false;
                 _expandedSection.Opacity = 1;
