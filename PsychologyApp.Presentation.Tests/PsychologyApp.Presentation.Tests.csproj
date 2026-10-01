@@ -48,6 +48,7 @@
     <Compile Include="JournalHelpersTests.cs" />
     <Compile Include="TestScoreLabelMapperTests.cs" />
     <Compile Include="AppStringsErrorTests.cs" />
+    <Compile Include="WeakActionEventTests.cs" />
     <Compile Include="EntryDraftTests.cs" />
     <Compile Include="UserQuotesRefreshPolicyTests.cs" />
     <Compile Include="PracticeClinicalDashboardEnricherTests.cs" />

@@ -41,7 +41,26 @@ public static class UserPreferences
     public const int DefaultMoodReminderHour = 20;
     public const int DefaultChatReminderHour = 19;
 
-    public static event Action? Changed;
+    private static readonly WeakActionEvent ChangedHandlers = new();
+
+    // Weak: view models, technique pages and quote cards subscribe here and never unsubscribe.
+    public static event Action? Changed
+    {
+        add
+        {
+            if (value is not null)
+            {
+                ChangedHandlers.Add(value);
+            }
+        }
+        remove
+        {
+            if (value is not null)
+            {
+                ChangedHandlers.Remove(value);
+            }
+        }
+    }
 
     private static UserPreferencesState? _inMemoryState;
 
@@ -51,36 +70,42 @@ public static class UserPreferences
     internal static void ResetInMemoryStorage() => _inMemoryState = null;
 
     public static string GetPersistedLanguage() =>
-        NormalizeLanguageKey(Load().Language);
+        NormalizeLanguageKey(Current.Language);
 
-    public static string OnboardingConcern => Load().OnboardingConcern;
+    public static string OnboardingConcern => Current.OnboardingConcern;
 
-    public static UserPreferencesState Load()
+    /// <summary>A copy the caller may change and pass to <see cref="Save"/>.</summary>
+    public static UserPreferencesState Load() => Copy(Current);
+
+    // Every localized string reads the language through Load (AppStrings.LanguageProvider), so a screen open asked
+    // SharedPreferences for ~20 keys over JNI hundreds of times. All writes go through Save, which refreshes this cache.
+    private static UserPreferencesState? _persistedCache;
+
+    private static UserPreferencesState Current => _inMemoryState ?? (_persistedCache ??= ReadPersisted());
+
+    private static UserPreferencesState Copy(UserPreferencesState s) => new()
     {
-        if (_inMemoryState is not null)
-        {
-            return new UserPreferencesState
-            {
-                Language = _inMemoryState.Language,
-                Theme = _inMemoryState.Theme,
-                Color = _inMemoryState.Color,
-                Form = _inMemoryState.Form,
-                Size = _inMemoryState.Size,
-                IsBold = _inMemoryState.IsBold,
-                QuestionnaireAutoAdvance = _inMemoryState.QuestionnaireAutoAdvance,
-                HasCompletedOnboarding = _inMemoryState.HasCompletedOnboarding,
-                OnboardingConcern = _inMemoryState.OnboardingConcern,
-                PracticeRemindersEnabled = _inMemoryState.PracticeRemindersEnabled,
-                PracticeReminderHour = _inMemoryState.PracticeReminderHour,
-                QuoteRemindersEnabled = _inMemoryState.QuoteRemindersEnabled,
-                QuoteReminderHour = _inMemoryState.QuoteReminderHour,
-                MoodRemindersEnabled = _inMemoryState.MoodRemindersEnabled,
-                MoodReminderHour = _inMemoryState.MoodReminderHour,
-                ChatRemindersEnabled = _inMemoryState.ChatRemindersEnabled,
-                ChatReminderHour = _inMemoryState.ChatReminderHour
-            };
-        }
+        Language = s.Language,
+        Theme = s.Theme,
+        Color = s.Color,
+        Form = s.Form,
+        Size = s.Size,
+        IsBold = s.IsBold,
+        QuestionnaireAutoAdvance = s.QuestionnaireAutoAdvance,
+        HasCompletedOnboarding = s.HasCompletedOnboarding,
+        OnboardingConcern = s.OnboardingConcern,
+        PracticeRemindersEnabled = s.PracticeRemindersEnabled,
+        PracticeReminderHour = s.PracticeReminderHour,
+        QuoteRemindersEnabled = s.QuoteRemindersEnabled,
+        QuoteReminderHour = s.QuoteReminderHour,
+        MoodRemindersEnabled = s.MoodRemindersEnabled,
+        MoodReminderHour = s.MoodReminderHour,
+        ChatRemindersEnabled = s.ChatRemindersEnabled,
+        ChatReminderHour = s.ChatReminderHour
+    };
 
+    private static UserPreferencesState ReadPersisted()
+    {
         return new UserPreferencesState
         {
             Language = ResolveLanguagePreference(),
@@ -114,6 +139,9 @@ public static class UserPreferences
             _inMemoryState = state;
             return;
         }
+
+        // Re-read after writing: the stored values are normalized, and the caller may keep mutating its instance.
+        _persistedCache = null;
 
         Preferences.Set(LanguageKey, NormalizeLanguageKey(state.Language));
         Preferences.Set(ThemeKey, NormalizeThemeKey(state.Theme));
@@ -192,20 +220,22 @@ public static class UserPreferences
             ChatRemindersEnabled = current.ChatRemindersEnabled,
             ChatReminderHour = current.ChatReminderHour
         });
-        Changed?.Invoke();
+        ChangedHandlers.Raise();
     }
 
     public static void ApplyAll()
     {
+        // A language that follows the system one can change while the process lives on.
+        _persistedCache = null;
         AppStrings.LanguageOverride = null;
-        AppStrings.LanguageProvider = () => Load().Language;
+        AppStrings.LanguageProvider = () => Current.Language;
         UserPreferencesState state = Load();
         ApplyLanguage(state.Language);
         ApplyTheme(state.Theme);
         ApplyAccentColor(state.Color);
         ApplyTypography(state.Size, state.IsBold);
         ApplyForm(state.Form);
-        Changed?.Invoke();
+        ChangedHandlers.Raise();
     }
 
     public static void ApplyPreview(UserPreferencesState state)
@@ -216,7 +246,7 @@ public static class UserPreferences
         ApplyAccentColor(state.Color);
         ApplyTypography(state.Size, state.IsBold);
         ApplyForm(state.Form);
-        Changed?.Invoke();
+        ChangedHandlers.Raise();
     }
 
     public static void ResetOnboardingCompletion()
@@ -246,7 +276,7 @@ public static class UserPreferences
 
     public static void ApplyTheme()
     {
-        ApplyTheme(Load().Theme);
+        ApplyTheme(Current.Theme);
     }
 
     public static void ApplyTheme(string theme)
@@ -262,7 +292,7 @@ public static class UserPreferences
 
     public static void ApplyLanguage()
     {
-        ApplyLanguage(Load().Language);
+        ApplyLanguage(Current.Language);
     }
 
     public static void ApplyLanguage(string language)
@@ -368,7 +398,7 @@ public static class UserPreferences
 
     public static string GetLanguageLabel(string key, string? language = null)
     {
-        string lang = language ?? Load().Language;
+        string lang = language ?? Current.Language;
         return NormalizeLanguageKey(key) switch
         {
             "en" => "English",
@@ -378,7 +408,7 @@ public static class UserPreferences
 
     public static string GetThemeLabel(string key, string? language = null)
     {
-        string lang = language ?? Load().Language;
+        string lang = language ?? Current.Language;
         return NormalizeThemeKey(key) switch
         {
             "dark" => IsEnglish(lang) ? "Dark" : "Тёмная",
@@ -388,7 +418,7 @@ public static class UserPreferences
 
     public static string GetColorLabel(string key, string? language = null)
     {
-        string lang = language ?? Load().Language;
+        string lang = language ?? Current.Language;
         return NormalizeColorKey(key) switch
         {
             "red" => IsEnglish(lang) ? "Red" : "Красный",
@@ -400,7 +430,7 @@ public static class UserPreferences
 
     public static string GetFormLabel(string key, string? language = null)
     {
-        string lang = language ?? Load().Language;
+        string lang = language ?? Current.Language;
         return NormalizeFormKey(key) switch
         {
             "square" => IsEnglish(lang) ? "Square corners" : "Без закругления",
@@ -410,7 +440,7 @@ public static class UserPreferences
 
     public static string GetSizeLabel(string key, string? language = null)
     {
-        string lang = language ?? Load().Language;
+        string lang = language ?? Current.Language;
         return NormalizeSizeKey(key) switch
         {
             "large" => IsEnglish(lang) ? "Large" : "Большой",
