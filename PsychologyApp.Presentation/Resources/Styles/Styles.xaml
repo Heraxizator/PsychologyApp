@@ -23,21 +23,9 @@
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
 
-    <Style TargetType="Grid">
-        <Setter Property="VisualStateManager.VisualStateGroups">
-            <VisualStateGroupList>
-                <VisualStateGroup x:Name="CommonStates">
-                    <VisualState x:Name="Normal" />
-                    <VisualState x:Name="Selected">
-                        <VisualState.Setters>
-                            <Setter Property="BackgroundColor"
-                                        Value="Transparent" />
-                        </VisualState.Setters>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateGroupList>
-        </Setter>
-    </Style>
+    <!-- No implicit Grid or Label visual states: MAUI clones a style's VisualStateGroupList into every element it
+         applies to, and the app has hundreds of grids and labels. The Grid "Selected" state only served CollectionView
+         selection, which no list uses; the Label "Disabled" state set the same colour as "Normal". -->
 
     <Style TargetType="Button">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={DynamicResource Primary}}" />
@@ -179,19 +167,6 @@
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="InterRegular" />
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="VisualStateManager.VisualStateGroups">
-            <VisualStateGroupList>
-                <VisualStateGroup x:Name="CommonStates">
-                    <VisualState x:Name="Normal" />
-                    <VisualState x:Name="Disabled">
-                        <VisualState.Setters>
-                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
-                        </VisualState.Setters>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateGroupList>
-        </Setter>
-
     </Style>
 
     <Style TargetType="ListView">
