@@ -22,6 +22,9 @@
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<!-- Compile bindings that set Source ({x:Reference Root}, TemplatedParent) too; they're most of the app's bindings. -->
 		<MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
+		<!-- Generate C# for XAML in every configuration. The .NET 10 default inflates XAML by reflection at runtime in
+		     Debug, which made every first page/tab open stall the UI thread for seconds (skipped frames on device). -->
+		<MauiXamlInflator>SourceGen</MauiXamlInflator>
 		<!-- ViewModels are DI-only; nullable init warnings are false positives in partial MAUI types. -->
 		<NoWarn>$(NoWarn);CS8618;CS8625;CS8601;CS8604;CS8600;CS8619;XA4304;CA1416;CS0618</NoWarn>
 
