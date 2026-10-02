@@ -67,7 +67,7 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
     public async Task DeleteSessionAsync(long sessionId, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        await using SqliteTransaction transaction = connection.BeginTransaction();
+        await using SqliteTransaction transaction = (SqliteTransaction)await connection.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
         await connection.ExecuteAsync(DapperCommandFactory.Create(
             ChatSql.DeleteMessages, new { SessionId = sessionId }, transaction, CommandTimeoutSeconds, cancellationToken)).ConfigureAwait(false);
         await connection.ExecuteAsync(DapperCommandFactory.Create(
@@ -78,7 +78,7 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
     public async Task DeleteAllSessionsAsync(CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        await using SqliteTransaction transaction = connection.BeginTransaction();
+        await using SqliteTransaction transaction = (SqliteTransaction)await connection.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
         await connection.ExecuteAsync(DapperCommandFactory.Create(
             ChatSql.DeleteAllMessages, transaction: transaction, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken)).ConfigureAwait(false);
         await connection.ExecuteAsync(DapperCommandFactory.Create(
@@ -133,7 +133,7 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
         }
 
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
-        await using SqliteTransaction transaction = connection.BeginTransaction();
+        await using SqliteTransaction transaction = (SqliteTransaction)await connection.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
         List<long> ids = new(messages.Count);
         foreach (ChatMessageDTO message in messages)
         {
@@ -191,10 +191,9 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
         UserMessageCount = r.UserMessageCount
     };
 
-    private static string ToIso(DateTime value) => value.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture);
+    private static string ToIso(DateTime value) => SqliteTime.ToIso(value);
 
-    private static DateTime FromIso(string value) =>
-        DateTime.Parse(value, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind).ToUniversalTime();
+    private static DateTime FromIso(string value) => SqliteTime.FromIso(value);
 
     private sealed class SessionRow
     {

@@ -105,12 +105,13 @@ public sealed class CrisisHubViewModel : BaseViewModel
     {
         try
         {
-            RiskAssessmentDTO? latest = await _clinicalCareService.GetLatestRiskAssessmentAsync();
-            IsRed = latest?.RiskLevel is RiskLevel.Red;
+            // Same rule as the startup gate: only a current Red counts, so the screen never contradicts why it was opened.
+            IsRed = await _clinicalCareService.ShouldRouteToCrisisHubAsync();
         }
         catch
         {
-            IsRed = false;
+            // This is a safety screen: if the state cannot be read, do not offer the "back to practices" shortcut.
+            IsRed = true;
         }
     }
 

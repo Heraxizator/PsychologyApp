@@ -3,7 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>PsychologyApp.LocalLlm</RootNamespace>
-    <!-- Referenced by the Android app and by tools/PsychologyApp.LlmEval; deliberately not part of PsychologyApp.sln
+    <!-- Used only by tools/PsychologyApp.LlmEval for now: the app registers NullLanguageModel (see MauiProgram), so no on-device model
+         ships yet. Deliberately not part of PsychologyApp.sln
          so CI does not restore the native ONNX runtimes. -->
   </PropertyGroup>
 

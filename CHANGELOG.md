@@ -16,6 +16,17 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ### Fixed
 - Localization tests that change the static language now run in the `Localization` collection, which removes a source of intermittent failures.
+- Backup restore: it now runs in a single transaction (all or nothing), skips rows the database already has (importing a file twice changes nothing), keeps the original dates of session results instead of stamping them with the import moment, and no longer creates extra "completed today" practices that inflated counters and the streak. Format version 2 also carries chat memory, favourite quotes, custom techniques, the risk check, the therapy program and escalations; an unreadable, empty, oversized or newer file is rejected before anything is written. The temporary export file is deleted after sharing.
+- Streaks now follow the person's own calendar day instead of the UTC date (a practice at 00:30 in Moscow or at 20:00 in New York no longer lands on the wrong day).
+- A "red" risk check routes to the crisis hub only for a week; after that the app asks for a new check instead of opening the crisis hub on every launch, and a months-old "green" no longer hides a bad week in the scorecard.
+- The weekly scorecard no longer writes a new escalation event every time a dashboard opens (one per kind per week), and the Amber "hold the week" write that was undone on the next read is gone.
+- Crisis phrases: more Russian and English wordings (hanging, cutting, jumping, pills, "better off without me", "kms"); journal notes are now checked too and offer the crisis screen. The crisis screen fails closed when the risk state cannot be read.
+- Helpline: 8-800-2000-122 is labelled as the children's, teenagers' and parents' helpline; 112 stays the emergency number and findahelpline.com is offered for adult lines.
+- Database: every timestamp is written as UTC and read back as UTC; `datetime()` filters that bypassed indexes now compare the stored text directly; `PRAGMA foreign_keys=ON` plus a real `ChatMessages` -> `ChatSessions` foreign key (schema version 13); a database from a newer build is refused instead of being opened; Dapper calls that ignored their cancellation token now honour it; `ChatMemory` is part of the table drop list; the chat list uses one grouped query instead of three subqueries per chat; the deactivate-then-upsert of the therapy program is one transaction.
+- The unused `TryProtectDatabaseFile` (it did nothing on Android/iOS and ran `File.Encrypt` on every connection open elsewhere) was removed; the database relies on the app sandbox and is not encrypted at rest.
+- Unobserved `FireAndForget` failures with no handler wired are traced instead of being swallowed.
+- The local model manifest is pinned to a Hugging Face commit and every file now has a SHA-256.
+- `_build_out/` is no longer tracked; CI also runs for `features/re-design` and quotes the `TargetFrameworks` override.
 
 ### Changed
 - UI/usability pass over all non-chat screens: 44 dp back button with a screen-reader label, icon tiles on navigation rows (profile, options, crisis hub, practice completion), pinned primary actions on Settings, Feedback, Designer and Donate, a segmented yes/no control in the risk check, pill-sized retake/history actions on test cards, clear button and `Done` key on text fields, left-aligned body text instead of justified, and test history rendered without a nested `CollectionView`.

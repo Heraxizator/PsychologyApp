@@ -138,6 +138,16 @@ public class KeywordCrisisDetectorTests
     [InlineData("I just want to disappear")]
     [InlineData("Иногда хочется исчезнуть")]
     [InlineData("Хочу уснуть и не проснуться")]
+    [InlineData("я повешусь")]
+    [InlineData("думаю вскрыть вены, а лучше вскрыться в ванной")]
+    [InlineData("хочу выйти в окно")]
+    [InlineData("всем будет лучше без меня")]
+    [InlineData("наглотаться таблеток и уснуть")]
+    [InlineData("i want to hang myself")]
+    [InlineData("I keep cutting myself")]
+    [InlineData("thinking about kms tonight")]
+    [InlineData("I would rather be dead")]
+    [InlineData("everyone would be better off without me")]
     public void Detects_crisis_phrases(string text) => Assert.True(_detector.IsCrisis(text));
 
     [Theory]
@@ -147,6 +157,9 @@ public class KeywordCrisisDetectorTests
     [InlineData("I want to live in Paris")]
     [InlineData("I don't want to go to work today")]
     [InlineData("Не хочу больше слушать этот шум, хочу жить в тишине")]
+    [InlineData("Пробежал 5 kms, ноги гудят")]
+    [InlineData("Выпил таблетку от головы и лёг")]
+    [InlineData("Не хочу больше быть на этой работе")]
     [InlineData("")]
     [InlineData(null)]
     public void Ignores_ordinary_text(string? text) => Assert.False(_detector.IsCrisis(text));

@@ -1,4 +1,5 @@
 using System.Data;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Microsoft.Data.Sqlite;
 using PsychologyApp.Application.Abstractions.Persistence;
@@ -84,6 +85,11 @@ internal static class SqliteOperationLane
         }
         catch (TimeoutException)
         {
+            // Either a connection was never disposed or a method opened a second connection while holding the first
+            // (the slot is released only when the connection closes). Ordering is lost for this one operation: make it visible.
+            Trace.TraceWarning(
+                "SqliteOperationLane: the previous database operation held the lane for more than {0} s; continuing unordered.",
+                MaxWaitForPrevious.TotalSeconds);
         }
     }
 

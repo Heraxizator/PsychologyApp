@@ -62,25 +62,7 @@ public sealed class AndroidPracticeReminderScheduler : IPracticeReminderSchedule
         PendingIntent pendingIntent = CreateAlarmPendingIntent(context, techniqueId, title, body);
         long triggerAtMillis = new DateTimeOffset(DateTime.SpecifyKind(fireLocal, DateTimeKind.Local)).ToUnixTimeMilliseconds();
 
-        try
-        {
-            if (Build.VERSION.SdkInt >= BuildVersionCodes.M)
-            {
-                alarmManager.SetExactAndAllowWhileIdle(AlarmType.RtcWakeup, triggerAtMillis, pendingIntent);
-            }
-            else
-            {
-                alarmManager.SetExact(AlarmType.RtcWakeup, triggerAtMillis, pendingIntent);
-            }
-        }
-        catch (Java.Lang.SecurityException)
-        {
-            alarmManager.SetAndAllowWhileIdle(AlarmType.RtcWakeup, triggerAtMillis, pendingIntent);
-        }
-        finally
-        {
-            pendingIntent.Dispose();
-        }
+        AndroidAlarms.SetExactAndDispose(alarmManager, triggerAtMillis, pendingIntent);
     }
 
     internal static void EnsureNotificationChannel(Context context)

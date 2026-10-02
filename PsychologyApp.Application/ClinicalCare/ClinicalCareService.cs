@@ -8,9 +8,22 @@ namespace PsychologyApp.Application.ClinicalCare;
 
 public sealed class ClinicalCareService(
     IClinicalCareRepository repository,
-    IUserProgressService userProgressService) : IClinicalCareService
+    IUserProgressService userProgressService,
+    TimeProvider? timeProvider = null) : IClinicalCareService
 {
     public static readonly TimeSpan DefaultRiskCheckInterval = TimeSpan.FromDays(7);
+
+    /// <summary>How long a "weekly_scorecard" escalation of one kind is remembered before another may be recorded.</summary>
+    private static readonly TimeSpan ScorecardEscalationCooldown = TimeSpan.FromDays(7);
+
+    private const string ScorecardTriggerSource = "weekly_scorecard";
+
+    private readonly TimeProvider time = timeProvider ?? TimeProvider.System;
+
+    private DateTime UtcNow => time.GetUtcNow().UtcDateTime;
+
+    /// <summary>An explicit check is the person's own word for a week; after that it says nothing about today.</summary>
+    private bool IsCurrent(RiskAssessmentDTO assessment) => UtcNow - assessment.AssessedAt <= DefaultRiskCheckInterval;
 
     public async Task<RiskAssessmentDTO> AssessRiskAsync(
         RiskAssessmentInput input,
@@ -23,7 +36,7 @@ public sealed class ClinicalCareService(
             input.HasSevereInsomnia));
         RiskAssessmentDTO assessment = new()
         {
-            AssessedAt = DateTime.UtcNow,
+            AssessedAt = UtcNow,
             Source = string.IsNullOrWhiteSpace(input.Source) ? "unknown" : input.Source,
             Notes = input.Notes ?? string.Empty,
             HasSelfHarmThoughts = input.HasSelfHarmThoughts,
@@ -40,7 +53,7 @@ public sealed class ClinicalCareService(
             await repository.SaveEscalationEventAsync(
                 new EscalationEventDTO
                 {
-                    CreatedAt = DateTime.UtcNow,
+                    CreatedAt = UtcNow,
                     RiskLevel = riskLevel,
                     TriggerSource = assessment.Source,
                     Action = EscalationActions.RouteToCrisisHub,
@@ -53,7 +66,7 @@ public sealed class ClinicalCareService(
             await repository.SaveEscalationEventAsync(
                 new EscalationEventDTO
                 {
-                    CreatedAt = DateTime.UtcNow,
+                    CreatedAt = UtcNow,
                     RiskLevel = riskLevel,
                     TriggerSource = assessment.Source,
                     Action = EscalationActions.OfferSpecialistHelp,
@@ -76,13 +89,15 @@ public sealed class ClinicalCareService(
             return true;
         }
 
-        return DateTime.UtcNow - latest.AssessedAt > maxAge;
+        return UtcNow - latest.AssessedAt > maxAge;
     }
 
     public async Task<bool> ShouldRouteToCrisisHubAsync(CancellationToken cancellationToken = default)
     {
+        // Only a current Red routes to the crisis hub. An old one must not trap the person there on every launch: once it is
+        // older than the check interval the app asks them to check in again instead (IsRiskCheckDueAsync).
         RiskAssessmentDTO? latest = await repository.GetLatestRiskAssessmentAsync(cancellationToken).ConfigureAwait(false);
-        return latest?.RiskLevel is RiskLevel.Red;
+        return latest is { RiskLevel: RiskLevel.Red } && IsCurrent(latest);
     }
 
     public async Task<TherapyProgramStateDTO> EnsureProgramAsync(
@@ -98,7 +113,7 @@ public sealed class ClinicalCareService(
         TherapyProgramStateDTO program = new()
         {
             ProgramType = ResolveProgram(onboardingConcern),
-            StartedAt = DateTime.UtcNow,
+            StartedAt = UtcNow,
             CurrentWeek = 1,
             IsActive = true
         };
@@ -117,7 +132,7 @@ public sealed class ClinicalCareService(
             return null;
         }
 
-        int elapsedWeeks = Math.Max(0, (DateTime.UtcNow.Date - existing.StartedAt.ToUniversalTime().Date).Days / 7) + 1;
+        int elapsedWeeks = Math.Max(0, (UtcNow.Date - existing.StartedAt.ToUniversalTime().Date).Days / 7) + 1;
         int targetWeek = Math.Clamp(elapsedWeeks, 1, TherapyProgramCatalog.TotalWeeks);
         if (targetWeek == existing.CurrentWeek)
         {
@@ -171,7 +186,7 @@ public sealed class ClinicalCareService(
 
     public async Task<ClinicalScorecardDTO> BuildWeeklyScorecardAsync(CancellationToken cancellationToken = default)
     {
-        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+        DateOnly today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
         DateOnly weekStart = today.AddDays(-6);
 
         IReadOnlyList<CompletionDTO> completions =
@@ -189,8 +204,10 @@ public sealed class ClinicalCareService(
         int testCount = (int)Math.Min(int.MaxValue, testCountTotal);
 
         RiskAssessmentDTO? latestRisk = await repository.GetLatestRiskAssessmentAsync(cancellationToken).ConfigureAwait(false);
-        RiskLevel riskLevel = latestRisk?.RiskLevel
-            ?? RiskClassifier.DeriveFromMoodPracticeSignals(avgMood, practiceCount);
+        // A months-old "green" must not hide a bad week, so only a current explicit check overrides the weekly signals.
+        RiskLevel riskLevel = latestRisk is not null && IsCurrent(latestRisk)
+            ? latestRisk.RiskLevel
+            : RiskClassifier.DeriveFromMoodPracticeSignals(avgMood, practiceCount);
 
         return new ClinicalScorecardDTO
         {
@@ -205,6 +222,11 @@ public sealed class ClinicalCareService(
         };
     }
 
+    /// <summary>
+    /// Records an escalation when the weekly signals are Amber or Red and otherwise moves the program on by the calendar.
+    /// The program's week is derived from its start date, so this does not (and cannot) "hold" a week; it also does not write on
+    /// every call: one escalation per kind is recorded per <see cref="ScorecardEscalationCooldown"/>, however often a screen refreshes.
+    /// </summary>
     public async Task<TherapyProgramStateDTO?> AdjustProgramFromScorecardAsync(CancellationToken cancellationToken = default)
     {
         ClinicalScorecardDTO scorecard = await BuildWeeklyScorecardAsync(cancellationToken).ConfigureAwait(false);
@@ -214,48 +236,46 @@ public sealed class ClinicalCareService(
             return null;
         }
 
-        if (scorecard.RiskLevel is RiskLevel.Red)
+        if (scorecard.RiskLevel is RiskLevel.Red or RiskLevel.Amber)
         {
-            await repository.SaveEscalationEventAsync(
-                new EscalationEventDTO
-                {
-                    CreatedAt = DateTime.UtcNow,
-                    RiskLevel = RiskLevel.Red,
-                    TriggerSource = "weekly_scorecard",
-                    Action = EscalationActions.RouteToCrisisHub,
-                    Notes = scorecard.Summary
-                },
-                cancellationToken).ConfigureAwait(false);
+            string action = scorecard.RiskLevel is RiskLevel.Red
+                ? EscalationActions.RouteToCrisisHub
+                : EscalationActions.OfferSpecialistHelp;
+            await RecordScorecardEscalationOnceAsync(scorecard, action, cancellationToken).ConfigureAwait(false);
             return program;
-        }
-
-        if (scorecard.RiskLevel is RiskLevel.Amber)
-        {
-            await repository.SaveEscalationEventAsync(
-                new EscalationEventDTO
-                {
-                    CreatedAt = DateTime.UtcNow,
-                    RiskLevel = RiskLevel.Amber,
-                    TriggerSource = "weekly_scorecard",
-                    Action = EscalationActions.OfferSpecialistHelp,
-                    Notes = scorecard.Summary
-                },
-                cancellationToken).ConfigureAwait(false);
-
-            // Hold at current week (gentler pace) when signals worsen.
-            TherapyProgramStateDTO held = new()
-            {
-                ProgramType = program.ProgramType,
-                StartedAt = program.StartedAt,
-                CurrentWeek = Math.Max(1, program.CurrentWeek),
-                IsActive = true
-            };
-            await repository.UpsertActiveProgramAsync(held, cancellationToken).ConfigureAwait(false);
-            return held;
         }
 
         return await AdvanceProgramWeekIfDueAsync(cancellationToken).ConfigureAwait(false);
     }
+
+    private async Task RecordScorecardEscalationOnceAsync(
+        ClinicalScorecardDTO scorecard,
+        string action,
+        CancellationToken cancellationToken)
+    {
+        IReadOnlyList<EscalationEventDTO> recent = await repository.GetRecentEscalationsAsync(20, cancellationToken).ConfigureAwait(false);
+        DateTime now = UtcNow;
+        bool alreadyRecorded = recent.Any(e =>
+            e.TriggerSource == ScorecardTriggerSource
+            && e.Action == action
+            && now - e.CreatedAt < ScorecardEscalationCooldown);
+        if (alreadyRecorded)
+        {
+            return;
+        }
+
+        await repository.SaveEscalationEventAsync(
+            new EscalationEventDTO
+            {
+                CreatedAt = now,
+                RiskLevel = scorecard.RiskLevel,
+                TriggerSource = ScorecardTriggerSource,
+                Action = action,
+                Notes = scorecard.Summary
+            },
+            cancellationToken).ConfigureAwait(false);
+    }
+
 
     public Task<IReadOnlyList<EscalationEventDTO>> GetRecentEscalationsAsync(
         int limit = 20,
@@ -273,7 +293,7 @@ public sealed class ClinicalCareService(
                 CopingStrategies = plan.CopingStrategies,
                 Contacts = plan.Contacts,
                 Reasons = plan.Reasons,
-                UpdatedAt = DateTime.UtcNow
+                UpdatedAt = UtcNow
             },
             cancellationToken);
 

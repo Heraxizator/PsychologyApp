@@ -66,13 +66,44 @@ public sealed class DataBackupViewModel : BaseViewModel
     {
         string json = await _backupService.ExportAsync();
         string fileName = $"psychologyapp-backup-{DateTime.Now:yyyyMMdd-HHmm}.json";
+        await ShareTemporaryFileAsync(fileName, json, AppStrings.DataBackupExportTitle);
+    }
+
+    /// <summary>
+    /// The file holds chats, mood notes and the safety plan in plain text, so it is written to the cache only for the moment
+    /// the share sheet is open and removed afterwards (also when sharing fails or is cancelled).
+    /// </summary>
+    private static async Task ShareTemporaryFileAsync(string fileName, string content, string title)
+    {
         string path = Path.Combine(FileSystem.CacheDirectory, fileName);
-        await File.WriteAllTextAsync(path, json, Encoding.UTF8);
-        await Share.Default.RequestAsync(new ShareFileRequest
+        try
         {
-            Title = AppStrings.DataBackupExportTitle,
-            File = new ShareFile(path)
-        });
+            await File.WriteAllTextAsync(path, content, Encoding.UTF8);
+            await Share.Default.RequestAsync(new ShareFileRequest
+            {
+                Title = title,
+                File = new ShareFile(path)
+            });
+        }
+        finally
+        {
+            TryDelete(path);
+        }
+    }
+
+    private static void TryDelete(string path)
+    {
+        try
+        {
+            File.Delete(path);
+        }
+        catch (IOException)
+        {
+            // Left for the OS to clear from the cache.
+        }
+        catch (UnauthorizedAccessException)
+        {
+        }
     }
 
     private async Task ImportBackupAsync()
@@ -95,12 +126,19 @@ public sealed class DataBackupViewModel : BaseViewModel
                 AppStrings.DataBackupImportedToast(
                     result.MoodEntries,
                     result.TestResults,
-                    result.Completions,
-                    result.ChatSessions));
+                    result.Completions + result.SessionResults,
+                    result.ChatSessions,
+                    result.SkippedDuplicates));
         }
-        catch
+        catch (BackupFormatException)
         {
+            // Nothing was written: the import is a single transaction and the file was rejected before it.
             _toastService.LongToast(AppStrings.DataBackupImportFailedToast, AppToastKind.Error);
+        }
+        catch (Exception)
+        {
+            // The transaction rolled back, so the database is exactly as it was before the attempt.
+            _toastService.LongToast(AppStrings.DataBackupImportRolledBackToast, AppToastKind.Error);
         }
     }
 
@@ -109,12 +147,6 @@ public sealed class DataBackupViewModel : BaseViewModel
         bool english = UserPreferences.IsEnglish(UserPreferences.Load().Language);
         string summary = await _specialistSummaryService.BuildSummaryAsync(english);
         string fileName = $"specialist-summary-{DateTime.Now:yyyyMMdd-HHmm}.txt";
-        string path = Path.Combine(FileSystem.CacheDirectory, fileName);
-        await File.WriteAllTextAsync(path, summary, Encoding.UTF8);
-        await Share.Default.RequestAsync(new ShareFileRequest
-        {
-            Title = AppStrings.DataBackupSummaryTitle,
-            File = new ShareFile(path)
-        });
+        await ShareTemporaryFileAsync(fileName, summary, AppStrings.DataBackupSummaryTitle);
     }
 }

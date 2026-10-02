@@ -28,7 +28,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                 result.Score,
                 result.Summary,
                 result.DetailJson,
-                CompletedAt = result.CompletedAt.ToString("O")
+                CompletedAt = SqliteTime.ToIso(result.CompletedAt)
             },
             commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken)).ConfigureAwait(false);
@@ -49,7 +49,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         return await connection.QuerySingleOrDefaultAsync<TestResultDTO>(DapperCommandFactory.Create(
             UserProgressSql.SelectMostRecentTestResultSince,
-            new { sinceUtc = DateTime.UtcNow.Subtract(within).ToString("O") },
+            new { sinceUtc = SqliteTime.ToIso(DateTime.UtcNow.Subtract(within)) },
             commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
@@ -148,7 +148,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                 completion.ItemKey,
                 completion.ModuleName,
                 completion.PageName,
-                CompletedAt = completion.CompletedAt.ToString("O"),
+                CompletedAt = SqliteTime.ToIso(completion.CompletedAt),
                 completion.DurationSeconds
             },
             commandTimeout: CommandTimeoutSeconds,
@@ -172,7 +172,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                     request.ItemKey,
                     request.ModuleName,
                     request.PageName,
-                    CompletedAt = completedAt.ToString("O"),
+                    CompletedAt = SqliteTime.ToIso(completedAt),
                     request.DurationSeconds
                 },
                 transaction,
@@ -184,7 +184,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                 new
                 {
                     request.ItemKey,
-                    CompletedAt = completedAt.ToString("O"),
+                    CompletedAt = SqliteTime.ToIso(completedAt),
                     request.DurationSeconds,
                     request.PayloadJson,
                     request.PreIntensity,
@@ -251,9 +251,8 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken)).ConfigureAwait(false);
 
-        return rows
-            .Select(day => DateOnly.Parse(day, System.Globalization.CultureInfo.InvariantCulture))
-            .ToList();
+        // Timestamps are stored in UTC, but a "day" for a streak is the user's own calendar day.
+        return SqliteTime.ToLocalDays(rows, TimeZoneInfo.Local);
     }
 
     public async Task<DateTime?> GetLastCompletionForItemAsync(string itemKey, CancellationToken cancellationToken = default)
@@ -303,7 +302,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             {
                 techniqueKey,
                 payloadJson,
-                updatedAt = DateTime.UtcNow.ToString("O")
+                updatedAt = SqliteTime.ToIso(DateTime.UtcNow)
             },
             commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken)).ConfigureAwait(false);
@@ -362,7 +361,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                 {
                     entry.MoodLevel,
                     entry.Note,
-                    RecordedAt = entry.RecordedAt.ToString("O")
+                    RecordedAt = SqliteTime.ToIso(entry.RecordedAt)
                 },
                 transaction,
                 CommandTimeoutSeconds,
@@ -374,7 +373,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                 {
                     moduleName = "Practice",
                     pageName = "Mood",
-                    completedAt = entry.RecordedAt.ToString("O")
+                    completedAt = SqliteTime.ToIso(entry.RecordedAt)
                 },
                 transaction,
                 CommandTimeoutSeconds,
@@ -412,8 +411,8 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             UserProgressSql.SelectMoodsInRange,
             new
             {
-                fromUtc = fromUtc?.ToString("O"),
-                toUtc = toUtc?.ToString("O"),
+                fromUtc = SqliteTime.ToIso(fromUtc),
+                toUtc = SqliteTime.ToIso(toUtc),
                 limit
             },
             commandTimeout: CommandTimeoutSeconds,
@@ -526,8 +525,8 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             new
             {
                 itemKeys,
-                sinceUtc = sinceUtc.ToString("O"),
-                beforeUtc = beforeUtc.ToString("O")
+                sinceUtc = SqliteTime.ToIso(sinceUtc),
+                beforeUtc = SqliteTime.ToIso(beforeUtc)
             },
             commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken)).ConfigureAwait(false);
@@ -538,6 +537,5 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             ? null
             : ParseUtcDateTime(value);
 
-    private static DateTime ParseUtcDateTime(string value) =>
-        DateTime.Parse(value, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.RoundtripKind);
+    private static DateTime ParseUtcDateTime(string value) => SqliteTime.FromIso(value);
 }

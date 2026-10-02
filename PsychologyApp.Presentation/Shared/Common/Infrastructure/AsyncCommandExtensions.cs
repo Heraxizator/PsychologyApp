@@ -21,7 +21,14 @@ public static class AsyncCommandExtensions
                     return;
                 }
 
-                DefaultErrorHandler?.Invoke(error);
+                if (DefaultErrorHandler is { } handler)
+                {
+                    handler(error);
+                    return;
+                }
+
+                // Never swallowed silently: with no handler wired the failure at least reaches the debug/trace output.
+                System.Diagnostics.Trace.TraceError("Unobserved async failure: " + error);
             },
             TaskScheduler.Default);
     }

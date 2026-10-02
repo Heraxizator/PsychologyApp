@@ -67,7 +67,7 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
             ClinicalCareSql.InsertRiskAssessment,
             new
             {
-                AssessedAt = assessment.AssessedAt.ToString("O"),
+                AssessedAt = SqliteTime.ToIso(assessment.AssessedAt),
                 assessment.Source,
                 assessment.Notes,
                 assessment.HasSelfHarmThoughts,
@@ -106,9 +106,13 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
     public async Task UpsertActiveProgramAsync(TherapyProgramStateDTO program, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        // Deactivate-then-upsert is one change: a failure between the two must not leave the person with no active program.
+        await using SqliteTransaction transaction =
+            (SqliteTransaction)await connection.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
 
         await connection.ExecuteAsync(DapperCommandFactory.Create(
             ClinicalCareSql.DeactivateAllPrograms,
+            transaction: transaction,
             commandTimeout: CommandTimeoutSeconds,
             cancellationToken: cancellationToken)).ConfigureAwait(false);
 
@@ -117,12 +121,15 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
             new
             {
                 ProgramKey = program.ProgramType.ToString(),
-                StartedAt = program.StartedAt.ToString("O"),
+                StartedAt = SqliteTime.ToIso(program.StartedAt),
                 program.CurrentWeek,
                 IsActive = program.IsActive ? 1 : 0
             },
-            commandTimeout: CommandTimeoutSeconds,
-            cancellationToken: cancellationToken)).ConfigureAwait(false);
+            transaction,
+            CommandTimeoutSeconds,
+            cancellationToken)).ConfigureAwait(false);
+
+        await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<TherapyProgramStateDTO?> GetActiveProgramAsync(CancellationToken cancellationToken = default)
@@ -158,7 +165,7 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
             ClinicalCareSql.InsertEscalation,
             new
             {
-                CreatedAt = escalation.CreatedAt.ToString("O"),
+                CreatedAt = SqliteTime.ToIso(escalation.CreatedAt),
                 RiskLevel = ToRiskKey(escalation.RiskLevel),
                 escalation.TriggerSource,
                 escalation.Action,
@@ -199,7 +206,7 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
         };
 
     private static DateTime ParseUtcDateTime(string value) =>
-        DateTime.Parse(value, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.RoundtripKind);
+        SqliteTime.FromIso(value);
 
     private sealed class ClinicalRiskRow
     {

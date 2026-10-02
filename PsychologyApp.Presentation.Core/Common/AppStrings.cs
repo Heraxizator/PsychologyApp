@@ -1022,6 +1022,12 @@ public static partial class AppStrings
     public static string QuoteShareTitle => T("Цитата", "Quote");
     public static string UnknownAuthor => T("Неизвестный автор", "Unknown author");
 
+    public static string JournalCrisisPromptTitle => T("Вам сейчас очень тяжело?", "Are things very hard right now?");
+    public static string JournalCrisisPromptBody => T(
+        "В заметке есть слова, которые тревожат. Вы не одни: на экране срочной помощи — номера служб и план безопасности.",
+        "Your note contains words that worry us. You are not alone: the crisis help screen has helplines and your safety plan.");
+    public static string JournalCrisisPromptAccept => T("Открыть помощь", "Open help");
+    public static string JournalCrisisPromptDecline => T("Не сейчас", "Not now");
     public static string CrisisHubTitle => T("Срочная помощь", "Crisis help");
     public static string CrisisHubLead => T(
         "Сначала безопасность. Приложение не заменяет экстренную помощь.",
@@ -1043,14 +1049,14 @@ public static partial class AppStrings
         $"{CrisisHubSafetyPlanStepNumber1}. {CrisisHubSafetyPlanStep1}\n{CrisisHubSafetyPlanStepNumber2}. {CrisisHubSafetyPlanStep2}\n{CrisisHubSafetyPlanStepNumber3}. {CrisisHubSafetyPlanStep3}";
     public static string CrisisHubHotlineTitle => T("Позвонить сейчас", "Call now");
     public static string CrisisHubHotlineRu => T(
-        "Россия: 8-800-2000-122 (телефон доверия), 112 — экстренные службы",
-        "Russia: 8-800-2000-122 (helpline), 112 — emergency services");
+        "Россия: 112 — экстренные службы (звонок бесплатный). 8-800-2000-122 — детский телефон доверия, для детей, подростков и родителей. Линию для взрослых в вашем регионе найдите на findahelpline.com",
+        "Russia: 112 — emergency services (free). 8-800-2000-122 — the children's helpline, for children, teenagers and parents. For an adult helpline near you, see findahelpline.com");
     public static string CrisisHubHotlineRuNumber => "88002000122";
     public static string CrisisHubEmergencyNumber => "112";
     public static string CrisisHubHotlineIntl => T(
         "Международно: findahelpline.com",
         "International: findahelpline.com");
-    public static string CrisisHubCallHotlineRu => T("Позвонить на 8-800-2000-122", "Call 8-800-2000-122");
+    public static string CrisisHubCallHotlineRu => T("Детский телефон доверия 8-800-2000-122", "Children's helpline 8-800-2000-122");
     public static string CrisisHubCallEmergency => T("Позвонить в 112", "Call 112");
     public static string CrisisHubEmergencyBadge => "112";
     public static string CrisisHubOpenHelpline => T("Открыть findahelpline.com", "Open findahelpline.com");
@@ -1076,9 +1082,16 @@ public static partial class AppStrings
         "Текстовый файл за последние 30 дней — можно отправить психологу или врачу.",
         "A text file covering the last 30 days — share it with a psychologist or doctor.");
     public static string DataBackupExportedToast => T("Файл готов к отправке", "File is ready to share");
-    public static string DataBackupImportedToast(int moods, int tests, int completions, int chats) => T(
-        $"Добавлено: настроение {moods}, тесты {tests}, практики {completions}, чаты {chats}",
-        $"Added: mood {moods}, tests {tests}, practices {completions}, chats {chats}");
+    public static string DataBackupImportedToast(int moods, int tests, int completions, int chats, int skipped = 0) => skipped > 0
+        ? T(
+            $"Добавлено: настроение {moods}, тесты {tests}, практики {completions}, чаты {chats}. Уже было: {skipped}",
+            $"Added: mood {moods}, tests {tests}, practices {completions}, chats {chats}. Already present: {skipped}")
+        : T(
+            $"Добавлено: настроение {moods}, тесты {tests}, практики {completions}, чаты {chats}",
+            $"Added: mood {moods}, tests {tests}, practices {completions}, chats {chats}");
+    public static string DataBackupImportRolledBackToast => T(
+        "Не удалось восстановить данные. Ничего не изменено — попробуйте ещё раз",
+        "Could not restore the data. Nothing was changed — please try again");
     public static string DataBackupImportFailedToast => T(
         "Не удалось прочитать файл резервной копии",
         "Could not read the backup file");

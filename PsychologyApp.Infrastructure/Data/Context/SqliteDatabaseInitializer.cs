@@ -17,7 +17,7 @@ public sealed class SqliteDatabaseInitializer(IDbConnectionFactory connectionFac
             await using (System.Data.Common.DbConnection checkpointConnection =
                          await connectionFactory.CreateOpenConnectionAsync(cancellationToken).ConfigureAwait(false))
             {
-                await checkpointConnection.ExecuteScalarAsync<long>("PRAGMA wal_checkpoint(TRUNCATE);", cancellationToken).ConfigureAwait(false);
+                await checkpointConnection.ExecuteScalarAsync<long>(new CommandDefinition("PRAGMA wal_checkpoint(TRUNCATE);", cancellationToken: cancellationToken)).ConfigureAwait(false);
             }
 
             SqliteConnection.ClearAllPools();

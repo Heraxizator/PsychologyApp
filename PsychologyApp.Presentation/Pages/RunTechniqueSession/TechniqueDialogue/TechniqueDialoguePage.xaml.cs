@@ -22,6 +22,14 @@ public partial class TechniqueDialoguePage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await _viewModel.StartAsync();
+        try
+        {
+            await _viewModel.StartAsync();
+        }
+        catch (Exception ex)
+        {
+            // An async void handler must not throw: that would take the whole app down instead of one dialogue.
+            PsychologyApp.Presentation.Shared.Common.AsyncCommandExtensions.DefaultErrorHandler?.Invoke(ex);
+        }
     }
 }

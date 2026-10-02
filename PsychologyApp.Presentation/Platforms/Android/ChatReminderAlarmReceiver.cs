@@ -2,7 +2,6 @@
 using Android.App;
 using Android.Content;
 using AndroidX.Core.App;
-using Microsoft.Extensions.DependencyInjection;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Services.Notifications;
 
@@ -37,33 +36,7 @@ public sealed class ChatReminderAlarmReceiver : BroadcastReceiver
         Notification? notification = builder.Build();
         NotificationManagerCompat.From(context)?.Notify(ChatReminderConstants.NotificationId, notification);
 
-        RescheduleNext();
-    }
-
-    private static void RescheduleNext()
-    {
-        try
-        {
-            IServiceProvider? services = Microsoft.Maui.Controls.Application.Current?.Handler?.MauiContext?.Services;
-            if (services?.GetService<IChatReminderCoordinator>() is not IChatReminderCoordinator coordinator)
-            {
-                return;
-            }
-
-            _ = Task.Run(async () =>
-            {
-                try
-                {
-                    await coordinator.SyncAsync().ConfigureAwait(false);
-                }
-                catch
-                {
-                }
-            });
-        }
-        catch
-        {
-        }
+        ReminderSyncWork.Run<IChatReminderCoordinator>(this, coordinator => coordinator.SyncAsync());
     }
 }
 #endif

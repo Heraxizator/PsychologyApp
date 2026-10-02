@@ -1,7 +1,6 @@
 #if ANDROID
 using Android.App;
 using Android.Content;
-using Microsoft.Extensions.DependencyInjection;
 using PsychologyApp.Presentation.Shared.Services.Notifications;
 
 namespace PsychologyApp.Presentation.Platforms.Android;
@@ -17,28 +16,7 @@ public sealed class QuoteReminderBootReceiver : BroadcastReceiver
             return;
         }
 
-        try
-        {
-            IServiceProvider? services = Microsoft.Maui.Controls.Application.Current?.Handler?.MauiContext?.Services;
-            if (services?.GetService<IQuoteReminderCoordinator>() is not IQuoteReminderCoordinator coordinator)
-            {
-                return;
-            }
-
-            _ = Task.Run(async () =>
-            {
-                try
-                {
-                    await coordinator.SyncAsync().ConfigureAwait(false);
-                }
-                catch
-                {
-                }
-            });
-        }
-        catch
-        {
-        }
+        ReminderSyncWork.Run<IQuoteReminderCoordinator>(this, coordinator => coordinator.SyncAsync());
     }
 }
 #endif

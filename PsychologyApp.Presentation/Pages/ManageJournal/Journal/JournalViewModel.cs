@@ -30,6 +30,7 @@ public sealed class JournalViewModel : BaseViewModel
     private CancellationTokenSource? _noteSaveCts;
     private bool _suppressNoteAutosave;
     private bool _noteDirty;
+    private string? _crisisOfferedForNote;
 
     public JournalViewModel(
         JournalMoodLoader journalMoodLoader,
@@ -394,7 +395,7 @@ public sealed class JournalViewModel : BaseViewModel
         }
 
         string? note = string.IsNullOrWhiteSpace(JournalNote) ? null : JournalNote.Trim();
-        await _journalMoodLoader.SaveMoodAsync(
+        bool looksLikeCrisis = await _journalMoodLoader.SaveMoodAsync(
             SelectedMoodLevel,
             note,
             _editorEntryId,
@@ -406,6 +407,26 @@ public sealed class JournalViewModel : BaseViewModel
         if (reload)
         {
             await LoadAsync();
+        }
+
+        // Asked once per distinct note text: autosave fires repeatedly while the person is still typing.
+        if (looksLikeCrisis && !string.Equals(note, _crisisOfferedForNote, StringComparison.Ordinal))
+        {
+            _crisisOfferedForNote = note;
+            await OfferCrisisHelpAsync();
+        }
+    }
+
+    private async Task OfferCrisisHelpAsync()
+    {
+        bool open = await _dialogService.AskAsync(
+            AppStrings.JournalCrisisPromptTitle,
+            AppStrings.JournalCrisisPromptBody,
+            AppStrings.JournalCrisisPromptAccept,
+            AppStrings.JournalCrisisPromptDecline);
+        if (open)
+        {
+            await _navigationService.GoToCrisisHubAsync();
         }
     }
 }

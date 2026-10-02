@@ -2,7 +2,6 @@
 using Android.App;
 using Android.Content;
 using AndroidX.Core.App;
-using Microsoft.Extensions.DependencyInjection;
 using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Shared.Services.Notifications;
 
@@ -30,7 +29,7 @@ public sealed class PracticeReminderAlarmReceiver : BroadcastReceiver
             ?? string.Empty;
 
         ShowNotification(context, techniqueId, title, body);
-        ScheduleNextFromCoordinator();
+        ReminderSyncWork.Run<IPracticeReminderCoordinator>(this, coordinator => coordinator.SyncAsync());
     }
 
     private static void ShowNotification(Context context, TechniqueId techniqueId, string title, string body)
@@ -50,24 +49,6 @@ public sealed class PracticeReminderAlarmReceiver : BroadcastReceiver
         Notification notification = builder.Build()!;
         NotificationManagerCompat.From(context)?.Notify(PracticeReminderConstants.NotificationId, notification);
         tapIntent.Dispose();
-    }
-
-    private static void ScheduleNextFromCoordinator()
-    {
-        try
-        {
-            IServiceProvider? services = MauiApplication.Current?.Services;
-            if (services?.GetService<IPracticeReminderCoordinator>() is not IPracticeReminderCoordinator coordinator)
-            {
-                return;
-            }
-
-            _ = coordinator.SyncAsync();
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"Practice reminder reschedule failed: {ex.Message}");
-        }
     }
 }
 #endif

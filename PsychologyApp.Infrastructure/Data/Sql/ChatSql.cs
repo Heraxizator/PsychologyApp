@@ -8,25 +8,40 @@ internal static class ChatSql
         SELECT last_insert_rowid();
         """;
 
-    internal const string SelectSessions = """
+    // One grouped pass over ChatMessages for the counts (it was three correlated subqueries per session); the preview stays an
+    // index seek on (SessionId, MessageId).
+    private const string SessionColumns = """
+        s.SessionId, s.Title, s.CreatedAt, s.UpdatedAt, s.Emotion, s.Theme, s.FirstIntensity, s.LastIntensity, s.StateJson,
+        (SELECT m.Text FROM ChatMessages m WHERE m.SessionId = s.SessionId ORDER BY m.MessageId DESC LIMIT 1) AS Preview,
+        COALESCE(c.MessageCount, 0) AS MessageCount,
+        COALESCE(c.UserMessageCount, 0) AS UserMessageCount
+        """;
+
+    internal const string SelectSessions = $"""
         SELECT
-            s.SessionId, s.Title, s.CreatedAt, s.UpdatedAt, s.Emotion, s.Theme, s.FirstIntensity, s.LastIntensity, s.StateJson,
-            (SELECT m.Text FROM ChatMessages m WHERE m.SessionId = s.SessionId ORDER BY m.MessageId DESC LIMIT 1) AS Preview,
-            (SELECT COUNT(*) FROM ChatMessages m WHERE m.SessionId = s.SessionId) AS MessageCount,
-            (SELECT COUNT(*) FROM ChatMessages m WHERE m.SessionId = s.SessionId AND m.Role = 0) AS UserMessageCount
+            {SessionColumns}
         FROM ChatSessions s
+        LEFT JOIN (
+            SELECT SessionId, COUNT(*) AS MessageCount, SUM(CASE WHEN Role = 0 THEN 1 ELSE 0 END) AS UserMessageCount
+            FROM ChatMessages
+            GROUP BY SessionId
+        ) c ON c.SessionId = s.SessionId
         ORDER BY s.UpdatedAt DESC, s.SessionId DESC;
         """;
 
-    internal const string SelectSession = """
+    internal const string SelectSession = $"""
         SELECT
-            s.SessionId, s.Title, s.CreatedAt, s.UpdatedAt, s.Emotion, s.Theme, s.FirstIntensity, s.LastIntensity, s.StateJson,
-            (SELECT m.Text FROM ChatMessages m WHERE m.SessionId = s.SessionId ORDER BY m.MessageId DESC LIMIT 1) AS Preview,
-            (SELECT COUNT(*) FROM ChatMessages m WHERE m.SessionId = s.SessionId) AS MessageCount,
-            (SELECT COUNT(*) FROM ChatMessages m WHERE m.SessionId = s.SessionId AND m.Role = 0) AS UserMessageCount
+            {SessionColumns}
         FROM ChatSessions s
+        LEFT JOIN (
+            SELECT SessionId, COUNT(*) AS MessageCount, SUM(CASE WHEN Role = 0 THEN 1 ELSE 0 END) AS UserMessageCount
+            FROM ChatMessages
+            WHERE SessionId = @SessionId
+            GROUP BY SessionId
+        ) c ON c.SessionId = s.SessionId
         WHERE s.SessionId = @SessionId;
         """;
+
 
     internal const string UpdateSession = """
         UPDATE ChatSessions

@@ -2,7 +2,6 @@
 using Android.App;
 using Android.Content;
 using AndroidX.Core.App;
-using Microsoft.Extensions.DependencyInjection;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Services.Notifications;
 
@@ -37,33 +36,7 @@ public sealed class QuoteReminderAlarmReceiver : BroadcastReceiver
         Notification? notification = builder.Build();
         NotificationManagerCompat.From(context)?.Notify(QuoteReminderConstants.NotificationId, notification);
 
-        RescheduleNext(context);
-    }
-
-    private static void RescheduleNext(Context context)
-    {
-        try
-        {
-            IServiceProvider? services = Microsoft.Maui.Controls.Application.Current?.Handler?.MauiContext?.Services;
-            if (services?.GetService<IQuoteReminderCoordinator>() is not IQuoteReminderCoordinator coordinator)
-            {
-                return;
-            }
-
-            _ = Task.Run(async () =>
-            {
-                try
-                {
-                    await coordinator.SyncAsync().ConfigureAwait(false);
-                }
-                catch
-                {
-                }
-            });
-        }
-        catch
-        {
-        }
+        ReminderSyncWork.Run<IQuoteReminderCoordinator>(this, coordinator => coordinator.SyncAsync());
     }
 }
 #endif

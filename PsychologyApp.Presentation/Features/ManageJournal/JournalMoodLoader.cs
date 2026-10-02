@@ -1,3 +1,4 @@
+using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Domain.UserProgress;
@@ -45,7 +46,7 @@ public sealed record JournalMoodSnapshot(
     DateOnly WeekStripEnd,
     IReadOnlyList<JournalActivityInsight> ActivityInsights);
 
-public sealed class JournalMoodLoader(IUserProgressService userProgressService)
+public sealed class JournalMoodLoader(IUserProgressService userProgressService, ICrisisDetector crisisDetector)
 {
     private const int TimelineLimit = 500;
     private const int MaxWeekLookbackDays = 84;
@@ -216,7 +217,8 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
             activityInsights);
     }
 
-    public async Task SaveMoodAsync(
+    /// <summary>Saves the check-in. Returns true when the note reads like a crisis, so the screen can offer the help page.</summary>
+    public async Task<bool> SaveMoodAsync(
         int moodLevel,
         string? note,
         long? entryId,
@@ -227,15 +229,19 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService)
         if (entryId is > 0)
         {
             await userProgressService.UpdateMoodEntryAsync(entryId.Value, moodLevel, note, cancellationToken);
-            return;
+        }
+        else
+        {
+            DateTime recordedAtUtc = ResolveSlotTimestamp(day, slot);
+            await userProgressService.RecordMoodAsync(
+                moodLevel,
+                note,
+                recordedAtUtc,
+                cancellationToken);
         }
 
-        DateTime recordedAtUtc = ResolveSlotTimestamp(day, slot);
-        await userProgressService.RecordMoodAsync(
-            moodLevel,
-            note,
-            recordedAtUtc,
-            cancellationToken);
+        // A journal note is where people write what they would not say in the chat; it gets the same local check.
+        return crisisDetector.IsCrisis(note);
     }
 
     public Task DeleteMoodAsync(long moodEntryId, CancellationToken cancellationToken = default) =>

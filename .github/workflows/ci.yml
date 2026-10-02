@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, master]
+    branches: [main, master, features/re-design]
   pull_request:
-    branches: [main, master]
+    branches: [main, master, features/re-design]
 
 jobs:
   build-test:
@@ -39,7 +39,8 @@ jobs:
       - run: dotnet build PsychologyApp.Presentation/PsychologyApp.Presentation.csproj -f net10.0-ios
       - run: dotnet build PsychologyApp.Presentation/PsychologyApp.Presentation.csproj -f net10.0-android
       - run: dotnet build PsychologyApp.Presentation/PsychologyApp.Presentation.csproj -f net10.0-android -c Release
-      - run: dotnet test PsychologyApp.Presentation.Tests/PsychologyApp.Presentation.Tests.csproj -c Debug -f net10.0-android -p:TargetFrameworks=net10.0;net10.0-android --verbosity minimal
+      # %3B is MSBuild's escaped ";" - a bare one would end the command in PowerShell.
+      - run: dotnet test PsychologyApp.Presentation.Tests/PsychologyApp.Presentation.Tests.csproj -c Debug -f net10.0-android "-p:TargetFrameworks=net10.0%3Bnet10.0-android" --verbosity minimal
 
   build-test-linux:
     runs-on: ubuntu-latest

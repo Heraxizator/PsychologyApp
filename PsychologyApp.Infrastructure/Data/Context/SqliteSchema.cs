@@ -6,10 +6,11 @@ namespace PsychologyApp.Infrastructure.Data.Context;
 
 public static class SqliteSchema
 {
-    public const int CurrentVersion = 12;
+    public const int CurrentVersion = 13;
 
     private static readonly string[] DropTablesSql =
     [
+        "DROP TABLE IF EXISTS ChatMemory;",
         "DROP TABLE IF EXISTS ChatMessages;",
         "DROP TABLE IF EXISTS ChatSessions;",
         "DROP TABLE IF EXISTS SessionResults;",
@@ -31,12 +32,18 @@ public static class SqliteSchema
     {
         if (SupportsWal(connection))
         {
-            await connection.ExecuteAsync("PRAGMA journal_mode=WAL;", cancellationToken).ConfigureAwait(false);
-            await connection.ExecuteAsync("PRAGMA synchronous=NORMAL;", cancellationToken).ConfigureAwait(false);
+            await ExecuteAsync(connection, "PRAGMA journal_mode=WAL;", cancellationToken).ConfigureAwait(false);
+            await ExecuteAsync(connection, "PRAGMA synchronous=NORMAL;", cancellationToken).ConfigureAwait(false);
         }
 
-        await connection.ExecuteAsync("PRAGMA busy_timeout=5000;", cancellationToken).ConfigureAwait(false);
+        await ExecuteAsync(connection, "PRAGMA busy_timeout=5000;", cancellationToken).ConfigureAwait(false);
+        // Off by default in SQLite and per connection: without it the ChatMessages -> ChatSessions key is only decoration.
+        await ExecuteAsync(connection, "PRAGMA foreign_keys=ON;", cancellationToken).ConfigureAwait(false);
     }
+
+    // Dapper's ExecuteAsync(sql, object param) would take a CancellationToken as the parameter bag and ignore it.
+    private static Task<int> ExecuteAsync(DbConnection connection, string sql, CancellationToken cancellationToken) =>
+        connection.ExecuteAsync(new CommandDefinition(sql, cancellationToken: cancellationToken));
 
     private static bool SupportsWal(DbConnection connection) =>
         connection is not SqliteConnection sqlite
@@ -44,7 +51,8 @@ public static class SqliteSchema
 
     public static async Task EnsureSchemaAsync(DbConnection connection, CancellationToken cancellationToken = default)
     {
-        await connection.ExecuteAsync(
+        await ExecuteAsync(
+            connection,
             """
             CREATE TABLE IF NOT EXISTS SchemaVersion (
                 Version INTEGER NOT NULL PRIMARY KEY
@@ -53,8 +61,14 @@ public static class SqliteSchema
             cancellationToken).ConfigureAwait(false);
 
         int version = await connection.ExecuteScalarAsync<int>(
-            "SELECT IFNULL(MAX(Version), 0) FROM SchemaVersion;",
-            cancellationToken).ConfigureAwait(false);
+            new CommandDefinition("SELECT IFNULL(MAX(Version), 0) FROM SchemaVersion;", cancellationToken: cancellationToken)).ConfigureAwait(false);
+
+        if (version > CurrentVersion)
+        {
+            // Written by a newer build: running older code against it could silently misread or drop what it does not know.
+            throw new InvalidOperationException(
+                $"The database schema version {version} is newer than this app supports ({CurrentVersion}).");
+        }
 
         if (version < 1)
         {
@@ -125,7 +139,42 @@ public static class SqliteSchema
         if (version < 12)
         {
             await ApplyMigrationAsync(connection, 12, MigrateToVersion12Async, cancellationToken).ConfigureAwait(false);
+            version = 12;
         }
+
+        if (version < 13)
+        {
+            await ApplyMigrationAsync(connection, 13, MigrateToVersion13Async, cancellationToken).ConfigureAwait(false);
+        }
+    }
+
+    /// <summary>
+    /// Chat messages now belong to their session by a real foreign key (deleting a session removes its messages even if a caller
+    /// forgets to). SQLite cannot add a key to an existing table, so the table is rebuilt; orphans are dropped on the way.
+    /// </summary>
+    private static async Task MigrateToVersion13Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)
+    {
+        await connection.ExecuteAsync(
+            """
+            CREATE TABLE ChatMessages_v13 (
+                MessageId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                SessionId INTEGER NOT NULL REFERENCES ChatSessions(SessionId) ON DELETE CASCADE,
+                Role INTEGER NOT NULL,
+                Text TEXT NOT NULL,
+                CreatedAt TEXT NOT NULL,
+                QuickRepliesJson TEXT
+            );
+
+            INSERT INTO ChatMessages_v13 (MessageId, SessionId, Role, Text, CreatedAt, QuickRepliesJson)
+            SELECT MessageId, SessionId, Role, Text, CreatedAt, QuickRepliesJson
+            FROM ChatMessages
+            WHERE SessionId IN (SELECT SessionId FROM ChatSessions);
+
+            DROP TABLE ChatMessages;
+            ALTER TABLE ChatMessages_v13 RENAME TO ChatMessages;
+            CREATE INDEX IF NOT EXISTS IX_ChatMessages_Session ON ChatMessages(SessionId, MessageId);
+            """,
+            transaction: transaction).ConfigureAwait(false);
     }
 
     /// <summary>The journal reads moods by date range and favourites look quotes up by text; both scanned the whole table.</summary>
@@ -344,10 +393,11 @@ public static class SqliteSchema
         try
         {
             await migrate(connection, transaction, cancellationToken).ConfigureAwait(false);
-            await connection.ExecuteAsync(
+            await connection.ExecuteAsync(new CommandDefinition(
                 "INSERT OR IGNORE INTO SchemaVersion (Version) VALUES (@version);",
                 new { version },
-                transaction).ConfigureAwait(false);
+                transaction,
+                cancellationToken: cancellationToken)).ConfigureAwait(false);
             await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
         }
         catch
@@ -373,7 +423,7 @@ public static class SqliteSchema
     {
         foreach (string sql in DropTablesSql)
         {
-            await connection.ExecuteAsync(sql, cancellationToken).ConfigureAwait(false);
+            await ExecuteAsync(connection, sql, cancellationToken).ConfigureAwait(false);
         }
     }
 

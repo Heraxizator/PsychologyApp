@@ -32,10 +32,17 @@ public partial class AppToastPopup : Popup
 
     private async void OnLoaded(object? sender, EventArgs e)
     {
-        ApplyHostSize();
-        PrepareEnterAnimation();
-        await AnimateInAsync();
-        _ready.TrySetResult();
+        try
+        {
+            ApplyHostSize();
+            PrepareEnterAnimation();
+            await AnimateInAsync();
+        }
+        finally
+        {
+            // Whoever awaits the popup being ready must not hang if an animation step throws.
+            _ready.TrySetResult();
+        }
     }
 
     private void ApplyHostSize()

@@ -13,31 +13,7 @@ public static class SqlitePaths
         return Path.Join(appDataPath, DatabaseFileName);
     }
 
-    public static void TryProtectDatabaseFile(string path)
-    {
-        if (!File.Exists(path))
-        {
-            return;
-        }
-
-        try
-        {
-            if (OperatingSystem.IsWindows())
-            {
-                File.Encrypt(path);
-                return;
-            }
-
-            if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS())
-            {
-                File.SetUnixFileMode(
-                    path,
-                    UnixFileMode.UserRead | UnixFileMode.UserWrite);
-            }
-        }
-        catch
-        {
-            // Best-effort hardening. App keeps running even if file protection fails.
-        }
-    }
+    // The database is not encrypted at rest: on Android and iOS it lives in the app's private sandbox (cloud backup and device
+    // transfer are excluded in data_extraction_rules.xml). An earlier "TryProtectDatabaseFile" only did anything on desktop
+    // OSes the app does not ship on, and ran File.Encrypt on every connection open; it was removed rather than left as decoration.
 }

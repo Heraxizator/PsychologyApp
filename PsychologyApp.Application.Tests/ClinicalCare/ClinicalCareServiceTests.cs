@@ -100,7 +100,7 @@ public sealed class ClinicalCareServiceTests
     }
 
     [Fact]
-    public async Task AdjustProgramFromScorecardAsync_WhenAmberRisk_HoldsWeekAndOffersHelp()
+    public async Task AdjustProgramFromScorecardAsync_WhenAmberRisk_OffersHelpWithoutRewritingTheProgram()
     {
         var repo = new FakeClinicalCareRepository();
         repo.ActiveProgram = new TherapyProgramStateDTO
@@ -143,6 +143,77 @@ public sealed class ClinicalCareServiceTests
         Assert.NotNull(result);
         Assert.True(result.CurrentWeek >= 2);
         Assert.Empty(repo.Escalations);
+    }
+
+    [Fact]
+    public async Task ShouldRouteToCrisisHubAsync_RedOlderThanTheCheckInterval_NoLongerRoutesButChecksInAgain()
+    {
+        var repo = new FakeClinicalCareRepository();
+        DateTime now = new(2026, 10, 2, 12, 0, 0, DateTimeKind.Utc);
+        repo.Assessments.Add(new RiskAssessmentDTO { AssessedAt = now.AddDays(-8), RiskLevel = RiskLevel.Red, Source = "test" });
+        var service = new ClinicalCareService(repo, new FakeUserProgressService(), new FixedTime(now));
+
+        Assert.False(await service.ShouldRouteToCrisisHubAsync());
+        Assert.True(await service.IsRiskCheckDueAsync(ClinicalCareService.DefaultRiskCheckInterval));
+    }
+
+    [Fact]
+    public async Task ShouldRouteToCrisisHubAsync_RecentRed_Routes()
+    {
+        var repo = new FakeClinicalCareRepository();
+        DateTime now = new(2026, 10, 2, 12, 0, 0, DateTimeKind.Utc);
+        repo.Assessments.Add(new RiskAssessmentDTO { AssessedAt = now.AddDays(-6), RiskLevel = RiskLevel.Red, Source = "test" });
+        var service = new ClinicalCareService(repo, new FakeUserProgressService(), new FixedTime(now));
+
+        Assert.True(await service.ShouldRouteToCrisisHubAsync());
+    }
+
+    [Fact]
+    public async Task BuildWeeklyScorecardAsync_StaleGreenCheck_DoesNotOverrideWeeklySignals()
+    {
+        var repo = new FakeClinicalCareRepository();
+        DateTime now = DateTime.UtcNow;
+        repo.Assessments.Add(new RiskAssessmentDTO { AssessedAt = now.AddDays(-90), RiskLevel = RiskLevel.Green, Source = "test" });
+        var progress = new FakeUserProgressService
+        {
+            Moods = [new MoodEntryDTO { MoodLevel = 1, RecordedAt = now }, new MoodEntryDTO { MoodLevel = 2, RecordedAt = now }]
+        };
+        var service = new ClinicalCareService(repo, progress);
+
+        ClinicalScorecardDTO scorecard = await service.BuildWeeklyScorecardAsync();
+
+        Assert.Equal(RiskLevel.Amber, scorecard.RiskLevel);
+    }
+
+    [Fact]
+    public async Task AdjustProgramFromScorecardAsync_CalledRepeatedly_RecordsOneEscalationPerWeek()
+    {
+        var repo = new FakeClinicalCareRepository();
+        DateTime now = new(2026, 10, 2, 12, 0, 0, DateTimeKind.Utc);
+        repo.ActiveProgram = new TherapyProgramStateDTO { ProgramType = TherapyProgramType.Anxiety, StartedAt = now.AddDays(-2), CurrentWeek = 1, IsActive = true };
+        repo.Assessments.Add(new RiskAssessmentDTO { AssessedAt = now, RiskLevel = RiskLevel.Red, Source = "test" });
+        var time = new FixedTime(now);
+        var service = new ClinicalCareService(repo, new FakeUserProgressService(), time);
+
+        for (int i = 0; i < 5; i++)
+        {
+            await service.AdjustProgramFromScorecardAsync();
+        }
+
+        Assert.Single(repo.Escalations, e => e.TriggerSource == "weekly_scorecard");
+
+        time.Now = now.AddDays(8);
+        repo.Assessments[0] = new RiskAssessmentDTO { AssessedAt = time.Now, RiskLevel = RiskLevel.Red, Source = "test" };
+        await service.AdjustProgramFromScorecardAsync();
+
+        Assert.Equal(2, repo.Escalations.Count(e => e.TriggerSource == "weekly_scorecard"));
+    }
+
+    private sealed class FixedTime(DateTime utcNow) : TimeProvider
+    {
+        public DateTime Now { get; set; } = utcNow;
+
+        public override DateTimeOffset GetUtcNow() => new(Now, TimeSpan.Zero);
     }
 
     [Fact]
@@ -230,7 +301,8 @@ public sealed class ClinicalCareServiceTests
         public Task RecordMoodAsync(int moodLevel, string? note = null, DateTime? recordedAtUtc = null, CancellationToken cancellationToken = default) => Task.CompletedTask;
         public Task UpdateMoodEntryAsync(long moodEntryId, int moodLevel, string? note = null, CancellationToken cancellationToken = default) => Task.CompletedTask;
         public Task DeleteMoodEntryAsync(long moodEntryId, CancellationToken cancellationToken = default) => Task.CompletedTask;
-        public Task<IReadOnlyList<MoodEntryDTO>> GetRecentMoodsAsync(int limit = 7, CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyList<MoodEntryDTO>>([]);
+        public IReadOnlyList<MoodEntryDTO> Moods { get; init; } = [];
+        public Task<IReadOnlyList<MoodEntryDTO>> GetRecentMoodsAsync(int limit = 7, CancellationToken cancellationToken = default) => Task.FromResult(Moods);
         public Task<IReadOnlyList<MoodEntryDTO>> GetMoodsAsync(DateTime? fromUtc = null, DateTime? toUtc = null, int limit = 60, CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyList<MoodEntryDTO>>([]);
         public Task UpdateSessionResultPostIntensityAsync(long sessionResultId, int postIntensity, CancellationToken cancellationToken = default) => Task.CompletedTask;
         public Task UpdateSessionResultNoteAsync(long sessionResultId, string note, CancellationToken cancellationToken = default) => Task.CompletedTask;

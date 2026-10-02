@@ -18,7 +18,7 @@ internal static class UserProgressSql
     internal const string SelectMostRecentTestResultSince = """
         SELECT TestResultId, TestId, Score, Summary, DetailJson, CompletedAt
         FROM TestResults
-        WHERE datetime(CompletedAt) >= datetime(@sinceUtc)
+        WHERE CompletedAt >= @sinceUtc
         ORDER BY TestResultId DESC
         LIMIT 1;
         """;
@@ -83,7 +83,7 @@ internal static class UserProgressSql
         """;
 
     internal const string SelectCompletionDates = """
-        SELECT DISTINCT substr(CompletedAt, 1, 10) AS Day
+        SELECT DISTINCT substr(CompletedAt, 1, 16) AS Day
         FROM Completions
         ORDER BY Day DESC;
         """;
@@ -242,7 +242,7 @@ internal static class UserProgressSql
         FROM Completions
         WHERE CompletionKind = 'technique'
           AND ItemKey IN @itemKeys
-          AND datetime(CompletedAt) >= datetime(@sinceUtc)
-          AND datetime(CompletedAt) < datetime(@beforeUtc);
+          AND CompletedAt >= @sinceUtc
+          AND CompletedAt < @beforeUtc;
         """;
 }
