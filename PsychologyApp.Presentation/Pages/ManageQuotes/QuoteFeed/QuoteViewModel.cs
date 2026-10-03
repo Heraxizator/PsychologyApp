@@ -55,25 +55,27 @@ public partial class QuoteViewModel : BaseViewModel
         IDatabaseReadySignal databaseReadySignal,
         LanguageContentReloader languageContentReloader)
     {
+        // Assigned before the try block so that every field is definitely assigned even when initialization below throws.
+        _quotService = quotService;
+        _logger = logger;
+        _toastService = toastService;
+        _settings = settings;
+        _databaseReadySignal = databaseReadySignal;
+        _feedCoordinator = feedCoordinator;
+        _quoteCommandsFactory = quoteCommandsFactory;
+        _languageContentReloader = languageContentReloader;
+        _searchController = new QuoteSearchController(
+            quoteSearchService,
+            quoteCommandsFactory,
+            _feedState,
+            logger,
+            NotifySearchRelatedProperties,
+            () => ShowAllReadEmpty = false,
+            SetFail,
+            () => _toastService.ShortToast(AppStrings.QuotesSearchError));
+
         try
         {
-            _quotService = quotService;
-            _logger = logger;
-            _toastService = toastService;
-            _settings = settings;
-            _databaseReadySignal = databaseReadySignal;
-            _feedCoordinator = feedCoordinator;
-            _quoteCommandsFactory = quoteCommandsFactory;
-            _languageContentReloader = languageContentReloader;
-            _searchController = new QuoteSearchController(
-                quoteSearchService,
-                quoteCommandsFactory,
-                _feedState,
-                logger,
-                NotifySearchRelatedProperties,
-                () => ShowAllReadEmpty = false,
-                SetFail,
-                () => _toastService.ShortToast(AppStrings.QuotesSearchError));
             BindNavigation(navigationService);
             OpenProfileCommand = new AsyncCommand(() => navigationService.GoToUserProfileAsync());
             Cancel = new Command(CancelInit);

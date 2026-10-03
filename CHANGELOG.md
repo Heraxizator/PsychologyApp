@@ -26,6 +26,7 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 - The unused `TryProtectDatabaseFile` (it did nothing on Android/iOS and ran `File.Encrypt` on every connection open elsewhere) was removed; the database relies on the app sandbox and is not encrypted at rest.
 - Unobserved `FireAndForget` failures with no handler wired are traced instead of being swallowed.
 - The local model manifest is pinned to a Hugging Face commit and every file now has a SHA-256.
+- Nullable warnings (CS8600/8601/8604/8618/8619/8625) are no longer suppressed in the Presentation project; the 56 real ones were fixed (constructors assign fields before their try block, two unused parameterless view-model constructors removed, dialog titles are `string?`).
 - `_build_out/` is no longer tracked; CI also runs for `features/re-design` and quotes the `TargetFrameworks` override.
 
 ### Changed

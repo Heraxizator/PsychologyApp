@@ -11,9 +11,9 @@ public partial class PolarityViewModel
             polarities,
             item => new Models.Practice.Techniques.Polarity
             {
-                Id = item.Id,
-                Positive = item.Positive,
-                Negative = item.Negative
+                Id = item.Id ?? string.Empty,
+                Positive = item.Positive ?? string.Empty,
+                Negative = item.Negative ?? string.Empty
             },
             hasItems =>
             {

@@ -60,21 +60,23 @@ public partial class UserViewModel : BaseViewModel
         IClinicalCareService clinicalCareService,
         ProfileWeekDaysLoader profileWeekDaysLoader)
     {
+        // Assigned before the try block so that every field is definitely assigned even when initialization below throws.
+        _navigationService = navigationService;
+        _quotesChangeNotifier = quotesChangeNotifier;
+        _profileStatsLoader = profileStatsLoader;
+        _profileQuotesLoader = profileQuotesLoader;
+        _practiceHistoryLoader = practiceHistoryLoader;
+        _featuredTechniquesBuilder = featuredTechniquesBuilder;
+        _quoteCommandsFactory = quoteCommandsFactory;
+        _profileScreenCoordinator = profileScreenCoordinator;
+        _languageContentReloader = languageContentReloader;
+        _clinicalCareService = clinicalCareService;
+        _profileWeekDaysLoader = profileWeekDaysLoader;
+        _logger = logger;
+        _settings = settings;
+
         try
         {
-            _navigationService = navigationService;
-            _quotesChangeNotifier = quotesChangeNotifier;
-            _profileStatsLoader = profileStatsLoader;
-            _profileQuotesLoader = profileQuotesLoader;
-            _practiceHistoryLoader = practiceHistoryLoader;
-            _featuredTechniquesBuilder = featuredTechniquesBuilder;
-            _quoteCommandsFactory = quoteCommandsFactory;
-            _profileScreenCoordinator = profileScreenCoordinator;
-            _languageContentReloader = languageContentReloader;
-            _clinicalCareService = clinicalCareService;
-            _profileWeekDaysLoader = profileWeekDaysLoader;
-            _logger = logger;
-            _settings = settings;
             _quotesChangeNotifier.FavoritesChanged += OnFavoritesChanged;
             ModuleName = AppStrings.ShellTabPractice;
             PageName = AppStrings.ProfileTitle;
@@ -87,7 +89,7 @@ public partial class UserViewModel : BaseViewModel
         catch (Exception e)
         {
             SetFail();
-            _logger?.LogError(e, "UserViewModel initialization failed.");
+            _logger.LogError(e, "UserViewModel initialization failed.");
         }
     }
 

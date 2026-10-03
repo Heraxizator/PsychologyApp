@@ -306,9 +306,9 @@ public partial class AppShell : Shell
         return ShellNavigationResolver.ResolveShellContent(current);
     }
 
-    private static bool TryResolveTabIndex(ShellNavigationState target, out int index)
+    private static bool TryResolveTabIndex(ShellNavigationState? target, out int index)
     {
-        string location = target.Location.ToString();
+        string location = target?.Location.ToString() ?? string.Empty;
         for (int i = 0; i < TabRoutes.Length; i++)
         {
             if (location.Contains(TabRoutes[i], StringComparison.OrdinalIgnoreCase))

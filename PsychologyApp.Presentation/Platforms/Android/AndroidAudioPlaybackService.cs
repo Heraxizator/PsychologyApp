@@ -153,14 +153,15 @@ public sealed class AndroidAudioPlaybackService : Java.Lang.Object, IAudioPlayba
             return;
         }
 
-        _focusRequest = new AudioFocusRequestClass.Builder(AudioFocus.Gain)
+        AudioFocusRequestClass request = new AudioFocusRequestClass.Builder(AudioFocus.Gain)
             .SetAudioAttributes(new AudioAttributes.Builder()!
                 .SetUsage(AudioUsageKind.Media)!
                 .SetContentType(AudioContentType.Music)!
                 .Build()!)
             .SetOnAudioFocusChangeListener(this)
-            .Build();
-        audio.RequestAudioFocus(_focusRequest);
+            .Build()!;
+        _focusRequest = request;
+        audio.RequestAudioFocus(request);
     }
 
     private void AbandonFocus()

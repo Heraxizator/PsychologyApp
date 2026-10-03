@@ -56,6 +56,7 @@ public sealed class MusicPlaylistPresenter
 
         foreach (string category in allItems
                      .Select(item => item.Category)
+                     .OfType<string>()
                      .Where(category => !string.IsNullOrWhiteSpace(category))
                      .Distinct(StringComparer.Ordinal))
         {

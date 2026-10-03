@@ -8,14 +8,14 @@ namespace PsychologyApp.Presentation.Shared.Services.Dialogs;
 
 public class DialogService(IPageHost pageHost) : IDialogService
 {
-    public async Task ShowAsync(string title, string message)
+    public async Task ShowAsync(string? title, string message)
     {
         Page page = RequireActivePage();
         var popup = new AppDialogPopup(title, message, AppStrings.Ok, cancel: null);
         await page.ShowPopupAsync(popup, CreateDialogOptions(popup));
     }
 
-    public async Task<bool> AskAsync(string title, string message, string accept, string cancel)
+    public async Task<bool> AskAsync(string? title, string message, string accept, string cancel)
     {
         Page page = RequireActivePage();
         var popup = new AppDialogPopup(title, message, accept, cancel);

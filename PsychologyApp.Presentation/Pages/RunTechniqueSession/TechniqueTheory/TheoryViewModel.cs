@@ -23,8 +23,6 @@ public partial class TheoryViewModel : BaseViewModel
 
     public bool HasInitialized => _initialized;
 
-    public TheoryViewModel() { }
-
     public TheoryViewModel(
         INavigationService navigationService,
         TechniqueCatalogGateway techniqueCatalog,

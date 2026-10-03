@@ -46,16 +46,18 @@ public partial class PhysicsSearchViewModel : BaseViewModel
         INavigationService navigationService,
         IDatabaseReadySignal databaseReadySignal)
     {
+        // Assigned before the try block so that every field is definitely assigned even when initialization below throws.
+        _reasonSearchService = reasonSearchService;
+        _searchCoordinator = searchCoordinator;
+        _searchSession = searchSession;
+        _logger = logger;
+        _toastService = toastService;
+        _settings = settings;
+        _navigationService = navigationService;
+        _databaseReadySignal = databaseReadySignal;
+
         try
         {
-            _reasonSearchService = reasonSearchService;
-            _searchCoordinator = searchCoordinator;
-            _searchSession = searchSession;
-            _logger = logger;
-            _toastService = toastService;
-            _settings = settings;
-            _navigationService = navigationService;
-            _databaseReadySignal = databaseReadySignal;
             ModuleName = AppStrings.PhysicsTitle;
             PageName = AppStrings.PhysicsSearchPage;
 

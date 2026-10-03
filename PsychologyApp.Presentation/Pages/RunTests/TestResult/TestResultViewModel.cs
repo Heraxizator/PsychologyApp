@@ -28,8 +28,6 @@ public partial class TestResultViewModel : BaseViewModel
     public ICommand RetakeCommand { get; }
     public ICommand BackToListCommand { get; }
 
-    public TestResultViewModel() { }
-
     public TestResultViewModel(
         INavigationService navigationService,
         ITestCatalogService testCatalogService,
