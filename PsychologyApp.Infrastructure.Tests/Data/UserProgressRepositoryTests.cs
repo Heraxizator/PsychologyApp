@@ -121,7 +121,8 @@ public sealed class UserProgressRepositoryTests : IAsyncLifetime
     [Fact]
     public async Task GetCompletionDatesAsync_ReturnsDistinctDaysDescending()
     {
-        DateTime day1 = DateTime.UtcNow.Date;
+        // Local noon of two consecutive days, stored as UTC: whatever the machine's time zone, they are two different local days.
+        DateTime day1 = DateTime.Today.AddHours(12).ToUniversalTime();
         DateTime day2 = day1.AddDays(-1);
 
         await _repository.RecordCompletionAsync(new CompletionDTO
@@ -130,7 +131,7 @@ public sealed class UserProgressRepositoryTests : IAsyncLifetime
             ItemKey = "a",
             ModuleName = "Practice",
             PageName = "A",
-            CompletedAt = day1.AddHours(1),
+            CompletedAt = day1,
             DurationSeconds = 0
         });
 
@@ -140,7 +141,7 @@ public sealed class UserProgressRepositoryTests : IAsyncLifetime
             ItemKey = "b",
             ModuleName = "Practice",
             PageName = "B",
-            CompletedAt = day1.AddHours(2),
+            CompletedAt = day1.AddHours(1),
             DurationSeconds = 0
         });
 
@@ -150,15 +151,15 @@ public sealed class UserProgressRepositoryTests : IAsyncLifetime
             ItemKey = "c",
             ModuleName = "Practice",
             PageName = "C",
-            CompletedAt = day2.AddHours(3),
+            CompletedAt = day2,
             DurationSeconds = 0
         });
 
         IReadOnlyList<DateOnly> dates = await _repository.GetCompletionDatesAsync();
 
         Assert.Equal(2, dates.Count);
-        Assert.Equal(DateOnly.FromDateTime(day1), dates[0]);
-        Assert.Equal(DateOnly.FromDateTime(day2), dates[1]);
+        Assert.Equal(DateOnly.FromDateTime(day1.ToLocalTime()), dates[0]);
+        Assert.Equal(DateOnly.FromDateTime(day2.ToLocalTime()), dates[1]);
     }
 
     [Fact]
@@ -299,7 +300,8 @@ public sealed class UserProgressRepositoryTests : IAsyncLifetime
         Assert.Single(moods);
         Assert.Equal(4, moods[0].MoodLevel);
         Assert.Equal("ok", moods[0].Note);
-        Assert.Contains(DateOnly.FromDateTime(recordedAt), completionDates);
+        // A streak "day" is the user's own calendar day, not the UTC date the timestamp is stored under.
+        Assert.Contains(DateOnly.FromDateTime(recordedAt.ToLocalTime()), completionDates);
     }
 
     [Fact]

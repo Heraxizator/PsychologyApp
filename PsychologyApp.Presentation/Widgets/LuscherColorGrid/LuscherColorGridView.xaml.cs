@@ -109,6 +109,9 @@ public partial class LuscherColorGridView : ContentView
 
         _handlersAttached = true;
 
+        // One debouncer for the whole grid: a double tap (or two fingers) must pick one colour, not two.
+        TapDebouncer pickDebouncer = new(TimeSpan.FromMilliseconds(600));
+
         foreach (Border tile in GetColorTiles())
         {
             if (tile.GestureRecognizers.FirstOrDefault() is not TapGestureRecognizer tap || tap.Command is null)
@@ -119,6 +122,11 @@ public partial class LuscherColorGridView : ContentView
             ICommand original = tap.Command;
             tap.Command = new Command(async () =>
             {
+                if (!pickDebouncer.TryEnter())
+                {
+                    return;
+                }
+
                 await UiAnimations.SafePulseAsync(tile);
                 await tile.ScaleTo(0.85, 100, Easing.CubicOut);
                 await tile.FadeTo(0, 150, Easing.CubicOut);

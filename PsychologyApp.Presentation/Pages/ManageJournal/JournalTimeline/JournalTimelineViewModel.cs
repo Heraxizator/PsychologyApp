@@ -28,8 +28,8 @@ public sealed class JournalTimelineViewModel : BaseViewModel
         _navigationService = navigationService;
         BindNavigation(navigationService);
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
-        SelectTimelineEntryCommand = new Command<object?>(parameter => SelectTimelineEntryAsync(parameter).FireAndForget());
-        ShareEntryCommand = new Command<object?>(parameter => ShareEntryAsync(parameter).FireAndForget());
+        SelectTimelineEntryCommand = new AsyncCommand<object?>(SelectTimelineEntryAsync);
+        ShareEntryCommand = new AsyncCommand<object?>(ShareEntryAsync);
         LoadAsync().FireAndForget();
     }
 

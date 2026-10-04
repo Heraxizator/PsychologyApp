@@ -42,8 +42,8 @@ public partial class OnboardingViewModel : BaseViewModel
         _onboardingRecommendationResolver = onboardingRecommendationResolver;
         _clinicalCareService = clinicalCareService;
 
-        NextCommand = new Command(GoNext);
-        BackCommand = new Command(GoBack);
+        NextCommand = new DebouncedCommand(GoNext);
+        BackCommand = new DebouncedCommand(GoBack);
         SkipCommand = new AsyncCommand(CompleteWithoutPracticeAsync);
         SelectAnxietyCommand = new AsyncCommand(() => SelectConcernAndAdvanceAsync(OnboardingConcernKeys.Anxiety));
         SelectBodyCommand = new AsyncCommand(() => SelectConcernAndAdvanceAsync(OnboardingConcernKeys.Body));

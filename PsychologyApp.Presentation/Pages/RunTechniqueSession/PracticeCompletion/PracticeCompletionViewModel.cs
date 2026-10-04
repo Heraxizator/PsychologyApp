@@ -33,15 +33,15 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         _nextPracticeResolver = nextPracticeResolver;
         _sessionResultId = sessionResultId;
         StreakDays = streakDays;
-        RecordMoodCommand = new Command<object?>(parameter =>
+        RecordMoodCommand = new AsyncCommand<object?>(async parameter =>
         {
             if (parameter is int moodLevel)
             {
-                RecordMoodAsync(moodLevel).FireAndForget();
+                await RecordMoodAsync(moodLevel);
             }
             else if (parameter is string text && int.TryParse(text, out int parsed))
             {
-                RecordMoodAsync(parsed).FireAndForget();
+                await RecordMoodAsync(parsed);
             }
         });
         MorePracticeCommand = new AsyncCommand(MorePracticeAsync);

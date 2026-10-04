@@ -65,7 +65,7 @@ public sealed class JournalViewModel : BaseViewModel
         PickSlotCommand = new AsyncCommand(PickSlotAsync);
         FlushNoteCommand = new AsyncCommand(FlushPendingNoteSaveAsync);
         OpenPracticeSuggestCommand = new Command(() => _shellTabNavigator.OpenPracticeTab());
-        RecordMoodCommand = new Command<object?>(parameter =>
+        RecordMoodCommand = new AsyncCommand<object?>(async parameter =>
         {
             int level = parameter switch
             {
@@ -77,7 +77,7 @@ public sealed class JournalViewModel : BaseViewModel
             if (level is >= 1 and <= 5)
             {
                 SelectedMoodLevel = level;
-                SaveMoodAsync().FireAndForget();
+                await SaveMoodAsync();
             }
         });
         ToggleFactorCommand = new Command<object?>(parameter =>

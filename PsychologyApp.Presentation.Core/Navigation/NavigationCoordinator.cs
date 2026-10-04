@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Logging;
 
 namespace PsychologyApp.Presentation.Shared.Navigation;
@@ -8,6 +9,13 @@ public static class NavigationCoordinator
     private static long _pushBlockedUntilUtcTicks;
     private static readonly TimeSpan PushCooldown = TimeSpan.FromMilliseconds(350);
     private static ILogger? _logger;
+
+    /// <summary>How long after a page opened a call for the same destination still counts as the same tap.</summary>
+    private static readonly TimeSpan DuplicateWindow = TimeSpan.FromMilliseconds(600);
+
+    private static readonly object DuplicateLock = new();
+    private static readonly HashSet<string> InFlight = new(StringComparer.Ordinal);
+    private static readonly Dictionary<string, long> LastOpenedTicks = new(StringComparer.Ordinal);
 
     private static readonly TimeSpan PushGateWait = TimeSpan.FromSeconds(4);
     private static readonly TimeSpan CompletionGateWait = TimeSpan.FromSeconds(8);
@@ -34,6 +42,12 @@ public static class NavigationCoordinator
         }
 
         Volatile.Write(ref _pushBlockedUntilUtcTicks, 0);
+
+        lock (DuplicateLock)
+        {
+            InFlight.Clear();
+            LastOpenedTicks.Clear();
+        }
     }
 
     public static void LogNavigationFailure(Exception exception, string message) =>
@@ -44,14 +58,87 @@ public static class NavigationCoordinator
         _ = await RunCoreAsync(navigate, applyPushCooldown: false).ConfigureAwait(false);
     }
 
-    public static Task<NavigationRunStatus> RunPushAsync(Func<Task> navigate) =>
-        RunCoreAsync(navigate, applyPushCooldown: true, waitForGate: true, gateWait: PushGateWait);
+    /// <summary>
+    /// Opens a page. <paramref name="destination"/> names where it goes (by default the calling method, e.g. "GoToUserProfileAsync");
+    /// a second call for the same destination while the first is still opening, or within <see cref="DuplicateWindow"/> after it
+    /// opened, is a double tap and is dropped. Without this the gate only *queued* it, and the page opened twice, one after the other.
+    /// Calls for different destinations are still queued in order (code that pushes two pages in a row keeps working).
+    /// </summary>
+    public static Task<NavigationRunStatus> RunPushAsync(Func<Task> navigate, [CallerMemberName] string? destination = null) =>
+        RunGuardedAsync(
+            destination,
+            () => RunCoreAsync(navigate, applyPushCooldown: true, waitForGate: true, gateWait: PushGateWait));
 
     /// <summary>
-    /// Single-shot push for test completion: no inter-push cooldown, longer gate wait.
+    /// Single-shot push for test completion: no inter-push cooldown, longer gate wait, same double-tap guard.
     /// </summary>
-    public static Task<NavigationRunStatus> RunCompletionPushAsync(Func<Task> navigate) =>
-        RunCoreAsync(navigate, applyPushCooldown: false, waitForGate: true, gateWait: CompletionGateWait);
+    public static Task<NavigationRunStatus> RunCompletionPushAsync(Func<Task> navigate, [CallerMemberName] string? destination = null) =>
+        RunGuardedAsync(
+            destination,
+            () => RunCoreAsync(navigate, applyPushCooldown: false, waitForGate: true, gateWait: CompletionGateWait));
+
+    private static async Task<NavigationRunStatus> RunGuardedAsync(string? destination, Func<Task<NavigationRunStatus>> run)
+    {
+        if (destination is null)
+        {
+            return await run().ConfigureAwait(false);
+        }
+
+        if (!TryBeginPush(destination))
+        {
+            _logger?.LogInformation("Navigation dropped: {Destination} is already opening (double tap).", destination);
+            return NavigationRunStatus.DroppedDuplicate;
+        }
+
+        NavigationRunStatus status = NavigationRunStatus.Failed;
+        try
+        {
+            status = await run().ConfigureAwait(false);
+            return status;
+        }
+        finally
+        {
+            EndPush(destination, opened: status == NavigationRunStatus.Completed);
+        }
+    }
+
+    private static bool TryBeginPush(string destination)
+    {
+        lock (DuplicateLock)
+        {
+            if (InFlight.Contains(destination))
+            {
+                return false;
+            }
+
+            if (LastOpenedTicks.TryGetValue(destination, out long openedAt)
+                && Environment.TickCount64 - openedAt < DuplicateWindow.TotalMilliseconds)
+            {
+                return false;
+            }
+
+            InFlight.Add(destination);
+            return true;
+        }
+    }
+
+    private static void EndPush(string destination, bool opened)
+    {
+        lock (DuplicateLock)
+        {
+            InFlight.Remove(destination);
+
+            // A failed or dropped push must not block the retry that follows it.
+            if (opened)
+            {
+                LastOpenedTicks[destination] = Environment.TickCount64;
+            }
+            else
+            {
+                LastOpenedTicks.Remove(destination);
+            }
+        }
+    }
 
     private static async Task<NavigationRunStatus> RunCoreAsync(
         Func<Task> navigate,

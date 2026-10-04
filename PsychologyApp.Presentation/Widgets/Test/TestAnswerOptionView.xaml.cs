@@ -96,8 +96,16 @@ public partial class TestAnswerOptionView : ContentView
         SemanticProperties.SetHint(view, $"{selectionState}. {modeHint}");
     }
 
+    private readonly TapDebouncer _tapDebouncer = new();
+
     private async void OnOptionTapped(object? sender, TappedEventArgs e)
     {
+        // A double tap would run the pulse and the command twice (and answer the same question twice).
+        if (!_tapDebouncer.TryEnter())
+        {
+            return;
+        }
+
         await UiAnimations.SafePulseAsync(this);
 
         if (TapCommand?.CanExecute(null) == true)

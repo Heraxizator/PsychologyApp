@@ -52,6 +52,12 @@
     <Compile Include="EntryDraftTests.cs" />
     <Compile Include="UserQuotesRefreshPolicyTests.cs" />
     <Compile Include="PracticeClinicalDashboardEnricherTests.cs" />
+    <Compile Include="TapGuardTests.cs" />
+    <!-- Plain C# (no MAUI types), so the double-tap guards are tested without a device. -->
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/Infrastructure/AsyncCommand.cs" Link="Linked/AsyncCommand.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/Infrastructure/AsyncCommandOfT.cs" Link="Linked/AsyncCommandOfT.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/Infrastructure/AsyncCommandExtensions.cs" Link="Linked/AsyncCommandExtensions.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/Infrastructure/DebouncedCommand.cs" Link="Linked/DebouncedCommand.cs" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">

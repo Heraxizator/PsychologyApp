@@ -46,14 +46,14 @@ public partial class TechniqueSessionViewModel
 
     private void InitializeWizardCommands()
     {
-        PreviousStepCommand = new Command(() =>
+        PreviousStepCommand = new DebouncedCommand(() =>
         {
             if (CanGoToPreviousStep)
             {
                 CurrentStepIndex--;
             }
         });
-        NextStepCommand = new Command(() =>
+        NextStepCommand = new DebouncedCommand(() =>
         {
             if (!CanGoToNextStep)
             {

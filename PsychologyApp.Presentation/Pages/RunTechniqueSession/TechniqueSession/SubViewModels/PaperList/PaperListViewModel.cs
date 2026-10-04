@@ -44,8 +44,8 @@ public partial class PaperListViewModel : BaseViewModel, ITechniqueSessionScreen
         BindNavigation(navigationService);
         AddCommand = new Command(ToAdd);
         DeleteCommand = new Command<Paper>(DeleteItem);
-        BackCommand = new Command(async () => await GoBackAsync());
-        CompleteCommand = new Command(async () => await CompleteSessionAsync());
+        BackCommand = new AsyncCommand(GoBackAsync);
+        CompleteCommand = new AsyncCommand(CompleteSessionAsync);
         Finish = CompleteCommand;
         LoadDraftAsync().FireAndForget();
     }

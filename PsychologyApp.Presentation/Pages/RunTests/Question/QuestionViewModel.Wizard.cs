@@ -247,7 +247,7 @@ public sealed class AnswerOptionItem : INotifyPropertyChanged
         Answer = answer;
         IsSingleChoice = isSingleChoice;
         _isSelected = answer.Selected;
-        SelectCommand = new Command(() => onSelect(answer));
+        SelectCommand = new DebouncedCommand(() => onSelect(answer));
     }
 
     public Answer Answer { get; }
