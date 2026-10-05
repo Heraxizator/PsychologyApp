@@ -2217,4 +2217,532 @@
   <data name="TestsDecimalScoreOutOf" xml:space="preserve">
     <value>{0} из {1}</value>
   </data>
+  <data name="BackupProtectTitle" xml:space="preserve">
+    <value>Защитить копию паролем?</value>
+  </data>
+  <data name="BackupProtectBody" xml:space="preserve">
+    <value>В копии чаты, заметки и план безопасности. Файл с паролем нельзя прочитать без него.</value>
+  </data>
+  <data name="BackupProtectWith" xml:space="preserve">
+    <value>С паролем (рекомендуется)</value>
+  </data>
+  <data name="BackupProtectWithout" xml:space="preserve">
+    <value>Без защиты</value>
+  </data>
+  <data name="BackupPassphraseTitle" xml:space="preserve">
+    <value>Пароль для копии</value>
+  </data>
+  <data name="BackupPassphraseNewBody" xml:space="preserve">
+    <value>Придумайте пароль не короче 8 символов. Восстановить его нельзя: без него копию не открыть.</value>
+  </data>
+  <data name="BackupPassphraseConfirmBody" xml:space="preserve">
+    <value>Повторите пароль.</value>
+  </data>
+  <data name="BackupPassphraseOpenBody" xml:space="preserve">
+    <value>Копия защищена паролем. Введите его.</value>
+  </data>
+  <data name="BackupPassphrasePlaceholder" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="BackupPassphraseTooShortToast" xml:space="preserve">
+    <value>Пароль короче 8 символов</value>
+  </data>
+  <data name="BackupPassphraseMismatchToast" xml:space="preserve">
+    <value>Пароли не совпадают</value>
+  </data>
+  <data name="BackupPassphraseWrongToast" xml:space="preserve">
+    <value>Неверный пароль или файл изменён</value>
+  </data>
+  <data name="TodayRecommendationReason.anxiety" xml:space="preserve">
+    <value>Подходит при тревоге</value>
+  </data>
+  <data name="TodayRecommendationReason.body" xml:space="preserve">
+    <value>Для работы с телом и симптомами</value>
+  </data>
+  <data name="TodayRecommendationReason.mood" xml:space="preserve">
+    <value>Помогает при тяжёлом настроении</value>
+  </data>
+  <data name="PracticeMilestoneTitle.3" xml:space="preserve">
+    <value>3 дня подряд!</value>
+  </data>
+  <data name="PracticeMilestoneTitle.7" xml:space="preserve">
+    <value>Неделя подряд!</value>
+  </data>
+  <data name="PracticeMilestoneTitle.14" xml:space="preserve">
+    <value>2 недели подряд!</value>
+  </data>
+  <data name="PracticeMilestoneTitle.30" xml:space="preserve">
+    <value>Месяц подряд!</value>
+  </data>
+  <data name="PracticeMilestoneBody.3" xml:space="preserve">
+    <value>Хорошее начало — так держать.</value>
+  </data>
+  <data name="PracticeMilestoneBody.7" xml:space="preserve">
+    <value>7 дней подряд — отличный ритм.</value>
+  </data>
+  <data name="PracticeMilestoneBody.14" xml:space="preserve">
+    <value>14 дней — сильная привычка.</value>
+  </data>
+  <data name="PracticeMilestoneBody.30" xml:space="preserve">
+    <value>30 дней — впечатляющая серия.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.10" xml:space="preserve">
+    <value>10 практик позади!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.25" xml:space="preserve">
+    <value>25 практик!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.50" xml:space="preserve">
+    <value>50 практик!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.100" xml:space="preserve">
+    <value>100 практик!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.250" xml:space="preserve">
+    <value>250 практик!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.500" xml:space="preserve">
+    <value>500 практик!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.1000" xml:space="preserve">
+    <value>1000 практик!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.10" xml:space="preserve">
+    <value>Первый серьёзный рубеж — вы делаете это регулярно.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.25" xml:space="preserve">
+    <value>25 раз вы выбирали позаботиться о себе.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.50" xml:space="preserve">
+    <value>Полсотни практик — это уже привычка.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.100" xml:space="preserve">
+    <value>Сотня практик! Впечатляющая работа над собой.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.250" xml:space="preserve">
+    <value>250 практик — вы невероятно последовательны.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.500" xml:space="preserve">
+    <value>500 практик — это уже часть вашей жизни.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.1000" xml:space="preserve">
+    <value>1000 практик! Невероятный путь.</value>
+  </data>
+  <data name="TherapyProgramWeekGoal.1" xml:space="preserve">
+    <value>Стабилизация: короткие ежедневные практики</value>
+  </data>
+  <data name="TherapyProgramWeekGoal.2" xml:space="preserve">
+    <value>Наблюдение за мыслями и телом</value>
+  </data>
+  <data name="TherapyProgramWeekGoal.3" xml:space="preserve">
+    <value>Гибкость: пробовать разные техники</value>
+  </data>
+  <data name="BeckScore.BeckBand.None" xml:space="preserve">
+    <value>0-9 - нет депрессивных симптомов</value>
+  </data>
+  <data name="BeckScore.BeckBand.Mild" xml:space="preserve">
+    <value>10-15 - лёгкая депрессия</value>
+  </data>
+  <data name="BeckScore.BeckBand.Moderate" xml:space="preserve">
+    <value>16-19 - умеренная депрессия</value>
+  </data>
+  <data name="BeckScore.BeckBand.Marked" xml:space="preserve">
+    <value>20-29 - выраженная депрессия (средней тяжести)</value>
+  </data>
+  <data name="BeckScoreDetail.BeckBand.None" xml:space="preserve">
+    <value>Симптомы в пределах нормы. Поддерживайте режим сна и регулярную активность.</value>
+  </data>
+  <data name="BeckScoreDetail.BeckBand.Mild" xml:space="preserve">
+    <value>Лёгкое снижение настроения. Помогают прогулки, дневник мыслей и короткие практики.</value>
+  </data>
+  <data name="BeckScoreDetail.BeckBand.Moderate" xml:space="preserve">
+    <value>Умеренная депрессия. Имеет смысл обсудить состояние со специалистом и добавить ежедневные практики.</value>
+  </data>
+  <data name="BeckScoreDetail.BeckBand.Marked" xml:space="preserve">
+    <value>Выраженные симптомы. Рекомендуем обратиться к психологу или врачу и не оставаться с этим наедине.</value>
+  </data>
+  <data name="PochebutScore.PochebutBand.Low" xml:space="preserve">
+    <value>0-10 - низкий уровень агрессивности</value>
+  </data>
+  <data name="PochebutScore.PochebutBand.Moderate" xml:space="preserve">
+    <value>11-24 - средний уровень агрессивности</value>
+  </data>
+  <data name="PochebutScoreDetail.PochebutBand.Low" xml:space="preserve">
+    <value>Агрессивные реакции редки. Сохраняйте навыки саморегуляции.</value>
+  </data>
+  <data name="PochebutScoreDetail.PochebutBand.Moderate" xml:space="preserve">
+    <value>Умеренная агрессивность. Помогает пауза, дыхание и переформулировка ситуации.</value>
+  </data>
+  <data name="Gad7Score.Gad7Band.Minimal" xml:space="preserve">
+    <value>0-4 — минимальная тревога</value>
+  </data>
+  <data name="Gad7Score.Gad7Band.Mild" xml:space="preserve">
+    <value>5-9 — лёгкая тревога</value>
+  </data>
+  <data name="Gad7Score.Gad7Band.Moderate" xml:space="preserve">
+    <value>10-14 — умеренная тревога</value>
+  </data>
+  <data name="Gad7ScoreDetail.Gad7Band.Minimal" xml:space="preserve">
+    <value>Тревожные симптомы в пределах нормы. Продолжайте отслеживать стресс и отдых.</value>
+  </data>
+  <data name="Gad7ScoreDetail.Gad7Band.Mild" xml:space="preserve">
+    <value>Лёгкая тревога. Помогают дыхание, прогулки и короткие практики заземления.</value>
+  </data>
+  <data name="Gad7ScoreDetail.Gad7Band.Moderate" xml:space="preserve">
+    <value>Умеренная тревога. Имеет смысл обсудить состояние со специалистом.</value>
+  </data>
+  <data name="K10Score.K10Band.Low" xml:space="preserve">
+    <value>10-15 — низкий дистресс</value>
+  </data>
+  <data name="K10Score.K10Band.Mild" xml:space="preserve">
+    <value>16-21 — умеренный дистресс</value>
+  </data>
+  <data name="K10Score.K10Band.Moderate" xml:space="preserve">
+    <value>22-29 — выраженный дистресс</value>
+  </data>
+  <data name="K10ScoreDetail.K10Band.Low" xml:space="preserve">
+    <value>Психологический дистресс в низком диапазоне. Поддерживайте режим и регулярную активность.</value>
+  </data>
+  <data name="K10ScoreDetail.K10Band.Mild" xml:space="preserve">
+    <value>Умеренный дистресс. Практики на переосмысление опыта и выгрузку мыслей могут помочь.</value>
+  </data>
+  <data name="K10ScoreDetail.K10Band.Moderate" xml:space="preserve">
+    <value>Выраженный дистресс. Важно не оставаться с этим наедине — обратитесь за поддержкой.</value>
+  </data>
+  <data name="Who5Score.Who5Band.Low" xml:space="preserve">
+    <value>0-12 — низкое благополучие</value>
+  </data>
+  <data name="Who5Score.Who5Band.Fair" xml:space="preserve">
+    <value>13-18 — удовлетворительное благополучие</value>
+  </data>
+  <data name="Who5ScoreDetail.Who5Band.Low" xml:space="preserve">
+    <value>Субъективное благополучие снижено. Помогают регулярный сон, движение и выгрузка мыслей на бумагу.</value>
+  </data>
+  <data name="Who5ScoreDetail.Who5Band.Fair" xml:space="preserve">
+    <value>Благополучие на среднем уровне. Укрепляйте привычки, которые дают энергию и интерес к делам.</value>
+  </data>
+  <data name="TestRecommendationReasonK10.RecommendationLane.High" xml:space="preserve">
+    <value>При высоком дистрессе «Крутилка» помогает снизить заряд болезненных воспоминаний.</value>
+  </data>
+  <data name="TestRecommendationReasonK10.RecommendationLane.Mid" xml:space="preserve">
+    <value>Модификация опыта помогает пересмотреть тяжёлые переживания.</value>
+  </data>
+  <data name="Phq9Score.Phq9Band.Minimal" xml:space="preserve">
+    <value>0-4 — минимальная депрессия</value>
+  </data>
+  <data name="Phq9Score.Phq9Band.Mild" xml:space="preserve">
+    <value>5-9 — лёгкая депрессия</value>
+  </data>
+  <data name="Phq9Score.Phq9Band.Moderate" xml:space="preserve">
+    <value>10-14 — умеренная депрессия</value>
+  </data>
+  <data name="Phq9Score.Phq9Band.ModeratelySevere" xml:space="preserve">
+    <value>15-19 — умеренно тяжёлая депрессия</value>
+  </data>
+  <data name="Phq9ScoreDetail.Phq9Band.Minimal" xml:space="preserve">
+    <value>Депрессивные симптомы в пределах нормы. Поддерживайте режим и активность.</value>
+  </data>
+  <data name="Phq9ScoreDetail.Phq9Band.Mild" xml:space="preserve">
+    <value>Лёгкая депрессия. Помогают сон, движение и выгрузка мыслей на бумагу.</value>
+  </data>
+  <data name="Phq9ScoreDetail.Phq9Band.Moderate" xml:space="preserve">
+    <value>Умеренная депрессия. Имеет смысл обсудить состояние со специалистом.</value>
+  </data>
+  <data name="Phq9ScoreDetail.Phq9Band.ModeratelySevere" xml:space="preserve">
+    <value>Умеренно тяжёлая депрессия. Рекомендуем обратиться к психологу или врачу.</value>
+  </data>
+  <data name="IsiScore.IsiBand.None" xml:space="preserve">
+    <value>0-7 — норма</value>
+  </data>
+  <data name="IsiScore.IsiBand.Subthreshold" xml:space="preserve">
+    <value>8-14 — субпороговая бессонница</value>
+  </data>
+  <data name="IsiScore.IsiBand.Moderate" xml:space="preserve">
+    <value>15-21 — умеренная бессонница</value>
+  </data>
+  <data name="IsiScoreDetail.IsiBand.None" xml:space="preserve">
+    <value>Значимых нарушений сна нет. Сохраняйте стабильный режим и гигиену сна.</value>
+  </data>
+  <data name="IsiScoreDetail.IsiBand.Subthreshold" xml:space="preserve">
+    <value>Субпороговая бессонница. Помогают ритуалы перед сном и снижение стимуляции вечером.</value>
+  </data>
+  <data name="IsiScoreDetail.IsiBand.Moderate" xml:space="preserve">
+    <value>Умеренная бессонница. Имеет смысл обсудить сон со специалистом.</value>
+  </data>
+  <data name="EssScore.EssBand.Normal" xml:space="preserve">
+    <value>0-10 — норма</value>
+  </data>
+  <data name="EssScore.EssBand.Mild" xml:space="preserve">
+    <value>11-12 — лёгкая сонливость</value>
+  </data>
+  <data name="EssScore.EssBand.Moderate" xml:space="preserve">
+    <value>13-15 — умеренная сонливость</value>
+  </data>
+  <data name="EssScoreDetail.EssBand.Normal" xml:space="preserve">
+    <value>Дневная сонливость в пределах нормы. Поддерживайте регулярный сон.</value>
+  </data>
+  <data name="EssScoreDetail.EssBand.Mild" xml:space="preserve">
+    <value>Лёгкая дневная сонливость. Проверьте режим сна и время отхода ко сну.</value>
+  </data>
+  <data name="EssScoreDetail.EssBand.Moderate" xml:space="preserve">
+    <value>Умеренная дневная сонливость. Имеет смысл обсудить это с врачом.</value>
+  </data>
+  <data name="TestRecommendationReasonIsi.RecommendationLane.High" xml:space="preserve">
+    <value>При тяжёлой бессоннице «Крутилка» помогает снизить заряд тревожных мыслей.</value>
+  </data>
+  <data name="TestRecommendationReasonIsi.RecommendationLane.Mid" xml:space="preserve">
+    <value>Модификация опыта помогает пересмотреть тяжёлые переживания, мешающие сну.</value>
+  </data>
+  <data name="TestRecommendationReasonEss.RecommendationLane.High" xml:space="preserve">
+    <value>При выраженной сонливости «Крутилка» помогает снизить заряд болезненных воспоминаний.</value>
+  </data>
+  <data name="TestRecommendationReasonEss.RecommendationLane.Mid" xml:space="preserve">
+    <value>Модификация опыта помогает пересмотреть привычки, влияющие на бодрость.</value>
+  </data>
+  <data name="Phq15Score.Phq15Band.Minimal" xml:space="preserve">
+    <value>0-4 — минимальная соматическая нагрузка</value>
+  </data>
+  <data name="Phq15Score.Phq15Band.Low" xml:space="preserve">
+    <value>5-9 — низкая соматическая нагрузка</value>
+  </data>
+  <data name="Phq15Score.Phq15Band.Moderate" xml:space="preserve">
+    <value>10-14 — умеренная соматическая нагрузка</value>
+  </data>
+  <data name="Phq15ScoreDetail.Phq15Band.Minimal" xml:space="preserve">
+    <value>Соматические симптомы в пределах нормы. Поддерживайте режим и физическую активность.</value>
+  </data>
+  <data name="Phq15ScoreDetail.Phq15Band.Low" xml:space="preserve">
+    <value>Низкая соматическая нагрузка. Отслеживайте сон, стресс и нагрузку.</value>
+  </data>
+  <data name="Phq15ScoreDetail.Phq15Band.Moderate" xml:space="preserve">
+    <value>Умеренная соматическая нагрузка. Имеет смысл обсудить жалобы с врачом.</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.ExtremelyDissatisfied" xml:space="preserve">
+    <value>5-9 — крайне низкая удовлетворённость</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.Dissatisfied" xml:space="preserve">
+    <value>10-14 — низкая удовлетворённость</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.SlightlyDissatisfied" xml:space="preserve">
+    <value>15-19 — слегка низкая удовлетворённость</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.Neutral" xml:space="preserve">
+    <value>20 — нейтральная удовлетворённость</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.SlightlySatisfied" xml:space="preserve">
+    <value>21-25 — слегка высокая удовлетворённость</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.Satisfied" xml:space="preserve">
+    <value>26-30 — высокая удовлетворённость</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.ExtremelyDissatisfied" xml:space="preserve">
+    <value>Крайне низкая удовлетворённость жизнью. Полезно выгружать мысли и обсудить состояние со специалистом.</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.Dissatisfied" xml:space="preserve">
+    <value>Низкая удовлетворённость жизнью. Помогают регулярный сон, движение и осмысленные цели.</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.SlightlyDissatisfied" xml:space="preserve">
+    <value>Удовлетворённость жизнью ниже среднего. Укрепляйте привычки, которые дают ощущение смысла.</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.Neutral" xml:space="preserve">
+    <value>Нейтральная удовлетворённость жизнью. Есть пространство для улучшения повседневных практик.</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.SlightlySatisfied" xml:space="preserve">
+    <value>Удовлетворённость жизнью слегка выше среднего. Продолжайте практики, которые вас поддерживают.</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.Satisfied" xml:space="preserve">
+    <value>Высокая удовлетворённость жизнью. Поддерживайте то, что помогает сохранять это состояние.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq15.RecommendationLane.High" xml:space="preserve">
+    <value>При высокой соматической нагрузке «Крутилка» помогает снизить заряд болезненных воспоминаний.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq15.RecommendationLane.Mid" xml:space="preserve">
+    <value>Модификация опыта помогает пересмотреть связь тела и переживаний.</value>
+  </data>
+  <data name="Pss10Score.Pss10Band.Low" xml:space="preserve">
+    <value>0–13 — низкий стресс</value>
+  </data>
+  <data name="Pss10Score.Pss10Band.Moderate" xml:space="preserve">
+    <value>14–26 — умеренный стресс</value>
+  </data>
+  <data name="Pss10ScoreDetail.Pss10Band.Low" xml:space="preserve">
+    <value>Воспринимаемый стресс в пределах нормы. Поддерживайте режим отдыха и восстановления.</value>
+  </data>
+  <data name="Pss10ScoreDetail.Pss10Band.Moderate" xml:space="preserve">
+    <value>Умеренный стресс. Дыхательные практики и заземление помогают снизить напряжение.</value>
+  </data>
+  <data name="HadsAnxietyScore.HadsBand.Normal" xml:space="preserve">
+    <value>0–7 — норма</value>
+  </data>
+  <data name="HadsAnxietyScore.HadsBand.Borderline" xml:space="preserve">
+    <value>8–10 — пограничный уровень</value>
+  </data>
+  <data name="HadsAnxietyScoreDetail.HadsBand.Normal" xml:space="preserve">
+    <value>Тревожные симптомы в пределах нормы.</value>
+  </data>
+  <data name="HadsAnxietyScoreDetail.HadsBand.Borderline" xml:space="preserve">
+    <value>Пограничный уровень тревоги. Дыхание и заземление помогают стабилизировать состояние.</value>
+  </data>
+  <data name="HadsDepressionScore.HadsBand.Normal" xml:space="preserve">
+    <value>0–7 — норма</value>
+  </data>
+  <data name="HadsDepressionScore.HadsBand.Borderline" xml:space="preserve">
+    <value>8–10 — пограничный уровень</value>
+  </data>
+  <data name="HadsDepressionScoreDetail.HadsBand.Normal" xml:space="preserve">
+    <value>Депрессивные симптомы в пределах нормы.</value>
+  </data>
+  <data name="HadsDepressionScoreDetail.HadsBand.Borderline" xml:space="preserve">
+    <value>Пограничный уровень. Малые шаги действия и выгрузка мыслей могут помочь.</value>
+  </data>
+  <data name="RsesScore.RsesBand.Low" xml:space="preserve">
+    <value>0–14 — низкая самооценка</value>
+  </data>
+  <data name="RsesScore.RsesBand.Normal" xml:space="preserve">
+    <value>15–25 — нормальная самооценка</value>
+  </data>
+  <data name="RsesScoreDetail.RsesBand.Low" xml:space="preserve">
+    <value>Низкая самооценка. Практики самосострадания и поддерживающий внутренний диалог могут помочь.</value>
+  </data>
+  <data name="RsesScoreDetail.RsesBand.Normal" xml:space="preserve">
+    <value>Самооценка в пределах нормы. Продолжайте поддерживать себя в сложные периоды.</value>
+  </data>
+  <data name="TestRecommendationReasonPss10.RecommendationLane.High" xml:space="preserve">
+    <value>При высоком стрессе «Крутилка» помогает снизить эмоциональный заряд.</value>
+  </data>
+  <data name="TestRecommendationReasonPss10.RecommendationLane.Mid" xml:space="preserve">
+    <value>При умеренном стрессе дыхание успокаивает нервную систему.</value>
+  </data>
+  <data name="TestRecommendationReasonHadsAnxiety.RecommendationLane.High" xml:space="preserve">
+    <value>При выраженной тревоге «Крутилка» снижает эмоциональный заряд.</value>
+  </data>
+  <data name="TestRecommendationReasonHadsAnxiety.RecommendationLane.Mid" xml:space="preserve">
+    <value>При пограничной тревоге дыхание стабилизирует состояние.</value>
+  </data>
+  <data name="TestRecommendationReasonHadsDepression.RecommendationLane.High" xml:space="preserve">
+    <value>При выраженной депрессии «Один маленький шаг» возвращает движение.</value>
+  </data>
+  <data name="TestRecommendationReasonHadsDepression.RecommendationLane.Mid" xml:space="preserve">
+    <value>При пограничном состоянии «Лист бумаги» помогает выгрузить мысли.</value>
+  </data>
+  <data name="TestRecommendationReasonRses.RecommendationLane.High" xml:space="preserve">
+    <value>При низкой самооценке «Добрые слова себе» смягчают самокритику.</value>
+  </data>
+  <data name="TestRecommendationReasonRses.RecommendationLane.Mid" xml:space="preserve">
+    <value>«Один маленький шаг» поддерживает ощущение способности действовать.</value>
+  </data>
+  <data name="TodayRecommendationReason.default" xml:space="preserve">
+    <value>Практика дня</value>
+  </data>
+  <data name="TherapyProgramWeekGoal.default" xml:space="preserve">
+    <value>Закрепление и самостоятельный выбор</value>
+  </data>
+  <data name="BeckScore.default" xml:space="preserve">
+    <value>30-63 – тяжелая депрессия</value>
+  </data>
+  <data name="BeckScoreDetail.default" xml:space="preserve">
+    <value>Тяжёлая депрессия. Важно как можно скорее получить профессиональную помощь.</value>
+  </data>
+  <data name="PochebutScore.default" xml:space="preserve">
+    <value>25-40 - высокий уровень агрессивности</value>
+  </data>
+  <data name="PochebutScoreDetail.default" xml:space="preserve">
+    <value>Высокая агрессивность. Практики на снижение важности и дистанцирование от триггера особенно уместны.</value>
+  </data>
+  <data name="Gad7Score.default" xml:space="preserve">
+    <value>15-21 — выраженная тревога</value>
+  </data>
+  <data name="Gad7ScoreDetail.default" xml:space="preserve">
+    <value>Выраженная тревога. Рекомендуем обратиться к психологу или врачу.</value>
+  </data>
+  <data name="K10Score.default" xml:space="preserve">
+    <value>30-50 — высокий дистресс</value>
+  </data>
+  <data name="K10ScoreDetail.default" xml:space="preserve">
+    <value>Высокий дистресс. Рекомендуем как можно скорее получить профессиональную помощь.</value>
+  </data>
+  <data name="Who5Score.default" xml:space="preserve">
+    <value>19-25 — хорошее благополучие</value>
+  </data>
+  <data name="Who5ScoreDetail.default" xml:space="preserve">
+    <value>Хороший уровень благополучия. Продолжайте практики, которые поддерживают это состояние.</value>
+  </data>
+  <data name="TestRecommendationReasonK10.default" xml:space="preserve">
+    <value>Для профилактики полезно выгружать мысли на бумагу.</value>
+  </data>
+  <data name="Phq9Score.default" xml:space="preserve">
+    <value>20-27 — тяжёлая депрессия</value>
+  </data>
+  <data name="Phq9ScoreDetail.default" xml:space="preserve">
+    <value>Тяжёлая депрессия. Важно как можно скорее получить профессиональную помощь.</value>
+  </data>
+  <data name="IsiScore.default" xml:space="preserve">
+    <value>22-28 — тяжёлая бессонница</value>
+  </data>
+  <data name="IsiScoreDetail.default" xml:space="preserve">
+    <value>Тяжёлая бессонница. Рекомендуем обратиться к врачу или специалисту по сну.</value>
+  </data>
+  <data name="EssScore.default" xml:space="preserve">
+    <value>16-24 — выраженная сонливость</value>
+  </data>
+  <data name="EssScoreDetail.default" xml:space="preserve">
+    <value>Выраженная дневная сонливость. Рекомендуем обратиться к врачу.</value>
+  </data>
+  <data name="TestRecommendationReasonIsi.default" xml:space="preserve">
+    <value>Для профилактики полезно выгружать мысли на бумагу.</value>
+  </data>
+  <data name="TestRecommendationReasonEss.default" xml:space="preserve">
+    <value>Для профилактики полезно выгружать мысли на бумагу.</value>
+  </data>
+  <data name="Phq15Score.default" xml:space="preserve">
+    <value>15-30 — высокая соматическая нагрузка</value>
+  </data>
+  <data name="Phq15ScoreDetail.default" xml:space="preserve">
+    <value>Высокая соматическая нагрузка. Рекомендуем обратиться к врачу для обследования.</value>
+  </data>
+  <data name="SwlsScore.default" xml:space="preserve">
+    <value>31-35 — очень высокая удовлетворённость</value>
+  </data>
+  <data name="SwlsScoreDetail.default" xml:space="preserve">
+    <value>Очень высокая удовлетворённость жизнью. Продолжайте заботиться о ресурсах и балансе.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq15.default" xml:space="preserve">
+    <value>Для профилактики полезно выгружать мысли на бумагу.</value>
+  </data>
+  <data name="Pss10Score.default" xml:space="preserve">
+    <value>27–40 — высокий стресс</value>
+  </data>
+  <data name="Pss10ScoreDetail.default" xml:space="preserve">
+    <value>Высокий воспринимаемый стресс. Имеет смысл снизить нагрузку и обратиться за поддержкой.</value>
+  </data>
+  <data name="HadsAnxietyScore.default" xml:space="preserve">
+    <value>11–21 — выраженная тревога</value>
+  </data>
+  <data name="HadsAnxietyScoreDetail.default" xml:space="preserve">
+    <value>Выраженная тревога. Рекомендуем обратиться к специалисту и использовать практики саморегуляции.</value>
+  </data>
+  <data name="HadsDepressionScore.default" xml:space="preserve">
+    <value>11–21 — выраженная депрессия</value>
+  </data>
+  <data name="HadsDepressionScoreDetail.default" xml:space="preserve">
+    <value>Выраженные симптомы. Рекомендуем обратиться к специалисту.</value>
+  </data>
+  <data name="RsesScore.default" xml:space="preserve">
+    <value>26–30 — высокая самооценка</value>
+  </data>
+  <data name="RsesScoreDetail.default" xml:space="preserve">
+    <value>Высокая самооценка. Сохраняйте баланс самопринятия и реалистичной самооценки.</value>
+  </data>
+  <data name="TestRecommendationReasonPss10.default" xml:space="preserve">
+    <value>Для профилактики полезно выгружать мысли на бумагу.</value>
+  </data>
+  <data name="TestRecommendationReasonHadsAnxiety.default" xml:space="preserve">
+    <value>Заземление поддерживает спокойствие в теле.</value>
+  </data>
+  <data name="TestRecommendationReasonHadsDepression.default" xml:space="preserve">
+    <value>«Запись мысли» помогает работать с негативными интерпретациями.</value>
+  </data>
+  <data name="TestRecommendationReasonRses.default" xml:space="preserve">
+    <value>Модификация опыта укрепляет ресурсное состояние.</value>
+  </data>
 </root>

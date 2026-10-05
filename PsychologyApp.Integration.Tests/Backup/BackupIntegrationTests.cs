@@ -49,6 +49,27 @@ public sealed class BackupIntegrationTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task EncryptedBackup_NeedsThePassphrase_AndRestoresTheSameData()
+    {
+        await _source.GetRequiredService<IUserProgressService>().RecordMoodAsync(4, "a private note", LongAgo);
+        IBackupService source = _source.GetRequiredService<IBackupService>();
+        IBackupService target = _target.GetRequiredService<IBackupService>();
+
+        string file = await source.ExportEncryptedAsync("correct horse battery");
+
+        Assert.True(target.IsEncrypted(file));
+        Assert.DoesNotContain("a private note", file);
+        await Assert.ThrowsAsync<BackupPassphraseException>(() => target.ImportAsync(file));
+        await Assert.ThrowsAsync<BackupPassphraseException>(() => target.ImportEncryptedAsync(file, "wrong passphrase"));
+        Assert.Empty(await _target.GetRequiredService<IUserProgressService>().GetMoodsAsync());
+
+        BackupImportResult result = await target.ImportEncryptedAsync(file, "correct horse battery");
+
+        Assert.Equal(1, result.MoodEntries);
+        Assert.Equal("a private note", Assert.Single(await _target.GetRequiredService<IUserProgressService>().GetMoodsAsync()).Note);
+    }
+
+    [Fact]
     public async Task Import_SameFileTwice_AddsNothingTheSecondTime()
     {
         await _source.GetRequiredService<IUserProgressService>().RecordMoodAsync(2, null, LongAgo);

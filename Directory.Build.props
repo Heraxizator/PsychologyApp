@@ -9,8 +9,4 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
-  <!-- SQLitePCLRaw.lib.e_sqlite3 2.1.11 (via Microsoft.Data.Sqlite), high severity. Re-checked 2026-10-05 with the suppression removed: still reported, no patched package. Review at every Dependabot bump of Microsoft.Data.Sqlite. -->
-  <ItemGroup>
-    <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-2m69-gcr7-jv3q" />
-  </ItemGroup>
 </Project>

@@ -2211,4 +2211,532 @@
   <data name="TestsDecimalScoreOutOf" xml:space="preserve">
     <value>{0} of {1}</value>
   </data>
+  <data name="BackupProtectTitle" xml:space="preserve">
+    <value>Protect the backup with a passphrase?</value>
+  </data>
+  <data name="BackupProtectBody" xml:space="preserve">
+    <value>The backup holds chats, notes and the safety plan. A file with a passphrase cannot be read without it.</value>
+  </data>
+  <data name="BackupProtectWith" xml:space="preserve">
+    <value>With a passphrase (recommended)</value>
+  </data>
+  <data name="BackupProtectWithout" xml:space="preserve">
+    <value>Without protection</value>
+  </data>
+  <data name="BackupPassphraseTitle" xml:space="preserve">
+    <value>Backup passphrase</value>
+  </data>
+  <data name="BackupPassphraseNewBody" xml:space="preserve">
+    <value>Choose a passphrase of at least 8 characters. It cannot be recovered: without it the backup cannot be opened.</value>
+  </data>
+  <data name="BackupPassphraseConfirmBody" xml:space="preserve">
+    <value>Repeat the passphrase.</value>
+  </data>
+  <data name="BackupPassphraseOpenBody" xml:space="preserve">
+    <value>This backup is protected by a passphrase. Enter it.</value>
+  </data>
+  <data name="BackupPassphrasePlaceholder" xml:space="preserve">
+    <value>Passphrase</value>
+  </data>
+  <data name="BackupPassphraseTooShortToast" xml:space="preserve">
+    <value>The passphrase is shorter than 8 characters</value>
+  </data>
+  <data name="BackupPassphraseMismatchToast" xml:space="preserve">
+    <value>The passphrases do not match</value>
+  </data>
+  <data name="BackupPassphraseWrongToast" xml:space="preserve">
+    <value>Wrong passphrase, or the file was changed</value>
+  </data>
+  <data name="TodayRecommendationReason.anxiety" xml:space="preserve">
+    <value>Good for anxiety</value>
+  </data>
+  <data name="TodayRecommendationReason.body" xml:space="preserve">
+    <value>For body and symptoms</value>
+  </data>
+  <data name="TodayRecommendationReason.mood" xml:space="preserve">
+    <value>Helps when mood is low</value>
+  </data>
+  <data name="PracticeMilestoneTitle.3" xml:space="preserve">
+    <value>3 days in a row!</value>
+  </data>
+  <data name="PracticeMilestoneTitle.7" xml:space="preserve">
+    <value>A full week!</value>
+  </data>
+  <data name="PracticeMilestoneTitle.14" xml:space="preserve">
+    <value>2 weeks in a row!</value>
+  </data>
+  <data name="PracticeMilestoneTitle.30" xml:space="preserve">
+    <value>A full month!</value>
+  </data>
+  <data name="PracticeMilestoneBody.3" xml:space="preserve">
+    <value>A solid start — keep it going.</value>
+  </data>
+  <data name="PracticeMilestoneBody.7" xml:space="preserve">
+    <value>7 days in a row — great rhythm.</value>
+  </data>
+  <data name="PracticeMilestoneBody.14" xml:space="preserve">
+    <value>14 days — a strong habit.</value>
+  </data>
+  <data name="PracticeMilestoneBody.30" xml:space="preserve">
+    <value>30 days — an impressive streak.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.10" xml:space="preserve">
+    <value>10 practices done!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.25" xml:space="preserve">
+    <value>25 practices!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.50" xml:space="preserve">
+    <value>50 practices!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.100" xml:space="preserve">
+    <value>100 practices!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.250" xml:space="preserve">
+    <value>250 practices!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.500" xml:space="preserve">
+    <value>500 practices!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.1000" xml:space="preserve">
+    <value>1000 practices!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.10" xml:space="preserve">
+    <value>A first real milestone — you're building a habit.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.25" xml:space="preserve">
+    <value>25 times you chose to take care of yourself.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.50" xml:space="preserve">
+    <value>Fifty practices — that's a real habit now.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.100" xml:space="preserve">
+    <value>A hundred practices! Impressive work on yourself.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.250" xml:space="preserve">
+    <value>250 practices — you're remarkably consistent.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.500" xml:space="preserve">
+    <value>500 practices — this is truly part of your life now.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.1000" xml:space="preserve">
+    <value>1000 practices! An incredible journey.</value>
+  </data>
+  <data name="TherapyProgramWeekGoal.1" xml:space="preserve">
+    <value>Stabilize with short daily practices</value>
+  </data>
+  <data name="TherapyProgramWeekGoal.2" xml:space="preserve">
+    <value>Observe thoughts and body signals</value>
+  </data>
+  <data name="TherapyProgramWeekGoal.3" xml:space="preserve">
+    <value>Flexibility: try varied techniques</value>
+  </data>
+  <data name="BeckScore.BeckBand.None" xml:space="preserve">
+    <value>0-9 - no depressive symptoms</value>
+  </data>
+  <data name="BeckScore.BeckBand.Mild" xml:space="preserve">
+    <value>10-15 - mild depression</value>
+  </data>
+  <data name="BeckScore.BeckBand.Moderate" xml:space="preserve">
+    <value>16-19 - moderate depression</value>
+  </data>
+  <data name="BeckScore.BeckBand.Marked" xml:space="preserve">
+    <value>20-29 - marked depression (moderate severity)</value>
+  </data>
+  <data name="BeckScoreDetail.BeckBand.None" xml:space="preserve">
+    <value>Symptoms are within normal range. Keep sleep and regular activity.</value>
+  </data>
+  <data name="BeckScoreDetail.BeckBand.Mild" xml:space="preserve">
+    <value>Mild low mood. Walks, thought journaling, and short practices can help.</value>
+  </data>
+  <data name="BeckScoreDetail.BeckBand.Moderate" xml:space="preserve">
+    <value>Moderate depression. Consider talking to a professional and daily practices.</value>
+  </data>
+  <data name="BeckScoreDetail.BeckBand.Marked" xml:space="preserve">
+    <value>Marked symptoms. Please consult a psychologist or doctor and seek support.</value>
+  </data>
+  <data name="PochebutScore.PochebutBand.Low" xml:space="preserve">
+    <value>0-10 - low aggressiveness</value>
+  </data>
+  <data name="PochebutScore.PochebutBand.Moderate" xml:space="preserve">
+    <value>11-24 - moderate aggressiveness</value>
+  </data>
+  <data name="PochebutScoreDetail.PochebutBand.Low" xml:space="preserve">
+    <value>Aggressive reactions are rare. Keep your self-regulation habits.</value>
+  </data>
+  <data name="PochebutScoreDetail.PochebutBand.Moderate" xml:space="preserve">
+    <value>Moderate aggressiveness. Pause, breathing, and reframing the situation help.</value>
+  </data>
+  <data name="Gad7Score.Gad7Band.Minimal" xml:space="preserve">
+    <value>0-4 — minimal anxiety</value>
+  </data>
+  <data name="Gad7Score.Gad7Band.Mild" xml:space="preserve">
+    <value>5-9 — mild anxiety</value>
+  </data>
+  <data name="Gad7Score.Gad7Band.Moderate" xml:space="preserve">
+    <value>10-14 — moderate anxiety</value>
+  </data>
+  <data name="Gad7ScoreDetail.Gad7Band.Minimal" xml:space="preserve">
+    <value>Anxiety symptoms are within normal range. Keep monitoring stress and rest.</value>
+  </data>
+  <data name="Gad7ScoreDetail.Gad7Band.Mild" xml:space="preserve">
+    <value>Mild anxiety. Breathing, walks, and short grounding practices help.</value>
+  </data>
+  <data name="Gad7ScoreDetail.Gad7Band.Moderate" xml:space="preserve">
+    <value>Moderate anxiety. Consider discussing your state with a professional.</value>
+  </data>
+  <data name="K10Score.K10Band.Low" xml:space="preserve">
+    <value>10-15 — low distress</value>
+  </data>
+  <data name="K10Score.K10Band.Mild" xml:space="preserve">
+    <value>16-21 — mild distress</value>
+  </data>
+  <data name="K10Score.K10Band.Moderate" xml:space="preserve">
+    <value>22-29 — moderate distress</value>
+  </data>
+  <data name="K10ScoreDetail.K10Band.Low" xml:space="preserve">
+    <value>Psychological distress is in the low range. Maintain routine and regular activity.</value>
+  </data>
+  <data name="K10ScoreDetail.K10Band.Mild" xml:space="preserve">
+    <value>Mild distress. Experience reframing and thought journaling practices may help.</value>
+  </data>
+  <data name="K10ScoreDetail.K10Band.Moderate" xml:space="preserve">
+    <value>Moderate distress. Do not face this alone — seek support.</value>
+  </data>
+  <data name="Who5Score.Who5Band.Low" xml:space="preserve">
+    <value>0-12 — low well-being</value>
+  </data>
+  <data name="Who5Score.Who5Band.Fair" xml:space="preserve">
+    <value>13-18 — fair well-being</value>
+  </data>
+  <data name="Who5ScoreDetail.Who5Band.Low" xml:space="preserve">
+    <value>Subjective well-being is low. Regular sleep, movement, and journaling thoughts can help.</value>
+  </data>
+  <data name="Who5ScoreDetail.Who5Band.Fair" xml:space="preserve">
+    <value>Well-being is at a moderate level. Strengthen habits that bring energy and interest.</value>
+  </data>
+  <data name="TestRecommendationReasonK10.RecommendationLane.High" xml:space="preserve">
+    <value>With high distress, Spin helps lower the charge of painful memories.</value>
+  </data>
+  <data name="TestRecommendationReasonK10.RecommendationLane.Mid" xml:space="preserve">
+    <value>Experience modification helps revisit difficult experiences.</value>
+  </data>
+  <data name="Phq9Score.Phq9Band.Minimal" xml:space="preserve">
+    <value>0-4 — minimal depression</value>
+  </data>
+  <data name="Phq9Score.Phq9Band.Mild" xml:space="preserve">
+    <value>5-9 — mild depression</value>
+  </data>
+  <data name="Phq9Score.Phq9Band.Moderate" xml:space="preserve">
+    <value>10-14 — moderate depression</value>
+  </data>
+  <data name="Phq9Score.Phq9Band.ModeratelySevere" xml:space="preserve">
+    <value>15-19 — moderately severe depression</value>
+  </data>
+  <data name="Phq9ScoreDetail.Phq9Band.Minimal" xml:space="preserve">
+    <value>Depressive symptoms are within normal range. Maintain routine and activity.</value>
+  </data>
+  <data name="Phq9ScoreDetail.Phq9Band.Mild" xml:space="preserve">
+    <value>Mild depression. Sleep, movement, and journaling thoughts can help.</value>
+  </data>
+  <data name="Phq9ScoreDetail.Phq9Band.Moderate" xml:space="preserve">
+    <value>Moderate depression. Consider discussing your state with a professional.</value>
+  </data>
+  <data name="Phq9ScoreDetail.Phq9Band.ModeratelySevere" xml:space="preserve">
+    <value>Moderately severe depression. Please consult a psychologist or doctor.</value>
+  </data>
+  <data name="IsiScore.IsiBand.None" xml:space="preserve">
+    <value>0-7 — no significant insomnia</value>
+  </data>
+  <data name="IsiScore.IsiBand.Subthreshold" xml:space="preserve">
+    <value>8-14 — subthreshold insomnia</value>
+  </data>
+  <data name="IsiScore.IsiBand.Moderate" xml:space="preserve">
+    <value>15-21 — moderate insomnia</value>
+  </data>
+  <data name="IsiScoreDetail.IsiBand.None" xml:space="preserve">
+    <value>No clinically significant insomnia. Keep a stable sleep schedule and sleep hygiene.</value>
+  </data>
+  <data name="IsiScoreDetail.IsiBand.Subthreshold" xml:space="preserve">
+    <value>Subthreshold insomnia. Bedtime rituals and reducing evening stimulation help.</value>
+  </data>
+  <data name="IsiScoreDetail.IsiBand.Moderate" xml:space="preserve">
+    <value>Moderate insomnia. Consider discussing sleep with a professional.</value>
+  </data>
+  <data name="EssScore.EssBand.Normal" xml:space="preserve">
+    <value>0-10 — normal</value>
+  </data>
+  <data name="EssScore.EssBand.Mild" xml:space="preserve">
+    <value>11-12 — mild sleepiness</value>
+  </data>
+  <data name="EssScore.EssBand.Moderate" xml:space="preserve">
+    <value>13-15 — moderate sleepiness</value>
+  </data>
+  <data name="EssScoreDetail.EssBand.Normal" xml:space="preserve">
+    <value>Daytime sleepiness is within normal range. Maintain regular sleep.</value>
+  </data>
+  <data name="EssScoreDetail.EssBand.Mild" xml:space="preserve">
+    <value>Mild daytime sleepiness. Review your sleep schedule and bedtime.</value>
+  </data>
+  <data name="EssScoreDetail.EssBand.Moderate" xml:space="preserve">
+    <value>Moderate daytime sleepiness. Consider discussing this with a doctor.</value>
+  </data>
+  <data name="TestRecommendationReasonIsi.RecommendationLane.High" xml:space="preserve">
+    <value>With severe insomnia, Spin helps lower the charge of anxious thoughts.</value>
+  </data>
+  <data name="TestRecommendationReasonIsi.RecommendationLane.Mid" xml:space="preserve">
+    <value>Experience modification helps revisit difficult experiences that disrupt sleep.</value>
+  </data>
+  <data name="TestRecommendationReasonEss.RecommendationLane.High" xml:space="preserve">
+    <value>With severe sleepiness, Spin helps lower the charge of painful memories.</value>
+  </data>
+  <data name="TestRecommendationReasonEss.RecommendationLane.Mid" xml:space="preserve">
+    <value>Experience modification helps revisit habits that affect alertness.</value>
+  </data>
+  <data name="Phq15Score.Phq15Band.Minimal" xml:space="preserve">
+    <value>0-4 — minimal somatic burden</value>
+  </data>
+  <data name="Phq15Score.Phq15Band.Low" xml:space="preserve">
+    <value>5-9 — low somatic burden</value>
+  </data>
+  <data name="Phq15Score.Phq15Band.Moderate" xml:space="preserve">
+    <value>10-14 — moderate somatic burden</value>
+  </data>
+  <data name="Phq15ScoreDetail.Phq15Band.Minimal" xml:space="preserve">
+    <value>Somatic symptoms are within normal range. Maintain routine and physical activity.</value>
+  </data>
+  <data name="Phq15ScoreDetail.Phq15Band.Low" xml:space="preserve">
+    <value>Low somatic burden. Monitor sleep, stress, and workload.</value>
+  </data>
+  <data name="Phq15ScoreDetail.Phq15Band.Moderate" xml:space="preserve">
+    <value>Moderate somatic burden. Consider discussing symptoms with a doctor.</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.ExtremelyDissatisfied" xml:space="preserve">
+    <value>5-9 — extremely dissatisfied</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.Dissatisfied" xml:space="preserve">
+    <value>10-14 — dissatisfied</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.SlightlyDissatisfied" xml:space="preserve">
+    <value>15-19 — slightly dissatisfied</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.Neutral" xml:space="preserve">
+    <value>20 — neutral</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.SlightlySatisfied" xml:space="preserve">
+    <value>21-25 — slightly satisfied</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.Satisfied" xml:space="preserve">
+    <value>26-30 — satisfied</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.ExtremelyDissatisfied" xml:space="preserve">
+    <value>Extremely low life satisfaction. Journaling and speaking with a professional may help.</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.Dissatisfied" xml:space="preserve">
+    <value>Low life satisfaction. Regular sleep, movement, and meaningful goals help.</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.SlightlyDissatisfied" xml:space="preserve">
+    <value>Life satisfaction is below average. Strengthen habits that bring a sense of meaning.</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.Neutral" xml:space="preserve">
+    <value>Neutral life satisfaction. There is room to improve everyday practices.</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.SlightlySatisfied" xml:space="preserve">
+    <value>Life satisfaction is slightly above average. Continue practices that support you.</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.Satisfied" xml:space="preserve">
+    <value>High life satisfaction. Maintain what helps you keep this state.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq15.RecommendationLane.High" xml:space="preserve">
+    <value>With high somatic burden, Spin helps lower the charge of painful memories.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq15.RecommendationLane.Mid" xml:space="preserve">
+    <value>Experience modification helps revisit the link between body and emotions.</value>
+  </data>
+  <data name="Pss10Score.Pss10Band.Low" xml:space="preserve">
+    <value>0–13 — low stress</value>
+  </data>
+  <data name="Pss10Score.Pss10Band.Moderate" xml:space="preserve">
+    <value>14–26 — moderate stress</value>
+  </data>
+  <data name="Pss10ScoreDetail.Pss10Band.Low" xml:space="preserve">
+    <value>Perceived stress is within normal range. Maintain rest and recovery habits.</value>
+  </data>
+  <data name="Pss10ScoreDetail.Pss10Band.Moderate" xml:space="preserve">
+    <value>Moderate stress. Breathing and grounding practices can ease tension.</value>
+  </data>
+  <data name="HadsAnxietyScore.HadsBand.Normal" xml:space="preserve">
+    <value>0–7 — normal</value>
+  </data>
+  <data name="HadsAnxietyScore.HadsBand.Borderline" xml:space="preserve">
+    <value>8–10 — borderline</value>
+  </data>
+  <data name="HadsAnxietyScoreDetail.HadsBand.Normal" xml:space="preserve">
+    <value>Anxiety symptoms are within normal range.</value>
+  </data>
+  <data name="HadsAnxietyScoreDetail.HadsBand.Borderline" xml:space="preserve">
+    <value>Borderline anxiety. Breathing and grounding can help stabilize how you feel.</value>
+  </data>
+  <data name="HadsDepressionScore.HadsBand.Normal" xml:space="preserve">
+    <value>0–7 — normal</value>
+  </data>
+  <data name="HadsDepressionScore.HadsBand.Borderline" xml:space="preserve">
+    <value>8–10 — borderline</value>
+  </data>
+  <data name="HadsDepressionScoreDetail.HadsBand.Normal" xml:space="preserve">
+    <value>Depressive symptoms are within normal range.</value>
+  </data>
+  <data name="HadsDepressionScoreDetail.HadsBand.Borderline" xml:space="preserve">
+    <value>Borderline level. Small steps and writing thoughts may help.</value>
+  </data>
+  <data name="RsesScore.RsesBand.Low" xml:space="preserve">
+    <value>0–14 — low self-esteem</value>
+  </data>
+  <data name="RsesScore.RsesBand.Normal" xml:space="preserve">
+    <value>15–25 — normal self-esteem</value>
+  </data>
+  <data name="RsesScoreDetail.RsesBand.Low" xml:space="preserve">
+    <value>Low self-esteem. Self-compassion and supportive self-talk may help.</value>
+  </data>
+  <data name="RsesScoreDetail.RsesBand.Normal" xml:space="preserve">
+    <value>Self-esteem is within normal range. Keep supporting yourself during hard periods.</value>
+  </data>
+  <data name="TestRecommendationReasonPss10.RecommendationLane.High" xml:space="preserve">
+    <value>With high stress, Spin helps lower emotional charge.</value>
+  </data>
+  <data name="TestRecommendationReasonPss10.RecommendationLane.Mid" xml:space="preserve">
+    <value>With moderate stress, breathing calms the nervous system.</value>
+  </data>
+  <data name="TestRecommendationReasonHadsAnxiety.RecommendationLane.High" xml:space="preserve">
+    <value>With elevated anxiety, Spin lowers emotional charge.</value>
+  </data>
+  <data name="TestRecommendationReasonHadsAnxiety.RecommendationLane.Mid" xml:space="preserve">
+    <value>With borderline anxiety, breathing stabilizes how you feel.</value>
+  </data>
+  <data name="TestRecommendationReasonHadsDepression.RecommendationLane.High" xml:space="preserve">
+    <value>With elevated depression, One small step restores momentum.</value>
+  </data>
+  <data name="TestRecommendationReasonHadsDepression.RecommendationLane.Mid" xml:space="preserve">
+    <value>With borderline symptoms, Paper helps unload thoughts.</value>
+  </data>
+  <data name="TestRecommendationReasonRses.RecommendationLane.High" xml:space="preserve">
+    <value>With low self-esteem, Kind words to yourself soften self-criticism.</value>
+  </data>
+  <data name="TestRecommendationReasonRses.RecommendationLane.Mid" xml:space="preserve">
+    <value>One small step supports a sense of ability to act.</value>
+  </data>
+  <data name="TodayRecommendationReason.default" xml:space="preserve">
+    <value>Practice of the day</value>
+  </data>
+  <data name="TherapyProgramWeekGoal.default" xml:space="preserve">
+    <value>Consolidate and choose independently</value>
+  </data>
+  <data name="BeckScore.default" xml:space="preserve">
+    <value>30-63 - severe depression</value>
+  </data>
+  <data name="BeckScoreDetail.default" xml:space="preserve">
+    <value>Severe depression. Professional help is strongly recommended.</value>
+  </data>
+  <data name="PochebutScore.default" xml:space="preserve">
+    <value>25-40 - high aggressiveness</value>
+  </data>
+  <data name="PochebutScoreDetail.default" xml:space="preserve">
+    <value>High aggressiveness. Practices that lower importance and add distance from triggers are especially useful.</value>
+  </data>
+  <data name="Gad7Score.default" xml:space="preserve">
+    <value>15-21 — severe anxiety</value>
+  </data>
+  <data name="Gad7ScoreDetail.default" xml:space="preserve">
+    <value>Severe anxiety. Please consult a psychologist or doctor.</value>
+  </data>
+  <data name="K10Score.default" xml:space="preserve">
+    <value>30-50 — high distress</value>
+  </data>
+  <data name="K10ScoreDetail.default" xml:space="preserve">
+    <value>High distress. Professional help is strongly recommended.</value>
+  </data>
+  <data name="Who5Score.default" xml:space="preserve">
+    <value>19-25 — good well-being</value>
+  </data>
+  <data name="Who5ScoreDetail.default" xml:space="preserve">
+    <value>Good level of well-being. Continue practices that support this state.</value>
+  </data>
+  <data name="TestRecommendationReasonK10.default" xml:space="preserve">
+    <value>For prevention, writing thoughts on paper is helpful.</value>
+  </data>
+  <data name="Phq9Score.default" xml:space="preserve">
+    <value>20-27 — severe depression</value>
+  </data>
+  <data name="Phq9ScoreDetail.default" xml:space="preserve">
+    <value>Severe depression. Professional help is urgently recommended.</value>
+  </data>
+  <data name="IsiScore.default" xml:space="preserve">
+    <value>22-28 — severe insomnia</value>
+  </data>
+  <data name="IsiScoreDetail.default" xml:space="preserve">
+    <value>Severe insomnia. Please consult a doctor or sleep specialist.</value>
+  </data>
+  <data name="EssScore.default" xml:space="preserve">
+    <value>16-24 — severe sleepiness</value>
+  </data>
+  <data name="EssScoreDetail.default" xml:space="preserve">
+    <value>Severe daytime sleepiness. Medical consultation is recommended.</value>
+  </data>
+  <data name="TestRecommendationReasonIsi.default" xml:space="preserve">
+    <value>For prevention, writing thoughts on paper is helpful.</value>
+  </data>
+  <data name="TestRecommendationReasonEss.default" xml:space="preserve">
+    <value>For prevention, writing thoughts on paper is helpful.</value>
+  </data>
+  <data name="Phq15Score.default" xml:space="preserve">
+    <value>15-30 — high somatic burden</value>
+  </data>
+  <data name="Phq15ScoreDetail.default" xml:space="preserve">
+    <value>High somatic burden. Medical evaluation is recommended.</value>
+  </data>
+  <data name="SwlsScore.default" xml:space="preserve">
+    <value>31-35 — extremely satisfied</value>
+  </data>
+  <data name="SwlsScoreDetail.default" xml:space="preserve">
+    <value>Very high life satisfaction. Keep caring for your resources and balance.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq15.default" xml:space="preserve">
+    <value>For prevention, writing thoughts on paper is helpful.</value>
+  </data>
+  <data name="Pss10Score.default" xml:space="preserve">
+    <value>27–40 — high stress</value>
+  </data>
+  <data name="Pss10ScoreDetail.default" xml:space="preserve">
+    <value>High perceived stress. Consider reducing load and seeking support.</value>
+  </data>
+  <data name="HadsAnxietyScore.default" xml:space="preserve">
+    <value>11–21 — elevated anxiety</value>
+  </data>
+  <data name="HadsAnxietyScoreDetail.default" xml:space="preserve">
+    <value>Elevated anxiety. Consider professional support and self-regulation practices.</value>
+  </data>
+  <data name="HadsDepressionScore.default" xml:space="preserve">
+    <value>11–21 — elevated depression</value>
+  </data>
+  <data name="HadsDepressionScoreDetail.default" xml:space="preserve">
+    <value>Elevated symptoms. Professional support is recommended.</value>
+  </data>
+  <data name="RsesScore.default" xml:space="preserve">
+    <value>26–30 — high self-esteem</value>
+  </data>
+  <data name="RsesScoreDetail.default" xml:space="preserve">
+    <value>High self-esteem. Maintain balance between self-acceptance and realistic self-appraisal.</value>
+  </data>
+  <data name="TestRecommendationReasonPss10.default" xml:space="preserve">
+    <value>For prevention, writing thoughts on paper is helpful.</value>
+  </data>
+  <data name="TestRecommendationReasonHadsAnxiety.default" xml:space="preserve">
+    <value>Grounding supports calm in the body.</value>
+  </data>
+  <data name="TestRecommendationReasonHadsDepression.default" xml:space="preserve">
+    <value>Thought record helps work with negative interpretations.</value>
+  </data>
+  <data name="TestRecommendationReasonRses.default" xml:space="preserve">
+    <value>Experience modification strengthens resourceful states.</value>
+  </data>
 </root>

@@ -4,6 +4,7 @@ using PsychologyApp.Application.DataBackup;
 using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Shared.UI.Overlays;
@@ -19,6 +20,7 @@ public sealed class DataBackupViewModel : BaseViewModel
     private readonly ISpecialistSummaryService _specialistSummaryService;
     private readonly IToastService _toastService;
     private readonly IUserPreferencesStore _preferences;
+    private readonly IDialogService _dialogService;
 
     public ICommand BackCommand { get; }
     public ICommand ExportBackupCommand { get; }
@@ -43,13 +45,15 @@ public sealed class DataBackupViewModel : BaseViewModel
         IBackupService backupService,
         ISpecialistSummaryService specialistSummaryService,
         IToastService toastService,
-        IUserPreferencesStore preferences)
+        IUserPreferencesStore preferences,
+        IDialogService dialogService)
     {
         BindNavigation(navigationService);
         _backupService = backupService;
         _specialistSummaryService = specialistSummaryService;
         _toastService = toastService;
         _preferences = preferences;
+        _dialogService = dialogService;
 
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
         ExportBackupCommand = new AsyncCommand(ExportBackupAsync);
@@ -75,8 +79,34 @@ public sealed class DataBackupViewModel : BaseViewModel
 
     private async Task ExportBackupAsync()
     {
-        string json = await _backupService.ExportAsync();
-        string fileName = $"psychologyapp-backup-{DateTime.Now:yyyyMMdd-HHmm}.json";
+        string? choice = await _dialogService.PickOptionAsync(
+            AppStrings.BackupProtectTitle,
+            [AppStrings.BackupProtectWith, AppStrings.BackupProtectWithout],
+            AppStrings.Cancel);
+        if (choice is null)
+        {
+            return;
+        }
+
+        string json;
+        string suffix = string.Empty;
+        if (choice == AppStrings.BackupProtectWith)
+        {
+            string? passphrase = await AskNewPassphraseAsync();
+            if (passphrase is null)
+            {
+                return;
+            }
+
+            json = await _backupService.ExportEncryptedAsync(passphrase);
+            suffix = "-protected";
+        }
+        else
+        {
+            json = await _backupService.ExportAsync();
+        }
+
+        string fileName = $"psychologyapp-backup{suffix}-{DateTime.Now:yyyyMMdd-HHmm}.json";
         await ShareTemporaryFileAsync(fileName, json, AppStrings.DataBackupExportTitle);
     }
 
@@ -131,7 +161,13 @@ public sealed class DataBackupViewModel : BaseViewModel
             }
 
             string json = await File.ReadAllTextAsync(file.FullPath, Encoding.UTF8);
-            BackupImportResult result = await _backupService.ImportAsync(json);
+            BackupImportResult? imported = _backupService.IsEncrypted(json)
+                ? await ImportProtectedAsync(json)
+                : await _backupService.ImportAsync(json);
+            if (imported is not BackupImportResult result)
+            {
+                return;
+            }
 
             _toastService.LongToast(
                 AppStrings.DataBackupImportedToast(
@@ -151,6 +187,63 @@ public sealed class DataBackupViewModel : BaseViewModel
             // The transaction rolled back, so the database is exactly as it was before the attempt.
             _toastService.LongToast(AppStrings.DataBackupImportRolledBackToast, AppToastKind.Error);
         }
+    }
+
+    /// <summary>Asks for a new passphrase twice; null when cancelled or when it is too short or the two differ (a toast says which).</summary>
+    private async Task<string?> AskNewPassphraseAsync()
+    {
+        string? first = await _dialogService.PromptPasswordAsync(
+            AppStrings.BackupPassphraseTitle, AppStrings.BackupPassphraseNewBody, AppStrings.BackupPassphrasePlaceholder, AppStrings.Ok, AppStrings.Cancel);
+        if (first is null)
+        {
+            return null;
+        }
+
+        if (first.Length < BackupEncryption.MinPassphraseLength)
+        {
+            _toastService.LongToast(AppStrings.BackupPassphraseTooShortToast, AppToastKind.Error);
+            return null;
+        }
+
+        string? second = await _dialogService.PromptPasswordAsync(
+            AppStrings.BackupPassphraseTitle, AppStrings.BackupPassphraseConfirmBody, AppStrings.BackupPassphrasePlaceholder, AppStrings.Ok, AppStrings.Cancel);
+        if (second is null)
+        {
+            return null;
+        }
+
+        if (!string.Equals(first, second, StringComparison.Ordinal))
+        {
+            _toastService.LongToast(AppStrings.BackupPassphraseMismatchToast, AppToastKind.Error);
+            return null;
+        }
+
+        return first;
+    }
+
+    /// <summary>Three tries at the passphrase; null when cancelled or when all of them were wrong.</summary>
+    private async Task<BackupImportResult?> ImportProtectedAsync(string file)
+    {
+        for (int attempt = 0; attempt < 3; attempt++)
+        {
+            string? passphrase = await _dialogService.PromptPasswordAsync(
+                AppStrings.BackupPassphraseTitle, AppStrings.BackupPassphraseOpenBody, AppStrings.BackupPassphrasePlaceholder, AppStrings.Ok, AppStrings.Cancel);
+            if (passphrase is null)
+            {
+                return null;
+            }
+
+            try
+            {
+                return await _backupService.ImportEncryptedAsync(file, passphrase);
+            }
+            catch (BackupPassphraseException)
+            {
+                _toastService.ShortToast(AppStrings.BackupPassphraseWrongToast, AppToastKind.Error);
+            }
+        }
+
+        return null;
     }
 
     private async Task ShareErrorLogAsync()

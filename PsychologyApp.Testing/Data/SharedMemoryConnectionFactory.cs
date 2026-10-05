@@ -10,7 +10,11 @@ public sealed class SharedMemoryConnectionFactory : IDbConnectionFactory, IAsync
 {
     private static readonly SemaphoreSlim SchemaInitializationGate = new(1, 1);
 
-    static SharedMemoryConnectionFactory() => Iso8601DateTimeHandler.Register();
+    static SharedMemoryConnectionFactory()
+    {
+        SqliteProvider.EnsureInitialized();
+        Iso8601DateTimeHandler.Register();
+    }
 
     private readonly string _connectionString;
     private readonly SqliteConnection _keeper;

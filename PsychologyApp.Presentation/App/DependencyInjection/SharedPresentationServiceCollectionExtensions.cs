@@ -1,3 +1,4 @@
+using PsychologyApp.Application.Abstractions.Persistence;
 #if ANDROID
 using PsychologyApp.Presentation.Platforms.Android;
 #endif
@@ -18,6 +19,7 @@ public static class SharedPresentationServiceCollectionExtensions
 {
     public static IServiceCollection AddSharedPresentation(this IServiceCollection services)
     {
+        services.AddSingleton<IDatabaseKeyProvider, PsychologyApp.Presentation.Shared.Platform.MauiDatabaseKeyProvider>();
         services.AddSingleton<IToastService, ToastService>();
         services.AddSingleton<IAppClipboardService, AppClipboardService>();
         services.AddSingleton<IPageHost, MauiPageHost>();

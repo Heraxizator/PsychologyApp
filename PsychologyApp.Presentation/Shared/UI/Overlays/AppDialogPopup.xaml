@@ -28,6 +28,12 @@
                     <Label
                         x:Name="MessageLabel"
                         Style="{StaticResource AppDialogMessageStyle}" />
+                    <Entry
+                        x:Name="PasswordEntry"
+                        IsVisible="False"
+                        IsPassword="True"
+                        ReturnType="Done"
+                        Style="{StaticResource InputTextStyle}" />
                 </VerticalStackLayout>
 
                 <BoxView Style="{StaticResource AppDialogDividerStyle}" />

@@ -56,6 +56,31 @@ public class DialogService(IPageHost pageHost) : IDialogService
         }
     }
 
+    public async Task<string?> PromptPasswordAsync(string? title, string message, string placeholder, string accept, string cancel)
+    {
+        if (!TryEnter())
+        {
+            return null;
+        }
+
+        try
+        {
+            Page page = RequireActivePage();
+            var popup = new AppDialogPopup(title, message, accept, cancel, placeholder);
+            IPopupResult popupResult = await page.ShowPopupAsync(popup, CreateDialogOptions(popup));
+            if (popupResult.WasDismissedByTappingOutsideOfPopup || popup.DialogResult != true)
+            {
+                return null;
+            }
+
+            return popup.InputText;
+        }
+        finally
+        {
+            Leave();
+        }
+    }
+
     public async Task<string?> PickOptionAsync(string title, IReadOnlyList<string> options, string cancel)
     {
         if (!TryEnter())

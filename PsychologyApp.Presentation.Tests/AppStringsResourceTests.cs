@@ -58,6 +58,23 @@ public sealed class AppStringsResourceTests
         }
     }
 
+    [Fact]
+    public void EveryKeyUsedInTheSourceExistsInTheResources()
+    {
+        string common = Path.GetDirectoryName(FindResource("StringsRu.resx"))!;
+        System.Text.RegularExpressions.Regex used = new("\\bR\\(\"([^\"]+)\"\\)");
+        HashSet<string> keys = System.Xml.Linq.XDocument.Load(Path.Combine(common, "StringsRu.resx")).Root!.Elements("data")
+            .Select(d => (string)d.Attribute("name")!).ToHashSet();
+
+        foreach (string file in Directory.GetFiles(common, "AppStrings*.cs"))
+        {
+            foreach (System.Text.RegularExpressions.Match match in used.Matches(File.ReadAllText(file)))
+            {
+                Assert.True(keys.Contains(match.Groups[1].Value), $"{Path.GetFileName(file)}: no text for {match.Groups[1].Value}");
+            }
+        }
+    }
+
     private static string FindResource(string name)
     {
         string? dir = AppContext.BaseDirectory;

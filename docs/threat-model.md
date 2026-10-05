@@ -17,9 +17,9 @@ assessments, a safety plan with contacts. Everything is stored **on the device o
 
 | Threat | Handling | Residual risk |
 | --- | --- | --- |
-| Another app reads the database | Android app sandbox; `allowBackup=false`; cloud backup and device transfer excluded; the database is not encrypted at rest (SQLCipher is a planned hardening, not implemented) | Rooted device or a physical copy of the app data |
+| Another app, or a copy of the app data, reads the database | Android app sandbox; `allowBackup=false`; cloud backup and device transfer excluded; the file is encrypted at rest (SQLite3 Multiple Ciphers, ChaCha20-Poly1305) with a random 256-bit key kept in the Android Keystore / iOS Keychain via SecureStorage; an older plain database is converted on first launch, verified row by row, and the plain copy deleted | A rooted device with live access to the unlocked app; loss of the key (clearing Keystore data) makes the file unreadable, there is no recovery by design |
 | Someone with the unlocked phone | Out of scope (no app lock yet) | Open: an optional PIN/biometric lock is the next step |
-| Backup file leaks after sharing | Plain JSON by design (the person decides where it goes); deleted from the cache after sharing | The person's choice of destination |
+| Backup file leaks after sharing | The export offers a passphrase (PBKDF2-SHA256 600k iterations, AES-256-GCM, authenticated); the unprotected option stays available; the temporary file is deleted from the cache after sharing | A weak passphrase; an unprotected export sent somewhere unsafe |
 | Forged intent to MainActivity | Reminder taps need a per-install secret carried only by our own PendingIntents | Navigation only, no data access |
 | Malicious content over the network | The app only downloads audio, over HTTPS, size-capped, content-type and magic-byte checked; Alice runs in a WebView restricted to the Yandex family over HTTPS | Third-party site compromise |
 | Tampered model download (dormant feature) | Pinned commit and SHA-256 for every file | Feature is not shipped |

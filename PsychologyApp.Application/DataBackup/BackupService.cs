@@ -57,8 +57,33 @@ public sealed class BackupService(
         return JsonSerializer.Serialize(backup, BackupJsonContext.Default.AppBackupDTO);
     }
 
+    public async Task<string> ExportEncryptedAsync(string passphrase, CancellationToken cancellationToken = default)
+    {
+        string plain = await ExportAsync(cancellationToken).ConfigureAwait(false);
+        // PBKDF2 with a high iteration count takes a moment: off the caller thread.
+        return await Task.Run(() => BackupEncryption.Encrypt(plain, passphrase), cancellationToken).ConfigureAwait(false);
+    }
+
+    public async Task<BackupImportResult> ImportEncryptedAsync(string file, string passphrase, CancellationToken cancellationToken = default)
+    {
+        if (file.Length > MaxImportCharacters * 2L)
+        {
+            throw new BackupFormatException("The file is too large to be a backup.");
+        }
+
+        string plain = await Task.Run(() => BackupEncryption.Decrypt(file, passphrase), cancellationToken).ConfigureAwait(false);
+        return await ImportAsync(plain, cancellationToken).ConfigureAwait(false);
+    }
+
+    public bool IsEncrypted(string file) => BackupEncryption.IsEncrypted(file);
+
     public async Task<BackupImportResult> ImportAsync(string json, CancellationToken cancellationToken = default)
     {
+        if (BackupEncryption.IsEncrypted(json))
+        {
+            throw new BackupPassphraseException("A passphrase is needed to open this backup.");
+        }
+
         AppBackupDTO backup = Parse(json);
         int sourceRows = backup.MoodEntries.Count + backup.TestResults.Count + backup.Completions.Count
             + backup.SessionResults.Count + backup.ChatSessions.Count + backup.Techniques.Count;

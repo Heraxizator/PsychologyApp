@@ -8,9 +8,15 @@ public partial class AppDialogPopup : Popup
 {
     private bool _isClosing;
 
-    public AppDialogPopup(string? title, string message, string accept, string? cancel)
+    public AppDialogPopup(string? title, string message, string accept, string? cancel, string? passwordPlaceholder = null)
     {
         InitializeComponent();
+
+        if (passwordPlaceholder is not null)
+        {
+            PasswordEntry.IsVisible = true;
+            PasswordEntry.Placeholder = passwordPlaceholder;
+        }
 
         if (string.IsNullOrWhiteSpace(title))
         {
@@ -40,6 +46,9 @@ public partial class AppDialogPopup : Popup
     }
 
     public bool? DialogResult { get; private set; }
+
+    /// <summary>What was typed in the masked field; empty when the dialog has none.</summary>
+    public string InputText => PasswordEntry.Text ?? string.Empty;
 
     public void MarkDismissedOutside() => DialogResult = false;
 

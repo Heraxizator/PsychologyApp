@@ -266,10 +266,10 @@ public static partial class AppStrings
     public static string OnboardingReminderHourLabel => R(nameof(OnboardingReminderHourLabel));
     public static string TodayRecommendationReason(string concern) => concern switch
     {
-        "anxiety" => T("Подходит при тревоге", "Good for anxiety"),
-        "body" => T("Для работы с телом и симптомами", "For body and symptoms"),
-        "mood" => T("Помогает при тяжёлом настроении", "Helps when mood is low"),
-        _ => T("Практика дня", "Practice of the day")
+        "anxiety" => R("TodayRecommendationReason.anxiety"),
+        "body" => R("TodayRecommendationReason.body"),
+        "mood" => R("TodayRecommendationReason.mood"),
+        _ => R("TodayRecommendationReason.default")
     };
 
     public static string TodayRecommendationReasonFromTest(string testId) => F(nameof(TodayRecommendationReasonFromTest), testId);
@@ -530,42 +530,42 @@ public static partial class AppStrings
         streak is 3 or 7 or 14 or 30;
     public static string PracticeMilestoneTitle(int streak) => streak switch
     {
-        3 => T("3 дня подряд!", "3 days in a row!"),
-        7 => T("Неделя подряд!", "A full week!"),
-        14 => T("2 недели подряд!", "2 weeks in a row!"),
-        30 => T("Месяц подряд!", "A full month!"),
+        3 => R("PracticeMilestoneTitle.3"),
+        7 => R("PracticeMilestoneTitle.7"),
+        14 => R("PracticeMilestoneTitle.14"),
+        30 => R("PracticeMilestoneTitle.30"),
         _ => PracticeCompletedTitle
     };
     public static string PracticeMilestoneBody(int streak) => streak switch
     {
-        3 => T("Хорошее начало — так держать.", "A solid start — keep it going."),
-        7 => T("7 дней подряд — отличный ритм.", "7 days in a row — great rhythm."),
-        14 => T("14 дней — сильная привычка.", "14 days — a strong habit."),
-        30 => T("30 дней — впечатляющая серия.", "30 days — an impressive streak."),
+        3 => R("PracticeMilestoneBody.3"),
+        7 => R("PracticeMilestoneBody.7"),
+        14 => R("PracticeMilestoneBody.14"),
+        30 => R("PracticeMilestoneBody.30"),
         _ => PracticeCompletedBody(streak)
     };
     public static bool IsLifetimeMilestone(long total) =>
         total is 10 or 25 or 50 or 100 or 250 or 500 or 1000;
     public static string PracticeLifetimeMilestoneTitle(long total) => total switch
     {
-        10 => T("10 практик позади!", "10 practices done!"),
-        25 => T("25 практик!", "25 practices!"),
-        50 => T("50 практик!", "50 practices!"),
-        100 => T("100 практик!", "100 practices!"),
-        250 => T("250 практик!", "250 practices!"),
-        500 => T("500 практик!", "500 practices!"),
-        1000 => T("1000 практик!", "1000 practices!"),
+        10 => R("PracticeLifetimeMilestoneTitle.10"),
+        25 => R("PracticeLifetimeMilestoneTitle.25"),
+        50 => R("PracticeLifetimeMilestoneTitle.50"),
+        100 => R("PracticeLifetimeMilestoneTitle.100"),
+        250 => R("PracticeLifetimeMilestoneTitle.250"),
+        500 => R("PracticeLifetimeMilestoneTitle.500"),
+        1000 => R("PracticeLifetimeMilestoneTitle.1000"),
         _ => PracticeCompletedTitle
     };
     public static string PracticeLifetimeMilestoneBody(long total) => total switch
     {
-        10 => T("Первый серьёзный рубеж — вы делаете это регулярно.", "A first real milestone — you're building a habit."),
-        25 => T("25 раз вы выбирали позаботиться о себе.", "25 times you chose to take care of yourself."),
-        50 => T("Полсотни практик — это уже привычка.", "Fifty practices — that's a real habit now."),
-        100 => T("Сотня практик! Впечатляющая работа над собой.", "A hundred practices! Impressive work on yourself."),
-        250 => T("250 практик — вы невероятно последовательны.", "250 practices — you're remarkably consistent."),
-        500 => T("500 практик — это уже часть вашей жизни.", "500 practices — this is truly part of your life now."),
-        1000 => T("1000 практик! Невероятный путь.", "1000 practices! An incredible journey."),
+        10 => R("PracticeLifetimeMilestoneBody.10"),
+        25 => R("PracticeLifetimeMilestoneBody.25"),
+        50 => R("PracticeLifetimeMilestoneBody.50"),
+        100 => R("PracticeLifetimeMilestoneBody.100"),
+        250 => R("PracticeLifetimeMilestoneBody.250"),
+        500 => R("PracticeLifetimeMilestoneBody.500"),
+        1000 => R("PracticeLifetimeMilestoneBody.1000"),
         _ => PracticeCompletedBody(0)
     };
     public static string PracticeMoodDelta(int before, int after) =>
@@ -835,6 +835,18 @@ public static partial class AppStrings
     public static string ErrorLogSubtitle => R(nameof(ErrorLogSubtitle));
     public static string ErrorLogEmptyToast => R(nameof(ErrorLogEmptyToast));
     public static string DataBackupImportRolledBackToast => R(nameof(DataBackupImportRolledBackToast));
+    public static string BackupProtectTitle => R(nameof(BackupProtectTitle));
+    public static string BackupProtectBody => R(nameof(BackupProtectBody));
+    public static string BackupProtectWith => R(nameof(BackupProtectWith));
+    public static string BackupProtectWithout => R(nameof(BackupProtectWithout));
+    public static string BackupPassphraseTitle => R(nameof(BackupPassphraseTitle));
+    public static string BackupPassphraseNewBody => R(nameof(BackupPassphraseNewBody));
+    public static string BackupPassphraseConfirmBody => R(nameof(BackupPassphraseConfirmBody));
+    public static string BackupPassphraseOpenBody => R(nameof(BackupPassphraseOpenBody));
+    public static string BackupPassphrasePlaceholder => R(nameof(BackupPassphrasePlaceholder));
+    public static string BackupPassphraseTooShortToast => R(nameof(BackupPassphraseTooShortToast));
+    public static string BackupPassphraseMismatchToast => R(nameof(BackupPassphraseMismatchToast));
+    public static string BackupPassphraseWrongToast => R(nameof(BackupPassphraseWrongToast));
     public static string DataBackupImportFailedToast => R(nameof(DataBackupImportFailedToast));
     public static string CrisisHubSafetyPlanLinkTitle => R(nameof(CrisisHubSafetyPlanLinkTitle));
     public static string CrisisHubSafetyPlanLinkSubtitle => R(nameof(CrisisHubSafetyPlanLinkSubtitle));
@@ -966,10 +978,10 @@ public static partial class AppStrings
     public static string TherapyProgramWeekLabel(int week) => F(nameof(TherapyProgramWeekLabel), week);
     public static string TherapyProgramWeekGoal(int week) => week switch
     {
-        1 => T("Стабилизация: короткие ежедневные практики", "Stabilize with short daily practices"),
-        2 => T("Наблюдение за мыслями и телом", "Observe thoughts and body signals"),
-        3 => T("Гибкость: пробовать разные техники", "Flexibility: try varied techniques"),
-        _ => T("Закрепление и самостоятельный выбор", "Consolidate and choose independently")
+        1 => R("TherapyProgramWeekGoal.1"),
+        2 => R("TherapyProgramWeekGoal.2"),
+        3 => R("TherapyProgramWeekGoal.3"),
+        _ => R("TherapyProgramWeekGoal.default")
     };
     public static string TherapyProgramBanner(string programName, int week, string goal, int? completed = null, int? target = null)
     {
