@@ -1094,6 +1094,11 @@ public static partial class AppStrings
         : T(
             $"Добавлено: настроение {moods}, тесты {tests}, практики {completions}, чаты {chats}",
             $"Added: mood {moods}, tests {tests}, practices {completions}, chats {chats}");
+    public static string ErrorLogTitle => T("Журнал ошибок", "Error log");
+    public static string ErrorLogSubtitle => T(
+        "Поделиться файлом с техническими ошибками, чтобы помочь найти причину сбоя. Он не содержит ваших записей.",
+        "Share a file of technical errors to help find the cause of a crash. It does not contain your entries.");
+    public static string ErrorLogEmptyToast => T("Ошибок не записано", "No errors recorded");
     public static string DataBackupImportRolledBackToast => T(
         "Не удалось восстановить данные. Ничего не изменено — попробуйте ещё раз",
         "Could not restore the data. Nothing was changed — please try again");
