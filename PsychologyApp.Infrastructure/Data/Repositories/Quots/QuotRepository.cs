@@ -19,7 +19,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
 
     public async Task<IEnumerable<Quot>> GetUnreadLatestAsync(int count, CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         return await connection.QueryAsync<Quot>(DapperCommandFactory.Create(
             "SELECT * FROM Quots WHERE IsReaded = 0 ORDER BY QuotId DESC LIMIT @count;",
             new { count },
@@ -29,7 +29,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
 
     public async Task<IEnumerable<Quot>> GetLatestAsync(int count, CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         return await connection.QueryAsync<Quot>(DapperCommandFactory.Create(
             "SELECT * FROM Quots ORDER BY QuotId DESC LIMIT @count;",
             new { count },
@@ -39,7 +39,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
 
     public async Task<IEnumerable<Quot>> GetFavouritesAsync(int count, CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         return await connection.QueryAsync<Quot>(DapperCommandFactory.Create(
             "SELECT * FROM Quots WHERE IsFavourite = 1 ORDER BY QuotId DESC LIMIT @count;",
             new { count },
@@ -57,7 +57,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
             return [];
         }
 
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         return await connection.QueryAsync<Quot>(DapperCommandFactory.Create(
             "SELECT * FROM Quots WHERE IsReaded = 0 AND Theme IN @themes ORDER BY QuotId DESC LIMIT @count;",
             new { themes, count },
@@ -75,7 +75,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
             return [];
         }
 
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         return await connection.QueryAsync<Quot>(DapperCommandFactory.Create(
             "SELECT * FROM Quots WHERE IsReaded = 1 AND Theme IN @themes ORDER BY QuotId DESC LIMIT @count;",
             new { themes, count },
@@ -88,7 +88,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
         int count,
         CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         return await connection.QueryAsync<Quot>(DapperCommandFactory.Create(
             "SELECT * FROM Quots WHERE Theme = @theme ORDER BY QuotId DESC LIMIT @count;",
             new { theme, count },
@@ -98,7 +98,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
 
     public async Task<Quot?> GetByTextAsync(string text, CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         return await connection.QueryFirstOrDefaultAsync<Quot>(DapperCommandFactory.Create(
             "SELECT * FROM Quots WHERE Text = @text ORDER BY QuotId DESC LIMIT 1;",
             new { text },
@@ -108,7 +108,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
 
     public async Task<int> CountAllAsync(CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         return await connection.ExecuteScalarAsync<int>(DapperCommandFactory.Create(
             "SELECT COUNT(*) FROM Quots;",
             commandTimeout: CommandTimeoutSeconds,
@@ -117,7 +117,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
 
     public async Task<int> CountUnreadAsync(CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         return await connection.ExecuteScalarAsync<int>(DapperCommandFactory.Create(
             "SELECT COUNT(*) FROM Quots WHERE IsReaded = 0;",
             commandTimeout: CommandTimeoutSeconds,
@@ -144,7 +144,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
 
     public async Task<IReadOnlyList<string>> GetExistingTextsAsync(CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         IEnumerable<string> rows = await connection.QueryAsync<string>(DapperCommandFactory.Create(
             "SELECT DISTINCT Text FROM Quots;",
             commandTimeout: CommandTimeoutSeconds,
@@ -155,7 +155,7 @@ public sealed class QuotRepository : BaseRepository<Quot>, IQuotRepository
 
     public async Task<IReadOnlyList<string>> GetFavoriteTextsAsync(CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         IEnumerable<string> rows = await connection.QueryAsync<string>(DapperCommandFactory.Create(
             "SELECT DISTINCT Text FROM Quots WHERE IsFavourite = 1;",
             commandTimeout: CommandTimeoutSeconds,

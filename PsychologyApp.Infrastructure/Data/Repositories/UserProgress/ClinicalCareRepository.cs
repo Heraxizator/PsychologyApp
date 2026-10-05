@@ -23,7 +23,7 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
 
     public async Task<SafetyPlanDTO?> GetSafetyPlanAsync(CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         string? json = await connection.ExecuteScalarAsync<string?>(DapperCommandFactory.Create(
             "SELECT Value FROM AppMetadata WHERE Key = @key;",
             new { key = SafetyPlanMetadataKey },
@@ -82,7 +82,7 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
 
     public async Task<RiskAssessmentDTO?> GetLatestRiskAssessmentAsync(CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         ClinicalRiskRow? row = await connection.QuerySingleOrDefaultAsync<ClinicalRiskRow>(DapperCommandFactory.Create(
             ClinicalCareSql.SelectLatestRiskAssessment,
             commandTimeout: CommandTimeoutSeconds,
@@ -134,7 +134,7 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
 
     public async Task<TherapyProgramStateDTO?> GetActiveProgramAsync(CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         ProgramRow? row = await connection.QuerySingleOrDefaultAsync<ProgramRow>(DapperCommandFactory.Create(
             ClinicalCareSql.SelectActiveProgram,
             commandTimeout: CommandTimeoutSeconds,
@@ -177,7 +177,7 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
 
     public async Task<IReadOnlyList<EscalationEventDTO>> GetRecentEscalationsAsync(int limit, CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         IEnumerable<EscalationRow> rows = await connection.QueryAsync<EscalationRow>(DapperCommandFactory.Create(
             ClinicalCareSql.SelectRecentEscalations,
             new { limit },

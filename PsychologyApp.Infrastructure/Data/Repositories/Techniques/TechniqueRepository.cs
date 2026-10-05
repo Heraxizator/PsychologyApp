@@ -25,7 +25,7 @@ public sealed class TechniqueRepository : BaseRepository<Technique>, ITechniqueR
         int limit,
         CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         return await connection.QueryAsync<Technique>(DapperCommandFactory.Create(
             "SELECT * FROM Techniques ORDER BY TechniqueId DESC LIMIT @limit OFFSET @offset;",
             new { limit, offset },

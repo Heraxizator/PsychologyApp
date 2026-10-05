@@ -28,4 +28,8 @@ public abstract class SqliteRepositoryBase
     // Returned through the operation lane so the awaiting repository method continues — and queries — off the UI thread.
     protected ConfiguredTaskAwaitable<SqliteConnection> OpenConnectionAsync(CancellationToken cancellationToken = default) =>
         SqliteOperationLane.OpenAsync(_connectionFactory, cancellationToken);
+
+    /// <summary>For methods that only read: runs in parallel with other readers, after the writes requested before it.</summary>
+    protected ConfiguredTaskAwaitable<SqliteConnection> OpenReadConnectionAsync(CancellationToken cancellationToken = default) =>
+        SqliteOperationLane.OpenAsync(_connectionFactory, cancellationToken, readOnly: true);
 }

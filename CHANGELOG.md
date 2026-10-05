@@ -15,6 +15,7 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 - `docs/chat-companion.md` describes the engine, the state, the memory and its limits.
 
 ### Quality
+- Database lane: readers now run in parallel (WAL), writers stay exclusive. Order is kept for every pair that involves a write: a reader waits for the writers requested before it, a writer waits for all readers and writers requested before it (so a delayed draft save still cannot land after the draft is deleted). Only repository methods named Get/Count are read-only; the in-memory test database keeps one operation at a time. Not measured on a device.
 - Texts: 685 of the `AppStrings` texts live in `StringsRu.resx` and `StringsEn.resx` (`PsychologyApp.Presentation.Core/Common`); the `AppStrings` API is unchanged. A language is added by adding a `StringsXx.resx` and one `ResourceManager`; a test checks every text exists and is not empty in both languages. Texts with parameters (interpolation, switch) stay in code. `tools/Extract-Strings.ps1` is the one-off migration script.
 - `ShellStartupCoordinator`, `DataBackupViewModel` and `StartPhysicsViewModel` take `IUserPreferencesStore` instead of the static `UserPreferences`.
 - Mutation testing of the clinical logic: crisis detector and self-harm screening 93%, risk classifier and score calculators 87% (weekly workflow; the build breaks under 50%).
@@ -24,6 +25,7 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 - `FireAndForget` records where a background task was started and ignores cancellations; `docs/threat-model.md` states what is and is not protected (the database is not encrypted at rest).
 
 ### Fixed
+- `.gitignore` had `Backup*/`, which hid `Infrastructure/Data/Repositories/Backup/BackupRepository.cs` and `Integration.Tests/Backup` from git: a fresh clone did not compile. The pattern is anchored to the repository root and both are now tracked.
 - Reminder taps: the notifications' tap intents carry a random per-install secret and MainActivity (exported as the launcher) accepts a reminder action only with it; package name and action alone, which any app can set, no longer count.
 - Quotes are unique by text (schema version 14: duplicates removed, unique index, `INSERT OR IGNORE`), so concurrent seedings cannot insert the same quote twice.
 - Release builds now keep a local error log (warnings and errors only, `logs/app-errors.log`, capped at 2 MB; crashes are written straight to disk). Before, Release had no log sink and every `LogError` vanished. The data screen has "Share error log" (the file holds technical errors, not entries; nothing is sent automatically).

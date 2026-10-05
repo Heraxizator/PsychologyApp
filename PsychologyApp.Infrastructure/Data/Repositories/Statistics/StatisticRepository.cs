@@ -19,7 +19,7 @@ public sealed class StatisticRepository : BaseRepository<Statistic>, IStatisticR
 
     public async Task<long> CountDistinctPagesAsync(CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         return await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
             "SELECT COUNT(DISTINCT PageName) FROM Statistics;",
             commandTimeout: CommandTimeoutSeconds,
@@ -28,7 +28,7 @@ public sealed class StatisticRepository : BaseRepository<Statistic>, IStatisticR
 
     public async Task<long> CountByPageNameAsync(string pageName, CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         return await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
             "SELECT COUNT(*) FROM Statistics WHERE PageName = @pageName;",
             new { pageName },
@@ -52,7 +52,7 @@ public sealed class StatisticRepository : BaseRepository<Statistic>, IStatisticR
 
     public async Task<IEnumerable<Statistic>> GetRecentAsync(int limit, CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         return await connection.QueryAsync<Statistic>(DapperCommandFactory.Create(
             "SELECT * FROM Statistics ORDER BY StatisticId DESC LIMIT @limit;",
             new { limit },

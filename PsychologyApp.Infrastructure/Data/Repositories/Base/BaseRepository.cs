@@ -88,7 +88,7 @@ public abstract class BaseRepository<TEntity> : SqliteRepositoryBase, IRepositor
 
     public async Task<TEntity?> GetByIdAsync(long id, CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         return await connection.QuerySingleOrDefaultAsync<TEntity>(DapperCommandFactory.Create(
             _sql.SelectByKeySql,
             new { id },

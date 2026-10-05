@@ -25,7 +25,7 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
 
     public async Task<IReadOnlyList<ChatSessionDTO>> GetSessionsAsync(CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         IEnumerable<SessionRow> rows = await connection.QueryAsync<SessionRow>(DapperCommandFactory.Create(
             ChatSql.SelectSessions,
             commandTimeout: CommandTimeoutSeconds,
@@ -35,7 +35,7 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
 
     public async Task<ChatSessionDTO?> GetSessionAsync(long sessionId, CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         SessionRow? row = await connection.QuerySingleOrDefaultAsync<SessionRow>(DapperCommandFactory.Create(
             ChatSql.SelectSession,
             new { SessionId = sessionId },
@@ -88,7 +88,7 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
 
     public async Task<IReadOnlyDictionary<string, string>> GetMemoryAsync(CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         IEnumerable<MemoryRow> rows = await connection.QueryAsync<MemoryRow>(DapperCommandFactory.Create(
             ChatSql.SelectMemory, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken)).ConfigureAwait(false);
         return rows.ToDictionary(r => r.Key, r => r.Value);
@@ -218,7 +218,7 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
 
     public async Task<IReadOnlyList<ChatMessageDTO>> GetMessagesAsync(long sessionId, CancellationToken cancellationToken = default)
     {
-        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
         IEnumerable<MessageRow> rows = await connection.QueryAsync<MessageRow>(DapperCommandFactory.Create(
             ChatSql.SelectMessages,
             new { SessionId = sessionId },
