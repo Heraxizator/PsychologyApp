@@ -111,6 +111,7 @@ public sealed class AndroidPracticeReminderScheduler : IPracticeReminderSchedule
         intent.PutExtra(PracticeReminderConstants.ExtraTechniqueId, techniqueId.ToString());
         intent.AddFlags(ActivityFlags.ClearTop | ActivityFlags.SingleTop | ActivityFlags.NewTask);
 
+        ReminderIntentToken.Put(intent);
         return PendingIntent.GetActivity(
             context,
             PracticeReminderConstants.NotificationId,

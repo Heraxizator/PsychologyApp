@@ -59,9 +59,6 @@ public class MainActivity : MauiAppCompatActivity
         }
     }
 
-    private static bool IsFromOurApp(Intent intent)
-    {
-        string? packageName = intent.Package ?? intent.Component?.PackageName;
-        return string.Equals(packageName, global::Android.App.Application.Context.PackageName, StringComparison.Ordinal);
-    }
+    // Package and action are chosen by the sender; only our own notifications carry the per-install secret (see ReminderIntentToken).
+    private static bool IsFromOurApp(Intent intent) => PsychologyApp.Presentation.Platforms.Android.ReminderIntentToken.IsValid(intent);
 }

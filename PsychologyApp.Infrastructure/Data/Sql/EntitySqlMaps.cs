@@ -33,7 +33,7 @@ internal static class EntitySqlMaps
         Table = "Quots",
         KeyColumn = "QuotId",
         InsertSql = """
-            INSERT INTO Quots (Title, Text, Theme, IsReaded, IsFavourite)
+            INSERT OR IGNORE INTO Quots (Title, Text, Theme, IsReaded, IsFavourite)
             VALUES (@Title, @Text, @Theme, @IsReaded, @IsFavourite);
             """,
         UpdateSql = """

@@ -108,6 +108,7 @@ public sealed class AndroidChatReminderScheduler : IChatReminderScheduler
         intent.SetPackage(context.PackageName);
         intent.AddFlags(ActivityFlags.ClearTop | ActivityFlags.SingleTop | ActivityFlags.NewTask);
 
+        ReminderIntentToken.Put(intent);
         return PendingIntent.GetActivity(
             context,
             ChatReminderConstants.NotificationId,

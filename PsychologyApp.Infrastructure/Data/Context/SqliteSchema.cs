@@ -6,7 +6,7 @@ namespace PsychologyApp.Infrastructure.Data.Context;
 
 public static class SqliteSchema
 {
-    public const int CurrentVersion = 13;
+    public const int CurrentVersion = 14;
 
     private static readonly string[] DropTablesSql =
     [
@@ -145,7 +145,26 @@ public static class SqliteSchema
         if (version < 13)
         {
             await ApplyMigrationAsync(connection, 13, MigrateToVersion13Async, cancellationToken).ConfigureAwait(false);
+            version = 13;
         }
+
+        if (version < 14)
+        {
+            await ApplyMigrationAsync(connection, 14, MigrateToVersion14Async, cancellationToken).ConfigureAwait(false);
+        }
+    }
+
+    /// <summary>A quote is unique by its text: two concurrent seedings (the startup one and "more quotes") used to insert the same text twice.
+    /// Existing duplicates are removed first (the lowest id, usually the one already read or favourited first, stays).</summary>
+    private static async Task MigrateToVersion14Async(DbConnection connection, DbTransaction transaction, CancellationToken cancellationToken)
+    {
+        await connection.ExecuteAsync(
+            """
+            DELETE FROM Quots WHERE QuotId NOT IN (SELECT MIN(QuotId) FROM Quots GROUP BY Text);
+            DROP INDEX IF EXISTS IX_Quots_Text;
+            CREATE UNIQUE INDEX IF NOT EXISTS UX_Quots_Text ON Quots (Text);
+            """,
+            transaction: transaction).ConfigureAwait(false);
     }
 
     /// <summary>

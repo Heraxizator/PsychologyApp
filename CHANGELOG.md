@@ -15,6 +15,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 - `docs/chat-companion.md` describes the engine, the state, the memory and its limits.
 
 ### Fixed
+- Reminder taps: the notifications' tap intents carry a random per-install secret and MainActivity (exported as the launcher) accepts a reminder action only with it; package name and action alone, which any app can set, no longer count.
+- Quotes are unique by text (schema version 14: duplicates removed, unique index, `INSERT OR IGNORE`), so concurrent seedings cannot insert the same quote twice.
 - Release builds now keep a local error log (warnings and errors only, `logs/app-errors.log`, capped at 2 MB; crashes are written straight to disk). Before, Release had no log sink and every `LogError` vanished. The data screen has "Share error log" (the file holds technical errors, not entries; nothing is sent automatically).
 - Global error handling: raw exception messages (English, about SQL or entities) are no longer shown to the person; cancellations are not reported; an unobserved background task is logged instead of raising a red toast; a terminating crash is written to disk instead of opening a dialog nobody will see.
 - Reminders use inexact alarms (`SetAndAllowWhileIdle`) and the `SCHEDULE_EXACT_ALARM` permission is gone from the manifest: a daily reminder does not need exact delivery and Google Play reserves that permission for alarm/calendar apps.

@@ -108,6 +108,7 @@ public sealed class AndroidQuoteReminderScheduler : IQuoteReminderScheduler
         intent.SetPackage(context.PackageName);
         intent.AddFlags(ActivityFlags.ClearTop | ActivityFlags.SingleTop | ActivityFlags.NewTask);
 
+        ReminderIntentToken.Put(intent);
         return PendingIntent.GetActivity(
             context,
             QuoteReminderConstants.NotificationId,

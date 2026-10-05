@@ -73,7 +73,7 @@ public class SqliteSchemaHardeningTests
             CREATE TABLE ChatMessages (
                 MessageId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, SessionId INTEGER NOT NULL, Role INTEGER NOT NULL,
                 Text TEXT NOT NULL, CreatedAt TEXT NOT NULL, QuickRepliesJson TEXT);
-            DELETE FROM SchemaVersion WHERE Version = 13;
+            DELETE FROM SchemaVersion WHERE Version >= 13;
             INSERT INTO ChatSessions (Title, CreatedAt, UpdatedAt) VALUES ('t','2020-01-01T00:00:00Z','2020-01-01T00:00:00Z');
             INSERT INTO ChatMessages (SessionId, Role, Text, CreatedAt) VALUES (1, 0, 'kept', '2020-01-01T00:00:00Z');
             INSERT INTO ChatMessages (SessionId, Role, Text, CreatedAt) VALUES (99, 0, 'orphan', '2020-01-01T00:00:00Z');
@@ -83,6 +83,28 @@ public class SqliteSchemaHardeningTests
 
         IEnumerable<string> texts = await connection.QueryAsync<string>("SELECT Text FROM ChatMessages;");
         Assert.Equal(["kept"], texts);
+    }
+
+    [Fact]
+    public async Task MigrationTo14_RemovesDuplicateQuotesAndKeepsTheFirstOfEach()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        await SqliteSchema.EnsureSchemaAsync(connection);
+        await connection.ExecuteAsync(
+            """
+            DROP INDEX UX_Quots_Text;
+            DELETE FROM SchemaVersion WHERE Version >= 14;
+            INSERT INTO Quots (Title, Text, Theme, IsReaded, IsFavourite) VALUES ('a', 'same', 't', 1, 0);
+            INSERT INTO Quots (Title, Text, Theme, IsReaded, IsFavourite) VALUES ('b', 'same', 't', 0, 0);
+            INSERT INTO Quots (Title, Text, Theme, IsReaded, IsFavourite) VALUES ('c', 'other', 't', 0, 0);
+            """);
+
+        await SqliteSchema.EnsureSchemaAsync(connection);
+
+        Assert.Equal(["a", "c"], await connection.QueryAsync<string>("SELECT Title FROM Quots ORDER BY QuotId;"));
+        await Assert.ThrowsAsync<SqliteException>(() => connection.ExecuteAsync(
+            "INSERT INTO Quots (Title, Text, Theme, IsReaded, IsFavourite) VALUES ('d', 'same', 't', 0, 0);"));
     }
 }
 
