@@ -370,3 +370,5 @@ FodyWeavers.xsd
 **/AndroidSigning.local.props
 # Local build output (was committed by mistake)
 _build_out/
+
+StrykerOutput/

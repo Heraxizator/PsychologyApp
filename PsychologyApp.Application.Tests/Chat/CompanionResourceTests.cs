@@ -308,6 +308,6 @@ public class CompanionTestReferenceTests
         CompanionReply reply = Tap(d, new CompanionState { Emotion = "Overthinking" }, "resource:test-history");
 
         Assert.Equal(DialogueActionKind.OpenTestHistory, reply.Action?.Kind);
-        Assert.Equal(CompanionResourceContent.StressTestId, reply.Action.TestId);
+        Assert.Equal(CompanionResourceContent.StressTestId, reply.Action!.TestId);
     }
 }

@@ -14,6 +14,11 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 - Animations: new messages slide in, suggestion chips appear in turn, the send button pulses, chat-list rows reveal in turn, profile numbers count up, bars grow. All honour reduced motion.
 - `docs/chat-companion.md` describes the engine, the state, the memory and its limits.
 
+### Quality
+- Tests: property-based tests of the chat companion (FsCheck), boundary tests for every questionnaire cut-off (Domain mutation score 58.6% -> 72.6%), upgrade-from-version-1 and idempotent-schema tests; per-layer coverage gates in CI (Application/Domain 80, Infrastructure 75, overall 70).
+- CI: warnings are errors, Dependabot, gitleaks and dependency audit (`security.yml`), weekly mutation run (`mutation.yml`), Release emulator smoke test (`android-smoke.yml`, manual/weekly).
+- `FireAndForget` records where a background task was started and ignores cancellations; `docs/threat-model.md` states what is and is not protected (the database is not encrypted at rest).
+
 ### Fixed
 - Reminder taps: the notifications' tap intents carry a random per-install secret and MainActivity (exported as the launcher) accepts a reminder action only with it; package name and action alone, which any app can set, no longer count.
 - Quotes are unique by text (schema version 14: duplicates removed, unique index, `INSERT OR IGNORE`), so concurrent seedings cannot insert the same quote twice.

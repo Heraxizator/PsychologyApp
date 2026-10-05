@@ -26,6 +26,7 @@ public sealed class GlobalExceptionHandler
     public void Attach(Microsoft.Maui.Controls.Application application)
     {
         AsyncCommandExtensions.DefaultErrorHandler = ex => LogAndNotify(ex, "Background task failed", useDialog: false);
+        AsyncCommandExtensions.DefaultErrorLogger = (ex, origin) => _logger.LogWarning(ex, "Background task started in {Origin} failed", origin);
         application.HandlerChanged += OnHandlerChanged;
         AppDomain.CurrentDomain.UnhandledException += OnDomainUnhandled;
         TaskScheduler.UnobservedTaskException += OnUnobservedTask;

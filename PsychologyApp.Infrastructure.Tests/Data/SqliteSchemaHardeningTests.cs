@@ -106,6 +106,52 @@ public class SqliteSchemaHardeningTests
         await Assert.ThrowsAsync<SqliteException>(() => connection.ExecuteAsync(
             "INSERT INTO Quots (Title, Text, Theme, IsReaded, IsFavourite) VALUES ('d', 'same', 't', 0, 0);"));
     }
+
+    [Fact]
+    public async Task UpgradeFromVersion1_KeepsTheOldRowsAndReachesTheCurrentSchema()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        // A database exactly as the first release left it: version 1 tables only, with user data in them.
+        await connection.ExecuteAsync(
+            """
+            CREATE TABLE SchemaVersion (Version INTEGER NOT NULL PRIMARY KEY);
+            INSERT INTO SchemaVersion (Version) VALUES (1);
+            CREATE TABLE Techniques (TechniqueId INTEGER PRIMARY KEY AUTOINCREMENT, Number TEXT NOT NULL, Date TEXT NOT NULL, Header TEXT NOT NULL,
+                Describtion TEXT NOT NULL, Subject TEXT NOT NULL, Author TEXT NOT NULL, Algorithm TEXT NOT NULL, Image TEXT, IsCompleted INTEGER NOT NULL DEFAULT 0);
+            CREATE TABLE Quots (QuotId INTEGER PRIMARY KEY AUTOINCREMENT, Title TEXT NOT NULL, Text TEXT NOT NULL, Theme TEXT NOT NULL,
+                IsReaded INTEGER NOT NULL DEFAULT 0, IsFavourite INTEGER NOT NULL DEFAULT 0);
+            CREATE TABLE Statistics (StatisticId INTEGER PRIMARY KEY AUTOINCREMENT, ModuleName TEXT NOT NULL, PageName TEXT NOT NULL,
+                DateTime TEXT NOT NULL, SecondsDuration INTEGER NOT NULL);
+            INSERT INTO Techniques (Number, Date, Header, Describtion, Subject, Author, Algorithm) VALUES ('1', 'd', 'My technique', 'desc', 's', 'a', 'steps');
+            INSERT INTO Quots (Title, Text, Theme, IsReaded, IsFavourite) VALUES ('t', 'kept quote', 'x', 1, 1);
+            INSERT INTO Statistics (ModuleName, PageName, DateTime, SecondsDuration) VALUES ('m', 'p', '2020-01-01T00:00:00Z', 5);
+            """);
+
+        await SqliteSchema.EnsureSchemaAsync(connection);
+
+        Assert.Equal(SqliteSchema.CurrentVersion, await connection.ExecuteScalarAsync<int>("SELECT MAX(Version) FROM SchemaVersion;"));
+        Assert.Equal("desc", await connection.ExecuteScalarAsync<string>("SELECT Description FROM Techniques;"));
+        Assert.Equal("kept quote", await connection.ExecuteScalarAsync<string>("SELECT Text FROM Quots WHERE IsFavourite = 1 AND IsReaded = 1;"));
+        Assert.Equal(1, await connection.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM Statistics;"));
+        foreach (string table in new[] { "MoodEntries", "SessionResults", "ChatSessions", "ChatMessages", "ChatMemory", "RiskAssessments", "TherapyPrograms" })
+        {
+            Assert.Equal(1, await connection.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name = @tableName;", new { tableName = table }));
+        }
+    }
+
+    [Fact]
+    public async Task EnsureSchemaTwice_ChangesNothingTheSecondTime()
+    {
+        await using var connection = new SqliteConnection("Data Source=:memory:");
+        await connection.OpenAsync();
+        await SqliteSchema.EnsureSchemaAsync(connection);
+        string first = string.Join("|", await connection.QueryAsync<string>("SELECT sql FROM sqlite_master WHERE sql IS NOT NULL ORDER BY name;"));
+
+        await SqliteSchema.EnsureSchemaAsync(connection);
+
+        Assert.Equal(first, string.Join("|", await connection.QueryAsync<string>("SELECT sql FROM sqlite_master WHERE sql IS NOT NULL ORDER BY name;")));
+    }
 }
 
 public class SqliteTimeTests

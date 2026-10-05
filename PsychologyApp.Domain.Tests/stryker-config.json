@@ -1,0 +1,7 @@
+{
+  "stryker-config": {
+    "project": "PsychologyApp.Domain.csproj",
+    "reporters": ["html", "progress", "json"],
+    "thresholds": { "high": 80, "low": 60, "break": 50 }
+  }
+}

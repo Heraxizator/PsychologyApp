@@ -1,0 +1,39 @@
+name: Security
+
+on:
+  push:
+    branches: [main, master, features/re-design]
+  pull_request:
+  schedule:
+    - cron: "0 5 * * 1"
+
+jobs:
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Scan for committed secrets
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  vulnerable-packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Fail on known-vulnerable NuGet packages
+        run: |
+          dotnet restore PsychologyApp.Domain/PsychologyApp.Domain.csproj
+          dotnet restore PsychologyApp.Application/PsychologyApp.Application.csproj
+          dotnet restore PsychologyApp.Infrastructure/PsychologyApp.Infrastructure.csproj
+          for proj in PsychologyApp.Domain PsychologyApp.Application PsychologyApp.Infrastructure; do
+            dotnet list "$proj/$proj.csproj" package --vulnerable --include-transitive | tee "vuln-$proj.txt"
+          done
+          if grep -h -q "has the following vulnerable packages" vuln-*.txt; then
+            echo "Vulnerable packages found"; exit 1
+          fi

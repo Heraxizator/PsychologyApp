@@ -20,17 +20,25 @@ jobs:
       - name: Install ReportGenerator
         run: dotnet tool install -g dotnet-reportgenerator-globaltool
       - name: Coverage summary
-        run: reportgenerator "-reports:TestResults/**/coverage.cobertura.xml" "-targetdir:CoverageReport" "-reporttypes:TextSummary"
-      - name: Enforce minimum line coverage
+        run: reportgenerator "-reports:TestResults/**/coverage.cobertura.xml" "-targetdir:CoverageReport" "-reporttypes:TextSummary;JsonSummary" "-assemblyfilters:+PsychologyApp.*;-*Tests*;-PsychologyApp.Testing"
+      - name: Enforce minimum line coverage per layer
         shell: pwsh
         run: |
-          $summary = Get-Content CoverageReport/Summary.txt -Raw
-          if ($summary -match 'Line coverage:\s*([\d\.]+)%') {
-            $rate = [double]$Matches[1]
-            if ($rate -lt 60) { throw "Line coverage $rate% is below 60% threshold." }
-          } else {
-            throw "Could not parse coverage summary from CoverageReport/Summary.txt."
+          # Measured when this gate was added: Application 84%, Domain 83%, Infrastructure 80%, all instrumented code 77%.
+          # The gate sits a few points below, so a drop is caught without failing on noise. Raise it as coverage rises.
+          $summary = Get-Content CoverageReport/Summary.json -Raw | ConvertFrom-Json
+          $minimums = @{ 'PsychologyApp.Application' = 80; 'PsychologyApp.Domain' = 80; 'PsychologyApp.Infrastructure' = 75 }
+          $failed = $false
+          foreach ($name in $minimums.Keys) {
+            $assembly = $summary.coverage.assemblies | Where-Object { $_.name -eq $name }
+            if (-not $assembly) { Write-Error "No coverage found for $name"; $failed = $true; continue }
+            Write-Host "$name line coverage: $($assembly.coverage)% (minimum $($minimums[$name])%)"
+            if ($assembly.coverage -lt $minimums[$name]) { Write-Error "$name is below $($minimums[$name])%"; $failed = $true }
           }
+          $overall = $summary.summary.linecoverage
+          Write-Host "Overall line coverage: $overall%"
+          if ($overall -lt 70) { Write-Error "Overall coverage $overall% is below 70%"; $failed = $true }
+          if ($failed) { exit 1 }
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:

@@ -4,7 +4,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AnalysisLevel>latest</AnalysisLevel>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <!-- No new warning may be merged: every project starts clean and stays clean. -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <!-- SQLitePCLRaw 2.1.11 (via Microsoft.Data.Sqlite) — no patched package yet. -->

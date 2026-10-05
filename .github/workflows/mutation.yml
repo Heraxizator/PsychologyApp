@@ -1,0 +1,27 @@
+name: mutation
+
+on:
+  schedule:
+    - cron: "0 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  domain:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - run: dotnet tool install -g dotnet-stryker --version 5.0.0
+      - name: Mutate Domain
+        working-directory: PsychologyApp.Domain.Tests
+        run: dotnet stryker
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stryker-domain
+          path: PsychologyApp.Domain.Tests/StrykerOutput
