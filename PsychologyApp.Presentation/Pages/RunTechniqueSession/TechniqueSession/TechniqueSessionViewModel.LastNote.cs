@@ -35,9 +35,10 @@ public partial class TechniqueSessionViewModel
             string? note = await _userProgressService.GetLastSessionNoteAsync(_techniqueId.ToString());
             LastNoteText = note ?? string.Empty;
         }
-        catch
+        catch (Exception bestEffortError)
         {
             // The last note is a nice-to-have; the session works fine without it.
+            BestEffort.Report(bestEffortError);
         }
     }
 }

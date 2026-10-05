@@ -276,9 +276,10 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
                 NotifySudsDelta();
             }
         }
-        catch
+        catch (Exception bestEffortError)
         {
             // Pre-SUDS is optional on the completion screen.
+            BestEffort.Report(bestEffortError);
         }
     }
 
@@ -293,9 +294,10 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         {
             await _userProgressService.UpdateSessionResultPostIntensityAsync(_sessionResultId.Value, postIntensity);
         }
-        catch
+        catch (Exception bestEffortError)
         {
             // Post-SUDS is optional; completion still works without persistence.
+            BestEffort.Report(bestEffortError);
         }
     }
 
@@ -310,9 +312,10 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
                 BeforeMoodLevel = today.MoodLevel;
             }
         }
-        catch
+        catch (Exception bestEffortError)
         {
             // Pre-mood is optional; completion still works without delta.
+            BestEffort.Report(bestEffortError);
         }
     }
 
@@ -327,9 +330,10 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
             OnPropertyChanged(nameof(TitleText));
             OnPropertyChanged(nameof(BodyText));
         }
-        catch
+        catch (Exception bestEffortError)
         {
             // Lifetime milestone celebration is a nice-to-have; completion still works without it.
+            BestEffort.Report(bestEffortError);
         }
     }
 
@@ -358,9 +362,10 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
             NextPracticeIcon = result.IconName;
             HasNextPractice = true;
         }
-        catch
+        catch (Exception bestEffortError)
         {
             // Next practice is optional; completion still works without it.
+            BestEffort.Report(bestEffortError);
         }
     }
 

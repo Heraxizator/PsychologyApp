@@ -36,9 +36,10 @@ public sealed class TechniqueSessionCompletionService(
                 programWeek = program.CurrentWeek;
             }
         }
-        catch
+        catch (Exception bestEffortError)
         {
             // Program context is optional for session results.
+            BestEffort.Report(bestEffortError);
         }
 
         long sessionResultId = await progress.RecordSessionOutcomeAsync(

@@ -65,9 +65,10 @@ public partial class OnboardingViewModel
         {
             await _clinicalCareService.EnsureProgramAsync(concern);
         }
-        catch
+        catch (Exception bestEffortError)
         {
             // Program seed is best-effort; onboarding still completes.
+            BestEffort.Report(bestEffortError);
         }
     }
 }

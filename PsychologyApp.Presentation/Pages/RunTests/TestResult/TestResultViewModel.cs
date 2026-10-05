@@ -142,9 +142,10 @@ public partial class TestResultViewModel : BaseViewModel
                     nameof(ChartTitle));
             });
         }
-        catch
+        catch (Exception bestEffortError)
         {
             // Trend/chart are optional; result screen must stay usable if history load fails.
+            BestEffort.Report(bestEffortError);
         }
     }
 }

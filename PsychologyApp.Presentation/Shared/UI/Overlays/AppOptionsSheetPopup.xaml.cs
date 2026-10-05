@@ -87,13 +87,13 @@ public partial class AppOptionsSheetPopup : Popup
         OptionsStack.Add(row);
     }
 
-    private async void SelectOption(string option)
+    private void SelectOption(string option)
     {
         SelectedOption = option;
-        await CloseAsync();
+        SafeAsync.Run(async () => await CloseAsync());
     }
 
-    private async void OnCancelTapped(object? sender, TappedEventArgs e) => await CloseAsync();
+    private void OnCancelTapped(object? sender, TappedEventArgs e) => SafeAsync.Run(async () => await CloseAsync());
 
-    private async void OnDismissTapped(object? sender, TappedEventArgs e) => await CloseAsync();
+    private void OnDismissTapped(object? sender, TappedEventArgs e) => SafeAsync.Run(async () => await CloseAsync());
 }

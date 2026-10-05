@@ -121,9 +121,10 @@ public sealed class CrisisHubViewModel : BaseViewModel
         {
             await Browser.Default.OpenAsync("https://findahelpline.com", BrowserLaunchMode.SystemPreferred);
         }
-        catch
+        catch (Exception bestEffortError)
         {
             // Best-effort external link.
+            BestEffort.Report(bestEffortError);
         }
     }
 
@@ -139,9 +140,10 @@ public sealed class CrisisHubViewModel : BaseViewModel
 
             await Launcher.Default.OpenAsync($"tel:{number}");
         }
-        catch
+        catch (Exception bestEffortError)
         {
             // Best-effort dial.
+            BestEffort.Report(bestEffortError);
         }
     }
 

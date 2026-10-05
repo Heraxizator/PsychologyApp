@@ -50,9 +50,10 @@ public sealed class QuoteReminderCoordinator(
                 body = AppStrings.QuoteReminderBodySnippet(text);
             }
         }
-        catch
+        catch (Exception bestEffortError)
         {
             // Keep generic body if catalog lookup fails.
+            BestEffort.Report(bestEffortError);
         }
 
         scheduler.Schedule(

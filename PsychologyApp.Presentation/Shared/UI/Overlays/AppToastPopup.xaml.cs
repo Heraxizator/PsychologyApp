@@ -30,7 +30,9 @@ public partial class AppToastPopup : Popup
         await CloseAsync();
     }
 
-    private async void OnLoaded(object? sender, EventArgs e)
+    private void OnLoaded(object? sender, EventArgs e) => SafeAsync.Run(LoadedAsync);
+
+    private async Task LoadedAsync()
     {
         try
         {

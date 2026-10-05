@@ -205,9 +205,10 @@ public sealed class SafetyPlanViewModel : BaseViewModel
 
             await Launcher.Default.OpenAsync($"tel:{number}");
         }
-        catch
+        catch (Exception bestEffortError)
         {
             // Best-effort dial.
+            BestEffort.Report(bestEffortError);
         }
     }
 }

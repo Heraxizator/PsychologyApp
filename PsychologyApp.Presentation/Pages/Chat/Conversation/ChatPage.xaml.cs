@@ -189,9 +189,10 @@ public partial class ChatPage : ContentPage
         {
             MessageList.ScrollTo(Math.Clamp(index, 0, last), position: position, animate: animate);
         }
-        catch (Exception)
+        catch (Exception bestEffortError)
         {
             // A scroll that Android's list isn't ready for must never crash the chat; the message is safely on screen either way.
+            BestEffort.Report(bestEffortError);
         }
     }
 }

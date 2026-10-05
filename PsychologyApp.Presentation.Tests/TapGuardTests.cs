@@ -3,6 +3,7 @@ using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
 
+[Collection("AsyncErrorHooks")]
 public sealed class TapGuardTests
 {
     [Fact]

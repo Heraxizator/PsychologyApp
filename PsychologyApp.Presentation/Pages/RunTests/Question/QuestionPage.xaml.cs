@@ -23,11 +23,11 @@ public partial class QuestionPage : ContentPage
         InitializeComponent();
     }
 
-    private async void OnValidationHintRequested(object? sender, EventArgs e)
+    private void OnValidationHintRequested(object? sender, EventArgs e)
     {
         if (QuestionCard is not null)
         {
-            await UiAnimations.SafeShakeAsync(QuestionCard);
+            SafeAsync.Run(() => UiAnimations.SafeShakeAsync(QuestionCard));
         }
     }
 }

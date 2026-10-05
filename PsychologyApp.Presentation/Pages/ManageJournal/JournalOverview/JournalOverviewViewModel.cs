@@ -518,9 +518,10 @@ public sealed class JournalOverviewViewModel : BaseViewModel
                 NotifyPeriodProperties();
             });
         }
-        catch
+        catch (Exception bestEffortError)
         {
             // Overview is optional.
+            BestEffort.Report(bestEffortError);
         }
     }
 }

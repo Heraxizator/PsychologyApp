@@ -353,9 +353,10 @@ public sealed class JournalViewModel : BaseViewModel
 
             await UiThread.RunAsync(() => ApplySnapshot(snapshot));
         }
-        catch
+        catch (Exception bestEffortError)
         {
             // Journal content is optional; empty state still works.
+            BestEffort.Report(bestEffortError);
         }
     }
 

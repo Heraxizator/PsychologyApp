@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Common;
 using System.Collections.Concurrent;
 using System.Runtime;
 
@@ -60,9 +61,10 @@ public class WeakReferenceManager<TMessage>
                         {
                             handler(message);
                         }
-                        catch
+                        catch (Exception bestEffortError)
                         {
                             // Игнорируем ошибки в обработчиках, чтобы не прерывать отправку другим подписчикам
+                            BestEffort.Report(bestEffortError);
                         }
                     }
                     else

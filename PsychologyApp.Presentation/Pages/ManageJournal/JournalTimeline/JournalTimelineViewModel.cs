@@ -149,9 +149,10 @@ public sealed class JournalTimelineViewModel : BaseViewModel
                 ApplySearchFilter();
             });
         }
-        catch
+        catch (Exception bestEffortError)
         {
             // Timeline is optional.
+            BestEffort.Report(bestEffortError);
         }
     }
 

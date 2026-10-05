@@ -15,6 +15,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 - `docs/chat-companion.md` describes the engine, the state, the memory and its limits.
 
 ### Quality
+- Mutation testing of the clinical logic: crisis detector and self-harm screening 93%, risk classifier and score calculators 87% (weekly workflow; the build breaks under 50%).
+- `SafeAsync.Run` replaces every `async void` handler; `BestEffort.Report` logs the 13 formerly silent "optional" catch blocks; code style is enforced in the build.
 - Tests: property-based tests of the chat companion (FsCheck), boundary tests for every questionnaire cut-off (Domain mutation score 58.6% -> 72.6%), upgrade-from-version-1 and idempotent-schema tests; per-layer coverage gates in CI (Application/Domain 80, Infrastructure 75, overall 70).
 - CI: warnings are errors, Dependabot, gitleaks and dependency audit (`security.yml`), weekly mutation run (`mutation.yml`), Release emulator smoke test (`android-smoke.yml`, manual/weekly).
 - `FireAndForget` records where a background task was started and ignores cancellations; `docs/threat-model.md` states what is and is not protected (the database is not encrypted at rest).
