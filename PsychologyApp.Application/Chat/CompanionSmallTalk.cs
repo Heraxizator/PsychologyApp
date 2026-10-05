@@ -162,6 +162,53 @@ public static class CompanionSmallTalk
         ? "An approximate number is enough: 0 is completely calm, 10 is as strong as it gets. You can tap a number below."
         : "Достаточно примерно: 0 — совсем спокойно, 10 — сильнее не бывает. Можно нажать цифру ниже.";
 
+    // ----- input that is not a message -----
+
+    /// <summary>Digits only, keyboard mashing or a repeated letter: say plainly that there was nothing to understand, without a
+    /// show of empathy. From the second time in a row, make it easier by offering the feelings to pick from.</summary>
+    public static string Noise(bool digits, int streak, bool english, Random random)
+    {
+        if (streak >= 2)
+        {
+            return english
+                ? "If it's hard to find words right now, that's fine. You can pick what is closest below."
+                : "Если слова сейчас найти трудно — ничего страшного. Можно просто выбрать, что ближе всего.";
+        }
+
+        return digits
+            ? Pick(random, english
+                ? ["That's only digits, and I can't tell what they mean. What did you want to say?", "I only see numbers here, so I can't tell what you mean. Could you put it in words?"]
+                : ["Тут одни цифры, и я не могу понять, что они значат. Что вы хотели сказать?", "Я вижу только цифры и не понимаю, о чём вы. Можете написать словами?"])
+            : Pick(random, english
+                ? ["That looks like an accidental message, and I couldn't make it out. What did you want to say?", "I couldn't make sense of that one. Try putting it in words?"]
+                : ["Похоже, сообщение вышло случайным, и мне не удалось его понять. Что хотели сказать?", "Это сообщение разобрать не получилось. Можете написать словами?"]);
+    }
+
+    /// <summary>A number from 0 to 10 when no tension question is open: probably a rating, but of what?</summary>
+    public static string NumberOutOfContext(bool english) => english
+        ? "What is that number about? If it's how tense you are (0 is completely calm, 10 is as strong as it gets), tell me what is behind it."
+        : "К чему это число? Если это уровень напряжения (0 — совсем спокойно, 10 — сильнее не бывает), расскажите, что за ним стоит.";
+
+    /// <summary>One or two words with no feeling, topic or person in them, when nothing was asked: not a story to thank anyone for.</summary>
+    public static string Unclear(int streak, bool english, Random random)
+    {
+        if (streak >= 2)
+        {
+            return english
+                ? "Maybe it's easier to start from a feeling. Pick what is closest, or write a few words."
+                : "Может быть, проще начать с чувства. Выберите, что ближе всего, или напишите несколько слов.";
+        }
+
+        return Pick(random, english
+            ? ["I don't quite follow yet. Tell me a little more: what is going on right now?", "I'm not sure what you mean. Could you say a bit more about what is happening?"]
+            : ["Я пока не очень понимаю, о чём вы. Расскажите немного подробнее: что сейчас происходит?", "Мне пока не хватает слов, чтобы понять. Можете сказать чуть больше о том, что происходит?"]);
+    }
+
+    /// <summary>Only exclamation marks.</summary>
+    public static string Exclaims(bool english, Random random) => Pick(random, english
+        ? ["I can feel there's a lot of emotion. I'm here. What happened?", "Sounds like something is boiling inside. I'm listening: what happened?"]
+        : ["Чувствуется, что эмоций много. Я рядом. Что случилось?", "Похоже, внутри всё кипит. Я слушаю: что произошло?"]);
+
     // ----- following the person's feeling, not just nodding -----
 
     /// <summary>A short, specific echo of the feeling for a later message. Replaces the generic "I understand".</summary>

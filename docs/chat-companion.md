@@ -22,6 +22,14 @@ saves the person's message and the whole reply in one transaction and updates th
 
 1. Crisis wording is checked first (`KeywordCrisisDetector`). A hit opens the crisis hub and nothing else runs.
 2. A typed 0-10 number answers the tension question, exactly like the chip.
+2b. Input that is not a message is recognised before anything else is guessed: bare digits ("1111"), key mashing ("asdfgh", "йцукен",
+   "qwerty"), one letter repeated, a repeated unit ("sdfsdf"), a long word with no vowel, "???" (means "what?", the last question is
+   repeated) and "!!!" (strong feeling, not a smile). The companion says plainly that it could not make it out, does not count it as a
+   turn, does not remember it as something said and does not change what it knows (`CompanionState.UnclearStreak`); from the second miss
+   in a row it offers the feelings to pick from. While the tension question is open, digits get the scale explained; a lone 0-10 number
+   with nothing asked gets "what is that number about?"; a short number (up to three digits) after an open question is an answer.
+   Russian typed on the English layout ("ghbdtn" for "привет") is read as Russian when the Russian reading means something to the engine.
+   One or two words with no feeling, topic or person, said when nothing was asked, are not thanked as a story.
 3. `UtteranceClassifier` says what the person is doing: greeting, thanks, goodbye, yes/no, "I don't know", refusing to talk, asking for
    advice, asking to explain, why, is it normal, backchannel, laughter/emoji, good news, how are you, name, capabilities, "say that
    again", "skip". Social phrases count only when the message carries no feeling ("thanks, but I'm still anxious" is a statement).

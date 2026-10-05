@@ -38,7 +38,12 @@ public enum Utterance
     /// <summary>"What?", "repeat", "I didn't get it".</summary>
     AsksToRepeat,
     /// <summary>"Skip this", "ask something else".</summary>
-    SkipsQuestion
+    SkipsQuestion,
+    /// <summary>Not a message: only digits ("1111"), keyboard mashing ("asdfgh", "йцукен"), one letter repeated ("аааа"), a repeated unit
+    /// ("sdfsdf") or a string with no vowels. There is nothing to understand, so the dialogue must not pretend there is.</summary>
+    Noise,
+    /// <summary>Only exclamation marks ("!!!", "!!!!"): strong emotion with no words.</summary>
+    Exclaims
 }
 
 /// <summary>
@@ -95,7 +100,7 @@ public static class UtteranceClassifier
     private static readonly string[] AdviceTerms =
     [
         "что делать", "что мне делать", "как быть", "посоветуй", "посоветуйте", "подскажи что", "подскажите что", "дай совет", "дайте совет", "что посоветуешь", "что посоветуете",
-        "что мне теперь делать", "как мне быть", "what should i do", "what do i do", "any advice", "give me advice", "help me", "what can i do"
+        "что мне теперь делать", "как мне быть", "помоги", "помогите", "нужна помощь", "мне нужна помощь", "what should i do", "what do i do", "any advice", "give me advice", "help me", "need help", "what can i do"
     ];
 
     private static readonly string[] ExplainTerms =
@@ -139,7 +144,9 @@ public static class UtteranceClassifier
         "skip", "next question", "another question", "ask something else", "dont want to answer"
     ];
 
-    private static readonly string[] AcknowledgeTerms = ["ок", "окей", "ясно", "ясненько", "понятно", "ладно", "ну ладно", "понял", "поняла", "принято", "ну ок", "okay", "ok", "i see", "got it", "alright", "understood", "hm", "хм", "мм", "ммм", "гм"];
+    private static readonly string[] AcknowledgeTerms = ["ок", "окей", "ясно", "ясненько", "понятно", "ладно", "ну ладно", "понял", "поняла", "принято", "ну ок", "okay", "ok", "i see", "got it", "alright", "understood", "hm", "хм", "мм", "ммм", "гм",
+        // Fillers and hesitation: a backchannel, not a story.
+        "ну", "эм", "эмм", "э", "ээ", "эээ", "мхм", "и", "а", "так", "вот", "um", "uh", "hmm", "umm", "well", "so"];
 
     private static readonly string[] GoodShortTerms = ["хорошо", "нормально", "отлично", "супер", "прекрасно", "здорово", "good", "great", "fine", "excellent", "awesome"];
 
@@ -163,7 +170,7 @@ public static class UtteranceClassifier
         string normalized = Normalize(text);
         if (normalized.Length == 0)
         {
-            return IsReactionOnly(text) ? Utterance.Reaction : Utterance.Statement;
+            return IsReactionOnly(text) ? ClassifyMarks(text) : Utterance.Statement;
         }
 
         int words = CountWords(normalized);
@@ -290,7 +297,24 @@ public static class UtteranceClassifier
             return Utterance.No;
         }
 
-        return Utterance.Statement;
+        if (IsHesitation(normalized))
+        {
+            return Utterance.Acknowledge;
+        }
+
+        return IsNoise(normalized) ? Utterance.Noise : Utterance.Statement;
+    }
+
+    /// <summary>Messages with no letters or digits: "???" is "what?", "!!!" is strong feeling, anything else (dots, brackets, emoji) is a reaction.</summary>
+    private static Utterance ClassifyMarks(string text)
+    {
+        string marks = new(text.Where(c => !char.IsWhiteSpace(c)).ToArray());
+        if (marks.All(c => c is '?' or '!') && marks.Contains('?'))
+        {
+            return Utterance.AsksToRepeat;
+        }
+
+        return marks.All(c => c == '!') ? Utterance.Exclaims : Utterance.Reaction;
     }
 
     /// <summary>The message starts with a greeting. Short greetings ("hi", "hey", "хай") must be the whole first word, so "high" or "хайп" do not count.</summary>
@@ -310,6 +334,148 @@ public static class UtteranceClassifier
         }
 
         return false;
+    }
+
+    // ----- noise: input with nothing to understand -----
+
+    private static readonly string[] KeyboardRows =
+    [
+        "qwertyuiop", "asdfghjkl", "zxcvbnm", "1234567890",
+        "йцукенгшщзхъ", "фывапролджэ", "ячсмитьбю"
+    ];
+
+    private const string CyrillicVowels = "аеёиоуыэюя";
+    private const string LatinVowels = "aeiouy";
+    private const int MinKeyboardRun = 4;
+    private const int MinRepeatedUnitLength = 6;
+    private const int MinVowelessLength = 5;
+
+    /// <summary>Every word of the (already normalised) message is noise: digits, one letter repeated, a stretch of a keyboard row,
+    /// a short unit repeated ("sdfsdf") or a long word with no vowel. Real words, names, laughter and feelings never match.</summary>
+    public static bool IsNoise(string normalized)
+    {
+        string[] tokens = normalized.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        return tokens.Length > 0 && tokens.All(IsNoiseToken);
+    }
+
+    private static bool IsNoiseToken(string token)
+    {
+        if (token.All(char.IsDigit))
+        {
+            return true;
+        }
+
+        if (!token.All(char.IsLetter))
+        {
+            return false;
+        }
+
+        if (token.Length >= 3 && token.All(c => c == token[0]))
+        {
+            return true;
+        }
+
+        if (token.Length >= MinKeyboardRun && KeyboardRows.Any(row => row.Contains(token, StringComparison.Ordinal) || Reversed(row).Contains(token, StringComparison.Ordinal)))
+        {
+            return true;
+        }
+
+        if (token.Length >= MinRepeatedUnitLength && IsRepeatedUnit(token))
+        {
+            return true;
+        }
+
+        return token.Length >= MinVowelessLength && !token.Any(c => CyrillicVowels.Contains(c) || LatinVowels.Contains(c));
+    }
+
+    private static string Reversed(string value) => new(value.Reverse().ToArray());
+
+    /// <summary>"sdfsdf", "ыфвыфв": a one- to three-letter unit repeated through the whole token.</summary>
+    private static bool IsRepeatedUnit(string token)
+    {
+        for (int unit = 1; unit <= 3; unit++)
+        {
+            if (token.Length % unit != 0 || token.Length / unit < 2)
+            {
+                continue;
+            }
+
+            bool repeated = true;
+            for (int i = unit; i < token.Length && repeated; i++)
+            {
+                repeated = token[i] == token[i - unit];
+            }
+
+            if (repeated)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>"ммм", "эээ", "hmm", "uhh": hesitation sounds, a backchannel rather than a mash of keys.</summary>
+    private static bool IsHesitation(string normalized) =>
+        normalized.Length >= 2
+        && !normalized.Contains(' ')
+        && (normalized.All(c => "мэхы".Contains(c)) || normalized.All(c => "mhu".Contains(c)));
+
+    /// <summary>Only digits (and separators): "1111", "12 34", "10:30". Callers decide whether that is a 0-10 answer.</summary>
+    public static bool IsDigitsOnly(string text)
+    {
+        string trimmed = text.Trim();
+        return trimmed.Length > 0
+            && trimmed.Any(char.IsDigit)
+            && trimmed.All(c => char.IsDigit(c) || char.IsWhiteSpace(c) || c is '-' or '.' or ',' or ':' or '/');
+    }
+
+    private const string LatinKeys = "qwertyuiopasdfghjklzxcvbnm";
+    private const string CyrillicKeys = "йцукенгшщзфывапролдячсмить";
+
+    /// <summary>
+    /// A Russian message typed with the English layout ("ghbdtn" is "привет"). Returns the text as the same keys would give on the
+    /// Russian layout, or null when the text is not plausibly that (it has other characters, or is too short to tell).
+    /// The caller must still check that the result means something, because "hello" maps to nonsense and must stay "hello".
+    /// </summary>
+    public static string? TryFixLayout(string text)
+    {
+        string trimmed = text.Trim();
+        if (trimmed.Count(c => c is >= 'a' and <= 'z' or >= 'A' and <= 'Z') < 3
+            || !trimmed.All(c => c is >= 'a' and <= 'z' or >= 'A' and <= 'Z' or ' ' or '[' or ']' or ';' or '\'' or ',' or '.' or '`'))
+        {
+            return null;
+        }
+
+        System.Text.StringBuilder mapped = new(trimmed.Length);
+        for (int i = 0; i < trimmed.Length; i++)
+        {
+            char c = trimmed[i];
+            bool upper = char.IsUpper(c);
+            int key = LatinKeys.IndexOf(char.ToLowerInvariant(c));
+            if (key >= 0)
+            {
+                char letter = CyrillicKeys[key];
+                mapped.Append(upper ? char.ToUpperInvariant(letter) : letter);
+                continue;
+            }
+
+            // Punctuation keys are letters on the Russian layout, but only inside a word ("ghbdtn," ends in a comma, not in "б").
+            bool insideWord = i > 0 && i < trimmed.Length - 1 && char.IsLetter(trimmed[i - 1]) && char.IsLetter(trimmed[i + 1]);
+            mapped.Append(insideWord ? c switch
+            {
+                '[' => 'х',
+                ']' => 'ъ',
+                ';' => 'ж',
+                '\'' => 'э',
+                ',' => 'б',
+                '.' => 'ю',
+                '`' => 'ё',
+                _ => c
+            } : c);
+        }
+
+        return mapped.ToString();
     }
 
     /// <summary>Text with no letters at all: dots, brackets, emoji. Laughter and sad faces are reactions, not empty messages.</summary>

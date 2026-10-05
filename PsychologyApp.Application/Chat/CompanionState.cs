@@ -26,6 +26,10 @@ public sealed record CompanionState
     public int TurnsSinceOffer { get; init; } = 99;
 
     public int UnknownStreak { get; init; }
+
+    /// <summary>Messages in a row that were not understood at all (digits, key mashing, one or two empty words). Not a feeling streak:
+    /// it only decides when to stop asking for words and offer the feelings to pick from.</summary>
+    public int UnclearStreak { get; init; }
     public bool ScaleAsked { get; init; }
 
     /// <summary>The next 0..10 answer is the tension after a practice, not before it.</summary>
@@ -114,6 +118,7 @@ public sealed record CompanionState
             WriteOptional(w, "last", LastIntensity);
             w.WriteNumber("sinceOffer", TurnsSinceOffer);
             w.WriteNumber("unknownStreak", UnknownStreak);
+            w.WriteNumber("unclearStreak", UnclearStreak);
             w.WriteBoolean("scaleAsked", ScaleAsked);
             w.WriteBoolean("awaitingPost", AwaitingPostPracticeRating);
             WriteArray(w, "asked", AskedQuestions);
@@ -165,6 +170,7 @@ public sealed record CompanionState
                 LastIntensity = Int(r, "last"),
                 TurnsSinceOffer = Int(r, "sinceOffer") ?? 99,
                 UnknownStreak = Int(r, "unknownStreak") ?? 0,
+                UnclearStreak = Int(r, "unclearStreak") ?? 0,
                 ScaleAsked = Bool(r, "scaleAsked"),
                 AwaitingPostPracticeRating = Bool(r, "awaitingPost"),
                 AskedQuestions = Array(r, "asked"),

@@ -155,13 +155,27 @@ public sealed partial class CompanionDialogue(
         return reply with { State = reply.State with { QuestionPending = asked, LastQuestion = asked ? last : reply.State.LastQuestion } };
     }
 
+    /// <summary>
+    /// A message the engine could not understand (digits, key mashing, one or two empty words) raises <see cref="CompanionState.UnclearStreak"/>;
+    /// anything it did understand resets it, so the "pick a feeling" help only appears after several misses in a row.
+    /// </summary>
     private CompanionReply RespondToText(CompanionState previous, string raw, bool namePending)
+    {
+        CompanionReply reply = RespondToTextCore(previous, raw, namePending);
+        return reply.State.UnclearStreak > previous.UnclearStreak|| reply.State.UnclearStreak == 0
+            ? reply
+            : reply with { State = reply.State with { UnclearStreak = 0 } };
+    }
+
+    private CompanionReply RespondToTextCore(CompanionState previous, string raw, bool namePending)
     {
         string text = raw.Trim();
         if (text.Length == 0)
         {
             return CompanionReply.Empty(previous);
         }
+
+        text = FixWrongLayout(text);
 
         if (crisisDetector.IsCrisis(text))
         {
@@ -187,6 +201,20 @@ public sealed partial class CompanionDialogue(
             return RespondToRating(previous, typedRating, ParseEmotion(previous.Emotion), ParseTheme(previous.Theme));
         }
 
+        if (act == Utterance.Noise)
+        {
+            bool digits = UtteranceClassifier.IsDigitsOnly(text);
+            if (digits && previous.QuestionPending && !IsScaleQuestion(previous) && IsShortNumber(text))
+            {
+                // "5" after "how many times a week?" answers a question; "1111" answers nothing, and bare digits with nothing asked are noise.
+                act = Utterance.Statement;
+            }
+            else
+            {
+                return RespondToNoise(previous, text, digits);
+            }
+        }
+
         // "хорошо" after a question about the problem is agreement; only in a chat with no problem yet it is good news.
         if (act == Utterance.SharesGoodNews && previous.QuestionPending && ParseEmotion(previous.Emotion) != CompanionEmotion.Unknown && text.Split(' ').Length <= 3)
         {
@@ -204,9 +232,83 @@ public sealed partial class CompanionDialogue(
             return Introduce(previous, given);
         }
 
+        if (act == Utterance.Statement && !previous.QuestionPending && IsUnclearShort(text, single))
+        {
+            return RespondToUnclear(previous);
+        }
+
         return act == Utterance.Statement
             ? RespondToStatement(previous, text, single)
             : RespondToConversationalMove(previous, act, text, single);
+    }
+
+    /// <summary>Russian typed on the English layout ("ghbdtn" for "привет"): used only when the Russian reading means something to the engine,
+    /// so an English "hello" typed in a Russian chat stays "hello".</summary>
+    private string FixWrongLayout(string text)
+    {
+        if (english || UtteranceClassifier.TryFixLayout(text) is not { } mapped)
+        {
+            return text;
+        }
+
+        bool meaningful = analyzer.Analyze(mapped).Emotion != CompanionEmotion.Unknown
+            || crisisDetector.IsCrisis(mapped)
+            || UtteranceClassifier.Classify(mapped, hasFeeling: false) is not (Utterance.Statement or Utterance.Noise);
+        return meaningful ? mapped : text;
+    }
+
+    /// <summary>One or two words that name no feeling, topic, person or symptom, said when nothing was asked.</summary>
+    private static bool IsUnclearShort(string text, SituationAnalysis analysis) =>
+        text.Split([' ', '-'], StringSplitOptions.RemoveEmptyEntries).Length <= 2
+        && analysis.Emotion == CompanionEmotion.Unknown
+        && analysis.Themes.Count == 0
+        && analysis.Persons is not { Count: > 0 }
+        && !analysis.HasBodySymptoms
+        && !analysis.IsIntense;
+
+    /// <summary>A number a person could plausibly give as an answer: one to three digits ("5", "30", "120"), not "1111".</summary>
+    private static bool IsShortNumber(string text)
+    {
+        string trimmed = text.Trim().TrimEnd('.', '!');
+        return trimmed.Length is >= 1 and <= 3 && trimmed.All(char.IsDigit);
+    }
+
+    private CompanionReply RespondToUnclear(CompanionState previous)
+    {
+        CompanionState state = previous with { UnclearStreak = previous.UnclearStreak + 1 };
+        return Reply(
+            [CompanionSmallTalk.Unclear(state.UnclearStreak, english, _random)],
+            state.UnclearStreak >= 2 ? EmotionReplies() : [],
+            state,
+            ParseEmotion(state.Emotion),
+            ParseTheme(state.Theme));
+    }
+
+    /// <summary>Nothing to understand: it does not count as a turn, is not remembered as something said, and does not move the dialogue on.</summary>
+    private CompanionReply RespondToNoise(CompanionState previous, string text, bool digits)
+    {
+        CompanionEmotion emotion = ParseEmotion(previous.Emotion);
+        CompanionTheme? theme = ParseTheme(previous.Theme);
+
+        // "1111" while the tension question is open: explain the scale instead of acting as if it were a story.
+        if (digits && IsScaleQuestion(previous))
+        {
+            return Reply([CompanionSmallTalk.ScaleHelp(english)], RatingReplies(), previous, emotion, theme);
+        }
+
+        // A lone 0-10 number with no question open.
+        if (digits && TryParseRating(text, out _))
+        {
+            return Reply([CompanionSmallTalk.NumberOutOfContext(english)], [], previous, emotion, theme);
+        }
+
+        CompanionState state = previous with { UnclearStreak = previous.UnclearStreak + 1 };
+        return Reply(
+            [CompanionSmallTalk.Noise(digits, state.UnclearStreak, english, _random)],
+            state.UnclearStreak >= 2 ? EmotionReplies() : [],
+            state,
+            emotion,
+            theme);
     }
 
     private CompanionReply Introduce(CompanionState previous, string name)
@@ -256,6 +358,7 @@ public sealed partial class CompanionDialogue(
                 theme),
             Utterance.Acknowledge => Reply([CompanionSmallTalk.Acknowledge(previous.QuestionPending, english, _random)], [], state, emotion, theme),
             Utterance.Reaction => Reply([CompanionSmallTalk.Reaction(text, UtteranceClassifier.IsSadReaction(text), english, _random)], [], state, emotion, theme),
+            Utterance.Exclaims => Reply([CompanionSmallTalk.Exclaims(english, _random)], [], state, emotion, theme),
             Utterance.SharesGoodNews => Reply([CompanionSmallTalk.GoodNews(english, _random)], CompanionSmallTalk.GoodNewsReplies(english), state, emotion, theme),
             Utterance.AsksHowAreYou => Reply([CompanionSmallTalk.HowAreYou(english, _random)], [], state, emotion, theme),
             Utterance.AsksName => Reply([CompanionSmallTalk.Name(english)], [], state with { NamePending = true }, emotion, theme),
