@@ -61,7 +61,7 @@ public sealed class AndroidMoodReminderScheduler : IMoodReminderScheduler
         PendingIntent pendingIntent = CreateAlarmPendingIntent(context, title, body);
         long triggerAtMillis = new DateTimeOffset(DateTime.SpecifyKind(fireLocal, DateTimeKind.Local)).ToUnixTimeMilliseconds();
 
-        AndroidAlarms.SetExactAndDispose(alarmManager, triggerAtMillis, pendingIntent);
+        AndroidAlarms.SetReminderAndDispose(alarmManager, triggerAtMillis, pendingIntent);
     }
 
     internal static void EnsureNotificationChannel(Context context)

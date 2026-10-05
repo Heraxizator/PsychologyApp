@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using PsychologyApp.Application.Exceptions;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Shared.UI.Overlays;
@@ -50,12 +51,31 @@ public sealed class GlobalExceptionHandler
             return;
         }
 
-        LogAndNotify(ex, "Unhandled domain exception", useDialog: e.IsTerminating);
+        if (e.IsTerminating)
+        {
+            // The process is ending: a dialog would never be seen and the queued logger may not be drained, so write the crash straight to disk.
+            DebugFileLoggerProvider.AppendNow(
+                DebugFileLoggerProvider.ErrorLogPath,
+                $"[{DateTimeOffset.Now:yyyy-MM-dd HH:mm:ss.fff}] CRASH Unhandled domain exception: {ex}");
+            return;
+        }
+
+        LogAndNotify(ex, "Unhandled domain exception", useDialog: false);
     }
 
     private void OnUnobservedTask(object? sender, UnobservedTaskExceptionEventArgs e)
     {
-        LogAndNotify(e.Exception, "Unobserved task exception", useDialog: false);
+        // Nobody awaited this task, so the person cannot act on it and a red toast for it is only noise (cancellations, dropped connections).
+        // It is logged; the task is marked observed so it cannot take the process down.
+        try
+        {
+            _logger.LogWarning(e.Exception.Flatten(), "Unobserved task exception");
+        }
+        catch
+        {
+            System.Diagnostics.Debug.WriteLine(e.Exception);
+        }
+
         e.SetObserved();
     }
 
@@ -72,6 +92,11 @@ public sealed class GlobalExceptionHandler
         catch
         {
             System.Diagnostics.Debug.WriteLine($"{message}: {exception}");
+        }
+
+        if (IsExpectedNoise(exception))
+        {
+            return;
         }
 
         string userMessage = GetUserMessage(exception);
@@ -95,13 +120,18 @@ public sealed class GlobalExceptionHandler
         });
     }
 
+    /// <summary>A cancelled operation is not a failure, and a dropped connection is not something the person caused or can fix by being told.</summary>
+    private static bool IsExpectedNoise(Exception exception) =>
+        exception is OperationCanceledException or TaskCanceledException
+        || exception is AggregateException aggregate && aggregate.Flatten().InnerExceptions.All(IsExpectedNoise);
+
+    // Only messages written for people (localized) are shown; an exception's own text is technical, English and often about SQL or entities.
     private static string GetUserMessage(Exception exception) =>
         exception switch
         {
             TechniqueNotFoundException => AppStrings.TechniqueNotFound,
             QuotNotFoundException => AppStrings.QuoteNotFound,
             NotFoundException => AppStrings.UnexpectedErrorMessage,
-            AppException app => app.Message,
             _ => AppStrings.UnexpectedErrorMessage
         };
 }

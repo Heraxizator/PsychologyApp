@@ -15,6 +15,11 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 - `docs/chat-companion.md` describes the engine, the state, the memory and its limits.
 
 ### Fixed
+- Release builds now keep a local error log (warnings and errors only, `logs/app-errors.log`, capped at 2 MB; crashes are written straight to disk). Before, Release had no log sink and every `LogError` vanished. The data screen has "Share error log" (the file holds technical errors, not entries; nothing is sent automatically).
+- Global error handling: raw exception messages (English, about SQL or entities) are no longer shown to the person; cancellations are not reported; an unobserved background task is logged instead of raising a red toast; a terminating crash is written to disk instead of opening a dialog nobody will see.
+- Reminders use inexact alarms (`SetAndAllowWhileIdle`) and the `SCHEDULE_EXACT_ALARM` permission is gone from the manifest: a daily reminder does not need exact delivery and Google Play reserves that permission for alarm/calendar apps.
+- Page-visit statistics (written on every screen view, read by nothing but a distinct-page count) are pruned at startup to 90 days; the latest row of every page is kept.
+- Measured and not adopted: a minimum confidence for naming a feeling in the chat (a single clear keyword and an accidental match both score 0.5; see docs/companion-understanding.md).
 - Safety: an answer other than "never" to the suicide question of the Beck inventory (item 9) or the PHQ-9 (item 9) is now a risk signal on its own: it is recorded like the risk check (so the startup gate and the dashboard react) and the crisis screen opens right after the result, whatever the total.
 - Beck inventory scoring takes the highest ticked statement of each group (the standard rule) instead of summing every ticked statement, so ticking several statements no longer inflates the total and the severity band.
 - Chat turns are saved atomically: memory counters, the messages and the chat's state/title go to the database in one transaction (`IChatRepository.SaveTurnAsync`), and turns of one chat run one at a time, so a crash or a double send can no longer leave messages without their state or lose a turn; starting a chat from several taps makes one chat.

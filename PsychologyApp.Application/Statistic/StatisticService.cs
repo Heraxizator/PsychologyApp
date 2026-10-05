@@ -13,4 +13,7 @@ public sealed class StatisticService(IStatisticRepository statisticRepository) :
 
     public async Task<long> CountPageCompletedAsync(CancellationToken cancellationToken = default) =>
         await statisticRepository.CountDistinctPagesAsync(cancellationToken).ConfigureAwait(false);
+
+    public Task<int> PruneAsync(TimeSpan retention, CancellationToken cancellationToken = default) =>
+        statisticRepository.PruneAsync(DateTime.UtcNow - retention, cancellationToken);
 }

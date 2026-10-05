@@ -36,6 +36,20 @@ public sealed class StatisticRepository : BaseRepository<Statistic>, IStatisticR
             cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
+    public async Task<int> PruneAsync(DateTime olderThanUtc, CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        return await connection.ExecuteAsync(DapperCommandFactory.Create(
+            """
+            DELETE FROM Statistics
+            WHERE DateTime < @cutoff
+              AND StatisticId NOT IN (SELECT MAX(StatisticId) FROM Statistics GROUP BY PageName);
+            """,
+            new { cutoff = SqliteTime.ToIso(olderThanUtc) },
+            commandTimeout: CommandTimeoutSeconds,
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
+    }
+
     public async Task<IEnumerable<Statistic>> GetRecentAsync(int limit, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);

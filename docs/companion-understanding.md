@@ -65,3 +65,19 @@ dotnet run -c Release --project tools/PsychologyApp.NluEval -- <e5-dir> \
 
 `<e5-dir>` holds `model_qint8_avx512_vnni.onnx` and `sentencepiece.bpe.model` from `intfloat/multilingual-e5-small` (MIT).
 Do not tune the lexicon on the held-out set; replace it with a fresh set first.
+
+## Confidence is not a usable "is this a guess?" signal (measured)
+
+`SituationAnalysis.Confidence` is `top / (top + second + 1)`. A single clear keyword ("anxious", "тревожно") scores exactly 0.5, the same as one
+accidental match, so a threshold cannot tell them apart. Measured precision of the named feeling, by minimum confidence:
+
+| Minimum confidence | Development set (named / precision) | Held-out set (named / precision) |
+|--------------------|-------------------------------------|----------------------------------|
+| 0 | 145 / 99% | 19 / 74% |
+| 0.51 | 119 / 99% | 12 / 83% |
+| 0.67 | 50 / 100% | 2 / 100% |
+
+Requiring 0.51 raised held-out precision from 74% to 83% but made the dialogue stop naming obvious single-keyword messages
+("I feel so anxious about my job"), which broke three existing dialogue tests, so it was not adopted. The held-out problem is mostly
+**coverage** (19 of 60 messages named at all), not wrong names: better recall needs a larger lexicon or the embedding fallback
+described above, not a confidence cut-off.

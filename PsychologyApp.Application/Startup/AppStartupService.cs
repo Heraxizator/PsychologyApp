@@ -6,6 +6,7 @@ using PsychologyApp.Application.Abstractions.Startup;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Practice;
 using PsychologyApp.Application.Quot;
+using PsychologyApp.Application.Statistic;
 
 namespace PsychologyApp.Application.Startup;
 
@@ -15,7 +16,8 @@ public sealed class AppStartupService(
     IQuoteCatalogVersionStore quoteCatalogVersionStore,
     ITechniqueCatalogService techniqueCatalogService,
     IOptions<AppSettings> settings,
-    ILogger<AppStartupService> logger) : IAppStartupService
+    ILogger<AppStartupService> logger,
+    IStatisticService? statistics = null) : IAppStartupService
 {
     public async Task InitializeAsync(CancellationToken cancellationToken = default)
     {
@@ -27,7 +29,29 @@ public sealed class AppStartupService(
         await Task.WhenAll(
             SeedQuotesAsync(timeoutSource.Token),
             PrewarmTechniqueCatalogAsync(timeoutSource.Token)).ConfigureAwait(false);
+
+        await PruneStatisticsAsync(cancellationToken).ConfigureAwait(false);
     }
+
+    /// <summary>Page-visit history is written on every screen view and read by nothing but a distinct-page count: keep 90 days of it.</summary>
+    private async Task PruneStatisticsAsync(CancellationToken cancellationToken)
+    {
+        if (statistics is null)
+        {
+            return;
+        }
+
+        try
+        {
+            await statistics.PruneAsync(StatisticsRetention, cancellationToken).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "Pruning page statistics failed; app can continue.");
+        }
+    }
+
+    private static readonly TimeSpan StatisticsRetention = TimeSpan.FromDays(90);
 
     private async Task SeedQuotesAsync(CancellationToken cancellationToken)
     {

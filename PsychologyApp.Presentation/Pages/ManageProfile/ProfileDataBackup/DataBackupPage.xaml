@@ -52,6 +52,16 @@
                     <behaviors:ListItemRevealBehavior RevealIndex="3" />
                 </ui:SettingsLinkCardView.Behaviors>
             </ui:SettingsLinkCardView>
+
+            <ui:SettingsLinkCardView
+                Title="{Binding ErrorLogTitle}"
+                Subtitle="{Binding ErrorLogSubtitle}"
+                IconName="ErrorOutline"
+                TapCommand="{Binding ShareErrorLogCommand}">
+                <ui:SettingsLinkCardView.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="4" />
+                </ui:SettingsLinkCardView.Behaviors>
+            </ui:SettingsLinkCardView>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

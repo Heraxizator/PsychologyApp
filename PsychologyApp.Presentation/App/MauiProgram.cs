@@ -50,7 +50,10 @@ public static class MauiProgram
         string logFilePath = Path.Combine(FileSystem.AppDataDirectory, "logs", "app-debug.log");
         builder.Logging.AddProvider(new DebugFileLoggerProvider(logFilePath));
 #else
+        // Release had no log sink at all, so every LogError vanished and field crashes could not be diagnosed. Warnings and errors now go
+        // to a small local file (the person can share it from the data screen); nothing leaves the device by itself.
         builder.Logging.SetMinimumLevel(LogLevel.Information);
+        builder.Logging.AddProvider(new DebugFileLoggerProvider(DebugFileLoggerProvider.ErrorLogPath, LogLevel.Warning));
 #endif
 
         builder.Services.AddPsychologyAppCore(settings =>

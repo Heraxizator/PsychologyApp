@@ -22,6 +22,10 @@ public sealed class DataBackupViewModel : BaseViewModel
     public ICommand ExportBackupCommand { get; }
     public ICommand ImportBackupCommand { get; }
     public ICommand ExportSummaryCommand { get; }
+    public ICommand ShareErrorLogCommand { get; }
+
+    public string ErrorLogTitle => AppStrings.ErrorLogTitle;
+    public string ErrorLogSubtitle => AppStrings.ErrorLogSubtitle;
 
     public string PageTitle => AppStrings.DataBackupTitle;
     public string LeadText => AppStrings.DataBackupLead;
@@ -47,6 +51,7 @@ public sealed class DataBackupViewModel : BaseViewModel
         ExportBackupCommand = new AsyncCommand(ExportBackupAsync);
         ImportBackupCommand = new AsyncCommand(ImportBackupAsync);
         ExportSummaryCommand = new AsyncCommand(ExportSummaryAsync);
+        ShareErrorLogCommand = new AsyncCommand(ShareErrorLogAsync);
     }
 
     protected override void RefreshLocalizedProperties()
@@ -59,7 +64,9 @@ public sealed class DataBackupViewModel : BaseViewModel
             nameof(ImportTitle),
             nameof(ImportSubtitle),
             nameof(SummaryTitle),
-            nameof(SummarySubtitle));
+            nameof(SummarySubtitle),
+            nameof(ErrorLogTitle),
+            nameof(ErrorLogSubtitle));
     }
 
     private async Task ExportBackupAsync()
@@ -140,6 +147,28 @@ public sealed class DataBackupViewModel : BaseViewModel
             // The transaction rolled back, so the database is exactly as it was before the attempt.
             _toastService.LongToast(AppStrings.DataBackupImportRolledBackToast, AppToastKind.Error);
         }
+    }
+
+    private async Task ShareErrorLogAsync()
+    {
+        string text;
+        try
+        {
+            string path = Shared.Common.Infrastructure.DebugFileLoggerProvider.ErrorLogPath;
+            text = File.Exists(path) ? await File.ReadAllTextAsync(path, Encoding.UTF8) : string.Empty;
+        }
+        catch (IOException)
+        {
+            text = string.Empty;
+        }
+
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            _toastService.ShortToast(AppStrings.ErrorLogEmptyToast);
+            return;
+        }
+
+        await ShareTemporaryFileAsync($"psychologyapp-errors-{DateTime.Now:yyyyMMdd-HHmm}.log", text, AppStrings.ErrorLogTitle);
     }
 
     private async Task ExportSummaryAsync()
