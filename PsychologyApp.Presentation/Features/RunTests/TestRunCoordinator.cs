@@ -1,4 +1,6 @@
-﻿using PsychologyApp.Application.Models.Tests;
+﻿using PsychologyApp.Application.ClinicalCare;
+using PsychologyApp.Application.Models;
+using PsychologyApp.Application.Models.Tests;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Navigation;
 
@@ -16,7 +18,8 @@ public sealed record QuestionnaireSavedResult(
 
 public sealed class TestRunCoordinator(
     QuestionnaireSubmissionService submissionService,
-    QuestionnaireDetailBuilder detailBuilder)
+    QuestionnaireDetailBuilder detailBuilder,
+    IClinicalCareService? clinicalCareService = null)
 {
     public Task StartAsync(TestDefinition definition, INavigationService navigationService) =>
         definition.Kind switch
@@ -82,6 +85,24 @@ public sealed class TestRunCoordinator(
             cancellationToken,
             detailJson);
 
+        // An answer other than "never" to the question about suicidal thoughts is a risk signal in its own right, whatever the total:
+        // it is recorded exactly like the risk check, so the startup gate and the dashboard treat it the same way.
+        if (submission.SelfHarmItemEndorsed && clinicalCareService is not null)
+        {
+            // The result is already saved at this point, so a failure to record the risk must not fail the whole completion
+            // (a retry would save the result twice); the crisis screen still opens below.
+            try
+            {
+                await clinicalCareService.AssessRiskAsync(
+                    new RiskAssessmentInput { HasSelfHarmThoughts = true, Source = $"test:{request.Session.AnalyzerId}" },
+                    cancellationToken);
+            }
+            catch (Exception ex) when (ex is not OperationCanceledException)
+            {
+                System.Diagnostics.Trace.TraceError("Could not record the risk signal from a questionnaire: " + ex);
+            }
+        }
+
         return new QuestionnaireSavedResult(submission, detail, request);
     }
 
@@ -103,7 +124,8 @@ public sealed class TestRunCoordinator(
                 request.Session.AnalyzerId,
                 saved.Detail,
                 cancellationToken),
-            status => status == NavigationRunStatus.Completed,
+            // A repeated tap on "finish" is dropped as a duplicate: the page is already opening, which is not a failure to retry.
+            status => status is NavigationRunStatus.Completed or NavigationRunStatus.DroppedDuplicate,
             maxAttempts: 3,
             delay: TimeSpan.FromMilliseconds(150),
             cancellationToken);
@@ -111,6 +133,12 @@ public sealed class TestRunCoordinator(
         if (!completed)
         {
             throw new TestCompletionNavigationException();
+        }
+
+        // After the result is on screen: help first, then the numbers. Back from the crisis screen returns to the result.
+        if (submission.SelfHarmItemEndorsed)
+        {
+            await navigationService.GoToCrisisHubAsync();
         }
     }
 

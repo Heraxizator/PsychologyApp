@@ -44,8 +44,10 @@ public sealed class AppStartupService(
                 await quotService.LoadSingleAsync(cancellationToken).ConfigureAwait(false);
             }
         }
-        catch (Exception ex) when (ex is InvalidOperationException or OperationCanceledException or JsonException)
+        catch (Exception ex)
         {
+            // Any failure here (a bad asset, a database error, the startup deadline) is survivable: the quotes are seeded again next start,
+            // because the catalogue version is only recorded after a complete seeding.
             logger.LogError(ex, "Preload quotes failed; app can continue.");
         }
     }
@@ -56,7 +58,7 @@ public sealed class AppStartupService(
         {
             await techniqueCatalogService.GetAllAsync(cancellationToken).ConfigureAwait(false);
         }
-        catch (Exception ex) when (ex is InvalidOperationException or OperationCanceledException or JsonException)
+        catch (Exception ex)
         {
             logger.LogError(ex, "Preload technique catalog failed; app can continue.");
         }

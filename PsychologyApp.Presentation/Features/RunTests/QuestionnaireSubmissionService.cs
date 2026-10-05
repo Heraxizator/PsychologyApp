@@ -8,7 +8,8 @@ public sealed record QuestionnaireSubmission(
     int Score,
     string Interpretation,
     TechniqueId? RecommendedTechnique,
-    string? InterpretationDetail);
+    string? InterpretationDetail,
+    bool SelfHarmItemEndorsed = false);
 
 public sealed class QuestionnaireSubmissionService(IQuestionnaireScoringService scoringService)
 {
@@ -27,7 +28,8 @@ public sealed class QuestionnaireSubmissionService(IQuestionnaireScoringService 
             result.Score,
             interpretation,
             result.RecommendedTechnique,
-            interpretationDetail);
+            interpretationDetail,
+            result.SelfHarmItemEndorsed);
     }
 
     public Task SaveAsync(

@@ -36,4 +36,40 @@ public interface IChatRepository
     Task DeleteMemoryAsync(string key, CancellationToken cancellationToken = default);
 
     Task ClearMemoryAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Everything one turn changes, saved together: the memory it revealed, the messages (user and companion) and the session
+    /// (state, title, activity time). Either all of it is stored or none of it, so a chat can never show messages whose state was
+    /// lost, or counters for a turn that was not saved. Returns the message ids in order. Implementations should make it one
+    /// transaction; this default applies the steps one after another.
+    /// </summary>
+    async Task<IReadOnlyList<long>> SaveTurnAsync(
+        ChatSessionDTO session,
+        IReadOnlyList<ChatMessageDTO> messages,
+        IReadOnlyList<ChatMemoryChange> memory,
+        CancellationToken cancellationToken = default)
+    {
+        foreach (ChatMemoryChange change in memory)
+        {
+            if (change.Increment)
+            {
+                await IncrementMemoryAsync(change.Key, cancellationToken).ConfigureAwait(false);
+            }
+            else if (change.Value is null)
+            {
+                await DeleteMemoryAsync(change.Key, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                await SetMemoryAsync(change.Key, change.Value, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        IReadOnlyList<long> ids = await AddMessagesAsync(messages, cancellationToken).ConfigureAwait(false);
+        await UpdateSessionAsync(session, cancellationToken).ConfigureAwait(false);
+        return ids;
+    }
 }
+
+/// <summary>One change to what the companion remembers: set a value, add one to a counter, or (null value, no increment) forget a key.</summary>
+public sealed record ChatMemoryChange(string Key, string? Value = null, bool Increment = false);

@@ -568,4 +568,26 @@ public class ChatServiceTests
 
         Assert.DoesNotContain(offer.NewMessages, m => m.Text.Contains("Умеренный стресс"));
     }
+    [Fact]
+    public async Task Turns_sent_at_the_same_time_are_all_kept_and_counted()
+    {
+        ChatService service = CreateService();
+        long id = (await service.StartNewChatAsync()).Session.Id;
+
+        await Task.WhenAll(Enumerable.Range(0, 8).Select(i => service.SendTextAsync(id, $"Мне тревожно {i}")));
+
+        ChatSessionDTO session = (await service.GetChatAsync(id))!;
+        Assert.Equal(8, CompanionState.Deserialize(session.StateJson).Turns);
+        Assert.Equal(8, (await service.GetMessagesAsync(id)).Count(m => m.Role == ChatRole.User));
+    }
+
+    [Fact]
+    public async Task Starting_a_chat_from_many_taps_makes_only_one_chat()
+    {
+        ChatService service = CreateService();
+
+        await Task.WhenAll(Enumerable.Range(0, 6).Select(_ => service.StartNewChatAsync()));
+
+        Assert.Single(await service.GetChatsAsync());
+    }
 }

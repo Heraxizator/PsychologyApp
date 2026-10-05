@@ -27,7 +27,11 @@ public static class ChatText
             {
                 if (atSentenceStart)
                 {
-                    chars[i] = char.ToUpperInvariant(c);
+                    if (!IsVerbatimToken(chars, i))
+                    {
+                        chars[i] = char.ToUpperInvariant(c);
+                    }
+
                     atSentenceStart = false;
                 }
 
@@ -55,6 +59,22 @@ public static class ChatText
         }
 
         return new string(chars);
+    }
+
+    /// <summary>An address, a link or a mixed-case name ("iPhone", "eBay") is left exactly as typed: capitalising it would change what it is.</summary>
+    private static bool IsVerbatimToken(char[] chars, int start)
+    {
+        int end = start;
+        while (end < chars.Length && !char.IsWhiteSpace(chars[end]))
+        {
+            end++;
+        }
+
+        string token = new(chars, start, end - start);
+        return token.Contains('@')
+            || token.Contains("://", StringComparison.Ordinal)
+            || token.StartsWith("www.", StringComparison.OrdinalIgnoreCase)
+            || token.Skip(1).Any(char.IsUpper);
     }
 
     private static bool NextIsSpaceOrEnd(char[] chars, int index) =>

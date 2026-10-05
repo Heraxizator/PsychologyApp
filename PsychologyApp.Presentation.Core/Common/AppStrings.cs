@@ -147,6 +147,11 @@ public static partial class AppStrings
     public static string ReviewExplanation => T(
         "Вы можете сообщить о проблеме или предложить свои идеи о том, как сделать приложение ещё лучше. Служба поддержки получит ваше сообщение.",
         "You can report a problem or suggest ideas to improve the app. Support will receive your message.");
+    // Without a configured address the message goes to the phone's share sheet, so the text must not promise that support receives it.
+    public static string ReviewExplanationShare => T(
+        "Опишите проблему или идею и выберите, куда отправить сообщение: почта, мессенджер или заметки. Приложение само ничего не отправляет разработчику.",
+        "Describe a problem or an idea and choose where to send it: email, a messenger or notes. The app does not send anything to the developer by itself.");
+    public static string ReviewShareButton => T("Поделиться", "Share");
     public static string ReviewMessagePlaceholder => T(
         "Опишите проблему или идею…",
         "Describe the issue or idea…");

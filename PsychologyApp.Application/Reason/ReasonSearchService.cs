@@ -1,4 +1,5 @@
 ﻿using PsychologyApp.Application.Abstractions.Integration;
+using PsychologyApp.Application.Common;
 using PsychologyApp.Application.Models;
 
 namespace PsychologyApp.Application.Reason;
@@ -20,8 +21,14 @@ public sealed class ReasonSearchService(IReasonContentProvider reasonContentProv
             return [];
         }
 
+        IReadOnlyList<string> stems = SearchText.Stems(query);
+        if (stems.Count == 0)
+        {
+            return [];
+        }
+
         return source
-            .Select(reason => (Reason: reason, Score: TryGetMatchScore(reason, query)))
+            .Select(reason => (Reason: reason, Score: TryGetMatchScore(reason, stems)))
             .Where(match => match.Score is not null)
             .Select(match => new RankedReason(match.Reason, match.Score!.Value))
             .OrderByDescending(pair => pair.MatchScore)
@@ -29,18 +36,18 @@ public sealed class ReasonSearchService(IReasonContentProvider reasonContentProv
             .ToList();
     }
 
-    private static int? TryGetMatchScore(ReasonDTO reason, string searchText)
+    private static int? TryGetMatchScore(ReasonDTO reason, IReadOnlyList<string> stems)
     {
-        if (reason.Title?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true)
+        if (SearchText.Matches(reason.Title, stems))
         {
             return 3;
         }
 
-        if (reason.Subtitle?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true)
+        if (SearchText.Matches(reason.Subtitle, stems))
         {
             return 2;
         }
 
-        return reason.Solution?.Contains(searchText, StringComparison.OrdinalIgnoreCase) is true ? 1 : null;
+        return SearchText.Matches(reason.Solution, stems) ? 1 : null;
     }
 }

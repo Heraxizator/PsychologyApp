@@ -1,4 +1,5 @@
 using PsychologyApp.Application.Abstractions.Integration;
+using PsychologyApp.Application.Common;
 
 namespace PsychologyApp.Application.Quot;
 
@@ -14,7 +15,12 @@ public sealed class QuoteSearchService(IQuotContentProvider quotContentProvider)
             return [];
         }
 
-        string normalizedQuery = query.Trim();
+        IReadOnlyList<string> stems = SearchText.Stems(query);
+        if (stems.Count == 0)
+        {
+            return [];
+        }
+
         IReadOnlyList<QuotSeed> seeds = await quotContentProvider.LoadAllAsync(cancellationToken).ConfigureAwait(false);
         List<QuotSeed> results = [];
 
@@ -25,9 +31,9 @@ public sealed class QuoteSearchService(IQuotContentProvider quotContentProvider)
                 break;
             }
 
-            if (ContainsIgnoreCase(seed.Text, normalizedQuery) ||
-                ContainsIgnoreCase(seed.Author, normalizedQuery) ||
-                ContainsIgnoreCase(seed.Theme, normalizedQuery))
+            if (SearchText.Matches(seed.Text, stems) ||
+                SearchText.Matches(seed.Author, stems) ||
+                SearchText.Matches(seed.Theme, stems))
             {
                 results.Add(seed);
             }
@@ -36,7 +42,4 @@ public sealed class QuoteSearchService(IQuotContentProvider quotContentProvider)
         return results;
     }
 
-    private static bool ContainsIgnoreCase(string? value, string query) =>
-        !string.IsNullOrEmpty(value) &&
-        value.Contains(query, StringComparison.OrdinalIgnoreCase);
 }

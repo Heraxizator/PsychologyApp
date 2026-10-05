@@ -36,4 +36,11 @@ public class ChatTextTests
     {
         Assert.Equal("😔 Мне грустно", ChatText.Capitalize("😔 мне грустно"));
     }
+    [Theory]
+    [InlineData("iPhone сломался. он не включается", "iPhone сломался. Он не включается")]
+    [InlineData("anna@mail.ru мой адрес", "anna@mail.ru мой адрес")]
+    [InlineData("https://example.com это сайт", "https://example.com это сайт")]
+    [InlineData("мне плохо. eBay не помог", "Мне плохо. eBay не помог")]
+    public void Links_addresses_and_mixed_case_names_are_left_as_typed(string typed, string expected) =>
+        Assert.Equal(expected, ChatText.Capitalize(typed));
 }

@@ -9,7 +9,8 @@ public sealed record QuestionnaireScoringResult(
     int Score,
     int BandIndex,
     TechniqueId? RecommendedTechnique,
-    string? AnalyzerId);
+    string? AnalyzerId,
+    bool SelfHarmItemEndorsed = false);
 
 public interface IQuestionnaireScoringService
 {
@@ -25,6 +26,7 @@ public sealed class QuestionnaireScoringService : IQuestionnaireScoringService
 
     public QuestionnaireScoringResult Calculate(IEnumerable<Question> questions, string? analyzerId)
     {
+        questions = questions.ToList();
         IReadOnlyList<QuestionnaireQuestionAnswers> answerModels = ToAnswerModels(questions);
         int score = QuestionnaireScoreCalculator.CalculateScore(answerModels);
         int bandIndex = TestScoreInterpreter.GetBandIndex(analyzerId, score);
@@ -32,7 +34,8 @@ public sealed class QuestionnaireScoringService : IQuestionnaireScoringService
             ? TestScoreRecommendation.RecommendTechnique(analyzerId, score)
             : null;
 
-        return new QuestionnaireScoringResult(score, bandIndex, recommended, analyzerId);
+        return new QuestionnaireScoringResult(
+            score, bandIndex, recommended, analyzerId, SelfHarmScreening.IsEndorsed(analyzerId, questions));
     }
 
     private static IReadOnlyList<QuestionnaireQuestionAnswers> ToAnswerModels(IEnumerable<Question> questions) =>

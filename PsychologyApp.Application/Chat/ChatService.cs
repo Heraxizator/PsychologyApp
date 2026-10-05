@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Conversation;
@@ -69,7 +70,26 @@ public sealed class ChatService(
     private const int LowMoodLevel = 2;
     private const int StressTestRelevantDays = 30;
 
+    // A turn is read-modify-write on the chat's state: two at once (a double send, a quick reply racing a follow-up) would each start from
+    // the same state and the later save would silently erase the earlier turn. Turns of one chat therefore run one at a time.
+    private readonly ConcurrentDictionary<long, SemaphoreSlim> _turnGates = new();
+    private readonly SemaphoreSlim _newChatGate = new(1, 1);
+
     public async Task<ChatTurnResult> StartNewChatAsync(CancellationToken cancellationToken = default)
+    {
+        // "Is there an untouched chat?" then "create one" must not interleave, or two taps make two empty chats.
+        await _newChatGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            return await StartNewChatCoreAsync(cancellationToken).ConfigureAwait(false);
+        }
+        finally
+        {
+            _newChatGate.Release();
+        }
+    }
+
+    private async Task<ChatTurnResult> StartNewChatCoreAsync(CancellationToken cancellationToken)
     {
         IReadOnlyList<ChatSessionDTO> sessions = await repository.GetSessionsAsync(cancellationToken).ConfigureAwait(false);
         DateTime now = Now();
@@ -89,8 +109,7 @@ public sealed class ChatService(
         CompanionDialogue dialogue = await DialogueAsync(cancellationToken, includeTodayMood: true).ConfigureAwait(false);
         CompanionReply reply = dialogue.Open(await WithMemoryAsync(new CompanionState(), cancellationToken).ConfigureAwait(false), previous);
         session.StateJson = reply.State.Serialize();
-        IReadOnlyList<ChatMessageDTO> added = await StoreAsync(CompanionMessages(session, reply, now), cancellationToken).ConfigureAwait(false);
-        await repository.UpdateSessionAsync(session, cancellationToken).ConfigureAwait(false);
+        IReadOnlyList<ChatMessageDTO> added = await StoreAsync(session, CompanionMessages(session, reply, now), [], cancellationToken).ConfigureAwait(false);
 
         return new ChatTurnResult(session, added, null);
     }
@@ -119,6 +138,20 @@ public sealed class ChatService(
 
     public async Task<ChatTurnResult?> CheckPracticeFollowUpAsync(long sessionId, CancellationToken cancellationToken = default)
     {
+        SemaphoreSlim gate = _turnGates.GetOrAdd(sessionId, _ => new SemaphoreSlim(1, 1));
+        await gate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            return await CheckPracticeFollowUpCoreAsync(sessionId, cancellationToken).ConfigureAwait(false);
+        }
+        finally
+        {
+            gate.Release();
+        }
+    }
+
+    private async Task<ChatTurnResult?> CheckPracticeFollowUpCoreAsync(long sessionId, CancellationToken cancellationToken)
+    {
         ChatSessionDTO? session = await repository.GetSessionAsync(sessionId, cancellationToken).ConfigureAwait(false);
         if (session is null)
         {
@@ -142,8 +175,7 @@ public sealed class ChatService(
         CompanionDialogue dialogue = await DialogueAsync(cancellationToken).ConfigureAwait(false);
         CompanionReply reply = dialogue.FollowUpAfterPractice(state);
         ApplyReply(session, reply, now, firstText: null);
-        IReadOnlyList<ChatMessageDTO> added = await StoreAsync(CompanionMessages(session, reply, now), cancellationToken).ConfigureAwait(false);
-        await repository.UpdateSessionAsync(session, cancellationToken).ConfigureAwait(false);
+        IReadOnlyList<ChatMessageDTO> added = await StoreAsync(session, CompanionMessages(session, reply, now), [], cancellationToken).ConfigureAwait(false);
         return new ChatTurnResult(session, added, null);
     }
 
@@ -165,7 +197,7 @@ public sealed class ChatService(
 
     public async Task<CompanionProfile> GetProfileAsync(CancellationToken cancellationToken = default)
     {
-        // Independent reads: run them together instead of waiting for one, then the other.
+        // Independent reads. (Database access is queued one operation at a time, so this is for clarity, not speed.)
         Task<IReadOnlyList<ChatSessionDTO>> sessionsTask = repository.GetSessionsAsync(cancellationToken);
         Task<IReadOnlyDictionary<string, string>> memoryTask = repository.GetMemoryAsync(cancellationToken);
         await Task.WhenAll(sessionsTask, memoryTask).ConfigureAwait(false);
@@ -202,28 +234,45 @@ public sealed class ChatService(
     }
 
     /// <summary>Carries what a turn revealed into the memory that outlives the chat: a new name, a started practice, a practice that helped.</summary>
-    private async Task RememberAsync(CompanionState before, CompanionReply reply, CancellationToken cancellationToken)
+    private static List<ChatMemoryChange> MemoryChanges(CompanionState before, CompanionReply reply)
     {
+        List<ChatMemoryChange> changes = [];
         if (reply.State.UserName is { } name && name != before.UserName)
         {
-            await repository.SetMemoryAsync(ChatMemoryKeys.Name, name, cancellationToken).ConfigureAwait(false);
+            changes.Add(new ChatMemoryChange(ChatMemoryKeys.Name, name));
         }
 
         if (reply.Action is { Kind: DialogueActionKind.StartTechnique, TechniqueId: { } started })
         {
-            await repository.IncrementMemoryAsync(ChatMemoryKeys.Tried(started), cancellationToken).ConfigureAwait(false);
+            changes.Add(new ChatMemoryChange(ChatMemoryKeys.Tried(started), Increment: true));
         }
 
         for (int i = before.HelpedPractices.Count; i < reply.State.HelpedPractices.Count; i++)
         {
             if (Enum.TryParse(reply.State.HelpedPractices[i], out TechniqueId helped))
             {
-                await repository.IncrementMemoryAsync(ChatMemoryKeys.Helped(helped), cancellationToken).ConfigureAwait(false);
+                changes.Add(new ChatMemoryChange(ChatMemoryKeys.Helped(helped), Increment: true));
             }
         }
+
+        return changes;
     }
 
     private async Task<ChatTurnResult> TakeTurnAsync(long sessionId, string userText, CompanionInput input, CancellationToken cancellationToken)
+    {
+        SemaphoreSlim gate = _turnGates.GetOrAdd(sessionId, _ => new SemaphoreSlim(1, 1));
+        await gate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            return await TakeTurnCoreAsync(sessionId, userText, input, cancellationToken).ConfigureAwait(false);
+        }
+        finally
+        {
+            gate.Release();
+        }
+    }
+
+    private async Task<ChatTurnResult> TakeTurnCoreAsync(long sessionId, string userText, CompanionInput input, CancellationToken cancellationToken)
     {
         ChatSessionDTO session = await repository.GetSessionAsync(sessionId, cancellationToken).ConfigureAwait(false)
             ?? throw new InvalidOperationException($"Chat {sessionId} does not exist.");
@@ -237,7 +286,6 @@ public sealed class ChatService(
 
         CompanionDialogue dialogue = await DialogueAsync(cancellationToken).ConfigureAwait(false);
         CompanionReply reply = dialogue.Respond(state, input);
-        await RememberAsync(state, reply, cancellationToken).ConfigureAwait(false);
         ApplyReply(session, reply, now, firstText: input is CompanionInput.FreeText ? userText : null);
 
         // The user's message and the whole reply are stored in one transaction: a turn is saved completely or not at all.
@@ -246,8 +294,7 @@ public sealed class ChatService(
             new() { SessionId = sessionId, Role = ChatRole.User, Text = userText, CreatedAt = now },
             .. CompanionMessages(session, reply, now)
         ];
-        IReadOnlyList<ChatMessageDTO> added = await StoreAsync(pending, cancellationToken).ConfigureAwait(false);
-        await repository.UpdateSessionAsync(session, cancellationToken).ConfigureAwait(false);
+        IReadOnlyList<ChatMessageDTO> added = await StoreAsync(session, pending, MemoryChanges(state, reply), cancellationToken).ConfigureAwait(false);
 
         // Logging to the journal is a side effect the companion carries out itself; the UI never sees it as a navigation instruction.
         if (reply.Action is { Kind: DialogueActionKind.LogMood, MoodLevel: { } moodLevel })
@@ -298,16 +345,15 @@ public sealed class ChatService(
             QuickReplies = i == reply.Messages.Count - 1 ? reply.QuickReplies : []
         });
 
-    /// <summary>Saves the messages in one transaction and returns them with their ids.</summary>
-    private async Task<IReadOnlyList<ChatMessageDTO>> StoreAsync(IEnumerable<ChatMessageDTO> messages, CancellationToken cancellationToken)
+    /// <summary>Saves the turn (memory, messages and the session) in one transaction and returns the messages with their ids.</summary>
+    private async Task<IReadOnlyList<ChatMessageDTO>> StoreAsync(
+        ChatSessionDTO session,
+        IEnumerable<ChatMessageDTO> messages,
+        IReadOnlyList<ChatMemoryChange> memory,
+        CancellationToken cancellationToken)
     {
         List<ChatMessageDTO> pending = messages.ToList();
-        if (pending.Count == 0)
-        {
-            return pending;
-        }
-
-        IReadOnlyList<long> ids = await repository.AddMessagesAsync(pending, cancellationToken).ConfigureAwait(false);
+        IReadOnlyList<long> ids = await repository.SaveTurnAsync(session, pending, memory, cancellationToken).ConfigureAwait(false);
         return pending.Select((m, i) => new ChatMessageDTO
         {
             Id = ids[i],

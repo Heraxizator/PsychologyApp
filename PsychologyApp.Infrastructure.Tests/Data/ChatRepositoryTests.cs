@@ -1,3 +1,4 @@
+using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Chat;
 using PsychologyApp.Infrastructure.Data.Repositories.Chat;
 using PsychologyApp.Testing.Data;
@@ -196,5 +197,47 @@ public sealed class ChatRepositoryTests
         Assert.Empty(await _repository.GetSessionsAsync());
         Assert.Empty(await _repository.GetMessagesAsync(id));
         Assert.Equal("Аня", (await _repository.GetMemoryAsync())["name"]);
+    }
+    [Fact]
+    public async Task SaveTurn_stores_memory_messages_and_session_together()
+    {
+        long id = await _repository.CreateSessionAsync("t", T0);
+        ChatSessionDTO session = (await _repository.GetSessionAsync(id))!;
+        session.Title = "Тревога";
+        session.StateJson = "{\"turns\":1}";
+        session.UpdatedAt = T0.AddMinutes(1);
+
+        IReadOnlyList<long> ids = await _repository.SaveTurnAsync(
+            session,
+            [new ChatMessageDTO { SessionId = id, Role = ChatRole.User, Text = "привет", CreatedAt = T0.AddMinutes(1) }],
+            [new ChatMemoryChange("name", "Аня"), new ChatMemoryChange("tried:Spin", Increment: true), new ChatMemoryChange("tried:Spin", Increment: true)]);
+
+        Assert.Single(ids);
+        Assert.Equal("Тревога", (await _repository.GetSessionAsync(id))!.Title);
+        Assert.Equal("{\"turns\":1}", (await _repository.GetSessionAsync(id))!.StateJson);
+        IReadOnlyDictionary<string, string> memory = await _repository.GetMemoryAsync();
+        Assert.Equal("Аня", memory["name"]);
+        Assert.Equal("2", memory["tried:Spin"]);
+    }
+
+    [Fact]
+    public async Task SaveTurn_that_fails_leaves_no_memory_no_messages_and_the_old_session()
+    {
+        long id = await _repository.CreateSessionAsync("old", T0);
+        ChatSessionDTO session = (await _repository.GetSessionAsync(id))!;
+        session.Title = "new";
+
+        // The second message points at a chat that does not exist, so the foreign key rejects the whole turn.
+        await Assert.ThrowsAnyAsync<Exception>(() => _repository.SaveTurnAsync(
+            session,
+            [
+                new ChatMessageDTO { SessionId = id, Role = ChatRole.User, Text = "ok", CreatedAt = T0 },
+                new ChatMessageDTO { SessionId = 9999, Role = ChatRole.User, Text = "orphan", CreatedAt = T0 }
+            ],
+            [new ChatMemoryChange("name", "Аня")]));
+
+        Assert.Equal("old", (await _repository.GetSessionAsync(id))!.Title);
+        Assert.Empty(await _repository.GetMessagesAsync(id));
+        Assert.Empty(await _repository.GetMemoryAsync());
     }
 }

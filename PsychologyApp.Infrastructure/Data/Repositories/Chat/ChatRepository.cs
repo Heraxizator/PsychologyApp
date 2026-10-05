@@ -156,6 +156,66 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
         return ids;
     }
 
+    public async Task<IReadOnlyList<long>> SaveTurnAsync(
+        ChatSessionDTO session,
+        IReadOnlyList<ChatMessageDTO> messages,
+        IReadOnlyList<ChatMemoryChange> memory,
+        CancellationToken cancellationToken = default)
+    {
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteTransaction transaction = (SqliteTransaction)await connection.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
+
+        foreach (ChatMemoryChange change in memory)
+        {
+            (string sql, object parameters) = change switch
+            {
+                { Increment: true } => (ChatSql.IncrementMemory, (object)new { change.Key }),
+                { Value: null } => (ChatSql.DeleteMemoryKey, new { change.Key }),
+                _ => (ChatSql.UpsertMemory, new { change.Key, change.Value })
+            };
+            await connection.ExecuteAsync(DapperCommandFactory.Create(
+                sql, parameters, transaction, CommandTimeoutSeconds, cancellationToken)).ConfigureAwait(false);
+        }
+
+        List<long> ids = new(messages.Count);
+        foreach (ChatMessageDTO message in messages)
+        {
+            ids.Add(await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
+                ChatSql.InsertMessage,
+                new
+                {
+                    message.SessionId,
+                    Role = (int)message.Role,
+                    message.Text,
+                    CreatedAt = ToIso(message.CreatedAt),
+                    QuickRepliesJson = ChatQuickReplyJson.Serialize(message.QuickReplies)
+                },
+                transaction,
+                CommandTimeoutSeconds,
+                cancellationToken)).ConfigureAwait(false));
+        }
+
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
+            ChatSql.UpdateSession,
+            new
+            {
+                SessionId = session.Id,
+                session.Title,
+                UpdatedAt = ToIso(session.UpdatedAt),
+                session.Emotion,
+                session.Theme,
+                session.FirstIntensity,
+                session.LastIntensity,
+                session.StateJson
+            },
+            transaction,
+            CommandTimeoutSeconds,
+            cancellationToken)).ConfigureAwait(false);
+
+        await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
+        return ids;
+    }
+
     public async Task<IReadOnlyList<ChatMessageDTO>> GetMessagesAsync(long sessionId, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);

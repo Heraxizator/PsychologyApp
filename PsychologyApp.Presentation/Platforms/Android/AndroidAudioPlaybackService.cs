@@ -12,6 +12,8 @@ namespace PsychologyApp.Presentation.Platforms.Android;
 /// </summary>
 public sealed class AndroidAudioPlaybackService : Java.Lang.Object, IAudioPlaybackService, AudioManager.IOnAudioFocusChangeListener
 {
+    private static readonly TimeSpan PrepareTimeout = TimeSpan.FromSeconds(20);
+
     private MediaPlayer? _player;
     private TaskCompletionSource? _prepared;
     private AudioFocusRequestClass? _focusRequest;
@@ -48,11 +50,28 @@ public sealed class AndroidAudioPlaybackService : Java.Lang.Object, IAudioPlayba
         player.Reset();
         _isPrepared = false;
         _isPlaying = false;
-        player.SetDataSource(result.Uri);
-
         _prepared = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
-        player.PrepareAsync();
-        await _prepared.Task;
+        // Preparing a local file takes well under a second; a player that never answers must not hang the page forever.
+        using CancellationTokenSource timeout = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        timeout.CancelAfter(PrepareTimeout);
+        try
+        {
+            player.SetDataSource(result.Uri);
+            player.PrepareAsync();
+            await _prepared.Task.WaitAsync(timeout.Token);
+        }
+        catch (OperationCanceledException) when (timeout.IsCancellationRequested && !cancellationToken.IsCancellationRequested)
+        {
+            DiscardIfCached(result);
+            throw new TimeoutException("The audio player did not become ready.");
+        }
+        catch (Exception ex) when (ex is InvalidOperationException or Java.Lang.Exception or IOException)
+        {
+            // A file the player rejects (cut off, wrong format) must not stay in the cache and fail the same way every time.
+            DiscardIfCached(result);
+            throw;
+        }
+
         cancellationToken.ThrowIfCancellationRequested();
 
         _isPrepared = true;
@@ -92,6 +111,8 @@ public sealed class AndroidAudioPlaybackService : Java.Lang.Object, IAudioPlayba
     }
 
     /// <summary>Frees the native player when its page goes away.</summary>
+    private static void DiscardIfCached(AudioCacheResult result) => MusicAudioCache.Invalidate(result.Uri);
+
     public void Release()
     {
         AbandonFocus();
