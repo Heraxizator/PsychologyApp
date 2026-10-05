@@ -18,6 +18,10 @@ public interface IUserPreferencesStore
     void ResetOnboardingCompletion();
     void SetPendingTechnique(TechniqueId techniqueId);
     TechniqueId? ConsumePendingTechnique();
+    bool HasUsedPhysicsSearch { get; }
+    void MarkPhysicsSearchUsed();
+    void SetPendingOpenJournal();
+    bool ConsumePendingOpenJournal();
 }
 
 public sealed class MauiUserPreferencesStore : IUserPreferencesStore
@@ -47,4 +51,12 @@ public sealed class MauiUserPreferencesStore : IUserPreferencesStore
     public void SetPendingTechnique(TechniqueId techniqueId) => UserPreferences.SetPendingTechnique(techniqueId);
 
     public TechniqueId? ConsumePendingTechnique() => UserPreferences.ConsumePendingTechnique();
+
+    public bool HasUsedPhysicsSearch => UserPreferences.HasUsedPhysicsSearch;
+
+    public void MarkPhysicsSearchUsed() => UserPreferences.MarkPhysicsSearchUsed();
+
+    public void SetPendingOpenJournal() => UserPreferences.SetPendingOpenJournal();
+
+    public bool ConsumePendingOpenJournal() => UserPreferences.ConsumePendingOpenJournal();
 }

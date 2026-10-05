@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.Navigation;
@@ -29,27 +30,27 @@ public class StartPhysicsViewModel : BaseViewModel
     public ICommand OpenProfileCommand { get; private set; } = default!;
     public string ProfileToolbarText => AppStrings.ProfileTitle;
 
-    public StartPhysicsViewModel(INavigationService navigationService)
+    public StartPhysicsViewModel(INavigationService navigationService, IUserPreferencesStore preferences)
     {
         ModuleName = AppStrings.PhysicsTitle;
         PageName = AppStrings.PhysicsIntroPage;
 
         BindNavigation(navigationService);
         OpenProfileCommand = new AsyncCommand(() => navigationService.GoToUserProfileAsync());
-        StartCommand = new AsyncCommand(() => StartAsync(navigationService));
+        StartCommand = new AsyncCommand(() => StartAsync(navigationService, preferences));
         SetDone();
 
         // Returning users already know what this screen explains; jump straight to the search
         // they actually came here for. First-time users still see the explanation as usual.
-        if (UserPreferences.HasUsedPhysicsSearch)
+        if (preferences.HasUsedPhysicsSearch)
         {
             navigationService.GoToPhysicsSearchAsync().FireAndForget();
         }
     }
 
-    private static Task StartAsync(INavigationService navigationService)
+    private static Task StartAsync(INavigationService navigationService, IUserPreferencesStore preferences)
     {
-        UserPreferences.MarkPhysicsSearchUsed();
+        preferences.MarkPhysicsSearchUsed();
         return navigationService.GoToPhysicsSearchAsync();
     }
 

@@ -3,99 +3,75 @@ namespace PsychologyApp.Presentation.Common;
 public static partial class AppStrings
 {
     public static string TestsDetectorTitle => ShellTabDetectorShort;
-    public static string TestsFindProblemTitle => T("Поиск проблемы", "Find a problem");
-    public static string TestsAboutPassageTitle => T("О прохождении", "About this test");
-    public static string TestsDescriptionHeader => T("Описание", "Description");
-    public static string TestsAlgorithmHeader => T("Алгоритм", "Steps");
-    public static string TestsNoteHeader => T("Замечание", "Note");
-    public static string TestsStartButton => T("Начать", "Start");
-    public static string TestsQuestionnaireTitle => T("Опросник", "Questionnaire");
-    public static string TestsQuestionPrefix => T("Вопрос ", "Question ");
-    public static string TestsFinishButton => T("Завершить", "Finish");
-    public static string TestsStandardTitle => T("Стандартный тест", "Standard test");
-    public static string TestsBriefTitle => T("Краткий тест", "Brief test");
-    public static string TestsColorInstruction => T(
-        "Выбирайте цвета в приятной вам последовательности",
-        "Choose colors in an order that feels pleasant to you");
-    public static string TestsMoreInfo => T("Подробнее", "More info");
-    public static string TestsRestart => T("Заново", "Start over");
-    public static string TestRetakeButton => T("Пройти снова", "Take again");
-    public static string TestsFirstColor => T("Первый цвет", "First color");
-    public static string TestsSecondColor => T("Второй цвет", "Second color");
-    public static string TestsLuscherResultsTitle => T("Результаты", "Results");
-    public static string TestsLuscherWantedRole => T("Самый приятный", "Most pleasant");
-    public static string TestsLuscherUnwantedRole => T("Самый неприятный", "Least pleasant");
-    public static string TestsLuscherFirstInstruction => T(
-        "Выберите самый приятный для вас цвет",
-        "Choose the color you find most pleasant");
-    public static string TestsLuscherSecondInstruction => T(
-        "Из оставшихся выберите самый неприятный для вас цвет",
-        "From the remaining colors, choose the one you find least pleasant");
-    public static string TestsLuscherSecondPassInstruction => T(
-        "Повторите выбор: снова расставьте все 8 цветов от самого приятного к наименее приятному",
-        "Repeat the selection: order all 8 colors again from most to least pleasant");
+    public static string TestsFindProblemTitle => R(nameof(TestsFindProblemTitle));
+    public static string TestsAboutPassageTitle => R(nameof(TestsAboutPassageTitle));
+    public static string TestsDescriptionHeader => R(nameof(TestsDescriptionHeader));
+    public static string TestsAlgorithmHeader => R(nameof(TestsAlgorithmHeader));
+    public static string TestsNoteHeader => R(nameof(TestsNoteHeader));
+    public static string TestsStartButton => R(nameof(TestsStartButton));
+    public static string TestsQuestionnaireTitle => R(nameof(TestsQuestionnaireTitle));
+    public static string TestsQuestionPrefix => R(nameof(TestsQuestionPrefix));
+    public static string TestsFinishButton => R(nameof(TestsFinishButton));
+    public static string TestsStandardTitle => R(nameof(TestsStandardTitle));
+    public static string TestsBriefTitle => R(nameof(TestsBriefTitle));
+    public static string TestsColorInstruction => R(nameof(TestsColorInstruction));
+    public static string TestsMoreInfo => R(nameof(TestsMoreInfo));
+    public static string TestsRestart => R(nameof(TestsRestart));
+    public static string TestRetakeButton => R(nameof(TestRetakeButton));
+    public static string TestsFirstColor => R(nameof(TestsFirstColor));
+    public static string TestsSecondColor => R(nameof(TestsSecondColor));
+    public static string TestsLuscherResultsTitle => R(nameof(TestsLuscherResultsTitle));
+    public static string TestsLuscherWantedRole => R(nameof(TestsLuscherWantedRole));
+    public static string TestsLuscherUnwantedRole => R(nameof(TestsLuscherUnwantedRole));
+    public static string TestsLuscherFirstInstruction => R(nameof(TestsLuscherFirstInstruction));
+    public static string TestsLuscherSecondInstruction => R(nameof(TestsLuscherSecondInstruction));
+    public static string TestsLuscherSecondPassInstruction => R(nameof(TestsLuscherSecondPassInstruction));
     public static string TestsLuscherPassOf(int current, int total) => T($"Проход {current} из {total}", $"Pass {current} of {total}");
-    public static string TestsLuscherHistoryFirstPass => T("Проход 1", "Pass 1");
-    public static string TestsLuscherHistorySecondPass => T("Проход 2", "Pass 2");
+    public static string TestsLuscherHistoryFirstPass => R(nameof(TestsLuscherHistoryFirstPass));
+    public static string TestsLuscherHistorySecondPass => R(nameof(TestsLuscherHistorySecondPass));
     public static string TestsLuscherHistoryBk(double bk) => T($"{TestsBkLabel}: {bk}", $"{TestsBkLabel}: {bk}");
-    public static string TestsStandardDescription => T(
-        "Это стандартная версия теста Люшера. Она может более точно оценить настроение, чем альтернативная.",
-        "This is the full Lüscher test. It can assess mood more precisely than the brief version.");
-    public static string TestsBriefDescription => T(
-        "Это краткая версия теста Люшера. Выберите два цвета — самый приятный и самый неприятный.",
-        "This is the brief Lüscher test. Choose two colors — the most and least pleasant.");
-    public static string TestsAnswerAllToast => T("Нужно ответить на все вопросы", "Please answer all questions");
-    public static string TestsAnswerCurrentToast => T("Ответьте на этот вопрос", "Answer this question");
+    public static string TestsStandardDescription => R(nameof(TestsStandardDescription));
+    public static string TestsBriefDescription => R(nameof(TestsBriefDescription));
+    public static string TestsAnswerAllToast => R(nameof(TestsAnswerAllToast));
+    public static string TestsAnswerCurrentToast => R(nameof(TestsAnswerCurrentToast));
     public static string TestsStepOf(int current, int total) => T($"{current} из {total}", $"{current} of {total}");
-    public static string TestsNextButton => T("Далее", "Next");
-    public static string TestsPreviousButton => T("Назад", "Back");
+    public static string TestsNextButton => R(nameof(TestsNextButton));
+    public static string TestsPreviousButton => R(nameof(TestsPreviousButton));
     public static string TestsResultTitle(int score) => T($"Ваш результат: {score}", $"Your score: {score}");
-    public static string TestsResultPageTitle => T("Результат теста", "Test result");
-    public static string TestsBackToList => T("К списку тестов", "Back to tests");
-    public static string TestsResultRecommendationHint => T(
-        "На основе результата мы подобрали практику, которая может помочь",
-        "Based on your result, we picked a practice that may help");
-    public static string TestResultExplorePractice => T("Попробуйте практику", "Try a practice");
+    public static string TestsResultPageTitle => R(nameof(TestsResultPageTitle));
+    public static string TestsBackToList => R(nameof(TestsBackToList));
+    public static string TestsResultRecommendationHint => R(nameof(TestsResultRecommendationHint));
+    public static string TestResultExplorePractice => R(nameof(TestResultExplorePractice));
     public static string TestDuration(int minutes) => T($"~{minutes} мин", $"~{minutes} min");
     public static string TestQuestionCount(int count) => T($"{count} вопр.", $"{count} questions");
     public static string TestRecommendationFor(string techniqueTitle) =>
         T($"Рекомендуем: {techniqueTitle}", $"Recommended: {techniqueTitle}");
     public static string TestRecommendationReason(string reason) => reason;
-    public static string TestsContinueButton => T("Продолжить", "Continue");
-    public static string TestsListSectionTitle => T("Психологические тесты", "Psychological tests");
-    public static string TestsListSectionSubtitle => T(
-        "Выберите тест и узнайте больше о своём состоянии",
-        "Pick a test to learn more about how you feel");
+    public static string TestsContinueButton => R(nameof(TestsContinueButton));
+    public static string TestsListSectionTitle => R(nameof(TestsListSectionTitle));
+    public static string TestsListSectionSubtitle => R(nameof(TestsListSectionSubtitle));
     public static string TestHistoryScore(int score) => T($"Балл: {score}", $"Score: {score}");
-    public static string TestHistoryTrendTitle => T("Динамика баллов", "Score trend");
+    public static string TestHistoryTrendTitle => R(nameof(TestHistoryTrendTitle));
     public static string TestResultDuration(int seconds) =>
         seconds < 60
             ? T($"{seconds} сек", $"{seconds} sec")
             : T($"{seconds / 60} мин {seconds % 60} сек", $"{seconds / 60} min {seconds % 60} sec");
-    public static string TestResultAnswersTitle => T("Ваши ответы", "Your answers");
-    public static string TestsIntroLead => T(
-        "Несколько минут — и вы получите персональную интерпретацию",
-        "A few minutes for a personal interpretation");
-    public static string TestsQuestionLead => T(
-        "Отвечайте честно — здесь нет правильных или неправильных ответов",
-        "Answer honestly — there are no right or wrong answers");
-    public static string TestsMultiChoiceHint => T(
-        "Можно выбрать несколько вариантов",
-        "You can select more than one option");
-    public static string TestsSingleChoiceHint => T(
-        "Один вариант ответа",
-        "Single answer");
-    public static string TestsAnswerSelected => T("Выбрано", "Selected");
-    public static string TestsAnswerNotSelected => T("Не выбрано", "Not selected");
-    public static string TestsAnswerOption => T("Вариант ответа", "Answer option");
+    public static string TestResultAnswersTitle => R(nameof(TestResultAnswersTitle));
+    public static string TestsIntroLead => R(nameof(TestsIntroLead));
+    public static string TestsQuestionLead => R(nameof(TestsQuestionLead));
+    public static string TestsMultiChoiceHint => R(nameof(TestsMultiChoiceHint));
+    public static string TestsSingleChoiceHint => R(nameof(TestsSingleChoiceHint));
+    public static string TestsAnswerSelected => R(nameof(TestsAnswerSelected));
+    public static string TestsAnswerNotSelected => R(nameof(TestsAnswerNotSelected));
+    public static string TestsAnswerOption => R(nameof(TestsAnswerOption));
     public static string TestsRemainingDuration(int minutes) => T($"~{minutes} мин осталось", $"~{minutes} min left");
-    public static string TestsCoLabel => T("Суммарное отклонение от аутогенной нормы (СО)", "Total deviation from autogenic norm (CO)");
-    public static string TestsBkLabel => T("Вегетативный коэффициент (ВК)", "Vegetative coefficient (VC)");
+    public static string TestsCoLabel => R(nameof(TestsCoLabel));
+    public static string TestsBkLabel => R(nameof(TestsBkLabel));
     public static string TestsScoreOutOf(int value, string total) => T($"{value} из {total}", $"{value} of {total}");
     public static string TestsDecimalScoreOutOf(double value, string total) =>
         T($"{value} из {total}", $"{value} of {total}");
-    public static string Yes => T("Да", "Yes");
-    public static string No => T("Нет", "No");
-    public static string Ok => T("OK", "OK");
+    public static string Yes => R(nameof(Yes));
+    public static string No => R(nameof(No));
+    public static string Ok => R(nameof(Ok));
 
 }

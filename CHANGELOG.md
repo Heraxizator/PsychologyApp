@@ -15,6 +15,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 - `docs/chat-companion.md` describes the engine, the state, the memory and its limits.
 
 ### Quality
+- Texts: 685 of the `AppStrings` texts live in `StringsRu.resx` and `StringsEn.resx` (`PsychologyApp.Presentation.Core/Common`); the `AppStrings` API is unchanged. A language is added by adding a `StringsXx.resx` and one `ResourceManager`; a test checks every text exists and is not empty in both languages. Texts with parameters (interpolation, switch) stay in code. `tools/Extract-Strings.ps1` is the one-off migration script.
+- `ShellStartupCoordinator`, `DataBackupViewModel` and `StartPhysicsViewModel` take `IUserPreferencesStore` instead of the static `UserPreferences`.
 - Mutation testing of the clinical logic: crisis detector and self-harm screening 93%, risk classifier and score calculators 87% (weekly workflow; the build breaks under 50%).
 - `SafeAsync.Run` replaces every `async void` handler; `BestEffort.Report` logs the 13 formerly silent "optional" catch blocks; code style is enforced in the build.
 - Tests: property-based tests of the chat companion (FsCheck), boundary tests for every questionnaire cut-off (Domain mutation score 58.6% -> 72.6%), upgrade-from-version-1 and idempotent-schema tests; per-layer coverage gates in CI (Application/Domain 80, Infrastructure 75, overall 70).

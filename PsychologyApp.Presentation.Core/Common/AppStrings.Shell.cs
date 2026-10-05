@@ -2,20 +2,20 @@ namespace PsychologyApp.Presentation.Common;
 
 public static partial class AppStrings
 {
-    public static string ShellTabMusic => T("Музыка", "Music");
-    public static string ShellTabPractice => T("Практик", "Practice");
-    public static string ShellTabDetector => T("Детектор", "Detector");
-    public static string ShellTabSomatic => T("Соматик", "Somatic");
+    public static string ShellTabMusic => R(nameof(ShellTabMusic));
+    public static string ShellTabPractice => R(nameof(ShellTabPractice));
+    public static string ShellTabDetector => R(nameof(ShellTabDetector));
+    public static string ShellTabSomatic => R(nameof(ShellTabSomatic));
     [Obsolete("Use ShellTabMusic")]
     public static string ShellTabCleaner => ShellTabMusic;
-    public static string ShellTabMotivator => T("Мотиватор", "Motivator");
+    public static string ShellTabMotivator => R(nameof(ShellTabMotivator));
 
-    public static string ShellTabPracticeShort => T("Практик", "Practice");
-    public static string ShellTabDetectorShort => T("Тесты", "Tests");
-    public static string ShellTabSomaticShort => T("Тело", "Body");
-    public static string ShellTabMusicShort => T("Молитвы", "Prayers");
+    public static string ShellTabPracticeShort => R(nameof(ShellTabPracticeShort));
+    public static string ShellTabDetectorShort => R(nameof(ShellTabDetectorShort));
+    public static string ShellTabSomaticShort => R(nameof(ShellTabSomaticShort));
+    public static string ShellTabMusicShort => R(nameof(ShellTabMusicShort));
     [Obsolete("Use ShellTabMusicShort")]
     public static string ShellTabCleanerShort => ShellTabMusicShort;
-    public static string ShellTabMotivatorShort => T("Цитаты", "Quotes");
+    public static string ShellTabMotivatorShort => R(nameof(ShellTabMotivatorShort));
 
 }

@@ -98,10 +98,11 @@ public sealed class DataBackupViewModelFactory(
     IBackupService backupService,
     ISpecialistSummaryService specialistSummaryService,
     IToastService toastService,
+    IUserPreferencesStore userPreferencesStore,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IDataBackupViewModelFactory
 {
     public DataBackupViewModel Create(ContentPage page) =>
-        new(ResolveNavigation(navigationServiceFactory, page), backupService, specialistSummaryService, toastService);
+        new(ResolveNavigation(navigationServiceFactory, page), backupService, specialistSummaryService, toastService, userPreferencesStore);
 }
 
 public interface IAliceViewModelFactory

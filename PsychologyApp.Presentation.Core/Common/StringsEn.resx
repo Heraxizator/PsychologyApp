@@ -1,0 +1,2070 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ChatsTitle" xml:space="preserve">
+    <value>Chats</value>
+  </data>
+  <data name="ChatNew" xml:space="preserve">
+    <value>New chat</value>
+  </data>
+  <data name="ChatInputPlaceholder" xml:space="preserve">
+    <value>Write a message…</value>
+  </data>
+  <data name="ChatEmptyTitle" xml:space="preserve">
+    <value>No conversations yet</value>
+  </data>
+  <data name="ChatEmptyBody" xml:space="preserve">
+    <value>Tell me what is going on. I will listen, help you sort it out and suggest a practice.</value>
+  </data>
+  <data name="ChatRename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="ChatDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ChatRenameTitle" xml:space="preserve">
+    <value>Chat name</value>
+  </data>
+  <data name="ChatRenameMessage" xml:space="preserve">
+    <value>What should this conversation be called?</value>
+  </data>
+  <data name="ChatRenameAccept" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ChatCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ChatDeleteTitle" xml:space="preserve">
+    <value>Delete this chat?</value>
+  </data>
+  <data name="ChatDeleteBody" xml:space="preserve">
+    <value>The conversation and its history will be deleted from this device and cannot be restored.</value>
+  </data>
+  <data name="ChatHeroTitle" xml:space="preserve">
+    <value>Talk</value>
+  </data>
+  <data name="ChatHeroFreshSubtitle" xml:space="preserve">
+    <value>Tell me what is going on and I will help you sort it out</value>
+  </data>
+  <data name="ChatHeroContinue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="ChatHeroStart" xml:space="preserve">
+    <value>Start talking</value>
+  </data>
+  <data name="ChatHeroAllChats" xml:space="preserve">
+    <value>All chats</value>
+  </data>
+  <data name="ChatHeroNewChat" xml:space="preserve">
+    <value>New chat</value>
+  </data>
+  <data name="ChatStatusIdle" xml:space="preserve">
+    <value>Companion · everything stays on your phone</value>
+  </data>
+  <data name="ChatError" xml:space="preserve">
+    <value>Could not send the message. Please try again.</value>
+  </data>
+  <data name="ChatLoadingText" xml:space="preserve">
+    <value>Opening the chat…</value>
+  </data>
+  <data name="ChatScrollToNewest" xml:space="preserve">
+    <value>Jump to newest messages</value>
+  </data>
+  <data name="ChatScrollToOldest" xml:space="preserve">
+    <value>Jump to the start of the conversation</value>
+  </data>
+  <data name="ChatStressTestTitle" xml:space="preserve">
+    <value>Stress test (PSS-10)</value>
+  </data>
+  <data name="ChatReminderTitle" xml:space="preserve">
+    <value>The companion is here</value>
+  </data>
+  <data name="ChatReminderBody" xml:space="preserve">
+    <value>It's been a little while. How are things going now?</value>
+  </data>
+  <data name="ChatProfileTitle" xml:space="preserve">
+    <value>Companion</value>
+  </data>
+  <data name="ChatProfileOpen" xml:space="preserve">
+    <value>Open the companion's profile</value>
+  </data>
+  <data name="ChatProfileOnline" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="ChatProfileOffline" xml:space="preserve">
+    <value>Works offline</value>
+  </data>
+  <data name="ChatProfileStatChats" xml:space="preserve">
+    <value>Chats</value>
+  </data>
+  <data name="ChatProfileStatMessages" xml:space="preserve">
+    <value>Your messages</value>
+  </data>
+  <data name="ChatProfileStatDays" xml:space="preserve">
+    <value>Days together</value>
+  </data>
+  <data name="ChatProfileStatStreak" xml:space="preserve">
+    <value>Day streak</value>
+  </data>
+  <data name="ChatProfileTrustTitle" xml:space="preserve">
+    <value>Level of trust</value>
+  </data>
+  <data name="ChatProfileNameTitle" xml:space="preserve">
+    <value>What to call you</value>
+  </data>
+  <data name="ChatProfileNameEmpty" xml:space="preserve">
+    <value>No name yet</value>
+  </data>
+  <data name="ChatProfileNameHint" xml:space="preserve">
+    <value>The companion will occasionally address you by name</value>
+  </data>
+  <data name="ChatProfileNameEdit" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ChatProfileNamePromptTitle" xml:space="preserve">
+    <value>Your name</value>
+  </data>
+  <data name="ChatProfileNamePromptMessage" xml:space="preserve">
+    <value>What should I call you? Leave empty to remove the name.</value>
+  </data>
+  <data name="ChatProfileInsightsTitle" xml:space="preserve">
+    <value>What your conversations show</value>
+  </data>
+  <data name="ChatProfileTensionTitle" xml:space="preserve">
+    <value>Tension over time</value>
+  </data>
+  <data name="ChatProfileTensionStart" xml:space="preserve">
+    <value>At the start</value>
+  </data>
+  <data name="ChatProfileTensionEnd" xml:space="preserve">
+    <value>At the end</value>
+  </data>
+  <data name="ChatProfilePracticesTitle" xml:space="preserve">
+    <value>What helps you</value>
+  </data>
+  <data name="ChatProfilePracticesEmpty" xml:space="preserve">
+    <value>Do a practice from a chat and rate the tension before and after, and what helps you will appear here.</value>
+  </data>
+  <data name="ChatProfilePracticeBest" xml:space="preserve">
+    <value>Best</value>
+  </data>
+  <data name="ChatProfilePracticeStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="ChatProfileEmotionsTitle" xml:space="preserve">
+    <value>What you talk about most</value>
+  </data>
+  <data name="ChatProfileAboutTitle" xml:space="preserve">
+    <value>About the companion</value>
+  </data>
+  <data name="ChatProfileActionsTitle" xml:space="preserve">
+    <value>Manage</value>
+  </data>
+  <data name="ChatProfileAllChats" xml:space="preserve">
+    <value>All chats</value>
+  </data>
+  <data name="ChatProfileForget" xml:space="preserve">
+    <value>Forget my name and preferences</value>
+  </data>
+  <data name="ChatProfileForgetTitle" xml:space="preserve">
+    <value>Forget about you?</value>
+  </data>
+  <data name="ChatProfileForgetBody" xml:space="preserve">
+    <value>The companion will forget your name and which practices helped. Your chats will stay.</value>
+  </data>
+  <data name="ChatProfileDeleteAll" xml:space="preserve">
+    <value>Delete all chats</value>
+  </data>
+  <data name="ChatProfileDeleteAllTitle" xml:space="preserve">
+    <value>Delete all chats?</value>
+  </data>
+  <data name="ChatProfileDeleteAllBody" xml:space="preserve">
+    <value>All conversations will be deleted from this device and cannot be restored. Your name and preferences will stay.</value>
+  </data>
+  <data name="ChatProfileConfirm" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="ChatProfileLoadingText" xml:space="preserve">
+    <value>Working out your statistics…</value>
+  </data>
+  <data name="OptionsTitle" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="OptionsSettingsTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="OptionsSettingsSubtitle" xml:space="preserve">
+    <value>Theme, color, and display options</value>
+  </data>
+  <data name="OptionsAppSection" xml:space="preserve">
+    <value>App</value>
+  </data>
+  <data name="OptionsSafetySection" xml:space="preserve">
+    <value>Safety</value>
+  </data>
+  <data name="OptionsSupportSection" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="ProfileSettingsCardSubtitle" xml:space="preserve">
+    <value>Theme, language, and font</value>
+  </data>
+  <data name="OptionsAboutTitle" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="OptionsAboutSubtitle" xml:space="preserve">
+    <value>App information</value>
+  </data>
+  <data name="OptionsFeedbackTitle" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+  <data name="OptionsFeedbackSubtitle" xml:space="preserve">
+    <value>Report a problem or suggest an idea</value>
+  </data>
+  <data name="OptionsDonateTitle" xml:space="preserve">
+    <value>Support the project</value>
+  </data>
+  <data name="OptionsDonateSubtitle" xml:space="preserve">
+    <value>Help the app grow</value>
+  </data>
+  <data name="ProfileOptionsCardSubtitle" xml:space="preserve">
+    <value>Settings, support, Alice AI</value>
+  </data>
+  <data name="OptionsAliceTitle" xml:space="preserve">
+    <value>Alice AI</value>
+  </data>
+  <data name="OptionsAliceSubtitle" xml:space="preserve">
+    <value>Yandex voice assistant</value>
+  </data>
+  <data name="AliceDisclaimerHeader" xml:space="preserve">
+    <value>Important</value>
+  </data>
+  <data name="AliceDisclaimerBody" xml:space="preserve">
+    <value>Alice is an external Yandex service. An internet connection is required. Responses are informational only and do not replace professional care.</value>
+  </data>
+  <data name="AliceOpenInBrowser" xml:space="preserve">
+    <value>Open in browser</value>
+  </data>
+  <data name="AliceOpenFailed" xml:space="preserve">
+    <value>Failed to open Alice</value>
+  </data>
+  <data name="AliceLoadingText" xml:space="preserve">
+    <value>Loading Alice…</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SettingsDesignSection" xml:space="preserve">
+    <value>Design</value>
+  </data>
+  <data name="SettingsFontSection" xml:space="preserve">
+    <value>Font</value>
+  </data>
+  <data name="SettingsLanguageLabel" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="SettingsThemeLabel" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="SettingsColorLabel" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="SettingsFormLabel" xml:space="preserve">
+    <value>Shape</value>
+  </data>
+  <data name="SettingsSizeLabel" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="SettingsBoldLabel" xml:space="preserve">
+    <value>Bold</value>
+  </data>
+  <data name="SettingsTestsSection" xml:space="preserve">
+    <value>Tests</value>
+  </data>
+  <data name="SettingsRemindersSection" xml:space="preserve">
+    <value>Reminders</value>
+  </data>
+  <data name="SettingsPracticeRemindersLabel" xml:space="preserve">
+    <value>Practice reminders</value>
+  </data>
+  <data name="SettingsPracticeReminderHourLabel" xml:space="preserve">
+    <value>Reminder time</value>
+  </data>
+  <data name="SettingsPracticeReminderHourPickerTitle" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="PracticeReminderTitle" xml:space="preserve">
+    <value>Time to practice</value>
+  </data>
+  <data name="PracticeReminderBody" xml:space="preserve">
+    <value>Take a few minutes to practice and keep your progress going.</value>
+  </data>
+  <data name="SettingsPrimaryConcernLabel" xml:space="preserve">
+    <value>Primary concern</value>
+  </data>
+  <data name="SettingsPrimaryConcernPickerTitle" xml:space="preserve">
+    <value>What troubles you?</value>
+  </data>
+  <data name="SettingsPrimaryConcernSection" xml:space="preserve">
+    <value>Personalization</value>
+  </data>
+  <data name="SettingsQuestionnaireAutoAdvanceLabel" xml:space="preserve">
+    <value>Auto-advance to the next question</value>
+  </data>
+  <data name="SettingsApplyButton" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="SettingsPickerOptions" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="SettingsPickerColors" xml:space="preserve">
+    <value>Colors</value>
+  </data>
+  <data name="SettingsPickerShapes" xml:space="preserve">
+    <value>Shapes</value>
+  </data>
+  <data name="SettingsPickerSizes" xml:space="preserve">
+    <value>Sizes</value>
+  </data>
+  <data name="SettingsPickerLanguages" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <data name="SettingsAppliedTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="SettingsAppliedMessage" xml:space="preserve">
+    <value>Settings applied</value>
+  </data>
+  <data name="SettingsFormHelper" xml:space="preserve">
+    <value>Corner rounding for cards and input fields</value>
+  </data>
+  <data name="SettingsColorHelper" xml:space="preserve">
+    <value>Primary color for buttons and accents</value>
+  </data>
+  <data name="SettingsReplayOnboarding" xml:space="preserve">
+    <value>Retake onboarding</value>
+  </data>
+  <data name="TechniqueTheory" xml:space="preserve">
+    <value>Theory</value>
+  </data>
+  <data name="TechniqueAlgorithm" xml:space="preserve">
+    <value>Algorithm</value>
+  </data>
+  <data name="TechniqueFinish" xml:space="preserve">
+    <value>Finish</value>
+  </data>
+  <data name="TechniqueTitle" xml:space="preserve">
+    <value>Technique</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="DescriptionLabel" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>Saving…</value>
+  </data>
+  <data name="DesignerLoadError" xml:space="preserve">
+    <value>Could not load technique</value>
+  </data>
+  <data name="DesignerSaveError" xml:space="preserve">
+    <value>Could not save technique</value>
+  </data>
+  <data name="ThemeLabel" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="AuthorLabel" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="MessageLabel" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="FormLabel" xml:space="preserve">
+    <value>Form</value>
+  </data>
+  <data name="ActionsListLabel" xml:space="preserve">
+    <value>Action list</value>
+  </data>
+  <data name="PracticeHomeTitle" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="PracticeMyTechniques" xml:space="preserve">
+    <value>My techniques</value>
+  </data>
+  <data name="PracticeCatalog" xml:space="preserve">
+    <value>Practice catalog</value>
+  </data>
+  <data name="PracticeCatalogHint" xml:space="preserve">
+    <value>Pick a technique or create your own</value>
+  </data>
+  <data name="PracticeCreate" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="PracticeTechniquesList" xml:space="preserve">
+    <value>Techniques list</value>
+  </data>
+  <data name="PracticeInitError" xml:space="preserve">
+    <value>Initialization failed</value>
+  </data>
+  <data name="PracticeLoadMoreError" xml:space="preserve">
+    <value>Could not load more techniques</value>
+  </data>
+  <data name="PracticeLoadingText" xml:space="preserve">
+    <value>Loading practices</value>
+  </data>
+  <data name="PracticeLoadingMoreText" xml:space="preserve">
+    <value>Loading…</value>
+  </data>
+  <data name="PracticeDesignTitle" xml:space="preserve">
+    <value>Create technique</value>
+  </data>
+  <data name="PracticeConstructor" xml:space="preserve">
+    <value>Designer</value>
+  </data>
+  <data name="PracticeCustomTechnique" xml:space="preserve">
+    <value>Custom technique</value>
+  </data>
+  <data name="PracticeDeleteConfirm" xml:space="preserve">
+    <value>Are you sure you want to delete your technique?</value>
+  </data>
+  <data name="ReviewTitle" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+  <data name="ReviewPage" xml:space="preserve">
+    <value>Review</value>
+  </data>
+  <data name="ReviewExplanationHeader" xml:space="preserve">
+    <value>How it works</value>
+  </data>
+  <data name="ReviewExplanation" xml:space="preserve">
+    <value>You can report a problem or suggest ideas to improve the app. Support will receive your message.</value>
+  </data>
+  <data name="ReviewExplanationShare" xml:space="preserve">
+    <value>Describe a problem or an idea and choose where to send it: email, a messenger or notes. The app does not send anything to the developer by itself.</value>
+  </data>
+  <data name="ReviewShareButton" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="ReviewMessagePlaceholder" xml:space="preserve">
+    <value>Describe the issue or idea…</value>
+  </data>
+  <data name="ReviewMessageRequired" xml:space="preserve">
+    <value>Enter a message before sending</value>
+  </data>
+  <data name="ReviewSendSuccessTitle" xml:space="preserve">
+    <value>Thank you</value>
+  </data>
+  <data name="ReviewSendSuccessMessage" xml:space="preserve">
+    <value>Your message has been sent</value>
+  </data>
+  <data name="ReviewEmailSubject" xml:space="preserve">
+    <value>Psychology App feedback</value>
+  </data>
+  <data name="ReviewSmsRecipientMissing" xml:space="preserve">
+    <value>SMS recipient is not configured</value>
+  </data>
+  <data name="ReviewSmsNotSupported" xml:space="preserve">
+    <value>SMS is not supported on this device</value>
+  </data>
+  <data name="ReviewSmsFailed" xml:space="preserve">
+    <value>Failed to open the SMS app</value>
+  </data>
+  <data name="ReviewEmailNotSupported" xml:space="preserve">
+    <value>Email is not supported on this device</value>
+  </data>
+  <data name="ReviewEmailFailed" xml:space="preserve">
+    <value>Failed to open the email app</value>
+  </data>
+  <data name="ReviewShareTitle" xml:space="preserve">
+    <value>App feedback</value>
+  </data>
+  <data name="ReviewShareFailed" xml:space="preserve">
+    <value>Failed to open the share menu</value>
+  </data>
+  <data name="DonateTitle" xml:space="preserve">
+    <value>Donations</value>
+  </data>
+  <data name="DonateMoreInfo" xml:space="preserve">
+    <value>More info</value>
+  </data>
+  <data name="DonateBody" xml:space="preserve">
+    <value>This project runs on donations only. We do not show ads or sell paid services. Donations support developers and designers.</value>
+  </data>
+  <data name="DonateButton" xml:space="preserve">
+    <value>Donate</value>
+  </data>
+  <data name="DonateOpenFailed" xml:space="preserve">
+    <value>Failed to open the donation page</value>
+  </data>
+  <data name="InfoAboutBody" xml:space="preserve">
+    <value>This app is a collection of simple yet powerful techniques to help with stress, fear, doubt, intrusive thoughts, limiting beliefs, and destructive patterns. The methods are well known and time-tested. Some come from NLP or the work of Zivorad Slavinski. These tools can save you time, energy, and money. They do not require deep knowledge of psychology or subconscious reprogramming. We wish you success in your practice!</value>
+  </data>
+  <data name="CleanerPrayersPage" xml:space="preserve">
+    <value>Prayers</value>
+  </data>
+  <data name="CleanerPrayerCollection" xml:space="preserve">
+    <value>Prayer collection</value>
+  </data>
+  <data name="CleanerLoad" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="CleanerSearchingPrayers" xml:space="preserve">
+    <value>Loading prayers</value>
+  </data>
+  <data name="CleanerPreparingAudio" xml:space="preserve">
+    <value>Preparing audio…</value>
+  </data>
+  <data name="CleanerPlaybackError" xml:space="preserve">
+    <value>Could not play audio. Check your internet connection.</value>
+  </data>
+  <data name="CleanerOfflineBadge" xml:space="preserve">
+    <value>Available offline</value>
+  </data>
+  <data name="CleanerPlayNext" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="CleanerReplay" xml:space="preserve">
+    <value>Replay</value>
+  </data>
+  <data name="CleanerMoreInfoBody" xml:space="preserve">
+    <value>Audio prayers for morning, evening, and quiet practice. Internet is required for the first listen; tracks can then be played offline.</value>
+  </data>
+  <data name="CleanerCollectionSubtitle" xml:space="preserve">
+    <value>Choose a prayer and tap a card to start listening.</value>
+  </data>
+  <data name="CleanerCategoryAll" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="CleanerCategoryMorning" xml:space="preserve">
+    <value>Morning</value>
+  </data>
+  <data name="CleanerCategoryEvening" xml:space="preserve">
+    <value>Evening</value>
+  </data>
+  <data name="CleanerCategoryPenitential" xml:space="preserve">
+    <value>Penitential</value>
+  </data>
+  <data name="CleanerCategoryCore" xml:space="preserve">
+    <value>Core</value>
+  </data>
+  <data name="CleanerPrayerMain" xml:space="preserve">
+    <value>Main prayer</value>
+  </data>
+  <data name="CleanerPsalm50" xml:space="preserve">
+    <value>Psalm 50</value>
+  </data>
+  <data name="CleanerPsalm50Desc" xml:space="preserve">
+    <value>A penitential psalm; traditionally read three times a day</value>
+  </data>
+  <data name="CleanerPsalm90" xml:space="preserve">
+    <value>Psalm 90</value>
+  </data>
+  <data name="CleanerPsalm90Desc" xml:space="preserve">
+    <value>A prayer for God's protection and help</value>
+  </data>
+  <data name="CleanerOurFather" xml:space="preserve">
+    <value>Our Father</value>
+  </data>
+  <data name="CleanerOurFatherDesc" xml:space="preserve">
+    <value>The central Christian prayer</value>
+  </data>
+  <data name="CleanerJesusPrayer" xml:space="preserve">
+    <value>Jesus Prayer</value>
+  </data>
+  <data name="CleanerJesusPrayerDesc" xml:space="preserve">
+    <value>A short prayer of the heart to Christ</value>
+  </data>
+  <data name="CleanerHeavenlyKing" xml:space="preserve">
+    <value>Heavenly King</value>
+  </data>
+  <data name="CleanerHeavenlyKingDesc" xml:space="preserve">
+    <value>Opening prayer of the morning rule</value>
+  </data>
+  <data name="CleanerMorningPrayer" xml:space="preserve">
+    <value>Morning prayers</value>
+  </data>
+  <data name="CleanerMorningPrayerDesc" xml:space="preserve">
+    <value>A short morning prayer cycle</value>
+  </data>
+  <data name="CleanerSymbolOfFaith" xml:space="preserve">
+    <value>Symbol of Faith</value>
+  </data>
+  <data name="CleanerSymbolOfFaithDesc" xml:space="preserve">
+    <value>A concise statement of Orthodox faith</value>
+  </data>
+  <data name="CleanerEveningPrayer" xml:space="preserve">
+    <value>Evening prayers</value>
+  </data>
+  <data name="CleanerEveningPrayerDesc" xml:space="preserve">
+    <value>A short evening prayer cycle</value>
+  </data>
+  <data name="CleanerTrisagion" xml:space="preserve">
+    <value>Trisagion</value>
+  </data>
+  <data name="CleanerTrisagionDesc" xml:space="preserve">
+    <value>"Holy God, Holy Mighty…"</value>
+  </data>
+  <data name="CleanerVirginMary" xml:space="preserve">
+    <value>Hail, O Virgin</value>
+  </data>
+  <data name="CleanerVirginMaryDesc" xml:space="preserve">
+    <value>A prayer to the Most Holy Theotokos</value>
+  </data>
+  <data name="CleanerHolySpirit" xml:space="preserve">
+    <value>Prayer to the Holy Spirit</value>
+  </data>
+  <data name="CleanerHolySpiritDesc" xml:space="preserve">
+    <value>A prayer for the gifts and strengthening of the Spirit</value>
+  </data>
+  <data name="CleanerDoxology" xml:space="preserve">
+    <value>Doxology</value>
+  </data>
+  <data name="CleanerDoxologyDesc" xml:space="preserve">
+    <value>The great doxology to God</value>
+  </data>
+  <data name="CleanerSearchPlaceholder" xml:space="preserve">
+    <value>Search prayers</value>
+  </data>
+  <data name="CleanerNoPrayersFound" xml:space="preserve">
+    <value>No prayers found</value>
+  </data>
+  <data name="CleanerCatalogEmpty" xml:space="preserve">
+    <value>No prayers in the catalog yet</value>
+  </data>
+  <data name="CleanerNowPlaying" xml:space="preserve">
+    <value>Now playing</value>
+  </data>
+  <data name="DesignerNamePlaceholder" xml:space="preserve">
+    <value>Slavinski spin technique</value>
+  </data>
+  <data name="DesignerDescriptionPlaceholder" xml:space="preserve">
+    <value>Instant neutralization method...</value>
+  </data>
+  <data name="DesignerThemePlaceholder" xml:space="preserve">
+    <value>Episodes</value>
+  </data>
+  <data name="DesignerAuthorPlaceholder" xml:space="preserve">
+    <value>Zivorad Slavinski</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Repeat" xml:space="preserve">
+    <value>Repeat</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ConcernLabel" xml:space="preserve">
+    <value>Concern</value>
+  </data>
+  <data name="FirstPolarityLabel" xml:space="preserve">
+    <value>First polarity</value>
+  </data>
+  <data name="SecondPolarityLabel" xml:space="preserve">
+    <value>Second polarity</value>
+  </data>
+  <data name="TechniqueStepBack" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="TechniqueStepNext" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="ProverbLabel" xml:space="preserve">
+    <value>Proverb</value>
+  </data>
+  <data name="QuoteAddFavoriteHint" xml:space="preserve">
+    <value>Add to favorites</value>
+  </data>
+  <data name="QuoteCopyHint" xml:space="preserve">
+    <value>Copy quote</value>
+  </data>
+  <data name="QuoteShareHint" xml:space="preserve">
+    <value>Share quote</value>
+  </data>
+  <data name="PolarityNegativePlaceholder" xml:space="preserve">
+    <value>Neurosis</value>
+  </data>
+  <data name="PolarityPositivePlaceholder" xml:space="preserve">
+    <value>Calm</value>
+  </data>
+  <data name="StartupErrorTitle" xml:space="preserve">
+    <value>Startup error</value>
+  </data>
+  <data name="StartupErrorMessage" xml:space="preserve">
+    <value>Failed to initialize the app. Please restart.</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="UnexpectedErrorMessage" xml:space="preserve">
+    <value>An unexpected error occurred. Please try again.</value>
+  </data>
+  <data name="TestsResultSaveFailedMessage" xml:space="preserve">
+    <value>Failed to save the test result. Please try again.</value>
+  </data>
+  <data name="TestsResultNavigationFailedMessage" xml:space="preserve">
+    <value>The result was saved, but the result screen could not be opened. Tap Finish again.</value>
+  </data>
+  <data name="TechniqueNotFound" xml:space="preserve">
+    <value>Technique not found.</value>
+  </data>
+  <data name="QuoteNotFound" xml:space="preserve">
+    <value>Quote not found.</value>
+  </data>
+  <data name="PracticeEmptyTitle" xml:space="preserve">
+    <value>No techniques yet</value>
+  </data>
+  <data name="PracticeEmptyBody" xml:space="preserve">
+    <value>Tap Create to add your first technique</value>
+  </data>
+  <data name="TestsEmptyTitle" xml:space="preserve">
+    <value>Tests are not available yet</value>
+  </data>
+  <data name="TestsEmptyBody" xml:space="preserve">
+    <value>Tap Refresh to load the list again</value>
+  </data>
+  <data name="TestsEmptyRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="TestsLoadingText" xml:space="preserve">
+    <value>Loading tests</value>
+  </data>
+  <data name="QuotesEmptyTitle" xml:space="preserve">
+    <value>No quotes found</value>
+  </data>
+  <data name="QuotesEmptyBody" xml:space="preserve">
+    <value>Tap Refresh to load quotes again</value>
+  </data>
+  <data name="QuotesRefreshButton" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ProfileQuotesEmpty" xml:space="preserve">
+    <value>No favorite quotes yet</value>
+  </data>
+  <data name="QuotesFavoritesEmptyBody" xml:space="preserve">
+    <value>Tap the heart on a quote to add it here.</value>
+  </data>
+  <data name="PhysicsSolutionHeader" xml:space="preserve">
+    <value>What to do</value>
+  </data>
+  <data name="PhysicsRecommendedPractices" xml:space="preserve">
+    <value>Practices that may help</value>
+  </data>
+  <data name="PhysicsTryPractice" xml:space="preserve">
+    <value>Try a practice</value>
+  </data>
+  <data name="ProfileTestsCompleted" xml:space="preserve">
+    <value>Tests completed</value>
+  </data>
+  <data name="ProfileStreakDays" xml:space="preserve">
+    <value>Day streak</value>
+  </data>
+  <data name="ProfileStreakHint" xml:space="preserve">
+    <value>Counts days with a completed practice</value>
+  </data>
+  <data name="TodayForYou" xml:space="preserve">
+    <value>Today for you</value>
+  </data>
+  <data name="TodayRecommended" xml:space="preserve">
+    <value>Recommended practice</value>
+  </data>
+  <data name="TodayStartPractice" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="ComebackBanner" xml:space="preserve">
+    <value>Welcome back — start with a short practice</value>
+  </data>
+  <data name="OnboardingRemindersLabel" xml:space="preserve">
+    <value>Remind me to practice</value>
+  </data>
+  <data name="OnboardingReminderHourLabel" xml:space="preserve">
+    <value>Reminder time</value>
+  </data>
+  <data name="TodayMoodQuestion" xml:space="preserve">
+    <value>How are you feeling?</value>
+  </data>
+  <data name="TodayMoodSaved" xml:space="preserve">
+    <value>Mood saved</value>
+  </data>
+  <data name="MoodHistoryTitle" xml:space="preserve">
+    <value>Recent</value>
+  </data>
+  <data name="ProfileMoodTrendTitle" xml:space="preserve">
+    <value>Mood</value>
+  </data>
+  <data name="ProfileMoodCheckInTitle" xml:space="preserve">
+    <value>How are you feeling today?</value>
+  </data>
+  <data name="ProfileWeeklyInsightTitle" xml:space="preserve">
+    <value>This week</value>
+  </data>
+  <data name="JournalTitle" xml:space="preserve">
+    <value>Journal</value>
+  </data>
+  <data name="OpenJournalLabel" xml:space="preserve">
+    <value>How are you feeling?</value>
+  </data>
+  <data name="JournalCardSubtitle" xml:space="preserve">
+    <value>Mood, notes, and trends</value>
+  </data>
+  <data name="JournalTodayTitle" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="JournalEntriesTitle" xml:space="preserve">
+    <value>Entries</value>
+  </data>
+  <data name="JournalWeekEmpty" xml:space="preserve">
+    <value>Not much this week yet — log a mood check-in</value>
+  </data>
+  <data name="JournalNotePlaceholder" xml:space="preserve">
+    <value>What shaped this? (optional)</value>
+  </data>
+  <data name="JournalNoteSectionTitle" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="JournalAddNoteLabel" xml:space="preserve">
+    <value>Add a note</value>
+  </data>
+  <data name="JournalShowHintsLabel" xml:space="preserve">
+    <value>Prompts</value>
+  </data>
+  <data name="JournalHideHintsLabel" xml:space="preserve">
+    <value>Hide prompts</value>
+  </data>
+  <data name="JournalHowNowQuestion" xml:space="preserve">
+    <value>How are you right now?</value>
+  </data>
+  <data name="JournalMoreMenuLabel" xml:space="preserve">
+    <value>More</value>
+  </data>
+  <data name="JournalSlotPickerTitle" xml:space="preserve">
+    <value>Check-in time</value>
+  </data>
+  <data name="JournalNoteSaveHint" xml:space="preserve">
+    <value>Mood saves instantly. Use the button below for the note.</value>
+  </data>
+  <data name="JournalSaveLabel" xml:space="preserve">
+    <value>Save note</value>
+  </data>
+  <data name="JournalDeleteLabel" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="JournalDeleteConfirmTitle" xml:space="preserve">
+    <value>Delete entry?</value>
+  </data>
+  <data name="JournalDeleteConfirmMessage" xml:space="preserve">
+    <value>This day's mood check-in and note will be removed.</value>
+  </data>
+  <data name="JournalDeleteConfirmAccept" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="JournalDeleteConfirmCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="JournalNoNoteCaption" xml:space="preserve">
+    <value>No note</value>
+  </data>
+  <data name="JournalEditTodayHint" xml:space="preserve">
+    <value>Edit today</value>
+  </data>
+  <data name="JournalPickMoodHint" xml:space="preserve">
+    <value>Pick a mood above</value>
+  </data>
+  <data name="JournalMoodStatsTitle" xml:space="preserve">
+    <value>Overview</value>
+  </data>
+  <data name="JournalMoodStreakLabel" xml:space="preserve">
+    <value>Day streak</value>
+  </data>
+  <data name="JournalDynamicsTitle" xml:space="preserve">
+    <value>Trend</value>
+  </data>
+  <data name="JournalOverviewInsightEmpty" xml:space="preserve">
+    <value>Not many check-ins yet — log your mood this week</value>
+  </data>
+  <data name="ProfileMoodCheckInBanner" xml:space="preserve">
+    <value>No mood check-in for today yet</value>
+  </data>
+  <data name="JournalTryQuietQuote" xml:space="preserve">
+    <value>A short quote may help</value>
+  </data>
+  <data name="PracticeOpenJournalRow" xml:space="preserve">
+    <value>Add a journal note</value>
+  </data>
+  <data name="JournalQuestionsSectionTitle" xml:space="preserve">
+    <value>Questions</value>
+  </data>
+  <data name="JournalFactorsSectionTitle" xml:space="preserve">
+    <value>Day factors</value>
+  </data>
+  <data name="JournalWeekNavPrev" xml:space="preserve">
+    <value>Previous week</value>
+  </data>
+  <data name="JournalWeekNavNext" xml:space="preserve">
+    <value>Next week</value>
+  </data>
+  <data name="JournalMonthNavPrev" xml:space="preserve">
+    <value>Previous month</value>
+  </data>
+  <data name="JournalMonthNavNext" xml:space="preserve">
+    <value>Next month</value>
+  </data>
+  <data name="JournalFilter7Days" xml:space="preserve">
+    <value>7 days</value>
+  </data>
+  <data name="JournalFilter30Days" xml:space="preserve">
+    <value>30 days</value>
+  </data>
+  <data name="JournalFilter90Days" xml:space="preserve">
+    <value>90 days</value>
+  </data>
+  <data name="JournalYesterdayTitle" xml:space="preserve">
+    <value>Yesterday</value>
+  </data>
+  <data name="JournalPastDayCheckInTitle" xml:space="preserve">
+    <value>How was your mood that day?</value>
+  </data>
+  <data name="JournalPromptHelped" xml:space="preserve">
+    <value>What helped?</value>
+  </data>
+  <data name="JournalPromptBlocked" xml:space="preserve">
+    <value>What got in the way?</value>
+  </data>
+  <data name="JournalPromptGrateful" xml:space="preserve">
+    <value>Grateful for?</value>
+  </data>
+  <data name="JournalPromptNext" xml:space="preserve">
+    <value>What next?</value>
+  </data>
+  <data name="JournalSearchPlaceholder" xml:space="preserve">
+    <value>Search notes</value>
+  </data>
+  <data name="JournalSearchEmpty" xml:space="preserve">
+    <value>No matching notes</value>
+  </data>
+  <data name="JournalTimelineEmpty" xml:space="preserve">
+    <value>No check-ins yet — log a mood in the journal to start a streak</value>
+  </data>
+  <data name="JournalTryShortPractice" xml:space="preserve">
+    <value>A short practice may help</value>
+  </data>
+  <data name="JournalPromptBlockedShort" xml:space="preserve">
+    <value>What blocked</value>
+  </data>
+  <data name="JournalPromptGratefulShort" xml:space="preserve">
+    <value>Grateful</value>
+  </data>
+  <data name="JournalFactorSleep" xml:space="preserve">
+    <value>Sleep: </value>
+  </data>
+  <data name="JournalFactorPeople" xml:space="preserve">
+    <value>People: </value>
+  </data>
+  <data name="JournalFactorPractice" xml:space="preserve">
+    <value>Practice: </value>
+  </data>
+  <data name="JournalFactorWalk" xml:space="preserve">
+    <value>Walk: </value>
+  </data>
+  <data name="JournalFactorWork" xml:space="preserve">
+    <value>Work: </value>
+  </data>
+  <data name="JournalFactorSport" xml:space="preserve">
+    <value>Sport: </value>
+  </data>
+  <data name="JournalFactorRest" xml:space="preserve">
+    <value>Rest: </value>
+  </data>
+  <data name="JournalFactorStress" xml:space="preserve">
+    <value>Stress: </value>
+  </data>
+  <data name="JournalFactorHome" xml:space="preserve">
+    <value>Home: </value>
+  </data>
+  <data name="JournalFactorSleepLabel" xml:space="preserve">
+    <value>Sleep</value>
+  </data>
+  <data name="JournalFactorPeopleLabel" xml:space="preserve">
+    <value>People</value>
+  </data>
+  <data name="JournalFactorPracticeLabel" xml:space="preserve">
+    <value>Practice</value>
+  </data>
+  <data name="JournalFactorWalkLabel" xml:space="preserve">
+    <value>Walk</value>
+  </data>
+  <data name="JournalFactorWorkLabel" xml:space="preserve">
+    <value>Work</value>
+  </data>
+  <data name="JournalFactorSportLabel" xml:space="preserve">
+    <value>Sport</value>
+  </data>
+  <data name="JournalFactorRestLabel" xml:space="preserve">
+    <value>Rest</value>
+  </data>
+  <data name="JournalFactorStressLabel" xml:space="preserve">
+    <value>Stress</value>
+  </data>
+  <data name="JournalFactorHomeLabel" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="JournalYearNavPrev" xml:space="preserve">
+    <value>Previous year</value>
+  </data>
+  <data name="JournalYearNavNext" xml:space="preserve">
+    <value>Next year</value>
+  </data>
+  <data name="JournalYearHeatmapTitle" xml:space="preserve">
+    <value>Year in pixels</value>
+  </data>
+  <data name="JournalCalendarScaleWeek" xml:space="preserve">
+    <value>Week</value>
+  </data>
+  <data name="JournalCalendarScaleMonth" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="JournalCalendarScaleYear" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="JournalCalendarSectionTitle" xml:space="preserve">
+    <value>Calendar</value>
+  </data>
+  <data name="JournalStatsSectionTitle" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="JournalStreakMetricLabel" xml:space="preserve">
+    <value>Streak</value>
+  </data>
+  <data name="JournalPeriodNavPrev" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="JournalPeriodNavNext" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="JournalSlotMorning" xml:space="preserve">
+    <value>Morning</value>
+  </data>
+  <data name="JournalSlotEvening" xml:space="preserve">
+    <value>Evening</value>
+  </data>
+  <data name="JournalExportLabel" xml:space="preserve">
+    <value>Export CSV</value>
+  </data>
+  <data name="JournalExportTitle" xml:space="preserve">
+    <value>Mood journal</value>
+  </data>
+  <data name="JournalExportEmpty" xml:space="preserve">
+    <value>No entries to export</value>
+  </data>
+  <data name="JournalSlotFullHint" xml:space="preserve">
+    <value>This day already has two check-ins — pick Morning or Evening</value>
+  </data>
+  <data name="MoodNotesEmpty" xml:space="preserve">
+    <value>No mood check-ins yet — log one above</value>
+  </data>
+  <data name="JournalNeedMoodToSave" xml:space="preserve">
+    <value>Choose a mood first</value>
+  </data>
+  <data name="WeekPracticesLabel" xml:space="preserve">
+    <value>Practices</value>
+  </data>
+  <data name="WeekMoodCheckInsLabel" xml:space="preserve">
+    <value>Check-ins</value>
+  </data>
+  <data name="WeekAvgMoodLabel" xml:space="preserve">
+    <value>Avg mood</value>
+  </data>
+  <data name="WeekRiskLabel" xml:space="preserve">
+    <value>Risk</value>
+  </data>
+  <data name="WeekStreakLabel" xml:space="preserve">
+    <value>Streak</value>
+  </data>
+  <data name="ProfileMoodTrendHint" xml:space="preserve">
+    <value>Track mood here to see your trend</value>
+  </data>
+  <data name="ChartFirstMeasurement" xml:space="preserve">
+    <value>First measurement</value>
+  </data>
+  <data name="PracticeReflectionQuestion" xml:space="preserve">
+    <value>How do you feel now?</value>
+  </data>
+  <data name="PracticeReflectionNotePlaceholder" xml:space="preserve">
+    <value>Short note (optional)</value>
+  </data>
+  <data name="PracticePreSudsLabel" xml:space="preserve">
+    <value>Intensity before (0–10)</value>
+  </data>
+  <data name="PracticePostSudsLabel" xml:space="preserve">
+    <value>Intensity after (0–10)</value>
+  </data>
+  <data name="PracticeSudsSectionTitle" xml:space="preserve">
+    <value>How did intensity change?</value>
+  </data>
+  <data name="PracticeReflectionSectionTitle" xml:space="preserve">
+    <value>Mood</value>
+  </data>
+  <data name="PracticeLastNoteTitle" xml:space="preserve">
+    <value>What you noticed last time</value>
+  </data>
+  <data name="PracticeCompletedTitle" xml:space="preserve">
+    <value>Done!</value>
+  </data>
+  <data name="ProfileMoodNotesTitle" xml:space="preserve">
+    <value>Mood notes</value>
+  </data>
+  <data name="PracticeGoHomeButton" xml:space="preserve">
+    <value>Go home</value>
+  </data>
+  <data name="PracticeMoreButton" xml:space="preserve">
+    <value>More practice</value>
+  </data>
+  <data name="PracticeNextCaption" xml:space="preserve">
+    <value>Next practice</value>
+  </data>
+  <data name="PracticeNextReason" xml:space="preserve">
+    <value>Keep the momentum</value>
+  </data>
+  <data name="PracticeHistoryTitle" xml:space="preserve">
+    <value>Recent practices</value>
+  </data>
+  <data name="PracticeHistoryEmpty" xml:space="preserve">
+    <value>No completed practices yet</value>
+  </data>
+  <data name="QuoteCopied" xml:space="preserve">
+    <value>Copied</value>
+  </data>
+  <data name="TestHistoryTitle" xml:space="preserve">
+    <value>Result history</value>
+  </data>
+  <data name="TestHistoryEmpty" xml:space="preserve">
+    <value>No saved results yet</value>
+  </data>
+  <data name="TestOpenHistory" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="PhysicsNoResultsSubhint" xml:space="preserve">
+    <value>Try: shoulder, neck, back, stomach, head…</value>
+  </data>
+  <data name="TechniqueContinueBadge" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="TechniqueNotTriedYet" xml:space="preserve">
+    <value>Not tried yet</value>
+  </data>
+  <data name="TestNeverTakenYet" xml:space="preserve">
+    <value>Not taken yet</value>
+  </data>
+  <data name="TestTryTechnique" xml:space="preserve">
+    <value>Try a technique</value>
+  </data>
+  <data name="TestResultImproved" xml:space="preserve">
+    <value>Better than last time</value>
+  </data>
+  <data name="TestResultWorse" xml:space="preserve">
+    <value>Worse than last time</value>
+  </data>
+  <data name="TestResultSame" xml:space="preserve">
+    <value>Same as last time</value>
+  </data>
+  <data name="OnboardingAppName" xml:space="preserve">
+    <value>PsychologyApp</value>
+  </data>
+  <data name="OnboardingAppTagline" xml:space="preserve">
+    <value>Calm within reach — even offline</value>
+  </data>
+  <data name="OnboardingWelcomeTitle" xml:space="preserve">
+    <value>A space for you</value>
+  </data>
+  <data name="OnboardingWelcomeBody" xml:space="preserve">
+    <value>Here you can breathe, understand yourself, and find support — at your own pace.</value>
+  </data>
+  <data name="OnboardingValueOffline" xml:space="preserve">
+    <value>Offline</value>
+  </data>
+  <data name="OnboardingValueNoJudgment" xml:space="preserve">
+    <value>No judgment</value>
+  </data>
+  <data name="OnboardingValueOnDevice" xml:space="preserve">
+    <value>On your device</value>
+  </data>
+  <data name="OnboardingBack" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="OnboardingOverviewTitle" xml:space="preserve">
+    <value>Five pillars in one place</value>
+  </data>
+  <data name="OnboardingOverviewSubtitle" xml:space="preserve">
+    <value>Practices, tests, psychosomatic search, prayers, and quotes — a rare mix in one companion</value>
+  </data>
+  <data name="OnboardingOverviewLead" xml:space="preserve">
+    <value>Everything is one tap away in the tab bar</value>
+  </data>
+  <data name="OnboardingModulePracticeHint" xml:space="preserve">
+    <value>Calm your nervous system in minutes</value>
+  </data>
+  <data name="OnboardingModuleTestsHint" xml:space="preserve">
+    <value>Know yourself through questionnaires and Lüscher</value>
+  </data>
+  <data name="OnboardingModuleSomaticHint" xml:space="preserve">
+    <value>Understand the body–emotion link</value>
+  </data>
+  <data name="OnboardingModuleMusicHint" xml:space="preserve">
+    <value>Find words and sound for the soul</value>
+  </data>
+  <data name="OnboardingModuleQuotesHint" xml:space="preserve">
+    <value>Lift your mood with one thought</value>
+  </data>
+  <data name="OnboardingConcernTitle" xml:space="preserve">
+    <value>What troubles you?</value>
+  </data>
+  <data name="OnboardingConcernSubtitle" xml:space="preserve">
+    <value>We'll pick a first practice for your needs</value>
+  </data>
+  <data name="OnboardingConcernFooterHint" xml:space="preserve">
+    <value>Tap an option to continue</value>
+  </data>
+  <data name="OnboardingConcernAnxiety" xml:space="preserve">
+    <value>Anxiety</value>
+  </data>
+  <data name="OnboardingConcernBody" xml:space="preserve">
+    <value>Body / symptoms</value>
+  </data>
+  <data name="OnboardingConcernMood" xml:space="preserve">
+    <value>Mood</value>
+  </data>
+  <data name="OnboardingConcernExplore" xml:space="preserve">
+    <value>Just exploring</value>
+  </data>
+  <data name="OnboardingConcernAnxietyHint" xml:space="preserve">
+    <value>When thoughts won't let go</value>
+  </data>
+  <data name="OnboardingConcernBodyHint" xml:space="preserve">
+    <value>When your body signals stress</value>
+  </data>
+  <data name="OnboardingConcernMoodHint" xml:space="preserve">
+    <value>When it feels heavy inside</value>
+  </data>
+  <data name="OnboardingConcernExploreHint" xml:space="preserve">
+    <value>I just want to look around</value>
+  </data>
+  <data name="OnboardingFinishTitle" xml:space="preserve">
+    <value>All set — shall we begin?</value>
+  </data>
+  <data name="OnboardingRecommendedCaption" xml:space="preserve">
+    <value>Recommended practice</value>
+  </data>
+  <data name="OnboardingDisclaimerTitle" xml:space="preserve">
+    <value>Important</value>
+  </data>
+  <data name="OnboardingDisclaimerBody" xml:space="preserve">
+    <value>This app does not replace professional care. Seek a specialist for severe conditions.</value>
+  </data>
+  <data name="OnboardingStart" xml:space="preserve">
+    <value>Try it now</value>
+  </data>
+  <data name="OnboardingSkip" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="OnboardingNext" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="QuoteShareFooter" xml:space="preserve">
+    <value>PsychologyApp</value>
+  </data>
+  <data name="PhysicsTitle" xml:space="preserve">
+    <value>Psychosomatic</value>
+  </data>
+  <data name="PhysicsIntroPage" xml:space="preserve">
+    <value>Introduction</value>
+  </data>
+  <data name="PhysicsSearchPage" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="PhysicsSearchTitle" xml:space="preserve">
+    <value>Psychosomatic</value>
+  </data>
+  <data name="PhysicsExplanationHeader" xml:space="preserve">
+    <value>Explanation</value>
+  </data>
+  <data name="PhysicsExplanationBody" xml:space="preserve">
+    <value>About half of all illnesses have a psychological component. Any physical symptom can point to an emotional cause that troubles you but stays unconscious.</value>
+  </data>
+  <data name="PhysicsDescriptionHeader" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="PhysicsDescriptionBody" xml:space="preserve">
+    <value>This tool helps you find a possible emotional cause of a physical symptom in just a few taps. It's simple.</value>
+  </data>
+  <data name="PhysicsAlgorithmStep1" xml:space="preserve">
+    <value>1. Name the illness or body part that hurts</value>
+  </data>
+  <data name="PhysicsAlgorithmStep2" xml:space="preserve">
+    <value>2. Explore several possible emotional causes.</value>
+  </data>
+  <data name="PhysicsSearchToolbar" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="PhysicsProblemLabel" xml:space="preserve">
+    <value>Problem</value>
+  </data>
+  <data name="PhysicsIllnessPlaceholder" xml:space="preserve">
+    <value>Condition</value>
+  </data>
+  <data name="PhysicsEmptySearchHint" xml:space="preserve">
+    <value>Enter a search term</value>
+  </data>
+  <data name="PhysicsEmptySearchSubhint" xml:space="preserve">
+    <value>Illness or body part</value>
+  </data>
+  <data name="PhysicsNoResultsHint" xml:space="preserve">
+    <value>No results found</value>
+  </data>
+  <data name="PhysicsLoadingText" xml:space="preserve">
+    <value>Searching causes</value>
+  </data>
+  <data name="PhysicsSearchFilteringText" xml:space="preserve">
+    <value>Filtering results</value>
+  </data>
+  <data name="PhysicsSearchError" xml:space="preserve">
+    <value>Search failed</value>
+  </data>
+  <data name="QuotesSearchError" xml:space="preserve">
+    <value>Quote search failed</value>
+  </data>
+  <data name="LoadFailed" xml:space="preserve">
+    <value>Failed to load</value>
+  </data>
+  <data name="RetryQuestion" xml:space="preserve">
+    <value>Try again?</value>
+  </data>
+  <data name="LoadError" xml:space="preserve">
+    <value>Failed to load</value>
+  </data>
+  <data name="ProfileTitle" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="ProfileLoadingText" xml:space="preserve">
+    <value>Loading profile</value>
+  </data>
+  <data name="ProfileUserLabel" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="ProfileStandardUser" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="ProfileTechniquesCompleted" xml:space="preserve">
+    <value>Techniques completed</value>
+  </data>
+  <data name="ProfileFollowers" xml:space="preserve">
+    <value>Followers</value>
+  </data>
+  <data name="ProfileRecommended" xml:space="preserve">
+    <value>Recommended</value>
+  </data>
+  <data name="ProfileBestQuotes" xml:space="preserve">
+    <value>Favorite quotes</value>
+  </data>
+  <data name="ProfileQuotesSeeAll" xml:space="preserve">
+    <value>All favorite quotes</value>
+  </data>
+  <data name="ProfileQuotesSeeAllSubtitle" xml:space="preserve">
+    <value>Open Quotes tab</value>
+  </data>
+  <data name="QuotesFavoriteAdded" xml:space="preserve">
+    <value>Added to favorites</value>
+  </data>
+  <data name="QuotesFavoriteRemoved" xml:space="preserve">
+    <value>Removed from favorites</value>
+  </data>
+  <data name="QuotesGoToTab" xml:space="preserve">
+    <value>Go to quotes</value>
+  </data>
+  <data name="QuotesFeedAll" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="QuotesFeedFavorites" xml:space="preserve">
+    <value>Favorites</value>
+  </data>
+  <data name="QuotesFeedForYou" xml:space="preserve">
+    <value>For you</value>
+  </data>
+  <data name="QuotesThemeAll" xml:space="preserve">
+    <value>All themes</value>
+  </data>
+  <data name="QuotesDailyTitle" xml:space="preserve">
+    <value>Quote of the day</value>
+  </data>
+  <data name="QuotesSearchPlaceholder" xml:space="preserve">
+    <value>Search quotes</value>
+  </data>
+  <data name="QuotesSearchEmptyTitle" xml:space="preserve">
+    <value>Nothing found</value>
+  </data>
+  <data name="QuotesSearchEmptyBody" xml:space="preserve">
+    <value>Try a different query.</value>
+  </data>
+  <data name="QuotesShowAgain" xml:space="preserve">
+    <value>Show again</value>
+  </data>
+  <data name="QuotesForYouHint" xml:space="preserve">
+    <value>Picked for your onboarding focus</value>
+  </data>
+  <data name="QuotesForYouEmptyTitle" xml:space="preserve">
+    <value>No quotes for you yet</value>
+  </data>
+  <data name="QuotesForYouEmptyBody" xml:space="preserve">
+    <value>We pick quotes for your onboarding focus. Check back later or switch to All.</value>
+  </data>
+  <data name="SettingsQuoteRemindersLabel" xml:space="preserve">
+    <value>Daily quote</value>
+  </data>
+  <data name="SettingsQuoteReminderHourLabel" xml:space="preserve">
+    <value>Quote time</value>
+  </data>
+  <data name="SettingsQuoteReminderHourPickerTitle" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="SettingsMoodRemindersLabel" xml:space="preserve">
+    <value>Remind me to check in</value>
+  </data>
+  <data name="SettingsMoodReminderHourLabel" xml:space="preserve">
+    <value>Check-in time</value>
+  </data>
+  <data name="SettingsMoodReminderHourPickerTitle" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="SettingsChatRemindersLabel" xml:space="preserve">
+    <value>Remind me to talk</value>
+  </data>
+  <data name="SettingsChatReminderHourLabel" xml:space="preserve">
+    <value>Reminder time</value>
+  </data>
+  <data name="SettingsChatReminderHourPickerTitle" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="QuoteReminderTitle" xml:space="preserve">
+    <value>Quote of the day</value>
+  </data>
+  <data name="QuoteReminderBody" xml:space="preserve">
+    <value>Open the app and read today's thought.</value>
+  </data>
+  <data name="QuoteThemeWisdom" xml:space="preserve">
+    <value>Wisdom</value>
+  </data>
+  <data name="QuoteThemeMotivation" xml:space="preserve">
+    <value>Motivation</value>
+  </data>
+  <data name="QuoteThemeResilience" xml:space="preserve">
+    <value>Resilience</value>
+  </data>
+  <data name="QuoteThemeSelfAwareness" xml:space="preserve">
+    <value>Self-awareness</value>
+  </data>
+  <data name="QuoteThemeMindfulness" xml:space="preserve">
+    <value>Mindfulness</value>
+  </data>
+  <data name="QuoteThemeSelfEsteem" xml:space="preserve">
+    <value>Self-esteem</value>
+  </data>
+  <data name="QuoteThemeHope" xml:space="preserve">
+    <value>Hope</value>
+  </data>
+  <data name="QuoteThemeEmpathy" xml:space="preserve">
+    <value>Empathy</value>
+  </data>
+  <data name="QuoteThemeHappiness" xml:space="preserve">
+    <value>Happiness</value>
+  </data>
+  <data name="QuoteThemeHabits" xml:space="preserve">
+    <value>Habits</value>
+  </data>
+  <data name="QuoteThemeLove" xml:space="preserve">
+    <value>Love</value>
+  </data>
+  <data name="QuoteThemeRelationships" xml:space="preserve">
+    <value>Relationships</value>
+  </data>
+  <data name="QuoteThemeResponsibility" xml:space="preserve">
+    <value>Responsibility</value>
+  </data>
+  <data name="QuoteThemePurpose" xml:space="preserve">
+    <value>Purpose</value>
+  </data>
+  <data name="QuoteThemeGrowth" xml:space="preserve">
+    <value>Growth</value>
+  </data>
+  <data name="QuoteThemeHealing" xml:space="preserve">
+    <value>Healing</value>
+  </data>
+  <data name="QuoteThemeSelfLove" xml:space="preserve">
+    <value>Self-love</value>
+  </data>
+  <data name="QuoteThemeAcceptance" xml:space="preserve">
+    <value>Acceptance</value>
+  </data>
+  <data name="QuoteThemeGratitude" xml:space="preserve">
+    <value>Gratitude</value>
+  </data>
+  <data name="QuoteThemeCalm" xml:space="preserve">
+    <value>Calm</value>
+  </data>
+  <data name="QuoteThemeAnxiety" xml:space="preserve">
+    <value>Anxiety</value>
+  </data>
+  <data name="QuoteThemeGeneral" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="QuotesAllReadTitle" xml:space="preserve">
+    <value>You are all caught up</value>
+  </data>
+  <data name="QuotesAllReadBody" xml:space="preserve">
+    <value>No new quotes right now. Open favorites or try again later.</value>
+  </data>
+  <data name="QuotesShowFavorites" xml:space="preserve">
+    <value>Show favorites</value>
+  </data>
+  <data name="ProfileBsffSubtitle" xml:space="preserve">
+    <value>Subconscious deprogramming method</value>
+  </data>
+  <data name="QuotesSearching" xml:space="preserve">
+    <value>Searching quotes</value>
+  </data>
+  <data name="QuotesLoading" xml:space="preserve">
+    <value>Loading quotes</value>
+  </data>
+  <data name="QuoteShareTitle" xml:space="preserve">
+    <value>Quote</value>
+  </data>
+  <data name="UnknownAuthor" xml:space="preserve">
+    <value>Unknown author</value>
+  </data>
+  <data name="JournalCrisisPromptTitle" xml:space="preserve">
+    <value>Are things very hard right now?</value>
+  </data>
+  <data name="JournalCrisisPromptBody" xml:space="preserve">
+    <value>Your note contains words that worry us. You are not alone: the crisis help screen has helplines and your safety plan.</value>
+  </data>
+  <data name="JournalCrisisPromptAccept" xml:space="preserve">
+    <value>Open help</value>
+  </data>
+  <data name="JournalCrisisPromptDecline" xml:space="preserve">
+    <value>Not now</value>
+  </data>
+  <data name="CrisisHubTitle" xml:space="preserve">
+    <value>Crisis help</value>
+  </data>
+  <data name="CrisisHubLead" xml:space="preserve">
+    <value>Safety first. This app does not replace emergency care.</value>
+  </data>
+  <data name="CrisisHubSafetyPlanTitle" xml:space="preserve">
+    <value>Safety plan</value>
+  </data>
+  <data name="CrisisHubSafetyPlanStep1" xml:space="preserve">
+    <value>Step away from triggers and find a safer place.</value>
+  </data>
+  <data name="CrisisHubSafetyPlanStep2" xml:space="preserve">
+    <value>Reach a trusted person — a friend, relative, or specialist.</value>
+  </data>
+  <data name="CrisisHubSafetyPlanStep3" xml:space="preserve">
+    <value>If life is at risk — call emergency services (112).</value>
+  </data>
+  <data name="CrisisHubHotlineTitle" xml:space="preserve">
+    <value>Call now</value>
+  </data>
+  <data name="CrisisHubHotlineRu" xml:space="preserve">
+    <value>Russia: 112 — emergency services (free). 8-800-2000-122 — the children's helpline, for children, teenagers and parents. For an adult helpline near you, see findahelpline.com</value>
+  </data>
+  <data name="CrisisHubHotlineIntl" xml:space="preserve">
+    <value>International: findahelpline.com</value>
+  </data>
+  <data name="CrisisHubCallHotlineRu" xml:space="preserve">
+    <value>Children's helpline 8-800-2000-122</value>
+  </data>
+  <data name="CrisisHubCallEmergency" xml:space="preserve">
+    <value>Call 112</value>
+  </data>
+  <data name="CrisisHubOpenHelpline" xml:space="preserve">
+    <value>Open findahelpline.com</value>
+  </data>
+  <data name="CrisisHubRecheck" xml:space="preserve">
+    <value>Recheck how I'm doing</value>
+  </data>
+  <data name="CrisisHubContinueSoft" xml:space="preserve">
+    <value>Return to gentle practices</value>
+  </data>
+  <data name="CrisisHubSpecialistHint" xml:space="preserve">
+    <value>Please consider a psychologist or doctor. Self-help fits mild to moderate states.</value>
+  </data>
+  <data name="DataBackupTitle" xml:space="preserve">
+    <value>Data &amp; backup</value>
+  </data>
+  <data name="DataBackupLead" xml:space="preserve">
+    <value>All data stays on this device only. Make a backup so you don't lose it.</value>
+  </data>
+  <data name="DataBackupExportTitle" xml:space="preserve">
+    <value>Export a backup</value>
+  </data>
+  <data name="DataBackupExportSubtitle" xml:space="preserve">
+    <value>A file with all chats, mood entries, tests and practice history.</value>
+  </data>
+  <data name="DataBackupImportTitle" xml:space="preserve">
+    <value>Restore from a backup</value>
+  </data>
+  <data name="DataBackupImportSubtitle" xml:space="preserve">
+    <value>Adds the data from the chosen backup file.</value>
+  </data>
+  <data name="DataBackupSummaryTitle" xml:space="preserve">
+    <value>Summary for a specialist</value>
+  </data>
+  <data name="DataBackupSummarySubtitle" xml:space="preserve">
+    <value>A text file covering the last 30 days — share it with a psychologist or doctor.</value>
+  </data>
+  <data name="DataBackupExportedToast" xml:space="preserve">
+    <value>File is ready to share</value>
+  </data>
+  <data name="ErrorLogTitle" xml:space="preserve">
+    <value>Error log</value>
+  </data>
+  <data name="ErrorLogSubtitle" xml:space="preserve">
+    <value>Share a file of technical errors to help find the cause of a crash. It does not contain your entries.</value>
+  </data>
+  <data name="ErrorLogEmptyToast" xml:space="preserve">
+    <value>No errors recorded</value>
+  </data>
+  <data name="DataBackupImportRolledBackToast" xml:space="preserve">
+    <value>Could not restore the data. Nothing was changed — please try again</value>
+  </data>
+  <data name="DataBackupImportFailedToast" xml:space="preserve">
+    <value>Could not read the backup file</value>
+  </data>
+  <data name="CrisisHubSafetyPlanLinkTitle" xml:space="preserve">
+    <value>My safety plan</value>
+  </data>
+  <data name="CrisisHubSafetyPlanLinkSubtitle" xml:space="preserve">
+    <value>Build a personal plan: warning signs, what helps, who to call.</value>
+  </data>
+  <data name="SafetyPlanPageTitle" xml:space="preserve">
+    <value>Safety plan</value>
+  </data>
+  <data name="SafetyPlanLead" xml:space="preserve">
+    <value>Fill this in while calm — it will help in a hard moment.</value>
+  </data>
+  <data name="SafetyPlanWarningSignsTitle" xml:space="preserve">
+    <value>My warning signs</value>
+  </data>
+  <data name="SafetyPlanWarningSignsPlaceholder" xml:space="preserve">
+    <value>For example: haven't slept in two nights</value>
+  </data>
+  <data name="SafetyPlanCopingTitle" xml:space="preserve">
+    <value>What helps me</value>
+  </data>
+  <data name="SafetyPlanCopingPlaceholder" xml:space="preserve">
+    <value>For example: go for a walk, call a friend</value>
+  </data>
+  <data name="SafetyPlanReasonsTitle" xml:space="preserve">
+    <value>Reasons to keep going</value>
+  </data>
+  <data name="SafetyPlanReasonsPlaceholder" xml:space="preserve">
+    <value>For example: my cat, the trip this spring</value>
+  </data>
+  <data name="SafetyPlanContactsTitle" xml:space="preserve">
+    <value>Who to call</value>
+  </data>
+  <data name="SafetyPlanContactNamePlaceholder" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="SafetyPlanContactPhonePlaceholder" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="SafetyPlanTapToRemoveHint" xml:space="preserve">
+    <value>Tap to remove</value>
+  </data>
+  <data name="SafetyPlanCallAction" xml:space="preserve">
+    <value>Call</value>
+  </data>
+  <data name="RiskCheckTitle" xml:space="preserve">
+    <value>Safety check</value>
+  </data>
+  <data name="RiskCheckLead" xml:space="preserve">
+    <value>If you have thoughts of self-harm — open help now. You do not need to finish the check first.</value>
+  </data>
+  <data name="RiskCheckSubtitle" xml:space="preserve">
+    <value>Answer honestly. This helps choose a safe path.</value>
+  </data>
+  <data name="RiskCheckSelfHarm" xml:space="preserve">
+    <value>Thoughts of self-harm or suicide</value>
+  </data>
+  <data name="RiskCheckDisorientation" xml:space="preserve">
+    <value>Severe disorientation or loss of contact with reality</value>
+  </data>
+  <data name="RiskCheckSubstance" xml:space="preserve">
+    <value>Substance or alcohol-related risk</value>
+  </data>
+  <data name="RiskCheckInsomnia" xml:space="preserve">
+    <value>Severe insomnia and exhaustion</value>
+  </data>
+  <data name="RiskCheckSubmit" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="RiskCheckOpenHelpNow" xml:space="preserve">
+    <value>Open help now</value>
+  </data>
+  <data name="RiskCheckYes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="RiskCheckNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="OptionsCrisisTitle" xml:space="preserve">
+    <value>Crisis help</value>
+  </data>
+  <data name="OptionsCrisisSubtitle" xml:space="preserve">
+    <value>Safety plan and hotlines</value>
+  </data>
+  <data name="ClinicalScorecardTitle" xml:space="preserve">
+    <value>Weekly overview</value>
+  </data>
+  <data name="PracticeHistorySeeAll" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="PracticeHistoryPageTitle" xml:space="preserve">
+    <value>Practice history</value>
+  </data>
+  <data name="ProfileRiskCheckLabel" xml:space="preserve">
+    <value>How am I right now?</value>
+  </data>
+  <data name="ProfileRiskCheckSubtitle" xml:space="preserve">
+    <value>Short questions about safety</value>
+  </data>
+  <data name="JournalOverviewTitle" xml:space="preserve">
+    <value>Overview</value>
+  </data>
+  <data name="JournalTimelineTitle" xml:space="preserve">
+    <value>Entries</value>
+  </data>
+  <data name="JournalOpenOverview" xml:space="preserve">
+    <value>Overview</value>
+  </data>
+  <data name="JournalOpenTimeline" xml:space="preserve">
+    <value>Entries</value>
+  </data>
+  <data name="JournalRecentDaysTitle" xml:space="preserve">
+    <value>This week</value>
+  </data>
+  <data name="JournalPromptHelpedShort" xml:space="preserve">
+    <value>What helped</value>
+  </data>
+  <data name="JournalPromptNextShort" xml:space="preserve">
+    <value>What's next</value>
+  </data>
+  <data name="JournalShareLabel" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="JournalShareTitle" xml:space="preserve">
+    <value>Journal entry</value>
+  </data>
+  <data name="JournalReminderToggle" xml:space="preserve">
+    <value>Remind me to check in</value>
+  </data>
+  <data name="JournalReminderHint" xml:space="preserve">
+    <value>Change the time in Settings</value>
+  </data>
+  <data name="MoodReminderTitle" xml:space="preserve">
+    <value>Journal</value>
+  </data>
+  <data name="MoodReminderBody" xml:space="preserve">
+    <value>How are you feeling today? Log it in your journal.</value>
+  </data>
+  <data name="ClinicalScorecardEmpty" xml:space="preserve">
+    <value>Not enough data yet — practices and mood will appear here</value>
+  </data>
+  <data name="ClinicalRiskGreen" xml:space="preserve">
+    <value>low</value>
+  </data>
+  <data name="ClinicalRiskAmber" xml:space="preserve">
+    <value>elevated</value>
+  </data>
+  <data name="ClinicalRiskRed" xml:space="preserve">
+    <value>high</value>
+  </data>
+  <data name="LuscherCoStable" xml:space="preserve">
+    <value>No unproductive tension; high emotional stability. Actions are purposeful and efficient. Overall mood is optimistic.</value>
+  </data>
+  <data name="LuscherCoMildTension" xml:space="preserve">
+    <value>Moderate tension that may reduce efficiency. Emotional stability is generally adequate with occasional strain.</value>
+  </data>
+  <data name="LuscherCoModerateTension" xml:space="preserve">
+    <value>Noticeable tension and emotional strain. Efficiency may drop; recovery and rest are recommended.</value>
+  </data>
+  <data name="LuscherCoElevatedTension" xml:space="preserve">
+    <value>Elevated tension and reduced emotional stability. Sustained effort may feel forced; rest and support are recommended.</value>
+  </data>
+  <data name="LuscherCoHighTension" xml:space="preserve">
+    <value>High tension and emotional instability. Significant strain; professional support may be helpful.</value>
+  </data>
+  <data name="LuscherBkExhausted" xml:space="preserve">
+    <value>Low vegetative coefficient: exhaustion, passivity, and need for substantial recovery.</value>
+  </data>
+  <data name="LuscherBkConserving" xml:space="preserve">
+    <value>Balanced vegetative coefficient: moderate need for rest with enough energy for familiar routines.</value>
+  </data>
+  <data name="LuscherBkOptimal" xml:space="preserve">
+    <value>Optimal mobilization: physical and mental resources are well aligned for action.</value>
+  </data>
+  <data name="LuscherBkOveraroused" xml:space="preserve">
+    <value>High vegetative coefficient: strong emotional arousal and autonomic reactivity.</value>
+  </data>
+  <data name="TherapyProgramTitle" xml:space="preserve">
+    <value>Your program</value>
+  </data>
+  <data name="TherapyProgramAnxiety" xml:space="preserve">
+    <value>Anxiety</value>
+  </data>
+  <data name="TherapyProgramMood" xml:space="preserve">
+    <value>Mood</value>
+  </data>
+  <data name="TherapyProgramStress" xml:space="preserve">
+    <value>Stress</value>
+  </data>
+  <data name="ClinicalAmberBanner" xml:space="preserve">
+    <value>Your state needs attention — crisis help is available</value>
+  </data>
+  <data name="ClinicalRedBanner" xml:space="preserve">
+    <value>Open crisis help first</value>
+  </data>
+  <data name="ClinicalStatusUnavailableBanner" xml:space="preserve">
+    <value>Could not load safety status - open crisis help</value>
+  </data>
+  <data name="DialogueInputPlaceholder" xml:space="preserve">
+    <value>Your answer…</value>
+  </data>
+  <data name="DialogueTyping" xml:space="preserve">
+    <value>typing…</value>
+  </data>
+  <data name="DialogueFinish" xml:space="preserve">
+    <value>Finish</value>
+  </data>
+  <data name="DialogueClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="DialogueRatingScale" xml:space="preserve">
+    <value>0 — not at all, 10 — very strong</value>
+  </data>
+  <data name="DialogueLoadFailed" xml:space="preserve">
+    <value>Could not open the dialogue. Please try again later.</value>
+  </data>
+  <data name="ShellTabMusic" xml:space="preserve">
+    <value>Music</value>
+  </data>
+  <data name="ShellTabPractice" xml:space="preserve">
+    <value>Practice</value>
+  </data>
+  <data name="ShellTabDetector" xml:space="preserve">
+    <value>Detector</value>
+  </data>
+  <data name="ShellTabSomatic" xml:space="preserve">
+    <value>Somatic</value>
+  </data>
+  <data name="ShellTabMotivator" xml:space="preserve">
+    <value>Motivator</value>
+  </data>
+  <data name="ShellTabPracticeShort" xml:space="preserve">
+    <value>Practice</value>
+  </data>
+  <data name="ShellTabDetectorShort" xml:space="preserve">
+    <value>Tests</value>
+  </data>
+  <data name="ShellTabSomaticShort" xml:space="preserve">
+    <value>Body</value>
+  </data>
+  <data name="ShellTabMusicShort" xml:space="preserve">
+    <value>Prayers</value>
+  </data>
+  <data name="ShellTabMotivatorShort" xml:space="preserve">
+    <value>Quotes</value>
+  </data>
+  <data name="TestsFindProblemTitle" xml:space="preserve">
+    <value>Find a problem</value>
+  </data>
+  <data name="TestsAboutPassageTitle" xml:space="preserve">
+    <value>About this test</value>
+  </data>
+  <data name="TestsDescriptionHeader" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="TestsAlgorithmHeader" xml:space="preserve">
+    <value>Steps</value>
+  </data>
+  <data name="TestsNoteHeader" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="TestsStartButton" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="TestsQuestionnaireTitle" xml:space="preserve">
+    <value>Questionnaire</value>
+  </data>
+  <data name="TestsQuestionPrefix" xml:space="preserve">
+    <value>Question </value>
+  </data>
+  <data name="TestsFinishButton" xml:space="preserve">
+    <value>Finish</value>
+  </data>
+  <data name="TestsStandardTitle" xml:space="preserve">
+    <value>Standard test</value>
+  </data>
+  <data name="TestsBriefTitle" xml:space="preserve">
+    <value>Brief test</value>
+  </data>
+  <data name="TestsColorInstruction" xml:space="preserve">
+    <value>Choose colors in an order that feels pleasant to you</value>
+  </data>
+  <data name="TestsMoreInfo" xml:space="preserve">
+    <value>More info</value>
+  </data>
+  <data name="TestsRestart" xml:space="preserve">
+    <value>Start over</value>
+  </data>
+  <data name="TestRetakeButton" xml:space="preserve">
+    <value>Take again</value>
+  </data>
+  <data name="TestsFirstColor" xml:space="preserve">
+    <value>First color</value>
+  </data>
+  <data name="TestsSecondColor" xml:space="preserve">
+    <value>Second color</value>
+  </data>
+  <data name="TestsLuscherResultsTitle" xml:space="preserve">
+    <value>Results</value>
+  </data>
+  <data name="TestsLuscherWantedRole" xml:space="preserve">
+    <value>Most pleasant</value>
+  </data>
+  <data name="TestsLuscherUnwantedRole" xml:space="preserve">
+    <value>Least pleasant</value>
+  </data>
+  <data name="TestsLuscherFirstInstruction" xml:space="preserve">
+    <value>Choose the color you find most pleasant</value>
+  </data>
+  <data name="TestsLuscherSecondInstruction" xml:space="preserve">
+    <value>From the remaining colors, choose the one you find least pleasant</value>
+  </data>
+  <data name="TestsLuscherSecondPassInstruction" xml:space="preserve">
+    <value>Repeat the selection: order all 8 colors again from most to least pleasant</value>
+  </data>
+  <data name="TestsLuscherHistoryFirstPass" xml:space="preserve">
+    <value>Pass 1</value>
+  </data>
+  <data name="TestsLuscherHistorySecondPass" xml:space="preserve">
+    <value>Pass 2</value>
+  </data>
+  <data name="TestsStandardDescription" xml:space="preserve">
+    <value>This is the full Lüscher test. It can assess mood more precisely than the brief version.</value>
+  </data>
+  <data name="TestsBriefDescription" xml:space="preserve">
+    <value>This is the brief Lüscher test. Choose two colors — the most and least pleasant.</value>
+  </data>
+  <data name="TestsAnswerAllToast" xml:space="preserve">
+    <value>Please answer all questions</value>
+  </data>
+  <data name="TestsAnswerCurrentToast" xml:space="preserve">
+    <value>Answer this question</value>
+  </data>
+  <data name="TestsNextButton" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="TestsPreviousButton" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="TestsResultPageTitle" xml:space="preserve">
+    <value>Test result</value>
+  </data>
+  <data name="TestsBackToList" xml:space="preserve">
+    <value>Back to tests</value>
+  </data>
+  <data name="TestsResultRecommendationHint" xml:space="preserve">
+    <value>Based on your result, we picked a practice that may help</value>
+  </data>
+  <data name="TestResultExplorePractice" xml:space="preserve">
+    <value>Try a practice</value>
+  </data>
+  <data name="TestsContinueButton" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="TestsListSectionTitle" xml:space="preserve">
+    <value>Psychological tests</value>
+  </data>
+  <data name="TestsListSectionSubtitle" xml:space="preserve">
+    <value>Pick a test to learn more about how you feel</value>
+  </data>
+  <data name="TestHistoryTrendTitle" xml:space="preserve">
+    <value>Score trend</value>
+  </data>
+  <data name="TestResultAnswersTitle" xml:space="preserve">
+    <value>Your answers</value>
+  </data>
+  <data name="TestsIntroLead" xml:space="preserve">
+    <value>A few minutes for a personal interpretation</value>
+  </data>
+  <data name="TestsQuestionLead" xml:space="preserve">
+    <value>Answer honestly — there are no right or wrong answers</value>
+  </data>
+  <data name="TestsMultiChoiceHint" xml:space="preserve">
+    <value>You can select more than one option</value>
+  </data>
+  <data name="TestsSingleChoiceHint" xml:space="preserve">
+    <value>Single answer</value>
+  </data>
+  <data name="TestsAnswerSelected" xml:space="preserve">
+    <value>Selected</value>
+  </data>
+  <data name="TestsAnswerNotSelected" xml:space="preserve">
+    <value>Not selected</value>
+  </data>
+  <data name="TestsAnswerOption" xml:space="preserve">
+    <value>Answer option</value>
+  </data>
+  <data name="TestsCoLabel" xml:space="preserve">
+    <value>Total deviation from autogenic norm (CO)</value>
+  </data>
+  <data name="TestsBkLabel" xml:space="preserve">
+    <value>Vegetative coefficient (VC)</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+</root>

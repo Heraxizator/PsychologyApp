@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.Abstractions.Startup;
@@ -21,6 +22,7 @@ public sealed class ShellStartupCoordinator(
     IOptions<AppSettings> settings,
     IDatabaseReadySignal databaseReadySignal,
     IToastService toastService,
+    IUserPreferencesStore preferences,
     ILogger<ShellStartupCoordinator> logger) : IShellStartupCoordinator
 {
     public async Task InitializeAsync()
@@ -49,7 +51,7 @@ public sealed class ShellStartupCoordinator(
         INavigation navigation,
         Func<TechniqueId?, Task> onTechniqueSelected)
     {
-        if (UserPreferences.Load().HasCompletedOnboarding)
+        if (preferences.Load().HasCompletedOnboarding)
         {
             return Task.CompletedTask;
         }
@@ -85,7 +87,7 @@ public sealed class ShellStartupCoordinator(
 
     public async Task ShowClinicalGateIfNeededAsync(INavigation navigation)
     {
-        if (!UserPreferences.Load().HasCompletedOnboarding)
+        if (!preferences.Load().HasCompletedOnboarding)
         {
             return;
         }

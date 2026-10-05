@@ -5,6 +5,7 @@ using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Shared.UI.Overlays;
 using PsychologyApp.Presentation.Shared.ViewModels;
 using System.Text;
@@ -17,6 +18,7 @@ public sealed class DataBackupViewModel : BaseViewModel
     private readonly IBackupService _backupService;
     private readonly ISpecialistSummaryService _specialistSummaryService;
     private readonly IToastService _toastService;
+    private readonly IUserPreferencesStore _preferences;
 
     public ICommand BackCommand { get; }
     public ICommand ExportBackupCommand { get; }
@@ -40,12 +42,14 @@ public sealed class DataBackupViewModel : BaseViewModel
         INavigationService navigationService,
         IBackupService backupService,
         ISpecialistSummaryService specialistSummaryService,
-        IToastService toastService)
+        IToastService toastService,
+        IUserPreferencesStore preferences)
     {
         BindNavigation(navigationService);
         _backupService = backupService;
         _specialistSummaryService = specialistSummaryService;
         _toastService = toastService;
+        _preferences = preferences;
 
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
         ExportBackupCommand = new AsyncCommand(ExportBackupAsync);
@@ -173,7 +177,7 @@ public sealed class DataBackupViewModel : BaseViewModel
 
     private async Task ExportSummaryAsync()
     {
-        bool english = UserPreferences.IsEnglish(UserPreferences.Load().Language);
+        bool english = UserPreferences.IsEnglish(_preferences.Load().Language);
         string summary = await _specialistSummaryService.BuildSummaryAsync(english);
         string fileName = $"specialist-summary-{DateTime.Now:yyyyMMdd-HHmm}.txt";
         await ShareTemporaryFileAsync(fileName, summary, AppStrings.DataBackupSummaryTitle);

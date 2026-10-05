@@ -14,54 +14,44 @@ public static partial class AppStrings
         ?? DefaultLanguage;
 
 
-    public static string OptionsTitle => T("Параметры", "Options");
-    public static string OptionsSettingsTitle => T("Настройки", "Settings");
-    public static string OptionsSettingsSubtitle => T("Тема, цвет и параметры отображения", "Theme, color, and display options");
-    public static string OptionsAppSection => T("Приложение", "App");
-    public static string OptionsSafetySection => T("Безопасность", "Safety");
-    public static string OptionsSupportSection => T("Поддержка", "Support");
-    public static string ProfileSettingsCardSubtitle => T("Тема, язык, шрифт", "Theme, language, and font");
-    public static string OptionsAboutTitle => T("О приложении", "About");
-    public static string OptionsAboutSubtitle => T("Информация о приложении", "App information");
-    public static string OptionsFeedbackTitle => T("Обратная связь", "Feedback");
-    public static string OptionsFeedbackSubtitle => T("Сообщить о проблеме или предложить идею", "Report a problem or suggest an idea");
-    public static string OptionsDonateTitle => T("Поддержать проект", "Support the project");
-    public static string OptionsDonateSubtitle => T("Помочь развитию приложения", "Help the app grow");
-    public static string ProfileOptionsCardSubtitle => T(
-        "Настройки, поддержка, Alice AI",
-        "Settings, support, Alice AI");
-    public static string OptionsAliceTitle => T("Alice AI", "Alice AI");
-    public static string OptionsAliceSubtitle => T(
-        "Голосовой собеседник от Яндекса",
-        "Yandex voice assistant");
-    public static string AliceDisclaimerHeader => T("Важно", "Important");
-    public static string AliceDisclaimerBody => T(
-        "Alice — внешний сервис Яндекса. Для работы нужен интернет. Ответы носят ознакомительный характер и не заменяют консультацию специалиста.",
-        "Alice is an external Yandex service. An internet connection is required. Responses are informational only and do not replace professional care.");
-    public static string AliceOpenInBrowser => T("Открыть в браузере", "Open in browser");
-    public static string AliceOpenFailed => T(
-        "Не удалось открыть Alice",
-        "Failed to open Alice");
-    public static string AliceLoadingText => T("Загрузка Alice…", "Loading Alice…");
+    public static string OptionsTitle => R(nameof(OptionsTitle));
+    public static string OptionsSettingsTitle => R(nameof(OptionsSettingsTitle));
+    public static string OptionsSettingsSubtitle => R(nameof(OptionsSettingsSubtitle));
+    public static string OptionsAppSection => R(nameof(OptionsAppSection));
+    public static string OptionsSafetySection => R(nameof(OptionsSafetySection));
+    public static string OptionsSupportSection => R(nameof(OptionsSupportSection));
+    public static string ProfileSettingsCardSubtitle => R(nameof(ProfileSettingsCardSubtitle));
+    public static string OptionsAboutTitle => R(nameof(OptionsAboutTitle));
+    public static string OptionsAboutSubtitle => R(nameof(OptionsAboutSubtitle));
+    public static string OptionsFeedbackTitle => R(nameof(OptionsFeedbackTitle));
+    public static string OptionsFeedbackSubtitle => R(nameof(OptionsFeedbackSubtitle));
+    public static string OptionsDonateTitle => R(nameof(OptionsDonateTitle));
+    public static string OptionsDonateSubtitle => R(nameof(OptionsDonateSubtitle));
+    public static string ProfileOptionsCardSubtitle => R(nameof(ProfileOptionsCardSubtitle));
+    public static string OptionsAliceTitle => R(nameof(OptionsAliceTitle));
+    public static string OptionsAliceSubtitle => R(nameof(OptionsAliceSubtitle));
+    public static string AliceDisclaimerHeader => R(nameof(AliceDisclaimerHeader));
+    public static string AliceDisclaimerBody => R(nameof(AliceDisclaimerBody));
+    public static string AliceOpenInBrowser => R(nameof(AliceOpenInBrowser));
+    public static string AliceOpenFailed => R(nameof(AliceOpenFailed));
+    public static string AliceLoadingText => R(nameof(AliceLoadingText));
 
-    public static string SettingsTitle => T("Настройки", "Settings");
-    public static string SettingsDesignSection => T("Дизайн", "Design");
-    public static string SettingsFontSection => T("Шрифт", "Font");
-    public static string SettingsLanguageLabel => T("Язык", "Language");
-    public static string SettingsThemeLabel => T("Тема", "Theme");
-    public static string SettingsColorLabel => T("Цвет", "Color");
-    public static string SettingsFormLabel => T("Форма", "Shape");
-    public static string SettingsSizeLabel => T("Размер", "Size");
-    public static string SettingsBoldLabel => T("Жирный", "Bold");
-    public static string SettingsTestsSection => T("Тесты", "Tests");
-    public static string SettingsRemindersSection => T("Напоминания", "Reminders");
-    public static string SettingsPracticeRemindersLabel => T("Напоминания о практике", "Practice reminders");
-    public static string SettingsPracticeReminderHourLabel => T("Время напоминания", "Reminder time");
-    public static string SettingsPracticeReminderHourPickerTitle => T("Время", "Time");
-    public static string PracticeReminderTitle => T("Пора позаниматься", "Time to practice");
-    public static string PracticeReminderBody => T(
-        "Уделите несколько минут практике — это поддержит ваш прогресс.",
-        "Take a few minutes to practice and keep your progress going.");
+    public static string SettingsTitle => R(nameof(SettingsTitle));
+    public static string SettingsDesignSection => R(nameof(SettingsDesignSection));
+    public static string SettingsFontSection => R(nameof(SettingsFontSection));
+    public static string SettingsLanguageLabel => R(nameof(SettingsLanguageLabel));
+    public static string SettingsThemeLabel => R(nameof(SettingsThemeLabel));
+    public static string SettingsColorLabel => R(nameof(SettingsColorLabel));
+    public static string SettingsFormLabel => R(nameof(SettingsFormLabel));
+    public static string SettingsSizeLabel => R(nameof(SettingsSizeLabel));
+    public static string SettingsBoldLabel => R(nameof(SettingsBoldLabel));
+    public static string SettingsTestsSection => R(nameof(SettingsTestsSection));
+    public static string SettingsRemindersSection => R(nameof(SettingsRemindersSection));
+    public static string SettingsPracticeRemindersLabel => R(nameof(SettingsPracticeRemindersLabel));
+    public static string SettingsPracticeReminderHourLabel => R(nameof(SettingsPracticeReminderHourLabel));
+    public static string SettingsPracticeReminderHourPickerTitle => R(nameof(SettingsPracticeReminderHourPickerTitle));
+    public static string PracticeReminderTitle => R(nameof(PracticeReminderTitle));
+    public static string PracticeReminderBody => R(nameof(PracticeReminderBody));
     public static string PracticeReminderTitleNamed(string techniqueName) =>
         T($"Пора: {techniqueName}", $"Time for {techniqueName}");
     public static string PracticeReminderBodyNamed(string techniqueName, string reason) =>
@@ -70,294 +60,194 @@ public static partial class AppStrings
                 $"Сегодня: {techniqueName}. Уделите несколько минут практике.",
                 $"Today: {techniqueName}. Take a few minutes to practice.")
             : T($"{reason} — {techniqueName}", $"{reason} — {techniqueName}");
-    public static string SettingsPrimaryConcernLabel => T("Главный запрос", "Primary concern");
-    public static string SettingsPrimaryConcernPickerTitle => T("Что вас беспокоит?", "What troubles you?");
-    public static string SettingsPrimaryConcernSection => T("Персонализация", "Personalization");
-    public static string SettingsQuestionnaireAutoAdvanceLabel => T(
-        "Автопереход к следующему вопросу",
-        "Auto-advance to the next question");
-    public static string SettingsApplyButton => T("Применить", "Apply");
-    public static string SettingsPickerOptions => T("Варианты", "Options");
-    public static string SettingsPickerColors => T("Цвета", "Colors");
-    public static string SettingsPickerShapes => T("Формы", "Shapes");
-    public static string SettingsPickerSizes => T("Размеры", "Sizes");
-    public static string SettingsPickerLanguages => T("Языки", "Languages");
-    public static string SettingsAppliedTitle => T("Информация", "Information");
-    public static string SettingsAppliedMessage => T("Настройки применены", "Settings applied");
-    public static string SettingsFormHelper => T(
-        "Скругление углов карточек и полей ввода",
-        "Corner rounding for cards and input fields");
-    public static string SettingsColorHelper => T(
-        "Основной цвет кнопок и акцентов",
-        "Primary color for buttons and accents");
-    public static string SettingsReplayOnboarding => T(
-        "Пройти знакомство снова",
-        "Retake onboarding");
+    public static string SettingsPrimaryConcernLabel => R(nameof(SettingsPrimaryConcernLabel));
+    public static string SettingsPrimaryConcernPickerTitle => R(nameof(SettingsPrimaryConcernPickerTitle));
+    public static string SettingsPrimaryConcernSection => R(nameof(SettingsPrimaryConcernSection));
+    public static string SettingsQuestionnaireAutoAdvanceLabel => R(nameof(SettingsQuestionnaireAutoAdvanceLabel));
+    public static string SettingsApplyButton => R(nameof(SettingsApplyButton));
+    public static string SettingsPickerOptions => R(nameof(SettingsPickerOptions));
+    public static string SettingsPickerColors => R(nameof(SettingsPickerColors));
+    public static string SettingsPickerShapes => R(nameof(SettingsPickerShapes));
+    public static string SettingsPickerSizes => R(nameof(SettingsPickerSizes));
+    public static string SettingsPickerLanguages => R(nameof(SettingsPickerLanguages));
+    public static string SettingsAppliedTitle => R(nameof(SettingsAppliedTitle));
+    public static string SettingsAppliedMessage => R(nameof(SettingsAppliedMessage));
+    public static string SettingsFormHelper => R(nameof(SettingsFormHelper));
+    public static string SettingsColorHelper => R(nameof(SettingsColorHelper));
+    public static string SettingsReplayOnboarding => R(nameof(SettingsReplayOnboarding));
 
-    public static string TechniqueTheory => T("Теория", "Theory");
-    public static string TechniqueAlgorithm => T("Алгоритм", "Algorithm");
-    public static string TechniqueFinish => T("Завершить", "Finish");
-    public static string TechniqueTitle => T("Техника", "Technique");
-    public static string Back => T("Назад", "Back");
-    public static string Save => T("Сохранить", "Save");
-    public static string Send => T("Отправить", "Send");
-    public static string Edit => T("Изменить", "Edit");
-    public static string Remove => T("Удалить", "Delete");
-    public static string NameLabel => T("Название", "Name");
-    public static string DescriptionLabel => T("Описание", "Description");
-    public static string Saving => T("Сохранение…", "Saving…");
-    public static string DesignerLoadError => T(
-        "Не удалось загрузить технику",
-        "Could not load technique");
-    public static string DesignerSaveError => T(
-        "Не удалось сохранить технику",
-        "Could not save technique");
-    public static string ThemeLabel => T("Тема", "Theme");
-    public static string AuthorLabel => T("Автор", "Author");
-    public static string MessageLabel => T("Сообщение", "Message");
-    public static string FormLabel => T("Форма", "Form");
-    public static string ActionsListLabel => T("Список действий", "Action list");
+    public static string TechniqueTheory => R(nameof(TechniqueTheory));
+    public static string TechniqueAlgorithm => R(nameof(TechniqueAlgorithm));
+    public static string TechniqueFinish => R(nameof(TechniqueFinish));
+    public static string TechniqueTitle => R(nameof(TechniqueTitle));
+    public static string Back => R(nameof(Back));
+    public static string Save => R(nameof(Save));
+    public static string Send => R(nameof(Send));
+    public static string Edit => R(nameof(Edit));
+    public static string Remove => R(nameof(Remove));
+    public static string NameLabel => R(nameof(NameLabel));
+    public static string DescriptionLabel => R(nameof(DescriptionLabel));
+    public static string Saving => R(nameof(Saving));
+    public static string DesignerLoadError => R(nameof(DesignerLoadError));
+    public static string DesignerSaveError => R(nameof(DesignerSaveError));
+    public static string ThemeLabel => R(nameof(ThemeLabel));
+    public static string AuthorLabel => R(nameof(AuthorLabel));
+    public static string MessageLabel => R(nameof(MessageLabel));
+    public static string FormLabel => R(nameof(FormLabel));
+    public static string ActionsListLabel => R(nameof(ActionsListLabel));
 
-    public static string PracticeHomeTitle => T("Главная", "Home");
-    public static string PracticeMyTechniques => T("Мои техники", "My techniques");
-    public static string PracticeCatalog => T("Каталог практик", "Practice catalog");
-    public static string PracticeCatalogHint => T(
-        "Выберите технику или создайте свою",
-        "Pick a technique or create your own");
-    public static string PracticeCreate => T("Создать", "Create");
-    public static string PracticeTechniquesList => T("Список техник", "Techniques list");
-    public static string PracticeInitError => T("Ошибка при инициализации", "Initialization failed");
-    public static string PracticeLoadMoreError => T(
-        "Не удалось подгрузить техники",
-        "Could not load more techniques");
-    public static string PracticeLoadingText => T("Загрузка практик", "Loading practices");
-    public static string PracticeLoadingMoreText => T("Загрузка…", "Loading…");
+    public static string PracticeHomeTitle => R(nameof(PracticeHomeTitle));
+    public static string PracticeMyTechniques => R(nameof(PracticeMyTechniques));
+    public static string PracticeCatalog => R(nameof(PracticeCatalog));
+    public static string PracticeCatalogHint => R(nameof(PracticeCatalogHint));
+    public static string PracticeCreate => R(nameof(PracticeCreate));
+    public static string PracticeTechniquesList => R(nameof(PracticeTechniquesList));
+    public static string PracticeInitError => R(nameof(PracticeInitError));
+    public static string PracticeLoadMoreError => R(nameof(PracticeLoadMoreError));
+    public static string PracticeLoadingText => R(nameof(PracticeLoadingText));
+    public static string PracticeLoadingMoreText => R(nameof(PracticeLoadingMoreText));
     public static string PracticeCustomTechniqueNumber(long id) =>
         T($"Своя техника №{id}", $"Custom technique #{id}");
-    public static string PracticeDesignTitle => T("Создание техники", "Create technique");
-    public static string PracticeConstructor => T("Конструктор", "Designer");
-    public static string PracticeCustomTechnique => T("Своя техника", "Custom technique");
-    public static string PracticeDeleteConfirm => T(
-        "Вы уверены, что хотите удалить свою технику",
-        "Are you sure you want to delete your technique?");
+    public static string PracticeDesignTitle => R(nameof(PracticeDesignTitle));
+    public static string PracticeConstructor => R(nameof(PracticeConstructor));
+    public static string PracticeCustomTechnique => R(nameof(PracticeCustomTechnique));
+    public static string PracticeDeleteConfirm => R(nameof(PracticeDeleteConfirm));
 
-    public static string ReviewTitle => T("Обратная связь", "Feedback");
-    public static string ReviewPage => T("Отзыв", "Review");
-    public static string ReviewExplanationHeader => T("Как это работает", "How it works");
-    public static string ReviewExplanation => T(
-        "Вы можете сообщить о проблеме или предложить свои идеи о том, как сделать приложение ещё лучше. Служба поддержки получит ваше сообщение.",
-        "You can report a problem or suggest ideas to improve the app. Support will receive your message.");
+    public static string ReviewTitle => R(nameof(ReviewTitle));
+    public static string ReviewPage => R(nameof(ReviewPage));
+    public static string ReviewExplanationHeader => R(nameof(ReviewExplanationHeader));
+    public static string ReviewExplanation => R(nameof(ReviewExplanation));
     // Without a configured address the message goes to the phone's share sheet, so the text must not promise that support receives it.
-    public static string ReviewExplanationShare => T(
-        "Опишите проблему или идею и выберите, куда отправить сообщение: почта, мессенджер или заметки. Приложение само ничего не отправляет разработчику.",
-        "Describe a problem or an idea and choose where to send it: email, a messenger or notes. The app does not send anything to the developer by itself.");
-    public static string ReviewShareButton => T("Поделиться", "Share");
-    public static string ReviewMessagePlaceholder => T(
-        "Опишите проблему или идею…",
-        "Describe the issue or idea…");
-    public static string ReviewMessageRequired => T(
-        "Введите сообщение перед отправкой",
-        "Enter a message before sending");
-    public static string ReviewSendSuccessTitle => T("Спасибо", "Thank you");
-    public static string ReviewSendSuccessMessage => T(
-        "Ваше сообщение отправлено",
-        "Your message has been sent");
-    public static string ReviewEmailSubject => T("Отзыв о приложении Psychology", "Psychology App feedback");
-    public static string ReviewSmsRecipientMissing => T(
-        "Получатель SMS не настроен",
-        "SMS recipient is not configured");
-    public static string ReviewSmsNotSupported => T(
-        "Отправка СМС не поддерживается",
-        "SMS is not supported on this device");
-    public static string ReviewSmsFailed => T(
-        "Не удалось открыть приложение для отправки СМС",
-        "Failed to open the SMS app");
-    public static string ReviewEmailNotSupported => T(
-        "Отправка email не поддерживается",
-        "Email is not supported on this device");
-    public static string ReviewEmailFailed => T(
-        "Не удалось открыть приложение для отправки email",
-        "Failed to open the email app");
-    public static string ReviewShareTitle => T("Отзыв о приложении", "App feedback");
-    public static string ReviewShareFailed => T(
-        "Не удалось открыть меню отправки",
-        "Failed to open the share menu");
+    public static string ReviewExplanationShare => R(nameof(ReviewExplanationShare));
+    public static string ReviewShareButton => R(nameof(ReviewShareButton));
+    public static string ReviewMessagePlaceholder => R(nameof(ReviewMessagePlaceholder));
+    public static string ReviewMessageRequired => R(nameof(ReviewMessageRequired));
+    public static string ReviewSendSuccessTitle => R(nameof(ReviewSendSuccessTitle));
+    public static string ReviewSendSuccessMessage => R(nameof(ReviewSendSuccessMessage));
+    public static string ReviewEmailSubject => R(nameof(ReviewEmailSubject));
+    public static string ReviewSmsRecipientMissing => R(nameof(ReviewSmsRecipientMissing));
+    public static string ReviewSmsNotSupported => R(nameof(ReviewSmsNotSupported));
+    public static string ReviewSmsFailed => R(nameof(ReviewSmsFailed));
+    public static string ReviewEmailNotSupported => R(nameof(ReviewEmailNotSupported));
+    public static string ReviewEmailFailed => R(nameof(ReviewEmailFailed));
+    public static string ReviewShareTitle => R(nameof(ReviewShareTitle));
+    public static string ReviewShareFailed => R(nameof(ReviewShareFailed));
 
-    public static string DonateTitle => T("Пожертвования", "Donations");
-    public static string DonateMoreInfo => T("Подробнее", "More info");
-    public static string DonateBody => T(
-        "Наш проект существует исключительно на пожертвования. Мы не размещаем рекламу и не оказываем платных услуг. Пожертвования используются на работу программистов и дизайнеров.",
-        "This project runs on donations only. We do not show ads or sell paid services. Donations support developers and designers.");
-    public static string DonateButton => T("Пожертвовать", "Donate");
-    public static string DonateOpenFailed => T(
-        "Не удалось открыть страницу пожертвования",
-        "Failed to open the donation page");
+    public static string DonateTitle => R(nameof(DonateTitle));
+    public static string DonateMoreInfo => R(nameof(DonateMoreInfo));
+    public static string DonateBody => R(nameof(DonateBody));
+    public static string DonateButton => R(nameof(DonateButton));
+    public static string DonateOpenFailed => R(nameof(DonateOpenFailed));
 
-    public static string InfoAboutBody => T(
-        "Приложение представляет собой список простых, но в то же время мощных техник, которые помогут вам справиться с такими проблемами, как стресс, страх, сомнения, навязчивые мысли, ограничивающие убеждения и деструктивные установки. Все методики являются общеизвестными и проверены временем. Некоторые взяты из НЛП или трудов Живорада Славинского. Эти инструменты позволят вам сэкономить много времени, сил и денег. Они не потребуют глубоких знаний в области психологии и программирования подсознания. Желаем успеха в проработках!",
-        "This app is a collection of simple yet powerful techniques to help with stress, fear, doubt, intrusive thoughts, limiting beliefs, and destructive patterns. The methods are well known and time-tested. Some come from NLP or the work of Zivorad Slavinski. These tools can save you time, energy, and money. They do not require deep knowledge of psychology or subconscious reprogramming. We wish you success in your practice!");
+    public static string InfoAboutBody => R(nameof(InfoAboutBody));
 
-    public static string CleanerPrayersPage => T("Молитвы", "Prayers");
-    public static string CleanerPrayerCollection => T("Сборник молитв", "Prayer collection");
-    public static string CleanerLoad => T("Загрузить", "Load");
-    public static string CleanerSearchingPrayers => T("Поиск молитв", "Loading prayers");
-    public static string CleanerPreparingAudio => T("Подготовка аудио…", "Preparing audio…");
-    public static string CleanerPlaybackError => T(
-        "Не удалось воспроизвести аудио. Проверьте подключение к интернету.",
-        "Could not play audio. Check your internet connection.");
-    public static string CleanerOfflineBadge => T("Доступно офлайн", "Available offline");
-    public static string CleanerPlayNext => T("Далее", "Next");
-    public static string CleanerReplay => T("Сначала", "Replay");
-    public static string CleanerMoreInfoBody => T(
-        "Аудиомолитвы для утра, вечера и тихой практики. Для первого прослушивания нужен интернет; затем трек можно слушать офлайн.",
-        "Audio prayers for morning, evening, and quiet practice. Internet is required for the first listen; tracks can then be played offline.");
-    public static string CleanerCollectionSubtitle => T(
-        "Выберите молитву и нажмите на карточку, чтобы начать прослушивание.",
-        "Choose a prayer and tap a card to start listening.");
-    public static string CleanerCategoryAll => T("Все", "All");
-    public static string CleanerCategoryMorning => T("Утренние", "Morning");
-    public static string CleanerCategoryEvening => T("Вечерние", "Evening");
-    public static string CleanerCategoryPenitential => T("Покаянные", "Penitential");
-    public static string CleanerCategoryCore => T("Основные", "Core");
-    public static string CleanerPrayerMain => T("Основная молитва", "Main prayer");
-    public static string CleanerPsalm50 => T("Псалом 50", "Psalm 50");
-    public static string CleanerPsalm50Desc => T(
-        "Покаянный псалом; читают три раза в сутки",
-        "A penitential psalm; traditionally read three times a day");
-    public static string CleanerPsalm90 => T("Псалом 90", "Psalm 90");
-    public static string CleanerPsalm90Desc => T(
-        "Молитва о защите и помощи Божией",
-        "A prayer for God's protection and help");
-    public static string CleanerOurFather => T("Отче Наш", "Our Father");
-    public static string CleanerOurFatherDesc => T(
-        "Главная молитва христиан",
-        "The central Christian prayer");
-    public static string CleanerJesusPrayer => T("Иисусова молитва", "Jesus Prayer");
-    public static string CleanerJesusPrayerDesc => T(
-        "Краткая молитва сердечного обращения к Христу",
-        "A short prayer of the heart to Christ");
-    public static string CleanerHeavenlyKing => T("Царю небесный", "Heavenly King");
-    public static string CleanerHeavenlyKingDesc => T(
-        "Начало утреннего правила",
-        "Opening prayer of the morning rule");
-    public static string CleanerMorningPrayer => T("Утренние молитвы", "Morning prayers");
-    public static string CleanerMorningPrayerDesc => T(
-        "Краткий утренний цикл молитв",
-        "A short morning prayer cycle");
-    public static string CleanerSymbolOfFaith => T("Символ веры", "Symbol of Faith");
-    public static string CleanerSymbolOfFaithDesc => T(
-        "Краткое изложение православного вероучения",
-        "A concise statement of Orthodox faith");
-    public static string CleanerEveningPrayer => T("Вечерние молитвы", "Evening prayers");
-    public static string CleanerEveningPrayerDesc => T(
-        "Краткий вечерний цикл молитв",
-        "A short evening prayer cycle");
-    public static string CleanerTrisagion => T("Трисвятое", "Trisagion");
-    public static string CleanerTrisagionDesc => T(
-        "«Святый Боже, Святый Крепкий…»",
-        "\"Holy God, Holy Mighty…\"");
-    public static string CleanerVirginMary => T("Богородице Дево", "Hail, O Virgin");
-    public static string CleanerVirginMaryDesc => T(
-        "Молитва Пресвятой Богородице",
-        "A prayer to the Most Holy Theotokos");
-    public static string CleanerHolySpirit => T("Молитва Святому Духу", "Prayer to the Holy Spirit");
-    public static string CleanerHolySpiritDesc => T(
-        "Просьба о дарах и укреплении Духом",
-        "A prayer for the gifts and strengthening of the Spirit");
-    public static string CleanerDoxology => T("Славословие", "Doxology");
-    public static string CleanerDoxologyDesc => T(
-        "Великое славословие Богу",
-        "The great doxology to God");
-    public static string CleanerSearchPlaceholder => T("Поиск молитвы", "Search prayers");
-    public static string CleanerNoPrayersFound => T("Ничего не найдено", "No prayers found");
-    public static string CleanerCatalogEmpty => T(
-        "Пока нет молитв в каталоге",
-        "No prayers in the catalog yet");
-    public static string CleanerNowPlaying => T("Сейчас играет", "Now playing");
+    public static string CleanerPrayersPage => R(nameof(CleanerPrayersPage));
+    public static string CleanerPrayerCollection => R(nameof(CleanerPrayerCollection));
+    public static string CleanerLoad => R(nameof(CleanerLoad));
+    public static string CleanerSearchingPrayers => R(nameof(CleanerSearchingPrayers));
+    public static string CleanerPreparingAudio => R(nameof(CleanerPreparingAudio));
+    public static string CleanerPlaybackError => R(nameof(CleanerPlaybackError));
+    public static string CleanerOfflineBadge => R(nameof(CleanerOfflineBadge));
+    public static string CleanerPlayNext => R(nameof(CleanerPlayNext));
+    public static string CleanerReplay => R(nameof(CleanerReplay));
+    public static string CleanerMoreInfoBody => R(nameof(CleanerMoreInfoBody));
+    public static string CleanerCollectionSubtitle => R(nameof(CleanerCollectionSubtitle));
+    public static string CleanerCategoryAll => R(nameof(CleanerCategoryAll));
+    public static string CleanerCategoryMorning => R(nameof(CleanerCategoryMorning));
+    public static string CleanerCategoryEvening => R(nameof(CleanerCategoryEvening));
+    public static string CleanerCategoryPenitential => R(nameof(CleanerCategoryPenitential));
+    public static string CleanerCategoryCore => R(nameof(CleanerCategoryCore));
+    public static string CleanerPrayerMain => R(nameof(CleanerPrayerMain));
+    public static string CleanerPsalm50 => R(nameof(CleanerPsalm50));
+    public static string CleanerPsalm50Desc => R(nameof(CleanerPsalm50Desc));
+    public static string CleanerPsalm90 => R(nameof(CleanerPsalm90));
+    public static string CleanerPsalm90Desc => R(nameof(CleanerPsalm90Desc));
+    public static string CleanerOurFather => R(nameof(CleanerOurFather));
+    public static string CleanerOurFatherDesc => R(nameof(CleanerOurFatherDesc));
+    public static string CleanerJesusPrayer => R(nameof(CleanerJesusPrayer));
+    public static string CleanerJesusPrayerDesc => R(nameof(CleanerJesusPrayerDesc));
+    public static string CleanerHeavenlyKing => R(nameof(CleanerHeavenlyKing));
+    public static string CleanerHeavenlyKingDesc => R(nameof(CleanerHeavenlyKingDesc));
+    public static string CleanerMorningPrayer => R(nameof(CleanerMorningPrayer));
+    public static string CleanerMorningPrayerDesc => R(nameof(CleanerMorningPrayerDesc));
+    public static string CleanerSymbolOfFaith => R(nameof(CleanerSymbolOfFaith));
+    public static string CleanerSymbolOfFaithDesc => R(nameof(CleanerSymbolOfFaithDesc));
+    public static string CleanerEveningPrayer => R(nameof(CleanerEveningPrayer));
+    public static string CleanerEveningPrayerDesc => R(nameof(CleanerEveningPrayerDesc));
+    public static string CleanerTrisagion => R(nameof(CleanerTrisagion));
+    public static string CleanerTrisagionDesc => R(nameof(CleanerTrisagionDesc));
+    public static string CleanerVirginMary => R(nameof(CleanerVirginMary));
+    public static string CleanerVirginMaryDesc => R(nameof(CleanerVirginMaryDesc));
+    public static string CleanerHolySpirit => R(nameof(CleanerHolySpirit));
+    public static string CleanerHolySpiritDesc => R(nameof(CleanerHolySpiritDesc));
+    public static string CleanerDoxology => R(nameof(CleanerDoxology));
+    public static string CleanerDoxologyDesc => R(nameof(CleanerDoxologyDesc));
+    public static string CleanerSearchPlaceholder => R(nameof(CleanerSearchPlaceholder));
+    public static string CleanerNoPrayersFound => R(nameof(CleanerNoPrayersFound));
+    public static string CleanerCatalogEmpty => R(nameof(CleanerCatalogEmpty));
+    public static string CleanerNowPlaying => R(nameof(CleanerNowPlaying));
 
-    public static string DesignerNamePlaceholder => T("Крутилка Славинского", "Slavinski spin technique");
-    public static string DesignerDescriptionPlaceholder => T(
-        "Метод мгновенной нейтрализации...",
-        "Instant neutralization method...");
-    public static string DesignerThemePlaceholder => T("Эпизоды", "Episodes");
-    public static string DesignerAuthorPlaceholder => T("Живорад Славинский", "Zivorad Slavinski");
+    public static string DesignerNamePlaceholder => R(nameof(DesignerNamePlaceholder));
+    public static string DesignerDescriptionPlaceholder => R(nameof(DesignerDescriptionPlaceholder));
+    public static string DesignerThemePlaceholder => R(nameof(DesignerThemePlaceholder));
+    public static string DesignerAuthorPlaceholder => R(nameof(DesignerAuthorPlaceholder));
 
-    public static string Add => T("Добавить", "Add");
-    public static string Repeat => T("Повторить", "Repeat");
-    public static string Cancel => T("Отмена", "Cancel");
-    public static string ConcernLabel => T("Беспокойство", "Concern");
-    public static string FirstPolarityLabel => T("Первая полярность", "First polarity");
-    public static string SecondPolarityLabel => T("Вторая полярность", "Second polarity");
+    public static string Add => R(nameof(Add));
+    public static string Repeat => R(nameof(Repeat));
+    public static string Cancel => R(nameof(Cancel));
+    public static string ConcernLabel => R(nameof(ConcernLabel));
+    public static string FirstPolarityLabel => R(nameof(FirstPolarityLabel));
+    public static string SecondPolarityLabel => R(nameof(SecondPolarityLabel));
     public static string PoleNumber(int number) => T($"Полюс №{number}", $"Pole #{number}");
     public static string RecordNumber(int number) => T($"Запись №{number}", $"Entry #{number}");
     public static string PracticeEntryCount(int count) => T($"Записей: {count}", $"{count} entries");
     public static string TechniqueStepProgress(int step, int total) => T($"Шаг {step} из {total}", $"Step {step} of {total}");
-    public static string TechniqueStepBack => T("Назад", "Back");
-    public static string TechniqueStepNext => T("Далее", "Next");
-    public static string ProverbLabel => T("Пословица", "Proverb");
-    public static string QuoteAddFavoriteHint => T("Добавить в избранное", "Add to favorites");
-    public static string QuoteCopyHint => T("Копировать цитату", "Copy quote");
-    public static string QuoteShareHint => T("Поделиться цитатой", "Share quote");
-    public static string PolarityNegativePlaceholder => T("Невроз", "Neurosis");
-    public static string PolarityPositivePlaceholder => T("Покой", "Calm");
+    public static string TechniqueStepBack => R(nameof(TechniqueStepBack));
+    public static string TechniqueStepNext => R(nameof(TechniqueStepNext));
+    public static string ProverbLabel => R(nameof(ProverbLabel));
+    public static string QuoteAddFavoriteHint => R(nameof(QuoteAddFavoriteHint));
+    public static string QuoteCopyHint => R(nameof(QuoteCopyHint));
+    public static string QuoteShareHint => R(nameof(QuoteShareHint));
+    public static string PolarityNegativePlaceholder => R(nameof(PolarityNegativePlaceholder));
+    public static string PolarityPositivePlaceholder => R(nameof(PolarityPositivePlaceholder));
 
-    public static string StartupErrorTitle => T("Ошибка запуска", "Startup error");
-    public static string StartupErrorMessage => T(
-        "Не удалось инициализировать приложение. Перезапустите приложение.",
-        "Failed to initialize the app. Please restart.");
-    public static string ErrorTitle => T("Ошибка", "Error");
-    public static string UnexpectedErrorMessage => T(
-        "Произошла непредвиденная ошибка. Попробуйте ещё раз.",
-        "An unexpected error occurred. Please try again.");
-    public static string TestsResultSaveFailedMessage => T(
-        "Не удалось сохранить результат теста. Попробуйте ещё раз.",
-        "Failed to save the test result. Please try again.");
-    public static string TestsResultNavigationFailedMessage => T(
-        "Результат сохранён, но не удалось открыть экран результата. Нажмите «Завершить» ещё раз.",
-        "The result was saved, but the result screen could not be opened. Tap Finish again.");
-    public static string TechniqueNotFound => T("Техника не найдена.", "Technique not found.");
-    public static string QuoteNotFound => T("Цитата не найдена.", "Quote not found.");
+    public static string StartupErrorTitle => R(nameof(StartupErrorTitle));
+    public static string StartupErrorMessage => R(nameof(StartupErrorMessage));
+    public static string ErrorTitle => R(nameof(ErrorTitle));
+    public static string UnexpectedErrorMessage => R(nameof(UnexpectedErrorMessage));
+    public static string TestsResultSaveFailedMessage => R(nameof(TestsResultSaveFailedMessage));
+    public static string TestsResultNavigationFailedMessage => R(nameof(TestsResultNavigationFailedMessage));
+    public static string TechniqueNotFound => R(nameof(TechniqueNotFound));
+    public static string QuoteNotFound => R(nameof(QuoteNotFound));
 
-    public static string PracticeEmptyTitle => T("Пока нет техник", "No techniques yet");
-    public static string PracticeEmptyBody => T(
-        "Нажмите «Создать», чтобы добавить первую технику",
-        "Tap Create to add your first technique");
-    public static string TestsEmptyTitle => T("Тесты пока недоступны", "Tests are not available yet");
-    public static string TestsEmptyBody => T(
-        "Нажмите «Обновить», чтобы загрузить список снова",
-        "Tap Refresh to load the list again");
-    public static string TestsEmptyRefresh => T("Обновить", "Refresh");
-    public static string TestsLoadingText => T("Загрузка тестов", "Loading tests");
-    public static string QuotesEmptyTitle => T("Цитаты не найдены", "No quotes found");
-    public static string QuotesEmptyBody => T(
-        "Нажмите «Обновить», чтобы загрузить цитаты снова",
-        "Tap Refresh to load quotes again");
-    public static string QuotesRefreshButton => T("Обновить", "Refresh");
-    public static string ProfileQuotesEmpty => T("Пока нет избранных цитат", "No favorite quotes yet");
-    public static string QuotesFavoritesEmptyBody => T(
-        "Нажмите сердечко на цитате, чтобы добавить её сюда.",
-        "Tap the heart on a quote to add it here.");
+    public static string PracticeEmptyTitle => R(nameof(PracticeEmptyTitle));
+    public static string PracticeEmptyBody => R(nameof(PracticeEmptyBody));
+    public static string TestsEmptyTitle => R(nameof(TestsEmptyTitle));
+    public static string TestsEmptyBody => R(nameof(TestsEmptyBody));
+    public static string TestsEmptyRefresh => R(nameof(TestsEmptyRefresh));
+    public static string TestsLoadingText => R(nameof(TestsLoadingText));
+    public static string QuotesEmptyTitle => R(nameof(QuotesEmptyTitle));
+    public static string QuotesEmptyBody => R(nameof(QuotesEmptyBody));
+    public static string QuotesRefreshButton => R(nameof(QuotesRefreshButton));
+    public static string ProfileQuotesEmpty => R(nameof(ProfileQuotesEmpty));
+    public static string QuotesFavoritesEmptyBody => R(nameof(QuotesFavoritesEmptyBody));
 
-    public static string PhysicsSolutionHeader => T("Что делать", "What to do");
-    public static string PhysicsRecommendedPractices => T("Практики, которые могут помочь", "Practices that may help");
-    public static string PhysicsTryPractice => T("Попробовать практику", "Try a practice");
+    public static string PhysicsSolutionHeader => R(nameof(PhysicsSolutionHeader));
+    public static string PhysicsRecommendedPractices => R(nameof(PhysicsRecommendedPractices));
+    public static string PhysicsTryPractice => R(nameof(PhysicsTryPractice));
 
-    public static string ProfileTestsCompleted => T("Пройдено тестов", "Tests completed");
-    public static string ProfileStreakDays => T("Дней подряд", "Day streak");
-    public static string ProfileStreakHint => T(
-        "Считаются дни с завершённой практикой",
-        "Counts days with a completed practice");
+    public static string ProfileTestsCompleted => R(nameof(ProfileTestsCompleted));
+    public static string ProfileStreakDays => R(nameof(ProfileStreakDays));
+    public static string ProfileStreakHint => R(nameof(ProfileStreakHint));
     public static string ProfileStreakCount(int days) => T($"{days} дн.", $"{days} days");
 
-    public static string TodayForYou => T("Сегодня для вас", "Today for you");
-    public static string TodayRecommended => T("Рекомендуемая практика", "Recommended practice");
-    public static string TodayStartPractice => T("Начать", "Start");
+    public static string TodayForYou => R(nameof(TodayForYou));
+    public static string TodayRecommended => R(nameof(TodayRecommended));
+    public static string TodayStartPractice => R(nameof(TodayStartPractice));
     public static string StreakAtRiskBanner(int days) => T(
         $"Сохраните серию из {days} дн. — позанимайтесь сегодня",
         $"Keep your {days}-day streak — practice today");
-    public static string ComebackBanner => T(
-        "С возвращением — начните с короткой практики",
-        "Welcome back — start with a short practice");
+    public static string ComebackBanner => R(nameof(ComebackBanner));
     public static string ComebackBannerWithTechnique(string name) => T(
         $"С возвращением — начните с «{name}»",
         $"Welcome back — start with {name}");
@@ -380,10 +270,8 @@ public static partial class AppStrings
         _ => "практик"
     };
     private static string PracticeCountWordEn(int count) => count == 1 ? "practice" : "practices";
-    public static string OnboardingRemindersLabel => T(
-        "Напоминать о практике",
-        "Remind me to practice");
-    public static string OnboardingReminderHourLabel => T("Время напоминания", "Reminder time");
+    public static string OnboardingRemindersLabel => R(nameof(OnboardingRemindersLabel));
+    public static string OnboardingReminderHourLabel => R(nameof(OnboardingReminderHourLabel));
     public static string TodayRecommendationReason(string concern) => concern switch
     {
         "anxiety" => T("Подходит при тревоге", "Good for anxiety"),
@@ -406,64 +294,48 @@ public static partial class AppStrings
     public static string WeeklyInsightTestWorsePart() => T("тест ↓", "test ↓");
     public static string WeeklyInsightWithExtra(string baseLine, string extra) =>
         string.IsNullOrWhiteSpace(extra) ? baseLine : $"{baseLine} · {extra}";
-    public static string TodayMoodQuestion => T("Как настроение?", "How are you feeling?");
-    public static string TodayMoodSaved => T("Настроение сохранено", "Mood saved");
+    public static string TodayMoodQuestion => R(nameof(TodayMoodQuestion));
+    public static string TodayMoodSaved => R(nameof(TodayMoodSaved));
     public static string TodayMoodLine(int level, int max) =>
         T($"Сегодня: {MoodEmoji(level)} {level}/{max}", $"Today: {MoodEmoji(level)} {level}/{max}");
-    public static string MoodHistoryTitle => T("Недавнее", "Recent");
+    public static string MoodHistoryTitle => R(nameof(MoodHistoryTitle));
     public static string MoodHistoryEntry(string date, int level, int max) =>
         T($"{date}: {MoodEmoji(level)} {level}/{max}", $"{date}: {MoodEmoji(level)} {level}/{max}");
-    public static string ProfileMoodTrendTitle => T("Настроение", "Mood");
-    public static string ProfileMoodCheckInTitle => T("Как настроение сегодня?", "How are you feeling today?");
-    public static string ProfileWeeklyInsightTitle => T("На этой неделе", "This week");
-    public static string JournalTitle => T("Дневник", "Journal");
-    public static string OpenJournalLabel => T("Как настроение?", "How are you feeling?");
-    public static string JournalCardSubtitle => T(
-        "Настроение, заметки и динамика",
-        "Mood, notes, and trends");
-    public static string JournalTodayTitle => T("Сегодня", "Today");
-    public static string JournalEntriesTitle => T("Записи", "Entries");
-    public static string JournalWeekEmpty => T(
-        "Пока мало данных за неделю — отметьте настроение",
-        "Not much this week yet — log a mood check-in");
-    public static string JournalNotePlaceholder => T(
-        "Что повлияло? (необязательно)",
-        "What shaped this? (optional)");
-    public static string JournalNoteSectionTitle => T("Заметка", "Note");
-    public static string JournalAddNoteLabel => T("Добавить заметку", "Add a note");
-    public static string JournalShowHintsLabel => T("Подсказки", "Prompts");
-    public static string JournalHideHintsLabel => T("Скрыть подсказки", "Hide prompts");
-    public static string JournalHowNowQuestion => T("Как сейчас?", "How are you right now?");
-    public static string JournalMoreMenuLabel => T("Ещё", "More");
-    public static string JournalSlotPickerTitle => T("Время check-in", "Check-in time");
-    public static string JournalNoteSaveHint => T(
-        "Настроение сохраняется сразу. Заметку — кнопкой ниже.",
-        "Mood saves instantly. Use the button below for the note.");
-    public static string JournalSaveLabel => T("Сохранить заметку", "Save note");
-    public static string JournalDeleteLabel => T("Удалить", "Delete");
-    public static string JournalDeleteConfirmTitle => T("Удалить запись?", "Delete entry?");
-    public static string JournalDeleteConfirmMessage => T(
-        "Отметка настроения и заметка за этот день будут удалены.",
-        "This day's mood check-in and note will be removed.");
-    public static string JournalDeleteConfirmAccept => T("Удалить", "Delete");
-    public static string JournalDeleteConfirmCancel => T("Отмена", "Cancel");
-    public static string JournalNoNoteCaption => T("Без заметки", "No note");
-    public static string JournalEditTodayHint => T(
-        "Изменить сегодня",
-        "Edit today");
+    public static string ProfileMoodTrendTitle => R(nameof(ProfileMoodTrendTitle));
+    public static string ProfileMoodCheckInTitle => R(nameof(ProfileMoodCheckInTitle));
+    public static string ProfileWeeklyInsightTitle => R(nameof(ProfileWeeklyInsightTitle));
+    public static string JournalTitle => R(nameof(JournalTitle));
+    public static string OpenJournalLabel => R(nameof(OpenJournalLabel));
+    public static string JournalCardSubtitle => R(nameof(JournalCardSubtitle));
+    public static string JournalTodayTitle => R(nameof(JournalTodayTitle));
+    public static string JournalEntriesTitle => R(nameof(JournalEntriesTitle));
+    public static string JournalWeekEmpty => R(nameof(JournalWeekEmpty));
+    public static string JournalNotePlaceholder => R(nameof(JournalNotePlaceholder));
+    public static string JournalNoteSectionTitle => R(nameof(JournalNoteSectionTitle));
+    public static string JournalAddNoteLabel => R(nameof(JournalAddNoteLabel));
+    public static string JournalShowHintsLabel => R(nameof(JournalShowHintsLabel));
+    public static string JournalHideHintsLabel => R(nameof(JournalHideHintsLabel));
+    public static string JournalHowNowQuestion => R(nameof(JournalHowNowQuestion));
+    public static string JournalMoreMenuLabel => R(nameof(JournalMoreMenuLabel));
+    public static string JournalSlotPickerTitle => R(nameof(JournalSlotPickerTitle));
+    public static string JournalNoteSaveHint => R(nameof(JournalNoteSaveHint));
+    public static string JournalSaveLabel => R(nameof(JournalSaveLabel));
+    public static string JournalDeleteLabel => R(nameof(JournalDeleteLabel));
+    public static string JournalDeleteConfirmTitle => R(nameof(JournalDeleteConfirmTitle));
+    public static string JournalDeleteConfirmMessage => R(nameof(JournalDeleteConfirmMessage));
+    public static string JournalDeleteConfirmAccept => R(nameof(JournalDeleteConfirmAccept));
+    public static string JournalDeleteConfirmCancel => R(nameof(JournalDeleteConfirmCancel));
+    public static string JournalNoNoteCaption => R(nameof(JournalNoNoteCaption));
+    public static string JournalEditTodayHint => R(nameof(JournalEditTodayHint));
     public static string JournalDayEmptyHint(DateOnly day) =>
         T($"Нет записи за {day:d} — можно добавить", $"No entry for {day:d} — you can add one");
-    public static string JournalPickMoodHint => T(
-        "Выберите настроение выше",
-        "Pick a mood above");
+    public static string JournalPickMoodHint => R(nameof(JournalPickMoodHint));
     public static string JournalDayMoodLine(DateOnly day, int level, int max) =>
         T($"{day:d}: {MoodEmoji(level)} {level}/{max}", $"{day:d}: {MoodEmoji(level)} {level}/{max}");
-    public static string JournalMoodStatsTitle => T("Обзор", "Overview");
-    public static string JournalMoodStreakLabel => T("Серия дней", "Day streak");
-    public static string JournalDynamicsTitle => T("Динамика", "Trend");
-    public static string JournalOverviewInsightEmpty => T(
-        "Пока мало отметок — отметьте настроение на этой неделе",
-        "Not many check-ins yet — log your mood this week");
+    public static string JournalMoodStatsTitle => R(nameof(JournalMoodStatsTitle));
+    public static string JournalMoodStreakLabel => R(nameof(JournalMoodStreakLabel));
+    public static string JournalDynamicsTitle => R(nameof(JournalDynamicsTitle));
+    public static string JournalOverviewInsightEmpty => R(nameof(JournalOverviewInsightEmpty));
     public static string JournalPracticeMoodInsight(int practiceDays, string averageMood) =>
         T(
             $"После практик ({practiceDays} дн.): ср. настроение {averageMood}",
@@ -475,23 +347,17 @@ public static partial class AppStrings
         T(
             $"С практикой ср. {averageOnPractice} · без практики ср. {averageWithoutPractice} ({practiceDays} дн. с практикой)",
             $"With practice avg {averageOnPractice} · without avg {averageWithoutPractice} ({practiceDays} practice days)");
-    public static string ProfileMoodCheckInBanner => T(
-        "Сегодня ещё нет отметки настроения",
-        "No mood check-in for today yet");
-    public static string JournalTryQuietQuote => T(
-        "Короткая цитата может поддержать",
-        "A short quote may help");
-    public static string PracticeOpenJournalRow => T(
-        "Дописать в дневник",
-        "Add a journal note");
-    public static string JournalQuestionsSectionTitle => T("Вопросы", "Questions");
-    public static string JournalFactorsSectionTitle => T("Факторы дня", "Day factors");
+    public static string ProfileMoodCheckInBanner => R(nameof(ProfileMoodCheckInBanner));
+    public static string JournalTryQuietQuote => R(nameof(JournalTryQuietQuote));
+    public static string PracticeOpenJournalRow => R(nameof(PracticeOpenJournalRow));
+    public static string JournalQuestionsSectionTitle => R(nameof(JournalQuestionsSectionTitle));
+    public static string JournalFactorsSectionTitle => R(nameof(JournalFactorsSectionTitle));
     public static string JournalFactorsSummaryLine(string labels) =>
         T($"Факторы: {labels}", $"Factors: {labels}");
-    public static string JournalWeekNavPrev => T("Предыдущая неделя", "Previous week");
-    public static string JournalWeekNavNext => T("Следующая неделя", "Next week");
-    public static string JournalMonthNavPrev => T("Предыдущий месяц", "Previous month");
-    public static string JournalMonthNavNext => T("Следующий месяц", "Next month");
+    public static string JournalWeekNavPrev => R(nameof(JournalWeekNavPrev));
+    public static string JournalWeekNavNext => R(nameof(JournalWeekNavNext));
+    public static string JournalMonthNavPrev => R(nameof(JournalMonthNavPrev));
+    public static string JournalMonthNavNext => R(nameof(JournalMonthNavNext));
     public static string JournalMonthTitle(DateOnly month) =>
         month.ToDateTime(TimeOnly.MinValue).ToString("MMMM yyyy", System.Globalization.CultureInfo.CurrentCulture);
     public static string JournalFactorCountPill(string label, int count) =>
@@ -555,10 +421,10 @@ public static partial class AppStrings
 
     private static string MoodCheckInWordEn(int count) => count == 1 ? "check-in" : "check-ins";
 
-    public static string JournalFilter7Days => T("7 дней", "7 days");
-    public static string JournalFilter30Days => T("30 дней", "30 days");
-    public static string JournalFilter90Days => T("90 дней", "90 days");
-    public static string JournalYesterdayTitle => T("Вчера", "Yesterday");
+    public static string JournalFilter7Days => R(nameof(JournalFilter7Days));
+    public static string JournalFilter30Days => R(nameof(JournalFilter30Days));
+    public static string JournalFilter90Days => R(nameof(JournalFilter90Days));
+    public static string JournalYesterdayTitle => R(nameof(JournalYesterdayTitle));
     public static string JournalEditorDayTitle(DateOnly day)
     {
         DateOnly today = DateOnly.FromDateTime(DateTime.Today);
@@ -574,65 +440,57 @@ public static partial class AppStrings
 
         return day.ToDateTime(TimeOnly.MinValue).ToString("d MMM");
     }
-    public static string JournalPastDayCheckInTitle => T(
-        "Как было настроение в этот день?",
-        "How was your mood that day?");
-    public static string JournalPromptHelped => T("Что помогло?", "What helped?");
-    public static string JournalPromptBlocked => T("Что мешало?", "What got in the way?");
-    public static string JournalPromptGrateful => T("За что благодарен?", "Grateful for?");
-    public static string JournalPromptNext => T("Что сделаю дальше?", "What next?");
-    public static string JournalSearchPlaceholder => T("Поиск по заметкам", "Search notes");
-    public static string JournalSearchEmpty => T(
-        "Ничего не найдено",
-        "No matching notes");
+    public static string JournalPastDayCheckInTitle => R(nameof(JournalPastDayCheckInTitle));
+    public static string JournalPromptHelped => R(nameof(JournalPromptHelped));
+    public static string JournalPromptBlocked => R(nameof(JournalPromptBlocked));
+    public static string JournalPromptGrateful => R(nameof(JournalPromptGrateful));
+    public static string JournalPromptNext => R(nameof(JournalPromptNext));
+    public static string JournalSearchPlaceholder => R(nameof(JournalSearchPlaceholder));
+    public static string JournalSearchEmpty => R(nameof(JournalSearchEmpty));
     public static string JournalBestWorstPill(int best, int worst) =>
         T($"Лучший {MoodEmoji(best)} {best} · Худший {MoodEmoji(worst)} {worst}",
             $"Best {MoodEmoji(best)} {best} · Worst {MoodEmoji(worst)} {worst}");
-    public static string JournalTimelineEmpty => T(
-        "Ещё нет отметок — сделайте check-in в дневнике, чтобы начать серию",
-        "No check-ins yet — log a mood in the journal to start a streak");
+    public static string JournalTimelineEmpty => R(nameof(JournalTimelineEmpty));
     public static string JournalTimelineStreakLine(string streak) =>
         string.IsNullOrWhiteSpace(streak) || streak == MetricEmptyValue
             ? string.Empty
             : T($"Серия check-in: {streak}", $"Check-in streak: {streak}");
-    public static string JournalTryShortPractice => T(
-        "Короткая практика может помочь",
-        "A short practice may help");
-    public static string JournalPromptBlockedShort => T("Что мешало", "What blocked");
-    public static string JournalPromptGratefulShort => T("Благодарность", "Grateful");
-    public static string JournalFactorSleep => T("Сон: ", "Sleep: ");
-    public static string JournalFactorPeople => T("Люди: ", "People: ");
-    public static string JournalFactorPractice => T("Практика: ", "Practice: ");
-    public static string JournalFactorWalk => T("Прогулка: ", "Walk: ");
-    public static string JournalFactorWork => T("Работа: ", "Work: ");
-    public static string JournalFactorSport => T("Спорт: ", "Sport: ");
-    public static string JournalFactorRest => T("Отдых: ", "Rest: ");
-    public static string JournalFactorStress => T("Стресс: ", "Stress: ");
-    public static string JournalFactorHome => T("Дом: ", "Home: ");
-    public static string JournalFactorSleepLabel => T("Сон", "Sleep");
-    public static string JournalFactorPeopleLabel => T("Люди", "People");
-    public static string JournalFactorPracticeLabel => T("Практика", "Practice");
-    public static string JournalFactorWalkLabel => T("Прогулка", "Walk");
-    public static string JournalFactorWorkLabel => T("Работа", "Work");
-    public static string JournalFactorSportLabel => T("Спорт", "Sport");
-    public static string JournalFactorRestLabel => T("Отдых", "Rest");
-    public static string JournalFactorStressLabel => T("Стресс", "Stress");
-    public static string JournalFactorHomeLabel => T("Дом", "Home");
+    public static string JournalTryShortPractice => R(nameof(JournalTryShortPractice));
+    public static string JournalPromptBlockedShort => R(nameof(JournalPromptBlockedShort));
+    public static string JournalPromptGratefulShort => R(nameof(JournalPromptGratefulShort));
+    public static string JournalFactorSleep => R(nameof(JournalFactorSleep));
+    public static string JournalFactorPeople => R(nameof(JournalFactorPeople));
+    public static string JournalFactorPractice => R(nameof(JournalFactorPractice));
+    public static string JournalFactorWalk => R(nameof(JournalFactorWalk));
+    public static string JournalFactorWork => R(nameof(JournalFactorWork));
+    public static string JournalFactorSport => R(nameof(JournalFactorSport));
+    public static string JournalFactorRest => R(nameof(JournalFactorRest));
+    public static string JournalFactorStress => R(nameof(JournalFactorStress));
+    public static string JournalFactorHome => R(nameof(JournalFactorHome));
+    public static string JournalFactorSleepLabel => R(nameof(JournalFactorSleepLabel));
+    public static string JournalFactorPeopleLabel => R(nameof(JournalFactorPeopleLabel));
+    public static string JournalFactorPracticeLabel => R(nameof(JournalFactorPracticeLabel));
+    public static string JournalFactorWalkLabel => R(nameof(JournalFactorWalkLabel));
+    public static string JournalFactorWorkLabel => R(nameof(JournalFactorWorkLabel));
+    public static string JournalFactorSportLabel => R(nameof(JournalFactorSportLabel));
+    public static string JournalFactorRestLabel => R(nameof(JournalFactorRestLabel));
+    public static string JournalFactorStressLabel => R(nameof(JournalFactorStressLabel));
+    public static string JournalFactorHomeLabel => R(nameof(JournalFactorHomeLabel));
     public static string JournalActivityCorrelationPill(string label, int count, string averageMood) =>
         T($"{label} · {count} · ср. {averageMood}", $"{label} · {count} · avg {averageMood}");
-    public static string JournalYearNavPrev => T("Предыдущий год", "Previous year");
-    public static string JournalYearNavNext => T("Следующий год", "Next year");
+    public static string JournalYearNavPrev => R(nameof(JournalYearNavPrev));
+    public static string JournalYearNavNext => R(nameof(JournalYearNavNext));
     public static string JournalYearTitle(int year) =>
         T($"Год {year}", $"Year {year}");
-    public static string JournalYearHeatmapTitle => T("Год в пикселях", "Year in pixels");
-    public static string JournalCalendarScaleWeek => T("Неделя", "Week");
-    public static string JournalCalendarScaleMonth => T("Месяц", "Month");
-    public static string JournalCalendarScaleYear => T("Год", "Year");
-    public static string JournalCalendarSectionTitle => T("Календарь", "Calendar");
-    public static string JournalStatsSectionTitle => T("Сводка", "Summary");
-    public static string JournalStreakMetricLabel => T("Серия", "Streak");
-    public static string JournalPeriodNavPrev => T("Назад", "Previous");
-    public static string JournalPeriodNavNext => T("Вперёд", "Next");
+    public static string JournalYearHeatmapTitle => R(nameof(JournalYearHeatmapTitle));
+    public static string JournalCalendarScaleWeek => R(nameof(JournalCalendarScaleWeek));
+    public static string JournalCalendarScaleMonth => R(nameof(JournalCalendarScaleMonth));
+    public static string JournalCalendarScaleYear => R(nameof(JournalCalendarScaleYear));
+    public static string JournalCalendarSectionTitle => R(nameof(JournalCalendarSectionTitle));
+    public static string JournalStatsSectionTitle => R(nameof(JournalStatsSectionTitle));
+    public static string JournalStreakMetricLabel => R(nameof(JournalStreakMetricLabel));
+    public static string JournalPeriodNavPrev => R(nameof(JournalPeriodNavPrev));
+    public static string JournalPeriodNavNext => R(nameof(JournalPeriodNavNext));
     public static string JournalOnThisDayLastYearEmpty => string.Empty;
     public static string JournalOnThisDayLastYear(int moodLevel, string? noteSnippet)
     {
@@ -645,39 +503,29 @@ public static partial class AppStrings
         string snippet = noteSnippet.Length > 80 ? noteSnippet[..80].TrimEnd() + "…" : noteSnippet;
         return T($"Год назад: {mood} · {snippet}", $"A year ago: {mood} · {snippet}");
     }
-    public static string JournalSlotMorning => T("Утро", "Morning");
-    public static string JournalSlotEvening => T("Вечер", "Evening");
-    public static string JournalExportLabel => T("Экспорт CSV", "Export CSV");
-    public static string JournalExportTitle => T("Дневник настроения", "Mood journal");
-    public static string JournalExportEmpty => T(
-        "Нет записей для экспорта",
-        "No entries to export");
-    public static string JournalSlotFullHint => T(
-        "В этот день уже две отметки — выберите Утро или Вечер",
-        "This day already has two check-ins — pick Morning or Evening");
-    public static string MoodNotesEmpty => T(
-        "Пока нет отметок настроения — сделайте check-in выше",
-        "No mood check-ins yet — log one above");
-    public static string JournalNeedMoodToSave => T(
-        "Сначала выберите настроение",
-        "Choose a mood first");
+    public static string JournalSlotMorning => R(nameof(JournalSlotMorning));
+    public static string JournalSlotEvening => R(nameof(JournalSlotEvening));
+    public static string JournalExportLabel => R(nameof(JournalExportLabel));
+    public static string JournalExportTitle => R(nameof(JournalExportTitle));
+    public static string JournalExportEmpty => R(nameof(JournalExportEmpty));
+    public static string JournalSlotFullHint => R(nameof(JournalSlotFullHint));
+    public static string MoodNotesEmpty => R(nameof(MoodNotesEmpty));
+    public static string JournalNeedMoodToSave => R(nameof(JournalNeedMoodToSave));
     public static string WeekRangeLabel(DateOnly start, DateOnly end) =>
         T($"{start:dd MMM} – {end:dd MMM}", $"{start:dd MMM} – {end:dd MMM}");
-    public static string WeekPracticesLabel => T("Практики", "Practices");
-    public static string WeekMoodCheckInsLabel => T("Отметки", "Check-ins");
-    public static string WeekAvgMoodLabel => T("Ср. настроение", "Avg mood");
-    public static string WeekRiskLabel => T("Риск", "Risk");
-    public static string WeekStreakLabel => T("Серия", "Streak");
+    public static string WeekPracticesLabel => R(nameof(WeekPracticesLabel));
+    public static string WeekMoodCheckInsLabel => R(nameof(WeekMoodCheckInsLabel));
+    public static string WeekAvgMoodLabel => R(nameof(WeekAvgMoodLabel));
+    public static string WeekRiskLabel => R(nameof(WeekRiskLabel));
+    public static string WeekStreakLabel => R(nameof(WeekStreakLabel));
     public static string MetricEmptyValue => "—";
     public static string FormatAverageMood(double average) =>
         average <= 0 ? MetricEmptyValue : average.ToString("0.0");
     public static string MoodLevelPill(int level, int max = 5) =>
         $"{MoodEmoji(level)} {level}/{max}";
-    public static string ProfileMoodTrendHint => T(
-        "Отмечайте настроение здесь, чтобы увидеть динамику",
-        "Track mood here to see your trend");
+    public static string ProfileMoodTrendHint => R(nameof(ProfileMoodTrendHint));
 
-    public static string ChartFirstMeasurement => T("Первое измерение", "First measurement");
+    public static string ChartFirstMeasurement => R(nameof(ChartFirstMeasurement));
     public static string ChartSparseHint(int count) => T(
         $"{count} измерения — тренд уточняется",
         $"{count} measurements — trend still forming");
@@ -690,15 +538,15 @@ public static partial class AppStrings
         };
     public static string ChartDateLabel(DateTime date) =>
         date.ToString("dd MMM", System.Globalization.CultureInfo.CurrentCulture);
-    public static string PracticeReflectionQuestion => T("Как вы себя чувствуете?", "How do you feel now?");
-    public static string PracticeReflectionNotePlaceholder => T("Короткая заметка (необязательно)", "Short note (optional)");
-    public static string PracticePreSudsLabel => T("Интенсивность до (0–10)", "Intensity before (0–10)");
-    public static string PracticePostSudsLabel => T("Интенсивность после (0–10)", "Intensity after (0–10)");
+    public static string PracticeReflectionQuestion => R(nameof(PracticeReflectionQuestion));
+    public static string PracticeReflectionNotePlaceholder => R(nameof(PracticeReflectionNotePlaceholder));
+    public static string PracticePreSudsLabel => R(nameof(PracticePreSudsLabel));
+    public static string PracticePostSudsLabel => R(nameof(PracticePostSudsLabel));
     public static string PracticeSudsDelta(int before, int after) => $"{before} → {after}";
-    public static string PracticeSudsSectionTitle => T("Как изменилась интенсивность?", "How did intensity change?");
-    public static string PracticeReflectionSectionTitle => T("Настроение", "Mood");
-    public static string PracticeLastNoteTitle => T("Что вы заметили в прошлый раз", "What you noticed last time");
-    public static string PracticeCompletedTitle => T("Готово!", "Done!");
+    public static string PracticeSudsSectionTitle => R(nameof(PracticeSudsSectionTitle));
+    public static string PracticeReflectionSectionTitle => R(nameof(PracticeReflectionSectionTitle));
+    public static string PracticeLastNoteTitle => R(nameof(PracticeLastNoteTitle));
+    public static string PracticeCompletedTitle => R(nameof(PracticeCompletedTitle));
     public static string PracticeCompletedBody(int streak) =>
         T($"Отличная работа! Серия: {streak} дн.", $"Great job! Streak: {streak} days");
     public static bool IsStreakMilestone(int streak) =>
@@ -746,28 +594,26 @@ public static partial class AppStrings
     public static string PracticeMoodDelta(int before, int after) =>
         T($"Было {MoodEmoji(before)} {before}/5 → стало {MoodEmoji(after)} {after}/5",
             $"Was {MoodEmoji(before)} {before}/5 → now {MoodEmoji(after)} {after}/5");
-    public static string ProfileMoodNotesTitle => T("Заметки к настроению", "Mood notes");
-    public static string PracticeGoHomeButton => T("На главную", "Go home");
-    public static string PracticeMoreButton => T("Ещё практика", "More practice");
-    public static string PracticeNextCaption => T("Следующая практика", "Next practice");
-    public static string PracticeNextReason => T("Продолжим серию", "Keep the momentum");
-    public static string PracticeHistoryTitle => T("Недавние практики", "Recent practices");
-    public static string PracticeHistoryEmpty => T("Пока нет завершённых практик", "No completed practices yet");
+    public static string ProfileMoodNotesTitle => R(nameof(ProfileMoodNotesTitle));
+    public static string PracticeGoHomeButton => R(nameof(PracticeGoHomeButton));
+    public static string PracticeMoreButton => R(nameof(PracticeMoreButton));
+    public static string PracticeNextCaption => R(nameof(PracticeNextCaption));
+    public static string PracticeNextReason => R(nameof(PracticeNextReason));
+    public static string PracticeHistoryTitle => R(nameof(PracticeHistoryTitle));
+    public static string PracticeHistoryEmpty => R(nameof(PracticeHistoryEmpty));
     public static string PracticeHistoryEntry(string date, string name) =>
         T($"{date}: {name}", $"{date}: {name}");
     public static string InfoAppVersion(string version) =>
         T($"Версия {version}", $"Version {version}");
-    public static string QuoteCopied => T("Скопировано", "Copied");
-    public static string TestHistoryTitle => T("История результатов", "Result history");
-    public static string TestHistoryEmpty => T("Пока нет сохранённых результатов", "No saved results yet");
+    public static string QuoteCopied => R(nameof(QuoteCopied));
+    public static string TestHistoryTitle => R(nameof(TestHistoryTitle));
+    public static string TestHistoryEmpty => R(nameof(TestHistoryEmpty));
     public static string TestHistoryEntry(string date, string summary) =>
         T($"{date}: {summary}", $"{date}: {summary}");
-    public static string TestOpenHistory => T("История", "History");
+    public static string TestOpenHistory => R(nameof(TestOpenHistory));
     public static string ProfileLastPractice(string date) =>
         T($"Последняя практика: {date}", $"Last practice: {date}");
-    public static string PhysicsNoResultsSubhint => T(
-        "Попробуйте: плечо, шея, спина, живот, голова…",
-        "Try: shoulder, neck, back, stomach, head…");
+    public static string PhysicsNoResultsSubhint => R(nameof(PhysicsNoResultsSubhint));
 
     private static string MoodEmoji(int level) => level switch
     {
@@ -780,9 +626,9 @@ public static partial class AppStrings
     };
 
     public static string MoodEmojiFor(int level) => MoodEmoji(level);
-    public static string TechniqueContinueBadge => T("Продолжить", "Continue");
+    public static string TechniqueContinueBadge => R(nameof(TechniqueContinueBadge));
     public static string TechniqueLastPractice(string date) => T($"Последняя практика: {date}", $"Last practice: {date}");
-    public static string TechniqueNotTriedYet => T("Не пробовали", "Not tried yet");
+    public static string TechniqueNotTriedYet => R(nameof(TechniqueNotTriedYet));
     public static string TechniqueDuration(int minutes) => T($"~{minutes} мин", $"~{minutes} min");
     public static string TechniqueMetaLine(string duration, string theme) => T($"{duration} · {theme}", $"{duration} · {theme}");
     public static string TechniqueRatingValue(int value) => T($"Оценка: {value} из 10", $"Rating: {value} of 10");
@@ -791,133 +637,89 @@ public static partial class AppStrings
     public static string TestLastResult(string summary) => T($"Последний результат: {summary}", $"Last result: {summary}");
     public static string TestLastResultDated(string summary, string date) =>
         T($"Последний результат · {date}: {summary}", $"Last result · {date}: {summary}");
-    public static string TestNeverTakenYet => T("Ещё не проходили", "Not taken yet");
+    public static string TestNeverTakenYet => R(nameof(TestNeverTakenYet));
     public static string TestCompletedAt(string date) => T($"Пройдено: {date}", $"Completed: {date}");
-    public static string TestTryTechnique => T("Попробовать технику", "Try a technique");
-    public static string TestResultImproved => T("Лучше прошлого раза", "Better than last time");
-    public static string TestResultWorse => T("Хуже прошлого раза", "Worse than last time");
-    public static string TestResultSame => T("Как в прошлый раз", "Same as last time");
+    public static string TestTryTechnique => R(nameof(TestTryTechnique));
+    public static string TestResultImproved => R(nameof(TestResultImproved));
+    public static string TestResultWorse => R(nameof(TestResultWorse));
+    public static string TestResultSame => R(nameof(TestResultSame));
 
-    public static string OnboardingAppName => T("PsychologyApp", "PsychologyApp");
-    public static string OnboardingAppTagline => T(
-        "Спокойствие рядом — даже без интернета",
-        "Calm within reach — even offline");
-    public static string OnboardingWelcomeTitle => T("Пространство для себя", "A space for you");
-    public static string OnboardingWelcomeBody => T(
-        "Здесь можно выдохнуть, разобраться с собой и найти опору — в своём темпе.",
-        "Here you can breathe, understand yourself, and find support — at your own pace.");
-    public static string OnboardingValueOffline => T("Офлайн", "Offline");
-    public static string OnboardingValueNoJudgment => T("Без осуждения", "No judgment");
-    public static string OnboardingValueOnDevice => T("На устройстве", "On your device");
+    public static string OnboardingAppName => R(nameof(OnboardingAppName));
+    public static string OnboardingAppTagline => R(nameof(OnboardingAppTagline));
+    public static string OnboardingWelcomeTitle => R(nameof(OnboardingWelcomeTitle));
+    public static string OnboardingWelcomeBody => R(nameof(OnboardingWelcomeBody));
+    public static string OnboardingValueOffline => R(nameof(OnboardingValueOffline));
+    public static string OnboardingValueNoJudgment => R(nameof(OnboardingValueNoJudgment));
+    public static string OnboardingValueOnDevice => R(nameof(OnboardingValueOnDevice));
     public static string OnboardingStepOf(int current, int total) =>
         T($"{current} из {total}", $"{current} of {total}");
-    public static string OnboardingBack => T("Назад", "Back");
-    public static string OnboardingOverviewTitle => T("Пять опор в одном месте", "Five pillars in one place");
-    public static string OnboardingOverviewSubtitle => T(
-        "Практики, тесты, психосоматика, молитвы и цитаты — редкое сочетание в одном компаньоне",
-        "Practices, tests, psychosomatic search, prayers, and quotes — a rare mix in one companion");
-    public static string OnboardingOverviewLead => T(
-        "Всё под рукой в нижней панели",
-        "Everything is one tap away in the tab bar");
-    public static string OnboardingModulePracticeHint => T(
-        "Успокоить нервную систему за минуты",
-        "Calm your nervous system in minutes");
-    public static string OnboardingModuleTestsHint => T(
-        "Узнать себя через опросники и Люшера",
-        "Know yourself through questionnaires and Lüscher");
-    public static string OnboardingModuleSomaticHint => T(
-        "Понять связь тела и эмоций",
-        "Understand the body–emotion link");
-    public static string OnboardingModuleMusicHint => T(
-        "Найти слова и звук для души",
-        "Find words and sound for the soul");
-    public static string OnboardingModuleQuotesHint => T(
-        "Поддержать настроение одной мыслью",
-        "Lift your mood with one thought");
-    public static string OnboardingConcernTitle => T("Что вас беспокоит?", "What troubles you?");
-    public static string OnboardingConcernSubtitle => T(
-        "Подберём первую практику под ваш запрос",
-        "We'll pick a first practice for your needs");
-    public static string OnboardingConcernFooterHint => T(
-        "Нажмите на вариант, чтобы продолжить",
-        "Tap an option to continue");
-    public static string OnboardingConcernAnxiety => T("Тревога", "Anxiety");
-    public static string OnboardingConcernBody => T("Тело / симптомы", "Body / symptoms");
-    public static string OnboardingConcernMood => T("Настроение", "Mood");
-    public static string OnboardingConcernExplore => T("Просто попробовать", "Just exploring");
-    public static string OnboardingConcernAnxietyHint => T(
-        "Когда мысли не отпускают",
-        "When thoughts won't let go");
-    public static string OnboardingConcernBodyHint => T(
-        "Когда тело сигналит о стрессе",
-        "When your body signals stress");
-    public static string OnboardingConcernMoodHint => T(
-        "Когда тяжело внутри",
-        "When it feels heavy inside");
-    public static string OnboardingConcernExploreHint => T(
-        "Хочу просто посмотреть",
-        "I just want to look around");
-    public static string OnboardingFinishTitle => T("Всё готово — начнём?", "All set — shall we begin?");
+    public static string OnboardingBack => R(nameof(OnboardingBack));
+    public static string OnboardingOverviewTitle => R(nameof(OnboardingOverviewTitle));
+    public static string OnboardingOverviewSubtitle => R(nameof(OnboardingOverviewSubtitle));
+    public static string OnboardingOverviewLead => R(nameof(OnboardingOverviewLead));
+    public static string OnboardingModulePracticeHint => R(nameof(OnboardingModulePracticeHint));
+    public static string OnboardingModuleTestsHint => R(nameof(OnboardingModuleTestsHint));
+    public static string OnboardingModuleSomaticHint => R(nameof(OnboardingModuleSomaticHint));
+    public static string OnboardingModuleMusicHint => R(nameof(OnboardingModuleMusicHint));
+    public static string OnboardingModuleQuotesHint => R(nameof(OnboardingModuleQuotesHint));
+    public static string OnboardingConcernTitle => R(nameof(OnboardingConcernTitle));
+    public static string OnboardingConcernSubtitle => R(nameof(OnboardingConcernSubtitle));
+    public static string OnboardingConcernFooterHint => R(nameof(OnboardingConcernFooterHint));
+    public static string OnboardingConcernAnxiety => R(nameof(OnboardingConcernAnxiety));
+    public static string OnboardingConcernBody => R(nameof(OnboardingConcernBody));
+    public static string OnboardingConcernMood => R(nameof(OnboardingConcernMood));
+    public static string OnboardingConcernExplore => R(nameof(OnboardingConcernExplore));
+    public static string OnboardingConcernAnxietyHint => R(nameof(OnboardingConcernAnxietyHint));
+    public static string OnboardingConcernBodyHint => R(nameof(OnboardingConcernBodyHint));
+    public static string OnboardingConcernMoodHint => R(nameof(OnboardingConcernMoodHint));
+    public static string OnboardingConcernExploreHint => R(nameof(OnboardingConcernExploreHint));
+    public static string OnboardingFinishTitle => R(nameof(OnboardingFinishTitle));
     public static string OnboardingFinishSubtitle(string practiceName) => T(
         $"Рекомендуем начать с «{practiceName}»",
         $"We recommend starting with \"{practiceName}\"");
-    public static string OnboardingRecommendedCaption => T("Рекомендуемая практика", "Recommended practice");
-    public static string OnboardingDisclaimerTitle => T("Важно", "Important");
-    public static string OnboardingDisclaimerBody => T(
-        "Приложение не заменяет профессиональную помощь. При тяжёлых состояниях обратитесь к специалисту.",
-        "This app does not replace professional care. Seek a specialist for severe conditions.");
-    public static string OnboardingStart => T("Попробовать сейчас", "Try it now");
-    public static string OnboardingSkip => T("Пропустить", "Skip");
-    public static string OnboardingNext => T("Далее", "Next");
+    public static string OnboardingRecommendedCaption => R(nameof(OnboardingRecommendedCaption));
+    public static string OnboardingDisclaimerTitle => R(nameof(OnboardingDisclaimerTitle));
+    public static string OnboardingDisclaimerBody => R(nameof(OnboardingDisclaimerBody));
+    public static string OnboardingStart => R(nameof(OnboardingStart));
+    public static string OnboardingSkip => R(nameof(OnboardingSkip));
+    public static string OnboardingNext => R(nameof(OnboardingNext));
 
-    public static string QuoteShareFooter => T("PsychologyApp", "PsychologyApp");
+    public static string QuoteShareFooter => R(nameof(QuoteShareFooter));
 
-    public static string PhysicsTitle => T("Психосоматик", "Psychosomatic");
-    public static string PhysicsIntroPage => T("С введением", "Introduction");
-    public static string PhysicsSearchPage => T("Поисковик", "Search");
-    public static string PhysicsSearchTitle => T("Психосоматика", "Psychosomatic");
-    public static string PhysicsExplanationHeader => T("Пояснение", "Explanation");
-    public static string PhysicsExplanationBody => T(
-        "Известно, что около половины всех болезней возникает на психической основе. Поэтому по любому физическому недомоганию можно определить то, что вас беспокоит, но не осознаётся.",
-        "About half of all illnesses have a psychological component. Any physical symptom can point to an emotional cause that troubles you but stays unconscious.");
-    public static string PhysicsDescriptionHeader => T("Описание", "Description");
-    public static string PhysicsDescriptionBody => T(
-        "Тест поможет вам в пару кликов найти эмоциональную причину любого вашего физического недомогания. Всё очень просто.",
-        "This tool helps you find a possible emotional cause of a physical symptom in just a few taps. It's simple.");
-    public static string PhysicsAlgorithmStep1 => T(
-        "1. Назвать болезнь или часть тела, которая болит",
-        "1. Name the illness or body part that hurts");
-    public static string PhysicsAlgorithmStep2 => T(
-        "2. Узнать несколько возможных причин.",
-        "2. Explore several possible emotional causes.");
-    public static string PhysicsSearchToolbar => T("Найти", "Search");
-    public static string PhysicsProblemLabel => T("Проблема", "Problem");
-    public static string PhysicsIllnessPlaceholder => T("Болезнь", "Condition");
-    public static string PhysicsEmptySearchHint => T("Введите запрос", "Enter a search term");
-    public static string PhysicsEmptySearchSubhint => T("Болезнь или часть тела", "Illness or body part");
-    public static string PhysicsNoResultsHint => T("Ничего не найдено", "No results found");
-    public static string PhysicsLoadingText => T("Поиск причин", "Searching causes");
-    public static string PhysicsSearchFilteringText => T("Подбор результатов", "Filtering results");
-    public static string PhysicsSearchError => T(
-        "Не удалось выполнить поиск",
-        "Search failed");
-    public static string QuotesSearchError => T(
-        "Не удалось выполнить поиск цитат",
-        "Quote search failed");
-    public static string LoadFailed => T("Не удалось загрузить", "Failed to load");
-    public static string RetryQuestion => T("Попробовать ещё раз?", "Try again?");
-    public static string LoadError => T("Ошибка при загрузке", "Failed to load");
+    public static string PhysicsTitle => R(nameof(PhysicsTitle));
+    public static string PhysicsIntroPage => R(nameof(PhysicsIntroPage));
+    public static string PhysicsSearchPage => R(nameof(PhysicsSearchPage));
+    public static string PhysicsSearchTitle => R(nameof(PhysicsSearchTitle));
+    public static string PhysicsExplanationHeader => R(nameof(PhysicsExplanationHeader));
+    public static string PhysicsExplanationBody => R(nameof(PhysicsExplanationBody));
+    public static string PhysicsDescriptionHeader => R(nameof(PhysicsDescriptionHeader));
+    public static string PhysicsDescriptionBody => R(nameof(PhysicsDescriptionBody));
+    public static string PhysicsAlgorithmStep1 => R(nameof(PhysicsAlgorithmStep1));
+    public static string PhysicsAlgorithmStep2 => R(nameof(PhysicsAlgorithmStep2));
+    public static string PhysicsSearchToolbar => R(nameof(PhysicsSearchToolbar));
+    public static string PhysicsProblemLabel => R(nameof(PhysicsProblemLabel));
+    public static string PhysicsIllnessPlaceholder => R(nameof(PhysicsIllnessPlaceholder));
+    public static string PhysicsEmptySearchHint => R(nameof(PhysicsEmptySearchHint));
+    public static string PhysicsEmptySearchSubhint => R(nameof(PhysicsEmptySearchSubhint));
+    public static string PhysicsNoResultsHint => R(nameof(PhysicsNoResultsHint));
+    public static string PhysicsLoadingText => R(nameof(PhysicsLoadingText));
+    public static string PhysicsSearchFilteringText => R(nameof(PhysicsSearchFilteringText));
+    public static string PhysicsSearchError => R(nameof(PhysicsSearchError));
+    public static string QuotesSearchError => R(nameof(QuotesSearchError));
+    public static string LoadFailed => R(nameof(LoadFailed));
+    public static string RetryQuestion => R(nameof(RetryQuestion));
+    public static string LoadError => R(nameof(LoadError));
 
-    public static string ProfileTitle => T("Профиль", "Profile");
-    public static string ProfileLoadingText => T("Загрузка профиля", "Loading profile");
-    public static string ProfileUserLabel => T("Пользователь", "User");
-    public static string ProfileStandardUser => T("Стандартный", "Standard");
-    public static string ProfileTechniquesCompleted => T("Пройдено техник", "Techniques completed");
-    public static string ProfileFollowers => T("Подписчиков", "Followers");
-    public static string ProfileRecommended => T("Советуем пройти", "Recommended");
-    public static string ProfileBestQuotes => T("Избранные цитаты", "Favorite quotes");
-    public static string ProfileQuotesSeeAll => T("Все избранные цитаты", "All favorite quotes");
-    public static string ProfileQuotesSeeAllSubtitle => T("Открыть вкладку «Цитаты»", "Open Quotes tab");
+    public static string ProfileTitle => R(nameof(ProfileTitle));
+    public static string ProfileLoadingText => R(nameof(ProfileLoadingText));
+    public static string ProfileUserLabel => R(nameof(ProfileUserLabel));
+    public static string ProfileStandardUser => R(nameof(ProfileStandardUser));
+    public static string ProfileTechniquesCompleted => R(nameof(ProfileTechniquesCompleted));
+    public static string ProfileFollowers => R(nameof(ProfileFollowers));
+    public static string ProfileRecommended => R(nameof(ProfileRecommended));
+    public static string ProfileBestQuotes => R(nameof(ProfileBestQuotes));
+    public static string ProfileQuotesSeeAll => R(nameof(ProfileQuotesSeeAll));
+    public static string ProfileQuotesSeeAllSubtitle => R(nameof(ProfileQuotesSeeAllSubtitle));
     public static string FormatProfileQuotesPreviewSubtitle(int shown, int total)
     {
         if (shown <= 0 || total <= 0)
@@ -942,38 +744,32 @@ public static partial class AppStrings
 
         return shown == 1 ? "Показана 1 избранная" : $"Показано {shown} избранных";
     }
-    public static string QuotesFavoriteAdded => T("Добавлено в избранное", "Added to favorites");
-    public static string QuotesFavoriteRemoved => T("Убрано из избранного", "Removed from favorites");
-    public static string QuotesGoToTab => T("Перейти к цитатам", "Go to quotes");
-    public static string QuotesFeedAll => T("Все", "All");
-    public static string QuotesFeedFavorites => T("Избранное", "Favorites");
-    public static string QuotesFeedForYou => T("Для вас", "For you");
-    public static string QuotesThemeAll => T("Все темы", "All themes");
-    public static string QuotesDailyTitle => T("Цитата дня", "Quote of the day");
-    public static string QuotesSearchPlaceholder => T("Поиск по цитатам", "Search quotes");
-    public static string QuotesSearchEmptyTitle => T("Ничего не найдено", "Nothing found");
-    public static string QuotesSearchEmptyBody => T("Попробуйте другой запрос.", "Try a different query.");
-    public static string QuotesShowAgain => T("Показать снова", "Show again");
-    public static string QuotesForYouHint => T(
-        "Подобрано под ваш запрос из онбординга",
-        "Picked for your onboarding focus");
-    public static string QuotesForYouEmptyTitle => T("Пока нет цитат для вас", "No quotes for you yet");
-    public static string QuotesForYouEmptyBody => T(
-        "Мы подбираем цитаты под ваш фокус из онбординга. Загляните позже или переключитесь на «Все».",
-        "We pick quotes for your onboarding focus. Check back later or switch to All.");
-    public static string SettingsQuoteRemindersLabel => T("Цитата дня", "Daily quote");
-    public static string SettingsQuoteReminderHourLabel => T("Время цитаты", "Quote time");
-    public static string SettingsQuoteReminderHourPickerTitle => T("Время", "Time");
-    public static string SettingsMoodRemindersLabel => T("Напоминать о check-in", "Remind me to check in");
-    public static string SettingsMoodReminderHourLabel => T("Время check-in", "Check-in time");
-    public static string SettingsMoodReminderHourPickerTitle => T("Время", "Time");
-    public static string SettingsChatRemindersLabel => T("Напоминать о разговоре", "Remind me to talk");
-    public static string SettingsChatReminderHourLabel => T("Время напоминания", "Reminder time");
-    public static string SettingsChatReminderHourPickerTitle => T("Время", "Time");
-    public static string QuoteReminderTitle => T("Цитата дня", "Quote of the day");
-    public static string QuoteReminderBody => T(
-        "Откройте приложение и прочитайте мысль дня.",
-        "Open the app and read today's thought.");
+    public static string QuotesFavoriteAdded => R(nameof(QuotesFavoriteAdded));
+    public static string QuotesFavoriteRemoved => R(nameof(QuotesFavoriteRemoved));
+    public static string QuotesGoToTab => R(nameof(QuotesGoToTab));
+    public static string QuotesFeedAll => R(nameof(QuotesFeedAll));
+    public static string QuotesFeedFavorites => R(nameof(QuotesFeedFavorites));
+    public static string QuotesFeedForYou => R(nameof(QuotesFeedForYou));
+    public static string QuotesThemeAll => R(nameof(QuotesThemeAll));
+    public static string QuotesDailyTitle => R(nameof(QuotesDailyTitle));
+    public static string QuotesSearchPlaceholder => R(nameof(QuotesSearchPlaceholder));
+    public static string QuotesSearchEmptyTitle => R(nameof(QuotesSearchEmptyTitle));
+    public static string QuotesSearchEmptyBody => R(nameof(QuotesSearchEmptyBody));
+    public static string QuotesShowAgain => R(nameof(QuotesShowAgain));
+    public static string QuotesForYouHint => R(nameof(QuotesForYouHint));
+    public static string QuotesForYouEmptyTitle => R(nameof(QuotesForYouEmptyTitle));
+    public static string QuotesForYouEmptyBody => R(nameof(QuotesForYouEmptyBody));
+    public static string SettingsQuoteRemindersLabel => R(nameof(SettingsQuoteRemindersLabel));
+    public static string SettingsQuoteReminderHourLabel => R(nameof(SettingsQuoteReminderHourLabel));
+    public static string SettingsQuoteReminderHourPickerTitle => R(nameof(SettingsQuoteReminderHourPickerTitle));
+    public static string SettingsMoodRemindersLabel => R(nameof(SettingsMoodRemindersLabel));
+    public static string SettingsMoodReminderHourLabel => R(nameof(SettingsMoodReminderHourLabel));
+    public static string SettingsMoodReminderHourPickerTitle => R(nameof(SettingsMoodReminderHourPickerTitle));
+    public static string SettingsChatRemindersLabel => R(nameof(SettingsChatRemindersLabel));
+    public static string SettingsChatReminderHourLabel => R(nameof(SettingsChatReminderHourLabel));
+    public static string SettingsChatReminderHourPickerTitle => R(nameof(SettingsChatReminderHourPickerTitle));
+    public static string QuoteReminderTitle => R(nameof(QuoteReminderTitle));
+    public static string QuoteReminderBody => R(nameof(QuoteReminderBody));
     public static string QuoteReminderBodySnippet(string quoteText)
     {
         string trimmed = quoteText.Trim();
@@ -990,103 +786,75 @@ public static partial class AppStrings
 
         return trimmed.Substring(0, maxLen - 1).TrimEnd() + "…";
     }
-    public static string QuoteThemeWisdom => T("Мудрость", "Wisdom");
-    public static string QuoteThemeMotivation => T("Мотивация", "Motivation");
-    public static string QuoteThemeResilience => T("Стойкость", "Resilience");
-    public static string QuoteThemeSelfAwareness => T("Осознанность", "Self-awareness");
-    public static string QuoteThemeMindfulness => T("Осмыленность", "Mindfulness");
-    public static string QuoteThemeSelfEsteem => T("Самооценка", "Self-esteem");
-    public static string QuoteThemeHope => T("Надежда", "Hope");
-    public static string QuoteThemeEmpathy => T("Эмпатия", "Empathy");
-    public static string QuoteThemeHappiness => T("Счастье", "Happiness");
-    public static string QuoteThemeHabits => T("Привычки", "Habits");
-    public static string QuoteThemeLove => T("Любовь", "Love");
-    public static string QuoteThemeRelationships => T("Отношения", "Relationships");
-    public static string QuoteThemeResponsibility => T("Ответственность", "Responsibility");
-    public static string QuoteThemePurpose => T("Смысл", "Purpose");
-    public static string QuoteThemeGrowth => T("Рост", "Growth");
-    public static string QuoteThemeHealing => T("Исцеление", "Healing");
-    public static string QuoteThemeSelfLove => T("Любовь к себе", "Self-love");
-    public static string QuoteThemeAcceptance => T("Принятие", "Acceptance");
-    public static string QuoteThemeGratitude => T("Благодарность", "Gratitude");
-    public static string QuoteThemeCalm => T("Спокойствие", "Calm");
-    public static string QuoteThemeAnxiety => T("Тревога", "Anxiety");
-    public static string QuoteThemeGeneral => T("Общее", "General");
-    public static string QuotesAllReadTitle => T("Вы всё прочитали", "You are all caught up");
-    public static string QuotesAllReadBody => T(
-        "Новых цитат пока нет. Откройте избранное или обновите позже.",
-        "No new quotes right now. Open favorites or try again later.");
-    public static string QuotesShowFavorites => T("Показать избранное", "Show favorites");
-    public static string ProfileBsffSubtitle => T(
-        "Методика депрограммирования подсознания",
-        "Subconscious deprogramming method");
+    public static string QuoteThemeWisdom => R(nameof(QuoteThemeWisdom));
+    public static string QuoteThemeMotivation => R(nameof(QuoteThemeMotivation));
+    public static string QuoteThemeResilience => R(nameof(QuoteThemeResilience));
+    public static string QuoteThemeSelfAwareness => R(nameof(QuoteThemeSelfAwareness));
+    public static string QuoteThemeMindfulness => R(nameof(QuoteThemeMindfulness));
+    public static string QuoteThemeSelfEsteem => R(nameof(QuoteThemeSelfEsteem));
+    public static string QuoteThemeHope => R(nameof(QuoteThemeHope));
+    public static string QuoteThemeEmpathy => R(nameof(QuoteThemeEmpathy));
+    public static string QuoteThemeHappiness => R(nameof(QuoteThemeHappiness));
+    public static string QuoteThemeHabits => R(nameof(QuoteThemeHabits));
+    public static string QuoteThemeLove => R(nameof(QuoteThemeLove));
+    public static string QuoteThemeRelationships => R(nameof(QuoteThemeRelationships));
+    public static string QuoteThemeResponsibility => R(nameof(QuoteThemeResponsibility));
+    public static string QuoteThemePurpose => R(nameof(QuoteThemePurpose));
+    public static string QuoteThemeGrowth => R(nameof(QuoteThemeGrowth));
+    public static string QuoteThemeHealing => R(nameof(QuoteThemeHealing));
+    public static string QuoteThemeSelfLove => R(nameof(QuoteThemeSelfLove));
+    public static string QuoteThemeAcceptance => R(nameof(QuoteThemeAcceptance));
+    public static string QuoteThemeGratitude => R(nameof(QuoteThemeGratitude));
+    public static string QuoteThemeCalm => R(nameof(QuoteThemeCalm));
+    public static string QuoteThemeAnxiety => R(nameof(QuoteThemeAnxiety));
+    public static string QuoteThemeGeneral => R(nameof(QuoteThemeGeneral));
+    public static string QuotesAllReadTitle => R(nameof(QuotesAllReadTitle));
+    public static string QuotesAllReadBody => R(nameof(QuotesAllReadBody));
+    public static string QuotesShowFavorites => R(nameof(QuotesShowFavorites));
+    public static string ProfileBsffSubtitle => R(nameof(ProfileBsffSubtitle));
 
     public static string MotivatorTitle => ShellTabMotivatorShort;
-    public static string QuotesSearching => T("Поиск цитат", "Searching quotes");
-    public static string QuotesLoading => T("Загрузка цитат", "Loading quotes");
-    public static string QuoteShareTitle => T("Цитата", "Quote");
-    public static string UnknownAuthor => T("Неизвестный автор", "Unknown author");
+    public static string QuotesSearching => R(nameof(QuotesSearching));
+    public static string QuotesLoading => R(nameof(QuotesLoading));
+    public static string QuoteShareTitle => R(nameof(QuoteShareTitle));
+    public static string UnknownAuthor => R(nameof(UnknownAuthor));
 
-    public static string JournalCrisisPromptTitle => T("Вам сейчас очень тяжело?", "Are things very hard right now?");
-    public static string JournalCrisisPromptBody => T(
-        "В заметке есть слова, которые тревожат. Вы не одни: на экране срочной помощи — номера служб и план безопасности.",
-        "Your note contains words that worry us. You are not alone: the crisis help screen has helplines and your safety plan.");
-    public static string JournalCrisisPromptAccept => T("Открыть помощь", "Open help");
-    public static string JournalCrisisPromptDecline => T("Не сейчас", "Not now");
-    public static string CrisisHubTitle => T("Срочная помощь", "Crisis help");
-    public static string CrisisHubLead => T(
-        "Сначала безопасность. Приложение не заменяет экстренную помощь.",
-        "Safety first. This app does not replace emergency care.");
-    public static string CrisisHubSafetyPlanTitle => T("План безопасности", "Safety plan");
-    public static string CrisisHubSafetyPlanStep1 => T(
-        "Отойдите от триггеров и займите безопасное место.",
-        "Step away from triggers and find a safer place.");
-    public static string CrisisHubSafetyPlanStep2 => T(
-        "Свяжитесь с кем-то надёжным — другом, родным или специалистом.",
-        "Reach a trusted person — a friend, relative, or specialist.");
-    public static string CrisisHubSafetyPlanStep3 => T(
-        "Если есть угроза жизни — звоните в экстренные службы (112).",
-        "If life is at risk — call emergency services (112).");
+    public static string JournalCrisisPromptTitle => R(nameof(JournalCrisisPromptTitle));
+    public static string JournalCrisisPromptBody => R(nameof(JournalCrisisPromptBody));
+    public static string JournalCrisisPromptAccept => R(nameof(JournalCrisisPromptAccept));
+    public static string JournalCrisisPromptDecline => R(nameof(JournalCrisisPromptDecline));
+    public static string CrisisHubTitle => R(nameof(CrisisHubTitle));
+    public static string CrisisHubLead => R(nameof(CrisisHubLead));
+    public static string CrisisHubSafetyPlanTitle => R(nameof(CrisisHubSafetyPlanTitle));
+    public static string CrisisHubSafetyPlanStep1 => R(nameof(CrisisHubSafetyPlanStep1));
+    public static string CrisisHubSafetyPlanStep2 => R(nameof(CrisisHubSafetyPlanStep2));
+    public static string CrisisHubSafetyPlanStep3 => R(nameof(CrisisHubSafetyPlanStep3));
     public static string CrisisHubSafetyPlanStepNumber1 => "1";
     public static string CrisisHubSafetyPlanStepNumber2 => "2";
     public static string CrisisHubSafetyPlanStepNumber3 => "3";
     public static string CrisisHubSafetyPlanBody =>
         $"{CrisisHubSafetyPlanStepNumber1}. {CrisisHubSafetyPlanStep1}\n{CrisisHubSafetyPlanStepNumber2}. {CrisisHubSafetyPlanStep2}\n{CrisisHubSafetyPlanStepNumber3}. {CrisisHubSafetyPlanStep3}";
-    public static string CrisisHubHotlineTitle => T("Позвонить сейчас", "Call now");
-    public static string CrisisHubHotlineRu => T(
-        "Россия: 112 — экстренные службы (звонок бесплатный). 8-800-2000-122 — детский телефон доверия, для детей, подростков и родителей. Линию для взрослых в вашем регионе найдите на findahelpline.com",
-        "Russia: 112 — emergency services (free). 8-800-2000-122 — the children's helpline, for children, teenagers and parents. For an adult helpline near you, see findahelpline.com");
+    public static string CrisisHubHotlineTitle => R(nameof(CrisisHubHotlineTitle));
+    public static string CrisisHubHotlineRu => R(nameof(CrisisHubHotlineRu));
     public static string CrisisHubHotlineRuNumber => "88002000122";
     public static string CrisisHubEmergencyNumber => "112";
-    public static string CrisisHubHotlineIntl => T(
-        "Международно: findahelpline.com",
-        "International: findahelpline.com");
-    public static string CrisisHubCallHotlineRu => T("Детский телефон доверия 8-800-2000-122", "Children's helpline 8-800-2000-122");
-    public static string CrisisHubCallEmergency => T("Позвонить в 112", "Call 112");
+    public static string CrisisHubHotlineIntl => R(nameof(CrisisHubHotlineIntl));
+    public static string CrisisHubCallHotlineRu => R(nameof(CrisisHubCallHotlineRu));
+    public static string CrisisHubCallEmergency => R(nameof(CrisisHubCallEmergency));
     public static string CrisisHubEmergencyBadge => "112";
-    public static string CrisisHubOpenHelpline => T("Открыть findahelpline.com", "Open findahelpline.com");
-    public static string CrisisHubRecheck => T("Перепроверить состояние", "Recheck how I'm doing");
-    public static string CrisisHubContinueSoft => T("Вернуться к мягким практикам", "Return to gentle practices");
-    public static string CrisisHubSpecialistHint => T(
-        "Рекомендуем обратиться к психологу или врачу. Самопомощь подходит для лёгких и умеренных состояний.",
-        "Please consider a psychologist or doctor. Self-help fits mild to moderate states.");
-    public static string DataBackupTitle => T("Данные и резервная копия", "Data & backup");
-    public static string DataBackupLead => T(
-        "Все данные хранятся только на этом устройстве. Сделайте копию, чтобы не потерять их.",
-        "All data stays on this device only. Make a backup so you don't lose it.");
-    public static string DataBackupExportTitle => T("Экспортировать резервную копию", "Export a backup");
-    public static string DataBackupExportSubtitle => T(
-        "Файл со всеми чатами, записями настроения, тестами и практиками.",
-        "A file with all chats, mood entries, tests and practice history.");
-    public static string DataBackupImportTitle => T("Восстановить из копии", "Restore from a backup");
-    public static string DataBackupImportSubtitle => T(
-        "Добавит данные из выбранного файла резервной копии.",
-        "Adds the data from the chosen backup file.");
-    public static string DataBackupSummaryTitle => T("Сводка для специалиста", "Summary for a specialist");
-    public static string DataBackupSummarySubtitle => T(
-        "Текстовый файл за последние 30 дней — можно отправить психологу или врачу.",
-        "A text file covering the last 30 days — share it with a psychologist or doctor.");
-    public static string DataBackupExportedToast => T("Файл готов к отправке", "File is ready to share");
+    public static string CrisisHubOpenHelpline => R(nameof(CrisisHubOpenHelpline));
+    public static string CrisisHubRecheck => R(nameof(CrisisHubRecheck));
+    public static string CrisisHubContinueSoft => R(nameof(CrisisHubContinueSoft));
+    public static string CrisisHubSpecialistHint => R(nameof(CrisisHubSpecialistHint));
+    public static string DataBackupTitle => R(nameof(DataBackupTitle));
+    public static string DataBackupLead => R(nameof(DataBackupLead));
+    public static string DataBackupExportTitle => R(nameof(DataBackupExportTitle));
+    public static string DataBackupExportSubtitle => R(nameof(DataBackupExportSubtitle));
+    public static string DataBackupImportTitle => R(nameof(DataBackupImportTitle));
+    public static string DataBackupImportSubtitle => R(nameof(DataBackupImportSubtitle));
+    public static string DataBackupSummaryTitle => R(nameof(DataBackupSummaryTitle));
+    public static string DataBackupSummarySubtitle => R(nameof(DataBackupSummarySubtitle));
+    public static string DataBackupExportedToast => R(nameof(DataBackupExportedToast));
     public static string DataBackupImportedToast(int moods, int tests, int completions, int chats, int skipped = 0) => skipped > 0
         ? T(
             $"Добавлено: настроение {moods}, тесты {tests}, практики {completions}, чаты {chats}. Уже было: {skipped}",
@@ -1094,96 +862,64 @@ public static partial class AppStrings
         : T(
             $"Добавлено: настроение {moods}, тесты {tests}, практики {completions}, чаты {chats}",
             $"Added: mood {moods}, tests {tests}, practices {completions}, chats {chats}");
-    public static string ErrorLogTitle => T("Журнал ошибок", "Error log");
-    public static string ErrorLogSubtitle => T(
-        "Поделиться файлом с техническими ошибками, чтобы помочь найти причину сбоя. Он не содержит ваших записей.",
-        "Share a file of technical errors to help find the cause of a crash. It does not contain your entries.");
-    public static string ErrorLogEmptyToast => T("Ошибок не записано", "No errors recorded");
-    public static string DataBackupImportRolledBackToast => T(
-        "Не удалось восстановить данные. Ничего не изменено — попробуйте ещё раз",
-        "Could not restore the data. Nothing was changed — please try again");
-    public static string DataBackupImportFailedToast => T(
-        "Не удалось прочитать файл резервной копии",
-        "Could not read the backup file");
-    public static string CrisisHubSafetyPlanLinkTitle => T("Мой план безопасности", "My safety plan");
-    public static string CrisisHubSafetyPlanLinkSubtitle => T(
-        "Составьте личный план: признаки, что делать, кому звонить.",
-        "Build a personal plan: warning signs, what helps, who to call.");
+    public static string ErrorLogTitle => R(nameof(ErrorLogTitle));
+    public static string ErrorLogSubtitle => R(nameof(ErrorLogSubtitle));
+    public static string ErrorLogEmptyToast => R(nameof(ErrorLogEmptyToast));
+    public static string DataBackupImportRolledBackToast => R(nameof(DataBackupImportRolledBackToast));
+    public static string DataBackupImportFailedToast => R(nameof(DataBackupImportFailedToast));
+    public static string CrisisHubSafetyPlanLinkTitle => R(nameof(CrisisHubSafetyPlanLinkTitle));
+    public static string CrisisHubSafetyPlanLinkSubtitle => R(nameof(CrisisHubSafetyPlanLinkSubtitle));
 
-    public static string SafetyPlanPageTitle => T("План безопасности", "Safety plan");
-    public static string SafetyPlanLead => T(
-        "Заполните заранее, пока спокойно — план поможет в трудный момент.",
-        "Fill this in while calm — it will help in a hard moment.");
-    public static string SafetyPlanWarningSignsTitle => T("Мои тревожные признаки", "My warning signs");
-    public static string SafetyPlanWarningSignsPlaceholder => T(
-        "Например: не сплю вторую ночь подряд",
-        "For example: haven't slept in two nights");
-    public static string SafetyPlanCopingTitle => T("Что мне помогает", "What helps me");
-    public static string SafetyPlanCopingPlaceholder => T(
-        "Например: выйти на прогулку, позвонить другу",
-        "For example: go for a walk, call a friend");
-    public static string SafetyPlanReasonsTitle => T("Ради чего стоит продолжать", "Reasons to keep going");
-    public static string SafetyPlanReasonsPlaceholder => T(
-        "Например: моя кошка, поездка весной",
-        "For example: my cat, the trip this spring");
-    public static string SafetyPlanContactsTitle => T("Кому позвонить", "Who to call");
-    public static string SafetyPlanContactNamePlaceholder => T("Имя", "Name");
-    public static string SafetyPlanContactPhonePlaceholder => T("Телефон", "Phone");
-    public static string SafetyPlanTapToRemoveHint => T("Нажмите, чтобы удалить", "Tap to remove");
-    public static string SafetyPlanCallAction => T("Позвонить", "Call");
+    public static string SafetyPlanPageTitle => R(nameof(SafetyPlanPageTitle));
+    public static string SafetyPlanLead => R(nameof(SafetyPlanLead));
+    public static string SafetyPlanWarningSignsTitle => R(nameof(SafetyPlanWarningSignsTitle));
+    public static string SafetyPlanWarningSignsPlaceholder => R(nameof(SafetyPlanWarningSignsPlaceholder));
+    public static string SafetyPlanCopingTitle => R(nameof(SafetyPlanCopingTitle));
+    public static string SafetyPlanCopingPlaceholder => R(nameof(SafetyPlanCopingPlaceholder));
+    public static string SafetyPlanReasonsTitle => R(nameof(SafetyPlanReasonsTitle));
+    public static string SafetyPlanReasonsPlaceholder => R(nameof(SafetyPlanReasonsPlaceholder));
+    public static string SafetyPlanContactsTitle => R(nameof(SafetyPlanContactsTitle));
+    public static string SafetyPlanContactNamePlaceholder => R(nameof(SafetyPlanContactNamePlaceholder));
+    public static string SafetyPlanContactPhonePlaceholder => R(nameof(SafetyPlanContactPhonePlaceholder));
+    public static string SafetyPlanTapToRemoveHint => R(nameof(SafetyPlanTapToRemoveHint));
+    public static string SafetyPlanCallAction => R(nameof(SafetyPlanCallAction));
 
-    public static string RiskCheckTitle => T("Проверка безопасности", "Safety check");
-    public static string RiskCheckLead => T(
-        "Если есть мысли о самоповреждении — откройте помощь сразу. Можно не ждать конца опроса.",
-        "If you have thoughts of self-harm — open help now. You do not need to finish the check first.");
-    public static string RiskCheckSubtitle => T(
-        "Ответьте честно. Это помогает подобрать безопасный сценарий.",
-        "Answer honestly. This helps choose a safe path.");
-    public static string RiskCheckSelfHarm => T(
-        "Есть мысли о самоповреждении или суициде",
-        "Thoughts of self-harm or suicide");
-    public static string RiskCheckDisorientation => T(
-        "Сильная дезориентация или потеря связи с реальностью",
-        "Severe disorientation or loss of contact with reality");
-    public static string RiskCheckSubstance => T(
-        "Риск, связанный с веществами / алкоголем",
-        "Substance or alcohol-related risk");
-    public static string RiskCheckInsomnia => T(
-        "Тяжёлая бессонница и истощение",
-        "Severe insomnia and exhaustion");
-    public static string RiskCheckSubmit => T("Готово", "Done");
-    public static string RiskCheckOpenHelpNow => T("Открыть помощь сейчас", "Open help now");
-    public static string RiskCheckYes => T("Да", "Yes");
-    public static string RiskCheckNo => T("Нет", "No");
+    public static string RiskCheckTitle => R(nameof(RiskCheckTitle));
+    public static string RiskCheckLead => R(nameof(RiskCheckLead));
+    public static string RiskCheckSubtitle => R(nameof(RiskCheckSubtitle));
+    public static string RiskCheckSelfHarm => R(nameof(RiskCheckSelfHarm));
+    public static string RiskCheckDisorientation => R(nameof(RiskCheckDisorientation));
+    public static string RiskCheckSubstance => R(nameof(RiskCheckSubstance));
+    public static string RiskCheckInsomnia => R(nameof(RiskCheckInsomnia));
+    public static string RiskCheckSubmit => R(nameof(RiskCheckSubmit));
+    public static string RiskCheckOpenHelpNow => R(nameof(RiskCheckOpenHelpNow));
+    public static string RiskCheckYes => R(nameof(RiskCheckYes));
+    public static string RiskCheckNo => R(nameof(RiskCheckNo));
     public static string RiskCheckSourceOnboarding => "onboarding";
     public static string RiskCheckSourcePeriodic => "periodic";
     public static string RiskCheckSourceManual => "manual";
     public static string RiskCheckSourceProfile => "profile";
 
-    public static string OptionsCrisisTitle => T("Срочная помощь", "Crisis help");
-    public static string OptionsCrisisSubtitle => T(
-        "План безопасности и горячие линии",
-        "Safety plan and hotlines");
+    public static string OptionsCrisisTitle => R(nameof(OptionsCrisisTitle));
+    public static string OptionsCrisisSubtitle => R(nameof(OptionsCrisisSubtitle));
 
-    public static string ClinicalScorecardTitle => T("Недельный обзор", "Weekly overview");
-    public static string PracticeHistorySeeAll => T("Все", "All");
-    public static string PracticeHistoryPageTitle => T("История практик", "Practice history");
-    public static string ProfileRiskCheckLabel => T("Как я сейчас?", "How am I right now?");
-    public static string ProfileRiskCheckSubtitle => T(
-        "Короткие вопросы о безопасности",
-        "Short questions about safety");
+    public static string ClinicalScorecardTitle => R(nameof(ClinicalScorecardTitle));
+    public static string PracticeHistorySeeAll => R(nameof(PracticeHistorySeeAll));
+    public static string PracticeHistoryPageTitle => R(nameof(PracticeHistoryPageTitle));
+    public static string ProfileRiskCheckLabel => R(nameof(ProfileRiskCheckLabel));
+    public static string ProfileRiskCheckSubtitle => R(nameof(ProfileRiskCheckSubtitle));
     public static string ProfileMoodTrendPreview(string avgMood, string risk) =>
         T($"Настроение: {avgMood} · риск: {risk}", $"Mood: {avgMood} · risk: {risk}");
 
-    public static string JournalOverviewTitle => T("Обзор", "Overview");
-    public static string JournalTimelineTitle => T("Записи", "Entries");
-    public static string JournalOpenOverview => T("Обзор", "Overview");
-    public static string JournalOpenTimeline => T("Записи", "Entries");
-    public static string JournalRecentDaysTitle => T("Эта неделя", "This week");
-    public static string JournalPromptHelpedShort => T("Что помогло", "What helped");
-    public static string JournalPromptNextShort => T("Что дальше", "What's next");
-    public static string JournalShareLabel => T("Поделиться", "Share");
-    public static string JournalShareTitle => T("Запись дневника", "Journal entry");
+    public static string JournalOverviewTitle => R(nameof(JournalOverviewTitle));
+    public static string JournalTimelineTitle => R(nameof(JournalTimelineTitle));
+    public static string JournalOpenOverview => R(nameof(JournalOpenOverview));
+    public static string JournalOpenTimeline => R(nameof(JournalOpenTimeline));
+    public static string JournalRecentDaysTitle => R(nameof(JournalRecentDaysTitle));
+    public static string JournalPromptHelpedShort => R(nameof(JournalPromptHelpedShort));
+    public static string JournalPromptNextShort => R(nameof(JournalPromptNextShort));
+    public static string JournalShareLabel => R(nameof(JournalShareLabel));
+    public static string JournalShareTitle => R(nameof(JournalShareTitle));
     public static string JournalShareText(string day, string mood, string note) =>
         string.IsNullOrWhiteSpace(note)
             ? T($"{day}: настроение {mood}", $"{day}: mood {mood}")
@@ -1233,58 +969,34 @@ public static partial class AppStrings
                 .Where(line => !prefixes.Any(prefix =>
                     line.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))));
     }
-    public static string JournalReminderToggle => T("Напоминать о check-in", "Remind me to check in");
-    public static string JournalReminderHint => T(
-        "Время можно изменить в настройках",
-        "Change the time in Settings");
-    public static string MoodReminderTitle => T("Дневник", "Journal");
-    public static string MoodReminderBody => T(
-        "Как настроение сегодня? Отметьте в дневнике.",
-        "How are you feeling today? Log it in your journal.");
+    public static string JournalReminderToggle => R(nameof(JournalReminderToggle));
+    public static string JournalReminderHint => R(nameof(JournalReminderHint));
+    public static string MoodReminderTitle => R(nameof(MoodReminderTitle));
+    public static string MoodReminderBody => R(nameof(MoodReminderBody));
 
-    public static string ClinicalScorecardEmpty => T(
-        "Пока мало данных — практики и настроение появятся здесь",
-        "Not enough data yet — practices and mood will appear here");
+    public static string ClinicalScorecardEmpty => R(nameof(ClinicalScorecardEmpty));
     public static string ClinicalScorecardSummary(int practices, int moods, string riskLabel) => T(
         $"За неделю: {practices} практик, {moods} отметок настроения · риск: {riskLabel}",
         $"This week: {practices} practices, {moods} mood check-ins · risk: {riskLabel}");
-    public static string ClinicalRiskGreen => T("низкий", "low");
-    public static string ClinicalRiskAmber => T("повышенный", "elevated");
-    public static string ClinicalRiskRed => T("высокий", "high");
+    public static string ClinicalRiskGreen => R(nameof(ClinicalRiskGreen));
+    public static string ClinicalRiskAmber => R(nameof(ClinicalRiskAmber));
+    public static string ClinicalRiskRed => R(nameof(ClinicalRiskRed));
 
-    public static string LuscherCoStable => T(
-        "Отсутствие непродуктивной (не связанной с какой-либо полезной деятельностью) напряженности, высокая нервно-психическая устойчивость.\r\nДействия обследуемого целесообразны, экономичны, имеют высокий коэффициент полезного действия. Общий эмоциональный настрой – оптимистичный. Обследуемый верит в свои силы и в целом готов преодолевать препятствия и трудности. Высок уровень волевого самоконтроля, предопределяющего поступки и способствующего развитию личности.\r\nПри наличии соответствующей мотивации обследуемый способен интенсивно работать длительное время. В экстремальных ситуациях эффективно мобилизуется, сосредотачивается на выполнении задачи.",
-        "No unproductive tension; high emotional stability. Actions are purposeful and efficient. Overall mood is optimistic.");
-    public static string LuscherCoMildTension => T(
-        "Незначительный уровень непродуктивной напряженности, нервно-психическая устойчивость хорошая.\r\nПреобладает установка на активность и действие. Энергоресурсов достаточно для более или менее регулярных «подвигов» в работе, вспышек активности и напряжения, недоступных большинству других людей. Способен свободно управлять своим вниманием. В условиях мотивированной (интересной) деятельности не испытывает трудностей с оперативным и долговременным запоминанием и последующим воспроизведением. К острым ощущениям, в общем, не стремится. Из стрессовых ситуаций, как правило, выходит с достоинством.",
-        "Moderate tension that may reduce efficiency. Emotional stability is generally adequate with occasional strain.");
-    public static string LuscherCoModerateTension => T(
-        "Средний уровень непродуктивной напряженности.\r\nОбследуемый справляется со своими обязанностями в пределах сложившихся в обществе требований. В привычной для него обстановке, имея достаточно времени для переключения, переходит от работы к отдыху и обратно, от одного вида деятельности к другому без существенных затруднений. В случае необходимости способен преодолевать усталость волевым усилием, однако после этого работоспособность надолго снижается. Необходимо относительно четко субъективно разделять время работы и время отдыха.",
-        "Noticeable tension and emotional strain. Efficiency may drop; recovery and rest are recommended.");
-    public static string LuscherCoElevatedTension => T(
-        "Повышенный уровень непродуктивной напряженности, сниженная нервно-психическая устойчивость.\r\nПотенциал целесообразной активности снижен, что побуждает насильно заставлять себя делать те или иные необходимые дела. Постоянно действующий волевой самоконтроль, с одной стороны, и сам регулярно истощается. А с другой – не будучи связанным с непосредственным удовлетворением от процесса и результатов деятельности. Дополнительно усиливает психическое переутомление. Интенсивная длительная работа, скорее всего, потребует слишком большого напряжения от нервной системы и психики. При этом производительность работы и качество ее выполнения будут неравноценными в разные периоды времени. Общий эмоциональный тонус: повышенная возбудимость, тревожность, неуверенность. В стрессовой ситуации вероятно нарушение деятельности.",
-        "Elevated tension and reduced emotional stability. Sustained effort may feel forced; rest and support are recommended.");
-    public static string LuscherCoHighTension => T(
-        "Выраженная непродуктивная напряженность, низкая нервно-психическая устойчивость.\r\nВысокая утомляемость. Внимание легко отвлекается посторонними вещами, надолго может «застрять» на эмоциональном переживании. В связи с этим поведение непрогнозируемо и субъективно. Отсутствие устойчивой иерархии мотивов делает деятельность испытуемого реактивной и нецеленаправленной. Коммуникативность снижена, ограничена рамками формального общения. Эмоциональный фон может быстро колебаться между восторженно-возбужденным состоянием и подавленностью, раздражительностью и бессилием. Часто испытывает тревогу, предчувствие неприятностей, бессилие и отсутствие желания что-либо делать. В экстремальных ситуациях очень низкая надежность.",
-        "High tension and emotional instability. Significant strain; professional support may be helpful.");
+    public static string LuscherCoStable => R(nameof(LuscherCoStable));
+    public static string LuscherCoMildTension => R(nameof(LuscherCoMildTension));
+    public static string LuscherCoModerateTension => R(nameof(LuscherCoModerateTension));
+    public static string LuscherCoElevatedTension => R(nameof(LuscherCoElevatedTension));
+    public static string LuscherCoHighTension => R(nameof(LuscherCoHighTension));
 
-    public static string LuscherBkExhausted => T(
-        "Истощенность, установка на бездействие. Хроническое переутомление. В связи с этим характерно пассивное реагирование на трудности, неготовность к напряжению и адекватным действиям в стрессовых ситуациях. Необходимы разноплановые и объемные восстановительные мероприятия.",
-        "Low vegetative coefficient: exhaustion, passivity, and need for substantial recovery.");
-    public static string LuscherBkConserving => T(
-        "Установка на оптимизацию расходования сил. Умеренная потребность в восстановлении и отдыхе. Энергетический потенциал невысок, но вполне достаточен для успешной деятельности в привычных спокойных условиях. В экстремальной ситуации вероятно запаздывание с ориентировкой и принятием решений.",
-        "Balanced vegetative coefficient: moderate need for rest with enough energy for familiar routines.");
-    public static string LuscherBkOptimal => T(
-        "Мобилизованность, установка на активное действие. Оптимальная мобилизованность физических и психических ресурсов. В экстремальной ситуации наиболее вероятна высокая скорость ориентировки и принятия решений, целесообразность и успешность действий.",
-        "Optimal mobilization: physical and mental resources are well aligned for action.");
-    public static string LuscherBkOveraroused => T(
-        "Избыточное возбуждение, суетливость. Уровень возбуждения избыточно высок. Нередки случаи, когда испытуемый что-либо делает не ради самого дела, а лишь для того, чтобы разрядиться. В сложных ситуациях легко формируются лихорадочные реакции: импульсивность, нетерпеливость, снижение эмоционального самоконтроля, необдуманные поступки. В экстремальных ситуациях наиболее вероятна низкая эффективность действий, панические реакции. Необходимы разноплановые релаксирующие и успокаивающие процедуры.",
-        "High vegetative coefficient: strong emotional arousal and autonomic reactivity.");
+    public static string LuscherBkExhausted => R(nameof(LuscherBkExhausted));
+    public static string LuscherBkConserving => R(nameof(LuscherBkConserving));
+    public static string LuscherBkOptimal => R(nameof(LuscherBkOptimal));
+    public static string LuscherBkOveraroused => R(nameof(LuscherBkOveraroused));
 
-    public static string TherapyProgramTitle => T("Ваш протокол", "Your program");
-    public static string TherapyProgramAnxiety => T("Тревога", "Anxiety");
-    public static string TherapyProgramMood => T("Настроение", "Mood");
-    public static string TherapyProgramStress => T("Стресс", "Stress");
+    public static string TherapyProgramTitle => R(nameof(TherapyProgramTitle));
+    public static string TherapyProgramAnxiety => R(nameof(TherapyProgramAnxiety));
+    public static string TherapyProgramMood => R(nameof(TherapyProgramMood));
+    public static string TherapyProgramStress => R(nameof(TherapyProgramStress));
     public static string TherapyProgramWeekLabel(int week) => T($"Неделя {week}", $"Week {week}");
     public static string TherapyProgramWeekGoal(int week) => week switch
     {
@@ -1306,18 +1018,25 @@ public static partial class AppStrings
             $"{programName} · нед. {week} · {completed}/{target}",
             $"{programName} · wk {week} · {completed}/{target}");
     }
-    public static string ClinicalAmberBanner => T(
-        "Состояние требует внимания — доступна срочная помощь",
-        "Your state needs attention — crisis help is available");
-    public static string ClinicalRedBanner => T(
-        "Сначала откройте срочную помощь",
-        "Open crisis help first");
-    public static string ClinicalStatusUnavailableBanner => T(
-        "Не удалось загрузить статус безопасности — откройте срочную помощь",
-        "Could not load safety status - open crisis help");
+    public static string ClinicalAmberBanner => R(nameof(ClinicalAmberBanner));
+    public static string ClinicalRedBanner => R(nameof(ClinicalRedBanner));
+    public static string ClinicalStatusUnavailableBanner => R(nameof(ClinicalStatusUnavailableBanner));
 
     private static string T(string russian, string english) =>
         IsEnglish(Language) ? english : russian;
+
+    private static readonly System.Resources.ResourceManager RussianTexts =
+        new("PsychologyApp.Presentation.Common.StringsRu", typeof(AppStrings).Assembly);
+
+    private static readonly System.Resources.ResourceManager EnglishTexts =
+        new("PsychologyApp.Presentation.Common.StringsEn", typeof(AppStrings).Assembly);
+
+    /// <summary>The text for the key in the current language (StringsRu.resx / StringsEn.resx); a missing English text falls back to Russian.</summary>
+    private static string R(string key) =>
+        (IsEnglish(Language) ? EnglishTexts.GetString(key) : null) ?? RussianTexts.GetString(key) ?? key;
+
+    internal static string ResourceText(string key, bool english) =>
+        (english ? EnglishTexts : RussianTexts).GetString(key) ?? string.Empty;
 
     public static bool IsEnglish(string language) =>
         language.Equals("en", StringComparison.OrdinalIgnoreCase)

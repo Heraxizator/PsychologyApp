@@ -1,0 +1,2076 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ChatsTitle" xml:space="preserve">
+    <value>Чаты</value>
+  </data>
+  <data name="ChatNew" xml:space="preserve">
+    <value>Новый чат</value>
+  </data>
+  <data name="ChatInputPlaceholder" xml:space="preserve">
+    <value>Напишите сообщение…</value>
+  </data>
+  <data name="ChatEmptyTitle" xml:space="preserve">
+    <value>Пока нет разговоров</value>
+  </data>
+  <data name="ChatEmptyBody" xml:space="preserve">
+    <value>Расскажите, что происходит. Я выслушаю, помогу разобраться и подскажу практику.</value>
+  </data>
+  <data name="ChatRename" xml:space="preserve">
+    <value>Переименовать</value>
+  </data>
+  <data name="ChatDelete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="ChatRenameTitle" xml:space="preserve">
+    <value>Название чата</value>
+  </data>
+  <data name="ChatRenameMessage" xml:space="preserve">
+    <value>Как назвать этот разговор?</value>
+  </data>
+  <data name="ChatRenameAccept" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="ChatCancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="ChatDeleteTitle" xml:space="preserve">
+    <value>Удалить чат?</value>
+  </data>
+  <data name="ChatDeleteBody" xml:space="preserve">
+    <value>Разговор и его история будут удалены с устройства без возможности восстановления.</value>
+  </data>
+  <data name="ChatHeroTitle" xml:space="preserve">
+    <value>Поговорить</value>
+  </data>
+  <data name="ChatHeroFreshSubtitle" xml:space="preserve">
+    <value>Расскажите, что происходит, и я помогу разобраться</value>
+  </data>
+  <data name="ChatHeroContinue" xml:space="preserve">
+    <value>Продолжить</value>
+  </data>
+  <data name="ChatHeroStart" xml:space="preserve">
+    <value>Начать разговор</value>
+  </data>
+  <data name="ChatHeroAllChats" xml:space="preserve">
+    <value>Все чаты</value>
+  </data>
+  <data name="ChatHeroNewChat" xml:space="preserve">
+    <value>Новый чат</value>
+  </data>
+  <data name="ChatStatusIdle" xml:space="preserve">
+    <value>Собеседник · всё остаётся на вашем телефоне</value>
+  </data>
+  <data name="ChatError" xml:space="preserve">
+    <value>Не удалось отправить сообщение. Попробуйте ещё раз.</value>
+  </data>
+  <data name="ChatLoadingText" xml:space="preserve">
+    <value>Открываем чат…</value>
+  </data>
+  <data name="ChatScrollToNewest" xml:space="preserve">
+    <value>К последним сообщениям</value>
+  </data>
+  <data name="ChatScrollToOldest" xml:space="preserve">
+    <value>К началу разговора</value>
+  </data>
+  <data name="ChatStressTestTitle" xml:space="preserve">
+    <value>Тест на стресс (PSS-10)</value>
+  </data>
+  <data name="ChatReminderTitle" xml:space="preserve">
+    <value>Собеседник ждёт</value>
+  </data>
+  <data name="ChatReminderBody" xml:space="preserve">
+    <value>Пару минут назад вы говорили о том, что вас беспокоит. Как сейчас дела?</value>
+  </data>
+  <data name="ChatProfileTitle" xml:space="preserve">
+    <value>Собеседник</value>
+  </data>
+  <data name="ChatProfileOpen" xml:space="preserve">
+    <value>Открыть профиль собеседника</value>
+  </data>
+  <data name="ChatProfileOnline" xml:space="preserve">
+    <value>На связи</value>
+  </data>
+  <data name="ChatProfileOffline" xml:space="preserve">
+    <value>Работает офлайн</value>
+  </data>
+  <data name="ChatProfileStatChats" xml:space="preserve">
+    <value>Разговоров</value>
+  </data>
+  <data name="ChatProfileStatMessages" xml:space="preserve">
+    <value>Ваших сообщений</value>
+  </data>
+  <data name="ChatProfileStatDays" xml:space="preserve">
+    <value>Дней вместе</value>
+  </data>
+  <data name="ChatProfileStatStreak" xml:space="preserve">
+    <value>Дней подряд</value>
+  </data>
+  <data name="ChatProfileTrustTitle" xml:space="preserve">
+    <value>Уровень доверия</value>
+  </data>
+  <data name="ChatProfileNameTitle" xml:space="preserve">
+    <value>Как к вам обращаться</value>
+  </data>
+  <data name="ChatProfileNameEmpty" xml:space="preserve">
+    <value>Имя не указано</value>
+  </data>
+  <data name="ChatProfileNameHint" xml:space="preserve">
+    <value>Собеседник изредка будет обращаться к вам по имени</value>
+  </data>
+  <data name="ChatProfileNameEdit" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="ChatProfileNamePromptTitle" xml:space="preserve">
+    <value>Ваше имя</value>
+  </data>
+  <data name="ChatProfileNamePromptMessage" xml:space="preserve">
+    <value>Как к вам обращаться? Оставьте пустым, чтобы убрать имя.</value>
+  </data>
+  <data name="ChatProfileInsightsTitle" xml:space="preserve">
+    <value>Что видно из ваших разговоров</value>
+  </data>
+  <data name="ChatProfileTensionTitle" xml:space="preserve">
+    <value>Динамика напряжения</value>
+  </data>
+  <data name="ChatProfileTensionStart" xml:space="preserve">
+    <value>В начале</value>
+  </data>
+  <data name="ChatProfileTensionEnd" xml:space="preserve">
+    <value>В конце</value>
+  </data>
+  <data name="ChatProfilePracticesTitle" xml:space="preserve">
+    <value>Что вам помогает</value>
+  </data>
+  <data name="ChatProfilePracticesEmpty" xml:space="preserve">
+    <value>Пройдите практику из чата и оцените напряжение до и после, тогда здесь появится то, что вам помогает.</value>
+  </data>
+  <data name="ChatProfilePracticeBest" xml:space="preserve">
+    <value>Лучшее</value>
+  </data>
+  <data name="ChatProfilePracticeStart" xml:space="preserve">
+    <value>Начать</value>
+  </data>
+  <data name="ChatProfileEmotionsTitle" xml:space="preserve">
+    <value>О чём вы говорите чаще всего</value>
+  </data>
+  <data name="ChatProfileAboutTitle" xml:space="preserve">
+    <value>О собеседнике</value>
+  </data>
+  <data name="ChatProfileActionsTitle" xml:space="preserve">
+    <value>Управление</value>
+  </data>
+  <data name="ChatProfileAllChats" xml:space="preserve">
+    <value>Все чаты</value>
+  </data>
+  <data name="ChatProfileForget" xml:space="preserve">
+    <value>Забыть моё имя и предпочтения</value>
+  </data>
+  <data name="ChatProfileForgetTitle" xml:space="preserve">
+    <value>Забыть о вас?</value>
+  </data>
+  <data name="ChatProfileForgetBody" xml:space="preserve">
+    <value>Собеседник забудет имя и то, какие практики вам помогали. Чаты останутся.</value>
+  </data>
+  <data name="ChatProfileDeleteAll" xml:space="preserve">
+    <value>Удалить все чаты</value>
+  </data>
+  <data name="ChatProfileDeleteAllTitle" xml:space="preserve">
+    <value>Удалить все чаты?</value>
+  </data>
+  <data name="ChatProfileDeleteAllBody" xml:space="preserve">
+    <value>Все разговоры будут удалены с устройства без возможности восстановления. Имя и предпочтения сохранятся.</value>
+  </data>
+  <data name="ChatProfileConfirm" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="ChatProfileLoadingText" xml:space="preserve">
+    <value>Считаем вашу статистику…</value>
+  </data>
+  <data name="OptionsTitle" xml:space="preserve">
+    <value>Параметры</value>
+  </data>
+  <data name="OptionsSettingsTitle" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="OptionsSettingsSubtitle" xml:space="preserve">
+    <value>Тема, цвет и параметры отображения</value>
+  </data>
+  <data name="OptionsAppSection" xml:space="preserve">
+    <value>Приложение</value>
+  </data>
+  <data name="OptionsSafetySection" xml:space="preserve">
+    <value>Безопасность</value>
+  </data>
+  <data name="OptionsSupportSection" xml:space="preserve">
+    <value>Поддержка</value>
+  </data>
+  <data name="ProfileSettingsCardSubtitle" xml:space="preserve">
+    <value>Тема, язык, шрифт</value>
+  </data>
+  <data name="OptionsAboutTitle" xml:space="preserve">
+    <value>О приложении</value>
+  </data>
+  <data name="OptionsAboutSubtitle" xml:space="preserve">
+    <value>Информация о приложении</value>
+  </data>
+  <data name="OptionsFeedbackTitle" xml:space="preserve">
+    <value>Обратная связь</value>
+  </data>
+  <data name="OptionsFeedbackSubtitle" xml:space="preserve">
+    <value>Сообщить о проблеме или предложить идею</value>
+  </data>
+  <data name="OptionsDonateTitle" xml:space="preserve">
+    <value>Поддержать проект</value>
+  </data>
+  <data name="OptionsDonateSubtitle" xml:space="preserve">
+    <value>Помочь развитию приложения</value>
+  </data>
+  <data name="ProfileOptionsCardSubtitle" xml:space="preserve">
+    <value>Настройки, поддержка, Alice AI</value>
+  </data>
+  <data name="OptionsAliceTitle" xml:space="preserve">
+    <value>Alice AI</value>
+  </data>
+  <data name="OptionsAliceSubtitle" xml:space="preserve">
+    <value>Голосовой собеседник от Яндекса</value>
+  </data>
+  <data name="AliceDisclaimerHeader" xml:space="preserve">
+    <value>Важно</value>
+  </data>
+  <data name="AliceDisclaimerBody" xml:space="preserve">
+    <value>Alice — внешний сервис Яндекса. Для работы нужен интернет. Ответы носят ознакомительный характер и не заменяют консультацию специалиста.</value>
+  </data>
+  <data name="AliceOpenInBrowser" xml:space="preserve">
+    <value>Открыть в браузере</value>
+  </data>
+  <data name="AliceOpenFailed" xml:space="preserve">
+    <value>Не удалось открыть Alice</value>
+  </data>
+  <data name="AliceLoadingText" xml:space="preserve">
+    <value>Загрузка Alice…</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="SettingsDesignSection" xml:space="preserve">
+    <value>Дизайн</value>
+  </data>
+  <data name="SettingsFontSection" xml:space="preserve">
+    <value>Шрифт</value>
+  </data>
+  <data name="SettingsLanguageLabel" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="SettingsThemeLabel" xml:space="preserve">
+    <value>Тема</value>
+  </data>
+  <data name="SettingsColorLabel" xml:space="preserve">
+    <value>Цвет</value>
+  </data>
+  <data name="SettingsFormLabel" xml:space="preserve">
+    <value>Форма</value>
+  </data>
+  <data name="SettingsSizeLabel" xml:space="preserve">
+    <value>Размер</value>
+  </data>
+  <data name="SettingsBoldLabel" xml:space="preserve">
+    <value>Жирный</value>
+  </data>
+  <data name="SettingsTestsSection" xml:space="preserve">
+    <value>Тесты</value>
+  </data>
+  <data name="SettingsRemindersSection" xml:space="preserve">
+    <value>Напоминания</value>
+  </data>
+  <data name="SettingsPracticeRemindersLabel" xml:space="preserve">
+    <value>Напоминания о практике</value>
+  </data>
+  <data name="SettingsPracticeReminderHourLabel" xml:space="preserve">
+    <value>Время напоминания</value>
+  </data>
+  <data name="SettingsPracticeReminderHourPickerTitle" xml:space="preserve">
+    <value>Время</value>
+  </data>
+  <data name="PracticeReminderTitle" xml:space="preserve">
+    <value>Пора позаниматься</value>
+  </data>
+  <data name="PracticeReminderBody" xml:space="preserve">
+    <value>Уделите несколько минут практике — это поддержит ваш прогресс.</value>
+  </data>
+  <data name="SettingsPrimaryConcernLabel" xml:space="preserve">
+    <value>Главный запрос</value>
+  </data>
+  <data name="SettingsPrimaryConcernPickerTitle" xml:space="preserve">
+    <value>Что вас беспокоит?</value>
+  </data>
+  <data name="SettingsPrimaryConcernSection" xml:space="preserve">
+    <value>Персонализация</value>
+  </data>
+  <data name="SettingsQuestionnaireAutoAdvanceLabel" xml:space="preserve">
+    <value>Автопереход к следующему вопросу</value>
+  </data>
+  <data name="SettingsApplyButton" xml:space="preserve">
+    <value>Применить</value>
+  </data>
+  <data name="SettingsPickerOptions" xml:space="preserve">
+    <value>Варианты</value>
+  </data>
+  <data name="SettingsPickerColors" xml:space="preserve">
+    <value>Цвета</value>
+  </data>
+  <data name="SettingsPickerShapes" xml:space="preserve">
+    <value>Формы</value>
+  </data>
+  <data name="SettingsPickerSizes" xml:space="preserve">
+    <value>Размеры</value>
+  </data>
+  <data name="SettingsPickerLanguages" xml:space="preserve">
+    <value>Языки</value>
+  </data>
+  <data name="SettingsAppliedTitle" xml:space="preserve">
+    <value>Информация</value>
+  </data>
+  <data name="SettingsAppliedMessage" xml:space="preserve">
+    <value>Настройки применены</value>
+  </data>
+  <data name="SettingsFormHelper" xml:space="preserve">
+    <value>Скругление углов карточек и полей ввода</value>
+  </data>
+  <data name="SettingsColorHelper" xml:space="preserve">
+    <value>Основной цвет кнопок и акцентов</value>
+  </data>
+  <data name="SettingsReplayOnboarding" xml:space="preserve">
+    <value>Пройти знакомство снова</value>
+  </data>
+  <data name="TechniqueTheory" xml:space="preserve">
+    <value>Теория</value>
+  </data>
+  <data name="TechniqueAlgorithm" xml:space="preserve">
+    <value>Алгоритм</value>
+  </data>
+  <data name="TechniqueFinish" xml:space="preserve">
+    <value>Завершить</value>
+  </data>
+  <data name="TechniqueTitle" xml:space="preserve">
+    <value>Техника</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Назад</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Отправить</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Изменить</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="DescriptionLabel" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>Сохранение…</value>
+  </data>
+  <data name="DesignerLoadError" xml:space="preserve">
+    <value>Не удалось загрузить технику</value>
+  </data>
+  <data name="DesignerSaveError" xml:space="preserve">
+    <value>Не удалось сохранить технику</value>
+  </data>
+  <data name="ThemeLabel" xml:space="preserve">
+    <value>Тема</value>
+  </data>
+  <data name="AuthorLabel" xml:space="preserve">
+    <value>Автор</value>
+  </data>
+  <data name="MessageLabel" xml:space="preserve">
+    <value>Сообщение</value>
+  </data>
+  <data name="FormLabel" xml:space="preserve">
+    <value>Форма</value>
+  </data>
+  <data name="ActionsListLabel" xml:space="preserve">
+    <value>Список действий</value>
+  </data>
+  <data name="PracticeHomeTitle" xml:space="preserve">
+    <value>Главная</value>
+  </data>
+  <data name="PracticeMyTechniques" xml:space="preserve">
+    <value>Мои техники</value>
+  </data>
+  <data name="PracticeCatalog" xml:space="preserve">
+    <value>Каталог практик</value>
+  </data>
+  <data name="PracticeCatalogHint" xml:space="preserve">
+    <value>Выберите технику или создайте свою</value>
+  </data>
+  <data name="PracticeCreate" xml:space="preserve">
+    <value>Создать</value>
+  </data>
+  <data name="PracticeTechniquesList" xml:space="preserve">
+    <value>Список техник</value>
+  </data>
+  <data name="PracticeInitError" xml:space="preserve">
+    <value>Ошибка при инициализации</value>
+  </data>
+  <data name="PracticeLoadMoreError" xml:space="preserve">
+    <value>Не удалось подгрузить техники</value>
+  </data>
+  <data name="PracticeLoadingText" xml:space="preserve">
+    <value>Загрузка практик</value>
+  </data>
+  <data name="PracticeLoadingMoreText" xml:space="preserve">
+    <value>Загрузка…</value>
+  </data>
+  <data name="PracticeDesignTitle" xml:space="preserve">
+    <value>Создание техники</value>
+  </data>
+  <data name="PracticeConstructor" xml:space="preserve">
+    <value>Конструктор</value>
+  </data>
+  <data name="PracticeCustomTechnique" xml:space="preserve">
+    <value>Своя техника</value>
+  </data>
+  <data name="PracticeDeleteConfirm" xml:space="preserve">
+    <value>Вы уверены, что хотите удалить свою технику</value>
+  </data>
+  <data name="ReviewTitle" xml:space="preserve">
+    <value>Обратная связь</value>
+  </data>
+  <data name="ReviewPage" xml:space="preserve">
+    <value>Отзыв</value>
+  </data>
+  <data name="ReviewExplanationHeader" xml:space="preserve">
+    <value>Как это работает</value>
+  </data>
+  <data name="ReviewExplanation" xml:space="preserve">
+    <value>Вы можете сообщить о проблеме или предложить свои идеи о том, как сделать приложение ещё лучше. Служба поддержки получит ваше сообщение.</value>
+  </data>
+  <data name="ReviewExplanationShare" xml:space="preserve">
+    <value>Опишите проблему или идею и выберите, куда отправить сообщение: почта, мессенджер или заметки. Приложение само ничего не отправляет разработчику.</value>
+  </data>
+  <data name="ReviewShareButton" xml:space="preserve">
+    <value>Поделиться</value>
+  </data>
+  <data name="ReviewMessagePlaceholder" xml:space="preserve">
+    <value>Опишите проблему или идею…</value>
+  </data>
+  <data name="ReviewMessageRequired" xml:space="preserve">
+    <value>Введите сообщение перед отправкой</value>
+  </data>
+  <data name="ReviewSendSuccessTitle" xml:space="preserve">
+    <value>Спасибо</value>
+  </data>
+  <data name="ReviewSendSuccessMessage" xml:space="preserve">
+    <value>Ваше сообщение отправлено</value>
+  </data>
+  <data name="ReviewEmailSubject" xml:space="preserve">
+    <value>Отзыв о приложении Psychology</value>
+  </data>
+  <data name="ReviewSmsRecipientMissing" xml:space="preserve">
+    <value>Получатель SMS не настроен</value>
+  </data>
+  <data name="ReviewSmsNotSupported" xml:space="preserve">
+    <value>Отправка СМС не поддерживается</value>
+  </data>
+  <data name="ReviewSmsFailed" xml:space="preserve">
+    <value>Не удалось открыть приложение для отправки СМС</value>
+  </data>
+  <data name="ReviewEmailNotSupported" xml:space="preserve">
+    <value>Отправка email не поддерживается</value>
+  </data>
+  <data name="ReviewEmailFailed" xml:space="preserve">
+    <value>Не удалось открыть приложение для отправки email</value>
+  </data>
+  <data name="ReviewShareTitle" xml:space="preserve">
+    <value>Отзыв о приложении</value>
+  </data>
+  <data name="ReviewShareFailed" xml:space="preserve">
+    <value>Не удалось открыть меню отправки</value>
+  </data>
+  <data name="DonateTitle" xml:space="preserve">
+    <value>Пожертвования</value>
+  </data>
+  <data name="DonateMoreInfo" xml:space="preserve">
+    <value>Подробнее</value>
+  </data>
+  <data name="DonateBody" xml:space="preserve">
+    <value>Наш проект существует исключительно на пожертвования. Мы не размещаем рекламу и не оказываем платных услуг. Пожертвования используются на работу программистов и дизайнеров.</value>
+  </data>
+  <data name="DonateButton" xml:space="preserve">
+    <value>Пожертвовать</value>
+  </data>
+  <data name="DonateOpenFailed" xml:space="preserve">
+    <value>Не удалось открыть страницу пожертвования</value>
+  </data>
+  <data name="InfoAboutBody" xml:space="preserve">
+    <value>Приложение представляет собой список простых, но в то же время мощных техник, которые помогут вам справиться с такими проблемами, как стресс, страх, сомнения, навязчивые мысли, ограничивающие убеждения и деструктивные установки. Все методики являются общеизвестными и проверены временем. Некоторые взяты из НЛП или трудов Живорада Славинского. Эти инструменты позволят вам сэкономить много времени, сил и денег. Они не потребуют глубоких знаний в области психологии и программирования подсознания. Желаем успеха в проработках!</value>
+  </data>
+  <data name="CleanerPrayersPage" xml:space="preserve">
+    <value>Молитвы</value>
+  </data>
+  <data name="CleanerPrayerCollection" xml:space="preserve">
+    <value>Сборник молитв</value>
+  </data>
+  <data name="CleanerLoad" xml:space="preserve">
+    <value>Загрузить</value>
+  </data>
+  <data name="CleanerSearchingPrayers" xml:space="preserve">
+    <value>Поиск молитв</value>
+  </data>
+  <data name="CleanerPreparingAudio" xml:space="preserve">
+    <value>Подготовка аудио…</value>
+  </data>
+  <data name="CleanerPlaybackError" xml:space="preserve">
+    <value>Не удалось воспроизвести аудио. Проверьте подключение к интернету.</value>
+  </data>
+  <data name="CleanerOfflineBadge" xml:space="preserve">
+    <value>Доступно офлайн</value>
+  </data>
+  <data name="CleanerPlayNext" xml:space="preserve">
+    <value>Далее</value>
+  </data>
+  <data name="CleanerReplay" xml:space="preserve">
+    <value>Сначала</value>
+  </data>
+  <data name="CleanerMoreInfoBody" xml:space="preserve">
+    <value>Аудиомолитвы для утра, вечера и тихой практики. Для первого прослушивания нужен интернет; затем трек можно слушать офлайн.</value>
+  </data>
+  <data name="CleanerCollectionSubtitle" xml:space="preserve">
+    <value>Выберите молитву и нажмите на карточку, чтобы начать прослушивание.</value>
+  </data>
+  <data name="CleanerCategoryAll" xml:space="preserve">
+    <value>Все</value>
+  </data>
+  <data name="CleanerCategoryMorning" xml:space="preserve">
+    <value>Утренние</value>
+  </data>
+  <data name="CleanerCategoryEvening" xml:space="preserve">
+    <value>Вечерние</value>
+  </data>
+  <data name="CleanerCategoryPenitential" xml:space="preserve">
+    <value>Покаянные</value>
+  </data>
+  <data name="CleanerCategoryCore" xml:space="preserve">
+    <value>Основные</value>
+  </data>
+  <data name="CleanerPrayerMain" xml:space="preserve">
+    <value>Основная молитва</value>
+  </data>
+  <data name="CleanerPsalm50" xml:space="preserve">
+    <value>Псалом 50</value>
+  </data>
+  <data name="CleanerPsalm50Desc" xml:space="preserve">
+    <value>Покаянный псалом; читают три раза в сутки</value>
+  </data>
+  <data name="CleanerPsalm90" xml:space="preserve">
+    <value>Псалом 90</value>
+  </data>
+  <data name="CleanerPsalm90Desc" xml:space="preserve">
+    <value>Молитва о защите и помощи Божией</value>
+  </data>
+  <data name="CleanerOurFather" xml:space="preserve">
+    <value>Отче Наш</value>
+  </data>
+  <data name="CleanerOurFatherDesc" xml:space="preserve">
+    <value>Главная молитва христиан</value>
+  </data>
+  <data name="CleanerJesusPrayer" xml:space="preserve">
+    <value>Иисусова молитва</value>
+  </data>
+  <data name="CleanerJesusPrayerDesc" xml:space="preserve">
+    <value>Краткая молитва сердечного обращения к Христу</value>
+  </data>
+  <data name="CleanerHeavenlyKing" xml:space="preserve">
+    <value>Царю небесный</value>
+  </data>
+  <data name="CleanerHeavenlyKingDesc" xml:space="preserve">
+    <value>Начало утреннего правила</value>
+  </data>
+  <data name="CleanerMorningPrayer" xml:space="preserve">
+    <value>Утренние молитвы</value>
+  </data>
+  <data name="CleanerMorningPrayerDesc" xml:space="preserve">
+    <value>Краткий утренний цикл молитв</value>
+  </data>
+  <data name="CleanerSymbolOfFaith" xml:space="preserve">
+    <value>Символ веры</value>
+  </data>
+  <data name="CleanerSymbolOfFaithDesc" xml:space="preserve">
+    <value>Краткое изложение православного вероучения</value>
+  </data>
+  <data name="CleanerEveningPrayer" xml:space="preserve">
+    <value>Вечерние молитвы</value>
+  </data>
+  <data name="CleanerEveningPrayerDesc" xml:space="preserve">
+    <value>Краткий вечерний цикл молитв</value>
+  </data>
+  <data name="CleanerTrisagion" xml:space="preserve">
+    <value>Трисвятое</value>
+  </data>
+  <data name="CleanerTrisagionDesc" xml:space="preserve">
+    <value>«Святый Боже, Святый Крепкий…»</value>
+  </data>
+  <data name="CleanerVirginMary" xml:space="preserve">
+    <value>Богородице Дево</value>
+  </data>
+  <data name="CleanerVirginMaryDesc" xml:space="preserve">
+    <value>Молитва Пресвятой Богородице</value>
+  </data>
+  <data name="CleanerHolySpirit" xml:space="preserve">
+    <value>Молитва Святому Духу</value>
+  </data>
+  <data name="CleanerHolySpiritDesc" xml:space="preserve">
+    <value>Просьба о дарах и укреплении Духом</value>
+  </data>
+  <data name="CleanerDoxology" xml:space="preserve">
+    <value>Славословие</value>
+  </data>
+  <data name="CleanerDoxologyDesc" xml:space="preserve">
+    <value>Великое славословие Богу</value>
+  </data>
+  <data name="CleanerSearchPlaceholder" xml:space="preserve">
+    <value>Поиск молитвы</value>
+  </data>
+  <data name="CleanerNoPrayersFound" xml:space="preserve">
+    <value>Ничего не найдено</value>
+  </data>
+  <data name="CleanerCatalogEmpty" xml:space="preserve">
+    <value>Пока нет молитв в каталоге</value>
+  </data>
+  <data name="CleanerNowPlaying" xml:space="preserve">
+    <value>Сейчас играет</value>
+  </data>
+  <data name="DesignerNamePlaceholder" xml:space="preserve">
+    <value>Крутилка Славинского</value>
+  </data>
+  <data name="DesignerDescriptionPlaceholder" xml:space="preserve">
+    <value>Метод мгновенной нейтрализации...</value>
+  </data>
+  <data name="DesignerThemePlaceholder" xml:space="preserve">
+    <value>Эпизоды</value>
+  </data>
+  <data name="DesignerAuthorPlaceholder" xml:space="preserve">
+    <value>Живорад Славинский</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="Repeat" xml:space="preserve">
+    <value>Повторить</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="ConcernLabel" xml:space="preserve">
+    <value>Беспокойство</value>
+  </data>
+  <data name="FirstPolarityLabel" xml:space="preserve">
+    <value>Первая полярность</value>
+  </data>
+  <data name="SecondPolarityLabel" xml:space="preserve">
+    <value>Вторая полярность</value>
+  </data>
+  <data name="TechniqueStepBack" xml:space="preserve">
+    <value>Назад</value>
+  </data>
+  <data name="TechniqueStepNext" xml:space="preserve">
+    <value>Далее</value>
+  </data>
+  <data name="ProverbLabel" xml:space="preserve">
+    <value>Пословица</value>
+  </data>
+  <data name="QuoteAddFavoriteHint" xml:space="preserve">
+    <value>Добавить в избранное</value>
+  </data>
+  <data name="QuoteCopyHint" xml:space="preserve">
+    <value>Копировать цитату</value>
+  </data>
+  <data name="QuoteShareHint" xml:space="preserve">
+    <value>Поделиться цитатой</value>
+  </data>
+  <data name="PolarityNegativePlaceholder" xml:space="preserve">
+    <value>Невроз</value>
+  </data>
+  <data name="PolarityPositivePlaceholder" xml:space="preserve">
+    <value>Покой</value>
+  </data>
+  <data name="StartupErrorTitle" xml:space="preserve">
+    <value>Ошибка запуска</value>
+  </data>
+  <data name="StartupErrorMessage" xml:space="preserve">
+    <value>Не удалось инициализировать приложение. Перезапустите приложение.</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="UnexpectedErrorMessage" xml:space="preserve">
+    <value>Произошла непредвиденная ошибка. Попробуйте ещё раз.</value>
+  </data>
+  <data name="TestsResultSaveFailedMessage" xml:space="preserve">
+    <value>Не удалось сохранить результат теста. Попробуйте ещё раз.</value>
+  </data>
+  <data name="TestsResultNavigationFailedMessage" xml:space="preserve">
+    <value>Результат сохранён, но не удалось открыть экран результата. Нажмите «Завершить» ещё раз.</value>
+  </data>
+  <data name="TechniqueNotFound" xml:space="preserve">
+    <value>Техника не найдена.</value>
+  </data>
+  <data name="QuoteNotFound" xml:space="preserve">
+    <value>Цитата не найдена.</value>
+  </data>
+  <data name="PracticeEmptyTitle" xml:space="preserve">
+    <value>Пока нет техник</value>
+  </data>
+  <data name="PracticeEmptyBody" xml:space="preserve">
+    <value>Нажмите «Создать», чтобы добавить первую технику</value>
+  </data>
+  <data name="TestsEmptyTitle" xml:space="preserve">
+    <value>Тесты пока недоступны</value>
+  </data>
+  <data name="TestsEmptyBody" xml:space="preserve">
+    <value>Нажмите «Обновить», чтобы загрузить список снова</value>
+  </data>
+  <data name="TestsEmptyRefresh" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="TestsLoadingText" xml:space="preserve">
+    <value>Загрузка тестов</value>
+  </data>
+  <data name="QuotesEmptyTitle" xml:space="preserve">
+    <value>Цитаты не найдены</value>
+  </data>
+  <data name="QuotesEmptyBody" xml:space="preserve">
+    <value>Нажмите «Обновить», чтобы загрузить цитаты снова</value>
+  </data>
+  <data name="QuotesRefreshButton" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="ProfileQuotesEmpty" xml:space="preserve">
+    <value>Пока нет избранных цитат</value>
+  </data>
+  <data name="QuotesFavoritesEmptyBody" xml:space="preserve">
+    <value>Нажмите сердечко на цитате, чтобы добавить её сюда.</value>
+  </data>
+  <data name="PhysicsSolutionHeader" xml:space="preserve">
+    <value>Что делать</value>
+  </data>
+  <data name="PhysicsRecommendedPractices" xml:space="preserve">
+    <value>Практики, которые могут помочь</value>
+  </data>
+  <data name="PhysicsTryPractice" xml:space="preserve">
+    <value>Попробовать практику</value>
+  </data>
+  <data name="ProfileTestsCompleted" xml:space="preserve">
+    <value>Пройдено тестов</value>
+  </data>
+  <data name="ProfileStreakDays" xml:space="preserve">
+    <value>Дней подряд</value>
+  </data>
+  <data name="ProfileStreakHint" xml:space="preserve">
+    <value>Считаются дни с завершённой практикой</value>
+  </data>
+  <data name="TodayForYou" xml:space="preserve">
+    <value>Сегодня для вас</value>
+  </data>
+  <data name="TodayRecommended" xml:space="preserve">
+    <value>Рекомендуемая практика</value>
+  </data>
+  <data name="TodayStartPractice" xml:space="preserve">
+    <value>Начать</value>
+  </data>
+  <data name="ComebackBanner" xml:space="preserve">
+    <value>С возвращением — начните с короткой практики</value>
+  </data>
+  <data name="OnboardingRemindersLabel" xml:space="preserve">
+    <value>Напоминать о практике</value>
+  </data>
+  <data name="OnboardingReminderHourLabel" xml:space="preserve">
+    <value>Время напоминания</value>
+  </data>
+  <data name="TodayMoodQuestion" xml:space="preserve">
+    <value>Как настроение?</value>
+  </data>
+  <data name="TodayMoodSaved" xml:space="preserve">
+    <value>Настроение сохранено</value>
+  </data>
+  <data name="MoodHistoryTitle" xml:space="preserve">
+    <value>Недавнее</value>
+  </data>
+  <data name="ProfileMoodTrendTitle" xml:space="preserve">
+    <value>Настроение</value>
+  </data>
+  <data name="ProfileMoodCheckInTitle" xml:space="preserve">
+    <value>Как настроение сегодня?</value>
+  </data>
+  <data name="ProfileWeeklyInsightTitle" xml:space="preserve">
+    <value>На этой неделе</value>
+  </data>
+  <data name="JournalTitle" xml:space="preserve">
+    <value>Дневник</value>
+  </data>
+  <data name="OpenJournalLabel" xml:space="preserve">
+    <value>Как настроение?</value>
+  </data>
+  <data name="JournalCardSubtitle" xml:space="preserve">
+    <value>Настроение, заметки и динамика</value>
+  </data>
+  <data name="JournalTodayTitle" xml:space="preserve">
+    <value>Сегодня</value>
+  </data>
+  <data name="JournalEntriesTitle" xml:space="preserve">
+    <value>Записи</value>
+  </data>
+  <data name="JournalWeekEmpty" xml:space="preserve">
+    <value>Пока мало данных за неделю — отметьте настроение</value>
+  </data>
+  <data name="JournalNotePlaceholder" xml:space="preserve">
+    <value>Что повлияло? (необязательно)</value>
+  </data>
+  <data name="JournalNoteSectionTitle" xml:space="preserve">
+    <value>Заметка</value>
+  </data>
+  <data name="JournalAddNoteLabel" xml:space="preserve">
+    <value>Добавить заметку</value>
+  </data>
+  <data name="JournalShowHintsLabel" xml:space="preserve">
+    <value>Подсказки</value>
+  </data>
+  <data name="JournalHideHintsLabel" xml:space="preserve">
+    <value>Скрыть подсказки</value>
+  </data>
+  <data name="JournalHowNowQuestion" xml:space="preserve">
+    <value>Как сейчас?</value>
+  </data>
+  <data name="JournalMoreMenuLabel" xml:space="preserve">
+    <value>Ещё</value>
+  </data>
+  <data name="JournalSlotPickerTitle" xml:space="preserve">
+    <value>Время check-in</value>
+  </data>
+  <data name="JournalNoteSaveHint" xml:space="preserve">
+    <value>Настроение сохраняется сразу. Заметку — кнопкой ниже.</value>
+  </data>
+  <data name="JournalSaveLabel" xml:space="preserve">
+    <value>Сохранить заметку</value>
+  </data>
+  <data name="JournalDeleteLabel" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="JournalDeleteConfirmTitle" xml:space="preserve">
+    <value>Удалить запись?</value>
+  </data>
+  <data name="JournalDeleteConfirmMessage" xml:space="preserve">
+    <value>Отметка настроения и заметка за этот день будут удалены.</value>
+  </data>
+  <data name="JournalDeleteConfirmAccept" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="JournalDeleteConfirmCancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="JournalNoNoteCaption" xml:space="preserve">
+    <value>Без заметки</value>
+  </data>
+  <data name="JournalEditTodayHint" xml:space="preserve">
+    <value>Изменить сегодня</value>
+  </data>
+  <data name="JournalPickMoodHint" xml:space="preserve">
+    <value>Выберите настроение выше</value>
+  </data>
+  <data name="JournalMoodStatsTitle" xml:space="preserve">
+    <value>Обзор</value>
+  </data>
+  <data name="JournalMoodStreakLabel" xml:space="preserve">
+    <value>Серия дней</value>
+  </data>
+  <data name="JournalDynamicsTitle" xml:space="preserve">
+    <value>Динамика</value>
+  </data>
+  <data name="JournalOverviewInsightEmpty" xml:space="preserve">
+    <value>Пока мало отметок — отметьте настроение на этой неделе</value>
+  </data>
+  <data name="ProfileMoodCheckInBanner" xml:space="preserve">
+    <value>Сегодня ещё нет отметки настроения</value>
+  </data>
+  <data name="JournalTryQuietQuote" xml:space="preserve">
+    <value>Короткая цитата может поддержать</value>
+  </data>
+  <data name="PracticeOpenJournalRow" xml:space="preserve">
+    <value>Дописать в дневник</value>
+  </data>
+  <data name="JournalQuestionsSectionTitle" xml:space="preserve">
+    <value>Вопросы</value>
+  </data>
+  <data name="JournalFactorsSectionTitle" xml:space="preserve">
+    <value>Факторы дня</value>
+  </data>
+  <data name="JournalWeekNavPrev" xml:space="preserve">
+    <value>Предыдущая неделя</value>
+  </data>
+  <data name="JournalWeekNavNext" xml:space="preserve">
+    <value>Следующая неделя</value>
+  </data>
+  <data name="JournalMonthNavPrev" xml:space="preserve">
+    <value>Предыдущий месяц</value>
+  </data>
+  <data name="JournalMonthNavNext" xml:space="preserve">
+    <value>Следующий месяц</value>
+  </data>
+  <data name="JournalFilter7Days" xml:space="preserve">
+    <value>7 дней</value>
+  </data>
+  <data name="JournalFilter30Days" xml:space="preserve">
+    <value>30 дней</value>
+  </data>
+  <data name="JournalFilter90Days" xml:space="preserve">
+    <value>90 дней</value>
+  </data>
+  <data name="JournalYesterdayTitle" xml:space="preserve">
+    <value>Вчера</value>
+  </data>
+  <data name="JournalPastDayCheckInTitle" xml:space="preserve">
+    <value>Как было настроение в этот день?</value>
+  </data>
+  <data name="JournalPromptHelped" xml:space="preserve">
+    <value>Что помогло?</value>
+  </data>
+  <data name="JournalPromptBlocked" xml:space="preserve">
+    <value>Что мешало?</value>
+  </data>
+  <data name="JournalPromptGrateful" xml:space="preserve">
+    <value>За что благодарен?</value>
+  </data>
+  <data name="JournalPromptNext" xml:space="preserve">
+    <value>Что сделаю дальше?</value>
+  </data>
+  <data name="JournalSearchPlaceholder" xml:space="preserve">
+    <value>Поиск по заметкам</value>
+  </data>
+  <data name="JournalSearchEmpty" xml:space="preserve">
+    <value>Ничего не найдено</value>
+  </data>
+  <data name="JournalTimelineEmpty" xml:space="preserve">
+    <value>Ещё нет отметок — сделайте check-in в дневнике, чтобы начать серию</value>
+  </data>
+  <data name="JournalTryShortPractice" xml:space="preserve">
+    <value>Короткая практика может помочь</value>
+  </data>
+  <data name="JournalPromptBlockedShort" xml:space="preserve">
+    <value>Что мешало</value>
+  </data>
+  <data name="JournalPromptGratefulShort" xml:space="preserve">
+    <value>Благодарность</value>
+  </data>
+  <data name="JournalFactorSleep" xml:space="preserve">
+    <value>Сон: </value>
+  </data>
+  <data name="JournalFactorPeople" xml:space="preserve">
+    <value>Люди: </value>
+  </data>
+  <data name="JournalFactorPractice" xml:space="preserve">
+    <value>Практика: </value>
+  </data>
+  <data name="JournalFactorWalk" xml:space="preserve">
+    <value>Прогулка: </value>
+  </data>
+  <data name="JournalFactorWork" xml:space="preserve">
+    <value>Работа: </value>
+  </data>
+  <data name="JournalFactorSport" xml:space="preserve">
+    <value>Спорт: </value>
+  </data>
+  <data name="JournalFactorRest" xml:space="preserve">
+    <value>Отдых: </value>
+  </data>
+  <data name="JournalFactorStress" xml:space="preserve">
+    <value>Стресс: </value>
+  </data>
+  <data name="JournalFactorHome" xml:space="preserve">
+    <value>Дом: </value>
+  </data>
+  <data name="JournalFactorSleepLabel" xml:space="preserve">
+    <value>Сон</value>
+  </data>
+  <data name="JournalFactorPeopleLabel" xml:space="preserve">
+    <value>Люди</value>
+  </data>
+  <data name="JournalFactorPracticeLabel" xml:space="preserve">
+    <value>Практика</value>
+  </data>
+  <data name="JournalFactorWalkLabel" xml:space="preserve">
+    <value>Прогулка</value>
+  </data>
+  <data name="JournalFactorWorkLabel" xml:space="preserve">
+    <value>Работа</value>
+  </data>
+  <data name="JournalFactorSportLabel" xml:space="preserve">
+    <value>Спорт</value>
+  </data>
+  <data name="JournalFactorRestLabel" xml:space="preserve">
+    <value>Отдых</value>
+  </data>
+  <data name="JournalFactorStressLabel" xml:space="preserve">
+    <value>Стресс</value>
+  </data>
+  <data name="JournalFactorHomeLabel" xml:space="preserve">
+    <value>Дом</value>
+  </data>
+  <data name="JournalYearNavPrev" xml:space="preserve">
+    <value>Предыдущий год</value>
+  </data>
+  <data name="JournalYearNavNext" xml:space="preserve">
+    <value>Следующий год</value>
+  </data>
+  <data name="JournalYearHeatmapTitle" xml:space="preserve">
+    <value>Год в пикселях</value>
+  </data>
+  <data name="JournalCalendarScaleWeek" xml:space="preserve">
+    <value>Неделя</value>
+  </data>
+  <data name="JournalCalendarScaleMonth" xml:space="preserve">
+    <value>Месяц</value>
+  </data>
+  <data name="JournalCalendarScaleYear" xml:space="preserve">
+    <value>Год</value>
+  </data>
+  <data name="JournalCalendarSectionTitle" xml:space="preserve">
+    <value>Календарь</value>
+  </data>
+  <data name="JournalStatsSectionTitle" xml:space="preserve">
+    <value>Сводка</value>
+  </data>
+  <data name="JournalStreakMetricLabel" xml:space="preserve">
+    <value>Серия</value>
+  </data>
+  <data name="JournalPeriodNavPrev" xml:space="preserve">
+    <value>Назад</value>
+  </data>
+  <data name="JournalPeriodNavNext" xml:space="preserve">
+    <value>Вперёд</value>
+  </data>
+  <data name="JournalSlotMorning" xml:space="preserve">
+    <value>Утро</value>
+  </data>
+  <data name="JournalSlotEvening" xml:space="preserve">
+    <value>Вечер</value>
+  </data>
+  <data name="JournalExportLabel" xml:space="preserve">
+    <value>Экспорт CSV</value>
+  </data>
+  <data name="JournalExportTitle" xml:space="preserve">
+    <value>Дневник настроения</value>
+  </data>
+  <data name="JournalExportEmpty" xml:space="preserve">
+    <value>Нет записей для экспорта</value>
+  </data>
+  <data name="JournalSlotFullHint" xml:space="preserve">
+    <value>В этот день уже две отметки — выберите Утро или Вечер</value>
+  </data>
+  <data name="MoodNotesEmpty" xml:space="preserve">
+    <value>Пока нет отметок настроения — сделайте check-in выше</value>
+  </data>
+  <data name="JournalNeedMoodToSave" xml:space="preserve">
+    <value>Сначала выберите настроение</value>
+  </data>
+  <data name="WeekPracticesLabel" xml:space="preserve">
+    <value>Практики</value>
+  </data>
+  <data name="WeekMoodCheckInsLabel" xml:space="preserve">
+    <value>Отметки</value>
+  </data>
+  <data name="WeekAvgMoodLabel" xml:space="preserve">
+    <value>Ср. настроение</value>
+  </data>
+  <data name="WeekRiskLabel" xml:space="preserve">
+    <value>Риск</value>
+  </data>
+  <data name="WeekStreakLabel" xml:space="preserve">
+    <value>Серия</value>
+  </data>
+  <data name="ProfileMoodTrendHint" xml:space="preserve">
+    <value>Отмечайте настроение здесь, чтобы увидеть динамику</value>
+  </data>
+  <data name="ChartFirstMeasurement" xml:space="preserve">
+    <value>Первое измерение</value>
+  </data>
+  <data name="PracticeReflectionQuestion" xml:space="preserve">
+    <value>Как вы себя чувствуете?</value>
+  </data>
+  <data name="PracticeReflectionNotePlaceholder" xml:space="preserve">
+    <value>Короткая заметка (необязательно)</value>
+  </data>
+  <data name="PracticePreSudsLabel" xml:space="preserve">
+    <value>Интенсивность до (0–10)</value>
+  </data>
+  <data name="PracticePostSudsLabel" xml:space="preserve">
+    <value>Интенсивность после (0–10)</value>
+  </data>
+  <data name="PracticeSudsSectionTitle" xml:space="preserve">
+    <value>Как изменилась интенсивность?</value>
+  </data>
+  <data name="PracticeReflectionSectionTitle" xml:space="preserve">
+    <value>Настроение</value>
+  </data>
+  <data name="PracticeLastNoteTitle" xml:space="preserve">
+    <value>Что вы заметили в прошлый раз</value>
+  </data>
+  <data name="PracticeCompletedTitle" xml:space="preserve">
+    <value>Готово!</value>
+  </data>
+  <data name="ProfileMoodNotesTitle" xml:space="preserve">
+    <value>Заметки к настроению</value>
+  </data>
+  <data name="PracticeGoHomeButton" xml:space="preserve">
+    <value>На главную</value>
+  </data>
+  <data name="PracticeMoreButton" xml:space="preserve">
+    <value>Ещё практика</value>
+  </data>
+  <data name="PracticeNextCaption" xml:space="preserve">
+    <value>Следующая практика</value>
+  </data>
+  <data name="PracticeNextReason" xml:space="preserve">
+    <value>Продолжим серию</value>
+  </data>
+  <data name="PracticeHistoryTitle" xml:space="preserve">
+    <value>Недавние практики</value>
+  </data>
+  <data name="PracticeHistoryEmpty" xml:space="preserve">
+    <value>Пока нет завершённых практик</value>
+  </data>
+  <data name="QuoteCopied" xml:space="preserve">
+    <value>Скопировано</value>
+  </data>
+  <data name="TestHistoryTitle" xml:space="preserve">
+    <value>История результатов</value>
+  </data>
+  <data name="TestHistoryEmpty" xml:space="preserve">
+    <value>Пока нет сохранённых результатов</value>
+  </data>
+  <data name="TestOpenHistory" xml:space="preserve">
+    <value>История</value>
+  </data>
+  <data name="PhysicsNoResultsSubhint" xml:space="preserve">
+    <value>Попробуйте: плечо, шея, спина, живот, голова…</value>
+  </data>
+  <data name="TechniqueContinueBadge" xml:space="preserve">
+    <value>Продолжить</value>
+  </data>
+  <data name="TechniqueNotTriedYet" xml:space="preserve">
+    <value>Не пробовали</value>
+  </data>
+  <data name="TestNeverTakenYet" xml:space="preserve">
+    <value>Ещё не проходили</value>
+  </data>
+  <data name="TestTryTechnique" xml:space="preserve">
+    <value>Попробовать технику</value>
+  </data>
+  <data name="TestResultImproved" xml:space="preserve">
+    <value>Лучше прошлого раза</value>
+  </data>
+  <data name="TestResultWorse" xml:space="preserve">
+    <value>Хуже прошлого раза</value>
+  </data>
+  <data name="TestResultSame" xml:space="preserve">
+    <value>Как в прошлый раз</value>
+  </data>
+  <data name="OnboardingAppName" xml:space="preserve">
+    <value>PsychologyApp</value>
+  </data>
+  <data name="OnboardingAppTagline" xml:space="preserve">
+    <value>Спокойствие рядом — даже без интернета</value>
+  </data>
+  <data name="OnboardingWelcomeTitle" xml:space="preserve">
+    <value>Пространство для себя</value>
+  </data>
+  <data name="OnboardingWelcomeBody" xml:space="preserve">
+    <value>Здесь можно выдохнуть, разобраться с собой и найти опору — в своём темпе.</value>
+  </data>
+  <data name="OnboardingValueOffline" xml:space="preserve">
+    <value>Офлайн</value>
+  </data>
+  <data name="OnboardingValueNoJudgment" xml:space="preserve">
+    <value>Без осуждения</value>
+  </data>
+  <data name="OnboardingValueOnDevice" xml:space="preserve">
+    <value>На устройстве</value>
+  </data>
+  <data name="OnboardingBack" xml:space="preserve">
+    <value>Назад</value>
+  </data>
+  <data name="OnboardingOverviewTitle" xml:space="preserve">
+    <value>Пять опор в одном месте</value>
+  </data>
+  <data name="OnboardingOverviewSubtitle" xml:space="preserve">
+    <value>Практики, тесты, психосоматика, молитвы и цитаты — редкое сочетание в одном компаньоне</value>
+  </data>
+  <data name="OnboardingOverviewLead" xml:space="preserve">
+    <value>Всё под рукой в нижней панели</value>
+  </data>
+  <data name="OnboardingModulePracticeHint" xml:space="preserve">
+    <value>Успокоить нервную систему за минуты</value>
+  </data>
+  <data name="OnboardingModuleTestsHint" xml:space="preserve">
+    <value>Узнать себя через опросники и Люшера</value>
+  </data>
+  <data name="OnboardingModuleSomaticHint" xml:space="preserve">
+    <value>Понять связь тела и эмоций</value>
+  </data>
+  <data name="OnboardingModuleMusicHint" xml:space="preserve">
+    <value>Найти слова и звук для души</value>
+  </data>
+  <data name="OnboardingModuleQuotesHint" xml:space="preserve">
+    <value>Поддержать настроение одной мыслью</value>
+  </data>
+  <data name="OnboardingConcernTitle" xml:space="preserve">
+    <value>Что вас беспокоит?</value>
+  </data>
+  <data name="OnboardingConcernSubtitle" xml:space="preserve">
+    <value>Подберём первую практику под ваш запрос</value>
+  </data>
+  <data name="OnboardingConcernFooterHint" xml:space="preserve">
+    <value>Нажмите на вариант, чтобы продолжить</value>
+  </data>
+  <data name="OnboardingConcernAnxiety" xml:space="preserve">
+    <value>Тревога</value>
+  </data>
+  <data name="OnboardingConcernBody" xml:space="preserve">
+    <value>Тело / симптомы</value>
+  </data>
+  <data name="OnboardingConcernMood" xml:space="preserve">
+    <value>Настроение</value>
+  </data>
+  <data name="OnboardingConcernExplore" xml:space="preserve">
+    <value>Просто попробовать</value>
+  </data>
+  <data name="OnboardingConcernAnxietyHint" xml:space="preserve">
+    <value>Когда мысли не отпускают</value>
+  </data>
+  <data name="OnboardingConcernBodyHint" xml:space="preserve">
+    <value>Когда тело сигналит о стрессе</value>
+  </data>
+  <data name="OnboardingConcernMoodHint" xml:space="preserve">
+    <value>Когда тяжело внутри</value>
+  </data>
+  <data name="OnboardingConcernExploreHint" xml:space="preserve">
+    <value>Хочу просто посмотреть</value>
+  </data>
+  <data name="OnboardingFinishTitle" xml:space="preserve">
+    <value>Всё готово — начнём?</value>
+  </data>
+  <data name="OnboardingRecommendedCaption" xml:space="preserve">
+    <value>Рекомендуемая практика</value>
+  </data>
+  <data name="OnboardingDisclaimerTitle" xml:space="preserve">
+    <value>Важно</value>
+  </data>
+  <data name="OnboardingDisclaimerBody" xml:space="preserve">
+    <value>Приложение не заменяет профессиональную помощь. При тяжёлых состояниях обратитесь к специалисту.</value>
+  </data>
+  <data name="OnboardingStart" xml:space="preserve">
+    <value>Попробовать сейчас</value>
+  </data>
+  <data name="OnboardingSkip" xml:space="preserve">
+    <value>Пропустить</value>
+  </data>
+  <data name="OnboardingNext" xml:space="preserve">
+    <value>Далее</value>
+  </data>
+  <data name="QuoteShareFooter" xml:space="preserve">
+    <value>PsychologyApp</value>
+  </data>
+  <data name="PhysicsTitle" xml:space="preserve">
+    <value>Психосоматик</value>
+  </data>
+  <data name="PhysicsIntroPage" xml:space="preserve">
+    <value>С введением</value>
+  </data>
+  <data name="PhysicsSearchPage" xml:space="preserve">
+    <value>Поисковик</value>
+  </data>
+  <data name="PhysicsSearchTitle" xml:space="preserve">
+    <value>Психосоматика</value>
+  </data>
+  <data name="PhysicsExplanationHeader" xml:space="preserve">
+    <value>Пояснение</value>
+  </data>
+  <data name="PhysicsExplanationBody" xml:space="preserve">
+    <value>Известно, что около половины всех болезней возникает на психической основе. Поэтому по любому физическому недомоганию можно определить то, что вас беспокоит, но не осознаётся.</value>
+  </data>
+  <data name="PhysicsDescriptionHeader" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="PhysicsDescriptionBody" xml:space="preserve">
+    <value>Тест поможет вам в пару кликов найти эмоциональную причину любого вашего физического недомогания. Всё очень просто.</value>
+  </data>
+  <data name="PhysicsAlgorithmStep1" xml:space="preserve">
+    <value>1. Назвать болезнь или часть тела, которая болит</value>
+  </data>
+  <data name="PhysicsAlgorithmStep2" xml:space="preserve">
+    <value>2. Узнать несколько возможных причин.</value>
+  </data>
+  <data name="PhysicsSearchToolbar" xml:space="preserve">
+    <value>Найти</value>
+  </data>
+  <data name="PhysicsProblemLabel" xml:space="preserve">
+    <value>Проблема</value>
+  </data>
+  <data name="PhysicsIllnessPlaceholder" xml:space="preserve">
+    <value>Болезнь</value>
+  </data>
+  <data name="PhysicsEmptySearchHint" xml:space="preserve">
+    <value>Введите запрос</value>
+  </data>
+  <data name="PhysicsEmptySearchSubhint" xml:space="preserve">
+    <value>Болезнь или часть тела</value>
+  </data>
+  <data name="PhysicsNoResultsHint" xml:space="preserve">
+    <value>Ничего не найдено</value>
+  </data>
+  <data name="PhysicsLoadingText" xml:space="preserve">
+    <value>Поиск причин</value>
+  </data>
+  <data name="PhysicsSearchFilteringText" xml:space="preserve">
+    <value>Подбор результатов</value>
+  </data>
+  <data name="PhysicsSearchError" xml:space="preserve">
+    <value>Не удалось выполнить поиск</value>
+  </data>
+  <data name="QuotesSearchError" xml:space="preserve">
+    <value>Не удалось выполнить поиск цитат</value>
+  </data>
+  <data name="LoadFailed" xml:space="preserve">
+    <value>Не удалось загрузить</value>
+  </data>
+  <data name="RetryQuestion" xml:space="preserve">
+    <value>Попробовать ещё раз?</value>
+  </data>
+  <data name="LoadError" xml:space="preserve">
+    <value>Ошибка при загрузке</value>
+  </data>
+  <data name="ProfileTitle" xml:space="preserve">
+    <value>Профиль</value>
+  </data>
+  <data name="ProfileLoadingText" xml:space="preserve">
+    <value>Загрузка профиля</value>
+  </data>
+  <data name="ProfileUserLabel" xml:space="preserve">
+    <value>Пользователь</value>
+  </data>
+  <data name="ProfileStandardUser" xml:space="preserve">
+    <value>Стандартный</value>
+  </data>
+  <data name="ProfileTechniquesCompleted" xml:space="preserve">
+    <value>Пройдено техник</value>
+  </data>
+  <data name="ProfileFollowers" xml:space="preserve">
+    <value>Подписчиков</value>
+  </data>
+  <data name="ProfileRecommended" xml:space="preserve">
+    <value>Советуем пройти</value>
+  </data>
+  <data name="ProfileBestQuotes" xml:space="preserve">
+    <value>Избранные цитаты</value>
+  </data>
+  <data name="ProfileQuotesSeeAll" xml:space="preserve">
+    <value>Все избранные цитаты</value>
+  </data>
+  <data name="ProfileQuotesSeeAllSubtitle" xml:space="preserve">
+    <value>Открыть вкладку «Цитаты»</value>
+  </data>
+  <data name="QuotesFavoriteAdded" xml:space="preserve">
+    <value>Добавлено в избранное</value>
+  </data>
+  <data name="QuotesFavoriteRemoved" xml:space="preserve">
+    <value>Убрано из избранного</value>
+  </data>
+  <data name="QuotesGoToTab" xml:space="preserve">
+    <value>Перейти к цитатам</value>
+  </data>
+  <data name="QuotesFeedAll" xml:space="preserve">
+    <value>Все</value>
+  </data>
+  <data name="QuotesFeedFavorites" xml:space="preserve">
+    <value>Избранное</value>
+  </data>
+  <data name="QuotesFeedForYou" xml:space="preserve">
+    <value>Для вас</value>
+  </data>
+  <data name="QuotesThemeAll" xml:space="preserve">
+    <value>Все темы</value>
+  </data>
+  <data name="QuotesDailyTitle" xml:space="preserve">
+    <value>Цитата дня</value>
+  </data>
+  <data name="QuotesSearchPlaceholder" xml:space="preserve">
+    <value>Поиск по цитатам</value>
+  </data>
+  <data name="QuotesSearchEmptyTitle" xml:space="preserve">
+    <value>Ничего не найдено</value>
+  </data>
+  <data name="QuotesSearchEmptyBody" xml:space="preserve">
+    <value>Попробуйте другой запрос.</value>
+  </data>
+  <data name="QuotesShowAgain" xml:space="preserve">
+    <value>Показать снова</value>
+  </data>
+  <data name="QuotesForYouHint" xml:space="preserve">
+    <value>Подобрано под ваш запрос из онбординга</value>
+  </data>
+  <data name="QuotesForYouEmptyTitle" xml:space="preserve">
+    <value>Пока нет цитат для вас</value>
+  </data>
+  <data name="QuotesForYouEmptyBody" xml:space="preserve">
+    <value>Мы подбираем цитаты под ваш фокус из онбординга. Загляните позже или переключитесь на «Все».</value>
+  </data>
+  <data name="SettingsQuoteRemindersLabel" xml:space="preserve">
+    <value>Цитата дня</value>
+  </data>
+  <data name="SettingsQuoteReminderHourLabel" xml:space="preserve">
+    <value>Время цитаты</value>
+  </data>
+  <data name="SettingsQuoteReminderHourPickerTitle" xml:space="preserve">
+    <value>Время</value>
+  </data>
+  <data name="SettingsMoodRemindersLabel" xml:space="preserve">
+    <value>Напоминать о check-in</value>
+  </data>
+  <data name="SettingsMoodReminderHourLabel" xml:space="preserve">
+    <value>Время check-in</value>
+  </data>
+  <data name="SettingsMoodReminderHourPickerTitle" xml:space="preserve">
+    <value>Время</value>
+  </data>
+  <data name="SettingsChatRemindersLabel" xml:space="preserve">
+    <value>Напоминать о разговоре</value>
+  </data>
+  <data name="SettingsChatReminderHourLabel" xml:space="preserve">
+    <value>Время напоминания</value>
+  </data>
+  <data name="SettingsChatReminderHourPickerTitle" xml:space="preserve">
+    <value>Время</value>
+  </data>
+  <data name="QuoteReminderTitle" xml:space="preserve">
+    <value>Цитата дня</value>
+  </data>
+  <data name="QuoteReminderBody" xml:space="preserve">
+    <value>Откройте приложение и прочитайте мысль дня.</value>
+  </data>
+  <data name="QuoteThemeWisdom" xml:space="preserve">
+    <value>Мудрость</value>
+  </data>
+  <data name="QuoteThemeMotivation" xml:space="preserve">
+    <value>Мотивация</value>
+  </data>
+  <data name="QuoteThemeResilience" xml:space="preserve">
+    <value>Стойкость</value>
+  </data>
+  <data name="QuoteThemeSelfAwareness" xml:space="preserve">
+    <value>Осознанность</value>
+  </data>
+  <data name="QuoteThemeMindfulness" xml:space="preserve">
+    <value>Осмыленность</value>
+  </data>
+  <data name="QuoteThemeSelfEsteem" xml:space="preserve">
+    <value>Самооценка</value>
+  </data>
+  <data name="QuoteThemeHope" xml:space="preserve">
+    <value>Надежда</value>
+  </data>
+  <data name="QuoteThemeEmpathy" xml:space="preserve">
+    <value>Эмпатия</value>
+  </data>
+  <data name="QuoteThemeHappiness" xml:space="preserve">
+    <value>Счастье</value>
+  </data>
+  <data name="QuoteThemeHabits" xml:space="preserve">
+    <value>Привычки</value>
+  </data>
+  <data name="QuoteThemeLove" xml:space="preserve">
+    <value>Любовь</value>
+  </data>
+  <data name="QuoteThemeRelationships" xml:space="preserve">
+    <value>Отношения</value>
+  </data>
+  <data name="QuoteThemeResponsibility" xml:space="preserve">
+    <value>Ответственность</value>
+  </data>
+  <data name="QuoteThemePurpose" xml:space="preserve">
+    <value>Смысл</value>
+  </data>
+  <data name="QuoteThemeGrowth" xml:space="preserve">
+    <value>Рост</value>
+  </data>
+  <data name="QuoteThemeHealing" xml:space="preserve">
+    <value>Исцеление</value>
+  </data>
+  <data name="QuoteThemeSelfLove" xml:space="preserve">
+    <value>Любовь к себе</value>
+  </data>
+  <data name="QuoteThemeAcceptance" xml:space="preserve">
+    <value>Принятие</value>
+  </data>
+  <data name="QuoteThemeGratitude" xml:space="preserve">
+    <value>Благодарность</value>
+  </data>
+  <data name="QuoteThemeCalm" xml:space="preserve">
+    <value>Спокойствие</value>
+  </data>
+  <data name="QuoteThemeAnxiety" xml:space="preserve">
+    <value>Тревога</value>
+  </data>
+  <data name="QuoteThemeGeneral" xml:space="preserve">
+    <value>Общее</value>
+  </data>
+  <data name="QuotesAllReadTitle" xml:space="preserve">
+    <value>Вы всё прочитали</value>
+  </data>
+  <data name="QuotesAllReadBody" xml:space="preserve">
+    <value>Новых цитат пока нет. Откройте избранное или обновите позже.</value>
+  </data>
+  <data name="QuotesShowFavorites" xml:space="preserve">
+    <value>Показать избранное</value>
+  </data>
+  <data name="ProfileBsffSubtitle" xml:space="preserve">
+    <value>Методика депрограммирования подсознания</value>
+  </data>
+  <data name="QuotesSearching" xml:space="preserve">
+    <value>Поиск цитат</value>
+  </data>
+  <data name="QuotesLoading" xml:space="preserve">
+    <value>Загрузка цитат</value>
+  </data>
+  <data name="QuoteShareTitle" xml:space="preserve">
+    <value>Цитата</value>
+  </data>
+  <data name="UnknownAuthor" xml:space="preserve">
+    <value>Неизвестный автор</value>
+  </data>
+  <data name="JournalCrisisPromptTitle" xml:space="preserve">
+    <value>Вам сейчас очень тяжело?</value>
+  </data>
+  <data name="JournalCrisisPromptBody" xml:space="preserve">
+    <value>В заметке есть слова, которые тревожат. Вы не одни: на экране срочной помощи — номера служб и план безопасности.</value>
+  </data>
+  <data name="JournalCrisisPromptAccept" xml:space="preserve">
+    <value>Открыть помощь</value>
+  </data>
+  <data name="JournalCrisisPromptDecline" xml:space="preserve">
+    <value>Не сейчас</value>
+  </data>
+  <data name="CrisisHubTitle" xml:space="preserve">
+    <value>Срочная помощь</value>
+  </data>
+  <data name="CrisisHubLead" xml:space="preserve">
+    <value>Сначала безопасность. Приложение не заменяет экстренную помощь.</value>
+  </data>
+  <data name="CrisisHubSafetyPlanTitle" xml:space="preserve">
+    <value>План безопасности</value>
+  </data>
+  <data name="CrisisHubSafetyPlanStep1" xml:space="preserve">
+    <value>Отойдите от триггеров и займите безопасное место.</value>
+  </data>
+  <data name="CrisisHubSafetyPlanStep2" xml:space="preserve">
+    <value>Свяжитесь с кем-то надёжным — другом, родным или специалистом.</value>
+  </data>
+  <data name="CrisisHubSafetyPlanStep3" xml:space="preserve">
+    <value>Если есть угроза жизни — звоните в экстренные службы (112).</value>
+  </data>
+  <data name="CrisisHubHotlineTitle" xml:space="preserve">
+    <value>Позвонить сейчас</value>
+  </data>
+  <data name="CrisisHubHotlineRu" xml:space="preserve">
+    <value>Россия: 112 — экстренные службы (звонок бесплатный). 8-800-2000-122 — детский телефон доверия, для детей, подростков и родителей. Линию для взрослых в вашем регионе найдите на findahelpline.com</value>
+  </data>
+  <data name="CrisisHubHotlineIntl" xml:space="preserve">
+    <value>Международно: findahelpline.com</value>
+  </data>
+  <data name="CrisisHubCallHotlineRu" xml:space="preserve">
+    <value>Детский телефон доверия 8-800-2000-122</value>
+  </data>
+  <data name="CrisisHubCallEmergency" xml:space="preserve">
+    <value>Позвонить в 112</value>
+  </data>
+  <data name="CrisisHubOpenHelpline" xml:space="preserve">
+    <value>Открыть findahelpline.com</value>
+  </data>
+  <data name="CrisisHubRecheck" xml:space="preserve">
+    <value>Перепроверить состояние</value>
+  </data>
+  <data name="CrisisHubContinueSoft" xml:space="preserve">
+    <value>Вернуться к мягким практикам</value>
+  </data>
+  <data name="CrisisHubSpecialistHint" xml:space="preserve">
+    <value>Рекомендуем обратиться к психологу или врачу. Самопомощь подходит для лёгких и умеренных состояний.</value>
+  </data>
+  <data name="DataBackupTitle" xml:space="preserve">
+    <value>Данные и резервная копия</value>
+  </data>
+  <data name="DataBackupLead" xml:space="preserve">
+    <value>Все данные хранятся только на этом устройстве. Сделайте копию, чтобы не потерять их.</value>
+  </data>
+  <data name="DataBackupExportTitle" xml:space="preserve">
+    <value>Экспортировать резервную копию</value>
+  </data>
+  <data name="DataBackupExportSubtitle" xml:space="preserve">
+    <value>Файл со всеми чатами, записями настроения, тестами и практиками.</value>
+  </data>
+  <data name="DataBackupImportTitle" xml:space="preserve">
+    <value>Восстановить из копии</value>
+  </data>
+  <data name="DataBackupImportSubtitle" xml:space="preserve">
+    <value>Добавит данные из выбранного файла резервной копии.</value>
+  </data>
+  <data name="DataBackupSummaryTitle" xml:space="preserve">
+    <value>Сводка для специалиста</value>
+  </data>
+  <data name="DataBackupSummarySubtitle" xml:space="preserve">
+    <value>Текстовый файл за последние 30 дней — можно отправить психологу или врачу.</value>
+  </data>
+  <data name="DataBackupExportedToast" xml:space="preserve">
+    <value>Файл готов к отправке</value>
+  </data>
+  <data name="ErrorLogTitle" xml:space="preserve">
+    <value>Журнал ошибок</value>
+  </data>
+  <data name="ErrorLogSubtitle" xml:space="preserve">
+    <value>Поделиться файлом с техническими ошибками, чтобы помочь найти причину сбоя. Он не содержит ваших записей.</value>
+  </data>
+  <data name="ErrorLogEmptyToast" xml:space="preserve">
+    <value>Ошибок не записано</value>
+  </data>
+  <data name="DataBackupImportRolledBackToast" xml:space="preserve">
+    <value>Не удалось восстановить данные. Ничего не изменено — попробуйте ещё раз</value>
+  </data>
+  <data name="DataBackupImportFailedToast" xml:space="preserve">
+    <value>Не удалось прочитать файл резервной копии</value>
+  </data>
+  <data name="CrisisHubSafetyPlanLinkTitle" xml:space="preserve">
+    <value>Мой план безопасности</value>
+  </data>
+  <data name="CrisisHubSafetyPlanLinkSubtitle" xml:space="preserve">
+    <value>Составьте личный план: признаки, что делать, кому звонить.</value>
+  </data>
+  <data name="SafetyPlanPageTitle" xml:space="preserve">
+    <value>План безопасности</value>
+  </data>
+  <data name="SafetyPlanLead" xml:space="preserve">
+    <value>Заполните заранее, пока спокойно — план поможет в трудный момент.</value>
+  </data>
+  <data name="SafetyPlanWarningSignsTitle" xml:space="preserve">
+    <value>Мои тревожные признаки</value>
+  </data>
+  <data name="SafetyPlanWarningSignsPlaceholder" xml:space="preserve">
+    <value>Например: не сплю вторую ночь подряд</value>
+  </data>
+  <data name="SafetyPlanCopingTitle" xml:space="preserve">
+    <value>Что мне помогает</value>
+  </data>
+  <data name="SafetyPlanCopingPlaceholder" xml:space="preserve">
+    <value>Например: выйти на прогулку, позвонить другу</value>
+  </data>
+  <data name="SafetyPlanReasonsTitle" xml:space="preserve">
+    <value>Ради чего стоит продолжать</value>
+  </data>
+  <data name="SafetyPlanReasonsPlaceholder" xml:space="preserve">
+    <value>Например: моя кошка, поездка весной</value>
+  </data>
+  <data name="SafetyPlanContactsTitle" xml:space="preserve">
+    <value>Кому позвонить</value>
+  </data>
+  <data name="SafetyPlanContactNamePlaceholder" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="SafetyPlanContactPhonePlaceholder" xml:space="preserve">
+    <value>Телефон</value>
+  </data>
+  <data name="SafetyPlanTapToRemoveHint" xml:space="preserve">
+    <value>Нажмите, чтобы удалить</value>
+  </data>
+  <data name="SafetyPlanCallAction" xml:space="preserve">
+    <value>Позвонить</value>
+  </data>
+  <data name="RiskCheckTitle" xml:space="preserve">
+    <value>Проверка безопасности</value>
+  </data>
+  <data name="RiskCheckLead" xml:space="preserve">
+    <value>Если есть мысли о самоповреждении — откройте помощь сразу. Можно не ждать конца опроса.</value>
+  </data>
+  <data name="RiskCheckSubtitle" xml:space="preserve">
+    <value>Ответьте честно. Это помогает подобрать безопасный сценарий.</value>
+  </data>
+  <data name="RiskCheckSelfHarm" xml:space="preserve">
+    <value>Есть мысли о самоповреждении или суициде</value>
+  </data>
+  <data name="RiskCheckDisorientation" xml:space="preserve">
+    <value>Сильная дезориентация или потеря связи с реальностью</value>
+  </data>
+  <data name="RiskCheckSubstance" xml:space="preserve">
+    <value>Риск, связанный с веществами / алкоголем</value>
+  </data>
+  <data name="RiskCheckInsomnia" xml:space="preserve">
+    <value>Тяжёлая бессонница и истощение</value>
+  </data>
+  <data name="RiskCheckSubmit" xml:space="preserve">
+    <value>Готово</value>
+  </data>
+  <data name="RiskCheckOpenHelpNow" xml:space="preserve">
+    <value>Открыть помощь сейчас</value>
+  </data>
+  <data name="RiskCheckYes" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="RiskCheckNo" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="OptionsCrisisTitle" xml:space="preserve">
+    <value>Срочная помощь</value>
+  </data>
+  <data name="OptionsCrisisSubtitle" xml:space="preserve">
+    <value>План безопасности и горячие линии</value>
+  </data>
+  <data name="ClinicalScorecardTitle" xml:space="preserve">
+    <value>Недельный обзор</value>
+  </data>
+  <data name="PracticeHistorySeeAll" xml:space="preserve">
+    <value>Все</value>
+  </data>
+  <data name="PracticeHistoryPageTitle" xml:space="preserve">
+    <value>История практик</value>
+  </data>
+  <data name="ProfileRiskCheckLabel" xml:space="preserve">
+    <value>Как я сейчас?</value>
+  </data>
+  <data name="ProfileRiskCheckSubtitle" xml:space="preserve">
+    <value>Короткие вопросы о безопасности</value>
+  </data>
+  <data name="JournalOverviewTitle" xml:space="preserve">
+    <value>Обзор</value>
+  </data>
+  <data name="JournalTimelineTitle" xml:space="preserve">
+    <value>Записи</value>
+  </data>
+  <data name="JournalOpenOverview" xml:space="preserve">
+    <value>Обзор</value>
+  </data>
+  <data name="JournalOpenTimeline" xml:space="preserve">
+    <value>Записи</value>
+  </data>
+  <data name="JournalRecentDaysTitle" xml:space="preserve">
+    <value>Эта неделя</value>
+  </data>
+  <data name="JournalPromptHelpedShort" xml:space="preserve">
+    <value>Что помогло</value>
+  </data>
+  <data name="JournalPromptNextShort" xml:space="preserve">
+    <value>Что дальше</value>
+  </data>
+  <data name="JournalShareLabel" xml:space="preserve">
+    <value>Поделиться</value>
+  </data>
+  <data name="JournalShareTitle" xml:space="preserve">
+    <value>Запись дневника</value>
+  </data>
+  <data name="JournalReminderToggle" xml:space="preserve">
+    <value>Напоминать о check-in</value>
+  </data>
+  <data name="JournalReminderHint" xml:space="preserve">
+    <value>Время можно изменить в настройках</value>
+  </data>
+  <data name="MoodReminderTitle" xml:space="preserve">
+    <value>Дневник</value>
+  </data>
+  <data name="MoodReminderBody" xml:space="preserve">
+    <value>Как настроение сегодня? Отметьте в дневнике.</value>
+  </data>
+  <data name="ClinicalScorecardEmpty" xml:space="preserve">
+    <value>Пока мало данных — практики и настроение появятся здесь</value>
+  </data>
+  <data name="ClinicalRiskGreen" xml:space="preserve">
+    <value>низкий</value>
+  </data>
+  <data name="ClinicalRiskAmber" xml:space="preserve">
+    <value>повышенный</value>
+  </data>
+  <data name="ClinicalRiskRed" xml:space="preserve">
+    <value>высокий</value>
+  </data>
+  <data name="LuscherCoStable" xml:space="preserve">
+    <value>Отсутствие непродуктивной (не связанной с какой-либо полезной деятельностью) напряженности, высокая нервно-психическая устойчивость.
+Действия обследуемого целесообразны, экономичны, имеют высокий коэффициент полезного действия. Общий эмоциональный настрой – оптимистичный. Обследуемый верит в свои силы и в целом готов преодолевать препятствия и трудности. Высок уровень волевого самоконтроля, предопределяющего поступки и способствующего развитию личности.
+При наличии соответствующей мотивации обследуемый способен интенсивно работать длительное время. В экстремальных ситуациях эффективно мобилизуется, сосредотачивается на выполнении задачи.</value>
+  </data>
+  <data name="LuscherCoMildTension" xml:space="preserve">
+    <value>Незначительный уровень непродуктивной напряженности, нервно-психическая устойчивость хорошая.
+Преобладает установка на активность и действие. Энергоресурсов достаточно для более или менее регулярных «подвигов» в работе, вспышек активности и напряжения, недоступных большинству других людей. Способен свободно управлять своим вниманием. В условиях мотивированной (интересной) деятельности не испытывает трудностей с оперативным и долговременным запоминанием и последующим воспроизведением. К острым ощущениям, в общем, не стремится. Из стрессовых ситуаций, как правило, выходит с достоинством.</value>
+  </data>
+  <data name="LuscherCoModerateTension" xml:space="preserve">
+    <value>Средний уровень непродуктивной напряженности.
+Обследуемый справляется со своими обязанностями в пределах сложившихся в обществе требований. В привычной для него обстановке, имея достаточно времени для переключения, переходит от работы к отдыху и обратно, от одного вида деятельности к другому без существенных затруднений. В случае необходимости способен преодолевать усталость волевым усилием, однако после этого работоспособность надолго снижается. Необходимо относительно четко субъективно разделять время работы и время отдыха.</value>
+  </data>
+  <data name="LuscherCoElevatedTension" xml:space="preserve">
+    <value>Повышенный уровень непродуктивной напряженности, сниженная нервно-психическая устойчивость.
+Потенциал целесообразной активности снижен, что побуждает насильно заставлять себя делать те или иные необходимые дела. Постоянно действующий волевой самоконтроль, с одной стороны, и сам регулярно истощается. А с другой – не будучи связанным с непосредственным удовлетворением от процесса и результатов деятельности. Дополнительно усиливает психическое переутомление. Интенсивная длительная работа, скорее всего, потребует слишком большого напряжения от нервной системы и психики. При этом производительность работы и качество ее выполнения будут неравноценными в разные периоды времени. Общий эмоциональный тонус: повышенная возбудимость, тревожность, неуверенность. В стрессовой ситуации вероятно нарушение деятельности.</value>
+  </data>
+  <data name="LuscherCoHighTension" xml:space="preserve">
+    <value>Выраженная непродуктивная напряженность, низкая нервно-психическая устойчивость.
+Высокая утомляемость. Внимание легко отвлекается посторонними вещами, надолго может «застрять» на эмоциональном переживании. В связи с этим поведение непрогнозируемо и субъективно. Отсутствие устойчивой иерархии мотивов делает деятельность испытуемого реактивной и нецеленаправленной. Коммуникативность снижена, ограничена рамками формального общения. Эмоциональный фон может быстро колебаться между восторженно-возбужденным состоянием и подавленностью, раздражительностью и бессилием. Часто испытывает тревогу, предчувствие неприятностей, бессилие и отсутствие желания что-либо делать. В экстремальных ситуациях очень низкая надежность.</value>
+  </data>
+  <data name="LuscherBkExhausted" xml:space="preserve">
+    <value>Истощенность, установка на бездействие. Хроническое переутомление. В связи с этим характерно пассивное реагирование на трудности, неготовность к напряжению и адекватным действиям в стрессовых ситуациях. Необходимы разноплановые и объемные восстановительные мероприятия.</value>
+  </data>
+  <data name="LuscherBkConserving" xml:space="preserve">
+    <value>Установка на оптимизацию расходования сил. Умеренная потребность в восстановлении и отдыхе. Энергетический потенциал невысок, но вполне достаточен для успешной деятельности в привычных спокойных условиях. В экстремальной ситуации вероятно запаздывание с ориентировкой и принятием решений.</value>
+  </data>
+  <data name="LuscherBkOptimal" xml:space="preserve">
+    <value>Мобилизованность, установка на активное действие. Оптимальная мобилизованность физических и психических ресурсов. В экстремальной ситуации наиболее вероятна высокая скорость ориентировки и принятия решений, целесообразность и успешность действий.</value>
+  </data>
+  <data name="LuscherBkOveraroused" xml:space="preserve">
+    <value>Избыточное возбуждение, суетливость. Уровень возбуждения избыточно высок. Нередки случаи, когда испытуемый что-либо делает не ради самого дела, а лишь для того, чтобы разрядиться. В сложных ситуациях легко формируются лихорадочные реакции: импульсивность, нетерпеливость, снижение эмоционального самоконтроля, необдуманные поступки. В экстремальных ситуациях наиболее вероятна низкая эффективность действий, панические реакции. Необходимы разноплановые релаксирующие и успокаивающие процедуры.</value>
+  </data>
+  <data name="TherapyProgramTitle" xml:space="preserve">
+    <value>Ваш протокол</value>
+  </data>
+  <data name="TherapyProgramAnxiety" xml:space="preserve">
+    <value>Тревога</value>
+  </data>
+  <data name="TherapyProgramMood" xml:space="preserve">
+    <value>Настроение</value>
+  </data>
+  <data name="TherapyProgramStress" xml:space="preserve">
+    <value>Стресс</value>
+  </data>
+  <data name="ClinicalAmberBanner" xml:space="preserve">
+    <value>Состояние требует внимания — доступна срочная помощь</value>
+  </data>
+  <data name="ClinicalRedBanner" xml:space="preserve">
+    <value>Сначала откройте срочную помощь</value>
+  </data>
+  <data name="ClinicalStatusUnavailableBanner" xml:space="preserve">
+    <value>Не удалось загрузить статус безопасности — откройте срочную помощь</value>
+  </data>
+  <data name="DialogueInputPlaceholder" xml:space="preserve">
+    <value>Ваш ответ…</value>
+  </data>
+  <data name="DialogueTyping" xml:space="preserve">
+    <value>печатает…</value>
+  </data>
+  <data name="DialogueFinish" xml:space="preserve">
+    <value>Завершить</value>
+  </data>
+  <data name="DialogueClose" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="DialogueRatingScale" xml:space="preserve">
+    <value>0 — совсем нет, 10 — очень сильно</value>
+  </data>
+  <data name="DialogueLoadFailed" xml:space="preserve">
+    <value>Не удалось открыть диалог. Попробуйте ещё раз позже.</value>
+  </data>
+  <data name="ShellTabMusic" xml:space="preserve">
+    <value>Музыка</value>
+  </data>
+  <data name="ShellTabPractice" xml:space="preserve">
+    <value>Практик</value>
+  </data>
+  <data name="ShellTabDetector" xml:space="preserve">
+    <value>Детектор</value>
+  </data>
+  <data name="ShellTabSomatic" xml:space="preserve">
+    <value>Соматик</value>
+  </data>
+  <data name="ShellTabMotivator" xml:space="preserve">
+    <value>Мотиватор</value>
+  </data>
+  <data name="ShellTabPracticeShort" xml:space="preserve">
+    <value>Практик</value>
+  </data>
+  <data name="ShellTabDetectorShort" xml:space="preserve">
+    <value>Тесты</value>
+  </data>
+  <data name="ShellTabSomaticShort" xml:space="preserve">
+    <value>Тело</value>
+  </data>
+  <data name="ShellTabMusicShort" xml:space="preserve">
+    <value>Молитвы</value>
+  </data>
+  <data name="ShellTabMotivatorShort" xml:space="preserve">
+    <value>Цитаты</value>
+  </data>
+  <data name="TestsFindProblemTitle" xml:space="preserve">
+    <value>Поиск проблемы</value>
+  </data>
+  <data name="TestsAboutPassageTitle" xml:space="preserve">
+    <value>О прохождении</value>
+  </data>
+  <data name="TestsDescriptionHeader" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="TestsAlgorithmHeader" xml:space="preserve">
+    <value>Алгоритм</value>
+  </data>
+  <data name="TestsNoteHeader" xml:space="preserve">
+    <value>Замечание</value>
+  </data>
+  <data name="TestsStartButton" xml:space="preserve">
+    <value>Начать</value>
+  </data>
+  <data name="TestsQuestionnaireTitle" xml:space="preserve">
+    <value>Опросник</value>
+  </data>
+  <data name="TestsQuestionPrefix" xml:space="preserve">
+    <value>Вопрос </value>
+  </data>
+  <data name="TestsFinishButton" xml:space="preserve">
+    <value>Завершить</value>
+  </data>
+  <data name="TestsStandardTitle" xml:space="preserve">
+    <value>Стандартный тест</value>
+  </data>
+  <data name="TestsBriefTitle" xml:space="preserve">
+    <value>Краткий тест</value>
+  </data>
+  <data name="TestsColorInstruction" xml:space="preserve">
+    <value>Выбирайте цвета в приятной вам последовательности</value>
+  </data>
+  <data name="TestsMoreInfo" xml:space="preserve">
+    <value>Подробнее</value>
+  </data>
+  <data name="TestsRestart" xml:space="preserve">
+    <value>Заново</value>
+  </data>
+  <data name="TestRetakeButton" xml:space="preserve">
+    <value>Пройти снова</value>
+  </data>
+  <data name="TestsFirstColor" xml:space="preserve">
+    <value>Первый цвет</value>
+  </data>
+  <data name="TestsSecondColor" xml:space="preserve">
+    <value>Второй цвет</value>
+  </data>
+  <data name="TestsLuscherResultsTitle" xml:space="preserve">
+    <value>Результаты</value>
+  </data>
+  <data name="TestsLuscherWantedRole" xml:space="preserve">
+    <value>Самый приятный</value>
+  </data>
+  <data name="TestsLuscherUnwantedRole" xml:space="preserve">
+    <value>Самый неприятный</value>
+  </data>
+  <data name="TestsLuscherFirstInstruction" xml:space="preserve">
+    <value>Выберите самый приятный для вас цвет</value>
+  </data>
+  <data name="TestsLuscherSecondInstruction" xml:space="preserve">
+    <value>Из оставшихся выберите самый неприятный для вас цвет</value>
+  </data>
+  <data name="TestsLuscherSecondPassInstruction" xml:space="preserve">
+    <value>Повторите выбор: снова расставьте все 8 цветов от самого приятного к наименее приятному</value>
+  </data>
+  <data name="TestsLuscherHistoryFirstPass" xml:space="preserve">
+    <value>Проход 1</value>
+  </data>
+  <data name="TestsLuscherHistorySecondPass" xml:space="preserve">
+    <value>Проход 2</value>
+  </data>
+  <data name="TestsStandardDescription" xml:space="preserve">
+    <value>Это стандартная версия теста Люшера. Она может более точно оценить настроение, чем альтернативная.</value>
+  </data>
+  <data name="TestsBriefDescription" xml:space="preserve">
+    <value>Это краткая версия теста Люшера. Выберите два цвета — самый приятный и самый неприятный.</value>
+  </data>
+  <data name="TestsAnswerAllToast" xml:space="preserve">
+    <value>Нужно ответить на все вопросы</value>
+  </data>
+  <data name="TestsAnswerCurrentToast" xml:space="preserve">
+    <value>Ответьте на этот вопрос</value>
+  </data>
+  <data name="TestsNextButton" xml:space="preserve">
+    <value>Далее</value>
+  </data>
+  <data name="TestsPreviousButton" xml:space="preserve">
+    <value>Назад</value>
+  </data>
+  <data name="TestsResultPageTitle" xml:space="preserve">
+    <value>Результат теста</value>
+  </data>
+  <data name="TestsBackToList" xml:space="preserve">
+    <value>К списку тестов</value>
+  </data>
+  <data name="TestsResultRecommendationHint" xml:space="preserve">
+    <value>На основе результата мы подобрали практику, которая может помочь</value>
+  </data>
+  <data name="TestResultExplorePractice" xml:space="preserve">
+    <value>Попробуйте практику</value>
+  </data>
+  <data name="TestsContinueButton" xml:space="preserve">
+    <value>Продолжить</value>
+  </data>
+  <data name="TestsListSectionTitle" xml:space="preserve">
+    <value>Психологические тесты</value>
+  </data>
+  <data name="TestsListSectionSubtitle" xml:space="preserve">
+    <value>Выберите тест и узнайте больше о своём состоянии</value>
+  </data>
+  <data name="TestHistoryTrendTitle" xml:space="preserve">
+    <value>Динамика баллов</value>
+  </data>
+  <data name="TestResultAnswersTitle" xml:space="preserve">
+    <value>Ваши ответы</value>
+  </data>
+  <data name="TestsIntroLead" xml:space="preserve">
+    <value>Несколько минут — и вы получите персональную интерпретацию</value>
+  </data>
+  <data name="TestsQuestionLead" xml:space="preserve">
+    <value>Отвечайте честно — здесь нет правильных или неправильных ответов</value>
+  </data>
+  <data name="TestsMultiChoiceHint" xml:space="preserve">
+    <value>Можно выбрать несколько вариантов</value>
+  </data>
+  <data name="TestsSingleChoiceHint" xml:space="preserve">
+    <value>Один вариант ответа</value>
+  </data>
+  <data name="TestsAnswerSelected" xml:space="preserve">
+    <value>Выбрано</value>
+  </data>
+  <data name="TestsAnswerNotSelected" xml:space="preserve">
+    <value>Не выбрано</value>
+  </data>
+  <data name="TestsAnswerOption" xml:space="preserve">
+    <value>Вариант ответа</value>
+  </data>
+  <data name="TestsCoLabel" xml:space="preserve">
+    <value>Суммарное отклонение от аутогенной нормы (СО)</value>
+  </data>
+  <data name="TestsBkLabel" xml:space="preserve">
+    <value>Вегетативный коэффициент (ВК)</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+</root>

@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.App.Providers;
 using PsychologyApp.Presentation.Pages.SearchPhysics.StartPhysics;
 using Microsoft.Extensions.Logging;
@@ -45,8 +46,8 @@ public interface IStartPhysicsViewModelFactory
     StartPhysicsViewModel Create(ContentPage page);
 }
 
-public sealed class StartPhysicsViewModelFactory(Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IStartPhysicsViewModelFactory
+public sealed class StartPhysicsViewModelFactory(IUserPreferencesStore userPreferencesStore, Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IStartPhysicsViewModelFactory
 {
     public StartPhysicsViewModel Create(ContentPage page) =>
-        new(ResolveNavigation(navigationServiceFactory, page));
+        new(ResolveNavigation(navigationServiceFactory, page), userPreferencesStore);
 }
