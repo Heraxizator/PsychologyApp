@@ -52,8 +52,7 @@ public static partial class AppStrings
     public static string SettingsPracticeReminderHourPickerTitle => R(nameof(SettingsPracticeReminderHourPickerTitle));
     public static string PracticeReminderTitle => R(nameof(PracticeReminderTitle));
     public static string PracticeReminderBody => R(nameof(PracticeReminderBody));
-    public static string PracticeReminderTitleNamed(string techniqueName) =>
-        T($"Пора: {techniqueName}", $"Time for {techniqueName}");
+    public static string PracticeReminderTitleNamed(string techniqueName) => F(nameof(PracticeReminderTitleNamed), techniqueName);
     public static string PracticeReminderBodyNamed(string techniqueName, string reason) =>
         string.IsNullOrWhiteSpace(reason)
             ? T(
@@ -106,8 +105,7 @@ public static partial class AppStrings
     public static string PracticeLoadMoreError => R(nameof(PracticeLoadMoreError));
     public static string PracticeLoadingText => R(nameof(PracticeLoadingText));
     public static string PracticeLoadingMoreText => R(nameof(PracticeLoadingMoreText));
-    public static string PracticeCustomTechniqueNumber(long id) =>
-        T($"Своя техника №{id}", $"Custom technique #{id}");
+    public static string PracticeCustomTechniqueNumber(long id) => F(nameof(PracticeCustomTechniqueNumber), id);
     public static string PracticeDesignTitle => R(nameof(PracticeDesignTitle));
     public static string PracticeConstructor => R(nameof(PracticeConstructor));
     public static string PracticeCustomTechnique => R(nameof(PracticeCustomTechnique));
@@ -198,10 +196,10 @@ public static partial class AppStrings
     public static string ConcernLabel => R(nameof(ConcernLabel));
     public static string FirstPolarityLabel => R(nameof(FirstPolarityLabel));
     public static string SecondPolarityLabel => R(nameof(SecondPolarityLabel));
-    public static string PoleNumber(int number) => T($"Полюс №{number}", $"Pole #{number}");
-    public static string RecordNumber(int number) => T($"Запись №{number}", $"Entry #{number}");
-    public static string PracticeEntryCount(int count) => T($"Записей: {count}", $"{count} entries");
-    public static string TechniqueStepProgress(int step, int total) => T($"Шаг {step} из {total}", $"Step {step} of {total}");
+    public static string PoleNumber(int number) => F(nameof(PoleNumber), number);
+    public static string RecordNumber(int number) => F(nameof(RecordNumber), number);
+    public static string PracticeEntryCount(int count) => F(nameof(PracticeEntryCount), count);
+    public static string TechniqueStepProgress(int step, int total) => F(nameof(TechniqueStepProgress), step, total);
     public static string TechniqueStepBack => R(nameof(TechniqueStepBack));
     public static string TechniqueStepNext => R(nameof(TechniqueStepNext));
     public static string ProverbLabel => R(nameof(ProverbLabel));
@@ -239,27 +237,21 @@ public static partial class AppStrings
     public static string ProfileTestsCompleted => R(nameof(ProfileTestsCompleted));
     public static string ProfileStreakDays => R(nameof(ProfileStreakDays));
     public static string ProfileStreakHint => R(nameof(ProfileStreakHint));
-    public static string ProfileStreakCount(int days) => T($"{days} дн.", $"{days} days");
+    public static string ProfileStreakCount(int days) => F(nameof(ProfileStreakCount), days);
 
     public static string TodayForYou => R(nameof(TodayForYou));
     public static string TodayRecommended => R(nameof(TodayRecommended));
     public static string TodayStartPractice => R(nameof(TodayStartPractice));
-    public static string StreakAtRiskBanner(int days) => T(
-        $"Сохраните серию из {days} дн. — позанимайтесь сегодня",
-        $"Keep your {days}-day streak — practice today");
+    public static string StreakAtRiskBanner(int days) => F(nameof(StreakAtRiskBanner), days);
     public static string ComebackBanner => R(nameof(ComebackBanner));
-    public static string ComebackBannerWithTechnique(string name) => T(
-        $"С возвращением — начните с «{name}»",
-        $"Welcome back — start with {name}");
+    public static string ComebackBannerWithTechnique(string name) => F(nameof(ComebackBannerWithTechnique), name);
     public static string WeeklyInsightLine(int practiceCount, string moodTrend) =>
         string.IsNullOrEmpty(moodTrend)
             ? T($"На этой неделе: {practiceCount} {PracticeCountWord(practiceCount)}",
                 $"This week: {practiceCount} {PracticeCountWordEn(practiceCount)}")
             : T($"На этой неделе: {practiceCount} {PracticeCountWord(practiceCount)} · настроение {moodTrend}",
                 $"This week: {practiceCount} {PracticeCountWordEn(practiceCount)} · mood {moodTrend}");
-    public static string WeeklyInsightMoodOnly(string moodTrend) => T(
-        $"На этой неделе: настроение {moodTrend}",
-        $"This week: mood {moodTrend}");
+    public static string WeeklyInsightMoodOnly(string moodTrend) => F(nameof(WeeklyInsightMoodOnly), moodTrend);
     public static string MoodTrendUp => "↑";
     public static string MoodTrendFlat => "→";
     public static string MoodTrendDown => "↓";
@@ -280,16 +272,14 @@ public static partial class AppStrings
         _ => T("Практика дня", "Practice of the day")
     };
 
-    public static string TodayRecommendationReasonFromTest(string testId) =>
-        T($"После недавнего теста ({testId})", $"After a recent test ({testId})");
+    public static string TodayRecommendationReasonFromTest(string testId) => F(nameof(TodayRecommendationReasonFromTest), testId);
 
     public static string TodayRecommendationReasonLowMood() =>
         T("Когда настроение низкое", "When mood is low");
     public static string TodayRecommendationReasonContinueDraft() => T(
         "Продолжите с того места, где остановились",
         "Continue where you left off");
-    public static string WeeklyInsightStreakPart(int days) =>
-        T($"серия {days}", $"streak {days}");
+    public static string WeeklyInsightStreakPart(int days) => F(nameof(WeeklyInsightStreakPart), days);
     public static string WeeklyInsightTestImprovedPart() => T("тест ↑", "test ↑");
     public static string WeeklyInsightTestWorsePart() => T("тест ↓", "test ↓");
     public static string WeeklyInsightWithExtra(string baseLine, string extra) =>
@@ -336,32 +326,24 @@ public static partial class AppStrings
     public static string JournalMoodStreakLabel => R(nameof(JournalMoodStreakLabel));
     public static string JournalDynamicsTitle => R(nameof(JournalDynamicsTitle));
     public static string JournalOverviewInsightEmpty => R(nameof(JournalOverviewInsightEmpty));
-    public static string JournalPracticeMoodInsight(int practiceDays, string averageMood) =>
-        T(
-            $"После практик ({practiceDays} дн.): ср. настроение {averageMood}",
-            $"After practice ({practiceDays} days): avg mood {averageMood}");
+    public static string JournalPracticeMoodInsight(int practiceDays, string averageMood) => F(nameof(JournalPracticeMoodInsight), practiceDays, averageMood);
     public static string JournalPracticeMoodCompareInsight(
         int practiceDays,
         string averageOnPractice,
-        string averageWithoutPractice) =>
-        T(
-            $"С практикой ср. {averageOnPractice} · без практики ср. {averageWithoutPractice} ({practiceDays} дн. с практикой)",
-            $"With practice avg {averageOnPractice} · without avg {averageWithoutPractice} ({practiceDays} practice days)");
+        string averageWithoutPractice) => F(nameof(JournalPracticeMoodCompareInsight), averageOnPractice, averageWithoutPractice, practiceDays);
     public static string ProfileMoodCheckInBanner => R(nameof(ProfileMoodCheckInBanner));
     public static string JournalTryQuietQuote => R(nameof(JournalTryQuietQuote));
     public static string PracticeOpenJournalRow => R(nameof(PracticeOpenJournalRow));
     public static string JournalQuestionsSectionTitle => R(nameof(JournalQuestionsSectionTitle));
     public static string JournalFactorsSectionTitle => R(nameof(JournalFactorsSectionTitle));
-    public static string JournalFactorsSummaryLine(string labels) =>
-        T($"Факторы: {labels}", $"Factors: {labels}");
+    public static string JournalFactorsSummaryLine(string labels) => F(nameof(JournalFactorsSummaryLine), labels);
     public static string JournalWeekNavPrev => R(nameof(JournalWeekNavPrev));
     public static string JournalWeekNavNext => R(nameof(JournalWeekNavNext));
     public static string JournalMonthNavPrev => R(nameof(JournalMonthNavPrev));
     public static string JournalMonthNavNext => R(nameof(JournalMonthNavNext));
     public static string JournalMonthTitle(DateOnly month) =>
         month.ToDateTime(TimeOnly.MinValue).ToString("MMMM yyyy", System.Globalization.CultureInfo.CurrentCulture);
-    public static string JournalFactorCountPill(string label, int count) =>
-        T($"{label} · {count}", $"{label} · {count}");
+    public static string JournalFactorCountPill(string label, int count) => F(nameof(JournalFactorCountPill), label, count);
     public static string JournalOverviewInsightLine(
         int checkIns,
         string averageMood,
@@ -476,12 +458,10 @@ public static partial class AppStrings
     public static string JournalFactorRestLabel => R(nameof(JournalFactorRestLabel));
     public static string JournalFactorStressLabel => R(nameof(JournalFactorStressLabel));
     public static string JournalFactorHomeLabel => R(nameof(JournalFactorHomeLabel));
-    public static string JournalActivityCorrelationPill(string label, int count, string averageMood) =>
-        T($"{label} · {count} · ср. {averageMood}", $"{label} · {count} · avg {averageMood}");
+    public static string JournalActivityCorrelationPill(string label, int count, string averageMood) => F(nameof(JournalActivityCorrelationPill), label, count, averageMood);
     public static string JournalYearNavPrev => R(nameof(JournalYearNavPrev));
     public static string JournalYearNavNext => R(nameof(JournalYearNavNext));
-    public static string JournalYearTitle(int year) =>
-        T($"Год {year}", $"Year {year}");
+    public static string JournalYearTitle(int year) => F(nameof(JournalYearTitle), year);
     public static string JournalYearHeatmapTitle => R(nameof(JournalYearHeatmapTitle));
     public static string JournalCalendarScaleWeek => R(nameof(JournalCalendarScaleWeek));
     public static string JournalCalendarScaleMonth => R(nameof(JournalCalendarScaleMonth));
@@ -526,9 +506,7 @@ public static partial class AppStrings
     public static string ProfileMoodTrendHint => R(nameof(ProfileMoodTrendHint));
 
     public static string ChartFirstMeasurement => R(nameof(ChartFirstMeasurement));
-    public static string ChartSparseHint(int count) => T(
-        $"{count} измерения — тренд уточняется",
-        $"{count} measurements — trend still forming");
+    public static string ChartSparseHint(int count) => F(nameof(ChartSparseHint), count);
     public static string ResolveChartSubtitle(int pointCount) =>
         pointCount switch
         {
@@ -547,8 +525,7 @@ public static partial class AppStrings
     public static string PracticeReflectionSectionTitle => R(nameof(PracticeReflectionSectionTitle));
     public static string PracticeLastNoteTitle => R(nameof(PracticeLastNoteTitle));
     public static string PracticeCompletedTitle => R(nameof(PracticeCompletedTitle));
-    public static string PracticeCompletedBody(int streak) =>
-        T($"Отличная работа! Серия: {streak} дн.", $"Great job! Streak: {streak} days");
+    public static string PracticeCompletedBody(int streak) => F(nameof(PracticeCompletedBody), streak);
     public static bool IsStreakMilestone(int streak) =>
         streak is 3 or 7 or 14 or 30;
     public static string PracticeMilestoneTitle(int streak) => streak switch
@@ -601,18 +578,14 @@ public static partial class AppStrings
     public static string PracticeNextReason => R(nameof(PracticeNextReason));
     public static string PracticeHistoryTitle => R(nameof(PracticeHistoryTitle));
     public static string PracticeHistoryEmpty => R(nameof(PracticeHistoryEmpty));
-    public static string PracticeHistoryEntry(string date, string name) =>
-        T($"{date}: {name}", $"{date}: {name}");
-    public static string InfoAppVersion(string version) =>
-        T($"Версия {version}", $"Version {version}");
+    public static string PracticeHistoryEntry(string date, string name) => F(nameof(PracticeHistoryEntry), date, name);
+    public static string InfoAppVersion(string version) => F(nameof(InfoAppVersion), version);
     public static string QuoteCopied => R(nameof(QuoteCopied));
     public static string TestHistoryTitle => R(nameof(TestHistoryTitle));
     public static string TestHistoryEmpty => R(nameof(TestHistoryEmpty));
-    public static string TestHistoryEntry(string date, string summary) =>
-        T($"{date}: {summary}", $"{date}: {summary}");
+    public static string TestHistoryEntry(string date, string summary) => F(nameof(TestHistoryEntry), date, summary);
     public static string TestOpenHistory => R(nameof(TestOpenHistory));
-    public static string ProfileLastPractice(string date) =>
-        T($"Последняя практика: {date}", $"Last practice: {date}");
+    public static string ProfileLastPractice(string date) => F(nameof(ProfileLastPractice), date);
     public static string PhysicsNoResultsSubhint => R(nameof(PhysicsNoResultsSubhint));
 
     private static string MoodEmoji(int level) => level switch
@@ -627,18 +600,17 @@ public static partial class AppStrings
 
     public static string MoodEmojiFor(int level) => MoodEmoji(level);
     public static string TechniqueContinueBadge => R(nameof(TechniqueContinueBadge));
-    public static string TechniqueLastPractice(string date) => T($"Последняя практика: {date}", $"Last practice: {date}");
+    public static string TechniqueLastPractice(string date) => F(nameof(TechniqueLastPractice), date);
     public static string TechniqueNotTriedYet => R(nameof(TechniqueNotTriedYet));
-    public static string TechniqueDuration(int minutes) => T($"~{minutes} мин", $"~{minutes} min");
-    public static string TechniqueMetaLine(string duration, string theme) => T($"{duration} · {theme}", $"{duration} · {theme}");
-    public static string TechniqueRatingValue(int value) => T($"Оценка: {value} из 10", $"Rating: {value} of 10");
-    public static string TechniqueRatingNegValue(int value) => T($"Оценка: {value} (от −10 до 10)", $"Rating: {value} (from −10 to 10)");
+    public static string TechniqueDuration(int minutes) => F(nameof(TechniqueDuration), minutes);
+    public static string TechniqueMetaLine(string duration, string theme) => F(nameof(TechniqueMetaLine), duration, theme);
+    public static string TechniqueRatingValue(int value) => F(nameof(TechniqueRatingValue), value);
+    public static string TechniqueRatingNegValue(int value) => F(nameof(TechniqueRatingNegValue), value);
 
-    public static string TestLastResult(string summary) => T($"Последний результат: {summary}", $"Last result: {summary}");
-    public static string TestLastResultDated(string summary, string date) =>
-        T($"Последний результат · {date}: {summary}", $"Last result · {date}: {summary}");
+    public static string TestLastResult(string summary) => F(nameof(TestLastResult), summary);
+    public static string TestLastResultDated(string summary, string date) => F(nameof(TestLastResultDated), date, summary);
     public static string TestNeverTakenYet => R(nameof(TestNeverTakenYet));
-    public static string TestCompletedAt(string date) => T($"Пройдено: {date}", $"Completed: {date}");
+    public static string TestCompletedAt(string date) => F(nameof(TestCompletedAt), date);
     public static string TestTryTechnique => R(nameof(TestTryTechnique));
     public static string TestResultImproved => R(nameof(TestResultImproved));
     public static string TestResultWorse => R(nameof(TestResultWorse));
@@ -651,8 +623,7 @@ public static partial class AppStrings
     public static string OnboardingValueOffline => R(nameof(OnboardingValueOffline));
     public static string OnboardingValueNoJudgment => R(nameof(OnboardingValueNoJudgment));
     public static string OnboardingValueOnDevice => R(nameof(OnboardingValueOnDevice));
-    public static string OnboardingStepOf(int current, int total) =>
-        T($"{current} из {total}", $"{current} of {total}");
+    public static string OnboardingStepOf(int current, int total) => F(nameof(OnboardingStepOf), current, total);
     public static string OnboardingBack => R(nameof(OnboardingBack));
     public static string OnboardingOverviewTitle => R(nameof(OnboardingOverviewTitle));
     public static string OnboardingOverviewSubtitle => R(nameof(OnboardingOverviewSubtitle));
@@ -674,9 +645,7 @@ public static partial class AppStrings
     public static string OnboardingConcernMoodHint => R(nameof(OnboardingConcernMoodHint));
     public static string OnboardingConcernExploreHint => R(nameof(OnboardingConcernExploreHint));
     public static string OnboardingFinishTitle => R(nameof(OnboardingFinishTitle));
-    public static string OnboardingFinishSubtitle(string practiceName) => T(
-        $"Рекомендуем начать с «{practiceName}»",
-        $"We recommend starting with \"{practiceName}\"");
+    public static string OnboardingFinishSubtitle(string practiceName) => F(nameof(OnboardingFinishSubtitle), practiceName);
     public static string OnboardingRecommendedCaption => R(nameof(OnboardingRecommendedCaption));
     public static string OnboardingDisclaimerTitle => R(nameof(OnboardingDisclaimerTitle));
     public static string OnboardingDisclaimerBody => R(nameof(OnboardingDisclaimerBody));
@@ -908,8 +877,7 @@ public static partial class AppStrings
     public static string PracticeHistoryPageTitle => R(nameof(PracticeHistoryPageTitle));
     public static string ProfileRiskCheckLabel => R(nameof(ProfileRiskCheckLabel));
     public static string ProfileRiskCheckSubtitle => R(nameof(ProfileRiskCheckSubtitle));
-    public static string ProfileMoodTrendPreview(string avgMood, string risk) =>
-        T($"Настроение: {avgMood} · риск: {risk}", $"Mood: {avgMood} · risk: {risk}");
+    public static string ProfileMoodTrendPreview(string avgMood, string risk) => F(nameof(ProfileMoodTrendPreview), avgMood, risk);
 
     public static string JournalOverviewTitle => R(nameof(JournalOverviewTitle));
     public static string JournalTimelineTitle => R(nameof(JournalTimelineTitle));
@@ -975,9 +943,7 @@ public static partial class AppStrings
     public static string MoodReminderBody => R(nameof(MoodReminderBody));
 
     public static string ClinicalScorecardEmpty => R(nameof(ClinicalScorecardEmpty));
-    public static string ClinicalScorecardSummary(int practices, int moods, string riskLabel) => T(
-        $"За неделю: {practices} практик, {moods} отметок настроения · риск: {riskLabel}",
-        $"This week: {practices} practices, {moods} mood check-ins · risk: {riskLabel}");
+    public static string ClinicalScorecardSummary(int practices, int moods, string riskLabel) => F(nameof(ClinicalScorecardSummary), practices, moods, riskLabel);
     public static string ClinicalRiskGreen => R(nameof(ClinicalRiskGreen));
     public static string ClinicalRiskAmber => R(nameof(ClinicalRiskAmber));
     public static string ClinicalRiskRed => R(nameof(ClinicalRiskRed));
@@ -997,7 +963,7 @@ public static partial class AppStrings
     public static string TherapyProgramAnxiety => R(nameof(TherapyProgramAnxiety));
     public static string TherapyProgramMood => R(nameof(TherapyProgramMood));
     public static string TherapyProgramStress => R(nameof(TherapyProgramStress));
-    public static string TherapyProgramWeekLabel(int week) => T($"Неделя {week}", $"Week {week}");
+    public static string TherapyProgramWeekLabel(int week) => F(nameof(TherapyProgramWeekLabel), week);
     public static string TherapyProgramWeekGoal(int week) => week switch
     {
         1 => T("Стабилизация: короткие ежедневные практики", "Stabilize with short daily practices"),
@@ -1037,6 +1003,9 @@ public static partial class AppStrings
 
     internal static string ResourceText(string key, bool english) =>
         (english ? EnglishTexts : RussianTexts).GetString(key) ?? string.Empty;
+
+    private static string F(string key, params object?[] args) =>
+        string.Format(System.Globalization.CultureInfo.CurrentCulture, R(key), args);
 
     public static bool IsEnglish(string language) =>
         language.Equals("en", StringComparison.OrdinalIgnoreCase)

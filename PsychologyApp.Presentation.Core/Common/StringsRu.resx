@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -2072,5 +2072,149 @@
   </data>
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
+  </data>
+  <data name="ChatProfilePracticeDetail" xml:space="preserve">
+    <value>Помогла {0} из {1}</value>
+  </data>
+  <data name="PracticeReminderTitleNamed" xml:space="preserve">
+    <value>Пора: {0}</value>
+  </data>
+  <data name="PracticeCustomTechniqueNumber" xml:space="preserve">
+    <value>Своя техника №{0}</value>
+  </data>
+  <data name="PoleNumber" xml:space="preserve">
+    <value>Полюс №{0}</value>
+  </data>
+  <data name="RecordNumber" xml:space="preserve">
+    <value>Запись №{0}</value>
+  </data>
+  <data name="PracticeEntryCount" xml:space="preserve">
+    <value>Записей: {0}</value>
+  </data>
+  <data name="TechniqueStepProgress" xml:space="preserve">
+    <value>Шаг {0} из {1}</value>
+  </data>
+  <data name="ProfileStreakCount" xml:space="preserve">
+    <value>{0} дн.</value>
+  </data>
+  <data name="StreakAtRiskBanner" xml:space="preserve">
+    <value>Сохраните серию из {0} дн. — позанимайтесь сегодня</value>
+  </data>
+  <data name="ComebackBannerWithTechnique" xml:space="preserve">
+    <value>С возвращением — начните с «{0}»</value>
+  </data>
+  <data name="WeeklyInsightMoodOnly" xml:space="preserve">
+    <value>На этой неделе: настроение {0}</value>
+  </data>
+  <data name="TodayRecommendationReasonFromTest" xml:space="preserve">
+    <value>После недавнего теста ({0})</value>
+  </data>
+  <data name="WeeklyInsightStreakPart" xml:space="preserve">
+    <value>серия {0}</value>
+  </data>
+  <data name="JournalPracticeMoodInsight" xml:space="preserve">
+    <value>После практик ({0} дн.): ср. настроение {1}</value>
+  </data>
+  <data name="JournalPracticeMoodCompareInsight" xml:space="preserve">
+    <value>С практикой ср. {0} · без практики ср. {1} ({2} дн. с практикой)</value>
+  </data>
+  <data name="JournalFactorsSummaryLine" xml:space="preserve">
+    <value>Факторы: {0}</value>
+  </data>
+  <data name="JournalFactorCountPill" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="JournalActivityCorrelationPill" xml:space="preserve">
+    <value>{0} · {1} · ср. {2}</value>
+  </data>
+  <data name="JournalYearTitle" xml:space="preserve">
+    <value>Год {0}</value>
+  </data>
+  <data name="ChartSparseHint" xml:space="preserve">
+    <value>{0} измерения — тренд уточняется</value>
+  </data>
+  <data name="PracticeCompletedBody" xml:space="preserve">
+    <value>Отличная работа! Серия: {0} дн.</value>
+  </data>
+  <data name="PracticeHistoryEntry" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="InfoAppVersion" xml:space="preserve">
+    <value>Версия {0}</value>
+  </data>
+  <data name="TestHistoryEntry" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="ProfileLastPractice" xml:space="preserve">
+    <value>Последняя практика: {0}</value>
+  </data>
+  <data name="TechniqueLastPractice" xml:space="preserve">
+    <value>Последняя практика: {0}</value>
+  </data>
+  <data name="TechniqueDuration" xml:space="preserve">
+    <value>~{0} мин</value>
+  </data>
+  <data name="TechniqueMetaLine" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="TechniqueRatingValue" xml:space="preserve">
+    <value>Оценка: {0} из 10</value>
+  </data>
+  <data name="TechniqueRatingNegValue" xml:space="preserve">
+    <value>Оценка: {0} (от −10 до 10)</value>
+  </data>
+  <data name="TestLastResult" xml:space="preserve">
+    <value>Последний результат: {0}</value>
+  </data>
+  <data name="TestLastResultDated" xml:space="preserve">
+    <value>Последний результат · {0}: {1}</value>
+  </data>
+  <data name="TestCompletedAt" xml:space="preserve">
+    <value>Пройдено: {0}</value>
+  </data>
+  <data name="OnboardingStepOf" xml:space="preserve">
+    <value>{0} из {1}</value>
+  </data>
+  <data name="OnboardingFinishSubtitle" xml:space="preserve">
+    <value>Рекомендуем начать с «{0}»</value>
+  </data>
+  <data name="ProfileMoodTrendPreview" xml:space="preserve">
+    <value>Настроение: {0} · риск: {1}</value>
+  </data>
+  <data name="ClinicalScorecardSummary" xml:space="preserve">
+    <value>За неделю: {0} практик, {1} отметок настроения · риск: {2}</value>
+  </data>
+  <data name="TherapyProgramWeekLabel" xml:space="preserve">
+    <value>Неделя {0}</value>
+  </data>
+  <data name="TestsLuscherPassOf" xml:space="preserve">
+    <value>Проход {0} из {1}</value>
+  </data>
+  <data name="TestsStepOf" xml:space="preserve">
+    <value>{0} из {1}</value>
+  </data>
+  <data name="TestsResultTitle" xml:space="preserve">
+    <value>Ваш результат: {0}</value>
+  </data>
+  <data name="TestDuration" xml:space="preserve">
+    <value>~{0} мин</value>
+  </data>
+  <data name="TestQuestionCount" xml:space="preserve">
+    <value>{0} вопр.</value>
+  </data>
+  <data name="TestRecommendationFor" xml:space="preserve">
+    <value>Рекомендуем: {0}</value>
+  </data>
+  <data name="TestHistoryScore" xml:space="preserve">
+    <value>Балл: {0}</value>
+  </data>
+  <data name="TestsRemainingDuration" xml:space="preserve">
+    <value>~{0} мин осталось</value>
+  </data>
+  <data name="TestsScoreOutOf" xml:space="preserve">
+    <value>{0} из {1}</value>
+  </data>
+  <data name="TestsDecimalScoreOutOf" xml:space="preserve">
+    <value>{0} из {1}</value>
   </data>
 </root>

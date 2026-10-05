@@ -60,7 +60,7 @@ public static partial class AppStrings
     public static string ChatProfilePracticesEmpty => R(nameof(ChatProfilePracticesEmpty));
     public static string ChatProfilePracticeBest => R(nameof(ChatProfilePracticeBest));
     public static string ChatProfilePracticeStart => R(nameof(ChatProfilePracticeStart));
-    public static string ChatProfilePracticeDetail(int helped, int tried) => T($"Помогла {helped} из {tried}", $"Helped {helped} of {tried}");
+    public static string ChatProfilePracticeDetail(int helped, int tried) => F(nameof(ChatProfilePracticeDetail), helped, tried);
     public static string ChatProfileEmotionsTitle => R(nameof(ChatProfileEmotionsTitle));
     public static string ChatProfileAboutTitle => R(nameof(ChatProfileAboutTitle));
     public static string ChatProfileActionsTitle => R(nameof(ChatProfileActionsTitle));

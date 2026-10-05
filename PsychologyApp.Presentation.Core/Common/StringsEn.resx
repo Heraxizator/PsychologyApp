@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -2066,5 +2066,149 @@
   </data>
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
+  </data>
+  <data name="ChatProfilePracticeDetail" xml:space="preserve">
+    <value>Helped {0} of {1}</value>
+  </data>
+  <data name="PracticeReminderTitleNamed" xml:space="preserve">
+    <value>Time for {0}</value>
+  </data>
+  <data name="PracticeCustomTechniqueNumber" xml:space="preserve">
+    <value>Custom technique #{0}</value>
+  </data>
+  <data name="PoleNumber" xml:space="preserve">
+    <value>Pole #{0}</value>
+  </data>
+  <data name="RecordNumber" xml:space="preserve">
+    <value>Entry #{0}</value>
+  </data>
+  <data name="PracticeEntryCount" xml:space="preserve">
+    <value>{0} entries</value>
+  </data>
+  <data name="TechniqueStepProgress" xml:space="preserve">
+    <value>Step {0} of {1}</value>
+  </data>
+  <data name="ProfileStreakCount" xml:space="preserve">
+    <value>{0} days</value>
+  </data>
+  <data name="StreakAtRiskBanner" xml:space="preserve">
+    <value>Keep your {0}-day streak — practice today</value>
+  </data>
+  <data name="ComebackBannerWithTechnique" xml:space="preserve">
+    <value>Welcome back — start with {0}</value>
+  </data>
+  <data name="WeeklyInsightMoodOnly" xml:space="preserve">
+    <value>This week: mood {0}</value>
+  </data>
+  <data name="TodayRecommendationReasonFromTest" xml:space="preserve">
+    <value>After a recent test ({0})</value>
+  </data>
+  <data name="WeeklyInsightStreakPart" xml:space="preserve">
+    <value>streak {0}</value>
+  </data>
+  <data name="JournalPracticeMoodInsight" xml:space="preserve">
+    <value>After practice ({0} days): avg mood {1}</value>
+  </data>
+  <data name="JournalPracticeMoodCompareInsight" xml:space="preserve">
+    <value>With practice avg {0} · without avg {1} ({2} practice days)</value>
+  </data>
+  <data name="JournalFactorsSummaryLine" xml:space="preserve">
+    <value>Factors: {0}</value>
+  </data>
+  <data name="JournalFactorCountPill" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="JournalActivityCorrelationPill" xml:space="preserve">
+    <value>{0} · {1} · avg {2}</value>
+  </data>
+  <data name="JournalYearTitle" xml:space="preserve">
+    <value>Year {0}</value>
+  </data>
+  <data name="ChartSparseHint" xml:space="preserve">
+    <value>{0} measurements — trend still forming</value>
+  </data>
+  <data name="PracticeCompletedBody" xml:space="preserve">
+    <value>Great job! Streak: {0} days</value>
+  </data>
+  <data name="PracticeHistoryEntry" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="InfoAppVersion" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
+  <data name="TestHistoryEntry" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="ProfileLastPractice" xml:space="preserve">
+    <value>Last practice: {0}</value>
+  </data>
+  <data name="TechniqueLastPractice" xml:space="preserve">
+    <value>Last practice: {0}</value>
+  </data>
+  <data name="TechniqueDuration" xml:space="preserve">
+    <value>~{0} min</value>
+  </data>
+  <data name="TechniqueMetaLine" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="TechniqueRatingValue" xml:space="preserve">
+    <value>Rating: {0} of 10</value>
+  </data>
+  <data name="TechniqueRatingNegValue" xml:space="preserve">
+    <value>Rating: {0} (from −10 to 10)</value>
+  </data>
+  <data name="TestLastResult" xml:space="preserve">
+    <value>Last result: {0}</value>
+  </data>
+  <data name="TestLastResultDated" xml:space="preserve">
+    <value>Last result · {0}: {1}</value>
+  </data>
+  <data name="TestCompletedAt" xml:space="preserve">
+    <value>Completed: {0}</value>
+  </data>
+  <data name="OnboardingStepOf" xml:space="preserve">
+    <value>{0} of {1}</value>
+  </data>
+  <data name="OnboardingFinishSubtitle" xml:space="preserve">
+    <value>We recommend starting with "{0}"</value>
+  </data>
+  <data name="ProfileMoodTrendPreview" xml:space="preserve">
+    <value>Mood: {0} · risk: {1}</value>
+  </data>
+  <data name="ClinicalScorecardSummary" xml:space="preserve">
+    <value>This week: {0} practices, {1} mood check-ins · risk: {2}</value>
+  </data>
+  <data name="TherapyProgramWeekLabel" xml:space="preserve">
+    <value>Week {0}</value>
+  </data>
+  <data name="TestsLuscherPassOf" xml:space="preserve">
+    <value>Pass {0} of {1}</value>
+  </data>
+  <data name="TestsStepOf" xml:space="preserve">
+    <value>{0} of {1}</value>
+  </data>
+  <data name="TestsResultTitle" xml:space="preserve">
+    <value>Your score: {0}</value>
+  </data>
+  <data name="TestDuration" xml:space="preserve">
+    <value>~{0} min</value>
+  </data>
+  <data name="TestQuestionCount" xml:space="preserve">
+    <value>{0} questions</value>
+  </data>
+  <data name="TestRecommendationFor" xml:space="preserve">
+    <value>Recommended: {0}</value>
+  </data>
+  <data name="TestHistoryScore" xml:space="preserve">
+    <value>Score: {0}</value>
+  </data>
+  <data name="TestsRemainingDuration" xml:space="preserve">
+    <value>~{0} min left</value>
+  </data>
+  <data name="TestsScoreOutOf" xml:space="preserve">
+    <value>{0} of {1}</value>
+  </data>
+  <data name="TestsDecimalScoreOutOf" xml:space="preserve">
+    <value>{0} of {1}</value>
   </data>
 </root>

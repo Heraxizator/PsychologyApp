@@ -44,6 +44,9 @@ jobs:
             adb logcat -c
             adb shell am start -W -a android.intent.action.MAIN -c android.intent.category.LAUNCHER $(adb shell cmd package resolve-activity --brief "${PKG:-com.subconscious.psychologyapp}" | tail -1) | tee start.txt
             adb shell monkey -p "${PKG:-com.subconscious.psychologyapp}" --throttle 300 --pct-syskeys 0 -s 7 2000 || true
+            TOTAL=$(grep -oE "TotalTime: [0-9]+" start.txt | grep -oE "[0-9]+")
+            echo "cold start: ${TOTAL} ms"
+            [ -n "$TOTAL" ] && [ "$TOTAL" -lt 8000 ]
             adb logcat -d > logcat.txt
             ! grep -E "Fatal signal|FATAL EXCEPTION|plt_entry" logcat.txt
       - uses: actions/upload-artifact@v4

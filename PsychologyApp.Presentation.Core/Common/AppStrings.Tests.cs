@@ -26,7 +26,7 @@ public static partial class AppStrings
     public static string TestsLuscherFirstInstruction => R(nameof(TestsLuscherFirstInstruction));
     public static string TestsLuscherSecondInstruction => R(nameof(TestsLuscherSecondInstruction));
     public static string TestsLuscherSecondPassInstruction => R(nameof(TestsLuscherSecondPassInstruction));
-    public static string TestsLuscherPassOf(int current, int total) => T($"Проход {current} из {total}", $"Pass {current} of {total}");
+    public static string TestsLuscherPassOf(int current, int total) => F(nameof(TestsLuscherPassOf), current, total);
     public static string TestsLuscherHistoryFirstPass => R(nameof(TestsLuscherHistoryFirstPass));
     public static string TestsLuscherHistorySecondPass => R(nameof(TestsLuscherHistorySecondPass));
     public static string TestsLuscherHistoryBk(double bk) => T($"{TestsBkLabel}: {bk}", $"{TestsBkLabel}: {bk}");
@@ -34,23 +34,22 @@ public static partial class AppStrings
     public static string TestsBriefDescription => R(nameof(TestsBriefDescription));
     public static string TestsAnswerAllToast => R(nameof(TestsAnswerAllToast));
     public static string TestsAnswerCurrentToast => R(nameof(TestsAnswerCurrentToast));
-    public static string TestsStepOf(int current, int total) => T($"{current} из {total}", $"{current} of {total}");
+    public static string TestsStepOf(int current, int total) => F(nameof(TestsStepOf), current, total);
     public static string TestsNextButton => R(nameof(TestsNextButton));
     public static string TestsPreviousButton => R(nameof(TestsPreviousButton));
-    public static string TestsResultTitle(int score) => T($"Ваш результат: {score}", $"Your score: {score}");
+    public static string TestsResultTitle(int score) => F(nameof(TestsResultTitle), score);
     public static string TestsResultPageTitle => R(nameof(TestsResultPageTitle));
     public static string TestsBackToList => R(nameof(TestsBackToList));
     public static string TestsResultRecommendationHint => R(nameof(TestsResultRecommendationHint));
     public static string TestResultExplorePractice => R(nameof(TestResultExplorePractice));
-    public static string TestDuration(int minutes) => T($"~{minutes} мин", $"~{minutes} min");
-    public static string TestQuestionCount(int count) => T($"{count} вопр.", $"{count} questions");
-    public static string TestRecommendationFor(string techniqueTitle) =>
-        T($"Рекомендуем: {techniqueTitle}", $"Recommended: {techniqueTitle}");
+    public static string TestDuration(int minutes) => F(nameof(TestDuration), minutes);
+    public static string TestQuestionCount(int count) => F(nameof(TestQuestionCount), count);
+    public static string TestRecommendationFor(string techniqueTitle) => F(nameof(TestRecommendationFor), techniqueTitle);
     public static string TestRecommendationReason(string reason) => reason;
     public static string TestsContinueButton => R(nameof(TestsContinueButton));
     public static string TestsListSectionTitle => R(nameof(TestsListSectionTitle));
     public static string TestsListSectionSubtitle => R(nameof(TestsListSectionSubtitle));
-    public static string TestHistoryScore(int score) => T($"Балл: {score}", $"Score: {score}");
+    public static string TestHistoryScore(int score) => F(nameof(TestHistoryScore), score);
     public static string TestHistoryTrendTitle => R(nameof(TestHistoryTrendTitle));
     public static string TestResultDuration(int seconds) =>
         seconds < 60
@@ -64,12 +63,11 @@ public static partial class AppStrings
     public static string TestsAnswerSelected => R(nameof(TestsAnswerSelected));
     public static string TestsAnswerNotSelected => R(nameof(TestsAnswerNotSelected));
     public static string TestsAnswerOption => R(nameof(TestsAnswerOption));
-    public static string TestsRemainingDuration(int minutes) => T($"~{minutes} мин осталось", $"~{minutes} min left");
+    public static string TestsRemainingDuration(int minutes) => F(nameof(TestsRemainingDuration), minutes);
     public static string TestsCoLabel => R(nameof(TestsCoLabel));
     public static string TestsBkLabel => R(nameof(TestsBkLabel));
-    public static string TestsScoreOutOf(int value, string total) => T($"{value} из {total}", $"{value} of {total}");
-    public static string TestsDecimalScoreOutOf(double value, string total) =>
-        T($"{value} из {total}", $"{value} of {total}");
+    public static string TestsScoreOutOf(int value, string total) => F(nameof(TestsScoreOutOf), value, total);
+    public static string TestsDecimalScoreOutOf(double value, string total) => F(nameof(TestsDecimalScoreOutOf), value, total);
     public static string Yes => R(nameof(Yes));
     public static string No => R(nameof(No));
     public static string Ok => R(nameof(Ok));
