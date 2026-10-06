@@ -37,7 +37,7 @@ public static class CompanionDialogueContent
         return null;
     }
 
-    public static string Question(string id, bool english) => CompanionActContent.TargetedQuestion(id, english) ?? BankQuestion(id, english);
+    public static string Question(string id, bool english) => CompanionCaseContent.EventQuestion(id, english) ?? CompanionActContent.TargetedQuestion(id, english) ?? BankQuestion(id, english);
 
     private static string BankQuestion(string id, bool english) => id switch
     {

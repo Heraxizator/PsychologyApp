@@ -442,6 +442,8 @@ public class ChatServiceTests
         ChatTurnResult offer = await service.SendTextAsync(next, "Мне тревожно из-за завтрашней встречи");
         offer = await service.SendTextAsync(next, "Я думаю о ней весь день");
         offer = await service.SendTextAsync(next, "И ночью тоже не могу перестать");
+        offer = await service.SendTextAsync(next, "Особенно когда ложусь спать");
+        offer = await service.SendTextAsync(next, "Опять беспокоюсь о завтрашней встрече");
 
         Assert.Contains(offer.NewMessages, m => m.Text.Contains("В прошлый раз вам помогла практика", StringComparison.Ordinal));
         Assert.Equal("Grounding", offer.NewMessages[^1].QuickReplies.First(q => q.Kind == ChatQuickReplyKinds.Practice).Payload);
@@ -548,7 +550,9 @@ public class ChatServiceTests
         await service.SendQuickReplyAsync(id, new ChatQuickReply(ChatQuickReplyKinds.Rating, "6", "6"));
         await service.SendTextAsync(id, "Даже дома продолжаю об этом думать весь вечер");
 
-        ChatTurnResult offer = await service.SendTextAsync(id, "И на следующий день сил всё равно нет совсем");
+        await service.SendTextAsync(id, "И на следующий день сил всё равно нет совсем");
+        await service.SendTextAsync(id, "Всё валится из рук");
+        ChatTurnResult offer = await service.SendTextAsync(id, "Опять навалилась усталость и ничего не хочется");
 
         Assert.Contains(offer.NewMessages, m => m.Text.Contains("Умеренный стресс"));
     }

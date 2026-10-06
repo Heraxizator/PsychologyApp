@@ -109,6 +109,17 @@ public sealed record CompanionState
 
     public bool JournalLogged { get; init; }
 
+    /// <summary>What happened, as a <c>CompanionEvent</c> name (the "case card"); null until the person describes something.</summary>
+    public string? Event { get; init; }
+
+    /// <summary>What the person needs from the conversation: "vent", "understand" or "calm"; null until they said.</summary>
+    public string? Goal { get; init; }
+
+    public bool GoalAsked { get; init; }
+
+    /// <summary>Id of the question the companion has just asked, so a short answer is read against it. Cleared by any reply that asks nothing new.</summary>
+    public string? LastQuestionId { get; init; }
+
     public CompanionState WithText(string text) => this with
     {
         Turns = Turns + 1,
@@ -162,6 +173,10 @@ public sealed record CompanionState
             w.WriteBoolean("grief", GriefShared);
             w.WriteBoolean("declined", PracticesDeclined);
             w.WriteBoolean("helpNoted", ProfessionalHelpNoted);
+            WriteOptional(w, "event", Event);
+            WriteOptional(w, "goal", Goal);
+            w.WriteBoolean("goalAsked", GoalAsked);
+            WriteOptional(w, "lastQuestionId", LastQuestionId);
             w.WriteEndObject();
         }
 
@@ -220,7 +235,11 @@ public sealed record CompanionState
                 JournalLogged = Bool(r, "journalLogged"),
                 GriefShared = Bool(r, "grief"),
                 PracticesDeclined = Bool(r, "declined"),
-                ProfessionalHelpNoted = Bool(r, "helpNoted")
+                ProfessionalHelpNoted = Bool(r, "helpNoted"),
+                Event = Str(r, "event"),
+                Goal = Str(r, "goal"),
+                GoalAsked = Bool(r, "goalAsked"),
+                LastQuestionId = Str(r, "lastQuestionId")
             };
         }
         catch (Exception ex) when (ex is JsonException or InvalidOperationException)

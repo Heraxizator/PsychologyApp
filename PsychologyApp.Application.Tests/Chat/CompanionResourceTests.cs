@@ -93,7 +93,7 @@ public class CompanionResourceDialogueTests
     public void An_offer_for_sadness_includes_a_matching_quote_and_a_chip_for_more()
     {
         CompanionDialogue d = Create();
-        CompanionState state = new() { Turns = 2, Emotion = "Sadness", TurnsSinceOffer = 5, ScaleAsked = true };
+        CompanionState state = new() { Turns = 2, Emotion = "Sadness", TurnsSinceOffer = 5, ScaleAsked = true, GoalAsked = true };
 
         CompanionReply reply = Say(d, state, "Так грустно, что хочется плакать без причины");
 
@@ -106,7 +106,7 @@ public class CompanionResourceDialogueTests
     public void The_resource_is_offered_only_once_per_chat()
     {
         CompanionDialogue d = Create();
-        CompanionState state = new() { Turns = 2, Emotion = "Sadness", TurnsSinceOffer = 5, ScaleAsked = true, OfferedResource = "quote" };
+        CompanionState state = new() { Turns = 2, Emotion = "Sadness", TurnsSinceOffer = 5, ScaleAsked = true, GoalAsked = true, OfferedResource = "quote" };
 
         CompanionReply reply = Say(d, state, "Так грустно, что хочется плакать без причины");
 
@@ -180,7 +180,7 @@ public class CompanionResourceDialogueTests
     public void With_an_empty_catalog_the_offer_still_works_without_a_quote()
     {
         CompanionDialogue d = Create(quotes: []);
-        CompanionState state = new() { Turns = 2, Emotion = "Sadness", TurnsSinceOffer = 5, ScaleAsked = true };
+        CompanionState state = new() { Turns = 2, Emotion = "Sadness", TurnsSinceOffer = 5, ScaleAsked = true, GoalAsked = true };
 
         CompanionReply reply = Say(d, state, "Так грустно, что хочется плакать без причины");
 
@@ -291,7 +291,7 @@ public class CompanionTestReferenceTests
     {
         TestResultDTO result = new() { TestId = "pss10", Summary = "Умеренный стресс", CompletedAt = DateTime.UtcNow.AddDays(-3) };
         CompanionDialogue d = Create(result);
-        CompanionState state = new() { Turns = 2, Emotion = "Overthinking", TurnsSinceOffer = 5, ScaleAsked = true };
+        CompanionState state = new() { Turns = 2, Emotion = "Overthinking", TurnsSinceOffer = 5, ScaleAsked = true, GoalAsked = true };
 
         CompanionReply reply = d.Respond(state, new CompanionInput.FreeText("Мысли крутятся по кругу и не дают покоя весь день"));
 

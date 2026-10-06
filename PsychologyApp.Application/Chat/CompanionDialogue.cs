@@ -114,7 +114,9 @@ public sealed partial class CompanionDialogue(
             reply = Compute(clean, state.NamePending, input);
         }
 
-        return reply with { State = reply.State with { RecentReplies = Remember(state.RecentReplies, reply.Messages) } };
+        // The id belongs to the question asked in this very reply; one carried over from earlier turns would misread the next "yes".
+        string? lastQuestionId = reply.State.LastQuestionId == state.LastQuestionId ? null : reply.State.LastQuestionId;
+        return reply with { State = reply.State with { RecentReplies = Remember(state.RecentReplies, reply.Messages), LastQuestionId = lastQuestionId } };
     }
 
     private CompanionReply Compute(CompanionState state, bool namePending, CompanionInput input) => WithPending(input switch
@@ -193,6 +195,12 @@ public sealed partial class CompanionDialogue(
         if (previous.OfferedPrimary is { } offered && previous.TurnsSinceOffer == 0 && Enum.TryParse(offered, out TechniqueId _) && UtteranceClassifier.AcceptsOffer(text))
         {
             return RespondToQuickReply(previous, new ChatQuickReply(ChatQuickReplyKinds.Practice, string.Empty, offered));
+        }
+
+        // "Just talk" typed after "get it off your chest, sort it out or calm down?" is that choice, not a new story.
+        if (previous.LastQuestionId == CompanionCaseContent.GoalQuestionId && WordCount(text) <= 6 && CompanionCaseContent.ParseGoal(text) is { } typedGoal)
+        {
+            return RespondToGoal(previous with { Turns = previous.Turns + 1 }, typedGoal);
         }
 
         SituationAnalysis single = analyzer.Analyze(text);
@@ -418,8 +426,8 @@ public sealed partial class CompanionDialogue(
                 state,
                 emotion,
                 theme),
-            Utterance.Yes => Reply([CompanionActContent.YesProbe(english, _random)], [], state, emotion, theme),
-            Utterance.No => Reply([CompanionActContent.NoProbe(english, _random)], [], state, emotion, theme),
+            Utterance.Yes => Reply([CompanionCaseContent.FollowUp(previous.LastQuestionId, yes: true, english) ?? CompanionActContent.YesProbe(english, _random)], [], state, emotion, theme),
+            Utterance.No => Reply([CompanionCaseContent.FollowUp(previous.LastQuestionId, yes: false, english) ?? CompanionActContent.NoProbe(english, _random)], [], state, emotion, theme),
             _ => CompanionReply.Empty(state)
         };
     }
@@ -461,6 +469,18 @@ public sealed partial class CompanionDialogue(
         };
         analysis = analysis with { Emotion = emotion };
 
+        // The case card: what happened is kept, and "when did this start?" is not asked of someone who has just said when.
+        bool newEvent = analysis.Event != CompanionEvent.None && state.Event != analysis.Event.ToString();
+        if (analysis.Event != CompanionEvent.None)
+        {
+            state = state with { Event = analysis.Event.ToString() };
+        }
+
+        if (CompanionCaseContent.MentionsWhen(text) && !state.AskedQuestions.Contains("onset"))
+        {
+            state = state.WithAsked("onset");
+        }
+
         // The person has already said what happened (a real sentence with a topic or a person in it): do not ask "what happened?" as the next question.
         if (WordCount(text) >= 5 && (analysis.Themes.Count > 0 || analysis.Persons is { Count: > 0 }))
         {
@@ -482,6 +502,10 @@ public sealed partial class CompanionDialogue(
         }
 
         List<string> messages = [heard];
+        if (newEvent && !analysis.HasLoss && emotion != CompanionEmotion.Guilt && CompanionCaseContent.EventLine(analysis.Event, english) is { } eventLine)
+        {
+            messages[0] = $"{heard} {eventLine}";
+        }
 
         bool urgent = emotion == CompanionEmotion.Panic
             || (emotion == CompanionEmotion.Anxiety && analysis.IsIntense && analysis.HasBodySymptoms);
@@ -525,13 +549,27 @@ public sealed partial class CompanionDialogue(
         }
 
         bool known = emotion != CompanionEmotion.Unknown;
-        if (!state.ScaleAsked && state.ContentTurns >= 2 && known)
+        bool venting = state.Goal == CompanionCaseContent.GoalVent;
+        if (!state.ScaleAsked && state.ContentTurns >= 2 && known && !venting)
         {
             messages.Add(CompanionDialogueContent.ScaleQuestion(english));
             return Reply(messages, RatingReplies(), state with { ScaleAsked = true }, emotion, theme);
         }
 
-        if (known && state.ContentTurns >= 4 && state.Turns - state.LastRecapTurn >= RecapEveryTurns)
+        // Once the situation is clear, ask what the person wants from this talk instead of guessing: the rest of the chat follows the answer.
+        if (!state.GoalAsked && state.ContentTurns >= 3 && known)
+        {
+            messages.Add(CompanionCaseContent.GoalQuestion(english));
+            return Reply(messages, CompanionCaseContent.GoalChips(english), state with { GoalAsked = true, LastQuestionId = CompanionCaseContent.GoalQuestionId }, emotion, theme);
+        }
+
+        // Someone who came to talk is not interrupted by summaries and offers; those wait until they ask or the talk has gone on for long.
+        if (venting && state.ContentTurns < 8)
+        {
+            return state.Turns % 2 == 0 ? Reply(messages, [], state, emotion, theme) : AskOpen(state, messages, emotion, theme);
+        }
+
+        if (known && state.ContentTurns >= 4 && state.Turns - state.LastRecapTurn >= (state.Goal == CompanionCaseContent.GoalUnderstand ? 3 : RecapEveryTurns))
         {
             messages.Add(CompanionActContent.Recap(emotion, theme, person, state.FirstIntensity, state.LastIntensity, english));
             return Reply(messages, CompanionActContent.RecapReplies(english), state with { LastRecapTurn = state.Turns }, emotion, theme);
@@ -608,9 +646,14 @@ public sealed partial class CompanionDialogue(
     {
         switch (payload)
         {
-            case "continue":
             case "vent":
+                return RespondToGoal(state, CompanionCaseContent.GoalVent);
+
+            case "continue":
                 return Reply([CompanionDialogueContent.Question("more", english)], [], state, emotion, theme);
+
+            case { } goal when goal.StartsWith("goal:", StringComparison.Ordinal):
+                return RespondToGoal(state, goal["goal:".Length..]);
 
             case "enough":
                 return Reply([CompanionActContent.Goodbye(english)], [], state, emotion, theme);
@@ -619,7 +662,7 @@ public sealed partial class CompanionDialogue(
                 return Reply([CompanionActContent.OtherTopic(english)], [], state, emotion, theme);
 
             case "understand":
-                return AskNextQuestion(state, [], emotion, theme);
+                return RespondToGoal(state, CompanionCaseContent.GoalUnderstand);
 
             case "practice":
                 return Offer(state, [], new SituationAnalysis(emotion, 1, false, false, []), emotion, theme, calming: false, asked: true);
@@ -766,11 +809,38 @@ public sealed partial class CompanionDialogue(
         return english ? $"“{quote}”. {ack}" : $"«{quote}». {ack}";
     }
 
+    /// <summary>For someone who wants to be heard: an open invitation, never an interrogation.</summary>
+    private CompanionReply AskOpen(CompanionState state, List<string> messages, CompanionEmotion emotion, CompanionTheme? theme)
+    {
+        string id = state.AskedQuestions.Contains("more") ? "open2" : "more";
+        messages.Add(CompanionDialogueContent.Question(id, english));
+        return Reply(messages, [], state.WithAsked(id) with { LastQuestionId = id }, emotion, theme);
+    }
+
+    private CompanionReply RespondToGoal(CompanionState previous, string goal)
+    {
+        CompanionEmotion emotion = ParseEmotion(previous.Emotion);
+        CompanionTheme? theme = ParseTheme(previous.Theme);
+        CompanionState state = previous with { Goal = goal, GoalAsked = true };
+        switch (goal)
+        {
+            case CompanionCaseContent.GoalCalm:
+                return Offer(state, [CompanionCaseContent.GoalCalmReply(english)], new SituationAnalysis(emotion, 1, false, false, []), emotion, theme, calming: true, asked: true);
+
+            case CompanionCaseContent.GoalUnderstand:
+                return AskNextQuestion(state, [CompanionCaseContent.GoalUnderstandReply(english)], emotion, theme);
+
+            default:
+                return Reply([CompanionCaseContent.GoalVentReply(english)], [], state, emotion, theme);
+        }
+    }
+
     private CompanionReply AskNextQuestion(CompanionState state, List<string> messages, CompanionEmotion emotion, CompanionTheme? theme)
     {
-        string? id = emotion == CompanionEmotion.Unknown
-            ? null
-            : CompanionActContent.TargetedQuestionId(emotion, ParsePerson(state.Person), state.AskedQuestions);
+        string? eventId = CompanionCaseContent.EventQuestionIdIfNew(CompanionCaseContent.ParseEvent(state.Event), state.AskedQuestions);
+        string? personId = emotion == CompanionEmotion.Unknown ? null : CompanionActContent.TargetedQuestionId(emotion, ParsePerson(state.Person), state.AskedQuestions);
+        // Someone ashamed of what they did to a child is asked about the child; the situation question is for what happened to them.
+        string? id = emotion == CompanionEmotion.Unknown ? null : emotion == CompanionEmotion.Guilt ? personId ?? eventId : eventId ?? personId;
         id ??= CompanionDialogueContent.NextQuestionId(emotion, state.AskedQuestions);
 
         if (id is null)
@@ -781,7 +851,7 @@ public sealed partial class CompanionDialogue(
         }
 
         messages.Add(CompanionDialogueContent.Question(id, english));
-        return Reply(messages, [], state.WithAsked(id), emotion, theme);
+        return Reply(messages, [], state.WithAsked(id) with { LastQuestionId = id }, emotion, theme);
     }
 
     /// <summary>"Is there something else?" after an offer: the alternative that was kept back, or a fresh offer.</summary>
@@ -805,7 +875,7 @@ public sealed partial class CompanionDialogue(
         return Offer(state, [], new SituationAnalysis(emotion, 1, false, false, []), emotion, theme, calming: false, asked: true);
     }
 
-    private static readonly string[] LongLastingCues = ["месяц", "недел", "годами", "много лет", "уже давно", "долго не", "weeks", "months", "for years", "for a long time"];
+    private static readonly string[] LongLastingCues = ["недель", "неделями", "месяцев", "месяцами", "уже месяц", "целый месяц", "годами", "много лет", "уже давно", "долго не", "weeks", "months", "for years", "for a long time"];
 
     /// <summary>It has lasted weeks, or the person names a diagnosis themselves ("I think it is depression"): once per chat, a calm word about talking to a professional.</summary>
     private static bool NeedsProfessionalNote(string recent)

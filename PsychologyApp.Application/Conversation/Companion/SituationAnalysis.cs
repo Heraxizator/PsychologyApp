@@ -25,6 +25,24 @@ public enum CompanionTheme
     Study
 }
 
+/// <summary>What happened, as far as the words say: the situation behind the feeling.</summary>
+public enum CompanionEvent
+{
+    None,
+    Conflict,
+    Humiliation,
+    Breakup,
+    JobLoss,
+    HealthWorry,
+    CaringForIll,
+    Failure,
+    Betrayal,
+    Overload,
+    Sleeplessness,
+    Performance,
+    Loss
+}
+
 public enum CompanionPerson
 {
     Boss,
@@ -42,6 +60,7 @@ public enum CompanionPerson
 /// <param name="IsIntense">The text contains intensifiers such as "very", "unbearable".</param>
 /// <param name="Secondary">A second state that scored almost as high (mixed feelings), or Unknown.</param>
 /// <param name="Persons">Who the message is about (boss, partner, parent...), most mentioned first.</param>
+/// <param name="Event">The situation behind the feeling ("a quarrel", "a breakup", "lost a job"), or None.</param>
 /// <param name="HasLoss">Someone has died or was lost ("my grandmother died"): the reply is condolence, not a practice.</param>
 public sealed record SituationAnalysis(
     CompanionEmotion Emotion,
@@ -51,7 +70,8 @@ public sealed record SituationAnalysis(
     IReadOnlyList<CompanionTheme> Themes,
     CompanionEmotion Secondary = CompanionEmotion.Unknown,
     IReadOnlyList<CompanionPerson>? Persons = null,
-    bool HasLoss = false)
+    bool HasLoss = false,
+    CompanionEvent Event = CompanionEvent.None)
 {
     public static SituationAnalysis Empty { get; } = new(CompanionEmotion.Unknown, 0, false, false, []);
 }

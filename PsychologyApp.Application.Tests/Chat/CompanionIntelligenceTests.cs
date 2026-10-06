@@ -180,7 +180,7 @@ public class CompanionIntelligenceTests
     [Fact]
     public void A_person_in_the_story_leads_to_a_question_about_that_person()
     {
-        CompanionReply reply = Say(Create(), new CompanionState(), "Меня бесит начальник, опять раскритиковал при всех");
+        CompanionReply reply = Say(Create(), new CompanionState(), "Меня бесит начальник, опять не принял мою работу");
 
         Assert.Equal("Boss", reply.State.Person);
         Assert.Contains("начальник так поступает", reply.Messages[^1]);
@@ -211,7 +211,7 @@ public class CompanionIntelligenceTests
         CompanionDialogue d = Create();
         CompanionState state = new()
         {
-            Turns = 3, Emotion = "Anger", Theme = "Work", Person = "Boss", ScaleAsked = true, FirstIntensity = 8, LastIntensity = 5,
+            Turns = 3, Emotion = "Anger", Theme = "Work", Person = "Boss", ScaleAsked = true, GoalAsked = true, FirstIntensity = 8, LastIntensity = 5,
             TurnsSinceOffer = 1, RecentTexts = ["a", "b", "c"], AskedQuestions = ["t:Anger:Boss"]
         };
 
@@ -245,7 +245,7 @@ public class CompanionIntelligenceTests
         CompanionDialogue d = Create();
         CompanionState state = new()
         {
-            Turns = 4, LastRecapTurn = 4, Emotion = "Anxiety", ScaleAsked = true, TurnsSinceOffer = 1, RecentTexts = ["a", "b", "c"],
+            Turns = 4, LastRecapTurn = 4, Emotion = "Anxiety", ScaleAsked = true, GoalAsked = true, TurnsSinceOffer = 1, RecentTexts = ["a", "b", "c"],
             FirstQuote = "Завтра важная презентация", AskedQuestions = ["trigger", "worst_case", "body", "need", "meaning", "more"]
         };
 

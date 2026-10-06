@@ -331,4 +331,110 @@ public class CompanionConversationQualityTests
         Assert.Contains("внезапный всплеск", chat[0].Text);
         Assert.False(chat[0].OffersPractice);
     }
+
+    // ----- the case card, the goal of the talk, and answers read against the question asked -----
+
+    [Fact]
+    public void ASituationIsAnsweredWithItsOwnReflectionAndQuestion()
+    {
+        List<Turn> chat = Talk("Муж вчера накричал на меня, мне очень обидно");
+
+        Assert.Equal("Conflict", chat[0].Reply.State.Event);
+        Assert.Contains("Ссора с близким", chat[0].Text);
+        Assert.Contains("впервые или такое повторяется", chat[0].Reply.Messages[^1]);
+    }
+
+    [Fact]
+    public void YesToASituationQuestionGetsAFollowUpThatFitsIt()
+    {
+        List<Turn> chat = Talk("Муж вчера накричал на меня, мне очень обидно", "да");
+
+        Assert.Contains("запускает такие ссоры", chat[1].Text);
+        Assert.DoesNotContain("главное", chat[1].Text);
+    }
+
+    [Fact]
+    public void YesToWhetherThereIsSomeoneCloseIsAnsweredAboutThatPerson()
+    {
+        List<Turn> chat = Talk("Мне очень одиноко, никто не звонит и не пишет", "да");
+
+        Assert.Equal("support", chat[0].Reply.State.LastQuestionId ?? "support");
+        Assert.Contains("кто-то рядом", chat[1].Text);
+    }
+
+    [Fact]
+    public void WhenTheMessageSaysWhenItStartedThatIsNotAskedAgain()
+    {
+        List<Turn> chat = Talk("Мне грустно уже месяц, ничего не радует");
+
+        Assert.DoesNotContain("Когда это началось", chat[0].Text);
+    }
+
+    [Fact]
+    public void ThisWeekIsNotALongLastingProblem()
+    {
+        List<Turn> chat = Talk("Мне тревожно из-за работы", "Боюсь, что меня сократят на этой неделе");
+
+        Assert.DoesNotContain("врачом или психологом", chat[1].Text);
+    }
+
+    [Fact]
+    public void AfterAFewMessagesTheCompanionAsksWhatThePersonNeeds()
+    {
+        List<Turn> chat = Talk("Мне тревожно из-за работы", "Боюсь, что меня сократят на этой неделе", "Постоянно об этом думаю");
+
+        Assert.Equal(["goal:vent", "goal:understand", "goal:calm"], chat[2].Reply.QuickReplies.Select(q => q.Payload));
+        Assert.False(chat[2].OffersPractice);
+    }
+
+    [Fact]
+    public void SomeoneWhoWantsToVentIsNotOfferedPracticesOrAScale()
+    {
+        List<Turn> chat = Talk(
+            "Мне тревожно из-за работы",
+            "Боюсь, что меня сократят на этой неделе",
+            "Постоянно об этом думаю",
+            "просто выговориться",
+            "Вчера он снова при всех сказал, что я всё делаю медленно",
+            "Мне кажется, меня здесь не ценят",
+            "Я уже не знаю, как с этим жить",
+            "Особенно тяжело по утрам");
+
+        Assert.Equal("vent", chat[3].Reply.State.Goal);
+        Assert.Contains("просто слушаю", chat[3].Text);
+        Assert.All(chat.Skip(3), t =>
+        {
+            Assert.False(t.OffersPractice, t.Text);
+            Assert.False(t.AsksForScale, t.Text);
+        });
+    }
+
+    [Fact]
+    public void SomeoneWhoWantsToCalmDownIsOfferedAPracticeAtOnce()
+    {
+        List<Turn> chat = Talk("Мне тревожно из-за работы", "Боюсь, что меня сократят на этой неделе", "Постоянно об этом думаю", "хочу успокоиться");
+
+        Assert.Equal("calm", chat[3].Reply.State.Goal);
+        Assert.True(chat[3].OffersPractice);
+    }
+
+    [Fact]
+    public void SomeoneWhoWantsToSortItOutIsAskedTargetedQuestions()
+    {
+        List<Turn> chat = Talk("Мне тревожно из-за работы", "Боюсь, что меня сократят на этой неделе", "Постоянно об этом думаю", "хочу разобраться");
+
+        Assert.Equal("understand", chat[3].Reply.State.Goal);
+        Assert.EndsWith("?", chat[3].Reply.Messages[^1]);
+        Assert.False(chat[3].OffersPractice);
+    }
+
+    [Fact]
+    public void TheChosenGoalSurvivesSavingTheState()
+    {
+        CompanionState state = new() { Event = "Breakup", Goal = "vent", GoalAsked = true, LastQuestionId = "goal" };
+
+        CompanionState restored = CompanionState.Deserialize(state.Serialize());
+
+        Assert.Equal(("Breakup", "vent", true, "goal"), (restored.Event, restored.Goal, restored.GoalAsked, restored.LastQuestionId));
+    }
 }
