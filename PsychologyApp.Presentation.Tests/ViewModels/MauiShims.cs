@@ -95,25 +95,6 @@ namespace Microsoft.Maui.ApplicationModel
     }
 }
 
-namespace PsychologyApp.Presentation.Shared.Common
-{
-    /// <summary>Only the defaults the linked <c>UserPreferencesState</c> reads; the real class talks to the MAUI Preferences API.</summary>
-    public static class UserPreferences
-    {
-        public const string DefaultLanguage = "ru";
-        public const string DefaultTheme = "light";
-        public const string DefaultColor = "blue";
-        public const string DefaultForm = "rounded";
-        public const string DefaultSize = "medium";
-        public const int DefaultPracticeReminderHour = 19;
-        public const int DefaultQuoteReminderHour = 9;
-        public const int DefaultMoodReminderHour = 20;
-        public const int DefaultChatReminderHour = 20;
-
-        public static bool IsEnglish(string language) => language.Equals("en", StringComparison.OrdinalIgnoreCase);
-    }
-}
-
 namespace PsychologyApp.Presentation.Shared.Services.Preferences
 {
     using PsychologyApp.Domain.Practice;
@@ -295,5 +276,18 @@ namespace Microsoft.Maui.Controls
         public static LayoutOptions Start { get; } = new(0);
 
         public static LayoutOptions End { get; } = new(1);
+    }
+}
+
+namespace PsychologyApp.Presentation.Shared.Common
+{
+    /// <summary>The persistence half of the real class (it reads the MAUI Preferences API) reduced to what the linked logic half needs.</summary>
+    public static partial class UserPreferences
+    {
+        public static string Persisted { get; set; } = DefaultLanguage;
+
+        private static UserPreferencesState Current => new() { Language = Persisted };
+
+        public static string GetPersistedLanguage() => Persisted;
     }
 }

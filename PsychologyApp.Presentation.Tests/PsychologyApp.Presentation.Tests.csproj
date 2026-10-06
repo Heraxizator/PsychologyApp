@@ -84,6 +84,7 @@
     <Compile Include="../PsychologyApp.Presentation/Pages/ClinicalCare/SafetyPlan/SafetyPlanViewModel.cs" Link="Linked/ViewModels/SafetyPlanViewModel.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/ClinicalCare/RiskCheck/RiskCheckViewModel.cs" Link="Linked/ViewModels/RiskCheckViewModel.cs" />
     <Compile Include="../PsychologyApp.Presentation/Shared/Common/Preferences/UserPreferencesState.cs" Link="Linked/ViewModels/UserPreferencesState.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/Preferences/UserPreferences.Options.cs" Link="Linked/ViewModels/UserPreferences.Options.cs" />
     <Compile Include="../PsychologyApp.Presentation/Shared/Services/Preferences/IUserPreferencesStore.cs" Link="Linked/ViewModels/IUserPreferencesStore.cs" />
     <Compile Include="../PsychologyApp.Presentation/Models/Practice/Techniques/TechniqueDefinition.cs" Link="Linked/ViewModels/TechniqueDefinition.cs" />
     <Compile Include="../PsychologyApp.Presentation/Shared/Common/Infrastructure/BestEffort.cs" Link="Linked/ViewModels/BestEffort.cs" />
