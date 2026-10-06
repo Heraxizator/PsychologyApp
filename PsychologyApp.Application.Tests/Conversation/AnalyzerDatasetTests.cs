@@ -81,11 +81,20 @@ public class AnalyzerDatasetTests(ITestOutputHelper output)
         Assert.True(accuracy >= 0.20, $"Final-set accuracy fell to {accuracy:P0}.");
     }
 
+    [Fact]
+    public void Third_final_set_accuracy_is_recorded_and_does_not_collapse()
+    {
+        double accuracy = Measure("nlu-fresh3.json", "Third final set (written before the guesser was extended)");
+
+        Assert.True(accuracy >= 0.20, $"Third-set accuracy fell to {accuracy:P0}.");
+    }
+
     [Theory]
     [InlineData("nlu-dataset.json")]
     [InlineData("nlu-heldout.json")]
     [InlineData("nlu-fresh.json")]
     [InlineData("nlu-fresh2.json")]
+    [InlineData("nlu-fresh3.json")]
     public void Datasets_are_well_formed(string file)
     {
         Item[] items = Load(file);

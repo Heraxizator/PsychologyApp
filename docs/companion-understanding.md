@@ -122,3 +122,23 @@ On the final set (the only one never read while writing terms): lexicon 41%, lex
 Limits, stated plainly: the training and the test messages were written by the same author in the same style, so real people's phrasing is the open
 question; precision of about two in three is why the result is a question and not a conclusion. Replace the training file with messages labelled by a
 psychologist and re-run `EmotionGuesserTests`; the gate (`EmotionGuesser.MinMargin`, `MinWords`) should be re-chosen on that data.
+
+### Update: word features, a "no feeling" class, more data (2026-10)
+
+The guesser now also uses word stems and word pairs next to the character n-grams, and "no feeling named" (small talk, questions about the app)
+is a class of its own, so it can answer "nothing here" instead of being forced to pick a feeling. The training set grew from 427 to 723 messages
+(`nlu-train-extra.json` adds 190 written in other registers: short, formal, colloquial, English). It is regenerated from the labelled files with
+`node tools/build-emotion-training.js`; a test fails when a labelled message is missing from the shipped file.
+
+Model comparison, leave-one-set-out over five sets (527 messages; the lexicon alone gets 414 right, 78.6%). Gate: lead of 20, at least 5 words.
+
+| Model | Lexicon then model | Proposals / lexicon misses | Right | Small talk given a feeling |
+|---|---|---|---|---|
+| Characters only (the first version, extra data) | 87.5% | 67 / 76 | 81% | 7 |
+| Characters + words | 87.7% | 69 / 76 | 80% | 7 |
+| Words only | 79.1% | 3 / 76 | 100% | 0 |
+| Characters + a "no feeling" class | 88.4% | 57 / 76 | 91% | 0 |
+| **Characters + words + "no feeling" class (shipped)** | **88.8%** | **60 / 76** | **90%** | **0** |
+
+Per set, the sets written after the lexicon was frozen (never read while writing terms): `nlu-fresh2.json` lexicon 41% -> lexicon then guesser
+74%; `nlu-fresh3.json` 59% -> 76%. The model and the gate were chosen on these same folds, so some optimism remains; the authorship caveat above still applies.

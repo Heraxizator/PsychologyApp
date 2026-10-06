@@ -15,6 +15,7 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 - `docs/chat-companion.md` describes the engine, the state, the memory and its limits.
 
 ### Quality
+- Chat: the guesser now uses word features and a "no feeling" class and is trained on 723 messages; leave-one-set-out over five sets: lexicon then guesser 88.8% (lexicon alone 78.6%), 60 proposals for 76 lexicon misses, 90% right, no small talk given a feeling; on the two sets never read while writing terms 41% -> 74% and 59% -> 76%.
 - Chat: `EmotionGuesser` (character n-gram naive Bayes, bundled training set) proposes a feeling for long messages the word lists miss, as a question with the guess first among the chips; leave-one-set-out: right on 25 of the 38 proposals, lexicon then guesser 89% vs 83% on the pooled sets, 63% vs 41% on the final set.
 - Five view models run under test without a device (crisis screen, risk check, safety plan, data backup including the passphrase flow, chat list): the real files are compiled into the net10.0 test project with small MAUI stand-ins (`ViewModels/MauiShims.cs`); 49 tests.
 - 46 more texts (the branches of conditions) moved to the resx files; only texts built with interpolated expressions remain in code.

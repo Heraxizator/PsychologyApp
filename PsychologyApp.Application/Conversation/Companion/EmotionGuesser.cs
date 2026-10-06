@@ -16,10 +16,11 @@ public interface IEmotionGuesser
 }
 
 /// <summary>
-/// Multinomial naive Bayes over character 3-5-grams, trained once from the labelled messages bundled with the app
-/// (<c>Data/emotion-training.json</c>). Character n-grams cope with Russian word forms and typos without a stemmer.
-/// Measured by leave-one-set-out on four hand-written sets (docs/companion-understanding.md): with the gate below it proposes a feeling
-/// for about 70% of what the lexicon misses and is right about two times in three. The training texts are synthetic, so real
+/// Multinomial naive Bayes over character 3-5-grams plus word stems and word pairs, trained once from the labelled messages bundled with the app
+/// (<c>Data/emotion-training.json</c>). Character n-grams cope with Russian word forms and typos without a stemmer; word features add
+/// the phrases that matter ("не могу" next to a verb). "No feeling named" (small talk, questions about the app) is a class of its own, so the
+/// classifier can say "nothing here" instead of being forced to pick a feeling.
+/// Measured by leave-one-set-out on five hand-written sets (docs/companion-understanding.md). The training texts are synthetic, so real
 /// people's phrasing is the open question; that is why the result is a question, not a conclusion.
 /// </summary>
 public sealed class EmotionGuesser : IEmotionGuesser
@@ -31,6 +32,8 @@ public sealed class EmotionGuesser : IEmotionGuesser
     public const int MinWords = 5;
 
     private const double Smoothing = 0.1;
+    private const int WordStemLength = 6;
+    private const int PairStemLength = 5;
 
     private static readonly char[] Separators = [' ', ',', '.', '!', '?', ';', ':', '-', '—', '"', '«', '»', '(', ')', '\n', '\t'];
 
@@ -53,7 +56,7 @@ public sealed class EmotionGuesser : IEmotionGuesser
         {
             string label = item.GetProperty("label").GetString() ?? string.Empty;
             string text = item.GetProperty("text").GetString() ?? string.Empty;
-            if (Enum.TryParse(label, out CompanionEmotion emotion) && emotion != CompanionEmotion.Unknown && text.Length > 0)
+            if (Enum.TryParse(label, out CompanionEmotion emotion) && text.Length > 0)
             {
                 examples.Add((emotion, text));
             }
@@ -75,27 +78,27 @@ public sealed class EmotionGuesser : IEmotionGuesser
                 counts = _counts[emotion] = [];
             }
 
-            foreach (string gram in Grams(text))
+            foreach (string feature in Features(text))
             {
-                counts[gram] = counts.GetValueOrDefault(gram) + 1;
+                counts[feature] = counts.GetValueOrDefault(feature) + 1;
                 _totals[emotion] = _totals.GetValueOrDefault(emotion) + 1;
-                _vocabulary.Add(gram);
+                _vocabulary.Add(feature);
             }
         }
     }
 
+    /// <summary>A feeling to propose, or null when the message is too short, names no feeling, or two feelings are too close to call.</summary>
     public EmotionGuess? Guess(string text)
     {
-        if (string.IsNullOrWhiteSpace(text) || _counts.Count < 2 || WordCount(text) < MinWords)
+        if (string.IsNullOrWhiteSpace(text) || WordCount(text) < MinWords)
         {
             return null;
         }
 
-        EmotionGuess? best = Rank(text);
-        return best is { } guess && guess.Margin >= MinMargin ? guess : null;
+        return Rank(text) is { Emotion: not CompanionEmotion.Unknown, Margin: >= MinMargin } guess ? guess : null;
     }
 
-    /// <summary>The best guess with its margin, without the gate; used by the evaluation tests.</summary>
+    /// <summary>The best class with its margin, without the gate (it can be <see cref="CompanionEmotion.Unknown"/>); used by the evaluation tests.</summary>
     public EmotionGuess? Rank(string text)
     {
         if (_counts.Count < 2)
@@ -103,8 +106,8 @@ public sealed class EmotionGuesser : IEmotionGuesser
             return null;
         }
 
-        string[] grams = [.. Grams(text)];
-        if (grams.Length == 0)
+        string[] features = [.. Features(text)];
+        if (features.Length == 0)
         {
             return null;
         }
@@ -116,9 +119,9 @@ public sealed class EmotionGuesser : IEmotionGuesser
         {
             double score = Math.Log((double)_documents[emotion] / _documentTotal);
             double denominator = _totals[emotion] + (Smoothing * _vocabulary.Count);
-            foreach (string gram in grams)
+            foreach (string feature in features)
             {
-                score += Math.Log((counts.GetValueOrDefault(gram) + Smoothing) / denominator);
+                score += Math.Log((counts.GetValueOrDefault(feature) + Smoothing) / denominator);
             }
 
             if (score > first)
@@ -138,17 +141,31 @@ public sealed class EmotionGuesser : IEmotionGuesser
 
     private static int WordCount(string text) => text.Split(Separators, StringSplitOptions.RemoveEmptyEntries).Length;
 
-    private static IEnumerable<string> Grams(string text)
+    private static IEnumerable<string> Features(string text)
     {
-        string padded = " " + string.Join(' ', text.ToLowerInvariant().Split(Separators, StringSplitOptions.RemoveEmptyEntries)) + " ";
+        string[] words = text.ToLowerInvariant().Split(Separators, StringSplitOptions.RemoveEmptyEntries);
+
+        string padded = " " + string.Join(' ', words) + " ";
         for (int n = 3; n <= 5; n++)
         {
             for (int i = 0; i + n <= padded.Length; i++)
             {
-                yield return padded.Substring(i, n);
+                yield return "c" + padded.Substring(i, n);
             }
         }
+
+        foreach (string word in words)
+        {
+            yield return "w" + Stem(word, WordStemLength);
+        }
+
+        for (int i = 0; i + 1 < words.Length; i++)
+        {
+            yield return "b" + Stem(words[i], PairStemLength) + "_" + Stem(words[i + 1], PairStemLength);
+        }
     }
+
+    private static string Stem(string word, int length) => word.Length > length ? word[..length] : word;
 
     private static string ReadBundledTrainingSet()
     {
