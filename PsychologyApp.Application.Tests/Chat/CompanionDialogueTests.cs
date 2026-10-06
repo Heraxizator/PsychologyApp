@@ -35,6 +35,66 @@ public class CompanionDialogueTests
         Assert.NotEmpty(reply.QuickReplies);
     }
 
+    private sealed class StubGuesser(CompanionEmotion? emotion) : IEmotionGuesser
+    {
+        public EmotionGuess? Guess(string text) => emotion is { } e ? new EmotionGuess(e, 30) : null;
+    }
+
+    private static CompanionDialogue CreateWithGuess(CompanionEmotion? guess) =>
+        new(new LexiconSituationAnalyzer(), new KeywordCrisisDetector(), english: false, new Random(3), new FixedTime(Now), emotionGuesser: new StubGuesser(guess));
+
+    private const string LongUnrecognised = "Сегодня на работе случилось такое, что я до сих пор не могу прийти в себя после разговора";
+
+    [Fact]
+    public void A_guessed_feeling_is_proposed_first_and_named_in_the_question()
+    {
+        CompanionDialogue dialogue = CreateWithGuess(CompanionEmotion.Anger);
+        CompanionState state = dialogue.Open(new CompanionState(), previous: null).State;
+
+        CompanionReply reply = Say(dialogue, state, LongUnrecognised);
+
+        Assert.Equal(CompanionEmotion.Anger.ToString(), reply.QuickReplies[0].Payload);
+        Assert.Equal(8, reply.QuickReplies.Count);
+        Assert.Contains("злость", reply.Messages[^1]);
+        Assert.Equal(CompanionEmotion.Unknown.ToString(), reply.State.Emotion);
+    }
+
+    [Fact]
+    public void A_guess_without_a_chip_of_its_own_gets_one_in_front()
+    {
+        CompanionDialogue dialogue = CreateWithGuess(CompanionEmotion.Loneliness);
+        CompanionState state = dialogue.Open(new CompanionState(), previous: null).State;
+
+        CompanionReply reply = Say(dialogue, state, LongUnrecognised);
+
+        Assert.Equal(CompanionEmotion.Loneliness.ToString(), reply.QuickReplies[0].Payload);
+        Assert.Equal(9, reply.QuickReplies.Count);
+    }
+
+    [Fact]
+    public void Tapping_the_proposed_chip_confirms_the_feeling()
+    {
+        CompanionDialogue dialogue = CreateWithGuess(CompanionEmotion.Sadness);
+        CompanionState state = dialogue.Open(new CompanionState(), previous: null).State;
+        CompanionReply proposal = Say(dialogue, state, LongUnrecognised);
+
+        CompanionReply confirmed = Tap(dialogue, proposal.State, ChatQuickReplyKinds.Emotion, proposal.QuickReplies[0].Label, proposal.QuickReplies[0].Payload);
+
+        Assert.Equal(CompanionEmotion.Sadness.ToString(), confirmed.State.Emotion);
+    }
+
+    [Fact]
+    public void Without_a_guess_the_old_open_choice_is_shown()
+    {
+        CompanionDialogue dialogue = CreateWithGuess(null);
+        CompanionState state = dialogue.Open(new CompanionState(), previous: null).State;
+
+        CompanionReply reply = Say(dialogue, state, LongUnrecognised);
+
+        Assert.Equal(8, reply.QuickReplies.Count);
+        Assert.DoesNotContain("Похоже, это", reply.Messages[^1]);
+    }
+
     [Fact]
     public void A_short_message_that_names_no_feeling_does_not_get_the_choice_yet()
     {

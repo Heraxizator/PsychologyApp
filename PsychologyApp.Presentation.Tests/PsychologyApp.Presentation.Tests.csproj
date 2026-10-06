@@ -65,12 +65,34 @@
     <Compile Include="../PsychologyApp.Presentation/Shared/Common/Infrastructure/SafeAsync.cs" Link="Linked/SafeAsync.cs" />
     <Compile Include="../PsychologyApp.Presentation/Shared/Common/Infrastructure/AsyncCommandExtensions.cs" Link="Linked/AsyncCommandExtensions.cs" />
     <Compile Include="../PsychologyApp.Presentation/Shared/Common/Infrastructure/DebouncedCommand.cs" Link="Linked/DebouncedCommand.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/ViewModels/BaseViewModel.cs" Link="Linked/ViewModels/BaseViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/ViewModels/BaseViewModel.Technique.cs" Link="Linked/ViewModels/BaseViewModel.Technique.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/ViewModels/BaseViewModel.LoadingState.cs" Link="Linked/ViewModels/BaseViewModel.LoadingState.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/ViewModels/BaseViewModel.LoadingState.Properties.cs" Link="Linked/ViewModels/BaseViewModel.LoadingState.Properties.cs" />
+    <Compile Include="../PsychologyApp.Presentation/App/Routes/INavigationService.cs" Link="Linked/ViewModels/INavigationService.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ClinicalCare/CrisisHub/CrisisHubViewModel.cs" Link="Linked/ViewModels/CrisisHubViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/Chat/ChatList/ChatListViewModel.cs" Link="Linked/ViewModels/ChatListViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/UI/Overlays/AppToastKind.cs" Link="Linked/ViewModels/AppToastKind.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Services/Toasts/IToastService.cs" Link="Linked/ViewModels/IToastService.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Services/Dialogs/IDialogService.cs" Link="Linked/ViewModels/IDialogService.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ManageProfile/ProfileDataBackup/DataBackupViewModel.cs" Link="Linked/ViewModels/DataBackupViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/Infrastructure/RangeObservableCollection.cs" Link="Linked/ViewModels/RangeObservableCollection.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ClinicalCare/SafetyPlan/SafetyPlanViewModel.cs" Link="Linked/ViewModels/SafetyPlanViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ClinicalCare/RiskCheck/RiskCheckViewModel.cs" Link="Linked/ViewModels/RiskCheckViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/Preferences/UserPreferencesState.cs" Link="Linked/ViewModels/UserPreferencesState.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Services/Preferences/IUserPreferencesStore.cs" Link="Linked/ViewModels/IUserPreferencesStore.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Models/Practice/Techniques/TechniqueDefinition.cs" Link="Linked/ViewModels/TechniqueDefinition.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/Infrastructure/BestEffort.cs" Link="Linked/ViewModels/BestEffort.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/TechniqueDefinitionMapper.cs" Link="Linked/ViewModels/TechniqueDefinitionMapper.cs" />
+    <Compile Include="ViewModels\**\*.cs" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
     <ProjectReference Include="..\PsychologyApp.Presentation.Core\PsychologyApp.Presentation.Core.csproj" />
     <ProjectReference Include="..\PsychologyApp.Application\PsychologyApp.Application.csproj" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.3" />
+    <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
     <PackageReference Include="Moq" Version="4.20.72" />
   </ItemGroup>
 

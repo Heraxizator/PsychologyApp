@@ -2739,4 +2739,142 @@
   <data name="TestRecommendationReasonRses.default" xml:space="preserve">
     <value>Experience modification strengthens resourceful states.</value>
   </data>
+  <data name="TodayRecommendationReasonLowMood.1" xml:space="preserve">
+    <value>When mood is low</value>
+  </data>
+  <data name="TodayRecommendationReasonContinueDraft.1" xml:space="preserve">
+    <value>Continue where you left off</value>
+  </data>
+  <data name="WeeklyInsightTestImprovedPart.1" xml:space="preserve">
+    <value>test ↑</value>
+  </data>
+  <data name="WeeklyInsightTestWorsePart.1" xml:space="preserve">
+    <value>test ↓</value>
+  </data>
+  <data name="HeckHessScore.1" xml:space="preserve">
+    <value>0-24 - low neuroticism</value>
+  </data>
+  <data name="HeckHessScore.2" xml:space="preserve">
+    <value>25-40 - high neuroticism</value>
+  </data>
+  <data name="HeckHessScoreDetail.1" xml:space="preserve">
+    <value>Emotional reactivity is within normal range. Keep monitoring stress and rest.</value>
+  </data>
+  <data name="HeckHessScoreDetail.2" xml:space="preserve">
+    <value>Elevated neuroticism. Polarity and importance-comparison practices may ease tension.</value>
+  </data>
+  <data name="HaerScore.1" xml:space="preserve">
+    <value>0-28 - low psychopathy</value>
+  </data>
+  <data name="HaerScore.2" xml:space="preserve">
+    <value>29-40 - high psychopathy</value>
+  </data>
+  <data name="HaerScoreDetail.1" xml:space="preserve">
+    <value>Score is in the low range. This is a screening tool, not a diagnosis.</value>
+  </data>
+  <data name="HaerScoreDetail.2" xml:space="preserve">
+    <value>Elevated score. Working with past experience and beliefs may help.</value>
+  </data>
+  <data name="TestRecommendationReasonBeck.1" xml:space="preserve">
+    <value>For depressive symptoms, Spin helps lower the charge of painful memories.</value>
+  </data>
+  <data name="TestRecommendationReasonBeck.2" xml:space="preserve">
+    <value>For prevention, writing thoughts on paper is helpful.</value>
+  </data>
+  <data name="TestRecommendationReasonHeckHess.1" xml:space="preserve">
+    <value>With high neuroticism, polarities help see both sides.</value>
+  </data>
+  <data name="TestRecommendationReasonHeckHess.2" xml:space="preserve">
+    <value>Comparing importance strengthens perspective.</value>
+  </data>
+  <data name="TestRecommendationReasonHaer.1" xml:space="preserve">
+    <value>"50 years later" moves the problem forward in time.</value>
+  </data>
+  <data name="TestRecommendationReasonHaer.2" xml:space="preserve">
+    <value>Experience modification helps revisit beliefs.</value>
+  </data>
+  <data name="TestRecommendationReasonPochebut.1" xml:space="preserve">
+    <value>"Shrink it" visually lowers the trigger's importance.</value>
+  </data>
+  <data name="TestRecommendationReasonPochebut.2" xml:space="preserve">
+    <value>"Check it" helps release a looping thought.</value>
+  </data>
+  <data name="TestRecommendationReasonGad7.1" xml:space="preserve">
+    <value>With anxiety, polarities help see both sides of a situation.</value>
+  </data>
+  <data name="TestRecommendationReasonGad7.2" xml:space="preserve">
+    <value>Comparing importance strengthens perspective.</value>
+  </data>
+  <data name="TestRecommendationReasonWho5.1" xml:space="preserve">
+    <value>With low well-being, writing thoughts on paper is helpful.</value>
+  </data>
+  <data name="TestRecommendationReasonWho5.2" xml:space="preserve">
+    <value>Experience modification supports a sense of meaning and resource.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq9.1" xml:space="preserve">
+    <value>For depressive symptoms, Spin helps lower the charge of painful memories.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq9.2" xml:space="preserve">
+    <value>For prevention, writing thoughts on paper is helpful.</value>
+  </data>
+  <data name="ScoffScore.1" xml:space="preserve">
+    <value>0-1 — negative screen</value>
+  </data>
+  <data name="ScoffScore.2" xml:space="preserve">
+    <value>2-5 — positive screen</value>
+  </data>
+  <data name="ScoffScoreDetail.1" xml:space="preserve">
+    <value>No signs of an eating disorder on this screen.</value>
+  </data>
+  <data name="ScoffScoreDetail.2" xml:space="preserve">
+    <value>Positive screen. Please consult an eating-disorder specialist.</value>
+  </data>
+  <data name="TestRecommendationReasonScoff.1" xml:space="preserve">
+    <value>With signs of an eating disorder, Spin helps lower the charge of painful memories.</value>
+  </data>
+  <data name="TestRecommendationReasonScoff.2" xml:space="preserve">
+    <value>For prevention, writing thoughts on paper is helpful.</value>
+  </data>
+  <data name="TestRecommendationReasonSwls.1" xml:space="preserve">
+    <value>With low life satisfaction, writing thoughts on paper is helpful.</value>
+  </data>
+  <data name="TestRecommendationReasonSwls.2" xml:space="preserve">
+    <value>Experience modification supports a sense of meaning and resource.</value>
+  </data>
+  <data name="Phq2Score.1" xml:space="preserve">
+    <value>0–2 — negative screen</value>
+  </data>
+  <data name="Phq2Score.2" xml:space="preserve">
+    <value>3–6 — positive screen</value>
+  </data>
+  <data name="Phq2ScoreDetail.1" xml:space="preserve">
+    <value>Depressive symptoms are not prominent. Keep monitoring mood.</value>
+  </data>
+  <data name="Phq2ScoreDetail.2" xml:space="preserve">
+    <value>Positive depression screen. Consider PHQ-9 or a professional consultation.</value>
+  </data>
+  <data name="Gad2Score.1" xml:space="preserve">
+    <value>0–2 — negative screen</value>
+  </data>
+  <data name="Gad2Score.2" xml:space="preserve">
+    <value>3–6 — positive screen</value>
+  </data>
+  <data name="Gad2ScoreDetail.1" xml:space="preserve">
+    <value>Anxiety symptoms are not prominent. Keep monitoring how you feel.</value>
+  </data>
+  <data name="Gad2ScoreDetail.2" xml:space="preserve">
+    <value>Positive anxiety screen. Consider GAD-7 or a professional consultation.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq2.1" xml:space="preserve">
+    <value>With signs of depression, One small step restores momentum.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq2.2" xml:space="preserve">
+    <value>For prevention, writing thoughts on paper is helpful.</value>
+  </data>
+  <data name="TestRecommendationReasonGad2.1" xml:space="preserve">
+    <value>With anxiety, box breathing calms the body.</value>
+  </data>
+  <data name="TestRecommendationReasonGad2.2" xml:space="preserve">
+    <value>Grounding helps you stay in the present moment.</value>
+  </data>
 </root>

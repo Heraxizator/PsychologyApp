@@ -79,13 +79,14 @@ public sealed class QuestionWizardCoordinator
     }
 
     public async Task TryAutoAdvanceAsync(
+        bool autoAdvanceEnabled,
         bool isSingleAnswer,
         int totalCount,
         Func<bool> isCurrentAnswered,
         Func<Task> advanceAsync,
         Func<bool>? canAutoAdvance = null)
     {
-        if (!UserPreferences.Load().QuestionnaireAutoAdvance)
+        if (!autoAdvanceEnabled)
         {
             return;
         }

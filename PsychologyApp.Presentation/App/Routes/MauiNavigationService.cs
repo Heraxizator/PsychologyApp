@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 ﻿using PsychologyApp.Application.Models;
 using PsychologyApp.Presentation.Features.ManageJournal;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
@@ -15,13 +16,16 @@ public sealed class MauiNavigationService : INavigationService
     private readonly IPageFactory _pageFactory;
     private readonly IShellStartupCoordinator _shellStartupCoordinator;
     private readonly JournalScreenCoordinator _journalScreenCoordinator;
+    private readonly IUserPreferencesStore _preferences;
 
     public MauiNavigationService(
         NavigationContext context,
         IPageFactory pageFactory,
         IShellStartupCoordinator shellStartupCoordinator,
-        JournalScreenCoordinator journalScreenCoordinator)
+        JournalScreenCoordinator journalScreenCoordinator,
+        IUserPreferencesStore preferences)
     {
+        _preferences = preferences;
         _navigation = context.Navigation;
         _ownerPage = context.OwnerPage is { } page ? new WeakReference<ContentPage>(page) : null;
         _pageFactory = pageFactory;
@@ -209,7 +213,7 @@ public sealed class MauiNavigationService : INavigationService
     public Task GoToQuotesFavoritesAsync() =>
         NavigationCoordinator.RunAsync(() =>
         {
-            UserPreferences.SetPendingQuoteFeed("favorites");
+            _preferences.SetPendingQuoteFeed("favorites");
 
             if (Shell.Current is AppShell appShell)
             {
@@ -272,7 +276,7 @@ public sealed class MauiNavigationService : INavigationService
             return Task.CompletedTask;
         }
 
-        UserPreferences.SetPendingTechnique(techniqueId.Value);
+        _preferences.SetPendingTechnique(techniqueId.Value);
 
         if (Shell.Current is AppShell appShell)
         {

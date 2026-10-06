@@ -173,6 +173,7 @@ public partial class QuestionViewModel
             if (!_isCompleting)
             {
                 _wizard.TryAutoAdvanceAsync(
+                    UserPreferencesStore.Load().QuestionnaireAutoAdvance,
                     IsSingleAnswer,
                     TotalCount,
                     IsCurrentQuestionAnswered,

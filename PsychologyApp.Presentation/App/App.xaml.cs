@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.Lib.Navigation;
@@ -21,9 +22,10 @@ public partial class App : Microsoft.Maui.Controls.Application
     {
         AppShell shell = _services.GetRequiredService<AppShell>();
         IShellTabNavigator tabNavigator = _services.GetRequiredService<IShellTabNavigator>();
-        PracticeReminderTapHandler.Configure(tabNavigator);
+        IUserPreferencesStore preferences = _services.GetRequiredService<IUserPreferencesStore>();
+        PracticeReminderTapHandler.Configure(tabNavigator, preferences);
         QuoteReminderTapHandler.Configure(tabNavigator);
-        MoodReminderTapHandler.Configure(tabNavigator);
+        MoodReminderTapHandler.Configure(tabNavigator, preferences);
         ChatReminderTapHandler.Configure(tabNavigator);
         return new(shell);
     }

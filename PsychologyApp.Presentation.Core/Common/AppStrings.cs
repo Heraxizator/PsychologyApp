@@ -275,13 +275,11 @@ public static partial class AppStrings
     public static string TodayRecommendationReasonFromTest(string testId) => F(nameof(TodayRecommendationReasonFromTest), testId);
 
     public static string TodayRecommendationReasonLowMood() =>
-        T("Когда настроение низкое", "When mood is low");
-    public static string TodayRecommendationReasonContinueDraft() => T(
-        "Продолжите с того места, где остановились",
-        "Continue where you left off");
+        R("TodayRecommendationReasonLowMood.1");
+    public static string TodayRecommendationReasonContinueDraft() => R("TodayRecommendationReasonContinueDraft.1");
     public static string WeeklyInsightStreakPart(int days) => F(nameof(WeeklyInsightStreakPart), days);
-    public static string WeeklyInsightTestImprovedPart() => T("тест ↑", "test ↑");
-    public static string WeeklyInsightTestWorsePart() => T("тест ↓", "test ↓");
+    public static string WeeklyInsightTestImprovedPart() => R("WeeklyInsightTestImprovedPart.1");
+    public static string WeeklyInsightTestWorsePart() => R("WeeklyInsightTestWorsePart.1");
     public static string WeeklyInsightWithExtra(string baseLine, string extra) =>
         string.IsNullOrWhiteSpace(extra) ? baseLine : $"{baseLine} · {extra}";
     public static string TodayMoodQuestion => R(nameof(TodayMoodQuestion));

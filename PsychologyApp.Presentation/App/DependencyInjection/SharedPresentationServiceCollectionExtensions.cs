@@ -52,7 +52,8 @@ public static class SharedPresentationServiceCollectionExtensions
                 context,
                 sp.GetRequiredService<IPageFactory>(),
                 sp.GetRequiredService<IShellStartupCoordinator>(),
-                sp.GetRequiredService<PsychologyApp.Presentation.Features.ManageJournal.JournalScreenCoordinator>()));
+                sp.GetRequiredService<PsychologyApp.Presentation.Features.ManageJournal.JournalScreenCoordinator>(),
+                sp.GetRequiredService<IUserPreferencesStore>()));
 
         return services;
     }

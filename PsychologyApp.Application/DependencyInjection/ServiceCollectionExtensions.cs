@@ -83,6 +83,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<LuscherDetailReader>();
         services.AddSingleton<IClinicalCareService, ClinicalCareService>();
         services.AddSingleton<ICrisisDetector, KeywordCrisisDetector>();
+        services.AddSingleton<IEmotionGuesser>(_ => EmotionGuesser.Bundled);
         services.AddSingleton<IChatService, ChatService>();
         services.AddSingleton<ISituationAnalyzer, LexiconSituationAnalyzer>();
         services.AddSingleton<IBackupService, BackupService>();

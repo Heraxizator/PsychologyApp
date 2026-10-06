@@ -15,6 +15,10 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 - `docs/chat-companion.md` describes the engine, the state, the memory and its limits.
 
 ### Quality
+- Chat: `EmotionGuesser` (character n-gram naive Bayes, bundled training set) proposes a feeling for long messages the word lists miss, as a question with the guess first among the chips; leave-one-set-out: right on 25 of the 38 proposals, lexicon then guesser 89% vs 83% on the pooled sets, 63% vs 41% on the final set.
+- Five view models run under test without a device (crisis screen, risk check, safety plan, data backup including the passphrase flow, chat list): the real files are compiled into the net10.0 test project with small MAUI stand-ins (`ViewModels/MauiShims.cs`); 49 tests.
+- 46 more texts (the branches of conditions) moved to the resx files; only texts built with interpolated expressions remain in code.
+- `MauiNavigationService`, the reminder tap handlers and the questionnaire wizard use `IUserPreferencesStore` instead of the static `UserPreferences`.
 - Chat: third lexicon round (honest figure on a final, never-tuned set 37% -> 41%; the lexicon has reached its limit, see docs/companion-understanding.md) and the choice of feelings is offered at once for a long message that names no feeling.
 - `tools/android-smoke.sh` (used by the emulator workflow) installs the Release package, measures cold start, drives it with random input and fails on a crash or a start slower than 8 s; run against a real phone it passes (cold start 2.6 s on a Samsung A25 with the encrypted database, measured with the screen locked, so treat it as an upper bound).
 - `QuoteViewModel`, `UserViewModel`, `PhysicsSearchViewModel`, `TechniquesViewModel` read language and pending-navigation state through `IUserPreferencesStore`; every questionnaire score has a readable summary, detail and recommendation text in both languages (tested over the whole score range).

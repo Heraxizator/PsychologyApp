@@ -99,3 +99,26 @@ guard against regressions. The honest figure is the final set: +4 points. Word l
 Because most of what is missed is a person *telling* something, a message of eight words or more that names no feeling now gets the
 choice of feelings right away (`CompanionDialogue.TellingWords`) instead of an open question, which used to make them tell it again;
 shorter unclear messages keep the old two-step behaviour.
+
+## A second opinion for what the lexicon misses (2026-10)
+
+`EmotionGuesser` is a naive Bayes classifier over character 3-5-grams, trained at first use (about 25 ms) from the 427 labelled messages in
+`Conversation/Companion/Data/emotion-training.json` (the four evaluation sets merged and de-duplicated). It runs only when the lexicon
+recognised nothing and the message is a story (at least 8 words, as before), and its answer is never assumed: the chat says "Sounds like X, is that
+right? If not, pick what is closer." and puts X first among the feeling chips, so one tap confirms it.
+
+Leave-one-set-out (`EmotionGuesserTests`: train on three sets, ask about the fourth), with the gate of a lead of 20 (natural-log units) and at least
+5 words:
+
+| | all four sets pooled (427 messages) |
+|---|---|
+| Lexicon alone | 355 right (83%) |
+| Lexicon, then the guesser's proposal | 379 right (89%) |
+| Lexicon misses that get a proposal | 38 of 53, 25 of them right (66%) |
+| Small talk wrongly given a feeling | 1 |
+
+On the final set (the only one never read while writing terms): lexicon 41%, lexicon then guesser 63%.
+
+Limits, stated plainly: the training and the test messages were written by the same author in the same style, so real people's phrasing is the open
+question; precision of about two in three is why the result is a question and not a conclusion. Replace the training file with messages labelled by a
+psychologist and re-run `EmotionGuesserTests`; the gate (`EmotionGuesser.MinMargin`, `MinWords`) should be re-chosen on that data.

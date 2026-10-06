@@ -2745,4 +2745,142 @@
   <data name="TestRecommendationReasonRses.default" xml:space="preserve">
     <value>Модификация опыта укрепляет ресурсное состояние.</value>
   </data>
+  <data name="TodayRecommendationReasonLowMood.1" xml:space="preserve">
+    <value>Когда настроение низкое</value>
+  </data>
+  <data name="TodayRecommendationReasonContinueDraft.1" xml:space="preserve">
+    <value>Продолжите с того места, где остановились</value>
+  </data>
+  <data name="WeeklyInsightTestImprovedPart.1" xml:space="preserve">
+    <value>тест ↑</value>
+  </data>
+  <data name="WeeklyInsightTestWorsePart.1" xml:space="preserve">
+    <value>тест ↓</value>
+  </data>
+  <data name="HeckHessScore.1" xml:space="preserve">
+    <value>0-24 - невысокий уровень невротизации</value>
+  </data>
+  <data name="HeckHessScore.2" xml:space="preserve">
+    <value>25-40 - высокий уровень невротизации</value>
+  </data>
+  <data name="HeckHessScoreDetail.1" xml:space="preserve">
+    <value>Эмоциональная реактивность в пределах нормы. Продолжайте отслеживать стресс и отдых.</value>
+  </data>
+  <data name="HeckHessScoreDetail.2" xml:space="preserve">
+    <value>Повышенная невротизация. Практики на баланс противоположностей и сравнение важностей могут снизить напряжение.</value>
+  </data>
+  <data name="HaerScore.1" xml:space="preserve">
+    <value>0-28 - невысокий уровень психопатии</value>
+  </data>
+  <data name="HaerScore.2" xml:space="preserve">
+    <value>29-40 - высокий уровень психопатии</value>
+  </data>
+  <data name="HaerScoreDetail.1" xml:space="preserve">
+    <value>Показатель в низком диапазоне. Это скрининг, а не диагноз — ориентируйтесь на самочувствие.</value>
+  </data>
+  <data name="HaerScoreDetail.2" xml:space="preserve">
+    <value>Повышенные показатели. Полезно работать с прошлым опытом и переосмыслением убеждений.</value>
+  </data>
+  <data name="TestRecommendationReasonBeck.1" xml:space="preserve">
+    <value>При депрессивных симптомах «Крутилка» помогает снизить заряд болезненных воспоминаний.</value>
+  </data>
+  <data name="TestRecommendationReasonBeck.2" xml:space="preserve">
+    <value>Для профилактики полезно выгружать мысли на бумагу.</value>
+  </data>
+  <data name="TestRecommendationReasonHeckHess.1" xml:space="preserve">
+    <value>При высокой невротизации полярности помогают увидеть обе стороны ситуации.</value>
+  </data>
+  <data name="TestRecommendationReasonHeckHess.2" xml:space="preserve">
+    <value>Сравнение важностей укрепляет ощущение перспективы.</value>
+  </data>
+  <data name="TestRecommendationReasonHaer.1" xml:space="preserve">
+    <value>«50 лет спустя» отдаляет проблему во времени.</value>
+  </data>
+  <data name="TestRecommendationReasonHaer.2" xml:space="preserve">
+    <value>Модификация опыта помогает пересмотреть убеждения.</value>
+  </data>
+  <data name="TestRecommendationReasonPochebut.1" xml:space="preserve">
+    <value>«Уменьши это» визуально снижает значимость триггера.</value>
+  </data>
+  <data name="TestRecommendationReasonPochebut.2" xml:space="preserve">
+    <value>«Проверь это» помогает отпустить зацикленную мысль.</value>
+  </data>
+  <data name="TestRecommendationReasonGad7.1" xml:space="preserve">
+    <value>При тревоге полярности помогают увидеть обе стороны ситуации.</value>
+  </data>
+  <data name="TestRecommendationReasonGad7.2" xml:space="preserve">
+    <value>Сравнение важностей укрепляет ощущение перспективы.</value>
+  </data>
+  <data name="TestRecommendationReasonWho5.1" xml:space="preserve">
+    <value>При низком благополучии полезно выгружать мысли на бумагу.</value>
+  </data>
+  <data name="TestRecommendationReasonWho5.2" xml:space="preserve">
+    <value>Модификация опыта поддерживает ощущение смысла и ресурса.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq9.1" xml:space="preserve">
+    <value>При депрессивных симптомах «Крутилка» помогает снизить заряд болезненных воспоминаний.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq9.2" xml:space="preserve">
+    <value>Для профилактики полезно выгружать мысли на бумагу.</value>
+  </data>
+  <data name="ScoffScore.1" xml:space="preserve">
+    <value>0-1 — отрицательный скрининг</value>
+  </data>
+  <data name="ScoffScore.2" xml:space="preserve">
+    <value>2-5 — положительный скрининг</value>
+  </data>
+  <data name="ScoffScoreDetail.1" xml:space="preserve">
+    <value>Признаков расстройства пищевого поведения по скринингу не выявлено.</value>
+  </data>
+  <data name="ScoffScoreDetail.2" xml:space="preserve">
+    <value>Положительный скрининг. Рекомендуем обратиться к специалисту по пищевому поведению.</value>
+  </data>
+  <data name="TestRecommendationReasonScoff.1" xml:space="preserve">
+    <value>При признаках РПП «Крутилка» помогает снизить заряд болезненных воспоминаний.</value>
+  </data>
+  <data name="TestRecommendationReasonScoff.2" xml:space="preserve">
+    <value>Для профилактики полезно выгружать мысли на бумагу.</value>
+  </data>
+  <data name="TestRecommendationReasonSwls.1" xml:space="preserve">
+    <value>При низкой удовлетворённости жизнью полезно выгружать мысли на бумагу.</value>
+  </data>
+  <data name="TestRecommendationReasonSwls.2" xml:space="preserve">
+    <value>Модификация опыта поддерживает ощущение смысла и ресурса.</value>
+  </data>
+  <data name="Phq2Score.1" xml:space="preserve">
+    <value>0–2 — отрицательный скрининг</value>
+  </data>
+  <data name="Phq2Score.2" xml:space="preserve">
+    <value>3–6 — положительный скрининг</value>
+  </data>
+  <data name="Phq2ScoreDetail.1" xml:space="preserve">
+    <value>Симптомы депрессии не выражены. Продолжайте отслеживать настроение.</value>
+  </data>
+  <data name="Phq2ScoreDetail.2" xml:space="preserve">
+    <value>Положительный скрининг депрессии. Рассмотрите PHQ-9 или консультацию со специалистом.</value>
+  </data>
+  <data name="Gad2Score.1" xml:space="preserve">
+    <value>0–2 — отрицательный скрининг</value>
+  </data>
+  <data name="Gad2Score.2" xml:space="preserve">
+    <value>3–6 — положительный скрининг</value>
+  </data>
+  <data name="Gad2ScoreDetail.1" xml:space="preserve">
+    <value>Симптомы тревоги не выражены. Продолжайте отслеживать состояние.</value>
+  </data>
+  <data name="Gad2ScoreDetail.2" xml:space="preserve">
+    <value>Положительный скрининг тревоги. Рассмотрите GAD-7 или консультацию со специалистом.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq2.1" xml:space="preserve">
+    <value>При признаках депрессии «Один маленький шаг» возвращает движение.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq2.2" xml:space="preserve">
+    <value>Для профилактики полезно выгружать мысли на бумагу.</value>
+  </data>
+  <data name="TestRecommendationReasonGad2.1" xml:space="preserve">
+    <value>При тревоге «Квадратное дыхание» успокаивает тело.</value>
+  </data>
+  <data name="TestRecommendationReasonGad2.2" xml:space="preserve">
+    <value>Заземление помогает оставаться в настоящем моменте.</value>
+  </data>
 </root>

@@ -89,6 +89,10 @@ public static class CompanionDialogueContent
         ? "Okay, let's begin. When you're done, come back here and tell me how you are."
         : "Хорошо, начинаем. Когда закончите, вернитесь сюда и расскажите, как вы.";
 
+    public static string GuessPrompt(CompanionEmotion emotion, bool english) => english
+        ? $"It sounds like {CompanionContent.EmotionName(emotion, true)}, is that right? If not, pick what is closer."
+        : $"Похоже, это {CompanionContent.EmotionName(emotion, false)} — верно? Если нет, выберите, что ближе.";
+
     public static string EmotionPrompt(bool english) => english
         ? "I want to understand you better. Which of these is closest?"
         : "Хочу понять вас точнее. Что из этого ближе всего?";

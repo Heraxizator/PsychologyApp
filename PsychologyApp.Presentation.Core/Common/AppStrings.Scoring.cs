@@ -24,31 +24,23 @@ public static partial class AppStrings
 
     public static string HeckHessScore(BinarySeverityBand band) =>
         band == BinarySeverityBand.Low
-            ? T("0-24 - невысокий уровень невротизации", "0-24 - low neuroticism")
-            : T("25-40 - высокий уровень невротизации", "25-40 - high neuroticism");
+            ? R("HeckHessScore.1")
+            : R("HeckHessScore.2");
 
     public static string HeckHessScoreDetail(BinarySeverityBand band) =>
         band == BinarySeverityBand.Low
-            ? T(
-                "Эмоциональная реактивность в пределах нормы. Продолжайте отслеживать стресс и отдых.",
-                "Emotional reactivity is within normal range. Keep monitoring stress and rest.")
-            : T(
-                "Повышенная невротизация. Практики на баланс противоположностей и сравнение важностей могут снизить напряжение.",
-                "Elevated neuroticism. Polarity and importance-comparison practices may ease tension.");
+            ? R("HeckHessScoreDetail.1")
+            : R("HeckHessScoreDetail.2");
 
     public static string HaerScore(BinarySeverityBand band) =>
         band == BinarySeverityBand.Low
-            ? T("0-28 - невысокий уровень психопатии", "0-28 - low psychopathy")
-            : T("29-40 - высокий уровень психопатии", "29-40 - high psychopathy");
+            ? R("HaerScore.1")
+            : R("HaerScore.2");
 
     public static string HaerScoreDetail(BinarySeverityBand band) =>
         band == BinarySeverityBand.Low
-            ? T(
-                "Показатель в низком диапазоне. Это скрининг, а не диагноз — ориентируйтесь на самочувствие.",
-                "Score is in the low range. This is a screening tool, not a diagnosis.")
-            : T(
-                "Повышенные показатели. Полезно работать с прошлым опытом и переосмыслением убеждений.",
-                "Elevated score. Working with past experience and beliefs may help.");
+            ? R("HaerScoreDetail.1")
+            : R("HaerScoreDetail.2");
 
     public static string PochebutScore(PochebutBand band) => band switch
     {
@@ -66,23 +58,23 @@ public static partial class AppStrings
 
     public static string TestRecommendationReasonBeck(RecommendationLane lane) =>
         lane == RecommendationLane.High
-            ? T("При депрессивных симптомах «Крутилка» помогает снизить заряд болезненных воспоминаний.", "For depressive symptoms, Spin helps lower the charge of painful memories.")
-            : T("Для профилактики полезно выгружать мысли на бумагу.", "For prevention, writing thoughts on paper is helpful.");
+            ? R("TestRecommendationReasonBeck.1")
+            : R("TestRecommendationReasonBeck.2");
 
     public static string TestRecommendationReasonHeckHess(RecommendationLane lane) =>
         lane == RecommendationLane.High
-            ? T("При высокой невротизации полярности помогают увидеть обе стороны ситуации.", "With high neuroticism, polarities help see both sides.")
-            : T("Сравнение важностей укрепляет ощущение перспективы.", "Comparing importance strengthens perspective.");
+            ? R("TestRecommendationReasonHeckHess.1")
+            : R("TestRecommendationReasonHeckHess.2");
 
     public static string TestRecommendationReasonHaer(RecommendationLane lane) =>
         lane == RecommendationLane.High
-            ? T("«50 лет спустя» отдаляет проблему во времени.", "\"50 years later\" moves the problem forward in time.")
-            : T("Модификация опыта помогает пересмотреть убеждения.", "Experience modification helps revisit beliefs.");
+            ? R("TestRecommendationReasonHaer.1")
+            : R("TestRecommendationReasonHaer.2");
 
     public static string TestRecommendationReasonPochebut(RecommendationLane lane) =>
         lane == RecommendationLane.High
-            ? T("«Уменьши это» визуально снижает значимость триггера.", "\"Shrink it\" visually lowers the trigger's importance.")
-            : T("«Проверь это» помогает отпустить зацикленную мысль.", "\"Check it\" helps release a looping thought.");
+            ? R("TestRecommendationReasonPochebut.1")
+            : R("TestRecommendationReasonPochebut.2");
 
     public static string Gad7Score(Gad7Band band) => band switch
     {
@@ -132,8 +124,8 @@ public static partial class AppStrings
 
     public static string TestRecommendationReasonGad7(RecommendationLane lane) =>
         lane == RecommendationLane.High
-            ? T("При тревоге полярности помогают увидеть обе стороны ситуации.", "With anxiety, polarities help see both sides of a situation.")
-            : T("Сравнение важностей укрепляет ощущение перспективы.", "Comparing importance strengthens perspective.");
+            ? R("TestRecommendationReasonGad7.1")
+            : R("TestRecommendationReasonGad7.2");
 
     public static string TestRecommendationReasonK10(RecommendationLane lane) => lane switch
     {
@@ -144,8 +136,8 @@ public static partial class AppStrings
 
     public static string TestRecommendationReasonWho5(RecommendationLane lane) =>
         lane == RecommendationLane.High
-            ? T("При низком благополучии полезно выгружать мысли на бумагу.", "With low well-being, writing thoughts on paper is helpful.")
-            : T("Модификация опыта поддерживает ощущение смысла и ресурса.", "Experience modification supports a sense of meaning and resource.");
+            ? R("TestRecommendationReasonWho5.1")
+            : R("TestRecommendationReasonWho5.2");
 
     public static string Phq9Score(Phq9Band band) => band switch
     {
@@ -199,8 +191,8 @@ public static partial class AppStrings
 
     public static string TestRecommendationReasonPhq9(RecommendationLane lane) =>
         lane == RecommendationLane.High
-            ? T("При депрессивных симптомах «Крутилка» помогает снизить заряд болезненных воспоминаний.", "For depressive symptoms, Spin helps lower the charge of painful memories.")
-            : T("Для профилактики полезно выгружать мысли на бумагу.", "For prevention, writing thoughts on paper is helpful.");
+            ? R("TestRecommendationReasonPhq9.1")
+            : R("TestRecommendationReasonPhq9.2");
 
     public static string TestRecommendationReasonIsi(RecommendationLane lane) => lane switch
     {
@@ -234,17 +226,13 @@ public static partial class AppStrings
 
     public static string ScoffScore(ScoffBand band) =>
         band == ScoffBand.Negative
-            ? T("0-1 — отрицательный скрининг", "0-1 — negative screen")
-            : T("2-5 — положительный скрининг", "2-5 — positive screen");
+            ? R("ScoffScore.1")
+            : R("ScoffScore.2");
 
     public static string ScoffScoreDetail(ScoffBand band) =>
         band == ScoffBand.Negative
-            ? T(
-                "Признаков расстройства пищевого поведения по скринингу не выявлено.",
-                "No signs of an eating disorder on this screen.")
-            : T(
-                "Положительный скрининг. Рекомендуем обратиться к специалисту по пищевому поведению.",
-                "Positive screen. Please consult an eating-disorder specialist.");
+            ? R("ScoffScoreDetail.1")
+            : R("ScoffScoreDetail.2");
 
     public static string SwlsScore(SwlsBand band) => band switch
     {
@@ -277,13 +265,13 @@ public static partial class AppStrings
 
     public static string TestRecommendationReasonScoff(RecommendationLane lane) =>
         lane == RecommendationLane.High
-            ? T("При признаках РПП «Крутилка» помогает снизить заряд болезненных воспоминаний.", "With signs of an eating disorder, Spin helps lower the charge of painful memories.")
-            : T("Для профилактики полезно выгружать мысли на бумагу.", "For prevention, writing thoughts on paper is helpful.");
+            ? R("TestRecommendationReasonScoff.1")
+            : R("TestRecommendationReasonScoff.2");
 
     public static string TestRecommendationReasonSwls(RecommendationLane lane) =>
         lane == RecommendationLane.High
-            ? T("При низкой удовлетворённости жизнью полезно выгружать мысли на бумагу.", "With low life satisfaction, writing thoughts on paper is helpful.")
-            : T("Модификация опыта поддерживает ощущение смысла и ресурса.", "Experience modification supports a sense of meaning and resource.");
+            ? R("TestRecommendationReasonSwls.1")
+            : R("TestRecommendationReasonSwls.2");
 
     public static string Pss10Score(Pss10Band band) => band switch
     {
@@ -301,31 +289,23 @@ public static partial class AppStrings
 
     public static string Phq2Score(ScreenBand band) =>
         band == ScreenBand.Negative
-            ? T("0–2 — отрицательный скрининг", "0–2 — negative screen")
-            : T("3–6 — положительный скрининг", "3–6 — positive screen");
+            ? R("Phq2Score.1")
+            : R("Phq2Score.2");
 
     public static string Phq2ScoreDetail(ScreenBand band) =>
         band == ScreenBand.Negative
-            ? T(
-                "Симптомы депрессии не выражены. Продолжайте отслеживать настроение.",
-                "Depressive symptoms are not prominent. Keep monitoring mood.")
-            : T(
-                "Положительный скрининг депрессии. Рассмотрите PHQ-9 или консультацию со специалистом.",
-                "Positive depression screen. Consider PHQ-9 or a professional consultation.");
+            ? R("Phq2ScoreDetail.1")
+            : R("Phq2ScoreDetail.2");
 
     public static string Gad2Score(ScreenBand band) =>
         band == ScreenBand.Negative
-            ? T("0–2 — отрицательный скрининг", "0–2 — negative screen")
-            : T("3–6 — положительный скрининг", "3–6 — positive screen");
+            ? R("Gad2Score.1")
+            : R("Gad2Score.2");
 
     public static string Gad2ScoreDetail(ScreenBand band) =>
         band == ScreenBand.Negative
-            ? T(
-                "Симптомы тревоги не выражены. Продолжайте отслеживать состояние.",
-                "Anxiety symptoms are not prominent. Keep monitoring how you feel.")
-            : T(
-                "Положительный скрининг тревоги. Рассмотрите GAD-7 или консультацию со специалистом.",
-                "Positive anxiety screen. Consider GAD-7 or a professional consultation.");
+            ? R("Gad2ScoreDetail.1")
+            : R("Gad2ScoreDetail.2");
 
     public static string HadsAnxietyScore(HadsBand band) => band switch
     {
@@ -378,13 +358,13 @@ public static partial class AppStrings
 
     public static string TestRecommendationReasonPhq2(RecommendationLane lane) =>
         lane == RecommendationLane.High
-            ? T("При признаках депрессии «Один маленький шаг» возвращает движение.", "With signs of depression, One small step restores momentum.")
-            : T("Для профилактики полезно выгружать мысли на бумагу.", "For prevention, writing thoughts on paper is helpful.");
+            ? R("TestRecommendationReasonPhq2.1")
+            : R("TestRecommendationReasonPhq2.2");
 
     public static string TestRecommendationReasonGad2(RecommendationLane lane) =>
         lane == RecommendationLane.High
-            ? T("При тревоге «Квадратное дыхание» успокаивает тело.", "With anxiety, box breathing calms the body.")
-            : T("Заземление помогает оставаться в настоящем моменте.", "Grounding helps you stay in the present moment.");
+            ? R("TestRecommendationReasonGad2.1")
+            : R("TestRecommendationReasonGad2.2");
 
     public static string TestRecommendationReasonHadsAnxiety(RecommendationLane lane) => lane switch
     {

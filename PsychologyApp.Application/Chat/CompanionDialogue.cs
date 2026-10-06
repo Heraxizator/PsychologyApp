@@ -43,7 +43,8 @@ public sealed partial class CompanionDialogue(
     TimeProvider? time = null,
     IReadOnlyList<QuotSeed>? quotes = null,
     MoodEntryDTO? todayLowMood = null,
-    TestResultDTO? recentStressTest = null)
+    TestResultDTO? recentStressTest = null,
+    IEmotionGuesser? emotionGuesser = null)
 {
     private readonly Random _random = random ?? Random.Shared;
     private readonly TimeProvider _time = time ?? TimeProvider.System;
@@ -454,6 +455,12 @@ public sealed partial class CompanionDialogue(
 
         if (emotion == CompanionEmotion.Unknown && (state.UnknownStreak >= 2 || WordCount(text) >= TellingWords))
         {
+            if (emotionGuesser?.Guess(text) is { } guess)
+            {
+                messages.Add(CompanionDialogueContent.GuessPrompt(guess.Emotion, english));
+                return Reply(messages, EmotionReplies(guess.Emotion), state with { UnknownStreak = 0 }, emotion, theme);
+            }
+
             messages.Add(CompanionDialogueContent.EmotionPrompt(english));
             return Reply(messages, EmotionReplies(), state with { UnknownStreak = 0 }, emotion, theme);
         }
@@ -829,10 +836,31 @@ public sealed partial class CompanionDialogue(
 
     private static IReadOnlyList<ChatQuickReply> RatingReplies() => RatingChips;
 
-    private IReadOnlyList<ChatQuickReply> EmotionReplies() =>
-        CompanionContent.ClarifyChoices(english)
+    private IReadOnlyList<ChatQuickReply> EmotionReplies(CompanionEmotion? proposed = null)
+    {
+        List<ChatQuickReply> replies = CompanionContent.ClarifyChoices(english)
             .Select(c => new ChatQuickReply(ChatQuickReplyKinds.Emotion, c.Label, c.Emotion.ToString()))
-            .ToArray();
+            .ToList();
+        if (proposed is not { } emotion)
+        {
+            return replies;
+        }
+
+        // The proposed feeling goes first, so one tap confirms it; a feeling that has no chip of its own (loneliness, getting started) gets one.
+        int at = replies.FindIndex(r => r.Payload == emotion.ToString());
+        ChatQuickReply chip = at >= 0
+            ? replies[at]
+            : new ChatQuickReply(ChatQuickReplyKinds.Emotion, Capitalize(CompanionContent.EmotionName(emotion, english)), emotion.ToString());
+        if (at >= 0)
+        {
+            replies.RemoveAt(at);
+        }
+
+        replies.Insert(0, chip);
+        return replies;
+    }
+
+    private static string Capitalize(string text) => text.Length == 0 ? text : char.ToUpperInvariant(text[0]) + text[1..];
 
     private static bool IsScaleQuestion(CompanionState state) =>
         state.QuestionPending

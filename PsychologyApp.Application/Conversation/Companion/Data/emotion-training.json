@@ -1,0 +1,1710 @@
+[
+ {
+  "label": "Panic",
+  "text": "Не могу вдохнуть, грудь сдавило, кажется, сейчас упаду в обморок"
+ },
+ {
+  "label": "Panic",
+  "text": "У меня приступ, сердце бьётся как бешеное, руки трясутся, страшно до жути"
+ },
+ {
+  "label": "Panic",
+  "text": "Накрыло в лифте, мне кажется, что я задыхаюсь"
+ },
+ {
+  "label": "Panic",
+  "text": "Сердце выскакивает из груди, и мне кажется, что я умираю"
+ },
+ {
+  "label": "Panic",
+  "text": "Ощущение, что всё нереально и я сейчас потеряю контроль, дышать не получается"
+ },
+ {
+  "label": "Panic",
+  "text": "Дрожу вся, не могу успокоиться, кажется, что сейчас случится что-то ужасное, воздуха не хватает"
+ },
+ {
+  "label": "Panic",
+  "text": "Опять паническая атака посреди рабочего дня"
+ },
+ {
+  "label": "Panic",
+  "text": "Голова кружится, в груди давит, боюсь, что это сердечный приступ"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Постоянно переживаю за завтрашнее собеседование, места себе не нахожу"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Мне тревожно, когда ребёнок долго не отвечает на звонки"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Боюсь, что не справлюсь с проектом и меня выгонят"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Внутри всё время какое-то напряжение, как будто жду беды"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Не могу расслабиться, всё кажется опасным"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Волнуюсь перед выступлением так, что живот крутит"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Страшно ехать в другой город одной, вдруг что-то случится"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Неспокойно на душе последние дни без причины"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Прокручиваю в голове тот разговор и не могу остановиться"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Ночью лежу и думаю, думаю, думаю об одном и том же"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Мысли ходят по кругу, как белка в колесе"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Всё время анализирую, что сказал и как на это посмотрели"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Не могу выкинуть из головы его слова"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Накручиваю себя из-за ерунды, а потом не могу заснуть"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Перебираю в уме все возможные варианты и никак не остановлюсь"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Одна и та же мысль возвращается снова и снова"
+ },
+ {
+  "label": "Anger",
+  "text": "Меня бесит, что он опять не выполнил обещание"
+ },
+ {
+  "label": "Anger",
+  "text": "Так злюсь на сестру, что хочется кричать"
+ },
+ {
+  "label": "Anger",
+  "text": "Достали эти постоянные придирки начальника"
+ },
+ {
+  "label": "Anger",
+  "text": "Ненавижу, когда меня перебивают на совещаниях"
+ },
+ {
+  "label": "Anger",
+  "text": "Кипит внутри от злости, еле сдерживаюсь"
+ },
+ {
+  "label": "Anger",
+  "text": "Раздражает всё: шум, люди, дурацкие правила"
+ },
+ {
+  "label": "Anger",
+  "text": "Он снова соврал мне в лицо, я в ярости"
+ },
+ {
+  "label": "Anger",
+  "text": "Взбесило, что нас заставили работать в выходные"
+ },
+ {
+  "label": "Resentment",
+  "text": "Обидно до слёз, что никто не вспомнил про мой день рождения"
+ },
+ {
+  "label": "Resentment",
+  "text": "Мне так больно, что муж меня не поддержал"
+ },
+ {
+  "label": "Resentment",
+  "text": "Чувствую себя преданной после того, что сделала подруга"
+ },
+ {
+  "label": "Resentment",
+  "text": "Меня не ценят на работе, а я столько вкладываю"
+ },
+ {
+  "label": "Resentment",
+  "text": "Несправедливо, что премию дали не мне"
+ },
+ {
+  "label": "Resentment",
+  "text": "Он унизил меня при всех, и я до сих пор не могу этого забыть"
+ },
+ {
+  "label": "Resentment",
+  "text": "Обижена на маму за её слова"
+ },
+ {
+  "label": "Resentment",
+  "text": "Меня игнорируют в этой компании, будто меня не существует"
+ },
+ {
+  "label": "Guilt",
+  "text": "Мне стыдно за то, что я накричала на ребёнка"
+ },
+ {
+  "label": "Guilt",
+  "text": "Чувствую вину перед мамой, что редко звоню"
+ },
+ {
+  "label": "Guilt",
+  "text": "Это я во всём виноват, подвёл всю команду"
+ },
+ {
+  "label": "Guilt",
+  "text": "Не могу простить себе ту ошибку"
+ },
+ {
+  "label": "Guilt",
+  "text": "Жалею, что так резко ответил, теперь мучает совесть"
+ },
+ {
+  "label": "Guilt",
+  "text": "Стыдно смотреть людям в глаза после вчерашнего"
+ },
+ {
+  "label": "Guilt",
+  "text": "Из-за меня всё пошло не так"
+ },
+ {
+  "label": "Guilt",
+  "text": "Я плохая мать, снова сорвалась на детей"
+ },
+ {
+  "label": "Sadness",
+  "text": "Так грустно, что хочется плакать без причины"
+ },
+ {
+  "label": "Sadness",
+  "text": "После расставания внутри пустота"
+ },
+ {
+  "label": "Sadness",
+  "text": "Ничего не радует, даже любимые занятия"
+ },
+ {
+  "label": "Sadness",
+  "text": "Тоскую по бабушке, её нет уже год"
+ },
+ {
+  "label": "Sadness",
+  "text": "На душе тяжело и серо, всё безнадёжно"
+ },
+ {
+  "label": "Sadness",
+  "text": "Плачу по вечерам и не понимаю почему"
+ },
+ {
+  "label": "Sadness",
+  "text": "Кажется, жизнь потеряла краски"
+ },
+ {
+  "label": "Sadness",
+  "text": "Мне очень грустно в этот праздник"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Я выгорел, на работу идти как на каторгу"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Сил нет вообще ни на что, лежу и смотрю в потолок"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Устала до предела, а отдохнуть некогда"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Не высыпаюсь уже месяц, всё валится из рук"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Чувствую себя как выжатый лимон"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Апатия, ничего не хочется, даже вставать с кровати"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Перегрузка: работа, дети, дом, и так без выходных"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Ужасно вымотана, голова не соображает"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Мне одиноко, вечерами не с кем поговорить"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Я чувствую, что никому не нужен"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Друзья разъехались, я совсем одна в этом городе"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Целыми днями ни с кем не общаюсь, это давит"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Никто меня не понимает, я как чужой среди людей"
+ },
+ {
+  "label": "Loneliness",
+  "text": "После переезда не знаю здесь ни души"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Чувствую себя изолированной от всех"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Одиночество съедает, даже поделиться не с кем"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Не могу заставить себя сесть за диплом, откладываю уже неделю"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Всё время прокрастинирую, а дедлайн горит"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Понимаю, что надо начать, но не могу собраться"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Ленюсь и ругаю себя за это"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Сижу в телефоне вместо работы, и так каждый день"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Никак не приступлю к отчёту, всё время что-то отвлекает"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Дела копятся, а я ничего не делаю"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Не получается начать, хотя всё понимаю"
+ },
+ {
+  "label": "Unknown",
+  "text": "Ну как-то всё не так"
+ },
+ {
+  "label": "Unknown",
+  "text": "Не знаю, что сказать"
+ },
+ {
+  "label": "Unknown",
+  "text": "Привет, можно поговорить?"
+ },
+ {
+  "label": "Unknown",
+  "text": "Просто хотел написать что-нибудь"
+ },
+ {
+  "label": "Unknown",
+  "text": "Сегодня был обычный день, ходил в магазин"
+ },
+ {
+  "label": "Unknown",
+  "text": "Расскажи что-нибудь"
+ },
+ {
+  "label": "Panic",
+  "text": "I can't breathe and my heart is pounding, I think I'm having a panic attack"
+ },
+ {
+  "label": "Panic",
+  "text": "Everything feels unreal and I'm shaking, I'm scared I'll pass out"
+ },
+ {
+  "label": "Anxiety",
+  "text": "I'm so worried about the interview tomorrow"
+ },
+ {
+  "label": "Anxiety",
+  "text": "I feel on edge all the time and afraid something bad will happen"
+ },
+ {
+  "label": "Overthinking",
+  "text": "I keep replaying what I said in that meeting"
+ },
+ {
+  "label": "Overthinking",
+  "text": "My thoughts just go in circles and I can't switch them off"
+ },
+ {
+  "label": "Anger",
+  "text": "I'm furious that he lied to me again"
+ },
+ {
+  "label": "Anger",
+  "text": "This constant criticism from my boss drives me mad"
+ },
+ {
+  "label": "Resentment",
+  "text": "I feel so hurt that nobody remembered my birthday"
+ },
+ {
+  "label": "Resentment",
+  "text": "It's unfair that she got the promotion I earned"
+ },
+ {
+  "label": "Guilt",
+  "text": "I feel terrible for yelling at my kid"
+ },
+ {
+  "label": "Guilt",
+  "text": "It's all my fault, I let the whole team down"
+ },
+ {
+  "label": "Sadness",
+  "text": "I feel so empty and sad since the breakup"
+ },
+ {
+  "label": "Sadness",
+  "text": "Nothing makes me happy anymore and I cry every night"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "I'm completely burned out, I have no energy for anything"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "I haven't slept properly in weeks and I'm drained"
+ },
+ {
+  "label": "Loneliness",
+  "text": "I feel so lonely, I have no one to talk to"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Everyone moved away and I'm alone in this city"
+ },
+ {
+  "label": "Procrastination",
+  "text": "I keep putting off my thesis and the deadline is close"
+ },
+ {
+  "label": "Procrastination",
+  "text": "I can't make myself start the report"
+ },
+ {
+  "label": "Panic",
+  "text": "Внезапно стало нечем дышать, в глазах потемнело, подумал, что это конец"
+ },
+ {
+  "label": "Panic",
+  "text": "Меня всю трясёт, руки ледяные, в горле ком, чувствую, что теряю сознание"
+ },
+ {
+  "label": "Panic",
+  "text": "Такой ужас накатил без причины, что я выбежала из магазина"
+ },
+ {
+  "label": "Panic",
+  "text": "Тело как будто взорвалось изнутри, пульс зашкаливает"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Всё время жду, что случится что-то плохое"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Завтра результаты анализов, и я не могу думать ни о чём другом от страха"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Не сплю ночами, потому что боюсь ошибиться на новой работе"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Ощущение неопределённости просто сводит с ума, что будет дальше"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Опять эта сцена стоит перед глазами, снова и снова её перематываю"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Голова гудит от мыслей, они не дают уснуть"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Бесконечно обдумываю, как надо было ответить"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Не могу переключиться, всё время возвращаюсь к тому вопросу"
+ },
+ {
+  "label": "Anger",
+  "text": "Соседи опять до полуночи шумят, хочется взорваться"
+ },
+ {
+  "label": "Anger",
+  "text": "Я в бешенстве от того, как со мной обошлись в банке"
+ },
+ {
+  "label": "Anger",
+  "text": "Терпеть не могу, когда врут прямо в глаза"
+ },
+ {
+  "label": "Anger",
+  "text": "Муж опять разбросал вещи, у меня уже нервы на пределе от злости"
+ },
+ {
+  "label": "Resentment",
+  "text": "Мне до сих пор больно от её слов на прошлой неделе"
+ },
+ {
+  "label": "Resentment",
+  "text": "Столько для них сделала, а в ответ ни слова благодарности, так обидно"
+ },
+ {
+  "label": "Resentment",
+  "text": "Коллеги обсуждали меня за спиной, чувствую себя оскорблённой"
+ },
+ {
+  "label": "Resentment",
+  "text": "Друг не пришёл на мой праздник, и это сильно задело"
+ },
+ {
+  "label": "Guilt",
+  "text": "Мне ужасно неловко за то, что я наговорила подруге"
+ },
+ {
+  "label": "Guilt",
+  "text": "Постоянно казню себя за тот поступок"
+ },
+ {
+  "label": "Guilt",
+  "text": "Виню себя, что не была рядом, когда отцу было плохо"
+ },
+ {
+  "label": "Guilt",
+  "text": "Не могу отделаться от чувства, что я всех подвела"
+ },
+ {
+  "label": "Sadness",
+  "text": "Всё вокруг кажется серым, ни на что нет настроения"
+ },
+ {
+  "label": "Sadness",
+  "text": "Скучаю по нему до слёз, без него всё пусто"
+ },
+ {
+  "label": "Sadness",
+  "text": "Утром просыпаюсь и не вижу смысла вставать"
+ },
+ {
+  "label": "Sadness",
+  "text": "Депрессивное состояние уже вторую неделю"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Сгораю на работе, батарейка на нуле"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Каждое утро как через силу, энергии нет совсем"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Три недели без нормального отдыха, тело просто отказывает"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Голова тяжёлая, всё бесит, хочется просто спать сутками"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Вокруг много людей, а поговорить по душам не с кем"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Праздники встречаю в одиночестве, и от этого особенно тоскливо"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Ощущение, что до меня никому нет дела"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Живу одна и целыми днями молчу"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Который день собираюсь заняться курсовой и всё никак"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Вечно тяну до последнего, а потом паникую"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Открываю ноутбук и тут же ухожу смотреть видео"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Задача простая, но я почему-то не могу к ней подступиться"
+ },
+ {
+  "label": "Unknown",
+  "text": "Добрый вечер"
+ },
+ {
+  "label": "Unknown",
+  "text": "Ничего особенного не произошло"
+ },
+ {
+  "label": "Unknown",
+  "text": "Хочу просто поболтать"
+ },
+ {
+  "label": "Panic",
+  "text": "My chest is tight, I can't get air, my hands are numb and I feel like I'm going to die"
+ },
+ {
+  "label": "Anxiety",
+  "text": "I lie awake dreading everything that could go wrong tomorrow"
+ },
+ {
+  "label": "Overthinking",
+  "text": "I can't stop going over that conversation in my head"
+ },
+ {
+  "label": "Anger",
+  "text": "I'm so angry at how they treated me, I could scream"
+ },
+ {
+  "label": "Resentment",
+  "text": "It really stings that they never thanked me after all I did"
+ },
+ {
+  "label": "Guilt",
+  "text": "I can't forgive myself for what I said to her"
+ },
+ {
+  "label": "Sadness",
+  "text": "Everything feels grey and I cry for no reason"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "I'm wiped out and every day feels like a struggle"
+ },
+ {
+  "label": "Loneliness",
+  "text": "I spend the weekends completely alone and it hurts"
+ },
+ {
+  "label": "Procrastination",
+  "text": "I keep telling myself I'll start tomorrow but never do"
+ },
+ {
+  "label": "Panic",
+  "text": "Стою в очереди и вдруг перестала чувствовать руки, сердце колотится бешено"
+ },
+ {
+  "label": "Panic",
+  "text": "Проснулась ночью от ужаса, не могла понять, где я, вся мокрая от пота"
+ },
+ {
+  "label": "Panic",
+  "text": "В самолёте начался приступ, дышать сложно, кажется, вот-вот потеряю сознание"
+ },
+ {
+  "label": "Panic",
+  "text": "Такое чувство, что земля уходит из под ног, паникую по любому поводу"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Постоянно кажется, что упустила что-то важное на новой работе"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Не могу выдохнуть спокойно, пока не получу ответ от врача"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Каждый звонок от начальника вызывает волну тревжности внутри"
+ },
+ {
+  "label": "Anxiety",
+  "text": "С самого утра какое-то смутное чувство, что случится беда"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Разбираю по косточкам каждое слово из нашего последнего разговора"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Не могу отпустить ситуацию, мозг постоянно возвращается к ней"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Задаю себе один и тот же вопрос по сто раз за вечер"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Сплошной внутренний диалог, который никак не заканчивается"
+ },
+ {
+  "label": "Anger",
+  "text": "Коллега опять присвоил себе мою работу, руки трясутся от возмущения"
+ },
+ {
+  "label": "Anger",
+  "text": "Не выношу, когда со мной говорят таким тоном"
+ },
+ {
+  "label": "Anger",
+  "text": "Внутри всё клокочет, хочется хлопнуть дверью и уйти"
+ },
+ {
+  "label": "Anger",
+  "text": "Опять пришлось краснеть за чужие косяки, это выводит из равновесия"
+ },
+ {
+  "label": "Resentment",
+  "text": "После той встречи осадок остался на много дней вперёд"
+ },
+ {
+  "label": "Resentment",
+  "text": "Родители всегда хвалили брата больше, до сих пор саднит внутри"
+ },
+ {
+  "label": "Resentment",
+  "text": "Сказали, что моё мнение никого не интересует, было очень неприятно"
+ },
+ {
+  "label": "Resentment",
+  "text": "Мне до сих пор тяжело вспоминать, как надо мной посмеялись при всех"
+ },
+ {
+  "label": "Guilt",
+  "text": "Всю ночь прокручиваю в голове, как могла бы поступить иначе с сыном"
+ },
+ {
+  "label": "Guilt",
+  "text": "Ощущение, что подвела всех, кто на меня рассчитывал"
+ },
+ {
+  "label": "Guilt",
+  "text": "Не отпускает мысль, что зря на неё накричала"
+ },
+ {
+  "label": "Guilt",
+  "text": "Мучаюсь, что не смогла приехать к бабушке вовремя"
+ },
+ {
+  "label": "Sadness",
+  "text": "С самого утра тяжело на сердце, будто придавило чем-то"
+ },
+ {
+  "label": "Sadness",
+  "text": "Не хочется ни с кем говорить, только лежать и молчать"
+ },
+ {
+  "label": "Sadness",
+  "text": "Смотрю на старые фотографии и наворачиваются слёзы"
+ },
+ {
+  "label": "Sadness",
+  "text": "Внутри будто выключили свет, всё стало тусклым"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Третий проект подряд без выходных, чувствую себя выжатой досуха"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Просыпаюсь уже уставшей, как будто и не спала"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Руки опускаются, сил хватает только на самое необходимое"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Мозг как будто в тумане от постоянного недосыпа"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Переехала в новый город и до сих пор ни с кем не сблизилась"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Дома тихо, и эта тишина давит сильнее любого шума"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Все заняты своими семьями, а мне даже позвонить некому"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Чувствую себя лишней даже в компании друзей"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Уже неделю обещаю себе разобрать документы и всё переношу"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Включаю сериал вместо того чтобы готовиться к экзамену"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Список дел растёт, а я листаю ленту вместо работы"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Знаю, что пора звонить клиенту, но каждый раз нахожу повод отложить"
+ },
+ {
+  "label": "Unknown",
+  "text": "Как прошли твои выходные?"
+ },
+ {
+  "label": "Unknown",
+  "text": "Купила сегодня новую книгу"
+ },
+ {
+  "label": "Unknown",
+  "text": "Расскажи анекдот"
+ },
+ {
+  "label": "Unknown",
+  "text": "На улице сегодня солнечно"
+ },
+ {
+  "label": "Panic",
+  "text": "My vision went dark and I thought I was about to pass out on the train"
+ },
+ {
+  "label": "Panic",
+  "text": "Suddenly couldn't feel my hands, heart racing out of nowhere in the middle of the meeting"
+ },
+ {
+  "label": "Anxiety",
+  "text": "I keep bracing myself for bad news that hasn't even happened yet"
+ },
+ {
+  "label": "Anxiety",
+  "text": "My stomach's in knots every time my phone buzzes at work"
+ },
+ {
+  "label": "Overthinking",
+  "text": "My brain won't let that text message go, I've reread it fifty times"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Every night I replay the interview and pick apart everything I said"
+ },
+ {
+  "label": "Anger",
+  "text": "He took credit for my work again and I'm shaking with rage"
+ },
+ {
+  "label": "Anger",
+  "text": "I can't stand being talked down to like that"
+ },
+ {
+  "label": "Resentment",
+  "text": "Still stings that my sister got all the praise growing up"
+ },
+ {
+  "label": "Guilt",
+  "text": "I keep replaying how I could have handled it differently with my son"
+ },
+ {
+  "label": "Sadness",
+  "text": "Everything feels dim lately, like someone turned the lights down"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "I wake up already tired, like the sleep did nothing at all"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Moved to a new city months ago and still haven't connected with anyone"
+ },
+ {
+  "label": "Procrastination",
+  "text": "I keep opening the report and closing it again without writing a word"
+ },
+ {
+  "label": "Unknown",
+  "text": "What time does the store close?"
+ },
+ {
+  "label": "Unknown",
+  "text": "Tell me something interesting"
+ },
+ {
+  "label": "Panic",
+  "text": "В метро вдруг потемнело в глазах, руки онемели, думала, что сейчас упаду"
+ },
+ {
+  "label": "Panic",
+  "text": "Сердце так бьётся, что отдаёт в уши, и я не понимаю, что со мной происходит"
+ },
+ {
+  "label": "Panic",
+  "text": "Меня трясёт, в груди всё сдавило, кажется, это конец"
+ },
+ {
+  "label": "Panic",
+  "text": "Посреди совещания накатила волна, ладони мокрые, воздуха не хватает"
+ },
+ {
+  "label": "Panic",
+  "text": "Опять ночью проснулся с ощущением, что задыхаюсь и сейчас умру"
+ },
+ {
+  "label": "Panic",
+  "text": "Лифт застрял, я вцепилась в стену, дыхание сбивается, ноги ватные"
+ },
+ {
+  "label": "Panic",
+  "text": "Не могу вдохнуть полной грудью, пальцы покалывает, страшно до дрожи"
+ },
+ {
+  "label": "Panic",
+  "text": "My chest is crushing me and I can't catch my breath, I think I'm dying"
+ },
+ {
+  "label": "Panic",
+  "text": "Out of nowhere my hands went numb and my heart started hammering"
+ },
+ {
+  "label": "Panic",
+  "text": "I'm in the middle of an attack right now, everything feels unreal"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Завтра разговор с руководителем, и я уже вторые сутки не нахожу себе места"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Всё время жду, что случится что-то плохое, хотя причин вроде нет"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Результаты анализов будут через три дня, и внутри всё сжимается от ожидания"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Боюсь, что не справлюсь с новой должностью и все это увидят"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Когда ребёнок задерживается из школы, я начинаю представлять самое худшее"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Перед выступлением меня мутит, и мысли только о том, что всё пойдёт не так"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Не отпускает ощущение, что я что-то забыла сделать и это плохо кончится"
+ },
+ {
+  "label": "Anxiety",
+  "text": "I keep feeling like something bad is about to happen and I can't relax"
+ },
+ {
+  "label": "Anxiety",
+  "text": "My exam is tomorrow and my stomach is in knots"
+ },
+ {
+  "label": "Anxiety",
+  "text": "I'm constantly on edge about money even though we're fine for now"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Прокручиваю в голове вчерашний разговор и ищу, что сказала не так"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Ночью лежу и перебираю все варианты, как могло бы быть, и никак не засну"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Одна и та же мысль ходит по кругу уже неделю, не могу от неё отделаться"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Каждое его слово разбираю по косточкам, что он имел в виду"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Голова как будто на беговой дорожке: мысли несутся и не останавливаются"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Всё думаю и думаю про то решение, а толку никакого"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Не могу перестать анализировать, правильно ли я поступила"
+ },
+ {
+  "label": "Overthinking",
+  "text": "I replay that conversation over and over, picking apart everything I said"
+ },
+ {
+  "label": "Overthinking",
+  "text": "My mind won't shut up, it keeps going in circles about the same thing"
+ },
+ {
+  "label": "Overthinking",
+  "text": "I analyze every message I send for hours afterwards"
+ },
+ {
+  "label": "Anger",
+  "text": "Опять он обещал и не сделал, у меня просто кипит всё внутри"
+ },
+ {
+  "label": "Anger",
+  "text": "Хочется орать на всех подряд, такое чувство, что вот-вот сорвусь"
+ },
+ {
+  "label": "Anger",
+  "text": "Коллега присвоил мою идею, и я до сих пор не могу успокоиться от возмущения"
+ },
+ {
+  "label": "Anger",
+  "text": "Выхожу из себя от того, что меня постоянно перебивают"
+ },
+ {
+  "label": "Anger",
+  "text": "Сосед снова шумит ночью, и я готова пойти и разнести его дверь"
+ },
+ {
+  "label": "Anger",
+  "text": "Кулаки сжимаются, когда вспоминаю, как со мной поговорили в банке"
+ },
+ {
+  "label": "Anger",
+  "text": "Меня трясёт от злости на этих людей, которые так со мной поступили"
+ },
+ {
+  "label": "Anger",
+  "text": "I'm so mad at my brother I could scream"
+ },
+ {
+  "label": "Anger",
+  "text": "People cutting me off in traffic make my blood boil"
+ },
+ {
+  "label": "Anger",
+  "text": "I snapped at my kid again and I'm just fuming at everything today"
+ },
+ {
+  "label": "Resentment",
+  "text": "Столько лет вкладывалась в эти отношения, а в ответ ни слова благодарности"
+ },
+ {
+  "label": "Resentment",
+  "text": "Мне до сих пор больно из-за того, как они со мной поступили на дне рождения"
+ },
+ {
+  "label": "Resentment",
+  "text": "Все получили премию, а про меня как будто забыли"
+ },
+ {
+  "label": "Resentment",
+  "text": "Мама всегда хвалила сестру и никогда не замечала моих успехов, и это до сих пор жжёт"
+ },
+ {
+  "label": "Resentment",
+  "text": "Он выставил меня виноватой перед всеми, а я теперь ношу это в себе"
+ },
+ {
+  "label": "Resentment",
+  "text": "Не могу простить подруге, что она рассказала мой секрет"
+ },
+ {
+  "label": "Resentment",
+  "text": "Меня никогда не ставят в пример, хотя я делаю больше всех"
+ },
+ {
+  "label": "Resentment",
+  "text": "I gave them everything and they treated me like I didn't matter"
+ },
+ {
+  "label": "Resentment",
+  "text": "It still stings that nobody remembered my birthday"
+ },
+ {
+  "label": "Resentment",
+  "text": "He took credit for my work and I can't let it go"
+ },
+ {
+  "label": "Guilt",
+  "text": "Накричала на сына, а теперь не могу смотреть ему в глаза"
+ },
+ {
+  "label": "Guilt",
+  "text": "Меня гложет, что я не приехала к бабушке, пока она была жива"
+ },
+ {
+  "label": "Guilt",
+  "text": "Подвёл команду, и из-за меня сорвали сроки, теперь места себе не нахожу"
+ },
+ {
+  "label": "Guilt",
+  "text": "Сказала подруге лишнего, и теперь мне ужасно совестно"
+ },
+ {
+  "label": "Guilt",
+  "text": "Чувствую, что я плохая мать, потому что всё время на работе"
+ },
+ {
+  "label": "Guilt",
+  "text": "Не могу себе простить, что тогда промолчала"
+ },
+ {
+  "label": "Guilt",
+  "text": "Мне кажется, что это всё из-за меня, я всё испортила"
+ },
+ {
+  "label": "Guilt",
+  "text": "I feel terrible about how I treated her, I keep blaming myself"
+ },
+ {
+  "label": "Guilt",
+  "text": "I lied to my parents and now I can't look them in the eye"
+ },
+ {
+  "label": "Guilt",
+  "text": "I should have been there for him, it eats at me every day"
+ },
+ {
+  "label": "Sadness",
+  "text": "Вроде ничего не случилось, а на душе серо и хочется закрыться в комнате"
+ },
+ {
+  "label": "Sadness",
+  "text": "Всё вокруг потеряло цвет, и ничто не приносит удовольствия"
+ },
+ {
+  "label": "Sadness",
+  "text": "Сегодня годовщина смерти отца, и меня накрыла горечь"
+ },
+ {
+  "label": "Sadness",
+  "text": "Смотрю на старые фотографии и не могу сдержать слёзы"
+ },
+ {
+  "label": "Sadness",
+  "text": "Всё время чувствую себя несчастной, и не понимаю почему"
+ },
+ {
+  "label": "Sadness",
+  "text": "Нет ни желания, ни надежды, что станет лучше"
+ },
+ {
+  "label": "Sadness",
+  "text": "После расставания я просто лежу и смотрю в потолок"
+ },
+ {
+  "label": "Sadness",
+  "text": "I've been feeling so low lately and I can't shake it"
+ },
+ {
+  "label": "Sadness",
+  "text": "Nothing feels worth it anymore, I just want to stay in bed and cry"
+ },
+ {
+  "label": "Sadness",
+  "text": "I miss my old life so much it hurts"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "К вечеру я как выжатый лимон, даже говорить не хочется"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Просыпаюсь уже уставшей, и так каждый день без выходных"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Работаю по двенадцать часов, и ресурс закончился совсем"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Тело тяжёлое, как будто налито свинцом, и ничего не хочется"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Уже месяц не высыпаюсь с ребёнком, я на последнем издыхании"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Всё делаю на автомате, внутри ноль энергии"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Не могу собраться даже на простые дела, хочется просто спать"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "I'm completely worn out, even small things feel like climbing a mountain"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "I've been running on empty for weeks and I have nothing left"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "After work I just collapse on the couch, I can't do anything else"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Выходные проходят в тишине, мне даже позвонить некому"
+ },
+ {
+  "label": "Loneliness",
+  "text": "В новом городе я никого не знаю и вечерами просто смотрю в стену"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Кажется, что среди людей я всё равно чужая"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Друзья давно разъехались, и поговорить по душам не с кем"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Все в парах, а я каждый праздник встречаю одна"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Живу с семьёй, но чувствую, что меня никто не слышит и не видит"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Хочется, чтобы хоть кто-то спросил, как у меня дела"
+ },
+ {
+  "label": "Loneliness",
+  "text": "I moved here a year ago and still don't have a single friend"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Even in a crowd I feel invisible and disconnected"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Weekends are the worst, nobody ever texts me"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Отчёт горит, а я уже третий час листаю ленту вместо того, чтобы сесть за него"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Всё время говорю себе «завтра начну», и так уже месяц"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Уборку надо сделать давно, но я занимаюсь чем угодно, лишь бы не ею"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Сажусь за диплом и тут же отвлекаюсь на чай, телефон, уборку"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Знаю, что нужно сделать, а руки как будто не слушаются"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Дедлайн послезавтра, а я ещё даже не открывала файл"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Копится куча задач, и я просто сижу и не двигаюсь с места"
+ },
+ {
+  "label": "Procrastination",
+  "text": "I keep putting off my thesis and now it's due in two days"
+ },
+ {
+  "label": "Procrastination",
+  "text": "I know what I have to do but I just scroll my phone instead"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Every time I sit down to work I find something else to do"
+ },
+ {
+  "label": "Unknown",
+  "text": "Сегодня ходила за хлебом, купила ещё молока"
+ },
+ {
+  "label": "Unknown",
+  "text": "Скажи, а как работает это приложение"
+ },
+ {
+  "label": "Unknown",
+  "text": "Хочу поговорить"
+ },
+ {
+  "label": "Unknown",
+  "text": "Не знаю, как это описать"
+ },
+ {
+  "label": "Unknown",
+  "text": "Погода сегодня хорошая, гуляла в парке"
+ },
+ {
+  "label": "Unknown",
+  "text": "Просто пишу, чтобы проверить"
+ },
+ {
+  "label": "Unknown",
+  "text": "Расскажи что-нибудь интересное про сон"
+ },
+ {
+  "label": "Unknown",
+  "text": "I watched a movie last night"
+ },
+ {
+  "label": "Unknown",
+  "text": "What can you do for me"
+ },
+ {
+  "label": "Unknown",
+  "text": "Just checking in"
+ },
+ {
+  "label": "Panic",
+  "text": "Стою на платформе, всё плывёт, в ушах шум, мне кажется, я сейчас отключусь"
+ },
+ {
+  "label": "Panic",
+  "text": "Грудную клетку будто стянуло обручем, и мне не хватает вдоха"
+ },
+ {
+  "label": "Panic",
+  "text": "Внезапно охватил животный страх, тело перестало слушаться"
+ },
+ {
+  "label": "Panic",
+  "text": "Серцебиение под сто пятьдесят, перед глазами пятна, и мне кажется, что я схожу с ума"
+ },
+ {
+  "label": "Panic",
+  "text": "Меня накрывает посреди ночи, вскакиваю, хватаю ртом воздух"
+ },
+ {
+  "label": "Panic",
+  "text": "В торговом центре стало невыносимо, захотелось бежать, ноги подкашиваются"
+ },
+ {
+  "label": "Panic",
+  "text": "Suddenly I felt like I was losing control, my whole body was shaking and I couldn't breathe"
+ },
+ {
+  "label": "Panic",
+  "text": "I think I'm having a heart attack, my chest is so tight"
+ },
+ {
+  "label": "Panic",
+  "text": "The room started spinning and I was sure I was going to faint"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Перед поездкой всё время проверяю билеты и вечно кажется, что что-то пойдёт не по плану"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Ребёнок кашляет, и я не могу спать, мысленно рисую самые мрачные картины"
+ },
+ {
+  "label": "Anxiety",
+  "text": "В груди будто натянутая струна уже несколько дней, жду подвоха от всего"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Звонок из поликлиники, а мне заранее не по себе, вдруг там что-то серьёзное"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Страшно потерять работу, всё время считаю, на сколько хватит накоплений"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Нервы на пределе из-за предстоящего переезда, ничего не могу планировать спокойно"
+ },
+ {
+  "label": "Anxiety",
+  "text": "I get a pit in my stomach every time my boss asks to talk"
+ },
+ {
+  "label": "Anxiety",
+  "text": "I can't stop worrying about whether I locked the door"
+ },
+ {
+  "label": "Anxiety",
+  "text": "I'm tense all day, waiting for the other shoe to drop"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Мысленно спорю с начальницей уже который час, хотя разговор давно закончился"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Сто раз прикидываю, что надо было ответить, и снова и снова строю диалоги"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Ухожу в размышления и не могу остановиться, прямо замкнутый круг"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Эта тема сидит в голове, как заноза, и я ковыряюсь в ней целыми днями"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Взвешиваю все за и против, решения принять так и не могу"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Бесконечно воображаю разные сценарии развития событий"
+ },
+ {
+  "label": "Overthinking",
+  "text": "I lie awake going through every possible outcome of tomorrow's meeting"
+ },
+ {
+  "label": "Overthinking",
+  "text": "I can't turn my thoughts off, they just loop around the same worry"
+ },
+ {
+  "label": "Overthinking",
+  "text": "I keep dissecting what she said and what she really meant"
+ },
+ {
+  "label": "Anger",
+  "text": "Меня до глубины души возмутил его ответ, я чуть не швырнула телефон"
+ },
+ {
+  "label": "Anger",
+  "text": "Опять эти бесконечные придирки, хочется послать всех к чёрту"
+ },
+ {
+  "label": "Anger",
+  "text": "Горячая волна поднимается, когда он делает вид, что ничего не случилось"
+ },
+ {
+  "label": "Anger",
+  "text": "Хамство водителя довело до белого каления, я до сих пор вне себя"
+ },
+ {
+  "label": "Anger",
+  "text": "Зубы стискиваю, чтобы не наговорить лишнего этой наглой соседке"
+ },
+ {
+  "label": "Anger",
+  "text": "Рвёт и мечет внутри от этой несправедливой оценки на работе"
+ },
+ {
+  "label": "Anger",
+  "text": "I'm absolutely seething about what my manager said in front of everyone"
+ },
+ {
+  "label": "Anger",
+  "text": "That guy has a lot of nerve, I'm so irritated I can barely think"
+ },
+ {
+  "label": "Anger",
+  "text": "I slammed the door so hard the pictures shook, I'm that angry"
+ },
+ {
+  "label": "Resentment",
+  "text": "Я столько для них делала, а они даже спасибо не сказали, и обида не проходит"
+ },
+ {
+  "label": "Resentment",
+  "text": "Он отшутился, когда мне было важно, и теперь держу это в памяти, как камень за пазухой"
+ },
+ {
+  "label": "Resentment",
+  "text": "Слова свекрови про мою готовку застряли внутри и ранят до сих пор"
+ },
+ {
+  "label": "Resentment",
+  "text": "Начальник при всех сказал, что я ничего не умею, и мне до сих пор горько"
+ },
+ {
+  "label": "Resentment",
+  "text": "Подруга выбрала не меня на свадьбу, и я чувствую себя отвергнутой"
+ },
+ {
+  "label": "Resentment",
+  "text": "Каждый раз вспоминаю его насмешку, и внутри всё сжимается от неприятия"
+ },
+ {
+  "label": "Resentment",
+  "text": "She never apologized and I still feel wronged after all these years"
+ },
+ {
+  "label": "Resentment",
+  "text": "They didn't invite me and it really hurt my feelings"
+ },
+ {
+  "label": "Resentment",
+  "text": "He promised to support me and then he humiliated me in front of friends"
+ },
+ {
+  "label": "Guilt",
+  "text": "Забыла про день рождения мамы, и теперь мне невыносимо неловко перед ней"
+ },
+ {
+  "label": "Guilt",
+  "text": "Бросила друга в трудный момент и не могу себя оправдать"
+ },
+ {
+  "label": "Guilt",
+  "text": "Из-за моей невнимательности пострадал коллега, и я чувствую тяжесть на душе"
+ },
+ {
+  "label": "Guilt",
+  "text": "Обманула близкого человека и теперь не нахожу покоя"
+ },
+ {
+  "label": "Guilt",
+  "text": "Что-то не так сделала с отцом перед его уходом, и мучаюсь этим"
+ },
+ {
+  "label": "Guilt",
+  "text": "Мне стыдно за то, что я накричал на детей, они этого не заслужили"
+ },
+ {
+  "label": "Guilt",
+  "text": "I let my team down and I can't stop thinking it's on me"
+ },
+ {
+  "label": "Guilt",
+  "text": "I said something cruel to my sister and I regret it so much"
+ },
+ {
+  "label": "Guilt",
+  "text": "I wasn't there when my friend needed me and I feel awful"
+ },
+ {
+  "label": "Sadness",
+  "text": "После праздников навалилась хандра, и всё кажется бессмысленным"
+ },
+ {
+  "label": "Sadness",
+  "text": "Прощалась с котом, которого держала пятнадцать лет, и сердце разрывается"
+ },
+ {
+  "label": "Sadness",
+  "text": "На душе пасмурно, как за окном, и не к кому прижаться"
+ },
+ {
+  "label": "Sadness",
+  "text": "Дни тянутся однообразно, будто ничто не имеет значения"
+ },
+ {
+  "label": "Sadness",
+  "text": "Слёзы подступают сами собой, даже когда вроде бы всё хорошо"
+ },
+ {
+  "label": "Sadness",
+  "text": "Мне просто очень плохо и хочется, чтобы это закончилось"
+ },
+ {
+  "label": "Sadness",
+  "text": "I feel a heavy sadness that won't lift no matter what I do"
+ },
+ {
+  "label": "Sadness",
+  "text": "Everything feels gray and pointless since she left"
+ },
+ {
+  "label": "Sadness",
+  "text": "I've been crying on and off all week without a clear reason"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Совершенно нет сил подняться с дивана, организм словно сдулся"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Бесконечные дежурства вымотали меня подчистую"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Чувствую себя разряженным телефоном, который не подключили к зарядке"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Эмоциональное выгорание на работе, не радует даже отпуск"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Всё валится из рук, я как выпотрошенная после этой недели"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Усталость такая, что хочется просто исчезнуть на пару недель"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "I'm so burnt out I can't even enjoy things I used to love"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "My body is dragging and my head is foggy, I just need a month of sleep"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Every day feels like pushing a boulder uphill, I'm done"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Мне не с кем разделить радость, и от этого все победы теряют смысл"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Вечером возвращаюсь в пустую квартиру, и там никто меня не ждёт"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Кажется, у всех есть своя компания, а я как будто за стеклом"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Уже давно ни с кем не общалась живьём, только работа и дом"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Праздники для меня самое тяжёлое время, потому что я одна"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Даже в семье чувствую пропасть между мной и остальными"
+ },
+ {
+  "label": "Loneliness",
+  "text": "I eat dinner alone every night and it's starting to get to me"
+ },
+ {
+  "label": "Loneliness",
+  "text": "I don't have anyone I can really open up to"
+ },
+ {
+  "label": "Loneliness",
+  "text": "I scroll through other people's lives feeling left behind and alone"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Всё лежит на столе и ждёт, а я придумываю себе срочные дела"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Сроки подпирают, но я снова застряла в бесконечных мелочах"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Собираюсь заняться спортом с понедельника уже полгода"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Сажусь писать письмо, и вдруг оказывается, что надо перебрать полку с книгами"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Чувствую вину, что тяну с проектом, но всё равно ничего не делаю"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Без толчка не могу втянуться, хотя дело на пятнадцать минут"
+ },
+ {
+  "label": "Procrastination",
+  "text": "I tell myself I'll do it later and later never comes"
+ },
+ {
+  "label": "Procrastination",
+  "text": "I've had that email in drafts for two weeks and can't bring myself to send it"
+ },
+ {
+  "label": "Procrastination",
+  "text": "I clean the whole apartment just to avoid starting my assignment"
+ },
+ {
+  "label": "Unknown",
+  "text": "Какие у тебя есть упражнения"
+ },
+ {
+  "label": "Unknown",
+  "text": "Ты кто вообще"
+ },
+ {
+  "label": "Unknown",
+  "text": "Давай просто поболтаем о фильмах"
+ },
+ {
+  "label": "Unknown",
+  "text": "Сегодня я сварила суп и позвонила тёте"
+ },
+ {
+  "label": "Unknown",
+  "text": "Не уверена, что хочу об этом говорить"
+ },
+ {
+  "label": "Unknown",
+  "text": "Do you have any exercises"
+ },
+ {
+  "label": "Unknown",
+  "text": "I went to the gym and then got groceries"
+ },
+ {
+  "label": "Unknown",
+  "text": "Hello there"
+ }
+]

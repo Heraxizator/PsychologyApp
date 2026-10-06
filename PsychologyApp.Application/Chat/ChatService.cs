@@ -63,7 +63,8 @@ public sealed class ChatService(
     IUserProgressService progress,
     IChatLanguageProvider language,
     TimeProvider time,
-    IQuotContentProvider quotes) : IChatService
+    IQuotContentProvider quotes,
+    IEmotionGuesser? emotionGuesser = null) : IChatService
 {
     private const int MaxTitleLength = 60;
     private const int MaxNameLength = 30;
@@ -392,7 +393,8 @@ public sealed class ChatService(
             time: time,
             quotes: quotesTask.Result,
             todayLowMood: todayLowMood,
-            recentStressTest: stressTest);
+            recentStressTest: stressTest,
+            emotionGuesser: emotionGuesser);
     }
 
     private bool IsLocalToday(DateTime recordedAtUtc, DateTime nowUtc)
