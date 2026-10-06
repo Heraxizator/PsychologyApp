@@ -26,8 +26,17 @@ public static partial class SqliteEncryption
             throw new ArgumentException("The database key must be 64 hexadecimal characters.", nameof(key));
         }
 
+        await UseDirectKeyAsync(connection, cancellationToken).ConfigureAwait(false);
         await connection.ExecuteAsync(new CommandDefinition($"PRAGMA hexkey = '{key}';", cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
+
+    /// <summary>
+    /// The key is 256 random bits, so stretching it adds no security, and the default stretching (about 33 ms on a desktop, several
+    /// times that on a phone) would be paid on every connection that is opened. One iteration keeps the derivation but makes it free.
+    /// Must be set the same way when the key is applied and when the file is re-keyed.
+    /// </summary>
+    private static Task UseDirectKeyAsync(SqliteConnection connection, CancellationToken cancellationToken) =>
+        connection.ExecuteAsync(new CommandDefinition("PRAGMA kdf_iter = 1;", cancellationToken: cancellationToken));
 
     /// <summary>
     /// Makes the file at <paramref name="path"/> encrypted with <paramref name="key"/>. Returns false (and leaves the
@@ -91,6 +100,7 @@ public static partial class SqliteEncryption
             await connection.OpenAsync(cancellationToken).ConfigureAwait(false);
             // The key cannot be changed while the file is in WAL mode, and this also folds the WAL into the main file.
             await connection.ExecuteAsync(new CommandDefinition("PRAGMA journal_mode=DELETE;", cancellationToken: cancellationToken)).ConfigureAwait(false);
+            await UseDirectKeyAsync(connection, cancellationToken).ConfigureAwait(false);
             await connection.ExecuteAsync(new CommandDefinition($"PRAGMA hexrekey = '{key}';", cancellationToken: cancellationToken)).ConfigureAwait(false);
         }
 
