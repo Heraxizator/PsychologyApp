@@ -64,9 +64,28 @@ public class AnalyzerDatasetTests(ITestOutputHelper output)
         Assert.True(accuracy >= 0.20, $"Held-out accuracy fell to {accuracy:P0}.");
     }
 
+    [Fact]
+    public void Fresh_set_accuracy_is_recorded_and_does_not_collapse()
+    {
+        double accuracy = Measure("nlu-fresh.json", "Fresh set (written before the third lexicon round)");
+
+        Assert.True(accuracy >= 0.20, $"Fresh-set accuracy fell to {accuracy:P0}.");
+    }
+
+    [Fact]
+    public void Final_set_accuracy_is_recorded_and_does_not_collapse()
+    {
+        // Written after the third lexicon round and never tuned on: the honest estimate. Do not add terms from its misses.
+        double accuracy = Measure("nlu-fresh2.json", "Final set (written after the third round, never tuned on)");
+
+        Assert.True(accuracy >= 0.20, $"Final-set accuracy fell to {accuracy:P0}.");
+    }
+
     [Theory]
     [InlineData("nlu-dataset.json")]
     [InlineData("nlu-heldout.json")]
+    [InlineData("nlu-fresh.json")]
+    [InlineData("nlu-fresh2.json")]
     public void Datasets_are_well_formed(string file)
     {
         Item[] items = Load(file);

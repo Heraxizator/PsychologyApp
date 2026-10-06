@@ -24,6 +24,29 @@ public class CompanionDialogueTests
         d.Respond(state, new CompanionInput.QuickReply(new ChatQuickReply(kind, label, payload)));
 
     [Fact]
+    public void A_long_message_that_names_no_feeling_gets_the_choice_of_feelings_at_once()
+    {
+        CompanionDialogue dialogue = Create();
+        CompanionState state = dialogue.Open(new CompanionState(), previous: null).State;
+
+        CompanionReply reply = Say(dialogue, state, "Сегодня на работе случилось такое, что я до сих пор не могу прийти в себя после разговора");
+
+        Assert.Equal(CompanionEmotion.Unknown.ToString(), reply.State.Emotion);
+        Assert.NotEmpty(reply.QuickReplies);
+    }
+
+    [Fact]
+    public void A_short_message_that_names_no_feeling_does_not_get_the_choice_yet()
+    {
+        CompanionDialogue dialogue = Create();
+        CompanionState state = dialogue.Open(new CompanionState(), previous: null).State;
+
+        CompanionReply reply = Say(dialogue, state, "Был у врача");
+
+        Assert.Empty(reply.QuickReplies);
+    }
+
+    [Fact]
     public void First_chat_greets_and_promises_privacy_without_quick_replies()
     {
         CompanionReply reply = Create().Open(new CompanionState(), previous: null);

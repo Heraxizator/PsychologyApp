@@ -81,3 +81,21 @@ Requiring 0.51 raised held-out precision from 74% to 83% but made the dialogue s
 ("I feel so anxious about my job"), which broke three existing dialogue tests, so it was not adopted. The held-out problem is mostly
 **coverage** (19 of 60 messages named at all), not wrong names: better recall needs a larger lexicon or the embedding fallback
 described above, not a confidence cut-off.
+
+## Third lexicon round (2026-10) and the telling-message rule
+
+`LexiconExtendedPhrasings.cs` adds how people describe a state without naming it (body signs, situations, figures of speech).
+Measured on `nlu-fresh2.json` (98 messages written *after* the round and never tuned on):
+
+| Lexicon | Final set (never tuned on) |
+|---------|----------------------------|
+| Before the round | 37% |
+| After the round | **41%** |
+
+The two older sets (`nlu-heldout.json` 92%, `nlu-fresh.json` 97%) were read while writing the terms, so those numbers are inflated and only
+guard against regressions. The honest figure is the final set: +4 points. Word lists have reached their limit; the rest needs data
+(see "What would make it worthwhile" above).
+
+Because most of what is missed is a person *telling* something, a message of eight words or more that names no feeling now gets the
+choice of feelings right away (`CompanionDialogue.TellingWords`) instead of an open question, which used to make them tell it again;
+shorter unclear messages keep the old two-step behaviour.

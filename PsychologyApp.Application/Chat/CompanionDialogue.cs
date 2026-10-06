@@ -398,6 +398,12 @@ public sealed partial class CompanionDialogue(
         };
     }
 
+    /// <summary>A message this long that names no feeling is the person telling something the word lists did not catch: offer the choice of feelings
+    /// right away instead of asking an open question that would make them tell it again (see docs/companion-understanding.md).</summary>
+    private const int TellingWords = 8;
+
+    private static int WordCount(string text) => text.Split([' ', '-'], StringSplitOptions.RemoveEmptyEntries).Length;
+
     private CompanionReply RespondToStatement(CompanionState previous, string text, SituationAnalysis analysis)
     {
         bool firstStatement = previous.RecentTexts.Count == 0;
@@ -446,7 +452,7 @@ public sealed partial class CompanionDialogue(
             return Offer(state, messages, analysis, emotion, theme, calming: false);
         }
 
-        if (emotion == CompanionEmotion.Unknown && state.UnknownStreak >= 2)
+        if (emotion == CompanionEmotion.Unknown && (state.UnknownStreak >= 2 || WordCount(text) >= TellingWords))
         {
             messages.Add(CompanionDialogueContent.EmotionPrompt(english));
             return Reply(messages, EmotionReplies(), state with { UnknownStreak = 0 }, emotion, theme);

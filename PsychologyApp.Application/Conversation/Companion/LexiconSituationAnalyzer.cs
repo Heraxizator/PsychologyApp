@@ -116,7 +116,7 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
         Dictionary<CompanionEmotion, int> firstMention = [];
         foreach ((CompanionEmotion emotion, Entry[] baseEntries) in Emotions)
         {
-            Entry[] entries = [.. baseEntries, .. Colloquial.GetValueOrDefault(emotion, [])];
+            Entry[] entries = [.. baseEntries, .. Colloquial.GetValueOrDefault(emotion, []), .. Extended.GetValueOrDefault(emotion, [])];
             double score = 0;
             int first = int.MaxValue;
             // One word can be a near-typo of more than one listed stem for the same emotion (e.g. "тревога"
