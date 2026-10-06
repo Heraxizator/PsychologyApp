@@ -14,6 +14,12 @@ public enum Utterance
     RefusesToTalk,
     AsksForAdvice,
     AsksAboutCompanion,
+    /// <summary>"How much does it cost?", "where is my data?", "do I need internet?": a question about the app, answered with facts.</summary>
+    AsksAboutApp,
+    /// <summary>"Tell me a joke", "I am bored": a request for company or a distraction, not a problem.</summary>
+    AsksForEntertainment,
+    /// <summary>"I got promoted", "passed my exam": an event to celebrate, not a feeling to work through.</summary>
+    SharesAchievement,
     ComplainsAboutCompanion,
     /// <summary>Insults, slurs or a crude command aimed at the companion ("ты дебил", "иди нахуй", "ты пидор").
     /// One calm boundary, not a lecture and not a matching tone.</summary>
@@ -61,8 +67,20 @@ public static class UtteranceClassifier
     private static readonly string[] DontKnowTerms = ["не знаю", "хз", "сложно сказать", "затрудняюсь", "не уверен", "не уверена", "трудно сказать", "dont know", "do not know", "no idea", "not sure", "hard to say"];
     private static readonly string[] RefuseTerms =
     [
-        "не хочу об этом", "не хочу говорить", "не хочу рассказывать", "не буду об этом", "не хочется об этом", "не хочу про это", "не хочу это обсуждать",
-        "dont want to talk", "do not want to talk", "rather not", "dont want to discuss", "not going to talk"
+        "не хочу об этом", "не хочу говорить", "не хочу рассказывать", "не буду об этом", "не хочется об этом", "не хочу про это", "не хочу это обсуждать", "не хочу ничего обсуждать", "не хочу ничего рассказывать", "не хочу ничего говорить", "не хочу обсуждать", "не хочу разговаривать", "не хочу ни о чем говорить", "давай не будем об этом", "не буду ничего рассказывать", "оставь меня в покое", "оставьте меня в покое", "не хочу больше говорить",
+        "dont want to talk", "do not want to talk", "dont want to talk about", "leave me alone", "rather not", "dont want to discuss", "not going to talk"
+    ];
+
+    private static readonly string[] AppTerms =
+    [
+        "сколько стоит", "сколько это стоит", "это бесплатно", "это платно", "приложение бесплатн", "приложение платн", "бесплатное", "платное", "сколько платить", "где хранятся", "где хранится", "кто видит", "кто может видеть", "мои данные", "мои сообщения увидят", "ты отправляешь", "нужен интернет", "нужен ли интернет", "требуется ли интернет", "без интернета", "работает без интернета", "кто тебя создал", "кто тебя сделал", "кто тебя разработал", "кто вас создал", "кто разработал",
+        "how much does", "how much is", "is it free", "is this free", "is it paid", "where is my data", "where are my messages", "who can see", "do i need internet", "does it need internet", "work offline", "who made you", "who created you", "who built you"
+    ];
+
+    private static readonly string[] AchievementTerms =
+    [
+        "меня повысили", "повысили", "дали премию", "получила работу", "получил работу", "взяли на работу", "приняли на работу", "сдала экзамен", "сдал экзамен", "сдала на отлично", "поступила", "поступил в", "мне предложили", "помирились", "помирилась", "помирился", "родился", "родилась у нас", "выиграла", "выиграл", "наконец-то получилось", "у меня получилось",
+        "i got promoted", "got the job", "i got the job", "passed my exam", "passed the exam", "we made up", "got a promotion", "got accepted", "got a raise"
     ];
 
     private static readonly string[] AskBotTerms =
@@ -100,8 +118,10 @@ public static class UtteranceClassifier
     private static readonly string[] AdviceTerms =
     [
         "что делать", "что мне делать", "как быть", "посоветуй", "посоветуйте", "подскажи что", "подскажите что", "дай совет", "дайте совет", "что посоветуешь", "что посоветуете",
-        "что мне теперь делать", "как мне быть", "помоги", "помогите", "нужна помощь", "мне нужна помощь", "what should i do", "what do i do", "any advice", "give me advice", "help me", "need help", "what can i do"
+        "что мне теперь делать", "как с этим справляться", "как с этим справиться", "как справиться", "как справляться", "как с этим бороться", "как с этим жить", "как мне быть", "помоги", "помогите", "нужна помощь", "мне нужна помощь", "what should i do", "what do i do", "any advice", "give me advice", "help me", "need help", "what can i do"
     ];
+
+    private static readonly string[] EntertainTerms = ["расскажи анекдот", "знаешь анекдот", "анекдот", "пошути", "умеешь шутить", "расскажи шутку", "мне скучно", "скучно", "нечем заняться", "tell me a joke", "know any jokes", "i am bored", "im bored", "tell a joke"];
 
     private static readonly string[] ExplainTerms =
     [
@@ -126,7 +146,7 @@ public static class UtteranceClassifier
     private static readonly string[] HowAreYouTerms = ["как дела", "как ты", "как вы", "как поживаешь", "как поживаете", "как жизнь", "как настроение", "how are you", "how are things", "how do you do", "hows it going"];
     private static readonly string[] CapabilityTerms =
     [
-        "что ты умеешь", "что вы умеете", "что ты можешь", "что вы можете", "чем ты можешь помочь", "чем можешь помочь", "чем вы можете помочь", "как ты работаешь", "как это работает", "для чего ты", "зачем ты нужен",
+        "что ты умеешь", "расскажи что нибудь", "расскажи что то", "расскажи мне что нибудь", "что нибудь расскажи", "удиви меня", "tell me something", "что вы умеете", "что ты можешь", "что вы можете", "чем ты можешь помочь", "чем можешь помочь", "чем вы можете помочь", "как ты работаешь", "как это работает", "для чего ты", "зачем ты нужен",
         "what can you do", "how can you help", "how do you work", "what do you do", "what are you for"
     ];
 
@@ -152,7 +172,7 @@ public static class UtteranceClassifier
 
     private static readonly string[] GoodNewsTerms =
     [
-        "получилось", "справилась", "справился", "стало легче", "полегчало", "мне лучше", "мне хорошо", "мне стало лучше", "все хорошо", "все отлично", "отпустило", "я рад", "я рада", "счастлив", "счастлива", "хороший день", "прекрасный день",
+        "меня повысили", "повысили", "дали премию", "получила работу", "получил работу", "взяли на работу", "приняли на работу", "сдала экзамен", "сдал экзамен", "сдала на отлично", "поступила", "поступил в", "мне предложили", "помирились", "помирилась", "помирился", "родился", "родилась у нас", "выиграла", "выиграл", "наконец-то получилось", "у меня получилось", "i got promoted", "got the job", "i got the job", "passed my exam", "passed the exam", "we made up", "got a promotion", "got accepted", "got a raise", "получилось", "хорошая новость", "отличная новость", "справилась", "справился", "стало легче", "полегчало", "мне лучше", "мне хорошо", "мне стало лучше", "все хорошо", "все отлично", "отпустило", "я рад", "я рада", "счастлив", "счастлива", "хороший день", "прекрасный день",
         "good news", "i feel better", "im better", "im happy", "im fine", "feeling good", "it worked", "went well", "i did it", "im proud", "feeling better"
     ];
 
@@ -182,6 +202,11 @@ public static class UtteranceClassifier
             return Utterance.AsksAboutCompanion;
         }
 
+        if (words <= 10 && ContainsAny(padded, AppTerms))
+        {
+            return Utterance.AsksAboutApp;
+        }
+
         if (words <= 8 && (ContainsAny(padded, InsultPhraseTerms) || ContainsAny(padded, InsultCommandTerms) || (words <= 6 && ContainsAny(padded, IdentitySlurTerms))))
         {
             return Utterance.ProvokesOrInsultsCompanion;
@@ -200,6 +225,11 @@ public static class UtteranceClassifier
         if (words <= 5 && StartsShortQuestion(normalized, HowAreYouTerms))
         {
             return Utterance.AsksHowAreYou;
+        }
+
+        if (words <= 6 && ContainsAny(padded, EntertainTerms) && !hasFeeling)
+        {
+            return Utterance.AsksForEntertainment;
         }
 
         if (words <= 8 && ContainsAny(padded, CapabilityTerms))
@@ -222,7 +252,7 @@ public static class UtteranceClassifier
             return Utterance.RefusesToTalk;
         }
 
-        if (words <= 12 && ContainsAny(padded, ExplainTerms))
+        if (words <= 12 && (ContainsAny(padded, ExplainTerms) || normalized.EndsWith(" это что", StringComparison.Ordinal) || normalized.EndsWith(" что это", StringComparison.Ordinal)))
         {
             return Utterance.AsksToExplain;
         }
@@ -279,7 +309,7 @@ public static class UtteranceClassifier
 
         if (IsShareOfGoodNews(normalized, padded, words))
         {
-            return Utterance.SharesGoodNews;
+            return ContainsAny(padded, AchievementTerms) ? Utterance.SharesAchievement : Utterance.SharesGoodNews;
         }
 
         if (AcknowledgeTerms.Contains(normalized) || (words <= 2 && StartsWithAny(normalized, AcknowledgeTerms)))

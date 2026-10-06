@@ -90,7 +90,7 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
     {
         [CompanionTheme.Work] = ["работ", "начальник", "коллег", "проект", "зарплат", "офис", "увол", "собеседован", "=boss", "=work", "=job", "colleague", "office", "interview"],
         [CompanionTheme.Relationships] = ["отношен", "парень", "парня", "девушк", "=муж", "мужа", "жена", "жену", "партнер", "расстал", "бывш", "свидан", "boyfriend", "girlfriend", "husband", "=wife", "partner", "breakup", "relationship", "dating"],
-        [CompanionTheme.Family] = ["мама", "мамы", "маму", "=папа", "родител", "ребен", "=дети", "семь", "=брат", "сестр", "mother", "father", "parents", "=child", "=kids", "family", "sister", "brother"],
+        [CompanionTheme.Family] = ["мама", "мамы", "маму", "=папа", "родител", "ребен", "=дети", "семь", "=брат", "сестр", "дочь", "дочк", "дочер", "=сын", "=сына", "=сыну", "=сыном", "внук", "внучк", "бабушк", "дедушк", "тёщ", "теща", "свекров", "mother", "father", "parents", "=child", "=kids", "family", "sister", "brother"],
         [CompanionTheme.Health] = ["здоров", "болезн", "врач", "диагноз", "болит", "=боль", "анализ", "health", "doctor", "illness", "diagnos", "=pain"],
         [CompanionTheme.Money] = ["=деньги", "денег", "=долг", "долги", "кредит", "ипотек", "=money", "=debt", "=loan", "=rent", "=bills"],
         [CompanionTheme.Study] = ["экзамен", "учеб", "сесси", "универ", "школ", "диплом", "зачет", "=exam", "=study", "university", "=school", "thesis", "=grade"]
@@ -151,11 +151,21 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
             firstMention.TryAdd(CompanionEmotion.Panic, firstMention[CompanionEmotion.Anxiety]);
         }
 
+        bool hasLoss = LossTerms.Any(term => Matches(term, respectNegation: false));
+        if (hasLoss)
+        {
+            // A death is grief whatever else the words say; it also outweighs a stray "обида" or "тревога" from a different part of the message.
+            scores[CompanionEmotion.Sadness] = scores.GetValueOrDefault(CompanionEmotion.Sadness) + 4;
+            firstMention.TryAdd(CompanionEmotion.Sadness, 0);
+        }
+
         bool intense = IntensityTerms.Any(term => Matches(term, respectNegation: false));
+        // Most hits first; a tie goes to the theme mentioned first ("the kids all day, my husband at work" is about the family, not the job).
         IReadOnlyList<CompanionTheme> themes = Themes
-            .Select(pair => (Theme: pair.Key, Hits: pair.Value.Count(term => Matches(term, respectNegation: false))))
+            .Select(pair => (Theme: pair.Key, Hits: pair.Value.Count(term => Matches(term, respectNegation: false)), First: pair.Value.Select(term => IndexOf(term, normalized, tokens, offsets, respectNegation: false)).Where(at => at >= 0).DefaultIfEmpty(int.MaxValue).Min()))
             .Where(x => x.Hits > 0)
             .OrderByDescending(x => x.Hits)
+            .ThenBy(x => x.First)
             .Take(2)
             .Select(x => x.Theme)
             .ToArray();
@@ -175,13 +185,13 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
             .ToList();
         if (ranked.Count == 0 || ranked[0].Value < MinScore)
         {
-            return new SituationAnalysis(CompanionEmotion.Unknown, 0, hasBody, intense, themes, CompanionEmotion.Unknown, persons);
+            return new SituationAnalysis(CompanionEmotion.Unknown, 0, hasBody, intense, themes, CompanionEmotion.Unknown, persons, hasLoss);
         }
 
         double top = ranked[0].Value;
         double second = ranked.Count > 1 ? ranked[1].Value : 0;
         CompanionEmotion secondary = ranked.Count > 1 && ranked[1].Value >= 2 && ranked[1].Value >= top * 0.6 ? ranked[1].Key : CompanionEmotion.Unknown;
-        return new SituationAnalysis(ranked[0].Key, top / (top + second + 1), hasBody, intense, themes, secondary, persons);
+        return new SituationAnalysis(ranked[0].Key, top / (top + second + 1), hasBody, intense, themes, secondary, persons, hasLoss);
     }
 
     private static string Normalize(string text)

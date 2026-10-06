@@ -69,6 +69,48 @@ public static class CompanionKnowledge
     public static IReadOnlyList<ChatQuickReply> TopicChips(bool english) =>
         Topics.Take(6).Select(t => new ChatQuickReply(ChatQuickReplyKinds.Act, english ? t.LabelEn : t.LabelRu, "topic:" + t.Id)).ToArray();
 
+    /// <summary>Facts about the app, never about a price: the companion does not know how the app is sold, only how it works.</summary>
+    public static string AboutApp(string text, bool english)
+    {
+        string t = text.ToLowerInvariant();
+        bool price = new[] { "стоит", "бесплат", "платн", "платить", "how much", "free", "paid" }.Any(t.Contains);
+        bool data = new[] { "данные", "данных", "хранят", "видит", "видеть", "отправля", "сообщения", "data", "messages", "see " }.Any(t.Contains);
+        bool internet = new[] { "интернет", "internet", "offline" }.Any(t.Contains);
+        bool maker = new[] { "создал", "сделал", "разработал", "made you", "created you", "built you" }.Any(t.Contains);
+
+        if (maker)
+        {
+            return english
+                ? "I was made by the developers of this app; the \"About\" section in the menu tells more. I am a program, not a person."
+                : "Меня сделали разработчики этого приложения; подробнее в разделе «О приложении» в меню. Я программа, а не человек.";
+        }
+
+        if (data)
+        {
+            return english
+                ? "What you write here stays on your phone, stored in encrypted form, and nothing is sent anywhere. You can delete every chat in my profile."
+                : "Всё, что вы пишете здесь, остаётся на вашем телефоне в зашифрованном виде и никуда не отправляется. Все чаты можно удалить в моём профиле.";
+        }
+
+        if (internet)
+        {
+            return english
+                ? "I work without internet: everything I say is made on your phone."
+                : "Я работаю без интернета: всё, что я говорю, формируется прямо на вашем телефоне.";
+        }
+
+        if (price)
+        {
+            return english
+                ? "I don't know how the app is paid for, I am only the companion in it. The project can be supported from the \"Support the project\" section in the menu."
+                : "Как устроена оплата, я не знаю: я только собеседник внутри приложения. Поддержать проект можно в разделе «Поддержать проект» в меню.";
+        }
+
+        return english
+            ? "I am a companion inside this app. I work without internet, and what you write stays on your phone. What would you like to know?"
+            : "Я собеседник внутри этого приложения. Работаю без интернета, а всё, что вы пишете, остаётся на вашем телефоне. Что вы хотели бы узнать?";
+    }
+
     public static string ExplainFallback(bool english) => english
         ? "I can briefly explain some things: panic, anxiety, CBT, mindfulness, burnout and more. Which one interests you?"
         : "Я могу коротко объяснить некоторые вещи: панику, тревогу, КПТ, осознанность, выгорание и другое. Что вас интересует?";

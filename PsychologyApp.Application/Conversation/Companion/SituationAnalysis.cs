@@ -42,6 +42,7 @@ public enum CompanionPerson
 /// <param name="IsIntense">The text contains intensifiers such as "very", "unbearable".</param>
 /// <param name="Secondary">A second state that scored almost as high (mixed feelings), or Unknown.</param>
 /// <param name="Persons">Who the message is about (boss, partner, parent...), most mentioned first.</param>
+/// <param name="HasLoss">Someone has died or was lost ("my grandmother died"): the reply is condolence, not a practice.</param>
 public sealed record SituationAnalysis(
     CompanionEmotion Emotion,
     double Confidence,
@@ -49,7 +50,8 @@ public sealed record SituationAnalysis(
     bool IsIntense,
     IReadOnlyList<CompanionTheme> Themes,
     CompanionEmotion Secondary = CompanionEmotion.Unknown,
-    IReadOnlyList<CompanionPerson>? Persons = null)
+    IReadOnlyList<CompanionPerson>? Persons = null,
+    bool HasLoss = false)
 {
     public static SituationAnalysis Empty { get; } = new(CompanionEmotion.Unknown, 0, false, false, []);
 }

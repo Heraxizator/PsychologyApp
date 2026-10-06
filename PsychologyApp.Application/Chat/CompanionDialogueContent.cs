@@ -81,6 +81,17 @@ public static class CompanionDialogueContent
 
     public static string ScaleLow(bool english) => english ? "It's good that it isn't at its limit." : "Хорошо, что это не на пределе.";
 
+    public static string Condolence(bool english) => english
+        ? "I am so sorry. Losing someone close is one of the hardest things there is."
+        : "Мне очень жаль. Потерять близкого человека — одно из самых тяжёлых переживаний.";
+
+    public static string GriefQuestion(bool english, int turn) => (turn % 3) switch
+    {
+        0 => english ? "If you want to, tell me what this person was like for you." : "Если хочется, расскажите, каким был для вас этот человек.",
+        1 => english ? "What do you miss most right now?" : "Чего вам сейчас больше всего не хватает?",
+        _ => english ? "I am here. Take as much time as you need; what would you like to say?" : "Я рядом. Не торопитесь: что вам хочется сказать?"
+    };
+
     public static string UrgentBridge(bool english) => english
         ? "Let's help your body settle first, then we can talk."
         : "Давайте сначала поможем телу успокоиться, а потом поговорим.";

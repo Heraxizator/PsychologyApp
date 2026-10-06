@@ -78,6 +78,23 @@ public static class CompanionSmallTalk
         ? ["That's good to hear! What do you think helped?", "Nice, that matters. What made the difference?", "I'm glad. Try to notice what exactly helped, so you can repeat it. What was it?"]
         : ["Это хорошо слышать! Как думаете, что помогло?", "Отлично, это важно. Что стало решающим?", "Здорово. Заметьте, что именно помогло, чтобы повторить это потом. Что это было?"]);
 
+    /// <summary>Jokes and boredom: honest about not being funny, and offers what the companion can actually do.</summary>
+    public static string Entertain(string text, bool english, Random random)
+    {
+        bool bored = text.Contains("скуч", StringComparison.OrdinalIgnoreCase) || text.Contains("нечем", StringComparison.OrdinalIgnoreCase) || text.Contains("bored", StringComparison.OrdinalIgnoreCase);
+        return (english, bored) switch
+        {
+            (true, true) => "Boredom happens, sometimes it hides tiredness or a restless mood. We can just talk, or I can suggest a short practice or a quote. What would you like?",
+            (true, false) => Pick(random, ["I am not good at jokes, I am afraid. I can talk with you, share a quote or suggest a short practice. What would you like?", "Humour is not my strong side. But I can listen, share a quote or suggest a short practice. Which one?"]),
+            (false, true) => "Скука бывает от усталости, а иногда за ней прячется беспокойство. Можем просто поговорить, а могу предложить короткую практику или цитату. Что выберете?",
+            _ => Pick(random, ["С шутками у меня не очень, боюсь. Зато могу поговорить, показать цитату или предложить короткую практику. Что выберете?", "Юмор — не моя сильная сторона. Зато я умею слушать, могу показать цитату или предложить короткую практику. Что вам ближе?"])
+        };
+    }
+
+    public static string Congratulations(bool english, Random random) => Pick(random, english
+        ? ["Congratulations, that is wonderful news! How are you feeling about it?", "That is great, well done! How does it feel?", "I am really glad for you! What does it mean for you?"]
+        : ["Поздравляю, это замечательная новость! Как вы сами это переживаете?", "Здорово, вы молодец! Что вы чувствуете?", "Это отличная новость! Что она значит для вас?"]);
+
     public static IReadOnlyList<ChatQuickReply> GoodNewsReplies(bool english) =>
     [
         CompanionActContent.Continue(english),
@@ -245,6 +262,11 @@ public static class CompanionSmallTalk
     };
 
     /// <summary>The feeling has changed since the last message. Saying so shows that the person is being followed.</summary>
+    /// <summary>Panic, anxiety and racing thoughts shade into each other within a conversation; announcing every step between them sounds like a clerk.</summary>
+    public static bool IsSameFamily(CompanionEmotion a, CompanionEmotion b) =>
+        a is CompanionEmotion.Panic or CompanionEmotion.Anxiety or CompanionEmotion.Overthinking
+        && b is CompanionEmotion.Panic or CompanionEmotion.Anxiety or CompanionEmotion.Overthinking;
+
     public static string Shift(CompanionEmotion from, CompanionEmotion to, bool english) => english
         ? $"It seems {CompanionContent.EmotionName(to, true)} is now in front, more than {CompanionContent.EmotionName(from, true)}."
         : $"Похоже, теперь на первый план вышло другое: {CompanionContent.EmotionName(to, false)}, а не {CompanionContent.EmotionName(from, false)}.";

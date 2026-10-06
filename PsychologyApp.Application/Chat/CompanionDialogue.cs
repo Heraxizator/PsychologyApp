@@ -332,6 +332,8 @@ public sealed partial class CompanionDialogue(
         CompanionState state = previous with
         {
             Turns = previous.Turns + 1,
+            // "Hello" is not something the person told us: it must not bring the first practice offer one message closer.
+            Greetings = act == Utterance.Greeting ? previous.Greetings + 1 : previous.Greetings,
             TurnsSinceOffer = Math.Min(previous.TurnsSinceOffer + 1, 99),
             AwaitingPostPracticeRating = false
         };
@@ -341,6 +343,12 @@ public sealed partial class CompanionDialogue(
         // "yes" or "I don't know" to "how strong is it, 0 to 10?" is not an answer: help with the scale instead of moving on.
         if (act is Utterance.Yes or Utterance.No or Utterance.Acknowledge or Utterance.DontKnow && IsScaleQuestion(previous))
         {
+            // "Not sure, maybe he is right" is something the person said, not a failed answer to the scale: answer what was said.
+            if (WordCount(text) > 3)
+            {
+                return RespondToStatement(previous, text, single);
+            }
+
             return Reply([CompanionSmallTalk.ScaleHelp(english)], RatingReplies(), state, emotion, theme);
         }
 
@@ -361,6 +369,9 @@ public sealed partial class CompanionDialogue(
             Utterance.Reaction => Reply([CompanionSmallTalk.Reaction(text, UtteranceClassifier.IsSadReaction(text), english, _random)], [], state, emotion, theme),
             Utterance.Exclaims => Reply([CompanionSmallTalk.Exclaims(english, _random)], [], state, emotion, theme),
             Utterance.SharesGoodNews => Reply([CompanionSmallTalk.GoodNews(english, _random)], CompanionSmallTalk.GoodNewsReplies(english), state, emotion, theme),
+            Utterance.SharesAchievement => Reply([CompanionSmallTalk.Congratulations(english, _random)], CompanionSmallTalk.GoodNewsReplies(english), state, emotion, theme),
+            Utterance.AsksAboutApp => Reply([CompanionKnowledge.AboutApp(text, english)], [], state, emotion, theme),
+            Utterance.AsksForEntertainment => Reply([CompanionSmallTalk.Entertain(text, english, _random)], CompanionSmallTalk.CapabilityReplies(english), state, emotion, theme),
             Utterance.AsksHowAreYou => Reply([CompanionSmallTalk.HowAreYou(english, _random)], [], state, emotion, theme),
             Utterance.AsksName => Reply([CompanionSmallTalk.Name(english)], [], state with { NamePending = true }, emotion, theme),
             Utterance.AsksCapabilities => Reply([CompanionSmallTalk.Capabilities(english)], CompanionSmallTalk.CapabilityReplies(english), state, emotion, theme),
@@ -449,8 +460,20 @@ public sealed partial class CompanionDialogue(
             || (emotion == CompanionEmotion.Anxiety && analysis.IsIntense && analysis.HasBodySymptoms);
         if (urgent)
         {
-            messages.Add(CompanionDialogueContent.UrgentBridge(english));
+            string bridge = CompanionDialogueContent.UrgentBridge(english);
+            // The panic reflection already says "help the body first": saying it twice in one reply sounds like a loop.
+            if (!heard.Contains(bridge[..20], StringComparison.Ordinal))
+            {
+                messages.Add(bridge);
+            }
+
             return Offer(state, messages, analysis, emotion, theme, calming: false);
+        }
+
+        // After a death there is nothing to measure and nothing to fix: no scale, no practice, just company, until a different feeling shows up.
+        if (analysis.HasLoss || (state.GriefShared && emotion is CompanionEmotion.Unknown or CompanionEmotion.Sadness or CompanionEmotion.Loneliness or CompanionEmotion.Guilt))
+        {
+            return RespondToGrief(state with { GriefShared = true, Emotion = CompanionEmotion.Sadness.ToString() }, theme, newLoss: analysis.HasLoss && !previous.GriefShared);
         }
 
         // A proposal needs only enough words for the guesser to judge; the open choice waits for a real story or a second unclear message.
@@ -467,24 +490,24 @@ public sealed partial class CompanionDialogue(
         }
 
         bool known = emotion != CompanionEmotion.Unknown;
-        if (!state.ScaleAsked && state.Turns >= 2 && known)
+        if (!state.ScaleAsked && state.ContentTurns >= 2 && known)
         {
             messages.Add(CompanionDialogueContent.ScaleQuestion(english));
             return Reply(messages, RatingReplies(), state with { ScaleAsked = true }, emotion, theme);
         }
 
-        if (known && state.Turns >= 4 && state.Turns - state.LastRecapTurn >= RecapEveryTurns)
+        if (known && state.ContentTurns >= 4 && state.Turns - state.LastRecapTurn >= RecapEveryTurns)
         {
             messages.Add(CompanionActContent.Recap(emotion, theme, person, state.FirstIntensity, state.LastIntensity, english));
             return Reply(messages, CompanionActContent.RecapReplies(english), state with { LastRecapTurn = state.Turns }, emotion, theme);
         }
 
-        if (known && state.Turns >= 3 && state.TurnsSinceOffer >= 3)
+        if (known && state.ContentTurns >= 3 && state.TurnsSinceOffer >= 3)
         {
             return Offer(state, messages, analysis, emotion, theme, calming: false);
         }
 
-        if (known && state.Turns >= 5 && !state.CallbackAsked && state.FirstQuote is { } first)
+        if (known && state.ContentTurns >= 5 && !state.CallbackAsked && state.FirstQuote is { } first)
         {
             messages.Add(CompanionActContent.Callback(first, english));
             return Reply(messages, [], state with { CallbackAsked = true }, emotion, theme);
@@ -675,7 +698,7 @@ public sealed partial class CompanionDialogue(
         }
 
         List<string> messages = [rating <= LowTension ? CompanionDialogueContent.ScaleLow(english) : CompanionDialogueContent.ScaleMedium(english)];
-        return state.Turns >= 3 && state.TurnsSinceOffer >= 3 && emotion != CompanionEmotion.Unknown
+        return state.ContentTurns >= 3 && state.TurnsSinceOffer >= 3 && emotion != CompanionEmotion.Unknown
             ? Offer(state, messages, analysis, emotion, theme, calming: false)
             : AskNextQuestion(state, messages, emotion, theme);
     }
@@ -690,7 +713,7 @@ public sealed partial class CompanionDialogue(
             return quote is null ? validation : $"{CompanionDialogueContent.QuoteLine(quote, english, _random)} {validation}";
         }
 
-        string ack = emotion != CompanionEmotion.Unknown && before != CompanionEmotion.Unknown && emotion != before
+        string ack = emotion != CompanionEmotion.Unknown && before != CompanionEmotion.Unknown && emotion != before && !CompanionSmallTalk.IsSameFamily(before, emotion)
             ? CompanionSmallTalk.Shift(before, emotion, english)
             : emotion != CompanionEmotion.Unknown && state.Turns % 2 == 0
                 ? CompanionSmallTalk.Validation(emotion, english, _random)
@@ -724,6 +747,15 @@ public sealed partial class CompanionDialogue(
 
         messages.Add(CompanionDialogueContent.Question(id, english));
         return Reply(messages, [], state.WithAsked(id), emotion, theme);
+    }
+
+    private CompanionReply RespondToGrief(CompanionState state, CompanionTheme? theme, bool newLoss)
+    {
+        string opening = newLoss
+            ? CompanionDialogueContent.Condolence(english)
+            : CompanionDialogueContent.Acknowledgement(english, _random);
+        List<string> messages = [opening, CompanionDialogueContent.GriefQuestion(english, state.Turns)];
+        return Reply(messages, [], state, CompanionEmotion.Sadness, theme);
     }
 
     private CompanionReply Offer(

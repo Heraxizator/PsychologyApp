@@ -15,6 +15,12 @@ public sealed record CompanionState
     /// <summary>Number of free-text messages the person has sent.</summary>
     public int Turns { get; init; }
 
+    /// <summary>How many of those messages were only a greeting.</summary>
+    public int Greetings { get; init; }
+
+    /// <summary>Messages that told something: the pace of questions and offers follows these, not the greetings.</summary>
+    public int ContentTurns => Math.Max(0, Turns - Greetings);
+
     /// <summary>A <c>CompanionEmotion</c> name; "Unknown" until something is recognised.</summary>
     public string Emotion { get; init; } = "Unknown";
 
@@ -92,6 +98,9 @@ public sealed record CompanionState
 
     /// <summary>The companion has already logged a mood entry to the journal from this chat, or offered to and been declined
     /// implicitly by moving on — either way, it does not ask again in the same conversation.</summary>
+    /// <summary>The person told us someone died: no scales, no practice offers, no quick fixes until they ask for them.</summary>
+    public bool GriefShared { get; init; }
+
     public bool JournalLogged { get; init; }
 
     public CompanionState WithText(string text) => this with
@@ -112,6 +121,7 @@ public sealed record CompanionState
         {
             w.WriteStartObject();
             w.WriteNumber("turns", Turns);
+            w.WriteNumber("greetings", Greetings);
             w.WriteString("emotion", Emotion);
             WriteOptional(w, "theme", Theme);
             WriteOptional(w, "first", FirstIntensity);
@@ -143,6 +153,7 @@ public sealed record CompanionState
             w.WriteBoolean("preferredMentioned", PreferredMentioned);
             WriteOptional(w, "offeredResource", OfferedResource);
             w.WriteBoolean("journalLogged", JournalLogged);
+            w.WriteBoolean("grief", GriefShared);
             w.WriteEndObject();
         }
 
@@ -164,6 +175,7 @@ public sealed record CompanionState
             return new CompanionState
             {
                 Turns = Int(r, "turns") ?? 0,
+                Greetings = Int(r, "greetings") ?? 0,
                 Emotion = Str(r, "emotion") ?? "Unknown",
                 Theme = Str(r, "theme"),
                 FirstIntensity = Int(r, "first"),
@@ -197,7 +209,8 @@ public sealed record CompanionState
                 PreferredPractice = Str(r, "preferred"),
                 PreferredMentioned = Bool(r, "preferredMentioned"),
                 OfferedResource = Str(r, "offeredResource"),
-                JournalLogged = Bool(r, "journalLogged")
+                JournalLogged = Bool(r, "journalLogged"),
+                GriefShared = Bool(r, "grief")
             };
         }
         catch (Exception ex) when (ex is JsonException or InvalidOperationException)
