@@ -15,3 +15,4 @@ global using Microsoft.Maui.Controls;
 global using Microsoft.Maui.ApplicationModel;
 global using Microsoft.Maui.ApplicationModel.Communication;
 global using Microsoft.Maui;
+global using PsychologyApp.Presentation.Shared.Common.Localization;

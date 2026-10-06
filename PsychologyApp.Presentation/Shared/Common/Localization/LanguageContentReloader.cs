@@ -7,7 +7,7 @@ using PsychologyApp.Presentation.Shared.Common;
 
 namespace PsychologyApp.Presentation.Shared.Common.Localization;
 
-public sealed class LanguageContentReloader
+public sealed class LanguageContentReloader : ILanguageContentReloader
 {
     private readonly IUserPreferencesStore _preferences;
     public const int DefaultQuoteFeedCount = 20;

@@ -71,6 +71,14 @@
     <Compile Include="../PsychologyApp.Presentation/Shared/ViewModels/BaseViewModel.LoadingState.Properties.cs" Link="Linked/ViewModels/BaseViewModel.LoadingState.Properties.cs" />
     <Compile Include="../PsychologyApp.Presentation/App/Routes/INavigationService.cs" Link="Linked/ViewModels/INavigationService.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/ClinicalCare/CrisisHub/CrisisHubViewModel.cs" Link="Linked/ViewModels/CrisisHubViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ManageProfile/ProfileSettings/SettingsViewModel*.cs" Link="Linked/ViewModels/Settings/%(Filename)%(Extension)" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/SettingsPreferencesPresenter.cs" Link="Linked/ViewModels/Settings/%(Filename)%(Extension)" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/Localization/ILanguageContentReloader.cs" Link="Linked/ViewModels/Settings/%(Filename)%(Extension)" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Services/Notifications/IPracticeReminderCoordinator.cs" Link="Linked/ViewModels/Settings/%(Filename)%(Extension)" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Services/Notifications/IQuoteReminderCoordinator.cs" Link="Linked/ViewModels/Settings/%(Filename)%(Extension)" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Services/Notifications/IMoodReminderCoordinator.cs" Link="Linked/ViewModels/Settings/%(Filename)%(Extension)" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Services/Notifications/IChatReminderCoordinator.cs" Link="Linked/ViewModels/Settings/%(Filename)%(Extension)" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Services/Notifications/IPracticeReminderScheduler.cs" Link="Linked/ViewModels/Settings/%(Filename)%(Extension)" />
     <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/Question/QuestionViewModel*.cs" Link="Linked/ViewModels/Question/%(Filename)%(Extension)" />
     <Compile Include="../PsychologyApp.Presentation/Features/RunTests/QuestionWizardCoordinator.cs" Link="Linked/ViewModels/Question/%(Filename)%(Extension)" />
     <Compile Include="../PsychologyApp.Presentation/Features/RunTests/TestRunCoordinator.cs" Link="Linked/ViewModels/RunTests/%(Filename)%(Extension)" />

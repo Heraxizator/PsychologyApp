@@ -16,7 +16,7 @@ public partial class SettingsViewModel : BaseViewModel
     private readonly INavigationService _navigationService;
     private readonly IUserPreferencesStore _userPreferencesStore;
     private readonly SettingsPreferencesPresenter _presenter;
-    private readonly LanguageContentReloader _languageContentReloader;
+    private readonly ILanguageContentReloader _languageContentReloader;
     private readonly IPracticeReminderCoordinator _practiceReminderCoordinator;
     private readonly IQuoteReminderCoordinator _quoteReminderCoordinator;
     private readonly IMoodReminderCoordinator _moodReminderCoordinator;
@@ -34,7 +34,7 @@ public partial class SettingsViewModel : BaseViewModel
         INavigationService navigationService,
         IUserPreferencesStore userPreferencesStore,
         SettingsPreferencesPresenter presenter,
-        LanguageContentReloader languageContentReloader,
+        ILanguageContentReloader languageContentReloader,
         IPracticeReminderCoordinator practiceReminderCoordinator,
         IQuoteReminderCoordinator quoteReminderCoordinator,
         IMoodReminderCoordinator moodReminderCoordinator,
