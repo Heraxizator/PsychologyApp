@@ -98,6 +98,12 @@ public sealed record CompanionState
 
     /// <summary>The companion has already logged a mood entry to the journal from this chat, or offered to and been declined
     /// implicitly by moving on — either way, it does not ask again in the same conversation.</summary>
+    /// <summary>The person said they do not want practices: no automatic offers, only when they ask.</summary>
+    public bool PracticesDeclined { get; init; }
+
+    /// <summary>The note about talking to a doctor or psychologist was already given in this chat.</summary>
+    public bool ProfessionalHelpNoted { get; init; }
+
     /// <summary>The person told us someone died: no scales, no practice offers, no quick fixes until they ask for them.</summary>
     public bool GriefShared { get; init; }
 
@@ -154,6 +160,8 @@ public sealed record CompanionState
             WriteOptional(w, "offeredResource", OfferedResource);
             w.WriteBoolean("journalLogged", JournalLogged);
             w.WriteBoolean("grief", GriefShared);
+            w.WriteBoolean("declined", PracticesDeclined);
+            w.WriteBoolean("helpNoted", ProfessionalHelpNoted);
             w.WriteEndObject();
         }
 
@@ -210,7 +218,9 @@ public sealed record CompanionState
                 PreferredMentioned = Bool(r, "preferredMentioned"),
                 OfferedResource = Str(r, "offeredResource"),
                 JournalLogged = Bool(r, "journalLogged"),
-                GriefShared = Bool(r, "grief")
+                GriefShared = Bool(r, "grief"),
+                PracticesDeclined = Bool(r, "declined"),
+                ProfessionalHelpNoted = Bool(r, "helpNoted")
             };
         }
         catch (Exception ex) when (ex is JsonException or InvalidOperationException)

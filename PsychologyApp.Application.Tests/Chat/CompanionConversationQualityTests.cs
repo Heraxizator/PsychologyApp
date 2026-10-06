@@ -223,6 +223,87 @@ public class CompanionConversationQualityTests
     }
 
     [Fact]
+    public void NoPracticesMeansNoUnpromptedOffersAfterwards()
+    {
+        List<Turn> chat = Talk("Мне тревожно из-за работы", "Начальник давит на меня", "7", "не хочу делать никакие практики", "Он опять придрался к отчёту", "Я не знаю как с ним говорить", "Это продолжается каждый день");
+
+        Assert.Contains("без практик", chat[3].Text);
+        Assert.All(chat.Skip(3), t => Assert.False(t.OffersPractice, t.Text));
+    }
+
+    [Fact]
+    public void AnExplicitRequestStillGetsAPracticeAfterDecliningThem()
+    {
+        List<Turn> chat = Talk("Мне тревожно из-за работы", "Начальник давит на меня", "не хочу никаких практик", "Всё-таки что мне делать? Дай совет");
+
+        Assert.Contains("практик", chat[3].Text);
+    }
+
+    [Fact]
+    public void LaterIsAcceptedWithoutPressure()
+    {
+        List<Turn> chat = Talk("Мне тревожно из-за работы", "Начальник давит на меня", "потом");
+
+        Assert.Contains("вернёмся", chat[2].Text);
+        Assert.False(chat[2].OffersPractice);
+    }
+
+    [Fact]
+    public void SayingYesRightAfterAnOfferStartsThatPractice()
+    {
+        CompanionDialogue dialogue = new(new LexiconSituationAnalyzer(), new KeywordCrisisDetector(), english: false, new Random(11), new FixedTime(new DateTime(2026, 10, 6, 12, 0, 0, DateTimeKind.Utc)));
+        CompanionState state = dialogue.Open(new CompanionState(), previous: null).State;
+        CompanionReply offer = dialogue.Respond(state, new CompanionInput.FreeText("Сердце колотится и руки трясутся"));
+        Assert.NotNull(offer.State.OfferedPrimary);
+
+        CompanionReply accepted = dialogue.Respond(offer.State, new CompanionInput.FreeText("Ладно, давай попробуем"));
+
+        Assert.Equal(DialogueActionKind.StartTechnique, accepted.Action?.Kind);
+        Assert.Equal(offer.State.OfferedPrimary, accepted.Action?.TechniqueId?.ToString());
+    }
+
+    [Fact]
+    public void AskingForSomethingElseAfterAnOfferShowsTheOtherPractice()
+    {
+        CompanionDialogue dialogue = new(new LexiconSituationAnalyzer(), new KeywordCrisisDetector(), english: false, new Random(11), new FixedTime(new DateTime(2026, 10, 6, 12, 0, 0, DateTimeKind.Utc)));
+        CompanionState state = dialogue.Open(new CompanionState(), previous: null).State;
+        CompanionReply offer = dialogue.Respond(state, new CompanionInput.FreeText("Сердце колотится и руки трясутся"));
+
+        CompanionReply other = dialogue.Respond(offer.State, new CompanionInput.FreeText("А есть что-то другое?"));
+
+        Assert.Contains(other.QuickReplies, q => q.Kind == ChatQuickReplyKinds.Practice && q.Payload == offer.State.OfferedAlternative);
+    }
+
+    [Fact]
+    public void ALongLastingLowMoodGetsOneCalmWordAboutTalkingToAProfessional()
+    {
+        List<Turn> chat = Talk("Мне грустно и ничего не радует", "Это уже месяц", "Совсем нет желания что-то делать", "Каждый день одно и то же");
+
+        int notes = chat.Count(t => t.Text.Contains("врачом или психологом", StringComparison.Ordinal));
+        Assert.Equal(1, notes);
+    }
+
+    [Fact]
+    public void LetUsTalkTomorrowIsAFarewellNotAnEmotion()
+    {
+        List<Turn> chat = Talk("Мне не с кем поговорить", "Давай завтра ещё поговорим");
+
+        Assert.Contains("Берегите себя", chat[1].Text);
+        Assert.False(chat[1].AsksForScale);
+    }
+
+    [Fact]
+    public void EnglishGriefAndDecliningAreHandledToo()
+    {
+        List<Turn> grief = Talk(true, "My grandmother passed away last week");
+        Assert.Contains("sorry", grief[0].Text);
+        Assert.False(grief[0].AsksForScale);
+
+        List<Turn> decline = Talk(true, "I feel anxious about work", "My boss is pushing me", "I do not want any practices");
+        Assert.Contains("no practices", decline[2].Text);
+    }
+
+    [Fact]
     public void WhatIsAPanicAttackIsAnExplanationNotAnEmergency()
     {
         List<Turn> chat = Talk("А паническая атака это что?");

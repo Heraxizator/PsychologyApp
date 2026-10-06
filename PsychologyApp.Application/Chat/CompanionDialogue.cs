@@ -189,6 +189,12 @@ public sealed partial class CompanionDialogue(
                 null);
         }
 
+        // "Okay, let us try" right after an offer starts that practice, instead of listing the offer again.
+        if (previous.OfferedPrimary is { } offered && previous.TurnsSinceOffer == 0 && Enum.TryParse(offered, out TechniqueId _) && UtteranceClassifier.AcceptsOffer(text))
+        {
+            return RespondToQuickReply(previous, new ChatQuickReply(ChatQuickReplyKinds.Practice, string.Empty, offered));
+        }
+
         SituationAnalysis single = analyzer.Analyze(text);
         Utterance act = UtteranceClassifier.Classify(text, single.Emotion != CompanionEmotion.Unknown);
         if (act is Utterance.Yes or Utterance.No && !previous.QuestionPending)
@@ -372,6 +378,14 @@ public sealed partial class CompanionDialogue(
             Utterance.SharesAchievement => Reply([CompanionSmallTalk.Congratulations(english, _random)], CompanionSmallTalk.GoodNewsReplies(english), state, emotion, theme),
             Utterance.AsksAboutApp => Reply([CompanionKnowledge.AboutApp(text, english)], [], state, emotion, theme),
             Utterance.AsksForEntertainment => Reply([CompanionSmallTalk.Entertain(text, english, _random)], CompanionSmallTalk.CapabilityReplies(english), state, emotion, theme),
+            Utterance.DeclinesPractice => Reply(
+                [CompanionDialogueContent.PracticesDeclinedReply(english)],
+                [CompanionActContent.Vent(english), CompanionActContent.Enough(english)],
+                state with { PracticesDeclined = true },
+                emotion,
+                theme),
+            Utterance.Postpones => Reply([CompanionDialogueContent.Postponed(english)], [CompanionActContent.Continue(english), CompanionActContent.Enough(english)], state, emotion, theme),
+            Utterance.AsksForOther => RespondToAskForOther(state, emotion, theme),
             Utterance.AsksHowAreYou => Reply([CompanionSmallTalk.HowAreYou(english, _random)], [], state, emotion, theme),
             Utterance.AsksName => Reply([CompanionSmallTalk.Name(english)], [], state with { NamePending = true }, emotion, theme),
             Utterance.AsksCapabilities => Reply([CompanionSmallTalk.Capabilities(english)], CompanionSmallTalk.CapabilityReplies(english), state, emotion, theme),
@@ -470,8 +484,16 @@ public sealed partial class CompanionDialogue(
             return Offer(state, messages, analysis, emotion, theme, calming: false);
         }
 
+        if (!state.ProfessionalHelpNoted && state.ContentTurns >= 2 && emotion is CompanionEmotion.Sadness or CompanionEmotion.Exhaustion or CompanionEmotion.Anxiety or CompanionEmotion.Overthinking && NeedsProfessionalNote(string.Join(' ', state.RecentTexts)))
+        {
+            messages.Add(CompanionDialogueContent.ProfessionalHelpNote(english));
+            return Reply(messages, [], state with { ProfessionalHelpNoted = true }, emotion, theme);
+        }
+
         // After a death there is nothing to measure and nothing to fix: no scale, no practice, just company, until a different feeling shows up.
-        if (analysis.HasLoss || (state.GriefShared && emotion is CompanionEmotion.Unknown or CompanionEmotion.Sadness or CompanionEmotion.Loneliness or CompanionEmotion.Guilt))
+        bool newTopic = analysis.Themes.Count > 0 && !analysis.HasLoss || analysis.Persons is { Count: > 0 } && !analysis.HasLoss && emotion == CompanionEmotion.Unknown;
+        bool griefFeeling = emotion is CompanionEmotion.Sadness or CompanionEmotion.Loneliness or CompanionEmotion.Guilt || (emotion == CompanionEmotion.Unknown && !newTopic);
+        if (analysis.HasLoss || (state.GriefShared && griefFeeling))
         {
             return RespondToGrief(state with { GriefShared = true, Emotion = CompanionEmotion.Sadness.ToString() }, theme, newLoss: analysis.HasLoss && !previous.GriefShared);
         }
@@ -587,7 +609,7 @@ public sealed partial class CompanionDialogue(
                 return AskNextQuestion(state, [], emotion, theme);
 
             case "practice":
-                return Offer(state, [], new SituationAnalysis(emotion, 1, false, false, []), emotion, theme, calming: false);
+                return Offer(state, [], new SituationAnalysis(emotion, 1, false, false, []), emotion, theme, calming: false, asked: true);
 
             case { } topic when topic.StartsWith("topic:", StringComparison.Ordinal):
                 return CompanionKnowledge.ExplainById(topic["topic:".Length..], english) is { } explanation
@@ -601,7 +623,7 @@ public sealed partial class CompanionDialogue(
                     new SituationAnalysis(emotion, 1, true, false, []),
                     emotion,
                     theme,
-                    calming: true);
+                    calming: true, asked: true);
 
             case "resource:test":
                 return new CompanionReply(
@@ -749,6 +771,36 @@ public sealed partial class CompanionDialogue(
         return Reply(messages, [], state.WithAsked(id), emotion, theme);
     }
 
+    /// <summary>"Is there something else?" after an offer: the alternative that was kept back, or a fresh offer.</summary>
+    private CompanionReply RespondToAskForOther(CompanionState state, CompanionEmotion emotion, CompanionTheme? theme)
+    {
+        if (Enum.TryParse(state.OfferedAlternative, out TechniqueId alternative))
+        {
+            List<ChatQuickReply> chips =
+            [
+                PracticeReply(alternative.ToString(), CompanionContent.StartLabel(alternative, english)),
+                new ChatQuickReply(ChatQuickReplyKinds.More, CompanionContent.MoreLabel(english))
+            ];
+            return Reply(
+                [CompanionDialogueContent.OtherOption(english), CompanionContent.OfferLine(alternative, english)],
+                chips,
+                state with { OfferedPrimary = alternative.ToString(), OfferedAlternative = null, TurnsSinceOffer = 0 },
+                emotion,
+                theme);
+        }
+
+        return Offer(state, [], new SituationAnalysis(emotion, 1, false, false, []), emotion, theme, calming: false, asked: true);
+    }
+
+    private static readonly string[] LongLastingCues = ["месяц", "недел", "годами", "много лет", "уже давно", "долго не", "weeks", "months", "for years", "for a long time"];
+
+    /// <summary>It has lasted weeks, or the person names a diagnosis themselves ("I think it is depression"): once per chat, a calm word about talking to a professional.</summary>
+    private static bool NeedsProfessionalNote(string recent)
+    {
+        string t = recent.ToLowerInvariant();
+        return t.Contains("депресси", StringComparison.Ordinal) || t.Contains("depression", StringComparison.Ordinal) || LongLastingCues.Any(cue => t.Contains(cue, StringComparison.Ordinal));
+    }
+
     private CompanionReply RespondToGrief(CompanionState state, CompanionTheme? theme, bool newLoss)
     {
         string opening = newLoss
@@ -764,8 +816,20 @@ public sealed partial class CompanionDialogue(
         SituationAnalysis analysis,
         CompanionEmotion emotion,
         CompanionTheme? theme,
-        bool calming)
+        bool calming,
+        bool asked = false)
     {
+        // Someone who said "no practices" is not offered one unprompted; panic and an explicit request are the exceptions.
+        if (state.PracticesDeclined && !asked && !calming && emotion != CompanionEmotion.Panic)
+        {
+            if (messages.Count == 0)
+            {
+                messages.Add(CompanionDialogueContent.Question("more", english));
+            }
+
+            return Reply(messages, [], state, emotion, theme);
+        }
+
         IReadOnlyList<TechniqueId> suggestions = calming && emotion is not (CompanionEmotion.Panic or CompanionEmotion.Anxiety)
             ? [TechniqueId.Breathing, TechniqueId.Grounding]
             : TechniqueSuggester.Suggest(analysis with { Emotion = emotion });

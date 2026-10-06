@@ -81,6 +81,22 @@ public static class CompanionDialogueContent
 
     public static string ScaleLow(bool english) => english ? "It's good that it isn't at its limit." : "Хорошо, что это не на пределе.";
 
+    public static string PracticesDeclinedReply(bool english) => english
+        ? "All right, no practices. We can simply talk; I am listening."
+        : "Хорошо, без практик. Мы можем просто поговорить: я слушаю.";
+
+    public static string Postponed(bool english) => english
+        ? "Of course, we will come back to it when you are ready."
+        : "Конечно, вернёмся к этому, когда будете готовы.";
+
+    public static string OtherOption(bool english) => english
+        ? "We can try something different."
+        : "Можно попробовать что-то другое.";
+
+    public static string ProfessionalHelpNote(bool english) => english
+        ? "If this has been going on for weeks or gets in the way of living, it is worth talking to a doctor or a psychologist: that is not weakness, just a normal step. I do not diagnose, but I can be with you meanwhile."
+        : "Если это тянется уже несколько недель или мешает жить, стоит обсудить это с врачом или психологом: это не слабость, а нормальный шаг. Диагнозов я не ставлю, но могу быть рядом.";
+
     public static string Condolence(bool english) => english
         ? "I am so sorry. Losing someone close is one of the hardest things there is."
         : "Мне очень жаль. Потерять близкого человека — одно из самых тяжёлых переживаний.";

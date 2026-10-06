@@ -18,6 +18,12 @@ public enum Utterance
     AsksAboutApp,
     /// <summary>"Tell me a joke", "I am bored": a request for company or a distraction, not a problem.</summary>
     AsksForEntertainment,
+    /// <summary>"I do not want any practices": the offers stop, the conversation goes on.</summary>
+    DeclinesPractice,
+    /// <summary>"Later", "not now": agreed, no pressure.</summary>
+    Postpones,
+    /// <summary>"Is there something else?" after an offer.</summary>
+    AsksForOther,
     /// <summary>"I got promoted", "passed my exam": an event to celebrate, not a feeling to work through.</summary>
     SharesAchievement,
     ComplainsAboutCompanion,
@@ -62,13 +68,33 @@ public static class UtteranceClassifier
 
     private static readonly string[] GreetingStarts = ["привет", "здравствуй", "добрый", "доброе", "приветствую", "хай", "hi", "hello", "hey", "good morning", "good evening", "good afternoon"];
     private static readonly string[] ThanksTerms = ["спасибо", "благодарю", "благодарствую", "thanks", "thank you", "thx"];
-    private static readonly string[] GoodbyeTerms = ["до свидания", "до встречи", "всего доброго", "спокойной ночи", "до завтра", "bye", "goodbye", "good night", "see you", "talk later"];
+    private static readonly string[] GoodbyeTerms = ["до свидания", "до встречи", "всего доброго", "спокойной ночи", "до завтра", "давай завтра", "поговорим завтра", "поговорим позже", "давай позже", "bye", "goodbye", "good night", "see you", "talk later"];
     private static readonly string[] ByeWordTerms = ["пока "];
     private static readonly string[] DontKnowTerms = ["не знаю", "хз", "сложно сказать", "затрудняюсь", "не уверен", "не уверена", "трудно сказать", "dont know", "do not know", "no idea", "not sure", "hard to say"];
     private static readonly string[] RefuseTerms =
     [
         "не хочу об этом", "не хочу говорить", "не хочу рассказывать", "не буду об этом", "не хочется об этом", "не хочу про это", "не хочу это обсуждать", "не хочу ничего обсуждать", "не хочу ничего рассказывать", "не хочу ничего говорить", "не хочу обсуждать", "не хочу разговаривать", "не хочу ни о чем говорить", "давай не будем об этом", "не буду ничего рассказывать", "оставь меня в покое", "оставьте меня в покое", "не хочу больше говорить",
         "dont want to talk", "do not want to talk", "dont want to talk about", "leave me alone", "rather not", "dont want to discuss", "not going to talk"
+    ];
+
+    private static readonly string[] DeclinePracticeTerms =
+    [
+        "не хочу практик", "не хочу делать практик", "не хочу никакие практик", "не хочу упражнени", "не хочу делать упражнени", "не хочу делать никакие", "не надо практик", "не нужны практик", "без практик", "без упражнени", "не буду делать практик", "не буду делать упражнени", "не хочу ничего делать такого",
+        "no practices", "do not want any practice", "do not want practices", "do not want to do any practice", "do not want exercises", "dont want any practice", "dont want to do any practice", "dont want exercises", "no exercises", "dont want to do exercises"
+    ];
+
+    private static readonly string[] PostponeTerms = ["потом", "позже", "не сейчас", "в другой раз", "попозже", "later", "not now", "maybe later", "another time"];
+
+    private static readonly string[] OtherTerms =
+    [
+        "а есть что то другое", "есть что то другое", "что нибудь другое", "другую практику", "другое упражнение", "что еще есть", "что есть еще", "что то другое", "а что еще", "есть другое", "что еще можно",
+        "anything else", "something else", "another practice", "something different", "what else"
+    ];
+
+    private static readonly string[] AcceptTerms =
+    [
+        "да", "ага", "угу", "ладно", "хорошо", "ок", "окей", "давай", "давайте", "попробуем", "начнем", "давай попробуем", "давайте попробуем", "ладно давай", "ладно давайте", "хорошо давай", "хорошо давайте", "ладно попробуем", "ладно давай попробуем", "ну давай", "давай начнем", "да давай", "да давайте",
+        "yes", "ok", "okay", "sure", "lets try", "lets start", "ok lets try", "okay lets try", "yes lets try", "lets do it"
     ];
 
     private static readonly string[] AppTerms =
@@ -85,7 +111,7 @@ public static class UtteranceClassifier
 
     private static readonly string[] AskBotTerms =
     [
-        "ты кто", "ты вообще кто", "а ты кто", "вы вообще кто", "кто ты", "ты бот", "ты робот", "ты человек", "ты настоящ", "ты живой", "ты живая", "ты нейросеть", "ты ии", "вы бот", "вы робот", "вы человек", "вы кто", "кто вы",
+        "у тебя бывает", "ты чувствуешь", "тебе грустно", "тебе тяжело", "ты устаешь", "у тебя есть чувства", "тебе бывает", "ты кто", "ты вообще кто", "а ты кто", "вы вообще кто", "кто ты", "ты бот", "ты робот", "ты человек", "ты настоящ", "ты живой", "ты живая", "ты нейросеть", "ты ии", "вы бот", "вы робот", "вы человек", "вы кто", "кто вы",
         "ты гей", "ты гетеро", "ты натурал", "ты трансгендер", "ты парень или девушка", "у тебя есть пол", "какой у тебя пол", "ты мужчина или женщина", "ты мальчик или девочка", "сколько тебе лет", "у тебя есть тело",
         "are you a bot", "are you human", "are you real", "are you a person", "are you an ai", "who are you", "what are you",
         "are you gay", "are you straight", "are you trans", "what gender are you", "do you have a gender", "how old are you", "do you have a body"
@@ -183,6 +209,9 @@ public static class UtteranceClassifier
     private static readonly string[] YesTerms = ["да", "ага", "угу", "конечно", "наверное", "пожалуй", "возможно", "верно", "точно", "yes", "yeah", "yep", "sure", "maybe", "probably", "right", "exactly"];
     private static readonly string[] NoTerms = ["нет", "неа", "вряд ли", "no", "nope", "not really"];
 
+    /// <summary>A short "yes, let us try" said right after the companion offered a practice.</summary>
+    public static bool AcceptsOffer(string text) => AcceptTerms.Contains(Normalize(text));
+
     /// <param name="text">Raw message.</param>
     /// <param name="hasFeeling">The message already carries a recognised feeling; social phrases are then ignored.</param>
     public static Utterance Classify(string text, bool hasFeeling)
@@ -235,6 +264,21 @@ public static class UtteranceClassifier
         if (words <= 8 && ContainsAny(padded, CapabilityTerms))
         {
             return Utterance.AsksCapabilities;
+        }
+
+        if (words <= 8 && ContainsAny(padded, DeclinePracticeTerms))
+        {
+            return Utterance.DeclinesPractice;
+        }
+
+        if (words <= 3 && PostponeTerms.Contains(normalized))
+        {
+            return Utterance.Postpones;
+        }
+
+        if (words <= 7 && ContainsAny(padded, OtherTerms))
+        {
+            return Utterance.AsksForOther;
         }
 
         if (words <= 6 && ContainsAny(padded, SkipTerms))
