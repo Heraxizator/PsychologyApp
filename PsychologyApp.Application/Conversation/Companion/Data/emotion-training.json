@@ -2108,6 +2108,246 @@
   "text": "Can you tell me about yourself"
  },
  {
+  "label": "Sadness",
+  "text": "Две недели назад не стало моего дедушки, и я до сих пор хожу как в тумане"
+ },
+ {
+  "label": "Sadness",
+  "text": "Мы с мужем разводимся, и мне так горько от того, как всё закончилось"
+ },
+ {
+  "label": "Sadness",
+  "text": "Парень написал, что больше не хочет быть вместе, и у меня внутри пустота"
+ },
+ {
+  "label": "Sadness",
+  "text": "Моя собака умерла вчера, не могу перестать плакать"
+ },
+ {
+  "label": "Sadness",
+  "text": "Кажется, я ничего не стою, никому не интересна и ничего не умею"
+ },
+ {
+  "label": "Sadness",
+  "text": "Скучаю по маме, которой уже нет, особенно по вечерам"
+ },
+ {
+  "label": "Sadness",
+  "text": "My best friend moved away and the apartment feels so empty without her"
+ },
+ {
+  "label": "Sadness",
+  "text": "We broke up last night and I can't stop crying"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Сегодня сообщили, что будут сокращения, и я не сплю, считаю деньги на счёте"
+ },
+ {
+  "label": "Anxiety",
+  "text": "У отца подозрение на онкологию, ждём обследование, я места себе не нахожу"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Через неделю защита диплома, при одной мысли об этом холодеют руки"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Мне нужно выступить на конференции, а я боюсь опозориться перед коллегами"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Врач назначил повторный анализ, и я накручиваю самое страшное"
+ },
+ {
+  "label": "Anxiety",
+  "text": "Сын не отвечает на звонки уже три часа, внутри всё сжимается"
+ },
+ {
+  "label": "Anxiety",
+  "text": "My visa interview is next week and I can barely eat because of the nerves"
+ },
+ {
+  "label": "Anxiety",
+  "text": "They are announcing layoffs on Monday and I keep imagining the worst"
+ },
+ {
+  "label": "Resentment",
+  "text": "Начальница отчитала меня при всей команде, и я до сих пор не могу отойти от унижения"
+ },
+ {
+  "label": "Resentment",
+  "text": "Муж назвал меня истеричкой при его родителях, мне очень обидно"
+ },
+ {
+  "label": "Resentment",
+  "text": "Подруга рассказала всем мою тайну, а я ей так доверяла"
+ },
+ {
+  "label": "Resentment",
+  "text": "Свекровь снова критиковала мою готовку при гостях, и это ранит каждый раз"
+ },
+ {
+  "label": "Resentment",
+  "text": "Коллеги обсуждали меня за спиной, а потом улыбались в лицо"
+ },
+ {
+  "label": "Resentment",
+  "text": "My manager criticised me in front of the whole team and I felt humiliated"
+ },
+ {
+  "label": "Resentment",
+  "text": "My partner cheated on me and I still can't believe he lied for months"
+ },
+ {
+  "label": "Guilt",
+  "text": "Накричала на ребёнка из-за разлитого сока и теперь мне ужасно стыдно"
+ },
+ {
+  "label": "Guilt",
+  "text": "Я не навестила бабушку, пока она болела, и теперь думаю, что подвела её"
+ },
+ {
+  "label": "Guilt",
+  "text": "Я соврала подруге про причину отказа, и совесть не даёт покоя"
+ },
+ {
+  "label": "Guilt",
+  "text": "Устала от ухода за мамой и потом ловлю себя на мысли, что я плохая дочь"
+ },
+ {
+  "label": "Guilt",
+  "text": "I forgot my son's recital and I feel like the worst mother"
+ },
+ {
+  "label": "Guilt",
+  "text": "I took credit for a colleague's idea and I can't stop feeling ashamed"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Ухаживаю за больной мамой и работаю, сил не осталось вообще"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Двое маленьких детей, ночные подъёмы, я вымотана до предела"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Выгорание на работе, по утрам даже мысль о ноутбуке вызывает отвращение"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "Newborn twins and no sleep for three months, I'm running on fumes"
+ },
+ {
+  "label": "Exhaustion",
+  "text": "I work two jobs and feel completely depleted"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Никто не звонит, не пишет, и мне кажется, что всем на меня всё равно"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Я приехала учиться в другой город, и мне не с кем даже пообедать"
+ },
+ {
+  "label": "Loneliness",
+  "text": "После выхода на пенсию дни тянутся, и поговорить почти не с кем"
+ },
+ {
+  "label": "Loneliness",
+  "text": "Мне кажется, я всем мешаю и лучше держаться в стороне"
+ },
+ {
+  "label": "Loneliness",
+  "text": "I eat lunch alone at my desk every day and nobody notices"
+ },
+ {
+  "label": "Loneliness",
+  "text": "My friends all have partners now and I feel left behind"
+ },
+ {
+  "label": "Anger",
+  "text": "Сосед опять устроил вечеринку до трёх ночи, хочется пойти и высказать всё"
+ },
+ {
+  "label": "Anger",
+  "text": "Курьер потерял посылку и ещё нахамил, я просто кипела"
+ },
+ {
+  "label": "Anger",
+  "text": "Брат в очередной раз не выполнил обещание, я на него так зла"
+ },
+ {
+  "label": "Anger",
+  "text": "The airline lost our luggage and refused to help, I am livid"
+ },
+ {
+  "label": "Anger",
+  "text": "My roommate never cleans up and I'm about to explode"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Весь вечер прокручиваю в голове разговор с начальником, что он на самом деле имел в виду"
+ },
+ {
+  "label": "Overthinking",
+  "text": "Не могу перестать думать, правильно ли я выбрала эту профессию"
+ },
+ {
+  "label": "Overthinking",
+  "text": "I keep rehearsing the argument in my head and imagining what I should have said"
+ },
+ {
+  "label": "Overthinking",
+  "text": "I can't stop wondering whether I made the right decision about moving"
+ },
+ {
+  "label": "Panic",
+  "text": "Посреди ночи проснулась, сердце выскакивает, не могу вдохнуть, кажется, я умираю"
+ },
+ {
+  "label": "Panic",
+  "text": "В метро накрыло: темнеет в глазах, руки леденеют, хочется выбежать на ходу"
+ },
+ {
+  "label": "Panic",
+  "text": "My chest tightened out of nowhere, I can't breathe and I'm sure something terrible is happening"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Три недели откладываю звонок в налоговую, хотя знаю, что штраф растёт"
+ },
+ {
+  "label": "Procrastination",
+  "text": "Открываю документ с отчётом и тут же ухожу смотреть видео про котов"
+ },
+ {
+  "label": "Procrastination",
+  "text": "I keep putting off sending the application even though the deadline is tomorrow"
+ },
+ {
+  "label": "Unknown",
+  "text": "Подскажи, как удалить все чаты"
+ },
+ {
+  "label": "Unknown",
+  "text": "Сегодня ходила в магазин и сварила кофе"
+ },
+ {
+  "label": "Unknown",
+  "text": "Спасибо, на сегодня достаточно"
+ },
+ {
+  "label": "Unknown",
+  "text": "Can you explain how the breathing exercise works"
+ },
+ {
+  "label": "Unknown",
+  "text": "I'll write again tomorrow, bye"
+ },
+ {
   "label": "Panic",
   "text": "У меня приступ, не могу вдохнуть, помогите"
  },

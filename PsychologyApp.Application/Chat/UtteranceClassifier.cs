@@ -66,7 +66,7 @@ public static class UtteranceClassifier
 {
     private const int ShortGreetingLength = 3;
 
-    private static readonly string[] GreetingStarts = ["привет", "здравствуй", "добрый", "доброе", "приветствую", "хай", "hi", "hello", "hey", "good morning", "good evening", "good afternoon"];
+    private static readonly string[] GreetingStarts = ["прив", "здрасьте", "здрасте", "приветик", "хэй", "хеллоу", "эй", "алло", "привет", "здравствуй", "добрый", "доброе", "приветствую", "хай", "hi", "hello", "hey", "good morning", "good evening", "good afternoon"];
     private static readonly string[] ThanksTerms = ["спасибо", "благодарю", "благодарствую", "thanks", "thank you", "thx"];
     private static readonly string[] GoodbyeTerms = ["до свидания", "до встречи", "всего доброго", "спокойной ночи", "до завтра", "давай завтра", "поговорим завтра", "поговорим позже", "давай позже", "bye", "goodbye", "good night", "see you", "talk later"];
     private static readonly string[] ByeWordTerms = ["пока "];
@@ -190,7 +190,7 @@ public static class UtteranceClassifier
         "skip", "next question", "another question", "ask something else", "dont want to answer"
     ];
 
-    private static readonly string[] AcknowledgeTerms = ["ок", "окей", "ясно", "ясненько", "понятно", "ладно", "ну ладно", "понял", "поняла", "принято", "ну ок", "okay", "ok", "i see", "got it", "alright", "understood", "hm", "хм", "мм", "ммм", "гм",
+    private static readonly string[] AcknowledgeTerms = ["ок", "окей", "слушай", "слушайте", "ясно", "ясненько", "понятно", "ладно", "ну ладно", "понял", "поняла", "принято", "ну ок", "okay", "ok", "i see", "got it", "alright", "understood", "hm", "хм", "мм", "ммм", "гм",
         // Fillers and hesitation: a backchannel, not a story.
         "ну", "эм", "эмм", "э", "ээ", "эээ", "мхм", "и", "а", "так", "вот", "um", "uh", "hmm", "umm", "well", "so"];
 

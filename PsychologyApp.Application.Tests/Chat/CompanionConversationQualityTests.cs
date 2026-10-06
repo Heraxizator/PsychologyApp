@@ -303,6 +303,26 @@ public class CompanionConversationQualityTests
         Assert.Contains("no practices", decline[2].Text);
     }
 
+    [Theory]
+    [InlineData("прив")]
+    [InlineData("здрасьте")]
+    public void InformalGreetingsAreGreetings(string hello)
+    {
+        List<Turn> chat = Talk(hello);
+
+        Assert.DoesNotContain("не хватает слов", chat[0].Text);
+        Assert.Matches("(?i)здравствуйте|добр|привет", chat[0].Text);
+    }
+
+    [Fact]
+    public void AMessageWithoutAFeelingDoesNotFlipTheKnownFeeling()
+    {
+        List<Turn> chat = Talk("все достали", "хочется закрыться и ни с кем не общаться", "не знаю зачем я это пишу");
+
+        Assert.Equal(chat[1].Reply.State.Emotion, chat[2].Reply.State.Emotion);
+        Assert.DoesNotContain("на первый план", chat[2].Text);
+    }
+
     [Fact]
     public void WhatIsAPanicAttackIsAnExplanationNotAnEmergency()
     {

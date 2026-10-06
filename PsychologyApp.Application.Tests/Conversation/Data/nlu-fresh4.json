@@ -1,0 +1,72 @@
+[
+  { "lang": "ru", "label": "Sadness", "text": "Две недели назад не стало моего дедушки, и я до сих пор хожу как в тумане" },
+  { "lang": "ru", "label": "Sadness", "text": "Мы с мужем разводимся, и мне так горько от того, как всё закончилось" },
+  { "lang": "ru", "label": "Sadness", "text": "Парень написал, что больше не хочет быть вместе, и у меня внутри пустота" },
+  { "lang": "ru", "label": "Sadness", "text": "Моя собака умерла вчера, не могу перестать плакать" },
+  { "lang": "ru", "label": "Sadness", "text": "Кажется, я ничего не стою, никому не интересна и ничего не умею" },
+  { "lang": "ru", "label": "Sadness", "text": "Скучаю по маме, которой уже нет, особенно по вечерам" },
+  { "lang": "en", "label": "Sadness", "text": "My best friend moved away and the apartment feels so empty without her" },
+  { "lang": "en", "label": "Sadness", "text": "We broke up last night and I can't stop crying" },
+
+  { "lang": "ru", "label": "Anxiety", "text": "Сегодня сообщили, что будут сокращения, и я не сплю, считаю деньги на счёте" },
+  { "lang": "ru", "label": "Anxiety", "text": "У отца подозрение на онкологию, ждём обследование, я места себе не нахожу" },
+  { "lang": "ru", "label": "Anxiety", "text": "Через неделю защита диплома, при одной мысли об этом холодеют руки" },
+  { "lang": "ru", "label": "Anxiety", "text": "Мне нужно выступить на конференции, а я боюсь опозориться перед коллегами" },
+  { "lang": "ru", "label": "Anxiety", "text": "Врач назначил повторный анализ, и я накручиваю самое страшное" },
+  { "lang": "ru", "label": "Anxiety", "text": "Сын не отвечает на звонки уже три часа, внутри всё сжимается" },
+  { "lang": "en", "label": "Anxiety", "text": "My visa interview is next week and I can barely eat because of the nerves" },
+  { "lang": "en", "label": "Anxiety", "text": "They are announcing layoffs on Monday and I keep imagining the worst" },
+
+  { "lang": "ru", "label": "Resentment", "text": "Начальница отчитала меня при всей команде, и я до сих пор не могу отойти от унижения" },
+  { "lang": "ru", "label": "Resentment", "text": "Муж назвал меня истеричкой при его родителях, мне очень обидно" },
+  { "lang": "ru", "label": "Resentment", "text": "Подруга рассказала всем мою тайну, а я ей так доверяла" },
+  { "lang": "ru", "label": "Resentment", "text": "Свекровь снова критиковала мою готовку при гостях, и это ранит каждый раз" },
+  { "lang": "ru", "label": "Resentment", "text": "Коллеги обсуждали меня за спиной, а потом улыбались в лицо" },
+  { "lang": "en", "label": "Resentment", "text": "My manager criticised me in front of the whole team and I felt humiliated" },
+  { "lang": "en", "label": "Resentment", "text": "My partner cheated on me and I still can't believe he lied for months" },
+
+  { "lang": "ru", "label": "Guilt", "text": "Накричала на ребёнка из-за разлитого сока и теперь мне ужасно стыдно" },
+  { "lang": "ru", "label": "Guilt", "text": "Я не навестила бабушку, пока она болела, и теперь думаю, что подвела её" },
+  { "lang": "ru", "label": "Guilt", "text": "Я соврала подруге про причину отказа, и совесть не даёт покоя" },
+  { "lang": "ru", "label": "Guilt", "text": "Устала от ухода за мамой и потом ловлю себя на мысли, что я плохая дочь" },
+  { "lang": "en", "label": "Guilt", "text": "I forgot my son's recital and I feel like the worst mother" },
+  { "lang": "en", "label": "Guilt", "text": "I took credit for a colleague's idea and I can't stop feeling ashamed" },
+
+  { "lang": "ru", "label": "Exhaustion", "text": "Ухаживаю за больной мамой и работаю, сил не осталось вообще" },
+  { "lang": "ru", "label": "Exhaustion", "text": "Двое маленьких детей, ночные подъёмы, я вымотана до предела" },
+  { "lang": "ru", "label": "Exhaustion", "text": "Выгорание на работе, по утрам даже мысль о ноутбуке вызывает отвращение" },
+  { "lang": "en", "label": "Exhaustion", "text": "Newborn twins and no sleep for three months, I'm running on fumes" },
+  { "lang": "en", "label": "Exhaustion", "text": "I work two jobs and feel completely depleted" },
+
+  { "lang": "ru", "label": "Loneliness", "text": "Никто не звонит, не пишет, и мне кажется, что всем на меня всё равно" },
+  { "lang": "ru", "label": "Loneliness", "text": "Я приехала учиться в другой город, и мне не с кем даже пообедать" },
+  { "lang": "ru", "label": "Loneliness", "text": "После выхода на пенсию дни тянутся, и поговорить почти не с кем" },
+  { "lang": "ru", "label": "Loneliness", "text": "Мне кажется, я всем мешаю и лучше держаться в стороне" },
+  { "lang": "en", "label": "Loneliness", "text": "I eat lunch alone at my desk every day and nobody notices" },
+  { "lang": "en", "label": "Loneliness", "text": "My friends all have partners now and I feel left behind" },
+
+  { "lang": "ru", "label": "Anger", "text": "Сосед опять устроил вечеринку до трёх ночи, хочется пойти и высказать всё" },
+  { "lang": "ru", "label": "Anger", "text": "Курьер потерял посылку и ещё нахамил, я просто кипела" },
+  { "lang": "ru", "label": "Anger", "text": "Брат в очередной раз не выполнил обещание, я на него так зла" },
+  { "lang": "en", "label": "Anger", "text": "The airline lost our luggage and refused to help, I am livid" },
+  { "lang": "en", "label": "Anger", "text": "My roommate never cleans up and I'm about to explode" },
+
+  { "lang": "ru", "label": "Overthinking", "text": "Весь вечер прокручиваю в голове разговор с начальником, что он на самом деле имел в виду" },
+  { "lang": "ru", "label": "Overthinking", "text": "Не могу перестать думать, правильно ли я выбрала эту профессию" },
+  { "lang": "en", "label": "Overthinking", "text": "I keep rehearsing the argument in my head and imagining what I should have said" },
+  { "lang": "en", "label": "Overthinking", "text": "I can't stop wondering whether I made the right decision about moving" },
+
+  { "lang": "ru", "label": "Panic", "text": "Посреди ночи проснулась, сердце выскакивает, не могу вдохнуть, кажется, я умираю" },
+  { "lang": "ru", "label": "Panic", "text": "В метро накрыло: темнеет в глазах, руки леденеют, хочется выбежать на ходу" },
+  { "lang": "en", "label": "Panic", "text": "My chest tightened out of nowhere, I can't breathe and I'm sure something terrible is happening" },
+
+  { "lang": "ru", "label": "Procrastination", "text": "Три недели откладываю звонок в налоговую, хотя знаю, что штраф растёт" },
+  { "lang": "ru", "label": "Procrastination", "text": "Открываю документ с отчётом и тут же ухожу смотреть видео про котов" },
+  { "lang": "en", "label": "Procrastination", "text": "I keep putting off sending the application even though the deadline is tomorrow" },
+
+  { "lang": "ru", "label": "Unknown", "text": "Подскажи, как удалить все чаты" },
+  { "lang": "ru", "label": "Unknown", "text": "Сегодня ходила в магазин и сварила кофе" },
+  { "lang": "ru", "label": "Unknown", "text": "Спасибо, на сегодня достаточно" },
+  { "lang": "en", "label": "Unknown", "text": "Can you explain how the breathing exercise works" },
+  { "lang": "en", "label": "Unknown", "text": "I'll write again tomorrow, bye" }
+]

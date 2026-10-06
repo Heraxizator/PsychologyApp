@@ -9,7 +9,7 @@ public class EmotionGuesserTests(ITestOutputHelper output)
 {
     private sealed record Item(string Label, string Text);
 
-    private static readonly string[] Sets = ["nlu-dataset.json", "nlu-heldout.json", "nlu-fresh.json", "nlu-fresh2.json", "nlu-fresh3.json"];
+    private static readonly string[] Sets = ["nlu-dataset.json", "nlu-heldout.json", "nlu-fresh.json", "nlu-fresh2.json", "nlu-fresh3.json", "nlu-fresh4.json"];
 
     private static Item[] Load(string file) => JsonSerializer.Deserialize<Item[]>(
         File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Data", file)),

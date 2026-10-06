@@ -3,7 +3,7 @@
 // Run after adding or changing messages there:  node tools/build-emotion-training.js
 const fs = require("fs");
 const dir = "PsychologyApp.Application.Tests/Conversation/Data/";
-const files = ["nlu-dataset.json", "nlu-heldout.json", "nlu-fresh.json", "nlu-fresh2.json", "nlu-fresh3.json", "nlu-train-extra.json"];
+const files = ["nlu-dataset.json", "nlu-heldout.json", "nlu-fresh.json", "nlu-fresh2.json", "nlu-fresh3.json", "nlu-fresh4.json", "nlu-train-extra.json"];
 const seen = new Set();
 const out = [];
 for (const f of files) {

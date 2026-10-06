@@ -439,7 +439,8 @@ public sealed partial class CompanionDialogue(
             AwaitingPostPracticeRating = false
         };
 
-        if (analysis.Emotion == CompanionEmotion.Unknown)
+        // A message that names no feeling continues the one we know; only when nothing is known yet are the recent messages read together.
+        if (analysis.Emotion == CompanionEmotion.Unknown && ParseEmotion(previous.Emotion) == CompanionEmotion.Unknown)
         {
             analysis = analyzer.Analyze(string.Join(' ', state.RecentTexts)) with { HasBodySymptoms = analysis.HasBodySymptoms, IsIntense = analysis.IsIntense, Persons = analysis.Persons };
         }
@@ -459,6 +460,18 @@ public sealed partial class CompanionDialogue(
             FirstQuote = state.FirstQuote ?? quote
         };
         analysis = analysis with { Emotion = emotion };
+
+        // The person has already said what happened (a real sentence with a topic or a person in it): do not ask "what happened?" as the next question.
+        if (WordCount(text) >= 5 && (analysis.Themes.Count > 0 || analysis.Persons is { Count: > 0 }))
+        {
+            foreach (string id in new[] { "trigger", "what_happened" })
+            {
+                if (!state.AskedQuestions.Contains(id))
+                {
+                    state = state.WithAsked(id);
+                }
+            }
+        }
 
         // Parroting a whole one-sentence message back sounds mechanical; a quote is for picking one sentence out of several.
         string? spoken = quote is not null && text.TrimEnd('.', '!', '?', '…', ' ') == quote ? null : quote;
