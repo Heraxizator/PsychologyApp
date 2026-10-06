@@ -46,6 +46,7 @@ public sealed class UserViewModelFactory(
     LanguageContentReloader languageContentReloader,
     IClinicalCareService clinicalCareService,
     ProfileWeekDaysLoader profileWeekDaysLoader,
+    IUserPreferencesStore userPreferencesStore,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IUserViewModelFactory
 {
     public UserViewModel Create(ContentPage page) =>
@@ -62,7 +63,8 @@ public sealed class UserViewModelFactory(
             profileScreenCoordinator,
             languageContentReloader,
             clinicalCareService,
-            profileWeekDaysLoader);
+            profileWeekDaysLoader,
+            userPreferencesStore);
 }
 
 public interface IOptionsViewModelFactory

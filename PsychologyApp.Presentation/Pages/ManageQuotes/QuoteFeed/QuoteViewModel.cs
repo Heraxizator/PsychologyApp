@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MvvmHelpers;
@@ -43,6 +44,8 @@ public partial class QuoteViewModel : BaseViewModel
     private readonly LanguageContentReloader _languageContentReloader;
     private string? _feedLanguage;
 
+    private readonly IUserPreferencesStore _preferences;
+
     public QuoteViewModel(
         INavigationService navigationService,
         IQuotService quotService,
@@ -53,8 +56,10 @@ public partial class QuoteViewModel : BaseViewModel
         QuoteFeedCoordinator feedCoordinator,
         QuoteItemCommandsFactory quoteCommandsFactory,
         IDatabaseReadySignal databaseReadySignal,
-        LanguageContentReloader languageContentReloader)
+        LanguageContentReloader languageContentReloader,
+        IUserPreferencesStore preferences)
     {
+        _preferences = preferences;
         // Assigned before the try block so that every field is definitely assigned even when initialization below throws.
         _quotService = quotService;
         _logger = logger;

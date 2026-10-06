@@ -31,7 +31,7 @@ public partial class TechniquesViewModel
 
     public async Task TryOpenPendingJournalAsync()
     {
-        if (!UserPreferences.ConsumePendingOpenJournal())
+        if (!_preferences.ConsumePendingOpenJournal())
         {
             return;
         }

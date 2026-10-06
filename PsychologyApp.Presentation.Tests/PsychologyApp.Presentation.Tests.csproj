@@ -49,6 +49,7 @@
     <Compile Include="TestScoreLabelMapperTests.cs" />
     <Compile Include="AppStringsErrorTests.cs" />
     <Compile Include="AppStringsResourceTests.cs" />
+    <Compile Include="TestScoreLabelCompletenessTests.cs" />
     <Compile Include="WeakActionEventTests.cs" />
     <Compile Include="EntryDraftTests.cs" />
     <Compile Include="UserQuotesRefreshPolicyTests.cs" />

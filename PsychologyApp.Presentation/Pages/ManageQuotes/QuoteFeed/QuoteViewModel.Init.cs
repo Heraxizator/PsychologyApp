@@ -33,7 +33,7 @@ public partial class QuoteViewModel
 
     private bool ApplyPendingQuoteFeedIfNeeded()
     {
-        string? pendingKey = UserPreferences.ConsumePendingQuoteFeed();
+        string? pendingKey = _preferences.ConsumePendingQuoteFeed();
         if (string.IsNullOrWhiteSpace(pendingKey))
         {
             return false;
@@ -58,7 +58,7 @@ public partial class QuoteViewModel
             if (await LoadFeedAsync(seedNewQuote, isInitialLoad: true, generation))
             {
                 _initialized = true;
-                _feedLanguage = UserPreferences.GetPersistedLanguage();
+                _feedLanguage = _preferences.PersistedLanguage;
             }
         }
         finally

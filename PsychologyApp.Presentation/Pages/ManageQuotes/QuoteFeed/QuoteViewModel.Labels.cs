@@ -63,7 +63,7 @@ public partial class QuoteViewModel
         EnsureFeedFilters();
         EnsureThemeFilters();
 
-        string currentLanguage = UserPreferences.GetPersistedLanguage();
+        string currentLanguage = _preferences.PersistedLanguage;
         if (!_initialized)
         {
             _feedLanguage = currentLanguage;

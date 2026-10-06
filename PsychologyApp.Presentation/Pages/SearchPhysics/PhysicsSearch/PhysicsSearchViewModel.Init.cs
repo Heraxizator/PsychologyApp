@@ -18,7 +18,7 @@ public partial class PhysicsSearchViewModel
     {
         await InitAsync();
         _initialized = true;
-        _reasonsLanguage = UserPreferences.GetPersistedLanguage();
+        _reasonsLanguage = _preferences.PersistedLanguage;
     }
 
     private void OnSelfPropertyChanged(object? sender, PropertyChangedEventArgs e)

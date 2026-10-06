@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.ClinicalCare;
@@ -42,8 +43,10 @@ public partial class UserViewModel : BaseViewModel
 
         await RefreshAsync(forceQuotesReload: false);
         _initialized = true;
-        _feedLanguage = UserPreferences.GetPersistedLanguage();
+        _feedLanguage = _preferences.PersistedLanguage;
     }
+
+    private readonly IUserPreferencesStore _preferences;
 
     public UserViewModel(
         ILogger<UserViewModel> logger,
@@ -58,8 +61,10 @@ public partial class UserViewModel : BaseViewModel
         ProfileScreenCoordinator profileScreenCoordinator,
         LanguageContentReloader languageContentReloader,
         IClinicalCareService clinicalCareService,
-        ProfileWeekDaysLoader profileWeekDaysLoader)
+        ProfileWeekDaysLoader profileWeekDaysLoader,
+        IUserPreferencesStore preferences)
     {
+        _preferences = preferences;
         // Assigned before the try block so that every field is definitely assigned even when initialization below throws.
         _navigationService = navigationService;
         _quotesChangeNotifier = quotesChangeNotifier;

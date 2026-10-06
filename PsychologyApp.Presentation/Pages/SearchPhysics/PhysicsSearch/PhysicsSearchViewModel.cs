@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 using System.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -36,6 +37,8 @@ public partial class PhysicsSearchViewModel : BaseViewModel
     public ICommand LoadMoreSearchResultsCommand { get; private set; } = default!;
     public ICommand CancelSearchCommand { get; private set; } = default!;
 
+    private readonly IUserPreferencesStore _preferences;
+
     public PhysicsSearchViewModel(
         IReasonSearchService reasonSearchService,
         PhysicsSearchCoordinator searchCoordinator,
@@ -44,8 +47,10 @@ public partial class PhysicsSearchViewModel : BaseViewModel
         IToastService toastService,
         IOptions<AppSettings> settings,
         INavigationService navigationService,
-        IDatabaseReadySignal databaseReadySignal)
+        IDatabaseReadySignal databaseReadySignal,
+        IUserPreferencesStore preferences)
     {
+        _preferences = preferences;
         // Assigned before the try block so that every field is definitely assigned even when initialization below throws.
         _reasonSearchService = reasonSearchService;
         _searchCoordinator = searchCoordinator;

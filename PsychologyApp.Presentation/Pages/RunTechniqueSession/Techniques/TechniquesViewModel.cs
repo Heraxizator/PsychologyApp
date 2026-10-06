@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PsychologyApp.Application.ClinicalCare;
@@ -28,6 +29,8 @@ public partial class TechniquesViewModel : BaseViewModel
     private readonly IOptions<AppSettings> _settings;
     private readonly ILogger<TechniquesViewModel> _logger;
 
+    private readonly IUserPreferencesStore _preferences;
+
     public TechniquesViewModel(
         ITechniqueService techniqueService,
         IToastService toastService,
@@ -41,8 +44,10 @@ public partial class TechniquesViewModel : BaseViewModel
         PracticeClinicalDashboardEnricher clinicalDashboardEnricher,
         IClinicalCareService clinicalCareService,
         IOptions<AppSettings> settings,
-        ILogger<TechniquesViewModel> logger)
+        ILogger<TechniquesViewModel> logger,
+        IUserPreferencesStore preferences)
     {
+        _preferences = preferences;
         _techniqueService = techniqueService;
         _toastService = toastService;
         _techniqueMessenger = techniqueMessenger;

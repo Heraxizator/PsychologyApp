@@ -99,7 +99,7 @@ public partial class UserViewModel
             nameof(ShowClinicalScorecardEmpty));
         InitTechniques();
 
-        string currentLanguage = UserPreferences.GetPersistedLanguage();
+        string currentLanguage = _preferences.PersistedLanguage;
         if (string.Equals(_feedLanguage, currentLanguage, StringComparison.OrdinalIgnoreCase))
         {
             return;

@@ -22,6 +22,9 @@ public interface IUserPreferencesStore
     void MarkPhysicsSearchUsed();
     void SetPendingOpenJournal();
     bool ConsumePendingOpenJournal();
+    string PersistedLanguage { get; }
+    void SetPendingQuoteFeed(string feedKey);
+    string? ConsumePendingQuoteFeed();
 }
 
 public sealed class MauiUserPreferencesStore : IUserPreferencesStore
@@ -59,4 +62,10 @@ public sealed class MauiUserPreferencesStore : IUserPreferencesStore
     public void SetPendingOpenJournal() => UserPreferences.SetPendingOpenJournal();
 
     public bool ConsumePendingOpenJournal() => UserPreferences.ConsumePendingOpenJournal();
+
+    public string PersistedLanguage => UserPreferences.GetPersistedLanguage();
+
+    public void SetPendingQuoteFeed(string feedKey) => UserPreferences.SetPendingQuoteFeed(feedKey);
+
+    public string? ConsumePendingQuoteFeed() => UserPreferences.ConsumePendingQuoteFeed();
 }

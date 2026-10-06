@@ -26,6 +26,7 @@ public sealed class PhysicsSearchViewModelFactory(
     IToastService toastService,
     IOptions<AppSettings> settings,
     IDatabaseReadySignal databaseReadySignal,
+    IUserPreferencesStore userPreferencesStore,
     Func<NavigationContext, INavigationService> navigationServiceFactory)
     : ViewModelFactoryBase, IPhysicsSearchViewModelFactory
 {
@@ -38,7 +39,8 @@ public sealed class PhysicsSearchViewModelFactory(
             toastService,
             settings,
             ResolveNavigation(navigationServiceFactory, page),
-            databaseReadySignal);
+            databaseReadySignal,
+            userPreferencesStore);
 }
 
 public interface IStartPhysicsViewModelFactory

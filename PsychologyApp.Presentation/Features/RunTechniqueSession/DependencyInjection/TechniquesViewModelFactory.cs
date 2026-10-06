@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 ﻿using PsychologyApp.Presentation.App.Providers;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -32,6 +33,7 @@ public sealed class TechniquesViewModelFactory(
     IClinicalCareService clinicalCareService,
     IOptions<AppSettings> settings,
     ILogger<TechniquesViewModel> logger,
+    IUserPreferencesStore userPreferencesStore,
     IChatHeroFactory chatHeroFactory) : ViewModelFactoryBase, ITechniquesViewModelFactory
 {
     public TechniquesViewModel Create(ContentPage page)
@@ -51,7 +53,8 @@ public sealed class TechniquesViewModelFactory(
             clinicalDashboardEnricher,
             clinicalCareService,
             settings,
-            logger);
+            logger,
+            userPreferencesStore);
         viewModel.ChatHero = chatHeroFactory.CreateHero(navigation);
         return viewModel;
     }

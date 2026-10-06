@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.App.Providers;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -28,6 +29,7 @@ public sealed class QuoteViewModelFactory(
     Func<QuoteFeedCoordinator> feedCoordinatorFactory,
     QuoteItemCommandsFactory quoteCommandsFactory,
     LanguageContentReloader languageContentReloader,
+    IUserPreferencesStore userPreferencesStore,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IQuoteViewModelFactory
 {
     public QuoteViewModel Create(ContentPage page) =>
@@ -41,5 +43,6 @@ public sealed class QuoteViewModelFactory(
             feedCoordinatorFactory(),
             quoteCommandsFactory,
             databaseReadySignal,
-            languageContentReloader);
+            languageContentReloader,
+            userPreferencesStore);
 }

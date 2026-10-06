@@ -39,7 +39,7 @@ public partial class PhysicsSearchViewModel
             nameof(RecommendedPracticesLabel),
             nameof(TryPracticeLabel));
 
-        string currentLanguage = UserPreferences.GetPersistedLanguage();
+        string currentLanguage = _preferences.PersistedLanguage;
         if (string.Equals(_reasonsLanguage, currentLanguage, StringComparison.OrdinalIgnoreCase))
         {
             return;
