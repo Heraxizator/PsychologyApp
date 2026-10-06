@@ -8,9 +8,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <!-- Windows/VS: net10.0 only. Linux CI: include net10.0-android MAUI tests. -->
+  <!-- Windows/VS and the Linux CI (-p:Net10Only=true, no MAUI workloads there): net10.0 only. Elsewhere net10.0-android is added. -->
   <Choose>
-    <When Condition="'$(OS)' == 'Windows_NT'">
+    <When Condition="'$(OS)' == 'Windows_NT' Or '$(Net10Only)' == 'true'">
       <PropertyGroup>
         <TargetFrameworks>net10.0</TargetFrameworks>
       </PropertyGroup>
@@ -101,6 +101,11 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0-android'">
+    <!-- The stand-ins and linked files of the net10.0 build would clash with the real MAUI types here. -->
+    <Compile Remove="ViewModels\**" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net10.0-android'">

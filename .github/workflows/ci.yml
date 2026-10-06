@@ -16,7 +16,7 @@ jobs:
           dotnet-version: '10.0.x'
       - run: dotnet restore PsychologyApp.sln
       - run: dotnet build PsychologyApp.sln -c Debug
-      - run: dotnet test PsychologyApp.sln -c Debug --no-build --collect:"XPlat Code Coverage" --results-directory ./TestResults -- DataCollectionRunSettings.DataCollectors.datacollector.Configuration.Format=cobertura
+      - run: dotnet test PsychologyApp.sln -c Debug --no-build --collect:"XPlat Code Coverage" --results-directory ./TestResults
       - name: Install ReportGenerator
         run: dotnet tool install -g dotnet-reportgenerator-globaltool
       - name: Coverage summary
@@ -24,10 +24,10 @@ jobs:
       - name: Enforce minimum line coverage per layer
         shell: pwsh
         run: |
-          # Measured when this gate was added: Application 84%, Domain 83%, Infrastructure 80%, all instrumented code 77%.
+          # Measured 2026-10-06: Application 84.6%, Domain 90.4%, Infrastructure 79.3%, Presentation.Core 82.5%, all instrumented code 84%.
           # The gate sits a few points below, so a drop is caught without failing on noise. Raise it as coverage rises.
           $summary = Get-Content CoverageReport/Summary.json -Raw | ConvertFrom-Json
-          $minimums = @{ 'PsychologyApp.Application' = 80; 'PsychologyApp.Domain' = 80; 'PsychologyApp.Infrastructure' = 75 }
+          $minimums = @{ 'PsychologyApp.Application' = 82; 'PsychologyApp.Domain' = 86; 'PsychologyApp.Infrastructure' = 76; 'PsychologyApp.Presentation.Core' = 75 }
           $failed = $false
           foreach ($name in $minimums.Keys) {
             $assembly = $summary.coverage.assemblies | Where-Object { $_.name -eq $name }
@@ -37,7 +37,7 @@ jobs:
           }
           $overall = $summary.summary.linecoverage
           Write-Host "Overall line coverage: $overall%"
-          if ($overall -lt 70) { Write-Error "Overall coverage $overall% is below 70%"; $failed = $true }
+          if ($overall -lt 80) { Write-Error "Overall coverage $overall% is below 80%"; $failed = $true }
           if ($failed) { exit 1 }
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
@@ -47,8 +47,6 @@ jobs:
       - run: dotnet build PsychologyApp.Presentation/PsychologyApp.Presentation.csproj -f net10.0-ios
       - run: dotnet build PsychologyApp.Presentation/PsychologyApp.Presentation.csproj -f net10.0-android
       - run: dotnet build PsychologyApp.Presentation/PsychologyApp.Presentation.csproj -f net10.0-android -c Release
-      # %3B is MSBuild's escaped ";" - a bare one would end the command in PowerShell.
-      - run: dotnet test PsychologyApp.Presentation.Tests/PsychologyApp.Presentation.Tests.csproj -c Debug -f net10.0-android "-p:TargetFrameworks=net10.0%3Bnet10.0-android" --verbosity minimal
 
   build-test-linux:
     runs-on: ubuntu-latest
@@ -59,7 +57,6 @@ jobs:
           dotnet-version: '10.0.x'
       - name: Build core and test projects
         run: |
-          dotnet restore PsychologyApp.sln
           for proj in \
             PsychologyApp.Domain/PsychologyApp.Domain.csproj \
             PsychologyApp.Application/PsychologyApp.Application.csproj \
@@ -73,7 +70,7 @@ jobs:
             PsychologyApp.Integration.Tests/PsychologyApp.Integration.Tests.csproj \
             PsychologyApp.Presentation.Tests/PsychologyApp.Presentation.Tests.csproj
           do
-            dotnet build "$proj" -c Debug --no-restore
+            dotnet build "$proj" -c Debug -p:Net10Only=true
           done
       - name: Run tests
         run: |
@@ -84,5 +81,5 @@ jobs:
             PsychologyApp.Integration.Tests/PsychologyApp.Integration.Tests.csproj \
             PsychologyApp.Presentation.Tests/PsychologyApp.Presentation.Tests.csproj
           do
-            dotnet test "$proj" -c Debug --no-build --verbosity minimal
+            dotnet test "$proj" -c Debug --no-build -p:Net10Only=true --verbosity minimal
           done
