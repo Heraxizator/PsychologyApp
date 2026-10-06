@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Application.Reason;
 using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Domain.Entities;
@@ -10,9 +11,9 @@ public sealed class MauiReasonContentProvider : IReasonContentProvider
     private string? _loadedAsset;
     private IReadOnlyList<Reason>? _cache;
 
-    public MauiReasonContentProvider()
+    public MauiReasonContentProvider(IUserPreferencesStore preferences)
     {
-        UserPreferences.Changed += InvalidateCache;
+        preferences.Changed += InvalidateCache;
     }
 
     private void InvalidateCache()

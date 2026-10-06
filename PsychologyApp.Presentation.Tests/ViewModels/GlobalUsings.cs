@@ -14,3 +14,4 @@ global using BaseViewModel = PsychologyApp.Presentation.Shared.ViewModels.BaseVi
 global using Microsoft.Maui.Controls;
 global using Microsoft.Maui.ApplicationModel;
 global using Microsoft.Maui.ApplicationModel.Communication;
+global using Microsoft.Maui;

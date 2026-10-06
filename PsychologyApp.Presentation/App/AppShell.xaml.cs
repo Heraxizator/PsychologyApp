@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Shared.Common.Diagnostics;
 using CommunityToolkit.Maui.Behaviors;
 using CommunityToolkit.Maui.Core;
@@ -40,6 +41,7 @@ public partial class AppShell : Shell
     private readonly IMoodReminderCoordinator _moodReminderCoordinator;
     private readonly IChatReminderCoordinator _chatReminderCoordinator;
     private readonly ILogger<AppShell> _logger;
+    private readonly IUserPreferencesStore _preferences;
     private readonly bool[] _tabsMaterialized = new bool[5];
     private bool _lazyTabsReady;
 
@@ -50,8 +52,10 @@ public partial class AppShell : Shell
         IQuoteReminderCoordinator quoteReminderCoordinator,
         IMoodReminderCoordinator moodReminderCoordinator,
         IChatReminderCoordinator chatReminderCoordinator,
-        ILogger<AppShell> logger)
+        ILogger<AppShell> logger,
+        IUserPreferencesStore preferences)
     {
+        _preferences = preferences;
         _pageFactory = pageFactory;
         _startupCoordinator = startupCoordinator;
         _practiceReminderCoordinator = practiceReminderCoordinator;
@@ -62,7 +66,7 @@ public partial class AppShell : Shell
         InitializeComponent();
         ApplyLocalization();
         EnsureLazyTabsReady();
-        UserPreferences.Changed += OnPreferencesChanged;
+        _preferences.Changed += OnPreferencesChanged;
         if (Microsoft.Maui.Controls.Application.Current is { } app)
         {
             app.RequestedThemeChanged += OnRequestedThemeChanged;
@@ -461,7 +465,7 @@ public partial class AppShell : Shell
         {
             if (techniqueId is TechniqueId id)
             {
-                UserPreferences.SetPendingTechnique(id);
+                _preferences.SetPendingTechnique(id);
                 OpenPendingTechniqueIfNeeded();
             }
 
@@ -471,7 +475,7 @@ public partial class AppShell : Shell
 
     private async Task ShowClinicalGateIfNeededAsync()
     {
-        if (!UserPreferences.Load().HasCompletedOnboarding)
+        if (!_preferences.Load().HasCompletedOnboarding)
         {
             return;
         }

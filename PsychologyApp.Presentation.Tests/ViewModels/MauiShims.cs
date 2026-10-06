@@ -8,9 +8,9 @@ namespace Microsoft.Maui.Controls
 
     public sealed class Command<T> : ICommand
     {
-        private readonly Action<T?> _execute;
+        private readonly Action<T> _execute;
 
-        public Command(Action<T?> execute) => _execute = execute;
+        public Command(Action<T> execute) => _execute = execute;
 
         public event EventHandler? CanExecuteChanged
         {
@@ -20,7 +20,7 @@ namespace Microsoft.Maui.Controls
 
         public bool CanExecute(object? parameter) => true;
 
-        public void Execute(object? parameter) => _execute(parameter is T value ? value : default);
+        public void Execute(object? parameter) => _execute(parameter is T value ? value : default!);
     }
 
     public sealed class Command : ICommand
@@ -280,5 +280,20 @@ namespace Microsoft.Maui.ApplicationModel.DataTransfer
             Shared.Add((request.Title ?? string.Empty, Path.GetFileName(request.File!.FullPath), System.IO.File.ReadAllText(request.File.FullPath)));
             return Task.CompletedTask;
         }
+    }
+}
+
+namespace Microsoft.Maui
+{
+    public readonly record struct Thickness(double Left, double Top, double Right, double Bottom);
+}
+
+namespace Microsoft.Maui.Controls
+{
+    public readonly record struct LayoutOptions(int Value)
+    {
+        public static LayoutOptions Start { get; } = new(0);
+
+        public static LayoutOptions End { get; } = new(1);
     }
 }

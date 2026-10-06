@@ -71,6 +71,10 @@
     <Compile Include="../PsychologyApp.Presentation/Shared/ViewModels/BaseViewModel.LoadingState.Properties.cs" Link="Linked/ViewModels/BaseViewModel.LoadingState.Properties.cs" />
     <Compile Include="../PsychologyApp.Presentation/App/Routes/INavigationService.cs" Link="Linked/ViewModels/INavigationService.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/ClinicalCare/CrisisHub/CrisisHubViewModel.cs" Link="Linked/ViewModels/CrisisHubViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Widgets/DialogueChat/ChatViewModelBase.cs" Link="Linked/ViewModels/ChatViewModelBase.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Widgets/DialogueChat/DialogueChatModels.cs" Link="Linked/ViewModels/DialogueChatModels.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/Chat/Conversation/ChatViewModel.cs" Link="Linked/ViewModels/ChatViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/Chat/Companion/CompanionProfileViewModel.cs" Link="Linked/ViewModels/CompanionProfileViewModel.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/Chat/ChatList/ChatListViewModel.cs" Link="Linked/ViewModels/ChatListViewModel.cs" />
     <Compile Include="../PsychologyApp.Presentation/Shared/UI/Overlays/AppToastKind.cs" Link="Linked/ViewModels/AppToastKind.cs" />
     <Compile Include="../PsychologyApp.Presentation/Shared/Services/Toasts/IToastService.cs" Link="Linked/ViewModels/IToastService.cs" />

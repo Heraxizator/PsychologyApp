@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Application.Practice;
 using PsychologyApp.Application.Quot;
 using PsychologyApp.Application.Reason;
@@ -8,6 +9,7 @@ namespace PsychologyApp.Presentation.Shared.Common.Localization;
 
 public sealed class LanguageContentReloader
 {
+    private readonly IUserPreferencesStore _preferences;
     public const int DefaultQuoteFeedCount = 20;
 
     private readonly IQuotService _quotService;
@@ -26,23 +28,25 @@ public sealed class LanguageContentReloader
         CachedQuotContentProvider quotCache,
         CachedTestCatalogProvider testCatalogCache,
         CachedTechniqueCatalogProvider techniqueCatalogCache,
-        ITechniqueCatalogService techniqueCatalogService)
+        ITechniqueCatalogService techniqueCatalogService,
+        IUserPreferencesStore preferences)
     {
+        _preferences = preferences;
         _quotService = quotService;
         _reasonCache = reasonCache;
         _quotCache = quotCache;
         _testCatalogCache = testCatalogCache;
         _techniqueCatalogCache = techniqueCatalogCache;
         _techniqueCatalogService = techniqueCatalogService;
-        _lastPersistedLanguage = UserPreferences.GetPersistedLanguage();
-        UserPreferences.Changed += OnPreferencesChanged;
+        _lastPersistedLanguage = _preferences.PersistedLanguage;
+        _preferences.Changed += OnPreferencesChanged;
     }
 
     public Task EnsureReloadedAsync() => _reloadTask;
 
     private void OnPreferencesChanged()
     {
-        string persistedLanguage = UserPreferences.GetPersistedLanguage();
+        string persistedLanguage = _preferences.PersistedLanguage;
         if (string.Equals(_lastPersistedLanguage, persistedLanguage, StringComparison.OrdinalIgnoreCase))
         {
             return;

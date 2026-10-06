@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using PsychologyApp.Application.Abstractions.Integration;
@@ -13,10 +14,10 @@ public sealed class MauiQuotContentProvider : IQuotContentProvider
     private string? _loadedAsset;
     private IReadOnlyList<QuotSeed>? _cache;
 
-    public MauiQuotContentProvider(ILogger<MauiQuotContentProvider> logger)
+    public MauiQuotContentProvider(ILogger<MauiQuotContentProvider> logger, IUserPreferencesStore preferences)
     {
         _logger = logger;
-        UserPreferences.Changed += InvalidateCache;
+        preferences.Changed += InvalidateCache;
     }
 
     public async Task<IReadOnlyList<QuotSeed>> LoadAllAsync(CancellationToken cancellationToken = default) =>

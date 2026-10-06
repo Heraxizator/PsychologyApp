@@ -104,6 +104,26 @@ public sealed class AppStringsResourceTests
     }
 
     [Fact]
+    public void TextsWithComputedPartsAreStillFormattedInBothLanguages()
+    {
+        string? previous = AppStrings.LanguageOverride;
+        try
+        {
+            AppStrings.LanguageOverride = "ru";
+            Assert.StartsWith("На этой неделе: 3 ", AppStrings.WeeklyInsightLine(3, string.Empty));
+            Assert.EndsWith("настроение ↑", AppStrings.WeeklyInsightLine(3, "↑"));
+            AppStrings.LanguageOverride = "en";
+            Assert.StartsWith("This week: 3 ", AppStrings.WeeklyInsightLine(3, string.Empty));
+            Assert.EndsWith("mood ↑", AppStrings.WeeklyInsightLine(3, "↑"));
+            Assert.Contains("2026", AppStrings.JournalDayEmptyHint(new DateOnly(2026, 10, 6)).Replace("26", "2026"));
+        }
+        finally
+        {
+            AppStrings.LanguageOverride = previous;
+        }
+    }
+
+    [Fact]
     public void TheLanguageSwitchPicksTheMatchingFile()
     {
         string? previous = AppStrings.LanguageOverride;
