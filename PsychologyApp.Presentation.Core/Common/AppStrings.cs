@@ -55,9 +55,7 @@ public static partial class AppStrings
     public static string PracticeReminderTitleNamed(string techniqueName) => F(nameof(PracticeReminderTitleNamed), techniqueName);
     public static string PracticeReminderBodyNamed(string techniqueName, string reason) =>
         string.IsNullOrWhiteSpace(reason)
-            ? T(
-                $"Сегодня: {techniqueName}. Уделите несколько минут практике.",
-                $"Today: {techniqueName}. Take a few minutes to practice.")
+            ? F("PracticeReminderBodyNamed.1", techniqueName)
             : T($"{reason} — {techniqueName}", $"{reason} — {techniqueName}");
     public static string SettingsPrimaryConcernLabel => R(nameof(SettingsPrimaryConcernLabel));
     public static string SettingsPrimaryConcernPickerTitle => R(nameof(SettingsPrimaryConcernPickerTitle));
@@ -247,10 +245,8 @@ public static partial class AppStrings
     public static string ComebackBannerWithTechnique(string name) => F(nameof(ComebackBannerWithTechnique), name);
     public static string WeeklyInsightLine(int practiceCount, string moodTrend) =>
         string.IsNullOrEmpty(moodTrend)
-            ? T($"На этой неделе: {practiceCount} {PracticeCountWord(practiceCount)}",
-                $"This week: {practiceCount} {PracticeCountWordEn(practiceCount)}")
-            : T($"На этой неделе: {practiceCount} {PracticeCountWord(practiceCount)} · настроение {moodTrend}",
-                $"This week: {practiceCount} {PracticeCountWordEn(practiceCount)} · mood {moodTrend}");
+            ? F("WeeklyInsightLine.1", practiceCount, PracticeCountWord(practiceCount), PracticeCountWordEn(practiceCount))
+            : F("WeeklyInsightLine.2", practiceCount, PracticeCountWord(practiceCount), moodTrend, PracticeCountWordEn(practiceCount));
     public static string WeeklyInsightMoodOnly(string moodTrend) => F(nameof(WeeklyInsightMoodOnly), moodTrend);
     public static string MoodTrendUp => "↑";
     public static string MoodTrendFlat => "→";
@@ -285,7 +281,7 @@ public static partial class AppStrings
     public static string TodayMoodQuestion => R(nameof(TodayMoodQuestion));
     public static string TodayMoodSaved => R(nameof(TodayMoodSaved));
     public static string TodayMoodLine(int level, int max) =>
-        T($"Сегодня: {MoodEmoji(level)} {level}/{max}", $"Today: {MoodEmoji(level)} {level}/{max}");
+        F("TodayMoodLine.1", MoodEmoji(level), level, max);
     public static string MoodHistoryTitle => R(nameof(MoodHistoryTitle));
     public static string MoodHistoryEntry(string date, int level, int max) =>
         T($"{date}: {MoodEmoji(level)} {level}/{max}", $"{date}: {MoodEmoji(level)} {level}/{max}");
@@ -316,7 +312,7 @@ public static partial class AppStrings
     public static string JournalNoNoteCaption => R(nameof(JournalNoNoteCaption));
     public static string JournalEditTodayHint => R(nameof(JournalEditTodayHint));
     public static string JournalDayEmptyHint(DateOnly day) =>
-        T($"Нет записи за {day:d} — можно добавить", $"No entry for {day:d} — you can add one");
+        F("JournalDayEmptyHint.1", day);
     public static string JournalPickMoodHint => R(nameof(JournalPickMoodHint));
     public static string JournalDayMoodLine(DateOnly day, int level, int max) =>
         T($"{day:d}: {MoodEmoji(level)} {level}/{max}", $"{day:d}: {MoodEmoji(level)} {level}/{max}");
@@ -349,19 +345,15 @@ public static partial class AppStrings
         string streak)
     {
         string baseLine = string.IsNullOrWhiteSpace(trend)
-            ? T(
-                $"{checkIns} {MoodCheckInWord(checkIns)} · ср. {averageMood}",
-                $"{checkIns} {MoodCheckInWordEn(checkIns)} · avg {averageMood}")
-            : T(
-                $"{checkIns} {MoodCheckInWord(checkIns)} · ср. {averageMood} · настроение {trend}",
-                $"{checkIns} {MoodCheckInWordEn(checkIns)} · avg {averageMood} · mood {trend}");
+            ? F("JournalOverviewInsightLine.1", checkIns, MoodCheckInWord(checkIns), averageMood, MoodCheckInWordEn(checkIns))
+            : F("JournalOverviewInsightLine.2", checkIns, MoodCheckInWord(checkIns), averageMood, trend, MoodCheckInWordEn(checkIns));
 
         if (string.IsNullOrWhiteSpace(streak) || streak == MetricEmptyValue)
         {
             return baseLine;
         }
 
-        return T($"{baseLine} · серия {streak}", $"{baseLine} · streak {streak}");
+        return F("JournalOverviewInsightLine.3", baseLine, streak);
     }
 
     public static string JournalWeekInsightLine(int checkIns, string trend, string streak)
@@ -374,19 +366,17 @@ public static partial class AppStrings
         List<string> parts = [];
         if (!string.IsNullOrWhiteSpace(trend))
         {
-            parts.Add(T($"настроение {trend}", $"mood {trend}"));
+            parts.Add(F("JournalWeekInsightLine.1", trend));
         }
 
         if (!string.IsNullOrWhiteSpace(streak) && streak != MetricEmptyValue)
         {
-            parts.Add(T($"серия {streak}", $"streak {streak}"));
+            parts.Add(F("JournalWeekInsightLine.2", streak));
         }
 
         if (parts.Count == 0)
         {
-            return T(
-                $"{checkIns} {MoodCheckInWord(checkIns)} за неделю",
-                $"{checkIns} {MoodCheckInWordEn(checkIns)} this week");
+            return F("JournalWeekInsightLine.3", checkIns, MoodCheckInWord(checkIns), MoodCheckInWordEn(checkIns));
         }
 
         return string.Join(" · ", parts);
@@ -428,13 +418,12 @@ public static partial class AppStrings
     public static string JournalSearchPlaceholder => R(nameof(JournalSearchPlaceholder));
     public static string JournalSearchEmpty => R(nameof(JournalSearchEmpty));
     public static string JournalBestWorstPill(int best, int worst) =>
-        T($"Лучший {MoodEmoji(best)} {best} · Худший {MoodEmoji(worst)} {worst}",
-            $"Best {MoodEmoji(best)} {best} · Worst {MoodEmoji(worst)} {worst}");
+        F("JournalBestWorstPill.1", MoodEmoji(best), best, MoodEmoji(worst), worst);
     public static string JournalTimelineEmpty => R(nameof(JournalTimelineEmpty));
     public static string JournalTimelineStreakLine(string streak) =>
         string.IsNullOrWhiteSpace(streak) || streak == MetricEmptyValue
             ? string.Empty
-            : T($"Серия check-in: {streak}", $"Check-in streak: {streak}");
+            : F("JournalTimelineStreakLine.1", streak);
     public static string JournalTryShortPractice => R(nameof(JournalTryShortPractice));
     public static string JournalPromptBlockedShort => R(nameof(JournalPromptBlockedShort));
     public static string JournalPromptGratefulShort => R(nameof(JournalPromptGratefulShort));
@@ -475,11 +464,11 @@ public static partial class AppStrings
         string mood = MoodLevelPill(moodLevel);
         if (string.IsNullOrWhiteSpace(noteSnippet))
         {
-            return T($"Год назад: {mood}", $"A year ago: {mood}");
+            return F("JournalOnThisDayLastYear.1", mood);
         }
 
         string snippet = noteSnippet.Length > 80 ? noteSnippet[..80].TrimEnd() + "…" : noteSnippet;
-        return T($"Год назад: {mood} · {snippet}", $"A year ago: {mood} · {snippet}");
+        return F("JournalOnThisDayLastYear.2", mood, snippet);
     }
     public static string JournalSlotMorning => R(nameof(JournalSlotMorning));
     public static string JournalSlotEvening => R(nameof(JournalSlotEvening));
@@ -567,8 +556,7 @@ public static partial class AppStrings
         _ => PracticeCompletedBody(0)
     };
     public static string PracticeMoodDelta(int before, int after) =>
-        T($"Было {MoodEmoji(before)} {before}/5 → стало {MoodEmoji(after)} {after}/5",
-            $"Was {MoodEmoji(before)} {before}/5 → now {MoodEmoji(after)} {after}/5");
+        F("PracticeMoodDelta.1", MoodEmoji(before), before, MoodEmoji(after), after);
     public static string ProfileMoodNotesTitle => R(nameof(ProfileMoodNotesTitle));
     public static string PracticeGoHomeButton => R(nameof(PracticeGoHomeButton));
     public static string PracticeMoreButton => R(nameof(PracticeMoreButton));
@@ -823,12 +811,8 @@ public static partial class AppStrings
     public static string DataBackupSummarySubtitle => R(nameof(DataBackupSummarySubtitle));
     public static string DataBackupExportedToast => R(nameof(DataBackupExportedToast));
     public static string DataBackupImportedToast(int moods, int tests, int completions, int chats, int skipped = 0) => skipped > 0
-        ? T(
-            $"Добавлено: настроение {moods}, тесты {tests}, практики {completions}, чаты {chats}. Уже было: {skipped}",
-            $"Added: mood {moods}, tests {tests}, practices {completions}, chats {chats}. Already present: {skipped}")
-        : T(
-            $"Добавлено: настроение {moods}, тесты {tests}, практики {completions}, чаты {chats}",
-            $"Added: mood {moods}, tests {tests}, practices {completions}, chats {chats}");
+        ? F("DataBackupImportedToast.1", moods, tests, completions, chats, skipped)
+        : F("DataBackupImportedToast.2", moods, tests, completions, chats);
     public static string ErrorLogTitle => R(nameof(ErrorLogTitle));
     public static string ErrorLogSubtitle => R(nameof(ErrorLogSubtitle));
     public static string ErrorLogEmptyToast => R(nameof(ErrorLogEmptyToast));
@@ -900,8 +884,8 @@ public static partial class AppStrings
     public static string JournalShareTitle => R(nameof(JournalShareTitle));
     public static string JournalShareText(string day, string mood, string note) =>
         string.IsNullOrWhiteSpace(note)
-            ? T($"{day}: настроение {mood}", $"{day}: mood {mood}")
-            : T($"{day}: настроение {mood}\n{note}", $"{day}: mood {mood}\n{note}");
+            ? F("JournalShareText.1", day, mood)
+            : F("JournalShareText.2", day, mood, note);
     public static string JournalShareEntryWithFactors(string day, int moodLevel, string? note, IReadOnlyList<string> factorLabels)
     {
         string emoji = MoodEmojiFor(moodLevel);
@@ -985,14 +969,10 @@ public static partial class AppStrings
     {
         if (completed is null or < 0 || target is null or <= 0)
         {
-            return T(
-                $"{programName} · неделя {week}: {goal}",
-                $"{programName} · week {week}: {goal}");
+            return F("TherapyProgramBanner.1", programName, week, goal);
         }
 
-        return T(
-            $"{programName} · нед. {week} · {completed}/{target}",
-            $"{programName} · wk {week} · {completed}/{target}");
+        return F("TherapyProgramBanner.2", programName, week, completed, target);
     }
     public static string ClinicalAmberBanner => R(nameof(ClinicalAmberBanner));
     public static string ClinicalRedBanner => R(nameof(ClinicalRedBanner));

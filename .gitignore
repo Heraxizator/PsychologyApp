@@ -372,3 +372,6 @@ FodyWeavers.xsd
 _build_out/
 
 StrykerOutput/
+
+CoverageReport/
+TestResults/

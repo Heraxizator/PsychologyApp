@@ -53,8 +53,8 @@ public static partial class AppStrings
     public static string TestHistoryTrendTitle => R(nameof(TestHistoryTrendTitle));
     public static string TestResultDuration(int seconds) =>
         seconds < 60
-            ? T($"{seconds} сек", $"{seconds} sec")
-            : T($"{seconds / 60} мин {seconds % 60} сек", $"{seconds / 60} min {seconds % 60} sec");
+            ? F("TestResultDuration.1", seconds)
+            : F("TestResultDuration.2", seconds / 60, seconds % 60);
     public static string TestResultAnswersTitle => R(nameof(TestResultAnswersTitle));
     public static string TestsIntroLead => R(nameof(TestsIntroLead));
     public static string TestsQuestionLead => R(nameof(TestsQuestionLead));

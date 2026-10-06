@@ -2883,4 +2883,77 @@
   <data name="TestRecommendationReasonGad2.2" xml:space="preserve">
     <value>Заземление помогает оставаться в настоящем моменте.</value>
   </data>
+  <data name="PracticeReminderBodyNamed.1" xml:space="preserve">
+    <value>Сегодня: {0}. Уделите несколько минут практике.</value>
+  </data>
+  <data name="WeeklyInsightLine.1" xml:space="preserve">
+    <value>На этой неделе: {0} {1}</value>
+  </data>
+  <data name="WeeklyInsightLine.2" xml:space="preserve">
+    <value>На этой неделе: {0} {1} · настроение {2}</value>
+  </data>
+  <data name="TodayMoodLine.1" xml:space="preserve">
+    <value>Сегодня: {0} {1}/{2}</value>
+  </data>
+  <data name="JournalDayEmptyHint.1" xml:space="preserve">
+    <value>Нет записи за {0:d} — можно добавить</value>
+  </data>
+  <data name="JournalOverviewInsightLine.1" xml:space="preserve">
+    <value>{0} {1} · ср. {2}</value>
+  </data>
+  <data name="JournalOverviewInsightLine.2" xml:space="preserve">
+    <value>{0} {1} · ср. {2} · настроение {3}</value>
+  </data>
+  <data name="JournalOverviewInsightLine.3" xml:space="preserve">
+    <value>{0} · серия {1}</value>
+  </data>
+  <data name="JournalWeekInsightLine.1" xml:space="preserve">
+    <value>настроение {0}</value>
+  </data>
+  <data name="JournalWeekInsightLine.2" xml:space="preserve">
+    <value>серия {0}</value>
+  </data>
+  <data name="JournalWeekInsightLine.3" xml:space="preserve">
+    <value>{0} {1} за неделю</value>
+  </data>
+  <data name="JournalBestWorstPill.1" xml:space="preserve">
+    <value>Лучший {0} {1} · Худший {2} {3}</value>
+  </data>
+  <data name="JournalTimelineStreakLine.1" xml:space="preserve">
+    <value>Серия check-in: {0}</value>
+  </data>
+  <data name="JournalOnThisDayLastYear.1" xml:space="preserve">
+    <value>Год назад: {0}</value>
+  </data>
+  <data name="JournalOnThisDayLastYear.2" xml:space="preserve">
+    <value>Год назад: {0} · {1}</value>
+  </data>
+  <data name="PracticeMoodDelta.1" xml:space="preserve">
+    <value>Было {0} {1}/5 → стало {2} {3}/5</value>
+  </data>
+  <data name="DataBackupImportedToast.1" xml:space="preserve">
+    <value>Добавлено: настроение {0}, тесты {1}, практики {2}, чаты {3}. Уже было: {4}</value>
+  </data>
+  <data name="DataBackupImportedToast.2" xml:space="preserve">
+    <value>Добавлено: настроение {0}, тесты {1}, практики {2}, чаты {3}</value>
+  </data>
+  <data name="JournalShareText.1" xml:space="preserve">
+    <value>{0}: настроение {1}</value>
+  </data>
+  <data name="JournalShareText.2" xml:space="preserve">
+    <value>{0}: настроение {1}
+{2}</value>
+  </data>
+  <data name="TherapyProgramBanner.1" xml:space="preserve">
+    <value>{0} · неделя {1}: {2}</value>
+  </data>
+  <data name="TherapyProgramBanner.2" xml:space="preserve">
+    <value>{0} · нед. {1} · {2}/{3}</value>
+  </data>
+  <data name="TestResultDuration.1" xml:space="preserve">
+    <value>{0} сек</value>
+  </data>
+  <data name="TestResultDuration.2" xml:space="preserve">
+    <value>{0} мин {1} сек</value>
+  </data>
 </root>

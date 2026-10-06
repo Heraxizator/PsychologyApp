@@ -453,14 +453,15 @@ public sealed partial class CompanionDialogue(
             return Offer(state, messages, analysis, emotion, theme, calming: false);
         }
 
+        // A proposal needs only enough words for the guesser to judge; the open choice waits for a real story or a second unclear message.
+        if (emotion == CompanionEmotion.Unknown && emotionGuesser?.Guess(text) is { } guess)
+        {
+            messages.Add(CompanionDialogueContent.GuessPrompt(guess.Emotion, english));
+            return Reply(messages, EmotionReplies(guess.Emotion), state with { UnknownStreak = 0 }, emotion, theme);
+        }
+
         if (emotion == CompanionEmotion.Unknown && (state.UnknownStreak >= 2 || WordCount(text) >= TellingWords))
         {
-            if (emotionGuesser?.Guess(text) is { } guess)
-            {
-                messages.Add(CompanionDialogueContent.GuessPrompt(guess.Emotion, english));
-                return Reply(messages, EmotionReplies(guess.Emotion), state with { UnknownStreak = 0 }, emotion, theme);
-            }
-
             messages.Add(CompanionDialogueContent.EmotionPrompt(english));
             return Reply(messages, EmotionReplies(), state with { UnknownStreak = 0 }, emotion, theme);
         }
