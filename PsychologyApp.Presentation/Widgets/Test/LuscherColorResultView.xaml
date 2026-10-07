@@ -22,7 +22,7 @@
                 <Label
                     Text="{Binding RoleLabel, Source={x:Reference Root}}"
                     Style="{StaticResource CaptionStyle}"
-                    TextColor="{DynamicResource Primary}" />
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
                 <Label
                     Text="{Binding ColorName, Source={x:Reference Root}}"
                     Style="{StaticResource SectionTitleStyle}" />

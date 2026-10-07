@@ -45,7 +45,7 @@
                             Text="{TemplateBinding MetaText}"
                             Style="{StaticResource CaptionStyle}"
                             FontFamily="{StaticResource SemiBoldFontFamily}"
-                            TextColor="{DynamicResource Primary}"
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                             MaxLines="2"
                             LineBreakMode="WordWrap" />
                         <Label
@@ -60,7 +60,7 @@
                                 Text="{TemplateBinding LastResultText}"
                                 Style="{StaticResource CaptionStyle}"
                                 FontFamily="{StaticResource MediumFontFamily}"
-                                TextColor="{DynamicResource Primary}"
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                                 MaxLines="2"
                                 LineBreakMode="WordWrap">
                                 <Label.GestureRecognizers>
@@ -79,7 +79,7 @@
                                         Text="{TemplateBinding RetakeLabel}"
                                         Style="{StaticResource CaptionStyle}"
                                         VerticalOptions="Center"
-                                        TextColor="{DynamicResource Primary}"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                                         FontFamily="{StaticResource SemiBoldFontFamily}" />
                                 </Border>
                                 <Border
@@ -94,7 +94,7 @@
                                         Text="{TemplateBinding HistoryLabel}"
                                         Style="{StaticResource CaptionStyle}"
                                         VerticalOptions="Center"
-                                        TextColor="{DynamicResource Primary}"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                                         FontFamily="{StaticResource SemiBoldFontFamily}" />
                                 </Border>
                             </HorizontalStackLayout>

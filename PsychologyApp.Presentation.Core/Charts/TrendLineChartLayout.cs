@@ -46,6 +46,49 @@ public static class TrendLineChartLayout
         return new TrendLineChartLayoutResult(mapped, yMin, yMax, yTicks, xLabels);
     }
 
+    /// <summary>
+    /// Puts each annotation on the line: between the two readings it fell between, in proportion to the time. An annotation before the first or
+    /// after the last reading is dropped. "Helped" means the reading after it is higher than the reading before it (a higher value is better,
+    /// as for mood).
+    /// </summary>
+    public static IReadOnlyList<PlacedAnnotation> PlaceAnnotations(
+        IReadOnlyList<TrendChartPoint> points,
+        IReadOnlyList<TrendAnnotation> annotations,
+        int domainMin,
+        int domainMax,
+        int minSpan = 4)
+    {
+        if (points.Count < 2 || annotations.Count == 0)
+        {
+            return [];
+        }
+
+        (int yMin, int yMax) = ResolveYRange([.. points.Select(p => p.Value)], domainMin, domainMax, minSpan);
+        float range = Math.Max(1, yMax - yMin);
+        List<PlacedAnnotation> placed = [];
+        foreach (TrendAnnotation annotation in annotations)
+        {
+            for (int i = 0; i < points.Count - 1; i++)
+            {
+                DateTime from = points[i].OccurredAt;
+                DateTime to = points[i + 1].OccurredAt;
+                if (annotation.OccurredAt < from || annotation.OccurredAt > to)
+                {
+                    continue;
+                }
+
+                double span = (to - from).TotalSeconds;
+                float t = span <= 0 ? 0f : (float)((annotation.OccurredAt - from).TotalSeconds / span);
+                float x = MapNormalizedX(i, points.Count) + t * (MapNormalizedX(i + 1, points.Count) - MapNormalizedX(i, points.Count));
+                float value = points[i].Value + t * (points[i + 1].Value - points[i].Value);
+                placed.Add(new PlacedAnnotation(x, (value - yMin) / range, points[i + 1].Value > points[i].Value));
+                break;
+            }
+        }
+
+        return placed;
+    }
+
     public static (float Left, float Top, float Width, float Height) GetPlotRect(
         float dirtyLeft,
         float dirtyTop,

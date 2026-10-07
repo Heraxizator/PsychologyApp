@@ -308,6 +308,10 @@ public static partial class UserPreferences
         resources["PrimaryHover"] = hover;
         resources["PrimaryTint"] = tintLight;
         resources["PrimaryTintDark"] = tintDark;
+
+        // The accent as text: the same colour where it reads well, a deeper or lighter shade where it would not (yellow on white).
+        resources["PrimaryTextLight"] = Color.FromArgb(PsychologyApp.Presentation.Core.Charts.ColorContrast.Readable(primary.ToArgbHex(), "#F3F4F6"));
+        resources["PrimaryTextDark"] = Color.FromArgb(PsychologyApp.Presentation.Core.Charts.ColorContrast.Readable(primary.ToArgbHex(), "#1E1E1E"));
     }
 
     public static void ApplyTypography(string size, bool isBold)
@@ -317,11 +321,11 @@ public static partial class UserPreferences
             return;
         }
 
-        (double pageTitle, double section, double body) = ResolveFontSizes(NormalizeSizeKey(size));
+        (double pageTitle, double section, double body, double caption) = PsychologyApp.Presentation.Common.TypographyScale.For(NormalizeSizeKey(size));
         resources["PageTitleFontSize"] = pageTitle;
         resources["SectionTitleFontSize"] = section;
         resources["BodyFontSize"] = body;
-        resources["CaptionFontSize"] = Math.Max(body - 2, 10);
+        resources["CaptionFontSize"] = caption;
         resources["NavTitleFontSize"] = section;
         resources["QuoteDisplayFontSize"] = body + 4;
         resources["QuoteHeroFontSize"] = body + 6;
@@ -412,14 +416,6 @@ public static partial class UserPreferences
                 Color.FromArgb("#006ACC"),
                 Color.FromArgb("#D6EBFF"),
                 Color.FromArgb("#1A2A3D"))
-        };
-
-    private static (double pageTitle, double section, double body) ResolveFontSizes(string size) =>
-        NormalizeSizeKey(size) switch
-        {
-            "large" => (22, 20, 16),
-            "small" => (18, 16, 12),
-            _ => (20, 18, 14)
         };
 
     private static void SetCornerRadiusResources(ResourceDictionary resources, double radius)

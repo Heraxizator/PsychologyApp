@@ -844,6 +844,7 @@ public static partial class AppStrings
     public static string TensionChangeFormat => R(nameof(TensionChangeFormat));
     public static string TensionCalmWord => R(nameof(TensionCalmWord));
     public static string TensionStrongWord => R(nameof(TensionStrongWord));
+    public static string ChartPracticeLegend => R(nameof(ChartPracticeLegend));
     public static string DataBackupImportFailedToast => R(nameof(DataBackupImportFailedToast));
     public static string CrisisHubSafetyPlanLinkTitle => R(nameof(CrisisHubSafetyPlanLinkTitle));
     public static string CrisisHubSafetyPlanLinkSubtitle => R(nameof(CrisisHubSafetyPlanLinkSubtitle));

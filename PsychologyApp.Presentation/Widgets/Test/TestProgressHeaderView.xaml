@@ -16,7 +16,7 @@
                 Style="{StaticResource CaptionStyle}"
                 HorizontalTextAlignment="Start"
                 VerticalOptions="Center"
-                TextColor="{DynamicResource Primary}" />
+                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
             <Label
                 Grid.Column="1"
                 Text="{Binding RemainingDurationText, Source={x:Reference Root}}"

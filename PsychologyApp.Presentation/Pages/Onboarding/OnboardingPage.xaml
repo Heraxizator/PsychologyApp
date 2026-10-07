@@ -157,7 +157,7 @@
                     IsVisible="{Binding IsConcernFooterVisible}"
                     Text="{Binding ConcernFooterHint}"
                     Style="{StaticResource CaptionStyle}"
-                    TextColor="{DynamicResource Primary}"
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                     HorizontalTextAlignment="Center" />
                 <ui:ButtonView
                     IsVisible="{Binding IsFinishFooterVisible}"

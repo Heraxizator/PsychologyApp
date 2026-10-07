@@ -19,8 +19,8 @@
                     </Border.StrokeShape>
                 </Border>
                 <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="2">
-                    <Label x:Name="PhaseLabel" Style="{StaticResource SectionTitleStyle}" TextColor="White" HorizontalTextAlignment="Center" />
-                    <Label x:Name="CountLabel" Style="{StaticResource SectionTitleStyle}" TextColor="White" FontSize="34" HorizontalTextAlignment="Center" />
+                    <Label x:Name="PhaseLabel" Style="{StaticResource SectionTitleStyle}" HorizontalTextAlignment="Center" />
+                    <Label x:Name="CountLabel" Style="{StaticResource SectionTitleStyle}" FontSize="34" HorizontalTextAlignment="Center" />
                 </VerticalStackLayout>
             </Grid>
             <Label x:Name="CycleLabel" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />

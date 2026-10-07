@@ -7,7 +7,8 @@ public sealed record TrendLineChartOptions(
     int DomainMin,
     int DomainMax,
     Func<DateTime, string> FormatDate,
-    Func<int, string> FormatScore);
+    Func<int, string> FormatScore,
+    IReadOnlyList<TrendAnnotation>? Annotations = null);
 
 public static class TrendLineChartRenderer
 {
@@ -52,8 +53,50 @@ public static class TrendLineChartRenderer
             DrawLine(canvas, canvasPoints, primary);
         }
 
+        DrawAnnotations(canvas, options, plotLeft, plotTop, plotWidth, plotHeight, plotBottom, gridColor);
         DrawPoints(canvas, canvasPoints, primary, surfaceColor, options.Points.Count == 1 ? 7f : 5f);
         DrawXLabels(canvas, plotLeft, plotWidth, plotBottom, layout.XLabels, labelColor);
+    }
+
+    /// <summary>A practice is a dashed line up from the axis to the line and a leaf-shaped mark on it: green when the next reading was better, quiet blue otherwise.</summary>
+    private static void DrawAnnotations(
+        ICanvas canvas,
+        TrendLineChartOptions options,
+        float plotLeft,
+        float plotTop,
+        float plotWidth,
+        float plotHeight,
+        float plotBottom,
+        Color lineColor)
+    {
+        if (options.Annotations is not { Count: > 0 } annotations)
+        {
+            return;
+        }
+
+        Color good = ResolveThemedColor("Success", "SuccessDark", Colors.SeaGreen);
+        Color quiet = ResolveColor("Primary", Colors.SteelBlue);
+        foreach (PlacedAnnotation mark in TrendLineChartLayout.PlaceAnnotations(options.Points, annotations, options.DomainMin, options.DomainMax))
+        {
+            (float x, float y) = TrendLineChartLayout.ToCanvasPoint(new NormalizedChartPoint(mark.X, mark.Y), plotLeft, plotTop, plotWidth, plotHeight);
+            Color colour = mark.Helped ? good : quiet;
+
+            canvas.StrokeColor = lineColor;
+            canvas.StrokeSize = 1;
+            canvas.StrokeDashPattern = [3f, 3f];
+            canvas.DrawLine(x, plotBottom, x, y);
+            canvas.StrokeDashPattern = null;
+
+            float size = 7f;
+            PathF diamond = new();
+            diamond.MoveTo(x, y - 14 - size);
+            diamond.LineTo(x + size, y - 14);
+            diamond.LineTo(x, y - 14 + size);
+            diamond.LineTo(x - size, y - 14);
+            diamond.Close();
+            canvas.FillColor = colour;
+            canvas.FillPath(diamond);
+        }
     }
 
     private static void DrawGrid(

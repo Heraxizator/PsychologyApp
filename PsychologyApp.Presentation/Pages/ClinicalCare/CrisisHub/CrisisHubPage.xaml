@@ -62,7 +62,7 @@
                                 Text="{Binding EmergencyBadge}"
                                 Style="{StaticResource CaptionStyle}"
                                 FontFamily="{StaticResource SemiBoldFontFamily}"
-                                TextColor="{DynamicResource Primary}" />
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
                         </Border>
                         <Label
                             Grid.Column="2"
@@ -126,7 +126,7 @@
                                 Text="{Binding SafetyPlanStepNumber1}"
                                 Style="{StaticResource CaptionStyle}"
                                 FontFamily="{StaticResource SemiBoldFontFamily}"
-                                TextColor="{DynamicResource Primary}" />
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
                         </Border>
                         <Label
                             Grid.Column="1"
@@ -145,7 +145,7 @@
                                 Text="{Binding SafetyPlanStepNumber2}"
                                 Style="{StaticResource CaptionStyle}"
                                 FontFamily="{StaticResource SemiBoldFontFamily}"
-                                TextColor="{DynamicResource Primary}" />
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
                         </Border>
                         <Label
                             Grid.Column="1"
@@ -164,7 +164,7 @@
                                 Text="{Binding SafetyPlanStepNumber3}"
                                 Style="{StaticResource CaptionStyle}"
                                 FontFamily="{StaticResource SemiBoldFontFamily}"
-                                TextColor="{DynamicResource Primary}" />
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
                         </Border>
                         <Label
                             Grid.Column="1"

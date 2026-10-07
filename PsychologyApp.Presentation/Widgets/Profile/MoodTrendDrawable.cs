@@ -12,6 +12,9 @@ public sealed class MoodTrendDrawable : IDrawable
 
     public IReadOnlyList<MoodChartPoint> Points { get; set; } = [];
 
+    /// <summary>Practices to mark on the line.</summary>
+    public IReadOnlyList<TrendAnnotation> Annotations { get; set; } = [];
+
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
         if (Points.Count == 0)
@@ -31,6 +34,7 @@ public sealed class MoodTrendDrawable : IDrawable
                 MoodDomainMin,
                 MoodDomainMax,
                 AppStrings.ChartDateLabel,
-                static score => score.ToString()));
+                static score => score.ToString(),
+                Annotations));
     }
 }

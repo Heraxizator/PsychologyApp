@@ -20,7 +20,7 @@
                     Text="{mi:Material Icon=ErrorOutline}"
                     Style="{StaticResource IconActionStyle}"
                     FontSize="36"
-                    TextColor="{DynamicResource Primary}"
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                     HorizontalOptions="Center" />
                 <Label
                     Text="{TemplateBinding FailedText}"

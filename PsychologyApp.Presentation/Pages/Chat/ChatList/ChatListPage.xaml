@@ -88,7 +88,7 @@
                                         IsVisible="{Binding HasMood}"
                                         Text="{Binding MoodText}"
                                         Style="{StaticResource CaptionStyle}"
-                                        TextColor="{StaticResource Primary}">
+                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}">
                                         <Label.Triggers>
                                             <DataTrigger TargetType="Label" Binding="{Binding IsImproving}" Value="True">
                                                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Success}, Dark={StaticResource SuccessDark}}" />

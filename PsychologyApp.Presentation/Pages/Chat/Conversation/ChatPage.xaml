@@ -117,7 +117,7 @@
                                 <Label
                                     Text="{Binding TimeText}"
                                     Style="{StaticResource CaptionStyle}"
-                                    FontSize="11"
+                                    FontSize="12"
                                     HorizontalOptions="End">
                                     <Label.Triggers>
                                         <DataTrigger TargetType="Label" Binding="{Binding IsUser}" Value="True">
@@ -169,7 +169,7 @@
                 <Label
                     Text="{mi:Material Icon=KeyboardArrowUp}"
                     FontSize="22"
-                    TextColor="{DynamicResource Primary}"
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                     HorizontalOptions="Center"
                     VerticalOptions="Center" />
             </Border>
@@ -192,7 +192,7 @@
                 <Label
                     Text="{mi:Material Icon=KeyboardArrowDown}"
                     FontSize="22"
-                    TextColor="{DynamicResource Primary}"
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                     HorizontalOptions="Center"
                     VerticalOptions="Center" />
             </Border>
@@ -237,7 +237,7 @@
                                 Text="{Binding Label}"
                                 FontSize="14"
                                 FontFamily="{StaticResource MediumFontFamily}"
-                                TextColor="{DynamicResource Primary}" />
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
                         </Border>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>

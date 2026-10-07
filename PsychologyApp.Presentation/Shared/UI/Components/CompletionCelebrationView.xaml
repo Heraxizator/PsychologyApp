@@ -49,7 +49,7 @@
                             Text="{TemplateBinding StreakValueText}"
                             Style="{StaticResource SectionTitleStyle}"
                             HorizontalTextAlignment="Center"
-                            TextColor="{DynamicResource Primary}" />
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
                         <Label
                             Text="{TemplateBinding StreakLabelText}"
                             Style="{StaticResource CaptionStyle}"

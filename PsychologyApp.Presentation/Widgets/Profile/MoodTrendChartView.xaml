@@ -25,6 +25,11 @@
                 x:Name="ChartView"
                 HeightRequest="192"
                 HorizontalOptions="Fill" />
+            <Label
+                Text="{Binding LegendText, Source={x:Reference Root}}"
+                IsVisible="{Binding HasAnnotations, Source={x:Reference Root}}"
+                Style="{StaticResource CaptionStyle}"
+                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
         </VerticalStackLayout>
     </Border>
 

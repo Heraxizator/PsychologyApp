@@ -53,8 +53,8 @@ public partial class TensionSliderView : ContentView
         bool changed = value != _value;
         _value = value;
 
-        (byte r, byte g, byte b) = TensionScale.ColorAt(value);
-        Color color = Color.FromRgb(r, g, b);
+        bool dark = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark;
+        Color color = Color.FromArgb(TensionScale.HexAt(value, dark));
         NumberLabel.Text = value.ToString();
         NumberLabel.TextColor = color;
         TensionBar.ThumbColor = color;

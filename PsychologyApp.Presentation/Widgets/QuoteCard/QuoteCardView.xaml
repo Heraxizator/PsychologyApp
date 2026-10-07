@@ -32,7 +32,7 @@
                     </Border.Triggers>
                     <Label
                         Style="{StaticResource CaptionStyle}"
-                        TextColor="{DynamicResource Primary}"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                         FontFamily="{StaticResource SemiBoldFontFamily}"
                         MaxLines="1"
                         LineBreakMode="TailTruncation"

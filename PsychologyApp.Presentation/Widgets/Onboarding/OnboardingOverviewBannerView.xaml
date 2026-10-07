@@ -91,7 +91,7 @@
             <Label
                 Text="{Binding Source={x:Reference Root}, Path=LeadText}"
                 Style="{StaticResource CaptionStyle}"
-                TextColor="{DynamicResource Primary}"
+                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                 HorizontalTextAlignment="Center" />
         </VerticalStackLayout>
     </Border>

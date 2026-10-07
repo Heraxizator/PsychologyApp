@@ -175,7 +175,7 @@
                                             Grid.Column="1"
                                             Text="{Binding CallText}"
                                             Style="{StaticResource CaptionStyle}"
-                                            TextColor="{DynamicResource Primary}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                                             VerticalOptions="Center" />
                                     </Grid>
                                 </Border>

@@ -25,7 +25,7 @@
                             Text="{Binding MetricValue, Source={x:Reference Root}}"
                             FontFamily="{StaticResource SemiBoldFontFamily}"
                             FontSize="{StaticResource SectionTitleFontSize}"
-                            TextColor="{DynamicResource Primary}" />
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
                     </FormattedString>
                 </Label.FormattedText>
             </Label>

@@ -2,6 +2,7 @@ using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Domain.UserProgress;
+using PsychologyApp.Presentation.Core.Charts;
 using PsychologyApp.Presentation.Entities.Journal;
 using PsychologyApp.Presentation.Entities.Profile;
 using PsychologyApp.Presentation.Shared.Common;
@@ -44,7 +45,8 @@ public sealed record JournalMoodSnapshot(
     string PracticeMoodInsight,
     string OnThisDayLastYearText,
     DateOnly WeekStripEnd,
-    IReadOnlyList<JournalActivityInsight> ActivityInsights);
+    IReadOnlyList<JournalActivityInsight> ActivityInsights,
+    IReadOnlyList<TrendAnnotation> PracticeMarks);
 
 public sealed class JournalMoodLoader(IUserProgressService userProgressService, ICrisisDetector crisisDetector)
 {
@@ -214,7 +216,8 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService, 
             practiceInsight,
             onThisDay,
             stripEnd,
-            activityInsights);
+            activityInsights,
+            await LoadPracticeMarksAsync(points, cancellationToken));
     }
 
     /// <summary>Saves the check-in. Returns true when the note reads like a crisis, so the screen can offer the help page.</summary>
@@ -317,6 +320,31 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService, 
             .Where(group => group is not null)
             .Select(group => group!)
             .ToList();
+    }
+
+    /// <summary>Practices done between the first and the last reading, to mark on the mood chart.</summary>
+    private async Task<IReadOnlyList<TrendAnnotation>> LoadPracticeMarksAsync(IReadOnlyList<MoodChartPoint> points, CancellationToken cancellationToken)
+    {
+        if (points.Count < 2)
+        {
+            return [];
+        }
+
+        try
+        {
+            IReadOnlyList<CompletionDTO> completions = await userProgressService.GetRecentTechniqueCompletionsAsync(50, cancellationToken)
+                ?? Array.Empty<CompletionDTO>();
+            DateTime first = points[0].RecordedAtLocal;
+            DateTime last = points[^1].RecordedAtLocal;
+            return [.. completions
+                .Select(completion => completion.CompletedAt.ToLocalTime())
+                .Where(at => at >= first && at <= last)
+                .Select(at => new TrendAnnotation(at))];
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            return [];
+        }
     }
 
     private async Task<string> BuildPracticeMoodInsightAsync(

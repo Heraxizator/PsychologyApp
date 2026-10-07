@@ -4,21 +4,7 @@ param([string]$Dir = "$PSScriptRoot\..\PsychologyApp.Presentation.Core\Common", 
 $ErrorActionPreference = 'Stop'
 
 $entries = [ordered]@{
-    BreathInhale = @('Вдох', 'Inhale')
-    BreathHold = @('Пауза', 'Hold')
-    BreathExhale = @('Выдох', 'Exhale')
-    BreathStart = @('Начать', 'Start')
-    BreathStop = @('Остановить', 'Stop')
-    BreathAgain = @('Ещё раз', 'Again')
-    BreathCycleFormat = @('Цикл {0} из {1}', 'Cycle {0} of {1}')
-    BreathReady = @('Сядьте удобно и нажмите «Начать». Дышите вместе с кругом.', 'Sit comfortably and press Start. Breathe with the circle.')
-    BreathDone = @('Хорошо. Теперь оцените напряжение после практики.', 'Well done. Now rate your tension after the practice.')
-    BreathCircleLabel = @('Дыхательный круг: расширяется на вдохе, сжимается на выдохе', 'Breathing circle: grows as you inhale, shrinks as you exhale')
-    TensionPickHint = @('Проведите пальцем по полосе, чтобы выбрать от 0 до 10', 'Slide along the bar to pick from 0 to 10')
-    TensionPickConfirm = @('Выбрать', 'Choose')
-    TensionChangeFormat = @('Было {0} → стало {1}', 'Was {0} → now {1}')
-    TensionCalmWord = @('спокойно', 'calm')
-    TensionStrongWord = @('очень сильно', 'very strong')
+    ChartPracticeLegend = @('◆ — практика (зелёным — когда после неё настроение выросло)', '◆ — a practice (green when your mood rose afterwards)')
 }
 
 function AddData($path, $name, $value) {

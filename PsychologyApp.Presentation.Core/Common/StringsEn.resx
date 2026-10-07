@@ -2995,4 +2995,7 @@
   <data name="TensionStrongWord" xml:space="preserve">
     <value>very strong</value>
   </data>
+  <data name="ChartPracticeLegend" xml:space="preserve">
+    <value>◆ — a practice (green when your mood rose afterwards)</value>
+  </data>
 </root>

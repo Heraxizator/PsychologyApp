@@ -103,19 +103,19 @@
                         <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="2">
                             <VerticalStackLayout Grid.Column="0" Spacing="2">
                                 <Label x:Name="ChatsValue" Text="0" Style="{StaticResource PageTitleStyle}" TextColor="White" HorizontalTextAlignment="Center" />
-                                <Label Text="{Binding StatChatsLabel}" Style="{StaticResource CaptionStyle}" FontSize="11" TextColor="White" Opacity="0.85" HorizontalTextAlignment="Center" />
+                                <Label Text="{Binding StatChatsLabel}" Style="{StaticResource CaptionStyle}" FontSize="12" TextColor="White" Opacity="0.85" HorizontalTextAlignment="Center" />
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Column="1" Spacing="2">
                                 <Label x:Name="MessagesValue" Text="0" Style="{StaticResource PageTitleStyle}" TextColor="White" HorizontalTextAlignment="Center" />
-                                <Label Text="{Binding StatMessagesLabel}" Style="{StaticResource CaptionStyle}" FontSize="11" TextColor="White" Opacity="0.85" HorizontalTextAlignment="Center" />
+                                <Label Text="{Binding StatMessagesLabel}" Style="{StaticResource CaptionStyle}" FontSize="12" TextColor="White" Opacity="0.85" HorizontalTextAlignment="Center" />
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Column="2" Spacing="2">
                                 <Label x:Name="DaysValue" Text="0" Style="{StaticResource PageTitleStyle}" TextColor="White" HorizontalTextAlignment="Center" />
-                                <Label Text="{Binding StatDaysLabel}" Style="{StaticResource CaptionStyle}" FontSize="11" TextColor="White" Opacity="0.85" HorizontalTextAlignment="Center" />
+                                <Label Text="{Binding StatDaysLabel}" Style="{StaticResource CaptionStyle}" FontSize="12" TextColor="White" Opacity="0.85" HorizontalTextAlignment="Center" />
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Column="3" Spacing="2">
                                 <Label x:Name="StreakValue" Text="0" Style="{StaticResource PageTitleStyle}" TextColor="White" HorizontalTextAlignment="Center" />
-                                <Label Text="{Binding StatStreakLabel}" Style="{StaticResource CaptionStyle}" FontSize="11" TextColor="White" Opacity="0.85" HorizontalTextAlignment="Center" />
+                                <Label Text="{Binding StatStreakLabel}" Style="{StaticResource CaptionStyle}" FontSize="12" TextColor="White" Opacity="0.85" HorizontalTextAlignment="Center" />
                             </VerticalStackLayout>
                         </Grid>
                     </Border>
@@ -131,7 +131,7 @@
                             Grid.Column="1"
                             Text="{Binding TrustName}"
                             FontFamily="{StaticResource SemiBoldFontFamily}"
-                            TextColor="{DynamicResource Primary}"
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                             VerticalOptions="Center" />
                     </Grid>
 
@@ -182,7 +182,7 @@
                             </Border.GestureRecognizers>
                             <HorizontalStackLayout Spacing="6">
                                 <ui:MaterialIconView IconName="Edit" IconSize="16" IconColor="{DynamicResource Primary}" VerticalOptions="Center" />
-                                <Label Text="{Binding NameEditText}" FontFamily="{StaticResource MediumFontFamily}" TextColor="{DynamicResource Primary}" />
+                                <Label Text="{Binding NameEditText}" FontFamily="{StaticResource MediumFontFamily}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
                             </HorizontalStackLayout>
                         </Border>
                     </Grid>
@@ -230,7 +230,7 @@
                                     <VerticalStackLayout Spacing="4" WidthRequest="38">
                                         <Grid HeightRequest="118" ColumnDefinitions="*,*" ColumnSpacing="3">
                                             <VerticalStackLayout Grid.Column="0" VerticalOptions="End" Spacing="2">
-                                                <Label Text="{Binding BeforeText}" FontSize="10" HorizontalTextAlignment="Center" Style="{StaticResource CaptionStyle}" />
+                                                <Label Text="{Binding BeforeText}" FontSize="12" HorizontalTextAlignment="Center" Style="{StaticResource CaptionStyle}" />
                                                 <Border
                                                     StyleId="before"
                                                     HeightRequest="{Binding BeforeHeight}"
@@ -241,7 +241,7 @@
                                                     BindingContextChanged="OnBarContextChanged" />
                                             </VerticalStackLayout>
                                             <VerticalStackLayout Grid.Column="1" VerticalOptions="End" Spacing="2">
-                                                <Label Text="{Binding AfterText}" FontSize="10" HorizontalTextAlignment="Center" Style="{StaticResource CaptionStyle}" />
+                                                <Label Text="{Binding AfterText}" FontSize="12" HorizontalTextAlignment="Center" Style="{StaticResource CaptionStyle}" />
                                                 <Border
                                                     StyleId="after"
                                                     HeightRequest="{Binding AfterHeight}"
@@ -258,7 +258,7 @@
                                                 </Border>
                                             </VerticalStackLayout>
                                         </Grid>
-                                        <Label Text="{Binding Label}" FontSize="10" HorizontalTextAlignment="Center" Style="{StaticResource CaptionStyle}" />
+                                        <Label Text="{Binding Label}" FontSize="12" HorizontalTextAlignment="Center" Style="{StaticResource CaptionStyle}" />
                                     </VerticalStackLayout>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
@@ -298,7 +298,7 @@
                                             StrokeShape="RoundRectangle 9"
                                             BackgroundColor="{AppThemeBinding Light={StaticResource Success}, Dark={StaticResource SuccessDark}}"
                                             VerticalOptions="Center">
-                                            <Label Text="{Binding BestText}" FontSize="11" TextColor="White" />
+                                            <Label Text="{Binding BestText}" FontSize="12" TextColor="White" />
                                         </Border>
                                     </HorizontalStackLayout>
                                     <Label Grid.Row="1" Grid.Column="0" Text="{Binding Detail}" Style="{StaticResource CaptionStyle}" />
@@ -316,7 +316,7 @@
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding StartCommand}" />
                                         </Border.GestureRecognizers>
-                                        <Label Text="{Binding StartText}" FontFamily="{StaticResource MediumFontFamily}" TextColor="{DynamicResource Primary}" />
+                                        <Label Text="{Binding StartText}" FontFamily="{StaticResource MediumFontFamily}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
                                     </Border>
                                 </Grid>
                             </DataTemplate>

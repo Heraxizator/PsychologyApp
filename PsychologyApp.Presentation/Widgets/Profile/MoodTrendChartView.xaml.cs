@@ -1,4 +1,5 @@
 using PsychologyApp.Application.Models;
+using PsychologyApp.Presentation.Core.Charts;
 using PsychologyApp.Presentation.Shared.Common;
 
 namespace PsychologyApp.Presentation.Widgets.Profile;
@@ -22,6 +23,14 @@ public partial class MoodTrendChartView : ContentView
             typeof(MoodTrendChartView),
             Array.Empty<MoodChartPoint>(),
             propertyChanged: OnChartPointsChanged);
+
+    public static readonly BindableProperty AnnotationsProperty =
+        BindableProperty.Create(
+            nameof(Annotations),
+            typeof(IReadOnlyList<TrendAnnotation>),
+            typeof(MoodTrendChartView),
+            Array.Empty<TrendAnnotation>(),
+            propertyChanged: OnAnnotationsChanged);
 
     public static readonly BindableProperty SubtitleProperty =
         BindableProperty.Create(
@@ -50,6 +59,17 @@ public partial class MoodTrendChartView : ContentView
         get => (IReadOnlyList<MoodChartPoint>)GetValue(ChartPointsProperty);
         set => SetValue(ChartPointsProperty, value);
     }
+
+    /// <summary>Practices marked on the line.</summary>
+    public IReadOnlyList<TrendAnnotation> Annotations
+    {
+        get => (IReadOnlyList<TrendAnnotation>)GetValue(AnnotationsProperty);
+        set => SetValue(AnnotationsProperty, value);
+    }
+
+    public bool HasAnnotations => Annotations.Count > 0;
+
+    public string LegendText => AppStrings.ChartPracticeLegend;
 
     public string Subtitle
     {
@@ -80,6 +100,16 @@ public partial class MoodTrendChartView : ContentView
         if (bindable is MoodTrendChartView view && newValue is IReadOnlyList<MoodChartPoint> points)
         {
             view._drawable.Points = points;
+            view.ChartView.Invalidate();
+        }
+    }
+
+    private static void OnAnnotationsChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        if (bindable is MoodTrendChartView view && newValue is IReadOnlyList<TrendAnnotation> marks)
+        {
+            view._drawable.Annotations = marks;
+            view.OnPropertyChanged(nameof(HasAnnotations));
             view.ChartView.Invalidate();
         }
     }

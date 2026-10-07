@@ -12,7 +12,7 @@
                 <Label
                     Text="{TemplateBinding CaptionText}"
                     Style="{StaticResource CaptionStyle}"
-                    TextColor="{DynamicResource Primary}" />
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
                 <Border Style="{StaticResource TodayPracticeRowStyle}">
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
                         <Border
@@ -42,7 +42,7 @@
                             <Label
                                 Text="{TemplateBinding ReasonText}"
                                 Style="{StaticResource CaptionStyle}"
-                                TextColor="{DynamicResource Primary}"
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                                 MaxLines="1"
                                 LineBreakMode="TailTruncation" />
                         </VerticalStackLayout>

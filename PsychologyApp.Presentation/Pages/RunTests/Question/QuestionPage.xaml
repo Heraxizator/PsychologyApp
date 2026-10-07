@@ -52,7 +52,7 @@
                         <Label
                             Text="{Binding QuestionLeadText}"
                             Style="{StaticResource CaptionStyle}"
-                            TextColor="{DynamicResource Primary}"
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                             LineBreakMode="WordWrap" />
                         <Border
                             Padding="10,4"
@@ -62,7 +62,7 @@
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="8" />
                             </Border.StrokeShape>
-                            <Label Style="{StaticResource CaptionStyle}" TextColor="{DynamicResource Primary}" FontFamily="{StaticResource MediumFontFamily}">
+                            <Label Style="{StaticResource CaptionStyle}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" FontFamily="{StaticResource MediumFontFamily}">
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span Text="{Binding QuestionPrefix}" />
@@ -108,14 +108,14 @@
                 Text="{Binding MultiChoiceHintText}"
                 IsVisible="{Binding IsMultiChoiceHintVisible}"
                 Style="{StaticResource CaptionStyle}"
-                TextColor="{DynamicResource Primary}"
+                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                 HorizontalTextAlignment="Center"
                 LineBreakMode="WordWrap" />
             <Label
                 Text="{Binding ValidationHintText}"
                 IsVisible="{Binding IsValidationHintVisible}"
                 Style="{StaticResource CaptionStyle}"
-                TextColor="{DynamicResource Primary}"
+                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                 HorizontalTextAlignment="Center"
                 LineBreakMode="WordWrap" />
             <Grid ColumnDefinitions="*,*" ColumnSpacing="{StaticResource CompactSpacing}">

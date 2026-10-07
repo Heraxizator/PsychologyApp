@@ -226,7 +226,7 @@
                         HorizontalTextAlignment="Center"
                         HorizontalOptions="Fill"
                         Style="{StaticResource EmphasisBodyStyle}"
-                        TextColor="{DynamicResource Primary}"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                         FontFamily="{StaticResource SemiBoldFontFamily}"
                         LineBreakMode="WordWrap" />
                     <Label

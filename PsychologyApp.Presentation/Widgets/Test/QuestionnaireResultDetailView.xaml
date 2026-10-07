@@ -19,7 +19,7 @@
                     <VerticalStackLayout.Behaviors>
                         <behaviors:ListItemRevealBehavior />
                     </VerticalStackLayout.Behaviors>
-                    <Label Style="{StaticResource CaptionStyle}" TextColor="{DynamicResource Primary}">
+                    <Label Style="{StaticResource CaptionStyle}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span Text="{Binding QuestionNumber}" />

@@ -48,7 +48,7 @@
                         <Label
                             Text="{Binding IntroLeadText}"
                             Style="{StaticResource CaptionStyle}"
-                            TextColor="{DynamicResource Primary}"
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                             HorizontalTextAlignment="Center"
                             LineBreakMode="WordWrap" />
                     </VerticalStackLayout>

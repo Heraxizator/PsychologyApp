@@ -88,7 +88,7 @@
                 HorizontalOptions="Fill"
                 HorizontalTextAlignment="Center"
                 LineBreakMode="WordWrap"
-                TextColor="{DynamicResource Primary}"
+                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                 FontFamily="{StaticResource SemiBoldFontFamily}"
                 SemanticProperties.Description="{Binding DayHeaderText}">
                 <Label.GestureRecognizers>
@@ -164,7 +164,7 @@
                 HorizontalOptions="Fill"
                 HorizontalTextAlignment="Center"
                 LineBreakMode="WordWrap"
-                TextColor="{DynamicResource Primary}"
+                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                 SemanticProperties.Description="{Binding PracticeSuggestText}">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding OpenPracticeSuggestCommand}" />

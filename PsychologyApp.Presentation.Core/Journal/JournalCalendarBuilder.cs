@@ -58,6 +58,7 @@ public static class JournalCalendarBuilder
                 MoodGlyph = hasEntry
                     ? AppStrings.MoodEmojiFor(moodLevel)
                     : (enabled ? "·" : string.Empty),
+                MoodLevel = hasEntry ? moodLevel : null,
                 HasEntry = hasEntry,
                 IsEnabled = enabled,
                 IsSelected = selectedDay == date

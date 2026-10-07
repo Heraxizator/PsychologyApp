@@ -3001,4 +3001,7 @@
   <data name="TensionStrongWord" xml:space="preserve">
     <value>очень сильно</value>
   </data>
+  <data name="ChartPracticeLegend" xml:space="preserve">
+    <value>◆ — практика (зелёным — когда после неё настроение выросло)</value>
+  </data>
 </root>

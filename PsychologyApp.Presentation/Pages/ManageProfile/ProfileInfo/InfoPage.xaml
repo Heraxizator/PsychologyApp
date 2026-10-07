@@ -32,7 +32,7 @@
                         <Label
                             Text="{Binding AppVersionText}"
                             Style="{StaticResource CaptionStyle}"
-                            TextColor="{DynamicResource Primary}" />
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
                     </VerticalStackLayout>
                 </Border>
             </VerticalStackLayout>

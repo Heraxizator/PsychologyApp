@@ -39,7 +39,7 @@
                     <Label
                         Text="{Binding TrendText, Source={x:Reference Root}}"
                         Style="{StaticResource CaptionStyle}"
-                        TextColor="{DynamicResource Primary}"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                         FontFamily="{StaticResource SemiBoldFontFamily}">
                         <Label.Triggers>
                             <DataTrigger
@@ -57,14 +57,14 @@
                 Text="{Binding ScoreText, Source={x:Reference Root}}"
                 Style="{StaticResource CaptionStyle}"
                 FontFamily="{StaticResource MediumFontFamily}"
-                TextColor="{DynamicResource Primary}" />
+                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
             <Label Text="{Binding SummaryText, Source={x:Reference Root}}" Style="{StaticResource BodyStyle}" />
 
             <VerticalStackLayout IsVisible="{Binding HasDetail, Source={x:Reference Root}}" Spacing="4">
                 <Label
                     Text="{Binding DurationText, Source={x:Reference Root}}"
                     Style="{StaticResource CaptionStyle}"
-                    TextColor="{DynamicResource Primary}">
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ToggleDetailCommand, Source={x:Reference Root}}" />
                     </Label.GestureRecognizers>
@@ -80,7 +80,7 @@
                 <Label
                     Text="{Binding SummaryText, Source={x:Reference Root}}"
                     Style="{StaticResource CaptionStyle}"
-                    TextColor="{DynamicResource Primary}">
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ToggleLuscherDetailCommand, Source={x:Reference Root}}" />
                     </Label.GestureRecognizers>

@@ -13,7 +13,7 @@
             IsVisible="{Binding ShowStepLabel, Source={x:Reference Root}}"
             Style="{StaticResource CaptionStyle}"
             HorizontalTextAlignment="Center"
-            TextColor="{DynamicResource Primary}" />
+            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
         <HorizontalStackLayout
             x:Name="DotsLayout"
             Spacing="8"

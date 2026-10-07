@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using PsychologyApp.Application.Models;
+using PsychologyApp.Presentation.Core.Charts;
 using PsychologyApp.Presentation.Entities.FilterChip;
 using PsychologyApp.Presentation.Entities.Journal;
 using PsychologyApp.Presentation.Entities.Profile;
@@ -218,6 +219,13 @@ public sealed class JournalOverviewViewModel : BaseViewModel
     {
         get => _moodChartPoints;
         private set => SetProperty(ref _moodChartPoints, value);
+    }
+
+    private IReadOnlyList<TrendAnnotation> _practiceMarks = [];
+    public IReadOnlyList<TrendAnnotation> PracticeMarks
+    {
+        get => _practiceMarks;
+        private set => SetProperty(ref _practiceMarks, value);
     }
 
     private string _moodChartSubtitle = string.Empty;
@@ -492,6 +500,7 @@ public sealed class JournalOverviewViewModel : BaseViewModel
                 YearCells = snapshot.YearCells;
                 YearTitle = snapshot.YearTitle;
                 MoodChartPoints = snapshot.ChartPoints;
+                PracticeMarks = snapshot.PracticeMarks;
                 MoodChartSubtitle = snapshot.ChartSubtitle;
                 HasMoodTrendChart = snapshot.HasTrendChart;
                 WeekRangeSubtitle = snapshot.RangeSubtitle;

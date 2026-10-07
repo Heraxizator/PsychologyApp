@@ -17,9 +17,9 @@ public class TensionScaleTests
     [Fact]
     public void TheColourRunsFromCalmThroughAmberToRed()
     {
-        Assert.Equal((0x4F, 0xB6, 0xA6), Tuple(TensionScale.ColorAt(0)));
-        Assert.Equal((0xE8, 0xA2, 0x5A), Tuple(TensionScale.ColorAt(5)));
-        Assert.Equal((0xD9, 0x5A, 0x4E), Tuple(TensionScale.ColorAt(10)));
+        Assert.Equal((0x1F, 0x8A, 0x7A), Tuple(TensionScale.ColorAt(0)));
+        Assert.Equal((0xC0, 0x6E, 0x10), Tuple(TensionScale.ColorAt(5)));
+        Assert.Equal((0xC0, 0x39, 0x2B), Tuple(TensionScale.ColorAt(10)));
     }
 
     [Fact]

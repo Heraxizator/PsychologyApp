@@ -46,7 +46,7 @@
                             Text="{TemplateBinding Theme}"
                             Style="{StaticResource CaptionStyle}"
                             FontFamily="{StaticResource SemiBoldFontFamily}"
-                            TextColor="{DynamicResource Primary}"
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                             MaxLines="1"
                             LineBreakMode="TailTruncation" />
                     </VerticalStackLayout>

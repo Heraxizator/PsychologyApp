@@ -166,7 +166,7 @@
                                     <Label
                                         Text="{Binding .}"
                                         Style="{StaticResource CaptionStyle}"
-                                        TextColor="{DynamicResource Primary}"
+                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                                         FontFamily="{StaticResource SemiBoldFontFamily}"
                                         LineBreakMode="WordWrap"
                                         MaxLines="2" />
@@ -186,6 +186,7 @@
                 <moodTrend:MoodTrendChartView
                     IsVisible="{Binding HasMoodTrendChart}"
                     ChartPoints="{Binding MoodChartPoints}"
+                    Annotations="{Binding PracticeMarks}"
                     Subtitle="{Binding MoodChartSubtitle}"
                     Title="" />
             </VerticalStackLayout>

@@ -11,9 +11,6 @@ public partial class BreathingPacerView : ContentView
 {
     private const string AnimationName = "breathing";
 
-    private static readonly Color TenseColor = Color.FromArgb("#E8A25A");
-    private static readonly Color CalmColor = Color.FromArgb("#4FB6A6");
-
     private readonly BreathingPattern _pattern = BreathingPattern.Square;
     private BreathPhaseKind? _lastPhase;
     private bool _running;
@@ -91,8 +88,13 @@ public partial class BreathingPacerView : ContentView
 
     private void Render(double scale, double calm)
     {
-        Color color = Mix(TenseColor, CalmColor, calm);
-        double alpha = 0.55 + 0.4 * (scale - BreathingPattern.SmallScale) / (BreathingPattern.LargeScale - BreathingPattern.SmallScale);
+        bool dark = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark;
+        (byte r, byte g, byte b) = BreathingColors.At(calm, dark);
+        Color color = Color.FromRgb(r, g, b);
+        double alpha = BreathingColors.AlphaAt(scale);
+        Color text = Color.FromArgb(BreathingColors.TextHex(dark));
+        PhaseLabel.TextColor = text;
+        CountLabel.TextColor = text;
 
         // Reduced motion keeps the circle at a steady middle size; the words and counts still carry the rhythm.
         double shown = ReduceMotion.IsEnabled ? 0.8 : scale;
@@ -119,11 +121,6 @@ public partial class BreathingPacerView : ContentView
         BreathPhaseKind.Exhale => AppStrings.BreathExhale,
         _ => AppStrings.BreathHold
     };
-
-    private static Color Mix(Color a, Color b, double t) => new(
-        (float)(a.Red + (b.Red - a.Red) * t),
-        (float)(a.Green + (b.Green - a.Green) * t),
-        (float)(a.Blue + (b.Blue - a.Blue) * t));
 
     private static void Tick() => UiHaptics.Tick();
 }
