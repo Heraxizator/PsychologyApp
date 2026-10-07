@@ -202,4 +202,15 @@ public class ContrastTests(ITestOutputHelper output)
         Assert.Equal(fill, colors["PrimaryFill"].ToUpperInvariant());
         Assert.Equal(onFill, colors["OnPrimary"].ToUpperInvariant());
     }
+
+    [Fact]
+    public void TheSendIconIsVisibleOnTheEmptyAndOnTheReadyButton()
+    {
+        Dictionary<string, string> colors = ReadColors();
+
+        // Empty bar: the accent icon on the soft accent tint. Ready: the text colour of the accent fill on the fill itself.
+        Assert.True(ColorContrast.Ratio(colors["PrimaryTextLight"], colors["PrimaryTint"]) >= ColorContrast.LargeTextMinimum);
+        Assert.True(ColorContrast.Ratio(colors["PrimaryTextDark"], colors["PrimaryTintDark"]) >= ColorContrast.LargeTextMinimum);
+        Assert.True(ColorContrast.Ratio(colors["OnPrimary"], colors["PrimaryFill"]) >= ColorContrast.BodyTextMinimum);
+    }
 }

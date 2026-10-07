@@ -19,6 +19,7 @@ public partial class ChatPage : ContentPage
     public ChatPage(IChatViewModelFactory viewModelFactory, long? sessionId, INavigation hostNavigation)
     {
         InitializeComponent();
+        CenterInputText();
         _viewModel = viewModelFactory.CreateConversation(sessionId, hostNavigation);
         BindingContext = _viewModel;
         _viewModel.Messages.CollectionChanged += OnMessagesChanged;
@@ -33,8 +34,44 @@ public partial class ChatPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        ResizeForKeyboard(on: true);
         AppearAsync().FireAndForget();
     }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        ResizeForKeyboard(on: false);
+    }
+
+    /// <summary>
+    /// The window pans by default, which only nudges the page until the cursor line shows and leaves the send button half under the keyboard.
+    /// While the chat is open the window is resized instead, so the whole bar sits just above the keyboard; the previous mode comes back on leaving.
+    /// </summary>
+    private void ResizeForKeyboard(bool on)
+    {
+#if ANDROID
+        if (Microsoft.Maui.ApplicationModel.Platform.CurrentActivity?.Window is not { } window)
+        {
+            return;
+        }
+
+        if (on)
+        {
+            _previousSoftInputMode ??= window.Attributes?.SoftInputMode;
+            window.SetSoftInputMode(Android.Views.SoftInput.AdjustResize);
+        }
+        else if (_previousSoftInputMode is { } previous)
+        {
+            window.SetSoftInputMode(previous);
+            _previousSoftInputMode = null;
+        }
+#endif
+    }
+
+#if ANDROID
+    private Android.Views.SoftInput? _previousSoftInputMode;
+#endif
 
     private async Task AppearAsync()
     {
@@ -82,6 +119,24 @@ public partial class ChatPage : ContentPage
         chip.Opacity = 0;
         int index = Math.Clamp(_viewModel.QuickReplies.IndexOf(item), 0, MaxStaggeredChips);
         UiAnimations.SafeRevealLiteAsync(chip, y: 8, allowHidden: true, delayMs: 60 + (index * ChipStaggerMs)).FireAndForget();
+    }
+
+    /// <summary>
+    /// Android puts the text of a multi-line editor at its top edge, which left the words above the middle of the bar and the send button.
+    /// Centred vertically, with the editor's own padding removed, a single line sits on the same line as the button and a long message still grows the bar.
+    /// </summary>
+    private void CenterInputText()
+    {
+#if ANDROID
+        InputEditor.HandlerChanged += (_, _) =>
+        {
+            if (InputEditor.Handler?.PlatformView is Android.Widget.EditText editText)
+            {
+                editText.Gravity = Android.Views.GravityFlags.CenterVertical | Android.Views.GravityFlags.Start;
+                editText.SetPadding(0, 0, 0, 0);
+            }
+        };
+#endif
     }
 
     /// <summary>The slider replaces the eleven rating chips; its answer goes through the same command.</summary>
