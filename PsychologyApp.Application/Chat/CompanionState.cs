@@ -120,6 +120,9 @@ public sealed record CompanionState
     /// <summary>Id of the question the companion has just asked, so a short answer is read against it. Cleared by any reply that asks nothing new.</summary>
     public string? LastQuestionId { get; init; }
 
+    /// <summary>How tense the person rated themselves at the end of the previous chat; compared with the first rating of this one.</summary>
+    public int? PreviousIntensity { get; init; }
+
     public CompanionState WithText(string text) => this with
     {
         Turns = Turns + 1,
@@ -177,6 +180,7 @@ public sealed record CompanionState
             WriteOptional(w, "goal", Goal);
             w.WriteBoolean("goalAsked", GoalAsked);
             WriteOptional(w, "lastQuestionId", LastQuestionId);
+            WriteOptional(w, "prevIntensity", PreviousIntensity);
             w.WriteEndObject();
         }
 
@@ -239,7 +243,8 @@ public sealed record CompanionState
                 Event = Str(r, "event"),
                 Goal = Str(r, "goal"),
                 GoalAsked = Bool(r, "goalAsked"),
-                LastQuestionId = Str(r, "lastQuestionId")
+                LastQuestionId = Str(r, "lastQuestionId"),
+                PreviousIntensity = Int(r, "prevIntensity")
             };
         }
         catch (Exception ex) when (ex is JsonException or InvalidOperationException)

@@ -523,4 +523,21 @@ public class CompanionConversationQualityTests
 
         Assert.True(chat.Skip(1).Any(t => !t.Reply.Messages[^1].EndsWith('?')), string.Join(" || ", chat.Select(t => t.Text)));
     }
+
+    [Fact]
+    public void TheFirstRatingIsComparedWithTheEndOfTheLastChat()
+    {
+        CompanionDialogue dialogue = new(
+            new LexiconSituationAnalyzer(), new KeywordCrisisDetector(), false, new Random(11),
+            new FixedTime(new DateTime(2026, 10, 7, 12, 0, 0, DateTimeKind.Utc)), emotionGuesser: EmotionGuesser.Bundled);
+        ChatSessionDTO last = new() { Title = "Работа", UpdatedAt = new DateTime(2026, 10, 5, 12, 0, 0, DateTimeKind.Utc), Emotion = "Anxiety", LastIntensity = 8, MessageCount = 6 };
+        CompanionState state = dialogue.Open(new CompanionState(), last).State;
+        Assert.Equal(8, state.PreviousIntensity);
+
+        CompanionReply reply = dialogue.Respond(state, new CompanionInput.FreeText("Мне тревожно из-за работы"));
+        reply = dialogue.Respond(reply.State, new CompanionInput.FreeText("Опять много задач и дедлайны"));
+        reply = dialogue.Respond(reply.State, new CompanionInput.QuickReply(new ChatQuickReply(ChatQuickReplyKinds.Rating, "5", "5")));
+
+        Assert.Contains("В прошлый раз вы оценивали напряжение в 8, сейчас 5", string.Join(" ", reply.Messages));
+    }
 }

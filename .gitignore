@@ -375,3 +375,6 @@ StrykerOutput/
 
 CoverageReport/
 TestResults/
+
+# Real (consented, anonymised) messages used only for local evaluation, see docs/real-data-evaluation.md
+**/Conversation/Data/real/

@@ -15,6 +15,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 - `docs/chat-companion.md` describes the engine, the state, the memory and its limits.
 
 ### Quality
+- Chat remembers how the last chat ended: the first tension rating of a new chat is set against the last rating of the previous one ("last time 8, now 5"), without a schema change (it reuses the stored session).
+- `RealMessagesTests` and `docs/real-data-evaluation.md`: an evaluation harness for consented, anonymised real messages (git-ignored folder `Conversation/Data/real`); it reports lexicon and lexicon + guesser accuracy with the misses and fails if a real crisis message is missed. No real data is bundled: the numbers in this changelog are still on developer-written sets.
 - Safety: a labelled crisis set (`CrisisSafetyTests`, 46 crisis phrasings and 14 ordinary ones) found 19 phrasings the detector missed (41%: "незачем жить", "жить не хочется совсем", "проглотила все таблетки", "стою на мосту", "i took a bunch of pills", typos such as "суецид"); all are caught now, with no false alarms on fear of death, grief or tiredness.
 - Chat: a feeling that is denied or over ("мне не страшно", "раньше было тревожно, а сейчас спокойно", "i don't feel sad", "перестала переживать") is no longer read as a current feeling, while "больше не могу" stays; what someone said to the person ("она назвала меня неблагодарной") is given back in their own words; after a long heavy message the companion sometimes stays with the person instead of asking the next question; more wordings for acknowledgements.
 - Chat: "it is not the first time" and "for a long time" are read as the answer to the question about repetition or duration, and the follow-up fits what was said.

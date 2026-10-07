@@ -87,7 +87,7 @@ public sealed partial class CompanionDialogue(
                 [CompanionDialogueContent.ReturningGreeting(previous.Title, days, previous.LastIntensity, english)],
                 CompanionDialogueContent.CheckInReplies(english),
                 null,
-                state,
+                state with { PreviousIntensity = previous.LastIntensity },
                 CompanionEmotion.Unknown,
                 null));
         }
@@ -796,17 +796,22 @@ public sealed partial class CompanionDialogue(
             return Reply([CompanionDialogueContent.PostPracticeWorse(reference, rating, english)], [], state, emotion, theme);
         }
 
+        string? compared = previous.FirstIntensity is null && previous.PreviousIntensity is { } lastTime
+            ? CompanionCaseContent.CompareWithLastTime(lastTime, rating, english)
+            : null;
         SituationAnalysis analysis = new(emotion, 1, false, rating >= HighTension, []);
         if (rating >= HighTension)
         {
-            return Offer(state, [CompanionDialogueContent.ScaleHigh(english)], analysis, emotion, theme, calming: true);
+            return Offer(state, ComparedMessages(compared, CompanionDialogueContent.ScaleHigh(english)), analysis, emotion, theme, calming: true);
         }
 
-        List<string> messages = [rating <= LowTension ? CompanionDialogueContent.ScaleLow(english) : CompanionDialogueContent.ScaleMedium(english)];
+        List<string> messages = ComparedMessages(compared, rating <= LowTension ? CompanionDialogueContent.ScaleLow(english) : CompanionDialogueContent.ScaleMedium(english));
         return state.ContentTurns >= 3 && state.TurnsSinceOffer >= 3 && emotion != CompanionEmotion.Unknown
             ? Offer(state, messages, analysis, emotion, theme, calming: false)
             : AskNextQuestion(state, messages, emotion, theme);
     }
+
+    private static List<string> ComparedMessages(string? compared, string reaction) => compared is null ? [reaction] : [compared, reaction];
 
     private string Listen(CompanionState state, SituationAnalysis analysis, CompanionEmotion emotion, CompanionEmotion before, string? quote, bool firstStatement)
     {

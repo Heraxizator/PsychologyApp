@@ -329,4 +329,22 @@ public static class CompanionCaseContent
         string[] bank = english ? HoldEn : HoldRu;
         return bank[random.Next(bank.Length)];
     }
+
+    // ----- compared with the last chat -----
+
+    /// <summary>"Last time it was 8, now it is 5": the first rating of a chat set against the last rating of the previous one.</summary>
+    public static string CompareWithLastTime(int lastTime, int now, bool english)
+    {
+        if (now < lastTime)
+        {
+            return english ? $"Last time you rated the tension {lastTime}, now it is {now}. That is a real change." : $"В прошлый раз вы оценивали напряжение в {lastTime}, сейчас {now}. Это заметное изменение.";
+        }
+
+        if (now > lastTime)
+        {
+            return english ? $"Last time it was {lastTime}, now {now}. It is harder today, and it is good that you came back." : $"В прошлый раз было {lastTime}, сейчас {now}. Сегодня тяжелее, и хорошо, что вы вернулись.";
+        }
+
+        return english ? $"It is {now} again, as last time. The feeling has stayed with you." : $"Снова {now}, как и в прошлый раз. Это состояние осталось с вами.";
+    }
 }
