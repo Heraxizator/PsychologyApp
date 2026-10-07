@@ -505,4 +505,22 @@ public class CompanionConversationQualityTests
 
         Assert.Contains("обсудить с врачом", chat[1].Text);
     }
+
+    [Fact]
+    public void WhatSomeoneSaidIsGivenBackInTheirOwnWords()
+    {
+        List<Turn> chat = Talk("Поругалась с мамой, она назвала меня неблагодарной");
+
+        Assert.Contains("неблагодарной", chat[0].Text);
+        Assert.Matches("«неблагодарной»", chat[0].Text);
+    }
+
+    [Fact]
+    public void ALongHeavyMessageIsMetWithCompanyEveryOtherTime()
+    {
+        string story = "Я уже очень давно чувствую, что мне тяжело на работе, начальник постоянно давит, коллеги ничего не замечают, дома тоже нет сил, и мне кажется, что я просто не справляюсь со всем этим";
+        List<Turn> chat = Talk("Мне тревожно из-за работы", story, story, story, story, story, story);
+
+        Assert.True(chat.Skip(1).Any(t => !t.Reply.Messages[^1].EndsWith('?')), string.Join(" || ", chat.Select(t => t.Text)));
+    }
 }

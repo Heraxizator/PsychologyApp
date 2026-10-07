@@ -27,6 +27,11 @@ public sealed class KeywordCrisisDetector : ICrisisDetector
         "наглотаться таблеток", "выпить все таблетки", "выпью все таблетки", "хочу покончить", "умереть хочу", "лучше сдохнуть",
         "меня не станет", "чтобы меня не стало", "лучше без меня", "лучше будет без меня", "не хочу существовать",
         "всем будет лучше без меня", "жизнь не стоит", "не стоит жить",
+        "незачем жить", "лишняя в этом мире", "лишний в этом мире", "лучше бы не было меня", "лучше бы не было", "без меня всем было бы легче", "без меня было бы легче", "без меня будет лучше", "без меня всем лучше",
+        "прыгнуть с крыши", "прыгнуть с балкона", "собираюсь прыгнуть", "стою на мосту", "стою на крыше", "стою на краю",
+        "проглотила все таблетки", "проглотил все таблетки", "выпила все таблетки", "выпил все таблетки", "съела все таблетки", "съел все таблетки",
+        "всё прекратить", "все прекратить", "чтобы все закончилось навсегда", "покончить со всем", "со всем покончить", "пора заканчивать", "уйти навсегда", "хочу уйти навсегда",
+        "не хочу быть здесь", "не хочу тут быть", "себя убью", "себя убить", "накончу", "суецид", "суицыд", "сиуцид", "суицит",
         "режу руки", "порезала себя", "порезал себя", "причиняю себе боль", "делаю себе больно",
         // English (apostrophes are stripped before matching)
         "kill myself", "suicide", "suicidal", "want to die", "end my life", "end it all", "take my own life", "hurt myself",
@@ -37,6 +42,7 @@ public sealed class KeywordCrisisDetector : ICrisisDetector
         "jump off a bridge", "jump off the roof", "jump off a building", "hurting myself", "harm myself", "harming myself",
         "off myself", "unalive myself", "wish i werent alive", "wish i werent here", "want to be dead", "rather be dead",
         "no point in living", "no point living", "better without me", "everyone would be better off", "dont want to exist",
+        "killing myself", "kill my self", "disappear forever", "bunch of pills", "too many pills", "all the pills", "no reason to keep", "dont see the point in living", "end everything",
         "dont want to wake up", "never wake up"
     ];
 
@@ -86,6 +92,23 @@ public sealed class KeywordCrisisDetector : ICrisisDetector
 
     private static bool NegatedWishToLive(string[] tokens)
     {
+        // The other word order: "жить не хочется совсем", "жить мне больше не хочется".
+        for (int i = 0; i < tokens.Length; i++)
+        {
+            if (tokens[i] is not ("жить" or "live" or "living"))
+            {
+                continue;
+            }
+
+            for (int k = i + 1; k < Math.Min(tokens.Length - 1, i + 4); k++)
+            {
+                if (tokens[k] == "не" && tokens[k + 1] is "хочется" or "хочу" or "хотелось" or "хотела" or "хотел")
+                {
+                    return true;
+                }
+            }
+        }
+
         for (int i = 0; i < tokens.Length; i++)
         {
             if (tokens[i] is not ("хочу" or "хочется" or "want" or "wanna"))

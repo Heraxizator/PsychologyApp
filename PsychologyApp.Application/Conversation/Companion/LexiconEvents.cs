@@ -21,6 +21,47 @@ public sealed partial class LexiconSituationAnalyzer
         [CompanionEvent.Performance] = ["выступлени", "экзамен", "собеседовани", "презентаци", "защита диплома", "защиту диплома", "interview", "exam", "presentation", "public speaking", "my speech"]
     };
 
+    private static readonly string[] EndedMarkers = ["раньше", "прежде ", "давно не", "перестал", "больше не", "used to", "no longer", "not anymore", "stopped ", "anymore"];
+    private static readonly string[] ClauseBreaks = [",", ";", ".", "!", "?", " а ", " но ", " but ", " and now ", " now "];
+
+    /// <summary>
+    /// "I used to be anxious, but now I am calm" is not anxiety: a clause about a feeling that is over is dropped, if a clause about the present remains
+    /// (or nothing is left, as in "I stopped worrying"). "Больше не могу" is the opposite of over and stays.
+    /// </summary>
+    private static string DropEndedClauses(string text)
+    {
+        string lower = text.ToLowerInvariant();
+        if (!EndedMarkers.Any(lower.Contains))
+        {
+            return text;
+        }
+
+        List<string> kept = [];
+        string rest = text;
+        foreach (string clause in SplitClauses(rest))
+        {
+            string c = clause.ToLowerInvariant();
+            bool ended = EndedMarkers.Any(c.Contains) && !c.Contains("не могу", StringComparison.Ordinal) && !c.Contains("cant", StringComparison.Ordinal) && !c.Contains("can't", StringComparison.Ordinal);
+            if (!ended)
+            {
+                kept.Add(clause);
+            }
+        }
+
+        return string.Join(", ", kept);
+    }
+
+    private static IEnumerable<string> SplitClauses(string text)
+    {
+        string[] parts = [text];
+        foreach (string brk in ClauseBreaks)
+        {
+            parts = [.. parts.SelectMany(p => p.Split(brk, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))];
+        }
+
+        return parts;
+    }
+
     private CompanionEvent DetectEvent(string normalized, string[] tokens, int[] offsets, bool hasLoss)
     {
         if (hasLoss)

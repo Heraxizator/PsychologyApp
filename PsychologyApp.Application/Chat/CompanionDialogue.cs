@@ -478,6 +478,7 @@ public sealed partial class CompanionDialogue(
         analysis = analysis with { Emotion = emotion };
 
         // The case card: what happened is kept, and "when did this start?" is not asked of someone who has just said when.
+        string? said = CompanionCaseContent.SaidPhrase(text);
         bool newEvent = analysis.Event != CompanionEvent.None && state.Event != analysis.Event.ToString();
         if (analysis.Event != CompanionEvent.None)
         {
@@ -513,6 +514,11 @@ public sealed partial class CompanionDialogue(
         if (newEvent && !analysis.HasLoss && emotion != CompanionEmotion.Guilt && CompanionCaseContent.EventLine(analysis.Event, english) is { } eventLine)
         {
             messages[0] = $"{heard} {eventLine}";
+        }
+        if (said is not null && emotion != CompanionEmotion.Guilt && !state.AskedQuestions.Contains("said"))
+        {
+            messages[0] = $"{messages[0]} {CompanionCaseContent.SaidLine(said, english, _random)}";
+            state = state.WithAsked("said");
         }
 
         bool urgent = emotion == CompanionEmotion.Panic
@@ -598,6 +604,13 @@ public sealed partial class CompanionDialogue(
         {
             messages.Add(CompanionActContent.Callback(first, english));
             return Reply(messages, [], state with { CallbackAsked = true }, emotion, theme);
+        }
+
+        // A long message that carries a lot is met with company, not with the next question, every other time.
+        if (!firstStatement && WordCount(text) >= 25 && state.Turns % 2 == 1 && emotion != CompanionEmotion.Unknown)
+        {
+            messages.Add(CompanionCaseContent.HoldSpace(english, _random));
+            return Reply(messages, [], state, emotion, theme);
         }
 
         return AskNextQuestion(state, messages, emotion, theme);

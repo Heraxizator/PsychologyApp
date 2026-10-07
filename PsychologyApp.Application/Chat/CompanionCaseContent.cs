@@ -295,4 +295,38 @@ public static class CompanionCaseContent
                 return null;
         }
     }
+
+    // ----- the person's own words -----
+
+    private static readonly System.Text.RegularExpressions.Regex SaidPattern = new(
+        @"(?:сказал[аи]?|назвал[аи]?|обозвал[аи]?|крикнул[аи]?|написал[аи]?|заявил[аи]?|said|called me|told me|texted)\s+(?:что\s+|мне\s+|меня\s+|that\s+)*([^,.!?;]{3,40})",
+        System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.CultureInvariant);
+
+    /// <summary>What someone said to the person ("she called me ungrateful"), to give it back in the person's own words; null if no such phrase.</summary>
+    public static string? SaidPhrase(string text)
+    {
+        System.Text.RegularExpressions.Match m = SaidPattern.Match(text);
+        if (!m.Success)
+        {
+            return null;
+        }
+
+        string phrase = m.Groups[1].Value.Trim();
+        string[] words = phrase.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        return words.Length is >= 1 and <= 6 ? phrase : string.Join(' ', words.Take(6));
+    }
+
+    public static string SaidLine(string phrase, bool english, Random random) => random.Next(2) == 0
+        ? (english ? $"Words like “{phrase}” can stay in the head for a long time." : $"Слова «{phrase}» могут долго звучать в голове.")
+        : (english ? $"“{phrase}” — it is understandable that this stung." : $"«{phrase}» — понятно, что это задело.");
+
+    private static readonly string[] HoldRu = ["Я здесь, продолжайте, если хочется.", "Можно не торопиться. Я слушаю.", "Спасибо, что так подробно рассказали. Я с вами."];
+    private static readonly string[] HoldEn = ["I am here, go on if you like.", "There is no hurry. I am listening.", "Thank you for telling it in such detail. I am with you."];
+
+    /// <summary>After a long, heavy message a question can feel like being sent to a form: just stay with the person.</summary>
+    public static string HoldSpace(bool english, Random random)
+    {
+        string[] bank = english ? HoldEn : HoldRu;
+        return bank[random.Next(bank.Length)];
+    }
 }

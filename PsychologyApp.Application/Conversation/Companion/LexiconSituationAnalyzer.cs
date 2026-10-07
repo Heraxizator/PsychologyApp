@@ -12,7 +12,7 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
 
     // A negation is still recognised across one of these ("не сильно тревожусь"), but not across an arbitrary word —
     // normalization drops sentence punctuation, so an unbounded look-back would misread "Не знаю. Тревожусь" as negated.
-    private static readonly HashSet<string> NegationModifiers = ["сильно", "очень", "так", "особо", "слишком", "совсем", "прямо", "really", "very", "so", "too", "that"];
+    private static readonly HashSet<string> NegationModifiers = ["сильно", "очень", "так", "особо", "слишком", "совсем", "прямо", "чувствую", "ощущаю", "really", "very", "so", "too", "that", "feel", "feeling"];
 
     private sealed record Entry(int Weight, string[] Terms);
 
@@ -98,6 +98,12 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
 
     public SituationAnalysis Analyze(string text)
     {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return SituationAnalysis.Empty;
+        }
+
+        text = DropEndedClauses(text);
         if (string.IsNullOrWhiteSpace(text))
         {
             return SituationAnalysis.Empty;

@@ -66,8 +66,8 @@ public static class CompanionDialogueContent
         : "Насколько сильное напряжение сейчас, от 0 до 10?";
 
     public static string Acknowledgement(bool english, Random random) => Pick(random, english
-        ? ["I understand.", "Thank you for telling me.", "I hear you.", "That is not easy.", "It's good that you're talking about it.", "I'm with you."]
-        : ["Понимаю.", "Спасибо, что рассказываете.", "Слышу вас.", "Это непросто.", "Хорошо, что вы об этом говорите.", "Я с вами."]);
+        ? ["I understand.", "Thank you for telling me.", "I hear you.", "That is not easy.", "It's good that you're talking about it.", "I'm with you.", "Go on, I am following.", "That matters, thank you for trusting me with it.", "I can feel how much is in this.", "Take your time."]
+        : ["Понимаю.", "Спасибо, что рассказываете.", "Слышу вас.", "Это непросто.", "Хорошо, что вы об этом говорите.", "Я с вами.", "Продолжайте, я слежу за мыслью.", "Это важно, спасибо, что доверяете это мне.", "Чувствуется, как много за этим стоит.", "Не торопитесь."]);
 
     public static string QuoteLine(string quote, bool english, Random random) => Pick(random, english
         ? [$"You write: “{quote}”.", $"“{quote}”. I hear that."]
