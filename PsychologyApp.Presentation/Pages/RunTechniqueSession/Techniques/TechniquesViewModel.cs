@@ -65,7 +65,6 @@ public partial class TechniquesViewModel : BaseViewModel
         PageName = AppStrings.PracticeTechniquesList;
 
         WireCommands();
-        WireFlavorFilters();
         SubscribeToTechniqueChanges();
     }
 }

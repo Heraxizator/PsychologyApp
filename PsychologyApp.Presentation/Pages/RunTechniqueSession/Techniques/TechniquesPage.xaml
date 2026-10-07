@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Pages.RunTechniqueSession.Techniques.TechniquesPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.RunTechniqueSession.Techniques"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:practiceUi="clr-namespace:PsychologyApp.Presentation.Widgets.TechniqueListCard"
              xmlns:today="clr-namespace:PsychologyApp.Presentation.Widgets.TodayPracticeRow"
@@ -106,14 +107,7 @@
 
                     <ui:SectionHeaderView
                         Margin="0,4,0,0"
-                        TitleText="{Binding PracticeCatalogLabel}"
-                        ActionText="{Binding CreateButtonText}"
-                        ActionCommand="{Binding ConstructorTapped}" />
-
-                    <ui:FilterChipTabBarView
-                        ItemsSource="{Binding FlavorFilters}"
-                        TapCommand="{Binding SelectFlavorCommand}"
-                        SemanticProperties.Description="{Binding FlavorFilterLabel}" />
+                        TitleText="{Binding PracticeCatalogLabel}" />
                 </VerticalStackLayout>
             </CollectionView.Header>
 
@@ -149,10 +143,49 @@
             </CollectionView.EmptyView>
 
             <CollectionView.Footer>
-                <Grid
-                    HeightRequest="{Binding LoadMoreFooterHeight}"
-                    MinimumHeightRequest="{Binding LoadMoreFooterHeight}"
-                    IsClippedToBounds="True">
+                <VerticalStackLayout Spacing="8">
+                    <!-- The place to make your own practice: under the person's own practices, or with its own heading while there are none. -->
+                    <Label
+                        IsVisible="{Binding HasNoCustomGroup}"
+                        Text="{Binding MyTechniquesLabel}"
+                        Style="{StaticResource CaptionStyle}"
+                        FontFamily="{StaticResource SemiBoldFontFamily}"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                        Margin="4,20,0,0" />
+                    <Border
+                        Style="{StaticResource TechniqueListCardStyle}"
+                        Margin="4,4,4,12"
+                        SemanticProperties.Description="{Binding CreateOwnLabel}">
+                        <Border.Behaviors>
+                            <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                        </Border.Behaviors>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ConstructorTapped}" />
+                        </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border Grid.Column="0" Style="{StaticResource IconTileStyle}">
+                                <ui:MaterialIconView
+                                    IconName="Add"
+                                    IconSize="22"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center" />
+                            </Border>
+                            <Label
+                                Grid.Column="1"
+                                Text="{Binding CreateOwnLabel}"
+                                Style="{StaticResource ListRowTitleStyle}"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="2"
+                                VerticalOptions="Center"
+                                TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                Text="{mi:Material Icon=KeyboardArrowRight}" />
+                        </Grid>
+                    </Border>
+                    <Grid
+                        HeightRequest="{Binding LoadMoreFooterHeight}"
+                        MinimumHeightRequest="{Binding LoadMoreFooterHeight}"
+                        IsClippedToBounds="True">
                     <ui:ProgressBarView
                         IsVisible="{Binding IsLoadingMoreCustomTechniques}"
                         IsLoading="{Binding IsLoadingMoreCustomTechniques}"
@@ -160,7 +193,8 @@
                         VerticalOptions="Center"
                         HorizontalOptions="Center"
                         Margin="0,8" />
-                </Grid>
+                    </Grid>
+                </VerticalStackLayout>
             </CollectionView.Footer>
 
         </CollectionView>

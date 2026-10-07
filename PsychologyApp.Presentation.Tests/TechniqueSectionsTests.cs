@@ -4,7 +4,7 @@ using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
 
-/// <summary>The catalog split into sections by group: fixed order, one heading each, the filter keeps one, never an empty list.</summary>
+/// <summary>The catalog split into sections by group: fixed order, one heading each, no practice lost.</summary>
 public class TechniqueSectionsTests
 {
     private static TechniqueItem Item(string title, string? flavor) => new() { Title = title, Flavor = flavor, Active = true };
@@ -20,7 +20,7 @@ public class TechniqueSectionsTests
     [Fact]
     public void TheSectionsComeInAFixedOrderWithTheirHeadingsAndOnlyTheirOwnPractices()
     {
-        IReadOnlyList<TechniqueGroup> sections = TechniqueSections.Build(Items, "All", Title);
+        IReadOnlyList<TechniqueGroup> sections = TechniqueSections.Build(Items, Title);
 
         Assert.Equal(["BODY", "MIND", "HEART", "ACTION"], sections.Select(s => s.Title));
         Assert.Equal(["Breathing", "Grounding"], sections[0].Select(i => i.Title));
@@ -29,42 +29,26 @@ public class TechniqueSectionsTests
     }
 
     [Fact]
-    public void AChosenGroupKeepsOnlyItsSection()
+    public void EveryPracticeAppearsExactlyOnce()
     {
-        IReadOnlyList<TechniqueGroup> sections = TechniqueSections.Build(Items, "Heart", Title);
+        TechniqueItem[] shown = [.. TechniqueSections.Build(Items, Title).SelectMany(s => s)];
 
-        TechniqueGroup only = Assert.Single(sections);
-        Assert.Equal("HEART", only.Title);
-        Assert.Equal(["Compassion"], only.Select(i => i.Title));
+        Assert.Equal(Items.Length, shown.Length);
+        Assert.Equal(shown.Length, shown.Distinct().Count());
     }
 
     [Fact]
-    public void EveryPracticeAppearsExactlyOnceWhateverTheFilter()
+    public void ASectionWithoutPracticesIsLeftOut()
     {
-        foreach (string key in TechniqueFlavors.FilterKeys)
-        {
-            IReadOnlyList<TechniqueGroup> sections = TechniqueSections.Build(Items, key, Title);
-            TechniqueItem[] shown = [.. sections.SelectMany(s => s)];
+        IReadOnlyList<TechniqueGroup> sections = TechniqueSections.Build([Item("Spin", "Mind")], Title);
 
-            Assert.Equal(shown.Length, shown.Distinct().Count());
-            Assert.All(shown, item => Assert.Contains(item, Items));
-        }
-
-        Assert.Equal(Items.Length, TechniqueSections.Build(Items, "All", Title).SelectMany(s => s).Count());
-    }
-
-    [Fact]
-    public void AFilterThatWouldLeaveNothingShowsEverything()
-    {
-        IReadOnlyList<TechniqueGroup> sections = TechniqueSections.Build([Item("Spin", "Mind")], "Action", Title);
-
-        Assert.Equal(["Spin"], sections.SelectMany(s => s).Select(i => i.Title));
+        Assert.Equal(["MIND"], sections.Select(s => s.Title));
     }
 
     [Fact]
     public void APracticeWithoutAGroupStaysVisibleUnderNoHeading()
     {
-        IReadOnlyList<TechniqueGroup> sections = TechniqueSections.Build([Item("Spin", "Mind"), Item("Mine", null)], "All", Title);
+        IReadOnlyList<TechniqueGroup> sections = TechniqueSections.Build([Item("Spin", "Mind"), Item("Mine", null)], Title);
 
         Assert.Equal(2, sections.Count);
         Assert.Equal(string.Empty, sections[1].Title);
@@ -74,6 +58,6 @@ public class TechniqueSectionsTests
     [Fact]
     public void NoPracticesGiveNoSections()
     {
-        Assert.Empty(TechniqueSections.Build([], "All", Title));
+        Assert.Empty(TechniqueSections.Build([], Title));
     }
 }

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -3001,9 +3001,6 @@
   <data name="SkeletonLoadingLabel" xml:space="preserve">
     <value>Loading</value>
   </data>
-  <data name="PracticeFilterAll" xml:space="preserve">
-    <value>All</value>
-  </data>
   <data name="PracticeFilterBody" xml:space="preserve">
     <value>Body</value>
   </data>
@@ -3016,7 +3013,7 @@
   <data name="PracticeFilterAction" xml:space="preserve">
     <value>Action</value>
   </data>
-  <data name="PracticeFilterLabel" xml:space="preserve">
-    <value>Filter practices by group</value>
+  <data name="PracticeCreateOwn" xml:space="preserve">
+    <value>Create your own practice</value>
   </data>
 </root>

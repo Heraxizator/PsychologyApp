@@ -4,12 +4,7 @@ param([string]$Dir = "$PSScriptRoot\..\PsychologyApp.Presentation.Core\Common", 
 $ErrorActionPreference = 'Stop'
 
 $entries = [ordered]@{
-    PracticeFilterAll = @('Все', 'All')
-    PracticeFilterBody = @('Тело', 'Body')
-    PracticeFilterMind = @('Мысли', 'Thoughts')
-    PracticeFilterHeart = @('Сердце', 'Heart')
-    PracticeFilterAction = @('Действие', 'Action')
-    PracticeFilterLabel = @('Фильтр практик по группе', 'Filter practices by group')
+    PracticeCreateOwn = @('Создать свою практику', 'Create your own practice')
 }
 
 function AddData($path, $name, $value) {

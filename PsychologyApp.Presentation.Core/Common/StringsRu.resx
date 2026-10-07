@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -3007,9 +3007,6 @@
   <data name="SkeletonLoadingLabel" xml:space="preserve">
     <value>Загрузка</value>
   </data>
-  <data name="PracticeFilterAll" xml:space="preserve">
-    <value>Все</value>
-  </data>
   <data name="PracticeFilterBody" xml:space="preserve">
     <value>Тело</value>
   </data>
@@ -3022,7 +3019,7 @@
   <data name="PracticeFilterAction" xml:space="preserve">
     <value>Действие</value>
   </data>
-  <data name="PracticeFilterLabel" xml:space="preserve">
-    <value>Фильтр практик по группе</value>
+  <data name="PracticeCreateOwn" xml:space="preserve">
+    <value>Создать свою практику</value>
   </data>
 </root>
