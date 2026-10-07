@@ -3001,4 +3001,22 @@
   <data name="SkeletonLoadingLabel" xml:space="preserve">
     <value>Loading</value>
   </data>
+  <data name="PracticeFilterAll" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="PracticeFilterBody" xml:space="preserve">
+    <value>Body</value>
+  </data>
+  <data name="PracticeFilterMind" xml:space="preserve">
+    <value>Thoughts</value>
+  </data>
+  <data name="PracticeFilterHeart" xml:space="preserve">
+    <value>Heart</value>
+  </data>
+  <data name="PracticeFilterAction" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="PracticeFilterLabel" xml:space="preserve">
+    <value>Filter practices by group</value>
+  </data>
 </root>

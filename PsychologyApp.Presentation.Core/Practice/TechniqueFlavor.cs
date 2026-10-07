@@ -73,5 +73,14 @@ public static class TechniqueFlavors
     private static (byte R, byte G, byte B) Rgb(string hex) => (
         Convert.ToByte(hex.Substring(1, 2), 16), Convert.ToByte(hex.Substring(3, 2), 16), Convert.ToByte(hex.Substring(5, 2), 16));
 
+    public const string FilterAll = "All";
+
+    /// <summary>The keys of the group filter above the practice list, in the order of the chips.</summary>
+    public static IReadOnlyList<string> FilterKeys { get; } = [FilterAll, nameof(TechniqueFlavor.Body), nameof(TechniqueFlavor.Mind), nameof(TechniqueFlavor.Heart), nameof(TechniqueFlavor.Action)];
+
+    /// <summary>Whether a practice of this group shows under the chosen filter; "All" shows everything, a group shows only its own built-in practices. The person's own practices have no group and always stay, so their heading never sits over an empty list.</summary>
+    public static bool Matches(string? practiceFlavor, string? filterKey) =>
+        string.IsNullOrEmpty(filterKey) || filterKey == FilterAll || string.IsNullOrEmpty(practiceFlavor) || practiceFlavor == nameof(TechniqueFlavor.None) || string.Equals(practiceFlavor, filterKey, StringComparison.Ordinal);
+
     public static TechniqueFlavor Parse(string? name) => Enum.TryParse(name, out TechniqueFlavor flavor) ? flavor : TechniqueFlavor.None;
 }

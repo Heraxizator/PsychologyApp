@@ -846,6 +846,12 @@ public static partial class AppStrings
     public static string TensionStrongWord => R(nameof(TensionStrongWord));
     public static string ChartPracticeLegend => R(nameof(ChartPracticeLegend));
     public static string SkeletonLoadingLabel => R(nameof(SkeletonLoadingLabel));
+    public static string PracticeFilterAll => R(nameof(PracticeFilterAll));
+    public static string PracticeFilterBody => R(nameof(PracticeFilterBody));
+    public static string PracticeFilterMind => R(nameof(PracticeFilterMind));
+    public static string PracticeFilterHeart => R(nameof(PracticeFilterHeart));
+    public static string PracticeFilterAction => R(nameof(PracticeFilterAction));
+    public static string PracticeFilterLabel => R(nameof(PracticeFilterLabel));
     public static string DataBackupImportFailedToast => R(nameof(DataBackupImportFailedToast));
     public static string CrisisHubSafetyPlanLinkTitle => R(nameof(CrisisHubSafetyPlanLinkTitle));
     public static string CrisisHubSafetyPlanLinkSubtitle => R(nameof(CrisisHubSafetyPlanLinkSubtitle));

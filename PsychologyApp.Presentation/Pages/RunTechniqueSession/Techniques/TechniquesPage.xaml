@@ -107,6 +107,11 @@
                         SubtitleText="{Binding PracticeCatalogHint}"
                         ActionText="{Binding CreateButtonText}"
                         ActionCommand="{Binding ConstructorTapped}" />
+
+                    <ui:FilterChipTabBarView
+                        ItemsSource="{Binding FlavorFilters}"
+                        TapCommand="{Binding SelectFlavorCommand}"
+                        SemanticProperties.Description="{Binding FlavorFilterLabel}" />
                 </VerticalStackLayout>
             </CollectionView.Header>
 

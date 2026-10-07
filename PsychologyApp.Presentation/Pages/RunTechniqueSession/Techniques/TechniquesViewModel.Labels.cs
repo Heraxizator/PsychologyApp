@@ -21,12 +21,14 @@ public partial class TechniquesViewModel
 
     protected override void RefreshLocalizedProperties()
     {
+        EnsureFlavorFilters();
         Notify(
             nameof(PageTitle),
             nameof(MyTechniquesLabel),
             nameof(PracticeCatalogLabel),
             nameof(PracticeCatalogHint),
             nameof(CreateButtonText),
+            nameof(FlavorFilterLabel),
             nameof(ProfileToolbarText),
             nameof(TodayForYouLabel),
             nameof(TodayReasonText),

@@ -47,6 +47,8 @@ public partial class TechniquesViewModel
         {
             OnPropertyChanged(nameof(TechniquesItemsSource));
         }
+
+        ApplyFlavorFilter();
     }
 
     private void ReplaceGroups(ObservableCollection<TechniqueGroup> sourceGroups)

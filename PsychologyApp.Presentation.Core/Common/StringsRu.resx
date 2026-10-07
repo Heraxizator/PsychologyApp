@@ -3007,4 +3007,22 @@
   <data name="SkeletonLoadingLabel" xml:space="preserve">
     <value>Загрузка</value>
   </data>
+  <data name="PracticeFilterAll" xml:space="preserve">
+    <value>Все</value>
+  </data>
+  <data name="PracticeFilterBody" xml:space="preserve">
+    <value>Тело</value>
+  </data>
+  <data name="PracticeFilterMind" xml:space="preserve">
+    <value>Мысли</value>
+  </data>
+  <data name="PracticeFilterHeart" xml:space="preserve">
+    <value>Сердце</value>
+  </data>
+  <data name="PracticeFilterAction" xml:space="preserve">
+    <value>Действие</value>
+  </data>
+  <data name="PracticeFilterLabel" xml:space="preserve">
+    <value>Фильтр практик по группе</value>
+  </data>
 </root>

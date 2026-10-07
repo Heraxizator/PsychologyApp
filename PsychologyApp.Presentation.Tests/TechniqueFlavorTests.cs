@@ -91,4 +91,33 @@ public class TechniqueFlavorTests
 
         Assert.NotEqual(start, end);
     }
+
+    [Fact]
+    public void TheFilterAllShowsEverythingAndAGroupShowsOnlyItself()
+    {
+        Assert.True(TechniqueFlavors.Matches("Body", "All"));
+        Assert.True(TechniqueFlavors.Matches(null, "All"));
+        Assert.True(TechniqueFlavors.Matches("Mind", null));
+        Assert.True(TechniqueFlavors.Matches("Body", "Body"));
+        Assert.False(TechniqueFlavors.Matches("Mind", "Body"));
+        Assert.True(TechniqueFlavors.Matches(null, "Heart"));
+        Assert.True(TechniqueFlavors.Matches("None", "Heart"));
+    }
+
+    [Fact]
+    public void EveryFilterChipKeyIsARealGroupOrAll()
+    {
+        Assert.Equal("All", TechniqueFlavors.FilterKeys[0]);
+        Assert.All(TechniqueFlavors.FilterKeys.Skip(1), k => Assert.NotEqual(TechniqueFlavor.None, TechniqueFlavors.Parse(k)));
+        Assert.Equal(5, TechniqueFlavors.FilterKeys.Distinct().Count());
+    }
+
+    [Fact]
+    public void EveryGroupHasAtLeastTwoBuiltInPracticesSoNoFilterShowsAnEmptyList()
+    {
+        foreach (TechniqueFlavor flavor in new[] { TechniqueFlavor.Body, TechniqueFlavor.Mind, TechniqueFlavor.Heart, TechniqueFlavor.Action })
+        {
+            Assert.True(Enum.GetValues<TechniqueId>().Count(id => TechniqueFlavors.For(id) == flavor) >= 2, flavor.ToString());
+        }
+    }
 }
