@@ -52,6 +52,8 @@
     <Compile Include="TensionScaleTests.cs" />
     <Compile Include="ZoomOriginTests.cs" />
     <Compile Include="ContrastTests.cs" />
+    <Compile Include="TechniqueFlavorTests.cs" />
+    <Compile Include="AlgorithmStepTests.cs" />
     <Compile Include="AppStringsResourceTests.cs" />
     <Compile Include="TestScoreLabelCompletenessTests.cs" />
     <Compile Include="WeakActionEventTests.cs" />

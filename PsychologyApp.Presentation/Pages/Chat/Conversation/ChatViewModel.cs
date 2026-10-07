@@ -27,6 +27,9 @@ public sealed record ChatBubble(string Text, bool IsUser, string TimeText, strin
 public sealed record QuickReplyItem(ChatQuickReply Reply, ICommand Command)
 {
     public string Label => Reply.Label;
+
+    /// <summary>A practice offer is the main step of the message: it is drawn filled, the other chips stay outlined.</summary>
+    public bool IsPractice => Reply.Kind == ChatQuickReplyKinds.Practice;
 }
 
 /// <summary>One conversation in the messenger. Every message is persisted by <see cref="IChatService"/> before it is shown, so leaving the page never loses anything.</summary>

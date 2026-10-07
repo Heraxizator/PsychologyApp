@@ -11,7 +11,20 @@
              x:DataType="vm:ChatViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding Title}"
-             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}"
+             Background="{AppThemeBinding Light={StaticResource ChatBackdropLight}, Dark={StaticResource ChatBackdropDark}}">
+
+    <ContentPage.Resources>
+        <!-- A very faint top-to-bottom wash behind the conversation: the white companion bubbles stand out from it a little, and the page is not flat grey. -->
+        <LinearGradientBrush x:Key="ChatBackdropLight" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#F3F4F6" Offset="0.0" />
+            <GradientStop Color="#E9F0F7" Offset="1.0" />
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="ChatBackdropDark" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#121212" Offset="0.0" />
+            <GradientStop Color="#151B22" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Resources>
 
     <ContentPage.Behaviors>
         <behaviors:PageAnalyticsBehavior />
@@ -229,6 +242,12 @@
                             Stroke="{DynamicResource Primary}"
                             StrokeShape="RoundRectangle 18"
                             BackgroundColor="Transparent">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding IsPractice}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryFill}" />
+                                    <Setter Property="Stroke" Value="{DynamicResource PrimaryFill}" />
+                                </DataTrigger>
+                            </Border.Triggers>
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Command}" CommandParameter="{Binding Reply}" />
                             </Border.GestureRecognizers>
@@ -236,7 +255,14 @@
                                 Text="{Binding Label}"
                                 FontSize="14"
                                 FontFamily="{StaticResource MediumFontFamily}"
-                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsPractice}" Value="True">
+                                        <Setter Property="TextColor" Value="{DynamicResource OnPrimary}" />
+                                        <Setter Property="FontFamily" Value="{StaticResource SemiBoldFontFamily}" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
                         </Border>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>

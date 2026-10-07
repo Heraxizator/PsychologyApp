@@ -122,6 +122,7 @@
                         Subtitle="{Binding Subtitle}"
                         Theme="{Binding Theme}"
                         Author="{Binding Author}"
+                        Flavor="{Binding Flavor}"
                         Active="{Binding Active}"
                         TapCommand="{Binding TapCommand}">
                         <practiceUi:TechniqueListCardView.Behaviors>

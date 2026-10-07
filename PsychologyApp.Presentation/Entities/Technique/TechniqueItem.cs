@@ -18,6 +18,9 @@ public class TechniqueItem
     public string? Subtitle { get; set; }
     public string? Theme { get; set; }
     public string? Author { get; set; }
+
+    /// <summary>A <c>TechniqueFlavor</c> name: the group of the practice, which colours its card.</summary>
+    public string? Flavor { get; set; }
     public bool Active { get; set; }
     public ICommand? TapCommand { get; set; }
 
@@ -27,5 +30,5 @@ public class TechniqueItem
         || (a is not null && b is not null
             && a.Id == b.Id && a.Title == b.Title && a.Subtitle == b.Subtitle && a.MetaText == b.MetaText
             && a.Date == b.Date && a.IconName == b.IconName && a.Image == b.Image && a.Active == b.Active
-            && a.DurationText == b.DurationText && a.Number == b.Number && a.Theme == b.Theme && a.Author == b.Author);
+            && a.DurationText == b.DurationText && a.Flavor == b.Flavor && a.Number == b.Number && a.Theme == b.Theme && a.Author == b.Author);
 }

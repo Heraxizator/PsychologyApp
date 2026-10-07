@@ -3,7 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:self="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:conv="clr-namespace:PsychologyApp.Presentation.Shared.UI.Converters"
              x:Class="PsychologyApp.Presentation.Shared.UI.Components.AlgorithmBoxView">
+
+    <ContentView.Resources>
+        <conv:AlgorithmStepConverter x:Key="Step" />
+    </ContentView.Resources>
 
     <ContentView.Behaviors>
         <behaviors:ListItemRevealBehavior />
@@ -30,14 +35,33 @@
                         </StackLayout.Behaviors>
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="x:String">
-                                <Label
-                                    Margin="0,0,0,3"
-                                    Text="{Binding .}"
-                                    Style="{StaticResource BodyStyle}">
-                                    <Label.Behaviors>
+                                <Grid Margin="0,0,0,8" ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <Grid.Behaviors>
                                         <behaviors:ListItemRevealBehavior />
-                                    </Label.Behaviors>
-                                </Label>
+                                    </Grid.Behaviors>
+                                    <Border
+                                        Grid.Column="0"
+                                        WidthRequest="28"
+                                        HeightRequest="28"
+                                        VerticalOptions="Start"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 14"
+                                        IsVisible="{Binding ., Converter={StaticResource Step}, ConverterParameter=badge}"
+                                        BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
+                                        <Label
+                                            Text="{Binding ., Converter={StaticResource Step}, ConverterParameter=number}"
+                                            Style="{StaticResource CaptionStyle}"
+                                            FontFamily="{StaticResource SemiBoldFontFamily}"
+                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center" />
+                                    </Border>
+                                    <Label
+                                        Grid.Column="1"
+                                        Text="{Binding ., Converter={StaticResource Step}, ConverterParameter=text}"
+                                        Style="{StaticResource BodyStyle}"
+                                        VerticalOptions="Center" />
+                                </Grid>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </StackLayout>

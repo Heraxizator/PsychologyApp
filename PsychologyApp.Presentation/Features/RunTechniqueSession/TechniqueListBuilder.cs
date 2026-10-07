@@ -64,6 +64,7 @@ public sealed class TechniqueListBuilder(
                 Subtitle = entry.Subtitle,
                 Theme = theme,
                 Author = entry.Author,
+                Flavor = TechniqueFlavors.For(entry.TechniqueId).ToString(),
                 Active = true,
                 TapCommand = new AsyncCommand(() => navigationService.GoToTechniqueAsync(entry.TechniqueId))
             });
