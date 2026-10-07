@@ -198,7 +198,7 @@ public sealed partial class CompanionDialogue(
         }
 
         // "Just talk" typed after "get it off your chest, sort it out or calm down?" is that choice, not a new story.
-        if (previous.LastQuestionId == CompanionCaseContent.GoalQuestionId && WordCount(text) <= 6 && CompanionCaseContent.ParseGoal(text) is { } typedGoal)
+        if (WordCount(text) <= 6 && CompanionCaseContent.ParseGoal(text, asked: previous.LastQuestionId == CompanionCaseContent.GoalQuestionId, previous.ContentTurns) is { } typedGoal)
         {
             return RespondToGoal(previous with { Turns = previous.Turns + 1 }, typedGoal);
         }
@@ -535,6 +535,12 @@ public sealed partial class CompanionDialogue(
             return RespondToGrief(state with { GriefShared = true, Emotion = CompanionEmotion.Sadness.ToString() }, theme, newLoss: analysis.HasLoss && !previous.GriefShared);
         }
 
+        // The person has decided on a step: back it, and do not answer it with a practice offer.
+        if (!firstStatement && state.ContentTurns >= 2 && !state.AskedQuestions.Contains("plan") && CompanionCaseContent.StatesAPlan(text))
+        {
+            return Reply([CompanionCaseContent.PlanReply(english)], [], (state with { TurnsSinceOffer = 0 }).WithAsked("plan"), emotion, theme);
+        }
+
         // A proposal needs only enough words for the guesser to judge; the open choice waits for a real story or a second unclear message.
         if (emotion == CompanionEmotion.Unknown && emotionGuesser?.Guess(text) is { } guess)
         {
@@ -791,7 +797,7 @@ public sealed partial class CompanionDialogue(
             return quote is null ? validation : $"{CompanionDialogueContent.QuoteLine(quote, english, _random)} {validation}";
         }
 
-        string ack = emotion != CompanionEmotion.Unknown && before != CompanionEmotion.Unknown && emotion != before && !CompanionSmallTalk.IsSameFamily(before, emotion)
+        string ack = emotion != CompanionEmotion.Unknown && before != CompanionEmotion.Unknown && emotion != before && !CompanionSmallTalk.IsSameFamily(before, emotion) && !(state.Event is not null && CompanionSmallTalk.IsOneStory(before, emotion))
             ? CompanionSmallTalk.Shift(before, emotion, english)
             : emotion != CompanionEmotion.Unknown && state.Turns % 2 == 0
                 ? CompanionSmallTalk.Validation(emotion, english, _random)

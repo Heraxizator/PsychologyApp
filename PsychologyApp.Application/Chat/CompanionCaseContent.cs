@@ -118,6 +118,8 @@ public static class CompanionCaseContent
             "Then let's prepare for exactly that. What would help you feel more confident?")
     };
 
+    private static readonly HashSet<CompanionEvent> YesNoQuestions = [CompanionEvent.Humiliation, CompanionEvent.CaringForIll, CompanionEvent.Betrayal, CompanionEvent.Overload];
+
     public static string? EventLine(CompanionEvent kind, bool english) =>
         Texts.TryGetValue(kind, out EventText? t) ? (english ? t.LineEn : t.LineRu) : null;
 
@@ -151,6 +153,12 @@ public static class CompanionCaseContent
 
         if (questionId.StartsWith("e:", StringComparison.Ordinal) && Enum.TryParse(questionId[2..], out CompanionEvent kind) && Texts.TryGetValue(kind, out EventText? t))
         {
+            // "Yes" to "what worries you most: money, the future or others?" answers nothing: ask for the choice, do not pretend it was understood.
+            if (!YesNoQuestions.Contains(kind))
+            {
+                return english ? $"Let me ask again, in a word or two: {Texts[kind].AskEn}" : $"Уточню: ответьте коротко. {Texts[kind].AskRu}";
+            }
+
             return english ? (yes ? t.YesEn : t.NoEn) : (yes ? t.YesRu : t.NoRu);
         }
 
@@ -170,14 +178,21 @@ public static class CompanionCaseContent
         new(ChatQuickReplyKinds.Act, english ? "Calm down" : "Успокоиться", $"goal:{GoalCalm}")
     ];
 
-    private static readonly string[] VentWords = ["выговор", "поговорить", "высказ", "излить", "послушай", "просто рассказ", "get it off", "vent", "just talk", "let it out", "off my chest"];
+    private static readonly string[] VentWords = ["выговор", "поговорить", "высказ", "излить", "послушай", "выслуш", "послуша", "чтоб кто-то", "чтобы кто-то", "просто рассказ", "get it off", "vent", "just talk", "let it out", "off my chest"];
     private static readonly string[] UnderstandWords = ["разобрат", "понять", "разбор", "что делать", "sort", "figure", "understand", "make sense", "what to do"];
     private static readonly string[] CalmWords = ["успокоит", "расслабит", "полегч", "прийти в себя", "calm", "relax", "settle", "ease"];
 
-    /// <summary>Reads a typed answer to the goal question.</summary>
-    public static string? ParseGoal(string text)
+    private static readonly string[] WantPhrases = ["хочу", "хотела бы", "хотел бы", "хотела", "хотел", "нужно", "надо", "давай", "помоги", "i want", "i need", "help me", "let me", "can we"];
+
+    /// <summary>Reads a typed answer to the goal question; before that question was asked only an explicit wish ("I want to sort it out") counts, since "understand" and "calm" are everyday words.</summary>
+    public static string? ParseGoal(string text, bool asked, int contentTurns)
     {
         string t = text.ToLowerInvariant();
+        if (!asked && (contentTurns < 1 || !WantPhrases.Any(t.Contains)))
+        {
+            return null;
+        }
+
         if (CalmWords.Any(t.Contains))
         {
             return GoalCalm;
@@ -215,4 +230,23 @@ public static class CompanionCaseContent
         string t = text.ToLowerInvariant();
         return DurationCues.Any(t.Contains);
     }
+
+    // ----- the person has decided what to do -----
+
+    private static readonly string[] PlanPhrases =
+    [
+        "поговорю", "попробую", "скажу ей", "скажу ему", "напишу ей", "напишу ему", "позвоню", "решила", "решил ", "пойду к", "запишусь",
+        "i will talk", "i'll talk", "i'll try", "i will try", "i decided", "i'll call", "i'll write", "i'll tell"
+    ];
+
+    /// <summary>"Maybe I'll talk to her": a step the person has taken in their mind. The companion backs it instead of offering a practice.</summary>
+    public static bool StatesAPlan(string text)
+    {
+        string t = text.ToLowerInvariant();
+        return PlanPhrases.Any(t.Contains);
+    }
+
+    public static string PlanReply(bool english) => english
+        ? "That sounds like a real step, and it is yours to take. What would make it a little easier to start?"
+        : "Это похоже на настоящий шаг, и решать его вам. Что могло бы помочь начать чуть спокойнее?";
 }

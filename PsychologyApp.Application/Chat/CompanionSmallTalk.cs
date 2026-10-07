@@ -267,6 +267,11 @@ public static class CompanionSmallTalk
         a is CompanionEmotion.Panic or CompanionEmotion.Anxiety or CompanionEmotion.Overthinking
         && b is CompanionEmotion.Panic or CompanionEmotion.Anxiety or CompanionEmotion.Overthinking;
 
+    /// <summary>When something has happened (a breakup, a layoff, an ill parent), grief, worry, guilt and tiredness are one story: naming each swing as a new feeling sounds like not listening.</summary>
+    public static bool IsOneStory(CompanionEmotion a, CompanionEmotion b) =>
+        a is not (CompanionEmotion.Panic or CompanionEmotion.Anger or CompanionEmotion.Procrastination or CompanionEmotion.Unknown)
+        && b is not (CompanionEmotion.Panic or CompanionEmotion.Anger or CompanionEmotion.Procrastination or CompanionEmotion.Unknown);
+
     public static string Shift(CompanionEmotion from, CompanionEmotion to, bool english) => english
         ? $"It seems {CompanionContent.EmotionName(to, true)} is now in front, more than {CompanionContent.EmotionName(from, true)}."
         : $"Похоже, теперь на первый план вышло другое: {CompanionContent.EmotionName(to, false)}, а не {CompanionContent.EmotionName(from, false)}.";

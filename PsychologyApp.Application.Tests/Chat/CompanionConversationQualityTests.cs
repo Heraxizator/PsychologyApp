@@ -347,9 +347,9 @@ public class CompanionConversationQualityTests
     [Fact]
     public void YesToASituationQuestionGetsAFollowUpThatFitsIt()
     {
-        List<Turn> chat = Talk("Муж вчера накричал на меня, мне очень обидно", "да");
+        List<Turn> chat = Talk("Муж мне изменил, я в шоке", "да");
 
-        Assert.Contains("запускает такие ссоры", chat[1].Text);
+        Assert.Contains("Как он отреагировал", chat[1].Text);
         Assert.DoesNotContain("главное", chat[1].Text);
     }
 
@@ -436,5 +436,48 @@ public class CompanionConversationQualityTests
         CompanionState restored = CompanionState.Deserialize(state.Serialize());
 
         Assert.Equal(("Breakup", "vent", true, "goal"), (restored.Event, restored.Goal, restored.GoalAsked, restored.LastQuestionId));
+    }
+
+    [Fact]
+    public void YesToAQuestionWithAChoiceAsksForTheChoice()
+    {
+        List<Turn> chat = Talk("Меня уволили сегодня", "да");
+
+        Assert.Contains("Уточню", chat[1].Text);
+        Assert.Contains("деньги, будущее", chat[1].Text);
+    }
+
+    [Fact]
+    public void AWishToSortItOutIsHeardBeforeTheGoalQuestionIsAsked()
+    {
+        List<Turn> chat = Talk("Поругалась с мамой, она сказала что я неблагодарная", "хочу разобраться");
+
+        Assert.Equal("understand", chat[1].Reply.State.Goal);
+        Assert.DoesNotContain("выговориться, разобраться или успокоиться", chat[1].Text);
+    }
+
+    [Fact]
+    public void WishingToBeListenedToIsVenting()
+    {
+        List<Turn> chat = Talk("Меня уволили сегодня", "просто хочу чтоб кто-то выслушал");
+
+        Assert.Equal("vent", chat[1].Reply.State.Goal);
+    }
+
+    [Fact]
+    public void ADecisionToActIsBackedNotAnsweredWithAPractice()
+    {
+        List<Turn> chat = Talk("Поругалась с мамой, она сказала что я неблагодарная", "мне обидно", "наверное, поговорю с ней");
+
+        Assert.Contains("настоящий шаг", chat[2].Text);
+        Assert.False(chat[2].OffersPractice);
+    }
+
+    [Fact]
+    public void FeelingsWithinOneStoryAreNotAnnouncedAsAShift()
+    {
+        List<Turn> chat = Talk("Меня бросил парень после трёх лет", "я постоянно думаю что сделала не так", "мне пусто");
+
+        Assert.All(chat, t => Assert.DoesNotContain("на первый план", t.Text));
     }
 }
