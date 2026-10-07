@@ -203,6 +203,14 @@ public sealed partial class CompanionDialogue(
             return RespondToGoal(previous with { Turns = previous.Turns + 1 }, typedGoal);
         }
 
+        // "It is not the first time" answers "first time or again?": the follow-up that fits it, not a generic question.
+        if (WordCount(text) <= 8 && CompanionCaseContent.ReadChoice(previous.LastQuestionId, text) is { } choice
+            && CompanionCaseContent.FollowUp(previous.LastQuestionId, choice, english, force: true) is { } followUp)
+        {
+            CompanionState answered = previous.WithText(text) with { TurnsSinceOffer = Math.Min(previous.TurnsSinceOffer + 1, 99) };
+            return Reply([followUp], [], answered, ParseEmotion(previous.Emotion), ParseTheme(previous.Theme));
+        }
+
         SituationAnalysis single = analyzer.Analyze(text);
         Utterance act = UtteranceClassifier.Classify(text, single.Emotion != CompanionEmotion.Unknown);
         if (act is Utterance.Yes or Utterance.No && !previous.QuestionPending)

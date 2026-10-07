@@ -489,4 +489,20 @@ public class CompanionConversationQualityTests
         string said = string.Join(" ", chat.Skip(1).Select(t => t.Text));
         Assert.Matches("Расставание переворачивает|После такого трудно", said);
     }
+
+    [Fact]
+    public void ItIsNotTheFirstTimeAnswersTheQuestionAboutRepetition()
+    {
+        List<Turn> chat = Talk("Поругалась с мамой, она сказала что я неблагодарная", "да, это уже не первый раз");
+
+        Assert.Contains("запускает такие ссоры", chat[1].Text);
+    }
+
+    [Fact]
+    public void ForAWhileAnswersTheQuestionAboutHowLongSleepHasBeenBad()
+    {
+        List<Turn> chat = Talk("Не могу уснуть, лежу до утра", "уже давно");
+
+        Assert.Contains("обсудить с врачом", chat[1].Text);
+    }
 }

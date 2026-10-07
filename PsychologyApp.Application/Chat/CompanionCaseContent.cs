@@ -137,7 +137,7 @@ public static class CompanionCaseContent
     public static CompanionEvent ParseEvent(string? name) => Enum.TryParse(name, out CompanionEvent kind) ? kind : CompanionEvent.None;
 
     /// <summary>The question that fits the answer "yes" / "no" to the question just asked, or null when a generic follow-up will do.</summary>
-    public static string? FollowUp(string? questionId, bool yes, bool english)
+    public static string? FollowUp(string? questionId, bool yes, bool english, bool force = false)
     {
         if (questionId is null)
         {
@@ -154,7 +154,7 @@ public static class CompanionCaseContent
         if (questionId.StartsWith("e:", StringComparison.Ordinal) && Enum.TryParse(questionId[2..], out CompanionEvent kind) && Texts.TryGetValue(kind, out EventText? t))
         {
             // "Yes" to "what worries you most: money, the future or others?" answers nothing: ask for the choice, do not pretend it was understood.
-            if (!YesNoQuestions.Contains(kind))
+            if (!force && !YesNoQuestions.Contains(kind))
             {
                 return english ? $"Let me ask again, in a word or two: {Texts[kind].AskEn}" : $"Уточню: ответьте коротко. {Texts[kind].AskRu}";
             }
@@ -271,5 +271,28 @@ public static class CompanionCaseContent
 
         string[] bank = english ? lines.En : lines.Ru;
         return bank[random.Next(bank.Length)];
+    }
+
+    private static readonly string[] RepeatedCues = ["не первый", "повторя", "часто", "постоянно", "опять", "снова", "каждый раз", "всегда", "not the first", "again", "keeps", "always", "often"];
+    private static readonly string[] FirstTimeCues = ["впервые", "первый раз", "первый случай", "раньше не", "first time", "never before"];
+    private static readonly string[] LongCues = ["давно", "месяц", "недел", "годами", "долго", "long time", "months", "weeks", "years"];
+    private static readonly string[] RecentCues = ["недавно", "вчера", "на днях", "с недавних", "recently", "yesterday", "lately"];
+
+    /// <summary>
+    /// A short answer to a "this or that" question ("it is not the first time", "for a long time") read as the yes or the no of that question,
+    /// so the follow-up fits what was said. Only for the two questions whose answer is a plain "again / first time" or "long / recent".
+    /// </summary>
+    public static bool? ReadChoice(string? questionId, string text)
+    {
+        string t = text.ToLowerInvariant();
+        switch (questionId)
+        {
+            case "e:Conflict":
+                return RepeatedCues.Any(t.Contains) ? true : FirstTimeCues.Any(t.Contains) ? false : null;
+            case "e:Sleeplessness":
+                return RecentCues.Any(t.Contains) ? false : LongCues.Any(t.Contains) ? true : null;
+            default:
+                return null;
+        }
     }
 }
