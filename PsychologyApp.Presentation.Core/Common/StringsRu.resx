@@ -2956,4 +2956,49 @@
   <data name="TestResultDuration.2" xml:space="preserve">
     <value>{0} мин {1} сек</value>
   </data>
+  <data name="BreathInhale" xml:space="preserve">
+    <value>Вдох</value>
+  </data>
+  <data name="BreathHold" xml:space="preserve">
+    <value>Пауза</value>
+  </data>
+  <data name="BreathExhale" xml:space="preserve">
+    <value>Выдох</value>
+  </data>
+  <data name="BreathStart" xml:space="preserve">
+    <value>Начать</value>
+  </data>
+  <data name="BreathStop" xml:space="preserve">
+    <value>Остановить</value>
+  </data>
+  <data name="BreathAgain" xml:space="preserve">
+    <value>Ещё раз</value>
+  </data>
+  <data name="BreathCycleFormat" xml:space="preserve">
+    <value>Цикл {0} из {1}</value>
+  </data>
+  <data name="BreathReady" xml:space="preserve">
+    <value>Сядьте удобно и нажмите «Начать». Дышите вместе с кругом.</value>
+  </data>
+  <data name="BreathDone" xml:space="preserve">
+    <value>Хорошо. Теперь оцените напряжение после практики.</value>
+  </data>
+  <data name="BreathCircleLabel" xml:space="preserve">
+    <value>Дыхательный круг: расширяется на вдохе, сжимается на выдохе</value>
+  </data>
+  <data name="TensionPickHint" xml:space="preserve">
+    <value>Проведите пальцем по полосе, чтобы выбрать от 0 до 10</value>
+  </data>
+  <data name="TensionPickConfirm" xml:space="preserve">
+    <value>Выбрать</value>
+  </data>
+  <data name="TensionChangeFormat" xml:space="preserve">
+    <value>Было {0} → стало {1}</value>
+  </data>
+  <data name="TensionCalmWord" xml:space="preserve">
+    <value>спокойно</value>
+  </data>
+  <data name="TensionStrongWord" xml:space="preserve">
+    <value>очень сильно</value>
+  </data>
 </root>

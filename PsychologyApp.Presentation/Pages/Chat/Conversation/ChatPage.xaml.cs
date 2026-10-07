@@ -1,4 +1,5 @@
 using System.Collections.Specialized;
+using PsychologyApp.Application.Chat;
 using PsychologyApp.Presentation.Features.Chat.DependencyInjection;
 using PsychologyApp.Presentation.Shared.Common;
 
@@ -82,6 +83,10 @@ public partial class ChatPage : ContentPage
         int index = Math.Clamp(_viewModel.QuickReplies.IndexOf(item), 0, MaxStaggeredChips);
         UiAnimations.SafeRevealLiteAsync(chip, y: 8, allowHidden: true, delayMs: 60 + (index * ChipStaggerMs)).FireAndForget();
     }
+
+    /// <summary>The slider replaces the eleven rating chips; its answer goes through the same command.</summary>
+    private void OnTensionChosen(object? sender, int value) =>
+        _viewModel.QuickReplyCommand.Execute(new ChatQuickReply(ChatQuickReplyKinds.Rating, value.ToString(), value.ToString()));
 
     private void OnSendTapped(object? sender, TappedEventArgs e)
     {

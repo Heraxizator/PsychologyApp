@@ -14,6 +14,7 @@
         <shellBehaviors:TechniqueSessionBehavior />
     </ContentPage.Behaviors>
 
+    <Grid x:Name="ZoomHost">
     <controls:TechniquePageShell
         x:Name="SessionShell"
         TitleText="{Binding PageName}"
@@ -26,4 +27,5 @@
             <behaviors:RevealOnAppearingBehavior />
         </controls:TechniquePageShell.Behaviors>
     </controls:TechniquePageShell>
+    </Grid>
 </ContentPage>

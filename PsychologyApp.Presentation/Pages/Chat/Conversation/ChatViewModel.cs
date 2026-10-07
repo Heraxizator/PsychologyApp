@@ -115,6 +115,15 @@ public sealed class ChatViewModel : BaseViewModel
 
     public bool HasQuickReplies => QuickReplies.Count > 0;
 
+    /// <summary>The reply is the 0..10 tension question: one slider is shown instead of eleven chips.</summary>
+    public bool IsRatingMode => QuickReplies.Count >= 11 && QuickReplies.All(q => q.Reply.Kind == ChatQuickReplyKinds.Rating);
+
+    /// <summary>The chips are shown unless the question is the tension scale.</summary>
+    public bool ShowChips => HasQuickReplies && !IsRatingMode;
+
+    /// <summary>The tension the person gave last in this chat, so the slider can show "was 8 -> now 5" after a practice.</summary>
+    public int? RatingReference { get; private set; }
+
     /// <summary>True until the history has loaded once. The page shows a loading state instead of a blank list.</summary>
     public bool IsLoading
     {
@@ -273,8 +282,14 @@ public sealed class ChatViewModel : BaseViewModel
         return TakeTurnAsync(text, () => _chat.SendTextAsync(_sessionId!.Value, text, _lifetime.Token));
     }
 
-    private Task SendQuickReplyAsync(ChatQuickReply reply) =>
-        TakeTurnAsync(reply.Label, () => _chat.SendQuickReplyAsync(_sessionId!.Value, reply, _lifetime.Token));
+    private Task SendQuickReplyAsync(ChatQuickReply reply)
+    {
+        // The value just given is what the next slider shows as "was N".
+        int? picked = reply.Kind == ChatQuickReplyKinds.Rating && int.TryParse(reply.Payload, out int value) ? value : null;
+        Task turn = TakeTurnAsync(reply.Label, () => _chat.SendQuickReplyAsync(_sessionId!.Value, reply, _lifetime.Token));
+        RatingReference = picked ?? RatingReference;
+        return turn;
+    }
 
     private async Task TakeTurnAsync(string userText, Func<Task<ChatTurnResult>> send)
     {
@@ -355,6 +370,9 @@ public sealed class ChatViewModel : BaseViewModel
         }
 
         OnPropertyChanged(nameof(HasQuickReplies));
+        OnPropertyChanged(nameof(IsRatingMode));
+        OnPropertyChanged(nameof(ShowChips));
+        OnPropertyChanged(nameof(RatingReference));
     }
 
     /// <summary>Builds a bubble with a day divider above the first message of a day and tighter spacing inside a run from one sender. Bubbles must be created in display order.</summary>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             x:Class="PsychologyApp.Presentation.Widgets.TensionSlider.TensionSliderView">
+    <VerticalStackLayout Spacing="6" Padding="16,12,16,4">
+        <Label x:Name="NumberLabel" FontSize="44" HorizontalTextAlignment="Center" FontFamily="{StaticResource MediumFontFamily}" />
+        <Label x:Name="WordLabel" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" MinimumHeightRequest="18" />
+        <Label x:Name="ChangeLabel" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" IsVisible="False" />
+        <Slider x:Name="TensionBar" Minimum="0" Maximum="10" Value="5" ValueChanged="OnValueChanged" />
+        <Label x:Name="HintLabel" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+        <ui:ButtonView x:Name="ChooseButton" />
+    </VerticalStackLayout>
+</ContentView>

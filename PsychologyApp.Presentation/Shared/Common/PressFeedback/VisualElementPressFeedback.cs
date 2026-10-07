@@ -94,6 +94,7 @@ public static class VisualElementPressFeedback
 
     private static async Task<bool> AnimatePressAsync(VisualElement target)
     {
+        TapOrigin.Record(target);
         if (!TryClaimPressAnimation(target, out PressFeedbackOptions opts, out double scale))
         {
             return false;

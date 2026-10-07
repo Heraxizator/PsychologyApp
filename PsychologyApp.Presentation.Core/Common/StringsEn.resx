@@ -2950,4 +2950,49 @@
   <data name="TestResultDuration.2" xml:space="preserve">
     <value>{0} min {1} sec</value>
   </data>
+  <data name="BreathInhale" xml:space="preserve">
+    <value>Inhale</value>
+  </data>
+  <data name="BreathHold" xml:space="preserve">
+    <value>Hold</value>
+  </data>
+  <data name="BreathExhale" xml:space="preserve">
+    <value>Exhale</value>
+  </data>
+  <data name="BreathStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="BreathStop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="BreathAgain" xml:space="preserve">
+    <value>Again</value>
+  </data>
+  <data name="BreathCycleFormat" xml:space="preserve">
+    <value>Cycle {0} of {1}</value>
+  </data>
+  <data name="BreathReady" xml:space="preserve">
+    <value>Sit comfortably and press Start. Breathe with the circle.</value>
+  </data>
+  <data name="BreathDone" xml:space="preserve">
+    <value>Well done. Now rate your tension after the practice.</value>
+  </data>
+  <data name="BreathCircleLabel" xml:space="preserve">
+    <value>Breathing circle: grows as you inhale, shrinks as you exhale</value>
+  </data>
+  <data name="TensionPickHint" xml:space="preserve">
+    <value>Slide along the bar to pick from 0 to 10</value>
+  </data>
+  <data name="TensionPickConfirm" xml:space="preserve">
+    <value>Choose</value>
+  </data>
+  <data name="TensionChangeFormat" xml:space="preserve">
+    <value>Was {0} → now {1}</value>
+  </data>
+  <data name="TensionCalmWord" xml:space="preserve">
+    <value>calm</value>
+  </data>
+  <data name="TensionStrongWord" xml:space="preserve">
+    <value>very strong</value>
+  </data>
 </root>

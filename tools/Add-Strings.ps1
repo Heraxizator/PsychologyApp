@@ -4,18 +4,21 @@ param([string]$Dir = "$PSScriptRoot\..\PsychologyApp.Presentation.Core\Common", 
 $ErrorActionPreference = 'Stop'
 
 $entries = [ordered]@{
-    BackupProtectTitle = @('Защитить копию паролем?', 'Protect the backup with a passphrase?')
-    BackupProtectBody = @('В копии чаты, заметки и план безопасности. Файл с паролем нельзя прочитать без него.', 'The backup holds chats, notes and the safety plan. A file with a passphrase cannot be read without it.')
-    BackupProtectWith = @('С паролем (рекомендуется)', 'With a passphrase (recommended)')
-    BackupProtectWithout = @('Без защиты', 'Without protection')
-    BackupPassphraseTitle = @('Пароль для копии', 'Backup passphrase')
-    BackupPassphraseNewBody = @('Придумайте пароль не короче 8 символов. Восстановить его нельзя: без него копию не открыть.', 'Choose a passphrase of at least 8 characters. It cannot be recovered: without it the backup cannot be opened.')
-    BackupPassphraseConfirmBody = @('Повторите пароль.', 'Repeat the passphrase.')
-    BackupPassphraseOpenBody = @('Копия защищена паролем. Введите его.', 'This backup is protected by a passphrase. Enter it.')
-    BackupPassphrasePlaceholder = @('Пароль', 'Passphrase')
-    BackupPassphraseTooShortToast = @('Пароль короче 8 символов', 'The passphrase is shorter than 8 characters')
-    BackupPassphraseMismatchToast = @('Пароли не совпадают', 'The passphrases do not match')
-    BackupPassphraseWrongToast = @('Неверный пароль или файл изменён', 'Wrong passphrase, or the file was changed')
+    BreathInhale = @('Вдох', 'Inhale')
+    BreathHold = @('Пауза', 'Hold')
+    BreathExhale = @('Выдох', 'Exhale')
+    BreathStart = @('Начать', 'Start')
+    BreathStop = @('Остановить', 'Stop')
+    BreathAgain = @('Ещё раз', 'Again')
+    BreathCycleFormat = @('Цикл {0} из {1}', 'Cycle {0} of {1}')
+    BreathReady = @('Сядьте удобно и нажмите «Начать». Дышите вместе с кругом.', 'Sit comfortably and press Start. Breathe with the circle.')
+    BreathDone = @('Хорошо. Теперь оцените напряжение после практики.', 'Well done. Now rate your tension after the practice.')
+    BreathCircleLabel = @('Дыхательный круг: расширяется на вдохе, сжимается на выдохе', 'Breathing circle: grows as you inhale, shrinks as you exhale')
+    TensionPickHint = @('Проведите пальцем по полосе, чтобы выбрать от 0 до 10', 'Slide along the bar to pick from 0 to 10')
+    TensionPickConfirm = @('Выбрать', 'Choose')
+    TensionChangeFormat = @('Было {0} → стало {1}', 'Was {0} → now {1}')
+    TensionCalmWord = @('спокойно', 'calm')
+    TensionStrongWord = @('очень сильно', 'very strong')
 }
 
 function AddData($path, $name, $value) {

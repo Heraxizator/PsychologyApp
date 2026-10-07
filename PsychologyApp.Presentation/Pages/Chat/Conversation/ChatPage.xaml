@@ -7,6 +7,7 @@
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:avatar="clr-namespace:PsychologyApp.Presentation.Widgets.CompanionAvatar"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:tension="clr-namespace:PsychologyApp.Presentation.Widgets.TensionSlider"
              x:DataType="vm:ChatViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding Title}"
@@ -207,8 +208,14 @@
                 HeightRequest="1"
                 Color="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}" />
 
+            <tension:TensionSliderView
+                x:Name="TensionPicker"
+                IsVisible="{Binding IsRatingMode}"
+                ReferenceValue="{Binding RatingReference}"
+                Chosen="OnTensionChosen" />
+
             <FlexLayout
-                IsVisible="{Binding HasQuickReplies}"
+                IsVisible="{Binding ShowChips}"
                 Wrap="Wrap"
                 JustifyContent="Start"
                 Margin="12,10,12,0"

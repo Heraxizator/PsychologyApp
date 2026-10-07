@@ -249,4 +249,53 @@ public sealed class ChatViewModelTests
         Assert.Equal(chip, sent);
         Assert.False(viewModel.HasQuickReplies);
     }
+
+    private static ChatQuickReply[] RatingChips() =>
+        [.. Enumerable.Range(0, 11).Select(n => new ChatQuickReply(ChatQuickReplyKinds.Rating, n.ToString(), n.ToString()))];
+
+    [Fact]
+    public async Task ElevenRatingChipsBecomeOneSliderAndHideTheChips()
+    {
+        History(Message(ChatRole.Companion, "How strong is the tension?", Now, RatingChips()));
+        ChatViewModel viewModel = Create();
+
+        await viewModel.LoadAsync();
+
+        Assert.True(viewModel.IsRatingMode);
+        Assert.False(viewModel.ShowChips);
+        Assert.Null(viewModel.RatingReference);
+    }
+
+    [Fact]
+    public async Task OrdinaryChipsStayChipsAndAFewRatingsAreNotASlider()
+    {
+        History(Message(ChatRole.Companion, "pick", Now, new ChatQuickReply(ChatQuickReplyKinds.Emotion, "Anxiety", "Anxiety")));
+        ChatViewModel chips = Create();
+        await chips.LoadAsync();
+        Assert.False(chips.IsRatingMode);
+        Assert.True(chips.ShowChips);
+
+        History(Message(ChatRole.Companion, "pick", Now, new ChatQuickReply(ChatQuickReplyKinds.Rating, "3", "3")));
+        ChatViewModel few = Create();
+        await few.LoadAsync();
+        Assert.False(few.IsRatingMode);
+    }
+
+    [Fact]
+    public async Task ThePickedValueIsRememberedSoTheNextSliderCanShowWhatChanged()
+    {
+        History(Message(ChatRole.Companion, "How strong is the tension?", Now, RatingChips()));
+        ChatQuickReply? sent = null;
+        _chat.Setup(c => c.SendQuickReplyAsync(5, It.IsAny<ChatQuickReply>(), It.IsAny<CancellationToken>()))
+            .Callback<long, ChatQuickReply, CancellationToken>((_, reply, _) => sent = reply)
+            .ReturnsAsync(Turn(null, "Thank you"));
+        ChatViewModel viewModel = Create();
+        await viewModel.LoadAsync();
+
+        viewModel.QuickReplyCommand.Execute(new ChatQuickReply(ChatQuickReplyKinds.Rating, "8", "8"));
+        await VmTestHelpers.WaitUntilAsync(() => sent is not null, 5000);
+
+        Assert.Equal(8, viewModel.RatingReference);
+        Assert.False(viewModel.IsRatingMode);
+    }
 }

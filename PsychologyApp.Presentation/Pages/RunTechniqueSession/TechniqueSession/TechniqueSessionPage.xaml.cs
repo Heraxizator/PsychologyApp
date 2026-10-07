@@ -3,7 +3,9 @@ using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Features.RunTechniqueSession.Index;
 using PsychologyApp.Presentation.Features.RunTechniqueSession.DependencyInjection;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
+using PsychologyApp.Presentation.Widgets.BreathingPacer;
 using PsychologyApp.Presentation.Widgets.TechniqueBodies;
+using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueSession;
 using PsychologyApp.Presentation.Shared.ViewModels;
@@ -34,12 +36,53 @@ public partial class TechniqueSessionPage : ContentPage
         _techniqueId = techniqueId;
         _hostNavigation = hostNavigation;
         InitializeComponent();
+
+        // Hidden until the zoom from the tapped card is ready, so the full screen does not flash first.
+        _zoomPending = !ReduceMotion.IsEnabled && TapOrigin.HasRecentTap;
+        if (_zoomPending)
+        {
+            ZoomHost.Opacity = 0;
+        }
     }
+
+    private bool _zoomPending;
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        PlayZoomAsync().FireAndForget();
         InitializeSessionAsync().FireAndForget();
+    }
+
+    /// <summary>The screen grows out of the card that was tapped to open it, instead of just appearing.</summary>
+    private async Task PlayZoomAsync()
+    {
+        if (!_zoomPending)
+        {
+            return;
+        }
+
+        _zoomPending = false;
+        for (int attempt = 0; attempt < 30 && Width <= 0; attempt++)
+        {
+            await Task.Delay(16);
+        }
+
+        if (TapOrigin.TakeStartFor(Width, Height) is not { } start)
+        {
+            ZoomHost.Opacity = 1;
+            return;
+        }
+
+        ZoomHost.AnchorX = 0.5;
+        ZoomHost.AnchorY = 0.5;
+        ZoomHost.Scale = start.Scale;
+        ZoomHost.TranslationX = start.TranslationX;
+        ZoomHost.TranslationY = start.TranslationY;
+        ZoomHost.Opacity = 1;
+        await Task.WhenAll(
+            ZoomHost.ScaleToAsync(1, UiAnimations.MediumDuration + 60, Easing.CubicOut),
+            ZoomHost.TranslateToAsync(0, 0, UiAnimations.MediumDuration + 60, Easing.CubicOut));
     }
 
     private async Task InitializeSessionAsync()
@@ -66,7 +109,11 @@ public partial class TechniqueSessionPage : ContentPage
         TechniqueDefinition definition = await _techniqueCatalog.GetAsync(_techniqueId);
         View body = TechniqueBodyFactory.Create(definition.UiKind);
         body.BindingContext = BindingContext;
-        SessionShell.BodyContent = body;
+
+        // Breathing gets a circle to breathe with above the usual notes form.
+        SessionShell.BodyContent = _techniqueId == TechniqueId.Breathing
+            ? new VerticalStackLayout { Spacing = 8, Children = { new BreathingPacerView(), body } }
+            : body;
     }
 
     protected override void OnDisappearing()
