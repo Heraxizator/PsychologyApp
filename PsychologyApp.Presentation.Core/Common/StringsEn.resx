@@ -3013,7 +3013,4 @@
   <data name="PracticeFilterAction" xml:space="preserve">
     <value>Action</value>
   </data>
-  <data name="PracticeCreateOwn" xml:space="preserve">
-    <value>Create your own practice</value>
-  </data>
 </root>

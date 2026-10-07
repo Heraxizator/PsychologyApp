@@ -15,13 +15,6 @@ public partial class TechniquesViewModel
 
     private TechniqueGroup? _customGroup;
 
-    /// <summary>The person has practices of their own: their group has a heading, and the "create" card sits right under it. Without any, the card brings its own heading.</summary>
-    public bool HasCustomGroup => _customGroup is not null;
-
-    public bool HasNoCustomGroup => !HasCustomGroup;
-
-    public string CreateOwnLabel => AppStrings.PracticeCreateOwn;
-
     private void RebuildSections()
     {
         List<TechniqueGroup> groups = [.. TechniqueSections.Build(_staticItemsAll ?? [], SectionTitle)];
@@ -31,8 +24,6 @@ public partial class TechniquesViewModel
         }
 
         TechniqueGroups.ReplaceAll(groups);
-        OnPropertyChanged(nameof(HasCustomGroup));
-        OnPropertyChanged(nameof(HasNoCustomGroup));
     }
 
     private static string SectionTitle(TechniqueFlavor flavor) => flavor switch

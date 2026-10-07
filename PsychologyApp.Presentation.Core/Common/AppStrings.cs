@@ -850,7 +850,6 @@ public static partial class AppStrings
     public static string PracticeFilterMind => R(nameof(PracticeFilterMind));
     public static string PracticeFilterHeart => R(nameof(PracticeFilterHeart));
     public static string PracticeFilterAction => R(nameof(PracticeFilterAction));
-    public static string PracticeCreateOwn => R(nameof(PracticeCreateOwn));
     public static string DataBackupImportFailedToast => R(nameof(DataBackupImportFailedToast));
     public static string CrisisHubSafetyPlanLinkTitle => R(nameof(CrisisHubSafetyPlanLinkTitle));
     public static string CrisisHubSafetyPlanLinkSubtitle => R(nameof(CrisisHubSafetyPlanLinkSubtitle));

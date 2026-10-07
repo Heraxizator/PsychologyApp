@@ -28,7 +28,6 @@ public partial class TechniquesViewModel
             nameof(PracticeCatalogLabel),
             nameof(PracticeCatalogHint),
             nameof(CreateButtonText),
-            nameof(CreateOwnLabel),
             nameof(ProfileToolbarText),
             nameof(TodayForYouLabel),
             nameof(TodayReasonText),

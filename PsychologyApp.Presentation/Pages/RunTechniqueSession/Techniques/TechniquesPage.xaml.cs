@@ -22,6 +22,7 @@ public partial class TechniquesPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        PopChatButton();
         _animationHelper?.TryRevealAsync();
         _viewModel?.ChatHero?.RefreshAsync().FireAndForget();
         if (_viewModel is null)
@@ -40,6 +41,19 @@ public partial class TechniquesPage : ContentPage
 
         _viewModel.TryOpenPendingTechniqueAsync().FireAndForget();
         _viewModel.TryOpenPendingJournalAsync().FireAndForget();
+    }
+
+    /// <summary>The round chat button grows in once when the tab opens; with reduced motion it is simply there.</summary>
+    private void PopChatButton()
+    {
+        if (!UiAnimations.ShouldAnimate(ChatFab))
+        {
+            ChatFab.Scale = 1;
+            return;
+        }
+
+        ChatFab.Scale = 0.6;
+        ChatFab.ScaleToAsync(1, 240, Easing.SpringOut).FireAndForget();
     }
 
     private void OnRemainingItemsThresholdReached(object? sender, EventArgs e)

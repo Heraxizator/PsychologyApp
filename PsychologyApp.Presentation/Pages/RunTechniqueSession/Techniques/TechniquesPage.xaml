@@ -9,7 +9,6 @@
              xmlns:today="clr-namespace:PsychologyApp.Presentation.Widgets.TodayPracticeRow"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:technique="clr-namespace:PsychologyApp.Presentation.Entities.Technique"
-             xmlns:chatHero="clr-namespace:PsychologyApp.Presentation.Widgets.ChatHero"
              x:DataType="vm:TechniquesViewModel"
              Shell.NavBarIsVisible="True"
              Title="{Binding PageTitle}">
@@ -103,11 +102,11 @@
                         </today:TodayPracticeRowView.Behaviors>
                     </today:TodayPracticeRowView>
 
-                    <chatHero:ChatHeroView BindingContext="{Binding ChatHero}" />
-
                     <ui:SectionHeaderView
                         Margin="0,4,0,0"
-                        TitleText="{Binding PracticeCatalogLabel}" />
+                        TitleText="{Binding PracticeCatalogLabel}"
+                        ActionText="{Binding CreateButtonText}"
+                        ActionCommand="{Binding ConstructorTapped}" />
                 </VerticalStackLayout>
             </CollectionView.Header>
 
@@ -144,44 +143,6 @@
 
             <CollectionView.Footer>
                 <VerticalStackLayout Spacing="8">
-                    <!-- The place to make your own practice: under the person's own practices, or with its own heading while there are none. -->
-                    <Label
-                        IsVisible="{Binding HasNoCustomGroup}"
-                        Text="{Binding MyTechniquesLabel}"
-                        Style="{StaticResource CaptionStyle}"
-                        FontFamily="{StaticResource SemiBoldFontFamily}"
-                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                        Margin="4,20,0,0" />
-                    <Border
-                        Style="{StaticResource TechniqueListCardStyle}"
-                        Margin="4,4,4,12"
-                        SemanticProperties.Description="{Binding CreateOwnLabel}">
-                        <Border.Behaviors>
-                            <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
-                        </Border.Behaviors>
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding ConstructorTapped}" />
-                        </Border.GestureRecognizers>
-                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                            <Border Grid.Column="0" Style="{StaticResource IconTileStyle}">
-                                <ui:MaterialIconView
-                                    IconName="Add"
-                                    IconSize="22"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center" />
-                            </Border>
-                            <Label
-                                Grid.Column="1"
-                                Text="{Binding CreateOwnLabel}"
-                                Style="{StaticResource ListRowTitleStyle}"
-                                VerticalOptions="Center" />
-                            <Label
-                                Grid.Column="2"
-                                VerticalOptions="Center"
-                                TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                                Text="{mi:Material Icon=KeyboardArrowRight}" />
-                        </Grid>
-                    </Border>
                     <Grid
                         HeightRequest="{Binding LoadMoreFooterHeight}"
                         MinimumHeightRequest="{Binding LoadMoreFooterHeight}"
@@ -194,10 +155,42 @@
                         HorizontalOptions="Center"
                         Margin="0,8" />
                     </Grid>
+                    <!-- Room under the last card for the round chat button. -->
+                    <BoxView HeightRequest="72" Color="Transparent" />
                 </VerticalStackLayout>
             </CollectionView.Footer>
 
         </CollectionView>
+
+        <!-- The way into the chat: one round button in the corner, like a messenger. -->
+        <Border
+            x:Name="ChatFab"
+            IsVisible="{Binding IsDone}"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            Margin="0,0,20,20"
+            WidthRequest="56"
+            HeightRequest="56"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 28"
+            BackgroundColor="{DynamicResource PrimaryFill}"
+            SemanticProperties.Description="{Binding ChatHero.PrimaryText}">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Offset="0,4" Radius="10" Opacity="0.28" />
+            </Border.Shadow>
+            <Border.Behaviors>
+                <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+            </Border.Behaviors>
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ChatHero.PrimaryCommand}" />
+            </Border.GestureRecognizers>
+            <Label
+                Text="{mi:Material Icon=Chat}"
+                FontSize="26"
+                TextColor="{DynamicResource OnPrimary}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+        </Border>
 
         <ui:SkeletonView
             Kind="Cards"
