@@ -111,6 +111,11 @@ public partial class TechniqueSessionPage : ContentPage
         body.BindingContext = BindingContext;
 
         // Breathing gets a circle to breathe with above the usual notes form.
+        SessionShell.HeroIcon = definition.ListIcon;
+        SessionShell.HeroFlavor = TechniqueFlavors.For(_techniqueId).ToString();
+        SessionShell.HeroMeta = AppStrings.TechniqueMetaLine(AppStrings.TechniqueDuration(definition.ListDurationMinutes), definition.Theme);
+        SessionShell.HeroSubtitle = definition.ListSubtitle;
+
         SessionShell.BodyContent = _techniqueId == TechniqueId.Breathing
             ? new VerticalStackLayout { Spacing = 8, Children = { new BreathingPacerView(), body } }
             : body;

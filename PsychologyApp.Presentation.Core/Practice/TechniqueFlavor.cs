@@ -48,5 +48,30 @@ public static class TechniqueFlavors
         _ => null
     };
 
+    /// <summary>
+    /// The banner at the top of a practice: it starts at the group tile colour and fades toward the card surface, so the page does not begin with a hard edge.
+    /// The usual text colours of the theme stay readable on both ends (tested).
+    /// </summary>
+    public static (string Start, string End)? Banner(TechniqueFlavor flavor, bool dark)
+    {
+        if (Colors(flavor, dark) is not { } colours)
+        {
+            return null;
+        }
+
+        string surface = dark ? "#1E1E1E" : "#FFFFFF";
+        return (colours.Tile, Mix(colours.Tile, surface, 0.55));
+    }
+
+    private static string Mix(string a, string b, double t)
+    {
+        (byte ar, byte ag, byte ab) = Rgb(a);
+        (byte br, byte bg, byte bb) = Rgb(b);
+        return $"#{(byte)Math.Round(ar + (br - ar) * t):X2}{(byte)Math.Round(ag + (bg - ag) * t):X2}{(byte)Math.Round(ab + (bb - ab) * t):X2}";
+    }
+
+    private static (byte R, byte G, byte B) Rgb(string hex) => (
+        Convert.ToByte(hex.Substring(1, 2), 16), Convert.ToByte(hex.Substring(3, 2), 16), Convert.ToByte(hex.Substring(5, 2), 16));
+
     public static TechniqueFlavor Parse(string? name) => Enum.TryParse(name, out TechniqueFlavor flavor) ? flavor : TechniqueFlavor.None;
 }

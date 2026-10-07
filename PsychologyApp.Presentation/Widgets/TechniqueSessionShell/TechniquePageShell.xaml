@@ -19,7 +19,40 @@
                 BackCommand="{Binding Source={x:Reference Root}, Path=BackCommand}"
                 ExtensionText="{Binding Source={x:Reference Root}, Path=TheoryText}"
                 ExtensionCommand="{Binding Source={x:Reference Root}, Path=TheoryCommand}" />
+            <!-- What the practice is for, on a banner in the colour of its group. -->
+            <Border
+                x:Name="Hero"
+                IsVisible="{Binding Source={x:Reference Root}, Path=HasHero}"
+                Margin="0"
+                Padding="16"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 20">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                    <Border
+                        x:Name="HeroTile"
+                        WidthRequest="56"
+                        HeightRequest="56"
+                        VerticalOptions="Start"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 18">
+                        <ui:MaterialIconView
+                            x:Name="HeroIconView"
+                            IconSize="30"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                        <Label
+                            Text="{Binding Source={x:Reference Root}, Path=HeroSubtitle}"
+                            Style="{StaticResource SectionTitleStyle}" />
+                        <Label
+                            Text="{Binding Source={x:Reference Root}, Path=HeroMeta}"
+                            Style="{StaticResource CaptionStyle}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
             <ui:AlgorithmBoxView
+                x:Name="Steps"
                 TitleText="{Binding Source={x:Reference Root}, Path=AlgorithmTitleText}"
                 BodySource="{Binding Source={x:Reference Root}, Path=Algorithm}" />
             <Border

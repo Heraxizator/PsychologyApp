@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Windows.Input;
+using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Common;
 
 namespace PsychologyApp.Presentation.Widgets.TechniqueSessionShell;
@@ -100,11 +101,95 @@ public partial class TechniquePageShell : ContentView
         set => SetValue(FinishTextProperty, value);
     }
 
+    public static readonly BindableProperty HeroIconProperty =
+        BindableProperty.Create(nameof(HeroIcon), typeof(string), typeof(TechniquePageShell), string.Empty, propertyChanged: (b, _, _) => ((TechniquePageShell)b).ApplyHero());
+
+    public static readonly BindableProperty HeroSubtitleProperty =
+        BindableProperty.Create(nameof(HeroSubtitle), typeof(string), typeof(TechniquePageShell), string.Empty, propertyChanged: (b, _, _) => ((TechniquePageShell)b).ApplyHero());
+
+    public static readonly BindableProperty HeroMetaProperty =
+        BindableProperty.Create(nameof(HeroMeta), typeof(string), typeof(TechniquePageShell), string.Empty);
+
+    /// <summary>A <c>TechniqueFlavor</c> name: the group colours of the banner.</summary>
+    public static readonly BindableProperty HeroFlavorProperty =
+        BindableProperty.Create(nameof(HeroFlavor), typeof(string), typeof(TechniquePageShell), string.Empty, propertyChanged: (b, _, _) => ((TechniquePageShell)b).ApplyHero());
+
+    public string HeroIcon
+    {
+        get => (string)GetValue(HeroIconProperty);
+        set => SetValue(HeroIconProperty, value);
+    }
+
+    public string HeroSubtitle
+    {
+        get => (string)GetValue(HeroSubtitleProperty);
+        set => SetValue(HeroSubtitleProperty, value);
+    }
+
+    public string HeroMeta
+    {
+        get => (string)GetValue(HeroMetaProperty);
+        set => SetValue(HeroMetaProperty, value);
+    }
+
+    public string HeroFlavor
+    {
+        get => (string)GetValue(HeroFlavorProperty);
+        set => SetValue(HeroFlavorProperty, value);
+    }
+
+    public bool HasHero => !string.IsNullOrWhiteSpace(HeroSubtitle);
+
     public TechniquePageShell()
     {
         InitializeComponent();
         ApplyLocalization();
         UserPreferences.Changed += ApplyLocalization;
+        Loaded += (_, _) =>
+        {
+            ApplyHero();
+            if (Microsoft.Maui.Controls.Application.Current is { } app)
+            {
+                app.RequestedThemeChanged += OnThemeChanged;
+            }
+        };
+        Unloaded += (_, _) =>
+        {
+            if (Microsoft.Maui.Controls.Application.Current is { } app)
+            {
+                app.RequestedThemeChanged -= OnThemeChanged;
+            }
+        };
+    }
+
+    private void OnThemeChanged(object? sender, AppThemeChangedEventArgs e) => Dispatcher.Dispatch(ApplyHero);
+
+    /// <summary>The banner takes the colours of the practice's group in the current theme; with no group it stays a plain card.</summary>
+    private void ApplyHero()
+    {
+        OnPropertyChanged(nameof(HasHero));
+        bool dark = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark;
+        TechniqueFlavor flavor = TechniqueFlavors.Parse(HeroFlavor);
+        HeroIconView.IconName = HeroIcon;
+
+        if (TechniqueFlavors.Banner(flavor, dark) is { } banner && TechniqueFlavors.Colors(flavor, dark) is { } colours)
+        {
+            Hero.Background = new LinearGradientBrush(
+                [new GradientStop(Color.FromArgb(banner.Start), 0f), new GradientStop(Color.FromArgb(banner.End), 1f)],
+                new Point(0, 0),
+                new Point(1, 1));
+            HeroTile.BackgroundColor = Color.FromArgb(dark ? "#33FFFFFF" : "#99FFFFFF");
+            HeroIconView.IconColor = Color.FromArgb(colours.Icon);
+            Steps.BadgeTint = Color.FromArgb(colours.Tile);
+            Steps.BadgeInk = Color.FromArgb(colours.Icon);
+            return;
+        }
+
+        Hero.Background = new SolidColorBrush(Color.FromArgb(dark ? "#1E1E1E" : "#FFFFFF"));
+        HeroTile.BackgroundColor = Color.FromArgb(dark ? "#1A2A3D" : "#D6EBFF");
+        HeroIconView.ClearValue(PsychologyApp.Presentation.Shared.UI.Components.MaterialIconView.IconColorProperty);
+        Steps.ClearValue(PsychologyApp.Presentation.Shared.UI.Components.AlgorithmBoxView.BadgeTintProperty);
+        Steps.ClearValue(PsychologyApp.Presentation.Shared.UI.Components.AlgorithmBoxView.BadgeInkProperty);
     }
 
     protected override void OnBindingContextChanged()

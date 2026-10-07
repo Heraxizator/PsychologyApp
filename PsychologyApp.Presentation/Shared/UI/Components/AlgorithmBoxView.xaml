@@ -47,12 +47,12 @@
                                         StrokeThickness="0"
                                         StrokeShape="RoundRectangle 14"
                                         IsVisible="{Binding ., Converter={StaticResource Step}, ConverterParameter=badge}"
-                                        BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
+                                        BackgroundColor="{Binding ShownBadgeTint, Source={RelativeSource AncestorType={x:Type self:AlgorithmBoxView}}, x:DataType=self:AlgorithmBoxView}">
                                         <Label
                                             Text="{Binding ., Converter={StaticResource Step}, ConverterParameter=number}"
                                             Style="{StaticResource CaptionStyle}"
                                             FontFamily="{StaticResource SemiBoldFontFamily}"
-                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
+                                            TextColor="{Binding ShownBadgeInk, Source={RelativeSource AncestorType={x:Type self:AlgorithmBoxView}}, x:DataType=self:AlgorithmBoxView}"
                                             HorizontalOptions="Center"
                                             VerticalOptions="Center" />
                                     </Border>

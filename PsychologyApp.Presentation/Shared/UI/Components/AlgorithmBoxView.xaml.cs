@@ -5,7 +5,72 @@ public partial class AlgorithmBoxView : ContentView
     public AlgorithmBoxView()
     {
         InitializeComponent();
+        ApplyBadgeColours();
+        Loaded += (_, _) =>
+        {
+            ApplyBadgeColours();
+            if (Microsoft.Maui.Controls.Application.Current is { } app)
+            {
+                app.RequestedThemeChanged += OnThemeChanged;
+            }
+        };
+        Unloaded += (_, _) =>
+        {
+            if (Microsoft.Maui.Controls.Application.Current is { } app)
+            {
+                app.RequestedThemeChanged -= OnThemeChanged;
+            }
+        };
     }
+
+    /// <summary>Colours of the step badges chosen by whoever owns the page (a practice group); unset, the badges use the accent.</summary>
+    public static readonly BindableProperty BadgeTintProperty =
+        BindableProperty.Create(nameof(BadgeTint), typeof(Color), typeof(AlgorithmBoxView), null, propertyChanged: (b, _, _) => ((AlgorithmBoxView)b).ApplyBadgeColours());
+
+    public static readonly BindableProperty BadgeInkProperty =
+        BindableProperty.Create(nameof(BadgeInk), typeof(Color), typeof(AlgorithmBoxView), null, propertyChanged: (b, _, _) => ((AlgorithmBoxView)b).ApplyBadgeColours());
+
+    public Color? BadgeTint
+    {
+        get => (Color?)GetValue(BadgeTintProperty);
+        set => SetValue(BadgeTintProperty, value);
+    }
+
+    public Color? BadgeInk
+    {
+        get => (Color?)GetValue(BadgeInkProperty);
+        set => SetValue(BadgeInkProperty, value);
+    }
+
+    public static readonly BindableProperty ShownBadgeTintProperty =
+        BindableProperty.Create(nameof(ShownBadgeTint), typeof(Color), typeof(AlgorithmBoxView), Colors.Transparent);
+
+    public static readonly BindableProperty ShownBadgeInkProperty =
+        BindableProperty.Create(nameof(ShownBadgeInk), typeof(Color), typeof(AlgorithmBoxView), Colors.Black);
+
+    public Color ShownBadgeTint
+    {
+        get => (Color)GetValue(ShownBadgeTintProperty);
+        private set => SetValue(ShownBadgeTintProperty, value);
+    }
+
+    public Color ShownBadgeInk
+    {
+        get => (Color)GetValue(ShownBadgeInkProperty);
+        private set => SetValue(ShownBadgeInkProperty, value);
+    }
+
+    private void OnThemeChanged(object? sender, AppThemeChangedEventArgs e) => Dispatcher.Dispatch(ApplyBadgeColours);
+
+    private void ApplyBadgeColours()
+    {
+        bool dark = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark;
+        ShownBadgeTint = BadgeTint ?? Resource(dark ? "PrimaryTintDark" : "PrimaryTint", Colors.LightSkyBlue);
+        ShownBadgeInk = BadgeInk ?? Resource(dark ? "PrimaryTextDark" : "PrimaryTextLight", Colors.DodgerBlue);
+    }
+
+    private static Color Resource(string key, Color fallback) =>
+        Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue(key, out object? value) == true && value is Color c ? c : fallback;
 
     public static readonly BindableProperty TitleTextProperty =
         BindableProperty.Create(nameof(TitleText), typeof(string), typeof(AlgorithmBoxView), string.Empty, BindingMode.TwoWay);

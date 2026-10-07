@@ -59,4 +59,36 @@ public class TechniqueFlavorTests
         Assert.Equal(TechniqueFlavor.None, TechniqueFlavors.Parse(null));
         Assert.Equal(TechniqueFlavor.Heart, TechniqueFlavors.Parse("Heart"));
     }
+
+    [Theory]
+    [InlineData(false, "#343434", "#666666")]
+    [InlineData(true, "#EEEEEE", "#AAAAAA")]
+    public void TheTextOfThePageIsReadableAcrossTheWholeBanner(bool dark, string primary, string secondary)
+    {
+        foreach (TechniqueFlavor flavor in new[] { TechniqueFlavor.Body, TechniqueFlavor.Mind, TechniqueFlavor.Heart, TechniqueFlavor.Action })
+        {
+            (string start, string end) = TechniqueFlavors.Banner(flavor, dark)!.Value;
+            foreach (string ground in new[] { start, end })
+            {
+                Assert.True(ColorContrast.Ratio(primary, ground) >= ColorContrast.BodyTextMinimum, $"{flavor} dark={dark} primary on {ground}");
+                Assert.True(ColorContrast.Ratio(secondary, ground) >= ColorContrast.BodyTextMinimum, $"{flavor} dark={dark} secondary on {ground}: {ColorContrast.Ratio(secondary, ground):F2}");
+            }
+        }
+    }
+
+    [Fact]
+    public void ThereIsNoBannerForAPracticeWithoutAGroup()
+    {
+        Assert.Null(TechniqueFlavors.Banner(TechniqueFlavor.None, false));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void TheBannerFadesTowardTheSurface(bool dark)
+    {
+        (string start, string end) = TechniqueFlavors.Banner(TechniqueFlavor.Body, dark)!.Value;
+
+        Assert.NotEqual(start, end);
+    }
 }
