@@ -101,12 +101,25 @@
 
                     <chatHero:ChatHeroView BindingContext="{Binding ChatHero}" />
 
-                    <ui:SectionHeaderView
-                        Margin="0,4,0,0"
-                        TitleText="{Binding PracticeCatalogLabel}"
-                        SubtitleText="{Binding PracticeCatalogHint}"
-                        ActionText="{Binding CreateButtonText}"
-                        ActionCommand="{Binding ConstructorTapped}" />
+                    <!-- The heading and a quiet "new practice" link; the hint under the heading said what the heading says. -->
+                    <Grid Margin="0,8,0,0" ColumnDefinitions="*,Auto">
+                        <Label
+                            Grid.Column="0"
+                            Text="{Binding PracticeCatalogLabel}"
+                            Style="{StaticResource SectionTitleStyle}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Column="1"
+                            Text="{Binding CreateButtonText}"
+                            Style="{StaticResource NavActionLabelStyle}"
+                            Padding="12,10"
+                            VerticalOptions="Center"
+                            SemanticProperties.Description="{Binding CreateButtonText}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ConstructorTapped}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
 
                     <ui:FilterChipTabBarView
                         ItemsSource="{Binding FlavorFilters}"

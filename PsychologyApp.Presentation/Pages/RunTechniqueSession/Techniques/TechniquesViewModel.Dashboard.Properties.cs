@@ -57,9 +57,7 @@ public partial class TechniquesViewModel
     public string EngagementNudgeText =>
         ShowStreakAtRiskBanner
             ? AppStrings.StreakAtRiskBanner(AtRiskStreakDays)
-            : !string.IsNullOrWhiteSpace(TodayTechniqueItem?.Title)
-                ? AppStrings.ComebackBannerWithTechnique(TodayTechniqueItem.Title)
-                : AppStrings.ComebackBanner;
+            : AppStrings.ComebackBanner; // the card above already names the practice, so the line does not repeat it
 
     public string TodayActionText =>
         HasTodayDraft ? AppStrings.TechniqueContinueBadge : AppStrings.TodayStartPractice;
