@@ -27,6 +27,7 @@ public partial class TechniquesViewModel
 
     private void ApplyUiState(TechniqueDashboardUiState uiState)
     {
+        _staticItemsAll = [.. (uiState.IsGrouped && uiState.Groups.Count > 0 ? uiState.Groups[0] : uiState.CatalogTechniques)];
         bool groupingChanged = IsTechniquesGrouped != uiState.IsGrouped;
         IsTechniquesGrouped = uiState.IsGrouped;
 

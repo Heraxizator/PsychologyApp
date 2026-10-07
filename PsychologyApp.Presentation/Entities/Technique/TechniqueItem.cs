@@ -5,12 +5,8 @@ using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Entities.Technique;
 
-public class TechniqueItem : System.ComponentModel.INotifyPropertyChanged
+public class TechniqueItem
 {
-    private bool _active;
-
-    public event System.ComponentModel.PropertyChangedEventHandler? PropertyChanged;
-
     public long Id { get; set; }
     public string? Number { get; set; }
     public string? Date { get; set; }
@@ -25,19 +21,7 @@ public class TechniqueItem : System.ComponentModel.INotifyPropertyChanged
 
     /// <summary>A <c>TechniqueFlavor</c> name: the group of the practice, which colours its card.</summary>
     public string? Flavor { get; set; }
-    /// <summary>Whether the card is shown; the group filter turns cards off and on without touching the list.</summary>
-    public bool Active
-    {
-        get => _active;
-        set
-        {
-            if (_active != value)
-            {
-                _active = value;
-                PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(nameof(Active)));
-            }
-        }
-    }
+    public bool Active { get; set; }
     public ICommand? TapCommand { get; set; }
 
     /// <summary>True when both would render identically, so a refresh can keep the bound instance and skip a rebind.</summary>

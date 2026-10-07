@@ -14,6 +14,9 @@ public partial class TechniquesViewModel
 {
     private string _flavorFilter = TechniqueFlavors.FilterAll;
 
+    /// <summary>Every built-in practice, whatever the filter shows; paging and inserting a new practice work from this, not from what is on screen.</summary>
+    private List<Entities.Technique.TechniqueItem>? _staticItemsAll;
+
     public ObservableCollection<FilterChipTabItem> FlavorFilters { get; } = [];
 
     public ICommand SelectFlavorCommand { get; private set; } = default!;
@@ -55,15 +58,38 @@ public partial class TechniquesViewModel
         ApplyFlavorFilter();
     }
 
-    /// <summary>Switches the cards on or off for the chosen group; also run after every refresh of the list, which brings every card back on.</summary>
+    /// <summary>
+    /// Shows only the built-in practices of the chosen group by swapping the contents of the built-in part of the list. Hiding the cards instead left
+    /// the Android list with rows it never measured again, and the whole page went blank. Run after every refresh too, which brings every practice back.
+    /// </summary>
     private void ApplyFlavorFilter()
     {
-        foreach (Entities.Technique.TechniqueItem item in AllCatalogItems())
+        if (_staticItemsAll is not { Count: > 0 } all)
         {
-            item.Active = TechniqueFlavors.Matches(item.Flavor, _flavorFilter);
+            return;
+        }
+
+        List<Entities.Technique.TechniqueItem> shown = [.. all.Where(item => TechniqueFlavors.Matches(item.Flavor, _flavorFilter))];
+        if (shown.Count == 0)
+        {
+            shown = [.. all];
+        }
+
+        if (IsTechniquesGrouped && TechniqueGroups.Count > 0)
+        {
+            Entities.Technique.TechniqueGroup group = TechniqueGroups[0];
+            if (!group.SequenceEqual(shown))
+            {
+                group.Clear();
+                foreach (Entities.Technique.TechniqueItem item in shown)
+                {
+                    group.Add(item);
+                }
+            }
+        }
+        else if (!CatalogTechniques.SequenceEqual(shown))
+        {
+            CatalogTechniques.ReplaceAll(shown);
         }
     }
-
-    private IEnumerable<Entities.Technique.TechniqueItem> AllCatalogItems() =>
-        IsTechniquesGrouped ? TechniqueGroups.SelectMany(group => group) : CatalogTechniques;
 }

@@ -244,6 +244,11 @@ public partial class TechniquesViewModel
 
     private IReadOnlyList<TechniqueItem> ExtractCurrentStaticItems()
     {
+        if (_staticItemsAll is { Count: > 0 } all)
+        {
+            return all;
+        }
+
         if (IsTechniquesGrouped && TechniqueGroups.Count > 0)
         {
             return TechniqueGroups[0].ToList();
