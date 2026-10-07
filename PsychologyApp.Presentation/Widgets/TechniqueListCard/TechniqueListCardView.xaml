@@ -20,7 +20,7 @@
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
                 </Border.GestureRecognizers>
-                <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="4">
+                <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
                     <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
                         <Border
                             Grid.Column="0"
@@ -39,7 +39,7 @@
                         </Border>
                         <VerticalStackLayout
                             Grid.Column="1"
-                            Spacing="4"
+                            Spacing="6"
                             VerticalOptions="Center">
                             <Label
                                 Text="{TemplateBinding Title}"

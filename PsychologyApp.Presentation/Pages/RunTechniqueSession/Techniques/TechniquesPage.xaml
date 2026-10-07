@@ -62,7 +62,7 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.Header>
-                <VerticalStackLayout Spacing="{StaticResource ListItemSpacing}" Padding="0">
+                <VerticalStackLayout Spacing="16" Padding="0">
                     <VerticalStackLayout.Behaviors>
                         <behaviors:StaggerChildrenBehavior />
                     </VerticalStackLayout.Behaviors>
