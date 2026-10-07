@@ -2998,4 +2998,7 @@
   <data name="ChartPracticeLegend" xml:space="preserve">
     <value>◆ — a practice (green when your mood rose afterwards)</value>
   </data>
+  <data name="SkeletonLoadingLabel" xml:space="preserve">
+    <value>Loading</value>
+  </data>
 </root>

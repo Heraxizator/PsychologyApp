@@ -3004,4 +3004,7 @@
   <data name="ChartPracticeLegend" xml:space="preserve">
     <value>◆ — практика (зелёным — когда после неё настроение выросло)</value>
   </data>
+  <data name="SkeletonLoadingLabel" xml:space="preserve">
+    <value>Загрузка</value>
+  </data>
 </root>

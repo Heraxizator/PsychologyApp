@@ -83,10 +83,16 @@
             BodyText="{Binding RetakeButtonText}"
             TapCommand="{Binding RetakeCommand}" />
 
+        <ui:SkeletonView
+            Grid.Row="1"
+            Kind="Rows"
+            VerticalOptions="Start"
+            IsActive="{Binding IsLoadingOverlayVisible}" />
+
         <ui:ProgressBarView
             x:Name="LoadingProgress"
             Grid.RowSpan="3"
-            VerticalOptions="Center"
+            VerticalOptions="End"
             HorizontalOptions="Center"
             IsVisible="{Binding IsLoadingOverlayVisible}"
             IsLoading="{Binding IsLoadingOverlayVisible}"

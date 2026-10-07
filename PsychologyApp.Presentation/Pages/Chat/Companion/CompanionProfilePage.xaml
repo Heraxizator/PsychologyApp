@@ -24,13 +24,12 @@
             TitleText="{Binding Title}"
             BackCommand="{Binding BackCommand}" />
 
-        <ui:ProgressBarView
+        <ui:SkeletonView
             Grid.Row="1"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"
-            IsVisible="{Binding IsLoading}"
-            IsLoading="{Binding IsLoading}"
-            ProgressText="{Binding LoadingText}" />
+            Kind="Profile"
+            VerticalOptions="Start"
+            Margin="20,20,20,0"
+            IsActive="{Binding IsLoading}" />
 
     <ScrollView Grid.Row="1" IsVisible="{Binding HasLoaded}" VerticalScrollBarVisibility="Never">
         <VerticalStackLayout

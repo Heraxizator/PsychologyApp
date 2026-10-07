@@ -135,13 +135,12 @@
             </CollectionView.Footer>
         </CollectionView>
 
-        <ui:ProgressBarView
+        <ui:SkeletonView
             Grid.Row="1"
-            VerticalOptions="Center"
-            HorizontalOptions="Center"
-            IsVisible="{Binding IsLoading}"
-            IsLoading="{Binding IsLoading}"
-            ProgressText="{Binding LoadingText}" />
+            Kind="Bubbles"
+            VerticalOptions="Start"
+            Margin="12,12,12,0"
+            IsActive="{Binding IsLoading}" />
 
         <!-- Jump to the newest or the oldest message. Each appears only while there is somewhere to jump to. -->
         <VerticalStackLayout

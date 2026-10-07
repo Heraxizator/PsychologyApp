@@ -4,7 +4,7 @@ param([string]$Dir = "$PSScriptRoot\..\PsychologyApp.Presentation.Core\Common", 
 $ErrorActionPreference = 'Stop'
 
 $entries = [ordered]@{
-    ChartPracticeLegend = @('◆ — практика (зелёным — когда после неё настроение выросло)', '◆ — a practice (green when your mood rose afterwards)')
+    SkeletonLoadingLabel = @('Загрузка', 'Loading')
 }
 
 function AddData($path, $name, $value) {
