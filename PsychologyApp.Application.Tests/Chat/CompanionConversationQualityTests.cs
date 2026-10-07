@@ -480,4 +480,13 @@ public class CompanionConversationQualityTests
 
         Assert.All(chat, t => Assert.DoesNotContain("на первый план", t.Text));
     }
+
+    [Fact]
+    public void AcknowledgementsBelongToWhatHappenedNotToEverything()
+    {
+        List<Turn> chat = Talk("Меня бросил парень после трёх лет", "мы жили вместе", "каждый вечер вспоминаю");
+
+        string said = string.Join(" ", chat.Skip(1).Select(t => t.Text));
+        Assert.Matches("Расставание переворачивает|После такого трудно", said);
+    }
 }

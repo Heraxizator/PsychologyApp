@@ -249,4 +249,27 @@ public static class CompanionCaseContent
     public static string PlanReply(bool english) => english
         ? "That sounds like a real step, and it is yours to take. What would make it a little easier to start?"
         : "Это похоже на настоящий шаг, и решать его вам. Что могло бы помочь начать чуть спокойнее?";
+
+    private static readonly Dictionary<CompanionEvent, (string[] Ru, string[] En)> Acknowledgements = new()
+    {
+        [CompanionEvent.Conflict] = (["Слова близких запоминаются надолго.", "Когда ссорятся с близким, болит вдвойне."], ["Words from someone close stay with us.", "A quarrel with someone close hurts twice."]),
+        [CompanionEvent.Breakup] = (["Расставание переворачивает привычный день.", "После такого трудно собраться."], ["A breakup turns the whole day upside down.", "It is hard to pull yourself together after that."]),
+        [CompanionEvent.JobLoss] = (["Потерять работу — значит потерять почву под ногами.", "Такая неопределённость выматывает."], ["Losing a job feels like losing the ground under you.", "That uncertainty is draining."]),
+        [CompanionEvent.CaringForIll] = (["Вы несёте очень много.", "Заботиться о другом и забывать о себе — тяжело."], ["You are carrying a lot.", "Caring for someone and forgetting yourself is hard."]),
+        [CompanionEvent.HealthWorry] = (["Ждать результатов бывает тяжелее всего.", "Неизвестность пугает сильнее фактов."], ["Waiting for results can be the hardest part.", "Not knowing is scarier than the facts."]),
+        [CompanionEvent.Failure] = (["Обидно, когда вложено много сил.", "Неудача ранит, особенно когда вы к себе строги."], ["It stings when you put a lot in.", "A failure hurts, especially when you are hard on yourself."]),
+        [CompanionEvent.Betrayal] = (["Когда обманывает близкий, трудно снова доверять.", "Такое доверие не вернуть за один день."], ["When someone close lies, trust is hard to give again.", "That kind of trust does not come back in a day."])
+    };
+
+    /// <summary>A short acknowledgement that belongs to what happened, so that "That is not easy" is not said to everyone about everything; null when the event has none.</summary>
+    public static string? EventAcknowledgement(CompanionEvent kind, bool english, Random random)
+    {
+        if (!Acknowledgements.TryGetValue(kind, out (string[] Ru, string[] En) lines))
+        {
+            return null;
+        }
+
+        string[] bank = english ? lines.En : lines.Ru;
+        return bank[random.Next(bank.Length)];
+    }
 }

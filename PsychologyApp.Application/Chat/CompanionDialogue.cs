@@ -801,7 +801,7 @@ public sealed partial class CompanionDialogue(
             ? CompanionSmallTalk.Shift(before, emotion, english)
             : emotion != CompanionEmotion.Unknown && state.Turns % 2 == 0
                 ? CompanionSmallTalk.Validation(emotion, english, _random)
-                : CompanionDialogueContent.Acknowledgement(english, _random);
+                : CompanionCaseContent.EventAcknowledgement(CompanionCaseContent.ParseEvent(state.Event), english, _random) ?? CompanionDialogueContent.Acknowledgement(english, _random);
         if (state.UserName is not null && state.Turns % 3 == 0)
         {
             ack = CompanionSmallTalk.Address(state.UserName, ack);
