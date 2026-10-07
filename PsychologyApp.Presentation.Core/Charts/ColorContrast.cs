@@ -50,6 +50,33 @@ public static class ColorContrast
         return lightBackground ? "#000000" : "#FFFFFF";
     }
 
+    /// <summary>
+    /// What to put on an accent-coloured button: white text when the accent is deep enough, otherwise the accent darkened by up to 25% so white text
+    /// is readable, otherwise (a light accent like amber) dark text on the accent as it is.
+    /// </summary>
+    public static (string Fill, string OnFill) ForFill(string accent)
+    {
+        const string white = "#FFFFFF";
+        const string dark = "#262626";
+        if (Ratio(white, accent) >= BodyTextMinimum)
+        {
+            return (Normalize(accent), white);
+        }
+
+        (byte r, byte g, byte b) = Parse(accent);
+        for (int step = 1; step <= 5; step++)
+        {
+            double t = step * 0.05;
+            string candidate = $"#{(byte)Math.Round(r * (1 - t)):X2}{(byte)Math.Round(g * (1 - t)):X2}{(byte)Math.Round(b * (1 - t)):X2}";
+            if (Ratio(white, candidate) >= BodyTextMinimum)
+            {
+                return (candidate, white);
+            }
+        }
+
+        return Ratio(dark, accent) >= BodyTextMinimum ? (Normalize(accent), dark) : (Readable(accent, white), white);
+    }
+
     private static string Normalize(string hex)
     {
         (byte r, byte g, byte b) = Parse(hex);

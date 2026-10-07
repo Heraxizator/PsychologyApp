@@ -57,12 +57,12 @@
                                     VerticalOptions="Start"
                                     StrokeThickness="0"
                                     StrokeShape="RoundRectangle 22"
-                                    BackgroundColor="{DynamicResource Primary}">
+                                    BackgroundColor="{DynamicResource PrimaryFill}">
                                     <Label
                                         Text="{Binding Initial}"
                                         FontSize="19"
                                         FontFamily="{StaticResource SemiBoldFontFamily}"
-                                        TextColor="White"
+                                        TextColor="{DynamicResource OnPrimary}"
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center" />
                                 </Border>

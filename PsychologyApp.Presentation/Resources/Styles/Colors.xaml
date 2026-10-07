@@ -9,6 +9,8 @@
     <Color x:Key="PrimaryActive">#005BB5</Color>
     <Color x:Key="PrimaryTint">#D6EBFF</Color>
     <Color x:Key="PrimaryTextLight">#006ACC</Color>
+    <Color x:Key="PrimaryFill">#0071D9</Color>
+    <Color x:Key="OnPrimary">#FFFFFF</Color>
     <Color x:Key="PrimaryTextDark">#0085FF</Color>
     <Color x:Key="PrimaryTintDark">#1A2A3D</Color>
     <Color x:Key="AccentTextLight">#0085FF</Color>

@@ -102,7 +102,7 @@
                             BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
                             <Border.Triggers>
                                 <DataTrigger TargetType="Border" Binding="{Binding IsUser}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
+                                    <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryFill}" />
                                     <Setter Property="StrokeShape" Value="RoundRectangle 18,18,18,4" />
                                 </DataTrigger>
                             </Border.Triggers>
@@ -110,7 +110,7 @@
                                 <Label Text="{Binding Text}" Style="{StaticResource BodyStyle}" LineBreakMode="WordWrap">
                                     <Label.Triggers>
                                         <DataTrigger TargetType="Label" Binding="{Binding IsUser}" Value="True">
-                                            <Setter Property="TextColor" Value="White" />
+                                            <Setter Property="TextColor" Value="{DynamicResource OnPrimary}" />
                                         </DataTrigger>
                                     </Label.Triggers>
                                 </Label>
@@ -272,7 +272,7 @@
                     BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}">
                     <Border.Triggers>
                         <DataTrigger TargetType="Border" Binding="{Binding CanSend}" Value="True">
-                            <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
+                            <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryFill}" />
                         </DataTrigger>
                     </Border.Triggers>
                     <Border.GestureRecognizers>
@@ -281,7 +281,7 @@
                     <Label
                         Text="{mi:Material Icon=Send}"
                         FontSize="22"
-                        TextColor="White"
+                        TextColor="{DynamicResource OnPrimary}"
                         HorizontalOptions="Center"
                         VerticalOptions="Center" />
                 </Border>

@@ -94,9 +94,15 @@
             </Grid>
         </Grid>
 
+        <ui:SkeletonView
+            Kind="Cards"
+            VerticalOptions="Start"
+            Margin="20,120,20,0"
+            IsActive="{Binding IsLoadingOverlayVisible}" />
+
         <ui:ProgressBarView
             x:Name="InitLoadingProgress"
-            VerticalOptions="Center"
+            VerticalOptions="End"
             HorizontalOptions="Center"
             IsVisible="{Binding IsLoadingOverlayVisible}"
             IsLoading="{Binding IsLoadingOverlayVisible}"

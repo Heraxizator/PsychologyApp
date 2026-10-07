@@ -29,8 +29,23 @@ public sealed class SkeletonView : ContentView
         IsVisible = false;
         InputTransparent = true;
         SemanticProperties.SetDescription(this, AppStrings.SkeletonLoadingLabel);
-        Loaded += (_, _) => { Rebuild(); UpdateMotion(); };
-        Unloaded += (_, _) => StopMotion();
+        Loaded += (_, _) =>
+        {
+            Rebuild();
+            UpdateMotion();
+            if (Microsoft.Maui.Controls.Application.Current is { } app)
+            {
+                app.RequestedThemeChanged += OnThemeChanged;
+            }
+        };
+        Unloaded += (_, _) =>
+        {
+            StopMotion();
+            if (Microsoft.Maui.Controls.Application.Current is { } app)
+            {
+                app.RequestedThemeChanged -= OnThemeChanged;
+            }
+        };
         Rebuild();
     }
 
@@ -97,6 +112,8 @@ public sealed class SkeletonView : ContentView
         new Animation(t => Opacity = 1 - 0.45 * Math.Sin(t * Math.PI), 0, 1, Easing.Linear)
             .Commit(this, AnimationName, 16, 1200, Easing.Linear, repeat: () => true);
     }
+
+    private void OnThemeChanged(object? sender, AppThemeChangedEventArgs e) => Dispatcher.Dispatch(Rebuild);
 
     private void StopMotion()
     {

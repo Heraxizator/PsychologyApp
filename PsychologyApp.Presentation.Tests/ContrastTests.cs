@@ -170,4 +170,36 @@ public class ContrastTests(ITestOutputHelper output)
         Assert.Equal("#006ACC", ColorContrast.Readable("#0085FF", "#F3F4F6"));
         Assert.Equal("#0085FF", ColorContrast.Readable("#0085FF", "#1E1E1E"));
     }
+
+    [Theory]
+    [InlineData("#E53935")]
+    [InlineData("#F7B548")]
+    [InlineData("#2E9E5B")]
+    [InlineData("#0085FF")]
+    [InlineData("#FFFF00")]
+    [InlineData("#003366")]
+    public void TheTextOnAnAccentButtonIsReadableForAnyAccent(string accent)
+    {
+        (string fill, string onFill) = ColorContrast.ForFill(accent);
+
+        Assert.True(ColorContrast.Ratio(onFill, fill) >= ColorContrast.BodyTextMinimum, $"{accent} -> {fill} / {onFill}: {ColorContrast.Ratio(onFill, fill):F2}");
+    }
+
+    [Fact]
+    public void ALightAccentGetsDarkTextAndADeepOneKeepsWhite()
+    {
+        Assert.Equal("#262626", ColorContrast.ForFill("#F7B548").OnFill);
+        Assert.Equal("#FFFFFF", ColorContrast.ForFill("#003366").OnFill);
+        Assert.Equal("#003366", ColorContrast.ForFill("#003366").Fill);
+    }
+
+    [Fact]
+    public void TheDefaultButtonTokensAreTheComputedOnes()
+    {
+        Dictionary<string, string> colors = ReadColors();
+        (string fill, string onFill) = ColorContrast.ForFill(colors["Primary"]);
+
+        Assert.Equal(fill, colors["PrimaryFill"].ToUpperInvariant());
+        Assert.Equal(onFill, colors["OnPrimary"].ToUpperInvariant());
+    }
 }

@@ -68,9 +68,17 @@
                 TapCommand="{Binding StartCommand}" />
         </Grid>
 
+        <ui:SkeletonView
+            Kind="Cards"
+            Count="3"
+            VerticalOptions="Start"
+            Margin="{StaticResource LayoutTabPageMarginThickness}"
+            IsActive="{Binding IsLoadingOverlayVisible}" />
+
         <ui:ProgressBarView
             x:Name="LoadingProgress"
-            VerticalOptions="Center"
+            VerticalOptions="End"
+            Margin="0,0,0,24"
             HorizontalOptions="Center"
             IsVisible="{Binding IsLoadingOverlayVisible}"
             IsLoading="{Binding IsLoadingOverlayVisible}"

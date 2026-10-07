@@ -312,6 +312,11 @@ public static partial class UserPreferences
         // The accent as text: the same colour where it reads well, a deeper or lighter shade where it would not (yellow on white).
         resources["PrimaryTextLight"] = Color.FromArgb(PsychologyApp.Presentation.Core.Charts.ColorContrast.Readable(primary.ToArgbHex(), "#F3F4F6"));
         resources["PrimaryTextDark"] = Color.FromArgb(PsychologyApp.Presentation.Core.Charts.ColorContrast.Readable(primary.ToArgbHex(), "#1E1E1E"));
+
+        // What goes on an accent-coloured button: white on a fill deep enough for it, otherwise dark text on a light accent.
+        (string fill, string onFill) = PsychologyApp.Presentation.Core.Charts.ColorContrast.ForFill(primary.ToArgbHex());
+        resources["PrimaryFill"] = Color.FromArgb(fill);
+        resources["OnPrimary"] = Color.FromArgb(onFill);
     }
 
     public static void ApplyTypography(string size, bool isBold)

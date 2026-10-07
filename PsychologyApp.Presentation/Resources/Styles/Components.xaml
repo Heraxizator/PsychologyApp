@@ -66,7 +66,7 @@
         <Setter Property="Padding" Value="16,12" />
         <Setter Property="MinimumHeightRequest" Value="48" />
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
-        <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryFill}" />
         <Setter Property="Stroke" Value="Transparent" />
         <Setter Property="StrokeThickness" Value="0" />
         <Setter Property="VisualStateManager.VisualStateGroups">
@@ -94,7 +94,7 @@
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="VerticalTextAlignment" Value="Center" />
-        <Setter Property="TextColor" Value="White" />
+        <Setter Property="TextColor" Value="{DynamicResource OnPrimary}" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontFamily" Value="{StaticResource MediumFontFamily}" />
         <Setter Property="LineBreakMode" Value="NoWrap" />
@@ -141,7 +141,7 @@
     <Style x:Key="CompactPrimaryBorderStyle" TargetType="Border">
         <Setter Property="Padding" Value="12,8" />
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
-        <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryFill}" />
         <Setter Property="Stroke" Value="Transparent" />
         <Setter Property="StrokeThickness" Value="0" />
         <Setter Property="MinimumHeightRequest" Value="36" />
@@ -152,7 +152,7 @@
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="VerticalTextAlignment" Value="Center" />
-        <Setter Property="TextColor" Value="White" />
+        <Setter Property="TextColor" Value="{DynamicResource OnPrimary}" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontFamily" Value="{StaticResource MediumFontFamily}" />
         <Setter Property="LineBreakMode" Value="NoWrap" />
@@ -261,7 +261,7 @@
 
     <Style x:Key="ChoiceOptionSelectedBorderStyle" TargetType="Border" BasedOn="{StaticResource ChoiceOptionBorderStyle}">
         <Setter Property="Stroke" Value="{DynamicResource Primary}" />
-        <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryFill}" />
     </Style>
 
     <Style x:Key="ChoiceOptionLabelStyle" TargetType="Label">
@@ -274,7 +274,7 @@
     </Style>
 
     <Style x:Key="ChoiceOptionSelectedLabelStyle" TargetType="Label" BasedOn="{StaticResource ChoiceOptionLabelStyle}">
-        <Setter Property="TextColor" Value="White" />
+        <Setter Property="TextColor" Value="{DynamicResource OnPrimary}" />
         <Setter Property="FontFamily" Value="{StaticResource SemiBoldFontFamily}" />
     </Style>
 

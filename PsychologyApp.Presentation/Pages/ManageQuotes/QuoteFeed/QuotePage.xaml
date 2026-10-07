@@ -138,11 +138,17 @@
             </Grid>
         </RefreshView>
 
+        <ui:SkeletonView
+            Kind="Cards"
+            VerticalOptions="Start"
+            Margin="20,120,20,0"
+            IsActive="{Binding IsLoadingOverlayVisible}" />
+
         <ui:ProgressBarView
             x:Name="LoadingProgress"
             IsVisible="{Binding IsLoadingOverlayVisible}"
             IsLoading="{Binding IsLoadingOverlayVisible}"
-            VerticalOptions="Center"
+            VerticalOptions="End"
             HorizontalOptions="Center"
             ProgressText="{Binding QuotesLoadingText}"
             CancelCommand="{Binding Cancel}" />
