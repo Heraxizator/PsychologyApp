@@ -95,8 +95,6 @@ public partial class TechniquesViewModel
     {
         _hasMoreCustomTechniques = snapshot.HasMoreCustomTechniques;
         _customTechniquesOffset = snapshot.CustomTechniquesLoadedCount;
-        _customTechniquesGroup = IsTechniquesGrouped && TechniqueGroups.Count > 1
-            ? TechniqueGroups[^1]
-            : null;
+        _customTechniquesGroup = TechniqueGroups.LastOrDefault(group => group.IsCustom);
     }
 }

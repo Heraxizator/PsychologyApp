@@ -249,12 +249,7 @@ public partial class TechniquesViewModel
             return all;
         }
 
-        if (IsTechniquesGrouped && TechniqueGroups.Count > 0)
-        {
-            return TechniqueGroups[0].ToList();
-        }
-
-        return CatalogTechniques.ToList();
+        return [];
     }
 
     private void ApplyLayout(TechniqueListLayout layout, bool hasMore, int offset)
@@ -263,8 +258,6 @@ public partial class TechniquesViewModel
         ApplyUiState(ui);
         _hasMoreCustomTechniques = hasMore;
         _customTechniquesOffset = offset;
-        _customTechniquesGroup = IsTechniquesGrouped && TechniqueGroups.Count > 1
-            ? TechniqueGroups[^1]
-            : null;
+        _customTechniquesGroup = TechniqueGroups.LastOrDefault(group => group.IsCustom);
     }
 }

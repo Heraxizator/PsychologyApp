@@ -55,41 +55,28 @@ public partial class TechniquesViewModel
             chip.IsSelected = chip.Key == _flavorFilter;
         }
 
-        ApplyFlavorFilter();
+        RebuildSections();
     }
 
     /// <summary>
-    /// Shows only the built-in practices of the chosen group by swapping the contents of the built-in part of the list. Hiding the cards instead left
-    /// the Android list with rows it never measured again, and the whole page went blank. Run after every refresh too, which brings every practice back.
+    /// The catalog is the built-in practices in sections by group (only the chosen one with a filter) and then the person's own practices. The cards are never
+    /// hidden, only the sections are replaced as a whole (hiding cards left a blank page on Android). Run after every refresh, which brings every practice back.
     /// </summary>
-    private void ApplyFlavorFilter()
+    private void RebuildSections()
     {
-        if (_staticItemsAll is not { Count: > 0 } all)
+        List<Entities.Technique.TechniqueGroup> groups =
+        [
+            .. TechniqueSections.Build(_staticItemsAll ?? [], _flavorFilter, FlavorSectionTitle)
+        ];
+        if (_customGroup is not null)
         {
-            return;
+            groups.Add(_customGroup);
         }
 
-        List<Entities.Technique.TechniqueItem> shown = [.. all.Where(item => TechniqueFlavors.Matches(item.Flavor, _flavorFilter))];
-        if (shown.Count == 0)
-        {
-            shown = [.. all];
-        }
-
-        if (IsTechniquesGrouped && TechniqueGroups.Count > 0)
-        {
-            Entities.Technique.TechniqueGroup group = TechniqueGroups[0];
-            if (!group.SequenceEqual(shown))
-            {
-                group.Clear();
-                foreach (Entities.Technique.TechniqueItem item in shown)
-                {
-                    group.Add(item);
-                }
-            }
-        }
-        else if (!CatalogTechniques.SequenceEqual(shown))
-        {
-            CatalogTechniques.ReplaceAll(shown);
-        }
+        TechniqueGroups.ReplaceAll(groups);
     }
+
+    private static string FlavorSectionTitle(TechniqueFlavor flavor) => FlavorFilterTitle(flavor.ToString());
+
+    private Entities.Technique.TechniqueGroup? _customGroup;
 }

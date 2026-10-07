@@ -12,5 +12,8 @@ public sealed class TechniqueGroup : ObservableCollection<TechniqueItem>
 
     public string Title { get; }
 
+    /// <summary>The person's own practices: the group that is paged and edited, as opposed to the built-in sections.</summary>
+    public bool IsCustom { get; init; }
+
     public bool HasTitle => !string.IsNullOrEmpty(Title);
 }

@@ -65,6 +65,16 @@ public partial class TodayPracticeRowView : ContentView
         set => SetValue(SubtitleProperty, value);
     }
 
+    /// <summary>The safety banner above takes the place of the hint: one message at a time, and the one about safety first.</summary>
+    public static readonly BindableProperty HideHintProperty =
+        BindableProperty.Create(nameof(HideHint), typeof(bool), typeof(TodayPracticeRowView), false, propertyChanged: OnHintRelevantChanged);
+
+    public bool HideHint
+    {
+        get => (bool)GetValue(HideHintProperty);
+        set => SetValue(HideHintProperty, value);
+    }
+
     public static readonly BindableProperty NudgeTextProperty =
         BindableProperty.Create(nameof(NudgeText), typeof(string), typeof(TodayPracticeRowView), string.Empty, propertyChanged: OnHintRelevantChanged);
 
@@ -141,7 +151,9 @@ public partial class TodayPracticeRowView : ContentView
             return;
         }
 
-        string hint = view.HasNudge && !string.IsNullOrWhiteSpace(view.NudgeText)
+        string hint = view.HideHint
+            ? string.Empty
+            : view.HasNudge && !string.IsNullOrWhiteSpace(view.NudgeText)
             ? view.NudgeText
             : !string.IsNullOrWhiteSpace(view.ReasonText)
                 ? view.ReasonText

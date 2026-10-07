@@ -28,28 +28,22 @@ public partial class TechniquesViewModel
     private void ApplyUiState(TechniqueDashboardUiState uiState)
     {
         _staticItemsAll = [.. (uiState.IsGrouped && uiState.Groups.Count > 0 ? uiState.Groups[0] : uiState.CatalogTechniques)];
-        bool groupingChanged = IsTechniquesGrouped != uiState.IsGrouped;
-        IsTechniquesGrouped = uiState.IsGrouped;
 
-        if (uiState.IsGrouped)
-        {
-            ReplaceGroups(uiState.Groups);
-            CatalogTechniques.Clear();
-            TechniquesItemsSource = TechniqueGroups;
-        }
-        else
-        {
-            TechniqueGroups.Clear();
-            ReplaceCatalog(uiState.CatalogTechniques);
-            TechniquesItemsSource = CatalogTechniques;
-        }
+        // The person's own practices keep one group object for as long as the list lives: paging and inserting work on it.
+        _customGroup = uiState.IsGrouped && uiState.Groups.Count > 1
+            ? new TechniqueGroup(uiState.Groups[^1].Title, uiState.Groups[^1]) { IsCustom = true }
+            : null;
+
+        bool groupingChanged = !IsTechniquesGrouped;
+        IsTechniquesGrouped = true;
+        CatalogTechniques.Clear();
+        TechniquesItemsSource = TechniqueGroups;
+        RebuildSections();
 
         if (groupingChanged)
         {
             OnPropertyChanged(nameof(TechniquesItemsSource));
         }
-
-        ApplyFlavorFilter();
     }
 
     private void ReplaceGroups(ObservableCollection<TechniqueGroup> sourceGroups)
