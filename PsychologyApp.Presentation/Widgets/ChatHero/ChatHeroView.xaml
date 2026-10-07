@@ -10,8 +10,8 @@
 
     <Border
         Style="{StaticResource BrandCardStyle}"
-        Margin="0,0,0,12"
-        Padding="14,10"
+        Margin="0"
+        Padding="14,8"
         SemanticProperties.Description="{Binding Subtitle}">
         <Border.Behaviors>
             <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />

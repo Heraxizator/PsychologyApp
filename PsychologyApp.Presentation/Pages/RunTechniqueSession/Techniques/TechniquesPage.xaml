@@ -64,7 +64,7 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.Header>
-                <VerticalStackLayout Spacing="16" Padding="0">
+                <VerticalStackLayout Spacing="12" Padding="0">
                     <VerticalStackLayout.Behaviors>
                         <behaviors:StaggerChildrenBehavior />
                     </VerticalStackLayout.Behaviors>
@@ -105,7 +105,7 @@
                     <chatHero:ChatHeroView BindingContext="{Binding ChatHero}" />
 
                     <ui:SectionHeaderView
-                        Margin="0,8,0,0"
+                        Margin="0,4,0,0"
                         TitleText="{Binding PracticeCatalogLabel}"
                         ActionText="{Binding CreateButtonText}"
                         ActionCommand="{Binding ConstructorTapped}" />
