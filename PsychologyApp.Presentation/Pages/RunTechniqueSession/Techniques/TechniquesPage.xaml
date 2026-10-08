@@ -48,13 +48,34 @@
                                 <Setter Property="Margin" Value="0" />
                             </DataTrigger>
                         </Grid.Triggers>
-                        <Label
-                            Text="{Binding Title}"
+                        <Grid
                             IsVisible="{Binding HasTitle}"
-                            Style="{StaticResource CaptionStyle}"
-                            FontFamily="{StaticResource SemiBoldFontFamily}"
-                            TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                            Margin="4,8,0,4" />
+                            ColumnDefinitions="*,Auto"
+                            Padding="4,12,4,8"
+                            SemanticProperties.Description="{Binding HeaderText}">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleCommand}" />
+                            </Grid.GestureRecognizers>
+                            <Label
+                                Grid.Column="0"
+                                Text="{Binding HeaderText}"
+                                Style="{StaticResource CaptionStyle}"
+                                FontFamily="{StaticResource SemiBoldFontFamily}"
+                                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="1"
+                                IsVisible="{Binding CanCollapse}"
+                                Text="{mi:Material Icon=KeyboardArrowDown}"
+                                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                VerticalOptions="Center">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsCollapsed}" Value="True">
+                                        <Setter Property="Text" Value="{mi:Material Icon=KeyboardArrowRight}" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </Grid>
                     </Grid>
                 </DataTemplate>
             </CollectionView.GroupHeaderTemplate>

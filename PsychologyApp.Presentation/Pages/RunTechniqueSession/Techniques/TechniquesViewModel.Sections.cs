@@ -15,9 +15,41 @@ public partial class TechniquesViewModel
 
     private TechniqueGroup? _customGroup;
 
+    private const string CollapsedPreferenceKey = "practice.collapsedSections";
+
+    /// <summary>The sections the person has folded; all open until they fold one. Remembered between launches.</summary>
+    private IReadOnlySet<string> _collapsedSections = LoadCollapsedSections();
+
+    private static IReadOnlySet<string> LoadCollapsedSections()
+    {
+        try
+        {
+            return CollapsedSections.Parse(Microsoft.Maui.Storage.Preferences.Default.Get(CollapsedPreferenceKey, string.Empty));
+        }
+        catch (Exception ex) when (ex is InvalidOperationException or NotSupportedException)
+        {
+            return new HashSet<string>();
+        }
+    }
+
+    private void ToggleSection(string key)
+    {
+        _collapsedSections = CollapsedSections.Toggle(_collapsedSections, key);
+        try
+        {
+            Microsoft.Maui.Storage.Preferences.Default.Set(CollapsedPreferenceKey, CollapsedSections.Format(_collapsedSections));
+        }
+        catch (Exception ex) when (ex is InvalidOperationException or NotSupportedException)
+        {
+            // Not remembered this time; the section is still folded for now.
+        }
+
+        RebuildSections();
+    }
+
     private void RebuildSections()
     {
-        List<TechniqueGroup> groups = [.. TechniqueSections.Build(_staticItemsAll ?? [], SectionTitle)];
+        List<TechniqueGroup> groups = [.. TechniqueSections.Build(_staticItemsAll ?? [], SectionTitle, _collapsedSections, key => new Command(() => ToggleSection(key)))];
         if (_customGroup is not null)
         {
             groups.Add(_customGroup);
