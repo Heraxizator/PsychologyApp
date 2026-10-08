@@ -54,7 +54,7 @@
                             Style="{StaticResource CaptionStyle}"
                             FontFamily="{StaticResource SemiBoldFontFamily}"
                             TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                            Margin="4,20,0,6" />
+                            Margin="4,8,0,4" />
                     </Grid>
                 </DataTemplate>
             </CollectionView.GroupHeaderTemplate>
@@ -64,7 +64,7 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.Header>
-                <VerticalStackLayout Spacing="12" Padding="0">
+                <VerticalStackLayout Spacing="0" Padding="0">
                     <VerticalStackLayout.Behaviors>
                         <behaviors:StaggerChildrenBehavior />
                     </VerticalStackLayout.Behaviors>
@@ -103,7 +103,7 @@
                     </today:TodayPracticeRowView>
 
                     <ui:SectionHeaderView
-                        Margin="0,4,0,0"
+                        Margin="0"
                         TitleText="{Binding PracticeCatalogLabel}"
                         ActionText="{Binding CreateButtonText}"
                         ActionCommand="{Binding ConstructorTapped}" />
