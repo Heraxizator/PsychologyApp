@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:self="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             x:Class="PsychologyApp.Presentation.Shared.UI.Components.ChatInputBar"
+             x:DataType="self:ChatInputBar"
+             x:Name="Root">
+
+    <!-- One rounded bar: the text and the send button sit inside it, both centred on the same line. A tall message grows the bar upward and the button stays at its bottom. -->
+    <Border
+        Padding="6"
+        StrokeThickness="1"
+        StrokeShape="RoundRectangle 28"
+        Stroke="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}"
+        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+            <Editor
+                x:Name="InputEditor"
+                Grid.Column="0"
+                Margin="14,0,0,0"
+                Text="{Binding Text, Source={x:Reference Root}, Mode=TwoWay}"
+                Placeholder="{Binding Placeholder, Source={x:Reference Root}}"
+                PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                FontSize="{DynamicResource BodyFontSize}"
+                AutoSize="TextChanges"
+                MaxLength="{Binding MaxLength, Source={x:Reference Root}}"
+                MinimumHeightRequest="44"
+                MaximumHeightRequest="120"
+                VerticalOptions="Center"
+                BackgroundColor="Transparent" />
+
+            <Border
+                Grid.Column="1"
+                WidthRequest="44"
+                HeightRequest="44"
+                VerticalOptions="End"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 22"
+                SemanticProperties.Description="{Binding SendDescription, Source={x:Reference Root}}"
+                BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
+                <Border.Triggers>
+                    <DataTrigger TargetType="Border" Binding="{Binding CanSend, Source={x:Reference Root}}" Value="True">
+                        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryFill}" />
+                    </DataTrigger>
+                </Border.Triggers>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SendCommand, Source={x:Reference Root}}" Tapped="OnSendTapped" />
+                </Border.GestureRecognizers>
+                <Label
+                    Text="{mi:Material Icon=Send}"
+                    FontSize="20"
+                    TranslationX="1"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding CanSend, Source={x:Reference Root}}" Value="True">
+                            <Setter Property="TextColor" Value="{DynamicResource OnPrimary}" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </Border>
+        </Grid>
+    </Border>
+</ContentView>

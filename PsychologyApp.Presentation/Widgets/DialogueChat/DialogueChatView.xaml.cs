@@ -9,6 +9,7 @@ public partial class DialogueChatView : ContentView
     public DialogueChatView()
     {
         InitializeComponent();
+        InputBar.Input.Keyboard = Keyboard.Create(KeyboardFlags.CapitalizeSentence | KeyboardFlags.Spellcheck | KeyboardFlags.Suggestions);
     }
 
     protected override void OnBindingContextChanged()
@@ -26,6 +27,10 @@ public partial class DialogueChatView : ContentView
             _viewModel.Messages.CollectionChanged += OnMessagesChanged;
         }
     }
+
+    /// <summary>The slider answers the 0..10 question with the same command the chips used.</summary>
+    private void OnTensionChosen(object? sender, int value) =>
+        _viewModel?.RatingItems.FirstOrDefault(item => item.Value == value)?.Command.Execute(value);
 
     private void OnMessagesChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {

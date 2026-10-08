@@ -5,6 +5,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:PsychologyApp.Presentation.Shared.UI.Converters">
 
+    <!-- A very faint top-to-bottom wash behind a conversation: the white bubbles stand out from it a little, and the page is not flat grey. Shared by the main chat and the dialogue inside a practice. -->
+    <LinearGradientBrush x:Key="ChatBackdropLight" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#F3F4F6" Offset="0.0" />
+        <GradientStop Color="#E9F0F7" Offset="1.0" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ChatBackdropDark" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#121212" Offset="0.0" />
+        <GradientStop Color="#151B22" Offset="1.0" />
+    </LinearGradientBrush>
+
     <converters:PreferenceLabelConverter x:Key="PreferenceLabelConverter" />
     <Style x:Key="CardFrameStyle" TargetType="Frame">
         <Setter Property="HasShadow" Value="False" />

@@ -56,8 +56,17 @@ public abstract class ChatViewModelBase : BaseViewModel
     public string DraftText
     {
         get => _draftText;
-        set => SetProperty(ref _draftText, value);
+        set
+        {
+            if (SetProperty(ref _draftText, value))
+            {
+                OnPropertyChanged(nameof(CanSend));
+            }
+        }
     }
+
+    /// <summary>There is something to send, so the send button is drawn filled.</summary>
+    public bool CanSend => !string.IsNullOrWhiteSpace(_draftText);
 
     public string InputPlaceholder => string.IsNullOrWhiteSpace(_inputHint) ? AppStrings.DialogueInputPlaceholder : _inputHint;
 

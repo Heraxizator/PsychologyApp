@@ -1,6 +1,6 @@
 using PsychologyApp.Presentation.Shared.Common;
 
-namespace PsychologyApp.Presentation.Pages.Chat.Conversation;
+namespace PsychologyApp.Presentation.Shared.UI.Components;
 
 /// <summary>The three pulsing dots of a messenger's "typing..." bubble. Animates only while <see cref="IsRunning"/> and honours reduced motion.</summary>
 public partial class TypingBubbleView : ContentView

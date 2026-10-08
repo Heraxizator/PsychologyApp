@@ -9,15 +9,17 @@
              x:DataType="vm:TechniqueDialogueViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageName}"
-             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}"
+             Background="{AppThemeBinding Light={StaticResource ChatBackdropLight}, Dark={StaticResource ChatBackdropDark}}">
 
     <ContentPage.Behaviors>
         <behaviors:PageAnalyticsBehavior />
     </ContentPage.Behaviors>
 
-    <Grid RowDefinitions="Auto,*" Padding="{StaticResource LayoutPageMarginThickness}" RowSpacing="12">
+    <Grid RowDefinitions="Auto,*" Padding="12,0,12,12" RowSpacing="8">
         <ui:NavigationBarSimpleView
             Grid.Row="0"
+            Margin="8,12,8,0"
             TitleText="{Binding PageName}"
             BackCommand="{Binding BackCommand}" />
 

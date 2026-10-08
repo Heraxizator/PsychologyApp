@@ -113,6 +113,7 @@
     <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/TechniqueSections.cs" Link="Linked/ViewModels/TechniqueSections.cs" />
     <Compile Include="TechniqueSectionsTests.cs" />
     <Compile Include="CollapsedSectionsTests.cs" />
+    <Compile Include="ChatConsistencyTests.cs" />
     <Compile Include="../PsychologyApp.Presentation/Shared/Common/Infrastructure/BestEffort.cs" Link="Linked/ViewModels/BestEffort.cs" />
     <Compile Include="../PsychologyApp.Presentation/Shared/Common/TechniqueDefinitionMapper.cs" Link="Linked/ViewModels/TechniqueDefinitionMapper.cs" />
     <Compile Include="ViewModels\**\*.cs" />

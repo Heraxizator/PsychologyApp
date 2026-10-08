@@ -6,6 +6,7 @@ namespace PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueDialogue
 public partial class TechniqueDialoguePage : ContentPage
 {
     private readonly TechniqueDialogueViewModel _viewModel;
+    private readonly KeyboardResize _keyboard = new();
 
     public TechniqueDialoguePage(
         ITechniqueDialogueViewModelFactory viewModelFactory,
@@ -23,6 +24,13 @@ public partial class TechniqueDialoguePage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        _keyboard.Enable();
         SafeAsync.Run(_viewModel.StartAsync);
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        _keyboard.Restore();
     }
 }

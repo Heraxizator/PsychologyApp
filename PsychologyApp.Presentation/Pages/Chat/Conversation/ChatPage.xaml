@@ -15,18 +15,6 @@
              BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}"
              Background="{AppThemeBinding Light={StaticResource ChatBackdropLight}, Dark={StaticResource ChatBackdropDark}}">
 
-    <ContentPage.Resources>
-        <!-- A very faint top-to-bottom wash behind the conversation: the white companion bubbles stand out from it a little, and the page is not flat grey. -->
-        <LinearGradientBrush x:Key="ChatBackdropLight" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="#F3F4F6" Offset="0.0" />
-            <GradientStop Color="#E9F0F7" Offset="1.0" />
-        </LinearGradientBrush>
-        <LinearGradientBrush x:Key="ChatBackdropDark" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="#121212" Offset="0.0" />
-            <GradientStop Color="#151B22" Offset="1.0" />
-        </LinearGradientBrush>
-    </ContentPage.Resources>
-
     <ContentPage.Behaviors>
         <behaviors:PageAnalyticsBehavior />
     </ContentPage.Behaviors>
@@ -145,7 +133,7 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
             <CollectionView.Footer>
-                <vm:TypingBubbleView IsVisible="{Binding IsTyping}" IsRunning="{Binding IsTyping}" />
+                <ui:TypingBubbleView IsVisible="{Binding IsTyping}" IsRunning="{Binding IsTyping}" />
             </CollectionView.Footer>
         </CollectionView>
 
@@ -271,64 +259,14 @@
                 </BindableLayout.ItemTemplate>
             </FlexLayout>
 
-            <!-- One rounded bar: the text and the send button sit inside it, both centred on the same line. A tall message grows the bar upward and the button stays at its bottom. -->
-            <Border
+            <ui:ChatInputBar
+                x:Name="InputBar"
                 Margin="12,8,12,12"
-                Padding="6"
-                StrokeThickness="1"
-                StrokeShape="RoundRectangle 28"
-                Stroke="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}"
-                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
-                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
-                    <Editor
-                        x:Name="InputEditor"
-                        Grid.Column="0"
-                        Margin="14,0,0,0"
-                        Text="{Binding DraftText, Mode=TwoWay}"
-                        Placeholder="{Binding Placeholder}"
-                        PlaceholderColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
-                        FontSize="{DynamicResource BodyFontSize}"
-                        AutoSize="TextChanges"
-                        MaxLength="1500"
-                        MinimumHeightRequest="44"
-                        MaximumHeightRequest="120"
-                        VerticalOptions="Center"
-                        BackgroundColor="Transparent" />
-
-                    <Border
-                        Grid.Column="1"
-                        WidthRequest="44"
-                        HeightRequest="44"
-                        VerticalOptions="End"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 22"
-                        SemanticProperties.Description="{Binding SendText}"
-                        BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
-                        <Border.Triggers>
-                            <DataTrigger TargetType="Border" Binding="{Binding CanSend}" Value="True">
-                                <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryFill}" />
-                            </DataTrigger>
-                        </Border.Triggers>
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SendCommand}" Tapped="OnSendTapped" />
-                        </Border.GestureRecognizers>
-                        <Label
-                            Text="{mi:Material Icon=Send}"
-                            FontSize="20"
-                            TranslationX="1"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"
-                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}">
-                            <Label.Triggers>
-                                <DataTrigger TargetType="Label" Binding="{Binding CanSend}" Value="True">
-                                    <Setter Property="TextColor" Value="{DynamicResource OnPrimary}" />
-                                </DataTrigger>
-                            </Label.Triggers>
-                        </Label>
-                    </Border>
-                </Grid>
-            </Border>
+                Text="{Binding DraftText, Mode=TwoWay}"
+                Placeholder="{Binding Placeholder}"
+                SendCommand="{Binding SendCommand}"
+                CanSend="{Binding CanSend}"
+                SendDescription="{Binding SendText}" />
         </VerticalStackLayout>
     </Grid>
 </ContentPage>
