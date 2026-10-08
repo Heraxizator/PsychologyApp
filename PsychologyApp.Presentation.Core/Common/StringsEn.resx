@@ -1315,13 +1315,13 @@
     <value>Explanation</value>
   </data>
   <data name="PhysicsExplanationBody" xml:space="preserve">
-    <value>About half of all illnesses have a psychological component. Any physical symptom can point to an emotional cause that troubles you but stays unconscious.</value>
+    <value>Body and emotions are closely linked: tension, worry and fatigue often show up in the body. This section helps you notice what might be behind a sensation. It is not a diagnosis and does not replace a doctor.</value>
   </data>
   <data name="PhysicsDescriptionHeader" xml:space="preserve">
     <value>Description</value>
   </data>
   <data name="PhysicsDescriptionBody" xml:space="preserve">
-    <value>This tool helps you find a possible emotional cause of a physical symptom in just a few taps. It's simple.</value>
+    <value>Name a symptom or a part of the body and the app shows possible emotional causes and practices that may help. It is a prompt to look closer, not a medical conclusion.</value>
   </data>
   <data name="PhysicsAlgorithmStep1" xml:space="preserve">
     <value>1. Name the illness or body part that hurts</value>
