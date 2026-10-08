@@ -63,7 +63,7 @@
                             <Label
                                 Text="{TemplateBinding Subtitle}"
                                 Style="{StaticResource CaptionStyle}"
-                                MaxLines="1"
+                                MaxLines="2"
                                 LineBreakMode="TailTruncation" />
                         </VerticalStackLayout>
                         <Label
@@ -78,7 +78,7 @@
                         IsVisible="{TemplateBinding HasHint}"
                         Text="{TemplateBinding HintText}"
                         Style="{StaticResource CaptionStyle}"
-                        MaxLines="1"
+                        MaxLines="2"
                         LineBreakMode="TailTruncation" />
                 </Grid>
             </Border>

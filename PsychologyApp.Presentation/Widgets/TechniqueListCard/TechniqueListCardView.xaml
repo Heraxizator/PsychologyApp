@@ -77,6 +77,7 @@
                     </Grid>
                     <Label
                         Grid.Row="2"
+                        Margin="0,-6,0,0"
                         IsVisible="{TemplateBinding HasAuthor}"
                         Text="{TemplateBinding Author}"
                         Style="{StaticResource CaptionStyle}"

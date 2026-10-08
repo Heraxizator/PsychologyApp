@@ -54,3 +54,26 @@ public class ChatConsistencyTests
         Assert.Contains("TensionSliderView", Read("Widgets", "DialogueChat", "DialogueChatView.xaml"));
     }
 }
+
+/// <summary>Mistakes that only show when a screen is first drawn on the phone, caught here instead.</summary>
+public class XamlRuntimeSafetyTests
+{
+    /// <summary>
+    /// The icon markup (<c>{mi:Material Icon=...}</c>) throws when it is the value of a Setter ("does not support Style Setter in conjunction with Xaml Extension"),
+    /// which crashed the practice page the first time a list row was drawn. Use two labels and switch their visibility instead.
+    /// </summary>
+    [Fact]
+    public void NoSetterUsesTheIconMarkup()
+    {
+        string root = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "PsychologyApp.Presentation"));
+        string[] offenders =
+        [
+            .. Directory.EnumerateFiles(root, "*.xaml", SearchOption.AllDirectories)
+                .Where(path => !path.Contains($"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}") && !path.Contains($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}"))
+                .Where(path => System.Text.RegularExpressions.Regex.IsMatch(File.ReadAllText(path), @"<Setter\b[^>]*\{mi:"))
+                .Select(path => Path.GetRelativePath(root, path))
+        ];
+
+        Assert.Empty(offenders);
+    }
+}

@@ -51,7 +51,7 @@
                         <Grid
                             IsVisible="{Binding HasTitle}"
                             ColumnDefinitions="*,Auto"
-                            Padding="4,12,4,8"
+                            Padding="4,8,4,2"
                             SemanticProperties.Description="{Binding HeaderText}">
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ToggleCommand}" />
@@ -63,18 +63,19 @@
                                 FontFamily="{StaticResource SemiBoldFontFamily}"
                                 TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
                                 VerticalOptions="Center" />
+                            <!-- Two arrows, one shown at a time: the icon markup cannot be used inside a Setter (it crashed the page). -->
                             <Label
                                 Grid.Column="1"
-                                IsVisible="{Binding CanCollapse}"
+                                IsVisible="{Binding ShowsOpenArrow}"
                                 Text="{mi:Material Icon=KeyboardArrowDown}"
                                 TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                                VerticalOptions="Center">
-                                <Label.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding IsCollapsed}" Value="True">
-                                        <Setter Property="Text" Value="{mi:Material Icon=KeyboardArrowRight}" />
-                                    </DataTrigger>
-                                </Label.Triggers>
-                            </Label>
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="1"
+                                IsVisible="{Binding ShowsClosedArrow}"
+                                Text="{mi:Material Icon=KeyboardArrowRight}"
+                                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                VerticalOptions="Center" />
                         </Grid>
                     </Grid>
                 </DataTemplate>

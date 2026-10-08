@@ -23,6 +23,12 @@ public sealed class TechniqueGroup : ObservableCollection<TechniqueItem>
 
     public bool CanCollapse => Key is not null;
 
+    /// <summary>The arrow pointing down: the section can be folded.</summary>
+    public bool ShowsOpenArrow => CanCollapse && !IsCollapsed;
+
+    /// <summary>The arrow pointing right: the section is folded and can be opened.</summary>
+    public bool ShowsClosedArrow => CanCollapse && IsCollapsed;
+
     /// <summary>Folded: the heading stays, the cards are not in the list at all (hiding them left a blank page on Android).</summary>
     public bool IsCollapsed { get; init; }
 
