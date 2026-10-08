@@ -20,7 +20,7 @@
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
                 </Border.GestureRecognizers>
-                <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
+                <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="8">
                     <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
                         <Border
                             Grid.Column="0"
@@ -58,32 +58,31 @@
                             TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
                             Text="{mi:Material Icon=KeyboardArrowRight}" />
                     </Grid>
-                    <Grid Grid.Row="1" ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <!-- The group and the length on a line of their own (they used to share it with the date and were cut off), the date and the author under them. -->
+                    <Label
+                        Grid.Row="1"
+                        Text="{TemplateBinding MetaText}"
+                        Style="{StaticResource CaptionStyle}"
+                        FontFamily="{StaticResource SemiBoldFontFamily}"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
+                        MaxLines="1"
+                        LineBreakMode="TailTruncation" />
+                    <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="12">
                         <Label
                             Grid.Column="0"
-                            Text="{TemplateBinding MetaText}"
+                            Text="{TemplateBinding Date}"
                             Style="{StaticResource CaptionStyle}"
-                            FontFamily="{StaticResource SemiBoldFontFamily}"
-                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                             MaxLines="1"
                             LineBreakMode="TailTruncation" />
                         <Label
                             Grid.Column="1"
-                            Text="{TemplateBinding Date}"
+                            IsVisible="{TemplateBinding HasAuthor}"
+                            Text="{TemplateBinding Author}"
                             Style="{StaticResource CaptionStyle}"
                             HorizontalTextAlignment="End"
                             MaxLines="1"
                             LineBreakMode="TailTruncation" />
                     </Grid>
-                    <Label
-                        Grid.Row="2"
-                        Margin="0,-6,0,0"
-                        IsVisible="{TemplateBinding HasAuthor}"
-                        Text="{TemplateBinding Author}"
-                        Style="{StaticResource CaptionStyle}"
-                        HorizontalTextAlignment="End"
-                        MaxLines="1"
-                        LineBreakMode="TailTruncation" />
                 </Grid>
             </Border>
         </ControlTemplate>

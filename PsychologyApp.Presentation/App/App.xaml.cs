@@ -27,6 +27,9 @@ public partial class App : Microsoft.Maui.Controls.Application
         QuoteReminderTapHandler.Configure(tabNavigator);
         MoodReminderTapHandler.Configure(tabNavigator, preferences);
         ChatReminderTapHandler.Configure(tabNavigator);
+#if DEBUG
+        Shared.Common.Infrastructure.DemoDataImporter.TryImportAsync(_services).FireAndForget();
+#endif
         return new(shell);
     }
 
