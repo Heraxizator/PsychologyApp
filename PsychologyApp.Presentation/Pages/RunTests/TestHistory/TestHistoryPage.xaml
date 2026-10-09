@@ -90,12 +90,14 @@
             IsActive="{Binding IsLoadingOverlayVisible}" />
 
         <ui:ProgressBarView
+            BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}"
+            Padding="24,8"
             x:Name="LoadingProgress"
             Grid.RowSpan="3"
             VerticalOptions="End"
             HorizontalOptions="Center"
-            IsVisible="{Binding IsLoadingOverlayVisible}"
-            IsLoading="{Binding IsLoadingOverlayVisible}"
+            IsVisible="{Binding IsSlowLoadingVisible}"
+            IsLoading="{Binding IsSlowLoadingVisible}"
             ProgressText="{Binding LoadingText}" />
 
         <ui:RetryView

@@ -39,6 +39,8 @@
                         SemanticProperties.Description="{Binding SearchPlaceholder}" />
 
                     <ui:ProgressBarView
+            BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}"
+            Padding="24,8"
                         x:Name="SearchFilteringProgress"
                         IsVisible="{Binding IsSearchFilteringVisible}"
                         IsLoading="{Binding IsSearchFilteringVisible}"
@@ -145,9 +147,11 @@
             IsActive="{Binding IsLoadingOverlayVisible}" />
 
         <ui:ProgressBarView
+            BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}"
+            Padding="24,8"
             x:Name="LoadingProgress"
-            IsVisible="{Binding IsLoadingOverlayVisible}"
-            IsLoading="{Binding IsLoadingOverlayVisible}"
+            IsVisible="{Binding IsSlowLoadingVisible}"
+            IsLoading="{Binding IsSlowLoadingVisible}"
             VerticalOptions="End"
             HorizontalOptions="Center"
             ProgressText="{Binding QuotesLoadingText}"

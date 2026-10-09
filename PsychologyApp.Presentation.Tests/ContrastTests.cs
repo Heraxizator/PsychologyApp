@@ -177,6 +177,20 @@ public class ContrastTests(ITestOutputHelper output)
         Assert.True(failures.Count == 0, string.Join("; ", failures));
     }
 
+    [Fact]
+    public void TheBreathingWordsAreReadableOnTheFullScreenPageAtEveryMomentOfTheExercise()
+    {
+        for (double calm = 0; calm <= 1.0001; calm += 0.1)
+        {
+            for (double scale = BreathingPattern.SmallScale; scale <= BreathingPattern.LargeScale + 0.0001; scale += 0.05)
+            {
+                string seen = BreathingColors.Composite(BreathingColors.ImmersiveAt(calm), BreathingColors.AlphaAt(scale), dark: true);
+                double ratio = ColorContrast.Ratio(BreathingColors.TextHex(dark: true), seen);
+                Assert.True(ratio >= ColorContrast.BodyTextMinimum, $"calm {calm:F1}, scale {scale:F2}: {ratio:F2}");
+            }
+        }
+    }
+
     private static string StylePath(string file) => Path.GetFullPath(Path.Combine(
         AppContext.BaseDirectory, "..", "..", "..", "..", "PsychologyApp.Presentation", "Resources", "Styles", file));
 

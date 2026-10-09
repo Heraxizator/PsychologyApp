@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Widgets.TensionSlider.TensionReliefView"
+             HorizontalOptions="Center">
+
+    <!-- The tension before and after a practice as a haze that thins out while the number settles down. -->
+    <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+        <Grid WidthRequest="176" HeightRequest="176" HorizontalOptions="Center">
+            <Border x:Name="Haze" WidthRequest="176" HeightRequest="176" StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="88" />
+                </Border.StrokeShape>
+            </Border>
+            <Border x:Name="Core" WidthRequest="116" HeightRequest="116" StrokeThickness="0" HorizontalOptions="Center" VerticalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="58" />
+                </Border.StrokeShape>
+            </Border>
+            <Label x:Name="ValueLabel" Style="{StaticResource PageTitleStyle}" FontSize="44" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+        </Grid>
+        <Label x:Name="CaptionLabel" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+    </VerticalStackLayout>
+</ContentView>

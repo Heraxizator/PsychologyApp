@@ -15,6 +15,7 @@
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
+    <Grid>
     <ScrollView VerticalScrollBarVisibility="Never">
         <VerticalStackLayout
             Margin="{StaticResource LayoutPageMarginThickness}"
@@ -175,4 +176,20 @@
             </Label>
         </VerticalStackLayout>
     </ScrollView>
+
+        <!-- A soft circle in the colour of the chosen mood that opens from the tapped face and fades. -->
+        <Border
+            x:Name="MoodBloom"
+            WidthRequest="120"
+            HeightRequest="120"
+            Opacity="0"
+            InputTransparent="True"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            StrokeThickness="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="60" />
+            </Border.StrokeShape>
+        </Border>
+    </Grid>
 </ContentPage>

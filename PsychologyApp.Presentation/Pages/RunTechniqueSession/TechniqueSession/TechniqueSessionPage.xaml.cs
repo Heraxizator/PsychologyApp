@@ -3,6 +3,7 @@ using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Features.RunTechniqueSession.Index;
 using PsychologyApp.Presentation.Features.RunTechniqueSession.DependencyInjection;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
+using PsychologyApp.Presentation.Pages.RunTechniqueSession.BreathingImmersive;
 using PsychologyApp.Presentation.Widgets.BreathingPacer;
 using PsychologyApp.Presentation.Widgets.TechniqueBodies;
 using PsychologyApp.Presentation.Shared.Common;
@@ -117,9 +118,11 @@ public partial class TechniqueSessionPage : ContentPage
         SessionShell.HeroSubtitle = definition.ListSubtitle;
 
         SessionShell.BodyContent = _techniqueId == TechniqueId.Breathing
-            ? new VerticalStackLayout { Spacing = 8, Children = { new BreathingPacerView(), body } }
+            ? new VerticalStackLayout { Spacing = 8, Children = { new BreathingPacerView { FullscreenCommand = new Command(OpenImmersiveBreathing) }, body } }
             : body;
     }
+
+    private async void OpenImmersiveBreathing() => await Navigation.PushModalAsync(new BreathingImmersivePage());
 
     protected override void OnDisappearing()
     {

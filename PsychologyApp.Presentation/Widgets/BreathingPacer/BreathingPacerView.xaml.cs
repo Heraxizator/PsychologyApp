@@ -1,3 +1,4 @@
+using System.Windows.Input;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Common;
 
@@ -12,6 +13,16 @@ public partial class BreathingPacerView : ContentView
     private const string AnimationName = "breathing";
     private const double HaloLagSeconds = 0.45;
 
+    private const int ImmersiveStartDelayMs = 900;
+
+    public static readonly BindableProperty FullscreenCommandProperty = BindableProperty.Create(
+        nameof(FullscreenCommand), typeof(ICommand), typeof(BreathingPacerView), null,
+        propertyChanged: (bindable, _, _) => ((BreathingPacerView)bindable).UpdateFullscreenButton());
+
+    public static readonly BindableProperty IsImmersiveProperty = BindableProperty.Create(
+        nameof(IsImmersive), typeof(bool), typeof(BreathingPacerView), false,
+        propertyChanged: (bindable, _, newValue) => ((BreathingPacerView)bindable).ApplyImmersive((bool)newValue));
+
     private readonly BreathingPattern _pattern = BreathingPattern.Square;
     private BreathPhaseKind? _lastPhase;
     private bool _running;
@@ -21,8 +32,71 @@ public partial class BreathingPacerView : ContentView
         InitializeComponent();
         SemanticProperties.SetDescription(CircleHost, AppStrings.BreathCircleLabel);
         ToggleButton.TapCommand = new Command(Toggle);
+        FullscreenButton.BodyText = AppStrings.BreathFullscreen;
         Unloaded += (_, _) => Stop();
         ShowReady();
+    }
+
+    /// <summary>Asks the host to open the full-screen breathing page. The button shows only when the host gives a command.</summary>
+    public ICommand? FullscreenCommand
+    {
+        get => (ICommand?)GetValue(FullscreenCommandProperty);
+        set => SetValue(FullscreenCommandProperty, value);
+    }
+
+    /// <summary>The circle on its own: no card, a larger circle, the dark-theme colours on whatever dark page it sits on, and it starts by itself.</summary>
+    public bool IsImmersive
+    {
+        get => (bool)GetValue(IsImmersiveProperty);
+        set => SetValue(IsImmersiveProperty, value);
+    }
+
+    /// <summary>After every frame: how large the circle is (0.55 to 1) and its colour, so the page behind it can breathe too.</summary>
+    public event Action<double, Color>? Rendered;
+
+    private void UpdateFullscreenButton()
+    {
+        if (FullscreenCommand is not null)
+        {
+            FullscreenButton.TapCommand = FullscreenCommand;
+        }
+
+        FullscreenButton.IsVisible = FullscreenCommand is not null && !IsImmersive;
+    }
+
+    private void ApplyImmersive(bool immersive)
+    {
+        UpdateFullscreenButton();
+        if (!immersive)
+        {
+            return;
+        }
+
+        Card.Style = new Style(typeof(Border));
+        Card.BackgroundColor = Colors.Transparent;
+        Card.StrokeThickness = 0;
+        Card.Padding = 0;
+        Card.Margin = 0;
+        CircleHost.WidthRequest = 390;
+        CircleHost.HeightRequest = 390;
+        ToggleButton.Variant = "Secondary";
+        Halo.WidthRequest = 300;
+        Halo.HeightRequest = 300;
+        Halo.StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 150 };
+        Circle.WidthRequest = 260;
+        Circle.HeightRequest = 260;
+        Circle.StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 130 };
+        CountLabel.FontSize = 48;
+        CycleLabel.TextColor = Color.FromArgb("#CCFFFFFF");
+        Render(BreathingPattern.SmallScale, 0);
+        Loaded += async (_, _) =>
+        {
+            await Task.Delay(ImmersiveStartDelayMs);
+            if (!_running && IsImmersive)
+            {
+                Start();
+            }
+        };
     }
 
     private void ShowReady()
@@ -91,8 +165,8 @@ public partial class BreathingPacerView : ContentView
 
     private void Render(double scale, double calm, double? haloScale = null)
     {
-        bool dark = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark;
-        (byte r, byte g, byte b) = BreathingColors.At(calm, dark);
+        bool dark = IsImmersive || Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark;
+        (byte r, byte g, byte b) = IsImmersive ? BreathingColors.ImmersiveAt(calm) : BreathingColors.At(calm, dark);
         Color color = Color.FromRgb(r, g, b);
         double alpha = BreathingColors.AlphaAt(scale);
         Color text = Color.FromArgb(BreathingColors.TextHex(dark));
@@ -105,6 +179,7 @@ public partial class BreathingPacerView : ContentView
         Circle.BackgroundColor = color.WithAlpha((float)alpha);
         Halo.Scale = (ReduceMotion.IsEnabled ? 0.8 : haloScale ?? scale) * 1.18;
         Halo.BackgroundColor = color.WithAlpha(0.22f);
+        Rendered?.Invoke(scale, color);
     }
 
     private void Finish()

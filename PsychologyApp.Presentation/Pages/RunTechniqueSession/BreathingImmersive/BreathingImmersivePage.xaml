@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.RunTechniqueSession.BreathingImmersive.BreathingImmersivePage"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:breath="clr-namespace:PsychologyApp.Presentation.Widgets.BreathingPacer"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             Shell.NavBarIsVisible="False"
+             SafeAreaEdges="None"
+             BackgroundColor="#0B1620">
+
+    <ContentPage.Behaviors>
+        <behaviors:PageAnalyticsBehavior />
+    </ContentPage.Behaviors>
+
+    <!-- Nothing but the circle: the page behind it breathes with it (its colour and glow follow the circle), the screen stays on, one small way out. -->
+    <Grid>
+        <BoxView x:Name="Glow" Color="#1F6E5C" Opacity="0.08" InputTransparent="True" />
+
+        <breath:BreathingPacerView
+            x:Name="Pacer"
+            IsImmersive="True"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Margin="24" />
+
+        <Label
+            x:Name="CloseIcon"
+            Text="{mi:Material Icon=Close}"
+            FontSize="28"
+            TextColor="#CCFFFFFF"
+            HorizontalOptions="End"
+            VerticalOptions="Start"
+            Margin="0,48,20,0"
+            Padding="12"
+            SemanticProperties.Description="Close">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnCloseTapped" />
+            </Label.GestureRecognizers>
+        </Label>
+    </Grid>
+</ContentPage>

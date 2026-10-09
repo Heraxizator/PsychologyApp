@@ -170,6 +170,8 @@
                         MinimumHeightRequest="{Binding LoadMoreFooterHeight}"
                         IsClippedToBounds="True">
                     <ui:ProgressBarView
+            BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}"
+            Padding="24,8"
                         IsVisible="{Binding IsLoadingMoreCustomTechniques}"
                         IsLoading="{Binding IsLoadingMoreCustomTechniques}"
                         ProgressText="{Binding LoadingMoreText}"
@@ -221,12 +223,14 @@
             IsActive="{Binding IsLoadingOverlayVisible}" />
 
         <ui:ProgressBarView
+            BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}"
+            Padding="24,8"
             x:Name="LoadingProgress"
             VerticalOptions="End"
             Margin="0,0,0,24"
             HorizontalOptions="Center"
-            IsVisible="{Binding IsLoadingOverlayVisible}"
-            IsLoading="{Binding IsLoadingOverlayVisible}"
+            IsVisible="{Binding IsSlowLoadingVisible}"
+            IsLoading="{Binding IsSlowLoadingVisible}"
             ProgressText="{Binding LoadingText}"
             CancelCommand="{Binding Cancel}" />
 

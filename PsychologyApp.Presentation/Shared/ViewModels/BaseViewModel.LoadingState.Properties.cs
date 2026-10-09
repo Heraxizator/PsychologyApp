@@ -27,6 +27,7 @@ public partial class BaseViewModel
                 _init_visibility = value;
                 OnPropertyChanged(nameof(IsInit));
                 OnPropertyChanged(nameof(IsLoadingOverlayVisible));
+                UpdateSlowLoading();
             }
         }
     }
@@ -42,11 +43,50 @@ public partial class BaseViewModel
                 _done_visibility = value;
                 OnPropertyChanged(nameof(IsDone));
                 OnPropertyChanged(nameof(IsLoadingOverlayVisible));
+                UpdateSlowLoading();
             }
         }
     }
 
     public bool IsLoadingOverlayVisible => IsInit && !IsDone;
+
+    /// <summary>How long a load may take before the spinner with its cancel link appears; faster loads show the grey placeholders only.</summary>
+    protected const int SlowLoadingDelayMilliseconds = 2500;
+
+    private int _slowLoadingToken;
+    private bool _slowLoadingVisible;
+
+    /// <summary>True when a load has gone on for a while. The grey placeholders are enough for a quick load; the spinner and the cancel link come only for a slow one, so the two never sit on top of each other for the usual case.</summary>
+    public bool IsSlowLoadingVisible
+    {
+        get => _slowLoadingVisible;
+        private set
+        {
+            if (_slowLoadingVisible != value)
+            {
+                _slowLoadingVisible = value;
+                OnPropertyChanged(nameof(IsSlowLoadingVisible));
+            }
+        }
+    }
+
+    private void UpdateSlowLoading()
+    {
+        int token = ++_slowLoadingToken;
+        if (!IsLoadingOverlayVisible)
+        {
+            IsSlowLoadingVisible = false;
+            return;
+        }
+
+        _ = Task.Delay(SlowLoadingDelayMilliseconds).ContinueWith(_ =>
+        {
+            if (token == _slowLoadingToken && IsLoadingOverlayVisible)
+            {
+                IsSlowLoadingVisible = true;
+            }
+        }, TaskScheduler.Default);
+    }
 
     protected string _progress_text = string.Empty;
     public string ProgressText

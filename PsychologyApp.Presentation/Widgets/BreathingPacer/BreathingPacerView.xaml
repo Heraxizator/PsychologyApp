@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              x:Class="PsychologyApp.Presentation.Widgets.BreathingPacer.BreathingPacerView">
-    <Border Style="{StaticResource BrandCardStyle}" Margin="{StaticResource CardBottomMargin}">
+    <Border x:Name="Card" Style="{StaticResource BrandCardStyle}" Margin="{StaticResource CardBottomMargin}">
         <VerticalStackLayout Spacing="12">
             <Grid x:Name="CircleHost" HeightRequest="260" WidthRequest="260" HorizontalOptions="Center">
                 <Border x:Name="Halo" WidthRequest="220" HeightRequest="220" StrokeThickness="0"
@@ -25,6 +25,7 @@
             </Grid>
             <Label x:Name="CycleLabel" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
             <ui:ButtonView x:Name="ToggleButton" />
+            <ui:ButtonView x:Name="FullscreenButton" Variant="Secondary" IsVisible="False" />
         </VerticalStackLayout>
     </Border>
 </ContentView>

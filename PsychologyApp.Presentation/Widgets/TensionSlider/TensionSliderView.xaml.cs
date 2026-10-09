@@ -18,7 +18,6 @@ public partial class TensionSliderView : ContentView
     {
         InitializeComponent();
         HintLabel.Text = AppStrings.TensionPickHint;
-        ChooseButton.BodyText = AppStrings.TensionPickConfirm;
         ChooseButton.TapCommand = new Command(() => Chosen?.Invoke(this, _value));
         Show(5, announce: false);
     }
@@ -56,6 +55,7 @@ public partial class TensionSliderView : ContentView
         bool dark = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark;
         Color color = Color.FromArgb(TensionScale.HexAt(value, dark));
         NumberLabel.Text = value.ToString();
+        ChooseButton.BodyText = AppStrings.TensionPickConfirm(value);
         NumberLabel.TextColor = color;
         TensionBar.ThumbColor = color;
         TensionBar.MinimumTrackColor = color;

@@ -117,6 +117,10 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         }
     }
 
+    public int PreIntensityValue => _preIntensity ?? -1;
+
+    public int PostIntensityValue => int.TryParse(_postIntensityText, out int post) ? post : -1;
+
     public bool HasSudsDelta =>
         _preIntensity is >= 0 and <= 10
         && int.TryParse(_postIntensityText, out int post)
@@ -250,6 +254,8 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
     private void NotifySudsDelta()
     {
         OnPropertyChanged(nameof(HasSudsDelta));
+        OnPropertyChanged(nameof(PreIntensityValue));
+        OnPropertyChanged(nameof(PostIntensityValue));
         OnPropertyChanged(nameof(SudsDeltaText));
     }
 

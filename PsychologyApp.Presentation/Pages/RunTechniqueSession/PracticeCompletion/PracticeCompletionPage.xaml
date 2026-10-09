@@ -5,6 +5,7 @@
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:mood="clr-namespace:PsychologyApp.Presentation.Widgets.MoodStrip"
+             xmlns:tension="clr-namespace:PsychologyApp.Presentation.Widgets.TensionSlider"
              xmlns:today="clr-namespace:PsychologyApp.Presentation.Widgets.TodayPracticeRow"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.RunTechniqueSession.PracticeCompletion"
@@ -61,6 +62,10 @@
                         <ui:RatingEntryView
                             TitleText="{Binding PostSudsLabel}"
                             BodyText="{Binding PostIntensityText, Mode=TwoWay}" />
+                        <tension:TensionReliefView
+                            IsVisible="{Binding HasSudsDelta}"
+                            Before="{Binding PreIntensityValue}"
+                            After="{Binding PostIntensityValue}" />
                         <Border
                             x:Name="SudsDeltaPill"
                             Style="{StaticResource MetaPillStyle}"

@@ -2977,6 +2977,12 @@
   <data name="BreathStart" xml:space="preserve">
     <value>Начать</value>
   </data>
+  <data name="BreathFullscreen" xml:space="preserve">
+    <value>На весь экран</value>
+  </data>
+  <data name="ReliefDescription" xml:space="preserve">
+    <value>Напряжение: было {0}, стало {1}</value>
+  </data>
   <data name="BreathStop" xml:space="preserve">
     <value>Остановить</value>
   </data>
@@ -2996,10 +3002,10 @@
     <value>Дыхательный круг: расширяется на вдохе, сжимается на выдохе</value>
   </data>
   <data name="TensionPickHint" xml:space="preserve">
-    <value>Проведите пальцем по полосе, чтобы выбрать от 0 до 10</value>
+    <value>Проведите по полосе: от 0 до 10</value>
   </data>
   <data name="TensionPickConfirm" xml:space="preserve">
-    <value>Выбрать</value>
+    <value>Отправить: {0}</value>
   </data>
   <data name="TensionChangeFormat" xml:space="preserve">
     <value>Было {0} → стало {1}</value>

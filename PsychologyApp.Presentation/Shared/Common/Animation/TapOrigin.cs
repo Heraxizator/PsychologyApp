@@ -36,6 +36,13 @@ public static class TapOrigin
     }
 
     /// <summary>Position of a view within its page, adding up the offsets of its parents and subtracting what a scroll view has scrolled.</summary>
+    /// <summary>Where the last tap was, if it was a moment ago (not consumed: the zoom of a page uses it separately).</summary>
+    public static bool TryPeek(out Rect bounds)
+    {
+        bounds = _bounds;
+        return HasRecentTap && bounds.Width > 0;
+    }
+
     private static Rect? TryBoundsOnPage(VisualElement view)
     {
         double x = 0;

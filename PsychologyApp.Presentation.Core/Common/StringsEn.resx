@@ -2971,6 +2971,12 @@
   <data name="BreathStart" xml:space="preserve">
     <value>Start</value>
   </data>
+  <data name="BreathFullscreen" xml:space="preserve">
+    <value>Full screen</value>
+  </data>
+  <data name="ReliefDescription" xml:space="preserve">
+    <value>Tension: was {0}, now {1}</value>
+  </data>
   <data name="BreathStop" xml:space="preserve">
     <value>Stop</value>
   </data>
@@ -2990,10 +2996,10 @@
     <value>Breathing circle: grows as you inhale, shrinks as you exhale</value>
   </data>
   <data name="TensionPickHint" xml:space="preserve">
-    <value>Slide along the bar to pick from 0 to 10</value>
+    <value>Slide along the bar: 0 to 10</value>
   </data>
   <data name="TensionPickConfirm" xml:space="preserve">
-    <value>Choose</value>
+    <value>Send: {0}</value>
   </data>
   <data name="TensionChangeFormat" xml:space="preserve">
     <value>Was {0} → now {1}</value>

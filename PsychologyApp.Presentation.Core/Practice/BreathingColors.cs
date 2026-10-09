@@ -17,6 +17,17 @@ public static class BreathingColors
 
     public static string TextHex(bool dark) => dark ? DarkText : LightText;
 
+    // The full-screen breathing page is always dark: it moves from a quiet blue to teal instead of amber (amber on near-black turns to mud).
+    private static readonly (byte R, byte G, byte B) ImmersiveTense = (0x2B, 0x4F, 0x86);
+    private static readonly (byte R, byte G, byte B) ImmersiveCalm = (0x1F, 0x78, 0x68);
+
+    /// <summary>The circle colour on the full-screen dark page after <paramref name="calm"/> (0 at the start .. 1 at the end) of the exercise.</summary>
+    public static (byte R, byte G, byte B) ImmersiveAt(double calm)
+    {
+        double t = Math.Clamp(calm, 0, 1);
+        return ((byte)Math.Round(ImmersiveTense.R + (ImmersiveCalm.R - ImmersiveTense.R) * t), (byte)Math.Round(ImmersiveTense.G + (ImmersiveCalm.G - ImmersiveTense.G) * t), (byte)Math.Round(ImmersiveTense.B + (ImmersiveCalm.B - ImmersiveTense.B) * t));
+    }
+
     /// <summary>The circle colour after <paramref name="calm"/> (0 at the start .. 1 at the end) of the exercise.</summary>
     public static (byte R, byte G, byte B) At(double calm, bool dark)
     {

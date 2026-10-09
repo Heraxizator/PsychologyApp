@@ -837,6 +837,8 @@ public static partial class AppStrings
     public static string BreathHold => R(nameof(BreathHold));
     public static string BreathExhale => R(nameof(BreathExhale));
     public static string BreathStart => R(nameof(BreathStart));
+    public static string BreathFullscreen => R(nameof(BreathFullscreen));
+    public static string ReliefDescription(int before, int after) => F(nameof(ReliefDescription), before, after);
     public static string BreathStop => R(nameof(BreathStop));
     public static string BreathAgain => R(nameof(BreathAgain));
     public static string BreathCycleFormat => R(nameof(BreathCycleFormat));
@@ -844,7 +846,7 @@ public static partial class AppStrings
     public static string BreathDone => R(nameof(BreathDone));
     public static string BreathCircleLabel => R(nameof(BreathCircleLabel));
     public static string TensionPickHint => R(nameof(TensionPickHint));
-    public static string TensionPickConfirm => R(nameof(TensionPickConfirm));
+    public static string TensionPickConfirm(int value) => F(nameof(TensionPickConfirm), value);
     public static string TensionChangeFormat => R(nameof(TensionChangeFormat));
     public static string TensionCalmWord => R(nameof(TensionCalmWord));
     public static string TensionStrongWord => R(nameof(TensionStrongWord));
