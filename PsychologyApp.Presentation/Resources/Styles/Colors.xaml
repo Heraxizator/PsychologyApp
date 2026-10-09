@@ -8,10 +8,10 @@
     <Color x:Key="PrimaryHover">#006ACC</Color>
     <Color x:Key="PrimaryActive">#005BB5</Color>
     <Color x:Key="PrimaryTint">#D6EBFF</Color>
-    <Color x:Key="PrimaryTextLight">#006ACC</Color>
+    <Color x:Key="PrimaryTextLight">#0062BD</Color>
     <Color x:Key="PrimaryFill">#0071D9</Color>
     <Color x:Key="OnPrimary">#FFFFFF</Color>
-    <Color x:Key="PrimaryTextDark">#0085FF</Color>
+    <Color x:Key="PrimaryTextDark">#3399FF</Color>
     <Color x:Key="PrimaryTintDark">#1A2A3D</Color>
     <Color x:Key="AccentTextLight">#0085FF</Color>
     <Color x:Key="Secondary">#0085FF</Color>
@@ -19,9 +19,9 @@
 
     <!-- Fixed meaning, independent of the person's chosen accent colour above: destructive actions are always this red,
          improvement/success is always this green, wherever in the app they show up. -->
-    <Color x:Key="Danger">#D64545</Color>
+    <Color x:Key="Danger">#C23A3A</Color>
     <Color x:Key="DangerDark">#E5726B</Color>
-    <Color x:Key="Success">#2E9E5B</Color>
+    <Color x:Key="Success">#1E7A45</Color>
     <Color x:Key="SuccessDark">#4CAF7D</Color>
     <Color x:Key="OnlineStatus">#34C759</Color>
 
@@ -61,7 +61,7 @@
     <Color x:Key="InputFocusBackgroundLight">#F0F7FF</Color>
     <Color x:Key="InputFocusBackgroundDark">#1A2A3D</Color>
     <Color x:Key="InputBorderDark">#404040</Color>
-    <Color x:Key="InputPlaceholderLight">#999999</Color>
+    <Color x:Key="InputPlaceholderLight">#707070</Color>
     <Color x:Key="InputPlaceholderDark">#AAAAAA</Color>
 
     <Color x:Key="SurfaceHeroLight">#F5F9FF</Color>

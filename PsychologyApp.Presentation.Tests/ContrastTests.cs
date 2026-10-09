@@ -138,6 +138,45 @@ public class ContrastTests(ITestOutputHelper output)
         }
     }
 
+    [Fact]
+    public void TextOnTheOtherSurfacesOfBothThemesIsReadable()
+    {
+        Dictionary<string, string> colors = ReadColors();
+        (string Text, string Background, double Minimum)[] pairs =
+        [
+            ("TextPrimaryDark", "InputBackgroundDark", 4.5), ("TextSecondaryDark", "InputBackgroundDark", 4.5),
+            ("TextPrimaryDark", "SurfaceElevatedDark", 4.5), ("TextSecondaryDark", "SurfaceElevatedDark", 4.5),
+            ("TextPrimaryDark", "SurfaceHeroDark", 4.5), ("TextSecondaryDark", "SurfaceHeroDark", 4.5),
+            ("TextPrimaryDark", "PrimaryTintDark", 4.5), ("TextSecondaryDark", "PrimaryTintDark", 4.5),
+            ("PrimaryTextDark", "PrimaryTintDark", 4.5), ("PrimaryTextDark", "InputFocusBackgroundDark", 4.5),
+            ("PrimaryTextDark", "SurfaceHeroDark", 4.5), ("PrimaryTextDark", "InputBackgroundDark", 4.5),
+            ("PrimaryTextDark", "SurfaceElevatedDark", 4.5),
+            ("InputPlaceholderDark", "InputBackgroundDark", 4.5),
+            ("DangerDark", "SurfaceDark", 4.5), ("DangerDark", "PageBackgroundDark", 4.5),
+            ("SuccessDark", "SurfaceDark", 4.5), ("SuccessDark", "PageBackgroundDark", 4.5),
+            ("TextSecondaryLight", "InputBackgroundLight", 4.5), ("TextSecondaryLight", "SurfaceHeroLight", 4.5),
+            ("TextSecondaryLight", "PrimaryTint", 4.5), ("TextPrimaryLight", "PrimaryTint", 4.5),
+            ("PrimaryTextLight", "PrimaryTint", 4.5), ("PrimaryTextLight", "InputFocusBackgroundLight", 4.5),
+            ("PrimaryTextLight", "SurfaceHeroLight", 4.5), ("PrimaryTextLight", "InputBackgroundLight", 4.5),
+            ("InputPlaceholderLight", "InputBackgroundLight", 4.5),
+            ("Danger", "SurfaceLight", 4.5), ("Danger", "PageBackground", 4.5),
+            ("Success", "SurfaceLight", 4.5), ("Success", "PageBackground", 4.5)
+        ];
+
+        List<string> failures = [];
+        foreach ((string text, string background, double minimum) in pairs)
+        {
+            double ratio = ColorContrast.Ratio(colors[text], colors[background]);
+            output.WriteLine($"{text} on {background}: {ratio:F2}");
+            if (ratio < minimum)
+            {
+                failures.Add($"{text} on {background}: {ratio:F2}");
+            }
+        }
+
+        Assert.True(failures.Count == 0, string.Join("; ", failures));
+    }
+
     private static string StylePath(string file) => Path.GetFullPath(Path.Combine(
         AppContext.BaseDirectory, "..", "..", "..", "..", "PsychologyApp.Presentation", "Resources", "Styles", file));
 

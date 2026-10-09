@@ -10,6 +10,7 @@ namespace PsychologyApp.Presentation.Widgets.BreathingPacer;
 public partial class BreathingPacerView : ContentView
 {
     private const string AnimationName = "breathing";
+    private const double HaloLagSeconds = 0.45;
 
     private readonly BreathingPattern _pattern = BreathingPattern.Square;
     private BreathPhaseKind? _lastPhase;
@@ -72,7 +73,9 @@ public partial class BreathingPacerView : ContentView
     {
         BreathPosition position = _pattern.At(elapsed);
         double scale = BreathingPattern.ScaleAt(position.Phase, position.Progress);
-        Render(scale, _pattern.CalmAt(elapsed));
+        // The halo follows the circle a moment later, so the breath has depth instead of one flat disc.
+        BreathPosition trailing = _pattern.At(Math.Max(0, elapsed - HaloLagSeconds));
+        Render(scale, _pattern.CalmAt(elapsed), BreathingPattern.ScaleAt(trailing.Phase, trailing.Progress));
         CountLabel.Text = position.SecondsLeft.ToString();
         CycleLabel.Text = string.Format(AppStrings.BreathCycleFormat, position.Cycle, _pattern.Cycles);
 
@@ -86,7 +89,7 @@ public partial class BreathingPacerView : ContentView
         }
     }
 
-    private void Render(double scale, double calm)
+    private void Render(double scale, double calm, double? haloScale = null)
     {
         bool dark = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark;
         (byte r, byte g, byte b) = BreathingColors.At(calm, dark);
@@ -100,7 +103,7 @@ public partial class BreathingPacerView : ContentView
         double shown = ReduceMotion.IsEnabled ? 0.8 : scale;
         Circle.Scale = shown;
         Circle.BackgroundColor = color.WithAlpha((float)alpha);
-        Halo.Scale = shown * 1.18;
+        Halo.Scale = (ReduceMotion.IsEnabled ? 0.8 : haloScale ?? scale) * 1.18;
         Halo.BackgroundColor = color.WithAlpha(0.22f);
     }
 
