@@ -590,6 +590,10 @@ public static partial class AppStrings
     public static string TechniqueNotTriedYet => R(nameof(TechniqueNotTriedYet));
     public static string TechniqueDuration(int minutes) => F(nameof(TechniqueDuration), minutes);
     public static string TechniqueMetaLine(string duration, string theme) => F(nameof(TechniqueMetaLine), duration, theme);
+
+    public static string RatingScaleMin => R(nameof(RatingScaleMin));
+
+    public static string RatingScaleMax => R(nameof(RatingScaleMax));
     public static string TechniqueRatingValue(int value) => F(nameof(TechniqueRatingValue), value);
     public static string TechniqueRatingNegValue(int value) => F(nameof(TechniqueRatingNegValue), value);
 

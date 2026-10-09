@@ -21,7 +21,7 @@ internal static class TechniqueCatalogContentEn
             "3. Rate the feeling from 0 to 10"
         ],
         "Zivorad Slavinski's Spin helps lower the emotional charge of a painful memory.",
-        TechniqueUiKind.Entry, "Technique #1", "26.01.2023", "Spin", "Lower emotional charge in 3 steps", "Episodes", "Zivorad Slavinski", 5, "Autorenew",
+        TechniqueUiKind.Entry, "Technique #1", "26.01.2023", "Spin", "Lower emotional charge in 3 steps", "Hard moment", "Zivorad Slavinski", 5, "Autorenew",
         [
             new TechniqueEntrySeed("Episode", "E.g. yesterday's conversation you can't let go"),
             new TechniqueEntrySeed("Key feeling", "Hurt, fear, anger…"),
@@ -44,7 +44,7 @@ internal static class TechniqueCatalogContentEn
             "5. Compare the three answers and note what shifted"
         ],
         "Comparing importance across time helps place a problem in the context of your life.",
-        TechniqueUiKind.Entry, "Technique #2", "26.01.2023", "Importance comparison", "When the problem feels too big", "Importance", "NLP", 7, "CompareArrows",
+        TechniqueUiKind.Entry, "Technique #2", "26.01.2023", "Importance comparison", "When the problem feels too big", "Scale of the problem", "NLP", 7, "CompareArrows",
         [
             new TechniqueEntrySeed("Problem", "What feels unbearable right now?"),
             new TechniqueEntrySeed("Mattered in the past", "E.g. studies, relationships, career"),
@@ -67,7 +67,7 @@ internal static class TechniqueCatalogContentEn
             "3. Compare pairs and notice the balance"
         ],
         "The polarity method helps you see both sides and reduce inner tension.",
-        TechniqueUiKind.Polarity, "Technique #3", "26.01.2023", "Polarities", "See both sides of a situation", "Aspects", "Zivorad Slavinski", 5, "Contrast",
+        TechniqueUiKind.Polarity, "Technique #3", "26.01.2023", "Polarities", "See both sides of a situation", "Different sides", "Zivorad Slavinski", 5, "Contrast",
         null,
         Theory(
             "Every situation has attractive and unpleasant sides. Naming both reduces one-sided fixation.",
@@ -100,7 +100,7 @@ internal static class TechniqueCatalogContentEn
             "2. Rate its importance 50 years from now from 0 to 10"
         ],
         "Moving a problem forward in time lowers its subjective importance.",
-        TechniqueUiKind.Entry, "Technique #5", "30.01.2023", "50 years later", "Move the problem forward in time", "Importance", "NLP", 2, "Schedule",
+        TechniqueUiKind.Entry, "Technique #5", "30.01.2023", "50 years later", "Move the problem forward in time", "Scale of the problem", "NLP", 2, "Schedule",
         [
             new TechniqueEntrySeed("Problem", "What feels like a disaster today?"),
             new TechniqueEntrySeed("Importance in 50 years", "", EntryFieldKind.Rating0To10)
@@ -120,7 +120,7 @@ internal static class TechniqueCatalogContentEn
             "3. Hold the spot until tension eases"
         ],
         "Removing details from a memory often lowers its emotional charge.",
-        TechniqueUiKind.Entry, "Technique #6", "30.01.2023", "White spot", "Soften a painful memory", "Episodes", "NLP", 3, "BlurOn",
+        TechniqueUiKind.Entry, "Technique #6", "30.01.2023", "White spot", "Soften a painful memory", "Hard moment", "NLP", 3, "BlurOn",
         [new TechniqueEntrySeed("Episode", "Briefly: what happened and what hurts most")],
         Theory(
             "Details fuel the feeling. A white spot removes triggers and gives your nervous system a pause.",
@@ -143,7 +143,7 @@ internal static class TechniqueCatalogContentEn
             "9. Rate the new experience (−10…10)"
         ],
         "EMO helps replace a limiting experience with a more supportive one.",
-        TechniqueUiKind.Entry, "Technique #7", "08.02.2023", "Experience modification", "Rewrite a limiting experience", "Episodes", "Filip Slavinski", 15, "Psychology",
+        TechniqueUiKind.Entry, "Technique #7", "08.02.2023", "Experience modification", "Rewrite a limiting experience", "Hard moment", "Filip Slavinski", 15, "Psychology",
         [
             new TechniqueEntrySeed("Area", "Relationships, work, health…"),
             new TechniqueEntrySeed("Attitude toward the area", "How do you feel about it now?"),
@@ -170,7 +170,7 @@ internal static class TechniqueCatalogContentEn
             "3. Keep repeating until emotion eases"
         ],
         "Repeating a problem statement \"as for the first time\" lowers emotional intensity.",
-        TechniqueUiKind.Copied, "Technique #8", "21.01.2025", "Repeat it", "Hear the problem as if for the first time", "Importance", "NLP", 2, "Repeat",
+        TechniqueUiKind.Copied, "Technique #8", "21.01.2025", "Repeat it", "Hear the problem as if for the first time", "Scale of the problem", "NLP", 2, "Repeat",
         [new TechniqueEntrySeed("Wording", "I'm afraid of losing my job")],
         Theory(
             "A familiar phrase loses charge when spoken slowly and neutrally, without drama.",
@@ -187,7 +187,7 @@ internal static class TechniqueCatalogContentEn
             "3. Notice how anxiety shifts when exits exist"
         ],
         "Backup options reduce inflated importance of a single outcome.",
-        TechniqueUiKind.Entry, "Technique #9", "21.01.2025", "Backup plan", "Lower the stakes with a backup", "Importance", "NLP", 3, "Backup",
+        TechniqueUiKind.Entry, "Technique #9", "21.01.2025", "Backup plan", "Lower the stakes with a backup", "Scale of the problem", "NLP", 3, "Backup",
         [
             new TechniqueEntrySeed("Problem", "What if the main plan fails?"),
             new TechniqueEntrySeed("Backup option 1", "E.g. take a freelance project"),
@@ -209,7 +209,7 @@ internal static class TechniqueCatalogContentEn
             "3. Shrink and move it away until interest fades"
         ],
         "Visual shrinking and distance lower emotional interest in a problem.",
-        TechniqueUiKind.Entry, "Technique #10", "22.01.2025", "Shrink it", "Make the problem small and distant", "Importance", "NLP", 2, "ZoomOutMap",
+        TechniqueUiKind.Entry, "Technique #10", "22.01.2025", "Shrink it", "Make the problem small and distant", "Scale of the problem", "NLP", 2, "ZoomOutMap",
         [new TechniqueEntrySeed("What bothers you", "E.g. a conflict that keeps you awake")],
         Theory(
             "Image size and distance affect significance. A small far object rarely pulls your nerves.",
@@ -226,7 +226,7 @@ internal static class TechniqueCatalogContentEn
             "3. Notice what changed in body and mood"
         ],
         "Too much attention inflates importance. A brief pause tests how much the thought controls you.",
-        TechniqueUiKind.Entry, "Technique #11", "22.01.2025", "Check it", "See what happens if you let go", "Importance", "NLP", 2, "FactCheck",
+        TechniqueUiKind.Entry, "Technique #11", "22.01.2025", "Check it", "See what happens if you let go", "Scale of the problem", "NLP", 2, "FactCheck",
         [new TechniqueEntrySeed("What you're looping on", "Which thought keeps returning?")],
         Theory(
             "If a thought were vital for survival, letting go would feel dangerous. The experiment usually shows nothing catastrophic happens.",
@@ -244,7 +244,7 @@ internal static class TechniqueCatalogContentEn
             "4. Rate tension after shifting position"
         ],
         "Shifting perceptual position helps step back from an emotional peak and see the situation more broadly.",
-        TechniqueUiKind.Entry, "Technique #12", "12.06.2026", "Observer position", "Step back from emotions and see the situation from outside", "Episodes", "NLP", 4, "Visibility",
+        TechniqueUiKind.Entry, "Technique #12", "12.06.2026", "Observer position", "Step back from emotions and see the situation from outside", "Hard moment", "NLP", 4, "Visibility",
         [
             new TechniqueEntrySeed("Situation", "What happened or what are you replaying in your mind?"),
             new TechniqueEntrySeed("Feelings from first person", "What do you feel while inside the situation?"),
@@ -267,7 +267,7 @@ internal static class TechniqueCatalogContentEn
             "4. Rate the strength of the resource state"
         ],
         "An anchor links a body gesture to a resource state so you can return to support more quickly.",
-        TechniqueUiKind.Entry, "Technique #13", "12.06.2026", "Resource anchor", "Restore support through gesture and memory", "Episodes", "NLP", 4, "SelfImprovement",
+        TechniqueUiKind.Entry, "Technique #13", "12.06.2026", "Resource anchor", "Restore support through gesture and memory", "Hard moment", "NLP", 4, "SelfImprovement",
         [
             new TechniqueEntrySeed("Resource memory", "When did you feel strong, calm, or joyful?"),
             new TechniqueEntrySeed("Body sensations", "Where do you feel it? Warmth, lightness, grounding…"),
@@ -291,7 +291,7 @@ internal static class TechniqueCatalogContentEn
             "5. Name 1 taste or pleasant sensation"
         ],
         "Sensory grounding shifts attention from anxious thoughts to the present moment.",
-        TechniqueUiKind.Entry, "Technique #14", "12.06.2026", "5-4-3-2-1 grounding", "Return to the present through the senses", "Episodes", "Psyche", 3, "Nature",
+        TechniqueUiKind.Entry, "Technique #14", "12.06.2026", "5-4-3-2-1 grounding", "Return to the present through the senses", "Hard moment", "Psyche", 3, "Nature",
         [
             new TechniqueEntrySeed("5 things I see", "E.g. window, cup, book, lamp, hand"),
             new TechniqueEntrySeed("4 things I feel with my body", "E.g. chair, floor, clothes, air temperature"),
@@ -316,7 +316,7 @@ internal static class TechniqueCatalogContentEn
             "5. Hold for 4 counts — repeat 4 cycles and rate tension after"
         ],
         "Rhythmic breathing calms the nervous system and reduces bodily tension.",
-        TechniqueUiKind.Entry, "Technique #15", "04.07.2026", "Box breathing", "Calm the body through breath rhythm", "Episodes", "Psyche", 3, "Air",
+        TechniqueUiKind.Entry, "Technique #15", "04.07.2026", "Box breathing", "Calm the body through breath rhythm", "Hard moment", "Psyche", 3, "Air",
         [
             new TechniqueEntrySeed("Tension before", "", EntryFieldKind.Rating0To10),
             new TechniqueEntrySeed("Notes", "What did you notice in your body or breath during the practice?"),
@@ -338,7 +338,7 @@ internal static class TechniqueCatalogContentEn
             "4. Rate your energy after writing the step"
         ],
         "Behavioral activation: a small action restores a sense of movement and control.",
-        TechniqueUiKind.Entry, "Technique #16", "04.07.2026", "One small step", "Restore momentum through minimal action", "Episodes", "CBT", 5, "DirectionsWalk",
+        TechniqueUiKind.Entry, "Technique #16", "04.07.2026", "One small step", "Restore momentum through minimal action", "Hard moment", "CBT", 5, "DirectionsWalk",
         [
             new TechniqueEntrySeed("What feels heavy", "What seems hard, boring, or impossible right now?"),
             new TechniqueEntrySeed("Smallest step today", "E.g. get up, wash face, send one message"),
@@ -362,7 +362,7 @@ internal static class TechniqueCatalogContentEn
             "5. Rate the emotion again"
         ],
         "A structured CBT record helps you see the link between situation, thought, and emotion.",
-        TechniqueUiKind.Entry, "Technique #17", "04.07.2026", "Thought record", "Unpack a thought and reduce emotional charge", "Episodes", "CBT", 7, "EditNote",
+        TechniqueUiKind.Entry, "Technique #17", "04.07.2026", "Thought record", "Unpack a thought and reduce emotional charge", "Hard moment", "CBT", 7, "EditNote",
         [
             new TechniqueEntrySeed("Situation", "What happened? Where and when?"),
             new TechniqueEntrySeed("Automatic thought", "What did you think in that moment?"),
@@ -386,7 +386,7 @@ internal static class TechniqueCatalogContentEn
             "4. Rate warmth or relief"
         ],
         "Self-compassion reduces harsh self-criticism and helps recover after a mistake.",
-        TechniqueUiKind.Entry, "Technique #18", "04.07.2026", "Kind words to yourself", "Soften self-criticism through support", "Episodes", "CBT", 5, "Favorite",
+        TechniqueUiKind.Entry, "Technique #18", "04.07.2026", "Kind words to yourself", "Soften self-criticism through support", "Hard moment", "CBT", 5, "Favorite",
         [
             new TechniqueEntrySeed("What you criticize yourself for", "What do you tell yourself or blame yourself for?"),
             new TechniqueEntrySeed("What you would tell a friend", "How would you support someone close in this situation?"),

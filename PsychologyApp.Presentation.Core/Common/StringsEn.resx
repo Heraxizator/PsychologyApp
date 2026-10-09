@@ -409,13 +409,13 @@
     <value>Message</value>
   </data>
   <data name="FormLabel" xml:space="preserve">
-    <value>Form</value>
+    <value>Your notes</value>
   </data>
   <data name="ActionsListLabel" xml:space="preserve">
     <value>Action list</value>
   </data>
   <data name="PracticeHomeTitle" xml:space="preserve">
-    <value>Home</value>
+    <value>Practices</value>
   </data>
   <data name="PracticeMyTechniques" xml:space="preserve">
     <value>My techniques</value>
@@ -670,7 +670,7 @@
     <value>Instant neutralization method...</value>
   </data>
   <data name="DesignerThemePlaceholder" xml:space="preserve">
-    <value>Episodes</value>
+    <value>Hard moment</value>
   </data>
   <data name="DesignerAuthorPlaceholder" xml:space="preserve">
     <value>Zivorad Slavinski</value>
@@ -1225,7 +1225,7 @@
     <value>Five pillars in one place</value>
   </data>
   <data name="OnboardingOverviewSubtitle" xml:space="preserve">
-    <value>Practices, tests, psychosomatic search, prayers, and quotes — a rare mix in one companion</value>
+    <value>Practices, tests, body and emotions, prayers, and quotes — a rare mix in one companion</value>
   </data>
   <data name="OnboardingOverviewLead" xml:space="preserve">
     <value>Everything is one tap away in the tab bar</value>
@@ -1303,7 +1303,7 @@
     <value>PsychologyApp</value>
   </data>
   <data name="PhysicsTitle" xml:space="preserve">
-    <value>Psychosomatic</value>
+    <value>Body and emotions</value>
   </data>
   <data name="PhysicsIntroPage" xml:space="preserve">
     <value>Introduction</value>
@@ -1312,7 +1312,7 @@
     <value>Search</value>
   </data>
   <data name="PhysicsSearchTitle" xml:space="preserve">
-    <value>Psychosomatic</value>
+    <value>Body and emotions</value>
   </data>
   <data name="PhysicsExplanationHeader" xml:space="preserve">
     <value>Explanation</value>
@@ -1336,16 +1336,16 @@
     <value>Search</value>
   </data>
   <data name="PhysicsProblemLabel" xml:space="preserve">
-    <value>Problem</value>
+    <value>What is bothering you</value>
   </data>
   <data name="PhysicsIllnessPlaceholder" xml:space="preserve">
-    <value>Condition</value>
+    <value>For example: back pain</value>
   </data>
   <data name="PhysicsEmptySearchHint" xml:space="preserve">
     <value>Enter a search term</value>
   </data>
   <data name="PhysicsEmptySearchSubhint" xml:space="preserve">
-    <value>Illness or body part</value>
+    <value>Symptom or body part</value>
   </data>
   <data name="PhysicsNoResultsHint" xml:space="preserve">
     <value>No results found</value>
@@ -1888,7 +1888,7 @@
     <value>Music</value>
   </data>
   <data name="ShellTabPractice" xml:space="preserve">
-    <value>Practice</value>
+    <value>Practices</value>
   </data>
   <data name="ShellTabDetector" xml:space="preserve">
     <value>Detector</value>
@@ -1900,7 +1900,7 @@
     <value>Motivator</value>
   </data>
   <data name="ShellTabPracticeShort" xml:space="preserve">
-    <value>Practice</value>
+    <value>Practices</value>
   </data>
   <data name="ShellTabDetectorShort" xml:space="preserve">
     <value>Tests</value>
@@ -2153,6 +2153,12 @@
   </data>
   <data name="TechniqueMetaLine" xml:space="preserve">
     <value>{0} · {1}</value>
+  </data>
+  <data name="RatingScaleMin" xml:space="preserve">
+    <value>0 — none</value>
+  </data>
+  <data name="RatingScaleMax" xml:space="preserve">
+    <value>10 — very strong</value>
   </data>
   <data name="TechniqueRatingValue" xml:space="preserve">
     <value>Rating: {0} of 10</value>

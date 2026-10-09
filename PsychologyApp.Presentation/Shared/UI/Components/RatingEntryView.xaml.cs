@@ -132,8 +132,8 @@ public partial class RatingEntryView : ContentView
         {
             view.Minimum = 0;
             view.Maximum = 10;
-            view.MinimumCaption = "0";
-            view.MaximumCaption = "10";
+            view.MinimumCaption = AppStrings.RatingScaleMin;
+            view.MaximumCaption = AppStrings.RatingScaleMax;
         }
 
         view.SyncFromBodyText(force: true);

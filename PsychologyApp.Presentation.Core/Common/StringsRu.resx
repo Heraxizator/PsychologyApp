@@ -409,13 +409,13 @@
     <value>Сообщение</value>
   </data>
   <data name="FormLabel" xml:space="preserve">
-    <value>Форма</value>
+    <value>Ваши отметки</value>
   </data>
   <data name="ActionsListLabel" xml:space="preserve">
     <value>Список действий</value>
   </data>
   <data name="PracticeHomeTitle" xml:space="preserve">
-    <value>Главная</value>
+    <value>Практики</value>
   </data>
   <data name="PracticeMyTechniques" xml:space="preserve">
     <value>Мои техники</value>
@@ -670,7 +670,7 @@
     <value>Метод мгновенной нейтрализации...</value>
   </data>
   <data name="DesignerThemePlaceholder" xml:space="preserve">
-    <value>Эпизоды</value>
+    <value>Тяжёлый момент</value>
   </data>
   <data name="DesignerAuthorPlaceholder" xml:space="preserve">
     <value>Живорад Славинский</value>
@@ -1225,7 +1225,7 @@
     <value>Пять опор в одном месте</value>
   </data>
   <data name="OnboardingOverviewSubtitle" xml:space="preserve">
-    <value>Практики, тесты, психосоматика, молитвы и цитаты — редкое сочетание в одном компаньоне</value>
+    <value>Практики, тесты, тело и эмоции, молитвы и цитаты — редкое сочетание в одном компаньоне</value>
   </data>
   <data name="OnboardingOverviewLead" xml:space="preserve">
     <value>Всё под рукой в нижней панели</value>
@@ -1303,7 +1303,7 @@
     <value>PsychologyApp</value>
   </data>
   <data name="PhysicsTitle" xml:space="preserve">
-    <value>Психосоматик</value>
+    <value>Тело и эмоции</value>
   </data>
   <data name="PhysicsIntroPage" xml:space="preserve">
     <value>С введением</value>
@@ -1312,7 +1312,7 @@
     <value>Поисковик</value>
   </data>
   <data name="PhysicsSearchTitle" xml:space="preserve">
-    <value>Психосоматика</value>
+    <value>Тело и эмоции</value>
   </data>
   <data name="PhysicsExplanationHeader" xml:space="preserve">
     <value>Пояснение</value>
@@ -1336,16 +1336,16 @@
     <value>Найти</value>
   </data>
   <data name="PhysicsProblemLabel" xml:space="preserve">
-    <value>Проблема</value>
+    <value>Что беспокоит</value>
   </data>
   <data name="PhysicsIllnessPlaceholder" xml:space="preserve">
-    <value>Болезнь</value>
+    <value>Например: боль в спине</value>
   </data>
   <data name="PhysicsEmptySearchHint" xml:space="preserve">
     <value>Введите запрос</value>
   </data>
   <data name="PhysicsEmptySearchSubhint" xml:space="preserve">
-    <value>Болезнь или часть тела</value>
+    <value>Недомогание или часть тела</value>
   </data>
   <data name="PhysicsNoResultsHint" xml:space="preserve">
     <value>Ничего не найдено</value>
@@ -1894,7 +1894,7 @@
     <value>Музыка</value>
   </data>
   <data name="ShellTabPractice" xml:space="preserve">
-    <value>Практик</value>
+    <value>Практики</value>
   </data>
   <data name="ShellTabDetector" xml:space="preserve">
     <value>Детектор</value>
@@ -1906,7 +1906,7 @@
     <value>Мотиватор</value>
   </data>
   <data name="ShellTabPracticeShort" xml:space="preserve">
-    <value>Практик</value>
+    <value>Практики</value>
   </data>
   <data name="ShellTabDetectorShort" xml:space="preserve">
     <value>Тесты</value>
@@ -2159,6 +2159,12 @@
   </data>
   <data name="TechniqueMetaLine" xml:space="preserve">
     <value>{0} · {1}</value>
+  </data>
+  <data name="RatingScaleMin" xml:space="preserve">
+    <value>0 — совсем нет</value>
+  </data>
+  <data name="RatingScaleMax" xml:space="preserve">
+    <value>10 — очень сильно</value>
   </data>
   <data name="TechniqueRatingValue" xml:space="preserve">
     <value>Оценка: {0} из 10</value>
