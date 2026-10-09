@@ -6,6 +6,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ## [Unreleased]
 
+## [2.006] - 2026-10-09
+
 ### Added
 - Fix: the faces of the mood strip no longer keep a blue highlight after another face is chosen (the selection was a trigger on the background of a border, which does not always give the background back; the chosen face now gets a style and the others the plain one). Checked on a phone: five choices in a row leave one highlighted face.
 - Fix: a disabled button no longer fades to nothing: the words turn grey and stay legible ("Finish", "Back"), the button dims less than before; a test checks the contrast. Checked on a phone.
