@@ -122,7 +122,9 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService, 
             .Select(ToTimelineItem)
             .ToList();
 
+        // The calendar may have fetched more than the chosen range (a month or a year back): the chart shows the range only. A single chosen day keeps its own points.
         List<MoodChartPoint> points = FilterForDay(orderedNewestFirst, filterDay)
+            .Where(entry => filterDay is not null || DateOnly.FromDateTime(entry.RecordedAt.ToLocalTime()) >= rangeStart)
             .OrderBy(entry => entry.RecordedAt)
             .Select(entry => new MoodChartPoint(entry.RecordedAt.ToLocalTime(), entry.MoodLevel))
             .ToList();

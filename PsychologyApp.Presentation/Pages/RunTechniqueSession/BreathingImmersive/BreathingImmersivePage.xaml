@@ -22,7 +22,7 @@
             IsImmersive="True"
             HorizontalOptions="Center"
             VerticalOptions="Center"
-            Margin="24" />
+            Margin="8,24" />
 
         <Label
             x:Name="CloseIcon"

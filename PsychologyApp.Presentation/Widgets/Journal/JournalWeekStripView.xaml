@@ -26,7 +26,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="journal:JournalDayChip">
                     <Border
-                        WidthRequest="44"
+                        WidthRequest="{Binding DayWidth, Source={x:Reference Root}, x:DataType=self:JournalWeekStripView}"
                         HeightRequest="60"
                         Padding="2"
                         BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"

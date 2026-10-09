@@ -119,7 +119,7 @@ public static class DemoBackup
     /// <summary>A talk that ends on an offer of a practice: the first thing shown in the chat.</summary>
     private static BackupChatSessionDTO PresentationChat(DateTime nowUtc) => Talk(
         nowUtc.AddMinutes(-14),
-        "Волнение перед презентацией",
+        "Перед презентацией",
         [
             Say("Завтра важная презентация, и я не могу перестать об этом думать"),
             Say("Боюсь, что всё пойдёт не так и меня осудят"),

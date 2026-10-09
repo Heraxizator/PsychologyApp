@@ -14,6 +14,7 @@ public partial class BreathingPacerView : ContentView
     private const double HaloLagSeconds = 0.45;
 
     private const int ImmersiveStartDelayMs = 900;
+    private const double MaxImmersiveSize = 390;
 
     public static readonly BindableProperty FullscreenCommandProperty = BindableProperty.Create(
         nameof(FullscreenCommand), typeof(ICommand), typeof(BreathingPacerView), null,
@@ -64,6 +65,30 @@ public partial class BreathingPacerView : ContentView
         FullscreenButton.IsVisible = FullscreenCommand is not null && !IsImmersive;
     }
 
+    /// <summary>
+    /// On the full-screen page the circle follows the width it is given: the halo, which grows past the circle when it is full, must stay inside
+    /// the page, so a narrow screen gets a smaller circle instead of a clipped halo.
+    /// </summary>
+    private void FitCircleToWidth()
+    {
+        if (!IsImmersive)
+        {
+            return;
+        }
+
+        double host = Width > 0 ? Math.Min(Width, MaxImmersiveSize) : MaxImmersiveSize;
+        double halo = host * 0.78;
+        double circle = host * 0.68;
+        CircleHost.WidthRequest = host;
+        CircleHost.HeightRequest = host;
+        Halo.WidthRequest = halo;
+        Halo.HeightRequest = halo;
+        Halo.StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = halo / 2 };
+        Circle.WidthRequest = circle;
+        Circle.HeightRequest = circle;
+        Circle.StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = circle / 2 };
+    }
+
     private void ApplyImmersive(bool immersive)
     {
         UpdateFullscreenButton();
@@ -77,15 +102,9 @@ public partial class BreathingPacerView : ContentView
         Card.StrokeThickness = 0;
         Card.Padding = 0;
         Card.Margin = 0;
-        CircleHost.WidthRequest = 390;
-        CircleHost.HeightRequest = 390;
         ToggleButton.Variant = "Secondary";
-        Halo.WidthRequest = 300;
-        Halo.HeightRequest = 300;
-        Halo.StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 150 };
-        Circle.WidthRequest = 260;
-        Circle.HeightRequest = 260;
-        Circle.StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 130 };
+        SizeChanged += (_, _) => FitCircleToWidth();
+        FitCircleToWidth();
         CountLabel.FontSize = 48;
         CycleLabel.TextColor = Color.FromArgb("#CCFFFFFF");
         Render(BreathingPattern.SmallScale, 0);

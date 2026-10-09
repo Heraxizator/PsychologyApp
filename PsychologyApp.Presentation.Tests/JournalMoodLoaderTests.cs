@@ -92,6 +92,38 @@ public sealed class JournalMoodLoaderTests
         Assert.Equal(7, snapshot.WeekDays.Count);
     }
 
+
+    [Fact]
+    public async Task LoadAsync_ChartShowsOnlyTheChosenRange_EvenWhenTheCalendarFetchedMore()
+    {
+        Mock<IUserProgressService> progress = new();
+        DateTime now = DateTime.UtcNow;
+        progress
+            .Setup(p => p.GetMoodsAsync(
+                It.IsAny<DateTime?>(),
+                It.IsAny<DateTime?>(),
+                It.IsAny<int>(),
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<MoodEntryDTO>
+            {
+                new() { MoodEntryId = 4, MoodLevel = 4, RecordedAt = now },
+                new() { MoodEntryId = 3, MoodLevel = 3, RecordedAt = now.AddDays(-3) },
+                new() { MoodEntryId = 2, MoodLevel = 2, RecordedAt = now.AddDays(-12) },
+                new() { MoodEntryId = 1, MoodLevel = 5, RecordedAt = now.AddDays(-25) }
+            });
+        progress
+            .Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+
+        DateOnly earlier = DateOnly.FromDateTime(DateTime.Today.AddDays(-25));
+        JournalMoodLoader loader = new(progress.Object);
+        JournalMoodSnapshot snapshot = await loader.LoadAsync(
+            rangeDays: 7,
+            monthCursor: new DateOnly(earlier.Year, earlier.Month, 1),
+            calendarScale: JournalCalendarScale.Month);
+
+        Assert.Equal(2, snapshot.ChartPoints.Count);
+    }
     [Fact]
     public async Task LoadAsync_Accepts90DayRange()
     {

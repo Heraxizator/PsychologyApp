@@ -8,6 +8,28 @@ public partial class JournalWeekStripView : ContentView
     public JournalWeekStripView()
     {
         InitializeComponent();
+        SizeChanged += (_, _) => FitDays();
+    }
+
+    public static readonly BindableProperty DayWidthProperty =
+        BindableProperty.Create(nameof(DayWidth), typeof(double), typeof(JournalWeekStripView), 44d);
+
+    /// <summary>The width of one day: all seven days share the strip, so none is pushed out of sight on a narrow screen.</summary>
+    public double DayWidth
+    {
+        get => (double)GetValue(DayWidthProperty);
+        private set => SetValue(DayWidthProperty, value);
+    }
+
+    private void FitDays()
+    {
+        if (Width <= 0)
+        {
+            return;
+        }
+
+        const double Gap = 10;
+        DayWidth = Math.Clamp((Width - 6 * Gap) / 7 - 1, 28, 56);
     }
 
     public static readonly BindableProperty CaptionTextProperty =

@@ -68,17 +68,17 @@
 <table>
 <tr>
 <td align="center" width="20%"><img src="store/screenshots/01-chat.png" alt="Чат-собеседник" width="190"><br><sub><b>Собеседник, который слышит</b></sub></td>
-<td align="center" width="20%"><img src="store/screenshots/02-breathing.png" alt="Дыхательный круг" width="190"><br><sub><b>Дышите вместе с кругом</b></sub></td>
+<td align="center" width="20%"><img src="store/screenshots/02-breathing.png" alt="Дыхание на весь экран" width="190"><br><sub><b>Дышите вместе с кругом</b></sub></td>
 <td align="center" width="20%"><img src="store/screenshots/03-practices.png" alt="Каталог практик" width="190"><br><sub><b>Практики на каждый день</b></sub></td>
 <td align="center" width="20%"><img src="store/screenshots/04-mood-calendar.png" alt="Календарь настроения" width="190"><br><sub><b>Настроение в цвете</b></sub></td>
 <td align="center" width="20%"><img src="store/screenshots/05-mood-chart.png" alt="График настроения" width="190"><br><sub><b>Видно, что помогает</b></sub></td>
 </tr>
 <tr>
-<td align="center"><img src="store/screenshots/06-body.png" alt="Связь тела и эмоций" width="190"><br><sub><b>Связь тела и эмоций</b></sub></td>
-<td align="center"><img src="store/screenshots/07-prayers.png" alt="Молитвы" width="190"><br><sub><b>Молитвы под рукой</b></sub></td>
-<td align="center"><img src="store/screenshots/08-quotes.png" alt="Цитаты" width="190"><br><sub><b>Цитаты на каждый день</b></sub></td>
-<td align="center"><img src="store/screenshots/09-profile.png" alt="Профиль и недельный обзор" width="190"><br><sub><b>Ваш путь на одном экране</b></sub></td>
-<td align="center"><img src="store/screenshots/10-tests.png" alt="Тесты" width="190"><br><sub><b>Тесты с понятным итогом</b></sub></td>
+<td align="center"><img src="store/screenshots/07-body.png" alt="Связь тела и эмоций" width="190"><br><sub><b>Связь тела и эмоций</b></sub></td>
+<td align="center"><img src="store/screenshots/08-prayers.png" alt="Молитвы" width="190"><br><sub><b>Молитвы под рукой</b></sub></td>
+<td align="center"><img src="store/screenshots/09-quotes.png" alt="Цитаты" width="190"><br><sub><b>Цитаты на каждый день</b></sub></td>
+<td align="center"><img src="store/screenshots/10-profile.png" alt="Профиль и недельный обзор" width="190"><br><sub><b>Ваш путь на одном экране</b></sub></td>
+<td align="center"><img src="store/screenshots/11-tests.png" alt="Тесты" width="190"><br><sub><b>Тесты с понятным итогом</b></sub></td>
 </tr>
 </table>
 

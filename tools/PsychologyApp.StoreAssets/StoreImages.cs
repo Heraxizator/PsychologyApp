@@ -22,17 +22,18 @@ public static class StoreImages
 
     public static readonly Shot[] Shots =
     [
-        // The first eight go to Google Play (at most eight); RuStore takes all ten.
-        new("04-chat-offer.png", "01-chat.png", "Собеседник, который слышит", "Подскажет практику, когда она нужна", Color.FromArgb(0x00, 0x72, 0xDB), Color.FromArgb(0x4F, 0xA3, 0xF0)),
-        new("03-breathing.png", "02-breathing.png", "Дышите вместе с кругом", "Спокойный ритм и счёт вдохов", Color.FromArgb(0x1F, 0x7A, 0x6B), Color.FromArgb(0x5C, 0xB8, 0xA5), 180),
-        new("02-practices.png", "03-practices.png", "Практики на каждый день", "Тело, мысли и чувства — по разделам", Color.FromArgb(0x00, 0x72, 0xDB), Color.FromArgb(0x4F, 0xA3, 0xF0)),
-        new("10b-month.png", "04-mood-calendar.png", "Настроение в цвете", "Дневник по дням, неделям и месяцам", Color.FromArgb(0x2F, 0x8F, 0x6F), Color.FromArgb(0x7B, 0xCB, 0xA8)),
-        new("10d-chart.png", "05-mood-chart.png", "Видно, что помогает", "Отметки практик на графике настроения", Color.FromArgb(0x00, 0x5F, 0xB8), Color.FromArgb(0x3E, 0x92, 0xE0), 650),
-        new("06-body-new.png", "06-body.png", "Связь тела и эмоций", "Что могло стоять за ощущением в теле", Color.FromArgb(0x1B, 0x6F, 0xA8), Color.FromArgb(0x5F, 0xB0, 0xD8)),
-        new("08-prayers.png", "07-prayers.png", "Молитвы под рукой", "Утренние, покаянные и основные", Color.FromArgb(0x3F, 0x4F, 0xA8), Color.FromArgb(0x84, 0x92, 0xD8)),
-        new("09b-quotes-wisdom.png", "08-quotes.png", "Цитаты на каждый день", "Мудрость и мотивация, избранное и поиск", Color.FromArgb(0xA8, 0x62, 0x1B), Color.FromArgb(0xDC, 0x98, 0x4E)),
-        new("07-profile.png", "09-profile.png", "Ваш путь — на одном экране", "Практики, серия дней, недельный обзор", Color.FromArgb(0x0B, 0x5F, 0xA8), Color.FromArgb(0x5A, 0xA6, 0xE6)),
-        new("05-tests.png", "10-tests.png", "Тесты с понятным итогом", "Короткие опросники и рекомендации", Color.FromArgb(0x3B, 0x6E, 0xC4), Color.FromArgb(0x86, 0xA8, 0xE6))
+        // The first eight go to Google Play (at most eight); RuStore takes all eleven.
+        new("chat.png", "01-chat.png", "Собеседник, который слышит", "Подскажет практику, когда она нужна", Color.FromArgb(0x00, 0x72, 0xDB), Color.FromArgb(0x4F, 0xA3, 0xF0)),
+        new("breathfs1.png", "02-breathing.png", "Дышите вместе с кругом", "Спокойный ритм, экран только для дыхания", Color.FromArgb(0x14, 0x5A, 0x6E), Color.FromArgb(0x2F, 0x9C, 0x92), 84),
+        new("practices.png", "03-practices.png", "Практики на каждый день", "Тело, мысли и чувства — по разделам", Color.FromArgb(0x00, 0x72, 0xDB), Color.FromArgb(0x4F, 0xA3, 0xF0)),
+        new("calsept.png", "04-mood-calendar.png", "Настроение в цвете", "Дневник по дням, неделям и месяцам", Color.FromArgb(0x2F, 0x8F, 0x6F), Color.FromArgb(0x7B, 0xCB, 0xA8)),
+        new("chartweek.png", "05-mood-chart.png", "Видно, что помогает", "Отметки практик на графике настроения", Color.FromArgb(0x00, 0x5F, 0xB8), Color.FromArgb(0x3E, 0x92, 0xE0), 660),
+        new("dialog2.png", "06-practice-dialogue.png", "Практика — как разговор", "Те же собеседник и чат, шаг за шагом", Color.FromArgb(0x3B, 0x6E, 0xC4), Color.FromArgb(0x86, 0xA8, 0xE6)),
+        new("body.png", "07-body.png", "Связь тела и эмоций", "Что могло стоять за ощущением в теле", Color.FromArgb(0x1B, 0x6F, 0xA8), Color.FromArgb(0x5F, 0xB0, 0xD8)),
+        new("prayers.png", "08-prayers.png", "Молитвы под рукой", "Утренние, покаянные и основные", Color.FromArgb(0x3F, 0x4F, 0xA8), Color.FromArgb(0x84, 0x92, 0xD8)),
+        new("quotes.png", "09-quotes.png", "Цитаты на каждый день", "Мудрость и мотивация, избранное и поиск", Color.FromArgb(0xA8, 0x62, 0x1B), Color.FromArgb(0xDC, 0x98, 0x4E)),
+        new("profile.png", "10-profile.png", "Ваш путь — на одном экране", "Практики, серия дней, недельный обзор", Color.FromArgb(0x0B, 0x5F, 0xA8), Color.FromArgb(0x5A, 0xA6, 0xE6)),
+        new("tests.png", "11-tests.png", "Тесты с понятным итогом", "Короткие опросники и рекомендации", Color.FromArgb(0x3B, 0x6E, 0xC4), Color.FromArgb(0x86, 0xA8, 0xE6))
     ];
 
     public static void Compose(string rawDir, string outDir)
