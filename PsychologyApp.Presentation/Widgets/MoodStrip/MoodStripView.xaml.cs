@@ -89,11 +89,41 @@ public partial class MoodStripView : ContentView
         set => SetValue(UsePlainLayoutProperty, value);
     }
 
+    protected override void OnApplyTemplate()
+    {
+        base.OnApplyTemplate();
+        ApplySelection(SelectedMoodLevel);
+    }
+
+    /// <summary>
+    /// The chosen face gets the selected style and every other face the plain one. A style is swapped as a whole, so nothing is left behind on a
+    /// face that is no longer chosen (a trigger that set the background of a border did not always give it back).
+    /// </summary>
+    private void ApplySelection(int selected)
+    {
+        for (int level = 1; level <= 5; level++)
+        {
+            Border? chip = (GetTemplateChild($"MoodChip{level}") ?? FindByName($"MoodChip{level}")) as Border;
+            string key = level == selected ? "MoodChipSelectedStyle" : "MoodChipStyle";
+            if (chip is not null
+                && Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue(key, out object? style) == true
+                && style is Style found)
+            {
+                chip.Style = found;
+            }
+        }
+    }
+
     private static void OnSelectedMoodLevelChanged(BindableObject bindable, object oldValue, object newValue)
     {
         if (bindable is not MoodStripView strip)
         {
             return;
+        }
+
+        if (newValue is int changedTo)
+        {
+            strip.ApplySelection(changedTo);
         }
 
         if (newValue is int level && level >= 1 && level <= 5 && !Equals(oldValue, newValue))

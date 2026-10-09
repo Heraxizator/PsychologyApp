@@ -53,6 +53,8 @@
     <system:Double x:Key="MetaIconFontSize">14</system:Double>
     <system:Double x:Key="PolarityIconFontSize">24</system:Double>
     <system:Double x:Key="DisabledOpacity">0.45</system:Double>
+    <!-- A disabled button keeps its words readable: it turns grey and quiet instead of fading to nothing. -->
+    <system:Double x:Key="DisabledButtonOpacity">0.8</system:Double>
     <system:Double x:Key="HeroAccentBarWidth">4</system:Double>
     <x:String x:Key="BodyFontFamily">InterRegular</x:String>
     <x:String x:Key="MediumFontFamily">InterMedium</x:String>

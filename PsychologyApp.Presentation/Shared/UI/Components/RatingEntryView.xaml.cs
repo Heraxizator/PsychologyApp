@@ -11,6 +11,9 @@ public partial class RatingEntryView : ContentView
     public RatingEntryView()
     {
         InitializeComponent();
+
+        // The default kind does not raise a change, so the scale captions are set once here as well.
+        OnKindChanged(this, Kind, Kind);
     }
 
     public static readonly BindableProperty TitleTextProperty =

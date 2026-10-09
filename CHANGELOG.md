@@ -7,6 +7,9 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 ## [Unreleased]
 
 ### Added
+- Fix: the faces of the mood strip no longer keep a blue highlight after another face is chosen (the selection was a trigger on the background of a border, which does not always give the background back; the chosen face now gets a style and the others the plain one). Checked on a phone: five choices in a row leave one highlighted face.
+- Fix: a disabled button no longer fades to nothing: the words turn grey and stay legible ("Finish", "Back"), the button dims less than before; a test checks the contrast. Checked on a phone.
+- Fix: the 0-10 scales of the forms show "0 - none" and "10 - very strong" everywhere, not only where the kind of the scale was set explicitly.
 - UI, breathing on the whole screen: the breathing practice has a "Full screen" button; it opens a page with nothing but the circle on a deep blue background that glows and fades with the breath, the colour moving from blue to teal, the screen kept awake, one way out (the cross or the back button); it starts by itself. Seen on a phone: the page, the circle and the halo (after the halo clipping was fixed); a new test checks that the words stay readable on the circle at every moment.
 - UI, the practice result as a picture: after a practice the tension before and after is shown as a haze in the colour of the tension that thins out while the number settles from the first value to the second ('TensionReliefView'; at once with reduced motion). Built and wired to the completion page; not seen on a phone (the flow needs a finished practice).
 - UI, the mood colours the page: choosing a mood in the journal opens a soft circle in the mood colour from the tapped face to the corners of the page and fades (about a second; not with reduced motion). Built; the animation itself was not caught on a phone because it is shorter than a screenshot takes.

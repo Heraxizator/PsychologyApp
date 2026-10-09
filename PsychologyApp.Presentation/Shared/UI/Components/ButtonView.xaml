@@ -44,7 +44,7 @@
                         Binding="{TemplateBinding IsEnabled}"
                         TargetType="Border"
                         Value="False">
-                        <Setter Property="Opacity" Value="{StaticResource DisabledOpacity}" />
+                        <Setter Property="Opacity" Value="{StaticResource DisabledButtonOpacity}" />
                         <Setter Property="InputTransparent" Value="True" />
                     </DataTrigger>
                 </Border.Triggers>
@@ -53,6 +53,12 @@
                     Style="{StaticResource PrimaryActionLabelStyle}"
                     Text="{TemplateBinding BodyText}">
                     <Label.Triggers>
+                        <DataTrigger
+                            Binding="{TemplateBinding IsEnabled}"
+                            TargetType="Label"
+                            Value="False">
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        </DataTrigger>
                         <DataTrigger
                             Binding="{TemplateBinding Variant}"
                             TargetType="Label"

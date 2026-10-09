@@ -191,6 +191,31 @@ public class ContrastTests(ITestOutputHelper output)
         }
     }
 
+    [Theory]
+    [InlineData(false, "TextSecondaryLight", "DisabledSurfaceLight", "PageBackground")]
+    [InlineData(true, "TextSecondaryDark", "DisabledSurfaceDark", "PageBackgroundDark")]
+    public void TheWordsOfADisabledButtonStayLegible(bool dark, string text, string surface, string page)
+    {
+        Dictionary<string, string> colors = ReadColors();
+        double opacity = double.Parse(
+            Regex.Match(File.ReadAllText(StylePath("Typography.xaml")), "x:Key=\"DisabledButtonOpacity\">([0-9.]+)<").Groups[1].Value,
+            System.Globalization.CultureInfo.InvariantCulture);
+
+        string Over(string foreground) => Blend(colors[foreground], colors[page], opacity);
+
+        double ratio = ColorContrast.Ratio(Over(text), Over(surface));
+        output.WriteLine($"disabled button, dark={dark}: {ratio:F2}");
+        Assert.True(ratio >= 3, $"disabled button words, dark={dark}: {ratio:F2}");
+    }
+
+    private static string Blend(string foreground, string background, double opacity)
+    {
+        (byte fr, byte fg, byte fb) = ColorContrast.Parse(foreground);
+        (byte br, byte bg, byte bb) = ColorContrast.Parse(background);
+        byte Mix(byte f, byte b) => (byte)Math.Round(f * opacity + b * (1 - opacity));
+        return $"#{Mix(fr, br):X2}{Mix(fg, bg):X2}{Mix(fb, bb):X2}";
+    }
+
     private static string StylePath(string file) => Path.GetFullPath(Path.Combine(
         AppContext.BaseDirectory, "..", "..", "..", "..", "PsychologyApp.Presentation", "Resources", "Styles", file));
 

@@ -91,7 +91,7 @@
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
                             <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource DisabledSurfaceLight}, Dark={StaticResource DisabledSurfaceDark}}" />
-                            <Setter Property="Opacity" Value="{StaticResource DisabledOpacity}" />
+                            <Setter Property="Opacity" Value="{StaticResource DisabledButtonOpacity}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -129,7 +129,7 @@
                     </VisualState>
                     <VisualState x:Name="Disabled">
                         <VisualState.Setters>
-                            <Setter Property="Opacity" Value="{StaticResource DisabledOpacity}" />
+                            <Setter Property="Opacity" Value="{StaticResource DisabledButtonOpacity}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
