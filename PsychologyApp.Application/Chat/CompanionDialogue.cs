@@ -93,7 +93,7 @@ public sealed partial class CompanionDialogue(
         }
 
         return WithPending(new CompanionReply(
-            [CompanionSmallTalk.FirstGreeting(Hour(), english, _random, state.UserName), CompanionContent.PrivacyNote(english)],
+            [CompanionSmallTalk.FirstGreeting(Hour(), english, _random, state.UserName)],
             [],
             null,
             state,

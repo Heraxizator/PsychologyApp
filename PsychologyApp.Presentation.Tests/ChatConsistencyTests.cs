@@ -34,6 +34,17 @@ public class ChatConsistencyTests
         Assert.Contains("KeyboardResize", Read([.. path[..^1], path[^1] + ".cs"]));
     }
 
+    [Theory]
+    [InlineData("Pages", "Chat", "Conversation", "ChatPage.xaml")]
+    [InlineData("Pages", "RunTechniqueSession", "TechniqueDialogue", "TechniqueDialoguePage.xaml")]
+    public void BothChatsHaveTheSameCompanionHeader(params string[] path)
+    {
+        string xaml = Read(path);
+
+        Assert.Contains("<avatar:CompanionHeaderView", xaml);
+        Assert.Contains("ProfileCommand=\"{Binding OpenProfileCommand}\"", xaml);
+    }
+
     [Fact]
     public void TheirBubblesHaveTheSameShapeAndColours()
     {

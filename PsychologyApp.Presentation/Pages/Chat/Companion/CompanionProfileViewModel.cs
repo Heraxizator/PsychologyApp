@@ -90,7 +90,6 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     public RangeObservableCollection<PracticeRowItem> Practices { get; } = [];
     public RangeObservableCollection<EmotionRowItem> Emotions { get; } = [];
     public RangeObservableCollection<InsightItem> Insights { get; } = [];
-    public RangeObservableCollection<InsightItem> Abilities { get; } = [];
     public RangeObservableCollection<TrustStepItem> TrustSteps { get; } = [];
 
     public int Chats => _profile.Chats;
@@ -106,6 +105,7 @@ public sealed class CompanionProfileViewModel : BaseViewModel
 
     public string Since => ChatProfileContent.Since(_profile.SinceUtc, _language.IsEnglish);
     public string Tagline => ChatProfileContent.Tagline(_language.IsEnglish);
+    public string AboutBody => ChatProfileContent.About(_language.IsEnglish);
     public string PrivacyLine => ChatProfileContent.PrivacyLine(_language.IsEnglish);
     public string Disclaimer => ChatProfileContent.Disclaimer(_language.IsEnglish);
 
@@ -171,7 +171,6 @@ public sealed class CompanionProfileViewModel : BaseViewModel
             $"{Math.Round(e.Share * 100):0}%",
             e.Share)));
         Fill(Insights, ChatProfileContent.Insights(fresh, _language.IsEnglish).Select(t => new InsightItem(t)));
-        Fill(Abilities, ChatProfileContent.Abilities(_language.IsEnglish).Select(t => new InsightItem(t)));
         // At the highest level there is no "in progress" step left to half-light; it reads as fully reached instead.
         bool atMaxTrust = fresh.Trust.MessagesToNext == 0;
         Fill(TrustSteps, Enumerable.Range(0, ChatProfileContent.TrustLevels).Select(i => new TrustStepItem(
@@ -251,7 +250,7 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     private void NotifyAll() => Notify(
         nameof(Chats), nameof(Messages), nameof(Days), nameof(Streak),
         nameof(TrustName), nameof(TrustHint),
-        nameof(HasName), nameof(NameText), nameof(Since), nameof(Tagline), nameof(PrivacyLine), nameof(Disclaimer),
+        nameof(HasName), nameof(NameText), nameof(Since), nameof(Tagline), nameof(AboutBody), nameof(PrivacyLine), nameof(Disclaimer),
         nameof(HasTension), nameof(TensionCaption), nameof(HasPractices), nameof(HasNoPractices), nameof(HasEmotions), nameof(HasHistory),
         nameof(Title), nameof(OnlineText), nameof(OfflineText), nameof(StatChatsLabel), nameof(StatMessagesLabel), nameof(StatDaysLabel),
         nameof(StatStreakLabel), nameof(TrustTitle), nameof(NameTitle), nameof(NameHint), nameof(NameEditText), nameof(InsightsTitle),

@@ -162,9 +162,9 @@ public class ChatServiceTests
         ChatTurnResult result = await service.StartNewChatAsync();
 
         Assert.Equal("Новый чат", result.Session.Title);
-        Assert.Equal(2, result.NewMessages.Count);
+        Assert.Single(result.NewMessages);
         IReadOnlyList<ChatMessageDTO> stored = await service.GetMessagesAsync(result.Session.Id);
-        Assert.Equal(2, stored.Count);
+        Assert.Single(stored);
         Assert.All(stored, m => Assert.Equal(ChatRole.Companion, m.Role));
     }
 
@@ -520,7 +520,7 @@ public class ChatServiceTests
 
         ChatTurnResult result = await service.StartNewChatAsync();
 
-        Assert.Equal(2, result.NewMessages.Count);
+        Assert.Single(result.NewMessages);
     }
 
     [Fact]

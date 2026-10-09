@@ -270,7 +270,7 @@ public class CompanionRealismTests
         CompanionReply reply = Create(time: At(hour)).Open(new CompanionState(), previous: null);
 
         Assert.StartsWith(expected, reply.Messages[0]);
-        Assert.Equal(2, reply.Messages.Count);
+        Assert.Single(reply.Messages);
     }
 
     [Fact]

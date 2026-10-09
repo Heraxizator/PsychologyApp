@@ -107,12 +107,11 @@ public class CompanionDialogueTests
     }
 
     [Fact]
-    public void First_chat_greets_and_promises_privacy_without_quick_replies()
+    public void First_chat_greets_in_one_message_without_quick_replies()
     {
         CompanionReply reply = Create().Open(new CompanionState(), previous: null);
 
-        Assert.Equal(2, reply.Messages.Count);
-        Assert.Contains("устройстве", reply.Messages[1]);
+        Assert.Single(reply.Messages);
         Assert.Empty(reply.QuickReplies);
     }
 
@@ -140,7 +139,7 @@ public class CompanionDialogueTests
     {
         ChatSessionDTO previous = new() { Id = 1, Title = "Новый чат", Emotion = "Anxiety", MessageCount = 1, UpdatedAt = Now };
 
-        Assert.Equal(2, Create().Open(new CompanionState(), previous).Messages.Count);
+        Assert.Single(Create().Open(new CompanionState(), previous).Messages);
     }
 
     [Fact]

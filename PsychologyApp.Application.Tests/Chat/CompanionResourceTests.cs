@@ -221,7 +221,7 @@ public class CompanionJournalTests
     {
         CompanionReply reply = Create().Open(new CompanionState(), previous: null);
 
-        Assert.Equal(2, reply.Messages.Count);
+        Assert.Single(reply.Messages);
     }
 
     [Fact]

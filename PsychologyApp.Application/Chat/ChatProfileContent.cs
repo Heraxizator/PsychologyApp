@@ -37,23 +37,10 @@ public static class ChatProfileContent
         ? "I'm an app, not a person and not a doctor. I don't diagnose and I don't replace a specialist. If things are very hard, the crisis section is one tap away."
         : "Я приложение, не человек и не врач. Я не ставлю диагнозов и не заменяю специалиста. Если очень тяжело, раздел экстренной помощи всегда под рукой.";
 
-    public static IReadOnlyList<string> Abilities(bool english) => english
-        ?
-        [
-            "Listen without judging",
-            "Name what you feel",
-            "Measure tension from 0 to 10",
-            "Suggest a short practice",
-            "Explain things like panic or CBT"
-        ]
-        :
-        [
-            "Выслушать без оценок",
-            "Назвать то, что вы чувствуете",
-            "Измерить напряжение от 0 до 10",
-            "Предложить короткую практику",
-            "Объяснить, что такое паника или КПТ"
-        ];
+    /// <summary>One calm paragraph instead of a list of abilities: the same companion also runs the practices, and what helped is kept on the phone.</summary>
+    public static string About(bool english) => english
+        ? "The same companion leads the practices of the catalogue, in the same kind of conversation. What helped you is remembered on this phone and shown above."
+        : "Тот же собеседник проводит практики из каталога в таком же разговоре. Что вам помогло, он запоминает на этом телефоне и показывает выше.";
 
     public static string Since(DateTime? sinceUtc, bool english)
     {

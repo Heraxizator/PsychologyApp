@@ -348,16 +348,7 @@
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                 <VerticalStackLayout Spacing="12">
                     <Label Text="{Binding AboutTitle}" Style="{StaticResource SectionTitleStyle}" />
-                    <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Abilities}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="vm:InsightItem">
-                                <HorizontalStackLayout Spacing="10">
-                                    <ui:MaterialIconView IconName="CheckCircle" IconSize="18" IconColor="{DynamicResource Primary}" VerticalOptions="Center" />
-                                    <Label Text="{Binding Text}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
-                                </HorizontalStackLayout>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </VerticalStackLayout>
+                    <Label Text="{Binding AboutBody}" Style="{StaticResource BodyStyle}" />
                     <Label Text="{Binding PrivacyLine}" Style="{StaticResource CaptionStyle}" />
                     <Label Text="{Binding Disclaimer}" Style="{StaticResource CaptionStyle}" />
                 </VerticalStackLayout>

@@ -216,6 +216,6 @@ public class ChatStatisticsTests
         Assert.All(ChatProfileContent.Insights(profile, english: true), line => Assert.DoesNotMatch("[А-Яа-я]", line));
         Assert.DoesNotMatch("[А-Яа-я]", ChatProfileContent.TensionCaption(profile, english: true));
         Assert.DoesNotMatch("[А-Яа-я]", ChatProfileContent.Since(profile.SinceUtc, english: true));
-        Assert.All(ChatProfileContent.Abilities(english: true), a => Assert.DoesNotMatch("[А-Яа-я]", a));
+        Assert.DoesNotMatch("[А-Яа-я]", ChatProfileContent.About(english: true));
     }
 }

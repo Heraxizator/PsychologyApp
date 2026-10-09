@@ -21,56 +21,14 @@
 
     <Grid RowDefinitions="Auto,*,Auto">
 
-        <!-- Header: back, avatar, name and status -->
-        <Grid
+        <!-- Header: the companion (shared with the dialogue inside a practice) -->
+        <avatar:CompanionHeaderView
             Grid.Row="0"
-            ColumnDefinitions="44,Auto,*"
-            ColumnSpacing="10"
-            Padding="4,8,16,10"
-            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
-            <Label
-                Grid.Column="0"
-                Style="{StaticResource NavBackIconStyle}"
-                Text="{mi:Material Icon=KeyboardArrowLeft}">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding BackCommand}" />
-                </Label.GestureRecognizers>
-            </Label>
-            <avatar:CompanionAvatarView
-                x:Name="HeaderAvatar"
-                Grid.Column="1"
-                WidthRequest="46"
-                HeightRequest="46"
-                VerticalOptions="Center"
-                SemanticProperties.Description="{Binding OpenProfileText}"
-                SemanticProperties.Hint="{Binding OpenProfileText}">
-                <avatar:CompanionAvatarView.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding OpenProfileCommand}" />
-                </avatar:CompanionAvatarView.GestureRecognizers>
-            </avatar:CompanionAvatarView>
-            <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" Spacing="1">
-                <VerticalStackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding OpenProfileCommand}" />
-                </VerticalStackLayout.GestureRecognizers>
-                <Label
-                    Text="{Binding Title}"
-                    Style="{StaticResource ListRowTitleStyle}"
-                    FontSize="17"
-                    LineBreakMode="TailTruncation"
-                    MaxLines="1" />
-                <Label
-                    Text="{Binding StatusText}"
-                    Style="{StaticResource CaptionStyle}"
-                    LineBreakMode="TailTruncation"
-                    MaxLines="1" />
-            </VerticalStackLayout>
-            <BoxView
-                Grid.ColumnSpan="3"
-                HeightRequest="1"
-                VerticalOptions="End"
-                Margin="-4,0,-16,-10"
-                Color="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}" />
-        </Grid>
+            Title="{Binding Title}"
+            Status="{Binding StatusText}"
+            ProfileText="{Binding OpenProfileText}"
+            BackCommand="{Binding BackCommand}"
+            ProfileCommand="{Binding OpenProfileCommand}" />
 
         <!-- Conversation -->
         <CollectionView

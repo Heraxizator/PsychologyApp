@@ -70,7 +70,10 @@
     <value>New chat</value>
   </data>
   <data name="ChatStatusIdle" xml:space="preserve">
-    <value>Companion · everything stays on your phone</value>
+    <value>Companion · offline</value>
+  </data>
+  <data name="ChatStatusPractice" xml:space="preserve">
+    <value>Companion · practice</value>
   </data>
   <data name="ChatError" xml:space="preserve">
     <value>Could not send the message. Please try again.</value>

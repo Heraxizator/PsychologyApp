@@ -4,10 +4,12 @@
              x:Class="PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueDialogue.TechniqueDialoguePage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:chat="clr-namespace:PsychologyApp.Presentation.Widgets.DialogueChat"
+             xmlns:avatar="clr-namespace:PsychologyApp.Presentation.Widgets.CompanionAvatar"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueDialogue"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:DataType="vm:TechniqueDialogueViewModel"
              Shell.NavBarIsVisible="False"
+             SafeAreaEdges="All"
              Title="{Binding PageName}"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}"
              Background="{AppThemeBinding Light={StaticResource ChatBackdropLight}, Dark={StaticResource ChatBackdropDark}}">
@@ -16,13 +18,16 @@
         <behaviors:PageAnalyticsBehavior />
     </ContentPage.Behaviors>
 
-    <Grid RowDefinitions="Auto,*" Padding="12,0,12,12" RowSpacing="8">
-        <ui:NavigationBarSimpleView
+    <Grid RowDefinitions="Auto,*">
+        <!-- The same header as the main chat: the practice talks with the same companion. -->
+        <avatar:CompanionHeaderView
             Grid.Row="0"
-            Margin="8,12,8,0"
-            TitleText="{Binding PageName}"
-            BackCommand="{Binding BackCommand}" />
+            Title="{Binding PageName}"
+            Status="{Binding StatusText}"
+            ProfileText="{Binding OpenProfileText}"
+            BackCommand="{Binding BackCommand}"
+            ProfileCommand="{Binding OpenProfileCommand}" />
 
-        <chat:DialogueChatView Grid.Row="1" />
+        <chat:DialogueChatView Grid.Row="1" Margin="12,8,12,12" />
     </Grid>
 </ContentPage>

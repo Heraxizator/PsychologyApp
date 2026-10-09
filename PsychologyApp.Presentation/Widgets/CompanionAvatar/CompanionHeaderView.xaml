@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:self="clr-namespace:PsychologyApp.Presentation.Widgets.CompanionAvatar"
+             x:Class="PsychologyApp.Presentation.Widgets.CompanionAvatar.CompanionHeaderView"
+             x:DataType="self:CompanionHeaderView"
+             x:Name="Root">
+
+    <!-- The top of every chat: back, the companion's avatar, a title and a status line. The avatar and the text open the companion's profile. -->
+    <Grid
+        ColumnDefinitions="44,Auto,*"
+        ColumnSpacing="10"
+        Padding="4,8,16,10"
+        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
+        <Label
+            Grid.Column="0"
+            Style="{StaticResource NavBackIconStyle}"
+            Text="{mi:Material Icon=KeyboardArrowLeft}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding BackCommand, Source={x:Reference Root}}" />
+            </Label.GestureRecognizers>
+        </Label>
+        <self:CompanionAvatarView
+            Grid.Column="1"
+            WidthRequest="46"
+            HeightRequest="46"
+            VerticalOptions="Center"
+            SemanticProperties.Description="{Binding ProfileText, Source={x:Reference Root}}"
+            SemanticProperties.Hint="{Binding ProfileText, Source={x:Reference Root}}">
+            <self:CompanionAvatarView.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ProfileCommand, Source={x:Reference Root}}" />
+            </self:CompanionAvatarView.GestureRecognizers>
+        </self:CompanionAvatarView>
+        <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" Spacing="1">
+            <VerticalStackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ProfileCommand, Source={x:Reference Root}}" />
+            </VerticalStackLayout.GestureRecognizers>
+            <Label
+                Text="{Binding Title, Source={x:Reference Root}}"
+                Style="{StaticResource ListRowTitleStyle}"
+                FontSize="17"
+                LineBreakMode="TailTruncation"
+                MaxLines="1" />
+            <Label
+                Text="{Binding Status, Source={x:Reference Root}}"
+                Style="{StaticResource CaptionStyle}"
+                LineBreakMode="TailTruncation"
+                MaxLines="1" />
+        </VerticalStackLayout>
+        <BoxView
+            Grid.ColumnSpan="3"
+            HeightRequest="1"
+            VerticalOptions="End"
+            Margin="-4,0,-16,-10"
+            Color="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}" />
+    </Grid>
+</ContentView>

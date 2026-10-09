@@ -33,6 +33,7 @@ public abstract class ChatViewModelBase : BaseViewModel
         BindNavigation(navigationService);
 
         BackCommand = new AsyncCommand(GoBackAsync);
+        OpenProfileCommand = new AsyncCommand(() => NavigationService!.GoToCompanionProfileAsync());
         SendCommand = new Command(() => Run(SendTextAsync));
         ChooseCommand = new Command<int>(index => Run(() => ChooseAsync(index)));
         RateCommand = new Command<int>(rating => Run(() => RateAsync(rating)));
@@ -48,6 +49,9 @@ public abstract class ChatViewModelBase : BaseViewModel
     public IReadOnlyList<DialogueRatingItem> RatingItems { get; }
 
     public ICommand BackCommand { get; }
+
+    /// <summary>The same companion as in the main chat: its profile opens from the header here too.</summary>
+    public ICommand OpenProfileCommand { get; }
     public ICommand SendCommand { get; }
     public ICommand ChooseCommand { get; }
     public ICommand RateCommand { get; }
@@ -74,12 +78,23 @@ public abstract class ChatViewModelBase : BaseViewModel
 
     public string TypingText => AppStrings.DialogueTyping;
 
+    public string OpenProfileText => AppStrings.ChatProfileOpen;
+
+    /// <summary>Under the title in the header: the typing hint, otherwise that this is a practice with the same companion.</summary>
+    public string StatusText => IsTyping ? AppStrings.DialogueTyping : AppStrings.ChatStatusPractice;
+
     public string RatingScaleText => AppStrings.DialogueRatingScale;
 
     public bool IsTyping
     {
         get => _isTyping;
-        private set => SetProperty(ref _isTyping, value);
+        private set
+        {
+            if (SetProperty(ref _isTyping, value))
+            {
+                OnPropertyChanged(nameof(StatusText));
+            }
+        }
     }
 
     public bool IsTextInput => !_isFinished && _inputKind == ConversationInputKind.Text;

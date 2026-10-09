@@ -70,7 +70,10 @@
     <value>Новый чат</value>
   </data>
   <data name="ChatStatusIdle" xml:space="preserve">
-    <value>Собеседник · всё остаётся на вашем телефоне</value>
+    <value>Собеседник · офлайн</value>
+  </data>
+  <data name="ChatStatusPractice" xml:space="preserve">
+    <value>Собеседник · практика</value>
   </data>
   <data name="ChatError" xml:space="preserve">
     <value>Не удалось отправить сообщение. Попробуйте ещё раз.</value>
