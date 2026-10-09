@@ -6,6 +6,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ## [Unreleased]
 
+## [2.007] - 2026-10-09
+
 ## [2.006] - 2026-10-09
 
 ### Added
