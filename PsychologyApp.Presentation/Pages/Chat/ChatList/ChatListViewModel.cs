@@ -76,12 +76,22 @@ public sealed class ChatListViewModel : BaseViewModel
     public bool IsEmpty
     {
         get => _isEmpty;
-        private set => SetProperty(ref _isEmpty, value);
+        private set
+        {
+            if (SetProperty(ref _isEmpty, value))
+            {
+                OnPropertyChanged(nameof(HasChats));
+            }
+        }
     }
 
     /// <summary>The tab is named after the assistant, like the other tabs are named after what they hold.</summary>
     public string Title => AppStrings.ShellTabChatShort;
+    /// <summary>The round button in the corner is for a second chat; with no chats the empty state has its own big button.</summary>
+    public bool HasChats => !IsEmpty;
+
     public string NewChatText => AppStrings.ChatNew;
+    public string StartChatText => AppStrings.ChatHeroStart;
     public string EmptyTitle => AppStrings.ChatEmptyTitle;
     public string EmptyBody => AppStrings.ChatEmptyBody;
 
@@ -102,7 +112,7 @@ public sealed class ChatListViewModel : BaseViewModel
     }
 
     protected override void RefreshLocalizedProperties() =>
-        Notify(nameof(Title), nameof(NewChatText), nameof(EmptyTitle), nameof(EmptyBody));
+        Notify(nameof(Title), nameof(NewChatText), nameof(StartChatText), nameof(EmptyTitle), nameof(EmptyBody));
 
     private ChatListItem ToItem(ChatSessionDTO session, DateTime now)
     {

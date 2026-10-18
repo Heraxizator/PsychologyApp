@@ -20,6 +20,9 @@ namespace PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
 
 public partial class QuoteViewModel : BaseViewModel
 {
+    /// <summary>The same back arrow as on every other pushed page (the page hides the system bar).</summary>
+    public ICommand BackCommand { get; }
+
     private readonly QuoteFeedState _feedState = new();
     private readonly QuoteSearchController _searchController;
 
@@ -77,6 +80,8 @@ public partial class QuoteViewModel : BaseViewModel
             () => ShowAllReadEmpty = false,
             SetFail,
             () => _toastService.ShortToast(AppStrings.QuotesSearchError));
+
+        BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
 
         try
         {

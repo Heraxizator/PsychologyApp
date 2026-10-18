@@ -22,6 +22,9 @@ public sealed class ArticleSectionItem(string title, IEnumerable<LibraryCardItem
 /// </summary>
 public sealed class ArticlesViewModel : BaseViewModel
 {
+    /// <summary>The same back arrow as on every other pushed page (the page hides the system bar).</summary>
+    public ICommand BackCommand { get; }
+
     private const string AllKey = "all";
 
     private readonly INavigationService _navigation;
@@ -36,6 +39,7 @@ public sealed class ArticlesViewModel : BaseViewModel
     public ArticlesViewModel(INavigationService navigation, IReadingService reading, IDatabaseReadySignal databaseReady)
     {
         BindNavigation(navigation);
+        BackCommand = new AsyncCommand(GoBackAsync);
         _navigation = navigation;
         _reading = reading;
         _databaseReady = databaseReady;

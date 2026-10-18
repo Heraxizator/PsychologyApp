@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              x:Class="PsychologyApp.Presentation.Pages.ReadArticles.Courses.CoursesPage"
              xmlns:card="clr-namespace:PsychologyApp.Presentation.Widgets.LibraryCard"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ReadArticles.Courses"
              x:DataType="vm:CoursesViewModel"
-             Shell.NavBarIsVisible="True"
+             Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+
+    <!-- Opened over the tabs: the same back arrow and title as every other pushed page, instead of the system bar. -->
+    <Grid RowDefinitions="Auto,*">
+        <ui:NavigationBarSimpleView
+            Grid.Row="0"
+            Margin="20,0"
+            BackCommand="{Binding BackCommand}"
+            TitleText="{Binding PageTitle}" />
+        <ContentView Grid.Row="1">
 
     <ScrollView>
         <VerticalStackLayout Margin="{StaticResource LayoutTabPageMarginThickness}" Spacing="{StaticResource ListItemSpacing}">
@@ -21,4 +31,6 @@
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
+        </ContentView>
+    </Grid>
 </ContentPage>

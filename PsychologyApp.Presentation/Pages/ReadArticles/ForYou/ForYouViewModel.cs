@@ -16,6 +16,9 @@ namespace PsychologyApp.Presentation.Pages.ReadArticles.ForYou;
 /// </summary>
 public sealed class ForYouViewModel : BaseViewModel
 {
+    /// <summary>The same back arrow as on every other pushed page (the page hides the system bar).</summary>
+    public ICommand BackCommand { get; }
+
     private const int MoodDays = 30;
 
     private readonly INavigationService _navigation;
@@ -29,6 +32,7 @@ public sealed class ForYouViewModel : BaseViewModel
     public ForYouViewModel(INavigationService navigation, IReadingService reading, IUserProgressService progress, IDatabaseReadySignal databaseReady)
     {
         BindNavigation(navigation);
+        BackCommand = new AsyncCommand(GoBackAsync);
         _navigation = navigation;
         _reading = reading;
         _progress = progress;

@@ -11,6 +11,9 @@ namespace PsychologyApp.Presentation.Pages.ReadArticles.Courses;
 /// <summary>The "Courses" top tab of the Library: what guided self-help is, and the courses with their progress.</summary>
 public sealed class CoursesViewModel : BaseViewModel
 {
+    /// <summary>The same back arrow as on every other pushed page (the page hides the system bar).</summary>
+    public ICommand BackCommand { get; }
+
     private readonly INavigationService _navigation;
     private readonly IReadingService _reading;
     private readonly IDatabaseReadySignal _databaseReady;
@@ -20,6 +23,7 @@ public sealed class CoursesViewModel : BaseViewModel
     public CoursesViewModel(INavigationService navigation, IReadingService reading, IDatabaseReadySignal databaseReady)
     {
         BindNavigation(navigation);
+        BackCommand = new AsyncCommand(GoBackAsync);
         _navigation = navigation;
         _reading = reading;
         _databaseReady = databaseReady;

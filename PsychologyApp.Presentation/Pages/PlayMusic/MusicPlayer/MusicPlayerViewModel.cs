@@ -12,6 +12,9 @@ namespace PsychologyApp.Presentation.Pages.PlayMusic.MusicPlayer;
 
 public partial class MusicPlayerViewModel : BaseViewModel
 {
+    /// <summary>The same back arrow as on every other pushed page (the page hides the system bar).</summary>
+    public ICommand BackCommand { get; }
+
     private readonly ILogger<MusicPlayerViewModel> _logger;
     private readonly IAudioPlaybackService _playbackService;
     private readonly MusicPlaylistPresenter _playlistPresenter;
@@ -46,6 +49,7 @@ public partial class MusicPlayerViewModel : BaseViewModel
         _playlistPresenter = playlistPresenter;
         _playbackPresenter = playbackPresenter;
         BindNavigation(navigationService);
+        BackCommand = new AsyncCommand(GoBackAsync);
         _playbackService.PlaybackEnded += (_, _) => SetPlaybackState(false);
         _playbackService.PlaybackFailed += (_, _) =>
         {

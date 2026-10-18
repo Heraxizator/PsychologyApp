@@ -10,8 +10,17 @@
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:DataType="vm:MusicPlayerViewModel"
              x:Name="PageRoot"
-             Shell.NavBarIsVisible="True"
+             Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
+
+    <!-- Opened over the tabs: the same back arrow and title as every other pushed page, instead of the system bar. -->
+    <Grid RowDefinitions="Auto,*">
+        <ui:NavigationBarSimpleView
+            Grid.Row="0"
+            Margin="20,0"
+            BackCommand="{Binding BackCommand}"
+            TitleText="{Binding PageTitle}" />
+        <ContentView Grid.Row="1">
 
     <Grid
         VerticalOptions="FillAndExpand"
@@ -164,5 +173,7 @@
             FailedText="{Binding LoadFailedText}"
             RetryText="{Binding RetryText}"
             RetryCommand="{Binding Reload}" />
+    </Grid>
+        </ContentView>
     </Grid>
 </ContentPage>

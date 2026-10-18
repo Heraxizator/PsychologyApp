@@ -6,7 +6,7 @@
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:DataType="vm:InsightsViewModel"
-             Shell.NavBarIsVisible="True"
+             Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
 
@@ -29,6 +29,15 @@
             </VerticalStackLayout>
         </DataTemplate>
     </ContentPage.Resources>
+
+    <!-- Opened over the tabs: the same back arrow and title as every other pushed page, instead of the system bar. -->
+    <Grid RowDefinitions="Auto,*">
+        <ui:NavigationBarSimpleView
+            Grid.Row="0"
+            Margin="20,0"
+            BackCommand="{Binding BackCommand}"
+            TitleText="{Binding PageTitle}" />
+        <ContentView Grid.Row="1">
 
     <ScrollView VerticalScrollBarVisibility="Never">
         <VerticalStackLayout Margin="{StaticResource LayoutTabPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
@@ -67,4 +76,6 @@
             </Border>
         </VerticalStackLayout>
     </ScrollView>
+        </ContentView>
+    </Grid>
 </ContentPage>

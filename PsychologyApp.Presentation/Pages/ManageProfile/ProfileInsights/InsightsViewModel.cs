@@ -28,6 +28,9 @@ public sealed record InsightItem(string Title, string Detail, string? Note, ICom
 /// <summary>"What helps me": the rules are in <see cref="HelpInsights"/>; this page loads the data and words the results.</summary>
 public sealed class InsightsViewModel : BaseViewModel
 {
+    /// <summary>The same back arrow as on every other pushed page (the page hides the system bar).</summary>
+    public ICommand BackCommand { get; }
+
     /// <summary>The journal entries the mood factors are read from: about three months.</summary>
     private static readonly TimeSpan MoodWindow = TimeSpan.FromDays(90);
 
@@ -53,6 +56,7 @@ public sealed class InsightsViewModel : BaseViewModel
         IDatabaseReadySignal databaseReady)
     {
         BindNavigation(navigation);
+        BackCommand = new AsyncCommand(GoBackAsync);
         _navigation = navigation;
         _progress = progress;
         _tests = tests;

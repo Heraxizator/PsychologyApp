@@ -5,6 +5,7 @@
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.Chat.ChatList"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:avatar="clr-namespace:PsychologyApp.Presentation.Widgets.CompanionAvatar"
              x:DataType="vm:ChatListViewModel"
              Shell.NavBarIsVisible="True"
              Title="{Binding Title}"
@@ -115,23 +116,51 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
+        <!-- No chats yet: the companion itself invites a first talk, with one clear way to start. -->
         <VerticalStackLayout
             IsVisible="{Binding IsEmpty}"
             VerticalOptions="Center"
-            Spacing="8"
-            Padding="24,0">
+            Spacing="16"
+            Padding="32,0,32,48">
+            <Grid WidthRequest="168" HeightRequest="168" HorizontalOptions="Center">
+                <Border
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 84"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryTint}, Dark={StaticResource PrimaryTintDark}}" />
+                <Border
+                    WidthRequest="128"
+                    HeightRequest="128"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 64"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}" />
+                <avatar:CompanionAvatarView
+                    WidthRequest="92"
+                    HeightRequest="92"
+                    IconSize="40"
+                    ShowStatus="False"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+            </Grid>
             <Label
                 Text="{Binding EmptyTitle}"
-                Style="{StaticResource SectionTitleStyle}"
+                Style="{StaticResource PageTitleStyle}"
                 HorizontalTextAlignment="Center" />
             <Label
                 Text="{Binding EmptyBody}"
                 Style="{StaticResource BodyStyle}"
+                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
                 HorizontalTextAlignment="Center" />
+            <ui:ButtonView
+                Margin="0,8,0,0"
+                BodyText="{Binding StartChatText}"
+                TapCommand="{Binding NewChatCommand}" />
         </VerticalStackLayout>
 
         <!-- A new chat: one round button in the corner, under the thumb. -->
         <Border
+            IsVisible="{Binding HasChats}"
             HorizontalOptions="End"
             VerticalOptions="End"
             Margin="0,0,20,20"

@@ -9,9 +9,18 @@
              xmlns:dailyHero="clr-namespace:PsychologyApp.Presentation.Widgets.DailyQuoteHero"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:DataType="vm:QuoteViewModel"
-             Shell.NavBarIsVisible="True"
+             Shell.NavBarIsVisible="False"
              x:Name="page"
              Title="{Binding PageTitle}">
+
+    <!-- Opened over the tabs: the same back arrow and title as every other pushed page, instead of the system bar. -->
+    <Grid RowDefinitions="Auto,*">
+        <ui:NavigationBarSimpleView
+            Grid.Row="0"
+            Margin="20,0"
+            BackCommand="{Binding BackCommand}"
+            TitleText="{Binding PageTitle}" />
+        <ContentView Grid.Row="1">
 
     <Grid
         VerticalOptions="FillAndExpand"
@@ -162,4 +171,6 @@
             RetryCommand="{Binding Reload}" />
     </Grid>
 
+        </ContentView>
+    </Grid>
 </ContentPage>

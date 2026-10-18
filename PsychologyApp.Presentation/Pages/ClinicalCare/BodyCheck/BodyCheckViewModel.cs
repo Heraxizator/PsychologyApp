@@ -17,6 +17,9 @@ namespace PsychologyApp.Presentation.Pages.ClinicalCare.BodyCheck;
 /// </summary>
 public sealed class BodyCheckViewModel : BaseViewModel
 {
+    /// <summary>The same back arrow as on every other pushed page (the page hides the system bar).</summary>
+    public ICommand BackCommand { get; }
+
     private const int RecentShown = 5;
 
     private readonly INavigationService _navigation;
@@ -40,6 +43,7 @@ public sealed class BodyCheckViewModel : BaseViewModel
     public BodyCheckViewModel(INavigationService navigation, IBodyService service, IDialogService dialogs, IDatabaseReadySignal databaseReady)
     {
         BindNavigation(navigation);
+        BackCommand = new AsyncCommand(GoBackAsync);
         _navigation = navigation;
         _service = service;
         _dialogs = dialogs;

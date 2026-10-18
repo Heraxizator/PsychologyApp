@@ -324,13 +324,12 @@ public partial class AppShell : Shell
     }
 
     /// <summary>The bottom tabs and their icon names; the selected one is drawn filled, the others outlined (see <see cref="TabIcons"/>).</summary>
-    // The chat bubble of the outlined font is drawn solid; its own outline glyph is used instead.
     private (BaseShellItem Item, string Filled, string Outlined)[] BottomTabs =>
     [
-        (PracticeTab, "SelfImprovement", "SelfImprovement"),
-        (ChatTab, "ChatBubble", "ChatBubbleOutline"),
-        (DetectorTab, "AssignmentTurnedIn", "AssignmentTurnedIn"),
-        (JournalTab, "Mood", "Mood")
+        (PracticeTab, "Spa", "Spa"),
+        (ChatTab, "Forum", "Forum"),
+        (DetectorTab, "Psychology", "Psychology"),
+        (JournalTab, "AutoStories", "AutoStories")
     ];
 
     private void UpdateTabIcons()
