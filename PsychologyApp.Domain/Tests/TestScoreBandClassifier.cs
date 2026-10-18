@@ -28,6 +28,9 @@ public enum RsesBand { Low, Normal, High }
 
 public enum RecommendationLane { Low, Mid, High }
 
+/// <summary>PCL-5, 0..80: low up to 20, elevated 21..32, probable PTSD from 33 (the usual cut-off is 31..33).</summary>
+public enum Pcl5Band { Low, Elevated, Probable }
+
 public static class TestScoreBandClassifier
 {
     public static BeckBand ClassifyBeck(int score) => score switch
@@ -135,6 +138,17 @@ public static class TestScoreBandClassifier
     public static ScreenBand ClassifyGad2(int score) =>
         score <= 2 ? ScreenBand.Negative : ScreenBand.Positive;
 
+    /// <summary>PC-PTSD-5: three or more "yes" answers out of five is a positive screen.</summary>
+    public static ScreenBand ClassifyPcPtsd5(int score) =>
+        score >= 3 ? ScreenBand.Positive : ScreenBand.Negative;
+
+    public static Pcl5Band ClassifyPcl5(int score) => score switch
+    {
+        <= 20 => Pcl5Band.Low,
+        <= 32 => Pcl5Band.Elevated,
+        _ => Pcl5Band.Probable
+    };
+
     public static HadsBand ClassifyHads(int score) => score switch
     {
         <= 7 => HadsBand.Normal,
@@ -216,6 +230,16 @@ public static class TestScoreBandClassifier
 
     public static RecommendationLane RecommendGad2(int score) =>
         score >= 3 ? RecommendationLane.High : RecommendationLane.Low;
+
+    public static RecommendationLane RecommendPcPtsd5(int score) =>
+        score >= 3 ? RecommendationLane.High : RecommendationLane.Low;
+
+    public static RecommendationLane RecommendPcl5(int score) => score switch
+    {
+        >= 33 => RecommendationLane.High,
+        >= 21 => RecommendationLane.Mid,
+        _ => RecommendationLane.Low
+    };
 
     public static RecommendationLane RecommendHadsAnxiety(int score) => score switch
     {

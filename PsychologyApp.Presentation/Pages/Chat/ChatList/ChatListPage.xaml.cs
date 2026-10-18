@@ -11,10 +11,11 @@ public partial class ChatListPage : ContentPage
     private readonly ChatListViewModel _viewModel;
     private readonly HashSet<long> _revealed = [];
 
-    public ChatListPage(IChatViewModelFactory viewModelFactory, INavigation hostNavigation)
+    public ChatListPage(IChatViewModelFactory viewModelFactory, INavigation? hostNavigation)
     {
         InitializeComponent();
-        _viewModel = viewModelFactory.CreateList(hostNavigation);
+        // As the Chat tab there is no host stack: the page pushes onto its own.
+        _viewModel = viewModelFactory.CreateList(hostNavigation ?? Navigation);
         _viewModel.PromptAsync = (title, message, accept, cancel, initial) =>
             DisplayPromptAsync(title, message, accept, cancel, initialValue: initial, maxLength: 60);
         BindingContext = _viewModel;

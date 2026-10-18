@@ -596,5 +596,79 @@
       "I find it hard to enjoy a book, film, or TV program"
     ],
     "singleAnswer": true
+  },
+  {
+    "title": "PC-PTSD-5 screen",
+    "subtitle": "Post-traumatic reaction",
+    "estimatedMinutes": 1,
+    "questionCount": 5,
+    "construct": "Trauma",
+    "betterWhen": "lower",
+    "description": "Sometimes things happen to people that are unusually or especially frightening, horrible or traumatic: a serious accident or fire, a physical or sexual assault or abuse, war, the sudden death of someone close. If something like this has happened in your life, answer whether, in the past month, you have had the following. If there has been no such event, this questionnaire is not for you.",
+    "algorithm": [
+      "1. Think of the past month.",
+      "2. Answer each question \"yes\" or \"no\"."
+    ],
+    "comment": "This is a short screen, not a diagnosis. With three or more \"yes\" answers, take the detailed PCL-5 scale and see a trauma specialist.",
+    "analyzerId": "pcptsd5",
+    "answers": [
+      "Yes",
+      "No"
+    ],
+    "balls": [1, 0],
+    "questions": [
+      "Had nightmares about the event(s) or thought about the event(s) when you did not want to?",
+      "Tried hard not to think about the event(s) or went out of your way to avoid situations that reminded you of the event(s)?",
+      "Been constantly on guard, watchful, or easily startled?",
+      "Felt numb or detached from people, activities, or your surroundings?",
+      "Felt guilty or unable to stop blaming yourself or others for the event(s) or any problems the event(s) may have caused?"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "PCL-5 scale",
+    "subtitle": "Post-traumatic symptoms",
+    "estimatedMinutes": 5,
+    "questionCount": 20,
+    "construct": "Trauma",
+    "betterWhen": "lower",
+    "description": "Twenty questions about problems people sometimes have after a very stressful experience. Answer about the experience that troubles you most, and about the past month. You can repeat the scale every two weeks to see how the symptoms change.",
+    "algorithm": [
+      "1. Think of the past month.",
+      "2. Choose how much you were bothered by each problem."
+    ],
+    "comment": "This is a symptom scale, not a diagnosis. With high scores, see a specialist who works with trauma.",
+    "analyzerId": "pcl5",
+    "answers": [
+      "Not at all",
+      "A little bit",
+      "Moderately",
+      "Quite a bit",
+      "Extremely"
+    ],
+    "balls": [0, 1, 2, 3, 4],
+    "questions": [
+      "Repeated, disturbing, and unwanted memories of the stressful experience",
+      "Repeated, disturbing dreams of the stressful experience",
+      "Suddenly feeling or acting as if the stressful experience were actually happening again (as if you were actually back there reliving it)",
+      "Feeling very upset when something reminded you of the stressful experience",
+      "Having strong physical reactions when something reminded you of the stressful experience (for example, heart pounding, trouble breathing, sweating)",
+      "Avoiding memories, thoughts, or feelings related to the stressful experience",
+      "Avoiding external reminders of the stressful experience (for example, people, places, conversations, activities, objects, or situations)",
+      "Trouble remembering important parts of the stressful experience",
+      "Having strong negative beliefs about yourself, other people, or the world (for example, having thoughts such as: I am bad, there is something seriously wrong with me, no one can be trusted, the world is completely dangerous)",
+      "Blaming yourself or someone else for the stressful experience or what happened after it",
+      "Having strong negative feelings such as fear, horror, anger, guilt, or shame",
+      "Loss of interest in activities that you used to enjoy",
+      "Feeling distant or cut off from other people",
+      "Trouble experiencing positive feelings (for example, being unable to feel happiness or have loving feelings for people close to you)",
+      "Irritable behavior, angry outbursts, or acting aggressively",
+      "Taking too many risks or doing things that could cause you harm",
+      "Being \"superalert\" or watchful or on guard",
+      "Feeling jumpy or easily startled",
+      "Having difficulty concentrating",
+      "Trouble falling or staying asleep"
+    ],
+    "singleAnswer": true
   }
 ]

@@ -186,6 +186,16 @@
             </ui:SettingsLinkCardView>
 
             <ui:SettingsLinkCardView
+                Title="{Binding FlashbackTitle}"
+                Subtitle="{Binding FlashbackSubtitle}"
+                IconName="MyLocation"
+                TapCommand="{Binding OpenFlashbackCommand}">
+                <ui:SettingsLinkCardView.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="6" />
+                </ui:SettingsLinkCardView.Behaviors>
+            </ui:SettingsLinkCardView>
+
+            <ui:SettingsLinkCardView
                 Title="{Binding OpenHelplineText}"
                 IconName="SupportAgent"
                 TapCommand="{Binding OpenHelplineCommand}">

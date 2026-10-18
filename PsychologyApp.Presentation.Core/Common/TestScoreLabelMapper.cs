@@ -30,6 +30,8 @@ public static class TestScoreLabelMapper
         "hads_a" => AppStrings.HadsAnxietyScore(TestScoreBandClassifier.ClassifyHads(score)),
         "hads_d" => AppStrings.HadsDepressionScore(TestScoreBandClassifier.ClassifyHads(score)),
         "rses" => AppStrings.RsesScore(TestScoreBandClassifier.ClassifyRses(score)),
+        "pcptsd5" => AppStrings.PcPtsd5Score(TestScoreBandClassifier.ClassifyPcPtsd5(score)),
+        "pcl5" => AppStrings.Pcl5Score(TestScoreBandClassifier.ClassifyPcl5(score)),
         _ => null
     };
 
@@ -54,6 +56,8 @@ public static class TestScoreLabelMapper
         "hads_a" => AppStrings.HadsAnxietyScoreDetail(TestScoreBandClassifier.ClassifyHads(score)),
         "hads_d" => AppStrings.HadsDepressionScoreDetail(TestScoreBandClassifier.ClassifyHads(score)),
         "rses" => AppStrings.RsesScoreDetail(TestScoreBandClassifier.ClassifyRses(score)),
+        "pcptsd5" => AppStrings.PcPtsd5ScoreDetail(TestScoreBandClassifier.ClassifyPcPtsd5(score)),
+        "pcl5" => AppStrings.Pcl5ScoreDetail(TestScoreBandClassifier.ClassifyPcl5(score)),
         _ => null
     };
 
@@ -78,6 +82,8 @@ public static class TestScoreLabelMapper
         "hads_a" => AppStrings.TestRecommendationReasonHadsAnxiety(TestScoreBandClassifier.RecommendHadsAnxiety(score)),
         "hads_d" => AppStrings.TestRecommendationReasonHadsDepression(TestScoreBandClassifier.RecommendHadsDepression(score)),
         "rses" => AppStrings.TestRecommendationReasonRses(TestScoreBandClassifier.RecommendRses(score)),
+        "pcptsd5" => AppStrings.TestRecommendationReasonPcPtsd5(TestScoreBandClassifier.RecommendPcPtsd5(score)),
+        "pcl5" => AppStrings.TestRecommendationReasonPcl5(TestScoreBandClassifier.RecommendPcl5(score)),
         _ => null
     };
 }

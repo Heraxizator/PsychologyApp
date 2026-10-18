@@ -10,7 +10,6 @@ public static class ChatFeatureServiceCollectionExtensions
     {
         services.AddSingleton<IChatLanguageProvider, AppChatLanguageProvider>();
         services.AddSingleton<IChatViewModelFactory, ChatViewModelFactory>();
-        services.AddSingleton<IChatHeroFactory>(sp => sp.GetRequiredService<IChatViewModelFactory>());
         services.AddSingleton<IChatPageFactory, ChatPageFactory>();
         return services;
     }

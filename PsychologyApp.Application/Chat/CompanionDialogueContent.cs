@@ -112,6 +112,10 @@ public static class CompanionDialogueContent
         ? "Let's help your body settle first, then we can talk."
         : "Давайте сначала поможем телу успокоиться, а потом поговорим.";
 
+    public static string FlashbackBridge(bool english) => english
+        ? "It sounds like a memory has taken over. It is very strong, but it is about the past, and you are here, now. Let's come back to the present together first."
+        : "Похоже, накрыло воспоминание. Оно очень сильное, но оно о прошлом, а вы здесь, сейчас. Давайте сначала вместе вернёмся в настоящее.";
+
     public static string PracticeStarted(bool english) => english
         ? "Okay, let's begin. When you're done, come back here and tell me how you are."
         : "Хорошо, начинаем. Когда закончите, вернитесь сюда и расскажите, как вы.";

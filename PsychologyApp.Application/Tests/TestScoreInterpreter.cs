@@ -25,13 +25,15 @@ public static class TestScoreInterpreter
         "hads_a" => new ScoreRange(0, 21),
         "hads_d" => new ScoreRange(0, 21),
         "rses" => new ScoreRange(0, 30),
+        "pcptsd5" => new ScoreRange(0, 5),
+        "pcl5" => new ScoreRange(0, 80),
         _ => null
     };
     public static bool IsKnownAnalyzer(string analyzerId) => analyzerId switch
     {
         "heck_hess" or "haer" or "pochebut" or "beck" or "gad7" or "k10" or "who5"
             or "phq9" or "isi" or "ess" or "phq15" or "scoff" or "swls"
-            or "pss10" or "phq2" or "gad2" or "hads_a" or "hads_d" or "rses" => true,
+            or "pss10" or "phq2" or "gad2" or "hads_a" or "hads_d" or "rses" or "pcptsd5" or "pcl5" => true,
         _ => false
     };
 
@@ -116,6 +118,13 @@ public static class TestScoreInterpreter
             _ => 2
         },
         "phq2" => score <= 2 ? 0 : 1,
+        "pcptsd5" => score >= 3 ? 1 : 0,
+        "pcl5" => score switch
+        {
+            <= 20 => 0,
+            <= 32 => 1,
+            _ => 2
+        },
         "gad2" => score <= 2 ? 0 : 1,
         "hads_a" => score switch
         {

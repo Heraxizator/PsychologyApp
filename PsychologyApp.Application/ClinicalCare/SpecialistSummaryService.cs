@@ -1,3 +1,5 @@
+using PsychologyApp.Application.Abstractions.Persistence;
+using PsychologyApp.Application.Chat;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Domain.ClinicalCare;
@@ -7,7 +9,8 @@ namespace PsychologyApp.Application.ClinicalCare;
 
 public sealed class SpecialistSummaryService(
     IUserProgressService userProgressService,
-    IClinicalCareService clinicalCareService) : ISpecialistSummaryService
+    IClinicalCareService clinicalCareService,
+    IChatRepository chatRepository) : ISpecialistSummaryService
 {
     private const int PeriodDays = 30;
 
@@ -91,6 +94,25 @@ public sealed class SpecialistSummaryService(
                 ? $"- Filled in: {safetyPlan.WarningSigns.Count} warning sign(s), {safetyPlan.CopingStrategies.Count} coping strateg(y/ies), {safetyPlan.Contacts.Count} contact(s)."
                 : $"- Заполнен: признаков — {safetyPlan.WarningSigns.Count}, стратегий — {safetyPlan.CopingStrategies.Count}, контактов — {safetyPlan.Contacts.Count}.");
         sb.AppendLine();
+
+        // What the trauma conversations found: beliefs and triggers in the person's words, without details of the event.
+        IReadOnlyDictionary<string, string> memory = await chatRepository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
+        TraumaNotes notes = TraumaNotes.Deserialize(memory.TryGetValue(ChatMemoryKeys.TraumaNotes, out string? stored) ? stored : null);
+        if (!notes.IsEmpty)
+        {
+            sb.AppendLine(CompanionTraumaContent.SummaryTitle(english));
+            foreach (StuckPointNote stuck in notes.StuckPoints)
+            {
+                sb.AppendLine(CompanionTraumaContent.SummaryStuckPoint(stuck, english));
+            }
+
+            foreach (TriggerNote trigger in notes.Triggers)
+            {
+                sb.AppendLine(CompanionTraumaContent.SummaryTrigger(trigger, english));
+            }
+
+            sb.AppendLine();
+        }
 
         sb.AppendLine(english
             ? "Generated automatically by the app from the person's own entries. Not a clinical diagnosis."

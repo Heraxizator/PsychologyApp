@@ -6,7 +6,7 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.Chat.ChatList"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:DataType="vm:ChatListViewModel"
-             Shell.NavBarIsVisible="False"
+             Shell.NavBarIsVisible="True"
              Title="{Binding Title}"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
 
@@ -14,24 +14,27 @@
         <behaviors:PageAnalyticsBehavior />
     </ContentPage.Behaviors>
 
-    <Grid RowDefinitions="Auto,*,Auto" Padding="{StaticResource LayoutPageMarginThickness}" RowSpacing="12">
+    <ContentPage.Resources>
+        <!-- The neutral colour sits in the style: a local TextColor would win over the improving / worsening triggers. -->
+        <Style x:Key="ChatMoodTrendStyle" TargetType="Label" BasedOn="{StaticResource CaptionStyle}">
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}" />
+        </Style>
+    </ContentPage.Resources>
 
-        <ui:NavigationBarSimpleView
-            Grid.Row="0"
-            TitleText="{Binding Title}"
-            BackCommand="{Binding BackCommand}" />
-
+    <!-- One card per chat, as elsewhere in the app: the initial, the title and time, the last line; the new-chat button in the corner. -->
+    <Grid>
         <CollectionView
-            Grid.Row="1"
             ItemsSource="{Binding Chats}"
             SelectionMode="None"
-            VerticalScrollBarVisibility="Never">
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
-            </CollectionView.ItemsLayout>
+            VerticalScrollBarVisibility="Never"
+            Margin="12,8,12,0">
+            <CollectionView.Footer>
+                <!-- Room under the last row, so the round button never covers it. -->
+                <BoxView HeightRequest="88" Color="Transparent" />
+            </CollectionView.Footer>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:ChatListItem">
-                    <SwipeView>
+                    <SwipeView Margin="4,4,4,8" BackgroundColor="Transparent">
                         <SwipeView.RightItems>
                             <SwipeItems Mode="Reveal">
                                 <SwipeItem
@@ -45,24 +48,30 @@
                             </SwipeItems>
                         </SwipeView.RightItems>
 
-                        <Border Style="{StaticResource ListCardItemStyle}" Margin="0" Padding="14,12" BindingContextChanged="OnChatRowContextChanged">
+                        <Border
+                            Style="{StaticResource BrandCardStyle}"
+                            Margin="0"
+                            Padding="14,12"
+                            BindingContextChanged="OnChatRowContextChanged">
+                            <Border.Behaviors>
+                                <behaviors:PressFeedbackBehavior />
+                            </Border.Behaviors>
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding OpenCommand}" />
                             </Border.GestureRecognizers>
                             <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
                                 <Border
-                                    Grid.Column="0"
                                     WidthRequest="44"
                                     HeightRequest="44"
                                     VerticalOptions="Start"
                                     StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 22"
-                                    BackgroundColor="{DynamicResource PrimaryFill}">
+                                    StrokeShape="RoundRectangle 14"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryTint}, Dark={StaticResource PrimaryTintDark}}">
                                     <Label
                                         Text="{Binding Initial}"
                                         FontSize="19"
                                         FontFamily="{StaticResource SemiBoldFontFamily}"
-                                        TextColor="{DynamicResource OnPrimary}"
+                                        TextColor="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}"
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center" />
                                 </Border>
@@ -77,7 +86,8 @@
                                         <Label
                                             Grid.Column="1"
                                             Text="{Binding TimeText}"
-                                            Style="{StaticResource CaptionStyle}" />
+                                            Style="{StaticResource CaptionStyle}"
+                                            VerticalOptions="Center" />
                                     </Grid>
                                     <Label
                                         Text="{Binding Preview}"
@@ -87,8 +97,7 @@
                                     <Label
                                         IsVisible="{Binding HasMood}"
                                         Text="{Binding MoodText}"
-                                        Style="{StaticResource CaptionStyle}"
-                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}">
+                                        Style="{StaticResource ChatMoodTrendStyle}">
                                         <Label.Triggers>
                                             <DataTrigger TargetType="Label" Binding="{Binding IsImproving}" Value="True">
                                                 <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Success}, Dark={StaticResource SuccessDark}}" />
@@ -107,7 +116,6 @@
         </CollectionView>
 
         <VerticalStackLayout
-            Grid.Row="1"
             IsVisible="{Binding IsEmpty}"
             VerticalOptions="Center"
             Spacing="8"
@@ -122,9 +130,32 @@
                 HorizontalTextAlignment="Center" />
         </VerticalStackLayout>
 
-        <ui:ButtonView
-            Grid.Row="2"
-            BodyText="{Binding NewChatText}"
-            TapCommand="{Binding NewChatCommand}" />
+        <!-- A new chat: one round button in the corner, under the thumb. -->
+        <Border
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            Margin="0,0,20,20"
+            WidthRequest="58"
+            HeightRequest="58"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 29"
+            BackgroundColor="{DynamicResource PrimaryFill}"
+            SemanticProperties.Description="{Binding NewChatText}">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Offset="0,4" Radius="10" Opacity="0.28" />
+            </Border.Shadow>
+            <Border.Behaviors>
+                <behaviors:PressFeedbackBehavior />
+            </Border.Behaviors>
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NewChatCommand}" />
+            </Border.GestureRecognizers>
+            <ui:MaterialIconView
+                IconName="Edit"
+                IconSize="26"
+                IconColor="{DynamicResource OnPrimary}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+        </Border>
     </Grid>
 </ContentPage>

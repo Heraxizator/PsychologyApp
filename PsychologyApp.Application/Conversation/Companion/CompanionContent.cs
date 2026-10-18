@@ -110,6 +110,9 @@ public static class CompanionContent
         TechniqueId.SelfCompassion => english ? "Kind words to yourself" : "Добрые слова себе",
         TechniqueId.SmallStep => english ? "One small step" : "Один маленький шаг",
         TechniqueId.Anchor => english ? "Resource anchor" : "Якорь ресурса",
+        TechniqueId.BodyScan => english ? "Where is it in the body?" : "Где это в теле?",
+        TechniqueId.Flashback => english ? "A memory took over" : "Накрыло воспоминание",
+        TechniqueId.Nightmare => english ? "Rewrite a nightmare" : "Переписать кошмар",
         _ => id.ToString()
     };
 
@@ -123,6 +126,9 @@ public static class CompanionContent
         TechniqueId.SelfCompassion => english ? "it helps you treat yourself the way you would treat a friend." : "она помогает поддержать себя так, как вы поддержали бы друга.",
         TechniqueId.SmallStep => english ? "it turns a heavy task into one doable step." : "она превращает тяжёлое дело в один посильный шаг.",
         TechniqueId.Anchor => english ? "it brings back a feeling of support you already know." : "она возвращает знакомое ощущение опоры.",
+        TechniqueId.BodyScan => english ? "it helps you notice where the feeling sits in the body and let the tension ease." : "она помогает заметить, где в теле живёт чувство, и дать напряжению смягчиться.",
+        TechniqueId.Flashback => english ? "it brings you back from a hard memory to the present, about 3 minutes." : "она возвращает из тяжёлого воспоминания в настоящее, около 3 минут.",
+        TechniqueId.Nightmare => english ? "it makes a recurring nightmare rarer and weaker." : "она делает повторяющийся кошмар реже и слабее.",
         _ => string.Empty
     };
 

@@ -44,6 +44,9 @@ public class ConversationScenarioParserTests
     [Theory]
     [InlineData(TechniqueId.Observer)]
     [InlineData(TechniqueId.Grounding)]
+    [InlineData(TechniqueId.Flashback)]
+    [InlineData(TechniqueId.Spin)]
+    [InlineData(TechniqueId.Extend)]
     public void Every_dialogue_technique_ships_russian_and_english_scenarios(TechniqueId id)
     {
         string dir = Path.Combine(AppContext.BaseDirectory, "conversations");

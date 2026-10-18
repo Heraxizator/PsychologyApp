@@ -181,4 +181,26 @@ public sealed class TestScoreBandClassifierTests
     [InlineData(26, RecommendationLane.Low)]
     public void RecommendRses_Boundaries(int score, RecommendationLane expected) =>
         Assert.Equal(expected, TestScoreBandClassifier.RecommendRses(score));
+
+    // PC-PTSD-5: three or more "yes" answers is the published cut-off for a positive screen (Prins et al., 2016).
+    [Theory]
+    [InlineData(2, ScreenBand.Negative, RecommendationLane.Low)]
+    [InlineData(3, ScreenBand.Positive, RecommendationLane.High)]
+    public void PcPtsd5_turns_positive_at_three(int score, ScreenBand band, RecommendationLane lane)
+    {
+        Assert.Equal(band, TestScoreBandClassifier.ClassifyPcPtsd5(score));
+        Assert.Equal(lane, TestScoreBandClassifier.RecommendPcPtsd5(score));
+    }
+
+    // PCL-5: 31-33 is the published range for probable PTSD; the app uses the upper end, 33, so "probable" is not overstated.
+    [Theory]
+    [InlineData(20, Pcl5Band.Low, RecommendationLane.Low)]
+    [InlineData(21, Pcl5Band.Elevated, RecommendationLane.Mid)]
+    [InlineData(32, Pcl5Band.Elevated, RecommendationLane.Mid)]
+    [InlineData(33, Pcl5Band.Probable, RecommendationLane.High)]
+    public void Pcl5_bands_change_at_the_cut_offs(int score, Pcl5Band band, RecommendationLane lane)
+    {
+        Assert.Equal(band, TestScoreBandClassifier.ClassifyPcl5(score));
+        Assert.Equal(lane, TestScoreBandClassifier.RecommendPcl5(score));
+    }
 }

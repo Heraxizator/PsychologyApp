@@ -7,6 +7,28 @@
              xmlns:chat="clr-namespace:PsychologyApp.Presentation.Widgets.DialogueChat"
              x:DataType="chat:ChatViewModelBase">
 
+    <ContentView.Resources>
+        <DataTemplate x:Key="SuggestionChipTemplate" x:DataType="chat:DialogueSuggestionItem">
+                            <Border Style="{StaticResource DialogueAnswerChipStyle}">
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryFill}" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Command}" CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                                <Label Text="{Binding Label}" Style="{StaticResource AnswerChipLabelStyle}">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                            <Setter Property="TextColor" Value="{DynamicResource OnPrimary}" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Border>
+                        </DataTemplate>
+    </ContentView.Resources>
+
     <!-- Same look as the main chat: the same bubbles, the same typing dots, the same bar at the bottom, the same tension slider. -->
     <Grid RowDefinitions="*,Auto">
 
@@ -50,6 +72,23 @@
         </CollectionView>
 
         <VerticalStackLayout Grid.Row="1" Spacing="0">
+
+            <!-- Typical answers and, for a feeling, the emotion palette: tapped into the draft instead of typed. -->
+            <ui:EmotionPickerView
+                IsVisible="{Binding OffersEmotions}"
+                Margin="0,10,0,0"
+                Text="{Binding DraftText, Mode=TwoWay}" />
+            <!-- Quick answers: one row that scrolls sideways, like the quick replies of a messenger, so the conversation keeps the screen. -->
+            <ScrollView
+                IsVisible="{Binding HasSuggestions}"
+                Orientation="Horizontal"
+                HorizontalScrollBarVisibility="Never"
+                Margin="0,10,0,0">
+                <VerticalStackLayout>
+                    <HorizontalStackLayout BindableLayout.ItemsSource="{Binding SuggestionsFirstRow}" BindableLayout.ItemTemplate="{StaticResource SuggestionChipTemplate}" />
+                    <HorizontalStackLayout BindableLayout.ItemsSource="{Binding SuggestionsSecondRow}" BindableLayout.ItemTemplate="{StaticResource SuggestionChipTemplate}" IsVisible="{Binding HasSecondSuggestionRow}" />
+                </VerticalStackLayout>
+            </ScrollView>
 
             <!-- Free text answer -->
             <ui:ChatInputBar

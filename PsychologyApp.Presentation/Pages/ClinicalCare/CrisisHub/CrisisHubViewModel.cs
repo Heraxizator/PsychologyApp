@@ -1,5 +1,6 @@
 using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Models;
+using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.ViewModels;
@@ -26,6 +27,7 @@ public sealed class CrisisHubViewModel : BaseViewModel
         RecheckCommand = new AsyncCommand(() => _navigationService.GoToRiskCheckAsync(AppStrings.RiskCheckSourceManual));
         ContinueSoftCommand = new AsyncCommand(ContinueSoftAsync);
         OpenSafetyPlanCommand = new AsyncCommand(() => _navigationService.GoToSafetyPlanAsync());
+        OpenFlashbackCommand = new AsyncCommand(() => _navigationService.GoToTechniqueAsync(TechniqueId.Flashback));
         LoadAsync().FireAndForget();
     }
 
@@ -50,6 +52,8 @@ public sealed class CrisisHubViewModel : BaseViewModel
     public string SpecialistHint => AppStrings.CrisisHubSpecialistHint;
     public string SafetyPlanLinkTitle => AppStrings.CrisisHubSafetyPlanLinkTitle;
     public string SafetyPlanLinkSubtitle => AppStrings.CrisisHubSafetyPlanLinkSubtitle;
+    public string FlashbackTitle => AppStrings.CrisisHubFlashbackTitle;
+    public string FlashbackSubtitle => AppStrings.CrisisHubFlashbackSubtitle;
 
     private bool _isRed;
     public bool IsRed
@@ -73,6 +77,9 @@ public sealed class CrisisHubViewModel : BaseViewModel
     public ICommand RecheckCommand { get; }
     public ICommand ContinueSoftCommand { get; }
     public ICommand OpenSafetyPlanCommand { get; }
+
+    /// <summary>A flashback can feel like danger now; the way back to the present sits next to the hotlines.</summary>
+    public ICommand OpenFlashbackCommand { get; }
 
     protected override void RefreshLocalizedProperties()
     {
@@ -98,6 +105,8 @@ public sealed class CrisisHubViewModel : BaseViewModel
             nameof(SpecialistHint),
             nameof(SafetyPlanLinkTitle),
             nameof(SafetyPlanLinkSubtitle),
+            nameof(FlashbackTitle),
+            nameof(FlashbackSubtitle),
             nameof(ShowContinueSoft));
     }
 

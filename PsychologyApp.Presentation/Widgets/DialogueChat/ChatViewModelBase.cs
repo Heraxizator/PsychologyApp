@@ -27,6 +27,7 @@ public abstract class ChatViewModelBase : BaseViewModel
     private bool _isTyping;
     private bool _isFinished;
     private string _finishText = string.Empty;
+    private bool _offersEmotions;
 
     protected ChatViewModelBase(INavigationService navigationService)
     {
@@ -37,6 +38,7 @@ public abstract class ChatViewModelBase : BaseViewModel
         SendCommand = new Command(() => Run(SendTextAsync));
         ChooseCommand = new Command<int>(index => Run(() => ChooseAsync(index)));
         RateCommand = new Command<int>(rating => Run(() => RateAsync(rating)));
+        SuggestCommand = new Command<DialogueSuggestionItem>(ToggleSuggestion);
         FinishCommand = new AsyncCommand(() => OnFinishAsync(FinalStatus, FinalAction));
 
         RatingItems = Enumerable.Range(0, 11).Select(v => new DialogueRatingItem(v, RateCommand)).ToArray();
@@ -45,6 +47,43 @@ public abstract class ChatViewModelBase : BaseViewModel
     public ObservableCollection<DialogueMessage> Messages { get; } = [];
 
     public ObservableCollection<DialogueChoiceItem> Choices { get; } = [];
+
+    /// <summary>Typical answers to the current text question, tapped into the draft instead of typed.</summary>
+    public ObservableCollection<DialogueSuggestionItem> Suggestions { get; } = [];
+
+    /// <summary>The current text question is about a feeling: the emotion palette is shown above the input.</summary>
+    public bool OffersEmotions
+    {
+        get => _offersEmotions;
+        private set => SetProperty(ref _offersEmotions, value);
+    }
+
+    public bool HasSuggestions => Suggestions.Count > 0;
+
+    /// <summary>
+    /// The chips laid out in two rows that scroll sideways together: a long list (twenty things to see) shows twice as many at once
+    /// without taking the conversation's screen. Up to five chips stay in one row.
+    /// </summary>
+    public ObservableCollection<DialogueSuggestionItem> SuggestionsFirstRow { get; } = [];
+
+    public ObservableCollection<DialogueSuggestionItem> SuggestionsSecondRow { get; } = [];
+
+    public bool HasSecondSuggestionRow => SuggestionsSecondRow.Count > 0;
+
+    private const int OneRowChips = 5;
+
+    private void LayoutSuggestionRows()
+    {
+        SuggestionsFirstRow.Clear();
+        SuggestionsSecondRow.Clear();
+        bool twoRows = Suggestions.Count > OneRowChips;
+        for (int i = 0; i < Suggestions.Count; i++)
+        {
+            (twoRows && i % 2 == 1 ? SuggestionsSecondRow : SuggestionsFirstRow).Add(Suggestions[i]);
+        }
+
+        OnPropertyChanged(nameof(HasSecondSuggestionRow));
+    }
 
     public IReadOnlyList<DialogueRatingItem> RatingItems { get; }
 
@@ -55,6 +94,7 @@ public abstract class ChatViewModelBase : BaseViewModel
     public ICommand SendCommand { get; }
     public ICommand ChooseCommand { get; }
     public ICommand RateCommand { get; }
+    public ICommand SuggestCommand { get; }
     public ICommand FinishCommand { get; }
 
     public string DraftText
@@ -65,6 +105,7 @@ public abstract class ChatViewModelBase : BaseViewModel
             if (SetProperty(ref _draftText, value))
             {
                 OnPropertyChanged(nameof(CanSend));
+                RefreshSuggestionSelection();
             }
         }
     }
@@ -156,6 +197,17 @@ public abstract class ChatViewModelBase : BaseViewModel
     }
 
     protected virtual Task OnStartingAsync() => Task.CompletedTask;
+
+    /// <summary>The problem from the last practice, offered as the first chip of a question that asks for it; none by default.</summary>
+    protected virtual Task<string?> GetRecentProblemAsync() => Task.FromResult<string?>(null);
+
+    /// <summary>The chips of a question and their order; by default as written in the scenario. <paramref name="capture"/> names the answer.</summary>
+    protected virtual IReadOnlyList<string> RankSuggestions(IReadOnlyList<string> suggestions, string? capture) => suggestions;
+
+    /// <summary>A chip was picked into the answer.</summary>
+    protected virtual void OnSuggestionChosen(string suggestion)
+    {
+    }
 
     protected abstract Task<IDialogueSession?> CreateSessionAsync();
 
@@ -281,6 +333,22 @@ public abstract class ChatViewModelBase : BaseViewModel
             }
         }
 
+        Suggestions.Clear();
+        foreach (string suggestion in prompt is { Kind: ConversationInputKind.Text } ? RankSuggestions(prompt.Suggestions ?? [], prompt.Capture) : [])
+        {
+            Suggestions.Add(new DialogueSuggestionItem(suggestion, suggestion, SuggestCommand));
+        }
+
+        OffersEmotions = prompt is { Kind: ConversationInputKind.Text, OffersEmotions: true };
+        if (prompt is { Kind: ConversationInputKind.Text, OffersRecent: true })
+        {
+            OfferRecentProblemAsync().FireAndForget();
+        }
+
+        LayoutSuggestionRows();
+        OnPropertyChanged(nameof(HasSuggestions));
+        RefreshSuggestionSelection();
+
         NotifyInputChanged();
         OnPropertyChanged(nameof(InputPlaceholder));
     }
@@ -294,6 +362,42 @@ public abstract class ChatViewModelBase : BaseViewModel
         IsFinished = true;
 
         await OnEndedAsync(status, action);
+    }
+
+    private void ToggleSuggestion(DialogueSuggestionItem? item)
+    {
+        if (item is null || _inputKind != ConversationInputKind.Text)
+        {
+            return;
+        }
+
+        DraftText = AnswerText.Toggle(DraftText, item.Value);
+        if (AnswerText.Contains(DraftText, item.Value))
+        {
+            OnSuggestionChosen(item.Value);
+        }
+    }
+
+    private void RefreshSuggestionSelection()
+    {
+        foreach (DialogueSuggestionItem item in Suggestions)
+        {
+            item.IsSelected = AnswerText.Contains(DraftText, item.Value);
+        }
+    }
+
+    private async Task OfferRecentProblemAsync()
+    {
+        string? recent = await GetRecentProblemAsync();
+        if (string.IsNullOrWhiteSpace(recent) || _inputKind != ConversationInputKind.Text)
+        {
+            return;
+        }
+
+        Suggestions.Insert(0, new DialogueSuggestionItem(AppStrings.PracticeRecentProblem(AnswerText.Shorten(recent, 32)), recent, SuggestCommand));
+        LayoutSuggestionRows();
+        OnPropertyChanged(nameof(HasSuggestions));
+        RefreshSuggestionSelection();
     }
 
     private void NotifyInputChanged() =>

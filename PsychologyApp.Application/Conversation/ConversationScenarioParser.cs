@@ -22,6 +22,9 @@ public sealed class JsonConversationNode
     public string? Capture { get; set; }
     public string? Hint { get; set; }
     public bool Pause { get; set; }
+    public List<string>? Suggestions { get; set; }
+    public bool Emotions { get; set; }
+    public bool Recent { get; set; }
     public List<JsonConversationChoice>? Choices { get; set; }
     public List<JsonConversationRoute>? Routes { get; set; }
 }
@@ -162,6 +165,13 @@ public static class ConversationScenarioParser
             .Select(r => new ConversationRoute(r.Max, r.Next!, r.Below, r.Same))
             .ToList();
 
+        if (kind != ConversationNodeKind.AskText && (raw.Suggestions is { Count: > 0 } || raw.Emotions || raw.Recent))
+        {
+            return ParseResult<ConversationNode>.Failure($"Node '{id}' offers suggestions, emotions or the recent problem, but only text questions can.");
+        }
+
+        List<string>? suggestions = raw.Suggestions?.Where(s => !string.IsNullOrWhiteSpace(s)).Select(s => s.Trim()).ToList();
+
         bool needsNext = kind is ConversationNodeKind.Say or ConversationNodeKind.AskText
             || (kind == ConversationNodeKind.AskRating && routes is not { Count: > 0 });
         if (needsNext && string.IsNullOrWhiteSpace(raw.Next))
@@ -176,7 +186,7 @@ public static class ConversationScenarioParser
         }
 
         return ParseResult<ConversationNode>.Success(new ConversationNode(
-            id, kind.Value, text, raw.Next, raw.Capture, raw.Hint, choices, routes, raw.Pause));
+            id, kind.Value, text, raw.Next, raw.Capture, raw.Hint, choices, routes, raw.Pause, suggestions, raw.Emotions, raw.Recent));
     }
 
     private static string? Validate(string start, string crisis, Dictionary<string, ConversationNode> nodes)

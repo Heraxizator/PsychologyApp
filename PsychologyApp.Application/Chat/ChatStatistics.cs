@@ -10,6 +10,13 @@ public static class ChatMemoryKeys
     public const string TriedPrefix = "tried:";
     public const string HelpedPrefix = "helped:";
 
+    /// <summary>A step the person decided on in a chat, asked about in the next one, and when it was decided (ISO 8601, UTC).</summary>
+    public const string Plan = "plan";
+    public const string PlanAt = "plan_at";
+
+    /// <summary>The stuck points and triggers found in trauma conversations (<see cref="Chat.TraumaNotes"/>), for the summary for a specialist.</summary>
+    public const string TraumaNotes = "trauma_notes";
+
     public static string Tried(TechniqueId id) => TriedPrefix + id;
 
     public static string Helped(TechniqueId id) => HelpedPrefix + id;

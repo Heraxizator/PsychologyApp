@@ -73,6 +73,12 @@ public sealed record SituationAnalysis(
     bool HasLoss = false,
     CompanionEvent Event = CompanionEvent.None)
 {
+    /// <summary>The words describe a flashback: a traumatic memory relived as if it were happening now.</summary>
+    public bool IsFlashback { get; init; }
+
+    /// <summary>The words mention a hard event: abuse, an assault, an accident, war.</summary>
+    public bool MentionsTrauma { get; init; }
+
     public static SituationAnalysis Empty { get; } = new(CompanionEmotion.Unknown, 0, false, false, []);
 }
 

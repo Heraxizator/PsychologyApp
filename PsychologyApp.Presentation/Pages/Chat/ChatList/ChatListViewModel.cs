@@ -63,7 +63,6 @@ public sealed class ChatListViewModel : BaseViewModel
         _time = time;
 
         BindNavigation(navigationService);
-        BackCommand = new AsyncCommand(GoBackAsync);
         NewChatCommand = new AsyncCommand(() => NavigationService!.GoToChatAsync(null));
     }
 
@@ -72,7 +71,6 @@ public sealed class ChatListViewModel : BaseViewModel
 
     public RangeObservableCollection<ChatListItem> Chats { get; } = [];
 
-    public ICommand BackCommand { get; }
     public ICommand NewChatCommand { get; }
 
     public bool IsEmpty
@@ -81,7 +79,8 @@ public sealed class ChatListViewModel : BaseViewModel
         private set => SetProperty(ref _isEmpty, value);
     }
 
-    public string Title => AppStrings.ChatsTitle;
+    /// <summary>The tab is named after the assistant, like the other tabs are named after what they hold.</summary>
+    public string Title => AppStrings.ShellTabChatShort;
     public string NewChatText => AppStrings.ChatNew;
     public string EmptyTitle => AppStrings.ChatEmptyTitle;
     public string EmptyBody => AppStrings.ChatEmptyBody;

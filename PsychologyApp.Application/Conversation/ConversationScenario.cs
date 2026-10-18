@@ -27,7 +27,10 @@ public sealed record ConversationNode(
     string? Hint = null,
     IReadOnlyList<ConversationChoice>? Choices = null,
     IReadOnlyList<ConversationRoute>? Routes = null,
-    bool IsPause = false);
+    bool IsPause = false,
+    IReadOnlyList<string>? Suggestions = null,
+    bool OffersEmotions = false,
+    bool OffersRecent = false);
 
 public sealed record ConversationScenario(
     string Id,

@@ -14,6 +14,26 @@ public sealed partial class LexiconSituationAnalyzer
         "passed away", "=died", "funeral", "lost my mother", "lost my father", "lost my mom", "lost my dad", "lost my wife", "lost my husband", "lost my child", "lost someone", "death of my", "bereave"
     ];
 
+    /// <summary>A flashback: a traumatic memory relived as if now. It needs the way back to the present, not a talk about panic.</summary>
+    private static readonly string[] FlashbackTerms =
+    [
+        "флешбэк", "флешбек", "флэшбэк", "флэшбек", "снова там", "снова оказываюсь там", "заново переживаю", "переживаю заново", "происходит снова", "происходит заново",
+        "накрыло воспоминани", "накрывают воспоминани", "накрыли воспоминани", "воспоминание накрыл", "воспоминания накрыл", "накрыло прошлое",
+        "flashback", "reliving", "back there again", "happening all over again", "happening again", "memory hit me", "memories hit me", "memories flood"
+    ];
+
+    /// <summary>
+    /// A hard event in the past: abuse, assault, an accident, war. The reply is trauma-informed (no probing for details), and the person is
+    /// offered work on what it changed, not on the memory itself.
+    /// </summary>
+    private static readonly string[] TraumaTerms =
+    [
+        "травм", "насили", "изнасил", "домогал", "приставал ко мне", "избивал", "избил меня", "избили меня", "бил меня", "били меня",
+        "напали на меня", "нападени", "попал в аварию", "попала в аварию", "попали в аварию", "теракт", "на войне", "пережил войну", "пережила войну",
+        "пытали меня", "похитил", "в плену",
+        "trauma", "abuse", "abused", "assault", "raped", "rape", "molest", "beat me", "attacked me", "car accident", "terror attack", "the war", "kidnapped"
+    ];
+
     private static readonly Dictionary<CompanionEmotion, Entry[]> Extended = new()
     {
         [CompanionEmotion.Panic] =

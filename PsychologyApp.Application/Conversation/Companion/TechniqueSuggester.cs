@@ -3,7 +3,7 @@ namespace PsychologyApp.Application.Conversation.Companion;
 /// <summary>Closed, hand-reviewed mapping from a recognised state to practices. The language model never chooses what the app launches.</summary>
 public static class TechniqueSuggester
 {
-    public static IReadOnlyList<TechniqueId> Suggest(SituationAnalysis analysis) => analysis.Emotion switch
+    public static IReadOnlyList<TechniqueId> Suggest(SituationAnalysis analysis) => analysis.IsFlashback ? [TechniqueId.Flashback, TechniqueId.Grounding] : analysis.Emotion switch
     {
         CompanionEmotion.Panic => [TechniqueId.Grounding, TechniqueId.Breathing],
         CompanionEmotion.Anxiety when analysis.HasBodySymptoms => [TechniqueId.Grounding, TechniqueId.Breathing],

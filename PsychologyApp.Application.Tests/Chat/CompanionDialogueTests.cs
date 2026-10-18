@@ -35,6 +35,30 @@ public class CompanionDialogueTests
         Assert.NotEmpty(reply.QuickReplies);
     }
 
+    [Theory]
+    [InlineData("Опять накрыло воспоминание, я будто снова там", false)]
+    [InlineData("У меня флешбэк, всё происходит снова", false)]
+    [InlineData("I'm having a flashback, it's happening again", true)]
+    public void A_flashback_is_met_with_the_way_back_to_the_present_first(string text, bool english)
+    {
+        // Answering a relived trauma with "it sounds like panic" and breathing misses it; the flashback help names the past as past.
+        CompanionDialogue dialogue = Create(english);
+        CompanionState state = dialogue.Open(new CompanionState(), previous: null).State;
+
+        CompanionReply reply = Say(dialogue, state, text);
+
+        Assert.Equal(nameof(TechniqueId.Flashback), reply.QuickReplies[0].Payload);
+        Assert.Contains(CompanionDialogueContent.FlashbackBridge(english), reply.Messages);
+    }
+
+    [Fact]
+    public void A_denied_flashback_is_not_treated_as_one()
+    {
+        SituationAnalysis analysis = new LexiconSituationAnalyzer().Analyze("Это не флешбэк, просто тревожно перед экзаменом");
+
+        Assert.False(analysis.IsFlashback);
+    }
+
     private sealed class StubGuesser(CompanionEmotion? emotion) : IEmotionGuesser
     {
         public EmotionGuess? Guess(string text) => emotion is { } e ? new EmotionGuess(e, 30) : null;

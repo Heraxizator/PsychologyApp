@@ -44,8 +44,17 @@ public sealed partial class CompanionDialogue(
     IReadOnlyList<QuotSeed>? quotes = null,
     MoodEntryDTO? todayLowMood = null,
     TestResultDTO? recentStressTest = null,
-    IEmotionGuesser? emotionGuesser = null)
+    IEmotionGuesser? emotionGuesser = null,
+    int recentHeavyChats = 0,
+    IReadOnlySet<string>? recentlyTakenTests = null)
 {
+    /// <summary>Earlier chats of the last two weeks that ended heavy (tension 7 or more): from the second one on, a questionnaire is suggested.</summary>
+    private readonly int _recentHeavyChats = recentHeavyChats;
+
+    /// <summary>Questionnaires taken in the last two weeks: these are not suggested again.</summary>
+    private readonly IReadOnlySet<string> _recentlyTakenTests = recentlyTakenTests ?? new HashSet<string>();
+
+    private const int HeavyChatsForTest = 2;
     private readonly Random _random = random ?? Random.Shared;
     private readonly TimeProvider _time = time ?? TimeProvider.System;
     private readonly IReadOnlyList<QuotSeed> _quotes = quotes ?? [];
@@ -74,6 +83,18 @@ public sealed partial class CompanionDialogue(
             return WithPending(new CompanionReply(
                 [CompanionSmallTalk.JournalReference(mood, english, _random)],
                 [],
+                null,
+                state,
+                CompanionEmotion.Unknown,
+                null));
+        }
+
+        // A step decided on last time is asked about first: following up is what turns a talk into a change.
+        if (state.OpenPlan is { } plan)
+        {
+            return WithPending(new CompanionReply(
+                [CompanionProtocolContent.PlanQuestion(plan, english)],
+                CompanionProtocolContent.PlanChips(english),
                 null,
                 state,
                 CompanionEmotion.Unknown,
@@ -189,6 +210,12 @@ public sealed partial class CompanionDialogue(
                 previous,
                 ParseEmotion(previous.Emotion),
                 null);
+        }
+
+        // Inside a guided exercise every answer belongs to it, until it ends or the person stops it.
+        if (previous.Protocol is not null)
+        {
+            return ContinueProtocol(previous, text, null);
         }
 
         // "Okay, let us try" right after an offer starts that practice, instead of listing the offer again.
@@ -523,6 +550,12 @@ public sealed partial class CompanionDialogue(
 
         bool urgent = emotion == CompanionEmotion.Panic
             || (emotion == CompanionEmotion.Anxiety && analysis.IsIntense && analysis.HasBodySymptoms);
+        if (urgent && analysis.IsFlashback)
+        {
+            // A relived memory is not answered with "it sounds like panic": first the past is named as past, then the way back.
+            return Offer(state, [CompanionDialogueContent.FlashbackBridge(english)], analysis, emotion, theme, calming: false);
+        }
+
         if (urgent)
         {
             string bridge = CompanionDialogueContent.UrgentBridge(english);
@@ -533,6 +566,12 @@ public sealed partial class CompanionDialogue(
             }
 
             return Offer(state, messages, analysis, emotion, theme, calming: false);
+        }
+
+        // A hard event (abuse, an assault, an accident, war) is met once with thanks and no probing; a death is grief and goes its own way.
+        if (analysis.MentionsTrauma && !analysis.HasLoss && !state.TraumaAcknowledged)
+        {
+            return AcknowledgeTrauma(state, emotion, theme);
         }
 
         if (!state.ProfessionalHelpNoted && state.ContentTurns >= 2 && emotion is CompanionEmotion.Sadness or CompanionEmotion.Exhaustion or CompanionEmotion.Anxiety or CompanionEmotion.Overthinking && NeedsProfessionalNote(string.Join(' ', state.RecentTexts)))
@@ -552,7 +591,7 @@ public sealed partial class CompanionDialogue(
         // The person has decided on a step: back it, and do not answer it with a practice offer.
         if (!firstStatement && state.ContentTurns >= 2 && !state.AskedQuestions.Contains("plan") && CompanionCaseContent.StatesAPlan(text))
         {
-            return Reply([CompanionCaseContent.PlanReply(english)], [], (state with { TurnsSinceOffer = 0 }).WithAsked("plan"), emotion, theme);
+            return Reply([CompanionCaseContent.PlanReply(english)], [], (state with { TurnsSinceOffer = 0, NewPlan = ClipPlan(text) }).WithAsked("plan"), emotion, theme);
         }
 
         // A proposal needs only enough words for the guesser to judge; the open choice waits for a real story or a second unclear message.
@@ -640,6 +679,9 @@ public sealed partial class CompanionDialogue(
             case ChatQuickReplyKinds.More:
                 return Reply([CompanionDialogueContent.Question("more", english)], [], state with { TurnsSinceOffer = 0 }, emotion, theme);
 
+            case ChatQuickReplyKinds.Rating when state.Protocol is not null && int.TryParse(reply.Payload, out int protocolRating):
+                return ContinueProtocol(state, null, Math.Clamp(protocolRating, 0, 10));
+
             case ChatQuickReplyKinds.Rating when int.TryParse(reply.Payload, out int rating):
                 return RespondToRating(state, Math.Clamp(rating, 0, 10), emotion, theme);
 
@@ -707,6 +749,26 @@ public sealed partial class CompanionDialogue(
                     emotion,
                     theme,
                     calming: true, asked: true);
+
+            // An example phrase or a theme tapped inside an exercise answers it exactly as if it had been typed.
+            case { } said when said.StartsWith("say:", StringComparison.Ordinal) && state.Protocol is not null:
+                return ContinueProtocol(state, said["say:".Length..], null);
+
+            case { } protocol when protocol.StartsWith("protocol:", StringComparison.Ordinal):
+                return protocol == "protocol:stop"
+                    ? StopProtocol(state, emotion, theme)
+                    : StartProtocol(state, protocol["protocol:".Length..], emotion, theme);
+
+            case { } plan when plan.StartsWith("plan:", StringComparison.Ordinal):
+                return AnswerPlan(state, plan["plan:".Length..], emotion, theme);
+
+            case { } test when test.StartsWith("test:", StringComparison.Ordinal):
+                return new CompanionReply(
+                    [CompanionProtocolContent.TestNudgeTransition(english)], [], new DialogueAction(DialogueActionKind.OpenTest, TestId: test["test:".Length..]), state, emotion, theme);
+
+            case { } article when article.StartsWith("article:", StringComparison.Ordinal):
+                return new CompanionReply(
+                    [CompanionProtocolContent.ArticleTransition(english)], [], new DialogueAction(DialogueActionKind.OpenArticle, ArticleId: article["article:".Length..]), state, emotion, theme);
 
             case "resource:test":
                 return new CompanionReply(
@@ -1008,6 +1070,7 @@ public sealed partial class CompanionDialogue(
             }
         }
 
+        state = AddGuidedOffers(state, messages, quick, analysis, emotion);
         quick.Add(new ChatQuickReply(ChatQuickReplyKinds.More, CompanionContent.MoreLabel(english)));
 
         return Reply(

@@ -18,15 +18,6 @@ public sealed class TechniqueRecommendationServiceTests
         Assert.Equal(expected, _service.ResolveFromOnboardingConcern(concern));
 
     [Fact]
-    public void RecommendForSomaticQuery_ReturnsHeadacheTechniques()
-    {
-        IReadOnlyList<TechniqueId> techniques = _service.RecommendForSomaticQuery("headache");
-
-        Assert.Contains(TechniqueId.Spin, techniques);
-        Assert.Contains(TechniqueId.Paper, techniques);
-    }
-
-    [Fact]
     public void ResolveTodayTechnique_UsesRecentTestWithinSevenDays()
     {
         TodayRecommendationDecision decision = _service.ResolveTodayTechnique(new TodayRecommendationContext(

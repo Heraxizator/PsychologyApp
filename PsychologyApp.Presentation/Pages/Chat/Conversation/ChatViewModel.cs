@@ -46,6 +46,9 @@ public sealed class ChatViewModel : BaseViewModel
     private readonly CancellationTokenSource _lifetime = new();
 
     private long? _sessionId;
+
+    /// <summary>A chat opened on a topic (trauma, from its articles) starts with that topic's choices instead of a plain greeting.</summary>
+    private readonly string? _topic;
     private Task? _loading;
     private bool _isLoading = true;
     private bool _busy;
@@ -60,8 +63,10 @@ public sealed class ChatViewModel : BaseViewModel
         INavigationService navigationService,
         IChatLanguageProvider language,
         TimeProvider time,
-        long? sessionId)
+        long? sessionId,
+        string? topic = null)
     {
+        _topic = topic;
         ModuleName = AppStrings.ChatsTitle;
         PageName = AppStrings.ChatHeroTitle;
         _chat = chat;
@@ -177,7 +182,9 @@ public sealed class ChatViewModel : BaseViewModel
 
     private async Task LoadCoreAsync()
     {
-        long id = _sessionId ?? (await Task.Run(() => _chat.StartNewChatAsync(_lifetime.Token))).Session.Id;
+        long id = _sessionId ?? (await Task.Run(() => _topic is { } topic
+            ? _chat.StartTopicChatAsync(topic, _lifetime.Token)
+            : _chat.StartNewChatAsync(_lifetime.Token))).Session.Id;
 
         // The session and its history do not depend on each other: read both at once instead of waiting twice.
         Task<ChatSessionDTO?> sessionTask = _chat.GetChatAsync(id, _lifetime.Token);
@@ -344,17 +351,27 @@ public sealed class ChatViewModel : BaseViewModel
 
             case { Kind: DialogueActionKind.OpenSomatic }:
                 await Task.Delay(HandOverDelayMs, _lifetime.Token);
-                await NavigationService!.GoToPhysicsSearchAsync();
+                await NavigationService!.GoToArticleAsync(PsychologyApp.Application.Articles.ArticleIds.BodyAndStress);
+                break;
+
+            case { Kind: DialogueActionKind.OpenTest, TestId: { } questionnaire }:
+                await Task.Delay(HandOverDelayMs, _lifetime.Token);
+                await NavigationService!.GoToTestAsync(questionnaire);
+                break;
+
+            case { Kind: DialogueActionKind.OpenArticle, ArticleId: { } articleId }:
+                await Task.Delay(HandOverDelayMs, _lifetime.Token);
+                await NavigationService!.GoToArticleAsync(articleId);
                 break;
 
             case { Kind: DialogueActionKind.OpenPrayers }:
                 await Task.Delay(HandOverDelayMs, _lifetime.Token);
-                await NavigationService!.GoToPrayersTabAsync();
+                await NavigationService!.GoToPrayersAsync();
                 break;
 
             case { Kind: DialogueActionKind.OpenQuotes }:
                 await Task.Delay(HandOverDelayMs, _lifetime.Token);
-                await NavigationService!.GoToQuotesTabAsync();
+                await NavigationService!.GoToQuotesAsync();
                 break;
 
             case { Kind: DialogueActionKind.OpenTestHistory, TestId: { } testId }:

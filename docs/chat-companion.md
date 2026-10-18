@@ -1,4 +1,9 @@
+| `trauma_notes` | stuck points and triggers found in trauma work (their own words, at most 10 of each), for the summary for a specialist |
 # Chat companion
+
+The assistant is shown as **AI chat** (ИИ-чат), the owner's choice of name. The label must not be read as a cloud model: the status line
+says it works on the phone without internet, and its answers about itself say it is a self-help assistant, not a person and not a
+doctor. It has no grammatical gender in its replies.
 
 The chat companion is an offline, on-device dialogue engine behind a messenger-style UI. It does not use a language model and never
 touches the network. Why not a model: see [local-llm.md](local-llm.md) (unusable in Russian on a phone) and
@@ -48,9 +53,41 @@ Table `ChatMemory (MemoryKey, MemoryValue)`:
 | `name` | how to address the person |
 | `tried:<TechniqueId>` | how many times a practice was started from a chat |
 | `helped:<TechniqueId>` | how many times the tension dropped after it |
+| `plan`, `plan_at` | a step the person decided on (their own words, cut to 160 characters) and when, in UTC |
 
 The practice with the most `helped` marks is offered first in the next chat ("Last time X helped you"), except during a panic attack,
 where the standard help is used. Deleting all chats keeps the memory; "forget" clears the memory and keeps the chats.
+
+A step decided on (the end of problem solving, or "I'll talk to him tomorrow" said in a chat) is asked about when a new chat opens,
+from six hours on and for two weeks: "Last time you decided: … How did it go?" with "I did it / Partly / It didn't work out". The
+answer is met (what helped, what got in the way, a five-minute version of the step) and the step is forgotten. A low mood logged
+today still comes first.
+
+## Guided exercises in the chat
+
+The companion does not only point to a practice; on an offer it can also walk through one exercise, one question at a time
+(`CompanionDialogue.Protocols.cs`, wording in `CompanionProtocolContent`):
+
+| Exercise | When it is offered | Steps |
+| --- | --- | --- |
+| Checking a thought (cognitive restructuring) | anxiety, rumination, guilt, sadness, resentment; fear of an exam, a failure, a betrayal | the thought → belief 0–10 → facts for → facts against → what you would tell a friend → a fairer wording → belief again → summary with both numbers; if the belief did not drop, the thought record practice |
+| Problem solving | a quarrel, too much work, a lost job, putting things off | the task in one sentence → two or three options → the most doable → the first 10–15 minute step and when → summary; the step is remembered |
+
+Each is offered once per chat and never during panic, a flashback or grief. Crisis words are checked before every answer, as
+everywhere; "stop" or the "Stop here" chip ends the exercise at any step.
+
+## Trauma work
+
+When a hard event is mentioned, the companion answers it in a trauma-informed way and can work on the beliefs it left (stuck points,
+as in cognitive processing therapy) or map what sets the reactions off, without ever asking for the details of the event. Distress is
+checked first and the work waits at 7 of 10 or a flashback. See [trauma-module.md](trauma-module.md#trauma-work-in-the-chat).
+
+## Pointing further
+
+- An article that explains the recognised state is offered once per chat as a chip ("Read: …"), except during panic, where the body
+  article already comes with the somatic chip.
+- From the third chat in two weeks that ended at tension 7 or more, the matching questionnaire is suggested once (PHQ-9 for low mood
+  and exhaustion, GAD-7 for anxiety, PCL-5 after a flashback), unless it was taken in those two weeks; the chip opens it directly.
 
 ## Companion profile
 

@@ -1,0 +1,134 @@
+{
+  "id": "Flashback",
+  "title": "A memory took over",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [ "I'm here with you. What is happening now is a memory. It is very strong, but it is about the past. Together we'll come back to the present now." ],
+      "next": "ask_before"
+    },
+    {
+      "id": "ask_before",
+      "kind": "askRating",
+      "text": [ "How strong is it right now? From 0 to 10." ],
+      "capture": "rating_before",
+      "next": "say_now"
+    },
+    {
+      "id": "say_now",
+      "kind": "say",
+      "text": [ "Tell yourself, out loud if you can: \"This is a memory. That was then, and now is today. I am here.\"" ],
+      "next": "ask_where"
+    },
+    {
+      "id": "ask_where",
+      "kind": "askText",
+      "text": [ "Where are you now, and what time of day is it?" ],
+      "hint": "For example: at home, evening",
+      "capture": "now",
+      "suggestions": [ "At home", "At work", "Outside", "On transport", "Visiting someone", "Morning", "Afternoon", "Evening", "Night" ],
+      "next": "react_where"
+    },
+    {
+      "id": "react_where",
+      "kind": "say",
+      "text": [ "Now: {now}. This is the present. What came back belongs to another time." ],
+      "next": "say_feet"
+    },
+    {
+      "id": "say_feet",
+      "kind": "say",
+      "text": [ "Put your feet on the floor and press down. Feel the support. Clench your fists for a few seconds and let go." ],
+      "next": "ask_see"
+    },
+    {
+      "id": "ask_see",
+      "kind": "askText",
+      "text": [ "Name three things you can see around you." ],
+      "hint": "For example: window, cup, lamp",
+      "capture": "see",
+      "suggestions": [ "Window", "Table", "Phone", "Cup", "Lamp", "Door", "Chair", "Wall", "Picture", "Plant", "Clock", "Sky" ],
+      "next": "react_see"
+    },
+    {
+      "id": "react_see",
+      "kind": "say",
+      "text": [ "{see}. That is what is around you now." ],
+      "next": "say_breath"
+    },
+    {
+      "id": "say_breath",
+      "kind": "say",
+      "text": [ "Take five slow out-breaths, longer than the in-breath. If you can, splash cold water on your face or hold something cold." ],
+      "next": "ask_safe"
+    },
+    {
+      "id": "ask_safe",
+      "kind": "askChoice",
+      "text": [ "Are you safe right now, where you are?" ],
+      "choices": [
+        { "label": "Yes", "next": "ask_after" },
+        { "label": "Not sure", "next": "unsure" },
+        { "label": "No", "next": "not_safe" }
+      ]
+    },
+    {
+      "id": "unsure",
+      "kind": "say",
+      "text": [ "Look around once more. Is what happened then here now? Most often it is not. The body reacts as if the danger were near, but it is in the past." ],
+      "next": "ask_after"
+    },
+    {
+      "id": "not_safe",
+      "kind": "say",
+      "text": [ "If you are in danger right now, call your local emergency number (112 in the EU, 911 in the US) and go somewhere safe. If the danger is in the memory and not around you, come back to what you see and what you feel under your feet." ],
+      "next": "ask_after"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [ "How strong is it now? From 0 to 10." ],
+      "capture": "rating_after",
+      "routes": [
+        { "below": "rating_before", "next": "end_better" },
+        { "same": "rating_before", "next": "end_same" },
+        { "next": "end_worse" }
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [ "It was {rating_before}, now it's {rating_after}. You've come back to the present. Flashbacks after trauma are a common reaction, and they respond well to treatment. Where to start is in the article \"After trauma\" in the Articles tab." ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [ "It's {rating_after} now. Go through the steps once more, more slowly, and splash cold water on your face. If flashbacks are frequent, it is worth seeing a specialist who works with trauma: this responds well to treatment." ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [ "It got harder (was {rating_before}, now {rating_after}), and that isn't your fault. Call someone close or a helpline. If your life is at risk, call your local emergency number." ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [ "I'm very sorry you're in so much pain right now. What you wrote matters more than any technique, so I'm stopping the exercise." ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [ "Please talk to a real person right now. If your life may be at risk, call your local emergency number (112 in the EU, 911 in the US, 988 for the US Suicide and Crisis Lifeline). If someone is nearby, tell them you're not okay." ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [ "I'm an app, not a professional, and I can't keep you safe. You deserve support. Please reach out for it." ]
+    }
+  ]
+}

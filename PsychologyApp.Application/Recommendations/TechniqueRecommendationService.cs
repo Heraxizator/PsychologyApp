@@ -1,7 +1,6 @@
 using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Models.Tests;
-using PsychologyApp.Application.Somatic;
 using PsychologyApp.Application.Tests;
 using PsychologyApp.Domain.Practice;
 
@@ -15,7 +14,6 @@ public interface ITechniqueRecommendationService
 
     TechniqueId ResolveNextAfterCompletion(TodayRecommendationContext context, TechniqueId completedTechniqueId);
 
-    IReadOnlyList<TechniqueId> RecommendForSomaticQuery(string query);
 }
 
 public sealed class TechniqueRecommendationService : ITechniqueRecommendationService
@@ -157,8 +155,6 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
         return PickFromPool(filtered, context.LastPracticeDatesUtc, context.TechniqueEffectiveness);
     }
 
-    public IReadOnlyList<TechniqueId> RecommendForSomaticQuery(string query) =>
-        SomaticTechniqueRecommendation.RecommendForQuery(query);
 
     private static TechniqueId[] ResolveConcernPool(string concern) => concern switch
     {

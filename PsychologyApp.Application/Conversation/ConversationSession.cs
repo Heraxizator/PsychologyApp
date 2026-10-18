@@ -20,10 +20,18 @@ public enum ConversationInputKind
     Rating
 }
 
+/// <param name="Suggestions">For a text answer: typical short answers to tap instead of typing.</param>
+/// <param name="OffersEmotions">For a text answer about a feeling: show the emotion palette.</param>
+/// <param name="OffersRecent">For a text answer about the problem: offer the one from the last practice.</param>
+/// <param name="Capture">The name the answer is kept under (e.g. <c>f1</c>): lets the screen offer chips the person made their own for that question.</param>
 public sealed record ConversationPrompt(
     ConversationInputKind Kind,
     string? Hint,
-    IReadOnlyList<string> Choices);
+    IReadOnlyList<string> Choices,
+    IReadOnlyList<string>? Suggestions = null,
+    bool OffersEmotions = false,
+    bool OffersRecent = false,
+    string? Capture = null);
 
 public sealed record ConversationTurn(
     IReadOnlyList<string> BotMessages,
@@ -189,7 +197,7 @@ public sealed class ConversationSession : IDialogueSession
 
     private static ConversationPrompt BuildPrompt(ConversationNode node) => node.Kind switch
     {
-        ConversationNodeKind.AskText => new(ConversationInputKind.Text, node.Hint, []),
+        ConversationNodeKind.AskText => new(ConversationInputKind.Text, node.Hint, [], node.Suggestions ?? [], node.OffersEmotions, node.OffersRecent, node.Capture),
         ConversationNodeKind.AskChoice => new(ConversationInputKind.Choice, node.Hint, node.Choices!.Select(c => c.Label).ToArray()),
         _ => new(ConversationInputKind.Rating, node.Hint, [])
     };

@@ -142,6 +142,7 @@ public class ChatServiceTests
     private readonly InMemoryChatRepository _repository = new();
     private readonly Clock _clock = new(new DateTime(2026, 9, 21, 12, 0, 0, DateTimeKind.Utc));
     private readonly Mock<IUserProgressService> _progress = new();
+    private readonly Dictionary<string, TestResultDTO> _latestTests = [];
 
     private ChatService CreateService(bool english = false)
     {
@@ -151,7 +152,77 @@ public class ChatServiceTests
             .ReturnsAsync([]);
         _progress.Setup(p => p.GetLatestTestResultAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((TestResultDTO?)null);
+        _progress.Setup(p => p.GetLatestTestResultsAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(_latestTests);
         return new ChatService(_repository, new LexiconSituationAnalyzer(), new KeywordCrisisDetector(), _progress.Object, new Language(english), _clock, new StubQuotContentProvider());
+    }
+
+    [Fact]
+    public async Task What_the_trauma_work_finds_is_kept_between_chats_and_goes_into_the_summary_for_a_specialist()
+    {
+        ChatService service = CreateService();
+        long chat = (await service.StartTopicChatAsync(CompanionTraumaContent.Topic)).Session.Id;
+        await service.SendQuickReplyAsync(chat, new ChatQuickReply(ChatQuickReplyKinds.Act, "Что это запускает", "protocol:" + CompanionTraumaContent.Triggers));
+        foreach (string answer in new[] { "В метро в час пик", "Сердце колотится", "Выйти раньше и подышать" })
+        {
+            await service.SendTextAsync(chat, answer);
+        }
+
+        _progress.Setup(p => p.GetMoodsAsync(It.IsAny<DateTime?>(), It.IsAny<DateTime?>(), It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
+        _progress.Setup(p => p.GetAllTestResultsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
+        Mock<PsychologyApp.Application.ClinicalCare.IClinicalCareService> care = new();
+        care.Setup(c => c.GetSafetyPlanAsync(It.IsAny<CancellationToken>())).ReturnsAsync(new SafetyPlanDTO());
+        string summary = await new PsychologyApp.Application.ClinicalCare.SpecialistSummaryService(_progress.Object, care.Object, _repository).BuildSummaryAsync(english: false);
+
+        Assert.Contains(CompanionTraumaContent.SummaryTitle(false), summary);
+        Assert.Contains("В метро в час пик", summary);
+    }
+
+    [Fact]
+    public async Task A_chat_on_the_trauma_topic_opens_with_its_choices_only()
+    {
+        // Opened from the trauma article, the chat must not start with a question about something else, such as last time's step.
+        ChatService service = CreateService();
+        long first = (await service.StartNewChatAsync()).Session.Id;
+        await service.SendTextAsync(first, "Начальник завалил задачами, тревожно");
+        await service.SendQuickReplyAsync(first, new ChatQuickReply(ChatQuickReplyKinds.Act, "Разобрать", "protocol:solve"));
+        foreach (string answer in new[] { "Много задач", "Поговорить, терпеть", "Поговорить", "Написать ему завтра" })
+        {
+            await service.SendTextAsync(first, answer);
+        }
+
+        _clock.Utc = _clock.Utc.AddHours(8);
+        await service.StartNewChatAsync();
+        ChatTurnResult topic = await service.StartTopicChatAsync(CompanionTraumaContent.Topic);
+
+        ChatMessageDTO greeting = Assert.Single(await service.GetMessagesAsync(topic.Session.Id));
+        Assert.Equal(CompanionTraumaContent.TopicGreeting(false), greeting.Text);
+    }
+
+    [Fact]
+    public async Task A_step_decided_in_a_chat_is_asked_about_in_a_later_one_and_then_forgotten()
+    {
+        // Following up on what was decided is what turns a talk into a change; asking about it forever would turn it into a nag.
+        ChatService service = CreateService();
+        long first = (await service.StartNewChatAsync()).Session.Id;
+        await service.SendTextAsync(first, "Начальник завалил задачами, тревожно");
+        await service.SendQuickReplyAsync(first, new ChatQuickReply(ChatQuickReplyKinds.Act, "Разобрать", "protocol:solve"));
+        foreach (string answer in new[] { "Слишком много задач", "Поговорить, отказаться, терпеть", "Поговорить", "Написать ему завтра в 10" })
+        {
+            await service.SendTextAsync(first, answer);
+        }
+
+        _clock.Utc = _clock.Utc.AddHours(2);
+        long tooSoon = (await service.StartNewChatAsync()).Session.Id;
+        Assert.DoesNotContain(await service.GetMessagesAsync(tooSoon), message => message.Text.Contains("Написать ему завтра в 10"));
+        await service.SendTextAsync(tooSoon, "Привет");
+
+        _clock.Utc = _clock.Utc.AddHours(6);
+        ChatTurnResult later = await service.StartNewChatAsync();
+        Assert.Contains("Написать ему завтра в 10", later.NewMessages[0].Text);
+
+        await service.SendQuickReplyAsync(later.Session.Id, new ChatQuickReply(ChatQuickReplyKinds.Act, "Получилось", "plan:done"));
+        Assert.DoesNotContain(ChatMemoryKeys.Plan, (await _repository.GetMemoryAsync()).Keys);
     }
 
     [Fact]

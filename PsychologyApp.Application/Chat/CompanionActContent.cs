@@ -32,8 +32,8 @@ public static class CompanionActContent
         : "Я не могу решить за вас и не ставлю диагнозов, но могу помочь разобраться и предложить проверенные практики. Что вы хотели бы изменить в первую очередь?";
 
     public static string AboutCompanion(bool english) => english
-        ? "I'm a companion app: not a person and not a doctor. Everything you write stays on your phone. I listen and help you sort things out, but I don't replace a professional. What would you like to talk about?"
-        : "Я приложение-собеседник: не человек и не врач. Всё, что вы пишете, остаётся на вашем телефоне. Я слушаю и помогаю разобраться, но не заменяю специалиста. О чём хотите поговорить?";
+        ? "I'm the AI chat of this app, a self-help assistant: not a person and not a doctor. Everything you write stays on your phone. I listen and help you sort things out, but I don't replace a professional. What would you like to talk about?"
+        : "Я ИИ-чат этого приложения, помощник по самопомощи: не человек и не врач. Всё, что вы пишете, остаётся на вашем телефоне. Я слушаю и помогаю разобраться, но не заменяю специалиста. О чём хотите поговорить?";
 
     public static string Complaint(bool english) => english
         ? "I'm sorry that wasn't helpful. What would be more useful right now?"

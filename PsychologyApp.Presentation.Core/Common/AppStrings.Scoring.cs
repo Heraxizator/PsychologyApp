@@ -287,6 +287,21 @@ public static partial class AppStrings
         _ => R("Pss10ScoreDetail.default")
     };
 
+    public static string PcPtsd5Score(ScreenBand band) =>
+        R(band == ScreenBand.Positive ? "PcPtsd5Score.Positive" : "PcPtsd5Score.Negative");
+
+    public static string PcPtsd5ScoreDetail(ScreenBand band) =>
+        R(band == ScreenBand.Positive ? "PcPtsd5ScoreDetail.Positive" : "PcPtsd5ScoreDetail.Negative");
+
+    public static string Pcl5Score(Pcl5Band band) => R($"Pcl5Score.{band}");
+
+    public static string Pcl5ScoreDetail(Pcl5Band band) => R($"Pcl5ScoreDetail.{band}");
+
+    public static string TestRecommendationReasonPcPtsd5(RecommendationLane lane) =>
+        R(lane == RecommendationLane.High ? "TestRecommendationReasonPcPtsd5.High" : "TestRecommendationReasonPcPtsd5.Low");
+
+    public static string TestRecommendationReasonPcl5(RecommendationLane lane) => R($"TestRecommendationReasonPcl5.{lane}");
+
     public static string Phq2Score(ScreenBand band) =>
         band == ScreenBand.Negative
             ? R("Phq2Score.1")

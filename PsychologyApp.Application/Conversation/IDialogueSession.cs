@@ -6,7 +6,7 @@ public enum DialogueActionKind
     OpenCrisisHub,
     /// <summary>Opens the Tests tab so the person can pick a short self-assessment on their own.</summary>
     OpenTests,
-    /// <summary>Opens the body/psychosomatic explorer.</summary>
+    /// <summary>Opens the article on the body and stress: how anxiety is felt in the body, what helps, when to see a doctor.</summary>
     OpenSomatic,
     /// <summary>Opens the prayers/calming audio tab.</summary>
     OpenPrayers,
@@ -17,7 +17,13 @@ public enum DialogueActionKind
     /// <summary>A mood entry should be written to the journal. Handled entirely by ChatService — the tension the person
     /// already gave the companion becomes the journal's own 1..5 scale, with a short note. Never reaches the UI as a
     /// navigation instruction.</summary>
-    LogMood
+    LogMood,
+
+    /// <summary>Opens one questionnaire (<see cref="DialogueAction.TestId"/>) on its intro screen.</summary>
+    OpenTest,
+
+    /// <summary>Opens an article (<see cref="DialogueAction.ArticleId"/>).</summary>
+    OpenArticle
 }
 
 /// <summary>Something the UI must do once the dialogue has said its last words.</summary>
@@ -29,7 +35,8 @@ public sealed record DialogueAction(
     TechniqueId? TechniqueId = null,
     string? TestId = null,
     int? MoodLevel = null,
-    string? Note = null);
+    string? Note = null,
+    string? ArticleId = null);
 
 /// <summary>
 /// A turn-based dialogue the chat UI can drive without knowing whether it is a scripted scenario or the companion.

@@ -13,7 +13,7 @@ public sealed class MauiConversationScenarioProvider(
     ITestAssetReader assetReader,
     ILogger<MauiConversationScenarioProvider> logger) : IConversationScenarioProvider
 {
-    private static readonly HashSet<TechniqueId> DialogueTechniques = [TechniqueId.Observer, TechniqueId.Grounding];
+    private static readonly HashSet<TechniqueId> DialogueTechniques = [TechniqueId.Observer, TechniqueId.Grounding, TechniqueId.Spin, TechniqueId.Extend, TechniqueId.Flashback];
 
     private readonly ConcurrentDictionary<string, ConversationScenario> _cache = new(StringComparer.Ordinal);
 

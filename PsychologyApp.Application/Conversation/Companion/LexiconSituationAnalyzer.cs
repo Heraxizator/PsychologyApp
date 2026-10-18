@@ -157,6 +157,15 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
             firstMention.TryAdd(CompanionEmotion.Panic, firstMention[CompanionEmotion.Anxiety]);
         }
 
+        // A flashback counts as acute distress, so the reply is the urgent path: help first, talk later.
+        bool isFlashback = FlashbackTerms.Any(term => Matches(term, respectNegation: true));
+        bool mentionsTrauma = TraumaTerms.Any(term => Matches(term, respectNegation: true));
+        if (isFlashback)
+        {
+            scores[CompanionEmotion.Panic] = scores.GetValueOrDefault(CompanionEmotion.Panic) + 4;
+            firstMention[CompanionEmotion.Panic] = 0;
+        }
+
         bool hasLoss = LossTerms.Any(term => Matches(term, respectNegation: false));
         if (hasLoss)
         {
@@ -191,13 +200,13 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
             .ToList();
         if (ranked.Count == 0 || ranked[0].Value < MinScore)
         {
-            return new SituationAnalysis(CompanionEmotion.Unknown, 0, hasBody, intense, themes, CompanionEmotion.Unknown, persons, hasLoss, DetectEvent(normalized, tokens, offsets, hasLoss));
+            return new SituationAnalysis(CompanionEmotion.Unknown, 0, hasBody, intense, themes, CompanionEmotion.Unknown, persons, hasLoss, DetectEvent(normalized, tokens, offsets, hasLoss)) { MentionsTrauma = mentionsTrauma };
         }
 
         double top = ranked[0].Value;
         double second = ranked.Count > 1 ? ranked[1].Value : 0;
         CompanionEmotion secondary = ranked.Count > 1 && ranked[1].Value >= 2 && ranked[1].Value >= top * 0.6 ? ranked[1].Key : CompanionEmotion.Unknown;
-        return new SituationAnalysis(ranked[0].Key, top / (top + second + 1), hasBody, intense, themes, secondary, persons, hasLoss, DetectEvent(normalized, tokens, offsets, hasLoss));
+        return new SituationAnalysis(ranked[0].Key, top / (top + second + 1), hasBody, intense, themes, secondary, persons, hasLoss, DetectEvent(normalized, tokens, offsets, hasLoss)) { IsFlashback = isFlashback, MentionsTrauma = mentionsTrauma };
     }
 
     private static string Normalize(string text)
