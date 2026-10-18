@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.ReadArticles.ArticleReader.ArticleReaderPage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:blocks="clr-namespace:PsychologyApp.Presentation.Widgets.ArticleBlocks"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ReadArticles.ArticleReader"
+             x:DataType="vm:ArticleReaderViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding Title}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+
+    <ScrollView x:Name="Scroller">
+        <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="12">
+            <ui:NavigationBarSimpleView TitleText="{Binding Title}" BackCommand="{Binding BackCommand}" />
+            <Label Text="{Binding Summary}" Style="{StaticResource CaptionStyle}" Margin="0,0,0,4" />
+
+            <!-- Keeping and listening sit under the summary, labelled, rather than as small unlabelled icons in the header. -->
+            <FlexLayout x:Name="Tools" Wrap="Wrap" JustifyContent="Start" AlignItems="Center">
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0,0,8,8" Padding="12,8" SemanticProperties.Description="{Binding SaveText}">
+                    <Border.Behaviors>
+                        <behaviors:PressFeedbackBehavior />
+                    </Border.Behaviors>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SaveCommand}" />
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="6">
+                        <ui:MaterialIconView IconName="{Binding SaveIcon}" IconSize="20" VerticalOptions="Center" />
+                        <Label Text="{Binding SaveText}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0,0,8,8" Padding="12,8" SemanticProperties.Description="{Binding ListenText}">
+                    <Border.Behaviors>
+                        <behaviors:PressFeedbackBehavior />
+                    </Border.Behaviors>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ListenCommand}" />
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="6">
+                        <ui:MaterialIconView IconName="{Binding ListenIcon}" IconSize="20" VerticalOptions="Center" />
+                        <Label Text="{Binding ListenText}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+                <HorizontalStackLayout Spacing="4" Margin="0,0,0,8" IsVisible="{Binding IsRead}" VerticalOptions="Center">
+                    <ui:MaterialIconView IconName="TaskAlt" IconSize="18" VerticalOptions="Center"
+                                         IconColor="{AppThemeBinding Light={StaticResource Success}, Dark={StaticResource SuccessDark}}" />
+                    <Label Text="{Binding ReadMarkText}" Style="{StaticResource CaptionStyle}" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </FlexLayout>
+
+            <blocks:ArticleBlocksView Blocks="{Binding Blocks}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,7 +1,6 @@
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Application.Practice;
 using PsychologyApp.Application.Quot;
-using PsychologyApp.Application.Reason;
 using PsychologyApp.Application.Tests;
 using PsychologyApp.Presentation.Shared.Common;
 
@@ -13,7 +12,6 @@ public sealed class LanguageContentReloader : ILanguageContentReloader
     public const int DefaultQuoteFeedCount = 20;
 
     private readonly IQuotService _quotService;
-    private readonly CachedReasonContentProvider _reasonCache;
     private readonly CachedQuotContentProvider _quotCache;
     private readonly CachedTestCatalogProvider _testCatalogCache;
     private readonly CachedTechniqueCatalogProvider _techniqueCatalogCache;
@@ -24,7 +22,6 @@ public sealed class LanguageContentReloader : ILanguageContentReloader
 
     public LanguageContentReloader(
         IQuotService quotService,
-        CachedReasonContentProvider reasonCache,
         CachedQuotContentProvider quotCache,
         CachedTestCatalogProvider testCatalogCache,
         CachedTechniqueCatalogProvider techniqueCatalogCache,
@@ -33,7 +30,6 @@ public sealed class LanguageContentReloader : ILanguageContentReloader
     {
         _preferences = preferences;
         _quotService = quotService;
-        _reasonCache = reasonCache;
         _quotCache = quotCache;
         _testCatalogCache = testCatalogCache;
         _techniqueCatalogCache = techniqueCatalogCache;
@@ -53,7 +49,6 @@ public sealed class LanguageContentReloader : ILanguageContentReloader
         }
 
         _lastPersistedLanguage = persistedLanguage;
-        _reasonCache.Invalidate();
         _quotCache.Invalidate();
         _testCatalogCache.Invalidate();
         _techniqueCatalogCache.Invalidate();

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.ReadArticles.ForYou.ForYouPage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:card="clr-namespace:PsychologyApp.Presentation.Widgets.LibraryCard"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ReadArticles.ForYou"
+             x:DataType="vm:ForYouViewModel"
+             Shell.NavBarIsVisible="True"
+             Title="{Binding PageTitle}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+
+    <ScrollView>
+        <VerticalStackLayout Margin="{StaticResource LayoutTabPageMarginThickness}" Spacing="{StaticResource ListItemSpacing}">
+            <VerticalStackLayout Spacing="{StaticResource ListItemSpacing}" IsVisible="{Binding HasPicks}" BindableLayout.ItemsSource="{Binding Picks}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="card:LibraryCardItem">
+                        <card:LibraryCardView />
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="{StaticResource ListItemSpacing}" IsVisible="{Binding HasSaved}">
+                <Label Text="{Binding SavedTitle}" Style="{StaticResource SectionTitleStyle}" Margin="4,12,4,0" />
+                <VerticalStackLayout Spacing="{StaticResource ListItemSpacing}" BindableLayout.ItemsSource="{Binding Saved}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="card:LibraryCardItem">
+                            <card:LibraryCardView />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+
+            <!-- Nothing yet: say how the page fills up, and offer the quickest way to start. -->
+            <VerticalStackLayout Spacing="12" IsVisible="{Binding IsEmpty}" Margin="4,24,4,0">
+                <ui:MaterialIconView IconName="AutoStories" IconSize="40" HorizontalOptions="Center" />
+                <Label Text="{Binding EmptyText}" Style="{StaticResource BodyStyle}" HorizontalTextAlignment="Center" />
+                <ui:ButtonView BodyText="{Binding TakeTestText}" TapCommand="{Binding TakeTestCommand}" Variant="Secondary" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

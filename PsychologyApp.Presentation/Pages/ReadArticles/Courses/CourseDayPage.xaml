@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.ReadArticles.Courses.CourseDayPage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:blocks="clr-namespace:PsychologyApp.Presentation.Widgets.ArticleBlocks"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ReadArticles.Courses"
+             x:DataType="vm:CourseDayViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding Title}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+
+    <ScrollView>
+        <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="12">
+            <ui:NavigationBarSimpleView TitleText="{Binding Title}" BackCommand="{Binding BackCommand}" />
+            <Label Text="{Binding Caption}" Style="{StaticResource CaptionStyle}" />
+
+            <HorizontalStackLayout>
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="12,8" SemanticProperties.Description="{Binding ListenText}">
+                    <Border.Behaviors>
+                        <behaviors:PressFeedbackBehavior />
+                    </Border.Behaviors>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ListenCommand}" />
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="6">
+                        <ui:MaterialIconView IconName="{Binding ListenIcon}" IconSize="20" VerticalOptions="Center" />
+                        <Label Text="{Binding ListenText}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+            </HorizontalStackLayout>
+
+            <blocks:ArticleBlocksView Blocks="{Binding Blocks}" />
+
+            <!-- The question of the day: answered in one's own words, kept on the phone only. -->
+            <Label Text="{Binding Question}" Style="{StaticResource SectionTitleStyle}" Margin="0,12,0,0" />
+            <ui:TextEditorView PlaceholderText="{Binding ReflectionPlaceholder}" BodyText="{Binding Reflection, Mode=TwoWay}" IsEnabled="{Binding CanWrite}" />
+
+            <ui:ButtonView BodyText="{Binding CompleteText}" TapCommand="{Binding CompleteCommand}" IsVisible="{Binding CanComplete}" Margin="0,8,0,24" />
+            <HorizontalStackLayout Spacing="6" IsVisible="{Binding IsDayDone}" Margin="0,8,0,24">
+                <ui:MaterialIconView IconName="TaskAlt" IconSize="22" VerticalOptions="Center"
+                                     IconColor="{AppThemeBinding Light={StaticResource Success}, Dark={StaticResource SuccessDark}}" />
+                <Label Text="{Binding DoneText}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

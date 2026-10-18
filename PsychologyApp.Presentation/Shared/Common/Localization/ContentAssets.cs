@@ -18,11 +18,6 @@ public static class ContentAssets
         return $"{assetPath[..dotIndex]}.en{assetPath[dotIndex..]}";
     }
 
-    public static string PsychosomaticFile =>
-        UserPreferences.IsEnglish(AppStrings.Language)
-            ? "Psyhosomatic.en.txt"
-            : "Psyhosomatic.txt";
-
     public static string QuotesFile =>
         UserPreferences.IsEnglish(AppStrings.Language)
             ? "quotes/quotes.en.json"

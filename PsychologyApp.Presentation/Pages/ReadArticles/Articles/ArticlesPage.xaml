@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.ReadArticles.Articles.ArticlesPage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:card="clr-namespace:PsychologyApp.Presentation.Widgets.LibraryCard"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ReadArticles.Articles"
+             x:DataType="vm:ArticlesViewModel"
+             Shell.NavBarIsVisible="True"
+             Title="{Binding PageTitle}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+
+    <!-- Sections as groups of a virtualized list: only the cards on screen are built, not the whole library at once. -->
+    <CollectionView
+        ItemsSource="{Binding Sections}"
+        IsGrouped="True"
+        SelectionMode="None"
+        Margin="20,0"
+        VerticalScrollBarVisibility="Never">
+        <CollectionView.ItemsLayout>
+            <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
+        </CollectionView.ItemsLayout>
+
+        <CollectionView.Header>
+            <VerticalStackLayout Padding="0,20,0,0" Spacing="{StaticResource ListItemSpacing}">
+                <ui:TextEntryView PlaceholderText="{Binding SearchPlaceholder}" BodyText="{Binding Query, Mode=TwoWay}" />
+                <ui:FilterChipTabBarView ItemsSource="{Binding Filters}" TapCommand="{Binding SelectFilterCommand}" />
+                <Label Text="{Binding EmptyText}" IsVisible="{Binding HasEmptyText}" Style="{StaticResource BodyStyle}" Margin="4,12,4,0" />
+            </VerticalStackLayout>
+        </CollectionView.Header>
+
+        <CollectionView.GroupHeaderTemplate>
+            <DataTemplate x:DataType="vm:ArticleSectionItem">
+                <Label Text="{Binding Title}" IsVisible="{Binding HasTitle}" Style="{StaticResource SectionTitleStyle}" Margin="4,12,4,0" />
+            </DataTemplate>
+        </CollectionView.GroupHeaderTemplate>
+
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="card:LibraryCardItem">
+                <card:LibraryCardView />
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+
+        <CollectionView.Footer>
+            <BoxView HeightRequest="20" Color="Transparent" />
+        </CollectionView.Footer>
+    </CollectionView>
+</ContentPage>

@@ -8,6 +8,7 @@ public static class RunTestsFeatureServiceCollectionExtensions
     {
         services.AddSingleton<ITestPageFactory, TestPageFactory>();
         services.AddSingleton<TestRunCoordinator>();
+        services.AddSingleton<TestOpener>();
         services.AddSingleton<TestRetakeOperations>();
         services.AddSingleton<QuestionnaireDetailBuilder>();
         services.AddSingleton<QuestionnaireDetailReader>();

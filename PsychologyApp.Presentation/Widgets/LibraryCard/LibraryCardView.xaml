@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:local="clr-namespace:PsychologyApp.Presentation.Widgets.LibraryCard"
+             x:Class="PsychologyApp.Presentation.Widgets.LibraryCard.LibraryCardView"
+             x:DataType="local:LibraryCardItem">
+    <!-- One card for an article, a course and a pick: a pick adds why it is there, a read one gets a check. -->
+    <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="14,12" SemanticProperties.Description="{Binding Title}">
+        <Border.Behaviors>
+            <behaviors:PressFeedbackBehavior />
+        </Border.Behaviors>
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding OpenCommand}" />
+        </Border.GestureRecognizers>
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+            <Border
+                WidthRequest="44"
+                HeightRequest="44"
+                VerticalOptions="Start"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 14"
+                BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryTint}, Dark={StaticResource PrimaryTintDark}}">
+                <ui:MaterialIconView IconName="{Binding Icon}" IconSize="24" HorizontalOptions="Center" VerticalOptions="Center" />
+            </Border>
+            <VerticalStackLayout Grid.Column="1" Spacing="4">
+                <Label Text="{Binding Reason}" IsVisible="{Binding HasReason}" Style="{StaticResource CaptionStyle}"
+                       FontFamily="{StaticResource SemiBoldFontFamily}"
+                       TextColor="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}" />
+                <Label Text="{Binding Title}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" LineBreakMode="WordWrap" />
+                <Label Text="{Binding Summary}" Style="{StaticResource CaptionStyle}" MaxLines="2" LineBreakMode="TailTruncation" />
+                <HorizontalStackLayout Spacing="6">
+                    <Label Text="{Binding MetaText}" Style="{StaticResource CaptionStyle}" VerticalOptions="Center" />
+                    <ui:MaterialIconView IconName="TaskAlt" IconSize="16" IsVisible="{Binding IsRead}" VerticalOptions="Center"
+                                         IconColor="{AppThemeBinding Light={StaticResource Success}, Dark={StaticResource SuccessDark}}" />
+                    <ui:MaterialIconView IconName="Bookmarks" IconSize="16" IsVisible="{Binding IsSaved}" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </Grid>
+    </Border>
+</ContentView>

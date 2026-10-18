@@ -1,0 +1,119 @@
+using System.Windows.Input;
+using PsychologyApp.Application.Articles;
+using PsychologyApp.Application.Models;
+using PsychologyApp.Application.UserProgress;
+using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
+using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Shared.ViewModels;
+using PsychologyApp.Presentation.Widgets.LibraryCard;
+
+namespace PsychologyApp.Presentation.Pages.ReadArticles.ForYou;
+
+/// <summary>
+/// The "For you" top tab of the Library, from the device's own data: a course in progress, an article not read to the end, picks from
+/// recent questionnaires and the mood journal, and the saved articles. Empty, it says how it fills up instead of showing nothing.
+/// </summary>
+public sealed class ForYouViewModel : BaseViewModel
+{
+    private const int MoodDays = 30;
+
+    private readonly INavigationService _navigation;
+    private readonly IReadingService _reading;
+    private readonly IUserProgressService _progress;
+    private readonly IDatabaseReadySignal _databaseReady;
+    private IReadOnlyList<LibraryCardItem> _picks = [];
+    private IReadOnlyList<LibraryCardItem> _saved = [];
+    private bool _loaded;
+
+    public ForYouViewModel(INavigationService navigation, IReadingService reading, IUserProgressService progress, IDatabaseReadySignal databaseReady)
+    {
+        BindNavigation(navigation);
+        _navigation = navigation;
+        _reading = reading;
+        _progress = progress;
+        _databaseReady = databaseReady;
+        TakeTestCommand = new AsyncCommand(() => _navigation.GoToTestsTabAsync());
+    }
+
+    public string PageTitle => AppStrings.ArticlesForYou;
+    public string SavedTitle => AppStrings.ForYouSavedTitle;
+    public string EmptyText => AppStrings.ForYouEmpty;
+    public string TakeTestText => AppStrings.ForYouTakeTest;
+    public ICommand TakeTestCommand { get; }
+
+    public IReadOnlyList<LibraryCardItem> Picks
+    {
+        get => _picks;
+        private set => SetProperty(ref _picks, value);
+    }
+
+    public IReadOnlyList<LibraryCardItem> Saved
+    {
+        get => _saved;
+        private set => SetProperty(ref _saved, value);
+    }
+
+    public bool HasPicks => Picks.Count > 0;
+    public bool HasSaved => Saved.Count > 0;
+
+    /// <summary>Shown once loaded and there is nothing to suggest or keep.</summary>
+    public bool IsEmpty => _loaded && !HasPicks && !HasSaved;
+
+    /// <summary>Called whenever the page appears: a course day closed, an article read or a test taken changes it.</summary>
+    public async Task RefreshAsync()
+    {
+        try
+        {
+            await _databaseReady.WaitAsync();
+            ReadingState state = await _reading.GetAsync();
+            IReadOnlyDictionary<string, TestResultDTO> results = await _progress.GetLatestTestResultsAsync(ReadingRecommender.TestIds);
+            IReadOnlyList<MoodEntryDTO> moods = await _progress.GetRecentMoodsAsync(MoodDays);
+            IReadOnlyList<ReadingPick> picks = ReadingRecommender.Pick([.. results.Values], moods, state, DateTime.UtcNow);
+            bool english = AppStrings.IsEnglish(AppStrings.Language);
+            await UiThread.RunAsync(() =>
+            {
+                Picks = [.. picks.Select(pick => Card(pick, state, english)).OfType<LibraryCardItem>()];
+                Saved = [.. state.Saved.Select(id => ArticleContent.Find(id, english)).OfType<Article>().Select(article => LibraryCards.Article(article, state, _navigation))];
+                _loaded = true;
+                Notify(nameof(HasPicks), nameof(HasSaved), nameof(IsEmpty));
+            });
+        }
+        catch (Exception loadError)
+        {
+            // The personal part is missing this time; the other Library tabs still work.
+            BestEffort.Report(loadError);
+        }
+    }
+
+    private LibraryCardItem? Card(ReadingPick pick, ReadingState state, bool english)
+    {
+        string reason = pick.Reason switch
+        {
+            ReadingPickReason.ContinueCourse => AppStrings.PickContinueCourse,
+            ReadingPickReason.ContinueReading => AppStrings.PickContinueReading,
+            ReadingPickReason.Mood => AppStrings.PickMood,
+            _ => AppStrings.PickTest(TestName(pick.TestId))
+        };
+
+        return pick.IsCourse
+            ? ArticleContent.FindCourse(pick.Id, english) is { } course ? LibraryCards.Course(course, state, _navigation, reason) : null
+            : ArticleContent.Find(pick.Id, english) is { } article ? LibraryCards.Article(article, state, _navigation, reason) : null;
+    }
+
+    private static string TestName(string? testId) => testId switch
+    {
+        "pcl5" => "PCL-5",
+        "pcptsd5" => "PC-PTSD-5",
+        "phq9" => "PHQ-9",
+        "isi" => "ISI-7",
+        "gad7" => "GAD-7",
+        _ => testId ?? string.Empty
+    };
+
+    protected override void RefreshLocalizedProperties()
+    {
+        Notify(nameof(PageTitle), nameof(SavedTitle), nameof(EmptyText), nameof(TakeTestText));
+        RefreshAsync().FireAndForget();
+    }
+}

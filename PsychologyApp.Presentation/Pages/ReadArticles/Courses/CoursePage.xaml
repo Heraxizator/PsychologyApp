@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.ReadArticles.Courses.CoursePage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ReadArticles.Courses"
+             x:DataType="vm:CourseViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding Title}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView>
+            <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="12">
+                <ui:NavigationBarSimpleView TitleText="{Binding Title}" BackCommand="{Binding BackCommand}" />
+
+                <Border Style="{StaticResource HeroCardStyle}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border WidthRequest="48" HeightRequest="48" VerticalOptions="Start" StrokeThickness="0" StrokeShape="RoundRectangle 14"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryTint}, Dark={StaticResource PrimaryTintDark}}">
+                            <ui:MaterialIconView IconName="{Binding Icon}" IconSize="26" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                            <Label Text="{Binding Summary}" Style="{StaticResource BodyStyle}" />
+                            <Label Text="{Binding CourseProgressText}" Style="{StaticResource CaptionStyle}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- The measure: the same questionnaire at the start and at the end shows whether the course helped. -->
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="14,12">
+                    <VerticalStackLayout Spacing="6">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <ui:MaterialIconView IconName="Insights" IconSize="22" VerticalOptions="Center" />
+                            <Label Grid.Column="1" Text="{Binding MeasureTitle}" Style="{StaticResource SectionTitleStyle}" VerticalOptions="Center" />
+                        </Grid>
+                        <Label Text="{Binding MeasureText}" IsVisible="{Binding HasMeasure}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource MediumFontFamily}" />
+                        <Label Text="{Binding MeasureHint}" Style="{StaticResource CaptionStyle}" />
+                        <ui:ButtonView BodyText="{Binding TakeTestText}" TapCommand="{Binding TakeTestCommand}" Variant="Secondary" IsCompact="True" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <VerticalStackLayout Spacing="{StaticResource ListItemSpacing}" BindableLayout.ItemsSource="{Binding Days}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:CourseDayItem">
+                            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="14,12" Opacity="{Binding Opacity}"
+                                    SemanticProperties.Description="{Binding Title}">
+                                <Border.Behaviors>
+                                    <behaviors:PressFeedbackBehavior />
+                                </Border.Behaviors>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OpenCommand}" />
+                                </Border.GestureRecognizers>
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <ui:MaterialIconView IconName="{Binding Icon}" IconSize="24" VerticalOptions="Center" />
+                                    <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                        <Label Text="{Binding NumberText}" Style="{StaticResource CaptionStyle}" />
+                                        <Label Text="{Binding Title}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" />
+                                        <Label Text="{Binding StateText}" Style="{StaticResource CaptionStyle}" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <ui:ButtonView BodyText="{Binding ResetText}" TapCommand="{Binding ResetCommand}" Variant="Secondary" IsVisible="{Binding IsStarted}" Margin="0,8,0,0" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- The next step stays under the thumb. -->
+        <Border Grid.Row="1" Padding="16,10" StrokeThickness="0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+            <ui:ButtonView BodyText="{Binding PrimaryText}" TapCommand="{Binding PrimaryCommand}" IsEnabled="{Binding CanAct}" />
+        </Border>
+    </Grid>
+</ContentPage>
