@@ -1,14 +1,23 @@
 name: android-smoke
 
 # Builds the Release package (AOT, trimming, R8) and runs it on an emulator: the crashes that only exist in Release
-# (see CHANGELOG, "profiled AOT") are invisible to unit tests.
+# (see CHANGELOG, "profiled AOT") are invisible to unit tests. It runs on every push and pull request of the working
+# branches; a newer push cancels the run still going for the same branch.
 on:
   workflow_dispatch:
+  push:
+    branches: [main, master, features/re-design, "release/**"]
+  pull_request:
+    branches: [main, master, features/re-design]
   schedule:
     - cron: "0 4 * * 2"
 
 permissions:
   contents: read
+
+concurrency:
+  group: android-smoke-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   smoke:

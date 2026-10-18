@@ -70,8 +70,10 @@
 	  <RunAOTCompilation>False</RunAOTCompilation>
 	  <!-- Disable fast deployment: avoids XA0129 push failures to .__override__ on device. -->
 	  <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
-	  <!-- Debug: arm64 for physical devices + x64 for Windows emulator; avoids all 4 ABIs (XAWAS7024). -->
-	  <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
+	  <!-- Debug: arm64 for physical devices + x64 for Windows emulator; avoids all 4 ABIs (XAWAS7024). scripts/android-run.sh
+	       passes -p:AndroidDevRid with the connected device's ABI, so a run builds one ABI instead of two. -->
+	  <RuntimeIdentifiers Condition="'$(AndroidDevRid)' == ''">android-arm64;android-x64</RuntimeIdentifiers>
+	  <RuntimeIdentifiers Condition="'$(AndroidDevRid)' != ''">$(AndroidDevRid)</RuntimeIdentifiers>
 	  <!-- The SDK interprets all managed code in Debug (for C# Hot Reload), several times slower than JIT and a
 	       large share of the skipped frames seen in Debug runs. JIT keeps breakpoints and stepping. -->
 	  <UseInterpreter>false</UseInterpreter>

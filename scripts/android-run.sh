@@ -17,6 +17,11 @@ fi
 apk_dir="PsychologyApp.Presentation/bin/Debug/$FRAMEWORK"
 apk="$apk_dir/$DEV_APP_ID-Signed.apk"
 mapfile -t common < <(android_build_args)
+# Только ABI подключённого устройства: отладочная сборка обеих (arm64 и x64) идёт почти вдвое дольше.
+case "$(adb -s "$target" shell getprop ro.product.cpu.abi | tr -d $'\r')" in
+  arm64-v8a) common+=("-p:AndroidDevRid=android-arm64") ;;
+  x86_64) common+=("-p:AndroidDevRid=android-x64") ;;
+esac
 build() {
   rm -f "$apk_dir"/*.apk
   dotnet build "$PROJECT" -f "$FRAMEWORK" -c Debug "${common[@]}" \

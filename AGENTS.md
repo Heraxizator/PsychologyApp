@@ -134,7 +134,7 @@ Clean Architecture на уровне решения и Feature-Sliced Design в�
 - Компоненты Android (receiver, service, activity) объявляются атрибутами в C#. Не вписывайте их в `AndroidManifest.xml`
   под .NET-именами: Java-класс называется `crc64…`, и такая запись указывает на несуществующий класс (после
   перезагрузки приложение падает в фоне).
-- В Release работают AOT, обрезка и R8: падения, которых нет в Debug, ловит `tools/android-smoke.sh` (CI `android-smoke`).
+- В Release работают AOT, обрезка и R8: падения, которых нет в Debug, ловит `tools/android-smoke.sh` (CI `android-smoke`). CI с тестами и smoke запускается на каждый push и pull request рабочих веток (`main`, `features/re-design`, `release/**`).
 - Производительность меряйте в Release, а не в Debug (там нет AOT, цифры завышены в разы). Release по умолчанию собирается только под
   arm64, и на x86_64-эмуляторе он идёт через трансляцию ARM, так что цифры бессмысленны. Для эмулятора соберите отладочную копию под x64:
   `dotnet build PsychologyApp.Presentation -f net10.0-android -c Release -p:ApplicationId=com.subconscious.psychologyapp.dev
@@ -150,7 +150,7 @@ Clean Architecture на уровне решения и Feature-Sliced Design в�
 | `bash scripts/android-doctor.sh` | проверяет .NET, JDK, Android SDK, ускорение эмулятора и AVD; подсказывает, что исправить |
 | `bash scripts/android-setup.sh` | ставит недостающее в SDK пользователя (`%LOCALAPPDATA%\Android\Sdk`, `~/Android/Sdk`) и создаёт AVD |
 | `bash scripts/emu.sh` | запускает эмулятор и ждёт загрузки |
-| `bash scripts/android-run.sh` | собирает и запускает отладочную копию `com.subconscious.psychologyapp.dev` |
+| `bash scripts/android-run.sh` | собирает и запускает отладочную копию `com.subconscious.psychologyapp.dev` (только под ABI подключённого устройства) |
 | `bash scripts/android-release.sh` | релизные AAB и APK с проверками (см. ниже) |
 
 - На устройства разработчиков ставится только отладочная копия `.dev`: настоящий `com.subconscious.psychologyapp`
