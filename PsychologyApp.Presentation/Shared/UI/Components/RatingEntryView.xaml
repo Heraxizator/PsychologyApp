@@ -56,14 +56,17 @@
                 MinimumTrackColor="{Binding AccentColor, Source={x:Reference Root}}"
                 ThumbColor="{Binding AccentColor, Source={x:Reference Root}}"
                 ValueChanged="OnSliderValueChanged" />
+            <!-- The bottom padding keeps the descenders of the captions ("strong") from being cut by the row. -->
             <Grid ColumnDefinitions="Auto,*,Auto">
                 <Label
                     Grid.Column="0"
                     Text="{Binding MinimumCaption, Source={x:Reference Root}}"
+                    Padding="0,0,0,2"
                     Style="{StaticResource CaptionStyle}" />
                 <Label
                     Grid.Column="2"
                     Text="{Binding MaximumCaption, Source={x:Reference Root}}"
+                    Padding="0,0,0,2"
                     Style="{StaticResource CaptionStyle}" />
             </Grid>
         </VerticalStackLayout>

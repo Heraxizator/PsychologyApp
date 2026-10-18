@@ -394,8 +394,10 @@
     </Style>
 
     <!-- Answer chips in practices and practice dialogues: compact, softly filled; the chosen one turns solid accent. -->
+    <!-- The space around the words belongs to the label, not to the border: with the padding on the border, Android gave the label a little
+         less width than it had measured inside a FlexLayout and moved the last letter to a hidden second line ("Healt", "Stomac"). -->
     <Style x:Key="AnswerChipStyle" TargetType="Border">
-        <Setter Property="Padding" Value="12,6" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="StrokeThickness" Value="0" />
         <Setter Property="StrokeShape" Value="RoundRectangle 15" />
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AnswerChipLight}, Dark={StaticResource AnswerChipDark}}" />
@@ -408,13 +410,14 @@
 
     <!-- In a chat the chips sit on the tinted backdrop: white like the bubbles, with a hairline. -->
     <Style x:Key="DialogueAnswerChipStyle" TargetType="Border" BasedOn="{StaticResource AnswerChipStyle}">
-        <Setter Property="Padding" Value="14,8" />
+        <Setter Property="Padding" Value="2" />
         <Setter Property="StrokeThickness" Value="1" />
         <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}" />
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}" />
     </Style>
 
     <Style x:Key="AnswerChipLabelStyle" TargetType="Label">
+        <Setter Property="Padding" Value="12,6" />
         <Setter Property="FontSize" Value="{DynamicResource FieldLabelFontSize}" />
         <Setter Property="FontFamily" Value="{StaticResource MediumFontFamily}" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />

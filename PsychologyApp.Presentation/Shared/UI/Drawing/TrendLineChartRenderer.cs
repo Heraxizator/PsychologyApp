@@ -55,7 +55,7 @@ public static class TrendLineChartRenderer
 
         DrawAnnotations(canvas, options, plotLeft, plotTop, plotWidth, plotHeight, plotBottom, gridColor);
         DrawPoints(canvas, canvasPoints, primary, surfaceColor, options.Points.Count == 1 ? 7f : 5f);
-        DrawXLabels(canvas, plotLeft, plotWidth, plotBottom, layout.XLabels, labelColor);
+        DrawXLabels(canvas, plotLeft, plotWidth, plotBottom, dirtyRect.Left, dirtyRect.Right, layout.XLabels, labelColor);
     }
 
     /// <summary>A practice is a dashed line up from the axis to the line and a leaf-shaped mark on it: green when the next reading was better, quiet blue otherwise.</summary>
@@ -187,11 +187,15 @@ public static class TrendLineChartRenderer
         }
     }
 
+    private const float LabelBoxWidth = 56;
+
     private static void DrawXLabels(
         ICanvas canvas,
         float plotLeft,
         float plotWidth,
         float plotBottom,
+        float canvasLeft,
+        float canvasRight,
         IReadOnlyList<(int Index, string Label)> labels,
         Color labelColor)
     {
@@ -210,9 +214,10 @@ public static class TrendLineChartRenderer
             float x = plotLeft + normalizedX * plotWidth;
             canvas.DrawString(
                 label,
-                x - 28,
+                // The first and the last date sit on the ends of the plot; their boxes are kept inside the canvas, or the outer letters are cut.
+                Math.Clamp(x - LabelBoxWidth / 2, canvasLeft, Math.Max(canvasLeft, canvasRight - LabelBoxWidth)),
                 plotBottom + 6,
-                56,
+                LabelBoxWidth,
                 14,
                 HorizontalAlignment.Center,
                 VerticalAlignment.Top);
