@@ -20,6 +20,7 @@ namespace PsychologyApp.Presentation.Pages.ManageProfile.ProfileInsights;
 /// <param name="Command">Opens the practice or the test; null when there is nothing to open.</param>
 public sealed record InsightItem(string Title, string Detail, string? Note, ICommand? Command, string? ActionText)
 {
+    public bool HasDetail => Detail.Length > 0;
     public bool HasNote => Note is not null;
     public bool HasAction => Command is not null && ActionText is not null;
 }
