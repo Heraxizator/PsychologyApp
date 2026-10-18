@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.ClinicalCare.Exposure.ExposurePage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ClinicalCare.Exposure"
+             xmlns:common="clr-namespace:PsychologyApp.Presentation.Common;assembly=PsychologyApp.Presentation.Core"
+             x:DataType="vm:ExposureViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{x:Static common:AppStrings.ExposureTitle}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+
+    <ContentPage.Resources>
+        <!-- Small round buttons of a ladder step: 40 px is the smallest comfortable touch target. -->
+        <Style x:Key="ExposureStepButtonStyle" TargetType="Border">
+            <Setter Property="WidthRequest" Value="40" />
+            <Setter Property="HeightRequest" Value="40" />
+            <Setter Property="StrokeThickness" Value="0" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 20" />
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PrimaryTint}, Dark={StaticResource PrimaryTintDark}}" />
+        </Style>
+        <Style x:Key="ExposureStepButtonLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView x:Name="Scroller">
+        <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+            <ui:NavigationBarSimpleView TitleText="{x:Static common:AppStrings.ExposureTitle}" BackCommand="{Binding BackCommand}" />
+
+            <!-- 1. Safety screening: exposure on one's own is not for trauma, OCD, dissociation, substances or self-harm risk. -->
+            <VerticalStackLayout IsVisible="{Binding IsScreening}" Spacing="{StaticResource LayoutSpacing}">
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                    <VerticalStackLayout Spacing="10">
+                        <ui:MaterialIconView IconName="Stairs" IconSize="32" HorizontalOptions="Start" />
+                        <Label Text="{x:Static common:AppStrings.ExposureIntro}" Style="{StaticResource BodyStyle}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Label Text="{x:Static common:AppStrings.ExposureScreenTitle}" Style="{StaticResource SectionTitleStyle}" />
+                <Label Text="{x:Static common:AppStrings.ExposureScreenLead}" Style="{StaticResource CaptionStyle}" />
+                <VerticalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Questions}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:ExposureQuestionItem">
+                            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="16,14">
+                                <ui:YesNoSelectorView
+                                    LabelText="{Binding Text}"
+                                    YesText="{x:Static common:AppStrings.Yes}"
+                                    NoText="{x:Static common:AppStrings.No}"
+                                    IsYes="{Binding IsYes}"
+                                    IsNo="{Binding IsNo}"
+                                    SelectCommand="{Binding SelectCommand}" />
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+                <ui:ButtonView
+                    BodyText="{x:Static common:AppStrings.ExposureContinue}"
+                    TapCommand="{Binding ScreenCommand}"
+                    IsEnabled="{Binding CanScreen}" />
+            </VerticalStackLayout>
+
+            <!-- Referral: a kind, plain "this needs a specialist", with the crisis help one tap away. -->
+            <VerticalStackLayout IsVisible="{Binding IsReferral}" Spacing="{StaticResource LayoutSpacing}">
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                    <VerticalStackLayout Spacing="10">
+                        <ui:MaterialIconView IconName="SupportAgent" IconSize="32" HorizontalOptions="Start" />
+                        <Label Text="{x:Static common:AppStrings.ExposureReferralTitle}" Style="{StaticResource SectionTitleStyle}" />
+                        <Label Text="{Binding ReferralText}" Style="{StaticResource BodyStyle}" />
+                    </VerticalStackLayout>
+                </Border>
+                <ui:ButtonView Variant="Secondary" BodyText="{x:Static common:AppStrings.ExposureCrisisAction}" TapCommand="{Binding CrisisCommand}" />
+            </VerticalStackLayout>
+
+            <!-- 2. My fear: kind, the main prediction, safety behaviours and avoidance; the loop explains why the ladder asks the opposite. -->
+            <VerticalStackLayout IsVisible="{Binding IsFormulation}" Spacing="{StaticResource LayoutSpacing}">
+                <Label Text="{x:Static common:AppStrings.ExposureFearTitle}" Style="{StaticResource SectionTitleStyle}" />
+                <Label Text="{x:Static common:AppStrings.ExposureFearKindQuestion}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource MediumFontFamily}" />
+                <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding FearKinds}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:ExposureChoiceItem">
+                            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="16,12" SemanticProperties.Description="{Binding Title}">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectCommand}" />
+                                </Border.GestureRecognizers>
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <ui:MaterialIconView IconName="{Binding SelectionIcon}" IconSize="24" VerticalOptions="Center" />
+                                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                        <Label Text="{Binding Title}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource MediumFontFamily}" />
+                                        <Label Text="{Binding Subtitle}" Style="{StaticResource CaptionStyle}" IsVisible="{Binding HasSubtitle}" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout IsVisible="{Binding HasKind}" Spacing="{StaticResource LayoutSpacing}">
+                    <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16">
+                        <VerticalStackLayout Spacing="16">
+                            <ui:TechniqueTextFieldView
+                                TitleText="{x:Static common:AppStrings.ExposureFearedQuestion}"
+                                PlaceholderText="{x:Static common:AppStrings.ExposureFearedPlaceholder}"
+                                Text="{Binding FearedOutcome, Mode=TwoWay}"
+                                Suggestions="{Binding FearedSuggestions}" />
+                            <ui:RatingEntryView Embedded="True" TitleText="{x:Static common:AppStrings.ExposureFearedBelief}" MinimumCaption="{x:Static common:AppStrings.ExposureBeliefMin}" MaximumCaption="{x:Static common:AppStrings.ExposureBeliefMax}" BodyText="{Binding FearedBelief, Mode=TwoWay}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16">
+                        <VerticalStackLayout Spacing="8">
+                            <ui:TechniqueTextFieldView
+                                TitleText="{x:Static common:AppStrings.ExposureSafetyQuestion}"
+                                Text="{Binding SafetyText, Mode=TwoWay}"
+                                Suggestions="{Binding SafetySuggestions}" />
+                            <Label Text="{x:Static common:AppStrings.ExposureSafetyHint}" Style="{StaticResource CaptionStyle}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16">
+                        <ui:TechniqueTextFieldView
+                            TitleText="{x:Static common:AppStrings.ExposureAvoidedQuestion}"
+                            Text="{Binding AvoidedText, Mode=TwoWay}"
+                            Suggestions="{Binding AvoidedSuggestions}" />
+                    </Border>
+                    <Label Text="{x:Static common:AppStrings.ExposureCircle}" Style="{StaticResource CaptionStyle}" />
+                    <ui:ButtonView BodyText="{x:Static common:AppStrings.ExposureNext}" TapCommand="{Binding SaveFormulationCommand}" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+
+            <!-- 3. Building the ladder: examples by tap, own steps, each rated and kept in order from easy to hard. -->
+            <VerticalStackLayout IsVisible="{Binding IsLadder}" Spacing="{StaticResource LayoutSpacing}">
+                <Label Text="{x:Static common:AppStrings.ExposureLadderTitle}" Style="{StaticResource SectionTitleStyle}" />
+                <Label Text="{x:Static common:AppStrings.ExposureLadderLead}" Style="{StaticResource CaptionStyle}" />
+
+                <Label Text="{x:Static common:AppStrings.ExposureChosenTitle}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource MediumFontFamily}" />
+                <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding ChosenSteps}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:ExposureStepRow">
+                            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="14,8">
+                                <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto" ColumnSpacing="4">
+                                    <Label Text="{Binding Text}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                                    <Border Grid.Column="1" Style="{StaticResource ExposureStepButtonStyle}" SemanticProperties.Description="{x:Static common:AppStrings.ExposureEasier}">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding EasierCommand}" />
+                                        </Border.GestureRecognizers>
+                                        <Label Text="−" Style="{StaticResource ExposureStepButtonLabelStyle}" />
+                                    </Border>
+                                    <Label Grid.Column="2" Text="{Binding DistressText}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource SemiBoldFontFamily}"
+                                           WidthRequest="34" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+                                    <Border Grid.Column="3" Style="{StaticResource ExposureStepButtonStyle}" SemanticProperties.Description="{x:Static common:AppStrings.ExposureHarder}">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding HarderCommand}" />
+                                        </Border.GestureRecognizers>
+                                        <Label Text="+" Style="{StaticResource ExposureStepButtonLabelStyle}" />
+                                    </Border>
+                                    <Border Grid.Column="4" Style="{StaticResource ExposureStepButtonStyle}" SemanticProperties.Description="{x:Static common:AppStrings.ExposureRemoveStep}">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ToggleCommand}" />
+                                        </Border.GestureRecognizers>
+                                        <Label Text="✕" Style="{StaticResource ExposureStepButtonLabelStyle}" />
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+                <Label Text="{Binding LadderCountText}" Style="{StaticResource CaptionStyle}" />
+
+                <VerticalStackLayout IsVisible="{Binding HasExamples}" Spacing="8">
+                    <Label Text="{x:Static common:AppStrings.ExposureExamplesTitle}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource MediumFontFamily}" />
+                    <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding ExampleSteps}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:ExposureStepRow">
+                                <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="14,10" SemanticProperties.Description="{Binding Text}">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ToggleCommand}" />
+                                    </Border.GestureRecognizers>
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                        <ui:MaterialIconView IconName="{Binding ChosenIcon}" IconSize="22" VerticalOptions="Center" />
+                                        <Label Grid.Column="1" Text="{Binding Text}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                                        <Label Grid.Column="2" Text="{Binding DistressText}" Style="{StaticResource CaptionStyle}" VerticalOptions="Center" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16">
+                    <VerticalStackLayout Spacing="12">
+                        <ui:TechniqueTextFieldView
+                            TitleText="{x:Static common:AppStrings.ExposureOwnStepTitle}"
+                            PlaceholderText="{x:Static common:AppStrings.ExposureOwnStepPlaceholder}"
+                            Text="{Binding NewStepText, Mode=TwoWay}" />
+                        <ui:RatingEntryView Embedded="True" TitleText="{x:Static common:AppStrings.ExposureOwnStepDistress}" BodyText="{Binding NewStepDistress, Mode=TwoWay}" />
+                        <ui:ButtonView Variant="Secondary" BodyText="{x:Static common:AppStrings.ExposureAdd}" TapCommand="{Binding AddStepCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+                <ui:ButtonView BodyText="{x:Static common:AppStrings.ExposureSaveLadder}" TapCommand="{Binding SaveLadderCommand}" IsEnabled="{Binding CanSaveLadder}" />
+            </VerticalStackLayout>
+
+            <!-- 4. The ladder: progress in tested predictions, the steps, and the one thing to do next. -->
+            <VerticalStackLayout IsVisible="{Binding IsHome}" Spacing="{StaticResource LayoutSpacing}">
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="{Binding FearSummary}" Style="{StaticResource CaptionStyle}" IsVisible="{Binding HasFearSummary}" />
+                        <Label Text="{Binding ProgressTitle}" Style="{StaticResource SectionTitleStyle}" />
+                        <Label Text="{Binding ProgressDetail}" Style="{StaticResource BodyStyle}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0" IsVisible="{Binding HasPending}">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="{x:Static common:AppStrings.ExposurePendingTitle}" Style="{StaticResource CaptionStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" />
+                        <Label Text="{Binding PendingText}" Style="{StaticResource SectionTitleStyle}" />
+                        <ui:ButtonView BodyText="{x:Static common:AppStrings.ExposureReportAction}" TapCommand="{Binding ReportCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0" IsVisible="{Binding HasCurrentStep}">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="{x:Static common:AppStrings.ExposureCurrentTitle}" Style="{StaticResource CaptionStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" />
+                        <Label Text="{Binding CurrentStepText}" Style="{StaticResource SectionTitleStyle}" />
+                        <Label Text="{x:Static common:AppStrings.ExposureEasierHint}" Style="{StaticResource CaptionStyle}" IsVisible="{Binding NeedsEasierStep}" />
+                        <ui:ButtonView BodyText="{x:Static common:AppStrings.ExposureStartTask}" TapCommand="{Binding StartTaskCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0" IsVisible="{Binding IsLadderDone}">
+                    <Label Text="{x:Static common:AppStrings.ExposureLadderDone}" Style="{StaticResource BodyStyle}" />
+                </Border>
+
+                <Label Text="{x:Static common:AppStrings.ExposureLadderSection}" Style="{StaticResource SectionTitleStyle}" />
+                <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding LadderRows}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:ExposureStepRow">
+                            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="14,10">
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                    <ui:MaterialIconView IconName="{Binding StatusIcon}" IconSize="22" VerticalOptions="Center" />
+                                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                        <Label Text="{Binding Text}" Style="{StaticResource BodyStyle}" />
+                                        <Label Text="{Binding StatusText}" Style="{StaticResource CaptionStyle}" IsVisible="{Binding HasStatus}" />
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="2" Text="{Binding DistressText}" Style="{StaticResource CaptionStyle}" VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <ui:ButtonView Variant="Secondary" BodyText="{x:Static common:AppStrings.ExposureEditLadder}" TapCommand="{Binding EditLadderCommand}" />
+                <ui:ButtonView Variant="Secondary" BodyText="{x:Static common:AppStrings.ExposureEditFear}" TapCommand="{Binding EditFearCommand}" />
+                <ui:ButtonView Variant="Secondary" BodyText="{Binding DeleteText}" TapCommand="{Binding DeletePlanCommand}" />
+            </VerticalStackLayout>
+
+            <!-- 5. Before a task: the prediction and how sure, the safety net to give up, the rules. -->
+            <VerticalStackLayout IsVisible="{Binding IsBefore}" Spacing="{StaticResource LayoutSpacing}">
+                <Label Text="{x:Static common:AppStrings.ExposureBeforeTitle}" Style="{StaticResource CaptionStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" />
+                <Label Text="{Binding TaskStepText}" Style="{StaticResource SectionTitleStyle}" />
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16">
+                    <VerticalStackLayout Spacing="16">
+                        <ui:TechniqueTextFieldView
+                            TitleText="{x:Static common:AppStrings.ExposurePredictionQuestion}"
+                            PlaceholderText="{x:Static common:AppStrings.ExposurePredictionPlaceholder}"
+                            Text="{Binding Prediction, Mode=TwoWay}"
+                            Suggestions="{Binding PredictionSuggestions}" />
+                        <ui:RatingEntryView Embedded="True" TitleText="{x:Static common:AppStrings.ExposureBeliefBefore}" MinimumCaption="{x:Static common:AppStrings.ExposureBeliefMin}" MaximumCaption="{x:Static common:AppStrings.ExposureBeliefMax}" BodyText="{Binding BeliefBefore, Mode=TwoWay}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16">
+                    <ui:TechniqueTextFieldView
+                        TitleText="{x:Static common:AppStrings.ExposureDropQuestion}"
+                        Text="{Binding DroppedText, Mode=TwoWay}"
+                        Suggestions="{Binding DroppedSuggestions}" />
+                </Border>
+                <Label Text="{x:Static common:AppStrings.ExposureRules}" Style="{StaticResource BodyStyle}" />
+                <ui:ButtonView BodyText="{x:Static common:AppStrings.ExposureGo}" TapCommand="{Binding GoCommand}" />
+            </VerticalStackLayout>
+
+            <!-- 6. After a task: facts, whether the prediction came true, the belief now, the peak, the safety net, the lesson. -->
+            <VerticalStackLayout IsVisible="{Binding IsAfter}" Spacing="{StaticResource LayoutSpacing}">
+                <Label Text="{x:Static common:AppStrings.ExposureAfterTitle}" Style="{StaticResource CaptionStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" />
+                <Label Text="{Binding TaskStepText}" Style="{StaticResource SectionTitleStyle}" />
+                <Label Text="{Binding PredictionReminder}" Style="{StaticResource BodyStyle}" />
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16">
+                    <ui:TechniqueTextFieldView
+                        TitleText="{x:Static common:AppStrings.ExposureWhatHappenedQuestion}"
+                        PlaceholderText="{x:Static common:AppStrings.ExposureWhatHappenedPlaceholder}"
+                        Text="{Binding WhatHappened, Mode=TwoWay}" />
+                </Border>
+                <Label Text="{x:Static common:AppStrings.ExposureOutcomeQuestion}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource MediumFontFamily}" />
+                <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Outcomes}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:ExposureChoiceItem">
+                            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="16,12" SemanticProperties.Description="{Binding Title}">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectCommand}" />
+                                </Border.GestureRecognizers>
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                    <ui:MaterialIconView IconName="{Binding SelectionIcon}" IconSize="24" VerticalOptions="Center" />
+                                    <Label Grid.Column="1" Text="{Binding Title}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16">
+                    <VerticalStackLayout Spacing="16">
+                        <ui:RatingEntryView Embedded="True" TitleText="{x:Static common:AppStrings.ExposureBeliefAfter}" MinimumCaption="{x:Static common:AppStrings.ExposureBeliefMin}" MaximumCaption="{x:Static common:AppStrings.ExposureBeliefMax}" BodyText="{Binding BeliefAfter, Mode=TwoWay}" />
+                        <ui:RatingEntryView Embedded="True" TitleText="{x:Static common:AppStrings.ExposurePeak}" BodyText="{Binding PeakDistress, Mode=TwoWay}" />
+                        <ui:YesNoSelectorView
+                            LabelText="{x:Static common:AppStrings.ExposureUsedSafetyQuestion}"
+                            YesText="{x:Static common:AppStrings.Yes}"
+                            NoText="{x:Static common:AppStrings.No}"
+                            IsYes="{Binding UsedSafetyYes}"
+                            IsNo="{Binding UsedSafetyNo}"
+                            SelectCommand="{Binding SafetyAnswerCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16">
+                    <ui:TechniqueTextFieldView
+                        TitleText="{x:Static common:AppStrings.ExposureLearnedQuestion}"
+                        PlaceholderText="{x:Static common:AppStrings.ExposureLearnedPlaceholder}"
+                        Text="{Binding Learned, Mode=TwoWay}"
+                        Suggestions="{Binding LessonSuggestions}" />
+                </Border>
+                <ui:ButtonView BodyText="{x:Static common:AppStrings.ExposureSaveReport}" TapCommand="{Binding SaveReportCommand}" IsEnabled="{Binding CanReport}" />
+                <ui:ButtonView Variant="Secondary" BodyText="{x:Static common:AppStrings.ExposureInterrupt}" TapCommand="{Binding InterruptCommand}" />
+            </VerticalStackLayout>
+
+            <!-- 7. Feedback: what changed in the belief, and what it means for the ladder. -->
+            <VerticalStackLayout IsVisible="{Binding IsFeedback}" Spacing="{StaticResource LayoutSpacing}">
+                <Label Text="{x:Static common:AppStrings.ExposureFeedbackTitle}" Style="{StaticResource SectionTitleStyle}" />
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0" IsVisible="{Binding HasBeliefChange}">
+                    <Label Text="{Binding BeliefChangeText}" Style="{StaticResource SectionTitleStyle}" HorizontalTextAlignment="Center" />
+                </Border>
+                <VerticalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Insights}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="16,14">
+                                <Label Text="{Binding .}" Style="{StaticResource BodyStyle}" />
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+                <ui:ButtonView BodyText="{x:Static common:AppStrings.ExposureDone}" TapCommand="{Binding DoneCommand}" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
