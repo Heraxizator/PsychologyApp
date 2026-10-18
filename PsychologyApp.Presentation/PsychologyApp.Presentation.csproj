@@ -103,8 +103,10 @@
 	  <!-- SdkOnly: Mono linker trims SDK assemblies; R8 + ProguardConfiguration shrink dex. Full breaks AndroidX (PickVisualMedia). -->
 	  <AndroidLinkTool>r8</AndroidLinkTool>
 	  <AndroidLinkMode>SdkOnly</AndroidLinkMode>
-	  <!-- Phones only; build an emulator package with -p:RuntimeIdentifiers=android-x64. -->
-	  <RuntimeIdentifiers>android-arm64</RuntimeIdentifiers>
+	  <!-- Phones only. An emulator package (to measure Release on an x86_64 emulator, where arm64 runs translated and slow):
+	       -p:AndroidReleaseRid=android-x64. Not -p:RuntimeIdentifiers: a global RID flows into the class libraries and breaks their build. -->
+	  <RuntimeIdentifiers Condition="'$(AndroidReleaseRid)' == ''">android-arm64</RuntimeIdentifiers>
+	  <RuntimeIdentifiers Condition="'$(AndroidReleaseRid)' != ''">$(AndroidReleaseRid)</RuntimeIdentifiers>
 	  <!-- Release signing: paths/passwords in AndroidSigning.local.props (gitignored) or env vars. -->
 	  <AndroidKeyStore Condition="'$(AndroidSigningKeyStore)' != ''">true</AndroidKeyStore>
 	  <AndroidSigningKeyStore Condition="'$(AndroidSigningKeyStore)' != ''">$(AndroidSigningKeyStore)</AndroidSigningKeyStore>
@@ -183,6 +185,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="AathifMahir.Maui.MauiIcons.Material" Version="5.0.0" />
+		<PackageReference Include="AathifMahir.Maui.MauiIcons.Material.Outlined" Version="5.0.0" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="14.0.0" />
 		<!-- Android plays music with the platform MediaPlayer (Platforms/Android/AndroidAudioPlaybackService.cs);
 		     MediaElement and its ExoPlayer are only shipped to iOS and Mac. -->
@@ -201,6 +204,7 @@
 		<TrimmerRootAssembly Include="CommunityToolkit.Maui.MediaElement" RootMode="All" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'android'" />
 		<TrimmerRootAssembly Include="MauiIcons.Core" RootMode="All" />
 		<TrimmerRootAssembly Include="MauiIcons.Material" RootMode="All" />
+		<TrimmerRootAssembly Include="MauiIcons.Material.Outlined" RootMode="All" />
 		<TrimmerRootAssembly Include="MvvmHelpers" RootMode="All" />
 		<TrimmerRootAssembly Include="Dapper" RootMode="All" />
 		<TrimmerRootAssembly Include="Microsoft.Data.Sqlite" RootMode="All" />
