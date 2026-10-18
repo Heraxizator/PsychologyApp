@@ -594,8 +594,6 @@ file static class TopViewModelTestHelpers
     public static LanguageContentReloader CreateLanguageReloader(IQuotService quotService) =>
         new(
             quotService,
-            new PsychologyApp.Application.Reason.CachedReasonContentProvider(
-                Mock.Of<PsychologyApp.Application.Abstractions.Integration.IReasonContentProvider>()),
             new CachedQuotContentProvider(Mock.Of<IQuotContentProvider>()),
             new CachedTestCatalogProvider(
                 Mock.Of<ITestCatalogProvider>()),

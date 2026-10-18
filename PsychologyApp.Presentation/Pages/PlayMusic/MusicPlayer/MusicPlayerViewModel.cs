@@ -33,7 +33,6 @@ public partial class MusicPlayerViewModel : BaseViewModel
     public ICommand PlayNextCommand { get; }
     public ICommand PlayPreviousCommand { get; }
     public ICommand SelectCategoryCommand { get; }
-    public ICommand OpenProfileCommand { get; }
 
     public MusicPlayerViewModel(
         INavigationService navigationService,
@@ -47,7 +46,6 @@ public partial class MusicPlayerViewModel : BaseViewModel
         _playlistPresenter = playlistPresenter;
         _playbackPresenter = playbackPresenter;
         BindNavigation(navigationService);
-        OpenProfileCommand = new AsyncCommand(() => navigationService.GoToUserProfileAsync());
         _playbackService.PlaybackEnded += (_, _) => SetPlaybackState(false);
         _playbackService.PlaybackFailed += (_, _) =>
         {

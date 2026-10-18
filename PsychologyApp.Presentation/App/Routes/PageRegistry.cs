@@ -12,12 +12,18 @@ using PsychologyApp.Presentation.Features.RunTests;
 using PsychologyApp.Presentation.Pages.ClinicalCare.CrisisHub;
 using PsychologyApp.Presentation.Pages.ClinicalCare.RiskCheck;
 using PsychologyApp.Presentation.Pages.ClinicalCare.SafetyPlan;
+using PsychologyApp.Presentation.Pages.ClinicalCare.Exposure;
+using PsychologyApp.Presentation.Pages.ClinicalCare.BodyCheck;
+using PsychologyApp.Presentation.Pages.ReadArticles.Articles;
+using PsychologyApp.Presentation.Pages.ReadArticles.ArticleReader;
+using PsychologyApp.Presentation.Pages.ReadArticles.Courses;
+using PsychologyApp.Presentation.Pages.ReadArticles.ForYou;
+using PsychologyApp.Presentation.Features.ReadArticles;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Pages.RunTests.AlternativeTest;
 using PsychologyApp.Presentation.Pages.RunTests.FindProblem;
 using PsychologyApp.Presentation.Pages.PlayMusic.MusicPlayer;
-using PsychologyApp.Presentation.Pages.SearchPhysics.PhysicsSearch;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileDonate;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileAlice;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileInfo;
@@ -34,7 +40,6 @@ using PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
 using PsychologyApp.Presentation.Features.SendReviewForm;
 using PsychologyApp.Presentation.Pages.SendReviewForm.ReviewForm;
 using PsychologyApp.Presentation.Pages.RunTests.StandardTest;
-using PsychologyApp.Presentation.Pages.SearchPhysics.StartPhysics;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueCreated;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueDesigner;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueSession;
@@ -48,7 +53,6 @@ using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Features.ManageQuotes.DependencyInjection;
 using PsychologyApp.Presentation.Features.PlayMusic.DependencyInjection;
-using PsychologyApp.Presentation.Features.SearchPhysics.DependencyInjection;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 
 namespace PsychologyApp.Presentation.App.Routes;
@@ -63,13 +67,12 @@ public sealed class PageRegistry(
     ITestPageFactory testPageFactory,
     ITechniquePageFactory techniquePageFactory,
     IClinicalCarePageFactory clinicalCarePageFactory,
+    IReadArticlesPageFactory readArticlesPageFactory,
     IChatPageFactory chatPageFactory,
     IPracticeTheoryNavigator practiceTheoryNavigator,
-    IStartPhysicsViewModelFactory startPhysicsViewModelFactory,
     IMusicPlayerViewModelFactory musicPlayerViewModelFactory,
     IQuoteViewModelFactory quoteViewModelFactory,
     IPageViewModelActivator pageViewModelActivator,
-    IPhysicsSearchViewModelFactory physicsSearchViewModelFactory,
     IToastService toastService) : IPageFactory
 {
     public TechniquesPage CreateTechniquesPage() =>
@@ -80,9 +83,6 @@ public sealed class PageRegistry(
 
     public TestHistoryPage CreateTestHistoryPage(string testId, string testTitle) =>
         WithPressFeedback(testPageFactory.CreateTestHistoryPage(testId, testTitle));
-
-    public StartPhysicsPage CreateStartPhysicsPage() =>
-        WithPressFeedback(new StartPhysicsPage(pageViewModelActivator, startPhysicsViewModelFactory));
 
     public MusicPlayerPage CreateMusicPlayerPage() =>
         WithPressFeedback(new MusicPlayerPage(musicPlayerViewModelFactory, toastService));
@@ -126,9 +126,6 @@ public sealed class PageRegistry(
     public DataBackupPage CreateDataBackupPage() =>
         WithPressFeedback(profilePageFactory.CreateDataBackupPage());
 
-    public PhysicsSearchPage CreatePhysicsSearchPage() =>
-        WithPressFeedback(new PhysicsSearchPage(pageViewModelActivator, physicsSearchViewModelFactory));
-
     public TheoryPage CreateTheoryPage(string content, TechniqueId? techniqueId = null) =>
         WithPressFeedback(practiceTheoryNavigator.CreateTheoryPage(content, techniqueId));
 
@@ -164,11 +161,11 @@ public sealed class PageRegistry(
     public PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null, long? sessionResultId = null) =>
         WithPressFeedback(techniquePageFactory.CreatePracticeCompletionPage(streakDays, completedItemKey, sessionResultId));
 
-    public ChatListPage CreateChatListPage(INavigation hostNavigation) =>
+    public ChatListPage CreateChatListPage(INavigation? hostNavigation) =>
         WithPressFeedback(chatPageFactory.CreateChatListPage(hostNavigation));
 
-    public ChatPage CreateChatPage(long? sessionId, INavigation hostNavigation) =>
-        WithPressFeedback(chatPageFactory.CreateChatPage(sessionId, hostNavigation));
+    public ChatPage CreateChatPage(long? sessionId, INavigation hostNavigation, string? topic = null) =>
+        WithPressFeedback(chatPageFactory.CreateChatPage(sessionId, hostNavigation, topic));
 
     public CompanionProfilePage CreateCompanionProfilePage(INavigation hostNavigation) =>
         WithPressFeedback(chatPageFactory.CreateCompanionProfilePage(hostNavigation));
@@ -181,6 +178,30 @@ public sealed class PageRegistry(
 
     public SafetyPlanPage CreateSafetyPlanPage() =>
         WithPressFeedback(clinicalCarePageFactory.CreateSafetyPlanPage());
+
+    public ExposurePage CreateExposurePage() =>
+        WithPressFeedback(clinicalCarePageFactory.CreateExposurePage());
+
+    public BodyCheckPage CreateBodyCheckPage() =>
+        WithPressFeedback(clinicalCarePageFactory.CreateBodyCheckPage());
+
+    public ArticlesPage CreateArticlesPage() =>
+        WithPressFeedback(readArticlesPageFactory.CreateArticlesPage());
+
+    public ForYouPage CreateForYouPage() =>
+        WithPressFeedback(readArticlesPageFactory.CreateForYouPage());
+
+    public CoursesPage CreateCoursesPage() =>
+        WithPressFeedback(readArticlesPageFactory.CreateCoursesPage());
+
+    public ArticleReaderPage CreateArticleReaderPage(string articleId) =>
+        WithPressFeedback(readArticlesPageFactory.CreateArticleReaderPage(articleId));
+
+    public CoursePage CreateCoursePage(string courseId) =>
+        WithPressFeedback(readArticlesPageFactory.CreateCoursePage(courseId));
+
+    public CourseDayPage CreateCourseDayPage(string courseId, int day) =>
+        WithPressFeedback(readArticlesPageFactory.CreateCourseDayPage(courseId, day));
 
     private static TPage WithPressFeedback<TPage>(TPage page) where TPage : ContentPage
     {

@@ -10,11 +10,8 @@ using PsychologyApp.Presentation.Shared.Services.Notifications;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.Techniques;
-using PsychologyApp.Presentation.Pages.PlayMusic.MusicPlayer;
-using PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
-using PsychologyApp.Presentation.Pages.SearchPhysics.PhysicsSearch;
 using PsychologyApp.Presentation.Pages.RunTests.TestsList;
-using PsychologyApp.Presentation.Pages.SearchPhysics.StartPhysics;
+using PsychologyApp.Presentation.App.Routes;
 
 namespace PsychologyApp.Presentation.App;
 
@@ -22,16 +19,15 @@ public partial class AppShell : Shell
 {
     public ShellContent PracticeShellTab => PracticeTab;
     public ShellContent TestsTab => DetectorTab;
-    public ShellContent QuotesShellTab => QuotesTab;
-    public ShellContent PrayersShellTab => CleanerTab;
+    public ShellContent ChatShellTab => ChatTab;
+    public ShellContent JournalShellTab => JournalTab;
 
     private static readonly string[] TabRoutes =
     [
         "PracticeTab",
+        "ChatTab",
         "TestsTab",
-        "SomaticTab",
-        "CleanerTab",
-        "QuotesTab"
+        "JournalTab"
     ];
 
     private readonly IPageFactory _pageFactory;
@@ -42,7 +38,8 @@ public partial class AppShell : Shell
     private readonly IChatReminderCoordinator _chatReminderCoordinator;
     private readonly ILogger<AppShell> _logger;
     private readonly IUserPreferencesStore _preferences;
-    private readonly bool[] _tabsMaterialized = new bool[5];
+    private readonly Func<INavigationService> _navigationServiceFactory;
+    private readonly bool[] _tabsMaterialized = new bool[4];
     private bool _lazyTabsReady;
 
     public AppShell(
@@ -53,8 +50,10 @@ public partial class AppShell : Shell
         IMoodReminderCoordinator moodReminderCoordinator,
         IChatReminderCoordinator chatReminderCoordinator,
         ILogger<AppShell> logger,
-        IUserPreferencesStore preferences)
+        IUserPreferencesStore preferences,
+        Func<INavigationService> navigationServiceFactory)
     {
+        _navigationServiceFactory = navigationServiceFactory;
         _preferences = preferences;
         _pageFactory = pageFactory;
         _startupCoordinator = startupCoordinator;
@@ -65,6 +64,7 @@ public partial class AppShell : Shell
         _logger = logger;
         InitializeComponent();
         ApplyLocalization();
+        UpdateTabIcons();
         EnsureLazyTabsReady();
         _preferences.Changed += OnPreferencesChanged;
         if (Microsoft.Maui.Controls.Application.Current is { } app)
@@ -96,6 +96,7 @@ public partial class AppShell : Shell
     private void OnShellNavigated(object? sender, ShellNavigatedEventArgs e)
     {
         PerfTrace.Mark($"Navigated {e.Current?.Location}");
+        UpdateTabIcons();
         EnsureCurrentTabMaterialized();
 
         if (e.Source != ShellNavigationSource.ShellItemChanged)
@@ -154,27 +155,26 @@ public partial class AppShell : Shell
     public void ApplyLocalization()
     {
         PracticeTab.Title = AppStrings.ShellTabPracticeShort;
+        ChatTab.Title = AppStrings.ShellTabChatShort;
         DetectorTab.Title = AppStrings.ShellTabDetectorShort;
-        SomaticTab.Title = AppStrings.ShellTabSomaticShort;
-        CleanerTab.Title = AppStrings.ShellTabMusicShort;
-        QuotesTab.Title = AppStrings.ShellTabMotivatorShort;
+        JournalTab.Title = AppStrings.ShellTabJournalShort;
+        BuildMenu();
         ApplyTabBarChrome();
         ApplyStatusBarChrome(IsDarkRequestedTheme());
     }
 
     private void RefreshShellTabPageTitles()
     {
-        UpdateTabPageTitle(PracticeTab);
-        UpdateTabPageTitle(DetectorTab);
-        UpdateTabPageTitle(SomaticTab);
-        UpdateTabPageTitle(CleanerTab);
-        UpdateTabPageTitle(QuotesTab);
+        for (int index = 0; index < _tabsMaterialized.Length; index++)
+        {
+            UpdateTabPageTitle(GetTabShellContent(index));
+        }
     }
 
     private static ContentPage? GetTabRootPage(ShellContent tab) =>
         tab.Content as ContentPage;
 
-    private static void UpdateTabPageTitle(ShellContent tab)
+    private void UpdateTabPageTitle(ShellContent tab)
     {
         if (GetTabRootPage(tab) is not ContentPage page)
         {
@@ -185,9 +185,6 @@ public partial class AppShell : Shell
         {
             TechniquesViewModel techniques => techniques.PageTitle,
             TestsListViewModel tests => tests.PageTitle,
-            StartPhysicsViewModel physics => physics.PageTitle,
-            MusicPlayerViewModel music => music.PageTitle,
-            QuoteViewModel quotes => quotes.PageTitle,
             _ => null
         };
 
@@ -326,45 +323,47 @@ public partial class AppShell : Shell
         return false;
     }
 
-    private int GetTabIndex(ShellContent shellContent)
+    /// <summary>The bottom tabs and their icon names; the selected one is drawn filled, the others outlined (see <see cref="TabIcons"/>).</summary>
+    // The chat bubble of the outlined font is drawn solid; its own outline glyph is used instead.
+    private (BaseShellItem Item, string Filled, string Outlined)[] BottomTabs =>
+    [
+        (PracticeTab, "SelfImprovement", "SelfImprovement"),
+        (ChatTab, "ChatBubble", "ChatBubbleOutline"),
+        (DetectorTab, "AssignmentTurnedIn", "AssignmentTurnedIn"),
+        (JournalTab, "Mood", "Mood")
+    ];
+
+    private void UpdateTabIcons()
     {
-        if (ReferenceEquals(shellContent, PracticeTab))
+        ShellSection? current = (CurrentItem ?? Items.FirstOrDefault())?.CurrentItem;
+        foreach ((BaseShellItem item, string filled, string outlined) in BottomTabs)
         {
-            return 0;
+            // A ShellContent placed straight in the tab bar sits in an implicit section.
+            bool selected = ReferenceEquals(item.Parent, current);
+            item.Icon = selected ? TabIcons.Get(filled, filled: true) : TabIcons.Get(outlined, filled: false);
         }
-
-        if (ReferenceEquals(shellContent, DetectorTab))
-        {
-            return 1;
-        }
-
-        if (ReferenceEquals(shellContent, SomaticTab))
-        {
-            return 2;
-        }
-
-        if (ReferenceEquals(shellContent, CleanerTab))
-        {
-            return 3;
-        }
-
-        if (ReferenceEquals(shellContent, QuotesTab))
-        {
-            return 4;
-        }
-
-        return -1;
     }
 
-    private ShellContent GetTabShellContent(int index) => index switch
+    private ShellContent[] TabContents => [PracticeTab, ChatTab, DetectorTab, JournalTab];
+
+    private int GetTabIndex(ShellContent shellContent) => Array.FindIndex(TabContents, tab => ReferenceEquals(tab, shellContent));
+
+    private ShellContent GetTabShellContent(int index) => index >= 0 && index < TabContents.Length ? TabContents[index] : PracticeTab;
+
+    /// <summary>Shows a bottom tab: the content is selected in its section and the section in the tab bar.</summary>
+    public void ShowTab(ShellContent shellContent)
     {
-        0 => PracticeTab,
-        1 => DetectorTab,
-        2 => SomaticTab,
-        3 => CleanerTab,
-        4 => QuotesTab,
-        _ => PracticeTab
-    };
+        EnsureTabMaterialized(GetTabIndex(shellContent));
+        if (shellContent.Parent is ShellSection section)
+        {
+            section.CurrentItem = shellContent;
+            if (section.Parent is ShellItem item)
+            {
+                item.CurrentItem = section;
+                CurrentItem = item;
+            }
+        }
+    }
 
     public void MaterializeTab(ShellContent shellContent) =>
         EnsureTabMaterialized(GetTabIndex(shellContent));
@@ -392,12 +391,48 @@ public partial class AppShell : Shell
     private ContentPage CreateTabPage(int index) => index switch
     {
         0 => _pageFactory.CreateTechniquesPage(),
-        1 => _pageFactory.CreateTestsListPage(),
-        2 => _pageFactory.CreateStartPhysicsPage(),
-        3 => _pageFactory.CreateMusicPlayerPage(),
-        4 => _pageFactory.CreateQuotePage(),
+        1 => _pageFactory.CreateChatListPage(null),
+        2 => _pageFactory.CreateTestsListPage(),
+        3 => _pageFactory.CreateJournalPage(),
         _ => _pageFactory.CreateTechniquesPage()
     };
+
+    /// <summary>
+    /// Fills the burger menu. Its pages open over the current tab, so the tabs stay where they were and Back returns to them; whatever
+    /// was open over the tab is closed first, so the menu never stacks one section on another.
+    /// </summary>
+    private void BuildMenu()
+    {
+        MenuTitle.Text = AppStrings.OnboardingAppName;
+        MenuLibraryTitle.Text = AppStrings.ShellTabLibraryShort;
+        BindableLayout.SetItemsSource(MenuProfile, new[]
+        {
+            MenuEntry("Person", AppStrings.ProfileTitle, navigation => navigation.GoToUserProfileAsync()),
+            MenuEntry("AccessibilityNew", AppStrings.BodyTitle, navigation => navigation.GoToBodyAsync())
+        });
+        BindableLayout.SetItemsSource(MenuLibrary, new[]
+        {
+            MenuEntry("AutoAwesome", AppStrings.ArticlesForYou, navigation => navigation.GoToForYouAsync()),
+            MenuEntry("School", AppStrings.ArticlesCourses, navigation => navigation.GoToCoursesAsync()),
+            MenuEntry("Article", AppStrings.ShellTabArticlesShort, navigation => navigation.GoToArticlesAsync()),
+            MenuEntry("Headphones", AppStrings.ShellTabMusicShort, navigation => navigation.GoToPrayersAsync()),
+            MenuEntry("FormatQuote", AppStrings.ShellTabMotivatorShort, navigation => navigation.GoToQuotesAsync())
+        });
+        BindableLayout.SetItemsSource(MenuApp, new[]
+        {
+            MenuEntry("HealthAndSafety", AppStrings.CrisisHubTitle, navigation => navigation.GoToCrisisHubAsync()),
+            MenuEntry("Settings", AppStrings.OptionsTitle, navigation => navigation.GoToOptionsAsync())
+        });
+    }
+
+    private AppMenuEntry MenuEntry(string icon, string title, Func<INavigationService, Task> open) =>
+        new(icon, title, new AsyncCommand(async () =>
+        {
+            FlyoutIsPresented = false;
+            INavigationService navigation = _navigationServiceFactory();
+            await navigation.GoToRootAsync();
+            await open(navigation);
+        }));
 
     public void OpenPendingTechniqueIfNeeded()
     {

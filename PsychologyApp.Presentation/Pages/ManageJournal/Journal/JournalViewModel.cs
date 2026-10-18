@@ -47,11 +47,6 @@ public sealed class JournalViewModel : BaseViewModel
         BindNavigation(navigationService);
         ModuleName = AppStrings.JournalTitle;
         PageName = AppStrings.JournalTitle;
-        BackCommand = new AsyncCommand(async () =>
-        {
-            await FlushPendingNoteSaveAsync();
-            await navigationService.GoBackAsync();
-        });
         OpenOverviewCommand = new AsyncCommand(async () =>
         {
             await FlushPendingNoteSaveAsync();
@@ -143,7 +138,6 @@ public sealed class JournalViewModel : BaseViewModel
 
     public ObservableCollection<JournalActivityChip> ActivityChips { get; }
 
-    public ICommand BackCommand { get; }
     public ICommand OpenOverviewCommand { get; }
     public ICommand OpenTimelineCommand { get; }
     public ICommand PickSlotCommand { get; }
@@ -360,11 +354,35 @@ public sealed class JournalViewModel : BaseViewModel
         }
     }
 
+    /// <summary>
+    /// The journal reloads every time its tab appears. When the week shows the same days with the same moods, only the selection
+    /// moves: replacing the list would rebuild all seven day cells for nothing.
+    /// </summary>
+    private void ApplyWeekDays(IReadOnlyList<JournalDayChip> days)
+    {
+        bool sameDays = days.Count == _weekDays.Count
+            && days.Zip(_weekDays).All(pair => pair.First.Date == pair.Second.Date
+                && pair.First.MoodLevel == pair.Second.MoodLevel
+                && pair.First.MoodGlyph == pair.Second.MoodGlyph
+                && pair.First.HasEntry == pair.Second.HasEntry
+                && pair.First.DayLabel == pair.Second.DayLabel);
+        if (!sameDays)
+        {
+            WeekDays = days;
+            return;
+        }
+
+        foreach ((JournalDayChip fresh, JournalDayChip shown) in days.Zip(_weekDays))
+        {
+            shown.IsSelected = fresh.IsSelected;
+        }
+    }
+
     private void ApplySnapshot(JournalMoodSnapshot snapshot)
     {
         CancelNoteAutosave();
         _noteDirty = false;
-        WeekDays = snapshot.WeekDays;
+        ApplyWeekDays(snapshot.WeekDays);
         _weekStripEnd = snapshot.WeekStripEnd;
         _editorEntryId = snapshot.EditorEntryId;
         _editorDay = snapshot.EditorDay;

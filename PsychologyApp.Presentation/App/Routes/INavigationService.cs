@@ -23,7 +23,6 @@ public interface INavigationService
     Task GoToAliceAsync();
     Task GoToFormAsync();
     Task GoToSettingsAsync();
-    Task GoToPhysicsSearchAsync();
     Task GoToTheoryAsync(string content, TechniqueId? techniqueId = null);
     Task GoToFindProblemAsync(string? description, List<string> algorithm, string? comment, Func<Task> startTest, string? testId = null);
     Task GoToQuestionPageAsync(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null);
@@ -43,16 +42,25 @@ public interface INavigationService
         CancellationToken cancellationToken = default);
     Task GoToTestsTabAsync();
     Task GoToPracticeTabAsync();
-    Task GoToQuotesTabAsync();
+    Task GoToQuotesAsync();
     Task GoToQuotesFavoritesAsync();
-    Task GoToPrayersTabAsync();
+    Task GoToPrayersAsync();
+    Task GoToForYouAsync();
+    Task GoToCoursesAsync();
+    Task GoToArticlesAsync();
+    Task GoToBodyAsync();
     Task GoToPracticeCompletionAsync(int streakDays, string? completedItemKey = null, long? sessionResultId = null);
     Task ShowOnboardingAsync();
     Task GoToChatListAsync();
-    Task GoToChatAsync(long? sessionId = null);
+    Task GoToChatAsync(long? sessionId = null, string? topic = null);
     Task GoToCompanionProfileAsync();
     Task GoToCrisisHubAsync();
     Task GoToRiskCheckAsync(string source);
     Task GoToSafetyPlanAsync();
+    Task GoToExposureAsync();
+    Task GoToArticleAsync(string articleId);
+    Task GoToTestAsync(string testId);
+    Task GoToCourseAsync(string courseId);
+    Task GoToCourseDayAsync(string courseId, int day);
     Task GoToDataBackupAsync();
 }

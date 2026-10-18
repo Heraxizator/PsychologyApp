@@ -3,9 +3,14 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        x:Class="PsychologyApp.Presentation.App.AppShell"
        xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
-       xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
        xmlns:common="clr-namespace:PsychologyApp.Presentation.Common;assembly=PsychologyApp.Presentation.Core"
+       xmlns:app="clr-namespace:PsychologyApp.Presentation.App"
+       xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+       xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
        NavigationPage.HasNavigationBar="False"
+       FlyoutBehavior="Flyout"
+       FlyoutWidth="300"
+       FlyoutBackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}"
        Shell.TabBarBackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray950}}"
        Shell.TabBarForegroundColor="{StaticResource Primary}"
        Shell.TabBarTitleColor="{StaticResource Primary}"
@@ -19,37 +24,65 @@
             StatusBarStyle="{AppThemeBinding Light=DarkContent, Dark=LightContent}" />
     </Shell.Behaviors>
 
+    <!-- The menu behind the burger: the profile, the reading and listening sections, then help and the app's own pages. -->
+    <Shell.FlyoutContent>
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Padding="12,24,12,24" Spacing="4">
+                <VerticalStackLayout.Resources>
+                    <DataTemplate x:Key="MenuEntryTemplate" x:DataType="app:AppMenuEntry">
+                        <Border
+                            Padding="14,12"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 16"
+                            BackgroundColor="Transparent"
+                            SemanticProperties.Description="{Binding Title}">
+                            <Border.Behaviors>
+                                <behaviors:PressFeedbackBehavior />
+                            </Border.Behaviors>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Command}" />
+                            </Border.GestureRecognizers>
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                                <ui:MaterialIconView IconName="{Binding Icon}" IconSize="24" VerticalOptions="Center" />
+                                <Label Grid.Column="1" Text="{Binding Title}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </VerticalStackLayout.Resources>
+
+                <Label x:Name="MenuTitle" Style="{StaticResource SectionTitleStyle}" Margin="14,0,14,12" />
+                <VerticalStackLayout x:Name="MenuProfile" BindableLayout.ItemTemplate="{StaticResource MenuEntryTemplate}" />
+                <BoxView HeightRequest="1" Margin="14,8" Color="{AppThemeBinding Light={StaticResource BorderSubtleLight}, Dark={StaticResource BorderSubtleDark}}" />
+                <Label x:Name="MenuLibraryTitle" Style="{StaticResource CaptionStyle}" Margin="14,4,14,4" />
+                <VerticalStackLayout x:Name="MenuLibrary" BindableLayout.ItemTemplate="{StaticResource MenuEntryTemplate}" />
+                <BoxView HeightRequest="1" Margin="14,8" Color="{AppThemeBinding Light={StaticResource BorderSubtleLight}, Dark={StaticResource BorderSubtleDark}}" />
+                <VerticalStackLayout x:Name="MenuApp" BindableLayout.ItemTemplate="{StaticResource MenuEntryTemplate}" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Shell.FlyoutContent>
+
+    <!-- Four tabs for every day: Practices, AI chat, Tests, Journal. Everything else is in the menu. -->
     <TabBar>
 
         <ShellContent
             x:Name="PracticeTab"
             Route="PracticeTab"
-            Title="{x:Static common:AppStrings.ShellTabPracticeShort}"
-            Icon="{mi:Material Icon=AutoAwesome}" />
+            Title="{x:Static common:AppStrings.ShellTabPracticeShort}" />
+
+        <ShellContent
+            x:Name="ChatTab"
+            Route="ChatTab"
+            Title="{x:Static common:AppStrings.ShellTabChatShort}" />
 
         <ShellContent
             x:Name="DetectorTab"
             Route="TestsTab"
-            Title="{x:Static common:AppStrings.ShellTabDetectorShort}"
-            Icon="{mi:Material Icon=Insights}" />
+            Title="{x:Static common:AppStrings.ShellTabDetectorShort}" />
 
         <ShellContent
-            x:Name="SomaticTab"
-            Route="SomaticTab"
-            Title="{x:Static common:AppStrings.ShellTabSomaticShort}"
-            Icon="{mi:Material Icon=Favorite}" />
-
-        <ShellContent
-            x:Name="CleanerTab"
-            Route="CleanerTab"
-            Title="{x:Static common:AppStrings.ShellTabMusicShort}"
-            Icon="{mi:Material Icon=MenuBook}" />
-
-        <ShellContent
-            x:Name="QuotesTab"
-            Route="QuotesTab"
-            Title="{x:Static common:AppStrings.ShellTabMotivatorShort}"
-            Icon="{mi:Material Icon=Lightbulb}" />
+            x:Name="JournalTab"
+            Route="JournalTab"
+            Title="{x:Static common:AppStrings.ShellTabJournalShort}" />
 
     </TabBar>
 </Shell>

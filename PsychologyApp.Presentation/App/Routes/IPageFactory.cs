@@ -14,7 +14,6 @@ using PsychologyApp.Presentation.Pages.ManageProfile.ProfileAlice;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileInfo;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileOptions;
 using PsychologyApp.Presentation.Pages.RunTests.TestHistory;
-using PsychologyApp.Presentation.Pages.SearchPhysics.StartPhysics;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.Techniques;
@@ -29,12 +28,17 @@ using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueSession;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueDesigner;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.PracticeCompletion;
 using PsychologyApp.Presentation.Pages.RunTests.TestsList;
-using PsychologyApp.Presentation.Pages.SearchPhysics.PhysicsSearch;
 using PsychologyApp.Presentation.Pages.PlayMusic.MusicPlayer;
 using PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
 using PsychologyApp.Presentation.Pages.ClinicalCare.CrisisHub;
 using PsychologyApp.Presentation.Pages.ClinicalCare.RiskCheck;
 using PsychologyApp.Presentation.Pages.ClinicalCare.SafetyPlan;
+using PsychologyApp.Presentation.Pages.ClinicalCare.Exposure;
+using PsychologyApp.Presentation.Pages.ClinicalCare.BodyCheck;
+using PsychologyApp.Presentation.Pages.ReadArticles.Articles;
+using PsychologyApp.Presentation.Pages.ReadArticles.ArticleReader;
+using PsychologyApp.Presentation.Pages.ReadArticles.Courses;
+using PsychologyApp.Presentation.Pages.ReadArticles.ForYou;
 
 namespace PsychologyApp.Presentation.App.Routes;
 
@@ -43,7 +47,6 @@ public interface IPageFactory
     TechniquesPage CreateTechniquesPage();
     TestsListPage CreateTestsListPage();
     TestHistoryPage CreateTestHistoryPage(string testId, string testTitle);
-    StartPhysicsPage CreateStartPhysicsPage();
     MusicPlayerPage CreateMusicPlayerPage();
     QuotePage CreateQuotePage();
     UserPage CreateUserPage();
@@ -58,7 +61,6 @@ public interface IPageFactory
     AlicePage CreateAlicePage();
     FormPage CreateFormPage();
     SettingsPage CreateSettingsPage();
-    PhysicsSearchPage CreatePhysicsSearchPage();
     TheoryPage CreateTheoryPage(string content, TechniqueId? techniqueId = null);
     FindProblemPage CreateFindProblemPage(string? description, List<string> algorithm, string? comment, Func<Task> startTest, string? testId = null);
     QuestionPage CreateQuestionPage(List<Question> questions, Func<int, string> scoreAnalyzer, bool singleAnswer, TestSessionInfo? session = null);
@@ -71,10 +73,19 @@ public interface IPageFactory
     /// <summary>Opens the dialogue page for techniques that have a conversation scenario, otherwise the classic form session.</summary>
     ContentPage CreateTechniquePage(TechniqueId techniqueId, INavigation hostNavigation);
     PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null, long? sessionResultId = null);
-    ChatListPage CreateChatListPage(INavigation hostNavigation);
-    ChatPage CreateChatPage(long? sessionId, INavigation hostNavigation);
+    /// <param name="hostNavigation">The stack to push onto, or null for the Chat tab, which uses its own.</param>
+    ChatListPage CreateChatListPage(INavigation? hostNavigation);
+    ChatPage CreateChatPage(long? sessionId, INavigation hostNavigation, string? topic = null);
     CompanionProfilePage CreateCompanionProfilePage(INavigation hostNavigation);
     CrisisHubPage CreateCrisisHubPage();
     RiskCheckPage CreateRiskCheckPage(string source);
     SafetyPlanPage CreateSafetyPlanPage();
+    ExposurePage CreateExposurePage();
+    BodyCheckPage CreateBodyCheckPage();
+    ArticlesPage CreateArticlesPage();
+    ForYouPage CreateForYouPage();
+    CoursesPage CreateCoursesPage();
+    ArticleReaderPage CreateArticleReaderPage(string articleId);
+    CoursePage CreateCoursePage(string courseId);
+    CourseDayPage CreateCourseDayPage(string courseId, int day);
 }

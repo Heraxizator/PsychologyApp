@@ -7,7 +7,6 @@ using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Practice;
 using PsychologyApp.Application.Quot;
-using PsychologyApp.Application.Reason;
 using PsychologyApp.Presentation.Shared.Abstractions;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
@@ -337,7 +336,6 @@ public sealed class QuoteViewModelTests
     private static LanguageContentReloader CreateLanguageReloader(IQuotService quotService) =>
         new(
             quotService,
-            new CachedReasonContentProvider(Mock.Of<IReasonContentProvider>()),
             new CachedQuotContentProvider(Mock.Of<IQuotContentProvider>()),
             new CachedTestCatalogProvider(Mock.Of<ITestCatalogProvider>()),
             new CachedTechniqueCatalogProvider(Mock.Of<ITechniqueCatalogProvider>()),

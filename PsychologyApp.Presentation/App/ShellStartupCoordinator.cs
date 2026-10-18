@@ -10,6 +10,7 @@ using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Pages.Onboarding;
 using PsychologyApp.Presentation.Features.Onboarding.DependencyInjection;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
+using PsychologyApp.Presentation.App.Routes;
 using PsychologyApp.Presentation.Shared.UI.Overlays;
 
 namespace PsychologyApp.Presentation.App;
@@ -103,7 +104,7 @@ public sealed class ShellStartupCoordinator(
             {
                 await MainThread.InvokeOnMainThreadAsync(async () =>
                 {
-                    await navigation.PushAsync(pageFactory.CreateCrisisHubPage(), true);
+                    await navigation.PushAsync(MauiNavigationService.PrepareSecondaryPage(pageFactory.CreateCrisisHubPage()), true);
                 });
                 return;
             }
@@ -113,7 +114,7 @@ public sealed class ShellStartupCoordinator(
                 await MainThread.InvokeOnMainThreadAsync(async () =>
                 {
                     await navigation.PushAsync(
-                        pageFactory.CreateRiskCheckPage(AppStrings.RiskCheckSourcePeriodic),
+                        MauiNavigationService.PrepareSecondaryPage(pageFactory.CreateRiskCheckPage(AppStrings.RiskCheckSourcePeriodic)),
                         true);
                 });
             }
@@ -124,7 +125,7 @@ public sealed class ShellStartupCoordinator(
             await MainThread.InvokeOnMainThreadAsync(async () =>
             {
                 toastService.ShortToast(AppStrings.StartupErrorMessage, AppToastKind.Error);
-                await navigation.PushAsync(pageFactory.CreateCrisisHubPage(), true);
+                await navigation.PushAsync(MauiNavigationService.PrepareSecondaryPage(pageFactory.CreateCrisisHubPage()), true);
             });
         }
     }

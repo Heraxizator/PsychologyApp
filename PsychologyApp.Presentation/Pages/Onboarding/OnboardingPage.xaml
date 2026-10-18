@@ -57,25 +57,25 @@
                             x:Name="OverviewBanner"
                             LeadText="{Binding OverviewLead}" />
                         <onboarding:OnboardingModuleRowView
-                            IconName="AutoAwesome"
+                            IconName="SelfImprovement"
                             Title="{Binding ModulePracticeTitle}"
                             Subtitle="{Binding ModulePracticeHint}" />
                         <onboarding:OnboardingModuleRowView
-                            IconName="Insights"
+                            IconName="ChatBubble"
+                            Title="{Binding ModuleChatTitle}"
+                            Subtitle="{Binding ModuleChatHint}" />
+                        <onboarding:OnboardingModuleRowView
+                            IconName="AssignmentTurnedIn"
                             Title="{Binding ModuleTestsTitle}"
                             Subtitle="{Binding ModuleTestsHint}" />
                         <onboarding:OnboardingModuleRowView
-                            IconName="Favorite"
-                            Title="{Binding ModuleSomaticTitle}"
-                            Subtitle="{Binding ModuleSomaticHint}" />
+                            IconName="AutoStories"
+                            Title="{Binding ModuleLibraryTitle}"
+                            Subtitle="{Binding ModuleLibraryHint}" />
                         <onboarding:OnboardingModuleRowView
-                            IconName="MenuBook"
-                            Title="{Binding ModuleMusicTitle}"
-                            Subtitle="{Binding ModuleMusicHint}" />
-                        <onboarding:OnboardingModuleRowView
-                            IconName="Lightbulb"
-                            Title="{Binding ModuleQuotesTitle}"
-                            Subtitle="{Binding ModuleQuotesHint}" />
+                            IconName="Mood"
+                            Title="{Binding ModuleJournalTitle}"
+                            Subtitle="{Binding ModuleJournalHint}" />
                     </VerticalStackLayout>
 
                     <VerticalStackLayout

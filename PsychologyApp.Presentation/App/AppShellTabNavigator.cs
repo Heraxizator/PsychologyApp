@@ -13,8 +13,7 @@ public sealed class AppShellTabNavigator(Func<AppShell> appShellFactory, Func<IN
         MainThread.BeginInvokeOnMainThread(() =>
         {
             AppShell appShell = Shell;
-            appShell.MaterializeTab(appShell.PracticeShellTab);
-            appShell.CurrentItem = appShell.PracticeShellTab;
+            appShell.ShowTab(appShell.PracticeShellTab);
             appShell.OpenPendingTechniqueIfNeeded();
         });
     }
@@ -24,8 +23,7 @@ public sealed class AppShellTabNavigator(Func<AppShell> appShellFactory, Func<IN
         MainThread.BeginInvokeOnMainThread(() =>
         {
             AppShell appShell = Shell;
-            appShell.MaterializeTab(appShell.PracticeShellTab);
-            appShell.CurrentItem = appShell.PracticeShellTab;
+            appShell.ShowTab(appShell.PracticeShellTab);
             appShell.OpenPendingJournalIfNeeded();
         });
     }
@@ -35,18 +33,21 @@ public sealed class AppShellTabNavigator(Func<AppShell> appShellFactory, Func<IN
         MainThread.BeginInvokeOnMainThread(() =>
         {
             AppShell appShell = Shell;
-            appShell.MaterializeTab(appShell.PracticeShellTab);
-            appShell.CurrentItem = appShell.PracticeShellTab;
+            appShell.ShowTab(appShell.PracticeShellTab);
         });
     }
 
-    public void OpenQuotesTab()
+    public void OpenQuotes()
     {
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            AppShell appShell = Shell;
-            appShell.MaterializeTab(appShell.QuotesShellTab);
-            appShell.CurrentItem = appShell.QuotesShellTab;
+            // The quotes open over whatever is on screen; a second reminder tap must not stack another copy on the first.
+            if (Microsoft.Maui.Controls.Shell.Current?.CurrentPage is PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed.QuotePage)
+            {
+                return;
+            }
+
+            navigationServiceFactory().GoToQuotesAsync().FireAndForget();
         });
     }
 

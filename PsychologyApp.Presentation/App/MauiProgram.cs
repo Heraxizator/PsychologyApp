@@ -1,11 +1,11 @@
 using CommunityToolkit.Maui;
 using MauiIcons.Material;
+using MauiIcons.Material.Outlined;
 using Microsoft.Extensions.Logging;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Conversation.Companion;
 using PsychologyApp.Application.DependencyInjection;
-using PsychologyApp.Application.Reason;
 using PsychologyApp.Application.Practice;
 using PsychologyApp.Bootstrap;
 using PsychologyApp.Domain.Base.Constants;
@@ -33,12 +33,19 @@ public static class MauiProgram
             .UseMauiCommunityToolkitMediaElement(isAndroidForegroundServiceEnabled: false)
 #endif
             .UseMaterialMauiIcons()
+            .UseMaterialOutlinedMauiIcons()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("Inter-Regular.ttf", "InterRegular");
                 fonts.AddFont("Inter-Medium.ttf", "InterMedium");
                 fonts.AddFont("Inter-SemiBold.ttf", "InterSemiBold");
-            });
+            })
+#if ANDROID
+            .ConfigureMauiHandlers(handlers => handlers.AddHandler<
+                PsychologyApp.Presentation.Widgets.TechniqueListCard.TechniqueCardNativeView,
+                PsychologyApp.Presentation.Platforms.Android.TechniqueCardHandler>())
+#endif
+            ;
 
         ConfigureHandlers();
         ReduceMotion.Refresh();
@@ -66,11 +73,6 @@ public static class MauiProgram
             settings.LargeTimeoutMs = settings.LargeTimeoutMs > 0 ? settings.LargeTimeoutMs : Constants.LargeBaseTimeout;
         });
 
-        builder.Services.AddSingleton<MauiReasonContentProvider>();
-        builder.Services.AddPsychologyAppCachedReasonContent(sp =>
-            new CachedReasonContentProvider(
-                sp.GetRequiredService<MauiReasonContentProvider>(),
-                () => AppStrings.Language));
         builder.Services.AddSingleton<MauiQuotContentProvider>();
         builder.Services.AddPsychologyAppCachedQuotContent<MauiQuotContentProvider>();
         builder.Services.AddSingleton<MauiTestAssetReader>();
@@ -85,11 +87,15 @@ public static class MauiProgram
         builder.Services.AddSingleton(sp => new BuiltInTechniqueCatalogProvider(
             () => AppStrings.IsEnglish(AppStrings.Language) ? "en" : "ru"));
         builder.Services.AddPsychologyAppPresentation();
-        builder.Services.AddSingleton<AppShell>();
+        // Navigation for the shell itself (menu, notification taps): no owner page, so it acts on the current tab's stack.
+        // INavigationService is not registered on its own; it is always made through the context factory.
+        static Func<INavigationService> ShellNavigation(IServiceProvider sp) =>
+            () => sp.GetRequiredService<Func<NavigationContext, INavigationService>>()(new NavigationContext(null));
+        builder.Services.AddSingleton(sp => ActivatorUtilities.CreateInstance<AppShell>(sp, ShellNavigation(sp)));
         builder.Services.AddSingleton<IShellTabNavigator>(sp =>
             new AppShellTabNavigator(
                 () => sp.GetRequiredService<AppShell>(),
-                () => sp.GetRequiredService<INavigationService>()));
+                ShellNavigation(sp)));
 
         MauiApp app = builder.Build();
         NavigationCoordinator.SetLogger(

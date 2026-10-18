@@ -27,7 +27,7 @@ public partial class UserViewModel
         ReloadQuotesCommand = new AsyncCommand(() => ReloadQuotesAsync());
         CancelQuotesCommand = new Command(CancelQuotesLoading);
         OpenTestsListCommand = new AsyncCommand(() => _navigationService.GoToTestsTabAsync());
-        OpenQuotesTabCommand = new AsyncCommand(() => _navigationService.GoToQuotesTabAsync());
+        OpenQuotesTabCommand = new AsyncCommand(() => _navigationService.GoToQuotesAsync());
         OpenQuotesFavoritesCommand = new AsyncCommand(() => _navigationService.GoToQuotesFavoritesAsync());
     }
 }

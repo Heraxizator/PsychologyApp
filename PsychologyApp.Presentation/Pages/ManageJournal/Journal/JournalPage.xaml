@@ -12,76 +12,34 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ManageJournal.Journal"
              x:Name="JournalRoot"
              x:DataType="vm:JournalViewModel"
-             Shell.NavBarIsVisible="False"
+             Shell.NavBarIsVisible="True"
              Title="{Binding PageTitle}">
+
+    <!-- The same bar as the other tabs: the title on the left, the overview and the history as icons. The glyph goes through a
+         FontImageSource: the icon extension set straight on IconImageSource draws nothing in the Android toolbar. -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{Binding OpenOverviewLabel}" Command="{Binding OpenOverviewCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="{mi:Material Icon=Insights}" Size="24"
+                                 Color="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem Text="{Binding OpenTimelineLabel}" Command="{Binding OpenTimelineCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="{mi:Material Icon=History}" Size="24"
+                                 Color="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
 
     <Grid>
     <ScrollView VerticalScrollBarVisibility="Never">
         <VerticalStackLayout
-            Margin="{StaticResource LayoutPageMarginThickness}"
+            Margin="{StaticResource LayoutTabPageMarginThickness}"
             Spacing="{StaticResource LayoutSpacing}">
             <VerticalStackLayout.Behaviors>
                 <behaviors:StaggerChildrenBehavior />
             </VerticalStackLayout.Behaviors>
-
-            <Grid
-                Margin="{StaticResource NavBarBottomMargin}"
-                ColumnDefinitions="44,*,Auto,Auto"
-                ColumnSpacing="4"
-                MinimumHeightRequest="48">
-                <Grid.Behaviors>
-                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
-                </Grid.Behaviors>
-                <BoxView
-                    Grid.ColumnSpan="4"
-                    HeightRequest="1"
-                    VerticalOptions="End"
-                    Color="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}" />
-                <Border
-                    Grid.Column="0"
-                    Style="{StaticResource NavBackButtonStyle}"
-                    SemanticProperties.Description="{x:Static common:AppStrings.Back}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding BackCommand}" />
-                    </Border.GestureRecognizers>
-                    <Label
-                        Style="{StaticResource NavBackIconStyle}"
-                        WidthRequest="-1"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"
-                        Text="{mi:Material Icon=KeyboardArrowLeft}" />
-                </Border>
-                <Label
-                    Grid.Column="1"
-                    Text="{Binding PageTitle}"
-                    Style="{StaticResource NavTitleStyle}"
-                    HorizontalOptions="Fill"
-                    HorizontalTextAlignment="Center"
-                    LineBreakMode="WordWrap"
-                    MaxLines="2" />
-                <Label
-                    Grid.Column="2"
-                    Style="{StaticResource IconActionStyle}"
-                    WidthRequest="40"
-                    VerticalOptions="Center"
-                    Text="{mi:Material Icon=Insights}"
-                    SemanticProperties.Description="{Binding OpenOverviewLabel}">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding OpenOverviewCommand}" />
-                    </Label.GestureRecognizers>
-                </Label>
-                <Label
-                    Grid.Column="3"
-                    Style="{StaticResource IconActionStyle}"
-                    WidthRequest="40"
-                    VerticalOptions="Center"
-                    Text="{mi:Material Icon=History}"
-                    SemanticProperties.Description="{Binding OpenTimelineLabel}">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding OpenTimelineCommand}" />
-                    </Label.GestureRecognizers>
-                </Label>
-            </Grid>
 
             <Label
                 Text="{Binding DayHeaderText}"

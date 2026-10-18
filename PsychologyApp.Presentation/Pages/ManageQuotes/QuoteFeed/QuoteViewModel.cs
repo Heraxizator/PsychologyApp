@@ -31,7 +31,6 @@ public partial class QuoteViewModel : BaseViewModel
     public ICommand SelectThemeCommand { get; private set; } = default!;
     public ICommand ShowFavoritesCommand { get; private set; } = default!;
     public ICommand ShowAgainCommand { get; private set; } = default!;
-    public ICommand OpenProfileCommand { get; private set; } = default!;
     public ICommand CancelSearchCommand { get; private set; } = default!;
 
     private readonly IQuotService _quotService;
@@ -82,7 +81,6 @@ public partial class QuoteViewModel : BaseViewModel
         try
         {
             BindNavigation(navigationService);
-            OpenProfileCommand = new AsyncCommand(() => navigationService.GoToUserProfileAsync());
             Cancel = new Command(CancelInit);
             CancelSearchCommand = new Command(() => _searchController.CancelPendingSearch());
             LoadMoreQuotesCommand = new AsyncCommand(() => AddFreshQuotesAsync());

@@ -11,6 +11,7 @@ using PsychologyApp.Presentation.Shared.Services.Notifications;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
+using PsychologyApp.Presentation.Shared.Services.Speech;
 using PsychologyApp.Presentation.Shared.Navigation;
 
 namespace PsychologyApp.Presentation.App.DependencyInjection;
@@ -24,6 +25,8 @@ public static class SharedPresentationServiceCollectionExtensions
         services.AddSingleton<IAppClipboardService, AppClipboardService>();
         services.AddSingleton<IPageHost, MauiPageHost>();
         services.AddSingleton<IDialogService, DialogService>();
+        services.AddSingleton<ISpeechInput, DeviceSpeechInput>();
+        services.AddSingleton<ChipUsageStore>();
         services.AddSingleton<GlobalExceptionHandler>();
         services.AddSingleton<IPageViewModelActivator, PageViewModelActivator>();
         services.AddSingleton<IPageFactory, PageRegistry>();
@@ -53,7 +56,8 @@ public static class SharedPresentationServiceCollectionExtensions
                 sp.GetRequiredService<IPageFactory>(),
                 sp.GetRequiredService<IShellStartupCoordinator>(),
                 sp.GetRequiredService<PsychologyApp.Presentation.Features.ManageJournal.JournalScreenCoordinator>(),
-                sp.GetRequiredService<IUserPreferencesStore>()));
+                sp.GetRequiredService<IUserPreferencesStore>(),
+                sp.GetRequiredService<PsychologyApp.Presentation.Features.RunTests.TestOpener>()));
 
         return services;
     }

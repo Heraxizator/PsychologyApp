@@ -1,6 +1,7 @@
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 ﻿using PsychologyApp.Application.Models;
 using PsychologyApp.Presentation.Features.ManageJournal;
+using PsychologyApp.Presentation.Features.RunTests;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Shared.Common;
@@ -17,14 +18,17 @@ public sealed class MauiNavigationService : INavigationService
     private readonly IShellStartupCoordinator _shellStartupCoordinator;
     private readonly JournalScreenCoordinator _journalScreenCoordinator;
     private readonly IUserPreferencesStore _preferences;
+    private readonly TestOpener _testOpener;
 
     public MauiNavigationService(
         NavigationContext context,
         IPageFactory pageFactory,
         IShellStartupCoordinator shellStartupCoordinator,
         JournalScreenCoordinator journalScreenCoordinator,
-        IUserPreferencesStore preferences)
+        IUserPreferencesStore preferences,
+        TestOpener testOpener)
     {
+        _testOpener = testOpener;
         _preferences = preferences;
         _navigation = context.Navigation;
         _ownerPage = context.OwnerPage is { } page ? new WeakReference<ContentPage>(page) : null;
@@ -63,7 +67,15 @@ public sealed class MauiNavigationService : INavigationService
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(PrepareSecondaryPage(_pageFactory.CreatePracticeHistoryPage()), true));
 
     public Task GoToJournalAsync() =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(PrepareSecondaryPage(_pageFactory.CreateJournalPage()), true));
+        NavigationCoordinator.RunAsync(() =>
+        {
+            if (Shell.Current is AppShell appShell)
+            {
+                appShell.ShowTab(appShell.JournalShellTab);
+            }
+
+            return Task.CompletedTask;
+        });
 
     public Task GoToJournalDayAsync(DateOnly day) =>
         _journalScreenCoordinator.OpenEditorDayAsync(day, this);
@@ -91,9 +103,6 @@ public sealed class MauiNavigationService : INavigationService
 
     public Task GoToSettingsAsync() =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(PrepareSecondaryPage(_pageFactory.CreateSettingsPage()), true));
-
-    public Task GoToPhysicsSearchAsync() =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(PrepareSecondaryPage(_pageFactory.CreatePhysicsSearchPage()), false));
 
     public Task GoToTheoryAsync(string content, TechniqueId? techniqueId = null) =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(PrepareSecondaryPage(_pageFactory.CreateTheoryPage(content, techniqueId)), false));
@@ -167,8 +176,7 @@ public sealed class MauiNavigationService : INavigationService
         {
             if (Shell.Current is AppShell appShell)
             {
-                appShell.MaterializeTab(appShell.TestsTab);
-                appShell.CurrentItem = appShell.TestsTab;
+                appShell.ShowTab(appShell.TestsTab);
             }
 
             return Task.CompletedTask;
@@ -179,50 +187,36 @@ public sealed class MauiNavigationService : INavigationService
         {
             if (Shell.Current is AppShell appShell)
             {
-                appShell.MaterializeTab(appShell.PracticeShellTab);
-                appShell.CurrentItem = appShell.PracticeShellTab;
+                appShell.ShowTab(appShell.PracticeShellTab);
             }
 
             return Task.CompletedTask;
         });
 
-    public Task GoToQuotesTabAsync() =>
-        NavigationCoordinator.RunAsync(() =>
-        {
-            if (Shell.Current is AppShell appShell)
-            {
-                appShell.MaterializeTab(appShell.QuotesShellTab);
-                appShell.CurrentItem = appShell.QuotesShellTab;
-            }
+    // The menu's sections open over the current tab and keep the tab bar: they are places of their own, not steps of a task.
+    public Task GoToQuotesAsync() =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateQuotePage(), true));
 
-            return Task.CompletedTask;
-        });
+    public Task GoToPrayersAsync() =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateMusicPlayerPage(), true));
 
-    public Task GoToPrayersTabAsync() =>
-        NavigationCoordinator.RunAsync(() =>
-        {
-            if (Shell.Current is AppShell appShell)
-            {
-                appShell.MaterializeTab(appShell.PrayersShellTab);
-                appShell.CurrentItem = appShell.PrayersShellTab;
-            }
+    public Task GoToForYouAsync() =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateForYouPage(), true));
 
-            return Task.CompletedTask;
-        });
+    public Task GoToCoursesAsync() =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateCoursesPage(), true));
 
-    public Task GoToQuotesFavoritesAsync() =>
-        NavigationCoordinator.RunAsync(() =>
-        {
-            _preferences.SetPendingQuoteFeed("favorites");
+    public Task GoToArticlesAsync() =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateArticlesPage(), true));
 
-            if (Shell.Current is AppShell appShell)
-            {
-                appShell.MaterializeTab(appShell.QuotesShellTab);
-                appShell.CurrentItem = appShell.QuotesShellTab;
-            }
+    public Task GoToBodyAsync() =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateBodyCheckPage(), true));
 
-            return Task.CompletedTask;
-        });
+    public Task GoToQuotesFavoritesAsync()
+    {
+        _preferences.SetPendingQuoteFeed("favorites");
+        return GoToQuotesAsync();
+    }
 
     public Task ShowOnboardingAsync() =>
         NavigationCoordinator.RunAsync(() => _shellStartupCoordinator.ShowOnboardingAsync(
@@ -231,17 +225,21 @@ public sealed class MauiNavigationService : INavigationService
 
 
     public Task GoToChatListAsync() =>
-        NavigationCoordinator.RunPushAsync(() =>
+        NavigationCoordinator.RunAsync(() =>
         {
-            INavigation hostNavigation = ResolveNavigation();
-            return hostNavigation.PushAsync(PrepareSecondaryPage(_pageFactory.CreateChatListPage(hostNavigation)), true);
+            if (Shell.Current is AppShell appShell)
+            {
+                appShell.ShowTab(appShell.ChatShellTab);
+            }
+
+            return Task.CompletedTask;
         });
 
-    public Task GoToChatAsync(long? sessionId = null) =>
+    public Task GoToChatAsync(long? sessionId = null, string? topic = null) =>
         NavigationCoordinator.RunPushAsync(() =>
         {
             INavigation hostNavigation = ResolveNavigation();
-            return hostNavigation.PushAsync(PrepareSecondaryPage(_pageFactory.CreateChatPage(sessionId, hostNavigation)), true);
+            return hostNavigation.PushAsync(PrepareSecondaryPage(_pageFactory.CreateChatPage(sessionId, hostNavigation, topic)), true);
         });
 
     public Task GoToCompanionProfileAsync() =>
@@ -260,12 +258,31 @@ public sealed class MauiNavigationService : INavigationService
     public Task GoToSafetyPlanAsync() =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(PrepareSecondaryPage(_pageFactory.CreateSafetyPlanPage()), true));
 
+    public Task GoToExposureAsync() =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(PrepareSecondaryPage(_pageFactory.CreateExposurePage()), true));
+
+    public Task GoToArticleAsync(string articleId) =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(PrepareSecondaryPage(_pageFactory.CreateArticleReaderPage(articleId)), true));
+
+    public Task GoToTestAsync(string testId) => _testOpener.OpenAsync(testId, this);
+
+    public Task GoToCourseAsync(string courseId) =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(PrepareSecondaryPage(_pageFactory.CreateCoursePage(courseId)), true));
+
+    public Task GoToCourseDayAsync(string courseId, int day) =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(PrepareSecondaryPage(_pageFactory.CreateCourseDayPage(courseId, day)), true));
+
     public Task GoToDataBackupAsync() =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(PrepareSecondaryPage(_pageFactory.CreateDataBackupPage()), true));
 
-    private static ContentPage PrepareSecondaryPage(ContentPage page)
+    /// <summary>
+    /// A step inside a tab (a practice, a test, a chat, a form): no tab bar and no burger menu. A menu tap closes whatever is open over
+    /// the tab, so the menu must not be reachable (also by an edge swipe) from a page with unsaved answers.
+    /// </summary>
+    internal static ContentPage PrepareSecondaryPage(ContentPage page)
     {
         Shell.SetTabBarIsVisible(page, false);
+        Shell.SetFlyoutBehavior(page, FlyoutBehavior.Disabled);
         return page;
     }
 
@@ -280,8 +297,7 @@ public sealed class MauiNavigationService : INavigationService
 
         if (Shell.Current is AppShell appShell)
         {
-            appShell.MaterializeTab(appShell.PracticeShellTab);
-            appShell.CurrentItem = appShell.PracticeShellTab;
+            appShell.ShowTab(appShell.PracticeShellTab);
             appShell.OpenPendingTechniqueIfNeeded();
         }
 

@@ -11,7 +11,7 @@ public interface IShellTabNavigator
 
     void OpenPracticeTab();
 
-    void OpenQuotesTab();
+    void OpenQuotes();
 
     void OpenChat();
 }

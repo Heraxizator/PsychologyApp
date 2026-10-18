@@ -13,7 +13,6 @@ public partial class TestsListViewModel
     public string LoadingText => AppStrings.TestsLoadingText;
     public string FailedText => AppStrings.LoadFailed;
     public string RetryText => AppStrings.RetryQuestion;
-    public string ProfileToolbarText => AppStrings.ProfileTitle;
 
     protected override void RefreshLocalizedProperties()
     {
@@ -26,8 +25,7 @@ public partial class TestsListViewModel
             nameof(EmptyRefreshText),
             nameof(LoadingText),
             nameof(FailedText),
-            nameof(RetryText),
-            nameof(ProfileToolbarText));
+            nameof(RetryText));
 
         if (_initialized)
         {

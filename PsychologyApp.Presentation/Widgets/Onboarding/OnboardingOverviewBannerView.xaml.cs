@@ -24,7 +24,7 @@ public partial class OnboardingOverviewBannerView : ContentView
         [
             PracticeIconBorder,
             TestsIconBorder,
-            SomaticIconBorder,
+            ArticlesIconBorder,
             MusicIconBorder,
             QuotesIconBorder
         ];

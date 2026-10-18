@@ -41,7 +41,6 @@ public class TestNavigationService(INavigation navigation) : INavigationService
 
     public Task GoToSettingsAsync() => Task.CompletedTask;
 
-    public Task GoToPhysicsSearchAsync() => Task.CompletedTask;
 
     public Task GoToTheoryAsync(string content, TechniqueId? techniqueId = null) => Task.CompletedTask;
 
@@ -78,20 +77,29 @@ public class TestNavigationService(INavigation navigation) : INavigationService
 
     public Task GoToPracticeCompletionAsync(int streakDays, string? completedItemKey = null, long? sessionResultId = null) => Task.CompletedTask;
 
-    public Task GoToQuotesTabAsync() => Task.CompletedTask;
+    public Task GoToQuotesAsync() => Task.CompletedTask;
 
     public Task GoToQuotesFavoritesAsync() => Task.CompletedTask;
 
-    public Task GoToPrayersTabAsync() => Task.CompletedTask;
+    public Task GoToPrayersAsync() => Task.CompletedTask;
+    public Task GoToForYouAsync() => Task.CompletedTask;
+    public Task GoToCoursesAsync() => Task.CompletedTask;
+    public Task GoToArticlesAsync() => Task.CompletedTask;
+    public Task GoToBodyAsync() => Task.CompletedTask;
 
     public Task ShowOnboardingAsync() => Task.CompletedTask;
 
     public Task GoToChatListAsync() => Task.CompletedTask;
-    public Task GoToChatAsync(long? sessionId = null) => Task.CompletedTask;
+    public Task GoToChatAsync(long? sessionId = null, string? topic = null) => Task.CompletedTask;
     public Task GoToCompanionProfileAsync() => Task.CompletedTask;
     public Task GoToCrisisHubAsync() => Task.CompletedTask;
 
     public Task GoToRiskCheckAsync(string source) => Task.CompletedTask;
     public Task GoToSafetyPlanAsync() => Task.CompletedTask;
+    public Task GoToExposureAsync() => Task.CompletedTask;
+    public Task GoToArticleAsync(string articleId) => Task.CompletedTask;
+    public Task GoToTestAsync(string testId) => Task.CompletedTask;
+    public Task GoToCourseAsync(string courseId) => Task.CompletedTask;
+    public Task GoToCourseDayAsync(string courseId, int day) => Task.CompletedTask;
     public Task GoToDataBackupAsync() => Task.CompletedTask;
 }

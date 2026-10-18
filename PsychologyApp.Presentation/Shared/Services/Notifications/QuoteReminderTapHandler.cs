@@ -9,5 +9,5 @@ public static class QuoteReminderTapHandler
     public static void Configure(IShellTabNavigator shellTabNavigator) =>
         _shellTabNavigator = shellTabNavigator;
 
-    public static void Handle() => _shellTabNavigator?.OpenQuotesTab();
+    public static void Handle() => _shellTabNavigator?.OpenQuotes();
 }

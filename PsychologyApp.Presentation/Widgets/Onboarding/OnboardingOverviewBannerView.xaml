@@ -43,7 +43,7 @@
                         VerticalOptions="Center" />
                 </Border>
                 <Border
-                    x:Name="SomaticIconBorder"
+                    x:Name="ArticlesIconBorder"
                     WidthRequest="40"
                     HeightRequest="40"
                     StrokeThickness="0"
@@ -52,7 +52,7 @@
                         <RoundRectangle CornerRadius="10" />
                     </Border.StrokeShape>
                     <ui:MaterialIconView
-                        IconName="Favorite"
+                        IconName="Article"
                         IconColor="{DynamicResource Primary}"
                         HorizontalOptions="Center"
                         VerticalOptions="Center" />

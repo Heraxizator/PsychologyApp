@@ -1,6 +1,6 @@
 using PsychologyApp.Presentation.Features.Onboarding.DependencyInjection;
+using PsychologyApp.Presentation.Features.ReadArticles.DependencyInjection;
 using PsychologyApp.Presentation.Features.PlayMusic.DependencyInjection;
-using PsychologyApp.Presentation.Features.SearchPhysics.DependencyInjection;
 using PsychologyApp.Presentation.Features.ManageQuotes.DependencyInjection;
 using PsychologyApp.Presentation.Features.RunTests.DependencyInjection;
 using PsychologyApp.Presentation.Features.ManageProfile.DependencyInjection;
@@ -21,13 +21,13 @@ public static class PresentationServiceCollectionExtensions
         services.AddOnboardingFeature();
         services.AddClinicalCareFeature();
         services.AddPlayMusicFeature();
-        services.AddSearchPhysicsFeature();
         services.AddManageQuotesFeature();
         services.AddRunTestsFeature();
         services.AddManageProfileFeature();
         services.AddManageJournalFeature();
         services.AddRunTechniqueSessionFeature();
         services.AddChatFeature();
+        services.AddReadArticlesFeature();
         return services;
     }
 }

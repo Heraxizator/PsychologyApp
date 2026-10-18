@@ -13,6 +13,6 @@ public sealed class TheoryNavigationAdapter(IPracticeTheoryNavigator theoryNavig
         {
             TechniqueId? id = techniqueId is null ? null : Enum.Parse<TechniqueId>(techniqueId);
             TheoryPage page = theoryNavigator.CreateTheoryPage(content, id);
-            return Shell.Current.Navigation.PushAsync(page);
+            return Shell.Current.Navigation.PushAsync(MauiNavigationService.PrepareSecondaryPage(page));
         });
 }

@@ -33,12 +33,12 @@ public partial class OnboardingViewModel
     public string ModulePracticeHint => AppStrings.OnboardingModulePracticeHint;
     public string ModuleTestsTitle => AppStrings.ShellTabDetectorShort;
     public string ModuleTestsHint => AppStrings.OnboardingModuleTestsHint;
-    public string ModuleSomaticTitle => AppStrings.ShellTabSomaticShort;
-    public string ModuleSomaticHint => AppStrings.OnboardingModuleSomaticHint;
-    public string ModuleMusicTitle => AppStrings.ShellTabMusicShort;
-    public string ModuleMusicHint => AppStrings.OnboardingModuleMusicHint;
-    public string ModuleQuotesTitle => AppStrings.ShellTabMotivatorShort;
-    public string ModuleQuotesHint => AppStrings.OnboardingModuleQuotesHint;
+    public string ModuleChatTitle => AppStrings.ShellTabChatShort;
+    public string ModuleChatHint => AppStrings.OnboardingModuleChatHint;
+    public string ModuleLibraryTitle => AppStrings.ShellTabLibraryShort;
+    public string ModuleLibraryHint => AppStrings.OnboardingModuleLibraryHint;
+    public string ModuleJournalTitle => AppStrings.ShellTabJournalShort;
+    public string ModuleJournalHint => AppStrings.OnboardingModuleJournalHint;
 
     public string ConcernAnxiety => AppStrings.OnboardingConcernAnxiety;
     public string ConcernBody => AppStrings.OnboardingConcernBody;
@@ -94,12 +94,12 @@ public partial class OnboardingViewModel
             nameof(ModulePracticeHint),
             nameof(ModuleTestsTitle),
             nameof(ModuleTestsHint),
-            nameof(ModuleSomaticTitle),
-            nameof(ModuleSomaticHint),
-            nameof(ModuleMusicTitle),
-            nameof(ModuleMusicHint),
-            nameof(ModuleQuotesTitle),
-            nameof(ModuleQuotesHint),
+            nameof(ModuleChatTitle),
+            nameof(ModuleChatHint),
+            nameof(ModuleLibraryTitle),
+            nameof(ModuleLibraryHint),
+            nameof(ModuleJournalTitle),
+            nameof(ModuleJournalHint),
             nameof(ConcernAnxiety),
             nameof(ConcernBody),
             nameof(ConcernMood),

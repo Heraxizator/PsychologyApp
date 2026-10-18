@@ -25,7 +25,6 @@ public partial class TestsListViewModel : BaseViewModel
 
     public bool HasInitialized => _initialized;
 
-    public ICommand OpenProfileCommand { get; }
 
     public ObservableRangeCollection<TestItem> TestItemCollection { get; } = [];
 
@@ -44,7 +43,6 @@ public partial class TestsListViewModel : BaseViewModel
         _settings = settings;
         _logger = logger;
         BindNavigation(navigationService);
-        OpenProfileCommand = new AsyncCommand(() => _navigationService.GoToUserProfileAsync());
         Cancel = new Command(CancelInit);
         Reload = new AsyncCommand(ReloadAsync);
     }
