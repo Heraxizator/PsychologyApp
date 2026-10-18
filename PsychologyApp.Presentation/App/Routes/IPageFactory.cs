@@ -51,6 +51,7 @@ public interface IPageFactory
     QuotePage CreateQuotePage();
     UserPage CreateUserPage();
     PracticeHistoryPage CreatePracticeHistoryPage();
+    PsychologyApp.Presentation.Pages.ManageProfile.ProfileInsights.InsightsPage CreateInsightsPage();
     DataBackupPage CreateDataBackupPage();
     JournalPage CreateJournalPage();
     JournalOverviewPage CreateJournalOverviewPage();

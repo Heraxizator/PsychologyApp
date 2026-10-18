@@ -408,6 +408,7 @@ public partial class AppShell : Shell
         BindableLayout.SetItemsSource(MenuProfile, new[]
         {
             MenuEntry("Person", AppStrings.ProfileTitle, navigation => navigation.GoToUserProfileAsync()),
+            MenuEntry("Insights", AppStrings.InsightsTitle, navigation => navigation.GoToInsightsAsync()),
             MenuEntry("AccessibilityNew", AppStrings.BodyTitle, navigation => navigation.GoToBodyAsync())
         });
         BindableLayout.SetItemsSource(MenuLibrary, new[]

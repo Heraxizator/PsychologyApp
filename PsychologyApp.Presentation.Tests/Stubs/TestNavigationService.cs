@@ -86,6 +86,7 @@ public class TestNavigationService(INavigation navigation) : INavigationService
     public Task GoToCoursesAsync() => Task.CompletedTask;
     public Task GoToArticlesAsync() => Task.CompletedTask;
     public Task GoToBodyAsync() => Task.CompletedTask;
+    public Task GoToInsightsAsync() => Task.CompletedTask;
 
     public Task ShowOnboardingAsync() => Task.CompletedTask;
 

@@ -99,7 +99,7 @@ Some screens intentionally compose multiple slices:
 
 | Source slice | May import |
 |--------------|------------|
-| ManageProfile | ManageQuotes.Index (profile quotes), RunTechniqueSession.Index (featured techniques) |
+| ManageProfile | ManageJournal (journal factors read by «Что мне помогает»), ManageQuotes.Index (profile quotes), RunTechniqueSession.Index (featured techniques) |
 | RunTests | RunTechniqueSession.Index (test result technique recommendations) |
 
 All other cross-feature imports are forbidden and enforced by architecture tests.

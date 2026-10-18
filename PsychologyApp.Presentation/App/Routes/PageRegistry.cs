@@ -96,6 +96,9 @@ public sealed class PageRegistry(
     public PracticeHistoryPage CreatePracticeHistoryPage() =>
         WithPressFeedback(profilePageFactory.CreatePracticeHistoryPage());
 
+    public PsychologyApp.Presentation.Pages.ManageProfile.ProfileInsights.InsightsPage CreateInsightsPage() =>
+        WithPressFeedback(profilePageFactory.CreateInsightsPage());
+
     public JournalPage CreateJournalPage() =>
         WithPressFeedback(journalPageFactory.CreateJournalPage());
 

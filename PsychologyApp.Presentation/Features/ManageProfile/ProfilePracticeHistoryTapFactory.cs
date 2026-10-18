@@ -10,7 +10,7 @@ public static class ProfilePracticeHistoryTapFactory
 {
     public static PracticeHistoryItem WithTapCommand(PracticeHistoryItem item, INavigationService navigationService)
     {
-        ICommand? tapCommand = CreateTapCommand(item.ItemKey, navigationService);
+        ICommand? tapCommand = OpenCommand(item.ItemKey, navigationService);
         if (tapCommand is null)
         {
             return item;
@@ -32,7 +32,8 @@ public static class ProfilePracticeHistoryTapFactory
         };
     }
 
-    private static ICommand? CreateTapCommand(string itemKey, INavigationService navigationService)
+    /// <summary>Opens the practice a result was recorded for: a built-in one by its id, one the person made by its number.</summary>
+    public static ICommand? OpenCommand(string itemKey, INavigationService navigationService)
     {
         if (string.IsNullOrWhiteSpace(itemKey))
         {

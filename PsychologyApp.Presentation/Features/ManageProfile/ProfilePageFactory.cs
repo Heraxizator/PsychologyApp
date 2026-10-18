@@ -8,6 +8,7 @@ using PsychologyApp.Presentation.Pages.ManageProfile.ProfileDataBackup;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfilePracticeHistory;
+using PsychologyApp.Presentation.Pages.ManageProfile.ProfileInsights;
 
 namespace PsychologyApp.Presentation.Features.ManageProfile;
 
@@ -20,6 +21,7 @@ public interface IProfilePageFactory
     AlicePage CreateAlicePage();
     SettingsPage CreateSettingsPage();
     PracticeHistoryPage CreatePracticeHistoryPage();
+    InsightsPage CreateInsightsPage();
     DataBackupPage CreateDataBackupPage();
 }
 
@@ -32,6 +34,7 @@ public sealed class ProfilePageFactory(
     IAliceViewModelFactory aliceViewModelFactory,
     ISettingsViewModelFactory settingsViewModelFactory,
     IPracticeHistoryViewModelFactory practiceHistoryViewModelFactory,
+    IInsightsViewModelFactory insightsViewModelFactory,
     IDataBackupViewModelFactory dataBackupViewModelFactory) : IProfilePageFactory
 {
     public UserPage CreateUserPage() =>
@@ -54,6 +57,9 @@ public sealed class ProfilePageFactory(
 
     public PracticeHistoryPage CreatePracticeHistoryPage() =>
         new(practiceHistoryViewModelFactory);
+
+    public InsightsPage CreateInsightsPage() =>
+        new(insightsViewModelFactory);
 
     public DataBackupPage CreateDataBackupPage() =>
         new(dataBackupViewModelFactory);

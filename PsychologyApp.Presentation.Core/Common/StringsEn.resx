@@ -3829,4 +3829,64 @@
   <data name="BodySaveError" xml:space="preserve">
     <value>Could not save the check-in. Please try again.</value>
   </data>
+  <data name="InsightsTitle" xml:space="preserve">
+    <value>What helps me</value>
+  </data>
+  <data name="InsightsLead" xml:space="preserve">
+    <value>Only your own data here: which practices leave you calmer, how your test results move and what goes with your mood.</value>
+  </data>
+  <data name="InsightsPracticesTitle" xml:space="preserve">
+    <value>Practices that leave you calmer</value>
+  </data>
+  <data name="InsightsPracticeLine" xml:space="preserve">
+    <value>Tension down by {0} on average · times: {1}</value>
+  </data>
+  <data name="InsightsPracticesEmpty" xml:space="preserve">
+    <value>Rate your tension before and after a practice, and the ones that help you will show here.</value>
+  </data>
+  <data name="InsightsTestsTitle" xml:space="preserve">
+    <value>Tests</value>
+  </data>
+  <data name="InsightsTestChange" xml:space="preserve">
+    <value>First {0}, now {1}</value>
+  </data>
+  <data name="InsightsTestSingle" xml:space="preserve">
+    <value>Result: {0}</value>
+  </data>
+  <data name="InsightsTrendBetter" xml:space="preserve">
+    <value>better</value>
+  </data>
+  <data name="InsightsTrendWorse" xml:space="preserve">
+    <value>worse</value>
+  </data>
+  <data name="InsightsTrendSame" xml:space="preserve">
+    <value>no change</value>
+  </data>
+  <data name="InsightsRetestHint" xml:space="preserve">
+    <value>Two weeks have passed: a new result will show what changed.</value>
+  </data>
+  <data name="InsightsRetest" xml:space="preserve">
+    <value>Take it again</value>
+  </data>
+  <data name="InsightsTestsEmpty" xml:space="preserve">
+    <value>Take a test, and again in two weeks: this is where the change will show.</value>
+  </data>
+  <data name="InsightsMoodTitle" xml:space="preserve">
+    <value>What goes with your mood</value>
+  </data>
+  <data name="InsightsMoodUp" xml:space="preserve">
+    <value>{0}: mood higher by {1}</value>
+  </data>
+  <data name="InsightsMoodDown" xml:space="preserve">
+    <value>{0}: mood lower by {1}</value>
+  </data>
+  <data name="InsightsMoodNote" xml:space="preserve">
+    <value>These are coincidences in your entries, not proof of a cause.</value>
+  </data>
+  <data name="InsightsMoodEmpty" xml:space="preserve">
+    <value>Mark in the journal what affected you (sleep, people, a walk), and what goes with your mood will show here.</value>
+  </data>
+  <data name="InsightsBodyTitle" xml:space="preserve">
+    <value>What keeps coming back in the body</value>
+  </data>
 </root>

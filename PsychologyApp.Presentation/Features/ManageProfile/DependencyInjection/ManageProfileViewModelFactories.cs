@@ -175,3 +175,20 @@ public sealed class PracticeHistoryViewModelFactory(
     public PracticeHistoryViewModel Create(ContentPage page) =>
         new(practiceHistoryLoader, ResolveNavigation(navigationServiceFactory, page));
 }
+
+public interface IInsightsViewModelFactory
+{
+    PsychologyApp.Presentation.Pages.ManageProfile.ProfileInsights.InsightsViewModel Create(ContentPage page);
+}
+
+public sealed class InsightsViewModelFactory(
+    PsychologyApp.Application.UserProgress.IUserProgressService progress,
+    PsychologyApp.Application.Tests.ITestCatalogService tests,
+    PsychologyApp.Application.Body.IBodyService body,
+    PracticeHistoryFormatter names,
+    PsychologyApp.Presentation.Shared.Common.Infrastructure.IDatabaseReadySignal databaseReady,
+    Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IInsightsViewModelFactory
+{
+    public PsychologyApp.Presentation.Pages.ManageProfile.ProfileInsights.InsightsViewModel Create(ContentPage page) =>
+        new(ResolveNavigation(navigationServiceFactory, page), progress, tests, body, names, databaseReady);
+}

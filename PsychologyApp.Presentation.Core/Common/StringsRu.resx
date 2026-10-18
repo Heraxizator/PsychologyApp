@@ -3835,4 +3835,64 @@
   <data name="BodySaveError" xml:space="preserve">
     <value>Не удалось сохранить запись. Попробуйте ещё раз.</value>
   </data>
+  <data name="InsightsTitle" xml:space="preserve">
+    <value>Что мне помогает</value>
+  </data>
+  <data name="InsightsLead" xml:space="preserve">
+    <value>Здесь только ваши собственные данные: после каких практик становится легче, как меняются результаты тестов и что связано с настроением.</value>
+  </data>
+  <data name="InsightsPracticesTitle" xml:space="preserve">
+    <value>Практики, после которых легче</value>
+  </data>
+  <data name="InsightsPracticeLine" xml:space="preserve">
+    <value>Напряжение ниже в среднем на {0} · раз: {1}</value>
+  </data>
+  <data name="InsightsPracticesEmpty" xml:space="preserve">
+    <value>Отмечайте напряжение до и после практики — здесь появятся те, что помогают именно вам.</value>
+  </data>
+  <data name="InsightsTestsTitle" xml:space="preserve">
+    <value>Тесты</value>
+  </data>
+  <data name="InsightsTestChange" xml:space="preserve">
+    <value>Было {0}, сейчас {1}</value>
+  </data>
+  <data name="InsightsTestSingle" xml:space="preserve">
+    <value>Результат: {0}</value>
+  </data>
+  <data name="InsightsTrendBetter" xml:space="preserve">
+    <value>лучше</value>
+  </data>
+  <data name="InsightsTrendWorse" xml:space="preserve">
+    <value>хуже</value>
+  </data>
+  <data name="InsightsTrendSame" xml:space="preserve">
+    <value>без изменений</value>
+  </data>
+  <data name="InsightsRetestHint" xml:space="preserve">
+    <value>Прошло две недели — новый результат покажет, что изменилось.</value>
+  </data>
+  <data name="InsightsRetest" xml:space="preserve">
+    <value>Пройти снова</value>
+  </data>
+  <data name="InsightsTestsEmpty" xml:space="preserve">
+    <value>Пройдите тест, а через две недели — ещё раз: здесь будет видно, что меняется.</value>
+  </data>
+  <data name="InsightsMoodTitle" xml:space="preserve">
+    <value>Что связано с настроением</value>
+  </data>
+  <data name="InsightsMoodUp" xml:space="preserve">
+    <value>{0}: настроение выше на {1}</value>
+  </data>
+  <data name="InsightsMoodDown" xml:space="preserve">
+    <value>{0}: настроение ниже на {1}</value>
+  </data>
+  <data name="InsightsMoodNote" xml:space="preserve">
+    <value>Это совпадения в ваших отметках, а не доказательство причины.</value>
+  </data>
+  <data name="InsightsMoodEmpty" xml:space="preserve">
+    <value>Отмечайте в дневнике, что повлияло (сон, люди, прогулка), — здесь появится, что связано с вашим настроением.</value>
+  </data>
+  <data name="InsightsBodyTitle" xml:space="preserve">
+    <value>Что повторяется в теле</value>
+  </data>
 </root>

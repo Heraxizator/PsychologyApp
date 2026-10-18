@@ -212,6 +212,9 @@ public sealed class MauiNavigationService : INavigationService
     public Task GoToBodyAsync() =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateBodyCheckPage(), true));
 
+    public Task GoToInsightsAsync() =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateInsightsPage(), true));
+
     public Task GoToQuotesFavoritesAsync()
     {
         _preferences.SetPendingQuoteFeed("favorites");

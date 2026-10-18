@@ -23,14 +23,14 @@ public sealed class FsdArchitectureTests
 
     private static readonly Dictionary<string, string[]> AllowedFeatureCrossImports = new(StringComparer.Ordinal)
     {
-        ["ManageProfile"] = ["ManageQuotes", "RunTechniqueSession"],
+        ["ManageProfile"] = ["ManageJournal", "ManageQuotes", "RunTechniqueSession"],
         ["RunTests"] = ["RunTechniqueSession"],
         ["RunTechniqueSession"] = ["Chat"],
     };
 
     private static readonly Dictionary<string, string[]> AllowedPageCrossImports = new(StringComparer.Ordinal)
     {
-        ["ManageProfile"] = ["ManageQuotes", "RunTechniqueSession"],
+        ["ManageProfile"] = ["ManageJournal", "ManageQuotes", "RunTechniqueSession"],
         ["RunTests"] = ["RunTechniqueSession"],
     };
     private static readonly string[] CanonicalPageSlices =

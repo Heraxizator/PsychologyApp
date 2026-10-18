@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.ManageProfile.ProfileInsights.InsightsPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ManageProfile.ProfileInsights"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:DataType="vm:InsightsViewModel"
+             Shell.NavBarIsVisible="True"
+             Title="{Binding PageTitle}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+
+    <ContentPage.Behaviors>
+        <behaviors:PageAnalyticsBehavior />
+    </ContentPage.Behaviors>
+
+    <ContentPage.Resources>
+        <!-- One finding: what, how much, an optional note and, for a test due again, the way to retake it. -->
+        <DataTemplate x:Key="InsightTemplate" x:DataType="vm:InsightItem">
+            <VerticalStackLayout Spacing="4" Padding="0,6" SemanticProperties.Description="{Binding Title}">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Command}" />
+                </VerticalStackLayout.GestureRecognizers>
+                <Label Text="{Binding Title}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" />
+                <Label Text="{Binding Detail}" Style="{StaticResource CaptionStyle}" />
+                <Label Text="{Binding Note}" IsVisible="{Binding HasNote}" Style="{StaticResource CaptionStyle}"
+                       TextColor="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}" />
+                <ui:ButtonView IsVisible="{Binding HasAction}" Variant="Secondary" BodyText="{Binding ActionText}" TapCommand="{Binding Command}" Margin="0,6,0,0" />
+            </VerticalStackLayout>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+        <VerticalStackLayout Margin="{StaticResource LayoutTabPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+            <Label Text="{Binding LeadText}" Style="{StaticResource BodyStyle}" />
+
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding PracticesTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Practices}" BindableLayout.ItemTemplate="{StaticResource InsightTemplate}" />
+                    <Label Text="{Binding PracticesEmptyText}" IsVisible="{Binding ShowPracticesEmpty}" Style="{StaticResource CaptionStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding TestsTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Tests}" BindableLayout.ItemTemplate="{StaticResource InsightTemplate}" />
+                    <Label Text="{Binding TestsEmptyText}" IsVisible="{Binding ShowTestsEmpty}" Style="{StaticResource CaptionStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding MoodTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Moods}" BindableLayout.ItemTemplate="{StaticResource InsightTemplate}" />
+                    <Label Text="{Binding MoodNote}" IsVisible="{Binding HasMoods}" Style="{StaticResource CaptionStyle}" />
+                    <Label Text="{Binding MoodEmptyText}" IsVisible="{Binding ShowMoodsEmpty}" Style="{StaticResource CaptionStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16" IsVisible="{Binding HasBody}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding BodyTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding BodyPatterns}" BindableLayout.ItemTemplate="{StaticResource InsightTemplate}" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
