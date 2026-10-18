@@ -1210,13 +1210,13 @@
     <value>Назад</value>
   </data>
   <data name="OnboardingOverviewTitle" xml:space="preserve">
-    <value>Пять опор в одном месте</value>
+    <value>Опора в одном месте</value>
   </data>
   <data name="OnboardingOverviewSubtitle" xml:space="preserve">
-    <value>Практики, тесты, тело и эмоции, молитвы и цитаты — редкое сочетание в одном компаньоне</value>
+    <value>Практики, ИИ-чат, тесты и дневник — внизу экрана. Статьи, курсы, «Тело», молитвы и цитаты — в меню ☰</value>
   </data>
   <data name="OnboardingOverviewLead" xml:space="preserve">
-    <value>Всё под рукой в нижней панели</value>
+    <value>Главное — в нижней панели, остальное — в меню</value>
   </data>
   <data name="OnboardingModulePracticeHint" xml:space="preserve">
     <value>Успокоить нервную систему за минуты</value>

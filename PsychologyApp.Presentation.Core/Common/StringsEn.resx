@@ -1210,13 +1210,13 @@
     <value>Back</value>
   </data>
   <data name="OnboardingOverviewTitle" xml:space="preserve">
-    <value>Five pillars in one place</value>
+    <value>Support in one place</value>
   </data>
   <data name="OnboardingOverviewSubtitle" xml:space="preserve">
-    <value>Practices, tests, body and emotions, prayers, and quotes — a rare mix in one companion</value>
+    <value>Practices, AI chat, tests and the journal at the bottom of the screen. Articles, courses, Body, prayers and quotes in the menu ☰</value>
   </data>
   <data name="OnboardingOverviewLead" xml:space="preserve">
-    <value>Everything is one tap away in the tab bar</value>
+    <value>The essentials in the tab bar, the rest in the menu</value>
   </data>
   <data name="OnboardingModulePracticeHint" xml:space="preserve">
     <value>Calm your nervous system in minutes</value>
