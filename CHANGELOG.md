@@ -6,10 +6,17 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ## [Unreleased]
 
+## [2.008] - 2026-10-18
+
+Clinical texts of this release (trauma work, PTSD tests, Body check-in, courses) are to be checked by a psychologist before it is published: [docs/clinical-review.md](docs/clinical-review.md).
+
 ### Removed
 - The psychosomatics reference (the "Body" tab): a table in the manner of Louise Hay that tied illnesses to emotions ("an abscess: thoughts of revenge", "adenoids: a child who feels unwanted") and suggested practices by the word searched (knee pain → "Experience modification"). The claims have no scientific basis and can do harm: people blame themselves or their children for an illness, or put off seeing a doctor. Removed with its search, data files, content provider, card widget and tests. The body practices stay in the catalogue's "Body" section; the companion's "notice what the body feels" now opens the article "The body and stress".
 
 ### Fixed
+- A second launch of the running app (the launcher icon, a reminder) started a second activity; the next tab tap crashed. The activity is now single-top. Found by `tools/android-smoke.sh` on a Release x64 build, which passes after the fix (cold start 2.1 s, 2000 random events).
+- Button labels (the "Create" button of the practice catalogue) kept the old language after switching it until a restart. Seen on the emulator: they follow the switch.
+- The onboarding still promised "five pillars" with the removed body-and-emotions tab and said everything was in the tab bar; it now names the four tabs and the menu. Seen on the emulator in Russian.
 - On the first start after installing, on a slow phone, the practice catalogue could stay "No practices yet" until the app was restarted: the load waited for the encrypted database inside its 10-second timeout, and creating the database took longer. The timeout now covers the load only. Seen once on a cold emulator before the fix; not reproduced after it (a first start cannot be repeated on demand).
 - The burger menu closed whatever was open over a tab, so opening it (by an edge swipe on phones with button navigation) from a practice, a test or a chat dropped the unsaved answers. Step pages now have no menu (`PrepareSecondaryPage`, also used by the startup safety check, crisis help and the theory page). Not tried on a device: the emulator uses gesture navigation, where the edge swipe is "back".
 - A quote reminder tapped twice no longer stacks two Quotes pages.
