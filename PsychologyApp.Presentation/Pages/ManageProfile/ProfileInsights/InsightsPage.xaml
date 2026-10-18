@@ -22,7 +22,7 @@
                     <TapGestureRecognizer Command="{Binding Command}" />
                 </VerticalStackLayout.GestureRecognizers>
                 <Label Text="{Binding Title}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" />
-                <Label Text="{Binding Detail}" Style="{StaticResource CaptionStyle}" />
+                <Label Text="{Binding Detail}" IsVisible="{Binding HasDetail}" Style="{StaticResource CaptionStyle}" />
                 <Label Text="{Binding Note}" IsVisible="{Binding HasNote}" Style="{StaticResource CaptionStyle}"
                        TextColor="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}" />
                 <ui:ButtonView IsVisible="{Binding HasAction}" Variant="Secondary" BodyText="{Binding ActionText}" TapCommand="{Binding Command}" Margin="0,6,0,0" />
