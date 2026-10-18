@@ -11,6 +11,9 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 - Mood check-in reminder "at my usual time" (now the default for new installs): the hour with the most check-ins of the last 30 days, from at least five of them, otherwise 20:00. A reminder no longer comes on a day the person already checked in within three hours before it; a morning check-in does not silence the evening one. A time chosen earlier is kept. Checked on the emulator: the option and the scheduled alarm; a reminder actually firing at a learned hour was not waited for.
 - "What helps me" in the menu: built only from the person's own on-device records. It shows practices after which tension drops (the average before-and-after drop over at least two sessions), how each test result changed since the first try, with an offer to retake it after two weeks, journal factors that go with a higher or lower mood (at least three entries, a difference of 0.3 or more, worded as a link, not a cause), and repeated Body check-in patterns. Checked on the emulator in Russian with sparse data (empty hints, a single test); full data, dark theme and English were not checked on a device.
 
+### Fixed
+- AI chat and dialogue practices: a quick reply that does not fit on the row moves to the next row instead of being squeezed and clipped ("I want to say more" lost its second line in English). Checked in the AI chat on the emulator in English and Russian; a dialogue practice was not opened.
+
 ## [2.008] - 2026-10-18
 
 Clinical texts of this release (trauma work, PTSD tests, Body check-in, courses) are to be checked by a psychologist before it is published: [docs/clinical-review.md](docs/clinical-review.md).
