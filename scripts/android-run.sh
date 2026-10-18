@@ -22,6 +22,7 @@ case "$(adb -s "$target" shell getprop ro.product.cpu.abi | tr -d $'\r')" in
   arm64-v8a) common+=("-p:AndroidDevRid=android-arm64") ;;
   x86_64) common+=("-p:AndroidDevRid=android-x64") ;;
 esac
+drop_stale_abi_intermediates Debug
 build() {
   rm -f "$apk_dir"/*.apk
   dotnet build "$PROJECT" -f "$FRAMEWORK" -c Debug "${common[@]}" \

@@ -88,3 +88,21 @@ target_device() { echo "${ANDROID_SERIAL:-$(adb devices | awk 'NR > 1 && $2 == "
 
 # Значение свойства из csproj, например csproj_property ApplicationVersion.
 csproj_property() { sed -n "s:.*<$1>\(.*\)</$1>.*:\1:p" "$PROJECT" | head -1; }
+
+# Промежуточные файлы сборки под один ABI (obj/<конфигурация>/net10.0-android/android-arm64 и т. п.) .NET Android не
+# обновляет, когда меняются ресурсы приложения: там остаётся старый _Microsoft.Android.Resource.Designer.dll со старыми
+# номерами ресурсов. После добавления layout номера сдвигаются, и MAUI загружает чужой layout — приложение падает при
+# первой модальной странице (InflateException в mtrl_search_view, 2.008). Такие каталоги удаляются, если ресурсы новее их.
+drop_stale_abi_intermediates() {
+  local configuration=$1 dir designer
+  local project_dir
+  project_dir=$(dirname "$PROJECT")
+  for dir in "$project_dir/obj/$configuration/$FRAMEWORK"/android-*; do
+    [[ -d "$dir" ]] || continue
+    designer="$dir/_Microsoft.Android.Resource.Designer.dll"
+    if [[ -f "$designer" && -n "$(find "$project_dir/Platforms/Android/Resources" "$project_dir/Resources" -type f -newer "$designer" -print -quit)" ]]; then
+      echo "Устаревшие файлы сборки под ABI: удаляю $dir"
+      rm -rf "$dir" "$project_dir/bin/$configuration/$FRAMEWORK/$(basename "$dir")"
+    fi
+  done
+}

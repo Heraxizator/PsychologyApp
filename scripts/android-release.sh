@@ -46,6 +46,9 @@ done
 
 out="artifacts/release/$display"
 rm -rf "$out"
+# Выпуск собирается с нуля: промежуточные файлы прошлых сборок однажды уже дали пакет, падающий при первом запуске
+# (устаревшие номера ресурсов, см. drop_stale_abi_intermediates).
+rm -rf "$(dirname "$PROJECT")/obj/Release" "$(dirname "$PROJECT")/bin/Release"
 mapfile -t common < <(android_build_args)
 dotnet publish "$PROJECT" -f "$FRAMEWORK" -c Release "${common[@]}" \
   "-p:AndroidPackageFormats=aab%3Bapk" -o "$out"
