@@ -67,18 +67,16 @@
 
 <table>
 <tr>
-<td align="center" width="20%"><img src="store/screenshots/01-chat.png" alt="Чат-собеседник" width="190"><br><sub><b>Собеседник, который слышит</b></sub></td>
-<td align="center" width="20%"><img src="store/screenshots/02-breathing.png" alt="Дыхание на весь экран" width="190"><br><sub><b>Дышите вместе с кругом</b></sub></td>
-<td align="center" width="20%"><img src="store/screenshots/03-practices.png" alt="Каталог практик" width="190"><br><sub><b>Практики на каждый день</b></sub></td>
-<td align="center" width="20%"><img src="store/screenshots/04-mood-calendar.png" alt="Календарь настроения" width="190"><br><sub><b>Настроение в цвете</b></sub></td>
-<td align="center" width="20%"><img src="store/screenshots/05-mood-chart.png" alt="График настроения" width="190"><br><sub><b>Видно, что помогает</b></sub></td>
+<td align="center" width="25%"><img src="store/screenshots/ru/01-chat.png" alt="ИИ-чат" width="190"><br><sub><b>Собеседник, который слышит</b></sub></td>
+<td align="center" width="25%"><img src="store/screenshots/ru/02-breathing.png" alt="Дыхание на весь экран" width="190"><br><sub><b>Дышите вместе с кругом</b></sub></td>
+<td align="center" width="25%"><img src="store/screenshots/ru/03-practices.png" alt="Каталог практик" width="190"><br><sub><b>Пара минут — и легче</b></sub></td>
+<td align="center" width="25%"><img src="store/screenshots/ru/04-what-helps.png" alt="Что мне помогает" width="190"><br><sub><b>Видно, что помогает именно вам</b></sub></td>
 </tr>
 <tr>
-<td align="center"><img src="store/screenshots/07-body.png" alt="Связь тела и эмоций" width="190"><br><sub><b>Связь тела и эмоций</b></sub></td>
-<td align="center"><img src="store/screenshots/08-prayers.png" alt="Молитвы" width="190"><br><sub><b>Молитвы под рукой</b></sub></td>
-<td align="center"><img src="store/screenshots/09-quotes.png" alt="Цитаты" width="190"><br><sub><b>Цитаты на каждый день</b></sub></td>
-<td align="center"><img src="store/screenshots/10-profile.png" alt="Профиль и недельный обзор" width="190"><br><sub><b>Ваш путь на одном экране</b></sub></td>
-<td align="center"><img src="store/screenshots/11-tests.png" alt="Тесты" width="190"><br><sub><b>Тесты с понятным итогом</b></sub></td>
+<td align="center"><img src="store/screenshots/ru/05-journal.png" alt="Дневник настроения" width="190"><br><sub><b>Настроение — в одно касание</b></sub></td>
+<td align="center"><img src="store/screenshots/ru/06-mood-trend.png" alt="График настроения" width="190"><br><sub><b>Как меняется настроение</b></sub></td>
+<td align="center"><img src="store/screenshots/ru/07-widget.png" alt="Виджет на главном экране" width="190"><br><sub><b>Отметка прямо с экрана</b></sub></td>
+<td align="center"><img src="store/screenshots/ru/08-tests.png" alt="Тесты" width="190"><br><sub><b>Тесты с понятным итогом</b></sub></td>
 </tr>
 </table>
 
