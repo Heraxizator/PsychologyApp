@@ -160,7 +160,9 @@ public class ContrastTests(ITestOutputHelper output)
             ("PrimaryTextLight", "SurfaceHeroLight", 4.5), ("PrimaryTextLight", "InputBackgroundLight", 4.5),
             ("InputPlaceholderLight", "InputBackgroundLight", 4.5),
             ("Danger", "SurfaceLight", 4.5), ("Danger", "PageBackground", 4.5),
-            ("Success", "SurfaceLight", 4.5), ("Success", "PageBackground", 4.5)
+            ("Success", "SurfaceLight", 4.5), ("Success", "PageBackground", 4.5),
+            ("TextPrimaryLight", "DangerSurface", 4.5), ("TextPrimaryDark", "DangerSurfaceDark", 4.5),
+            ("Danger", "DangerSurface", 3.0), ("DangerDark", "DangerSurfaceDark", 3.0)
         ];
 
         List<string> failures = [];
@@ -290,5 +292,30 @@ public class ContrastTests(ITestOutputHelper output)
         Assert.True(ColorContrast.Ratio(colors["PrimaryTextLight"], colors["PrimaryTint"]) >= ColorContrast.LargeTextMinimum);
         Assert.True(ColorContrast.Ratio(colors["PrimaryTextDark"], colors["PrimaryTintDark"]) >= ColorContrast.LargeTextMinimum);
         Assert.True(ColorContrast.Ratio(colors["OnPrimary"], colors["PrimaryFill"]) >= ColorContrast.BodyTextMinimum);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void EveryEmotionChipIsReadableAndHasItsOwnColour(bool dark)
+    {
+        PsychologyApp.Application.Practice.EmotionFamily[] families = Enum.GetValues<PsychologyApp.Application.Practice.EmotionFamily>();
+        foreach (PsychologyApp.Application.Practice.EmotionFamily family in families)
+        {
+            (string fill, string text) = EmotionColors.For(family, dark);
+            double ratio = ColorContrast.Ratio(text, fill);
+            Assert.True(ratio >= ColorContrast.BodyTextMinimum, $"{family}, dark={dark}: {ratio:F2}");
+        }
+
+        Assert.Equal(families.Length, families.Select(f => EmotionColors.For(f, dark).Fill).Distinct().Count());
+    }
+
+    [Fact]
+    public void AnswerChipsAreReadableInBothThemes()
+    {
+        Dictionary<string, string> colors = ReadColors();
+
+        Assert.True(ColorContrast.Ratio(colors["TextPrimaryLight"], colors["AnswerChipLight"]) >= ColorContrast.BodyTextMinimum);
+        Assert.True(ColorContrast.Ratio(colors["TextPrimaryDark"], colors["AnswerChipDark"]) >= ColorContrast.BodyTextMinimum);
     }
 }

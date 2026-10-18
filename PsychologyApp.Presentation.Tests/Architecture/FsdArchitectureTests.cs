@@ -25,7 +25,6 @@ public sealed class FsdArchitectureTests
     {
         ["ManageProfile"] = ["ManageQuotes", "RunTechniqueSession"],
         ["RunTests"] = ["RunTechniqueSession"],
-        ["SearchPhysics"] = ["RunTechniqueSession"],
         ["RunTechniqueSession"] = ["Chat"],
     };
 
@@ -42,7 +41,7 @@ public sealed class FsdArchitectureTests
         "ManageJournal",
         "ClinicalCare",
         "ManageQuotes",
-        "SearchPhysics",
+        "ReadArticles",
         "SendReviewForm",
         "Onboarding",
         "PlayMusic",

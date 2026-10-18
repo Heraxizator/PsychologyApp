@@ -38,6 +38,7 @@
   <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
     <Compile Include="Architecture\**\*.cs" />
     <Compile Include="Charts\**\*.cs" />
+    <Compile Include="Body\**\*.cs" />
     <Compile Include="Serialization\**\*.cs" />
     <Compile Include="QuoteCatalogContentTests.cs" />
     <Compile Include="NavigationCoordinatorTests.cs" />
@@ -50,6 +51,9 @@
     <Compile Include="AppStringsErrorTests.cs" />
     <Compile Include="BreathingPatternTests.cs" />
     <Compile Include="TensionScaleTests.cs" />
+    <Compile Include="AnswerTextTests.cs" />
+    <Compile Include="PracticeAnswersTests.cs" />
+    <Compile Include="ExposureInsightsTests.cs" />
     <Compile Include="ZoomOriginTests.cs" />
     <Compile Include="ContrastTests.cs" />
     <Compile Include="TechniqueFlavorTests.cs" />

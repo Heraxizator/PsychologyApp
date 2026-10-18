@@ -228,9 +228,6 @@ public static partial class AppStrings
     public static string ProfileQuotesEmpty => R(nameof(ProfileQuotesEmpty));
     public static string QuotesFavoritesEmptyBody => R(nameof(QuotesFavoritesEmptyBody));
 
-    public static string PhysicsSolutionHeader => R(nameof(PhysicsSolutionHeader));
-    public static string PhysicsRecommendedPractices => R(nameof(PhysicsRecommendedPractices));
-    public static string PhysicsTryPractice => R(nameof(PhysicsTryPractice));
 
     public static string ProfileTestsCompleted => R(nameof(ProfileTestsCompleted));
     public static string ProfileStreakDays => R(nameof(ProfileStreakDays));
@@ -572,7 +569,6 @@ public static partial class AppStrings
     public static string TestHistoryEntry(string date, string summary) => F(nameof(TestHistoryEntry), date, summary);
     public static string TestOpenHistory => R(nameof(TestOpenHistory));
     public static string ProfileLastPractice(string date) => F(nameof(ProfileLastPractice), date);
-    public static string PhysicsNoResultsSubhint => R(nameof(PhysicsNoResultsSubhint));
 
     private static string MoodEmoji(int level) => level switch
     {
@@ -620,9 +616,9 @@ public static partial class AppStrings
     public static string OnboardingOverviewLead => R(nameof(OnboardingOverviewLead));
     public static string OnboardingModulePracticeHint => R(nameof(OnboardingModulePracticeHint));
     public static string OnboardingModuleTestsHint => R(nameof(OnboardingModuleTestsHint));
-    public static string OnboardingModuleSomaticHint => R(nameof(OnboardingModuleSomaticHint));
-    public static string OnboardingModuleMusicHint => R(nameof(OnboardingModuleMusicHint));
-    public static string OnboardingModuleQuotesHint => R(nameof(OnboardingModuleQuotesHint));
+    public static string OnboardingModuleChatHint => R(nameof(OnboardingModuleChatHint));
+    public static string OnboardingModuleLibraryHint => R(nameof(OnboardingModuleLibraryHint));
+    public static string OnboardingModuleJournalHint => R(nameof(OnboardingModuleJournalHint));
     public static string OnboardingConcernTitle => R(nameof(OnboardingConcernTitle));
     public static string OnboardingConcernSubtitle => R(nameof(OnboardingConcernSubtitle));
     public static string OnboardingConcernFooterHint => R(nameof(OnboardingConcernFooterHint));
@@ -645,25 +641,6 @@ public static partial class AppStrings
 
     public static string QuoteShareFooter => R(nameof(QuoteShareFooter));
 
-    public static string PhysicsTitle => R(nameof(PhysicsTitle));
-    public static string PhysicsIntroPage => R(nameof(PhysicsIntroPage));
-    public static string PhysicsSearchPage => R(nameof(PhysicsSearchPage));
-    public static string PhysicsSearchTitle => R(nameof(PhysicsSearchTitle));
-    public static string PhysicsExplanationHeader => R(nameof(PhysicsExplanationHeader));
-    public static string PhysicsExplanationBody => R(nameof(PhysicsExplanationBody));
-    public static string PhysicsDescriptionHeader => R(nameof(PhysicsDescriptionHeader));
-    public static string PhysicsDescriptionBody => R(nameof(PhysicsDescriptionBody));
-    public static string PhysicsAlgorithmStep1 => R(nameof(PhysicsAlgorithmStep1));
-    public static string PhysicsAlgorithmStep2 => R(nameof(PhysicsAlgorithmStep2));
-    public static string PhysicsSearchToolbar => R(nameof(PhysicsSearchToolbar));
-    public static string PhysicsProblemLabel => R(nameof(PhysicsProblemLabel));
-    public static string PhysicsIllnessPlaceholder => R(nameof(PhysicsIllnessPlaceholder));
-    public static string PhysicsEmptySearchHint => R(nameof(PhysicsEmptySearchHint));
-    public static string PhysicsEmptySearchSubhint => R(nameof(PhysicsEmptySearchSubhint));
-    public static string PhysicsNoResultsHint => R(nameof(PhysicsNoResultsHint));
-    public static string PhysicsLoadingText => R(nameof(PhysicsLoadingText));
-    public static string PhysicsSearchFilteringText => R(nameof(PhysicsSearchFilteringText));
-    public static string PhysicsSearchError => R(nameof(PhysicsSearchError));
     public static string QuotesSearchError => R(nameof(QuotesSearchError));
     public static string LoadFailed => R(nameof(LoadFailed));
     public static string RetryQuestion => R(nameof(RetryQuestion));

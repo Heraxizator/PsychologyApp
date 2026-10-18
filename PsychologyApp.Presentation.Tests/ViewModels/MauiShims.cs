@@ -137,12 +137,6 @@ namespace PsychologyApp.Presentation.Shared.Services.Preferences
 
         public TechniqueId? ConsumePendingTechnique() => null;
 
-        public bool HasUsedPhysicsSearch => false;
-
-        public void MarkPhysicsSearchUsed()
-        {
-        }
-
         public void SetPendingOpenJournal()
         {
         }

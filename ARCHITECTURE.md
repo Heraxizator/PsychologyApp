@@ -46,6 +46,21 @@ PsychologyApp.Presentation/
 └── Shared/           UI kit, navigation ports, cross-cutting infra only
 ```
 
+The Shell has four bottom tabs (Practices, AI chat, Tests, Journal), created lazily, and a burger menu (`AppShell.BuildMenu`).
+A menu entry closes whatever is open over the current tab and pushes its page there through `INavigationService`, keeping the tab
+bar; a page reached from the menu never links back to a tab root with a page of its own, so the navigation has no cycles. Because a
+menu tap closes what is open, the menu exists only on tab roots and menu pages: every step page (a practice, a test, a chat, a form)
+goes through `MauiNavigationService.PrepareSecondaryPage`, which hides the tab bar and disables the flyout.
+
+A list card that is built often while scrolling may be drawn natively on Android: a plain MAUI `View` carries the data and a command
+(`Widgets/TechniqueListCard/TechniqueCardNativeView`), a handler in `Platforms/Android` builds a small Android view tree from the app
+resources (colours, fonts, text size) and takes the click itself; other platforms keep the XAML card through `OnPlatform` in the
+template. Only where a Release measurement shows the XAML card costs frames: the practice card was about 17 native views with a MAUI
+handler each.
+
+Small documents that are read and written whole (the fear ladder, the reading state, the body log) are JSON in `AppMetadata` through
+`AppMetadataDocumentRepository<T>`; a document that cannot be read is copied to `<key>.unreadable` before a save replaces it.
+
 ### Page folder layout
 
 All screens live under `Pages/{Slice}/` — one of the canonical slices listed below (~10). Legacy flat folders (e.g. `Pages/Question/`, `Pages/ReviewForm/`) have been removed; do not add new top-level folders under `Pages/`. Session sub-ViewModels live under `Pages/{Slice}/{Screen}/SubViewModels/`.
@@ -62,9 +77,9 @@ All screens live under `Pages/{Slice}/` — one of the canonical slices listed b
 | **RunTechniqueSession** | Techniques, TechniqueSession, TechniqueCreated, TechniqueDesigner, TechniqueTheory, PracticeCompletion | `Practice/`, `Technique/`, `Recommendations/` | `Practice/`, `Technique/` |
 | **ManageProfile** | ProfileUser, ProfileOptions, ProfileSettings, ProfileInfo, ProfileDonate | `UserProgress/`, `Statistic/` | `UserProgress/`, `Statistic/` |
 | **ManageJournal** | Journal, JournalOverview, JournalTimeline | `UserProgress/` (mood ports), journal UI loaders in Features | `UserProgress/` (`MoodStreakCalculator`, `MoodCheckInSlotPolicy`) |
-| **ClinicalCare** | CrisisHub, RiskCheck | `ClinicalCare/` | `ClinicalCare/` (`RiskClassifier`, `RiskLevel`) |
+| **ClinicalCare** | CrisisHub, RiskCheck, SafetyPlan, Exposure (fear ladder, docs/exposure-engine.md), BodyCheck (docs/body-check.md) | `ClinicalCare/`, `Exposure/`, `Body/` | `ClinicalCare/` (`RiskClassifier`, `RiskLevel`), `Exposure/` (`ExposureLadder`, `ExposureScreening`) |
 | **ManageQuotes** | QuoteFeed | `Quot/` | `Quot/` |
-| **SearchPhysics** | StartPhysics, PhysicsSearch | `Reason/` | `Reason/` |
+| **ReadArticles** | The Library pages opened from the burger menu (For you, Courses, Articles; Prayers and Quotes come from their own slices), ArticleReader, Course, CourseDay (docs/articles-and-courses.md); the trauma module enters here (docs/trauma-module.md) | `Articles/` (content RU/EN) | — |
 | **Onboarding** | Onboarding | `Recommendations/` | `Practice/OnboardingConcernKeys` |
 | **PlayMusic** | MusicPlayer | — | — |
 | **SendReviewForm** | ReviewForm | — | — |
@@ -86,7 +101,6 @@ Some screens intentionally compose multiple slices:
 |--------------|------------|
 | ManageProfile | ManageQuotes.Index (profile quotes), RunTechniqueSession.Index (featured techniques) |
 | RunTests | RunTechniqueSession.Index (test result technique recommendations) |
-| SearchPhysics | RunTechniqueSession.Index (technique suggestions in search results) |
 
 All other cross-feature imports are forbidden and enforced by architecture tests.
 
@@ -96,7 +110,7 @@ All other cross-feature imports are forbidden and enforced by architecture tests
 - `Shared/Common/` — infrastructure helpers (AsyncCommand, exception handler, preferences)
 - `Shared/Common/Localization/` — `LanguageContentReloader` (cross-feature language switch)
 - `Shared/Services/` — toasts, dialogs, notifications
-- `Shared/Platform/` — MAUI content providers (Reason, Quot, Test catalog)
+- `Shared/Platform/` — MAUI content providers (Quot, Test catalog)
 - `Shared/Navigation/` — navigation coordinator, page activator
 - `Shared/Lib/` — shared ports usable from Shared layer (e.g. `IShellTabNavigator`, `INavigateToTheory`, `ITodayRecommendationReasonFormatter`)
 
@@ -113,7 +127,7 @@ Application/
 ├── Practice/
 ├── Technique/
 ├── Quot/
-├── Reason/
+├── Articles/
 ├── Statistic/
 ├── UserProgress/
 ├── ClinicalCare/
@@ -140,7 +154,7 @@ Infrastructure keeps a single SQLite database and shared repository base classes
 Startup order in `MauiProgram.cs`:
 
 1. `AddPsychologyAppCore()` — Infrastructure + Application
-2. Platform content providers (Reason, Quot, Tests, Practice catalog)
+2. Platform content providers (Quot, Tests, Practice catalog)
 3. `AddPsychologyAppPresentation()` — Shared + feature slices
 
 ## Presentation lifecycle
@@ -153,7 +167,7 @@ List/detail screens follow a shared async lifecycle:
 4. **Lightweight reappear** — tabs that are already initialized refresh only dashboard/header state on reappear (e.g. Practice streak/mood/today), not a full catalog reload.
 5. **Collections** — prefer in-place `ReplaceRange` / mutate existing groups over assigning new `ObservableCollection` instances on every refresh.
 6. **Search** — debounce with CTS; expose an in-flight filtering flag for inline progress; surface failures with toast/`AppStrings`, not silent empty lists.
-7. **CollectionView sizing** — use `ItemSizingStrategy="MeasureFirstItem"` only for uniform rows (e.g. truncated technique cards). Variable-height lists (Quotes, Physics expandable cards, Tests with optional meta/result rows) must keep the default / `MeasureAllItems`.
+7. **CollectionView sizing** — use `ItemSizingStrategy="MeasureFirstItem"` only for uniform rows (e.g. truncated technique cards). Variable-height lists (Quotes, Tests with optional meta/result rows) must keep the default / `MeasureAllItems`.
 8. **CollectionView.Footer** — when idle, collapse height (`HeightRequest=0`), do not rely on child `IsVisible=false` alone; MAUI often reserves footer space.
 9. **List reveals** — `ListItemRevealBehavior` may run inside `CollectionView` for the first `LiteRevealMaxIndex` items only; deeper rows skip animation to protect scroll performance.
 

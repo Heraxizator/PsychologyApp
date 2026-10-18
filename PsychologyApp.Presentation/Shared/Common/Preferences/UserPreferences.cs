@@ -28,7 +28,6 @@ public static partial class UserPreferences
     public const string ChatRemindersEnabledKey = "ChatRemindersEnabled";
     public const string ChatReminderHourKey = "ChatReminderHour";
     public const string PendingOpenJournalKey = "PendingOpenJournal";
-    public const string HasUsedPhysicsSearchKey = "HasUsedPhysicsSearch";
 
     private static readonly WeakActionEvent ChangedHandlers = new();
 
@@ -347,11 +346,6 @@ public static partial class UserPreferences
         double radius = IsRoundedForm(form) ? 12 : 4;
         SetCornerRadiusResources(resources, radius);
     }
-
-    public static bool HasUsedPhysicsSearch => Preferences.Get(HasUsedPhysicsSearchKey, false);
-
-    public static void MarkPhysicsSearchUsed() =>
-        Preferences.Set(HasUsedPhysicsSearchKey, true);
 
     public static void SetPendingOpenJournal() =>
         Preferences.Set(PendingOpenJournalKey, true);

@@ -1,9 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using PsychologyApp.Application.Abstractions.Analytics;
 using PsychologyApp.Application.Abstractions.Integration;
 using PsychologyApp.Application.Abstractions.Startup;
 using PsychologyApp.Application.Quot;
-using PsychologyApp.Application.Reason;
 using PsychologyApp.Application.Statistic;
 using PsychologyApp.Application.Technique;
 using PsychologyApp.Application.UserProgress;
@@ -17,21 +17,14 @@ using PsychologyApp.Application.DataBackup;
 using PsychologyApp.Application.Chat;
 using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Conversation.Companion;
+using PsychologyApp.Application.Articles;
+using PsychologyApp.Application.Body;
+using PsychologyApp.Application.Exposure;
 
 namespace PsychologyApp.Application.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddCachedReasonContentProvider<TInner>(this IServiceCollection services)
-        where TInner : class, IReasonContentProvider
-    {
-        services.AddSingleton<CachedReasonContentProvider>(sp =>
-            new CachedReasonContentProvider(sp.GetRequiredService<TInner>()));
-        services.AddSingleton<IReasonContentProvider>(sp => sp.GetRequiredService<CachedReasonContentProvider>());
-
-        return services;
-    }
-
     public static IServiceCollection AddCachedQuotContentProvider<TInner>(this IServiceCollection services)
         where TInner : class, IQuotContentProvider
     {
@@ -67,7 +60,6 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IQuotService, QuotService>();
         services.AddSingleton<IQuoteCatalogLookup, QuoteCatalogLookup>();
         services.AddSingleton<IQuoteSearchService, QuoteSearchService>();
-        services.AddSingleton<IReasonSearchService, ReasonSearchService>();
         services.AddSingleton(TimeProvider.System);
         services.AddSingleton<IStatisticService, StatisticService>();
         services.AddSingleton<IUserProgressService, UserProgressService>();
@@ -83,6 +75,11 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<LuscherDetailReader>();
         services.AddSingleton<IClinicalCareService, ClinicalCareService>();
         services.AddSingleton<ICrisisDetector, KeywordCrisisDetector>();
+        services.TryAddSingleton<ILanguageModel, NullLanguageModel>();
+        services.AddSingleton<ISupportPhraseSuggester, SupportPhraseSuggester>();
+        services.AddSingleton<IExposureService, ExposureService>();
+        services.AddSingleton<IBodyService, BodyService>();
+        services.AddSingleton<IReadingService, ReadingService>();
         services.AddSingleton<IEmotionGuesser>(_ => EmotionGuesser.Bundled);
         services.AddSingleton<IChatService, ChatService>();
         services.AddSingleton<ISituationAnalyzer, LexiconSituationAnalyzer>();

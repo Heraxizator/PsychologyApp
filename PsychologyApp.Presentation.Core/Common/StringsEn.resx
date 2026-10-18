@@ -70,10 +70,10 @@
     <value>New chat</value>
   </data>
   <data name="ChatStatusIdle" xml:space="preserve">
-    <value>Companion · offline</value>
+    <value>AI chat · offline</value>
   </data>
   <data name="ChatStatusPractice" xml:space="preserve">
-    <value>Companion · practice</value>
+    <value>AI chat · practice</value>
   </data>
   <data name="ChatError" xml:space="preserve">
     <value>Could not send the message. Please try again.</value>
@@ -91,16 +91,16 @@
     <value>Stress test (PSS-10)</value>
   </data>
   <data name="ChatReminderTitle" xml:space="preserve">
-    <value>The companion is here</value>
+    <value>AI chat is here</value>
   </data>
   <data name="ChatReminderBody" xml:space="preserve">
     <value>It's been a little while. How are things going now?</value>
   </data>
   <data name="ChatProfileTitle" xml:space="preserve">
-    <value>Companion</value>
+    <value>AI chat</value>
   </data>
   <data name="ChatProfileOpen" xml:space="preserve">
-    <value>Open the companion's profile</value>
+    <value>Open the AI chat profile</value>
   </data>
   <data name="ChatProfileOnline" xml:space="preserve">
     <value>Online</value>
@@ -130,7 +130,7 @@
     <value>No name yet</value>
   </data>
   <data name="ChatProfileNameHint" xml:space="preserve">
-    <value>The companion will occasionally address you by name</value>
+    <value>The chat will occasionally address you by name</value>
   </data>
   <data name="ChatProfileNameEdit" xml:space="preserve">
     <value>Change</value>
@@ -169,7 +169,7 @@
     <value>What you talk about most</value>
   </data>
   <data name="ChatProfileAboutTitle" xml:space="preserve">
-    <value>About the companion</value>
+    <value>About the AI chat</value>
   </data>
   <data name="ChatProfileActionsTitle" xml:space="preserve">
     <value>Manage</value>
@@ -184,7 +184,7 @@
     <value>Forget about you?</value>
   </data>
   <data name="ChatProfileForgetBody" xml:space="preserve">
-    <value>The companion will forget your name and which practices helped. Your chats will stay.</value>
+    <value>The chat will forget your name and which practices helped. Your chats will stay.</value>
   </data>
   <data name="ChatProfileDeleteAll" xml:space="preserve">
     <value>Delete all chats</value>
@@ -774,15 +774,6 @@
   <data name="QuotesFavoritesEmptyBody" xml:space="preserve">
     <value>Tap the heart on a quote to add it here.</value>
   </data>
-  <data name="PhysicsSolutionHeader" xml:space="preserve">
-    <value>What to do</value>
-  </data>
-  <data name="PhysicsRecommendedPractices" xml:space="preserve">
-    <value>Practices that may help</value>
-  </data>
-  <data name="PhysicsTryPractice" xml:space="preserve">
-    <value>Try a practice</value>
-  </data>
   <data name="ProfileTestsCompleted" xml:space="preserve">
     <value>Tests completed</value>
   </data>
@@ -1173,9 +1164,6 @@
   <data name="TestOpenHistory" xml:space="preserve">
     <value>History</value>
   </data>
-  <data name="PhysicsNoResultsSubhint" xml:space="preserve">
-    <value>Try: shoulder, neck, back, stomach, head…</value>
-  </data>
   <data name="TechniqueContinueBadge" xml:space="preserve">
     <value>Continue</value>
   </data>
@@ -1236,15 +1224,6 @@
   <data name="OnboardingModuleTestsHint" xml:space="preserve">
     <value>Know yourself through questionnaires and Lüscher</value>
   </data>
-  <data name="OnboardingModuleSomaticHint" xml:space="preserve">
-    <value>Understand the body–emotion link</value>
-  </data>
-  <data name="OnboardingModuleMusicHint" xml:space="preserve">
-    <value>Find words and sound for the soul</value>
-  </data>
-  <data name="OnboardingModuleQuotesHint" xml:space="preserve">
-    <value>Lift your mood with one thought</value>
-  </data>
   <data name="OnboardingConcernTitle" xml:space="preserve">
     <value>What troubles you?</value>
   </data>
@@ -1301,63 +1280,6 @@
   </data>
   <data name="QuoteShareFooter" xml:space="preserve">
     <value>PsychologyApp</value>
-  </data>
-  <data name="PhysicsTitle" xml:space="preserve">
-    <value>Body and emotions</value>
-  </data>
-  <data name="PhysicsIntroPage" xml:space="preserve">
-    <value>Introduction</value>
-  </data>
-  <data name="PhysicsSearchPage" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="PhysicsSearchTitle" xml:space="preserve">
-    <value>Body and emotions</value>
-  </data>
-  <data name="PhysicsExplanationHeader" xml:space="preserve">
-    <value>Explanation</value>
-  </data>
-  <data name="PhysicsExplanationBody" xml:space="preserve">
-    <value>Body and emotions are closely linked: tension, worry and fatigue often show up in the body. This section helps you notice what might be behind a sensation. It is not a diagnosis and does not replace a doctor.</value>
-  </data>
-  <data name="PhysicsDescriptionHeader" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="PhysicsDescriptionBody" xml:space="preserve">
-    <value>Name a symptom or a part of the body and the app shows possible emotional causes and practices that may help. It is a prompt to look closer, not a medical conclusion.</value>
-  </data>
-  <data name="PhysicsAlgorithmStep1" xml:space="preserve">
-    <value>1. Name the illness or body part that hurts</value>
-  </data>
-  <data name="PhysicsAlgorithmStep2" xml:space="preserve">
-    <value>2. Explore several possible emotional causes.</value>
-  </data>
-  <data name="PhysicsSearchToolbar" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="PhysicsProblemLabel" xml:space="preserve">
-    <value>What is bothering you</value>
-  </data>
-  <data name="PhysicsIllnessPlaceholder" xml:space="preserve">
-    <value>For example: back pain</value>
-  </data>
-  <data name="PhysicsEmptySearchHint" xml:space="preserve">
-    <value>Enter a search term</value>
-  </data>
-  <data name="PhysicsEmptySearchSubhint" xml:space="preserve">
-    <value>Symptom or body part</value>
-  </data>
-  <data name="PhysicsNoResultsHint" xml:space="preserve">
-    <value>No results found</value>
-  </data>
-  <data name="PhysicsLoadingText" xml:space="preserve">
-    <value>Searching causes</value>
-  </data>
-  <data name="PhysicsSearchFilteringText" xml:space="preserve">
-    <value>Filtering results</value>
-  </data>
-  <data name="PhysicsSearchError" xml:space="preserve">
-    <value>Search failed</value>
   </data>
   <data name="QuotesSearchError" xml:space="preserve">
     <value>Quote search failed</value>
@@ -1893,8 +1815,8 @@
   <data name="ShellTabDetector" xml:space="preserve">
     <value>Detector</value>
   </data>
-  <data name="ShellTabSomatic" xml:space="preserve">
-    <value>Somatic</value>
+  <data name="ShellTabArticles" xml:space="preserve">
+    <value>Articles</value>
   </data>
   <data name="ShellTabMotivator" xml:space="preserve">
     <value>Motivator</value>
@@ -1905,8 +1827,8 @@
   <data name="ShellTabDetectorShort" xml:space="preserve">
     <value>Tests</value>
   </data>
-  <data name="ShellTabSomaticShort" xml:space="preserve">
-    <value>Body</value>
+  <data name="ShellTabArticlesShort" xml:space="preserve">
+    <value>Articles</value>
   </data>
   <data name="ShellTabMusicShort" xml:space="preserve">
     <value>Prayers</value>
@@ -3027,5 +2949,884 @@
   </data>
   <data name="PracticeFilterAction" xml:space="preserve">
     <value>Action</value>
+  </data>
+  <data name="PracticeVoiceStart" xml:space="preserve">
+    <value>Dictate the answer</value>
+  </data>
+  <data name="PracticeVoiceStop" xml:space="preserve">
+    <value>Stop recording</value>
+  </data>
+  <data name="PracticeVoiceListening" xml:space="preserve">
+    <value>Listening… speak, a pause ends the recording</value>
+  </data>
+  <data name="PracticeVoiceHolding" xml:space="preserve">
+    <value>Speak… release to finish</value>
+  </data>
+  <data name="PracticeVoiceNothingHeard" xml:space="preserve">
+    <value>Didn't catch that — try again</value>
+  </data>
+  <data name="PracticeVoicePermissionDenied" xml:space="preserve">
+    <value>Allow microphone access in the phone settings to dictate answers</value>
+  </data>
+  <data name="PracticeVoiceUnavailable" xml:space="preserve">
+    <value>On-device speech recognition isn't available. Download the offline language pack in the phone settings</value>
+  </data>
+  <data name="PracticeRecentProblem" xml:space="preserve">
+    <value>Same as last time: {0}</value>
+  </data>
+  <data name="PracticeAssistTitle" xml:space="preserve">
+    <value>Ready phrases — take one and make it yours</value>
+  </data>
+  <data name="PracticeEmotionHint" xml:space="preserve">
+    <value>What's closest? You can pick several</value>
+  </data>
+  <data name="TechniqueStepSkip" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="StageEmptyText" xml:space="preserve">
+    <value>First write or dictate what bothers you</value>
+  </data>
+  <data name="StageAgain" xml:space="preserve">
+    <value>Again</value>
+  </data>
+  <data name="StageResizeTitle" xml:space="preserve">
+    <value>Make it small</value>
+  </data>
+  <data name="StageResizeHint" xml:space="preserve">
+    <value>Pinch the card or tap the button — the problem shrinks and drifts far away</value>
+  </data>
+  <data name="StageResizeAction" xml:space="preserve">
+    <value>Push it far away</value>
+  </data>
+  <data name="StageResizeDone" xml:space="preserve">
+    <value>Small and far away. How does it feel now?</value>
+  </data>
+  <data name="StageWhiteSpotTitle" xml:space="preserve">
+    <value>White spot</value>
+  </data>
+  <data name="StageWhiteSpotHint" xml:space="preserve">
+    <value>Watch the picture dissolve into white light. Breathe calmly</value>
+  </data>
+  <data name="StageWhiteSpotAction" xml:space="preserve">
+    <value>Start — 40 seconds</value>
+  </data>
+  <data name="StageWhiteSpotStop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="StageWhiteSpotSeconds" xml:space="preserve">
+    <value>{0} s left</value>
+  </data>
+  <data name="StageWhiteSpotDone" xml:space="preserve">
+    <value>Only even white light. Notice how it feels inside</value>
+  </data>
+  <data name="StagePaperTitle" xml:space="preserve">
+    <value>Let the thought go</value>
+  </data>
+  <data name="StagePaperHint" xml:space="preserve">
+    <value>Swipe the sheet up or use the buttons: crumple, tear, throw away</value>
+  </data>
+  <data name="StagePaperCrumple" xml:space="preserve">
+    <value>Crumple</value>
+  </data>
+  <data name="StagePaperTear" xml:space="preserve">
+    <value>Tear</value>
+  </data>
+  <data name="StagePaperThrow" xml:space="preserve">
+    <value>Throw away</value>
+  </data>
+  <data name="StagePaperDone" xml:space="preserve">
+    <value>The sheet is gone. Take a slow breath out</value>
+  </data>
+  <data name="StageRepeatTitle" xml:space="preserve">
+    <value>Say it out loud</value>
+  </data>
+  <data name="StageRepeatHint" xml:space="preserve">
+    <value>Say the phrase slowly, as if hearing it for the first time, and tap the circle</value>
+  </data>
+  <data name="StageRepeatCount" xml:space="preserve">
+    <value>Repeats: {0}</value>
+  </data>
+  <data name="StageRepeatCheck" xml:space="preserve">
+    <value>Listen in: does the phrase sound as strong as at the start?</value>
+  </data>
+  <data name="StageRepeatButton" xml:space="preserve">
+    <value>Said it out loud</value>
+  </data>
+  <data name="StagePauseTitle" xml:space="preserve">
+    <value>A minute without this thought</value>
+  </data>
+  <data name="StagePauseHint" xml:space="preserve">
+    <value>Let the thought go for a minute: just breathe with the circle</value>
+  </data>
+  <data name="StagePauseStart" xml:space="preserve">
+    <value>Start the minute</value>
+  </data>
+  <data name="StagePauseStop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="StagePauseDone" xml:space="preserve">
+    <value>The minute is over. What changed in your body and mood?</value>
+  </data>
+  <data name="StageFutureTitle" xml:space="preserve">
+    <value>A view from the future</value>
+  </data>
+  <data name="StageFutureHint" xml:space="preserve">
+    <value>Move the slider and watch the problem change over time</value>
+  </data>
+  <data name="StageFutureStop0" xml:space="preserve">
+    <value>Now</value>
+  </data>
+  <data name="StageFutureStop1" xml:space="preserve">
+    <value>In a month</value>
+  </data>
+  <data name="StageFutureStop2" xml:space="preserve">
+    <value>In a year</value>
+  </data>
+  <data name="StageFutureStop3" xml:space="preserve">
+    <value>In 5 years</value>
+  </data>
+  <data name="StageFutureStop4" xml:space="preserve">
+    <value>In 10 years</value>
+  </data>
+  <data name="StageFutureStop5" xml:space="preserve">
+    <value>In 50 years</value>
+  </data>
+  <data name="TechniqueStepsSummary" xml:space="preserve">
+    <value>Practice steps: {0}</value>
+  </data>
+  <data name="PracticeMoreChips" xml:space="preserve">
+    <value>More +{0}</value>
+  </data>
+  <data name="PracticeAnswersTitle" xml:space="preserve">
+    <value>Your answers</value>
+  </data>
+  <data name="ExposureEntryTitle" xml:space="preserve">
+    <value>Fear ladder</value>
+  </data>
+  <data name="ExposureEntrySubtitle" xml:space="preserve">
+    <value>Step by step into what you fear: the most effective way to weaken anxiety</value>
+  </data>
+  <data name="ExposureTitle" xml:space="preserve">
+    <value>Fear ladder</value>
+  </data>
+  <data name="ExposureIntro" xml:space="preserve">
+    <value>Anxiety lives on avoidance: we steer around what frightens us, or go with a safety net, and never find out that the danger was exaggerated. Here you will test your fears in real life, step by step. It is the best studied and most effective way to help yourself with anxiety.</value>
+  </data>
+  <data name="ExposureScreenTitle" xml:space="preserve">
+    <value>A few questions first</value>
+  </data>
+  <data name="ExposureScreenLead" xml:space="preserve">
+    <value>This method is not for everyone without a specialist. Please answer honestly: it is for your safety.</value>
+  </data>
+  <data name="ExposureScreenSelfHarm" xml:space="preserve">
+    <value>Do you have thoughts of suicide or of harming yourself now?</value>
+  </data>
+  <data name="ExposureScreenTrauma" xml:space="preserve">
+    <value>Is the fear linked to a trauma you lived through (violence, a disaster, war), with flashbacks or nightmares?</value>
+  </data>
+  <data name="ExposureScreenRituals" xml:space="preserve">
+    <value>Do rituals or checking take more than an hour a day?</value>
+  </data>
+  <data name="ExposureScreenDissociation" xml:space="preserve">
+    <value>Do you have moments when the world or you yourself feel unreal, you "blank out", hear voices or see things that are not there?</value>
+  </data>
+  <data name="ExposureScreenSubstances" xml:space="preserve">
+    <value>Do you numb your anxiety with alcohol or other substances?</value>
+  </data>
+  <data name="ExposureScreenBody" xml:space="preserve">
+    <value>Do you have heart disease, epilepsy, asthma, a pregnancy, a recent operation or injury?</value>
+  </data>
+  <data name="ExposureContinue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="ExposureReferralTitle" xml:space="preserve">
+    <value>Better with a specialist</value>
+  </data>
+  <data name="ExposureReferral" xml:space="preserve">
+    <value>From your answers, it is better to work with this fear together with a therapist: with trauma, compulsive rituals, dissociation or substance use the method has to be adapted to you, and doing it alone is not safe. This is not a verdict: it means you deserve stronger help. While you look for it, the breathing and grounding practices in the app are here for you.</value>
+  </data>
+  <data name="ExposureCrisisAction" xml:space="preserve">
+    <value>I need help now</value>
+  </data>
+  <data name="ExposureFearTitle" xml:space="preserve">
+    <value>My fear</value>
+  </data>
+  <data name="ExposureFearKindQuestion" xml:space="preserve">
+    <value>What are you afraid of?</value>
+  </data>
+  <data name="ExposureFearedQuestion" xml:space="preserve">
+    <value>What do you believe would happen in the worst case?</value>
+  </data>
+  <data name="ExposureFearedPlaceholder" xml:space="preserve">
+    <value>For example: everyone will see that I'm nervous</value>
+  </data>
+  <data name="ExposureFearedBelief" xml:space="preserve">
+    <value>How sure are you of it?</value>
+  </data>
+  <data name="ExposureSafetyQuestion" xml:space="preserve">
+    <value>What do you do so that it does not happen?</value>
+  </data>
+  <data name="ExposureSafetyHint" xml:space="preserve">
+    <value>This is a safety net. It calms you for a minute, but stops the brain from learning that it was safe without it.</value>
+  </data>
+  <data name="ExposureAvoidedQuestion" xml:space="preserve">
+    <value>What do you avoid because of this fear?</value>
+  </data>
+  <data name="ExposureCircle" xml:space="preserve">
+    <value>The anxiety loop: a situation, a frightening prediction, anxiety, avoidance or a safety net, "phew, it passed", and the fear seems confirmed. The ladder breaks this loop.</value>
+  </data>
+  <data name="ExposureNext" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="ExposureLadderTitle" xml:space="preserve">
+    <value>Steps of the ladder</value>
+  </data>
+  <data name="ExposureLadderLead" xml:space="preserve">
+    <value>Choose 6 to 10 situations, from slightly uneasy to the hardest. The number on the right is how frightening it will be, 0 to 100; adjust it with − and +.</value>
+  </data>
+  <data name="ExposureExamplesTitle" xml:space="preserve">
+    <value>Examples: tap to add</value>
+  </data>
+  <data name="ExposureOwnStepTitle" xml:space="preserve">
+    <value>Your own step</value>
+  </data>
+  <data name="ExposureOwnStepPlaceholder" xml:space="preserve">
+    <value>For example: call the bank</value>
+  </data>
+  <data name="ExposureOwnStepDistress" xml:space="preserve">
+    <value>How frightening it will be (0 to 10)</value>
+  </data>
+  <data name="ExposureAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ExposureChosenTitle" xml:space="preserve">
+    <value>My ladder</value>
+  </data>
+  <data name="ExposureLadderCount" xml:space="preserve">
+    <value>Steps: {0}. At least {1} are needed.</value>
+  </data>
+  <data name="ExposureSaveLadder" xml:space="preserve">
+    <value>Save the ladder</value>
+  </data>
+  <data name="ExposureEasier" xml:space="preserve">
+    <value>Easier</value>
+  </data>
+  <data name="ExposureHarder" xml:space="preserve">
+    <value>Harder</value>
+  </data>
+  <data name="ExposureRemoveStep" xml:space="preserve">
+    <value>Remove the step</value>
+  </data>
+  <data name="ExposureProgressPredictions" xml:space="preserve">
+    <value>Predictions tested: {0}. Came true: {1}.</value>
+  </data>
+  <data name="ExposureProgressSteps" xml:space="preserve">
+    <value>Steps mastered: {0} of {1}</value>
+  </data>
+  <data name="ExposureProgressBeliefDrop" xml:space="preserve">
+    <value>belief in the fear drops by {0} of 10 on average</value>
+  </data>
+  <data name="ExposureFearSummary" xml:space="preserve">
+    <value>Your fear: "{0}"</value>
+  </data>
+  <data name="ExposureCurrentTitle" xml:space="preserve">
+    <value>Next step</value>
+  </data>
+  <data name="ExposureStartTask" xml:space="preserve">
+    <value>Prepare for the task</value>
+  </data>
+  <data name="ExposurePendingTitle" xml:space="preserve">
+    <value>The task is waiting for your report</value>
+  </data>
+  <data name="ExposureReportAction" xml:space="preserve">
+    <value>Tell how it went</value>
+  </data>
+  <data name="ExposureEasierHint" xml:space="preserve">
+    <value>This step is too steep for now, and that is fine. Add one in between: the same situation, a little easier (shorter, with someone nearby, at a quiet time).</value>
+  </data>
+  <data name="ExposureLadderDone" xml:space="preserve">
+    <value>You have climbed the whole ladder. The fear no longer runs these situations. To keep it so, return to them now and then, in new places and with new people.</value>
+  </data>
+  <data name="ExposureStepMastered" xml:space="preserve">
+    <value>mastered</value>
+  </data>
+  <data name="ExposureStepTasks" xml:space="preserve">
+    <value>tasks: {0}</value>
+  </data>
+  <data name="ExposureLadderSection" xml:space="preserve">
+    <value>The ladder</value>
+  </data>
+  <data name="ExposureEditFear" xml:space="preserve">
+    <value>Edit my fear</value>
+  </data>
+  <data name="ExposureEditLadder" xml:space="preserve">
+    <value>Edit the ladder</value>
+  </data>
+  <data name="ExposureDelete" xml:space="preserve">
+    <value>Delete the ladder</value>
+  </data>
+  <data name="ExposureDeleteConfirm" xml:space="preserve">
+    <value>Tap again to delete everything</value>
+  </data>
+  <data name="ExposureBeforeTitle" xml:space="preserve">
+    <value>Before the task</value>
+  </data>
+  <data name="ExposurePredictionQuestion" xml:space="preserve">
+    <value>What do you think will happen?</value>
+  </data>
+  <data name="ExposurePredictionPlaceholder" xml:space="preserve">
+    <value>Be specific: what will others do or say, what will happen to you</value>
+  </data>
+  <data name="ExposureBeliefBefore" xml:space="preserve">
+    <value>How sure are you that it will happen?</value>
+  </data>
+  <data name="ExposureDropQuestion" xml:space="preserve">
+    <value>Which safety net will you give up this time?</value>
+  </data>
+  <data name="ExposureRules" xml:space="preserve">
+    <value>The rules: stay until you have tested the prediction, not until the anxiety is gone. No safety net. There will be anxiety, and that is normal and safe. You can always stop.</value>
+  </data>
+  <data name="ExposureGo" xml:space="preserve">
+    <value>I'm going to do it</value>
+  </data>
+  <data name="ExposureAfterTitle" xml:space="preserve">
+    <value>How did it go?</value>
+  </data>
+  <data name="ExposurePredictionReminder" xml:space="preserve">
+    <value>You predicted: "{0}", and were {1} of 10 sure.</value>
+  </data>
+  <data name="ExposureWhatHappenedQuestion" xml:space="preserve">
+    <value>What actually happened?</value>
+  </data>
+  <data name="ExposureWhatHappenedPlaceholder" xml:space="preserve">
+    <value>The facts, as a camera would see them</value>
+  </data>
+  <data name="ExposureOutcomeQuestion" xml:space="preserve">
+    <value>Did the prediction come true?</value>
+  </data>
+  <data name="ExposureOutcomeNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="ExposureOutcomePartly" xml:space="preserve">
+    <value>Partly</value>
+  </data>
+  <data name="ExposureOutcomeYes" xml:space="preserve">
+    <value>Yes, it came true</value>
+  </data>
+  <data name="ExposureBeliefAfter" xml:space="preserve">
+    <value>How sure are you now of the same prediction?</value>
+  </data>
+  <data name="ExposurePeak" xml:space="preserve">
+    <value>The strongest anxiety during the task (0 to 10)</value>
+  </data>
+  <data name="ExposureUsedSafetyQuestion" xml:space="preserve">
+    <value>Did you use a safety net?</value>
+  </data>
+  <data name="ExposureLearnedQuestion" xml:space="preserve">
+    <value>What did you learn?</value>
+  </data>
+  <data name="ExposureLearnedPlaceholder" xml:space="preserve">
+    <value>One sentence for yourself</value>
+  </data>
+  <data name="ExposureSaveReport" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ExposureInterrupt" xml:space="preserve">
+    <value>I stopped early</value>
+  </data>
+  <data name="ExposureFeedbackTitle" xml:space="preserve">
+    <value>The result</value>
+  </data>
+  <data name="ExposureBeliefChange" xml:space="preserve">
+    <value>Belief in the prediction: {0} → {1} of 10</value>
+  </data>
+  <data name="ExposureInsightDisconfirmed" xml:space="preserve">
+    <value>The fear predicted harm, and it did not happen. This is how the brain relearns: not by the anxiety going away, but by the expectation not coming true.</value>
+  </data>
+  <data name="ExposureInsightCameTrue" xml:space="preserve">
+    <value>What you feared happened, and you lived through it. How bad was it really, compared with what you imagined? What helped you cope? Repeat this step: one match is not yet a rule.</value>
+  </data>
+  <data name="ExposureInsightInterrupted" xml:space="preserve">
+    <value>Stopping is not a failure. You were still where it is frightening. Try again when you are ready, or start with an easier step.</value>
+  </data>
+  <data name="ExposureInsightSafety" xml:space="preserve">
+    <value>This time there was a safety net. Next time try without it: then the brain learns it was safe without it, too.</value>
+  </data>
+  <data name="ExposureInsightMastered" xml:space="preserve">
+    <value>Step mastered: here the fear no longer predicts harm. You can go higher.</value>
+  </data>
+  <data name="ExposureInsightLadderDone" xml:space="preserve">
+    <value>That was the last step. You have climbed the whole ladder!</value>
+  </data>
+  <data name="ExposureInsightEasier" xml:space="preserve">
+    <value>Two very hard times in a row: the step is too steep for now. Add an easier one in between.</value>
+  </data>
+  <data name="ExposureDone" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="ExposureBeliefMin" xml:space="preserve">
+    <value>0: not at all</value>
+  </data>
+  <data name="ExposureBeliefMax" xml:space="preserve">
+    <value>10: completely</value>
+  </data>
+  <data name="ExposureProgressStart" xml:space="preserve">
+    <value>The ladder is ready. The first task is to test one of your predictions.</value>
+  </data>
+  <data name="ExposureLearnedSummary" xml:space="preserve">
+    <value>You learned: "{0}"</value>
+  </data>
+  <data name="ExposureCatalogSubtitle" xml:space="preserve">
+    <value>Step by step into what you fear</value>
+  </data>
+  <data name="ExposureCatalogMeta" xml:space="preserve">
+    <value>~10 min a task · Anxiety</value>
+  </data>
+  <data name="ExposureCatalogBadge" xml:space="preserve">
+    <value>A programme for a few weeks</value>
+  </data>
+  <data name="ExposureCatalogAuthor" xml:space="preserve">
+    <value>CBT</value>
+  </data>
+  <data name="ArticlesLead" xml:space="preserve">
+    <value>Short reads on how anxiety, stress and the body work, and what to do about it</value>
+  </data>
+  <data name="ArticleMinutes" xml:space="preserve">
+    <value>{0} min read</value>
+  </data>
+  <data name="ArticlePracticeCaption" xml:space="preserve">
+    <value>Practice</value>
+  </data>
+  <data name="ArticleProgrammeCaption" xml:space="preserve">
+    <value>Programme</value>
+  </data>
+  <data name="ArticlesFilterAll" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="PcPtsd5Score.Negative" xml:space="preserve">
+    <value>Few signs of a post-traumatic reaction</value>
+  </data>
+  <data name="PcPtsd5Score.Positive" xml:space="preserve">
+    <value>There are signs of a post-traumatic reaction</value>
+  </data>
+  <data name="PcPtsd5ScoreDetail.Negative" xml:space="preserve">
+    <value>Fewer than three "yes" answers. If some of these experiences still trouble you, it is worth talking about them with a specialist.</value>
+  </data>
+  <data name="PcPtsd5ScoreDetail.Positive" xml:space="preserve">
+    <value>Three or more "yes" answers. This is a screening, not a diagnosis, but it is a reason to take the detailed PCL-5 scale and to see a specialist who works with trauma. Post-traumatic stress disorder responds well to treatment.</value>
+  </data>
+  <data name="Pcl5Score.Low" xml:space="preserve">
+    <value>Symptoms are mild</value>
+  </data>
+  <data name="Pcl5Score.Elevated" xml:space="preserve">
+    <value>Symptoms are noticeable</value>
+  </data>
+  <data name="Pcl5Score.Probable" xml:space="preserve">
+    <value>A high likelihood of post-traumatic stress disorder</value>
+  </data>
+  <data name="Pcl5ScoreDetail.Low" xml:space="preserve">
+    <value>Up to 20 of 80. There are few post-traumatic symptoms. If something listed still gets in the way, it is worth talking about it with a specialist.</value>
+  </data>
+  <data name="Pcl5ScoreDetail.Elevated" xml:space="preserve">
+    <value>21 to 32 of 80. The symptoms are noticeable and may get in the way. Repeat the scale in two weeks; if they get in the way of life, see a trauma specialist.</value>
+  </data>
+  <data name="Pcl5ScoreDetail.Probable" xml:space="preserve">
+    <value>33 or more of 80. This is common with post-traumatic stress disorder. It is not a diagnosis, but a serious reason to see a specialist who works with trauma: PTSD responds well to treatment.</value>
+  </data>
+  <data name="TestRecommendationReasonPcPtsd5.Low" xml:space="preserve">
+    <value>Grounding helps you come back to the present when something reminds you of the past.</value>
+  </data>
+  <data name="TestRecommendationReasonPcPtsd5.High" xml:space="preserve">
+    <value>This practice helps when a hard memory takes over.</value>
+  </data>
+  <data name="TestRecommendationReasonPcl5.Low" xml:space="preserve">
+    <value>This practice helps you notice where tension sits in the body and soften it.</value>
+  </data>
+  <data name="TestRecommendationReasonPcl5.Mid" xml:space="preserve">
+    <value>Grounding helps you come back to the present when something reminds you of the past.</value>
+  </data>
+  <data name="TestRecommendationReasonPcl5.High" xml:space="preserve">
+    <value>This practice helps when a hard memory takes over. But with such a score, the main help is a trauma specialist.</value>
+  </data>
+  <data name="ArticleTestsCaption" xml:space="preserve">
+    <value>Tests</value>
+  </data>
+  <data name="ArticleReadCaption" xml:space="preserve">
+    <value>Article</value>
+  </data>
+  <data name="TraumaCatalogTitle" xml:space="preserve">
+    <value>After trauma</value>
+  </data>
+  <data name="TraumaCatalogSubtitle" xml:space="preserve">
+    <value>Screening, flashbacks, nightmares, the way to a specialist</value>
+  </data>
+  <data name="TraumaCatalogMeta" xml:space="preserve">
+    <value>Test · practices · articles</value>
+  </data>
+  <data name="TraumaCatalogBadge" xml:space="preserve">
+    <value>Module</value>
+  </data>
+  <data name="TraumaCatalogAuthor" xml:space="preserve">
+    <value>Trauma</value>
+  </data>
+  <data name="CrisisHubFlashbackTitle" xml:space="preserve">
+    <value>A memory took over</value>
+  </data>
+  <data name="CrisisHubFlashbackSubtitle" xml:space="preserve">
+    <value>Come back to the present, about 3 minutes</value>
+  </data>
+  <data name="ArticleChecklistHint" xml:space="preserve">
+    <value>Tick what applies to you</value>
+  </data>
+  <data name="ArticleQuizCaption" xml:space="preserve">
+    <value>Check yourself</value>
+  </data>
+  <data name="ArticleCycleLoop" xml:space="preserve">
+    <value>…and round again</value>
+  </data>
+  <data name="ArticleTaskCaption" xml:space="preserve">
+    <value>Task for tomorrow</value>
+  </data>
+  <data name="ArticleSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ArticleSaved" xml:space="preserve">
+    <value>Saved</value>
+  </data>
+  <data name="ArticleListen" xml:space="preserve">
+    <value>Listen</value>
+  </data>
+  <data name="ArticleStopListening" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="ArticleReadMark" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="ArticleRight" xml:space="preserve">
+    <value>Right.</value>
+  </data>
+  <data name="ArticleNotQuite" xml:space="preserve">
+    <value>Not quite.</value>
+  </data>
+  <data name="ArticlesSearchPlaceholder" xml:space="preserve">
+    <value>Search articles</value>
+  </data>
+  <data name="ArticlesNothingFound" xml:space="preserve">
+    <value>Nothing found. Try another word.</value>
+  </data>
+  <data name="ArticlesFilterSaved" xml:space="preserve">
+    <value>Saved</value>
+  </data>
+  <data name="ArticlesNothingSaved" xml:space="preserve">
+    <value>Articles you save will appear here.</value>
+  </data>
+  <data name="ArticlesForYou" xml:space="preserve">
+    <value>For you</value>
+  </data>
+  <data name="ArticlesCourses" xml:space="preserve">
+    <value>Courses</value>
+  </data>
+  <data name="ArticlesCoursesLead" xml:space="preserve">
+    <value>Each day: a short read, an exercise and a task. This is how guided self-help works.</value>
+  </data>
+  <data name="ArticlesCourseMeta" xml:space="preserve">
+    <value>{0} days · up to {1} min a day</value>
+  </data>
+  <data name="PickContinueCourse" xml:space="preserve">
+    <value>Continue the course</value>
+  </data>
+  <data name="PickContinueReading" xml:space="preserve">
+    <value>You haven't finished it</value>
+  </data>
+  <data name="PickTest" xml:space="preserve">
+    <value>Based on your {0} result</value>
+  </data>
+  <data name="PickMood" xml:space="preserve">
+    <value>Several hard days in your journal</value>
+  </data>
+  <data name="CourseCaption" xml:space="preserve">
+    <value>Course</value>
+  </data>
+  <data name="CourseStart" xml:space="preserve">
+    <value>Start the course</value>
+  </data>
+  <data name="CourseContinue" xml:space="preserve">
+    <value>Continue: day {0}</value>
+  </data>
+  <data name="CourseFinished" xml:space="preserve">
+    <value>Course completed</value>
+  </data>
+  <data name="CourseDayLabel" xml:space="preserve">
+    <value>Day {0}</value>
+  </data>
+  <data name="CourseDayTomorrow" xml:space="preserve">
+    <value>Opens tomorrow</value>
+  </data>
+  <data name="CourseDayLocked" xml:space="preserve">
+    <value>After the previous day</value>
+  </data>
+  <data name="CourseDayDone" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="CourseProgress" xml:space="preserve">
+    <value>{0} of {1} done</value>
+  </data>
+  <data name="CourseMeasureTitle" xml:space="preserve">
+    <value>Measure</value>
+  </data>
+  <data name="CourseMeasureHint" xml:space="preserve">
+    <value>Take the {0} test at the start and at the end of the course to see whether it helps.</value>
+  </data>
+  <data name="CourseMeasureOnce" xml:space="preserve">
+    <value>{0}: {1} points</value>
+  </data>
+  <data name="CourseMeasureChange" xml:space="preserve">
+    <value>{0}: was {1}, now {2}</value>
+  </data>
+  <data name="CourseTakeTest" xml:space="preserve">
+    <value>Take {0}</value>
+  </data>
+  <data name="CourseReset" xml:space="preserve">
+    <value>Start the course again</value>
+  </data>
+  <data name="CourseResetConfirm" xml:space="preserve">
+    <value>Your answers in this course will be deleted. Start again?</value>
+  </data>
+  <data name="CourseReflectionPlaceholder" xml:space="preserve">
+    <value>Your answer. It stays on your phone only.</value>
+  </data>
+  <data name="CourseCompleteDay" xml:space="preserve">
+    <value>Day done</value>
+  </data>
+  <data name="CourseDayClosed" xml:space="preserve">
+    <value>Day {0} is done. The next one opens tomorrow: try the task.</value>
+  </data>
+  <data name="CourseAllDone" xml:space="preserve">
+    <value>Course completed. Take the measure again and compare with the start.</value>
+  </data>
+  <data name="CourseDayNotOpen" xml:space="preserve">
+    <value>This day is not open yet.</value>
+  </data>
+  <data name="ArticleChatCaption" xml:space="preserve">
+    <value>AI chat</value>
+  </data>
+  <data name="ShellTabChatShort" xml:space="preserve">
+    <value>AI chat</value>
+  </data>
+  <data name="ShellTabLibraryShort" xml:space="preserve">
+    <value>Library</value>
+  </data>
+  <data name="ShellTabJournalShort" xml:space="preserve">
+    <value>Journal</value>
+  </data>
+  <data name="ForYouEmpty" xml:space="preserve">
+    <value>Courses you've started, articles you haven't finished and suggestions from your tests and journal will appear here. Take a short test and the picks will get more precise.</value>
+  </data>
+  <data name="ForYouTakeTest" xml:space="preserve">
+    <value>Take a test</value>
+  </data>
+  <data name="ForYouSavedTitle" xml:space="preserve">
+    <value>Saved articles</value>
+  </data>
+  <data name="OnboardingModuleChatHint" xml:space="preserve">
+    <value>Talk it out and work through what troubles you, step by step</value>
+  </data>
+  <data name="OnboardingModuleLibraryHint" xml:space="preserve">
+    <value>Articles, courses, prayers and quotes</value>
+  </data>
+  <data name="OnboardingModuleJournalHint" xml:space="preserve">
+    <value>Track your mood and see what helps</value>
+  </data>
+  <data name="BodyTitle" xml:space="preserve">
+    <value>Body</value>
+  </data>
+  <data name="BodyLead" xml:space="preserve">
+    <value>The body often notices a feeling before we can name it. Mark where and what you feel, and check what may be behind it.</value>
+  </data>
+  <data name="BodyNotDiagnosis" xml:space="preserve">
+    <value>This is not a diagnosis: it looks for feelings, not for the causes of illness. If a sensation is new, strong, lasting or painful, see a doctor first.</value>
+  </data>
+  <data name="BodyAreaQuestion" xml:space="preserve">
+    <value>Where do you feel it?</value>
+  </data>
+  <data name="BodySensationQuestion" xml:space="preserve">
+    <value>What is it like?</value>
+  </data>
+  <data name="BodyIntensity" xml:space="preserve">
+    <value>How strong is it?</value>
+  </data>
+  <data name="BodyFeelingQuestion" xml:space="preserve">
+    <value>What could be behind it?</value>
+  </data>
+  <data name="BodyFeelingHint" xml:space="preserve">
+    <value>Feelings like these are often felt this way. These are guesses: pick what fits, or something else.</value>
+  </data>
+  <data name="BodyOtherFeelings" xml:space="preserve">
+    <value>Other feelings</value>
+  </data>
+  <data name="BodyPromptVoice" xml:space="preserve">
+    <value>If this sensation could speak, what would it say?</value>
+  </data>
+  <data name="BodyPromptBefore" xml:space="preserve">
+    <value>When did it start? What happened just before?</value>
+  </data>
+  <data name="BodyNotePlaceholder" xml:space="preserve">
+    <value>What comes to mind, or what happened before (optional)</value>
+  </data>
+  <data name="BodyDoctorFirst" xml:space="preserve">
+    <value>Pain or a strong sensation can be a sign of illness. If it is new or does not pass, see a doctor first, and look for feelings after.</value>
+  </data>
+  <data name="BodySave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="BodySaved" xml:space="preserve">
+    <value>Saved. What may help now:</value>
+  </data>
+  <data name="BodyCrisis" xml:space="preserve">
+    <value>It sounds very hard right now. You are not alone: here is where to turn right now.</value>
+  </data>
+  <data name="BodyAgain" xml:space="preserve">
+    <value>Check in again</value>
+  </data>
+  <data name="BodyPatternsTitle" xml:space="preserve">
+    <value>Your patterns</value>
+  </data>
+  <data name="BodyPatternsEmpty" xml:space="preserve">
+    <value>When the same sensation comes back, your patterns will show here.</value>
+  </data>
+  <data name="BodyPatternTitle" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="BodyPatternCount" xml:space="preserve">
+    <value>Times noted: {0}</value>
+  </data>
+  <data name="BodyPatternFeeling" xml:space="preserve">
+    <value>Most often: {0}</value>
+  </data>
+  <data name="BodyPatternTime" xml:space="preserve">
+    <value>Usually {0}</value>
+  </data>
+  <data name="BodyRecentTitle" xml:space="preserve">
+    <value>Recent check-ins</value>
+  </data>
+  <data name="BodyDelete" xml:space="preserve">
+    <value>Delete check-in</value>
+  </data>
+  <data name="BodyDeleteConfirmTitle" xml:space="preserve">
+    <value>Delete this check-in?</value>
+  </data>
+  <data name="BodyDeleteConfirmBody" xml:space="preserve">
+    <value>The check-in and your note will be removed from the phone.</value>
+  </data>
+  <data name="BodyDeleteConfirmAccept" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="BodyCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="BodyAreaHead" xml:space="preserve">
+    <value>Head</value>
+  </data>
+  <data name="BodyAreaFace" xml:space="preserve">
+    <value>Face and jaw</value>
+  </data>
+  <data name="BodyAreaThroat" xml:space="preserve">
+    <value>Throat</value>
+  </data>
+  <data name="BodyAreaShoulders" xml:space="preserve">
+    <value>Neck and shoulders</value>
+  </data>
+  <data name="BodyAreaChest" xml:space="preserve">
+    <value>Chest</value>
+  </data>
+  <data name="BodyAreaStomach" xml:space="preserve">
+    <value>Stomach</value>
+  </data>
+  <data name="BodyAreaBack" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="BodyAreaArms" xml:space="preserve">
+    <value>Arms</value>
+  </data>
+  <data name="BodyAreaLegs" xml:space="preserve">
+    <value>Legs</value>
+  </data>
+  <data name="BodyAreaWholeBody" xml:space="preserve">
+    <value>Whole body</value>
+  </data>
+  <data name="BodySensationTight" xml:space="preserve">
+    <value>Tightness</value>
+  </data>
+  <data name="BodySensationHeavy" xml:space="preserve">
+    <value>Heaviness</value>
+  </data>
+  <data name="BodySensationHeat" xml:space="preserve">
+    <value>Heat</value>
+  </data>
+  <data name="BodySensationCold" xml:space="preserve">
+    <value>Cold</value>
+  </data>
+  <data name="BodySensationLump" xml:space="preserve">
+    <value>A lump</value>
+  </data>
+  <data name="BodySensationTrembling" xml:space="preserve">
+    <value>Trembling</value>
+  </data>
+  <data name="BodySensationEmpty" xml:space="preserve">
+    <value>Emptiness</value>
+  </data>
+  <data name="BodySensationFluttering" xml:space="preserve">
+    <value>Fluttering</value>
+  </data>
+  <data name="BodySensationTingling" xml:space="preserve">
+    <value>Tingling</value>
+  </data>
+  <data name="BodySensationPain" xml:space="preserve">
+    <value>Pain</value>
+  </data>
+  <data name="BodyFeelingAnxiety" xml:space="preserve">
+    <value>anxiety</value>
+  </data>
+  <data name="BodyFeelingFear" xml:space="preserve">
+    <value>fear</value>
+  </data>
+  <data name="BodyFeelingAnger" xml:space="preserve">
+    <value>anger</value>
+  </data>
+  <data name="BodyFeelingHurt" xml:space="preserve">
+    <value>hurt</value>
+  </data>
+  <data name="BodyFeelingSadness" xml:space="preserve">
+    <value>sadness</value>
+  </data>
+  <data name="BodyFeelingShame" xml:space="preserve">
+    <value>shame</value>
+  </data>
+  <data name="BodyFeelingGuilt" xml:space="preserve">
+    <value>guilt</value>
+  </data>
+  <data name="BodyFeelingExhaustion" xml:space="preserve">
+    <value>exhaustion</value>
+  </data>
+  <data name="BodyFeelingJoy" xml:space="preserve">
+    <value>joy, excitement</value>
+  </data>
+  <data name="BodyFeelingUnknown" xml:space="preserve">
+    <value>I don't know</value>
+  </data>
+  <data name="BodyPartMorning" xml:space="preserve">
+    <value>in the morning</value>
+  </data>
+  <data name="BodyPartDay" xml:space="preserve">
+    <value>in the afternoon</value>
+  </data>
+  <data name="BodyPartEvening" xml:space="preserve">
+    <value>in the evening</value>
+  </data>
+  <data name="BodyPartNight" xml:space="preserve">
+    <value>at night</value>
+  </data>
+  <data name="BodySaveError" xml:space="preserve">
+    <value>Could not save the check-in. Please try again.</value>
   </data>
 </root>

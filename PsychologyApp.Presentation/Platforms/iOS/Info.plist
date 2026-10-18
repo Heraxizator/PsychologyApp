@@ -26,6 +26,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Чтобы надиктовать ответ вместо набора текста. Речь распознаётся на устройстве. / To dictate answers instead of typing; speech is recognised on the device.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Чтобы превращать надиктованный ответ в текст прямо на устройстве. / To turn dictated answers into text right on the device.</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
 </dict>

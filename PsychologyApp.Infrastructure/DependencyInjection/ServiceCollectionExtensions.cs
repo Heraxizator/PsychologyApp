@@ -39,6 +39,9 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<ITestResultProgressRepository>(sp => sp.GetRequiredService<UserProgressRepository>());
         services.AddSingleton<IPracticeProgressRepository>(sp => sp.GetRequiredService<UserProgressRepository>());
         services.AddSingleton<IClinicalCareRepository, ClinicalCareRepository>();
+        services.AddSingleton<IExposureRepository, ExposureRepository>();
+        services.AddSingleton<IBodyRepository, BodyRepository>();
+        services.AddSingleton<IReadingRepository, ReadingRepository>();
         services.AddSingleton<IChatRepository, ChatRepository>();
         services.AddSingleton<IBackupRepository, BackupRepository>();
 

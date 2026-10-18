@@ -9,7 +9,6 @@ using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Features.PlayMusic;
-using PsychologyApp.Presentation.Features.SearchPhysics;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Services.Progress;
@@ -238,22 +237,6 @@ public sealed class QuoteFeedCoordinatorTests
                 20,
                 It.IsAny<CancellationToken>()),
             Times.Once);
-    }
-}
-
-public sealed class PhysicsSearchUiStateTests
-{
-    [Fact]
-    public void Resolve_ShowsFilteringWhileSearching()
-    {
-        PhysicsSearchUiSnapshot snapshot = PhysicsSearchUiState.Resolve(
-            isDone: true,
-            searchText: "stress",
-            isSearching: true,
-            resultCount: 0);
-
-        Assert.True(snapshot.IsSearchFilteringVisible);
-        Assert.False(snapshot.IsSearchResultsListVisible);
     }
 }
 

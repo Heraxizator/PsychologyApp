@@ -70,10 +70,10 @@
     <value>Новый чат</value>
   </data>
   <data name="ChatStatusIdle" xml:space="preserve">
-    <value>Собеседник · офлайн</value>
+    <value>ИИ-чат · без интернета</value>
   </data>
   <data name="ChatStatusPractice" xml:space="preserve">
-    <value>Собеседник · практика</value>
+    <value>ИИ-чат · практика</value>
   </data>
   <data name="ChatError" xml:space="preserve">
     <value>Не удалось отправить сообщение. Попробуйте ещё раз.</value>
@@ -91,16 +91,16 @@
     <value>Тест на стресс (PSS-10)</value>
   </data>
   <data name="ChatReminderTitle" xml:space="preserve">
-    <value>Собеседник ждёт</value>
+    <value>ИИ-чат на связи</value>
   </data>
   <data name="ChatReminderBody" xml:space="preserve">
     <value>Пару минут назад вы говорили о том, что вас беспокоит. Как сейчас дела?</value>
   </data>
   <data name="ChatProfileTitle" xml:space="preserve">
-    <value>Собеседник</value>
+    <value>ИИ-чат</value>
   </data>
   <data name="ChatProfileOpen" xml:space="preserve">
-    <value>Открыть профиль собеседника</value>
+    <value>Открыть профиль ИИ-чата</value>
   </data>
   <data name="ChatProfileOnline" xml:space="preserve">
     <value>На связи</value>
@@ -130,7 +130,7 @@
     <value>Имя не указано</value>
   </data>
   <data name="ChatProfileNameHint" xml:space="preserve">
-    <value>Собеседник изредка будет обращаться к вам по имени</value>
+    <value>Чат изредка будет обращаться к вам по имени</value>
   </data>
   <data name="ChatProfileNameEdit" xml:space="preserve">
     <value>Изменить</value>
@@ -169,7 +169,7 @@
     <value>О чём вы говорите чаще всего</value>
   </data>
   <data name="ChatProfileAboutTitle" xml:space="preserve">
-    <value>О собеседнике</value>
+    <value>Об ИИ-чате</value>
   </data>
   <data name="ChatProfileActionsTitle" xml:space="preserve">
     <value>Управление</value>
@@ -184,7 +184,7 @@
     <value>Забыть о вас?</value>
   </data>
   <data name="ChatProfileForgetBody" xml:space="preserve">
-    <value>Собеседник забудет имя и то, какие практики вам помогали. Чаты останутся.</value>
+    <value>Чат забудет ваше имя и то, какие практики вам помогали. Чаты останутся.</value>
   </data>
   <data name="ChatProfileDeleteAll" xml:space="preserve">
     <value>Удалить все чаты</value>
@@ -774,15 +774,6 @@
   <data name="QuotesFavoritesEmptyBody" xml:space="preserve">
     <value>Нажмите сердечко на цитате, чтобы добавить её сюда.</value>
   </data>
-  <data name="PhysicsSolutionHeader" xml:space="preserve">
-    <value>Что делать</value>
-  </data>
-  <data name="PhysicsRecommendedPractices" xml:space="preserve">
-    <value>Практики, которые могут помочь</value>
-  </data>
-  <data name="PhysicsTryPractice" xml:space="preserve">
-    <value>Попробовать практику</value>
-  </data>
   <data name="ProfileTestsCompleted" xml:space="preserve">
     <value>Пройдено тестов</value>
   </data>
@@ -1173,9 +1164,6 @@
   <data name="TestOpenHistory" xml:space="preserve">
     <value>История</value>
   </data>
-  <data name="PhysicsNoResultsSubhint" xml:space="preserve">
-    <value>Попробуйте: плечо, шея, спина, живот, голова…</value>
-  </data>
   <data name="TechniqueContinueBadge" xml:space="preserve">
     <value>Продолжить</value>
   </data>
@@ -1236,15 +1224,6 @@
   <data name="OnboardingModuleTestsHint" xml:space="preserve">
     <value>Узнать себя через опросники и Люшера</value>
   </data>
-  <data name="OnboardingModuleSomaticHint" xml:space="preserve">
-    <value>Понять связь тела и эмоций</value>
-  </data>
-  <data name="OnboardingModuleMusicHint" xml:space="preserve">
-    <value>Найти слова и звук для души</value>
-  </data>
-  <data name="OnboardingModuleQuotesHint" xml:space="preserve">
-    <value>Поддержать настроение одной мыслью</value>
-  </data>
   <data name="OnboardingConcernTitle" xml:space="preserve">
     <value>Что вас беспокоит?</value>
   </data>
@@ -1301,63 +1280,6 @@
   </data>
   <data name="QuoteShareFooter" xml:space="preserve">
     <value>PsychologyApp</value>
-  </data>
-  <data name="PhysicsTitle" xml:space="preserve">
-    <value>Тело и эмоции</value>
-  </data>
-  <data name="PhysicsIntroPage" xml:space="preserve">
-    <value>С введением</value>
-  </data>
-  <data name="PhysicsSearchPage" xml:space="preserve">
-    <value>Поисковик</value>
-  </data>
-  <data name="PhysicsSearchTitle" xml:space="preserve">
-    <value>Тело и эмоции</value>
-  </data>
-  <data name="PhysicsExplanationHeader" xml:space="preserve">
-    <value>Пояснение</value>
-  </data>
-  <data name="PhysicsExplanationBody" xml:space="preserve">
-    <value>Тело и эмоции тесно связаны: напряжение, тревога и усталость нередко отзываются в теле. Этот раздел помогает заметить, что могло стоять за ощущением. Он не ставит диагноз и не заменяет врача.</value>
-  </data>
-  <data name="PhysicsDescriptionHeader" xml:space="preserve">
-    <value>Описание</value>
-  </data>
-  <data name="PhysicsDescriptionBody" xml:space="preserve">
-    <value>Назовите недомогание или часть тела, и приложение покажет возможные эмоциональные причины и практики, которые могут помочь. Это повод присмотреться к себе, а не медицинский вывод.</value>
-  </data>
-  <data name="PhysicsAlgorithmStep1" xml:space="preserve">
-    <value>1. Назвать болезнь или часть тела, которая болит</value>
-  </data>
-  <data name="PhysicsAlgorithmStep2" xml:space="preserve">
-    <value>2. Узнать несколько возможных причин.</value>
-  </data>
-  <data name="PhysicsSearchToolbar" xml:space="preserve">
-    <value>Найти</value>
-  </data>
-  <data name="PhysicsProblemLabel" xml:space="preserve">
-    <value>Что беспокоит</value>
-  </data>
-  <data name="PhysicsIllnessPlaceholder" xml:space="preserve">
-    <value>Например: боль в спине</value>
-  </data>
-  <data name="PhysicsEmptySearchHint" xml:space="preserve">
-    <value>Введите запрос</value>
-  </data>
-  <data name="PhysicsEmptySearchSubhint" xml:space="preserve">
-    <value>Недомогание или часть тела</value>
-  </data>
-  <data name="PhysicsNoResultsHint" xml:space="preserve">
-    <value>Ничего не найдено</value>
-  </data>
-  <data name="PhysicsLoadingText" xml:space="preserve">
-    <value>Поиск причин</value>
-  </data>
-  <data name="PhysicsSearchFilteringText" xml:space="preserve">
-    <value>Подбор результатов</value>
-  </data>
-  <data name="PhysicsSearchError" xml:space="preserve">
-    <value>Не удалось выполнить поиск</value>
   </data>
   <data name="QuotesSearchError" xml:space="preserve">
     <value>Не удалось выполнить поиск цитат</value>
@@ -1899,8 +1821,8 @@
   <data name="ShellTabDetector" xml:space="preserve">
     <value>Детектор</value>
   </data>
-  <data name="ShellTabSomatic" xml:space="preserve">
-    <value>Соматик</value>
+  <data name="ShellTabArticles" xml:space="preserve">
+    <value>Статьи</value>
   </data>
   <data name="ShellTabMotivator" xml:space="preserve">
     <value>Мотиватор</value>
@@ -1911,8 +1833,8 @@
   <data name="ShellTabDetectorShort" xml:space="preserve">
     <value>Тесты</value>
   </data>
-  <data name="ShellTabSomaticShort" xml:space="preserve">
-    <value>Тело</value>
+  <data name="ShellTabArticlesShort" xml:space="preserve">
+    <value>Статьи</value>
   </data>
   <data name="ShellTabMusicShort" xml:space="preserve">
     <value>Молитвы</value>
@@ -3033,5 +2955,884 @@
   </data>
   <data name="PracticeFilterAction" xml:space="preserve">
     <value>Действие</value>
+  </data>
+  <data name="PracticeVoiceStart" xml:space="preserve">
+    <value>Надиктовать ответ</value>
+  </data>
+  <data name="PracticeVoiceStop" xml:space="preserve">
+    <value>Остановить запись</value>
+  </data>
+  <data name="PracticeVoiceListening" xml:space="preserve">
+    <value>Слушаю… говорите, пауза закончит запись</value>
+  </data>
+  <data name="PracticeVoiceHolding" xml:space="preserve">
+    <value>Говорите… отпустите, чтобы закончить</value>
+  </data>
+  <data name="PracticeVoiceNothingHeard" xml:space="preserve">
+    <value>Не удалось расслышать — попробуйте ещё раз</value>
+  </data>
+  <data name="PracticeVoicePermissionDenied" xml:space="preserve">
+    <value>Разрешите доступ к микрофону в настройках телефона, чтобы диктовать ответы</value>
+  </data>
+  <data name="PracticeVoiceUnavailable" xml:space="preserve">
+    <value>Распознавание речи на устройстве недоступно. Скачайте офлайн-пакет языка в настройках телефона</value>
+  </data>
+  <data name="PracticeRecentProblem" xml:space="preserve">
+    <value>Как в прошлый раз: {0}</value>
+  </data>
+  <data name="PracticeAssistTitle" xml:space="preserve">
+    <value>Готовые фразы — возьмите и поправьте под себя</value>
+  </data>
+  <data name="PracticeEmotionHint" xml:space="preserve">
+    <value>Что ближе? Можно выбрать несколько</value>
+  </data>
+  <data name="TechniqueStepSkip" xml:space="preserve">
+    <value>Пропустить</value>
+  </data>
+  <data name="StageEmptyText" xml:space="preserve">
+    <value>Сначала напишите или надиктуйте, что беспокоит</value>
+  </data>
+  <data name="StageAgain" xml:space="preserve">
+    <value>Ещё раз</value>
+  </data>
+  <data name="StageResizeTitle" xml:space="preserve">
+    <value>Уменьшите это</value>
+  </data>
+  <data name="StageResizeHint" xml:space="preserve">
+    <value>Сведите пальцы на карточке или нажмите кнопку — проблема уменьшится и уплывёт вдаль</value>
+  </data>
+  <data name="StageResizeAction" xml:space="preserve">
+    <value>Отодвинуть вдаль</value>
+  </data>
+  <data name="StageResizeDone" xml:space="preserve">
+    <value>Маленькая и далёкая. Как она ощущается теперь?</value>
+  </data>
+  <data name="StageWhiteSpotTitle" xml:space="preserve">
+    <value>Белое пятно</value>
+  </data>
+  <data name="StageWhiteSpotHint" xml:space="preserve">
+    <value>Смотрите, как картинка растворяется в белом свете. Дышите спокойно</value>
+  </data>
+  <data name="StageWhiteSpotAction" xml:space="preserve">
+    <value>Начать — 40 секунд</value>
+  </data>
+  <data name="StageWhiteSpotStop" xml:space="preserve">
+    <value>Остановить</value>
+  </data>
+  <data name="StageWhiteSpotSeconds" xml:space="preserve">
+    <value>Осталось {0} с</value>
+  </data>
+  <data name="StageWhiteSpotDone" xml:space="preserve">
+    <value>Только ровный белый свет. Заметьте, как стало внутри</value>
+  </data>
+  <data name="StagePaperTitle" xml:space="preserve">
+    <value>Отпустите мысль</value>
+  </data>
+  <data name="StagePaperHint" xml:space="preserve">
+    <value>Смахните лист вверх или нажимайте кнопки: смять, порвать, выбросить</value>
+  </data>
+  <data name="StagePaperCrumple" xml:space="preserve">
+    <value>Смять</value>
+  </data>
+  <data name="StagePaperTear" xml:space="preserve">
+    <value>Порвать</value>
+  </data>
+  <data name="StagePaperThrow" xml:space="preserve">
+    <value>Выбросить</value>
+  </data>
+  <data name="StagePaperDone" xml:space="preserve">
+    <value>Лист отпущен. Сделайте медленный выдох</value>
+  </data>
+  <data name="StageRepeatTitle" xml:space="preserve">
+    <value>Повторяйте вслух</value>
+  </data>
+  <data name="StageRepeatHint" xml:space="preserve">
+    <value>Произнесите фразу медленно, как будто слышите её впервые, и нажмите на круг</value>
+  </data>
+  <data name="StageRepeatCount" xml:space="preserve">
+    <value>Повторов: {0}</value>
+  </data>
+  <data name="StageRepeatCheck" xml:space="preserve">
+    <value>Прислушайтесь: фраза звучит так же сильно, как в начале?</value>
+  </data>
+  <data name="StageRepeatButton" xml:space="preserve">
+    <value>Повторил(а) вслух</value>
+  </data>
+  <data name="StagePauseTitle" xml:space="preserve">
+    <value>Минута без этой мысли</value>
+  </data>
+  <data name="StagePauseHint" xml:space="preserve">
+    <value>Отпустите мысль на минуту: просто дышите вместе с кругом</value>
+  </data>
+  <data name="StagePauseStart" xml:space="preserve">
+    <value>Начать минуту</value>
+  </data>
+  <data name="StagePauseStop" xml:space="preserve">
+    <value>Остановить</value>
+  </data>
+  <data name="StagePauseDone" xml:space="preserve">
+    <value>Минута прошла. Что изменилось в теле и настроении?</value>
+  </data>
+  <data name="StageFutureTitle" xml:space="preserve">
+    <value>Взгляд из будущего</value>
+  </data>
+  <data name="StageFutureHint" xml:space="preserve">
+    <value>Сдвигайте ползунок и смотрите, как проблема меняется со временем</value>
+  </data>
+  <data name="StageFutureStop0" xml:space="preserve">
+    <value>Сейчас</value>
+  </data>
+  <data name="StageFutureStop1" xml:space="preserve">
+    <value>Через месяц</value>
+  </data>
+  <data name="StageFutureStop2" xml:space="preserve">
+    <value>Через год</value>
+  </data>
+  <data name="StageFutureStop3" xml:space="preserve">
+    <value>Через 5 лет</value>
+  </data>
+  <data name="StageFutureStop4" xml:space="preserve">
+    <value>Через 10 лет</value>
+  </data>
+  <data name="StageFutureStop5" xml:space="preserve">
+    <value>Через 50 лет</value>
+  </data>
+  <data name="TechniqueStepsSummary" xml:space="preserve">
+    <value>Шаги практики: {0}</value>
+  </data>
+  <data name="PracticeMoreChips" xml:space="preserve">
+    <value>Ещё +{0}</value>
+  </data>
+  <data name="PracticeAnswersTitle" xml:space="preserve">
+    <value>Ваши ответы</value>
+  </data>
+  <data name="ExposureEntryTitle" xml:space="preserve">
+    <value>Лестница страха</value>
+  </data>
+  <data name="ExposureEntrySubtitle" xml:space="preserve">
+    <value>Шаг за шагом туда, где страшно: самый действенный способ ослабить тревогу</value>
+  </data>
+  <data name="ExposureTitle" xml:space="preserve">
+    <value>Лестница страха</value>
+  </data>
+  <data name="ExposureIntro" xml:space="preserve">
+    <value>Тревога держится на избегании: мы обходим то, что пугает, или идём «со страховкой» — и так и не узнаём, что опасность была преувеличена. Здесь вы шаг за шагом проверите свои страхи на деле. Это самый изученный и действенный способ помочь себе при тревоге.</value>
+  </data>
+  <data name="ExposureScreenTitle" xml:space="preserve">
+    <value>Сначала несколько вопросов</value>
+  </data>
+  <data name="ExposureScreenLead" xml:space="preserve">
+    <value>Этот метод подходит не всем без специалиста. Ответьте честно — это нужно для вашей безопасности.</value>
+  </data>
+  <data name="ExposureScreenSelfHarm" xml:space="preserve">
+    <value>Бывают ли у вас сейчас мысли о самоубийстве или о том, чтобы причинить себе вред?</value>
+  </data>
+  <data name="ExposureScreenTrauma" xml:space="preserve">
+    <value>Связан ли страх с пережитой травмой (насилие, катастрофа, война), и бывают ли вспышки воспоминаний или кошмары?</value>
+  </data>
+  <data name="ExposureScreenRituals" xml:space="preserve">
+    <value>Занимают ли ритуалы или перепроверки больше часа в день?</value>
+  </data>
+  <data name="ExposureScreenDissociation" xml:space="preserve">
+    <value>Бывает ли, что мир или вы сами кажетесь нереальными, вы «выпадаете», слышите голоса или видите то, чего нет?</value>
+  </data>
+  <data name="ExposureScreenSubstances" xml:space="preserve">
+    <value>Заглушаете ли вы тревогу алкоголем или другими веществами?</value>
+  </data>
+  <data name="ExposureScreenBody" xml:space="preserve">
+    <value>Есть ли у вас болезни сердца, эпилепсия, астма, беременность, недавняя операция или травма?</value>
+  </data>
+  <data name="ExposureContinue" xml:space="preserve">
+    <value>Продолжить</value>
+  </data>
+  <data name="ExposureReferralTitle" xml:space="preserve">
+    <value>Лучше со специалистом</value>
+  </data>
+  <data name="ExposureReferral" xml:space="preserve">
+    <value>Судя по ответам, работать со страхом лучше вместе с психотерапевтом: при травме, навязчивых ритуалах, диссоциации или зависимости этот метод нужно подстраивать под вас, и делать это в одиночку небезопасно. Это не приговор — это значит, что вам положена помощь посильнее. Пока вы её ищете, практики дыхания и заземления в приложении остаются с вами.</value>
+  </data>
+  <data name="ExposureCrisisAction" xml:space="preserve">
+    <value>Мне нужна помощь сейчас</value>
+  </data>
+  <data name="ExposureFearTitle" xml:space="preserve">
+    <value>Мой страх</value>
+  </data>
+  <data name="ExposureFearKindQuestion" xml:space="preserve">
+    <value>Чего вы боитесь?</value>
+  </data>
+  <data name="ExposureFearedQuestion" xml:space="preserve">
+    <value>Что, по-вашему, случится в худшем случае?</value>
+  </data>
+  <data name="ExposureFearedPlaceholder" xml:space="preserve">
+    <value>Например: все заметят, что я волнуюсь</value>
+  </data>
+  <data name="ExposureFearedBelief" xml:space="preserve">
+    <value>Насколько вы в этом уверены?</value>
+  </data>
+  <data name="ExposureSafetyQuestion" xml:space="preserve">
+    <value>Что вы делаете, чтобы этого не случилось?</value>
+  </data>
+  <data name="ExposureSafetyHint" xml:space="preserve">
+    <value>Это «страховка». Она успокаивает на минуту, но не даёт мозгу узнать, что было безопасно и без неё.</value>
+  </data>
+  <data name="ExposureAvoidedQuestion" xml:space="preserve">
+    <value>Чего вы избегаете из-за этого страха?</value>
+  </data>
+  <data name="ExposureCircle" xml:space="preserve">
+    <value>Круг тревоги: ситуация → страшное предсказание → тревога → избегание или «страховка» → «пронесло» → страх кажется подтверждённым. Лестница разрывает этот круг.</value>
+  </data>
+  <data name="ExposureNext" xml:space="preserve">
+    <value>Дальше</value>
+  </data>
+  <data name="ExposureLadderTitle" xml:space="preserve">
+    <value>Ступени лестницы</value>
+  </data>
+  <data name="ExposureLadderLead" xml:space="preserve">
+    <value>Выберите 6–10 ситуаций: от немного тревожных до самых трудных. Число справа — насколько будет страшно, от 0 до 100; поправьте его кнопками − и +.</value>
+  </data>
+  <data name="ExposureExamplesTitle" xml:space="preserve">
+    <value>Примеры — нажмите, чтобы добавить</value>
+  </data>
+  <data name="ExposureOwnStepTitle" xml:space="preserve">
+    <value>Своя ступень</value>
+  </data>
+  <data name="ExposureOwnStepPlaceholder" xml:space="preserve">
+    <value>Например: позвонить в банк</value>
+  </data>
+  <data name="ExposureOwnStepDistress" xml:space="preserve">
+    <value>Насколько будет страшно (0–10)</value>
+  </data>
+  <data name="ExposureAdd" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="ExposureChosenTitle" xml:space="preserve">
+    <value>Моя лестница</value>
+  </data>
+  <data name="ExposureLadderCount" xml:space="preserve">
+    <value>Ступеней: {0}. Нужно хотя бы {1}.</value>
+  </data>
+  <data name="ExposureSaveLadder" xml:space="preserve">
+    <value>Сохранить лестницу</value>
+  </data>
+  <data name="ExposureEasier" xml:space="preserve">
+    <value>Легче</value>
+  </data>
+  <data name="ExposureHarder" xml:space="preserve">
+    <value>Труднее</value>
+  </data>
+  <data name="ExposureRemoveStep" xml:space="preserve">
+    <value>Убрать ступень</value>
+  </data>
+  <data name="ExposureProgressPredictions" xml:space="preserve">
+    <value>Проверено предсказаний: {0}. Сбылось: {1}.</value>
+  </data>
+  <data name="ExposureProgressSteps" xml:space="preserve">
+    <value>Освоено ступеней: {0} из {1}</value>
+  </data>
+  <data name="ExposureProgressBeliefDrop" xml:space="preserve">
+    <value>уверенность в страхе падает в среднем на {0} из 10</value>
+  </data>
+  <data name="ExposureFearSummary" xml:space="preserve">
+    <value>Ваш страх: «{0}»</value>
+  </data>
+  <data name="ExposureCurrentTitle" xml:space="preserve">
+    <value>Следующая ступень</value>
+  </data>
+  <data name="ExposureStartTask" xml:space="preserve">
+    <value>Подготовиться к заданию</value>
+  </data>
+  <data name="ExposurePendingTitle" xml:space="preserve">
+    <value>Задание ждёт вашего рассказа</value>
+  </data>
+  <data name="ExposureReportAction" xml:space="preserve">
+    <value>Рассказать, как прошло</value>
+  </data>
+  <data name="ExposureEasierHint" xml:space="preserve">
+    <value>Эта ступень пока слишком крутая — и это нормально. Добавьте промежуточную: ту же ситуацию, но чуть легче (короче, с кем-то рядом, в спокойное время).</value>
+  </data>
+  <data name="ExposureLadderDone" xml:space="preserve">
+    <value>Вы прошли всю лестницу. Страх больше не управляет этими ситуациями. Чтобы так и осталось, иногда возвращайтесь к ним — в новых местах и с новыми людьми.</value>
+  </data>
+  <data name="ExposureStepMastered" xml:space="preserve">
+    <value>освоена</value>
+  </data>
+  <data name="ExposureStepTasks" xml:space="preserve">
+    <value>заданий: {0}</value>
+  </data>
+  <data name="ExposureLadderSection" xml:space="preserve">
+    <value>Лестница</value>
+  </data>
+  <data name="ExposureEditFear" xml:space="preserve">
+    <value>Изменить описание страха</value>
+  </data>
+  <data name="ExposureEditLadder" xml:space="preserve">
+    <value>Изменить лестницу</value>
+  </data>
+  <data name="ExposureDelete" xml:space="preserve">
+    <value>Удалить лестницу</value>
+  </data>
+  <data name="ExposureDeleteConfirm" xml:space="preserve">
+    <value>Нажмите ещё раз, чтобы удалить всё</value>
+  </data>
+  <data name="ExposureBeforeTitle" xml:space="preserve">
+    <value>Перед заданием</value>
+  </data>
+  <data name="ExposurePredictionQuestion" xml:space="preserve">
+    <value>Что, по-вашему, случится?</value>
+  </data>
+  <data name="ExposurePredictionPlaceholder" xml:space="preserve">
+    <value>Конкретно: что сделают или скажут, что произойдёт с вами</value>
+  </data>
+  <data name="ExposureBeliefBefore" xml:space="preserve">
+    <value>Насколько вы уверены, что так и будет?</value>
+  </data>
+  <data name="ExposureDropQuestion" xml:space="preserve">
+    <value>От какой «страховки» вы откажетесь в этот раз?</value>
+  </data>
+  <data name="ExposureRules" xml:space="preserve">
+    <value>Правила: оставайтесь в ситуации, пока не проверите предсказание, — не до тех пор, пока тревога не уйдёт. Без страховки. Тревога будет — это нормально и безопасно. Остановиться можно всегда.</value>
+  </data>
+  <data name="ExposureGo" xml:space="preserve">
+    <value>Иду выполнять</value>
+  </data>
+  <data name="ExposureAfterTitle" xml:space="preserve">
+    <value>Как прошло?</value>
+  </data>
+  <data name="ExposurePredictionReminder" xml:space="preserve">
+    <value>Вы предсказывали: «{0}» — и были уверены на {1} из 10.</value>
+  </data>
+  <data name="ExposureWhatHappenedQuestion" xml:space="preserve">
+    <value>Что случилось на самом деле?</value>
+  </data>
+  <data name="ExposureWhatHappenedPlaceholder" xml:space="preserve">
+    <value>Факты, как увидела бы камера</value>
+  </data>
+  <data name="ExposureOutcomeQuestion" xml:space="preserve">
+    <value>Предсказание сбылось?</value>
+  </data>
+  <data name="ExposureOutcomeNo" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="ExposureOutcomePartly" xml:space="preserve">
+    <value>Частично</value>
+  </data>
+  <data name="ExposureOutcomeYes" xml:space="preserve">
+    <value>Да, сбылось</value>
+  </data>
+  <data name="ExposureBeliefAfter" xml:space="preserve">
+    <value>Насколько вы теперь уверены в том же предсказании?</value>
+  </data>
+  <data name="ExposurePeak" xml:space="preserve">
+    <value>Самая сильная тревога во время задания (0–10)</value>
+  </data>
+  <data name="ExposureUsedSafetyQuestion" xml:space="preserve">
+    <value>Пользовались страховкой?</value>
+  </data>
+  <data name="ExposureLearnedQuestion" xml:space="preserve">
+    <value>Что вы узнали?</value>
+  </data>
+  <data name="ExposureLearnedPlaceholder" xml:space="preserve">
+    <value>Одна фраза для себя</value>
+  </data>
+  <data name="ExposureSaveReport" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="ExposureInterrupt" xml:space="preserve">
+    <value>Я остановился(ась) раньше</value>
+  </data>
+  <data name="ExposureFeedbackTitle" xml:space="preserve">
+    <value>Итог задания</value>
+  </data>
+  <data name="ExposureBeliefChange" xml:space="preserve">
+    <value>Уверенность в предсказании: {0} → {1} из 10</value>
+  </data>
+  <data name="ExposureInsightDisconfirmed" xml:space="preserve">
+    <value>Страх предсказывал беду — а её не случилось. Именно так мозг переучивается: не тем, что тревога прошла, а тем, что ожидание не сбылось.</value>
+  </data>
+  <data name="ExposureInsightCameTrue" xml:space="preserve">
+    <value>Случилось то, чего вы боялись, — и вы это пережили. Насколько плохо это было на самом деле, по сравнению с тем, что вы представляли? Что помогло справиться? Повторите эту ступень: одно совпадение ещё не правило.</value>
+  </data>
+  <data name="ExposureInsightInterrupted" xml:space="preserve">
+    <value>Остановиться — не провал. Вы всё равно были там, где страшно. Попробуйте ещё раз, когда будете готовы, или начните с более лёгкой ступени.</value>
+  </data>
+  <data name="ExposureInsightSafety" xml:space="preserve">
+    <value>В этот раз была страховка. Следующий раз попробуйте без неё: тогда мозг запомнит, что безопасно было и без неё.</value>
+  </data>
+  <data name="ExposureInsightMastered" xml:space="preserve">
+    <value>Ступень освоена: страх больше не предсказывает здесь беду. Можно подниматься выше.</value>
+  </data>
+  <data name="ExposureInsightLadderDone" xml:space="preserve">
+    <value>Это была последняя ступень. Вы прошли всю лестницу!</value>
+  </data>
+  <data name="ExposureInsightEasier" xml:space="preserve">
+    <value>Два трудных раза подряд — ступень пока слишком крутая. Добавьте промежуточную, полегче.</value>
+  </data>
+  <data name="ExposureDone" xml:space="preserve">
+    <value>Готово</value>
+  </data>
+  <data name="ExposureBeliefMin" xml:space="preserve">
+    <value>0 — не верю</value>
+  </data>
+  <data name="ExposureBeliefMax" xml:space="preserve">
+    <value>10 — уверен(а) полностью</value>
+  </data>
+  <data name="ExposureProgressStart" xml:space="preserve">
+    <value>Лестница готова. Первое задание — проверить одно своё предсказание.</value>
+  </data>
+  <data name="ExposureLearnedSummary" xml:space="preserve">
+    <value>Вы узнали: «{0}»</value>
+  </data>
+  <data name="ExposureCatalogSubtitle" xml:space="preserve">
+    <value>Шаг за шагом туда, где страшно</value>
+  </data>
+  <data name="ExposureCatalogMeta" xml:space="preserve">
+    <value>~10 мин на задание · Тревога</value>
+  </data>
+  <data name="ExposureCatalogBadge" xml:space="preserve">
+    <value>Программа на несколько недель</value>
+  </data>
+  <data name="ExposureCatalogAuthor" xml:space="preserve">
+    <value>КПТ</value>
+  </data>
+  <data name="ArticlesLead" xml:space="preserve">
+    <value>Коротко о том, как работают тревога, стресс и тело, и что с этим делать</value>
+  </data>
+  <data name="ArticleMinutes" xml:space="preserve">
+    <value>{0} мин чтения</value>
+  </data>
+  <data name="ArticlePracticeCaption" xml:space="preserve">
+    <value>Практика</value>
+  </data>
+  <data name="ArticleProgrammeCaption" xml:space="preserve">
+    <value>Программа</value>
+  </data>
+  <data name="ArticlesFilterAll" xml:space="preserve">
+    <value>Все</value>
+  </data>
+  <data name="PcPtsd5Score.Negative" xml:space="preserve">
+    <value>Признаков посттравматической реакции немного</value>
+  </data>
+  <data name="PcPtsd5Score.Positive" xml:space="preserve">
+    <value>Есть признаки посттравматической реакции</value>
+  </data>
+  <data name="PcPtsd5ScoreDetail.Negative" xml:space="preserve">
+    <value>Ответов «да» меньше трёх. Если какие-то из этих переживаний всё же беспокоят, о них стоит поговорить со специалистом.</value>
+  </data>
+  <data name="PcPtsd5ScoreDetail.Positive" xml:space="preserve">
+    <value>Три и больше ответов «да». Это скрининг, а не диагноз, но это повод пройти подробную шкалу PCL-5 и обратиться к специалисту, который работает с травмой. Посттравматическое расстройство хорошо лечится.</value>
+  </data>
+  <data name="Pcl5Score.Low" xml:space="preserve">
+    <value>Симптомы выражены слабо</value>
+  </data>
+  <data name="Pcl5Score.Elevated" xml:space="preserve">
+    <value>Симптомы заметны</value>
+  </data>
+  <data name="Pcl5Score.Probable" xml:space="preserve">
+    <value>Высокая вероятность посттравматического расстройства</value>
+  </data>
+  <data name="Pcl5ScoreDetail.Low" xml:space="preserve">
+    <value>До 20 из 80. Посттравматических симптомов немного. Если что-то из перечисленного всё же мешает, о нём стоит поговорить со специалистом.</value>
+  </data>
+  <data name="Pcl5ScoreDetail.Elevated" xml:space="preserve">
+    <value>От 21 до 32 из 80. Симптомы заметны и могут мешать. Повторите шкалу через две недели; если они мешают жить, обратитесь к специалисту по травме.</value>
+  </data>
+  <data name="Pcl5ScoreDetail.Probable" xml:space="preserve">
+    <value>33 и больше из 80. Так часто бывает при посттравматическом стрессовом расстройстве. Это не диагноз, но серьёзный повод обратиться к специалисту, который работает с травмой: ПТСР хорошо лечится.</value>
+  </data>
+  <data name="TestRecommendationReasonPcPtsd5.Low" xml:space="preserve">
+    <value>Заземление помогает вернуться в настоящее, когда что-то напоминает о прошлом.</value>
+  </data>
+  <data name="TestRecommendationReasonPcPtsd5.High" xml:space="preserve">
+    <value>Эта практика помогает, когда накрывает тяжёлое воспоминание.</value>
+  </data>
+  <data name="TestRecommendationReasonPcl5.Low" xml:space="preserve">
+    <value>Эта практика помогает заметить, где в теле живёт напряжение, и смягчить его.</value>
+  </data>
+  <data name="TestRecommendationReasonPcl5.Mid" xml:space="preserve">
+    <value>Заземление помогает вернуться в настоящее, когда что-то напоминает о прошлом.</value>
+  </data>
+  <data name="TestRecommendationReasonPcl5.High" xml:space="preserve">
+    <value>Эта практика помогает, когда накрывает тяжёлое воспоминание. Но главная помощь при таких баллах — специалист по травме.</value>
+  </data>
+  <data name="ArticleTestsCaption" xml:space="preserve">
+    <value>Тесты</value>
+  </data>
+  <data name="ArticleReadCaption" xml:space="preserve">
+    <value>Статья</value>
+  </data>
+  <data name="TraumaCatalogTitle" xml:space="preserve">
+    <value>После травмы</value>
+  </data>
+  <data name="TraumaCatalogSubtitle" xml:space="preserve">
+    <value>Скрининг, флешбэки, кошмары, путь к специалисту</value>
+  </data>
+  <data name="TraumaCatalogMeta" xml:space="preserve">
+    <value>Тест · практики · статьи</value>
+  </data>
+  <data name="TraumaCatalogBadge" xml:space="preserve">
+    <value>Модуль</value>
+  </data>
+  <data name="TraumaCatalogAuthor" xml:space="preserve">
+    <value>Травма</value>
+  </data>
+  <data name="CrisisHubFlashbackTitle" xml:space="preserve">
+    <value>Накрыло воспоминание</value>
+  </data>
+  <data name="CrisisHubFlashbackSubtitle" xml:space="preserve">
+    <value>Вернуться в настоящее, около 3 минут</value>
+  </data>
+  <data name="ArticleChecklistHint" xml:space="preserve">
+    <value>Отметьте то, что про вас</value>
+  </data>
+  <data name="ArticleQuizCaption" xml:space="preserve">
+    <value>Проверьте себя</value>
+  </data>
+  <data name="ArticleCycleLoop" xml:space="preserve">
+    <value>…и снова по кругу</value>
+  </data>
+  <data name="ArticleTaskCaption" xml:space="preserve">
+    <value>Задание до завтра</value>
+  </data>
+  <data name="ArticleSave" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
+  <data name="ArticleSaved" xml:space="preserve">
+    <value>Сохранено</value>
+  </data>
+  <data name="ArticleListen" xml:space="preserve">
+    <value>Слушать</value>
+  </data>
+  <data name="ArticleStopListening" xml:space="preserve">
+    <value>Остановить</value>
+  </data>
+  <data name="ArticleReadMark" xml:space="preserve">
+    <value>Прочитано</value>
+  </data>
+  <data name="ArticleRight" xml:space="preserve">
+    <value>Верно.</value>
+  </data>
+  <data name="ArticleNotQuite" xml:space="preserve">
+    <value>Не совсем.</value>
+  </data>
+  <data name="ArticlesSearchPlaceholder" xml:space="preserve">
+    <value>Поиск по статьям</value>
+  </data>
+  <data name="ArticlesNothingFound" xml:space="preserve">
+    <value>Ничего не нашлось. Попробуйте другое слово.</value>
+  </data>
+  <data name="ArticlesFilterSaved" xml:space="preserve">
+    <value>Сохранённые</value>
+  </data>
+  <data name="ArticlesNothingSaved" xml:space="preserve">
+    <value>Здесь появятся статьи, которые вы сохраните.</value>
+  </data>
+  <data name="ArticlesForYou" xml:space="preserve">
+    <value>Для вас</value>
+  </data>
+  <data name="ArticlesCourses" xml:space="preserve">
+    <value>Курсы</value>
+  </data>
+  <data name="ArticlesCoursesLead" xml:space="preserve">
+    <value>Каждый день — короткое чтение, упражнение и задание. Так работает управляемая самопомощь.</value>
+  </data>
+  <data name="ArticlesCourseMeta" xml:space="preserve">
+    <value>{0} дн. · до {1} мин в день</value>
+  </data>
+  <data name="PickContinueCourse" xml:space="preserve">
+    <value>Продолжить курс</value>
+  </data>
+  <data name="PickContinueReading" xml:space="preserve">
+    <value>Вы не дочитали</value>
+  </data>
+  <data name="PickTest" xml:space="preserve">
+    <value>По результату теста {0}</value>
+  </data>
+  <data name="PickMood" xml:space="preserve">
+    <value>Несколько тяжёлых дней в дневнике</value>
+  </data>
+  <data name="CourseCaption" xml:space="preserve">
+    <value>Курс</value>
+  </data>
+  <data name="CourseStart" xml:space="preserve">
+    <value>Начать курс</value>
+  </data>
+  <data name="CourseContinue" xml:space="preserve">
+    <value>Продолжить: день {0}</value>
+  </data>
+  <data name="CourseFinished" xml:space="preserve">
+    <value>Курс пройден</value>
+  </data>
+  <data name="CourseDayLabel" xml:space="preserve">
+    <value>День {0}</value>
+  </data>
+  <data name="CourseDayTomorrow" xml:space="preserve">
+    <value>Откроется завтра</value>
+  </data>
+  <data name="CourseDayLocked" xml:space="preserve">
+    <value>После предыдущего дня</value>
+  </data>
+  <data name="CourseDayDone" xml:space="preserve">
+    <value>Пройден</value>
+  </data>
+  <data name="CourseProgress" xml:space="preserve">
+    <value>Пройдено {0} из {1}</value>
+  </data>
+  <data name="CourseMeasureTitle" xml:space="preserve">
+    <value>Замер</value>
+  </data>
+  <data name="CourseMeasureHint" xml:space="preserve">
+    <value>Пройдите тест {0} в начале и в конце курса, чтобы увидеть, помогает ли он.</value>
+  </data>
+  <data name="CourseMeasureOnce" xml:space="preserve">
+    <value>{0}: {1} баллов</value>
+  </data>
+  <data name="CourseMeasureChange" xml:space="preserve">
+    <value>{0}: было {1}, сейчас {2}</value>
+  </data>
+  <data name="CourseTakeTest" xml:space="preserve">
+    <value>Пройти {0}</value>
+  </data>
+  <data name="CourseReset" xml:space="preserve">
+    <value>Начать курс заново</value>
+  </data>
+  <data name="CourseResetConfirm" xml:space="preserve">
+    <value>Ответы этого курса будут удалены. Начать заново?</value>
+  </data>
+  <data name="CourseReflectionPlaceholder" xml:space="preserve">
+    <value>Ваш ответ. Он хранится только на телефоне.</value>
+  </data>
+  <data name="CourseCompleteDay" xml:space="preserve">
+    <value>День пройден</value>
+  </data>
+  <data name="CourseDayClosed" xml:space="preserve">
+    <value>День {0} пройден. Следующий откроется завтра: попробуйте задание.</value>
+  </data>
+  <data name="CourseAllDone" xml:space="preserve">
+    <value>Курс пройден. Пройдите замер ещё раз и сравните с началом.</value>
+  </data>
+  <data name="CourseDayNotOpen" xml:space="preserve">
+    <value>Этот день ещё не открыт.</value>
+  </data>
+  <data name="ArticleChatCaption" xml:space="preserve">
+    <value>ИИ-чат</value>
+  </data>
+  <data name="ShellTabChatShort" xml:space="preserve">
+    <value>ИИ-чат</value>
+  </data>
+  <data name="ShellTabLibraryShort" xml:space="preserve">
+    <value>Материалы</value>
+  </data>
+  <data name="ShellTabJournalShort" xml:space="preserve">
+    <value>Дневник</value>
+  </data>
+  <data name="ForYouEmpty" xml:space="preserve">
+    <value>Здесь появятся начатые курсы, недочитанные статьи и подсказки по вашим тестам и дневнику. Пройдите короткий тест, и подборка станет точнее.</value>
+  </data>
+  <data name="ForYouTakeTest" xml:space="preserve">
+    <value>Пройти тест</value>
+  </data>
+  <data name="ForYouSavedTitle" xml:space="preserve">
+    <value>Сохранённые статьи</value>
+  </data>
+  <data name="OnboardingModuleChatHint" xml:space="preserve">
+    <value>Выговориться и разобрать, что тревожит, по шагам</value>
+  </data>
+  <data name="OnboardingModuleLibraryHint" xml:space="preserve">
+    <value>Статьи, курсы, молитвы и цитаты</value>
+  </data>
+  <data name="OnboardingModuleJournalHint" xml:space="preserve">
+    <value>Отмечать настроение и видеть, что помогает</value>
+  </data>
+  <data name="BodyTitle" xml:space="preserve">
+    <value>Тело</value>
+  </data>
+  <data name="BodyLead" xml:space="preserve">
+    <value>Тело часто замечает чувство раньше, чем мы успеваем его назвать. Отметьте, где и что вы ощущаете, и проверьте, что за этим может стоять.</value>
+  </data>
+  <data name="BodyNotDiagnosis" xml:space="preserve">
+    <value>Это не диагноз: здесь ищут чувства, а не причины болезней. Если ощущение новое, сильное, держится долго или это боль — сначала покажитесь врачу.</value>
+  </data>
+  <data name="BodyAreaQuestion" xml:space="preserve">
+    <value>Где вы это чувствуете?</value>
+  </data>
+  <data name="BodySensationQuestion" xml:space="preserve">
+    <value>Какое это ощущение?</value>
+  </data>
+  <data name="BodyIntensity" xml:space="preserve">
+    <value>Насколько сильно?</value>
+  </data>
+  <data name="BodyFeelingQuestion" xml:space="preserve">
+    <value>Что за этим может стоять?</value>
+  </data>
+  <data name="BodyFeelingHint" xml:space="preserve">
+    <value>Так часто ощущаются эти чувства. Это догадки: выберите, что откликается, или другое.</value>
+  </data>
+  <data name="BodyOtherFeelings" xml:space="preserve">
+    <value>Другие чувства</value>
+  </data>
+  <data name="BodyPromptVoice" xml:space="preserve">
+    <value>Если бы это ощущение могло говорить, что бы оно сказало?</value>
+  </data>
+  <data name="BodyPromptBefore" xml:space="preserve">
+    <value>Когда оно появилось? Что было перед этим?</value>
+  </data>
+  <data name="BodyNotePlaceholder" xml:space="preserve">
+    <value>Что вспоминается или что было перед этим (необязательно)</value>
+  </data>
+  <data name="BodyDoctorFirst" xml:space="preserve">
+    <value>Боль или сильное ощущение может быть признаком болезни. Если оно новое или не проходит, сначала покажитесь врачу, а потом ищите чувства.</value>
+  </data>
+  <data name="BodySave" xml:space="preserve">
+    <value>Записать</value>
+  </data>
+  <data name="BodySaved" xml:space="preserve">
+    <value>Записано. Что может помочь сейчас:</value>
+  </data>
+  <data name="BodyCrisis" xml:space="preserve">
+    <value>Похоже, сейчас очень тяжело. Вы не одни: вот куда можно обратиться прямо сейчас.</value>
+  </data>
+  <data name="BodyAgain" xml:space="preserve">
+    <value>Отметить ещё</value>
+  </data>
+  <data name="BodyPatternsTitle" xml:space="preserve">
+    <value>Ваши закономерности</value>
+  </data>
+  <data name="BodyPatternsEmpty" xml:space="preserve">
+    <value>Когда одно и то же ощущение повторится, здесь появятся ваши закономерности.</value>
+  </data>
+  <data name="BodyPatternTitle" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="BodyPatternCount" xml:space="preserve">
+    <value>Отмечено раз: {0}</value>
+  </data>
+  <data name="BodyPatternFeeling" xml:space="preserve">
+    <value>Чаще всего: {0}</value>
+  </data>
+  <data name="BodyPatternTime" xml:space="preserve">
+    <value>Обычно {0}</value>
+  </data>
+  <data name="BodyRecentTitle" xml:space="preserve">
+    <value>Последние записи</value>
+  </data>
+  <data name="BodyDelete" xml:space="preserve">
+    <value>Удалить запись</value>
+  </data>
+  <data name="BodyDeleteConfirmTitle" xml:space="preserve">
+    <value>Удалить запись?</value>
+  </data>
+  <data name="BodyDeleteConfirmBody" xml:space="preserve">
+    <value>Запись и ваша заметка к ней исчезнут с телефона.</value>
+  </data>
+  <data name="BodyDeleteConfirmAccept" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="BodyCancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="BodyAreaHead" xml:space="preserve">
+    <value>Голова</value>
+  </data>
+  <data name="BodyAreaFace" xml:space="preserve">
+    <value>Лицо и челюсть</value>
+  </data>
+  <data name="BodyAreaThroat" xml:space="preserve">
+    <value>Горло</value>
+  </data>
+  <data name="BodyAreaShoulders" xml:space="preserve">
+    <value>Шея и плечи</value>
+  </data>
+  <data name="BodyAreaChest" xml:space="preserve">
+    <value>Грудь</value>
+  </data>
+  <data name="BodyAreaStomach" xml:space="preserve">
+    <value>Живот</value>
+  </data>
+  <data name="BodyAreaBack" xml:space="preserve">
+    <value>Спина</value>
+  </data>
+  <data name="BodyAreaArms" xml:space="preserve">
+    <value>Руки</value>
+  </data>
+  <data name="BodyAreaLegs" xml:space="preserve">
+    <value>Ноги</value>
+  </data>
+  <data name="BodyAreaWholeBody" xml:space="preserve">
+    <value>Всё тело</value>
+  </data>
+  <data name="BodySensationTight" xml:space="preserve">
+    <value>Сжатие</value>
+  </data>
+  <data name="BodySensationHeavy" xml:space="preserve">
+    <value>Тяжесть</value>
+  </data>
+  <data name="BodySensationHeat" xml:space="preserve">
+    <value>Жар</value>
+  </data>
+  <data name="BodySensationCold" xml:space="preserve">
+    <value>Холод</value>
+  </data>
+  <data name="BodySensationLump" xml:space="preserve">
+    <value>Ком</value>
+  </data>
+  <data name="BodySensationTrembling" xml:space="preserve">
+    <value>Дрожь</value>
+  </data>
+  <data name="BodySensationEmpty" xml:space="preserve">
+    <value>Пустота</value>
+  </data>
+  <data name="BodySensationFluttering" xml:space="preserve">
+    <value>Трепет</value>
+  </data>
+  <data name="BodySensationTingling" xml:space="preserve">
+    <value>Покалывание</value>
+  </data>
+  <data name="BodySensationPain" xml:space="preserve">
+    <value>Боль</value>
+  </data>
+  <data name="BodyFeelingAnxiety" xml:space="preserve">
+    <value>тревога</value>
+  </data>
+  <data name="BodyFeelingFear" xml:space="preserve">
+    <value>страх</value>
+  </data>
+  <data name="BodyFeelingAnger" xml:space="preserve">
+    <value>злость</value>
+  </data>
+  <data name="BodyFeelingHurt" xml:space="preserve">
+    <value>обида</value>
+  </data>
+  <data name="BodyFeelingSadness" xml:space="preserve">
+    <value>грусть</value>
+  </data>
+  <data name="BodyFeelingShame" xml:space="preserve">
+    <value>стыд</value>
+  </data>
+  <data name="BodyFeelingGuilt" xml:space="preserve">
+    <value>вина</value>
+  </data>
+  <data name="BodyFeelingExhaustion" xml:space="preserve">
+    <value>усталость</value>
+  </data>
+  <data name="BodyFeelingJoy" xml:space="preserve">
+    <value>радость, волнение</value>
+  </data>
+  <data name="BodyFeelingUnknown" xml:space="preserve">
+    <value>не знаю</value>
+  </data>
+  <data name="BodyPartMorning" xml:space="preserve">
+    <value>утром</value>
+  </data>
+  <data name="BodyPartDay" xml:space="preserve">
+    <value>днём</value>
+  </data>
+  <data name="BodyPartEvening" xml:space="preserve">
+    <value>вечером</value>
+  </data>
+  <data name="BodyPartNight" xml:space="preserve">
+    <value>ночью</value>
+  </data>
+  <data name="BodySaveError" xml:space="preserve">
+    <value>Не удалось сохранить запись. Попробуйте ещё раз.</value>
   </data>
 </root>
