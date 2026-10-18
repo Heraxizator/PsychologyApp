@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.ClinicalCare.BodyCheck.BodyCheckPage"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ClinicalCare.BodyCheck"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:map="clr-namespace:PsychologyApp.Presentation.Widgets.BodyMap"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:common="clr-namespace:PsychologyApp.Presentation.Common;assembly=PsychologyApp.Presentation.Core"
+             x:DataType="vm:BodyCheckViewModel"
+             Shell.NavBarIsVisible="True"
+             Title="{Binding PageTitle}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+
+    <ContentPage.Behaviors>
+        <behaviors:PageAnalyticsBehavior />
+    </ContentPage.Behaviors>
+
+    <ContentPage.Resources>
+        <!-- A chip of a place, a sensation or a feeling; the chosen one turns solid accent (base look in the style, see AGENTS.md). -->
+        <DataTemplate x:Key="ChoiceChipTemplate" x:DataType="vm:BodyChoiceItem">
+            <Border Style="{StaticResource AnswerChipStyle}" FlexLayout.Shrink="0" SemanticProperties.Description="{Binding Text}">
+                <Border.Triggers>
+                    <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryFill}" />
+                    </DataTrigger>
+                </Border.Triggers>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapCommand}" />
+                </Border.GestureRecognizers>
+                <Label Text="{Binding Text}" Style="{StaticResource AnswerChipLabelStyle}">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                            <Setter Property="TextColor" Value="{DynamicResource OnPrimary}" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </Border>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <ScrollView VerticalScrollBarVisibility="Never">
+        <VerticalStackLayout Margin="{StaticResource LayoutTabPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
+
+            <Label Text="{Binding LeadText}" Style="{StaticResource BodyStyle}" />
+
+            <!-- The person's own regularities: what keeps coming back, with what feeling and when. -->
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16" IsVisible="{Binding HasPatterns}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="{Binding PatternsTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <VerticalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Patterns}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:BodyPatternItem">
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="{Binding Title}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" />
+                                    <Label Text="{Binding CountText}" Style="{StaticResource CaptionStyle}" />
+                                    <Label Text="{Binding FeelingText}" IsVisible="{Binding HasFeeling}" Style="{StaticResource CaptionStyle}" />
+                                    <Label Text="{Binding TimeText}" IsVisible="{Binding HasTime}" Style="{StaticResource CaptionStyle}" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+            <Label Text="{Binding PatternsEmptyText}" IsVisible="{Binding ShowPatternsEmpty}" Style="{StaticResource CaptionStyle}" />
+
+            <VerticalStackLayout IsVisible="{Binding IsEditing}" Spacing="{StaticResource LayoutSpacing}">
+                <!-- Where: the figure for pointing, the list for everything (the back, the whole body) and for screen readers. -->
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="{Binding AreaQuestion}" Style="{StaticResource SectionTitleStyle}" />
+                        <map:BodyMapView HeightRequest="260" SelectedArea="{Binding SelectedArea}" TapCommand="{Binding SelectAreaCommand}" />
+                        <FlexLayout Wrap="Wrap" BindableLayout.ItemsSource="{Binding AreaChips}" BindableLayout.ItemTemplate="{StaticResource ChoiceChipTemplate}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16" IsVisible="{Binding HasArea}">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="{Binding SensationQuestion}" Style="{StaticResource SectionTitleStyle}" />
+                        <FlexLayout Wrap="Wrap" BindableLayout.ItemsSource="{Binding SensationChips}" BindableLayout.ItemTemplate="{StaticResource ChoiceChipTemplate}" />
+                        <ui:RatingEntryView
+                            Embedded="True"
+                            IsVisible="{Binding HasSensation}"
+                            TitleText="{Binding IntensityTitle}"
+                            MinimumCaption="{Binding IntensityMinCaption}"
+                            MaximumCaption="{Binding IntensityMaxCaption}"
+                            BodyText="{Binding Intensity, Mode=TwoWay}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Before any feeling: pain or a strong sensation may be an illness. -->
+                <Border
+                    Style="{StaticResource BrandCardStyle}"
+                    Margin="0"
+                    Padding="18,16"
+                    IsVisible="{Binding ShowDoctor}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource DangerSurface}, Dark={StaticResource DangerSurfaceDark}}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <ui:MaterialIconView IconName="LocalHospital" IconSize="24" VerticalOptions="Start"
+                                             IconColor="{AppThemeBinding Light={StaticResource Danger}, Dark={StaticResource DangerDark}}" />
+                        <Label Grid.Column="1" Text="{Binding DoctorText}" Style="{StaticResource BodyStyle}" />
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16" IsVisible="{Binding HasSensation}">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="{Binding FeelingQuestion}" Style="{StaticResource SectionTitleStyle}" />
+                        <Label Text="{Binding FeelingHint}" Style="{StaticResource CaptionStyle}" />
+                        <FlexLayout Wrap="Wrap" BindableLayout.ItemsSource="{Binding GuessChips}" BindableLayout.ItemTemplate="{StaticResource ChoiceChipTemplate}" />
+                        <Label Text="{Binding OtherFeelingsText}" Style="{StaticResource CaptionStyle}" />
+                        <FlexLayout Wrap="Wrap" BindableLayout.ItemsSource="{Binding OtherChips}" BindableLayout.ItemTemplate="{StaticResource ChoiceChipTemplate}" />
+                        <Label Text="{Binding PromptVoice}" Style="{StaticResource BodyStyle}" FontAttributes="Italic" />
+                        <Label Text="{Binding PromptBefore}" Style="{StaticResource BodyStyle}" FontAttributes="Italic" />
+                        <ui:TechniqueTextFieldView PlaceholderText="{Binding NotePlaceholder}" Text="{Binding Note, Mode=TwoWay}" />
+                        <ui:ButtonView BodyText="{Binding SaveText}" TapCommand="{Binding SaveCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="{Binding NotDiagnosisText}" Style="{StaticResource CaptionStyle}" />
+            </VerticalStackLayout>
+
+            <!-- After saving: help when the words read as a crisis, practices otherwise. -->
+            <Border
+                Style="{StaticResource BrandCardStyle}"
+                Margin="0"
+                Padding="18,16"
+                IsVisible="{Binding IsCrisis}"
+                BackgroundColor="{AppThemeBinding Light={StaticResource DangerSurface}, Dark={StaticResource DangerSurfaceDark}}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="{Binding CrisisText}" Style="{StaticResource BodyStyle}" />
+                    <ui:ButtonView BodyText="{Binding CrisisButtonText}" TapCommand="{Binding CrisisCommand}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16" IsVisible="{Binding ShowPractices}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="{Binding SavedText}" Style="{StaticResource SectionTitleStyle}" />
+                    <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Practices}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:BodyPracticeItem">
+                                <ui:ButtonView Variant="Secondary" BodyText="{Binding Title}" TapCommand="{Binding OpenCommand}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <ui:ButtonView IsVisible="{Binding IsSaved}" Variant="Secondary" BodyText="{Binding AgainText}" TapCommand="{Binding AgainCommand}" />
+
+            <VerticalStackLayout IsVisible="{Binding HasRecent}" Spacing="8">
+                <Label Text="{Binding RecentTitle}" Style="{StaticResource SectionTitleStyle}" />
+                <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Recent}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:BodyEntryItem">
+                            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="16,12">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                    <VerticalStackLayout Spacing="2">
+                                        <Label Text="{Binding Title}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" />
+                                        <Label Text="{Binding DateText}" Style="{StaticResource CaptionStyle}" />
+                                        <Label Text="{Binding FeelingsText}" IsVisible="{Binding HasFeelings}" Style="{StaticResource CaptionStyle}" />
+                                        <Label Text="{Binding Note}" IsVisible="{Binding HasNote}" Style="{StaticResource CaptionStyle}" MaxLines="3" LineBreakMode="TailTruncation" />
+                                    </VerticalStackLayout>
+                                    <Border
+                                        Grid.Column="1"
+                                        WidthRequest="44"
+                                        HeightRequest="44"
+                                        VerticalOptions="Start"
+                                        StrokeThickness="0"
+                                        BackgroundColor="Transparent"
+                                        SemanticProperties.Description="{x:Static common:AppStrings.BodyDelete}">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding DeleteCommand}" />
+                                        </Border.GestureRecognizers>
+                                        <ui:MaterialIconView IconName="DeleteOutline" IconSize="22" />
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

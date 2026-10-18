@@ -1,5 +1,7 @@
+using PsychologyApp.Application.Body;
 using PsychologyApp.Application.Chat;
 using PsychologyApp.Application.Models;
+using PsychologyApp.Domain.Exposure;
 
 namespace PsychologyApp.Application.DataBackup;
 
@@ -26,6 +28,11 @@ public sealed class AppBackupDTO
     public RiskAssessmentDTO? LatestRiskAssessment { get; init; }
     public TherapyProgramStateDTO? TherapyProgram { get; init; }
     public IReadOnlyList<EscalationEventDTO> Escalations { get; init; } = [];
+
+    // Optional, so the format stays 2: older versions of the app skip it and still read the rest.
+    public ExposurePlan? ExposurePlan { get; init; }
+    public PsychologyApp.Application.Articles.ReadingState? Reading { get; init; }
+    public BodyLog? Body { get; init; }
 }
 
 public sealed class BackupChatSessionDTO

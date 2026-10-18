@@ -10,6 +10,8 @@ public static class ClinicalCareFeatureServiceCollectionExtensions
         services.AddFeatureSingleton<ICrisisHubViewModelFactory, CrisisHubViewModelFactory>();
         services.AddFeatureSingleton<IRiskCheckViewModelFactory, RiskCheckViewModelFactory>();
         services.AddFeatureSingleton<ISafetyPlanViewModelFactory, SafetyPlanViewModelFactory>();
+        services.AddFeatureSingleton<IExposureViewModelFactory, ExposureViewModelFactory>();
+        services.AddFeatureSingleton<IBodyCheckViewModelFactory, BodyCheckViewModelFactory>();
         services.AddFeatureSingleton<IClinicalCarePageFactory, ClinicalCarePageFactory>();
         return services;
     }
