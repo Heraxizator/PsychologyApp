@@ -4,8 +4,51 @@ using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
 
+[Collection("Localization")]
 public sealed class JournalNoteFactorsTests
 {
+    // Regression: prefixes end with a space ("Прогулка: ") but note lines are trimmed, so a bare chip line
+    // "Прогулка:" was not matched — a second tap appended a duplicate and the factor was never counted.
+    [Theory]
+    [InlineData("ru")]
+    [InlineData("en")]
+    public void ToggleFactor_SecondTapRemovesBareFactorLine_AndBareLineCounts(string language)
+    {
+        string? previous = AppStrings.LanguageOverride;
+        try
+        {
+            AppStrings.LanguageOverride = language;
+
+            string note = JournalNoteFactors.ToggleFactor(string.Empty, JournalNoteFactors.WalkKey);
+            note = JournalNoteFactors.ToggleFactor(note, JournalNoteFactors.SleepKey);
+            Assert.True(JournalNoteFactors.HasFactor(note, JournalNoteFactors.WalkKey));
+            Assert.True(JournalNoteFactors.HasFactor(note, JournalNoteFactors.SleepKey));
+            Assert.Equal(2, JournalNoteFactors.CountInNotes([note, note]).Walk);
+
+            note = JournalNoteFactors.ToggleFactor(note, JournalNoteFactors.WalkKey);
+            note = JournalNoteFactors.ToggleFactor(note, JournalNoteFactors.SleepKey);
+            Assert.Equal(string.Empty, note);
+
+            string brokenSavedNote = string.Join(
+                Environment.NewLine,
+                AppStrings.JournalFactorWalk.TrimEnd(),
+                AppStrings.JournalFactorSleep.TrimEnd(),
+                AppStrings.JournalFactorWalk.TrimEnd(),
+                AppStrings.JournalFactorSleep.TrimEnd());
+            Assert.Equal(
+                AppStrings.JournalFactorsSummaryLine(
+                    $"{AppStrings.JournalFactorSleepLabel}, {AppStrings.JournalFactorWalkLabel}"),
+                JournalNoteFactors.FormatDisplayNote(brokenSavedNote));
+            string healed = JournalNoteFactors.ToggleFactor(brokenSavedNote, JournalNoteFactors.WalkKey);
+            Assert.False(JournalNoteFactors.HasFactor(healed, JournalNoteFactors.WalkKey));
+            Assert.True(JournalNoteFactors.HasFactor(healed, JournalNoteFactors.SleepKey));
+        }
+        finally
+        {
+            AppStrings.LanguageOverride = previous;
+        }
+    }
+
     [Fact]
     public void ToggleFactor_AddsAndRemovesWithoutDuplicates()
     {

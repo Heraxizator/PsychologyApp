@@ -78,7 +78,7 @@ public static class JournalNoteFactors
         }
 
         return note.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-            .Any(line => line.StartsWith(prefix, StringComparison.OrdinalIgnoreCase));
+            .Any(line => IsFactorLine(line, prefix));
     }
 
     public static string ToggleFactor(string? note, string key)
@@ -94,13 +94,8 @@ public static class JournalNoteFactors
             : note.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
                 .ToList();
 
-        int existingIndex = lines.FindIndex(line =>
-            line.StartsWith(prefix, StringComparison.OrdinalIgnoreCase));
-        if (existingIndex >= 0)
-        {
-            lines.RemoveAt(existingIndex);
-        }
-        else
+        // RemoveAll also heals notes that the old matching saved with duplicate factor lines.
+        if (lines.RemoveAll(line => IsFactorLine(line, prefix)) == 0)
         {
             lines.Add(prefix);
         }
@@ -137,9 +132,12 @@ public static class JournalNoteFactors
         return string.Join(
             Environment.NewLine,
             note.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                .Where(line => !prefixes.Any(prefix =>
-                    line.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))));
+                .Where(line => !prefixes.Any(prefix => IsFactorLine(line, prefix))));
     }
+
+    // Prefixes end with a space ("Сон: ") but note lines are trimmed, so a bare factor line reads "Сон:".
+    private static bool IsFactorLine(string line, string prefix) =>
+        line.StartsWith(prefix.TrimEnd(), StringComparison.OrdinalIgnoreCase);
 
     public static string FormatDisplayNote(string? note)
     {
