@@ -6,6 +6,7 @@ using PsychologyApp.Presentation.Shared.Services.Notifications;
 namespace PsychologyApp.Presentation.Platforms.Android;
 
 [BroadcastReceiver(Exported = false)]
+[IntentFilter([Intent.ActionBootCompleted])]
 public sealed class MoodReminderBootReceiver : BroadcastReceiver
 {
     public override void OnReceive(Context? context, Intent? intent)

@@ -2,36 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools">
 	<application android:allowBackup="false" android:dataExtractionRules="@xml/data_extraction_rules" android:icon="@mipmap/logo" android:roundIcon="@mipmap/logo_round" android:supportsRtl="true">
-		<receiver android:name="PsychologyApp.Presentation.Platforms.Android.PracticeReminderAlarmReceiver" android:exported="false" />
-		<receiver android:name="PsychologyApp.Presentation.Platforms.Android.PracticeReminderBootReceiver" android:exported="false">
-			<intent-filter>
-				<action android:name="android.intent.action.BOOT_COMPLETED" />
-			</intent-filter>
-		</receiver>
-		<receiver android:name="PsychologyApp.Presentation.Platforms.Android.QuoteReminderAlarmReceiver" android:exported="false" />
-		<receiver android:name="PsychologyApp.Presentation.Platforms.Android.QuoteReminderBootReceiver" android:exported="false">
-			<intent-filter>
-				<action android:name="android.intent.action.BOOT_COMPLETED" />
-			</intent-filter>
-		</receiver>
-		<receiver android:name="PsychologyApp.Presentation.Platforms.Android.MoodReminderAlarmReceiver" android:exported="false" />
-		<receiver android:name="PsychologyApp.Presentation.Platforms.Android.MoodReminderBootReceiver" android:exported="false">
-			<intent-filter>
-				<action android:name="android.intent.action.BOOT_COMPLETED" />
-			</intent-filter>
-		</receiver>
-		<receiver android:name="PsychologyApp.Presentation.Platforms.Android.ChatReminderAlarmReceiver" android:exported="false" />
-		<receiver android:name="PsychologyApp.Presentation.Platforms.Android.ChatReminderBootReceiver" android:exported="false">
-			<intent-filter>
-				<action android:name="android.intent.action.BOOT_COMPLETED" />
-			</intent-filter>
-		</receiver>
 	</application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.VIBRATE" />
 	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	<!-- Dictation in practices and chats: recognised on the device only (Android 13+ on-device recogniser). -->
+	<uses-permission android:name="android.permission.RECORD_AUDIO" />
+	<queries>
+		<intent>
+			<action android:name="android.speech.RecognitionService" />
+		</intent>
+	</queries>
 	<!-- MediaElement foreground service (not used; music pauses when leaving the player). -->
 	<uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" tools:node="remove" />
 	<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" tools:node="remove" />
