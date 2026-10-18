@@ -1186,7 +1186,7 @@
     <value>Как в прошлый раз</value>
   </data>
   <data name="OnboardingAppName" xml:space="preserve">
-    <value>PsychologyApp</value>
+    <value>Psychology App</value>
   </data>
   <data name="OnboardingAppTagline" xml:space="preserve">
     <value>Спокойствие рядом — даже без интернета</value>
@@ -1279,7 +1279,7 @@
     <value>Далее</value>
   </data>
   <data name="QuoteShareFooter" xml:space="preserve">
-    <value>PsychologyApp</value>
+    <value>Psychology App</value>
   </data>
   <data name="QuotesSearchError" xml:space="preserve">
     <value>Не удалось выполнить поиск цитат</value>

@@ -14,6 +14,7 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 ### Fixed
 - AI chat and dialogue practices: a quick reply that does not fit on the row moves to the next row instead of being squeezed and clipped ("I want to say more" lost its second line in English). Checked in the AI chat on the emulator in English and Russian; a dialogue practice was not opened.
 - "What helps me": no blank line under a mood link. Checked on the emulator.
+- The brand is written "Psychology App" everywhere, as in the stores: the onboarding, the menu header and the signature of a shared quote said "PsychologyApp". Checked on the emulator (menu header).
 
 ## [2.008] - 2026-10-18
 
