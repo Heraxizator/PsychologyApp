@@ -66,7 +66,7 @@ public partial class SettingsViewModel
         SizeOptions = UserPreferences.SizeKeys.ToArray();
         PracticeReminderHourOptions = UserPreferences.GetPracticeReminderHourOptions().ToArray();
         QuoteReminderHourOptions = UserPreferences.GetQuoteReminderHourOptions().ToArray();
-        MoodReminderHourOptions = UserPreferences.GetQuoteReminderHourOptions().ToArray();
+        MoodReminderHourOptions = UserPreferences.GetMoodReminderHourOptions().ToArray();
         ChatReminderHourOptions = UserPreferences.GetChatReminderHourOptions().ToArray();
         OnboardingConcernOptions = UserPreferences.OnboardingConcernKeysList.ToArray();
 

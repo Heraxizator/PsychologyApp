@@ -1386,6 +1386,9 @@
   <data name="SettingsMoodReminderHourPickerTitle" xml:space="preserve">
     <value>Time</value>
   </data>
+  <data name="SettingsMoodReminderAuto" xml:space="preserve">
+    <value>My usual time</value>
+  </data>
   <data name="SettingsChatRemindersLabel" xml:space="preserve">
     <value>Remind me to talk</value>
   </data>
@@ -3888,5 +3891,14 @@
   </data>
   <data name="InsightsBodyTitle" xml:space="preserve">
     <value>What keeps coming back in the body</value>
+  </data>
+  <data name="MoodWidgetTitle" xml:space="preserve">
+    <value>How are you now?</value>
+  </data>
+  <data name="MoodWidgetLevel" xml:space="preserve">
+    <value>Mood {0} of 5</value>
+  </data>
+  <data name="MoodWidgetPractice" xml:space="preserve">
+    <value>Practice of the day</value>
   </data>
 </root>

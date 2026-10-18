@@ -3,6 +3,7 @@ using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Shared.Lib.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Notifications;
+using PsychologyApp.Presentation.Features.ManageJournal;
 
 namespace PsychologyApp.Presentation.App;
 
@@ -27,6 +28,10 @@ public partial class App : Microsoft.Maui.Controls.Application
         QuoteReminderTapHandler.Configure(tabNavigator);
         MoodReminderTapHandler.Configure(tabNavigator, preferences);
         ChatReminderTapHandler.Configure(tabNavigator);
+        MoodWidgetTapHandler.Configure(
+            tabNavigator,
+            _services.GetRequiredService<JournalMoodLoader>(),
+            _services.GetRequiredService<IDatabaseReadySignal>());
 #if DEBUG
         Shared.Common.Infrastructure.DemoDataImporter.TryImportAsync(_services).FireAndForget();
 #endif
@@ -41,5 +46,16 @@ public partial class App : Microsoft.Maui.Controls.Application
         _services.GetRequiredService<IQuoteReminderCoordinator>().SyncAsync().FireAndForget();
         _services.GetRequiredService<IMoodReminderCoordinator>().SyncAsync().FireAndForget();
         _services.GetRequiredService<IChatReminderCoordinator>().SyncAsync().FireAndForget();
+    }
+
+    // A check-in made in the app (journal, after a practice, from the widget) moves today's mood reminder to tomorrow.
+    protected override void OnSleep()
+    {
+        base.OnSleep();
+        _services.GetRequiredService<IMoodReminderCoordinator>().SyncAsync().FireAndForget();
+#if ANDROID
+        // The widget's texts follow the app language; a switch made in this session reaches it here.
+        Platforms.Android.MoodWidgetProvider.Refresh(Platform.AppContext);
+#endif
     }
 }

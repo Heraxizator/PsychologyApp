@@ -7,6 +7,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 ## [Unreleased]
 
 ### Added
+- Home-screen widget "Mood and practice of the day" (Android): five faces save a check-in in one tap and open the journal on it, where a note or factors can be added; a second tap replaces the current morning or evening check-in, as in the journal. "Practice of the day" opens today's practice. The widget shows nothing personal. Checked on the emulator: placing it, a tap with the app running and after its process was killed, the replacement of the slot's check-in; dark theme and English were not checked on the widget.
+- Mood check-in reminder "at my usual time" (now the default for new installs): the hour with the most check-ins of the last 30 days, from at least five of them, otherwise 20:00. A reminder no longer comes on a day the person already checked in within three hours before it; a morning check-in does not silence the evening one. A time chosen earlier is kept. Checked on the emulator: the option and the scheduled alarm; a reminder actually firing at a learned hour was not waited for.
 - "What helps me" in the menu: built only from the person's own on-device records. It shows practices after which tension drops (the average before-and-after drop over at least two sessions), how each test result changed since the first try, with an offer to retake it after two weeks, journal factors that go with a higher or lower mood (at least three entries, a difference of 0.3 or more, worded as a link, not a cause), and repeated Body check-in patterns. Checked on the emulator in Russian with sparse data (empty hints, a single test); full data, dark theme and English were not checked on a device.
 
 ## [2.008] - 2026-10-18

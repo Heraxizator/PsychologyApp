@@ -209,10 +209,10 @@ public partial class SettingsViewModel
     private int moodReminderHour = UserPreferences.DefaultMoodReminderHour;
     public string MoodReminderHour
     {
-        get => UserPreferences.GetQuoteReminderHourLabel(moodReminderHour);
+        get => UserPreferences.GetMoodReminderHourLabel(moodReminderHour);
         set
         {
-            int normalized = UserPreferences.ParseQuoteReminderHourKey(value);
+            int normalized = UserPreferences.ParseMoodReminderHourKey(value);
             if (_isSyncingPickers || moodReminderHour == normalized)
             {
                 return;

@@ -1,3 +1,6 @@
+using Moq;
+using PsychologyApp.Application.Models;
+using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Services.Notifications;
@@ -19,7 +22,7 @@ public sealed class MoodReminderCoordinatorTests
         });
 
         var scheduler = new RecordingMoodReminderScheduler();
-        var coordinator = new MoodReminderCoordinator(store, scheduler);
+        var coordinator = new MoodReminderCoordinator(new Mock<IUserProgressService>().Object, store, scheduler);
 
         await coordinator.SyncAsync();
 
@@ -27,6 +30,33 @@ public sealed class MoodReminderCoordinatorTests
         Assert.False(scheduler.WasCancelled);
         Assert.Equal(AppStrings.MoodReminderTitle, scheduler.LastTitle);
         Assert.Equal(AppStrings.MoodReminderBody, scheduler.LastBody);
+    }
+
+    [Fact]
+    public async Task SyncAsync_AutomaticHourFollowsUsualCheckIns()
+    {
+        var store = new InMemoryUserPreferencesStore();
+        store.Save(new UserPreferencesState
+        {
+            HasCompletedOnboarding = true,
+            MoodRemindersEnabled = true,
+            MoodReminderHour = UserPreferences.MoodReminderAutoHour
+        });
+        // Five past evenings at 21:xx local time, none today, so today's reminder is not covered.
+        MoodEntryDTO[] moods = [.. Enumerable.Range(1, 5).Select(daysAgo => new MoodEntryDTO
+        {
+            MoodLevel = 3,
+            RecordedAt = DateTime.Today.AddDays(-daysAgo).AddHours(21.25).ToUniversalTime()
+        })];
+        Mock<IUserProgressService> progress = new();
+        progress
+            .Setup(service => service.GetMoodsAsync(It.IsAny<DateTime?>(), It.IsAny<DateTime?>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(moods);
+        var scheduler = new RecordingMoodReminderScheduler();
+
+        await new MoodReminderCoordinator(progress.Object, store, scheduler).SyncAsync();
+
+        Assert.Equal(21, scheduler.LastFireAt?.Hour);
     }
 
     [Fact]
@@ -40,7 +70,7 @@ public sealed class MoodReminderCoordinatorTests
         });
 
         var scheduler = new RecordingMoodReminderScheduler();
-        var coordinator = new MoodReminderCoordinator(store, scheduler);
+        var coordinator = new MoodReminderCoordinator(new Mock<IUserProgressService>().Object, store, scheduler);
 
         await coordinator.SyncAsync();
 
@@ -131,6 +161,7 @@ public sealed class MoodReminderCoordinatorTests
         public bool WasCancelled { get; private set; }
         public string? LastTitle { get; private set; }
         public string? LastBody { get; private set; }
+        public DateTime? LastFireAt { get; private set; }
 
         public Task RequestPermissionIfNeededAsync(CancellationToken cancellationToken = default) =>
             Task.CompletedTask;
@@ -138,6 +169,7 @@ public sealed class MoodReminderCoordinatorTests
         public void Schedule(DateTime fireAtLocal, string title, string body)
         {
             WasScheduled = true;
+            LastFireAt = fireAtLocal;
             LastTitle = title;
             LastBody = body;
         }

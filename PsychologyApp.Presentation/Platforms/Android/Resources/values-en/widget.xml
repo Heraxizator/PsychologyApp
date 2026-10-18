@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mood_widget_label">Mood and practice of the day</string>
+    <string name="mood_widget_title">How are you now?</string>
+    <string name="mood_widget_practice">Practice of the day →</string>
+</resources>

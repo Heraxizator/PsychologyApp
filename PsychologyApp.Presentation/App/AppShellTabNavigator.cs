@@ -37,6 +37,15 @@ public sealed class AppShellTabNavigator(Func<AppShell> appShellFactory, Func<IN
         });
     }
 
+    public void OpenJournal()
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            AppShell appShell = Shell;
+            appShell.ShowTab(appShell.JournalShellTab);
+        });
+    }
+
     public void OpenQuotes()
     {
         MainThread.BeginInvokeOnMainThread(() =>

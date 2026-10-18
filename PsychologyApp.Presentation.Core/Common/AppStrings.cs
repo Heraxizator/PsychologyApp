@@ -701,6 +701,7 @@ public static partial class AppStrings
     public static string SettingsMoodRemindersLabel => R(nameof(SettingsMoodRemindersLabel));
     public static string SettingsMoodReminderHourLabel => R(nameof(SettingsMoodReminderHourLabel));
     public static string SettingsMoodReminderHourPickerTitle => R(nameof(SettingsMoodReminderHourPickerTitle));
+    public static string SettingsMoodReminderAuto => R(nameof(SettingsMoodReminderAuto));
     public static string SettingsChatRemindersLabel => R(nameof(SettingsChatRemindersLabel));
     public static string SettingsChatReminderHourLabel => R(nameof(SettingsChatReminderHourLabel));
     public static string SettingsChatReminderHourPickerTitle => R(nameof(SettingsChatReminderHourPickerTitle));

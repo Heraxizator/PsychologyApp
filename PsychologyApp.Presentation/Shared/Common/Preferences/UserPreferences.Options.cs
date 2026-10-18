@@ -15,7 +15,11 @@ public static partial class UserPreferences
     public const string DefaultOnboardingConcern = OnboardingConcernKeys.Explore;
     public const int DefaultPracticeReminderHour = 19;
     public const int DefaultQuoteReminderHour = 9;
-    public const int DefaultMoodReminderHour = 20;
+    /// <summary>The stored mood reminder "hour" meaning "the hour I usually check in" (see <see cref="MoodReminderPolicy"/>).</summary>
+    public const int MoodReminderAutoHour = 0;
+    public const int DefaultMoodReminderHour = MoodReminderAutoHour;
+    /// <summary>The automatic reminder hour until there are enough check-ins to read a habit from.</summary>
+    public const int MoodReminderFallbackHour = 20;
     public const int DefaultChatReminderHour = 19;
 
     public static bool IsEnglish(string language) =>
@@ -152,7 +156,18 @@ public static partial class UserPreferences
         QuoteReminderPolicy.ClampHour(hour);
 
     public static int NormalizeMoodReminderHour(int hour) =>
-        QuoteReminderPolicy.ClampHour(hour);
+        hour == MoodReminderAutoHour ? MoodReminderAutoHour : QuoteReminderPolicy.ClampHour(hour);
+
+    public static string GetMoodReminderHourLabel(int hour) =>
+        NormalizeMoodReminderHour(hour) == MoodReminderAutoHour ? AppStrings.SettingsMoodReminderAuto : GetQuoteReminderHourLabel(hour);
+
+    public static int ParseMoodReminderHourKey(string displayOrKey) =>
+        string.Equals(displayOrKey, AppStrings.SettingsMoodReminderAuto, StringComparison.Ordinal)
+            ? MoodReminderAutoHour
+            : ParseQuoteReminderHourKey(displayOrKey);
+
+    public static IReadOnlyList<string> GetMoodReminderHourOptions() =>
+        [AppStrings.SettingsMoodReminderAuto, .. GetQuoteReminderHourOptions()];
 
     public static int NormalizeChatReminderHour(int hour) =>
         QuoteReminderPolicy.ClampHour(hour);

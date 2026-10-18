@@ -249,6 +249,24 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService, 
         return crisisDetector.IsCrisis(note);
     }
 
+    /// <summary>
+    /// A check-in "now" from outside the journal (the home-screen widget): it fills or replaces today's current slot, as
+    /// tapping a face in the journal does, and keeps a note already written there.
+    /// </summary>
+    public async Task SaveNowAsync(int moodLevel, CancellationToken cancellationToken = default)
+    {
+        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+        JournalCheckInSlot slot = MoodCheckInSlotPolicy.IsMorningLocalHour(DateTime.Now.Hour)
+            ? JournalCheckInSlot.Morning
+            : JournalCheckInSlot.Evening;
+        DateTime fromUtc = today.ToDateTime(TimeOnly.MinValue).ToUniversalTime();
+        IReadOnlyList<MoodEntryDTO> todays = await userProgressService.GetMoodsAsync(
+            fromUtc, fromUtc.AddDays(1), 50, cancellationToken);
+        (MoodEntryDTO? morning, MoodEntryDTO? evening) = SplitDaySlots(todays);
+        MoodEntryDTO? current = slot == JournalCheckInSlot.Morning ? morning : evening;
+        await SaveMoodAsync(moodLevel, current?.Note, current?.MoodEntryId, today, slot, cancellationToken);
+    }
+
     public Task DeleteMoodAsync(long moodEntryId, CancellationToken cancellationToken = default) =>
         userProgressService.DeleteMoodEntryAsync(moodEntryId, cancellationToken);
 

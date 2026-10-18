@@ -3,6 +3,7 @@ using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using PsychologyApp.Domain.Practice;
+using PsychologyApp.Presentation.Features.ManageJournal;
 using PsychologyApp.Presentation.Shared.Services.Notifications;
 
 namespace PsychologyApp.Presentation.App;
@@ -46,6 +47,18 @@ public class MainActivity : MauiAppCompatActivity
         if (string.Equals(intent.Action, ChatReminderConstants.ActionOpenFromNotification, StringComparison.Ordinal))
         {
             ChatReminderTapHandler.Handle();
+            return;
+        }
+
+        if (string.Equals(intent.Action, MoodWidgetConstants.ActionMood, StringComparison.Ordinal))
+        {
+            MoodWidgetTapHandler.HandleMood(intent.GetIntExtra(MoodWidgetConstants.ExtraMoodLevel, 0));
+            return;
+        }
+
+        if (string.Equals(intent.Action, MoodWidgetConstants.ActionPractice, StringComparison.Ordinal))
+        {
+            MoodWidgetTapHandler.HandlePractice();
             return;
         }
 

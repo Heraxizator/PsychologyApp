@@ -1,3 +1,5 @@
+using PsychologyApp.Application.Models;
+using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Domain.Notifications;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
@@ -5,6 +7,7 @@ using PsychologyApp.Presentation.Shared.Services.Preferences;
 namespace PsychologyApp.Presentation.Shared.Services.Notifications;
 
 public sealed class MoodReminderCoordinator(
+    IUserProgressService progress,
     IUserPreferencesStore preferencesStore,
     IMoodReminderScheduler scheduler) : IMoodReminderCoordinator
 {
@@ -25,20 +28,17 @@ public sealed class MoodReminderCoordinator(
     {
         await scheduler.RequestPermissionIfNeededAsync(cancellationToken);
 
-        DateTime? nextFireLocal = QuoteReminderPolicy.ResolveNextFireLocal(
-            state.MoodRemindersEnabled,
-            state.HasCompletedOnboarding,
-            state.MoodReminderHour,
-            DateTime.Now);
+        DateTime nowUtc = DateTime.UtcNow;
+        IReadOnlyList<MoodEntryDTO> moods = await progress.GetMoodsAsync(
+            nowUtc - MoodReminderPolicy.HistoryWindow, nowUtc, 500, cancellationToken);
+        List<DateTime> checkInsLocal = [.. moods.Select(mood => mood.RecordedAt.ToLocalTime())];
 
-        if (nextFireLocal is null)
-        {
-            scheduler.Cancel();
-            return;
-        }
+        int hour = UserPreferences.NormalizeMoodReminderHour(state.MoodReminderHour) == UserPreferences.MoodReminderAutoHour
+            ? MoodReminderPolicy.UsualHour(checkInsLocal) ?? UserPreferences.MoodReminderFallbackHour
+            : state.MoodReminderHour;
 
         scheduler.Schedule(
-            nextFireLocal.Value,
+            MoodReminderPolicy.NextFireLocal(hour, checkInsLocal, DateTime.Now),
             AppStrings.MoodReminderTitle,
             AppStrings.MoodReminderBody);
     }

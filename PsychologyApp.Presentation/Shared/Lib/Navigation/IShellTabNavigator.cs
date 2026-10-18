@@ -11,6 +11,8 @@ public interface IShellTabNavigator
 
     void OpenPracticeTab();
 
+    void OpenJournal();
+
     void OpenQuotes();
 
     void OpenChat();

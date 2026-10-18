@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The widget picker shows this before the app has drawn the widget; the widget's own texts come from AppStrings. -->
+    <string name="mood_widget_label">Настроение и практика дня</string>
+    <string name="mood_widget_title">Как вы сейчас?</string>
+    <string name="mood_widget_practice">Практика дня →</string>
+
+    <color name="widget_background">#FFFFFF</color>
+    <color name="widget_face">#EEF2F7</color>
+    <color name="widget_text">#1F2937</color>
+    <color name="widget_accent">#0062BD</color>
+
+    <style name="MoodWidgetFace">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:background">@drawable/mood_widget_face</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+</resources>

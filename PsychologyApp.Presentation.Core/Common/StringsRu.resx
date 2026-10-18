@@ -1386,6 +1386,9 @@
   <data name="SettingsMoodReminderHourPickerTitle" xml:space="preserve">
     <value>Время</value>
   </data>
+  <data name="SettingsMoodReminderAuto" xml:space="preserve">
+    <value>В моё обычное время</value>
+  </data>
   <data name="SettingsChatRemindersLabel" xml:space="preserve">
     <value>Напоминать о разговоре</value>
   </data>
@@ -3894,5 +3897,14 @@
   </data>
   <data name="InsightsBodyTitle" xml:space="preserve">
     <value>Что повторяется в теле</value>
+  </data>
+  <data name="MoodWidgetTitle" xml:space="preserve">
+    <value>Как вы сейчас?</value>
+  </data>
+  <data name="MoodWidgetLevel" xml:space="preserve">
+    <value>Настроение {0} из 5</value>
+  </data>
+  <data name="MoodWidgetPractice" xml:space="preserve">
+    <value>Практика дня</value>
   </data>
 </root>
