@@ -6,12 +6,13 @@
              x:Class="PsychologyApp.Presentation.Shared.UI.Components.RatingEntryView"
              x:Name="Root"
              HorizontalOptions="Fill">
-    <Border Style="{StaticResource InputBorderStyle}">
+    <Border x:Name="FrameBorder" Style="{StaticResource InputBorderStyle}">
         <VerticalStackLayout Spacing="10">
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
                 <Label
                     Grid.Column="0"
                     Text="{Binding TitleText, Source={x:Reference Root}}"
+                    x:Name="TitleLabel"
                     Style="{StaticResource FieldLabelStyle}"
                     Margin="0"
                     VerticalOptions="Center">
@@ -24,29 +25,27 @@
                         </DataTrigger>
                     </Label.Triggers>
                 </Label>
-                <Border
+                <!-- The answer as a large number in the colour of the scale: readable at a glance, it grows a little under the finger. -->
+                <Label
+                    x:Name="NumberLabel"
                     Grid.Column="1"
-                    Padding="12,5"
-                    StrokeThickness="0"
-                    BackgroundColor="{Binding AccentColor, Source={x:Reference Root}}"
-                    VerticalOptions="Center">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="12" />
-                    </Border.StrokeShape>
-                    <Border.Triggers>
+                    Text="{Binding NumberText, Source={x:Reference Root}}"
+                    FontSize="34"
+                    FontFamily="{StaticResource MediumFontFamily}"
+                    TextColor="{Binding AccentColor, Source={x:Reference Root}}"
+                    VerticalOptions="Center"
+                    MinimumWidthRequest="44"
+                    HorizontalTextAlignment="End"
+                    SemanticProperties.Description="{Binding ValueDisplay, Source={x:Reference Root}}">
+                    <Label.Triggers>
                         <DataTrigger
                             Binding="{Binding HasValue, Source={x:Reference Root}}"
-                            TargetType="Border"
+                            TargetType="Label"
                             Value="False">
                             <Setter Property="IsVisible" Value="False" />
                         </DataTrigger>
-                    </Border.Triggers>
-                    <Label
-                        Text="{Binding ValueDisplay, Source={x:Reference Root}}"
-                        Style="{StaticResource BodyStyle}"
-                        FontFamily="{StaticResource SemiBoldFontFamily}"
-                        TextColor="{StaticResource White}" />
-                </Border>
+                    </Label.Triggers>
+                </Label>
             </Grid>
             <Slider
                 x:Name="RatingSlider"

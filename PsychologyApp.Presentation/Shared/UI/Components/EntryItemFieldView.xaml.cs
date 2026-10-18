@@ -18,6 +18,16 @@ public partial class EntryItemFieldView : ContentView
         set => SetValue(EntryProperty, value);
     }
 
+    public static readonly BindableProperty EmbeddedProperty =
+        BindableProperty.Create(nameof(Embedded), typeof(bool), typeof(EntryItemFieldView), false);
+
+    /// <summary>The field sits inside a step card: scales drop their own frame.</summary>
+    public bool Embedded
+    {
+        get => (bool)GetValue(EmbeddedProperty);
+        set => SetValue(EmbeddedProperty, value);
+    }
+
     public bool IsTextField => Entry?.Kind == EntryFieldKind.Text;
 
     public bool IsRatingField => Entry?.Kind is EntryFieldKind.Rating0To10 or EntryFieldKind.RatingNeg10To10;

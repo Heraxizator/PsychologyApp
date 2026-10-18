@@ -25,10 +25,10 @@ public static class TechniqueFlavors
 {
     public static TechniqueFlavor For(TechniqueId id) => id switch
     {
-        TechniqueId.Breathing or TechniqueId.Grounding or TechniqueId.Anchor => TechniqueFlavor.Body,
+        TechniqueId.Breathing or TechniqueId.Grounding or TechniqueId.Anchor or TechniqueId.BodyScan or TechniqueId.Flashback => TechniqueFlavor.Body,
         TechniqueId.ThoughtRecord or TechniqueId.Comparison or TechniqueId.Polarity or TechniqueId.Check
             or TechniqueId.Spin or TechniqueId.Paper or TechniqueId.Experience => TechniqueFlavor.Mind,
-        TechniqueId.SelfCompassion or TechniqueId.Observer => TechniqueFlavor.Heart,
+        TechniqueId.SelfCompassion or TechniqueId.Observer or TechniqueId.Nightmare => TechniqueFlavor.Heart,
         TechniqueId.SmallStep or TechniqueId.Future or TechniqueId.Hack or TechniqueId.Extend
             or TechniqueId.Resize or TechniqueId.Copied => TechniqueFlavor.Action,
         _ => TechniqueFlavor.None

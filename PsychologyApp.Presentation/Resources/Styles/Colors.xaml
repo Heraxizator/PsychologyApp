@@ -21,6 +21,9 @@
          improvement/success is always this green, wherever in the app they show up. -->
     <Color x:Key="Danger">#C23A3A</Color>
     <Color x:Key="DangerDark">#E5726B</Color>
+    <!-- Background of a "see a doctor" note: a soft red that keeps body text readable in both themes (tested). -->
+    <Color x:Key="DangerSurface">#FCE8E6</Color>
+    <Color x:Key="DangerSurfaceDark">#3B2423</Color>
     <Color x:Key="Success">#1E7A45</Color>
     <Color x:Key="SuccessDark">#4CAF7D</Color>
     <Color x:Key="OnlineStatus">#34C759</Color>
@@ -58,6 +61,9 @@
     <Color x:Key="SurfaceDark">#1E1E1E</Color>
     <Color x:Key="InputBackgroundLight">#FAFAFA</Color>
     <Color x:Key="InputBackgroundDark">#2A2A2A</Color>
+    <!-- Answer chips of the practices: a soft fill instead of an outline, so a row of them reads as options, not as fields. -->
+    <Color x:Key="AnswerChipLight">#EEF1F6</Color>
+    <Color x:Key="AnswerChipDark">#2C3038</Color>
     <Color x:Key="InputFocusBackgroundLight">#F0F7FF</Color>
     <Color x:Key="InputFocusBackgroundDark">#1A2A3D</Color>
     <Color x:Key="InputBorderDark">#404040</Color>

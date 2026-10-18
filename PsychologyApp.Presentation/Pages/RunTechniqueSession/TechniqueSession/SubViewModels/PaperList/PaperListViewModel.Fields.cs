@@ -6,7 +6,13 @@ public partial class PaperListViewModel
     public string Text
     {
         get => text;
-        set => SetProperty(ref text, value);
+        set
+        {
+            if (SetProperty(ref text, value))
+            {
+                OnPropertyChanged(nameof(StageText));
+            }
+        }
     }
 
     private bool isFull;
@@ -15,4 +21,12 @@ public partial class PaperListViewModel
         get => isFull;
         set => SetProperty(ref isFull, value);
     }
+
+    /// <summary>The words on the sheet of the paper stage: what is being written now, otherwise the last thought added.</summary>
+    public string StageText => !string.IsNullOrWhiteSpace(Text)
+        ? Text
+        : PapersObservableCollection.LastOrDefault()?.Text ?? string.Empty;
+
+    /// <summary>How many times the phrase has been said out loud (each repeat is one entry).</summary>
+    public int RepeatCount => PapersObservableCollection.Count;
 }

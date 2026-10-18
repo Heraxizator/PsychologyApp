@@ -28,6 +28,9 @@ public partial class TechniquesViewModel
     private void ApplyUiState(TechniqueDashboardUiState uiState)
     {
         _staticItemsAll = [.. (uiState.IsGrouped && uiState.Groups.Count > 0 ? uiState.Groups[0] : uiState.CatalogTechniques)];
+        _staticItemsAll.RemoveAll(_programmeItems.Contains);
+        _programmeItems = [CreateFearLadderItem(), CreateTraumaItem()];
+        _staticItemsAll.InsertRange(0, _programmeItems);
 
         // The person's own practices keep one group object for as long as the list lives: paging and inserting work on it.
         _customGroup = uiState.IsGrouped && uiState.Groups.Count > 1
@@ -45,6 +48,38 @@ public partial class TechniquesViewModel
             OnPropertyChanged(nameof(TechniquesItemsSource));
         }
     }
+
+    /// <summary>
+    /// The fear ladder (first in "Action") and the trauma module (first in "Heart") sit in the catalogue like practices rather than on
+    /// banners above it: more blocks on the main page would crowd it. Each opens its own screen, not a practice session.
+    /// </summary>
+    private TechniqueItem[] _programmeItems = [];
+
+    private TechniqueItem CreateFearLadderItem() => new()
+    {
+        Title = AppStrings.ExposureEntryTitle,
+        Subtitle = AppStrings.ExposureCatalogSubtitle,
+        IconName = "Stairs",
+        MetaText = AppStrings.ExposureCatalogMeta,
+        Date = AppStrings.ExposureCatalogBadge,
+        Author = AppStrings.ExposureCatalogAuthor,
+        Flavor = nameof(TechniqueFlavor.Action),
+        Active = true,
+        TapCommand = OpenExposureCommand
+    };
+
+    private TechniqueItem CreateTraumaItem() => new()
+    {
+        Title = AppStrings.TraumaCatalogTitle,
+        Subtitle = AppStrings.TraumaCatalogSubtitle,
+        IconName = "Healing",
+        MetaText = AppStrings.TraumaCatalogMeta,
+        Date = AppStrings.TraumaCatalogBadge,
+        Author = AppStrings.TraumaCatalogAuthor,
+        Flavor = nameof(TechniqueFlavor.Heart),
+        Active = true,
+        TapCommand = OpenTraumaCommand
+    };
 
     private void ReplaceGroups(ObservableCollection<TechniqueGroup> sourceGroups)
     {

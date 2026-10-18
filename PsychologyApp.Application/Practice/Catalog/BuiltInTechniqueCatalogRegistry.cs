@@ -25,7 +25,10 @@ internal static class BuiltInTechniqueCatalogRegistry
             [TechniqueId.Breathing] = TechniqueCatalogContentRu.Breathing,
             [TechniqueId.SmallStep] = TechniqueCatalogContentRu.SmallStep,
             [TechniqueId.ThoughtRecord] = TechniqueCatalogContentRu.ThoughtRecord,
-            [TechniqueId.SelfCompassion] = TechniqueCatalogContentRu.SelfCompassion
+            [TechniqueId.SelfCompassion] = TechniqueCatalogContentRu.SelfCompassion,
+            [TechniqueId.BodyScan] = TechniqueCatalogContentRu.BodyScan,
+            [TechniqueId.Flashback] = TechniqueCatalogContentRu.Flashback,
+            [TechniqueId.Nightmare] = TechniqueCatalogContentRu.Nightmare
         };
 
     internal static IReadOnlyDictionary<TechniqueId, BuiltInTechniqueDefinition> English { get; } =
@@ -48,6 +51,9 @@ internal static class BuiltInTechniqueCatalogRegistry
             [TechniqueId.Breathing] = TechniqueCatalogContentEn.Breathing,
             [TechniqueId.SmallStep] = TechniqueCatalogContentEn.SmallStep,
             [TechniqueId.ThoughtRecord] = TechniqueCatalogContentEn.ThoughtRecord,
-            [TechniqueId.SelfCompassion] = TechniqueCatalogContentEn.SelfCompassion
+            [TechniqueId.SelfCompassion] = TechniqueCatalogContentEn.SelfCompassion,
+            [TechniqueId.BodyScan] = TechniqueCatalogContentEn.BodyScan,
+            [TechniqueId.Flashback] = TechniqueCatalogContentEn.Flashback,
+            [TechniqueId.Nightmare] = TechniqueCatalogContentEn.Nightmare
         };
 }

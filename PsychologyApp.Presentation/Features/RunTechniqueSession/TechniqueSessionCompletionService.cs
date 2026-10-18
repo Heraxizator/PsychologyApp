@@ -20,6 +20,7 @@ public sealed class TechniqueSessionCompletionService(
         DateTime sessionStartedAt,
         int? preIntensity = null,
         bool deleteDraft = true,
+        int? postIntensity = null,
         CancellationToken cancellationToken = default)
     {
         int durationSeconds = Math.Max(0, (int)(DateTime.UtcNow - sessionStartedAt).TotalSeconds);
@@ -56,6 +57,12 @@ public sealed class TechniqueSessionCompletionService(
                 DeleteDraft = deleteDraft
             },
             cancellationToken);
+
+        if (postIntensity is >= 0 and <= 10)
+        {
+            // The practice asked "after" as its own last step: the result page shows it instead of asking again.
+            await progress.UpdateSessionResultPostIntensityAsync(sessionResultId, postIntensity.Value, cancellationToken);
+        }
 
         await PracticeCompletionNavigator.NavigateAfterCompletionAsync(
             navigation,

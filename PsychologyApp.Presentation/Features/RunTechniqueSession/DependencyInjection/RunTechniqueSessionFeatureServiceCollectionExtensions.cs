@@ -22,6 +22,7 @@ public static class RunTechniqueSessionFeatureServiceCollectionExtensions
         services.AddSingleton<TechniqueListBuilder>();
         services.AddSingleton<DesignerTechniqueOperations>();
         services.AddSingleton<TechniqueSessionCompletionService>();
+        services.AddSingleton<RecentProblemStore>();
         SharedPresentationServiceCollectionExtensions.AddTransientFactory<EntryDraftCoordinator>(services);
         SharedPresentationServiceCollectionExtensions.AddTransientFactory<PaperListDraftCoordinator>(services);
         SharedPresentationServiceCollectionExtensions.AddTransientFactory<PolarityListDraftCoordinator>(services);

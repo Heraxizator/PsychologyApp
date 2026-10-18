@@ -1,4 +1,5 @@
 using PsychologyApp.Application.Models;
+using PsychologyApp.Application.Practice;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
@@ -19,6 +20,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
     private long? _sessionResultId;
     private int? _preIntensity;
     private long? _lifetimeCount;
+    private readonly ITechniqueCatalogService? _techniqueCatalog;
 
     public PracticeCompletionViewModel(
         INavigationService navigationService,
@@ -26,9 +28,11 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         NextPracticeResolver nextPracticeResolver,
         int streakDays,
         string? completedItemKey = null,
-        long? sessionResultId = null)
+        long? sessionResultId = null,
+        ITechniqueCatalogService? techniqueCatalog = null)
     {
         _navigationService = navigationService;
+        _techniqueCatalog = techniqueCatalog;
         _userProgressService = userProgressService;
         _nextPracticeResolver = nextPracticeResolver;
         _sessionResultId = sessionResultId;
@@ -259,6 +263,33 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         OnPropertyChanged(nameof(SudsDeltaText));
     }
 
+    /// <summary>What the person wrote in the practice, question by question: the thought and its balanced answer side by side.</summary>
+    public System.Collections.ObjectModel.ObservableCollection<PracticeAnswer> Answers { get; } = [];
+
+    public bool HasAnswers => Answers.Count > 0;
+
+    public string AnswersTitle => AppStrings.PracticeAnswersTitle;
+
+    private async Task ShowAnswersAsync(SessionResultDTO? result)
+    {
+        if (result is null || _techniqueCatalog is null || !Enum.TryParse(result.ItemKey, out TechniqueId techniqueId))
+        {
+            return;
+        }
+
+        PsychologyApp.Application.Models.Practice.BuiltInTechniqueDefinition definition = await _techniqueCatalog.GetAsync(techniqueId);
+        IReadOnlyList<PracticeAnswer> answers = PracticeAnswers.FromPayload(result.PayloadJson, definition.Entries ?? []);
+        await UiThread.RunAsync(() =>
+        {
+            foreach (PracticeAnswer answer in answers)
+            {
+                Answers.Add(answer);
+            }
+
+            OnPropertyChanged(nameof(HasAnswers));
+        });
+    }
+
     private async Task LoadSessionOutcomeAsync()
     {
         if (_sessionResultId is null)
@@ -269,6 +300,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         try
         {
             SessionResultDTO? result = await _userProgressService.GetSessionResultAsync(_sessionResultId.Value);
+            await ShowAnswersAsync(result);
             if (result?.PreIntensity is >= 0 and <= 10)
             {
                 _preIntensity = result.PreIntensity.Value;

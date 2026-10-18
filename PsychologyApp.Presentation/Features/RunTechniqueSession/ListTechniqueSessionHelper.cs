@@ -13,7 +13,8 @@ public sealed class ListTechniqueSessionHelper(
         string moduleName,
         string pageName,
         DateTime sessionStartedAt,
-        int? preIntensity = null) =>
+        int? preIntensity = null,
+        int? postIntensity = null) =>
         sessionCompletionService.CompleteStandardSessionAsync(
             progress,
             navigation,
@@ -21,5 +22,6 @@ public sealed class ListTechniqueSessionHelper(
             moduleName,
             pageName,
             sessionStartedAt,
-            preIntensity);
+            preIntensity,
+            postIntensity: postIntensity);
 }

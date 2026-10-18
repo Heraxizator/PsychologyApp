@@ -246,7 +246,8 @@ public partial class TechniquesViewModel
     {
         if (_staticItemsAll is { Count: > 0 } all)
         {
-            return all;
+            // The programme cards are added on every layout; the builder gets only the catalogue.
+            return all.Where(item => !_programmeItems.Contains(item)).ToList();
         }
 
         return [];

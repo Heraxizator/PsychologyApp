@@ -8,17 +8,22 @@
              x:Name="Root">
 
     <Grid>
-        <ui:TextEntryView
+        <ui:TechniqueTextFieldView
             IsVisible="{Binding IsTextField, Source={x:Reference Root}}"
             TitleText="{Binding Entry.Title, Source={x:Reference Root}}"
-            BodyText="{Binding Entry.Text, Source={x:Reference Root}, Mode=TwoWay}"
-            PlaceholderText="{Binding Entry.Placeholder, Source={x:Reference Root}}" />
+            Text="{Binding Entry.Text, Source={x:Reference Root}, Mode=TwoWay}"
+            PlaceholderText="{Binding Entry.Placeholder, Source={x:Reference Root}}"
+            Suggestions="{Binding Entry.Suggestions, Source={x:Reference Root}}"
+            Role="{Binding Entry.Role, Source={x:Reference Root}}"
+            RecentText="{Binding Entry.RecentText, Source={x:Reference Root}}"
+            AssistSuggestions="{Binding Entry.AssistSuggestions, Source={x:Reference Root}}" />
         <ui:RatingEntryView
             x:Name="RatingEntry"
             IsVisible="{Binding IsRatingField, Source={x:Reference Root}}"
             TitleText="{Binding Entry.Title, Source={x:Reference Root}}"
             BodyText="{Binding Entry.Text, Source={x:Reference Root}, Mode=TwoWay}"
-            Kind="{Binding Entry.Kind, Source={x:Reference Root}}" />
+            Kind="{Binding Entry.Kind, Source={x:Reference Root}}"
+            Embedded="{Binding Embedded, Source={x:Reference Root}}" />
     </Grid>
 
 </ContentView>

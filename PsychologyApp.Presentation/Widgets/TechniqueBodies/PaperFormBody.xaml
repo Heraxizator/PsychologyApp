@@ -11,13 +11,15 @@
         <Border Style="{StaticResource BrandCardStyle}" Margin="{StaticResource CardBottomMargin}">
             <StackLayout>
                 <Label Text="{Binding FormSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
-                <ui:TextEntryView
+                <ui:TechniqueTextFieldView
                     Margin="{StaticResource FieldTopMargin}"
                     TitleText="{Binding ThoughtFieldLabel}"
-                    BodyText="{Binding Text}"
+                    Text="{Binding Text, Mode=TwoWay}"
+                    Suggestions="{Binding ThoughtSuggestions}"
                     PlaceholderText="{Binding ThoughtPlaceholder}" />
                 <ui:ButtonView
                     Margin="{StaticResource CompactButtonMargin}"
+                    Variant="Secondary"
                     BodyText="{Binding AddButtonText}"
                     TapCommand="{Binding AddCommand}" />
             </StackLayout>

@@ -2,36 +2,67 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
-             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:session="clr-namespace:PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueSession"
              x:Class="PsychologyApp.Presentation.Widgets.TechniqueBodies.EntryFormBody"
              x:DataType="session:TechniqueSessionViewModel">
-    <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
-        <Grid ColumnDefinitions="*,Auto">
-            <Label
-                Grid.Column="0"
-                Text="{Binding FormSectionTitle}"
-                Style="{StaticResource SectionTitleStyle}"
-                VerticalOptions="Center" />
-            <Label
-                Grid.Column="1"
-                Text="{Binding StepProgressText}"
-                Style="{StaticResource CaptionStyle}"
-                VerticalOptions="Center" />
-        </Grid>
-        <ui:EntryItemFieldView x:Name="FieldHost" Entry="{Binding CurrentEntry}" />
-        <Grid ColumnDefinitions="*,*" ColumnSpacing="8" IsVisible="{Binding IsWizardMode}">
-            <ui:ButtonView
-                Grid.Column="0"
-                Variant="Secondary"
-                BodyText="{Binding PreviousStepText}"
-                TapCommand="{Binding PreviousStepCommand}"
-                IsEnabled="{Binding CanGoToPreviousStep}" />
-            <ui:ButtonView
-                Grid.Column="1"
-                BodyText="{Binding NextStepText}"
-                TapCommand="{Binding NextStepCommand}"
-                IsVisible="{Binding CanGoToNextStep}" />
-        </Grid>
-    </VerticalStackLayout>
+    <!-- One question at a time on its own card: where we are, the question itself in large type, the ways to answer, and the way on. -->
+    <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16,18,18">
+        <VerticalStackLayout Spacing="14">
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                <Label
+                    x:Name="StepCaption"
+                    Grid.Column="0"
+                    Text="{Binding StepProgressText}"
+                    IsVisible="{Binding IsWizardMode}"
+                    Style="{StaticResource CaptionStyle}"
+                    FontFamily="{StaticResource SemiBoldFontFamily}"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Column="0"
+                    Text="{Binding FormSectionTitle}"
+                    IsVisible="{Binding IsSingleStep}"
+                    Style="{StaticResource CaptionStyle}"
+                    FontFamily="{StaticResource SemiBoldFontFamily}"
+                    VerticalOptions="Center" />
+                <!-- One dot per step: done, current (a longer pill) and still ahead. -->
+                <HorizontalStackLayout
+                    x:Name="StepDots"
+                    Grid.Column="1"
+                    Spacing="5"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"
+                    IsVisible="{Binding IsWizardMode}" />
+            </Grid>
+
+            <ui:EntryItemFieldView x:Name="FieldHost" Entry="{Binding CurrentEntry}" Embedded="True" />
+
+            <Grid x:Name="WizardNav" ColumnDefinitions="Auto,*" IsVisible="{Binding IsWizardMode}">
+                <!-- Back is a quiet round button and only exists from the second step on. -->
+                <Border
+                    Grid.Column="0"
+                    WidthRequest="52"
+                    Margin="0,0,10,0"
+                    HeightRequest="52"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 26"
+                    Stroke="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}"
+                    BackgroundColor="Transparent"
+                    IsVisible="{Binding CanGoToPreviousStep}"
+                    SemanticProperties.Description="{Binding PreviousStepText}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding PreviousStepCommand}" />
+                    </Border.GestureRecognizers>
+                    <ui:MaterialIconView IconName="ArrowBack" IconSize="22" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Border>
+                <!-- "Next" is the strong action once there is an answer; "Skip" stays a quiet one. -->
+                <ui:ButtonView
+                    x:Name="NextButton"
+                    Grid.Column="1"
+                    BodyText="{Binding NextStepText}"
+                    Variant="{Binding NextStepVariant}"
+                    TapCommand="{Binding NextStepCommand}"
+                    IsVisible="{Binding CanGoToNextStep}" />
+            </Grid>
+        </VerticalStackLayout>
+    </Border>
 </ContentView>

@@ -35,11 +35,23 @@ public partial class TechniqueSessionViewModel
         ? AppStrings.TechniqueStepProgress(CurrentStepIndex + 1, Entries.Count)
         : string.Empty;
 
-    /// <summary>Blocks finishing a multi-step session before the last question has been reached.</summary>
-    public bool CanFinish => !IsWizardMode || !CanGoToNextStep;
+    /// <summary>
+    /// A multi-step session can be finished on the last step, or earlier once something has been written: every field is optional,
+    /// and a short practice is better than an abandoned one.
+    /// </summary>
+    public bool CanFinish => !IsWizardMode || !CanGoToNextStep || Entries.Any(e => !string.IsNullOrWhiteSpace(e.Text));
 
     public string PreviousStepText => AppStrings.TechniqueStepBack;
-    public string NextStepText => AppStrings.TechniqueStepNext;
+
+    /// <summary>"Skip" while the current step is empty, so moving on without an answer is an obvious, allowed choice.</summary>
+    public string NextStepText => string.IsNullOrWhiteSpace(CurrentEntry?.Text) ? AppStrings.TechniqueStepSkip : AppStrings.TechniqueStepNext;
+
+    public bool IsSingleStep => !IsWizardMode;
+
+    public bool IsCurrentEmpty => string.IsNullOrWhiteSpace(CurrentEntry?.Text);
+
+    /// <summary>The look of the forward button: filled once the step has an answer, outlined while it would only skip.</summary>
+    public string NextStepVariant => IsCurrentEmpty ? "Secondary" : "Primary";
 
     public ICommand PreviousStepCommand { get; private set; } = default!;
     public ICommand NextStepCommand { get; private set; } = default!;
@@ -65,7 +77,12 @@ public partial class TechniqueSessionViewModel
         });
     }
 
-    private void ResetWizardStep() => CurrentStepIndex = 0;
+    private void ResetWizardStep()
+    {
+        _currentStepIndex = 0;
+        OnPropertyChanged(nameof(CurrentStepIndex));
+        NotifyStepChanged();
+    }
 
     private void NotifyStepChanged()
     {
@@ -75,5 +92,10 @@ public partial class TechniqueSessionViewModel
         OnPropertyChanged(nameof(CanGoToNextStep));
         OnPropertyChanged(nameof(StepProgressText));
         OnPropertyChanged(nameof(CanFinish));
+        OnPropertyChanged(nameof(IsSingleStep));
+        OnPropertyChanged(nameof(IsCurrentEmpty));
+        OnPropertyChanged(nameof(NextStepVariant));
+        OnPropertyChanged(nameof(NextStepText));
+        OfferPhrasesForCurrentStep();
     }
 }

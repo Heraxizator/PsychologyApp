@@ -28,6 +28,8 @@
       ],
       "hint": "For example: yesterday's talk with my manager",
       "capture": "situation",
+      "suggestions": [ "A fight with someone close", "Something at work", "Conflict with my boss", "Studies or an exam", "Health", "Money", "Loneliness", "A failure", "A breakup", "Relationship with my parents", "Children", "Moving", "The future", "Criticism of me" ],
+      "recent": true,
       "next": "ask_feeling"
     },
     {
@@ -52,6 +54,7 @@
       "kind": "askText",
       "text": [ "What would you call this feeling? One or two words is enough." ],
       "capture": "feeling",
+      "emotions": true,
       "next": "ask_body"
     },
     {
@@ -63,6 +66,7 @@
       ],
       "hint": "For example: tightness in my chest",
       "capture": "body",
+      "suggestions": [ "Tight chest", "Lump in my throat", "Tense shoulders", "Heavy stomach", "Hot face", "Shaking hands", "Racing heart", "Cold hands", "Knot in my stomach", "Heavy head" ],
       "next": "ask_before"
     },
     {
@@ -118,6 +122,7 @@
       ],
       "hint": "For example: two people are talking in raised voices",
       "capture": "observer",
+      "suggestions": [ "Two people arguing", "A tired, upset person", "An ordinary work situation", "Each one defends their side", "In a week this will be forgotten", "People misunderstood each other", "A person trying very hard", "Unpleasant, but not dangerous", "Everyone has their own view", "The person needs rest" ],
       "next": "reflect"
     },
     {
@@ -138,6 +143,7 @@
       ],
       "hint": "For example: you're doing better than you think",
       "capture": "advice",
+      "suggestions": [ "You are doing better than you think", "This will pass", "You have a right to feel this way", "Pause and breathe out", "You're not alone", "It's okay to make mistakes", "You've already done a lot", "Take care of yourself" ],
       "next": "advice_echo"
     },
     {

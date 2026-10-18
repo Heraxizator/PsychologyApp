@@ -33,8 +33,7 @@ public sealed class TechniquesViewModelFactory(
     IClinicalCareService clinicalCareService,
     IOptions<AppSettings> settings,
     ILogger<TechniquesViewModel> logger,
-    IUserPreferencesStore userPreferencesStore,
-    IChatHeroFactory chatHeroFactory) : ViewModelFactoryBase, ITechniquesViewModelFactory
+    IUserPreferencesStore userPreferencesStore) : ViewModelFactoryBase, ITechniquesViewModelFactory
 {
     public TechniquesViewModel Create(ContentPage page)
     {
@@ -55,7 +54,6 @@ public sealed class TechniquesViewModelFactory(
             settings,
             logger,
             userPreferencesStore);
-        viewModel.ChatHero = chatHeroFactory.CreateHero(navigation);
         return viewModel;
     }
 }

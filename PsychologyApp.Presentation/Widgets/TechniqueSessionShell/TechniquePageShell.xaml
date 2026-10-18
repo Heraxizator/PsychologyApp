@@ -9,7 +9,8 @@
              x:Class="PsychologyApp.Presentation.Widgets.TechniqueSessionShell.TechniquePageShell"
              x:Name="Root">
 
-    <ScrollView VerticalScrollBarVisibility="Never">
+    <Grid RowDefinitions="*,Auto">
+    <ScrollView Grid.Row="0" VerticalScrollBarVisibility="Never">
         <VerticalStackLayout Margin="{StaticResource LayoutTabPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
             <VerticalStackLayout.Behaviors>
                 <behaviors:StaggerChildrenBehavior />
@@ -51,6 +52,22 @@
                     </VerticalStackLayout>
                 </Grid>
             </Border>
+            <!-- In a step-by-step practice the steps are on the cards below, so the algorithm folds to one line; a tap opens it. -->
+            <Border
+                x:Name="StepsSummary"
+                IsVisible="False"
+                Style="{StaticResource BrandCardStyle}"
+                Margin="0"
+                Padding="16,12">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnStepsSummaryTapped" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                    <ui:MaterialIconView x:Name="StepsSummaryIcon" IconName="FormatListNumbered" IconSize="20" VerticalOptions="Center" />
+                    <Label x:Name="StepsSummaryLabel" Grid.Column="1" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource MediumFontFamily}" VerticalOptions="Center" />
+                    <ui:MaterialIconView x:Name="StepsSummaryChevron" Grid.Column="2" IconName="ExpandMore" IconSize="22" VerticalOptions="Center" />
+                </Grid>
+            </Border>
             <ui:AlgorithmBoxView
                 x:Name="Steps"
                 TitleText="{Binding Source={x:Reference Root}, Path=AlgorithmTitleText}"
@@ -71,15 +88,39 @@
                         Style="{StaticResource BodyStyle}" />
                 </VerticalStackLayout>
             </Border>
-            <ui:RatingEntryView
+            <Border
                 x:DataType="session:ITechniqueSessionScreen"
-                TitleText="{Binding PreIntensityLabel}"
-                BodyText="{Binding PreIntensityText, Mode=TwoWay}" />
+                Style="{StaticResource BrandCardStyle}"
+                Margin="0"
+                Padding="18,16"
+                IsVisible="{Binding AsksPreIntensity}">
+                <ui:RatingEntryView
+                    x:DataType="session:ITechniqueSessionScreen"
+                    Embedded="True"
+                    TitleText="{Binding PreIntensityLabel}"
+                    BodyText="{Binding PreIntensityText, Mode=TwoWay}" />
+            </Border>
             <Grid x:Name="BodyHost" />
-            <ui:ButtonView
-                BodyText="{Binding Source={x:Reference Root}, Path=FinishText}"
-                TapCommand="{Binding Source={x:Reference Root}, Path=FinishCommand}"
-                IsEnabled="{Binding Source={x:Reference Root}, Path=FinishEnabled}" />
         </VerticalStackLayout>
     </ScrollView>
+
+    <!-- The way on stays under the thumb: "Next" and "Finish" are pinned to the bottom, so a practice can be walked one-handed. -->
+    <Border
+        x:Name="ActionBar"
+        Grid.Row="1"
+        StrokeThickness="0"
+        Padding="16,10,16,14"
+        BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+        <VerticalStackLayout Spacing="10">
+            <BoxView Style="{StaticResource SubtleDividerStyle}" Margin="-16,-10,-16,0" />
+            <Grid x:Name="FooterHost" />
+            <ui:ButtonView
+                x:Name="FinishButton"
+                BodyText="{Binding Source={x:Reference Root}, Path=FinishText}"
+                TapCommand="{Binding Source={x:Reference Root}, Path=FinishCommand}"
+                IsEnabled="{Binding Source={x:Reference Root}, Path=FinishEnabled}"
+                IsVisible="{Binding Source={x:Reference Root}, Path=FinishEnabled}" />
+        </VerticalStackLayout>
+    </Border>
+    </Grid>
 </ContentView>

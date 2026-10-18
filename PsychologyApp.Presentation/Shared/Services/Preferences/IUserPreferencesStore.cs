@@ -18,8 +18,6 @@ public interface IUserPreferencesStore
     void ResetOnboardingCompletion();
     void SetPendingTechnique(TechniqueId techniqueId);
     TechniqueId? ConsumePendingTechnique();
-    bool HasUsedPhysicsSearch { get; }
-    void MarkPhysicsSearchUsed();
     void SetPendingOpenJournal();
     bool ConsumePendingOpenJournal();
     string PersistedLanguage { get; }

@@ -11,7 +11,25 @@ public partial class TechniquePageShell : ContentView
         BindableProperty.Create(nameof(TitleText), typeof(string), typeof(TechniquePageShell), string.Empty);
 
     public static readonly BindableProperty AlgorithmProperty =
-        BindableProperty.Create(nameof(Algorithm), typeof(IEnumerable), typeof(TechniquePageShell));
+        BindableProperty.Create(nameof(Algorithm), typeof(IEnumerable), typeof(TechniquePageShell), propertyChanged: OnAlgorithmChanged);
+
+    private static void OnAlgorithmChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        var shell = (TechniquePageShell)bindable;
+        if (oldValue is System.Collections.Specialized.INotifyCollectionChanged oldSteps)
+        {
+            oldSteps.CollectionChanged -= shell.OnAlgorithmItemsChanged;
+        }
+
+        if (newValue is System.Collections.Specialized.INotifyCollectionChanged newSteps)
+        {
+            newSteps.CollectionChanged += shell.OnAlgorithmItemsChanged;
+        }
+
+        shell.ApplyFold();
+    }
+
+    private void OnAlgorithmItemsChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => ApplyFold();
 
     public static readonly BindableProperty BackCommandProperty =
         BindableProperty.Create(nameof(BackCommand), typeof(ICommand), typeof(TechniquePageShell));
@@ -23,7 +41,57 @@ public partial class TechniquePageShell : ContentView
         BindableProperty.Create(nameof(FinishCommand), typeof(ICommand), typeof(TechniquePageShell));
 
     public static readonly BindableProperty FinishEnabledProperty =
-        BindableProperty.Create(nameof(FinishEnabled), typeof(bool), typeof(TechniquePageShell), true);
+        BindableProperty.Create(nameof(FinishEnabled), typeof(bool), typeof(TechniquePageShell), true, propertyChanged: (b, _, _) => ((TechniquePageShell)b).ApplyActionBar());
+
+    /// <summary>Controls of the body that belong under the thumb (the step-by-step "Back / Next"): shown in the pinned bar above "Finish".</summary>
+    public static readonly BindableProperty FooterContentProperty =
+        BindableProperty.Create(nameof(FooterContent), typeof(View), typeof(TechniquePageShell), propertyChanged: OnFooterContentChanged);
+
+    public View? FooterContent
+    {
+        get => (View?)GetValue(FooterContentProperty);
+        set => SetValue(FooterContentProperty, value);
+    }
+
+    private static void OnFooterContentChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        var shell = (TechniquePageShell)bindable;
+        if (oldValue is View oldFooter)
+        {
+            oldFooter.PropertyChanged -= shell.OnFooterPropertyChanged;
+            shell.FooterHost.Children.Remove(oldFooter);
+        }
+
+        if (newValue is View newFooter)
+        {
+            newFooter.BindingContext = shell.BindingContext;
+            newFooter.PropertyChanged += shell.OnFooterPropertyChanged;
+            shell.FooterHost.Children.Add(newFooter);
+        }
+
+        shell.ApplyActionBar();
+    }
+
+    private void OnFooterPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(IsVisible))
+        {
+            ApplyActionBar();
+        }
+    }
+
+    /// <summary>The bar takes room only while it has something to press.</summary>
+    private void ApplyActionBar()
+    {
+        if (ActionBar is null)
+        {
+            return;
+        }
+
+        bool footer = FooterContent?.IsVisible == true;
+        FooterHost.IsVisible = footer;
+        ActionBar.IsVisible = footer || FinishEnabled;
+    }
 
     public static readonly BindableProperty BodyContentProperty =
         BindableProperty.Create(
@@ -140,9 +208,52 @@ public partial class TechniquePageShell : ContentView
 
     public bool HasHero => !string.IsNullOrWhiteSpace(HeroSubtitle);
 
+    public static readonly BindableProperty AlgorithmFoldedProperty =
+        BindableProperty.Create(nameof(AlgorithmFolded), typeof(bool), typeof(TechniquePageShell), false, propertyChanged: (b, _, _) => ((TechniquePageShell)b).ApplyFold());
+
+    /// <summary>
+    /// The algorithm shows as one line ("Steps of the practice: 5") that opens on a tap. Used where the steps are already walked
+    /// one by one below, so the answer field is on the first screen instead of after a long list.
+    /// </summary>
+    public bool AlgorithmFolded
+    {
+        get => (bool)GetValue(AlgorithmFoldedProperty);
+        set => SetValue(AlgorithmFoldedProperty, value);
+    }
+
+    private bool _algorithmOpened;
+
+    private void OnStepsSummaryTapped(object? sender, TappedEventArgs e)
+    {
+        _algorithmOpened = !_algorithmOpened;
+        UiHaptics.Tick();
+        ApplyFold();
+        if (_algorithmOpened)
+        {
+            UiAnimations.SafeRevealLiteAsync(Steps, allowHidden: true).FireAndForget();
+        }
+    }
+
+    private void ApplyFold()
+    {
+        if (StepsSummary is null || Steps is null)
+        {
+            return;
+        }
+
+        int count = Algorithm?.Cast<object>().Count() ?? 0;
+        bool folded = AlgorithmFolded && count > 0;
+        StepsSummary.IsVisible = folded;
+        Steps.IsVisible = !folded || _algorithmOpened;
+        StepsSummaryLabel.Text = AppStrings.TechniqueStepsSummary(count);
+        StepsSummaryChevron.IconName = _algorithmOpened ? "ExpandLess" : "ExpandMore";
+        SemanticProperties.SetDescription(StepsSummary, StepsSummaryLabel.Text);
+    }
+
     public TechniquePageShell()
     {
         InitializeComponent();
+        ApplyActionBar();
         ApplyLocalization();
         UserPreferences.Changed += ApplyLocalization;
         Loaded += (_, _) =>
@@ -180,6 +291,7 @@ public partial class TechniquePageShell : ContentView
                 new Point(1, 1));
             HeroTile.BackgroundColor = Color.FromArgb(dark ? "#33FFFFFF" : "#99FFFFFF");
             HeroIconView.IconColor = Color.FromArgb(colours.Icon);
+            StepsSummaryIcon.IconColor = Color.FromArgb(colours.Icon);
             Steps.BadgeTint = Color.FromArgb(colours.Tile);
             Steps.BadgeInk = Color.FromArgb(colours.Icon);
             return;
@@ -229,6 +341,11 @@ public partial class TechniquePageShell : ContentView
         if (BodyContent is not null)
         {
             BodyContent.BindingContext = BindingContext;
+        }
+
+        if (FooterContent is not null)
+        {
+            FooterContent.BindingContext = BindingContext;
         }
     }
 

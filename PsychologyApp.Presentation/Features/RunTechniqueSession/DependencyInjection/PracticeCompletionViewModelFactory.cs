@@ -14,6 +14,7 @@ public interface IPracticeCompletionViewModelFactory
 public sealed class PracticeCompletionViewModelFactory(
     IUserProgressService userProgressService,
     NextPracticeResolver nextPracticeResolver,
+    PsychologyApp.Application.Practice.ITechniqueCatalogService techniqueCatalog,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IPracticeCompletionViewModelFactory
 {
     public PracticeCompletionViewModel Create(
@@ -27,5 +28,6 @@ public sealed class PracticeCompletionViewModelFactory(
             nextPracticeResolver,
             streakDays,
             completedItemKey,
-            sessionResultId);
+            sessionResultId,
+            techniqueCatalog);
 }

@@ -2,46 +2,19 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
-             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:paperList="clr-namespace:PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueSession.SubViewModels.PaperList"
-             xmlns:models="clr-namespace:PsychologyApp.Presentation.Models.Practice.Techniques;assembly=PsychologyApp.Presentation.Core"
              x:Class="PsychologyApp.Presentation.Widgets.TechniqueBodies.CopiedFormBody"
              x:DataType="paperList:PaperListViewModel">
-    <StackLayout>
-        <Border Style="{StaticResource BrandCardStyle}" Margin="{StaticResource CardBottomMargin}">
-            <StackLayout>
-                <Label Text="{Binding FormSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
-                <ui:TextEntryView
-                    Margin="{StaticResource FieldTopMargin}"
-                    TitleText="{Binding ConcernFieldLabel}"
-                    BodyText="{Binding Text}"
-                    PlaceholderText="{Binding ThoughtPlaceholder}" />
-                <ui:ButtonView
-                    BodyText="{Binding RepeatButtonText}"
-                    TapCommand="{Binding AddCommand}" />
-            </StackLayout>
-        </Border>
-        <Label
-            Text="{Binding EntryCountText}"
-            Style="{StaticResource CaptionStyle}"
-            IsVisible="{Binding IsFull}"
-            Margin="{StaticResource SectionTopMargin}" />
-        <StackLayout
-            x:Name="PaperItemsStack"
-            Margin="{StaticResource SectionTopMargin}"
-            IsVisible="{Binding IsFull}"
-            BindableLayout.ItemsSource="{Binding PapersObservableCollection}">
-            <BindableLayout.ItemTemplate>
-                <DataTemplate x:DataType="models:Paper">
-                    <ui:ListEntryCardView
-                        Title="{Binding Id}"
-                        Body="{Binding Text}">
-                        <ui:ListEntryCardView.Behaviors>
-                            <behaviors:ListItemRevealBehavior />
-                        </ui:ListEntryCardView.Behaviors>
-                    </ui:ListEntryCardView>
-                </DataTemplate>
-            </BindableLayout.ItemTemplate>
+    <!-- Only the phrase here: the repeats themselves happen on the circle of the stage below, not as a list of identical cards. -->
+    <Border Style="{StaticResource BrandCardStyle}" Margin="{StaticResource CardBottomMargin}">
+        <StackLayout>
+            <Label Text="{Binding FormSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
+            <ui:TechniqueTextFieldView
+                Margin="{StaticResource FieldTopMargin}"
+                TitleText="{Binding ConcernFieldLabel}"
+                Text="{Binding Text, Mode=TwoWay}"
+                Suggestions="{Binding ThoughtSuggestions}"
+                PlaceholderText="{Binding ThoughtPlaceholder}" />
         </StackLayout>
-    </StackLayout>
+    </Border>
 </ContentView>

@@ -28,10 +28,18 @@ public partial class ChatInputBar : ContentView
     public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(
         nameof(MaxLength), typeof(int), typeof(ChatInputBar), 1500);
 
+    private readonly VoiceDictation _dictation;
+
     public ChatInputBar()
     {
         InitializeComponent();
         CenterInputText();
+        _dictation = new VoiceDictation(() => Text ?? string.Empty, value => Text = value);
+        _dictation.Changed += (_, _) => RefreshVoice();
+        _dictation.Attach(MicButton, InputEditor.Unfocus);
+        MicButton.IsVisible = VoiceDictation.IsAvailable;
+        SemanticProperties.SetDescription(MicButton, AppStrings.PracticeVoiceStart);
+        Unloaded += (_, _) => _dictation.StopAsync().FireAndForget();
     }
 
     public string Text
@@ -86,6 +94,27 @@ public partial class ChatInputBar : ContentView
             UiAnimations.SafePulseAsync(button).FireAndForget();
         }
     }
+
+    private void RefreshVoice()
+    {
+        bool listening = _dictation.IsListening;
+        VoiceStatusLabel.Text = _dictation.StatusText;
+        VoiceStatusLabel.IsVisible = !string.IsNullOrWhiteSpace(_dictation.StatusText);
+        MicButton.BackgroundColor = listening ? ResourceColor("Danger") : Colors.Transparent;
+        if (listening)
+        {
+            MicIcon.TextColor = Colors.White;
+        }
+        else
+        {
+            MicIcon.SetAppThemeColor(Label.TextColorProperty, ResourceColor("PrimaryTextLight"), ResourceColor("PrimaryTextDark"));
+        }
+
+        SemanticProperties.SetDescription(MicButton, listening ? AppStrings.PracticeVoiceStop : AppStrings.PracticeVoiceStart);
+    }
+
+    private static Color ResourceColor(string key) =>
+        Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue(key, out object? value) == true && value is Color color ? color : Colors.Gray;
 
     /// <summary>
     /// Android puts the text of a multi-line editor at its top edge, which left the words above the middle of the bar and the send button.

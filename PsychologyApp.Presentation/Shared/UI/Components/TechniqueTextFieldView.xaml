@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:self="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             x:DataType="self:TechniqueTextFieldView"
+             x:Class="PsychologyApp.Presentation.Shared.UI.Components.TechniqueTextFieldView"
+             x:Name="Root"
+             HorizontalOptions="Fill">
+
+    <!-- A practice answer that rarely needs the keyboard: chips, the last problem, an emotion palette, ready phrases and the microphone. -->
+    <VerticalStackLayout Spacing="10">
+        <!-- The question of the step, in the voice of a question rather than a form label. -->
+        <Label
+            x:Name="TitleLabel"
+            Text="{Binding TitleText, Source={x:Reference Root}}"
+            Style="{StaticResource SectionTitleStyle}"
+            Margin="0,0,0,2" />
+
+        <Border x:Name="InputBorder" Style="{StaticResource InputBorderStyle}" Padding="12,2,6,2">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                <Editor
+                    x:Name="InputEditor"
+                    Grid.Column="0"
+                    AutoSize="TextChanges"
+                    MinimumHeightRequest="48"
+                    MaximumHeightRequest="180"
+                    BackgroundColor="Transparent"
+                    FontSize="{DynamicResource BodyFontSize}"
+                    FontFamily="{DynamicResource BodyFontFamily}"
+                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                    PlaceholderColor="{AppThemeBinding Light={StaticResource InputPlaceholderLight}, Dark={StaticResource InputPlaceholderDark}}"
+                    Placeholder="{Binding PlaceholderText, Source={x:Reference Root}}"
+                    Text="{Binding Text, Source={x:Reference Root}, Mode=TwoWay}"
+                    VerticalOptions="Center"
+                    Focused="OnInputFocused"
+                    Unfocused="OnInputUnfocused" />
+
+                <Border
+                    x:Name="MicButton"
+                    Grid.Column="1"
+                    WidthRequest="40"
+                    HeightRequest="40"
+                    Margin="0,4"
+                    VerticalOptions="End"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 20"
+                    BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
+                    <Label
+                        x:Name="MicIcon"
+                        Text="{mi:Material Icon=Mic}"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                </Border>
+            </Grid>
+        </Border>
+
+        <Label x:Name="VoiceStatusLabel" Style="{StaticResource CaptionStyle}" IsVisible="False" />
+
+        <!-- The problem from the last practice, one tap away while this field is empty. -->
+        <Border
+            x:Name="RecentChip"
+            IsVisible="False"
+            HorizontalOptions="Start"
+            Padding="12,8"
+            StrokeThickness="1.2"
+            Stroke="{DynamicResource Primary}"
+            StrokeShape="RoundRectangle 18"
+            BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnRecentTapped" />
+            </Border.GestureRecognizers>
+            <HorizontalStackLayout Spacing="6">
+                <Label
+                    Text="{mi:Material Icon=History}"
+                    FontSize="16"
+                    VerticalOptions="Center"
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                <Label
+                    x:Name="RecentLabel"
+                    Style="{StaticResource CaptionStyle}"
+                    FontFamily="{StaticResource MediumFontFamily}"
+                    VerticalOptions="Center"
+                    LineBreakMode="TailTruncation"
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+            </HorizontalStackLayout>
+        </Border>
+
+        <self:EmotionPickerView x:Name="EmotionPicker" IsVisible="False" />
+
+        <FlexLayout x:Name="ChipsHost" Wrap="Wrap" JustifyContent="Start" IsVisible="False" />
+
+        <VerticalStackLayout x:Name="AssistSection" Spacing="6" IsVisible="False">
+            <Label x:Name="AssistTitle" Style="{StaticResource CaptionStyle}" />
+            <VerticalStackLayout x:Name="AssistHost" Spacing="6" />
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentView>

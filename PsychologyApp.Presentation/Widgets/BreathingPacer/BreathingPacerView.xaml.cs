@@ -20,11 +20,22 @@ public partial class BreathingPacerView : ContentView
         nameof(FullscreenCommand), typeof(ICommand), typeof(BreathingPacerView), null,
         propertyChanged: (bindable, _, _) => ((BreathingPacerView)bindable).UpdateFullscreenButton());
 
+    /// <summary>Four in, six out instead of the square: the slow out-breath an article teaches, inside the article.</summary>
+    public static readonly BindableProperty IsCalmProperty = BindableProperty.Create(
+        nameof(IsCalm), typeof(bool), typeof(BreathingPacerView), false,
+        propertyChanged: (bindable, _, newValue) => ((BreathingPacerView)bindable)._pattern = (bool)newValue ? BreathingPattern.Calm : BreathingPattern.Square);
+
+    public bool IsCalm
+    {
+        get => (bool)GetValue(IsCalmProperty);
+        set => SetValue(IsCalmProperty, value);
+    }
+
     public static readonly BindableProperty IsImmersiveProperty = BindableProperty.Create(
         nameof(IsImmersive), typeof(bool), typeof(BreathingPacerView), false,
         propertyChanged: (bindable, _, newValue) => ((BreathingPacerView)bindable).ApplyImmersive((bool)newValue));
 
-    private readonly BreathingPattern _pattern = BreathingPattern.Square;
+    private BreathingPattern _pattern = BreathingPattern.Square;
     private BreathPhaseKind? _lastPhase;
     private bool _running;
 

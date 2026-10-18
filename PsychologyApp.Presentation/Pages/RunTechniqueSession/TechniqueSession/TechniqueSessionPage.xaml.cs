@@ -6,6 +6,7 @@ using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.BreathingImmersive;
 using PsychologyApp.Presentation.Widgets.BreathingPacer;
 using PsychologyApp.Presentation.Widgets.TechniqueBodies;
+using PsychologyApp.Presentation.Widgets.PracticeStages;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueSession;
@@ -111,15 +112,34 @@ public partial class TechniqueSessionPage : ContentPage
         View body = TechniqueBodyFactory.Create(definition.UiKind);
         body.BindingContext = BindingContext;
 
-        // Breathing gets a circle to breathe with above the usual notes form.
         SessionShell.HeroIcon = definition.ListIcon;
         SessionShell.HeroFlavor = TechniqueFlavors.For(_techniqueId).ToString();
         SessionShell.HeroMeta = AppStrings.TechniqueMetaLine(AppStrings.TechniqueDuration(definition.ListDurationMinutes), definition.Theme);
         SessionShell.HeroSubtitle = definition.ListSubtitle;
 
-        SessionShell.BodyContent = _techniqueId == TechniqueId.Breathing
-            ? new VerticalStackLayout { Spacing = 8, Children = { new BreathingPacerView { FullscreenCommand = new Command(OpenImmersiveBreathing) }, body } }
-            : body;
+        // Breathing gets a circle to breathe with above the usual notes form.
+        VerticalStackLayout content = new() { Spacing = 8 };
+        if (_techniqueId == TechniqueId.Breathing)
+        {
+            content.Children.Add(new BreathingPacerView { FullscreenCommand = new Command(OpenImmersiveBreathing) });
+        }
+
+        content.Children.Add(body);
+
+        // Practices done in the imagination get a stage where the written problem becomes something to shrink, dissolve or let go.
+        if (PracticeStageFactory.Create(_techniqueId) is { } stage)
+        {
+            stage.BindingContext = BindingContext;
+            content.Children.Add(stage);
+        }
+
+        // Steps walked one by one, or acted out on a stage, need no long list above them: it folds to one line.
+        SessionShell.AlgorithmFolded = (definition.Entries?.Count ?? 0) > 1 || content.Children.Count > 1;
+        SessionShell.BodyContent = content;
+        if (body is EntryFormBody form)
+        {
+            SessionShell.FooterContent = form.DetachNavigation();
+        }
     }
 
     private async void OpenImmersiveBreathing() => await Navigation.PushModalAsync(new BreathingImmersivePage());

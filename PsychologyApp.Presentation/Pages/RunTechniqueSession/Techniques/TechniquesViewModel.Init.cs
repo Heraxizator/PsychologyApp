@@ -29,8 +29,16 @@ public partial class TechniquesViewModel
         await _initGate.WaitAsync();
         try
         {
+            if (showLoadingOverlay)
+            {
+                await UiThread.RunAsync(SetInit);
+            }
+
+            // The first start opens, and on a fresh install creates, the encrypted database; on a slow phone that alone outlasted the
+            // load timeout, and the catalog stayed "no practices yet" until a restart. The timeout bounds the load, not this wait.
+            await _databaseReadySignal.WaitAsync(CancellationToken.None);
             using CancellationTokenSource timeoutSource = OperationCancellation.CreateMiddleTimeoutSource(_settings);
-            await InitAsync(timeoutSource.Token, showLoadingOverlay);
+            await InitAsync(timeoutSource.Token, showLoadingOverlay: false);
         }
         finally
         {

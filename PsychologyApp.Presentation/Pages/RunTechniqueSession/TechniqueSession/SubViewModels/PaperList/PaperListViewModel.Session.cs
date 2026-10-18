@@ -29,6 +29,7 @@ public partial class PaperListViewModel
     {
         IsFull = visible;
         OnPropertyChanged(nameof(EntryCountText));
+        Notify(nameof(StageText), nameof(RepeatCount));
     }
 
     private void ToAdd(object obj)
@@ -45,6 +46,7 @@ public partial class PaperListViewModel
             Text = Text
         });
         OnPropertyChanged(nameof(EntryCountText));
+        Notify(nameof(StageText), nameof(RepeatCount));
         TechniqueEntryFeedback.PlayAddFeedback();
 
         if (_clearTextAfterAdd)

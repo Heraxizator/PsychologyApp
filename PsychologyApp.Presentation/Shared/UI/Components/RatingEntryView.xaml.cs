@@ -67,7 +67,7 @@ public partial class RatingEntryView : ContentView
     public string MinimumCaption
     {
         get => (string)GetValue(MinimumCaptionProperty);
-        private set => SetValue(MinimumCaptionProperty, value);
+        set => SetValue(MinimumCaptionProperty, value);
     }
 
     public static readonly BindableProperty MaximumCaptionProperty =
@@ -76,7 +76,7 @@ public partial class RatingEntryView : ContentView
     public string MaximumCaption
     {
         get => (string)GetValue(MaximumCaptionProperty);
-        private set => SetValue(MaximumCaptionProperty, value);
+        set => SetValue(MaximumCaptionProperty, value);
     }
 
     public static readonly BindableProperty SliderValueProperty =
@@ -97,10 +97,42 @@ public partial class RatingEntryView : ContentView
         private set => SetValue(ValueDisplayProperty, value);
     }
 
+    public static readonly BindableProperty EmbeddedProperty =
+        BindableProperty.Create(nameof(Embedded), typeof(bool), typeof(RatingEntryView), false, propertyChanged: (b, _, n) => ((RatingEntryView)b).ApplyEmbedded((bool)n));
+
+    /// <summary>Inside a step card the scale has no frame of its own and its title reads as the question of the step.</summary>
+    public bool Embedded
+    {
+        get => (bool)GetValue(EmbeddedProperty);
+        set => SetValue(EmbeddedProperty, value);
+    }
+
+    private void ApplyEmbedded(bool embedded)
+    {
+        if (embedded)
+        {
+            FrameBorder.Stroke = Colors.Transparent;
+            FrameBorder.StrokeThickness = 0;
+            FrameBorder.BackgroundColor = Colors.Transparent;
+            FrameBorder.Padding = 0;
+            TitleLabel.Style = Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue("SectionTitleStyle", out object? style) == true ? style as Style : TitleLabel.Style;
+        }
+    }
+
+    public static readonly BindableProperty NumberTextProperty =
+        BindableProperty.Create(nameof(NumberText), typeof(string), typeof(RatingEntryView), string.Empty);
+
+    /// <summary>The bare value, large on the right of the title: "7", or "+3" / "−3" on the −10..10 scale.</summary>
+    public string NumberText
+    {
+        get => (string)GetValue(NumberTextProperty);
+        private set => SetValue(NumberTextProperty, value);
+    }
+
     public static readonly BindableProperty HasValueProperty =
         BindableProperty.Create(nameof(HasValue), typeof(bool), typeof(RatingEntryView), false);
 
-    /// <summary>False while the question has not been answered yet — the pill and slider then show a neutral "unanswered" state.</summary>
+    /// <summary>False while the question has not been answered yet â the pill and slider then show a neutral "unanswered" state.</summary>
     public bool HasValue
     {
         get => (bool)GetValue(HasValueProperty);
@@ -184,6 +216,13 @@ public partial class RatingEntryView : ContentView
         }
 
         int rounded = (int)Math.Round(e.NewValue);
+        if (Math.Abs(e.NewValue - rounded) > 0.001)
+        {
+            // Whole steps only: the thumb jumps to the nearest one, which calls this handler again with the snapped value.
+            RatingSlider.Value = rounded;
+            return;
+        }
+
         _suppressSliderCallback = true;
         BodyText = rounded.ToString();
         _suppressSliderCallback = false;
@@ -194,6 +233,11 @@ public partial class RatingEntryView : ContentView
         {
             _lastHapticStep = rounded;
             TechniqueEntryFeedback.PlayAddFeedback();
+            if (UiAnimations.ShouldAnimate(NumberLabel))
+            {
+                NumberLabel.Scale = 1.18;
+                NumberLabel.ScaleToAsync(1, 140, Easing.CubicOut).FireAndForget();
+            }
         }
     }
 
@@ -202,6 +246,7 @@ public partial class RatingEntryView : ContentView
         if (!HasValue || !int.TryParse(BodyText, out int value))
         {
             ValueDisplay = string.Empty;
+            NumberText = string.Empty;
             AccentColor = GetThemeColor("NeutralBorder", "Gray600");
             return;
         }
@@ -209,6 +254,7 @@ public partial class RatingEntryView : ContentView
         ValueDisplay = Kind == EntryFieldKind.RatingNeg10To10
             ? AppStrings.TechniqueRatingNegValue(value)
             : AppStrings.TechniqueRatingValue(value);
+        NumberText = Kind == EntryFieldKind.RatingNeg10To10 && value > 0 ? $"+{value}" : value < 0 ? $"−{-value}" : value.ToString(System.Globalization.CultureInfo.CurrentCulture);
         AccentColor = ResolveAccentColor(value);
     }
 

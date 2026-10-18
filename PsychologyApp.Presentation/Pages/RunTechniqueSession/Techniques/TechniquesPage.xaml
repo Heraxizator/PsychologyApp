@@ -13,10 +13,6 @@
              Shell.NavBarIsVisible="True"
              Title="{Binding PageTitle}">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="{Binding ProfileToolbarText}" Command="{Binding OpenProfileCommand}" />
-    </ContentPage.ToolbarItems>
-
     <Grid
         VerticalOptions="FillAndExpand"
         HorizontalOptions="FillAndExpand">
@@ -132,26 +128,52 @@
                 </VerticalStackLayout>
             </CollectionView.Header>
 
+            <!-- On Android the card is one native view (TechniqueCardNativeView): the XAML card made fast scrolling stutter. -->
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="technique:TechniqueItem">
-                    <practiceUi:TechniqueListCardView
-                        Number="{Binding Number}"
-                        Date="{Binding Date}"
-                        Image="{Binding Image}"
-                        IconName="{Binding IconName}"
-                        MetaText="{Binding MetaText}"
-                        Title="{Binding Title}"
-                        Subtitle="{Binding Subtitle}"
-                        Theme="{Binding Theme}"
-                        Author="{Binding Author}"
-                        Flavor="{Binding Flavor}"
-                        Active="{Binding Active}"
-                        TapCommand="{Binding TapCommand}">
-                        <practiceUi:TechniqueListCardView.Behaviors>
-                            <behaviors:ListItemRevealBehavior />
-                        </practiceUi:TechniqueListCardView.Behaviors>
-                    </practiceUi:TechniqueListCardView>
-                </DataTemplate>
+                <OnPlatform x:TypeArguments="DataTemplate">
+                    <On Platform="Android">
+                        <DataTemplate x:DataType="technique:TechniqueItem">
+                            <practiceUi:TechniqueCardNativeView
+                                Margin="4,4,4,12"
+                                IsVisible="{Binding Active}"
+                                SemanticProperties.Description="{Binding Title}"
+                                Title="{Binding Title}"
+                                Subtitle="{Binding Subtitle}"
+                                MetaText="{Binding MetaText}"
+                                Date="{Binding Date}"
+                                Author="{Binding Author}"
+                                IconName="{Binding IconName}"
+                                Image="{Binding Image}"
+                                Flavor="{Binding Flavor}"
+                                TapCommand="{Binding TapCommand}">
+                                <practiceUi:TechniqueCardNativeView.Behaviors>
+                                    <behaviors:ListItemRevealBehavior />
+                                </practiceUi:TechniqueCardNativeView.Behaviors>
+                            </practiceUi:TechniqueCardNativeView>
+                        </DataTemplate>
+                    </On>
+                    <On Platform="iOS, MacCatalyst">
+                        <DataTemplate x:DataType="technique:TechniqueItem">
+                            <practiceUi:TechniqueListCardView
+                                Number="{Binding Number}"
+                                Date="{Binding Date}"
+                                Image="{Binding Image}"
+                                IconName="{Binding IconName}"
+                                MetaText="{Binding MetaText}"
+                                Title="{Binding Title}"
+                                Subtitle="{Binding Subtitle}"
+                                Theme="{Binding Theme}"
+                                Author="{Binding Author}"
+                                Flavor="{Binding Flavor}"
+                                Active="{Binding Active}"
+                                TapCommand="{Binding TapCommand}">
+                                <practiceUi:TechniqueListCardView.Behaviors>
+                                    <behaviors:ListItemRevealBehavior />
+                                </practiceUi:TechniqueListCardView.Behaviors>
+                            </practiceUi:TechniqueListCardView>
+                        </DataTemplate>
+                    </On>
+                </OnPlatform>
             </CollectionView.ItemTemplate>
 
             <CollectionView.EmptyView>
@@ -185,36 +207,6 @@
             </CollectionView.Footer>
 
         </CollectionView>
-
-        <!-- The way into the chat: one round button in the corner, like a messenger. -->
-        <Border
-            x:Name="ChatFab"
-            IsVisible="{Binding IsDone}"
-            HorizontalOptions="End"
-            VerticalOptions="End"
-            Margin="0,0,20,20"
-            WidthRequest="56"
-            HeightRequest="56"
-            StrokeThickness="0"
-            StrokeShape="RoundRectangle 28"
-            BackgroundColor="{DynamicResource PrimaryFill}"
-            SemanticProperties.Description="{Binding ChatHero.PrimaryText}">
-            <Border.Shadow>
-                <Shadow Brush="#000000" Offset="0,4" Radius="10" Opacity="0.28" />
-            </Border.Shadow>
-            <Border.Behaviors>
-                <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
-            </Border.Behaviors>
-            <Border.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding ChatHero.PrimaryCommand}" />
-            </Border.GestureRecognizers>
-            <Label
-                Text="{mi:Material Icon=Chat}"
-                FontSize="26"
-                TextColor="{DynamicResource OnPrimary}"
-                HorizontalOptions="Center"
-                VerticalOptions="Center" />
-        </Border>
 
         <ui:SkeletonView
             Kind="Cards"

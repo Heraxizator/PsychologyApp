@@ -36,7 +36,7 @@ public class TechniqueCatalogTests
     public async Task GetAllAsync_contains_eighteen_builtin_techniques()
     {
         IReadOnlyList<BuiltInTechniqueDefinition> all = await CreateCatalog().GetAllAsync();
-        Assert.Equal(18, all.Count);
+        Assert.Equal(21, all.Count);
     }
 
     [Fact]
@@ -106,5 +106,51 @@ public class TechniqueCatalogTests
         BuiltInTechniqueDefinition definition = await CreateCatalog().GetAsync(TechniqueId.Breathing);
 
         Assert.Equal(2, definition.Entries!.Count(entry => entry.Kind == EntryFieldKind.Rating0To10));
+    }
+
+    [Fact]
+    public async Task Russian_and_english_fields_offer_the_same_help()
+    {
+        ITechniqueCatalogService russian = new TechniqueCatalogService(new BuiltInTechniqueCatalogProvider(() => "ru"));
+        ITechniqueCatalogService english = new TechniqueCatalogService(new BuiltInTechniqueCatalogProvider(() => "en"));
+
+        foreach (TechniqueId id in Enum.GetValues<TechniqueId>())
+        {
+            IReadOnlyList<TechniqueEntrySeed> ru = (await russian.GetAsync(id)).Entries ?? [];
+            IReadOnlyList<TechniqueEntrySeed> en = (await english.GetAsync(id)).Entries ?? [];
+
+            Assert.Equal(ru.Count, en.Count);
+            for (int i = 0; i < ru.Count; i++)
+            {
+                Assert.True(ru[i].Role == en[i].Role, $"{id} field {i}: role differs");
+                Assert.True((ru[i].Suggestions?.Count ?? 0) == (en[i].Suggestions?.Count ?? 0), $"{id} field {i}: suggestion count differs");
+            }
+        }
+    }
+
+    [Fact]
+    public async Task Every_text_field_offers_some_help_besides_the_keyboard()
+    {
+        ITechniqueCatalogService catalog = CreateCatalog();
+        string[] free = ["Негативный опыт"];
+
+        foreach (BuiltInTechniqueDefinition definition in await catalog.GetAllAsync())
+        {
+            foreach (TechniqueEntrySeed entry in (definition.Entries ?? []).Where(e => e.Kind == EntryFieldKind.Text && !free.Contains(e.Title)))
+            {
+                bool helped = entry.Suggestions is { Count: > 0 } || entry.Role is not EntryFieldRole.None;
+                Assert.True(helped, $"{definition.PageName}: \"{entry.Title}\" has neither chips nor a role");
+            }
+        }
+    }
+
+    [Fact]
+    public async Task Problem_fields_come_first_so_stages_and_dialogues_can_find_the_problem()
+    {
+        foreach (TechniqueId id in new[] { TechniqueId.Resize, TechniqueId.Hack, TechniqueId.Check, TechniqueId.Future, TechniqueId.Spin, TechniqueId.Extend })
+        {
+            BuiltInTechniqueDefinition definition = await CreateCatalog().GetAsync(id);
+            Assert.Equal(EntryFieldRole.Problem, definition.Entries![0].Role);
+        }
     }
 }

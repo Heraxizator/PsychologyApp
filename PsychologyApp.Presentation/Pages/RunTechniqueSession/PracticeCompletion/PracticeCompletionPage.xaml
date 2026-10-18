@@ -9,6 +9,7 @@
              xmlns:today="clr-namespace:PsychologyApp.Presentation.Widgets.TodayPracticeRow"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.RunTechniqueSession.PracticeCompletion"
+             xmlns:common="clr-namespace:PsychologyApp.Presentation.Common;assembly=PsychologyApp.Presentation.Core"
              x:DataType="vm:PracticeCompletionViewModel"
              Shell.NavBarIsVisible="False"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
@@ -37,6 +38,30 @@
                 <VerticalStackLayout.Behaviors>
                     <behaviors:StaggerChildrenBehavior />
                 </VerticalStackLayout.Behaviors>
+                <!-- What was written in the practice, question by question: the thought and its balanced answer stay in sight. -->
+                <Border Style="{StaticResource BrandCardStyle}" IsVisible="{Binding HasAnswers}">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="{Binding AnswersTitle}" Style="{StaticResource SectionTitleStyle}" />
+                        <VerticalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Answers}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="common:PracticeAnswer">
+                                    <Grid ColumnDefinitions="4,*" ColumnSpacing="12">
+                                        <BoxView
+                                            Grid.Column="0"
+                                            WidthRequest="4"
+                                            CornerRadius="2"
+                                            Color="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
+                                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                            <Label Text="{Binding Title}" Style="{StaticResource CaptionStyle}" />
+                                            <Label Text="{Binding Answer}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource MediumFontFamily}" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
                 <today:TodayPracticeRowView
                     x:Name="NextPracticeRow"
                     IsVisible="False"

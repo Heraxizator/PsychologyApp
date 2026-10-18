@@ -32,9 +32,6 @@ public sealed class MauiUserPreferencesStore : IUserPreferencesStore
 
     public TechniqueId? ConsumePendingTechnique() => UserPreferences.ConsumePendingTechnique();
 
-    public bool HasUsedPhysicsSearch => UserPreferences.HasUsedPhysicsSearch;
-
-    public void MarkPhysicsSearchUsed() => UserPreferences.MarkPhysicsSearchUsed();
 
     public void SetPendingOpenJournal() => UserPreferences.SetPendingOpenJournal();
 

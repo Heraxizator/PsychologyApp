@@ -26,13 +26,19 @@ public partial class TechniqueSessionViewModel : BaseViewModel, ITechniqueSessio
         IUserProgressService userProgressService,
         ListTechniqueSessionHelper sessionHelper,
         EntryDraftCoordinator entryDraftCoordinator,
-        ITechniqueCatalogService techniqueCatalogService)
+        ITechniqueCatalogService techniqueCatalogService,
+        ISupportPhraseSuggester? supportPhraseSuggester = null,
+        RecentProblemStore? recentProblems = null,
+        PsychologyApp.Presentation.Shared.Services.Preferences.ChipUsageStore? chipUsage = null)
     {
+        _chipUsage = chipUsage;
         TechniqueCatalogService = techniqueCatalogService;
         _techniqueId = techniqueId;
         _userProgressService = userProgressService;
         _sessionHelper = sessionHelper;
         _entryDraftCoordinator = entryDraftCoordinator;
+        _phraseSuggester = supportPhraseSuggester;
+        _recentProblems = recentProblems;
         _entryDraftCoordinator.Attach(_techniqueId, Entries, _userProgressService);
 
         BindNavigation(navigationService);

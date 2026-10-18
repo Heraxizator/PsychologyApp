@@ -7,6 +7,7 @@ public partial class PaperListViewModel
     public string ThoughtFieldLabel => Entries.Count > 0 ? Entries[0].Title ?? string.Empty : string.Empty;
     public string ThoughtPlaceholder => Entries.Count > 0 ? Entries[0].Placeholder ?? string.Empty : string.Empty;
     public string RepeatButtonText => AppStrings.Repeat;
+    public IReadOnlyList<string> ThoughtSuggestions => Entries.Count > 0 ? Entries[0].Suggestions : [];
     public string ConcernFieldLabel => Entries.Count > 0 && !string.IsNullOrWhiteSpace(Entries[0].Title)
         ? Entries[0].Title
         : AppStrings.ConcernLabel;
@@ -19,6 +20,7 @@ public partial class PaperListViewModel
     {
         OnPropertyChanged(nameof(ThoughtFieldLabel));
         OnPropertyChanged(nameof(ThoughtPlaceholder));
+        OnPropertyChanged(nameof(ThoughtSuggestions));
         OnPropertyChanged(nameof(RepeatButtonText));
         OnPropertyChanged(nameof(ConcernFieldLabel));
         OnPropertyChanged(nameof(EntryCountText));

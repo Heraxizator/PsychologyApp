@@ -8,13 +8,15 @@
              x:Name="Root">
 
     <!-- One rounded bar: the text and the send button sit inside it, both centred on the same line. A tall message grows the bar upward and the button stays at its bottom. -->
+    <VerticalStackLayout Spacing="4">
+    <Label x:Name="VoiceStatusLabel" Style="{StaticResource CaptionStyle}" Margin="16,0" IsVisible="False" />
     <Border
         Padding="6"
         StrokeThickness="1"
         StrokeShape="RoundRectangle 28"
         Stroke="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}"
         BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}">
-        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="6">
             <Editor
                 x:Name="InputEditor"
                 Grid.Column="0"
@@ -31,8 +33,27 @@
                 VerticalOptions="Center"
                 BackgroundColor="Transparent" />
 
+            <!-- Dictation on the device, as in the practice fields; hidden where the phone cannot recognise speech offline. -->
             <Border
+                x:Name="MicButton"
                 Grid.Column="1"
+                WidthRequest="44"
+                HeightRequest="44"
+                VerticalOptions="End"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 22"
+                BackgroundColor="Transparent">
+                <Label
+                    x:Name="MicIcon"
+                    Text="{mi:Material Icon=Mic}"
+                    FontSize="22"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+            </Border>
+
+            <Border
+                Grid.Column="2"
                 WidthRequest="44"
                 HeightRequest="44"
                 VerticalOptions="End"
@@ -64,4 +85,5 @@
             </Border>
         </Grid>
     </Border>
+    </VerticalStackLayout>
 </ContentView>

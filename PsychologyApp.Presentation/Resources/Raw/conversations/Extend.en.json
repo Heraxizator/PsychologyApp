@@ -1,0 +1,131 @@
+{
+  "id": "Extend",
+  "title": "Backup plan",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "When everything seems to hang on one outcome, anxiety grows. Let's find some backup exits — even modest ones.",
+        "An all-or-nothing bet squeezes you. Let's gather a few backup options together: it takes a couple of minutes."
+      ],
+      "next": "ask_problem"
+    },
+    {
+      "id": "ask_problem",
+      "kind": "askText",
+      "text": [
+        "What worries you? What happens if the main plan doesn't work out?",
+        "Which outcome are you anxious about? Briefly, in your own words."
+      ],
+      "hint": "E.g. I won't get the job",
+      "capture": "f0",
+      "recent": true,
+      "suggestions": [ "A fight with someone close", "Something at work", "Conflict with my boss", "Studies or an exam", "Health", "Money", "Loneliness", "A failure", "A breakup", "Relationship with my parents", "Children", "Moving", "The future", "Criticism of me" ],
+      "next": "ask_before"
+    },
+    {
+      "id": "ask_before",
+      "kind": "askRating",
+      "text": [
+        "How anxious do you feel when you think the main plan might fail? From 0 to 10.",
+        "Rate your anxiety now: 0 is calm, 10 is very anxious."
+      ],
+      "capture": "rating_before",
+      "next": "ask_backup_1"
+    },
+    {
+      "id": "ask_backup_1",
+      "kind": "askText",
+      "text": [
+        "If the main plan doesn't work, what is your first backup option? Even the most modest one counts.",
+        "Imagine plan A didn't happen. What could you do instead?"
+      ],
+      "hint": "E.g. take a freelance project",
+      "capture": "f1",
+      "suggestions": [ "Ask for help", "Wait and try again", "Find another way", "Lower my demands on myself", "Take a break", "Talk it over with someone close", "See a specialist", "Find side work", "Take a course", "Break the task into steps", "Postpone the decision", "Start small" ],
+      "next": "ask_backup_2"
+    },
+    {
+      "id": "ask_backup_2",
+      "kind": "askText",
+      "text": [
+        "Good: \"{f1}\". And a second option?",
+        "\"{f1}\" is already a way out. What else could you do?"
+      ],
+      "hint": "E.g. train for a related role",
+      "capture": "f2",
+      "suggestions": [ "Ask for help", "Wait and try again", "Find another way", "Lower my demands on myself", "Take a break", "Talk it over with someone close", "See a specialist", "Find side work", "Take a course", "Break the task into steps", "Postpone the decision", "Start small" ],
+      "next": "ask_backup_3"
+    },
+    {
+      "id": "ask_backup_3",
+      "kind": "askText",
+      "text": [
+        "And a third — even the simplest one.",
+        "One last, third option. It can be very small."
+      ],
+      "hint": "E.g. temporarily cut expenses",
+      "capture": "f3",
+      "suggestions": [ "Ask for help", "Wait and try again", "Find another way", "Lower my demands on myself", "Take a break", "Talk it over with someone close", "See a specialist", "Find side work", "Take a course", "Break the task into steps", "Postpone the decision", "Start small" ],
+      "next": "summary"
+    },
+    {
+      "id": "summary",
+      "kind": "say",
+      "text": [
+        "So you have ways out: \"{f1}\", \"{f2}\", \"{f3}\". It's no longer all or nothing.",
+        "Look: \"{f1}\", \"{f2}\" and \"{f3}\". Even if the main plan fails, you have somewhere to go."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "How anxious do you feel now that you have backups? From 0 to 10.",
+        "Rate your anxiety again from 0 to 10. What changed?"
+      ],
+      "capture": "rating_after",
+      "routes": [
+        { "below": "rating_before", "next": "end_better" },
+        { "same": "rating_before", "next": "end_same" },
+        { "next": "end_worse" }
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [ "It was {rating_before}, now it's {rating_after}. Having a choice makes it easier for the mind. Keep this list — you can come back to it before an important event." ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [ "The anxiety stayed the same ({rating_after}). That's normal: sometimes it simply matters to know the exits are there. Maybe take a first small step on one of the options." ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [ "It got more anxious: it was {rating_before}, now {rating_after}. That happens when you look at something hard head-on, and it isn't your fault. Take three slow breaths out. If the heaviness stays, talk to someone close or to a professional." ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [ "I'm very sorry you're in so much pain right now. What you wrote matters more than any technique, so I'm stopping the exercise." ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [ "Please talk to a real person right now. If your life may be at risk, call your local emergency number (112 in the EU, 911 in the US, 988 for the US Suicide and Crisis Lifeline). You can find local helplines at findahelpline.com. If someone is nearby, tell them you're not okay." ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [ "I'm an app, not a professional, and I can't keep you safe. You deserve support. Please reach out for it." ]
+    }
+  ]
+}

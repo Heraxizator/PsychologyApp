@@ -10,6 +10,8 @@ public class EntryItem : INotifyPropertyChanged
     private string _placeholder = string.Empty;
     private string _text = string.Empty;
     private EntryFieldKind _kind = EntryFieldKind.Text;
+    private string _recentText = string.Empty;
+    private IReadOnlyList<string> _assistSuggestions = [];
 
     public string Title
     {
@@ -33,6 +35,35 @@ public class EntryItem : INotifyPropertyChanged
     {
         get => _kind;
         set => SetField(ref _kind, value);
+    }
+
+    /// <summary>Typical short answers offered as chips under the field.</summary>
+    public IReadOnlyList<string> Suggestions { get; init; } = [];
+
+    /// <summary>What the field is about: decides which extra help the field shows.</summary>
+    public EntryFieldRole Role { get; init; }
+
+    /// <summary>The problem the person worked on last time, offered as a one-tap chip while this field is empty.</summary>
+    public string RecentText
+    {
+        get => _recentText;
+        set => SetField(ref _recentText, value);
+    }
+
+    /// <summary>Ready phrases picked for what the person wrote earlier in the same practice (balanced thoughts, kind words).</summary>
+    public IReadOnlyList<string> AssistSuggestions
+    {
+        get => _assistSuggestions;
+        set
+        {
+            if (ReferenceEquals(_assistSuggestions, value))
+            {
+                return;
+            }
+
+            _assistSuggestions = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AssistSuggestions)));
+        }
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -64,6 +95,8 @@ public class EntryItem : INotifyPropertyChanged
         Title = Title,
         Placeholder = Placeholder,
         Kind = Kind,
+        Suggestions = Suggestions,
+        Role = Role,
         Text = string.Empty
     };
 }

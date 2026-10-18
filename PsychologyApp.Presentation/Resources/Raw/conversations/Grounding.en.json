@@ -41,6 +41,7 @@
       "text": [ "Name 5 things you can see. Commas are fine." ],
       "hint": "For example: window, cup, book, lamp, my hand",
       "capture": "see",
+      "suggestions": [ "Window", "Table", "Phone", "Computer", "Laptop", "Monitor", "Keyboard", "Cup", "Lamp", "Hand", "Door", "Book", "Chair", "Wall", "Picture", "Plant", "Clock", "Wardrobe", "Sky", "Car" ],
       "next": "react_see"
     },
     {
@@ -58,6 +59,7 @@
       "text": [ "Now 4 things you feel with your body: what supports you, clothes on your skin, the air." ],
       "hint": "For example: chair, floor, fabric, cool air",
       "capture": "touch",
+      "suggestions": [ "Chair", "Floor under my feet", "Clothes", "Coolness", "Warmth", "Phone in my hand", "Back of the chair", "Fabric on my skin", "Breath in my chest", "Wind", "Computer mouse", "Keys", "Pillow", "Watch on my wrist" ],
       "next": "react_touch"
     },
     {
@@ -72,6 +74,7 @@
       "text": [ "Listen. Name 3 sounds around you, even the quietest. You can hear your own breathing." ],
       "hint": "For example: clock, street, breathing",
       "capture": "hear",
+      "suggestions": [ "Street", "Clock", "Breathing", "Voices", "Fridge", "Wind", "Silence", "Computer", "Cars", "Birds", "Music", "Air conditioner", "Footsteps", "Rain" ],
       "next": "react_hear"
     },
     {
@@ -86,6 +89,7 @@
       "text": [ "Now 2 smells. If you can't smell anything right now, recall your favourites." ],
       "hint": "For example: coffee, fresh air",
       "capture": "smell",
+      "suggestions": [ "Coffee", "Fresh air", "Soap", "Food", "Perfume", "Almost nothing", "Tea", "Bread", "Books", "Flowers", "Hand cream", "Wood" ],
       "next": "ask_taste"
     },
     {
@@ -94,6 +98,7 @@
       "text": [ "And the last one: 1 taste or pleasant sensation. For example, water in your mouth or soft fabric under your fingers." ],
       "hint": "For example: the taste of water",
       "capture": "taste",
+      "suggestions": [ "Water", "Tea", "Soft fabric", "Warm palms", "Fresh mouth", "Coffee", "Mint gum", "Chocolate", "An apple", "A warm blanket" ],
       "next": "wrap"
     },
     {

@@ -88,7 +88,10 @@ public sealed class TechniqueViewModelFactory(
     TechniqueSessionCompletionService sessionCompletionService,
     Func<EntryDraftCoordinator> entryDraftCoordinatorFactory,
     Func<PaperListDraftCoordinator> paperListDraftCoordinatorFactory,
-    Func<PolarityListDraftCoordinator> polarityListDraftCoordinatorFactory) : ViewModelFactoryBase, ITechniqueViewModelFactory
+    Func<PolarityListDraftCoordinator> polarityListDraftCoordinatorFactory,
+    ISupportPhraseSuggester supportPhraseSuggester,
+    RecentProblemStore recentProblems,
+    PsychologyApp.Presentation.Shared.Services.Preferences.ChipUsageStore chipUsage) : ViewModelFactoryBase, ITechniqueViewModelFactory
 {
     public BaseViewModel Create(TechniqueId techniqueId, INavigation navigation) =>
         CreateViewModel(techniqueId, navigation);
@@ -113,7 +116,7 @@ public sealed class TechniqueViewModelFactory(
             TechniqueId.Paper => new PaperListViewModel(navigationService, TechniqueId.Paper, clearTextAfterAdd: true, userProgressService, sessionHelper, paperListDraftCoordinatorFactory(), techniqueCatalogService),
             TechniqueId.Polarity => new PolarityViewModel(navigationService, userProgressService, sessionHelper, polarityListDraftCoordinatorFactory(), techniqueCatalogService),
             TechniqueId.Copied => new PaperListViewModel(navigationService, TechniqueId.Copied, clearTextAfterAdd: false, userProgressService, sessionHelper, paperListDraftCoordinatorFactory(), techniqueCatalogService),
-            _ => new TechniqueSessionViewModel(techniqueId, navigationService, userProgressService, sessionHelper, entryDraftCoordinatorFactory(), techniqueCatalogService)
+            _ => new TechniqueSessionViewModel(techniqueId, navigationService, userProgressService, sessionHelper, entryDraftCoordinatorFactory(), techniqueCatalogService, supportPhraseSuggester, recentProblems, chipUsage)
         };
     }
 }

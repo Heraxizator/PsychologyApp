@@ -34,6 +34,8 @@ public static class TechniqueEntryMapper
     {
         Title = seed.Title,
         Placeholder = seed.Placeholder,
-        Kind = seed.Kind
+        Kind = seed.Kind,
+        Suggestions = seed.Suggestions ?? [],
+        Role = seed.Role
     };
 }

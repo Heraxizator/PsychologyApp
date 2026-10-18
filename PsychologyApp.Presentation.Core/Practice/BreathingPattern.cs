@@ -47,6 +47,14 @@ public sealed class BreathingPattern
         ],
         4);
 
+    /// <summary>Calm breathing for an article: four counts in, six out (a longer out-breath slows the heart), six cycles, one minute.</summary>
+    public static BreathingPattern Calm { get; } = new(
+        [
+            new BreathPhase(BreathPhaseKind.Inhale, 4, SmallScale, LargeScale),
+            new BreathPhase(BreathPhaseKind.Exhale, 6, LargeScale, SmallScale)
+        ],
+        6);
+
     /// <summary>The position after <paramref name="elapsedSeconds"/> from the start (negative counts as zero).</summary>
     public BreathPosition At(double elapsedSeconds)
     {

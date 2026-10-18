@@ -1,0 +1,140 @@
+{
+  "id": "Spin",
+  "title": "Spin",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "\"Spin\" helps lower the charge of an episode that won't let go. A couple of minutes, no long answers.",
+        "Let's loosen the grip of an episode that keeps spinning in your head. Short answers or the chips are enough."
+      ],
+      "next": "ask_episode"
+    },
+    {
+      "id": "ask_episode",
+      "kind": "askText",
+      "text": [
+        "Which episode is bothering you? A few words are enough.",
+        "What episode keeps coming back? Briefly, in your own words."
+      ],
+      "hint": "E.g. yesterday's conversation you can't let go",
+      "capture": "f0",
+      "recent": true,
+      "suggestions": [ "A fight with someone close", "Something at work", "Conflict with my boss", "Studies or an exam", "Health", "Money", "Loneliness", "A failure", "A breakup", "Relationship with my parents", "Children", "Moving", "The future", "Criticism of me" ],
+      "next": "ask_feeling"
+    },
+    {
+      "id": "ask_feeling",
+      "kind": "askText",
+      "text": [
+        "When you recall \"{f0}\", what is the main feeling? Pick it in the palette or write it.",
+        "What do you feel most strongly when you think about \"{f0}\"?"
+      ],
+      "hint": "Hurt, fear, anger…",
+      "capture": "f1",
+      "emotions": true,
+      "next": "ask_rating"
+    },
+    {
+      "id": "ask_rating",
+      "kind": "askRating",
+      "text": [
+        "How strong is this feeling right now? From 0 to 10.",
+        "Rate the feeling now: 0 means it barely touches you, 10 means it overwhelms you."
+      ],
+      "capture": "f2",
+      "routes": [
+        { "max": 2, "next": "end_low" },
+        { "next": "replay_intro" }
+      ]
+    },
+    {
+      "id": "replay_intro",
+      "kind": "say",
+      "text": [
+        "Now play the episode in your mind once more — slowly, like a film you watch from the side. No judging, just watch it to the end. Then take a long breath out.",
+        "Replay the episode from start to finish, unhurried, as if you were sitting in the audience. Watch it through and breathe out."
+      ],
+      "next": "replay_ready"
+    },
+    {
+      "id": "replay_ready",
+      "kind": "askChoice",
+      "text": [ "Done watching?" ],
+      "choices": [
+        { "label": "Yes", "next": "ask_after" },
+        { "label": "Once more", "next": "replay_again" },
+        { "label": "I need a pause", "next": "end_pause" }
+      ]
+    },
+    {
+      "id": "replay_again",
+      "kind": "say",
+      "text": [
+        "Okay, once more. From the very start to the end, slowly. Notice which details have faded.",
+        "One more round. Take your time and notice what no longer hooks you the way it did."
+      ],
+      "next": "replay_ready"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "And now: how strong is the feeling? From 0 to 10.",
+        "Rate it again: how strong is the feeling now?"
+      ],
+      "capture": "rating_after",
+      "routes": [
+        { "below": "f2", "next": "end_better" },
+        { "same": "f2", "next": "end_same" },
+        { "next": "end_worse" }
+      ]
+    },
+    {
+      "id": "end_low",
+      "kind": "end",
+      "text": [ "The charge is small right now ({f2}). That's a good sign: the episode doesn't hold you as tightly. If it comes back, you can return to \"Spin\"." ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [ "It was {f2}, now it's {rating_after}. The charge is going down. If the episode returns, repeat the practice tomorrow — it usually gets easier each time." ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [ "The strength stayed the same ({rating_after}). That's normal: sometimes it takes a few rounds on different days. You've already done something important — you looked straight at it." ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [ "It got stronger: it was {f2}, now {rating_after}. That happens when you touch something painful, and it isn't your fault. Take three slow breaths out. If the heaviness stays, talk to someone close or to a professional." ]
+    },
+    {
+      "id": "end_pause",
+      "kind": "end",
+      "pause": true,
+      "text": [ "Okay, let's stop here. Take a pause and have some water. You can come back any time." ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [ "I'm very sorry you're in so much pain right now. What you wrote matters more than any technique, so I'm stopping the exercise." ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [ "Please talk to a real person right now. If your life may be at risk, call your local emergency number (112 in the EU, 911 in the US, 988 for the US Suicide and Crisis Lifeline). You can find local helplines at findahelpline.com. If someone is nearby, tell them you're not okay." ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [ "I'm an app, not a professional, and I can't keep you safe. You deserve support. Please reach out for it." ]
+    }
+  ]
+}

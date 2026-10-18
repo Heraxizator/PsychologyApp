@@ -19,7 +19,9 @@ public sealed class TechniqueDialogueViewModelFactory(
     IUserProgressService userProgressService,
     IConversationScenarioProvider scenarioProvider,
     ICrisisDetector crisisDetector,
-    TechniqueSessionCompletionService sessionCompletionService) : ITechniqueDialogueViewModelFactory
+    TechniqueSessionCompletionService sessionCompletionService,
+    RecentProblemStore recentProblems,
+    PsychologyApp.Presentation.Shared.Services.Preferences.ChipUsageStore chipUsage) : ITechniqueDialogueViewModelFactory
 {
     public TechniqueDialogueViewModel Create(TechniqueId techniqueId, INavigation navigation) =>
         new(
@@ -29,5 +31,7 @@ public sealed class TechniqueDialogueViewModelFactory(
             techniqueCatalogService,
             scenarioProvider,
             crisisDetector,
-            sessionCompletionService);
+            sessionCompletionService,
+            recentProblems,
+            chipUsage);
 }
