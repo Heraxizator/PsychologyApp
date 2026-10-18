@@ -39,7 +39,9 @@ public partial class ButtonView : ContentView
             typeof(string),
             typeof(ButtonView),
             string.Empty,
-            BindingMode.TwoWay,
+            // One way: the button never edits its label. Two way through a TemplateBinding (SectionHeaderView.ActionText) pushed the
+            // first value back up and the label kept the old language after a switch.
+            BindingMode.OneWay,
             propertyChanged: OnAccessibilityChanged);
 
     public string BodyText
