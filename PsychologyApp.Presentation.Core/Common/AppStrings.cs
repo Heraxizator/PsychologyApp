@@ -860,6 +860,7 @@ public static partial class AppStrings
     public static string RiskCheckSubstance => R(nameof(RiskCheckSubstance));
     public static string RiskCheckInsomnia => R(nameof(RiskCheckInsomnia));
     public static string RiskCheckSubmit => R(nameof(RiskCheckSubmit));
+    public static string RiskCheckAnswerAll => R(nameof(RiskCheckAnswerAll));
     public static string RiskCheckOpenHelpNow => R(nameof(RiskCheckOpenHelpNow));
     public static string RiskCheckYes => R(nameof(RiskCheckYes));
     public static string RiskCheckNo => R(nameof(RiskCheckNo));

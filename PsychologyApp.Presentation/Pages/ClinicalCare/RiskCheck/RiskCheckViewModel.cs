@@ -44,6 +44,7 @@ public sealed class RiskCheckViewModel : BaseViewModel
     public string OpenHelpNowText => AppStrings.RiskCheckOpenHelpNow;
     public string YesLabel => AppStrings.RiskCheckYes;
     public string NoLabel => AppStrings.RiskCheckNo;
+    public string AnswerAllText => AppStrings.RiskCheckAnswerAll;
 
     private bool? _hasSelfHarmThoughts;
     public bool? HasSelfHarmThoughts
@@ -56,6 +57,7 @@ public sealed class RiskCheckViewModel : BaseViewModel
                 OnPropertyChanged(nameof(ShowOpenHelpNow));
                 OnPropertyChanged(nameof(IsSelfHarmYes));
                 OnPropertyChanged(nameof(IsSelfHarmNo));
+                NotifyAnswered();
             }
         }
     }
@@ -73,6 +75,7 @@ public sealed class RiskCheckViewModel : BaseViewModel
             {
                 OnPropertyChanged(nameof(IsDisorientationYes));
                 OnPropertyChanged(nameof(IsDisorientationNo));
+                NotifyAnswered();
             }
         }
     }
@@ -90,6 +93,7 @@ public sealed class RiskCheckViewModel : BaseViewModel
             {
                 OnPropertyChanged(nameof(IsSubstanceYes));
                 OnPropertyChanged(nameof(IsSubstanceNo));
+                NotifyAnswered();
             }
         }
     }
@@ -107,6 +111,7 @@ public sealed class RiskCheckViewModel : BaseViewModel
             {
                 OnPropertyChanged(nameof(IsInsomniaYes));
                 OnPropertyChanged(nameof(IsInsomniaNo));
+                NotifyAnswered();
             }
         }
     }
@@ -115,6 +120,17 @@ public sealed class RiskCheckViewModel : BaseViewModel
     public bool IsInsomniaNo => HasSevereInsomnia == false;
 
     public bool ShowOpenHelpNow => HasSelfHarmThoughts == true;
+
+    /// <summary>
+    /// An unanswered question is not a "no": a tap on "Done" before answering used to save "no risk" and silence the next check
+    /// for the whole interval. The way to help (<see cref="ShowOpenHelpNow"/>) never waits for the other answers.
+    /// </summary>
+    public bool CanSubmit =>
+        HasSelfHarmThoughts is not null && HasSevereDisorientation is not null && HasSubstanceRisk is not null && HasSevereInsomnia is not null;
+
+    public bool ShowAnswerAll => !CanSubmit;
+
+    private void NotifyAnswered() => Notify(nameof(CanSubmit), nameof(ShowAnswerAll));
 
     public ICommand SubmitCommand { get; }
     public ICommand BackCommand { get; }
@@ -138,6 +154,7 @@ public sealed class RiskCheckViewModel : BaseViewModel
             nameof(OpenHelpNowText),
             nameof(YesLabel),
             nameof(NoLabel),
+            nameof(AnswerAllText),
             nameof(ShowOpenHelpNow));
     }
 
@@ -158,13 +175,21 @@ public sealed class RiskCheckViewModel : BaseViewModel
 
     private async Task SubmitAsync()
     {
+        if (HasSelfHarmThoughts is not bool selfHarm
+            || HasSevereDisorientation is not bool disorientation
+            || HasSubstanceRisk is not bool substance
+            || HasSevereInsomnia is not bool insomnia)
+        {
+            return;
+        }
+
         RiskAssessmentDTO assessment = await _clinicalCareService.AssessRiskAsync(
             new RiskAssessmentInput
             {
-                HasSelfHarmThoughts = HasSelfHarmThoughts ?? false,
-                HasSevereDisorientation = HasSevereDisorientation ?? false,
-                HasSubstanceRisk = HasSubstanceRisk ?? false,
-                HasSevereInsomnia = HasSevereInsomnia ?? false,
+                HasSelfHarmThoughts = selfHarm,
+                HasSevereDisorientation = disorientation,
+                HasSubstanceRisk = substance,
+                HasSevereInsomnia = insomnia,
                 Source = _source
             });
 

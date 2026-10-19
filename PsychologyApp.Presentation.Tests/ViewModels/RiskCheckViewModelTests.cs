@@ -76,15 +76,44 @@ public sealed class RiskCheckViewModelTests
         Assert.Equal("weekly", _sent.Source);
     }
 
+    // An unanswered question is not a "no": "Done" before all four answers used to save "no risk" and silence the next check.
     [Fact]
-    public async Task UnansweredQuestionsCountAsNoAndABlankSourceBecomesManual()
+    public async Task ACheckWithAnUnansweredQuestionIsNotSaved()
+    {
+        RiskCheckViewModel viewModel = Create(RiskLevel.Green);
+        viewModel.SetSelfHarmCommand.Execute(false);
+        viewModel.SetDisorientationCommand.Execute(false);
+        viewModel.SetSubstanceCommand.Execute(false);
+
+        Assert.False(viewModel.CanSubmit);
+        Assert.True(viewModel.ShowAnswerAll);
+        await VmTestHelpers.RunAsync(viewModel.SubmitCommand);
+
+        _care.Verify(c => c.AssessRiskAsync(It.IsAny<RiskAssessmentInput>(), It.IsAny<CancellationToken>()), Times.Never);
+        _navigation.Verify(n => n.GoBackAsync(), Times.Never);
+
+        viewModel.SetInsomniaCommand.Execute(false);
+        Assert.True(viewModel.CanSubmit);
+        Assert.False(viewModel.ShowAnswerAll);
+    }
+
+    [Fact]
+    public async Task ABlankSourceBecomesManual()
     {
         RiskCheckViewModel viewModel = Create(RiskLevel.Green, source: " ");
+        AnswerAll(viewModel);
 
         await VmTestHelpers.RunAsync(viewModel.SubmitCommand);
 
-        Assert.False(_sent!.HasSelfHarmThoughts);
-        Assert.Equal(AppStrings.RiskCheckSourceManual, _sent.Source);
+        Assert.Equal(AppStrings.RiskCheckSourceManual, _sent!.Source);
+    }
+
+    private static void AnswerAll(RiskCheckViewModel viewModel)
+    {
+        viewModel.SetSelfHarmCommand.Execute(false);
+        viewModel.SetDisorientationCommand.Execute(false);
+        viewModel.SetSubstanceCommand.Execute(false);
+        viewModel.SetInsomniaCommand.Execute(false);
     }
 
     [Theory]
@@ -94,6 +123,7 @@ public sealed class RiskCheckViewModelTests
     public async Task OnlyAnElevatedResultOpensTheCrisisScreenAfterGoingBack(RiskLevel result, bool opensCrisisHub)
     {
         RiskCheckViewModel viewModel = Create(result);
+        AnswerAll(viewModel);
         List<string> calls = [];
         _navigation.Setup(n => n.GoBackAsync()).Callback(() => calls.Add("back")).Returns(Task.CompletedTask);
         _navigation.Setup(n => n.GoToCrisisHubAsync()).Callback(() => calls.Add("crisis")).Returns(Task.CompletedTask);
@@ -112,6 +142,7 @@ public sealed class RiskCheckViewModelTests
             seen = a;
             return Task.CompletedTask;
         });
+        AnswerAll(viewModel);
 
         await VmTestHelpers.RunAsync(viewModel.SubmitCommand);
 

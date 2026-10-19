@@ -1662,6 +1662,9 @@
   <data name="RiskCheckSubmit" xml:space="preserve">
     <value>Готово</value>
   </data>
+  <data name="RiskCheckAnswerAll" xml:space="preserve">
+    <value>Ответьте на все четыре вопроса — «Да» или «Нет».</value>
+  </data>
   <data name="RiskCheckOpenHelpNow" xml:space="preserve">
     <value>Открыть помощь сейчас</value>
   </data>

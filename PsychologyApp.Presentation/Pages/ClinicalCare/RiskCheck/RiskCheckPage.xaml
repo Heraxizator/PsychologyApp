@@ -85,9 +85,15 @@
                 BodyText="{Binding OpenHelpNowText}"
                 TapCommand="{Binding OpenHelpNowCommand}"
                 Variant="Primary" />
+            <Label
+                IsVisible="{Binding ShowAnswerAll}"
+                Text="{Binding AnswerAllText}"
+                Style="{StaticResource CaptionStyle}"
+                HorizontalTextAlignment="Center" />
             <ui:ButtonView
                 BodyText="{Binding SubmitText}"
                 TapCommand="{Binding SubmitCommand}"
+                IsEnabled="{Binding CanSubmit}"
                 Variant="Primary">
                 <ui:ButtonView.Triggers>
                     <DataTrigger
