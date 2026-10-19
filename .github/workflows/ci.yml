@@ -16,7 +16,23 @@ jobs:
           dotnet-version: '10.0.x'
       - run: dotnet restore PsychologyApp.sln
       - run: dotnet build PsychologyApp.sln -c Debug
-      - run: dotnet test PsychologyApp.sln -c Debug --no-build --collect:"XPlat Code Coverage" --results-directory ./TestResults
+      - run: dotnet test PsychologyApp.sln -c Debug --no-build --collect:"XPlat Code Coverage" --results-directory ./TestResults --logger trx
+      # A failed test becomes an annotation on the run page: the annotations can be read without signing in, the job log cannot.
+      # Some tests fail only now and then on the runner; this names them the first time.
+      - name: Report failed tests
+        if: failure()
+        shell: pwsh
+        run: |
+          Get-ChildItem TestResults -Recurse -Filter *.trx | ForEach-Object {
+            [xml]$trx = Get-Content $_.FullName -Raw
+            $ns = @{ t = "http://microsoft.com/schemas/VisualStudio/TeamTest/2010" }
+            Select-Xml -Xml $trx -Namespace $ns -XPath "//t:UnitTestResult[@outcome='Failed']" | ForEach-Object {
+              $r = $_.Node
+              $message = ($r.Output.ErrorInfo.Message -replace "`r?`n", " ")
+              if ($message.Length -gt 600) { $message = $message.Substring(0, 600) }
+              Write-Output "::error title=Failed test::$($r.testName) - $message"
+            }
+          }
       - name: Install ReportGenerator
         run: dotnet tool install -g dotnet-reportgenerator-globaltool
       - name: Coverage summary
@@ -49,7 +65,7 @@ jobs:
       - run: dotnet build PsychologyApp.Presentation/PsychologyApp.Presentation.csproj -f net10.0-android -c Release
 
   build-test-linux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4

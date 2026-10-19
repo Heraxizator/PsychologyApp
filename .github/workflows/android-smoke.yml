@@ -3,6 +3,7 @@ name: android-smoke
 # Builds the Release package (AOT, trimming, R8) and runs it on an emulator: the crashes that only exist in Release
 # (see CHANGELOG, "profiled AOT") are invisible to unit tests. It runs on every push and pull request of the working
 # branches; a newer push cancels the run still going for the same branch.
+# The runner image is pinned (not ubuntu-latest): a new image can break the emulator, and that should be a change of its own.
 on:
   workflow_dispatch:
   push:
@@ -21,7 +22,7 @@ concurrency:
 
 jobs:
   smoke:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
