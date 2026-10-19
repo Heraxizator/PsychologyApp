@@ -17,9 +17,8 @@
             Margin="20,0"
             BackCommand="{Binding BackCommand}"
             TitleText="{Binding PageTitle}" />
-        <ContentView Grid.Row="1">
 
-    <ScrollView>
+    <ScrollView Grid.Row="1">
         <VerticalStackLayout Margin="{StaticResource LayoutTabPageMarginThickness}" Spacing="{StaticResource ListItemSpacing}">
             <VerticalStackLayout Spacing="{StaticResource ListItemSpacing}" IsVisible="{Binding HasPicks}" BindableLayout.ItemsSource="{Binding Picks}">
                 <BindableLayout.ItemTemplate>
@@ -48,6 +47,5 @@
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
-        </ContentView>
     </Grid>
 </ContentPage>

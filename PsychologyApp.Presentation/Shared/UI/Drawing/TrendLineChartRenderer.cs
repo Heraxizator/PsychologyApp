@@ -212,15 +212,13 @@ public static class TrendLineChartRenderer
         {
             float normalizedX = TrendLineChartLayout.MapNormalizedX(index, pointCount);
             float x = plotLeft + normalizedX * plotWidth;
-            canvas.DrawString(
-                label,
-                // The first and the last date sit on the ends of the plot; their boxes are kept inside the canvas, or the outer letters are cut.
-                Math.Clamp(x - LabelBoxWidth / 2, canvasLeft, Math.Max(canvasLeft, canvasRight - LabelBoxWidth)),
-                plotBottom + 6,
-                LabelBoxWidth,
-                14,
-                HorizontalAlignment.Center,
-                VerticalAlignment.Top);
+            // The first and the last date sit on the ends of the plot; their boxes are kept inside the canvas, or the outer letters are cut.
+            // A box pushed inward aligns its text to the canvas edge, so the date stays next to its point instead of drifting to the middle.
+            float boxX = Math.Clamp(x - LabelBoxWidth / 2, canvasLeft, Math.Max(canvasLeft, canvasRight - LabelBoxWidth));
+            HorizontalAlignment alignment = boxX > x - LabelBoxWidth / 2
+                ? HorizontalAlignment.Left
+                : boxX < x - LabelBoxWidth / 2 ? HorizontalAlignment.Right : HorizontalAlignment.Center;
+            canvas.DrawString(label, boxX, plotBottom + 6, LabelBoxWidth, 14, alignment, VerticalAlignment.Top);
         }
     }
 

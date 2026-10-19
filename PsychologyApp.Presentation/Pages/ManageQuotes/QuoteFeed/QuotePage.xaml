@@ -20,9 +20,8 @@
             Margin="20,0"
             BackCommand="{Binding BackCommand}"
             TitleText="{Binding PageTitle}" />
-        <ContentView Grid.Row="1">
 
-    <Grid
+    <Grid Grid.Row="1"
         VerticalOptions="FillAndExpand"
         HorizontalOptions="FillAndExpand">
 
@@ -171,6 +170,5 @@
             RetryCommand="{Binding Reload}" />
     </Grid>
 
-        </ContentView>
     </Grid>
 </ContentPage>

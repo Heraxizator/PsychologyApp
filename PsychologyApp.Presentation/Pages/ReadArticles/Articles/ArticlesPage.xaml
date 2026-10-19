@@ -17,10 +17,9 @@
             Margin="20,0"
             BackCommand="{Binding BackCommand}"
             TitleText="{Binding PageTitle}" />
-        <ContentView Grid.Row="1">
 
     <!-- Sections as groups of a virtualized list: only the cards on screen are built, not the whole library at once. -->
-    <CollectionView
+    <CollectionView Grid.Row="1"
         ItemsSource="{Binding Sections}"
         IsGrouped="True"
         SelectionMode="None"
@@ -54,6 +53,5 @@
             <BoxView HeightRequest="20" Color="Transparent" />
         </CollectionView.Footer>
     </CollectionView>
-        </ContentView>
     </Grid>
 </ContentPage>
