@@ -52,7 +52,7 @@ public partial class App : Microsoft.Maui.Controls.Application
     protected override void OnSleep()
     {
         base.OnSleep();
-        _services.GetRequiredService<IMoodReminderCoordinator>().SyncAsync().FireAndForget();
+        _services.GetRequiredService<IMoodReminderCoordinator>().RescheduleAsync().FireAndForget();
 #if ANDROID
         // The widget's texts follow the app language; a switch made in this session reaches it here.
         Platforms.Android.MoodWidgetProvider.Refresh(Platform.AppContext);
