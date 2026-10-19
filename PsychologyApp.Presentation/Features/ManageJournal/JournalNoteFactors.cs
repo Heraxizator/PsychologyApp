@@ -94,13 +94,32 @@ public static class JournalNoteFactors
             : note.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
                 .ToList();
 
-        // RemoveAll also heals notes that the old matching saved with duplicate factor lines.
-        if (lines.RemoveAll(line => IsFactorLine(line, prefix)) == 0)
+        if (!lines.Any(line => IsFactorLine(line, prefix)))
         {
             lines.Add(prefix);
+            return string.Join(Environment.NewLine, lines);
         }
 
-        return string.Join(Environment.NewLine, lines);
+        // Turning a factor off takes away only its label: what the person wrote after it stays in the note. Every factor line is
+        // handled, which also heals notes that the old matching saved with duplicate bare lines.
+        string label = prefix.TrimEnd();
+        List<string> kept = [];
+        foreach (string line in lines)
+        {
+            if (!IsFactorLine(line, prefix))
+            {
+                kept.Add(line);
+                continue;
+            }
+
+            string words = line[label.Length..].Trim();
+            if (words.Length > 0)
+            {
+                kept.Add(words);
+            }
+        }
+
+        return string.Join(Environment.NewLine, kept);
     }
 
     public static IReadOnlyList<string> ExtractActiveLabels(string? note)

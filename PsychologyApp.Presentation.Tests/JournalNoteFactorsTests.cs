@@ -71,6 +71,19 @@ public sealed class JournalNoteFactorsTests
             .Count(line => line.StartsWith(AppStrings.JournalFactorPeople, StringComparison.OrdinalIgnoreCase)));
     }
 
+    // The person's own words after the label are never deleted by a chip tap: only the label goes.
+    [Fact]
+    public void ToggleFactor_Off_KeepsTheTextWrittenAfterTheLabel()
+    {
+        string prefix = AppStrings.JournalFactorSleep;
+        string note = $"{prefix}woke up three times{Environment.NewLine}Calm day";
+
+        string toggled = JournalNoteFactors.ToggleFactor(note, JournalNoteFactors.SleepKey);
+
+        Assert.False(JournalNoteFactors.HasFactor(toggled, JournalNoteFactors.SleepKey));
+        Assert.Equal($"woke up three times{Environment.NewLine}Calm day", toggled);
+    }
+
     [Fact]
     public void Analyze_ReturnsCountAndAverage_WhenActivityPresent()
     {
