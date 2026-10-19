@@ -454,6 +454,15 @@ public partial class AppShell : Shell
         viewModel.TryOpenPendingJournalAsync().FireAndForget();
     }
 
+    private readonly TaskCompletionSource _startupCompleted = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+    /// <summary>Done once onboarding and the safety gate (risk check or crisis hub) have been shown, if they were due.</summary>
+    internal Task StartupCompleted => _startupCompleted.Task;
+
+    /// <summary>The safety gate is on screen: a tap on a reminder or the widget must not move the person away from it.</summary>
+    internal static bool IsSafetyPageShown =>
+        Current?.CurrentPage is Pages.ClinicalCare.CrisisHub.CrisisHubPage or Pages.ClinicalCare.RiskCheck.RiskCheckPage;
+
     private async Task InitializeAppAsync()
     {
         try
@@ -466,6 +475,10 @@ public partial class AppShell : Shell
         catch (Exception ex)
         {
             _logger.LogError(ex, "Shell startup completed with errors.");
+        }
+        finally
+        {
+            _startupCompleted.TrySetResult();
         }
     }
 
