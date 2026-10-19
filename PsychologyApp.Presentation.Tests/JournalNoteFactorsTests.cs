@@ -118,6 +118,15 @@ public sealed class JournalNoteFactorsTests
         Assert.Equal("body text", JournalNoteFactors.StripFactorLines(note));
     }
 
+    // The note shown in the journal and exported to CSV keeps the words written after a factor label.
+    [Fact]
+    public void StripFactorLines_KeepsTheTextWrittenAfterALabel()
+    {
+        string note = $"{AppStrings.JournalFactorSleep}woke up three times{Environment.NewLine}Calm day";
+
+        Assert.Equal($"woke up three times{Environment.NewLine}Calm day", JournalNoteFactors.StripFactorLines(note));
+    }
+
     [Fact]
     public void FormatDisplayNote_AddsReadableFactorsSummary()
     {

@@ -100,26 +100,8 @@ public static class JournalNoteFactors
             return string.Join(Environment.NewLine, lines);
         }
 
-        // Turning a factor off takes away only its label: what the person wrote after it stays in the note. Every factor line is
-        // handled, which also heals notes that the old matching saved with duplicate bare lines.
-        string label = prefix.TrimEnd();
-        List<string> kept = [];
-        foreach (string line in lines)
-        {
-            if (!IsFactorLine(line, prefix))
-            {
-                kept.Add(line);
-                continue;
-            }
-
-            string words = line[label.Length..].Trim();
-            if (words.Length > 0)
-            {
-                kept.Add(words);
-            }
-        }
-
-        return string.Join(Environment.NewLine, kept);
+        // Every line of this factor loses its label, which also heals notes that the old matching saved with duplicate bare lines.
+        return string.Join(Environment.NewLine, WithoutLabels(lines, [prefix]));
     }
 
     public static IReadOnlyList<string> ExtractActiveLabels(string? note)
@@ -148,10 +130,26 @@ public static class JournalNoteFactors
             .Where(prefix => !string.IsNullOrEmpty(prefix))
             .ToArray();
 
-        return string.Join(
-            Environment.NewLine,
-            note.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                .Where(line => !prefixes.Any(prefix => IsFactorLine(line, prefix))));
+        string[] lines = note.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        return string.Join(Environment.NewLine, WithoutLabels(lines, prefixes));
+    }
+
+    /// <summary>
+    /// Takes the factor labels off the lines and keeps what the person wrote after them ("Сон: woke up three times" becomes
+    /// "woke up three times"); a line with nothing but the label goes. The person's words are never dropped: this text is shown
+    /// in the journal and exported to CSV.
+    /// </summary>
+    private static IEnumerable<string> WithoutLabels(IEnumerable<string> lines, IReadOnlyCollection<string> prefixes)
+    {
+        foreach (string line in lines)
+        {
+            string? prefix = prefixes.FirstOrDefault(candidate => IsFactorLine(line, candidate));
+            string words = prefix is null ? line : line[prefix.TrimEnd().Length..].Trim();
+            if (words.Length > 0)
+            {
+                yield return words;
+            }
+        }
     }
 
     // Prefixes end with a space ("Сон: ") but note lines are trimmed, so a bare factor line reads "Сон:".
