@@ -21,14 +21,17 @@ public class CrisisSafetyTests
         "хочу уйти навсегда", "я себя убью", "убью себя", "не хочу быть здесь больше", "хочу чтобы меня не стало", "накончу с собой", "суецид",
         "i want to kill myself", "i want to die", "i dont want to live anymore", "i'm thinking about suicide", "everyone would be better off without me",
         "i wish i could just disappear forever", "i have a plan to end my life", "i cut myself again", "i can't go on", "i want to end it all",
-        "thinking of killing myself", "i took a bunch of pills", "no reason to keep living", "i dont want to be alive", "i want to unalive myself"
+        "thinking of killing myself", "i took a bunch of pills", "no reason to keep living", "i dont want to be alive", "i want to unalive myself",
+        "думаю застрелиться", "иногда хочется утопиться", "хочу отравиться таблетками", "сброшусь с крыши", "выпрыгну из окна, если так дальше",
+        "лягу на рельсы и всё", "i keep thinking i should drown myself", "maybe i will poison myself", "i want to jump in front of a train"
     ];
 
     public static TheoryData<string> NotCrisis =>
     [
         "я не хочу умирать, мне страшно", "боюсь смерти", "у меня умерла бабушка", "мне грустно и тяжело", "я так устала от работы", "хочу отдохнуть и выспаться",
         "i'm afraid of dying", "my grandmother died last week", "i am so tired of work", "i want to sleep", "i don't want to go to work",
-        "это убивает меня на работе, столько дел", "смерть от смеха, ну и шутка", "хочу провалиться со стыда"
+        "это убивает меня на работе, столько дел", "смерть от смеха, ну и шутка", "хочу провалиться со стыда",
+        "давайте сброситься деньгами на подарок", "я сброшусь с Машей на подарок", "выпрыгну с парашютом летом", "я отравилась в кафе, весь день плохо"
     ];
 
     [Theory]

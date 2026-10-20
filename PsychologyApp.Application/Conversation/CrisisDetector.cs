@@ -33,6 +33,11 @@ public sealed class KeywordCrisisDetector : ICrisisDetector
         "всё прекратить", "все прекратить", "чтобы все закончилось навсегда", "покончить со всем", "со всем покончить", "пора заканчивать", "уйти навсегда", "хочу уйти навсегда",
         "не хочу быть здесь", "не хочу тут быть", "себя убью", "себя убить", "накончу", "суецид", "суицыд", "сиуцид", "суицит",
         "режу руки", "порезала себя", "порезал себя", "причиняю себе боль", "делаю себе больно",
+        // Ways of dying. "сброситься" alone is also "to chip in money", so only with where from.
+        "застрелиться", "застрелюсь", "застрелить себя", "утопиться", "утоплюсь", "отравить себя", "отравлюсь насмерть", "хочу отравиться",
+        "сброситься с крыши", "сброситься с моста", "сброситься с балкона", "сброшусь с крыши", "сброшусь с моста", "сброшусь с балкона",
+        "выпрыгну из окна", "выпрыгну с балкона", "выпрыгну с крыши", "шагнуть из окна", "шагнуть с крыши", "броситься под машину", "брошусь под поезд", "брошусь под машину",
+        "лечь на рельсы", "лягу на рельсы", "хочу убиться", "задушить себя",
         // English (apostrophes are stripped before matching)
         "kill myself", "suicide", "suicidal", "want to die", "end my life", "end it all", "take my own life", "hurt myself",
         "self harm", "selfharm", "no reason to live", "nothing to live for", "not worth living", "better off dead", "wish i was dead",
@@ -43,7 +48,9 @@ public sealed class KeywordCrisisDetector : ICrisisDetector
         "off myself", "unalive myself", "wish i werent alive", "wish i werent here", "want to be dead", "rather be dead",
         "no point in living", "no point living", "better without me", "everyone would be better off", "dont want to exist",
         "killing myself", "kill my self", "disappear forever", "bunch of pills", "too many pills", "all the pills", "no reason to keep", "dont see the point in living", "end everything",
-        "dont want to wake up", "never wake up"
+        "dont want to wake up", "never wake up",
+        "drown myself", "poison myself", "hang my self", "shoot my self", "jump in front of a train", "step in front of a train",
+        "throw myself off", "throw myself under", "jump out of the window", "jump out the window"
     ];
 
     /// <summary>
