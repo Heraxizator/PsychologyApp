@@ -277,10 +277,16 @@ public sealed class ChatService(
     private static readonly TimeSpan PlanForgetAfter = TimeSpan.FromDays(14);
 
     /// <summary>Carries what a turn revealed into the memory that outlives the chat: a new name, a started practice, a practice that helped,
-    /// a step decided on (and that it was asked about).</summary>
-    private List<ChatMemoryChange> MemoryChanges(CompanionState before, CompanionReply reply)
+    /// a step decided on (and that it was asked about), the topic of the chat.</summary>
+    private List<ChatMemoryChange> MemoryChanges(CompanionState before, CompanionReply reply, IReadOnlyDictionary<string, string> memory, DateTime now)
     {
         List<ChatMemoryChange> changes = [];
+        if (reply.State.TopicCounted is { } topic && topic != before.TopicCounted)
+        {
+            string key = RecurringTopics.MemoryKey(topic);
+            changes.Add(new ChatMemoryChange(key, RecurringTopics.Record(memory.GetValueOrDefault(key), now)));
+        }
+
         if (reply.State.NewPlan is { } plan && plan != before.NewPlan)
         {
             changes.Add(new ChatMemoryChange(ChatMemoryKeys.Plan, plan));
@@ -344,7 +350,8 @@ public sealed class ChatService(
         CompanionState state = await WithMemoryAsync(CompanionState.Deserialize(session.StateJson), cancellationToken).ConfigureAwait(false);
         DateTime now = Now();
 
-        CompanionDialogue dialogue = await DialogueAsync(cancellationToken, currentSessionId: sessionId).ConfigureAwait(false);
+        IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
+        CompanionDialogue dialogue = await DialogueAsync(cancellationToken, currentSessionId: sessionId, earlierTopicChats: RecurringTopics.EarlierChats(memory, now)).ConfigureAwait(false);
         CompanionReply reply = dialogue.Respond(state, input);
         ApplyReply(session, reply, now, firstText: input is CompanionInput.FreeText ? userText : null);
 
@@ -354,7 +361,7 @@ public sealed class ChatService(
             new() { SessionId = sessionId, Role = ChatRole.User, Text = userText, CreatedAt = now },
             .. CompanionMessages(session, reply, now)
         ];
-        IReadOnlyList<ChatMessageDTO> added = await StoreAsync(session, pending, MemoryChanges(state, reply), cancellationToken).ConfigureAwait(false);
+        IReadOnlyList<ChatMessageDTO> added = await StoreAsync(session, pending, MemoryChanges(state, reply, memory, now), cancellationToken).ConfigureAwait(false);
 
         // Logging to the journal is a side effect the companion carries out itself; the UI never sees it as a navigation instruction.
         if (reply.Action is { Kind: DialogueActionKind.LogMood, MoodLevel: { } moodLevel })
@@ -430,7 +437,8 @@ public sealed class ChatService(
     /// first load), a recent stress self-assessment if there is one, and — only when opening a chat, since nowhere else
     /// needs it — today's journal entry if it was a low one.
     /// </summary>
-    private async Task<CompanionDialogue> DialogueAsync(CancellationToken cancellationToken, bool includeTodayMood = false, long? currentSessionId = null)
+    private async Task<CompanionDialogue> DialogueAsync(
+        CancellationToken cancellationToken, bool includeTodayMood = false, long? currentSessionId = null, IReadOnlyDictionary<string, int>? earlierTopicChats = null)
     {
         // Heavy days that keep coming back are measured: earlier chats of two weeks that ended at 7 or more, and the questionnaires already taken.
         IReadOnlyList<ChatSessionDTO> sessions = await repository.GetSessionsAsync(cancellationToken).ConfigureAwait(false);
@@ -462,7 +470,8 @@ public sealed class ChatService(
             recentStressTest: stressTest,
             emotionGuesser: emotionGuesser,
             recentHeavyChats: heavyChats,
-            recentlyTakenTests: recentlyTaken);
+            recentlyTakenTests: recentlyTaken,
+            earlierTopicChats: earlierTopicChats);
     }
 
     private bool IsLocalToday(DateTime recordedAtUtc, DateTime nowUtc)

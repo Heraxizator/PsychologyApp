@@ -156,6 +156,12 @@ public sealed record CompanionState
     /// <summary>A hard event was mentioned and answered in a trauma-informed way: "what happened?" is not asked any more in this chat.</summary>
     public bool TraumaAcknowledged { get; init; }
 
+    /// <summary>The topic this chat was counted under in the memory of recurring topics; a chat counts once (<see cref="RecurringTopics"/>).</summary>
+    public string? TopicCounted { get; init; }
+
+    /// <summary>The companion has said in this chat that a topic keeps coming back; it says so once.</summary>
+    public bool PatternNoted { get; init; }
+
     /// <summary>
     /// The serialized <see cref="Chat.TraumaNotes"/> from the memory between chats. Loaded from the memory every turn and written back when it
     /// changes, so it is deliberately not part of <see cref="Serialize"/>: the chat's own copy would only go stale.
@@ -231,6 +237,8 @@ public sealed record CompanionState
             w.WriteBoolean("testSuggested", TestSuggested);
             w.WriteBoolean("articleOffered", ArticleOffered);
             w.WriteBoolean("traumaAcknowledged", TraumaAcknowledged);
+            WriteOptional(w, "topicCounted", TopicCounted);
+            w.WriteBoolean("patternNoted", PatternNoted);
             w.WriteEndObject();
         }
 
@@ -305,7 +313,9 @@ public sealed record CompanionState
                 PlanResolved = Bool(r, "planResolved"),
                 TestSuggested = Bool(r, "testSuggested"),
                 ArticleOffered = Bool(r, "articleOffered"),
-                TraumaAcknowledged = Bool(r, "traumaAcknowledged")
+                TraumaAcknowledged = Bool(r, "traumaAcknowledged"),
+                TopicCounted = Str(r, "topicCounted"),
+                PatternNoted = Bool(r, "patternNoted")
             };
         }
         catch (Exception ex) when (ex is JsonException or InvalidOperationException)

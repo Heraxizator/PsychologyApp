@@ -46,8 +46,12 @@ public sealed partial class CompanionDialogue(
     TestResultDTO? recentStressTest = null,
     IEmotionGuesser? emotionGuesser = null,
     int recentHeavyChats = 0,
-    IReadOnlySet<string>? recentlyTakenTests = null)
+    IReadOnlySet<string>? recentlyTakenTests = null,
+    IReadOnlyDictionary<string, int>? earlierTopicChats = null)
 {
+    /// <summary>For each topic, how many earlier chats of the last month it came up in (<see cref="RecurringTopics"/>).</summary>
+    private readonly IReadOnlyDictionary<string, int> _earlierTopicChats = earlierTopicChats ?? new Dictionary<string, int>();
+
     /// <summary>Earlier chats of the last two weeks that ended heavy (tension 7 or more): from the second one on, a questionnaire is suggested.</summary>
     private readonly int _recentHeavyChats = recentHeavyChats;
 
@@ -586,6 +590,20 @@ public sealed partial class CompanionDialogue(
         if (analysis.HasLoss || (state.GriefShared && griefFeeling))
         {
             return RespondToGrief(state with { GriefShared = true, Emotion = CompanionEmotion.Sadness.ToString() }, theme, newLoss: analysis.HasLoss && !previous.GriefShared);
+        }
+
+        // A topic that keeps coming back is counted once per chat, and the third chat on it in a month is named as a repeat: an observation and
+        // a question, with the way to look under it. Not in panic, a flashback or grief (those have returned above).
+        if (state.TopicCounted is null && RecurringTopics.Key(theme, person) is { } topic)
+        {
+            state = state with { TopicCounted = topic };
+            if (!state.PatternNoted && _earlierTopicChats.TryGetValue(topic, out int earlier) && earlier >= RecurringTopics.EarlierChatsForPattern
+                && RecurringTopics.Label(topic, english) is { } label)
+            {
+                messages.Add(CompanionDialogueContent.PatternNoticed(label, earlier + 1, english));
+                List<ChatQuickReply> chips = state.ProtocolOffered ? [] : [CompanionProtocolContent.DeeperChip(english)];
+                return Reply(messages, chips, state with { PatternNoted = true, ProtocolOffered = true }, emotion, theme);
+            }
         }
 
         // The person has decided on a step: back it, and do not answer it with a practice offer.

@@ -349,6 +349,27 @@ public class ChatServiceTests
     }
 
     [Fact]
+    public async Task A_topic_that_keeps_coming_back_is_counted_once_per_chat_and_named_in_the_third()
+    {
+        ChatService service = CreateService();
+        const string Boss = "Начальник опять накричал на меня при всех, мне очень обидно";
+        for (int chat = 0; chat < 2; chat++)
+        {
+            long id = (await service.StartNewChatAsync()).Session.Id;
+            await service.SendTextAsync(id, Boss);
+            await service.SendTextAsync(id, "И коллеги промолчали, начальник это видел");
+            _clock.Utc = _clock.Utc.AddDays(3);
+        }
+
+        Assert.Equal(2, (await _repository.GetMemoryAsync())[RecurringTopics.MemoryKey("person:Boss")].Split(',').Length);
+
+        long third = (await service.StartNewChatAsync()).Session.Id;
+        ChatTurnResult reply = await service.SendTextAsync(third, Boss);
+
+        Assert.Contains(reply.NewMessages, message => message.Text.Contains("в 3-м нашем разговоре", StringComparison.Ordinal));
+    }
+
+    [Fact]
     public async Task A_second_chat_remembers_the_first_one()
     {
         ChatService service = CreateService();

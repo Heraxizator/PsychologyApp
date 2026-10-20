@@ -1,4 +1,3 @@
-| `trauma_notes` | stuck points and triggers found in trauma work (their own words, at most 10 of each), for the summary for a specialist |
 # Chat companion
 
 The assistant is shown as **AI chat** (ИИ-чат), the owner's choice of name. The label must not be read as a cloud model: the status line
@@ -54,6 +53,8 @@ Table `ChatMemory (MemoryKey, MemoryValue)`:
 | `tried:<TechniqueId>` | how many times a practice was started from a chat |
 | `helped:<TechniqueId>` | how many times the tension dropped after it |
 | `plan`, `plan_at` | a step the person decided on (their own words, cut to 160 characters) and when, in UTC |
+| `trauma_notes` | stuck points and triggers found in trauma work (their own words, at most 10 of each), for the summary for a specialist |
+| `topic:<key>` | the dates (UTC) of the chats where a person or an area of life came up (`person:Boss`, `theme:Work`), at most 8; the third chat on a topic within 30 days is named as a repeat ("“boss” has come up in 3 of our conversations this month"), once per chat, with the offer to look under it |
 
 The practice with the most `helped` marks is offered first in the next chat ("Last time X helped you"), except during a panic attack,
 where the standard help is used. Deleting all chats keeps the memory; "forget" clears the memory and keeps the chats.
@@ -72,6 +73,7 @@ The companion does not only point to a practice; on an offer it can also walk th
 | --- | --- | --- |
 | Checking a thought (cognitive restructuring) | anxiety, rumination, guilt, sadness, resentment; fear of an exam, a failure, a betrayal | the thought → belief 0–10 → facts for → facts against → what you would tell a friend → a fairer wording → belief again → summary with both numbers; if the belief did not drop, the thought record practice |
 | Problem solving | a quarrel, too much work, a lost job, putting things off | the task in one sentence → two or three options → the most doable → the first 10–15 minute step and when → summary; the step is remembered |
+| Looking deeper (the downward arrow) | guilt, sadness, loneliness (next to checking the thought); a topic that keeps coming back | the heaviest thought → suppose it is true: what would be hardest → what it would say about you → what you would tell someone close → a fairer and kinder wording → summary with the person's own words and a note that a belief about oneself that keeps returning is worth working on with a psychologist. It follows the meaning of a thought and never asks what happened |
 
 Each is offered once per chat and never during panic, a flashback or grief. Crisis words are checked before every answer, as
 everywhere; "stop" or the "Stop here" chip ends the exercise at any step.

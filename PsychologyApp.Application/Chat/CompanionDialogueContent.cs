@@ -93,6 +93,11 @@ public static class CompanionDialogueContent
         ? "We can try something different."
         : "Можно попробовать что-то другое.";
 
+    /// <summary>A topic came up again: named once per chat, as an observation and a question, never as a conclusion about the person.</summary>
+    public static string PatternNoticed(string topic, int chats, bool english) => english
+        ? $"I notice that “{topic}” has come up in {chats} of our conversations this month. Sometimes what keeps returning points to something important. Would you like to look at what repeats in it?"
+        : $"Я замечаю, что тема «{topic}» появляется уже в {chats}-м нашем разговоре за этот месяц. Иногда то, что возвращается, указывает на что-то важное. Хотите посмотреть, что в этом повторяется?";
+
     public static string ProfessionalHelpNote(bool english) => english
         ? "If this has been going on for weeks or gets in the way of living, it is worth talking to a doctor or a psychologist: that is not weakness, just a normal step. I do not diagnose, but I can be with you meanwhile."
         : "Если это тянется уже несколько недель или мешает жить, стоит обсудить это с врачом или психологом: это не слабость, а нормальный шаг. Диагнозов я не ставлю, но могу быть рядом.";
