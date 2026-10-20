@@ -56,6 +56,9 @@ Table `ChatMemory (MemoryKey, MemoryValue)`:
 | `trauma_notes` | stuck points and triggers found in trauma work (their own words, at most 10 of each), for the summary for a specialist |
 | `topic:<key>` | the dates (UTC) of the chats where a person or an area of life came up (`person:Boss`, `theme:Work`), at most 8; the third chat on a topic within 30 days is named as a repeat ("“boss” has come up in 3 of our conversations this month"), once per chat, with the offer to look under it |
 
+"Delete all chats" keeps only `name`, `tried:` and `helped:` (its dialog promises the name and preferences); the rest was taken
+from the conversations and is deleted with them (`ChatMemoryKeys.OutlivesChats`). "Forget about you" clears the whole table.
+
 The practice with the most `helped` marks is offered first in the next chat ("Last time X helped you"), except during a panic attack,
 where the standard help is used. Deleting all chats keeps the memory; "forget" clears the memory and keeps the chats.
 

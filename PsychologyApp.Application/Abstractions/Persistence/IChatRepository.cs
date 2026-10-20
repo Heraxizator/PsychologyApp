@@ -22,7 +22,7 @@ public interface IChatRepository
 
     Task<IReadOnlyList<ChatMessageDTO>> GetMessagesAsync(long sessionId, CancellationToken cancellationToken = default);
 
-    /// <summary>Removes every chat and message. What the companion remembers about the person is kept, see <see cref="ClearMemoryAsync"/>.</summary>
+    /// <summary>Removes every chat and message. The memory is left to the caller (<see cref="Chat.ChatMemoryKeys.OutlivesChats"/>).</summary>
     Task DeleteAllSessionsAsync(CancellationToken cancellationToken = default);
 
     /// <summary>Everything the companion remembers between chats, by key.</summary>

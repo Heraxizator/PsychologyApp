@@ -54,6 +54,7 @@ public interface IChatService
     /// <summary>Sets how the companion addresses the person. A blank name makes it forget the name.</summary>
     Task SetUserNameAsync(string? name, CancellationToken cancellationToken = default);
 
+    /// <summary>Deletes every chat and what the memory took from them; the name and the practice counters stay.</summary>
     Task DeleteAllChatsAsync(CancellationToken cancellationToken = default);
 
     /// <summary>Forgets the name and which practices helped. Chats are kept.</summary>
@@ -236,8 +237,15 @@ public sealed class ChatService(
         await repository.SetMemoryAsync(ChatMemoryKeys.Name, trimmed.Length > MaxNameLength ? trimmed[..MaxNameLength] : trimmed, cancellationToken).ConfigureAwait(false);
     }
 
-    public Task DeleteAllChatsAsync(CancellationToken cancellationToken = default) =>
-        repository.DeleteAllSessionsAsync(cancellationToken);
+    public async Task DeleteAllChatsAsync(CancellationToken cancellationToken = default)
+    {
+        await repository.DeleteAllSessionsAsync(cancellationToken).ConfigureAwait(false);
+        IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
+        foreach (string key in memory.Keys.Where(key => !ChatMemoryKeys.OutlivesChats(key)).ToList())
+        {
+            await repository.DeleteMemoryAsync(key, cancellationToken).ConfigureAwait(false);
+        }
+    }
 
     public Task ForgetMemoryAsync(CancellationToken cancellationToken = default) =>
         repository.ClearMemoryAsync(cancellationToken);

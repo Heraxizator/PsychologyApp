@@ -580,6 +580,26 @@ public class ChatServiceTests
     }
 
     [Fact]
+    public async Task Deleting_all_chats_also_removes_what_was_taken_from_them()
+    {
+        // "All conversations will be deleted. Your name and preferences will stay": the person's own words kept in the memory
+        // (a decided step, stuck points from trauma work) and what the chats were about are part of those conversations.
+        ChatService service = CreateService();
+        await service.SetUserNameAsync("Аня");
+        await _repository.SetMemoryAsync(ChatMemoryKeys.Helped(TechniqueId.Breathing), "2");
+        await _repository.SetMemoryAsync(ChatMemoryKeys.Plan, "поговорить с начальником");
+        await _repository.SetMemoryAsync(ChatMemoryKeys.PlanAt, "2026-10-19T10:00:00.0000000Z");
+        await _repository.SetMemoryAsync(ChatMemoryKeys.TraumaNotes, "{\"stuck\":[\"это моя вина\"]}");
+        await _repository.SetMemoryAsync(RecurringTopics.MemoryKey("person:Boss"), "2026-10-19T10:00:00.0000000Z");
+
+        await service.DeleteAllChatsAsync();
+
+        Assert.Equal(
+            [ChatMemoryKeys.Helped(TechniqueId.Breathing), ChatMemoryKeys.Name],
+            (await _repository.GetMemoryAsync()).Keys.Order(StringComparer.Ordinal));
+    }
+
+    [Fact]
     public async Task A_low_mood_logged_today_is_picked_up_by_a_new_chats_greeting()
     {
         ChatService service = CreateService();

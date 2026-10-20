@@ -17,6 +17,14 @@ public static class ChatMemoryKeys
     /// <summary>The stuck points and triggers found in trauma conversations (<see cref="Chat.TraumaNotes"/>), for the summary for a specialist.</summary>
     public const string TraumaNotes = "trauma_notes";
 
+    /// <summary>
+    /// What "delete all chats" keeps, as its dialog promises: the name and which practices were tried and helped. Everything
+    /// else in the memory was taken from the conversations (the person's words, what they were about) and goes with them; a key
+    /// added later is deleted with the chats unless it is listed here.
+    /// </summary>
+    public static bool OutlivesChats(string key) =>
+        key == Name || key.StartsWith(TriedPrefix, StringComparison.Ordinal) || key.StartsWith(HelpedPrefix, StringComparison.Ordinal);
+
     public static string Tried(TechniqueId id) => TriedPrefix + id;
 
     public static string Helped(TechniqueId id) => HelpedPrefix + id;
