@@ -1,4 +1,5 @@
 using System.Text.Json;
+using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Models.Practice;
 using PsychologyApp.Domain.Practice;
 
@@ -100,6 +101,13 @@ public static class PracticeAnswers
 
         return answers.Count - 1;
     }
+
+    /// <summary>
+    /// Whether what the person wrote in a practice reads like a crisis, so the completion screen offers help instead of the next
+    /// practice. Only the answers are the person's words: a question such as "Thoughts about death" must not raise the alarm.
+    /// </summary>
+    public static bool ReadLikeCrisis(IEnumerable<PracticeAnswer> answers, ICrisisDetector detector) =>
+        answers.Any(answer => detector.IsCrisis(answer.Answer));
 
     /// <summary>
     /// The answers saved with a practice, paired with their questions, for the card after the practice. Tension ratings are left

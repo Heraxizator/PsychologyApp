@@ -1,3 +1,4 @@
+using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Models.Practice;
 using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Common;
@@ -138,5 +139,22 @@ public sealed class PracticeAnswersTests
         Dictionary<string, int> counts = Enumerable.Range(0, 10).ToDictionary(i => PracticeAnswers.OwnChipKey("Вижу", $"Вещь {i}"), _ => 3);
 
         Assert.Equal(PracticeAnswers.OwnChipMax, PracticeAnswers.OwnChips("Вижу", counts, []).Count);
+    }
+
+    [Fact]
+    public void Words_of_despair_in_an_answer_are_read_as_a_crisis()
+    {
+        PracticeAnswer[] answers = [new("Ситуация", "поругались дома"), new("Автоматическая мысль", "лучше бы меня не было")];
+
+        Assert.True(PracticeAnswers.ReadLikeCrisis(answers, new KeywordCrisisDetector()));
+    }
+
+    [Fact]
+    public void Only_the_answers_are_read_not_the_questions()
+    {
+        // A question may name the hard topic itself; only what the person wrote says how they are.
+        PracticeAnswer[] answers = [new("Мысли о том, чтобы покончить с собой", "нет, такого не было"), new("Ситуация", "устала на работе")];
+
+        Assert.False(PracticeAnswers.ReadLikeCrisis(answers, new KeywordCrisisDetector()));
     }
 }

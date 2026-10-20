@@ -53,6 +53,7 @@
     <Compile Include="TensionScaleTests.cs" />
     <Compile Include="AnswerTextTests.cs" />
     <Compile Include="PracticeAnswersTests.cs" />
+    <Compile Include="PracticeMoodCheckInTests.cs" />
     <Compile Include="ExposureInsightsTests.cs" />
     <Compile Include="ZoomOriginTests.cs" />
     <Compile Include="ContrastTests.cs" />

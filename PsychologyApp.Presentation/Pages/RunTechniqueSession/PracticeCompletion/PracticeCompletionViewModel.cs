@@ -22,7 +22,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
     private long? _sessionResultId;
     private int? _preIntensity;
     private long? _lifetimeCount;
-    private long? _moodEntryId;
+    private readonly PracticeMoodCheckIn _moodCheckIn;
     private readonly ITechniqueCatalogService? _techniqueCatalog;
 
     public PracticeCompletionViewModel(
@@ -40,6 +40,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         _userProgressService = userProgressService;
         _nextPracticeResolver = nextPracticeResolver;
         _crisisDetector = crisisDetector;
+        _moodCheckIn = new PracticeMoodCheckIn(userProgressService);
         _sessionResultId = sessionResultId;
         StreakDays = streakDays;
         RecordMoodCommand = new AsyncCommand<object?>(async parameter =>
@@ -309,7 +310,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
 
         PsychologyApp.Application.Models.Practice.BuiltInTechniqueDefinition definition = await _techniqueCatalog.GetAsync(techniqueId);
         IReadOnlyList<PracticeAnswer> answers = PracticeAnswers.FromPayload(result.PayloadJson, definition.Entries ?? []);
-        bool crisis = answers.Any(answer => _crisisDetector.IsCrisis(answer.Answer));
+        bool crisis = PracticeAnswers.ReadLikeCrisis(answers, _crisisDetector);
         await UiThread.RunAsync(() =>
         {
             foreach (PracticeAnswer answer in answers)
@@ -445,15 +446,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         string? note = string.IsNullOrWhiteSpace(ReflectionNote) ? null : ReflectionNote.Trim();
         IsCrisis |= _crisisDetector.IsCrisis(note);
 
-        // Changing one's mind about the face corrects the same check-in: each tap used to add another journal entry.
-        if (_moodEntryId is long entryId)
-        {
-            await _userProgressService.UpdateMoodEntryAsync(entryId, moodLevel, note);
-        }
-        else
-        {
-            _moodEntryId = await _userProgressService.RecordMoodAsync(moodLevel, note);
-        }
+        await _moodCheckIn.SaveAsync(moodLevel, note);
 
         if (note is not null && _sessionResultId is long sessionResultId)
         {
