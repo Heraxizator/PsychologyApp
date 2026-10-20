@@ -2,11 +2,13 @@ using Microsoft.Maui.ApplicationModel.DataTransfer;
 using Microsoft.Maui.Storage;
 using PsychologyApp.Application.DataBackup;
 using PsychologyApp.Application.ClinicalCare;
+using PsychologyApp.Presentation.Features.ManageProfile;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
+using PsychologyApp.Presentation.Shared.Services.Security;
 using PsychologyApp.Presentation.Shared.UI.Overlays;
 using PsychologyApp.Presentation.Shared.ViewModels;
 using System.Text;
@@ -21,12 +23,49 @@ public sealed class DataBackupViewModel : BaseViewModel
     private readonly IToastService _toastService;
     private readonly IUserPreferencesStore _preferences;
     private readonly IDialogService _dialogService;
+    private readonly IPersonalDataEraser _eraser;
+    private readonly IAppLock _appLock;
 
     public ICommand BackCommand { get; }
     public ICommand ExportBackupCommand { get; }
     public ICommand ImportBackupCommand { get; }
     public ICommand ExportSummaryCommand { get; }
     public ICommand ShareErrorLogCommand { get; }
+    public ICommand EraseAllCommand { get; }
+
+    public string EraseTitle => AppStrings.DataEraseTitle;
+    public string EraseSubtitle => AppStrings.DataEraseSubtitle;
+
+    public string AppLockLabel => AppStrings.AppLockLabel;
+    public string AppLockHint => AppStrings.AppLockHint;
+
+    /// <summary>Hidden where the system prompt does not exist (before Android 10): there is nothing to offer.</summary>
+    public bool IsAppLockOffered => _appLock.Availability != DeviceUnlockAvailability.Unsupported;
+
+    /// <summary>
+    /// Turning it on asks for the phone's unlock once, so a lock is never set on a phone that cannot open it; when that does not
+    /// happen the switch springs back. Turning it off needs nothing: whoever does it is already inside the app.
+    /// </summary>
+    public bool AppLockEnabled
+    {
+        get => _appLock.IsEnabled;
+        set
+        {
+            if (value == _appLock.IsEnabled)
+            {
+                return;
+            }
+
+            if (value)
+            {
+                EnableAppLockAsync().FireAndForget();
+                return;
+            }
+
+            _appLock.Disable();
+            OnPropertyChanged();
+        }
+    }
 
     public string ErrorLogTitle => AppStrings.ErrorLogTitle;
     public string ErrorLogSubtitle => AppStrings.ErrorLogSubtitle;
@@ -46,7 +85,9 @@ public sealed class DataBackupViewModel : BaseViewModel
         ISpecialistSummaryService specialistSummaryService,
         IToastService toastService,
         IUserPreferencesStore preferences,
-        IDialogService dialogService)
+        IDialogService dialogService,
+        IPersonalDataEraser eraser,
+        IAppLock appLock)
     {
         BindNavigation(navigationService);
         _backupService = backupService;
@@ -54,12 +95,15 @@ public sealed class DataBackupViewModel : BaseViewModel
         _toastService = toastService;
         _preferences = preferences;
         _dialogService = dialogService;
+        _eraser = eraser;
+        _appLock = appLock;
 
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
         ExportBackupCommand = new AsyncCommand(ExportBackupAsync);
         ImportBackupCommand = new AsyncCommand(ImportBackupAsync);
         ExportSummaryCommand = new AsyncCommand(ExportSummaryAsync);
         ShareErrorLogCommand = new AsyncCommand(ShareErrorLogAsync);
+        EraseAllCommand = new AsyncCommand(EraseAllAsync);
     }
 
     protected override void RefreshLocalizedProperties()
@@ -74,7 +118,54 @@ public sealed class DataBackupViewModel : BaseViewModel
             nameof(SummaryTitle),
             nameof(SummarySubtitle),
             nameof(ErrorLogTitle),
-            nameof(ErrorLogSubtitle));
+            nameof(ErrorLogSubtitle),
+            nameof(EraseTitle),
+            nameof(EraseSubtitle),
+            nameof(AppLockLabel),
+            nameof(AppLockHint));
+    }
+
+    private async Task EnableAppLockAsync()
+    {
+        try
+        {
+            if (_appLock.Availability == DeviceUnlockAvailability.NoScreenLock)
+            {
+                await _dialogService.ShowAsync(AppStrings.AppLockLabel, AppStrings.AppLockNoScreenLock);
+            }
+            else
+            {
+                await _appLock.TryEnableAsync();
+            }
+        }
+        finally
+        {
+            // On or not, the switch shows what is really set.
+            OnPropertyChanged(nameof(AppLockEnabled));
+        }
+    }
+
+    /// <summary>
+    /// Nothing can be brought back after this, so it is asked twice: first what goes (and that a backup is the only way back),
+    /// then a last "are you sure". On success the app restarts and this method does not return.
+    /// </summary>
+    private async Task EraseAllAsync()
+    {
+        if (!await _dialogService.AskAsync(AppStrings.DataEraseConfirmTitle, AppStrings.DataEraseConfirmBody, AppStrings.DataEraseConfirmAccept, AppStrings.Cancel)
+            || !await _dialogService.AskAsync(AppStrings.DataEraseFinalTitle, AppStrings.DataEraseFinalBody, AppStrings.DataEraseConfirmAccept, AppStrings.Cancel))
+        {
+            return;
+        }
+
+        try
+        {
+            await _eraser.EraseAllAsync();
+        }
+        catch (Exception ex)
+        {
+            BestEffort.Report(ex);
+            _toastService.LongToast(AppStrings.DataEraseFailedToast, AppToastKind.Error);
+        }
     }
 
     private async Task ExportBackupAsync()

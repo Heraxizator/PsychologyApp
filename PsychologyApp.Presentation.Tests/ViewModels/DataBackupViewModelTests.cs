@@ -3,9 +3,11 @@ using Microsoft.Maui.Storage;
 using Moq;
 using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.DataBackup;
+using PsychologyApp.Presentation.Features.ManageProfile;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileDataBackup;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
+using PsychologyApp.Presentation.Shared.Services.Security;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Shared.UI.Overlays;
 using Xunit;
@@ -19,6 +21,8 @@ public sealed class DataBackupViewModelTests : IDisposable
     private readonly Mock<IBackupService> _backup = new();
     private readonly Mock<IDialogService> _dialogs = new();
     private readonly Mock<IToastService> _toasts = new();
+    private readonly Mock<IPersonalDataEraser> _eraser = new();
+    private readonly Mock<IAppLock> _appLock = new();
     private readonly string _folder = Path.Combine(Path.GetTempPath(), $"backup-vm-{Guid.NewGuid():N}");
 
     public DataBackupViewModelTests()
@@ -34,7 +38,7 @@ public sealed class DataBackupViewModelTests : IDisposable
     public void Dispose() => Directory.Delete(_folder, recursive: true);
 
     private DataBackupViewModel Create() =>
-        new(new Mock<INavigationService>().Object, _backup.Object, new Mock<ISpecialistSummaryService>().Object, _toasts.Object, new MauiUserPreferencesStore(), _dialogs.Object);
+        new(new Mock<INavigationService>().Object, _backup.Object, new Mock<ISpecialistSummaryService>().Object, _toasts.Object, new MauiUserPreferencesStore(), _dialogs.Object, _eraser.Object, _appLock.Object);
 
     private void Choose(string? option) =>
         _dialogs.Setup(d => d.PickOptionAsync(It.IsAny<string>(), It.IsAny<IReadOnlyList<string>>(), It.IsAny<string>())).ReturnsAsync(option);
@@ -198,5 +202,80 @@ public sealed class DataBackupViewModelTests : IDisposable
 
         _toasts.Verify(t => t.LongToast(AppStrings.DataBackupImportFailedToast, AppToastKind.Error), Times.Once);
         _toasts.Verify(t => t.LongToast(AppStrings.DataBackupImportRolledBackToast, AppToastKind.Error), Times.Once);
+    }
+
+    private void Answers(params bool[] answers)
+    {
+        Queue<bool> queue = new(answers);
+        _dialogs.Setup(d => d.AskAsync(It.IsAny<string?>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+            .ReturnsAsync(() => queue.Count > 0 && queue.Dequeue());
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true, false)]
+    public async Task NothingIsDeletedUnlessBothQuestionsAreAnsweredYes(params bool[] answers)
+    {
+        Answers(answers);
+
+        await VmTestHelpers.RunAsync(Create().EraseAllCommand);
+
+        _eraser.Verify(e => e.EraseAllAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task TwoYesesDeleteEverything()
+    {
+        Answers(true, true);
+
+        await VmTestHelpers.RunAsync(Create().EraseAllCommand);
+
+        _eraser.Verify(e => e.EraseAllAsync(It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    [Fact]
+    public async Task AFailedDeletionIsSaidOutLoud()
+    {
+        Answers(true, true);
+        _eraser.Setup(e => e.EraseAllAsync(It.IsAny<CancellationToken>())).ThrowsAsync(new IOException("disk"));
+
+        await VmTestHelpers.RunAsync(Create().EraseAllCommand);
+
+        _toasts.Verify(t => t.LongToast(AppStrings.DataEraseFailedToast, AppToastKind.Error), Times.Once);
+    }
+
+    [Fact]
+    public async Task WithoutAScreenLockOnThePhoneTheSwitchExplainsAndStaysOff()
+    {
+        _appLock.SetupGet(l => l.Availability).Returns(DeviceUnlockAvailability.NoScreenLock);
+        DataBackupViewModel viewModel = Create();
+
+        viewModel.AppLockEnabled = true;
+        await VmTestHelpers.WaitUntilAsync(() => _dialogs.Invocations.Count > 0);
+
+        _dialogs.Verify(d => d.ShowAsync(It.IsAny<string?>(), AppStrings.AppLockNoScreenLock), Times.Once);
+        _appLock.Verify(l => l.TryEnableAsync(), Times.Never);
+        Assert.False(viewModel.AppLockEnabled);
+    }
+
+    [Fact]
+    public async Task TurningTheLockOnGoesThroughThePhonesUnlock()
+    {
+        _appLock.SetupGet(l => l.Availability).Returns(DeviceUnlockAvailability.Available);
+        _appLock.Setup(l => l.TryEnableAsync()).ReturnsAsync(true);
+        DataBackupViewModel viewModel = Create();
+
+        viewModel.AppLockEnabled = true;
+        await VmTestHelpers.WaitUntilAsync(() => _appLock.Invocations.Any(i => i.Method.Name == nameof(IAppLock.TryEnableAsync)));
+
+        _appLock.Verify(l => l.TryEnableAsync(), Times.Once);
+    }
+
+    [Fact]
+    public void TheSwitchIsHiddenWhereThePhoneCannotShowTheSystemPrompt()
+    {
+        _appLock.SetupGet(l => l.Availability).Returns(DeviceUnlockAvailability.Unsupported);
+
+        Assert.False(Create().IsAppLockOffered);
     }
 }

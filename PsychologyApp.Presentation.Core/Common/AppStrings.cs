@@ -793,6 +793,24 @@ public static partial class AppStrings
     public static string DataBackupImportSubtitle => R(nameof(DataBackupImportSubtitle));
     public static string DataBackupSummaryTitle => R(nameof(DataBackupSummaryTitle));
     public static string DataBackupSummarySubtitle => R(nameof(DataBackupSummarySubtitle));
+    public static string DataEraseTitle => R(nameof(DataEraseTitle));
+    public static string DataEraseSubtitle => R(nameof(DataEraseSubtitle));
+    public static string DataEraseConfirmTitle => R(nameof(DataEraseConfirmTitle));
+    public static string DataEraseConfirmBody => R(nameof(DataEraseConfirmBody));
+    public static string DataEraseConfirmAccept => R(nameof(DataEraseConfirmAccept));
+    public static string DataEraseFinalTitle => R(nameof(DataEraseFinalTitle));
+    public static string DataEraseFinalBody => R(nameof(DataEraseFinalBody));
+    public static string DataEraseFailedToast => R(nameof(DataEraseFailedToast));
+    public static string AppLockLabel => R(nameof(AppLockLabel));
+    public static string AppLockHint => R(nameof(AppLockHint));
+    public static string AppLockNoScreenLock => R(nameof(AppLockNoScreenLock));
+    public static string AppLockTitle => R(nameof(AppLockTitle));
+    public static string AppLockLead => R(nameof(AppLockLead));
+    public static string AppLockUnlock => R(nameof(AppLockUnlock));
+    public static string AppLockHelpTitle => R(nameof(AppLockHelpTitle));
+    public static string AppLockPromptTitle => R(nameof(AppLockPromptTitle));
+    public static string AppLockPromptSubtitle => R(nameof(AppLockPromptSubtitle));
+    public static string AppLockEnableTitle => R(nameof(AppLockEnableTitle));
     public static string DataBackupExportedToast => R(nameof(DataBackupExportedToast));
     public static string DataBackupImportedToast(int moods, int tests, int completions, int chats, int skipped = 0) => skipped > 0
         ? F("DataBackupImportedToast.1", moods, tests, completions, chats, skipped)

@@ -23,6 +23,16 @@
 
             <Label Text="{Binding LeadText}" Style="{StaticResource BodyStyle}" />
 
+            <Border Style="{StaticResource BrandCardStyle}" IsVisible="{Binding IsAppLockOffered}">
+                <VerticalStackLayout Spacing="4">
+                    <ui:SettingSwitchRowView
+                        LabelText="{Binding AppLockLabel}"
+                        IsToggled="{Binding AppLockEnabled}"
+                        ShowDivider="False" />
+                    <Label Text="{Binding AppLockHint}" Style="{StaticResource CaptionStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
             <ui:SettingsLinkCardView
                 Title="{Binding ExportTitle}"
                 Subtitle="{Binding ExportSubtitle}"
@@ -60,6 +70,18 @@
                 TapCommand="{Binding ShareErrorLogCommand}">
                 <ui:SettingsLinkCardView.Behaviors>
                     <behaviors:ListItemRevealBehavior RevealIndex="4" />
+                </ui:SettingsLinkCardView.Behaviors>
+            </ui:SettingsLinkCardView>
+
+            <!-- Last and apart from the rest: the one action here that cannot be undone. -->
+            <ui:SettingsLinkCardView
+                Margin="0,16,0,0"
+                Title="{Binding EraseTitle}"
+                Subtitle="{Binding EraseSubtitle}"
+                IconName="DeleteForever"
+                TapCommand="{Binding EraseAllCommand}">
+                <ui:SettingsLinkCardView.Behaviors>
+                    <behaviors:ListItemRevealBehavior RevealIndex="5" />
                 </ui:SettingsLinkCardView.Behaviors>
             </ui:SettingsLinkCardView>
         </VerticalStackLayout>

@@ -17,6 +17,9 @@ public static class ManageProfileFeatureServiceCollectionExtensions
         services.AddFeatureSingleton<ProfileWeekDaysLoader>();
         services.AddFeatureSingleton<ProfileFeaturedTechniquesBuilder>();
         services.AddFeatureSingleton<UserProfileRefreshCoordinator>();
+        services.AddFeatureSingleton<IPersonalDataEraser, PersonalDataEraser>();
+        services.AddSingleton<AppLockCoordinator>();
+        services.AddSingleton<IAppLock>(sp => sp.GetRequiredService<AppLockCoordinator>());
         services.AddFeatureSingleton<ProfileScreenCoordinator>();
         services.AddFeatureViewModelFactory<IUserViewModelFactory, UserViewModelFactory>();
         services.AddFeatureViewModelFactory<IOptionsViewModelFactory, OptionsViewModelFactory>();

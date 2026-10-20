@@ -1581,6 +1581,60 @@
   <data name="DataBackupSummarySubtitle" xml:space="preserve">
     <value>Текстовый файл за последние 30 дней — можно отправить психологу или врачу.</value>
   </data>
+  <data name="DataEraseTitle" xml:space="preserve">
+    <value>Удалить все мои данные</value>
+  </data>
+  <data name="DataEraseSubtitle" xml:space="preserve">
+    <value>Дневник, практики, тесты, чаты и настройки будут стёрты с телефона</value>
+  </data>
+  <data name="DataEraseConfirmTitle" xml:space="preserve">
+    <value>Удалить все данные?</value>
+  </data>
+  <data name="DataEraseConfirmBody" xml:space="preserve">
+    <value>С телефона будут удалены дневник настроения, практики и ответы в них, результаты тестов, разговоры с ИИ-чатом, план безопасности, записи «Тела» и настройки. Вернуть их можно только из резервной копии, если вы её сохранили.</value>
+  </data>
+  <data name="DataEraseConfirmAccept" xml:space="preserve">
+    <value>Удалить всё</value>
+  </data>
+  <data name="DataEraseFinalTitle" xml:space="preserve">
+    <value>Это нельзя отменить</value>
+  </data>
+  <data name="DataEraseFinalBody" xml:space="preserve">
+    <value>Приложение начнётся заново, как после установки. Удалить?</value>
+  </data>
+  <data name="DataEraseFailedToast" xml:space="preserve">
+    <value>Не удалось удалить данные. Попробуйте ещё раз.</value>
+  </data>
+  <data name="AppLockLabel" xml:space="preserve">
+    <value>Вход по отпечатку или PIN-коду телефона</value>
+  </data>
+  <data name="AppLockHint" xml:space="preserve">
+    <value>Перед тем как показать дневник, чаты и записи, приложение спросит разблокировку телефона — отпечаток, лицо или PIN. Свой PIN придумывать не нужно, забыть нечего.</value>
+  </data>
+  <data name="AppLockNoScreenLock" xml:space="preserve">
+    <value>Сначала включите блокировку экрана в настройках телефона (PIN, графический ключ или отпечаток), затем вернитесь сюда.</value>
+  </data>
+  <data name="AppLockTitle" xml:space="preserve">
+    <value>Приложение защищено</value>
+  </data>
+  <data name="AppLockLead" xml:space="preserve">
+    <value>Разблокируйте отпечатком, лицом или PIN-кодом телефона.</value>
+  </data>
+  <data name="AppLockUnlock" xml:space="preserve">
+    <value>Разблокировать</value>
+  </data>
+  <data name="AppLockHelpTitle" xml:space="preserve">
+    <value>Нужна помощь прямо сейчас?</value>
+  </data>
+  <data name="AppLockPromptTitle" xml:space="preserve">
+    <value>Psychology App</value>
+  </data>
+  <data name="AppLockPromptSubtitle" xml:space="preserve">
+    <value>Подтвердите, что это вы</value>
+  </data>
+  <data name="AppLockEnableTitle" xml:space="preserve">
+    <value>Включить защиту входа</value>
+  </data>
   <data name="DataBackupExportedToast" xml:space="preserve">
     <value>Файл готов к отправке</value>
   </data>

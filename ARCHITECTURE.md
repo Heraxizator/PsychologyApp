@@ -75,7 +75,7 @@ All screens live under `Pages/{Slice}/` — one of the canonical slices listed b
 |-------|-------|-------------|--------|
 | **RunTests** | TestsList, TestHistory, FindProblem, Question, StandardTest, AlternativeTest, LuscherTest, TestResult | `Tests/*`, `Models/Tests/` | `Tests/` (`TestScoreBandClassifier`), `Colour/` (`LuscherInterpretationBands`) |
 | **RunTechniqueSession** | Techniques, TechniqueSession, TechniqueCreated, TechniqueDesigner, TechniqueTheory, PracticeCompletion | `Practice/`, `Technique/`, `Recommendations/` | `Practice/`, `Technique/` |
-| **ManageProfile** | ProfileUser, ProfileOptions, ProfileSettings, ProfileInfo, ProfileDonate | `UserProgress/`, `Statistic/` | `UserProgress/`, `Statistic/` |
+| **ManageProfile** | ProfileUser, ProfileOptions, ProfileSettings, ProfileInfo, ProfileDonate, ProfileDataBackup (with the app lock switch and «Delete all my data»), AppLock (the lock screen) | `UserProgress/`, `Statistic/` | `UserProgress/`, `Statistic/` |
 | **ManageJournal** | Journal, JournalOverview, JournalTimeline | `UserProgress/` (mood ports), journal UI loaders in Features | `UserProgress/` (`MoodStreakCalculator`, `MoodCheckInSlotPolicy`) |
 | **ClinicalCare** | CrisisHub, RiskCheck, SafetyPlan, Exposure (fear ladder, docs/exposure-engine.md), BodyCheck (docs/body-check.md) | `ClinicalCare/`, `Exposure/`, `Body/` | `ClinicalCare/` (`RiskClassifier`, `RiskLevel`), `Exposure/` (`ExposureLadder`, `ExposureScreening`) |
 | **ManageQuotes** | QuoteFeed | `Quot/` | `Quot/` |

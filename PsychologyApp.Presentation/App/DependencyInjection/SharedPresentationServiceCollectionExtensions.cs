@@ -12,6 +12,7 @@ using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Shared.Services.Speech;
+using PsychologyApp.Presentation.Shared.Services.Security;
 using PsychologyApp.Presentation.Shared.Navigation;
 
 namespace PsychologyApp.Presentation.App.DependencyInjection;
@@ -41,11 +42,13 @@ public static class SharedPresentationServiceCollectionExtensions
         services.AddSingleton<IQuoteReminderScheduler, AndroidQuoteReminderScheduler>();
         services.AddSingleton<IMoodReminderScheduler, AndroidMoodReminderScheduler>();
         services.AddSingleton<IChatReminderScheduler, AndroidChatReminderScheduler>();
+        services.AddSingleton<IDeviceAuthenticator, AndroidDeviceAuthenticator>();
 #else
         services.AddSingleton<IPracticeReminderScheduler, NullPracticeReminderScheduler>();
         services.AddSingleton<IQuoteReminderScheduler, NullQuoteReminderScheduler>();
         services.AddSingleton<IMoodReminderScheduler, NullMoodReminderScheduler>();
         services.AddSingleton<IChatReminderScheduler, NullChatReminderScheduler>();
+        services.AddSingleton<IDeviceAuthenticator, UnavailableDeviceAuthenticator>();
 #endif
         services.AddSingleton<IDatabaseReadySignal, DatabaseReadySignal>();
         services.AddSingleton<LanguageContentReloader>();

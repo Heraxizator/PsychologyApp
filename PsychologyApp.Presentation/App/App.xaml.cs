@@ -42,6 +42,7 @@ public partial class App : Microsoft.Maui.Controls.Application
     {
         base.OnResume();
         ReduceMotion.Refresh();
+        _services.GetRequiredService<Features.ManageProfile.AppLockCoordinator>().GuardAsync().FireAndForget();
         _services.GetRequiredService<IPracticeReminderCoordinator>().SyncAsync().FireAndForget();
         _services.GetRequiredService<IQuoteReminderCoordinator>().SyncAsync().FireAndForget();
         _services.GetRequiredService<IMoodReminderCoordinator>().SyncAsync().FireAndForget();
@@ -52,6 +53,7 @@ public partial class App : Microsoft.Maui.Controls.Application
     protected override void OnSleep()
     {
         base.OnSleep();
+        _services.GetRequiredService<Features.ManageProfile.AppLockCoordinator>().OnLeft();
         _services.GetRequiredService<IMoodReminderCoordinator>().RescheduleAsync().FireAndForget();
 #if ANDROID
         // The widget's texts follow the app language; a switch made in this session reaches it here.

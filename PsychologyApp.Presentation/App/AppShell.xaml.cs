@@ -39,6 +39,7 @@ public partial class AppShell : Shell
     private readonly ILogger<AppShell> _logger;
     private readonly IUserPreferencesStore _preferences;
     private readonly Func<INavigationService> _navigationServiceFactory;
+    private readonly PsychologyApp.Presentation.Features.ManageProfile.AppLockCoordinator _appLock;
     private readonly bool[] _tabsMaterialized = new bool[4];
     private bool _lazyTabsReady;
 
@@ -51,9 +52,11 @@ public partial class AppShell : Shell
         IChatReminderCoordinator chatReminderCoordinator,
         ILogger<AppShell> logger,
         IUserPreferencesStore preferences,
-        Func<INavigationService> navigationServiceFactory)
+        Func<INavigationService> navigationServiceFactory,
+        PsychologyApp.Presentation.Features.ManageProfile.AppLockCoordinator appLock)
     {
         _navigationServiceFactory = navigationServiceFactory;
+        _appLock = appLock;
         _preferences = preferences;
         _pageFactory = pageFactory;
         _startupCoordinator = startupCoordinator;
@@ -467,6 +470,8 @@ public partial class AppShell : Shell
     {
         try
         {
+            // The lock comes first: nothing of the person, not even the onboarding or the safety gate, before the phone's unlock.
+            await _appLock.GuardAsync();
             await _startupCoordinator.InitializeAsync();
             await ShowOnboardingIfNeededAsync();
             await ShowClinicalGateIfNeededAsync();

@@ -1581,6 +1581,60 @@
   <data name="DataBackupSummarySubtitle" xml:space="preserve">
     <value>A text file covering the last 30 days — share it with a psychologist or doctor.</value>
   </data>
+  <data name="DataEraseTitle" xml:space="preserve">
+    <value>Delete all my data</value>
+  </data>
+  <data name="DataEraseSubtitle" xml:space="preserve">
+    <value>The journal, practices, tests, chats and settings are wiped from this phone</value>
+  </data>
+  <data name="DataEraseConfirmTitle" xml:space="preserve">
+    <value>Delete all data?</value>
+  </data>
+  <data name="DataEraseConfirmBody" xml:space="preserve">
+    <value>The mood journal, practices and your answers in them, test results, conversations with the AI chat, the safety plan, Body check-ins and settings will be deleted from this phone. They can only be brought back from a backup, if you saved one.</value>
+  </data>
+  <data name="DataEraseConfirmAccept" xml:space="preserve">
+    <value>Delete all</value>
+  </data>
+  <data name="DataEraseFinalTitle" xml:space="preserve">
+    <value>This cannot be undone</value>
+  </data>
+  <data name="DataEraseFinalBody" xml:space="preserve">
+    <value>The app will start over, as after installing it. Delete?</value>
+  </data>
+  <data name="DataEraseFailedToast" xml:space="preserve">
+    <value>Could not delete the data. Please try again.</value>
+  </data>
+  <data name="AppLockLabel" xml:space="preserve">
+    <value>Unlock with the phone's fingerprint or PIN</value>
+  </data>
+  <data name="AppLockHint" xml:space="preserve">
+    <value>Before showing the journal, chats and notes, the app asks for the phone's unlock: fingerprint, face or PIN. There is no separate PIN to make up or forget.</value>
+  </data>
+  <data name="AppLockNoScreenLock" xml:space="preserve">
+    <value>First turn on a screen lock in the phone's settings (a PIN, pattern or fingerprint), then come back here.</value>
+  </data>
+  <data name="AppLockTitle" xml:space="preserve">
+    <value>The app is protected</value>
+  </data>
+  <data name="AppLockLead" xml:space="preserve">
+    <value>Unlock with the phone's fingerprint, face or PIN.</value>
+  </data>
+  <data name="AppLockUnlock" xml:space="preserve">
+    <value>Unlock</value>
+  </data>
+  <data name="AppLockHelpTitle" xml:space="preserve">
+    <value>Need help right now?</value>
+  </data>
+  <data name="AppLockPromptTitle" xml:space="preserve">
+    <value>Psychology App</value>
+  </data>
+  <data name="AppLockPromptSubtitle" xml:space="preserve">
+    <value>Confirm it is you</value>
+  </data>
+  <data name="AppLockEnableTitle" xml:space="preserve">
+    <value>Turn on unlock protection</value>
+  </data>
   <data name="DataBackupExportedToast" xml:space="preserve">
     <value>File is ready to share</value>
   </data>

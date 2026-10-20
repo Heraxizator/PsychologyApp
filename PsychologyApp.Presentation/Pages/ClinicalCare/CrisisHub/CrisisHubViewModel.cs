@@ -22,8 +22,8 @@ public sealed class CrisisHubViewModel : BaseViewModel
         _clinicalCareService = clinicalCareService;
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
         OpenHelplineCommand = new AsyncCommand(OpenHelplineAsync);
-        CallHotlineRuCommand = new AsyncCommand(() => DialAsync(AppStrings.CrisisHubHotlineRuNumber));
-        CallEmergencyCommand = new AsyncCommand(() => DialAsync(AppStrings.CrisisHubEmergencyNumber));
+        CallHotlineRuCommand = new AsyncCommand(() => PhoneCall.DialAsync(AppStrings.CrisisHubHotlineRuNumber));
+        CallEmergencyCommand = new AsyncCommand(() => PhoneCall.DialAsync(AppStrings.CrisisHubEmergencyNumber));
         RecheckCommand = new AsyncCommand(() => _navigationService.GoToRiskCheckAsync(AppStrings.RiskCheckSourceManual));
         ContinueSoftCommand = new AsyncCommand(ContinueSoftAsync);
         OpenSafetyPlanCommand = new AsyncCommand(() => _navigationService.GoToSafetyPlanAsync());
@@ -137,24 +137,6 @@ public sealed class CrisisHubViewModel : BaseViewModel
         }
     }
 
-    private static async Task DialAsync(string number)
-    {
-        try
-        {
-            if (PhoneDialer.Default.IsSupported)
-            {
-                PhoneDialer.Default.Open(number);
-                return;
-            }
-
-            await Launcher.Default.OpenAsync($"tel:{number}");
-        }
-        catch (Exception bestEffortError)
-        {
-            // Best-effort dial.
-            BestEffort.Report(bestEffortError);
-        }
-    }
 
     private async Task ContinueSoftAsync()
     {

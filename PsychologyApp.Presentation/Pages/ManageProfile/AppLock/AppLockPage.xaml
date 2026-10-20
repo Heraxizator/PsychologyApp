@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.ManageProfile.AppLock.AppLockPage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ManageProfile.AppLock"
+             x:DataType="vm:AppLockViewModel"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+
+    <!-- Nothing personal here: the app's name, the way in, and the public help numbers. -->
+    <ScrollView>
+        <VerticalStackLayout
+            Margin="{StaticResource LayoutPageMarginThickness}"
+            Spacing="{StaticResource LayoutSpacing}"
+            VerticalOptions="Center">
+            <Border Style="{StaticResource BrandCardStyle}" Padding="20,24">
+                <VerticalStackLayout Spacing="16">
+                    <ui:MaterialIconView IconName="Lock" IconSize="40" HorizontalOptions="Center" SemanticProperties.Description="{Binding TitleText}" />
+                    <Label Text="{Binding TitleText}" Style="{StaticResource SectionTitleStyle}" HorizontalTextAlignment="Center" />
+                    <Label Text="{Binding LeadText}" Style="{StaticResource BodyStyle}" HorizontalTextAlignment="Center" />
+                    <ui:ButtonView BodyText="{Binding UnlockText}" TapCommand="{Binding UnlockCommand}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource BrandCardStyle}" Padding="20,16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="{Binding HelpTitle}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" />
+                    <ui:ButtonView Variant="Secondary" BodyText="{Binding CallEmergencyText}" TapCommand="{Binding CallEmergencyCommand}" />
+                    <ui:ButtonView Variant="Secondary" BodyText="{Binding CallHotlineText}" TapCommand="{Binding CallHotlineCommand}" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
