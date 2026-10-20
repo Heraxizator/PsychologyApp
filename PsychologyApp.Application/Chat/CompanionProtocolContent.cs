@@ -11,11 +11,13 @@ public static class CompanionProtocolContent
 {
     public const string Think = "think";
     public const string Solve = "solve";
+    public const string Deeper = "deeper";
 
     public const int ThinkBeliefBefore = 1;
     public const int ThinkBeliefAfter = 6;
     public const int ThinkSteps = 7;
     public const int SolveSteps = 4;
+    public const int DeeperSteps = 5;
 
     /// <summary>The step decided on is kept short: it is quoted back in the next chat.</summary>
     public const int MaxPlanLength = 160;
@@ -71,6 +73,35 @@ public static class CompanionProtocolContent
             ? $"Thought: “{thought}”. Belief was {before}, now {after}.\nMore accurate: “{balanced}”.\n{change} You can reread the new wording when the thought comes back."
             : $"Мысль: «{thought}». Верили на {before}, сейчас на {after}.\nТочнее: «{balanced}».\n{change} Новую формулировку можно перечитать, когда мысль вернётся.";
     }
+
+    // ----- looking deeper (the downward arrow): from a thought to what it says about oneself -----
+    // No step asks what happened: the exercise follows the meaning of a thought, never the details of an event.
+
+    public static ChatQuickReply DeeperChip(bool english) =>
+        new(ChatQuickReplyKinds.Act, english ? "Look at what lies under it" : "Посмотреть, что под этим", "protocol:" + Deeper);
+
+    public static string DeeperQuestion(int step, bool english) => step switch
+    {
+        0 => english
+            ? "Let's look a little deeper. Which thought about this weighs on you most? Write it as one sentence, the way it sounds in your head."
+            : "Давайте посмотрим чуть глубже. Какая мысль об этом тяготит больше всего? Запишите её одной фразой, так, как она звучит в голове.",
+        1 => english
+            ? "Suppose for a moment it is true. What would be the hardest thing about it, what would it mean?"
+            : "Допустим на минуту, что это правда. Что в этом было бы самым тяжёлым, что бы это значило?",
+        2 => english
+            ? "And if that were so, what would it say about you? Under such thoughts there is often a short “I…”: “I can't cope”, “I don't matter”, “something is wrong with me”."
+            : "А если и это так, что бы это говорило о вас самих? Под такими мыслями часто лежит короткое «я…»: «я не справляюсь», «я не важен», «со мной что-то не так».",
+        3 => english
+            ? "If someone close to you thought this about themselves, what would you tell them?"
+            : "Если бы близкий вам человек думал так о себе, что бы вы ему сказали?",
+        _ => english
+            ? "Taking that into account, how could you say it about yourself more fairly and more kindly?"
+            : "С учётом этого, как можно сказать о себе честнее и бережнее?"
+    };
+
+    public static string DeeperSummary(string thought, string belief, string kinder, bool english) => english
+        ? $"Thought: “{thought}”. Under it: “{belief}”.\nThoughts like this about oneself usually form long ago and sound like the truth, though they are not. More fairly: “{kinder}”.\nIf this thought about yourself keeps coming back and gets in the way, it is worth working on with a psychologist: this is what therapy does best."
+        : $"Мысль: «{thought}». Под ней: «{belief}».\nТакие мысли о себе обычно складываются давно и звучат как правда, хотя ею не являются. Честнее: «{kinder}».\nЕсли эта мысль о себе часто возвращается и мешает, с ней стоит поработать вместе с психологом: с этим терапия справляется лучше всего.";
 
     // ----- problem solving -----
 

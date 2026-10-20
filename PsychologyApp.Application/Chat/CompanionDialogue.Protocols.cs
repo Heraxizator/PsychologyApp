@@ -53,6 +53,12 @@ public sealed partial class CompanionDialogue
                 CompanionTraumaContent.Impact => CompanionTraumaContent.Choices(english)[0],
                 _ => CompanionProtocolContent.SolveChip(english)
             });
+            // Guilt, sadness and loneliness often rest on a thought about oneself: next to checking the thought, the person may look at what lies under it.
+            if (protocol == CompanionProtocolContent.Think && emotion is CompanionEmotion.Guilt or CompanionEmotion.Sadness or CompanionEmotion.Loneliness)
+            {
+                quick.Add(CompanionProtocolContent.DeeperChip(english));
+            }
+
             state = state with { ProtocolOffered = true };
         }
 
@@ -87,9 +93,12 @@ public sealed partial class CompanionDialogue
         }
 
         bool think = state.Protocol == CompanionProtocolContent.Think;
-        string question = think
-            ? CompanionProtocolContent.ThinkQuestion(state.ProtocolStep, english)
-            : CompanionProtocolContent.SolveQuestion(state.ProtocolStep, english);
+        string question = state.Protocol switch
+        {
+            CompanionProtocolContent.Think => CompanionProtocolContent.ThinkQuestion(state.ProtocolStep, english),
+            CompanionProtocolContent.Deeper => CompanionProtocolContent.DeeperQuestion(state.ProtocolStep, english),
+            _ => CompanionProtocolContent.SolveQuestion(state.ProtocolStep, english)
+        };
         IReadOnlyList<ChatQuickReply> chips = think && IsBeliefStep(state.ProtocolStep) ? RatingReplies() : [CompanionProtocolContent.StopChip(english)];
         return Reply([question], chips, state, emotion, theme);
     }
@@ -146,9 +155,12 @@ public sealed partial class CompanionDialogue
             ProtocolStep = state.ProtocolStep + 1
         };
 
-        return !think && answered.ProtocolStep >= CompanionProtocolContent.SolveSteps
-            ? FinishSolve(answered, emotion, theme)
-            : AskProtocol(answered, emotion, theme);
+        return answered.Protocol switch
+        {
+            CompanionProtocolContent.Deeper when answered.ProtocolStep >= CompanionProtocolContent.DeeperSteps => FinishDeeper(answered, emotion, theme),
+            CompanionProtocolContent.Solve when answered.ProtocolStep >= CompanionProtocolContent.SolveSteps => FinishSolve(answered, emotion, theme),
+            _ => AskProtocol(answered, emotion, theme)
+        };
     }
 
     private CompanionReply FinishThink(CompanionState state, int after, CompanionEmotion emotion, CompanionTheme? theme)
@@ -162,6 +174,23 @@ public sealed partial class CompanionDialogue
             : [];
         chips.Add(new ChatQuickReply(ChatQuickReplyKinds.More, CompanionContent.MoreLabel(english)));
         return Reply([summary], chips, EndProtocol(state) with { LastIntensity = state.LastIntensity }, emotion, theme);
+    }
+
+    private CompanionReply FinishDeeper(CompanionState state, CompanionEmotion emotion, CompanionTheme? theme)
+    {
+        // Notes: the thought, what would be hardest, what it says about oneself, what one would tell a friend, the kinder wording.
+        IReadOnlyList<string> notes = state.ProtocolNotes;
+        string summary = CompanionProtocolContent.DeeperSummary(
+            notes.ElementAtOrDefault(0) ?? string.Empty, notes.ElementAtOrDefault(2) ?? string.Empty, notes.ElementAtOrDefault(4) ?? string.Empty, english);
+        return Reply(
+            [summary],
+            [
+                PracticeReply(nameof(TechniqueId.SelfCompassion), CompanionContent.StartLabel(TechniqueId.SelfCompassion, english)),
+                new ChatQuickReply(ChatQuickReplyKinds.More, CompanionContent.MoreLabel(english))
+            ],
+            EndProtocol(state),
+            emotion,
+            theme);
     }
 
     private CompanionReply FinishSolve(CompanionState state, CompanionEmotion emotion, CompanionTheme? theme)

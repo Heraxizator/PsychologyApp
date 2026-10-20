@@ -47,6 +47,52 @@ public sealed class CompanionGuidedTests
     }
 
     [Fact]
+    public void Looking_deeper_goes_from_a_thought_to_what_it_says_about_oneself_and_a_kinder_wording()
+    {
+        // The downward arrow: the summary carries the person's own thought, the belief under it and their kinder wording,
+        // and points to a psychologist for a belief that keeps coming back.
+        CompanionDialogue dialogue = Create();
+        CompanionReply reply = Tap(dialogue, Anxious with { Emotion = nameof(CompanionEmotion.Guilt) }, ChatQuickReplyKinds.Act, "protocol:deeper");
+        Assert.DoesNotContain("что случилось", reply.Messages[0], StringComparison.OrdinalIgnoreCase);
+        reply = Say(dialogue, reply.State, "Я опять подвёл команду");
+        reply = Say(dialogue, reply.State, "Что на меня нельзя положиться");
+        reply = Say(dialogue, reply.State, "Я никчёмный");
+        reply = Say(dialogue, reply.State, "Что одна ошибка не делает его никчёмным");
+        reply = Say(dialogue, reply.State, "Я ошибся, но обычно на меня можно положиться");
+
+        string summary = Assert.Single(reply.Messages);
+        Assert.Contains("Я опять подвёл команду", summary);
+        Assert.Contains("Я никчёмный", summary);
+        Assert.Contains("обычно на меня можно положиться", summary);
+        Assert.Contains("психолог", summary);
+        Assert.Null(reply.State.Protocol);
+    }
+
+    [Theory]
+    [InlineData(nameof(CompanionEmotion.Guilt), true)]
+    [InlineData(nameof(CompanionEmotion.Sadness), true)]
+    [InlineData(nameof(CompanionEmotion.Anxiety), false)]
+    public void Looking_deeper_is_offered_for_guilt_and_sadness_next_to_checking_the_thought(string emotion, bool offered)
+    {
+        CompanionReply offer = Tap(Create(), Anxious with { Emotion = emotion }, ChatQuickReplyKinds.Act, "practice");
+
+        Assert.Contains(offer.QuickReplies, chip => chip.Payload == "protocol:think");
+        Assert.Equal(offered, offer.QuickReplies.Any(chip => chip.Payload == "protocol:deeper"));
+    }
+
+    [Fact]
+    public void Crisis_words_while_looking_deeper_open_help_instead_of_the_next_question()
+    {
+        CompanionDialogue dialogue = Create();
+        CompanionReply reply = Tap(dialogue, Anxious with { Emotion = nameof(CompanionEmotion.Guilt) }, ChatQuickReplyKinds.Act, "protocol:deeper");
+        reply = Say(dialogue, reply.State, "Я всех подвожу");
+
+        reply = Say(dialogue, reply.State, "Что всем будет лучше без меня");
+
+        Assert.Equal(DialogueActionKind.OpenCrisisHub, reply.Action?.Kind);
+    }
+
+    [Fact]
     public void Crisis_words_inside_an_exercise_open_help_instead_of_the_next_question()
     {
         CompanionDialogue dialogue = Create();
