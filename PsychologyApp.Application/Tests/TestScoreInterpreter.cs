@@ -7,11 +7,11 @@ public static class TestScoreInterpreter
     public static ScoreRange? GetScoreRange(string? analyzerId) => analyzerId switch
     {
         "beck" => new ScoreRange(0, 63),
-        "heck_hess" => new ScoreRange(0, 56),
-        "haer" => new ScoreRange(0, 60),
+        "heck_hess" => new ScoreRange(0, 40),
+        "haer" => new ScoreRange(0, 40),
         "pochebut" => new ScoreRange(0, 40),
         "gad7" => new ScoreRange(0, 21),
-        "k10" => new ScoreRange(0, 50),
+        "k10" => new ScoreRange(10, 50),
         "who5" => new ScoreRange(0, 25),
         "phq9" => new ScoreRange(0, 27),
         "isi" => new ScoreRange(0, 28),
@@ -48,7 +48,7 @@ public static class TestScoreInterpreter
             _ => 4
         },
         "heck_hess" => score <= 24 ? 0 : 1,
-        "haer" => score <= 29 ? 0 : 1,
+        "haer" => score <= 28 ? 0 : 1,
         "pochebut" => score switch
         {
             <= 10 => 0,

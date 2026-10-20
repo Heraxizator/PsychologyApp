@@ -46,7 +46,7 @@ public static class TestScoreBandClassifier
         score <= 24 ? BinarySeverityBand.Low : BinarySeverityBand.High;
 
     public static BinarySeverityBand ClassifyHaer(int score) =>
-        score <= 29 ? BinarySeverityBand.Low : BinarySeverityBand.High;
+        score <= 28 ? BinarySeverityBand.Low : BinarySeverityBand.High;
 
     public static PochebutBand ClassifyPochebut(int score) => score switch
     {
