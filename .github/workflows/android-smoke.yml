@@ -6,8 +6,10 @@ name: android-smoke
 # The runner image is pinned (not ubuntu-latest): a new image can break the emulator, and that should be a change of its own.
 on:
   workflow_dispatch:
+  # main runs it through the release workflow, which publishes only after it passed.
+  workflow_call:
   push:
-    branches: [main, master, features/re-design, "release/**"]
+    branches: [master, features/re-design, "release/**"]
   pull_request:
     branches: [main, master, features/re-design]
   schedule:

@@ -1,0 +1,129 @@
+name: release
+
+# Publishes the signed production APK and AAB as a GitHub Release when a new version reaches main.
+#
+# It runs on every push to main: android-smoke first (the Release build on an emulator; called from here rather than on its
+# own, because workflow_run only fires for workflows of the default branch, which is not main). A release happens only for a
+# version that has no tag yet, after that smoke run passed, the tests pass here, the version in the csproj matches the
+# CHANGELOG and [Unreleased] is empty: the published notes must describe everything in the package. So a release is a
+# deliberate act: raise ApplicationDisplayVersion and ApplicationVersion, move [Unreleased] into the new section, push to main
+# (see AGENTS.md, "Выпуск").
+#
+# Signing uses the release key from the repository secrets (see docs/release-ci.md). Without them the run stops with a notice
+# and publishes nothing: a package signed with any other key would not update the installed app.
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  smoke:
+    uses: ./.github/workflows/android-smoke.yml
+
+  check:
+    needs: smoke
+    runs-on: ubuntu-24.04
+    outputs:
+      release: ${{ steps.decide.outputs.release }}
+      version: ${{ steps.decide.outputs.version }}
+      code: ${{ steps.decide.outputs.code }}
+      sha: ${{ steps.decide.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - id: decide
+        env:
+          HAS_KEY: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' && secrets.ANDROID_KEY_ALIAS != '' && secrets.ANDROID_KEYSTORE_PASSWORD != '' && secrets.ANDROID_KEY_PASSWORD != '' }}
+        run: |
+          project=PsychologyApp.Presentation/PsychologyApp.Presentation.csproj
+          version=$(sed -n 's:.*<ApplicationDisplayVersion>\(.*\)</ApplicationDisplayVersion>.*:\1:p' "$project" | head -1)
+          code=$(sed -n 's:.*<ApplicationVersion>\(.*\)</ApplicationVersion>.*:\1:p' "$project" | head -1)
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          skip() { echo "::notice title=No release::$1"; echo "release=false" >> "$GITHUB_OUTPUT"; exit 0; }
+
+          git rev-parse -q --verify "refs/tags/v$version" >/dev/null && skip "v$version is already released"
+          # The project's scheme: version 2.008 has the code 2008. A mismatch means one of the two was not raised.
+          [[ "$code" == "$((10#${version//./}))" ]] || { echo "::error::ApplicationVersion $code does not match ApplicationDisplayVersion $version"; exit 1; }
+          newest=$(sed -n 's/^## \[\([0-9][^]]*\)\].*/\1/p' CHANGELOG.md | head -1)
+          [[ "$newest" == "$version" ]] || skip "the newest CHANGELOG section is [$newest], the csproj says $version"
+          unreleased=$(awk '/^## \[Unreleased\]/{on=1; next} /^## \[/{on=0} on && /^- /' CHANGELOG.md | wc -l)
+          [[ "$unreleased" == "0" ]] || skip "[Unreleased] has $unreleased entries: raise the version and move them into its section to release"
+          [[ "$HAS_KEY" == "true" ]] || skip "the release key is not in the repository secrets (docs/release-ci.md)"
+          echo "release=true" >> "$GITHUB_OUTPUT"
+
+  release:
+    needs: check
+    if: needs.check.outputs.release == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.check.outputs.sha }}
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Tests
+        run: |
+          for tests in PsychologyApp.Domain.Tests PsychologyApp.Application.Tests PsychologyApp.Infrastructure.Tests \
+                       PsychologyApp.Integration.Tests PsychologyApp.Presentation.Tests; do
+            dotnet test "$tests" -c Debug -p:Net10Only=true --verbosity minimal
+          done
+      - run: dotnet workload install maui-android
+      - name: Release key
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.keystore"
+      - name: Build signed AAB and APK (arm64, built from scratch)
+        env:
+          AndroidSigningKeyStore: ${{ runner.temp }}/release.keystore
+          AndroidSigningKeyAlias: ${{ secrets.ANDROID_KEY_ALIAS }}
+          AndroidSigningStorePass: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          AndroidSigningKeyPass: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: >
+          dotnet publish PsychologyApp.Presentation/PsychologyApp.Presentation.csproj -f net10.0-android -c Release
+          "-p:AndroidPackageFormats=aab%3Bapk" -o out
+      - name: Check the packages
+        env:
+          VERSION: ${{ needs.check.outputs.version }}
+          CODE: ${{ needs.check.outputs.code }}
+        run: |
+          tools=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+          apk=$(ls out/*-Signed.apk | head -1)
+          aab=$(ls out/*-Signed.aab | head -1)
+          badging=$("$tools/aapt" dump badging "$apk")
+          grep -q "package: name='com.subconscious.psychologyapp' versionCode='$CODE' versionName='$VERSION'" <<<"$badging" \
+            || { echo "::error::the APK is not com.subconscious.psychologyapp $VERSION ($CODE)"; head -1 <<<"$badging"; exit 1; }
+          certs=$("$tools/apksigner" verify --print-certs "$apk")
+          grep -q "CN=Android Debug" <<<"$certs" && { echo "::error::the APK is signed with a debug key"; exit 1; }
+          echo "$certs" | grep "certificate SHA-256" | head -1
+          mkdir release
+          cp "$apk" "release/PsychologyApp-$VERSION.apk"
+          cp "$aab" "release/PsychologyApp-$VERSION.aab"
+          awk -v head="## [$VERSION]" 'index($0, head) == 1 {on=1; next} /^## \[/ {on=0} on' CHANGELOG.md > release/notes.md
+          [[ -s release/notes.md ]] || { echo "::error::no CHANGELOG section for $VERSION"; exit 1; }
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.check.outputs.version }}
+          SHA: ${{ needs.check.outputs.sha }}
+        run: >
+          gh release create "v$VERSION" "release/PsychologyApp-$VERSION.apk" "release/PsychologyApp-$VERSION.aab"
+          --target "$SHA" --title "Psychology App $VERSION" --notes-file release/notes.md
+      - name: Remove the key
+        if: always()
+        run: rm -f "$RUNNER_TEMP/release.keystore"
