@@ -4,7 +4,7 @@ namespace PsychologyApp.Presentation.Widgets.CompanionAvatar;
 
 /// <summary>
 /// The companion's identity: a calm gradient orb with a slow breathing ring and an online dot. While <see cref="IsAlive"/>
-/// the ring pulses gently outward; with reduced motion it stays still. Pure XAML shapes and standard animations, so nothing
+/// the ring pulses gently outward a few times; with reduced motion it stays still. Pure XAML shapes and standard animations, so nothing
 /// here crosses into native drawing code.
 /// </summary>
 public partial class CompanionAvatarView : ContentView
@@ -12,6 +12,10 @@ public partial class CompanionAvatarView : ContentView
     private const uint BreatheMs = 2200;
     private const double HaloMaxScale = 1.35;
     private const int PauseMs = 500;
+
+    // A few breaths when the page opens, then stillness: an endless loop drains the battery and keeps accessibility
+    // services from ever seeing the screen settle.
+    private const int Breaths = 4;
 
     public static readonly BindableProperty IsAliveProperty = BindableProperty.Create(
         nameof(IsAlive),
@@ -131,7 +135,7 @@ public partial class CompanionAvatarView : ContentView
     {
         try
         {
-            while (!cancellationToken.IsCancellationRequested)
+            for (int breath = 0; breath < Breaths && !cancellationToken.IsCancellationRequested; breath++)
             {
                 Halo.Scale = 1;
                 Halo.Opacity = 0.45;
