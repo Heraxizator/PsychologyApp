@@ -5,7 +5,7 @@ namespace PsychologyApp.Presentation.Shared.Common.Diagnostics;
 /// <summary>
 /// Debug-only timing for device runs: page/tab creation times and UI-thread stalls, logged under the "PerfTrace"
 /// logcat tag. A stall line names the last marks, so a "Skipped N frames" in the log can be tied to its cause.
-/// Compiled out of Release.
+/// Compiled out of Release unless it is built with -p:PerfTrace=true.
 /// </summary>
 public static class PerfTrace
 {
@@ -14,7 +14,7 @@ public static class PerfTrace
     private static int _markIndex;
     private static int _started;
 
-    [Conditional("DEBUG")]
+    [Conditional("DEBUG"), Conditional("PERFTRACE")]
     public static void Mark(string what)
     {
         lock (RecentMarks)
@@ -23,7 +23,7 @@ public static class PerfTrace
         }
     }
 
-    [Conditional("DEBUG")]
+    [Conditional("DEBUG"), Conditional("PERFTRACE")]
     public static void Measure(string what, long startTimestamp)
     {
         double ms = Stopwatch.GetElapsedTime(startTimestamp).TotalMilliseconds;
@@ -32,7 +32,7 @@ public static class PerfTrace
     }
 
     /// <summary>Pings the UI thread from a background thread and reports every reply that came late.</summary>
-    [Conditional("DEBUG")]
+    [Conditional("DEBUG"), Conditional("PERFTRACE")]
     public static void StartStallWatchdog(IDispatcher dispatcher)
     {
         if (Interlocked.Exchange(ref _started, 1) == 1)

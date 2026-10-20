@@ -234,4 +234,9 @@
 
 	<Import Project="AndroidSigning.local.props" Condition="Exists('AndroidSigning.local.props')" />
 
+	<!-- -p:PerfTrace=true keeps the PerfTrace timings in a Release build, so slow screens can be attributed where they are measured. -->
+	<PropertyGroup Condition="'$(PerfTrace)' == 'true'">
+		<DefineConstants>$(DefineConstants);PERFTRACE</DefineConstants>
+	</PropertyGroup>
+
 </Project>

@@ -140,6 +140,9 @@ Clean Architecture на уровне решения и Feature-Sliced Design в�
   `dotnet build PsychologyApp.Presentation -f net10.0-android -c Release -p:ApplicationId=com.subconscious.psychologyapp.dev
   -p:AndroidKeyStore=false -p:AndroidPackageFormats=apk -p:AndroidReleaseRid=android-x64`. Холодный старт — `am start -W`
   (TotalTime), плавность — `dumpsys gfxinfo <пакет> reset`, потом действие, потом `dumpsys gfxinfo <пакет>`.
+  Чтобы понять, на что ушло время, добавьте к сборке `-p:PerfTrace=true`: замеры `PerfTrace` (создание вкладок и страниц,
+  задержки UI-потока с последними метками) попадут в logcat с тегом `PerfTrace`. Разбивка долгого кадра по фазам —
+  `dumpsys gfxinfo <пакет> framestats` (ожидание UI-потока, layout, draw, GPU); на эмуляторе GPU-время завышено.
 
 ## Сборка, запуск, выпуск
 
