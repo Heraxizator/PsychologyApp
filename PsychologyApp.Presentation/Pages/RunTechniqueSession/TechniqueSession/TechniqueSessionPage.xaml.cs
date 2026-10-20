@@ -142,7 +142,9 @@ public partial class TechniqueSessionPage : ContentPage
         }
     }
 
-    private async void OpenImmersiveBreathing() => await Navigation.PushModalAsync(new BreathingImmersivePage());
+    // Through the coordinator, so a quick second tap does not stack a second full-screen pacer over the first.
+    private void OpenImmersiveBreathing() =>
+        SafeAsync.Run(() => NavigationCoordinator.RunPushAsync(() => Navigation.PushModalAsync(new BreathingImmersivePage())));
 
     protected override void OnDisappearing()
     {
