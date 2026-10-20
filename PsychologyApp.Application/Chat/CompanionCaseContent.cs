@@ -24,7 +24,7 @@ public static class CompanionCaseContent
             "Was this the first time, or does it keep happening?",
             "Если повторяется, это объясняет, почему так тяжело: усталость копится. Что обычно запускает такие ссоры?",
             "If it keeps happening, that explains why it is so heavy: the weariness builds up. What usually sets these quarrels off?",
-            "Тогда понятно, почему это так потрясло: это было неожиданно. Что, по-вашему, стояло за его словами?",
+            "Тогда понятно, почему это так потрясло: это было неожиданно. Что, по-вашему, стояло за этими словами?",
             "Then it makes sense that it shook you: it came out of the blue. What do you think was behind the words?"),
         [CompanionEvent.Humiliation] = new(
             "Когда это случается при людях, к боли добавляется стыд, и он держится дольше самой обиды.",
@@ -120,8 +120,23 @@ public static class CompanionCaseContent
 
     private static readonly HashSet<CompanionEvent> YesNoQuestions = [CompanionEvent.Humiliation, CompanionEvent.CaringForIll, CompanionEvent.Betrayal, CompanionEvent.Overload];
 
-    public static string? EventLine(CompanionEvent kind, bool english) =>
-        Texts.TryGetValue(kind, out EventText? t) ? (english ? t.LineEn : t.LineRu) : null;
+    /// <summary>
+    /// The line that answers what happened. A quarrel with a boss or a colleague is not "a quarrel with someone close": there it is
+    /// the dependence and having to keep meeting that make it heavy.
+    /// </summary>
+    public static string? EventLine(CompanionEvent kind, bool english, CompanionPerson? person = null)
+    {
+        if (kind == CompanionEvent.Conflict && IsAtWork(person))
+        {
+            return english
+                ? "A clash with a boss or a colleague is heavy in its own way: you cannot just walk away, and tomorrow you meet again."
+                : "Конфликт с руководителем или коллегой тяжёл по-своему: от него не уйдёшь, а завтра снова встречаться.";
+        }
+
+        return Texts.TryGetValue(kind, out EventText? t) ? (english ? t.LineEn : t.LineRu) : null;
+    }
+
+    private static bool IsAtWork(CompanionPerson? person) => person is CompanionPerson.Boss or CompanionPerson.Colleague;
 
     public static string EventQuestionId(CompanionEvent kind) => $"e:{kind}";
 
@@ -262,8 +277,16 @@ public static class CompanionCaseContent
     };
 
     /// <summary>A short acknowledgement that belongs to what happened, so that "That is not easy" is not said to everyone about everything; null when the event has none.</summary>
-    public static string? EventAcknowledgement(CompanionEvent kind, bool english, Random random)
+    public static string? EventAcknowledgement(CompanionEvent kind, bool english, Random random, CompanionPerson? person = null)
     {
+        if (kind == CompanionEvent.Conflict && IsAtWork(person))
+        {
+            string[] work = english
+                ? ["Words like that at work stay with you long after the day ends.", "It is hard when so much depends on that person."]
+                : ["Такие слова на работе не отпускают и после конца дня.", "Тяжело, когда от этого человека многое зависит."];
+            return work[random.Next(work.Length)];
+        }
+
         if (!Acknowledgements.TryGetValue(kind, out (string[] Ru, string[] En) lines))
         {
             return null;

@@ -542,7 +542,7 @@ public sealed partial class CompanionDialogue(
         }
 
         List<string> messages = [heard];
-        if (newEvent && !analysis.HasLoss && emotion != CompanionEmotion.Guilt && CompanionCaseContent.EventLine(analysis.Event, english) is { } eventLine)
+        if (newEvent && !analysis.HasLoss && emotion != CompanionEmotion.Guilt && CompanionCaseContent.EventLine(analysis.Event, english, person) is { } eventLine)
         {
             messages[0] = $"{heard} {eventLine}";
         }
@@ -907,7 +907,7 @@ public sealed partial class CompanionDialogue(
             ? CompanionSmallTalk.Shift(before, emotion, english)
             : emotion != CompanionEmotion.Unknown && state.Turns % 2 == 0
                 ? CompanionSmallTalk.Validation(emotion, english, _random)
-                : CompanionCaseContent.EventAcknowledgement(CompanionCaseContent.ParseEvent(state.Event), english, _random) ?? CompanionDialogueContent.Acknowledgement(english, _random);
+                : CompanionCaseContent.EventAcknowledgement(CompanionCaseContent.ParseEvent(state.Event), english, _random, ParsePerson(state.Person)) ?? CompanionDialogueContent.Acknowledgement(english, _random);
         if (state.UserName is not null && state.Turns % 3 == 0)
         {
             ack = CompanionSmallTalk.Address(state.UserName, ack);

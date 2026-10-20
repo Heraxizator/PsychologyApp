@@ -345,6 +345,16 @@ public class CompanionConversationQualityTests
     }
 
     [Fact]
+    public void AClashWithABossIsNotCalledAQuarrelWithSomeoneClose()
+    {
+        List<Turn> chat = Talk("Начальник накричал на меня на планёрке, мне очень обидно", "уже не первый раз");
+
+        Assert.Equal("Conflict", chat[0].Reply.State.Event);
+        Assert.DoesNotContain("близк", chat[0].Text + chat[1].Text);
+        Assert.Contains("с руководителем или коллегой", chat[0].Text);
+    }
+
+    [Fact]
     public void YesToASituationQuestionGetsAFollowUpThatFitsIt()
     {
         List<Turn> chat = Talk("Муж мне изменил, я в шоке", "да");
