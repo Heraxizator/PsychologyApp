@@ -22,6 +22,12 @@ public sealed class BackupService(
     /// <summary>A real backup is a few MB; this only stops a wrong file (a video, a database) from being read into memory.</summary>
     internal const int MaxImportCharacters = 64 * 1024 * 1024;
 
+    /// <summary>
+    /// The same limit in bytes, for checking a picked file before it is read: an encrypted backup has up to twice as many
+    /// characters, all ASCII, and a plain one up to three bytes per character in UTF-8.
+    /// </summary>
+    public const long MaxImportFileBytes = MaxImportCharacters * 3L;
+
     private const int MaxEscalations = 1_000;
 
     public async Task<string> ExportAsync(CancellationToken cancellationToken = default)

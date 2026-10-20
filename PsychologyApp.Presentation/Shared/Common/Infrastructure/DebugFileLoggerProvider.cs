@@ -68,16 +68,30 @@ public sealed class DebugFileLoggerProvider : ILoggerProvider
                 File.Delete(_filePath);
             }
 
-            await using StreamWriter writer = new(_filePath, append: true, Encoding.UTF8);
-            ChannelReader<string> reader = _lines.Reader;
-            while (await reader.WaitToReadAsync().ConfigureAwait(false))
+            StreamWriter writer = new(_filePath, append: true, Encoding.UTF8);
+            try
             {
-                while (reader.TryRead(out string? line))
+                ChannelReader<string> reader = _lines.Reader;
+                while (await reader.WaitToReadAsync().ConfigureAwait(false))
                 {
-                    await writer.WriteLineAsync(line).ConfigureAwait(false);
-                }
+                    while (reader.TryRead(out string? line))
+                    {
+                        await writer.WriteLineAsync(line).ConfigureAwait(false);
+                    }
 
-                await writer.FlushAsync().ConfigureAwait(false);
+                    await writer.FlushAsync().ConfigureAwait(false);
+
+                    // The cap holds within a run too: an error repeating in a loop must not fill the phone's storage.
+                    if (writer.BaseStream.Length > MaxFileBytes)
+                    {
+                        await writer.DisposeAsync().ConfigureAwait(false);
+                        writer = new StreamWriter(_filePath, append: false, Encoding.UTF8);
+                    }
+                }
+            }
+            finally
+            {
+                await writer.DisposeAsync().ConfigureAwait(false);
             }
         }
         catch

@@ -160,6 +160,12 @@ public sealed class DataBackupViewModel : BaseViewModel
                 return;
             }
 
+            // A video or a database picked by mistake is rejected by its size, before it is read into memory.
+            if (new FileInfo(file.FullPath).Length > BackupService.MaxImportFileBytes)
+            {
+                throw new BackupFormatException("The file is too large to be a backup.");
+            }
+
             string json = await File.ReadAllTextAsync(file.FullPath, Encoding.UTF8);
             BackupImportResult? imported = _backupService.IsEncrypted(json)
                 ? await ImportProtectedAsync(json)
