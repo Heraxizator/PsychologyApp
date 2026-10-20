@@ -122,11 +122,12 @@ public sealed class ChatService(
         ChatSessionDTO session = (await repository.GetSessionAsync(id, cancellationToken).ConfigureAwait(false))!;
 
         CompanionDialogue dialogue = await DialogueAsync(cancellationToken, includeTodayMood: true).ConfigureAwait(false);
-        CompanionState opening = await WithMemoryAsync(new CompanionState(), cancellationToken).ConfigureAwait(false);
+        IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
+        CompanionState opening = WithMemory(new CompanionState(), memory);
         // A chat on a topic starts with that topic: the step decided last time waits for an ordinary chat.
         CompanionReply reply = topic is not null
             ? dialogue.OpenTopic(opening, topic)
-            : dialogue.Open(opening with { OpenPlan = await PlanToAskAboutAsync(now, cancellationToken).ConfigureAwait(false) }, previous);
+            : dialogue.Open(opening with { OpenPlan = PlanToAskAbout(memory, now) }, previous);
         session.StateJson = reply.State.Serialize();
         IReadOnlyList<ChatMessageDTO> added = await StoreAsync(session, CompanionMessages(session, reply, now), [], cancellationToken).ConfigureAwait(false);
 
@@ -242,23 +243,19 @@ public sealed class ChatService(
         repository.ClearMemoryAsync(cancellationToken);
 
     /// <summary>What the companion knows from earlier chats: the name and the practice that helped most. Memory wins over the chat's own copy, so a renamed person is renamed everywhere.</summary>
-    private async Task<CompanionState> WithMemoryAsync(CompanionState state, CancellationToken cancellationToken)
-    {
-        IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
-        return state with
+    private static CompanionState WithMemory(CompanionState state, IReadOnlyDictionary<string, string> memory) =>
+        state with
         {
             UserName = memory.TryGetValue(ChatMemoryKeys.Name, out string? name) && !string.IsNullOrWhiteSpace(name) ? name : state.UserName,
             PreferredPractice = ChatMemoryKeys.MostHelped(memory)?.ToString() ?? state.PreferredPractice,
             TraumaNotes = memory.TryGetValue(ChatMemoryKeys.TraumaNotes, out string? notes) ? notes : null
         };
-    }
 
     /// <summary>
     /// The step decided on in an earlier chat, once it has had time to be tried (from six hours on) and while it is still fresh (two weeks).
     /// </summary>
-    private async Task<string?> PlanToAskAboutAsync(DateTime now, CancellationToken cancellationToken)
+    private static string? PlanToAskAbout(IReadOnlyDictionary<string, string> memory, DateTime now)
     {
-        IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
         if (!memory.TryGetValue(ChatMemoryKeys.Plan, out string? plan) || string.IsNullOrWhiteSpace(plan)
             || !memory.TryGetValue(ChatMemoryKeys.PlanAt, out string? at)
             || !DateTime.TryParse(at, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime decided))
@@ -347,10 +344,10 @@ public sealed class ChatService(
             return new ChatTurnResult(session, [], null);
         }
 
-        CompanionState state = await WithMemoryAsync(CompanionState.Deserialize(session.StateJson), cancellationToken).ConfigureAwait(false);
+        IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
+        CompanionState state = WithMemory(CompanionState.Deserialize(session.StateJson), memory);
         DateTime now = Now();
 
-        IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
         CompanionDialogue dialogue = await DialogueAsync(cancellationToken, currentSessionId: sessionId, earlierTopicChats: RecurringTopics.EarlierChats(memory, now)).ConfigureAwait(false);
         CompanionReply reply = dialogue.Respond(state, input);
         ApplyReply(session, reply, now, firstText: input is CompanionInput.FreeText ? userText : null);
@@ -444,15 +441,15 @@ public sealed class ChatService(
         IReadOnlyList<ChatSessionDTO> sessions = await repository.GetSessionsAsync(cancellationToken).ConfigureAwait(false);
         DateTime since = Now() - HeavyWindow;
         int heavyChats = sessions.Count(s => s.Id != currentSessionId && s.UpdatedAt >= since && (s.LastIntensity ?? s.FirstIntensity) >= HeavyTension);
-        IReadOnlyDictionary<string, TestResultDTO> taken = await progress.GetLatestTestResultsAsync(["phq9", "gad7", "pcl5"], cancellationToken).ConfigureAwait(false);
-        HashSet<string> recentlyTaken = [.. taken.Where(pair => pair.Value.CompletedAt >= since).Select(pair => pair.Key)];
 
+        Task<IReadOnlyDictionary<string, TestResultDTO>> takenTask = progress.GetLatestTestResultsAsync(["phq9", "gad7", "pcl5"], cancellationToken);
         Task<IReadOnlyList<QuotSeed>> quotesTask = quotes.LoadAllAsync(cancellationToken);
         Task<TestResultDTO?> stressTestTask = progress.GetLatestTestResultAsync(CompanionResourceContent.StressTestId, cancellationToken);
         Task<IReadOnlyList<MoodEntryDTO>> moodsTask = includeTodayMood
             ? progress.GetRecentMoodsAsync(3, cancellationToken)
             : Task.FromResult<IReadOnlyList<MoodEntryDTO>>([]);
-        await Task.WhenAll(quotesTask, stressTestTask, moodsTask).ConfigureAwait(false);
+        await Task.WhenAll(takenTask, quotesTask, stressTestTask, moodsTask).ConfigureAwait(false);
+        HashSet<string> recentlyTaken = [.. takenTask.Result.Where(pair => pair.Value.CompletedAt >= since).Select(pair => pair.Key)];
 
         DateTime now = Now();
         TestResultDTO? stressTest = stressTestTask.Result is { } result && (now - result.CompletedAt).TotalDays <= StressTestRelevantDays
