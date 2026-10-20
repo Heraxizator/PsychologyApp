@@ -347,7 +347,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
             cancellationToken: cancellationToken)).ConfigureAwait(false);
     }
 
-    public async Task RecordMoodAsync(MoodEntryDTO entry, CancellationToken cancellationToken = default)
+    public async Task<long> RecordMoodAsync(MoodEntryDTO entry, CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
         await using SqliteTransaction transaction =
@@ -355,7 +355,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
 
         try
         {
-            await connection.ExecuteAsync(DapperCommandFactory.Create(
+            long id = await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
                 UserProgressSql.InsertMoodEntry,
                 new
                 {
@@ -380,6 +380,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
                 cancellationToken)).ConfigureAwait(false);
 
             await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
+            return id;
         }
         catch
         {

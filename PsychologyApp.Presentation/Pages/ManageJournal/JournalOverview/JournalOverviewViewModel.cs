@@ -467,9 +467,11 @@ public sealed class JournalOverviewViewModel : BaseViewModel
 
             await JournalCsvExporter.ShareAsync(moods);
         }
-        catch
+        catch (Exception ex)
         {
-            await _dialogService.ShowAsync(AppStrings.JournalExportTitle, AppStrings.JournalExportEmpty);
+            // "No entries" here would tell the person their journal is empty when only the file or the share sheet failed.
+            BestEffort.Report(ex);
+            await _dialogService.ShowAsync(AppStrings.JournalExportTitle, AppStrings.JournalExportFailed);
         }
     }
 

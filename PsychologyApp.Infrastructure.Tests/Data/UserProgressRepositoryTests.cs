@@ -305,6 +305,18 @@ public sealed class UserProgressRepositoryTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task RecordMoodAsync_ReturnsTheIdThatCorrectsTheSameEntry()
+    {
+        long id = await _repository.RecordMoodAsync(new MoodEntryDTO { MoodLevel = 3, RecordedAt = DateTime.UtcNow });
+        await _repository.UpdateMoodEntryAsync(id, 4, "after the practice");
+
+        MoodEntryDTO mood = Assert.Single(await _repository.GetRecentMoodsAsync(5));
+        Assert.Equal(id, mood.MoodEntryId);
+        Assert.Equal(4, mood.MoodLevel);
+        Assert.Equal("after the practice", mood.Note);
+    }
+
+    [Fact]
     public async Task GetRecentMoodsAsync_ReturnsNewestFirst()
     {
         await _repository.RecordMoodAsync(new MoodEntryDTO { MoodLevel = 1, RecordedAt = DateTime.UtcNow.AddHours(-2) });

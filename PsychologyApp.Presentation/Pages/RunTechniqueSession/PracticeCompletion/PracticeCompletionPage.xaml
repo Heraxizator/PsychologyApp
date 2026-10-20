@@ -38,6 +38,16 @@
                 <VerticalStackLayout.Behaviors>
                     <behaviors:StaggerChildrenBehavior />
                 </VerticalStackLayout.Behaviors>
+                <Border
+                    Style="{StaticResource BrandCardStyle}"
+                    IsVisible="{Binding IsCrisis}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource DangerSurface}, Dark={StaticResource DangerSurfaceDark}}">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="{Binding CrisisText}" Style="{StaticResource BodyStyle}" />
+                        <ui:ButtonView BodyText="{Binding CrisisButtonText}" TapCommand="{Binding CrisisCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+
                 <!-- What was written in the practice, question by question: the thought and its balanced answer stay in sight. -->
                 <Border Style="{StaticResource BrandCardStyle}" IsVisible="{Binding HasAnswers}">
                     <VerticalStackLayout Spacing="12">

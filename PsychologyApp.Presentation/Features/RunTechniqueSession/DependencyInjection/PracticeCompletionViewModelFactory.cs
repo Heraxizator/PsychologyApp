@@ -1,3 +1,4 @@
+using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.App.Providers;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
@@ -14,6 +15,7 @@ public interface IPracticeCompletionViewModelFactory
 public sealed class PracticeCompletionViewModelFactory(
     IUserProgressService userProgressService,
     NextPracticeResolver nextPracticeResolver,
+    ICrisisDetector crisisDetector,
     PsychologyApp.Application.Practice.ITechniqueCatalogService techniqueCatalog,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IPracticeCompletionViewModelFactory
 {
@@ -26,6 +28,7 @@ public sealed class PracticeCompletionViewModelFactory(
             ResolveNavigation(navigationServiceFactory, page),
             userProgressService,
             nextPracticeResolver,
+            crisisDetector,
             streakDays,
             completedItemKey,
             sessionResultId,

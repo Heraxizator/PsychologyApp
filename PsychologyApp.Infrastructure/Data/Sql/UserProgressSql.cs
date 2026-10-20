@@ -127,6 +127,7 @@ internal static class UserProgressSql
     internal const string InsertMoodEntry = """
         INSERT INTO MoodEntries (MoodLevel, Note, RecordedAt)
         VALUES (@MoodLevel, @Note, @RecordedAt);
+        SELECT last_insert_rowid();
         """;
 
     internal const string InsertMoodCompletion = """

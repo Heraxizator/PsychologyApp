@@ -1077,6 +1077,9 @@
   <data name="JournalExportEmpty" xml:space="preserve">
     <value>Нет записей для экспорта</value>
   </data>
+  <data name="JournalExportFailed" xml:space="preserve">
+    <value>Не удалось подготовить файл. Записи на месте, попробуйте ещё раз.</value>
+  </data>
   <data name="JournalSlotFullHint" xml:space="preserve">
     <value>В этот день уже две отметки — выберите Утро или Вечер</value>
   </data>
@@ -1130,6 +1133,9 @@
   </data>
   <data name="PracticeCompletedTitle" xml:space="preserve">
     <value>Готово!</value>
+  </data>
+  <data name="PracticeCrisis" xml:space="preserve">
+    <value>То, что вы написали, звучит очень тяжело. Вы не одни: вот куда можно обратиться прямо сейчас.</value>
   </data>
   <data name="ProfileMoodNotesTitle" xml:space="preserve">
     <value>Заметки к настроению</value>

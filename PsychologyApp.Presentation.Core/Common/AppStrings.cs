@@ -472,6 +472,7 @@ public static partial class AppStrings
     public static string JournalExportLabel => R(nameof(JournalExportLabel));
     public static string JournalExportTitle => R(nameof(JournalExportTitle));
     public static string JournalExportEmpty => R(nameof(JournalExportEmpty));
+    public static string JournalExportFailed => R(nameof(JournalExportFailed));
     public static string JournalSlotFullHint => R(nameof(JournalSlotFullHint));
     public static string MoodNotesEmpty => R(nameof(MoodNotesEmpty));
     public static string JournalNeedMoodToSave => R(nameof(JournalNeedMoodToSave));
@@ -509,6 +510,7 @@ public static partial class AppStrings
     public static string PracticeReflectionSectionTitle => R(nameof(PracticeReflectionSectionTitle));
     public static string PracticeLastNoteTitle => R(nameof(PracticeLastNoteTitle));
     public static string PracticeCompletedTitle => R(nameof(PracticeCompletedTitle));
+    public static string PracticeCrisis => R(nameof(PracticeCrisis));
     public static string PracticeCompletedBody(int streak) => F(nameof(PracticeCompletedBody), streak);
     public static bool IsStreakMilestone(int streak) =>
         streak is 3 or 7 or 14 or 30;

@@ -298,7 +298,7 @@ public sealed class ClinicalCareServiceTests
         public Task<string?> GetSessionDraftAsync(string techniqueKey, CancellationToken cancellationToken = default) => Task.FromResult<string?>(null);
         public Task<IReadOnlySet<string>> GetSessionDraftKeysAsync(IReadOnlyList<string> techniqueKeys, CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlySet<string>>(new HashSet<string>());
         public Task DeleteSessionDraftAsync(string techniqueKey, CancellationToken cancellationToken = default) => Task.CompletedTask;
-        public Task RecordMoodAsync(int moodLevel, string? note = null, DateTime? recordedAtUtc = null, CancellationToken cancellationToken = default) => Task.CompletedTask;
+        public Task<long> RecordMoodAsync(int moodLevel, string? note = null, DateTime? recordedAtUtc = null, CancellationToken cancellationToken = default) => Task.FromResult(0L);
         public Task UpdateMoodEntryAsync(long moodEntryId, int moodLevel, string? note = null, CancellationToken cancellationToken = default) => Task.CompletedTask;
         public Task DeleteMoodEntryAsync(long moodEntryId, CancellationToken cancellationToken = default) => Task.CompletedTask;
         public IReadOnlyList<MoodEntryDTO> Moods { get; init; } = [];

@@ -28,7 +28,7 @@ public interface IUserProgressService
     Task<IReadOnlySet<string>> GetSessionDraftKeysAsync(IReadOnlyList<string> techniqueKeys, CancellationToken cancellationToken = default);
     Task DeleteSessionDraftAsync(string techniqueKey, CancellationToken cancellationToken = default);
 
-    Task RecordMoodAsync(int moodLevel, string? note = null, DateTime? recordedAtUtc = null, CancellationToken cancellationToken = default);
+    Task<long> RecordMoodAsync(int moodLevel, string? note = null, DateTime? recordedAtUtc = null, CancellationToken cancellationToken = default);
     Task UpdateMoodEntryAsync(long moodEntryId, int moodLevel, string? note = null, CancellationToken cancellationToken = default);
     Task DeleteMoodEntryAsync(long moodEntryId, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<MoodEntryDTO>> GetRecentMoodsAsync(int limit = 7, CancellationToken cancellationToken = default);

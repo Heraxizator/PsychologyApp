@@ -132,7 +132,7 @@ public sealed class UserProgressService(IUserProgressRepository repository) : IU
     public Task DeleteSessionDraftAsync(string techniqueKey, CancellationToken cancellationToken = default) =>
         repository.DeleteSessionDraftAsync(techniqueKey, cancellationToken);
 
-    public Task RecordMoodAsync(
+    public Task<long> RecordMoodAsync(
         int moodLevel,
         string? note = null,
         DateTime? recordedAtUtc = null,

@@ -1,3 +1,4 @@
+using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Practice;
 using PsychologyApp.Application.UserProgress;
@@ -16,16 +17,19 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
     private readonly INavigationService _navigationService;
     private readonly IUserProgressService _userProgressService;
     private readonly NextPracticeResolver _nextPracticeResolver;
+    private readonly ICrisisDetector _crisisDetector;
     private TechniqueId? _nextTechniqueId;
     private long? _sessionResultId;
     private int? _preIntensity;
     private long? _lifetimeCount;
+    private long? _moodEntryId;
     private readonly ITechniqueCatalogService? _techniqueCatalog;
 
     public PracticeCompletionViewModel(
         INavigationService navigationService,
         IUserProgressService userProgressService,
         NextPracticeResolver nextPracticeResolver,
+        ICrisisDetector crisisDetector,
         int streakDays,
         string? completedItemKey = null,
         long? sessionResultId = null,
@@ -35,6 +39,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         _techniqueCatalog = techniqueCatalog;
         _userProgressService = userProgressService;
         _nextPracticeResolver = nextPracticeResolver;
+        _crisisDetector = crisisDetector;
         _sessionResultId = sessionResultId;
         StreakDays = streakDays;
         RecordMoodCommand = new AsyncCommand<object?>(async parameter =>
@@ -52,6 +57,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         NextPracticeCommand = new AsyncCommand(StartNextPracticeAsync);
         OpenJournalCommand = new AsyncCommand(() => _navigationService.GoToJournalAsync());
         GoHomeCommand = new AsyncCommand(() => _navigationService.GoToRootAsync());
+        CrisisCommand = new AsyncCommand(() => _navigationService.GoToCrisisHubAsync());
         LoadBeforeMoodAsync().FireAndForget();
         LoadSessionOutcomeAsync().FireAndForget();
         LoadNextPracticeAsync(completedItemKey).FireAndForget();
@@ -134,12 +140,33 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         ? AppStrings.PracticeSudsDelta(pre, post)
         : string.Empty;
 
+    // A next practice is a suggestion, and none is offered when what was written reads like a crisis.
     private bool _hasNextPractice;
     public bool HasNextPractice
     {
-        get => _hasNextPractice;
+        get => _hasNextPractice && !_isCrisis;
         private set => SetProperty(ref _hasNextPractice, value);
     }
+
+    /// <summary>
+    /// Practice answers and the note are where people write what they would not say in the chat; they get the same local
+    /// check as the journal and the chat, and the screen then offers the help page.
+    /// </summary>
+    private bool _isCrisis;
+    public bool IsCrisis
+    {
+        get => _isCrisis;
+        private set
+        {
+            if (SetProperty(ref _isCrisis, value))
+            {
+                OnPropertyChanged(nameof(HasNextPractice));
+            }
+        }
+    }
+
+    public string CrisisText => AppStrings.PracticeCrisis;
+    public string CrisisButtonText => AppStrings.CrisisHubTitle;
 
     private string _nextPracticeCaption = string.Empty;
     public string NextPracticeCaption
@@ -221,6 +248,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
     public ICommand NextPracticeCommand { get; }
     public ICommand OpenJournalCommand { get; }
     public ICommand GoHomeCommand { get; }
+    public ICommand CrisisCommand { get; }
 
     protected override void RefreshLocalizedProperties()
     {
@@ -246,7 +274,9 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
             nameof(HasMoodDelta),
             nameof(MoodDeltaText),
             nameof(NextPracticeCaption),
-            nameof(NextPracticeReason));
+            nameof(NextPracticeReason),
+            nameof(CrisisText),
+            nameof(CrisisButtonText));
     }
 
     private void NotifyMoodDelta()
@@ -279,6 +309,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
 
         PsychologyApp.Application.Models.Practice.BuiltInTechniqueDefinition definition = await _techniqueCatalog.GetAsync(techniqueId);
         IReadOnlyList<PracticeAnswer> answers = PracticeAnswers.FromPayload(result.PayloadJson, definition.Entries ?? []);
+        bool crisis = answers.Any(answer => _crisisDetector.IsCrisis(answer.Answer));
         await UiThread.RunAsync(() =>
         {
             foreach (PracticeAnswer answer in answers)
@@ -287,6 +318,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
             }
 
             OnPropertyChanged(nameof(HasAnswers));
+            IsCrisis |= crisis;
         });
     }
 
@@ -411,7 +443,17 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
     {
         SelectedMoodLevel = moodLevel;
         string? note = string.IsNullOrWhiteSpace(ReflectionNote) ? null : ReflectionNote.Trim();
-        await _userProgressService.RecordMoodAsync(moodLevel, note);
+        IsCrisis |= _crisisDetector.IsCrisis(note);
+
+        // Changing one's mind about the face corrects the same check-in: each tap used to add another journal entry.
+        if (_moodEntryId is long entryId)
+        {
+            await _userProgressService.UpdateMoodEntryAsync(entryId, moodLevel, note);
+        }
+        else
+        {
+            _moodEntryId = await _userProgressService.RecordMoodAsync(moodLevel, note);
+        }
 
         if (note is not null && _sessionResultId is long sessionResultId)
         {

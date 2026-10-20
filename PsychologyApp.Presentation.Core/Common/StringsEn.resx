@@ -1077,6 +1077,9 @@
   <data name="JournalExportEmpty" xml:space="preserve">
     <value>No entries to export</value>
   </data>
+  <data name="JournalExportFailed" xml:space="preserve">
+    <value>Could not prepare the file. Your entries are safe; please try again.</value>
+  </data>
   <data name="JournalSlotFullHint" xml:space="preserve">
     <value>This day already has two check-ins — pick Morning or Evening</value>
   </data>
@@ -1130,6 +1133,9 @@
   </data>
   <data name="PracticeCompletedTitle" xml:space="preserve">
     <value>Done!</value>
+  </data>
+  <data name="PracticeCrisis" xml:space="preserve">
+    <value>What you wrote sounds very hard. You are not alone: here is where to turn right now.</value>
   </data>
   <data name="ProfileMoodNotesTitle" xml:space="preserve">
     <value>Mood notes</value>
