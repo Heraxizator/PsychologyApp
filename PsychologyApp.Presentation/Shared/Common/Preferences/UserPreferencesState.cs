@@ -1,6 +1,10 @@
 namespace PsychologyApp.Presentation.Shared.Common;
 
-public sealed class UserPreferencesState
+/// <summary>
+/// The settings as one immutable value. A change is written as <c>state with { … }</c>, so a setting added later is carried
+/// along by every change instead of being reset by a copy that lists the fields by hand and forgets the new one.
+/// </summary>
+public sealed record UserPreferencesState
 {
     public string Language { get; init; } = UserPreferences.DefaultLanguage;
     public string Theme { get; init; } = UserPreferences.DefaultTheme;

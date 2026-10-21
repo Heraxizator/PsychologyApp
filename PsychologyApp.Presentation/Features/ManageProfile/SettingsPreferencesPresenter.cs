@@ -67,7 +67,8 @@ public sealed class SettingsPreferencesPresenter
         int chatReminderHour,
         string onboardingConcern,
         UserPreferencesState savedState) =>
-        new()
+        // Everything the settings screen does not edit (whether onboarding was done) stays as saved.
+        savedState with
         {
             Language = UserPreferences.ParseLanguageKey(language),
             Theme = UserPreferences.ParseThemeKey(theme),
@@ -84,7 +85,6 @@ public sealed class SettingsPreferencesPresenter
             MoodReminderHour = UserPreferences.NormalizeMoodReminderHour(moodReminderHour),
             ChatRemindersEnabled = chatRemindersEnabled,
             ChatReminderHour = UserPreferences.NormalizeChatReminderHour(chatReminderHour),
-            HasCompletedOnboarding = savedState.HasCompletedOnboarding,
             OnboardingConcern = UserPreferences.NormalizeOnboardingConcernKey(onboardingConcern)
         };
 

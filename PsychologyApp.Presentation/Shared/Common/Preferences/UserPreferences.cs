@@ -62,35 +62,14 @@ public static partial class UserPreferences
 
     public static string OnboardingConcern => Current.OnboardingConcern;
 
-    /// <summary>A copy the caller may change and pass to <see cref="Save"/>.</summary>
-    public static UserPreferencesState Load() => Copy(Current);
+    /// <summary>The current settings; change them with <c>with { … }</c> and pass the result to <see cref="Save"/>.</summary>
+    public static UserPreferencesState Load() => Current;
 
     // Every localized string reads the language through Load (AppStrings.LanguageProvider), so a screen open asked
     // SharedPreferences for ~20 keys over JNI hundreds of times. All writes go through Save, which refreshes this cache.
     private static UserPreferencesState? _persistedCache;
 
     private static UserPreferencesState Current => _inMemoryState ?? (_persistedCache ??= ReadPersisted());
-
-    private static UserPreferencesState Copy(UserPreferencesState s) => new()
-    {
-        Language = s.Language,
-        Theme = s.Theme,
-        Color = s.Color,
-        Form = s.Form,
-        Size = s.Size,
-        IsBold = s.IsBold,
-        QuestionnaireAutoAdvance = s.QuestionnaireAutoAdvance,
-        HasCompletedOnboarding = s.HasCompletedOnboarding,
-        OnboardingConcern = s.OnboardingConcern,
-        PracticeRemindersEnabled = s.PracticeRemindersEnabled,
-        PracticeReminderHour = s.PracticeReminderHour,
-        QuoteRemindersEnabled = s.QuoteRemindersEnabled,
-        QuoteReminderHour = s.QuoteReminderHour,
-        MoodRemindersEnabled = s.MoodRemindersEnabled,
-        MoodReminderHour = s.MoodReminderHour,
-        ChatRemindersEnabled = s.ChatRemindersEnabled,
-        ChatReminderHour = s.ChatReminderHour
-    };
 
     private static UserPreferencesState ReadPersisted()
     {
@@ -128,7 +107,7 @@ public static partial class UserPreferences
             return;
         }
 
-        // Re-read after writing: the stored values are normalized, and the caller may keep mutating its instance.
+        // Re-read after writing: the stored values are normalized, so the cache is rebuilt from what was actually stored.
         _persistedCache = null;
 
         Preferences.Set(LanguageKey, NormalizeLanguageKey(state.Language));
@@ -186,27 +165,14 @@ public static partial class UserPreferences
         int? practiceReminderHour = null)
     {
         UserPreferencesState current = Load();
-        Save(new UserPreferencesState
+        Save(current with
         {
-            Language = current.Language,
-            Theme = current.Theme,
-            Color = current.Color,
-            Form = current.Form,
-            Size = current.Size,
-            IsBold = current.IsBold,
-            QuestionnaireAutoAdvance = current.QuestionnaireAutoAdvance,
             HasCompletedOnboarding = true,
             OnboardingConcern = NormalizeOnboardingConcernKey(concern),
             PracticeRemindersEnabled = practiceRemindersEnabled ?? current.PracticeRemindersEnabled,
             PracticeReminderHour = practiceReminderHour is int hour
                 ? NormalizePracticeReminderHour(hour)
-                : current.PracticeReminderHour,
-            QuoteRemindersEnabled = current.QuoteRemindersEnabled,
-            QuoteReminderHour = current.QuoteReminderHour,
-            MoodRemindersEnabled = current.MoodRemindersEnabled,
-            MoodReminderHour = current.MoodReminderHour,
-            ChatRemindersEnabled = current.ChatRemindersEnabled,
-            ChatReminderHour = current.ChatReminderHour
+                : current.PracticeReminderHour
         });
         ChangedHandlers.Raise();
     }
@@ -239,27 +205,7 @@ public static partial class UserPreferences
 
     public static void ResetOnboardingCompletion()
     {
-        UserPreferencesState current = Load();
-        Save(new UserPreferencesState
-        {
-            Language = current.Language,
-            Theme = current.Theme,
-            Color = current.Color,
-            Form = current.Form,
-            Size = current.Size,
-            IsBold = current.IsBold,
-            QuestionnaireAutoAdvance = current.QuestionnaireAutoAdvance,
-            HasCompletedOnboarding = false,
-            OnboardingConcern = current.OnboardingConcern,
-            PracticeRemindersEnabled = current.PracticeRemindersEnabled,
-            PracticeReminderHour = current.PracticeReminderHour,
-            QuoteRemindersEnabled = current.QuoteRemindersEnabled,
-            QuoteReminderHour = current.QuoteReminderHour,
-            MoodRemindersEnabled = current.MoodRemindersEnabled,
-            MoodReminderHour = current.MoodReminderHour,
-            ChatRemindersEnabled = current.ChatRemindersEnabled,
-            ChatReminderHour = current.ChatReminderHour
-        });
+        Save(Load() with { HasCompletedOnboarding = false });
     }
 
     public static void ApplyTheme()
