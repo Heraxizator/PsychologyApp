@@ -66,7 +66,7 @@ public sealed class KeywordCrisisDetector : ICrisisDetector
             return false;
         }
 
-        string normalized = Normalize(text);
+        string normalized = UtteranceText.Normalize(text);
         foreach (string marker in Markers)
         {
             if (normalized.Contains(marker, StringComparison.Ordinal))
@@ -139,16 +139,5 @@ public sealed class KeywordCrisisDetector : ICrisisDetector
         }
 
         return false;
-    }
-
-    private static string Normalize(string text)
-    {
-        char[] chars = text.ToLowerInvariant()
-            .Replace('ё', 'е')
-            .Replace("'", string.Empty)
-            .Replace("’", string.Empty)
-            .Select(c => char.IsLetterOrDigit(c) ? c : ' ')
-            .ToArray();
-        return string.Join(' ', new string(chars).Split(' ', StringSplitOptions.RemoveEmptyEntries));
     }
 }

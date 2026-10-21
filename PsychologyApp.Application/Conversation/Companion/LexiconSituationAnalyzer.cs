@@ -109,7 +109,7 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
             return SituationAnalysis.Empty;
         }
 
-        string normalized = Normalize(text);
+        string normalized = UtteranceText.Normalize(text);
         string[] tokens = normalized.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         int[] offsets = new int[tokens.Length];
@@ -207,14 +207,6 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
         double second = ranked.Count > 1 ? ranked[1].Value : 0;
         CompanionEmotion secondary = ranked.Count > 1 && ranked[1].Value >= 2 && ranked[1].Value >= top * 0.6 ? ranked[1].Key : CompanionEmotion.Unknown;
         return new SituationAnalysis(ranked[0].Key, top / (top + second + 1), hasBody, intense, themes, secondary, persons, hasLoss, DetectEvent(normalized, tokens, offsets, hasLoss)) { IsFlashback = isFlashback, MentionsTrauma = mentionsTrauma };
-    }
-
-    private static string Normalize(string text)
-    {
-        char[] chars = text.ToLowerInvariant().Replace('ё', 'е').Replace("'", string.Empty).Replace("’", string.Empty)
-            .Select(c => char.IsLetterOrDigit(c) ? c : ' ')
-            .ToArray();
-        return string.Join(' ', new string(chars).Split(' ', StringSplitOptions.RemoveEmptyEntries));
     }
 
     private const int PhraseWordGap = 3;
