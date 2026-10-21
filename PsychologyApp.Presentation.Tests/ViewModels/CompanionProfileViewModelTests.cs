@@ -7,6 +7,7 @@ using Xunit;
 namespace PsychologyApp.Presentation.Tests.ViewModels;
 
 /// <summary>The companion's profile holds the two destructive actions of the chat (forget what it knows, delete every chat).</summary>
+[Collection("Localization")]
 public sealed class CompanionProfileViewModelTests
 {
     private readonly Mock<IChatService> _chat = new();

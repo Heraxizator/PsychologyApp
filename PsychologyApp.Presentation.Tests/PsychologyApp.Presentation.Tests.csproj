@@ -132,6 +132,9 @@
     <Compile Include="JournalNoteFactorsTests.cs" />
     <Compile Include="../PsychologyApp.Presentation/Shared/Common/TechniqueDefinitionMapper.cs" Link="Linked/ViewModels/TechniqueDefinitionMapper.cs" />
     <Compile Include="ViewModels\**\*.cs" />
+    <Compile Include="AsyncCommandTests.cs" />
+    <Compile Include="BaseViewModelLoadingOverlayTests.cs" />
+    <Compile Include="BaseViewModelPreferencesTests.cs" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">

@@ -1,37 +1,29 @@
-﻿using System.Reflection;
-using PsychologyApp.Presentation.Shared.Common;
+﻿using Moq;
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Shared.ViewModels;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
 
+/// <summary>A language or theme switch reaches every open screen: its texts are read again.</summary>
 public class BaseViewModelPreferencesTests
 {
     [Fact]
-    public void UserPreferencesChanged_InvokesRefreshLocalizedProperties()
+    public void A_settings_change_makes_the_screen_read_its_texts_again()
     {
-        var viewModel = new PreferencesStubViewModel();
+        Mock<IUserPreferencesStore> store = new();
+        PreferencesStubViewModel viewModel = new(store.Object);
         Assert.False(viewModel.Refreshed);
 
-        RaiseUserPreferencesChanged();
+        store.Raise(s => s.Changed += null);
 
         Assert.True(viewModel.Refreshed);
     }
 
-    private static void RaiseUserPreferencesChanged()
-    {
-        FieldInfo? field = typeof(UserPreferences).GetField(
-            "Changed",
-            BindingFlags.Static | BindingFlags.NonPublic);
-
-        if (field?.GetValue(null) is Action handler)
-        {
-            handler.Invoke();
-        }
-    }
-
     private sealed class PreferencesStubViewModel : BaseViewModel
     {
+        public PreferencesStubViewModel(IUserPreferencesStore store) => BindPreferences(store);
+
         public bool Refreshed { get; private set; }
 
         protected override void RefreshLocalizedProperties() => Refreshed = true;
