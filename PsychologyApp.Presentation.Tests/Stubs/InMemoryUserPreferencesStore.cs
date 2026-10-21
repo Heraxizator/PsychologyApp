@@ -4,10 +4,13 @@ using PsychologyApp.Presentation.Shared.Services.Preferences;
 
 namespace PsychologyApp.Presentation.Tests;
 
+/// <summary>The settings store without the device: what a test saves, the code under test reads back.</summary>
 public sealed class InMemoryUserPreferencesStore : IUserPreferencesStore
 {
     private UserPreferencesState _state = new();
     private TechniqueId? _pendingTechnique;
+    private string? _pendingQuoteFeed;
+    private bool _pendingOpenJournal;
 
     public event Action? Changed;
 
@@ -25,54 +28,16 @@ public sealed class InMemoryUserPreferencesStore : IUserPreferencesStore
 
     public void ApplyPreview(UserPreferencesState state) => _state = state;
 
-    public void CompleteOnboarding(
-        string concern,
-        bool? practiceRemindersEnabled = null,
-        int? practiceReminderHour = null)
-    {
-        _state = new UserPreferencesState
+    public void CompleteOnboarding(string concern, bool? practiceRemindersEnabled = null, int? practiceReminderHour = null) =>
+        Save(_state with
         {
-            Language = _state.Language,
-            Theme = _state.Theme,
-            Color = _state.Color,
-            Form = _state.Form,
-            Size = _state.Size,
-            IsBold = _state.IsBold,
-            QuestionnaireAutoAdvance = _state.QuestionnaireAutoAdvance,
             HasCompletedOnboarding = true,
             OnboardingConcern = concern,
             PracticeRemindersEnabled = practiceRemindersEnabled ?? _state.PracticeRemindersEnabled,
-            PracticeReminderHour = practiceReminderHour ?? _state.PracticeReminderHour,
-            QuoteRemindersEnabled = _state.QuoteRemindersEnabled,
-            QuoteReminderHour = _state.QuoteReminderHour,
-            MoodRemindersEnabled = _state.MoodRemindersEnabled,
-            MoodReminderHour = _state.MoodReminderHour
-        };
-        Changed?.Invoke();
-    }
+            PracticeReminderHour = practiceReminderHour ?? _state.PracticeReminderHour
+        });
 
-    public void ResetOnboardingCompletion()
-    {
-        _state = new UserPreferencesState
-        {
-            Language = _state.Language,
-            Theme = _state.Theme,
-            Color = _state.Color,
-            Form = _state.Form,
-            Size = _state.Size,
-            IsBold = _state.IsBold,
-            QuestionnaireAutoAdvance = _state.QuestionnaireAutoAdvance,
-            HasCompletedOnboarding = false,
-            OnboardingConcern = _state.OnboardingConcern,
-            PracticeRemindersEnabled = _state.PracticeRemindersEnabled,
-            PracticeReminderHour = _state.PracticeReminderHour,
-            QuoteRemindersEnabled = _state.QuoteRemindersEnabled,
-            QuoteReminderHour = _state.QuoteReminderHour,
-            MoodRemindersEnabled = _state.MoodRemindersEnabled,
-            MoodReminderHour = _state.MoodReminderHour
-        };
-        Changed?.Invoke();
-    }
+    public void ResetOnboardingCompletion() => Save(_state with { HasCompletedOnboarding = false });
 
     public void SetPendingTechnique(TechniqueId techniqueId) => _pendingTechnique = techniqueId;
 
@@ -80,6 +45,26 @@ public sealed class InMemoryUserPreferencesStore : IUserPreferencesStore
     {
         TechniqueId? pending = _pendingTechnique;
         _pendingTechnique = null;
+        return pending;
+    }
+
+    public void SetPendingOpenJournal() => _pendingOpenJournal = true;
+
+    public bool ConsumePendingOpenJournal()
+    {
+        bool pending = _pendingOpenJournal;
+        _pendingOpenJournal = false;
+        return pending;
+    }
+
+    public string PersistedLanguage => _state.Language;
+
+    public void SetPendingQuoteFeed(string feedKey) => _pendingQuoteFeed = feedKey;
+
+    public string? ConsumePendingQuoteFeed()
+    {
+        string? pending = _pendingQuoteFeed;
+        _pendingQuoteFeed = null;
         return pending;
     }
 }

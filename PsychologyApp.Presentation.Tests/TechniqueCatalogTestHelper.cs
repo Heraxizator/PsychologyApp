@@ -1,6 +1,7 @@
 using PsychologyApp.Application.Practice;
 using PsychologyApp.Application.Recommendations;
 using PsychologyApp.Presentation.Features.Onboarding;
+using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Features.RunTechniqueSession.Index;
 
 namespace PsychologyApp.Presentation.Tests;

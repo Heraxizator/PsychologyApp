@@ -32,26 +32,27 @@ public sealed class ListTechniqueSessionHelperTests
             "Polarity",
             startedAt);
 
+        // One write records the session and drops its draft, in one transaction, so a crash cannot keep the draft of a finished session.
         progress.Verify(
-            p => p.RecordTechniqueCompletionAsync(
-                TechniqueId.Polarity.ToString(),
-                "Practice",
-                "Polarity",
-                It.IsAny<int>(),
+            p => p.RecordSessionOutcomeAsync(
+                It.Is<SessionOutcomeRequest>(r =>
+                    r.ItemKey == TechniqueId.Polarity.ToString()
+                    && r.ModuleName == "Practice"
+                    && r.PageName == "Polarity"
+                    && r.DeleteDraft),
                 It.IsAny<CancellationToken>()),
             Times.Once);
-        progress.Verify(
-            p => p.DeleteSessionDraftAsync(TechniqueId.Polarity.ToString(), It.IsAny<CancellationToken>()),
-            Times.Once);
+        navigation.Verify(n => n.GoToPracticeCompletionAsync(It.IsAny<int>(), It.IsAny<string?>(), It.IsAny<long?>()), Times.Once);
     }
 }
 
+[Collection("Localization")]
 public sealed class QuestionnaireSubmissionServiceTests
 {
     [Fact]
     public void TryValidateAllAnswered_ReturnsFalse_WhenAnyQuestionUnanswered()
     {
-        QuestionnaireSubmissionService service = new();
+        QuestionnaireSubmissionService service = new(new QuestionnaireScoringService());
         List<Question> questions =
         [
             new()
@@ -78,7 +79,7 @@ public sealed class QuestionnaireSubmissionServiceTests
     [Fact]
     public void Calculate_SumsSelectedBallsAndMapsAnalyzer()
     {
-        QuestionnaireSubmissionService service = new();
+        QuestionnaireSubmissionService service = new(new QuestionnaireScoringService());
         List<Question> questions =
         [
             new()
@@ -101,12 +102,10 @@ public sealed class QuestionnaireSubmissionServiceTests
 
         QuestionnaireSubmission submission = service.Calculate(
             questions,
-            score => $"Score {score}",
-            new TestSessionInfo { TestId = "beck", AnalyzerId = "beck" });
+            "beck");
 
         Assert.Equal(5, submission.Score);
-        Assert.Equal("Score 5", submission.Interpretation);
-        Assert.Equal(TechniqueId.Paper, submission.RecommendedTechnique);
+        Assert.Equal(TestScoreLabelMapper.GetSummary("beck", 5), submission.Interpretation);
         Assert.False(string.IsNullOrWhiteSpace(submission.InterpretationDetail));
     }
 
@@ -114,7 +113,7 @@ public sealed class QuestionnaireSubmissionServiceTests
     public async Task SaveAsync_SkipsWhenTestIdMissing()
     {
         Mock<IUserProgressService> progress = new();
-        QuestionnaireSubmissionService service = new();
+        QuestionnaireSubmissionService service = new(new QuestionnaireScoringService());
 
         await service.SaveAsync(
             progress.Object,
@@ -132,7 +131,7 @@ public sealed class QuestionnaireSubmissionServiceTests
     public async Task SaveAsync_PersistsResultWhenSessionPresent()
     {
         Mock<IUserProgressService> progress = new();
-        QuestionnaireSubmissionService service = new();
+        QuestionnaireSubmissionService service = new(new QuestionnaireScoringService());
 
         await service.SaveAsync(
             progress.Object,

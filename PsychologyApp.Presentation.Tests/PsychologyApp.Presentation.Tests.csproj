@@ -135,6 +135,45 @@
     <Compile Include="AsyncCommandTests.cs" />
     <Compile Include="BaseViewModelLoadingOverlayTests.cs" />
     <Compile Include="BaseViewModelPreferencesTests.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTests/TestRetakeOperations.cs" Link="Linked/Features/RunTests/TestRetakeOperations.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTests/TestHistoryLoader.cs" Link="Linked/Features/RunTests/TestHistoryLoader.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTests/TestsListLoader.cs" Link="Linked/Features/RunTests/TestsListLoader.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/FindProblem/FindProblemViewModel.Content.cs" Link="Linked/Pages/RunTests/FindProblem/FindProblemViewModel.Content.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/FindProblem/FindProblemViewModel.cs" Link="Linked/Pages/RunTests/FindProblem/FindProblemViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/FindProblem/FindProblemViewModel.Labels.cs" Link="Linked/Pages/RunTests/FindProblem/FindProblemViewModel.Labels.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/FindProblem/FindProblemViewModel.Meta.cs" Link="Linked/Pages/RunTests/FindProblem/FindProblemViewModel.Meta.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/FindProblem/FindProblemViewModel.Reload.cs" Link="Linked/Pages/RunTests/FindProblem/FindProblemViewModel.Reload.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Entities/Test/AlgorithmRow.cs" Link="Linked/Entities/Test/AlgorithmRow.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Entities/Test/TestHistoryEntryItem.cs" Link="Linked/Entities/Test/TestHistoryEntryItem.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Entities/Test/TestItem.cs" Link="Linked/Entities/Test/TestItem.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTests/TestsListLoadResult.cs" Link="Linked/Features/RunTests/TestsListLoadResult.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/CatalogListPolicy.cs" Link="Linked/Features/CatalogListPolicy.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Entities/Test/TestItemFactory.cs" Link="Linked/Entities/Test/TestItemFactory.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTests/TestScoreChartRangeResolver.cs" Link="Linked/Features/RunTests/TestScoreChartRangeResolver.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageJournal/JournalScreenCoordinator.cs" Link="Linked/Features/ManageJournal/JournalScreenCoordinator.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageJournal/JournalEditorContext.cs" Link="Linked/Features/ManageJournal/JournalEditorContext.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/ListTechniqueSessionHelper.cs" Link="Linked/Features/RunTechniqueSession/ListTechniqueSessionHelper.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/TechniqueSessionCompletionService.cs" Link="Linked/Features/RunTechniqueSession/TechniqueSessionCompletionService.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/PracticeCompletionNavigator.cs" Link="Linked/Shared/Common/PracticeCompletionNavigator.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Abstractions/ITestAssetReader.cs" Link="Linked/Shared/Abstractions/ITestAssetReader.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/Index/TechniqueCatalogGateway.cs" Link="Linked/Features/RunTechniqueSession/Index/TechniqueCatalogGateway.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/TodayRecommendationResolver.cs" Link="Linked/Features/RunTechniqueSession/TodayRecommendationResolver.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/Infrastructure/IDatabaseReadySignal.cs" Link="Linked/Shared/Common/Infrastructure/IDatabaseReadySignal.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/TestsList/TestsListViewModel.cs" Link="Linked/Pages/RunTests/TestsList/TestsListViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/TestsList/TestsListViewModel.Labels.cs" Link="Linked/Pages/RunTests/TestsList/TestsListViewModel.Labels.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/TestsList/TestsListViewModel.Load.cs" Link="Linked/Pages/RunTests/TestsList/TestsListViewModel.Load.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/TodayRecommendationReasonFormatter.cs" Link="Linked/Features/RunTechniqueSession/TodayRecommendationReasonFormatter.cs" />
+    <Compile Include="FindProblemViewModelTests.cs" />
+    <Compile Include="Stubs\TestNavigationService.cs" />
+    <Compile Include="TestRunTestHelpers.cs" />
+    <Compile Include="TestItemFactoryTests.cs" />
+    <Compile Include="JournalScreenCoordinatorTests.cs" />
+    <Compile Include="Phase6LoaderTests.cs" />
+    <Compile Include="TestsListViewModelTests.cs" />
+    <Compile Include="Stubs\FakeTestAssetReader.cs" />
+    <Compile Include="Stubs\InMemoryUserPreferencesStore.cs" />
+    <Compile Include="TechniqueCatalogTestHelper.cs" />
+    <Compile Include="TestDatabaseReady.cs" />
     <Compile Include="TestTrendComparerTests.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/ITechniqueMessenger.cs" Link="Linked/Features/RunTechniqueSession/ITechniqueMessenger.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.cs" />

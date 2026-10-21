@@ -4,7 +4,41 @@ using System.Windows.Input;
 
 namespace Microsoft.Maui.Controls
 {
-    public interface INavigation;
+    public class Page;
+
+    public class ContentPage : Page;
+
+    /// <summary>The MAUI navigation contract, member for member, so a test can stand in for the page stack.</summary>
+    public interface INavigation
+    {
+        IReadOnlyList<Page> NavigationStack { get; }
+
+        IReadOnlyList<Page> ModalStack { get; }
+
+        void InsertPageBefore(Page page, Page before);
+
+        Task<Page> PopAsync();
+
+        Task<Page> PopAsync(bool animated);
+
+        Task<Page> PopModalAsync();
+
+        Task<Page> PopModalAsync(bool animated);
+
+        Task PopToRootAsync();
+
+        Task PopToRootAsync(bool animated);
+
+        Task PushAsync(Page page);
+
+        Task PushAsync(Page page, bool animated);
+
+        Task PushModalAsync(Page page);
+
+        Task PushModalAsync(Page page, bool animated);
+
+        void RemovePage(Page page);
+    }
 
     public interface IValueConverter
     {
@@ -50,6 +84,8 @@ namespace Microsoft.Maui.Controls
 
 namespace Microsoft.Maui.ApplicationModel
 {
+    public sealed class FeatureNotSupportedException : Exception;
+
     public static class MainThread
     {
         public static bool IsMainThread => true;
@@ -206,6 +242,48 @@ namespace Microsoft.Maui.ApplicationModel.Communication
 
         public void Open(string number) => Dialled.Add(number);
     }
+
+    public sealed class EmailMessage
+    {
+        public string? Subject { get; set; }
+
+        public string? Body { get; set; }
+
+        public List<string>? To { get; set; }
+    }
+
+    public sealed class Email
+    {
+        public static Email Default { get; } = new();
+
+        public static List<EmailMessage> Composed { get; } = [];
+
+        public Task ComposeAsync(EmailMessage message)
+        {
+            Composed.Add(message);
+            return Task.CompletedTask;
+        }
+    }
+
+    public sealed class SmsMessage(string body, IEnumerable<string> recipients)
+    {
+        public string Body { get; } = body;
+
+        public List<string> Recipients { get; } = [.. recipients];
+    }
+
+    public sealed class Sms
+    {
+        public static Sms Default { get; } = new();
+
+        public static List<SmsMessage> Composed { get; } = [];
+
+        public Task ComposeAsync(SmsMessage message)
+        {
+            Composed.Add(message);
+            return Task.CompletedTask;
+        }
+    }
 }
 
 namespace Microsoft.Maui.Storage
@@ -250,12 +328,28 @@ namespace Microsoft.Maui.ApplicationModel.DataTransfer
         public ShareFile? File { get; set; }
     }
 
+    public sealed class ShareTextRequest
+    {
+        public string? Title { get; set; }
+
+        public string? Text { get; set; }
+    }
+
     public sealed class Share
     {
         public static Share Default { get; } = new();
 
         /// <summary>The content of every file that was shared, read while the file still existed.</summary>
         public static List<(string Title, string FileName, string Content)> Shared { get; } = [];
+
+        /// <summary>The text of every text share.</summary>
+        public static List<string> SharedTexts { get; } = [];
+
+        public Task RequestAsync(ShareTextRequest request)
+        {
+            SharedTexts.Add(request.Text ?? string.Empty);
+            return Task.CompletedTask;
+        }
 
         public Task RequestAsync(ShareFileRequest request)
         {
