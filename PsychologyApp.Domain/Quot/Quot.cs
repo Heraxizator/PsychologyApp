@@ -25,12 +25,6 @@ public class Quot : Entity
         };
     }
 
-    public void EditTitle(string title)
-    {
-        ArgumentException.ThrowIfNullOrWhiteSpace(title);
-        Title = title;
-    }
-
     public void EditText(string text)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(text);

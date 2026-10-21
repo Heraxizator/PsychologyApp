@@ -10,9 +10,6 @@ internal static class ShellNavigationResolver
         _ => null
     };
 
-    internal static INavigation? TryGetActiveShellTabNavigation() =>
-        TryGetActiveTabStackNavigation();
-
     internal static INavigation? TryGetActiveTabStackNavigation()
     {
         if (Shell.Current?.CurrentItem is not TabBar tabBar)

@@ -147,15 +147,6 @@ public sealed class QuoteFeedCoordinatorTests
     }
 
     [Fact]
-    public void TrySwitchFeed_ReturnsTrueWhenModeChanges()
-    {
-        QuoteFeedCoordinator coordinator = CreateCoordinator();
-
-        Assert.True(coordinator.TrySwitchFeed(QuoteFeedMode.Favorites));
-        Assert.False(coordinator.TrySwitchFeed(QuoteFeedMode.Favorites));
-    }
-
-    [Fact]
     public async Task ShouldShowAllReadEmptyAsync_OnlyForAllFeedWithNoItems()
     {
         QuoteFeedCoordinator coordinator = CreateCoordinator();
@@ -163,7 +154,7 @@ public sealed class QuoteFeedCoordinatorTests
         quotService.Setup(s => s.IsAllCaughtUpAsync(It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
         Assert.True(await coordinator.ShouldShowAllReadEmptyAsync(collectionCount: 0, isDone: true, quotService.Object, CancellationToken.None));
-        coordinator.TrySwitchFeed(QuoteFeedMode.Favorites);
+        coordinator.SetFeedMode(QuoteFeedMode.Favorites);
         Assert.False(await coordinator.ShouldShowAllReadEmptyAsync(collectionCount: 0, isDone: true, quotService.Object, CancellationToken.None));
     }
 

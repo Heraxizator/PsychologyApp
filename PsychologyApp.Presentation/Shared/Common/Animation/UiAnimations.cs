@@ -22,15 +22,12 @@ public static class UiAnimations
     public const double PressTranslationY = 1;
     public const double PulseScaleTo = 1.04;
     public const double ShakeOffset = 4;
-    public const double FocusScale = 1.01;
     public const double SlideOffset = 11;
     public const double LiteSlideOffset = 7;
     public const double TabReappearSlideOffset = 4;
     public const double RevealScaleFrom = 0.97;
     public const double CrossfadeScaleFrom = 0.98;
 
-    public static Easing StandardEasing { get; } = Easing.CubicOut;
-    public static Easing EnterEasing { get; } = Easing.CubicOut;
     public static Easing EnterTransformEasing { get; } = Easing.SinOut;
     public static Easing EnterOpacityEasing { get; } = Easing.CubicOut;
     public static Easing ExitEasing { get; } = Easing.CubicIn;
@@ -65,15 +62,6 @@ public static class UiAnimations
         view.TranslationY = 0;
         view.Scale = 1;
     }
-
-    public static async Task SafeRevealAsync(
-        VisualElement? view,
-        double y = SlideOffset,
-        uint duration = MicroDuration,
-        bool allowHidden = false,
-        int delayMs = 0,
-        CancellationToken cancellationToken = default) =>
-        await SafeRevealPremiumAsync(view, y, duration, allowHidden, delayMs, cancellationToken);
 
     public static async Task SafeRevealPremiumAsync(
         VisualElement? view,
@@ -327,22 +315,6 @@ public static class UiAnimations
         return tcs.Task;
     }
 
-    public static async Task PressScaleAsync(
-        VisualElement? view,
-        double scale = PressScale,
-        uint duration = MicroDuration)
-    {
-        if (view is null || !ShouldAnimate(view))
-        {
-            ResetVisualState(view);
-            return;
-        }
-
-        await view.ScaleToAsync(scale, duration / 2, EnterTransformEasing);
-        await view.ScaleToAsync(1, duration / 2, ReleaseEasing);
-        ResetVisualState(view);
-    }
-
     public static async Task SafePulseAsync(
         VisualElement? view,
         CancellationToken cancellationToken = default)
@@ -422,12 +394,6 @@ public static class UiAnimations
         await view.TranslateToAsync(baseX, view.TranslationY, FastDuration / 2, ReleaseEasing);
         ResetVisualState(view);
     }
-
-    public static async Task SafeFocusRingAsync(
-        Border? border,
-        bool focused,
-        CancellationToken cancellationToken = default) =>
-        await SafeInputFocusAsync(border, focused, cancellationToken);
 
     public static async Task SafeInputFocusAsync(
         Border? border,

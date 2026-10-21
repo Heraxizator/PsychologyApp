@@ -27,16 +27,4 @@ public class StatisticTests
         Assert.Throws<ArgumentOutOfRangeException>(() =>
             DomainStatistic.Create("Module", "Page", DateTime.UtcNow, -1));
     }
-
-    [Fact]
-    public void CreateWithDuration_ComputesElapsedSeconds()
-    {
-        DateTime started = new(2026, 6, 5, 10, 0, 0, DateTimeKind.Utc);
-        DateTime ended = started.AddSeconds(42);
-
-        var statistic = DomainStatistic.CreateWithDuration("Module", "Page", started, ended);
-
-        Assert.Equal(42, statistic.SecondsDuration);
-        Assert.Equal(ended, statistic.DateTime);
-    }
 }

@@ -455,7 +455,6 @@ public static partial class AppStrings
     public static string JournalStreakMetricLabel => R(nameof(JournalStreakMetricLabel));
     public static string JournalPeriodNavPrev => R(nameof(JournalPeriodNavPrev));
     public static string JournalPeriodNavNext => R(nameof(JournalPeriodNavNext));
-    public static string JournalOnThisDayLastYearEmpty => string.Empty;
     public static string JournalOnThisDayLastYear(int moodLevel, string? noteSnippet)
     {
         string mood = MoodLevelPill(moodLevel);
@@ -771,8 +770,6 @@ public static partial class AppStrings
     public static string CrisisHubSafetyPlanStepNumber1 => "1";
     public static string CrisisHubSafetyPlanStepNumber2 => "2";
     public static string CrisisHubSafetyPlanStepNumber3 => "3";
-    public static string CrisisHubSafetyPlanBody =>
-        $"{CrisisHubSafetyPlanStepNumber1}. {CrisisHubSafetyPlanStep1}\n{CrisisHubSafetyPlanStepNumber2}. {CrisisHubSafetyPlanStep2}\n{CrisisHubSafetyPlanStepNumber3}. {CrisisHubSafetyPlanStep3}";
     public static string CrisisHubHotlineTitle => R(nameof(CrisisHubHotlineTitle));
     public static string CrisisHubHotlineRu => R(nameof(CrisisHubHotlineRu));
     public static string CrisisHubHotlineRuNumber => "88002000122";
@@ -884,7 +881,6 @@ public static partial class AppStrings
     public static string RiskCheckOpenHelpNow => R(nameof(RiskCheckOpenHelpNow));
     public static string RiskCheckYes => R(nameof(RiskCheckYes));
     public static string RiskCheckNo => R(nameof(RiskCheckNo));
-    public static string RiskCheckSourceOnboarding => "onboarding";
     public static string RiskCheckSourcePeriodic => "periodic";
     public static string RiskCheckSourceManual => "manual";
     public static string RiskCheckSourceProfile => "profile";
@@ -1016,9 +1012,6 @@ public static partial class AppStrings
     /// <summary>The text for the key in the current language (StringsRu.resx / StringsEn.resx); a missing English text falls back to Russian.</summary>
     private static string R(string key) =>
         (IsEnglish(Language) ? EnglishTexts.GetString(key) : null) ?? RussianTexts.GetString(key) ?? key;
-
-    internal static string ResourceText(string key, bool english) =>
-        (english ? EnglishTexts : RussianTexts).GetString(key) ?? string.Empty;
 
     private static string F(string key, params object?[] args) =>
         string.Format(System.Globalization.CultureInfo.CurrentCulture, R(key), args);

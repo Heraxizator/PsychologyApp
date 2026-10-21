@@ -314,18 +314,4 @@ public sealed class JournalMoodLoaderTests
         Assert.Empty(snapshot.MonthCells);
         Assert.True(snapshot.YearCells.Count > 300);
     }
-
-    [Fact]
-    public async Task DeleteMoodAsync_CallsService()
-    {
-        Mock<IUserProgressService> progress = new();
-        progress
-            .Setup(p => p.DeleteMoodEntryAsync(7, It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
-
-        JournalMoodLoader loader = new(progress.Object);
-        await loader.DeleteMoodAsync(7);
-
-        progress.Verify(p => p.DeleteMoodEntryAsync(7, It.IsAny<CancellationToken>()), Times.Once);
-    }
 }

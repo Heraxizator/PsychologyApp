@@ -73,14 +73,6 @@ public class UiAnimationsTests
     }
 
     [Fact]
-    public async Task SafeRevealAsync_WithNullView_CompletesWithoutException()
-    {
-        Task task = UiAnimations.SafeRevealAsync(null);
-        await task;
-        Assert.True(task.IsCompletedSuccessfully);
-    }
-
-    [Fact]
     public async Task SafeRevealPremiumAsync_WithNullView_CompletesWithoutException()
     {
         Task task = UiAnimations.SafeRevealPremiumAsync(null);
@@ -100,14 +92,6 @@ public class UiAnimationsTests
     public async Task SlideInAsync_WithNullView_CompletesWithoutException()
     {
         Task task = UiAnimations.SlideInAsync(null);
-        await task;
-        Assert.True(task.IsCompletedSuccessfully);
-    }
-
-    [Fact]
-    public async Task PressScaleAsync_WithNullView_CompletesWithoutException()
-    {
-        Task task = UiAnimations.PressScaleAsync(null);
         await task;
         Assert.True(task.IsCompletedSuccessfully);
     }
@@ -162,14 +146,6 @@ public class UiAnimationsTests
     public async Task SafeShakeAsync_WithNullView_CompletesWithoutException()
     {
         Task task = UiAnimations.SafeShakeAsync(null);
-        await task;
-        Assert.True(task.IsCompletedSuccessfully);
-    }
-
-    [Fact]
-    public async Task SafeFocusRingAsync_WithNullBorder_CompletesWithoutException()
-    {
-        Task task = UiAnimations.SafeFocusRingAsync(null, true);
         await task;
         Assert.True(task.IsCompletedSuccessfully);
     }

@@ -28,10 +28,4 @@ public class Statistic : Entity
             SecondsDuration = secondsDuration
         };
     }
-
-    public static Statistic CreateWithDuration(string moduleName, string pageName, DateTime startedAt, DateTime endedAt)
-    {
-        long seconds = (long)Math.Max(0, (endedAt - startedAt).TotalSeconds);
-        return Create(moduleName, pageName, endedAt, seconds);
-    }
 }

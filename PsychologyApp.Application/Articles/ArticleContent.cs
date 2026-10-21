@@ -39,8 +39,6 @@ public static partial class ArticleContent
     private static ArticleBlock Cycle(string caption, params string[] steps) => new(ArticleBlockKind.Cycle, caption, steps);
 
     private static ArticleBlock TraumaChat(string title) => new(ArticleBlockKind.TraumaChat, title);
-
-    internal static ArticleBlock Todo(string text) => new(ArticleBlockKind.Task, text);
 }
 
 /// <summary>What is read aloud: the text a person reads, in order, without the links and buttons around it.</summary>

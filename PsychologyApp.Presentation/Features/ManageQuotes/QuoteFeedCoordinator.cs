@@ -21,20 +21,7 @@ public sealed class QuoteFeedCoordinator
 
     public QuoteFeedMode FeedMode => _feedMode;
 
-    public string? SelectedThemeKey => _selectedThemeKey;
-
     public void ResetKnownQuotes() => _knownQuoteTexts.Clear();
-
-    public bool TrySwitchFeed(QuoteFeedMode mode)
-    {
-        if (_feedMode == mode)
-        {
-            return false;
-        }
-
-        _feedMode = mode;
-        return true;
-    }
 
     public void SetFeedMode(QuoteFeedMode mode) => _feedMode = mode;
 

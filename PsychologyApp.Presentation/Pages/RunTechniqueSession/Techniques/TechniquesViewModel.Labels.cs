@@ -10,7 +10,6 @@ public partial class TechniquesViewModel
     public string PracticeCatalogHint => AppStrings.PracticeCatalogHint;
     public string CreateButtonText => AppStrings.PracticeCreate;
     public string TodayForYouLabel => AppStrings.TodayForYou;
-    public string TodayStartPracticeText => AppStrings.TodayStartPractice;
     public string PracticeEmptyTitle => AppStrings.PracticeEmptyTitle;
     public string PracticeEmptyBody => AppStrings.PracticeEmptyBody;
     public string LoadingText => AppStrings.PracticeLoadingText;

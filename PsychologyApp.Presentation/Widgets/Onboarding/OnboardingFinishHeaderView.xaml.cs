@@ -9,8 +9,6 @@ public partial class OnboardingFinishHeaderView : ContentView
         InitializeComponent();
     }
 
-    public VisualElement CheckCircleElement => CheckCircleBorder;
-
     public Task PulseCheckCircleAsync() =>
         UiAnimations.SafePulseAsync(CheckCircleBorder);
 }

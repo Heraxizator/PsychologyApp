@@ -15,7 +15,6 @@ public static class CompanionProtocolContent
 
     public const int ThinkBeliefBefore = 1;
     public const int ThinkBeliefAfter = 6;
-    public const int ThinkSteps = 7;
     public const int SolveSteps = 4;
     public const int DeeperSteps = 5;
 

@@ -33,7 +33,5 @@ public sealed class TestHistoryEntryItem
     public bool HasLuscherDetail => LuscherStandardDetail is not null || LuscherBriefDetail is not null;
     public bool HasStandardLuscherDetail => LuscherStandardDetail is not null;
     public bool HasBriefLuscherDetail => LuscherBriefDetail is not null;
-    public bool IsImproved => TrendKind is TestTrendKind.Improved;
     public bool IsWorse => TrendKind is TestTrendKind.Worse;
-    public bool IsSame => TrendKind is TestTrendKind.Same;
 }

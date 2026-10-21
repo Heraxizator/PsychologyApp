@@ -6,11 +6,6 @@ namespace PsychologyApp.Presentation.Features.ManageProfile;
 
 public sealed class SettingsPreferencesPresenter
 {
-    public string DefaultLanguageLabel => UserPreferences.GetLanguageLabel(UserPreferences.DefaultLanguage);
-    public string DefaultThemeLabel => UserPreferences.GetThemeLabel(UserPreferences.DefaultTheme);
-    public string DefaultColorLabel => UserPreferences.GetColorLabel(UserPreferences.DefaultColor);
-    public string DefaultFormLabel => UserPreferences.GetFormLabel(UserPreferences.DefaultForm);
-    public string DefaultSizeLabel => UserPreferences.GetSizeLabel(UserPreferences.DefaultSize);
 
     public void ApplyKeysFromState(
         UserPreferencesState state,

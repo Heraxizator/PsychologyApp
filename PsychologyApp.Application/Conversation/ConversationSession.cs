@@ -63,8 +63,6 @@ public sealed class ConversationSession : IDialogueSession
 
     public IReadOnlyDictionary<string, string> Captured => _captured;
 
-    public string ScenarioId => _scenario.Id;
-
     public int? GetRating(string key) =>
         _captured.TryGetValue(key, out string? raw) && int.TryParse(raw, NumberStyles.Integer, CultureInfo.InvariantCulture, out int value)
             ? value

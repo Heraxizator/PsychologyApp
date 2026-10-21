@@ -25,26 +25,6 @@ public class QuotTests
     }
 
     [Fact]
-    public void EditTitleThrowsExceptionIfValueIsNotSet()
-    {
-        Quot quot = Quot.Create("Any Title", "Some Text", "Any Subject", true, false);
-
-        var action = () => quot.EditTitle(string.Empty);
-
-        Assert.Throws<ArgumentException>(action);
-    }
-
-    [Fact]
-    public void EditTitleIsSuccessfulIfValueIsSet()
-    {
-        Quot quot = Quot.Create("Any Title", "Some Text", "Any Subject", true, false);
-
-        quot.EditTitle("New Title");
-
-        Assert.Equal("New Title", quot.Title);
-    }
-
-    [Fact]
     public void EditTextThrowsExceptionIfValueIsNotSet()
     {
         Quot quot = Quot.Create("Any Title", "Some Text", "Any Subject", true, false);

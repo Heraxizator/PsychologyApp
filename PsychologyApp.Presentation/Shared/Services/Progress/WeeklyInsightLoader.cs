@@ -17,8 +17,6 @@ public sealed class WeeklyInsightSnapshot
     public string WeekRangeLabel { get; init; } = string.Empty;
 
     public bool HasInsight => PracticeCount > 0 || MoodEntriesCount > 0;
-    public bool HasMoodTrend => !string.IsNullOrWhiteSpace(MoodTrendLabel);
-    public bool HasExtraPill => !string.IsNullOrWhiteSpace(ExtraPillText);
 }
 
 public sealed class WeeklyInsightLoader(IUserProgressService userProgressService)

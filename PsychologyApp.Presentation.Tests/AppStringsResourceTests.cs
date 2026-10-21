@@ -24,7 +24,7 @@ public sealed class AppStringsResourceTests
                 AppStrings.LanguageOverride = language;
                 foreach (PropertyInfo property in TextProperties())
                 {
-                    if (property.GetCustomAttribute<ObsoleteAttribute>() is not null || property.Name == nameof(AppStrings.JournalOnThisDayLastYearEmpty))
+                    if (property.GetCustomAttribute<ObsoleteAttribute>() is not null)
                     {
                         continue;
                     }

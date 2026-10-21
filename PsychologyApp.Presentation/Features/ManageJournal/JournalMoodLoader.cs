@@ -267,9 +267,6 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService, 
         await SaveMoodAsync(moodLevel, current?.Note, current?.MoodEntryId, today, slot, cancellationToken);
     }
 
-    public Task DeleteMoodAsync(long moodEntryId, CancellationToken cancellationToken = default) =>
-        userProgressService.DeleteMoodEntryAsync(moodEntryId, cancellationToken);
-
     public async Task<IReadOnlyList<MoodEntryDTO>> GetExportMoodsAsync(
         CancellationToken cancellationToken = default)
     {
