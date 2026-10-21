@@ -11,7 +11,6 @@ public static class RunTestsFeatureServiceCollectionExtensions
         services.AddSingleton<TestOpener>();
         services.AddSingleton<TestRetakeOperations>();
         services.AddSingleton<QuestionnaireDetailBuilder>();
-        services.AddSingleton<QuestionnaireDetailReader>();
         services.AddSingleton<TestTrendResolver>();
         services.AddSingleton<TestHistoryLoader>();
         services.AddSingleton<TestsListLoader>();

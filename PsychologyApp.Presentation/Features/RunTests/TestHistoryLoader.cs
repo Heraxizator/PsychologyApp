@@ -18,7 +18,7 @@ public sealed record TestHistoryLoadResult(
 
 public sealed class TestHistoryLoader(
     TestTrendResolver trendResolver,
-    QuestionnaireDetailReader detailReader,
+    IQuestionnaireResultDetailService detailService,
     LuscherDetailReader luscherDetailReader)
 {
     // Off the UI thread: building the snapshot after each query would otherwise run there.
@@ -55,7 +55,7 @@ public sealed class TestHistoryLoader(
                 : trendResolver.Compare(item.Score, older.Score, direction);
 
             QuestionnaireResultDetail? detail = kind == TestKind.Questionnaire
-                ? detailReader.TryParse(item.DetailJson)
+                ? detailService.TryParse(item.DetailJson)
                 : null;
             LuscherStandardResultDetail? standardDetail = kind == TestKind.LuscherStandard
                 ? luscherDetailReader.TryParseStandard(item.DetailJson)

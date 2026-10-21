@@ -29,7 +29,7 @@ internal static class TestRunTestHelpers
 
         return new TestHistoryLoader(
             new TestTrendResolver(trendService),
-            new QuestionnaireDetailReader(detailService),
+            detailService,
             new LuscherDetailReader());
     }
 
