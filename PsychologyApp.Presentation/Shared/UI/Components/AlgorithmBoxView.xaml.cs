@@ -65,12 +65,9 @@ public partial class AlgorithmBoxView : ContentView
     private void ApplyBadgeColours()
     {
         bool dark = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark;
-        ShownBadgeTint = BadgeTint ?? Resource(dark ? "PrimaryTintDark" : "PrimaryTint", Colors.LightSkyBlue);
-        ShownBadgeInk = BadgeInk ?? Resource(dark ? "PrimaryTextDark" : "PrimaryTextLight", Colors.DodgerBlue);
+        ShownBadgeTint = BadgeTint ?? AppResources.Color(dark ? "PrimaryTintDark" : "PrimaryTint", Colors.LightSkyBlue);
+        ShownBadgeInk = BadgeInk ?? AppResources.Color(dark ? "PrimaryTextDark" : "PrimaryTextLight", Colors.DodgerBlue);
     }
-
-    private static Color Resource(string key, Color fallback) =>
-        Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue(key, out object? value) == true && value is Color c ? c : fallback;
 
     public static readonly BindableProperty TitleTextProperty =
         BindableProperty.Create(nameof(TitleText), typeof(string), typeof(AlgorithmBoxView), string.Empty, BindingMode.TwoWay);

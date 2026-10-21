@@ -27,7 +27,7 @@ public sealed class WhiteSpotStageView : PracticeStageView
         _lightView = new GraphicsView { Drawable = _light, InputTransparent = true, BackgroundColor = Colors.Transparent };
         _countdown = new Label
         {
-            Style = AppStyle("CaptionStyle"),
+            Style = AppResources.Find<Style>("CaptionStyle"),
             FontFamily = "InterMedium",
             TextColor = Color.FromRgba(255, 255, 255, 0.8),
             HorizontalOptions = LayoutOptions.Center,

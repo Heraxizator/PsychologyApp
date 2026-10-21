@@ -435,7 +435,7 @@ public static class UiAnimations
             return;
         }
 
-        Color targetStroke = focused ? GetFocusColor("Primary") : GetInputBorderColor();
+        Color targetStroke = focused ? AppResources.Color("Primary", Colors.Transparent) : GetInputBorderColor();
         Color targetBackground = focused ? GetInputFocusBackgroundColor() : GetInputBackgroundColor();
         Color startStroke = GetBorderStrokeColor(border);
         Color startBackground = border.BackgroundColor;
@@ -474,7 +474,7 @@ public static class UiAnimations
     private static void ApplyInputFocusInstant(Border border, bool focused)
     {
         border.StrokeThickness = 1;
-        border.Stroke = focused ? GetFocusColor("Primary") : GetInputBorderColor();
+        border.Stroke = focused ? AppResources.Color("Primary", Colors.Transparent) : GetInputBorderColor();
         border.BackgroundColor = focused ? GetInputFocusBackgroundColor() : GetInputBackgroundColor();
     }
 
@@ -493,7 +493,7 @@ public static class UiAnimations
         string key = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark
             ? "InputBorderDark"
             : "NeutralBorder";
-        return GetFocusColor(key);
+        return AppResources.Color(key, Colors.Transparent);
     }
 
     private static Color GetInputBackgroundColor()
@@ -501,7 +501,7 @@ public static class UiAnimations
         string key = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark
             ? "InputBackgroundDark"
             : "InputBackgroundLight";
-        return GetFocusColor(key);
+        return AppResources.Color(key, Colors.Transparent);
     }
 
     private static Color GetInputFocusBackgroundColor()
@@ -509,13 +509,8 @@ public static class UiAnimations
         string key = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark
             ? "InputFocusBackgroundDark"
             : "InputFocusBackgroundLight";
-        return GetFocusColor(key);
+        return AppResources.Color(key, Colors.Transparent);
     }
-
-    private static Color GetFocusColor(string key) =>
-        Microsoft.Maui.Controls.Application.Current?.Resources[key] is Color color
-            ? color
-            : Colors.Transparent;
 
     public static async Task SafeHideAsync(
         VisualElement? view,

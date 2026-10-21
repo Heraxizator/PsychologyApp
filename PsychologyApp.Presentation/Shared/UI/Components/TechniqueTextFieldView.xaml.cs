@@ -150,8 +150,8 @@ public partial class TechniqueTextFieldView : ContentView
         IReadOnlyList<string> own = usage?.OwnChips(TitleText, offered) ?? [];
         foreach (string chip in own.Concat(ordered))
         {
-            Label label = new() { Text = chip, Style = AppStyle("AnswerChipLabelStyle") };
-            Border view = new() { Style = AppStyle("AnswerChipStyle"), Content = label };
+            Label label = new() { Text = chip, Style = AppResources.Find<Style>("AnswerChipLabelStyle") };
+            Border view = new() { Style = AppResources.Find<Style>("AnswerChipStyle"), Content = label };
             FlexLayout.SetShrink(view, 0);
             view.MaximumWidthRequest = 320;
             // Inside a FlexLayout the label is measured without a width limit and a long chip is cut off; a limit lets it wrap.
@@ -162,8 +162,8 @@ public partial class TechniqueTextFieldView : ContentView
             _chips.Add((chip, view, label));
         }
 
-        _moreLabel = new Label { Style = AppStyle("AnswerChipLabelStyle"), TextColor = ThemeColor("PrimaryTextLight", "PrimaryTextDark") };
-        _moreChip = new Border { Style = AppStyle("AnswerChipStyle"), Content = _moreLabel, BackgroundColor = Colors.Transparent, StrokeThickness = 1, Stroke = new SolidColorBrush(ThemeColor("Primary", "PrimaryTextDark")) };
+        _moreLabel = new Label { Style = AppResources.Find<Style>("AnswerChipLabelStyle"), TextColor = AppResources.ThemedColor("PrimaryTextLight", "PrimaryTextDark", Colors.Gray) };
+        _moreChip = new Border { Style = AppResources.Find<Style>("AnswerChipStyle"), Content = _moreLabel, BackgroundColor = Colors.Transparent, StrokeThickness = 1, Stroke = new SolidColorBrush(AppResources.ThemedColor("Primary", "PrimaryTextDark", Colors.Gray)) };
         FlexLayout.SetShrink(_moreChip, 0);
         _moreChip.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(ExpandChips) });
         ChipsHost.Children.Add(_moreChip);
@@ -226,8 +226,8 @@ public partial class TechniqueTextFieldView : ContentView
         foreach ((string chip, Border view, Label label) in _chips)
         {
             bool selected = AnswerText.Contains(Text, chip);
-            view.Style = AppStyle(selected ? "AnswerChipSelectedStyle" : "AnswerChipStyle");
-            label.Style = AppStyle(selected ? "AnswerChipSelectedLabelStyle" : "AnswerChipLabelStyle");
+            view.Style = AppResources.Find<Style>(selected ? "AnswerChipSelectedStyle" : "AnswerChipStyle");
+            label.Style = AppResources.Find<Style>(selected ? "AnswerChipSelectedLabelStyle" : "AnswerChipLabelStyle");
             label.Text = selected ? $"✓  {chip}" : chip;
         }
 
@@ -237,7 +237,7 @@ public partial class TechniqueTextFieldView : ContentView
         {
             bool used = (Text ?? string.Empty).Contains(phrase, StringComparison.OrdinalIgnoreCase);
             view.StrokeThickness = used ? 1.8 : 1;
-            view.Stroke = used ? new SolidColorBrush(ThemeColor("Primary", "Primary")) : new SolidColorBrush(ThemeColor("NeutralBorder", "InputBorderDark"));
+            view.Stroke = used ? new SolidColorBrush(AppResources.ThemedColor("Primary", "Primary", Colors.Gray)) : new SolidColorBrush(AppResources.ThemedColor("NeutralBorder", "InputBorderDark", Colors.Gray));
         }
     }
 
@@ -250,7 +250,7 @@ public partial class TechniqueTextFieldView : ContentView
             Label label = new()
             {
                 Text = phrase,
-                Style = AppStyle("BodyStyle"),
+                Style = AppResources.Find<Style>("BodyStyle"),
                 LineBreakMode = LineBreakMode.WordWrap
             };
             Border view = new()
@@ -258,7 +258,7 @@ public partial class TechniqueTextFieldView : ContentView
                 Padding = new Thickness(14, 10),
                 StrokeThickness = 1,
                 StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 14 },
-                BackgroundColor = ThemeColor("SurfaceLight", "SurfaceDark"),
+                BackgroundColor = AppResources.ThemedColor("SurfaceLight", "SurfaceDark", Colors.Gray),
                 Content = label
             };
             SemanticProperties.SetDescription(view, phrase);
@@ -316,8 +316,8 @@ public partial class TechniqueTextFieldView : ContentView
         bool listening = _dictation.IsListening;
         VoiceStatusLabel.Text = _dictation.StatusText;
         VoiceStatusLabel.IsVisible = !string.IsNullOrWhiteSpace(_dictation.StatusText);
-        MicButton.BackgroundColor = listening ? ThemeColor("Danger", "Danger") : ThemeColor("PrimaryTint", "PrimaryTintDark");
-        MicIcon.TextColor = listening ? Colors.White : ThemeColor("PrimaryTextLight", "PrimaryTextDark");
+        MicButton.BackgroundColor = listening ? AppResources.ThemedColor("Danger", "Danger", Colors.Gray) : AppResources.ThemedColor("PrimaryTint", "PrimaryTintDark", Colors.Gray);
+        MicIcon.TextColor = listening ? Colors.White : AppResources.ThemedColor("PrimaryTextLight", "PrimaryTextDark", Colors.Gray);
         SemanticProperties.SetDescription(MicButton, listening ? AppStrings.PracticeVoiceStop : AppStrings.PracticeVoiceStart);
 
         if (listening && UiAnimations.ShouldAnimate(MicButton))
@@ -357,16 +357,5 @@ public partial class TechniqueTextFieldView : ContentView
 
         await usage.EnsureLoadedAsync();
         BuildChips();
-    }
-
-    private static Style? AppStyle(string key) =>
-        Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue(key, out object? value) == true ? value as Style : null;
-
-    private static Color ThemeColor(string lightKey, string darkKey)
-    {
-        string key = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark ? darkKey : lightKey;
-        return Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue(key, out object? value) == true && value is Color color
-            ? color
-            : Colors.Gray;
     }
 }

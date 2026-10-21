@@ -26,7 +26,7 @@ public sealed class PauseStageView : PracticeStageView
         SetScene(StageScenery.Twilight(), darkScene: true);
         _thought = new Label
         {
-            Style = AppStyle("BodyStyle"),
+            Style = AppResources.Find<Style>("BodyStyle"),
             TextColor = Color.FromRgba(255, 255, 255, 0.85),
             HorizontalTextAlignment = TextAlignment.Center,
             VerticalOptions = LayoutOptions.Start,
@@ -37,7 +37,7 @@ public sealed class PauseStageView : PracticeStageView
         _light = new GraphicsView { Drawable = _glow, InputTransparent = true, BackgroundColor = Colors.Transparent };
         _seconds = new Label
         {
-            Style = AppStyle("SectionTitleStyle"),
+            Style = AppResources.Find<Style>("SectionTitleStyle"),
             TextColor = Colors.White,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center,

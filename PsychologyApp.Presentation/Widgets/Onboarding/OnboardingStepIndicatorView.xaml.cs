@@ -65,10 +65,10 @@ public partial class OnboardingStepIndicatorView : ContentView
         DotsLayout.Children.Clear();
 
         int count = Math.Max(1, StepCount);
-        Color activeColor = ResolveColor("Primary");
+        Color activeColor = AppResources.Color("Primary", Colors.Gray);
         Color inactiveColor = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark
-            ? ResolveColor("Gray600")
-            : ResolveColor("Gray400");
+            ? AppResources.Color("Gray600", Colors.Gray)
+            : AppResources.Color("Gray400", Colors.Gray);
 
         for (int i = 0; i < count; i++)
         {
@@ -82,15 +82,5 @@ public partial class OnboardingStepIndicatorView : ContentView
             dot.StrokeShape = new RoundRectangle { CornerRadius = 4 };
             DotsLayout.Children.Add(dot);
         }
-    }
-
-    private static Color ResolveColor(string key)
-    {
-        if (Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue(key, out object? value) == true && value is Color color)
-        {
-            return color;
-        }
-
-        return Colors.Gray;
     }
 }

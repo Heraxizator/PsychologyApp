@@ -106,8 +106,7 @@ public partial class MoodStripView : ContentView
             Border? chip = (GetTemplateChild($"MoodChip{level}") ?? FindByName($"MoodChip{level}")) as Border;
             string key = level == selected ? "MoodChipSelectedStyle" : "MoodChipStyle";
             if (chip is not null
-                && Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue(key, out object? style) == true
-                && style is Style found)
+                && AppResources.Find<Style>(key) is Style found)
             {
                 chip.Style = found;
             }

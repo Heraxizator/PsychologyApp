@@ -100,21 +100,18 @@ public partial class ChatInputBar : ContentView
         bool listening = _dictation.IsListening;
         VoiceStatusLabel.Text = _dictation.StatusText;
         VoiceStatusLabel.IsVisible = !string.IsNullOrWhiteSpace(_dictation.StatusText);
-        MicButton.BackgroundColor = listening ? ResourceColor("Danger") : Colors.Transparent;
+        MicButton.BackgroundColor = listening ? AppResources.Color("Danger", Colors.Gray) : Colors.Transparent;
         if (listening)
         {
             MicIcon.TextColor = Colors.White;
         }
         else
         {
-            MicIcon.SetAppThemeColor(Label.TextColorProperty, ResourceColor("PrimaryTextLight"), ResourceColor("PrimaryTextDark"));
+            MicIcon.SetAppThemeColor(Label.TextColorProperty, AppResources.Color("PrimaryTextLight", Colors.Gray), AppResources.Color("PrimaryTextDark", Colors.Gray));
         }
 
         SemanticProperties.SetDescription(MicButton, listening ? AppStrings.PracticeVoiceStop : AppStrings.PracticeVoiceStart);
     }
-
-    private static Color ResourceColor(string key) =>
-        Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue(key, out object? value) == true && value is Color color ? color : Colors.Gray;
 
     /// <summary>
     /// Android puts the text of a multi-line editor at its top edge, which left the words above the middle of the bar and the send button.

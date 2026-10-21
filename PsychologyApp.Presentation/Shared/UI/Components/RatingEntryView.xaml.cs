@@ -115,7 +115,7 @@ public partial class RatingEntryView : ContentView
             FrameBorder.StrokeThickness = 0;
             FrameBorder.BackgroundColor = Colors.Transparent;
             FrameBorder.Padding = 0;
-            TitleLabel.Style = Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue("SectionTitleStyle", out object? style) == true ? style as Style : TitleLabel.Style;
+            TitleLabel.Style = AppResources.Find<Style>("SectionTitleStyle") ?? TitleLabel.Style;
         }
     }
 
@@ -247,7 +247,7 @@ public partial class RatingEntryView : ContentView
         {
             ValueDisplay = string.Empty;
             NumberText = string.Empty;
-            AccentColor = GetThemeColor("NeutralBorder", "Gray600");
+            AccentColor = AppResources.ThemedColor("NeutralBorder", "Gray600", Colors.Gray);
             return;
         }
 
@@ -263,15 +263,15 @@ public partial class RatingEntryView : ContentView
         double range = Maximum - Minimum;
         double normalized = range <= 0 ? 0 : (value - Minimum) / range;
 
-        Color calm = GetThemeColor("Success", "SuccessDark");
-        Color intense = GetThemeColor("Danger", "DangerDark");
+        Color calm = AppResources.ThemedColor("Success", "SuccessDark", Colors.Gray);
+        Color intense = AppResources.ThemedColor("Danger", "DangerDark", Colors.Gray);
 
         if (Kind == EntryFieldKind.RatingNeg10To10)
         {
             // -10 (worst) through 0 (neutral) to +10 (best): a diverging scale, not a one-directional one.
             return normalized < 0.5
-                ? Lerp(intense, GetThemeColor("Primary", "White"), normalized * 2)
-                : Lerp(GetThemeColor("Primary", "White"), calm, (normalized - 0.5) * 2);
+                ? Lerp(intense, AppResources.ThemedColor("Primary", "White", Colors.Gray), normalized * 2)
+                : Lerp(AppResources.ThemedColor("Primary", "White", Colors.Gray), calm, (normalized - 0.5) * 2);
         }
 
         return Lerp(calm, intense, normalized);
@@ -285,11 +285,5 @@ public partial class RatingEntryView : ContentView
             from.Green + (to.Green - from.Green) * t,
             from.Blue + (to.Blue - from.Blue) * t,
             from.Alpha + (to.Alpha - from.Alpha) * t);
-    }
-
-    private static Color GetThemeColor(string lightKey, string darkKey)
-    {
-        string key = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark ? darkKey : lightKey;
-        return Microsoft.Maui.Controls.Application.Current?.Resources[key] is Color color ? color : Colors.Gray;
     }
 }

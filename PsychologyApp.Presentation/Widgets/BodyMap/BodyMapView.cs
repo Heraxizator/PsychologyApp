@@ -88,9 +88,9 @@ public sealed class BodyMapView : GraphicsView
         public void Draw(ICanvas canvas, RectF dirtyRect)
         {
             bool dark = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark;
-            Color idle = Resolve(dark ? "PrimaryTintDark" : "PrimaryTint", Colors.LightBlue);
-            Color chosen = Resolve("PrimaryFill", Colors.RoyalBlue);
-            Color outline = Resolve(dark ? "BorderSubtleDark" : "BorderSubtleLight", Colors.LightGray);
+            Color idle = AppResources.Color(dark ? "PrimaryTintDark" : "PrimaryTint", Colors.LightBlue);
+            Color chosen = AppResources.Color("PrimaryFill", Colors.RoyalBlue);
+            Color outline = AppResources.Color(dark ? "BorderSubtleDark" : "BorderSubtleLight", Colors.LightGray);
 
             (double scale, double offsetX, double offsetY) = BodyMapLayout.Fit(dirtyRect.Width, dirtyRect.Height);
             canvas.StrokeSize = 1;
@@ -118,8 +118,5 @@ public sealed class BodyMapView : GraphicsView
                 }
             }
         }
-
-        private static Color Resolve(string key, Color fallback) =>
-            Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue(key, out object? value) == true && value is Color color ? color : fallback;
     }
 }

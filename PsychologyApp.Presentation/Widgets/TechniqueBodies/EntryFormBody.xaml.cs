@@ -92,8 +92,8 @@ public partial class EntryFormBody : ContentView
             }
         }
 
-        Color accent = ThemeColor("Primary", "PrimaryTextDark");
-        Color ahead = ThemeColor("NeutralBorder", "InputBorderDark");
+        Color accent = AppResources.ThemedColor("Primary", "PrimaryTextDark", Colors.Gray);
+        Color ahead = AppResources.ThemedColor("NeutralBorder", "InputBorderDark", Colors.Gray);
         for (int i = 0; i < StepDots.Children.Count; i++)
         {
             BoxView dot = (BoxView)StepDots.Children[i];
@@ -115,13 +115,5 @@ public partial class EntryFormBody : ContentView
                 }
             }
         }
-    }
-
-    private static Color ThemeColor(string lightKey, string darkKey)
-    {
-        string key = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark ? darkKey : lightKey;
-        return Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue(key, out object? value) == true && value is Color color
-            ? color
-            : Colors.Gray;
     }
 }

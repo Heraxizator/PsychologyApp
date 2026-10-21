@@ -14,7 +14,7 @@ public sealed class EmotionPickerView : ContentView
 
     private readonly FlexLayout _families = new() { Wrap = Microsoft.Maui.Layouts.FlexWrap.Wrap };
     private readonly FlexLayout _shades = new() { Wrap = Microsoft.Maui.Layouts.FlexWrap.Wrap, IsVisible = false };
-    private readonly Label _hint = new() { Style = ResourceStyle("CaptionStyle") };
+    private readonly Label _hint = new() { Style = AppResources.Find<Style>("CaptionStyle") };
     private readonly List<(string Word, Border Chip, Label Label, EmotionFamily Family)> _chips = [];
     private EmotionFamily? _openFamily;
 
@@ -96,7 +96,7 @@ public sealed class EmotionPickerView : ContentView
         Label label = new()
         {
             Text = word,
-            Style = Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue(isFamily ? "BodyStyle" : "CaptionStyle", out object? textStyle) == true ? textStyle as Style : null,
+            Style = AppResources.Find<Style>(isFamily ? "BodyStyle" : "CaptionStyle"),
             TextColor = Color.FromArgb(text),
             VerticalOptions = LayoutOptions.Center
         };
@@ -138,10 +138,5 @@ public sealed class EmotionPickerView : ContentView
     }
 
     private static void ApplyFont(Label label, string key) =>
-        label.FontFamily = Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue(key, out object? value) == true && value is string family
-            ? family
-            : label.FontFamily;
-
-    private static Style? ResourceStyle(string key) =>
-        Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue(key, out object? value) == true ? value as Style : null;
+        label.FontFamily = AppResources.Find<string>(key) ?? label.FontFamily;
 }

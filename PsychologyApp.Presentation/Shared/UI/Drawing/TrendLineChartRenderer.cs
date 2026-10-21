@@ -31,11 +31,11 @@ public static class TrendLineChartRenderer
         float plotRight = plotLeft + plotWidth;
         float plotBottom = plotTop + plotHeight;
 
-        Color primary = ResolveColor("Primary", Colors.SteelBlue);
-        Color primaryTint = ResolveThemedColor("PrimaryTint", "PrimaryTintDark", primary.WithAlpha(0.25f));
-        Color gridColor = ResolveThemedColor("NeutralBorder", "InputBorderDark", Colors.Gray.WithAlpha(0.35f));
-        Color labelColor = ResolveThemedColor("TextSecondaryLight", "TextSecondaryDark", Colors.Gray);
-        Color surfaceColor = ResolveThemedColor("SurfaceElevatedLight", "SurfaceElevatedDark", Colors.White);
+        Color primary = AppResources.Color("Primary", Colors.SteelBlue);
+        Color primaryTint = AppResources.ThemedColor("PrimaryTint", "PrimaryTintDark", primary.WithAlpha(0.25f));
+        Color gridColor = AppResources.ThemedColor("NeutralBorder", "InputBorderDark", Colors.Gray.WithAlpha(0.35f));
+        Color labelColor = AppResources.ThemedColor("TextSecondaryLight", "TextSecondaryDark", Colors.Gray);
+        Color surfaceColor = AppResources.ThemedColor("SurfaceElevatedLight", "SurfaceElevatedDark", Colors.White);
 
         DrawGrid(canvas, plotLeft, plotTop, plotWidth, plotHeight, plotRight, plotBottom, layout, gridColor, labelColor, options.FormatScore);
 
@@ -74,8 +74,8 @@ public static class TrendLineChartRenderer
             return;
         }
 
-        Color good = ResolveThemedColor("Success", "SuccessDark", Colors.SeaGreen);
-        Color quiet = ResolveColor("Primary", Colors.SteelBlue);
+        Color good = AppResources.ThemedColor("Success", "SuccessDark", Colors.SeaGreen);
+        Color quiet = AppResources.Color("Primary", Colors.SteelBlue);
         foreach (PlacedAnnotation mark in TrendLineChartLayout.PlaceAnnotations(options.Points, annotations, options.DomainMin, options.DomainMax))
         {
             (float x, float y) = TrendLineChartLayout.ToCanvasPoint(new NormalizedChartPoint(mark.X, mark.Y), plotLeft, plotTop, plotWidth, plotHeight);
@@ -220,33 +220,5 @@ public static class TrendLineChartRenderer
                 : boxX < x - LabelBoxWidth / 2 ? HorizontalAlignment.Right : HorizontalAlignment.Center;
             canvas.DrawString(label, boxX, plotBottom + 6, LabelBoxWidth, 14, alignment, VerticalAlignment.Top);
         }
-    }
-
-    private static Color ResolveColor(string key, Color fallback)
-    {
-        if (Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue(key, out object? value) == true &&
-            value is Color color)
-        {
-            return color;
-        }
-
-        return fallback;
-    }
-
-    private static Color ResolveThemedColor(string lightKey, string darkKey, Color fallback)
-    {
-        Microsoft.Maui.Controls.Application? app = Microsoft.Maui.Controls.Application.Current;
-        if (app is null)
-        {
-            return fallback;
-        }
-
-        string selectedKey = app.RequestedTheme == AppTheme.Dark ? darkKey : lightKey;
-        if (app.Resources.TryGetValue(selectedKey, out object? value) && value is Color color)
-        {
-            return color;
-        }
-
-        return ResolveColor(lightKey, fallback);
     }
 }

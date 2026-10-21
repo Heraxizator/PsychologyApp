@@ -35,7 +35,7 @@ public sealed class TimeTravelStageView : PracticeStageView
         _card = CreateWordsCard(_words);
         _whenLabel = new Label
         {
-            Style = AppStyle("CaptionStyle"),
+            Style = AppResources.Find<Style>("CaptionStyle"),
             FontFamily = "InterSemiBold",
             TextColor = IsDark ? Color.FromArgb("#E8ECF6") : Color.FromArgb("#1F2A44")
         };
@@ -64,8 +64,8 @@ public sealed class TimeTravelStageView : PracticeStageView
         Canvas.Children.Add(_when);
         Canvas.Children.Add(EmptyLabel);
         Grid ends = new() { ColumnDefinitions = [new ColumnDefinition(GridLength.Star), new ColumnDefinition(GridLength.Star)], Margin = new Thickness(6, -4, 6, 0) };
-        ends.Add(new Label { Text = AppStrings.StageFutureStop(0), Style = AppStyle("CaptionStyle") }, 0);
-        ends.Add(new Label { Text = AppStrings.StageFutureStop(AppStrings.StageFutureStopCount - 1), Style = AppStyle("CaptionStyle"), HorizontalTextAlignment = TextAlignment.End }, 1);
+        ends.Add(new Label { Text = AppStrings.StageFutureStop(0), Style = AppResources.Find<Style>("CaptionStyle") }, 0);
+        ends.Add(new Label { Text = AppStrings.StageFutureStop(AppStrings.StageFutureStopCount - 1), Style = AppResources.Find<Style>("CaptionStyle"), HorizontalTextAlignment = TextAlignment.End }, 1);
         Actions.Children.Add(new VerticalStackLayout { Children = { _time, ends } });
         Show(0, animate: false);
         OnSourceTextChanged();

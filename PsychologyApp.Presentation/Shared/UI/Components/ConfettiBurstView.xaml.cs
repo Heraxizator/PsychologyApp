@@ -38,7 +38,7 @@ public partial class ConfettiBurstView : ContentView
                 WidthRequest = tall ? 5 : 8,
                 HeightRequest = tall ? 11 : 6,
                 CornerRadius = 1.5,
-                Color = ResolvePieceColor(i),
+                Color = AppResources.Color(PaletteKeys[i % PaletteKeys.Length], Colors.Gray),
                 Opacity = 0,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
@@ -48,15 +48,6 @@ public partial class ConfettiBurstView : ContentView
             PieceHost.Children.Add(piece);
             _pieces.Add(piece);
         }
-    }
-
-    private static Color ResolvePieceColor(int index)
-    {
-        string key = PaletteKeys[index % PaletteKeys.Length];
-        return Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue(key, out object? value) == true
-            && value is Color color
-            ? color
-            : Colors.Gray;
     }
 
     public async Task PlayAsync()

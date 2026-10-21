@@ -19,11 +19,11 @@ public abstract class PracticeStageView : ContentView
     protected PracticeStageView(TechniqueFlavor flavor, string title, string hint)
     {
         Flavor = flavor;
-        TitleLabel = new Label { Text = title, Style = AppStyle("SectionTitleStyle") };
-        HintLabel = new Label { Text = hint, Style = AppStyle("CaptionStyle") };
+        TitleLabel = new Label { Text = title, Style = AppResources.Find<Style>("SectionTitleStyle") };
+        HintLabel = new Label { Text = hint, Style = AppResources.Find<Style>("CaptionStyle") };
         StatusLabel = new Label
         {
-            Style = AppStyle("BodyStyle"),
+            Style = AppResources.Find<Style>("BodyStyle"),
             FontFamily = "InterMedium",
             HorizontalTextAlignment = TextAlignment.Center,
             IsVisible = false
@@ -33,7 +33,7 @@ public abstract class PracticeStageView : ContentView
         EmptyLabel = new Label
         {
             Text = AppStrings.StageEmptyText,
-            Style = AppStyle("BodyStyle"),
+            Style = AppResources.Find<Style>("BodyStyle"),
             TextColor = Color.FromArgb("#5C5C66"),
             HorizontalTextAlignment = TextAlignment.Center,
             VerticalOptions = LayoutOptions.Center,
@@ -49,7 +49,7 @@ public abstract class PracticeStageView : ContentView
 
         Content = new Border
         {
-            Style = AppStyle("BrandCardStyle"),
+            Style = AppResources.Find<Style>("BrandCardStyle"),
             Margin = 0,
             Padding = new Thickness(14, 16, 14, 14),
             Content = new VerticalStackLayout
@@ -146,12 +146,12 @@ public abstract class PracticeStageView : ContentView
     /// <summary>An outlined tile with an icon over a short caption: three of them fit one row at any text size.</summary>
     protected static View CreateTile(string icon, string text, Action onTap)
     {
-        Color accent = ThemeColor("PrimaryTextLight", "PrimaryTextDark");
+        Color accent = AppResources.ThemedColor("PrimaryTextLight", "PrimaryTextDark", Colors.Gray);
         Border tile = new()
         {
             Padding = new Thickness(6, 10),
             StrokeThickness = 1.5,
-            Stroke = new SolidColorBrush(ThemeColor("Primary", "PrimaryTextDark")),
+            Stroke = new SolidColorBrush(AppResources.ThemedColor("Primary", "PrimaryTextDark", Colors.Gray)),
             StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 16 },
             BackgroundColor = Colors.Transparent,
             Content = new VerticalStackLayout
@@ -163,7 +163,7 @@ public abstract class PracticeStageView : ContentView
                     new Label
                     {
                         Text = text,
-                        Style = AppStyle("CaptionStyle"),
+                        Style = AppResources.Find<Style>("CaptionStyle"),
                         FontFamily = "InterSemiBold",
                         TextColor = accent,
                         HorizontalTextAlignment = TextAlignment.Center,
@@ -199,14 +199,14 @@ public abstract class PracticeStageView : ContentView
             StrokeThickness = 1,
             Stroke = new SolidColorBrush(onDarkScene ? Color.FromRgba(255, 255, 255, 0.22) : Color.FromRgba(0, 0, 0, 0.08)),
             StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 18 },
-            BackgroundColor = onDarkScene ? Color.FromRgba(255, 255, 255, 0.12) : ThemeColor("SurfaceLight", "SurfaceDark"),
+            BackgroundColor = onDarkScene ? Color.FromRgba(255, 255, 255, 0.12) : AppResources.ThemedColor("SurfaceLight", "SurfaceDark", Colors.Gray),
             Content = words
         };
     }
 
     protected static Label CreateWordsLabel() => new()
     {
-        Style = AppStyle("EmphasisBodyStyle"),
+        Style = AppResources.Find<Style>("EmphasisBodyStyle"),
         FontFamily = "InterSemiBold",
         HorizontalTextAlignment = TextAlignment.Center,
         LineBreakMode = LineBreakMode.WordWrap,
@@ -244,22 +244,11 @@ public abstract class PracticeStageView : ContentView
         return new LinearGradientBrush(stops, new Point(0, 0), new Point(0, 1));
     }
 
-    protected static Style? AppStyle(string key) =>
-        Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue(key, out object? value) == true ? value as Style : null;
-
-    protected static Color ThemeColor(string lightKey, string darkKey)
-    {
-        string key = IsDark ? darkKey : lightKey;
-        return Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue(key, out object? value) == true && value is Color color
-            ? color
-            : Colors.Gray;
-    }
-
     /// <summary>Without scenery of its own, a stage glows softly in the colour of the practice's group.</summary>
     private Brush DefaultCanvasBrush()
     {
         string tile = TechniqueFlavors.Colors(Flavor, IsDark)?.Tile ?? (IsDark ? "#1F3050" : "#DCE8FA");
-        Color page = ThemeColor("PageBackground", "PageBackgroundDark");
+        Color page = AppResources.ThemedColor("PageBackground", "PageBackgroundDark", Colors.Gray);
         return new RadialGradientBrush(
             [new GradientStop(Color.FromArgb(tile), 0f), new GradientStop(page, 1f)],
             new Point(0.5, 0.45),

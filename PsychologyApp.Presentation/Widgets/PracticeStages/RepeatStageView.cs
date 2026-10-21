@@ -33,7 +33,7 @@ public sealed class RepeatStageView : PracticeStageView
         string icon = TechniqueFlavors.Colors(flavor, IsDark)?.Icon ?? "#2656A8";
         _words = new Label
         {
-            Style = AppStyle("EmphasisBodyStyle"),
+            Style = AppResources.Find<Style>("EmphasisBodyStyle"),
             FontFamily = "InterSemiBold",
             HorizontalTextAlignment = TextAlignment.Center,
             VerticalTextAlignment = TextAlignment.Center,
@@ -49,7 +49,7 @@ public sealed class RepeatStageView : PracticeStageView
             VerticalOptions = LayoutOptions.Center,
             Stroke = new SolidColorBrush(Color.FromArgb(icon)),
             StrokeShape = new RoundRectangle { CornerRadius = CircleSize / 2 },
-            BackgroundColor = ThemeColor("SurfaceLight", "SurfaceDark"),
+            BackgroundColor = AppResources.ThemedColor("SurfaceLight", "SurfaceDark", Colors.Gray),
             // At night the halo is only a hint: a bright ring around the circle would glare in a dark room.
             Shadow = new Shadow { Brush = new SolidColorBrush(Color.FromArgb(icon)), Opacity = IsDark ? 0.1f : 0.25f, Radius = 18 },
             StrokeThickness = IsDark ? 2 : 3,
@@ -68,7 +68,7 @@ public sealed class RepeatStageView : PracticeStageView
         };
         _count = new Label
         {
-            Style = AppStyle("CaptionStyle"),
+            Style = AppResources.Find<Style>("CaptionStyle"),
             FontFamily = "InterSemiBold",
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.End,

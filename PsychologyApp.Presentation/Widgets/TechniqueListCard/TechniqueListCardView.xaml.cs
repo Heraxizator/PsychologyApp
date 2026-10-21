@@ -69,7 +69,7 @@ public partial class TechniqueListCardView : ContentView
         }
 
         string key = dark ? "PrimaryTintDark" : "PrimaryTint";
-        TileColor = Microsoft.Maui.Controls.Application.Current?.Resources.TryGetValue(key, out object? tint) == true && tint is Color c ? c : Colors.Transparent;
+        TileColor = AppResources.Color(key, Colors.Transparent);
         IconTint = null;
     }
 
