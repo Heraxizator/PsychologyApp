@@ -23,7 +23,6 @@ public sealed class JournalNoteFactorsTests
             note = JournalNoteFactors.ToggleFactor(note, JournalNoteFactors.SleepKey);
             Assert.True(JournalNoteFactors.HasFactor(note, JournalNoteFactors.WalkKey));
             Assert.True(JournalNoteFactors.HasFactor(note, JournalNoteFactors.SleepKey));
-            Assert.Equal(2, JournalNoteFactors.CountInNotes([note, note]).Walk);
 
             note = JournalNoteFactors.ToggleFactor(note, JournalNoteFactors.WalkKey);
             note = JournalNoteFactors.ToggleFactor(note, JournalNoteFactors.SleepKey);

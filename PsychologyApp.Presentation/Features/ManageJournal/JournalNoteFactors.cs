@@ -199,23 +199,6 @@ public static class JournalNoteFactors
 
         return insights;
     }
-
-    public static JournalFactorCounts CountInNotes(IEnumerable<string?> notes)
-    {
-        IReadOnlyList<JournalActivityInsight> insights = Analyze(
-            notes.Select(note => (note, 0)));
-        int Get(string key) => insights.FirstOrDefault(item => item.Key == key)?.Count ?? 0;
-        return new JournalFactorCounts(
-            Get(SleepKey),
-            Get(PeopleKey),
-            Get(PracticeKey),
-            Get(WalkKey),
-            Get(WorkKey),
-            Get(SportKey),
-            Get(RestKey),
-            Get(StressKey),
-            Get(HomeKey));
-    }
 }
 
 public sealed record JournalActivityInsight(
@@ -227,20 +210,4 @@ public sealed record JournalActivityInsight(
     public string DisplayPill => AverageMoodDisplay is null
         ? AppStrings.JournalFactorCountPill(Label, Count)
         : AppStrings.JournalActivityCorrelationPill(Label, Count, AverageMoodDisplay);
-}
-
-public sealed record JournalFactorCounts(
-    int Sleep,
-    int People,
-    int Practice,
-    int Walk = 0,
-    int Work = 0,
-    int Sport = 0,
-    int Rest = 0,
-    int Stress = 0,
-    int Home = 0)
-{
-    public bool HasAny =>
-        Sleep > 0 || People > 0 || Practice > 0 || Walk > 0 || Work > 0
-        || Sport > 0 || Rest > 0 || Stress > 0 || Home > 0;
 }
