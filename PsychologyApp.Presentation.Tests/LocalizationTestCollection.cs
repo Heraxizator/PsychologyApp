@@ -3,27 +3,18 @@ using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
 
+/// <summary>Tests that read or switch the interface language share one collection, so they never run alongside each other.</summary>
 public sealed class LocalizationTestFixture : IDisposable
 {
     public LocalizationTestFixture()
     {
-        UserPreferences.UseInMemoryStorage(new UserPreferencesState
-        {
-            Language = UserPreferences.DefaultLanguage,
-            Theme = UserPreferences.DefaultTheme,
-            Color = UserPreferences.DefaultColor,
-            Form = UserPreferences.DefaultForm,
-            Size = UserPreferences.DefaultSize,
-            IsBold = false,
-            HasCompletedOnboarding = true,
-            OnboardingConcern = "explore"
-        });
+        UserPreferences.Persisted = UserPreferences.DefaultLanguage;
         AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
     }
 
     public void Dispose()
     {
-        UserPreferences.ResetInMemoryStorage();
+        UserPreferences.Persisted = UserPreferences.DefaultLanguage;
         AppStrings.LanguageOverride = null;
     }
 }

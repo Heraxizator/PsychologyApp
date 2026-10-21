@@ -1,9 +1,9 @@
-using PsychologyApp.Application.Models;
-using PsychologyApp.Presentation.Shared.Common.Formatting;
+using PsychologyApp.Presentation.Shared.Common;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
 
+[Collection("Localization")]
 public sealed class QuoteShareFormatterTests
 {
     [Fact]

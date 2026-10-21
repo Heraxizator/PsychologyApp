@@ -135,6 +135,38 @@
     <Compile Include="AsyncCommandTests.cs" />
     <Compile Include="BaseViewModelLoadingOverlayTests.cs" />
     <Compile Include="BaseViewModelPreferencesTests.cs" />
+    <Compile Include="TestTrendComparerTests.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/ITechniqueMessenger.cs" Link="Linked/Features/RunTechniqueSession/ITechniqueMessenger.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.Fields.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.Fields.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.Init.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.Init.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.Labels.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.Labels.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.Save.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.Save.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/TechniqueMessage.cs" Link="Linked/Features/RunTechniqueSession/TechniqueMessage.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/DesignerTechniqueOperations.cs" Link="Linked/Features/RunTechniqueSession/DesignerTechniqueOperations.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/Infrastructure/OperationCancellation.cs" Link="Linked/Shared/Common/Infrastructure/OperationCancellation.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTests/FindProblemContentLoader.cs" Link="Linked/Features/RunTests/FindProblemContentLoader.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/ProfileStatsLoader.cs" Link="Linked/Features/ManageProfile/ProfileStatsLoader.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTests/TestTrendResolver.cs" Link="Linked/Features/RunTests/TestTrendResolver.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTests/TestTrendComparer.cs" Link="Linked/Features/RunTests/TestTrendComparer.cs" />
+    <Compile Include="DesignerViewModelTests.cs" />
+    <Compile Include="FindProblemContentLoaderTests.cs" />
+    <Compile Include="ProfileStatsLoaderTests.cs" />
+    <Compile Include="Stubs\FakeTestCatalogService.cs" />
+    <Compile Include="TestTrendResolverTests.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageJournal/JournalMoodLoader.cs" Link="Linked/Features/ManageJournal/JournalMoodLoader.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageJournal/JournalCalendarScale.cs" Link="Linked/Features/ManageJournal/JournalCalendarScale.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Entities/Journal/JournalTimelineDayGroup.cs" Link="Linked/Entities/Journal/JournalTimelineDayGroup.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Entities/Profile/MoodNoteItem.cs" Link="Linked/Entities/Profile/MoodNoteItem.cs" />
+    <Compile Include="JournalMoodLoaderTests.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/Localization/ContentAssets.cs" Link="Linked/Shared/Common/Localization/ContentAssets.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/Formatting/QuoteShareFormatter.cs" Link="Linked/Shared/Common/Formatting/QuoteShareFormatter.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/UI/Converters/PreferenceLabelConverter.cs" Link="Linked/Shared/UI/Converters/PreferenceLabelConverter.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/UI/Converters/PreferenceLabelKind.cs" Link="Linked/Shared/UI/Converters/PreferenceLabelKind.cs" />
+    <Compile Include="ContentAssetsTests.cs" />
+    <Compile Include="QuoteShareFormatterTests.cs" />
+    <Compile Include="LocalizationTestCollection.cs" />
+    <Compile Include="PreferenceLabelConverterTests.cs" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">

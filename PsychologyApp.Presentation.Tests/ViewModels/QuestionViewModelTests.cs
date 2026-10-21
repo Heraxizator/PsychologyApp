@@ -146,6 +146,20 @@ public sealed class QuestionViewModelTests
     }
 
     [Fact]
+    public async Task ThePracticeTheScoreRecommendsIsOfferedOnTheResultPage()
+    {
+        QuestionViewModel viewModel = Create(1);
+        _scoring.Setup(s => s.Calculate(It.IsAny<IEnumerable<TestQuestion>>(), "gad7"))
+            .Returns(new QuestionnaireScoringResult(7, 1, TechniqueId.Spin, "gad7"));
+
+        Pick(viewModel, 0);
+        await VmTestHelpers.RunAsync(viewModel.NextCommand);
+
+        _navigation.Verify(n => n.GoToTestResultAsync(
+            7, It.IsAny<string>(), TechniqueId.Spin, "gad7", It.IsAny<string?>(), "gad7", It.IsAny<QuestionnaireResultDetail?>(), It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    [Fact]
     public async Task AMultipleChoiceQuestionAllowsSeveralAnswersAndNeverAdvancesByItself()
     {
         QuestionViewModel viewModel = Create(2, single: false);

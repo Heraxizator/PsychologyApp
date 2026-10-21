@@ -2,7 +2,7 @@ using PsychologyApp.Application.Models.Tests;
 using PsychologyApp.Application.Tests;
 using Xunit;
 
-namespace PsychologyApp.Presentation.Tests.Catalog;
+namespace PsychologyApp.Application.Tests.Tests;
 
 public sealed class TestCatalogParserTests
 {
@@ -84,9 +84,9 @@ public sealed class TestCatalogParserTests
                 [0, 1, 2, 3],
                 ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"],
                 true,
-                2,
-                7,
-                "Anxiety")
+                EstimatedMinutes: 2,
+                QuestionCount: 7,
+                Construct: "Anxiety")
         ]);
 
         Assert.Single(items);
@@ -111,9 +111,9 @@ public sealed class TestCatalogParserTests
                 [0, 1, 2, 3],
                 ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9"],
                 true,
-                3,
-                9,
-                "Depression")
+                EstimatedMinutes: 3,
+                QuestionCount: 9,
+                Construct: "Depression")
         ]);
 
         Assert.Single(items);
@@ -138,9 +138,9 @@ public sealed class TestCatalogParserTests
                 [0, 1, 2],
                 ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12", "Q13", "Q14", "Q15"],
                 true,
-                4,
-                15,
-                "Somatic symptoms")
+                EstimatedMinutes: 4,
+                QuestionCount: 15,
+                Construct: "Somatic symptoms")
         ]);
 
         Assert.Single(items);
@@ -213,7 +213,7 @@ public sealed class TestCatalogParserTests
         Assert.True(result.IsSuccess);
         Assert.Equal("rses", result.Value!.TestId);
         Assert.Equal(2, result.Value.Questions!.Count);
-        Assert.Equal(3, result.Value.Questions![0].Answers[0].Score);
-        Assert.Equal(0, result.Value.Questions![1].Answers[0].Score);
+        Assert.Equal(3, result.Value.Questions![0].Answers[0].Ball);
+        Assert.Equal(0, result.Value.Questions![1].Answers[0].Ball);
     }
 }

@@ -6,6 +6,13 @@ namespace Microsoft.Maui.Controls
 {
     public interface INavigation;
 
+    public interface IValueConverter
+    {
+        object? Convert(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture);
+
+        object? ConvertBack(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture);
+    }
+
     public sealed class Command<T> : ICommand
     {
         private readonly Action<T> _execute;

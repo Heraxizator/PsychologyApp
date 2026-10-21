@@ -1,4 +1,5 @@
 using Moq;
+using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Features.ManageJournal;
@@ -28,7 +29,7 @@ public sealed class JournalMoodLoaderTests
             .Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
-        JournalMoodLoader loader = new(progress.Object);
+        JournalMoodLoader loader = new(progress.Object, new KeywordCrisisDetector());
         JournalMoodSnapshot snapshot = await loader.LoadAsync();
 
         Assert.True(snapshot.HasTrendChart);
@@ -81,7 +82,7 @@ public sealed class JournalMoodLoaderTests
             .Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
-        JournalMoodLoader loader = new(progress.Object);
+        JournalMoodLoader loader = new(progress.Object, new KeywordCrisisDetector());
         JournalMoodSnapshot snapshot = await loader.LoadAsync();
 
         Assert.Equal(3, snapshot.TimelineEntries.Count);
@@ -116,7 +117,7 @@ public sealed class JournalMoodLoaderTests
             .ReturnsAsync([]);
 
         DateOnly earlier = DateOnly.FromDateTime(DateTime.Today.AddDays(-25));
-        JournalMoodLoader loader = new(progress.Object);
+        JournalMoodLoader loader = new(progress.Object, new KeywordCrisisDetector());
         JournalMoodSnapshot snapshot = await loader.LoadAsync(
             rangeDays: 7,
             monthCursor: new DateOnly(earlier.Year, earlier.Month, 1),
@@ -141,7 +142,7 @@ public sealed class JournalMoodLoaderTests
             .Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
-        JournalMoodLoader loader = new(progress.Object);
+        JournalMoodLoader loader = new(progress.Object, new KeywordCrisisDetector());
         await loader.LoadAsync(rangeDays: 90);
 
         Assert.NotNull(capturedFrom);
@@ -177,8 +178,8 @@ public sealed class JournalMoodLoaderTests
             .Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
-        JournalMoodLoader loader = new(progress.Object);
-        JournalMoodSnapshot snapshot = await loader.LoadAsync(editorDay: day);
+        JournalMoodLoader loader = new(progress.Object, new KeywordCrisisDetector());
+        JournalMoodSnapshot snapshot = await loader.LoadAsync(editorDay: day, editorSlot: JournalCheckInSlot.Evening);
 
         Assert.Equal(11, snapshot.EditorEntryId);
         Assert.Equal(day, snapshot.EditorDay);
@@ -218,7 +219,7 @@ public sealed class JournalMoodLoaderTests
             .Setup(p => p.UpdateMoodEntryAsync(9, 5, "updated", It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
 
-        JournalMoodLoader loader = new(progress.Object);
+        JournalMoodLoader loader = new(progress.Object, new KeywordCrisisDetector());
         await loader.SaveMoodAsync(
             5,
             "updated",
@@ -246,9 +247,9 @@ public sealed class JournalMoodLoaderTests
                 "note",
                 It.IsAny<DateTime?>(),
                 It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
+            .ReturnsAsync(1L);
 
-        JournalMoodLoader loader = new(progress.Object);
+        JournalMoodLoader loader = new(progress.Object, new KeywordCrisisDetector());
         await loader.SaveMoodAsync(
             4,
             "note",
@@ -259,6 +260,23 @@ public sealed class JournalMoodLoaderTests
         progress.Verify(
             p => p.RecordMoodAsync(4, "note", It.IsAny<DateTime?>(), It.IsAny<CancellationToken>()),
             Times.Once);
+    }
+
+    [Theory]
+    [InlineData("Не хочу жить", true)]
+    [InlineData("Устала, но вечер был спокойный", false)]
+    public async Task A_note_that_reads_like_a_crisis_is_saved_and_asks_for_the_help_page(string note, bool crisis)
+    {
+        Mock<IUserProgressService> progress = new();
+        progress
+            .Setup(p => p.RecordMoodAsync(It.IsAny<int>(), It.IsAny<string?>(), It.IsAny<DateTime?>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(1L);
+        JournalMoodLoader loader = new(progress.Object, new KeywordCrisisDetector());
+
+        bool offerHelp = await loader.SaveMoodAsync(2, note, null, DateOnly.FromDateTime(DateTime.Today), JournalCheckInSlot.Evening);
+
+        Assert.Equal(crisis, offerHelp);
+        progress.Verify(p => p.RecordMoodAsync(2, note, It.IsAny<DateTime?>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -279,7 +297,7 @@ public sealed class JournalMoodLoaderTests
             .Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
-        JournalMoodLoader loader = new(progress.Object);
+        JournalMoodLoader loader = new(progress.Object, new KeywordCrisisDetector());
         JournalMoodSnapshot snapshot = await loader.LoadAsync(calendarScale: JournalCalendarScale.Week);
 
         Assert.Equal(JournalCalendarScale.Week, snapshot.CalendarScale);
@@ -306,7 +324,7 @@ public sealed class JournalMoodLoaderTests
             .Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
-        JournalMoodLoader loader = new(progress.Object);
+        JournalMoodLoader loader = new(progress.Object, new KeywordCrisisDetector());
         JournalMoodSnapshot snapshot = await loader.LoadAsync(calendarScale: JournalCalendarScale.Year);
 
         Assert.Equal(JournalCalendarScale.Year, snapshot.CalendarScale);
