@@ -11,6 +11,21 @@ public enum DeviceUnlockAvailability
     Unsupported
 }
 
+public enum DeviceUnlockResult
+{
+    /// <summary>The person passed the phone's unlock.</summary>
+    Passed,
+
+    /// <summary>The person cancelled, or the attempts ran out: the app stays closed and offers to try again.</summary>
+    NotPassed,
+
+    /// <summary>
+    /// The system could not ask at all (the screen lock is gone, the sensor is broken, the prompt failed to open). The lock must
+    /// not turn into a wall between the person and their own records, so this lets them in.
+    /// </summary>
+    CannotAsk
+}
+
 /// <summary>
 /// The phone's own unlock (fingerprint, face, or the phone's PIN, pattern or password) shown by the system. The app keeps no
 /// PIN of its own: there is nothing to forget and nothing to store.
@@ -19,13 +34,12 @@ public interface IDeviceAuthenticator
 {
     DeviceUnlockAvailability Availability { get; }
 
-    /// <summary>True once the person has passed the phone's unlock; false when they cancelled it or the system refused.</summary>
-    Task<bool> AuthenticateAsync(string title, string subtitle);
+    Task<DeviceUnlockResult> AuthenticateAsync(string title, string subtitle);
 }
 
 public sealed class UnavailableDeviceAuthenticator : IDeviceAuthenticator
 {
     public DeviceUnlockAvailability Availability => DeviceUnlockAvailability.Unsupported;
 
-    public Task<bool> AuthenticateAsync(string title, string subtitle) => Task.FromResult(false);
+    public Task<DeviceUnlockResult> AuthenticateAsync(string title, string subtitle) => Task.FromResult(DeviceUnlockResult.CannotAsk);
 }

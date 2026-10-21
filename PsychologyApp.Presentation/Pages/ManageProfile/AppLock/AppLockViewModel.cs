@@ -51,10 +51,11 @@ public sealed class AppLockViewModel : BaseViewModel
         _asking = true;
         try
         {
-            // The phone's screen lock was removed since the lock was turned on: there is nothing left to confirm with, and the
-            // person must never be shut out of their own records.
+            // When the phone cannot confirm anyone (its screen lock was removed since, or the system prompt cannot open), there is
+            // nothing left to check with, and the person must never be shut out of their own records.
             if (_authenticator.Availability != DeviceUnlockAvailability.Available
-                || await _authenticator.AuthenticateAsync(AppStrings.AppLockPromptTitle, AppStrings.AppLockPromptSubtitle))
+                || await _authenticator.AuthenticateAsync(AppStrings.AppLockPromptTitle, AppStrings.AppLockPromptSubtitle)
+                    is DeviceUnlockResult.Passed or DeviceUnlockResult.CannotAsk)
             {
                 _unlocked.TrySetResult();
             }

@@ -11,8 +11,11 @@ public static class AppLockPolicy
 
     /// <param name="enabled">The person turned the lock on.</param>
     /// <param name="unlockedThisRun">The phone's unlock was already passed since the app started.</param>
-    /// <param name="leftAtUtc">When the app last went to the background after being unlocked; null while it stays in front.</param>
-    public static bool NeedsUnlock(bool enabled, bool unlockedThisRun, DateTime? leftAtUtc, DateTime nowUtc)
+    /// <param name="awayFor">
+    /// How long the app has been in the background since it was last unlocked; null while it stays in front. Measured on a
+    /// clock the phone's owner cannot set back, or turning the clock back would skip the lock.
+    /// </param>
+    public static bool NeedsUnlock(bool enabled, bool unlockedThisRun, TimeSpan? awayFor)
     {
         if (!enabled)
         {
@@ -24,6 +27,6 @@ public static class AppLockPolicy
             return true;
         }
 
-        return leftAtUtc is DateTime left && nowUtc - left >= RelockAfter;
+        return awayFor is TimeSpan away && away >= RelockAfter;
     }
 }

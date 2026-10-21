@@ -16,7 +16,7 @@
             VerticalOptions="Center">
             <Border Style="{StaticResource BrandCardStyle}" Padding="20,24">
                 <VerticalStackLayout Spacing="16">
-                    <ui:MaterialIconView IconName="Lock" IconSize="40" HorizontalOptions="Center" SemanticProperties.Description="{Binding TitleText}" />
+                    <ui:MaterialIconView IconName="Lock" IconSize="40" HorizontalOptions="Center" />
                     <Label Text="{Binding TitleText}" Style="{StaticResource SectionTitleStyle}" HorizontalTextAlignment="Center" />
                     <Label Text="{Binding LeadText}" Style="{StaticResource BodyStyle}" HorizontalTextAlignment="Center" />
                     <ui:ButtonView BodyText="{Binding UnlockText}" TapCommand="{Binding UnlockCommand}" />

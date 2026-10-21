@@ -55,6 +55,7 @@
     <Compile Include="PracticeAnswersTests.cs" />
     <Compile Include="PracticeMoodCheckInTests.cs" />
     <Compile Include="AppLockPolicyTests.cs" />
+    <Compile Include="SharedFileNamesTests.cs" />
     <Compile Include="ExposureInsightsTests.cs" />
     <Compile Include="ZoomOriginTests.cs" />
     <Compile Include="ContrastTests.cs" />

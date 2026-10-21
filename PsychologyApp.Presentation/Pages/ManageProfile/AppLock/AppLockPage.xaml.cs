@@ -29,6 +29,13 @@ public partial class AppLockPage : ContentPage
         Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(PromptDelayMs), () => _viewModel.UnlockCommand.Execute(null));
     }
 
-    // Back must not step past the lock into the app; the phone's Home button still leaves it.
-    protected override bool OnBackButtonPressed() => true;
+    // Back must not step past the lock into the app. Doing nothing would look like a frozen app, so it leaves to the home
+    // screen, as the phone's own lock screens do.
+    protected override bool OnBackButtonPressed()
+    {
+#if ANDROID
+        Platform.CurrentActivity?.MoveTaskToBack(true);
+#endif
+        return true;
+    }
 }

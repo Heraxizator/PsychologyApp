@@ -13,9 +13,6 @@ namespace PsychologyApp.Presentation.Features.ManageProfile;
 /// </summary>
 public sealed class PersonalDataEraser(IDatabaseInitializer database, ILogger<PersonalDataEraser> logger) : IPersonalDataEraser
 {
-    // The names the app gives the files it shares (JournalCsvExporter, DataBackupViewModel).
-    private static readonly string[] OwnFilePrefixes = ["journal-", "psychologyapp-", "specialist-summary-"];
-
     public async Task EraseAllAsync(CancellationToken cancellationToken = default)
     {
         await database.RecreateDatabaseAsync(cancellationToken).ConfigureAwait(false);
@@ -25,8 +22,7 @@ public sealed class PersonalDataEraser(IDatabaseInitializer database, ILogger<Pe
         {
             foreach (string file in Directory.EnumerateFiles(FileSystem.CacheDirectory, "*", SearchOption.AllDirectories))
             {
-                string name = Path.GetFileName(file);
-                if (OwnFilePrefixes.Any(prefix => name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)))
+                if (SharedFileNames.IsOwn(Path.GetFileName(file)))
                 {
                     DeleteQuietly(file);
                 }

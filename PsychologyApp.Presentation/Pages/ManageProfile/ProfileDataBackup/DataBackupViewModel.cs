@@ -26,6 +26,9 @@ public sealed class DataBackupViewModel : BaseViewModel
     private readonly IPersonalDataEraser _eraser;
     private readonly IAppLock _appLock;
 
+    // A second tap while the system prompt is open would put a second prompt behind it.
+    private bool _enablingAppLock;
+
     public ICommand BackCommand { get; }
     public ICommand ExportBackupCommand { get; }
     public ICommand ImportBackupCommand { get; }
@@ -127,6 +130,12 @@ public sealed class DataBackupViewModel : BaseViewModel
 
     private async Task EnableAppLockAsync()
     {
+        if (_enablingAppLock)
+        {
+            return;
+        }
+
+        _enablingAppLock = true;
         try
         {
             if (_appLock.Availability == DeviceUnlockAvailability.NoScreenLock)
@@ -140,6 +149,8 @@ public sealed class DataBackupViewModel : BaseViewModel
         }
         finally
         {
+            _enablingAppLock = false;
+
             // On or not, the switch shows what is really set.
             OnPropertyChanged(nameof(AppLockEnabled));
         }
@@ -180,7 +191,7 @@ public sealed class DataBackupViewModel : BaseViewModel
         }
 
         string json;
-        string suffix = string.Empty;
+        bool passphraseProtected = false;
         if (choice == AppStrings.BackupProtectWith)
         {
             string? passphrase = await AskNewPassphraseAsync();
@@ -190,14 +201,14 @@ public sealed class DataBackupViewModel : BaseViewModel
             }
 
             json = await _backupService.ExportEncryptedAsync(passphrase);
-            suffix = "-protected";
+            passphraseProtected = true;
         }
         else
         {
             json = await _backupService.ExportAsync();
         }
 
-        string fileName = $"psychologyapp-backup{suffix}-{DateTime.Now:yyyyMMdd-HHmm}.json";
+        string fileName = SharedFileNames.Backup(passphraseProtected, DateTime.Now);
         await ShareTemporaryFileAsync(fileName, json, AppStrings.DataBackupExportTitle);
     }
 
@@ -362,14 +373,14 @@ public sealed class DataBackupViewModel : BaseViewModel
             return;
         }
 
-        await ShareTemporaryFileAsync($"psychologyapp-errors-{DateTime.Now:yyyyMMdd-HHmm}.log", text, AppStrings.ErrorLogTitle);
+        await ShareTemporaryFileAsync(SharedFileNames.ErrorLog(DateTime.Now), text, AppStrings.ErrorLogTitle);
     }
 
     private async Task ExportSummaryAsync()
     {
         bool english = UserPreferences.IsEnglish(_preferences.Load().Language);
         string summary = await _specialistSummaryService.BuildSummaryAsync(english);
-        string fileName = $"specialist-summary-{DateTime.Now:yyyyMMdd-HHmm}.txt";
+        string fileName = SharedFileNames.SpecialistSummary(DateTime.Now);
         await ShareTemporaryFileAsync(fileName, summary, AppStrings.DataBackupSummaryTitle);
     }
 }

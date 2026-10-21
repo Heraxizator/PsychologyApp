@@ -35,7 +35,7 @@ public static class JournalCsvExporter
         IReadOnlyList<MoodEntryDTO> entries,
         CancellationToken cancellationToken = default)
     {
-        string fileName = $"journal-{DateTime.Now:yyyyMMdd-HHmm}.csv";
+        string fileName = SharedFileNames.JournalExport(DateTime.Now);
         string path = Path.Combine(FileSystem.CacheDirectory, fileName);
         await File.WriteAllTextAsync(path, BuildCsv(entries), Encoding.UTF8, cancellationToken);
         await Share.Default.RequestAsync(new ShareFileRequest

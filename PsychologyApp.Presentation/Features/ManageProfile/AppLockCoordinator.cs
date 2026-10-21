@@ -9,13 +9,18 @@ namespace PsychologyApp.Presentation.Features.ManageProfile;
 /// phone's unlock is passed. The switch is kept under its own preference key, apart from the visual settings: saving a theme
 /// rewrites those as a whole, and the lock must never be turned off as a side effect.
 /// </summary>
-public sealed class AppLockCoordinator(IDeviceAuthenticator authenticator, TimeProvider time, ILogger<AppLockCoordinator> logger) : IAppLock
+public sealed class AppLockCoordinator(IDeviceAuthenticator authenticator, ILogger<AppLockCoordinator> logger) : IAppLock
 {
     private const string EnabledKey = "AppLockEnabled";
+    private const int WindowWaitStepMs = 50;
+    private const int WindowWaitSteps = 60;
 
     private bool _unlocked;
-    private DateTime? _leftAtUtc;
-    private AppLockPage? _shown;
+    private long? _leftAtMs;
+
+    // The check in progress. The start-up check and a return to the app can overlap (both wait for the window), and two of them
+    // would put two lock screens on top of each other.
+    private Task? _guard;
 
     public bool IsEnabled => Preferences.Default.Get(EnabledKey, false);
 
@@ -24,7 +29,7 @@ public sealed class AppLockCoordinator(IDeviceAuthenticator authenticator, TimeP
     public async Task<bool> TryEnableAsync()
     {
         if (Availability != DeviceUnlockAvailability.Available
-            || !await authenticator.AuthenticateAsync(AppStrings.AppLockEnableTitle, AppStrings.AppLockPromptSubtitle))
+            || await authenticator.AuthenticateAsync(AppStrings.AppLockEnableTitle, AppStrings.AppLockPromptSubtitle) != DeviceUnlockResult.Passed)
         {
             return false;
         }
@@ -46,26 +51,35 @@ public sealed class AppLockCoordinator(IDeviceAuthenticator authenticator, TimeP
     {
         if (_unlocked)
         {
-            _leftAtUtc = time.GetUtcNow().UtcDateTime;
+            _leftAtMs = SinceBootMs();
         }
     }
 
     /// <summary>At start and on every return: shows the lock screen when it is due and waits until it is passed.</summary>
-    public async Task GuardAsync()
+    public Task GuardAsync()
     {
-        ApplyRecentsPreview();
-        if (_shown is not null)
+        // Runs on the UI thread (the shell's constructor, App.OnResume), so this check and the assignment cannot interleave.
+        if (_guard is { IsCompleted: false } running)
         {
-            return;
+            return running;
         }
 
-        if (!AppLockPolicy.NeedsUnlock(IsEnabled, _unlocked, _leftAtUtc, time.GetUtcNow().UtcDateTime))
-        {
-            _leftAtUtc = null;
-            return;
-        }
+        return _guard = GuardCoreAsync();
+    }
 
+    private async Task GuardCoreAsync()
+    {
         INavigation? navigation = await WaitForWindowAsync();
+
+        // Applied once there is an activity: at a cold start the shell is built before it.
+        ApplyRecentsPreview();
+        TimeSpan? awayFor = _leftAtMs is long left ? TimeSpan.FromMilliseconds(SinceBootMs() - left) : null;
+        if (!AppLockPolicy.NeedsUnlock(IsEnabled, _unlocked, awayFor))
+        {
+            _leftAtMs = null;
+            return;
+        }
+
         if (navigation is null)
         {
             logger.LogError("No window to show the lock screen in");
@@ -73,11 +87,11 @@ public sealed class AppLockCoordinator(IDeviceAuthenticator authenticator, TimeP
         }
 
         AppLockPage page = new(new AppLockViewModel(authenticator));
-        _shown = page;
         try
         {
             await navigation.PushModalAsync(page, animated: false);
             await page.Unlocked;
+
             // Nothing is expected above it: onboarding and the safety gate start only after the lock is passed.
             if (navigation.ModalStack.Count > 0 && ReferenceEquals(navigation.ModalStack[^1], page))
             {
@@ -89,20 +103,26 @@ public sealed class AppLockCoordinator(IDeviceAuthenticator authenticator, TimeP
             }
 
             _unlocked = true;
-            _leftAtUtc = null;
+            _leftAtMs = null;
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "The lock screen could not be shown or closed");
         }
-        finally
-        {
-            _shown = null;
-        }
     }
 
-    private const int WindowWaitStepMs = 50;
-    private const int WindowWaitSteps = 60;
+    /// <summary>
+    /// Time since the phone started, counting deep sleep. The wall clock can be set back by whoever holds the phone, and a plain
+    /// monotonic clock stops while the phone sleeps (two hours in a pocket would read as seconds); this one does neither.
+    /// </summary>
+    private static long SinceBootMs()
+    {
+#if ANDROID
+        return global::Android.OS.SystemClock.ElapsedRealtime();
+#else
+        return Environment.TickCount64;
+#endif
+    }
 
     /// <summary>
     /// The start-up check runs from the shell's constructor, before the shell is in a window. Giving up there would quietly leave
