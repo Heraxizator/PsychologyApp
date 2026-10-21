@@ -1,3 +1,5 @@
+using PsychologyApp.Domain.Tests;
+
 namespace PsychologyApp.Application.Tests;
 
 public readonly record struct ScoreRange(int Min, int Max);
@@ -37,113 +39,38 @@ public static class TestScoreInterpreter
         _ => false
     };
 
+    /// <summary>
+    /// The band stored with a result. The cut-offs are the ones the result text is chosen by (TestScoreBandClassifier), so the
+    /// stored band and the words the person reads can never disagree on a border score.
+    /// </summary>
     public static int GetBandIndex(string? analyzerId, int score) => analyzerId switch
     {
-        "beck" => score switch
-        {
-            <= 9 => 0,
-            <= 15 => 1,
-            <= 19 => 2,
-            <= 29 => 3,
-            _ => 4
-        },
-        "heck_hess" => score <= 24 ? 0 : 1,
-        "haer" => score <= 28 ? 0 : 1,
-        "pochebut" => score switch
-        {
-            <= 10 => 0,
-            <= 24 => 1,
-            _ => 2
-        },
-        "gad7" => score switch
-        {
-            <= 4 => 0,
-            <= 9 => 1,
-            <= 14 => 2,
-            _ => 3
-        },
-        "k10" => score switch
-        {
-            <= 15 => 0,
-            <= 21 => 1,
-            <= 29 => 2,
-            _ => 3
-        },
-        "who5" => score switch
-        {
-            <= 12 => 0,
-            <= 18 => 1,
-            _ => 2
-        },
-        "phq9" => score switch
-        {
-            <= 4 => 0,
-            <= 9 => 1,
-            <= 14 => 2,
-            <= 19 => 3,
-            _ => 4
-        },
-        "isi" => score switch
-        {
-            <= 7 => 0,
-            <= 14 => 1,
-            <= 21 => 2,
-            _ => 3
-        },
-        "ess" => score switch
-        {
-            <= 10 => 0,
-            <= 12 => 1,
-            <= 15 => 2,
-            _ => 3
-        },
-        "phq15" => score switch
-        {
-            <= 4 => 0,
-            <= 9 => 1,
-            <= 14 => 2,
-            _ => 3
-        },
-        "scoff" => score <= 1 ? 0 : 1,
+        "beck" => (int)TestScoreBandClassifier.ClassifyBeck(score),
+        "heck_hess" => (int)TestScoreBandClassifier.ClassifyHeckHess(score),
+        "haer" => (int)TestScoreBandClassifier.ClassifyHaer(score),
+        "pochebut" => (int)TestScoreBandClassifier.ClassifyPochebut(score),
+        "gad7" => (int)TestScoreBandClassifier.ClassifyGad7(score),
+        "k10" => (int)TestScoreBandClassifier.ClassifyK10(score),
+        "who5" => (int)TestScoreBandClassifier.ClassifyWho5(score),
+        "phq9" => (int)TestScoreBandClassifier.ClassifyPhq9(score),
+        "isi" => (int)TestScoreBandClassifier.ClassifyIsi(score),
+        "ess" => (int)TestScoreBandClassifier.ClassifyEss(score),
+        "phq15" => (int)TestScoreBandClassifier.ClassifyPhq15(score),
+        "scoff" => (int)TestScoreBandClassifier.ClassifyScoff(score),
+        // The stored band of SWLS is coarser than its seven texts: dissatisfied (up to 20), neutral to slightly satisfied, satisfied.
         "swls" => score switch
         {
             <= 20 => 0,
             <= 25 => 1,
             _ => 2
         },
-        "pss10" => score switch
-        {
-            <= 13 => 0,
-            <= 26 => 1,
-            _ => 2
-        },
-        "phq2" => score <= 2 ? 0 : 1,
-        "pcptsd5" => score >= 3 ? 1 : 0,
-        "pcl5" => score switch
-        {
-            <= 20 => 0,
-            <= 32 => 1,
-            _ => 2
-        },
-        "gad2" => score <= 2 ? 0 : 1,
-        "hads_a" => score switch
-        {
-            <= 7 => 0,
-            <= 10 => 1,
-            _ => 2
-        },
-        "hads_d" => score switch
-        {
-            <= 7 => 0,
-            <= 10 => 1,
-            _ => 2
-        },
-        "rses" => score switch
-        {
-            <= 14 => 0,
-            <= 25 => 1,
-            _ => 2
-        },
+        "pss10" => (int)TestScoreBandClassifier.ClassifyPss10(score),
+        "phq2" => (int)TestScoreBandClassifier.ClassifyPhq2(score),
+        "gad2" => (int)TestScoreBandClassifier.ClassifyGad2(score),
+        "pcptsd5" => (int)TestScoreBandClassifier.ClassifyPcPtsd5(score),
+        "pcl5" => (int)TestScoreBandClassifier.ClassifyPcl5(score),
+        "hads_a" or "hads_d" => (int)TestScoreBandClassifier.ClassifyHads(score),
+        "rses" => (int)TestScoreBandClassifier.ClassifyRses(score),
         _ => -1
     };
 }
