@@ -11,7 +11,7 @@ public sealed class SqliteDatabaseInitializer(IDbConnectionFactory connectionFac
         SqliteOperationLane.RunAsync(connectionFactory, () => EnsureSchemaAsync(cancellationToken), cancellationToken);
 
     // One lane slot for the whole sequence: no other operation may run against the database while its files are deleted.
-    public Task RecreateDatabaseAsync(CancellationToken cancellationToken = default) =>
+    public Task RecreateDatabaseAsync(Func<Task>? whileExclusive = null, CancellationToken cancellationToken = default) =>
         SqliteOperationLane.RunAsync(connectionFactory, async () =>
         {
             await using (System.Data.Common.DbConnection checkpointConnection =
@@ -22,6 +22,11 @@ public sealed class SqliteDatabaseInitializer(IDbConnectionFactory connectionFac
 
             SqliteConnection.ClearAllPools();
             SqliteSchema.DeleteDatabaseFiles();
+
+            if (whileExclusive is not null)
+            {
+                await whileExclusive().ConfigureAwait(false);
+            }
 
             await EnsureSchemaAsync(cancellationToken).ConfigureAwait(false);
         }, cancellationToken);

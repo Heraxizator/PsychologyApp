@@ -13,10 +13,18 @@ namespace PsychologyApp.Presentation.Features.ManageProfile;
 /// </summary>
 public sealed class PersonalDataEraser(IDatabaseInitializer database, ILogger<PersonalDataEraser> logger) : IPersonalDataEraser
 {
-    public async Task EraseAllAsync(CancellationToken cancellationToken = default)
-    {
-        await database.RecreateDatabaseAsync(cancellationToken).ConfigureAwait(false);
+    // The rest runs while the database is held for this alone: the restart ends the process there, so a save that was already
+    // queued (a note being autosaved, a chat turn) never reaches the new, empty database.
+    public Task EraseAllAsync(CancellationToken cancellationToken = default) =>
+        database.RecreateDatabaseAsync(() =>
+        {
+            DeleteFilesAndSettings();
+            Restart();
+            return Task.CompletedTask;
+        }, cancellationToken);
 
+    private void DeleteFilesAndSettings()
+    {
         DeleteQuietly(Path.Combine(FileSystem.AppDataDirectory, "logs"));
         if (Directory.Exists(FileSystem.CacheDirectory))
         {
@@ -31,7 +39,6 @@ public sealed class PersonalDataEraser(IDatabaseInitializer database, ILogger<Pe
 
         ClearPreferences();
         logger.LogInformation("All personal data was deleted; restarting");
-        Restart();
     }
 
     // A file that cannot be removed must not stop the rest: the database, which holds what matters, is already gone.

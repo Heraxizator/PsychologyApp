@@ -56,6 +56,14 @@ public sealed class AppLockCoordinator(IDeviceAuthenticator authenticator, ILogg
     }
 
     /// <summary>At start and on every return: shows the lock screen when it is due and waits until it is passed.</summary>
+    /// <summary>
+    /// True while the app's own content must stay out of sight: from the moment the lock is found due (before the first frame of a
+    /// start or a return) until it is passed. The shell hides its content then, so nothing flashes before the lock screen.
+    /// </summary>
+    public bool IsCovering { get; private set; }
+
+    public event EventHandler? CoveringChanged;
+
     public Task GuardAsync()
     {
         // Runs on the UI thread (the shell's constructor, App.OnResume), so this check and the assignment cannot interleave.
@@ -64,31 +72,38 @@ public sealed class AppLockCoordinator(IDeviceAuthenticator authenticator, ILogg
             return running;
         }
 
-        return _guard = GuardCoreAsync();
+        // Decided here, synchronously, so the content is covered before the next frame is drawn.
+        TimeSpan? awayFor = _leftAtMs is long left ? TimeSpan.FromMilliseconds(SinceBootMs() - left) : null;
+        bool due = AppLockPolicy.NeedsUnlock(IsEnabled, _unlocked, awayFor);
+        if (due)
+        {
+            SetCovering(true);
+        }
+
+        return _guard = GuardCoreAsync(due);
     }
 
-    private async Task GuardCoreAsync()
+    private async Task GuardCoreAsync(bool due)
     {
         INavigation? navigation = await WaitForWindowAsync();
 
         // Applied once there is an activity: at a cold start the shell is built before it.
         ApplyRecentsPreview();
-        TimeSpan? awayFor = _leftAtMs is long left ? TimeSpan.FromMilliseconds(SinceBootMs() - left) : null;
-        if (!AppLockPolicy.NeedsUnlock(IsEnabled, _unlocked, awayFor))
+        if (!due)
         {
             _leftAtMs = null;
             return;
         }
 
-        if (navigation is null)
-        {
-            logger.LogError("No window to show the lock screen in");
-            return;
-        }
-
-        AppLockPage page = new(new AppLockViewModel(authenticator));
         try
         {
+            if (navigation is null)
+            {
+                logger.LogError("No window to show the lock screen in");
+                return;
+            }
+
+            AppLockPage page = new(new AppLockViewModel(authenticator));
             await navigation.PushModalAsync(page, animated: false);
             await page.Unlocked;
 
@@ -109,6 +124,22 @@ public sealed class AppLockCoordinator(IDeviceAuthenticator authenticator, ILogg
         {
             logger.LogError(ex, "The lock screen could not be shown or closed");
         }
+        finally
+        {
+            // Also when the lock screen could not be shown: a blank app would shut the person out of their records.
+            SetCovering(false);
+        }
+    }
+
+    private void SetCovering(bool covering)
+    {
+        if (IsCovering == covering)
+        {
+            return;
+        }
+
+        IsCovering = covering;
+        CoveringChanged?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>

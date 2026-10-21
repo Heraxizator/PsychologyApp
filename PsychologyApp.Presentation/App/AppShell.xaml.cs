@@ -78,6 +78,8 @@ public partial class AppShell : Shell
         PerfTrace.StartStallWatchdog(Dispatcher);
         Navigating += OnShellNavigating;
         Navigated += OnShellNavigated;
+        // While the app lock is due, nothing of the app is drawn: the lock screen is a modal page above this, unaffected.
+        _appLock.CoveringChanged += (_, _) => Opacity = _appLock.IsCovering ? 0 : 1;
         _ = InitializeAppAsync();
     }
 
