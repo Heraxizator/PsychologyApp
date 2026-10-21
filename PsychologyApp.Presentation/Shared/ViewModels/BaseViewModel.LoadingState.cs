@@ -7,7 +7,6 @@ public partial class BaseViewModel
         IsInit = false;
         IsFail = false;
         IsDone = false;
-        IsCreated = false;
     }
 
     public void SetDone()
@@ -26,12 +25,6 @@ public partial class BaseViewModel
     {
         SetDefault();
         IsFail = true;
-    }
-
-    public void SetCreated()
-    {
-        SetDefault();
-        IsCreated = true;
     }
 
     protected void CancelProgress()

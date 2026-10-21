@@ -7,12 +7,6 @@ public static class CompanionContent
         ? ["Hi. I'm here to listen. Tell me in your own words what is going on right now.", "Hello. What's on your mind at the moment? Tell me as it comes."]
         : ["Привет. Я здесь, чтобы выслушать. Расскажите своими словами, что сейчас происходит.", "Здравствуйте. Что у вас на душе прямо сейчас? Расскажите, как есть."]);
 
-    public static string PrivacyNote(bool english) => english
-        ? "Everything you write stays on your device."
-        : "Всё, что вы пишете, остаётся только на вашем устройстве.";
-
-    public static string InputHint(bool english) => english ? "For example: I can't stop worrying about tomorrow's meeting" : "Например: не могу перестать переживать из-за завтрашней встречи";
-
     public static string Reflection(SituationAnalysis analysis, bool english, Random random)
     {
         string line = Pick(random, ReflectionLines(analysis.Emotion, english));
@@ -31,10 +25,6 @@ public static class CompanionContent
         return line;
     }
 
-    public static string ClarifyLead(bool english) => english
-        ? "Thank you for telling me. I want to understand you better: which of these is closest to what you feel?"
-        : "Спасибо, что рассказали. Хочу понять вас точнее: что из этого ближе всего к тому, что вы чувствуете?";
-
     public static IReadOnlyList<(string Label, CompanionEmotion Emotion)> ClarifyChoices(bool english) => english
         ?
         [
@@ -49,8 +39,6 @@ public static class CompanionContent
             ("Грусть", CompanionEmotion.Sadness), ("Усталость", CompanionEmotion.Exhaustion)
         ];
 
-    public static string UnknownChoiceLabel(bool english) => english ? "Not sure yet" : "Пока не знаю";
-
     public static string Understood(CompanionEmotion emotion, bool english) => english
         ? $"I see: {EmotionName(emotion, true)}. Thank you."
         : $"Понимаю: {EmotionName(emotion, false)}. Спасибо, что поделились.";
@@ -64,10 +52,6 @@ public static class CompanionContent
     public static string AlternativeLabel(TechniqueId id, bool english) => english ? $"Another practice: {TechniqueTitle(id, true)}" : $"Другая практика: {TechniqueTitle(id, false)}";
 
     public static string MoreLabel(bool english) => english ? "I want to say more" : "Хочу ещё рассказать";
-
-    public static string VentPrompt(bool english, Random random) => Pick(random, english
-        ? ["I'm listening. What feels hardest about it?", "Go on, I'm here. What else is important?"]
-        : ["Я слушаю. Что в этом сложнее всего?", "Продолжайте, я здесь. Что ещё важно?"]);
 
     public static string Starting(bool english) => english ? "Okay, let's begin." : "Хорошо, начинаем.";
 

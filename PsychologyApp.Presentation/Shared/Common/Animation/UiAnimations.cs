@@ -42,18 +42,6 @@ public static class UiAnimations
     public static bool ShouldAnimate(VisualElement? view) =>
         CanAnimate(view) && !ReduceMotion.IsEnabled;
 
-    public static void PrepareForReveal(VisualElement? view)
-    {
-        if (view is null)
-        {
-            return;
-        }
-
-        view.Opacity = 0;
-        view.TranslationY = 0;
-        view.Scale = 1;
-    }
-
     public static void PrepareForPremiumReveal(VisualElement? view, double y = SlideOffset)
     {
         if (view is null)
@@ -440,12 +428,6 @@ public static class UiAnimations
         bool focused,
         CancellationToken cancellationToken = default) =>
         await SafeInputFocusAsync(border, focused, cancellationToken);
-
-    public static async Task FocusRingAsync(
-        Border? border,
-        bool focused,
-        CancellationToken cancellationToken = default) =>
-        await InputFocusAsync(border, focused, cancellationToken);
 
     public static async Task SafeInputFocusAsync(
         Border? border,

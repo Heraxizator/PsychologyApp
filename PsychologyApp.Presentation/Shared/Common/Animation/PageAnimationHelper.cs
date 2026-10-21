@@ -36,17 +36,10 @@ public sealed class PageAnimationHelper : IDisposable
 
     public void TryRevealAsync() => ScheduleAnimation(HandleLoadingStateAsync);
 
-    public async Task RevealOnAppearingAsync(VisualElement? root) =>
-        await UiAnimations.SafeRevealAsync(root);
-
-    public async Task RevealStaggeredAsync() =>
-        await UiAnimations.RevealChildrenStaggeredAsync(_staggerLayout, cancellationToken: _cts?.Token ?? CancellationToken.None);
-
     private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName is nameof(BaseViewModel.IsDone)
-            or nameof(BaseViewModel.IsInit)
-            or nameof(BaseViewModel.IsCreated))
+            or nameof(BaseViewModel.IsInit))
         {
             ScheduleAnimation(HandleLoadingStateAsync);
         }
@@ -110,13 +103,6 @@ public sealed class PageAnimationHelper : IDisposable
             {
                 UiAnimations.ResetVisualState(_contentView);
             }
-        }
-        else if (_viewModel.IsCreated)
-        {
-            _contentRevealed = false;
-            _introDismissed = false;
-            UiAnimations.ResetVisualState(_introView);
-            UiAnimations.ResetVisualState(_contentView);
         }
     }
 

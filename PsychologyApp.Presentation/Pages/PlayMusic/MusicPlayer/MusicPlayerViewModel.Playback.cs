@@ -8,9 +8,6 @@ public partial class MusicPlayerViewModel
     public void UpdatePlaybackProgressFromService() =>
         ApplyProgress(_playbackPresenter.CreateProgress(_playbackService.Position, _playbackService.Duration));
 
-    public void UpdatePlaybackProgress(TimeSpan position, TimeSpan duration) =>
-        ApplyProgress(_playbackPresenter.CreateProgress(position, duration));
-
     public async Task SeekToFractionAsync(double fraction)
     {
         TimeSpan position = await _playbackPresenter.SeekToFractionAsync(_playbackService, fraction);

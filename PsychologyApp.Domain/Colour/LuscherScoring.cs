@@ -16,26 +16,6 @@ public static class LuscherScoring
         [ColourValue.Black.Code] = 8
     };
 
-    public static int CalculateCo(IReadOnlyList<(ColourValue Colour, ColourMeaning Meaning)> selections)
-    {
-        ArgumentNullException.ThrowIfNull(selections);
-        if (selections.Count < 2)
-        {
-            return 0;
-        }
-
-        int coValue = 0;
-        for (int index = 1; index < selections.Count; index++)
-        {
-            string code = selections[index - 1].Colour.Code;
-            int answer = ColourWeights[code];
-            int expected = ColourWeights.ElementAt(index - 1).Value;
-            coValue += Math.Abs(answer - expected);
-        }
-
-        return coValue;
-    }
-
     public static int CalculateCoBetweenPasses(
         IReadOnlyList<(ColourValue Colour, ColourMeaning Meaning)> firstPass,
         IReadOnlyList<(ColourValue Colour, ColourMeaning Meaning)> secondPass)

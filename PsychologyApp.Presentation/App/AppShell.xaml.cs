@@ -369,9 +369,6 @@ public partial class AppShell : Shell
         }
     }
 
-    public void MaterializeTab(ShellContent shellContent) =>
-        EnsureTabMaterialized(GetTabIndex(shellContent));
-
     private void EnsureTabMaterialized(int index)
     {
         if (index < 0 || index >= _tabsMaterialized.Length || _tabsMaterialized[index])

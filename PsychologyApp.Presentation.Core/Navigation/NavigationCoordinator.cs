@@ -50,9 +50,6 @@ public static class NavigationCoordinator
         }
     }
 
-    public static void LogNavigationFailure(Exception exception, string message) =>
-        _logger?.LogWarning(exception, message);
-
     public static async Task RunAsync(Func<Task> navigate)
     {
         _ = await RunCoreAsync(navigate, applyPushCooldown: false).ConfigureAwait(false);

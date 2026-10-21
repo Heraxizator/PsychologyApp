@@ -14,16 +14,4 @@ public static class StatisticMapper
     {
         return global::PsychologyApp.Domain.Entities.Statistic.Create(statisticDTO.ModuleName!, statisticDTO.PageName!, statisticDTO.DateTime, statisticDTO.SecondsDuration);
     }
-
-    public static StatisticDTO GetStatisticDTO(global::PsychologyApp.Domain.Entities.Statistic statistic)
-    {
-        return new StatisticDTO
-        {
-            StatisticId = statistic.StatisticId,
-            ModuleName = statistic.ModuleName,
-            PageName = statistic.PageName,
-            DateTime = statistic.DateTime,
-            SecondsDuration = statistic.SecondsDuration
-        };
-    }
 }

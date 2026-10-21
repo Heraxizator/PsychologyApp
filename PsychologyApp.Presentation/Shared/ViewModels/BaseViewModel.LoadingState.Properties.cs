@@ -103,16 +103,4 @@ public partial class BaseViewModel
     }
 
     protected bool _created_visibility;
-    public bool IsCreated
-    {
-        get => _created_visibility;
-        set
-        {
-            if (_created_visibility != value)
-            {
-                _created_visibility = value;
-                OnPropertyChanged(nameof(IsCreated));
-            }
-        }
-    }
 }

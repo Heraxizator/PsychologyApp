@@ -219,21 +219,6 @@ public static partial class UserPreferences
 
     public static IReadOnlyList<string> SizeKeys { get; } = ["large", "medium", "small"];
 
-    public static IReadOnlyList<string> GetLanguageOptions(string? language = null) =>
-        LanguageKeys.Select(key => GetLanguageLabel(key, language)).ToArray();
-
-    public static IReadOnlyList<string> GetThemeOptions(string? language = null) =>
-        ThemeKeys.Select(key => GetThemeLabel(key, language)).ToArray();
-
-    public static IReadOnlyList<string> GetColorOptions(string? language = null) =>
-        ColorKeys.Select(key => GetColorLabel(key, language)).ToArray();
-
-    public static IReadOnlyList<string> GetFormOptions(string? language = null) =>
-        FormKeys.Select(key => GetFormLabel(key, language)).ToArray();
-
-    public static IReadOnlyList<string> GetSizeOptions(string? language = null) =>
-        SizeKeys.Select(key => GetSizeLabel(key, language)).ToArray();
-
     public static string ParseLanguageKey(string displayOrKey) => NormalizeLanguageKey(displayOrKey);
 
     public static IReadOnlyList<string> OnboardingConcernKeysList { get; } =
