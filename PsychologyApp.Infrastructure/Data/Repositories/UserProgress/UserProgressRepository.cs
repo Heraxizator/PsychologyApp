@@ -287,7 +287,7 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
         Dictionary<string, DateTime> result = new(StringComparer.Ordinal);
         foreach ((string itemKey, string completedAt) in rows)
         {
-            result[itemKey] = ParseUtcDateTime(completedAt);
+            result[itemKey] = SqliteTime.FromIso(completedAt);
         }
 
         return result;
@@ -536,7 +536,5 @@ public sealed class UserProgressRepository : SqliteRepositoryBase, IUserProgress
     private static DateTime? ParseOptionalUtcDateTime(string? value) =>
         value is null
             ? null
-            : ParseUtcDateTime(value);
-
-    private static DateTime ParseUtcDateTime(string value) => SqliteTime.FromIso(value);
+            : SqliteTime.FromIso(value);
 }

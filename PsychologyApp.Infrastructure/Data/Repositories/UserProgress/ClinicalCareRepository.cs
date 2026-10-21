@@ -92,7 +92,7 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
             : new RiskAssessmentDTO
             {
                 RiskAssessmentId = row.RiskAssessmentId,
-                AssessedAt = ParseUtcDateTime(row.AssessedAt),
+                AssessedAt = SqliteTime.FromIso(row.AssessedAt),
                 Source = row.Source,
                 Notes = row.Notes,
                 HasSelfHarmThoughts = row.HasSelfHarmThoughts,
@@ -152,7 +152,7 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
         return new TherapyProgramStateDTO
         {
             ProgramType = programType,
-            StartedAt = ParseUtcDateTime(row.StartedAt),
+            StartedAt = SqliteTime.FromIso(row.StartedAt),
             CurrentWeek = row.CurrentWeek <= 0 ? 1 : row.CurrentWeek,
             IsActive = row.IsActive
         };
@@ -187,7 +187,7 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
         return rows.Select(row => new EscalationEventDTO
         {
             EscalationEventId = row.EscalationEventId,
-            CreatedAt = ParseUtcDateTime(row.CreatedAt),
+            CreatedAt = SqliteTime.FromIso(row.CreatedAt),
             RiskLevel = ParseRiskLevel(row.RiskLevel),
             TriggerSource = row.TriggerSource,
             Action = row.Action,
@@ -204,9 +204,6 @@ public sealed class ClinicalCareRepository : SqliteRepositoryBase, IClinicalCare
             "amber" => RiskLevel.Amber,
             _ => RiskLevel.Green
         };
-
-    private static DateTime ParseUtcDateTime(string value) =>
-        SqliteTime.FromIso(value);
 
     private sealed class ClinicalRiskRow
     {
