@@ -9,7 +9,7 @@ namespace PsychologyApp.Presentation.Features.Chat.DependencyInjection;
 
 public interface IChatViewModelFactory
 {
-    ChatViewModel CreateConversation(long? sessionId, INavigation navigation, string? topic = null);
+    ChatViewModel CreateConversation(long? sessionId, INavigation navigation, string? topic = null, string? opener = null);
 
     ChatListViewModel CreateList(INavigation navigation);
 
@@ -23,8 +23,8 @@ public sealed class ChatViewModelFactory(
     TimeProvider time,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : IChatViewModelFactory
 {
-    public ChatViewModel CreateConversation(long? sessionId, INavigation navigation, string? topic = null) =>
-        new(chat, Resolve(navigation), language, time, sessionId, topic);
+    public ChatViewModel CreateConversation(long? sessionId, INavigation navigation, string? topic = null, string? opener = null) =>
+        new(chat, Resolve(navigation), language, time, sessionId, topic, opener);
 
     public ChatListViewModel CreateList(INavigation navigation) =>
         new(chat, Resolve(navigation), language, dialogs, time);

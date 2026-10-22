@@ -27,6 +27,24 @@
   <data name="ChatEmptyBody" xml:space="preserve">
     <value>Tell me what is going on. I will listen, help you sort it out and suggest a practice.</value>
   </data>
+  <data name="ChatEmptyPrivacy" xml:space="preserve">
+    <value>The conversation stays on this phone and is not sent anywhere</value>
+  </data>
+  <data name="ChatOpenersTitle" xml:space="preserve">
+    <value>Or begin with</value>
+  </data>
+  <data name="ChatOpenerAnxious" xml:space="preserve">
+    <value>I feel anxious</value>
+  </data>
+  <data name="ChatOpenerSleep" xml:space="preserve">
+    <value>I can't sleep</value>
+  </data>
+  <data name="ChatOpenerSad" xml:space="preserve">
+    <value>I feel sad</value>
+  </data>
+  <data name="ChatOpenerLonely" xml:space="preserve">
+    <value>I feel lonely</value>
+  </data>
   <data name="ChatRename" xml:space="preserve">
     <value>Rename</value>
   </data>

@@ -167,8 +167,8 @@ public sealed class PageRegistry(
     public ChatListPage CreateChatListPage(INavigation? hostNavigation) =>
         WithPressFeedback(chatPageFactory.CreateChatListPage(hostNavigation));
 
-    public ChatPage CreateChatPage(long? sessionId, INavigation hostNavigation, string? topic = null) =>
-        WithPressFeedback(chatPageFactory.CreateChatPage(sessionId, hostNavigation, topic));
+    public ChatPage CreateChatPage(long? sessionId, INavigation hostNavigation, string? topic = null, string? opener = null) =>
+        WithPressFeedback(chatPageFactory.CreateChatPage(sessionId, hostNavigation, topic, opener));
 
     public CompanionProfilePage CreateCompanionProfilePage(INavigation hostNavigation) =>
         WithPressFeedback(chatPageFactory.CreateCompanionProfilePage(hostNavigation));

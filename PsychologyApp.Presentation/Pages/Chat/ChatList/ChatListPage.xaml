@@ -116,47 +116,149 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <!-- No chats yet: the companion itself invites a first talk, with one clear way to start. -->
-        <VerticalStackLayout
-            IsVisible="{Binding IsEmpty}"
-            VerticalOptions="Center"
-            Spacing="16"
-            Padding="32,0,32,48">
-            <Grid WidthRequest="168" HeightRequest="168" HorizontalOptions="Center">
-                <Border
-                    StrokeThickness="0"
-                    StrokeShape="RoundRectangle 84"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryTint}, Dark={StaticResource PrimaryTintDark}}" />
-                <Border
-                    WidthRequest="128"
-                    HeightRequest="128"
-                    StrokeThickness="0"
-                    StrokeShape="RoundRectangle 64"
+        <!--
+            No chats yet: a small drawn conversation (the companion typing, a reply, its answer) instead of a lone avatar,
+            the promise that it stays on the phone, one big way to start and a few ready first lines for someone who does
+            not know what to write. The scene is decoration only; screen readers skip it.
+        -->
+        <ScrollView IsVisible="{Binding IsEmpty}" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout
+                VerticalOptions="Center"
+                Spacing="16"
+                Padding="28,24,28,32">
+                <Grid
+                    WidthRequest="264"
                     HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}" />
-                <avatar:CompanionAvatarView
-                    WidthRequest="92"
-                    HeightRequest="92"
-                    IconSize="40"
-                    ShowStatus="False"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center" />
-            </Grid>
-            <Label
-                Text="{Binding EmptyTitle}"
-                Style="{StaticResource PageTitleStyle}"
-                HorizontalTextAlignment="Center" />
-            <Label
-                Text="{Binding EmptyBody}"
-                Style="{StaticResource BodyStyle}"
-                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                HorizontalTextAlignment="Center" />
-            <ui:ButtonView
-                Margin="0,8,0,0"
-                BodyText="{Binding StartChatText}"
-                TapCommand="{Binding NewChatCommand}" />
-        </VerticalStackLayout>
+                    RowDefinitions="Auto,Auto,Auto"
+                    RowSpacing="10"
+                    AutomationProperties.IsInAccessibleTree="False">
+                    <!-- The companion, typing. -->
+                    <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto" ColumnSpacing="8" HorizontalOptions="Start">
+                        <avatar:CompanionAvatarView
+                            WidthRequest="36"
+                            HeightRequest="36"
+                            IconSize="18"
+                            ShowStatus="False"
+                            VerticalOptions="End" />
+                        <Border
+                            Grid.Column="1"
+                            Padding="16,14"
+                            StrokeThickness="0"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceElevatedLight}, Dark={StaticResource SurfaceElevatedDark}}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="18,18,4,18" />
+                            </Border.StrokeShape>
+                            <HorizontalStackLayout Spacing="6">
+                                <Ellipse WidthRequest="8" HeightRequest="8" Fill="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray500}}" />
+                                <Ellipse WidthRequest="8" HeightRequest="8" Fill="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray500}}" />
+                                <Ellipse WidthRequest="8" HeightRequest="8" Fill="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray500}}" />
+                            </HorizontalStackLayout>
+                        </Border>
+                    </Grid>
+                    <!-- The person's words. -->
+                    <Border
+                        Grid.Row="1"
+                        HorizontalOptions="End"
+                        Padding="16,14"
+                        StrokeThickness="0"
+                        BackgroundColor="{DynamicResource PrimaryFill}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="18,18,18,4" />
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Spacing="7">
+                            <BoxView WidthRequest="120" HeightRequest="8" CornerRadius="4" Color="White" Opacity="0.75" HorizontalOptions="Start" />
+                            <BoxView WidthRequest="76" HeightRequest="8" CornerRadius="4" Color="White" Opacity="0.55" HorizontalOptions="Start" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <!-- Its answer. -->
+                    <Border
+                        Grid.Row="2"
+                        Margin="44,0,0,0"
+                        HorizontalOptions="Start"
+                        Padding="16,14"
+                        StrokeThickness="0"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceElevatedLight}, Dark={StaticResource SurfaceElevatedDark}}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="18,18,4,18" />
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Spacing="7">
+                            <BoxView WidthRequest="140" HeightRequest="8" CornerRadius="4" Color="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}" HorizontalOptions="Start" />
+                            <BoxView WidthRequest="96" HeightRequest="8" CornerRadius="4" Color="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}" HorizontalOptions="Start" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <VerticalStackLayout Spacing="8" Margin="0,8,0,0">
+                    <Label
+                        Text="{Binding EmptyTitle}"
+                        Style="{StaticResource PageTitleStyle}"
+                        HorizontalTextAlignment="Center" />
+                    <Label
+                        Text="{Binding EmptyBody}"
+                        Style="{StaticResource BodyStyle}"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                        HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+
+                <!-- A grid, not a horizontal stack: the sentence has to wrap on a narrow phone or in Russian. -->
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" HorizontalOptions="Center" Padding="8,0">
+                    <ui:MaterialIconView
+                        IconName="Lock"
+                        IconSize="16"
+                        IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                        VerticalOptions="Start"
+                        Margin="0,2,0,0" />
+                    <Label
+                        Grid.Column="1"
+                        Text="{Binding EmptyPrivacy}"
+                        Style="{StaticResource CaptionStyle}"
+                        LineBreakMode="WordWrap" />
+                </Grid>
+
+                <ui:ButtonView
+                    BodyText="{Binding StartChatText}"
+                    TapCommand="{Binding NewChatCommand}" />
+
+                <Label
+                    Margin="0,8,0,0"
+                    Text="{Binding OpenersTitle}"
+                    Style="{StaticResource CaptionStyle}"
+                    HorizontalTextAlignment="Center" />
+                <FlexLayout
+                    Wrap="Wrap"
+                    Direction="Row"
+                    JustifyContent="Center"
+                    AlignItems="Start"
+                    BindableLayout.ItemsSource="{Binding Openers}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:ChatOpener">
+                            <Border
+                                FlexLayout.Shrink="0"
+                                Margin="4"
+                                Padding="16,10"
+                                MinimumHeightRequest="44"
+                                StrokeThickness="1"
+                                Stroke="{AppThemeBinding Light={StaticResource BorderSubtleLight}, Dark={StaticResource BorderSubtleDark}}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceElevatedLight}, Dark={StaticResource SurfaceElevatedDark}}"
+                                StrokeShape="RoundRectangle 22"
+                                SemanticProperties.Description="{Binding Text}">
+                                <Border.Behaviors>
+                                    <behaviors:PressFeedbackBehavior />
+                                </Border.Behaviors>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Command}" />
+                                </Border.GestureRecognizers>
+                                <Label
+                                    Text="{Binding Text}"
+                                    Style="{StaticResource BodyStyle}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
+                                    VerticalOptions="Center" />
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+            </VerticalStackLayout>
+        </ScrollView>
 
         <!-- A new chat: one round button in the corner, under the thumb. -->
         <Border

@@ -27,6 +27,24 @@
   <data name="ChatEmptyBody" xml:space="preserve">
     <value>Расскажите, что происходит. Я выслушаю, помогу разобраться и подскажу практику.</value>
   </data>
+  <data name="ChatEmptyPrivacy" xml:space="preserve">
+    <value>Разговор остаётся на этом телефоне и никуда не отправляется</value>
+  </data>
+  <data name="ChatOpenersTitle" xml:space="preserve">
+    <value>Или начните с</value>
+  </data>
+  <data name="ChatOpenerAnxious" xml:space="preserve">
+    <value>Мне тревожно</value>
+  </data>
+  <data name="ChatOpenerSleep" xml:space="preserve">
+    <value>Не могу уснуть</value>
+  </data>
+  <data name="ChatOpenerSad" xml:space="preserve">
+    <value>Мне грустно</value>
+  </data>
+  <data name="ChatOpenerLonely" xml:space="preserve">
+    <value>Мне одиноко</value>
+  </data>
   <data name="ChatRename" xml:space="preserve">
     <value>Переименовать</value>
   </data>

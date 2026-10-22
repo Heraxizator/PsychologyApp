@@ -10,7 +10,7 @@ public interface IChatPageFactory
     ChatListPage CreateChatListPage(INavigation? hostNavigation);
 
     /// <param name="sessionId">The chat to open, or null to start a new one.</param>
-    ChatPage CreateChatPage(long? sessionId, INavigation hostNavigation, string? topic = null);
+    ChatPage CreateChatPage(long? sessionId, INavigation hostNavigation, string? topic = null, string? opener = null);
 
     CompanionProfilePage CreateCompanionProfilePage(INavigation hostNavigation);
 }
@@ -19,7 +19,8 @@ public sealed class ChatPageFactory(IChatViewModelFactory viewModelFactory) : IC
 {
     public ChatListPage CreateChatListPage(INavigation? hostNavigation) => new(viewModelFactory, hostNavigation);
 
-    public ChatPage CreateChatPage(long? sessionId, INavigation hostNavigation, string? topic = null) => new(viewModelFactory, sessionId, hostNavigation, topic);
+    public ChatPage CreateChatPage(long? sessionId, INavigation hostNavigation, string? topic = null, string? opener = null) =>
+        new(viewModelFactory, sessionId, hostNavigation, topic, opener);
 
     public CompanionProfilePage CreateCompanionProfilePage(INavigation hostNavigation) => new(viewModelFactory, hostNavigation);
 }

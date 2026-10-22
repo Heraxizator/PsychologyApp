@@ -94,6 +94,24 @@ public sealed class ChatListViewModel : BaseViewModel
     public string StartChatText => AppStrings.ChatHeroStart;
     public string EmptyTitle => AppStrings.ChatEmptyTitle;
     public string EmptyBody => AppStrings.ChatEmptyBody;
+    public string EmptyPrivacy => AppStrings.ChatEmptyPrivacy;
+    public string OpenersTitle => AppStrings.ChatOpenersTitle;
+
+    /// <summary>
+    /// Ways to begin for someone who does not know what to write: each opens a new chat and sends its words as the person's
+    /// first message, so the chat answers it like anything they would type. Only feelings the chat understands from a first
+    /// line (ChatOpenersTests): a wish like "I want to sort it out" is read only after something has been told.
+    /// </summary>
+    public IReadOnlyList<ChatOpener> Openers =>
+    [
+        Opener(AppStrings.ChatOpenerAnxious),
+        Opener(AppStrings.ChatOpenerSleep),
+        Opener(AppStrings.ChatOpenerSad),
+        Opener(AppStrings.ChatOpenerLonely)
+    ];
+
+    private ChatOpener Opener(string text) =>
+        new(text, new AsyncCommand(() => NavigationService!.GoToChatAsync(opener: text)));
 
     public async Task RefreshAsync()
     {
@@ -112,7 +130,8 @@ public sealed class ChatListViewModel : BaseViewModel
     }
 
     protected override void RefreshLocalizedProperties() =>
-        Notify(nameof(Title), nameof(NewChatText), nameof(StartChatText), nameof(EmptyTitle), nameof(EmptyBody));
+        Notify(nameof(Title), nameof(NewChatText), nameof(StartChatText), nameof(EmptyTitle), nameof(EmptyBody), nameof(EmptyPrivacy),
+            nameof(OpenersTitle), nameof(Openers));
 
     private ChatListItem ToItem(ChatSessionDTO session, DateTime now)
     {
@@ -186,3 +205,6 @@ public sealed class ChatListViewModel : BaseViewModel
         return flat.Length <= PreviewLength ? flat : flat[..PreviewLength].TrimEnd() + "…";
     }
 }
+
+/// <summary>A way to begin a chat offered on the empty chat list.</summary>
+public sealed record ChatOpener(string Text, ICommand Command);

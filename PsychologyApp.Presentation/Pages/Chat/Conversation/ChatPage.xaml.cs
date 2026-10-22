@@ -16,10 +16,10 @@ public partial class ChatPage : ContentPage
     /// <summary>Whether the bottom of the conversation was on screen at the last scroll event; new messages only pull the view down while this is true.</summary>
     private bool _isNearBottom = true;
 
-    public ChatPage(IChatViewModelFactory viewModelFactory, long? sessionId, INavigation hostNavigation, string? topic = null)
+    public ChatPage(IChatViewModelFactory viewModelFactory, long? sessionId, INavigation hostNavigation, string? topic = null, string? opener = null)
     {
         InitializeComponent();
-        _viewModel = viewModelFactory.CreateConversation(sessionId, hostNavigation, topic);
+        _viewModel = viewModelFactory.CreateConversation(sessionId, hostNavigation, topic, opener);
         BindingContext = _viewModel;
         _viewModel.Messages.CollectionChanged += OnMessagesChanged;
 

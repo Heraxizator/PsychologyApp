@@ -201,4 +201,18 @@ public sealed class ChatListViewModelTests
         _navigation.Verify(n => n.GoToChatAsync(7L), Times.Once);
         _navigation.Verify(n => n.GoToChatAsync(null), Times.Once);
     }
+
+    [Fact]
+    public async Task AReadyFirstLineStartsANewChatWithThoseWords()
+    {
+        _navigation.Setup(n => n.GoToChatAsync(It.IsAny<long?>(), It.IsAny<string?>(), It.IsAny<string?>())).Returns(Task.CompletedTask);
+        ChatListViewModel viewModel = Create();
+        await viewModel.RefreshAsync();
+        ChatOpener opener = viewModel.Openers[1];
+
+        await VmTestHelpers.RunAsync(opener.Command);
+
+        Assert.True(viewModel.IsEmpty);
+        _navigation.Verify(n => n.GoToChatAsync(null, null, opener.Text), Times.Once);
+    }
 }

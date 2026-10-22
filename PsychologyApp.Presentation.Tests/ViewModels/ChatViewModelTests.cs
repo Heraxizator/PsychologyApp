@@ -99,6 +99,24 @@ public sealed class ChatViewModelTests
     }
 
     [Fact]
+    public async Task AChatOpenedWithReadyWordsSendsThemOnceAsThePersonsFirstMessage()
+    {
+        _chat.Setup(c => c.StartNewChatAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new ChatTurnResult(new ChatSessionDTO { Id = 5, Title = "New" }, [], null));
+        History(Message(ChatRole.Companion, "hi", Now));
+        _chat.Setup(c => c.SendTextAsync(5, "I can't fall asleep", It.IsAny<CancellationToken>())).ReturnsAsync(Turn(null, "Let's look at it"));
+        Mock<IChatLanguageProvider> language = new();
+        ChatViewModel viewModel = new(_chat.Object, _navigation.Object, language.Object, new FixedTime(), sessionId: null, opener: "I can't fall asleep");
+
+        await viewModel.OnAppearedAsync();
+        await viewModel.OnAppearedAsync();
+
+        _chat.Verify(c => c.SendTextAsync(5, "I can't fall asleep", It.IsAny<CancellationToken>()), Times.Once);
+        Assert.Equal(["hi", "I can't fall asleep", "Let's look at it"], viewModel.Messages.Select(m => m.Text));
+        Assert.True(viewModel.Messages[1].IsUser);
+    }
+
+    [Fact]
     public async Task LoadingTwiceAtOnceReadsTheHistoryOnce()
     {
         History(Message(ChatRole.Companion, "hi", Now));

@@ -76,7 +76,7 @@ public interface IPageFactory
     PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null, long? sessionResultId = null);
     /// <param name="hostNavigation">The stack to push onto, or null for the Chat tab, which uses its own.</param>
     ChatListPage CreateChatListPage(INavigation? hostNavigation);
-    ChatPage CreateChatPage(long? sessionId, INavigation hostNavigation, string? topic = null);
+    ChatPage CreateChatPage(long? sessionId, INavigation hostNavigation, string? topic = null, string? opener = null);
     CompanionProfilePage CreateCompanionProfilePage(INavigation hostNavigation);
     CrisisHubPage CreateCrisisHubPage();
     RiskCheckPage CreateRiskCheckPage(string source);

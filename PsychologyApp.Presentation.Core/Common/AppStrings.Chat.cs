@@ -8,6 +8,12 @@ public static partial class AppStrings
     public static string ChatEmptyTitle => R(nameof(ChatEmptyTitle));
 
     public static string ChatEmptyBody => R(nameof(ChatEmptyBody));
+    public static string ChatEmptyPrivacy => R(nameof(ChatEmptyPrivacy));
+    public static string ChatOpenersTitle => R(nameof(ChatOpenersTitle));
+    public static string ChatOpenerAnxious => R(nameof(ChatOpenerAnxious));
+    public static string ChatOpenerSleep => R(nameof(ChatOpenerSleep));
+    public static string ChatOpenerSad => R(nameof(ChatOpenerSad));
+    public static string ChatOpenerLonely => R(nameof(ChatOpenerLonely));
 
     public static string ChatRename => R(nameof(ChatRename));
     public static string ChatDelete => R(nameof(ChatDelete));

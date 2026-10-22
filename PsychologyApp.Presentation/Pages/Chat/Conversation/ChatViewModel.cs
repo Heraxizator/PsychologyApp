@@ -49,6 +49,9 @@ public sealed class ChatViewModel : BaseViewModel
 
     /// <summary>A chat opened on a topic (trauma, from its articles) starts with that topic's choices instead of a plain greeting.</summary>
     private readonly string? _topic;
+
+    /// <summary>Words picked on the empty chat list; sent once, as the person's first message, when the new chat has loaded.</summary>
+    private string? _opener;
     private Task? _loading;
     private bool _isLoading = true;
     private bool _busy;
@@ -64,9 +67,11 @@ public sealed class ChatViewModel : BaseViewModel
         IChatLanguageProvider language,
         TimeProvider time,
         long? sessionId,
-        string? topic = null)
+        string? topic = null,
+        string? opener = null)
     {
         _topic = topic;
+        _opener = string.IsNullOrWhiteSpace(opener) ? null : opener;
         ModuleName = AppStrings.ChatsTitle;
         PageName = AppStrings.ChatHeroTitle;
         _chat = chat;
@@ -230,6 +235,13 @@ public sealed class ChatViewModel : BaseViewModel
             {
                 Title = followUp.Session.Title;
                 await RevealAsync(followUp.NewMessages);
+            }
+
+            // The same path as a typed message, so the crisis check and the engine read it as the person's own words.
+            if (_opener is { } opener)
+            {
+                _opener = null;
+                await TakeTurnAsync(opener, () => _chat.SendTextAsync(id, opener, _lifetime.Token));
             }
         }
         catch (OperationCanceledException)
