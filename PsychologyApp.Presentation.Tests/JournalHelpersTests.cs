@@ -89,6 +89,8 @@ public sealed class JournalHelpersTests
         Assert.Equal(4, chips[^1].MoodLevel);
         Assert.True(chips[4].HasEntry);
         Assert.Equal(2, chips[4].MoodLevel);
+        Assert.False(chips[0].HasEntry);
+        Assert.Equal("20", chips[0].MoodGlyph);
     }
 
     [Fact]

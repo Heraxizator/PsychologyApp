@@ -24,8 +24,11 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ### Changed
 - Practice and test lists are denser: on a practice card the length and group, whether it was tried and the school moved up into the text column (one left edge for all its text, the icon at the top instead of lines across the whole card), the "Today for you" hint sits under the subtitle, and the gaps between cards are smaller. A practice card is about 12% lower, and the five tests now fit on one screen. Checked on the emulator in English, light and dark themes, on Practices and Tests; the iOS card got the same layout and was built, not seen.
+- Each test in the list has its own icon and tile colour by what it measures (a cloud for low mood, air for anxiety, a bolt for stress, a moon for sleep, a palette for the Lüscher test and so on), in the colours of the practice groups, instead of one identical icon on every card. Checked on the emulator in English, dark theme.
+- The journal's week strip shows the date on a day without a check-in, so it reads as a calendar; a lone dot used to stand there. Checked on the emulator in English, dark theme.
 
 ### Fixed
+- Settings: a switch that is off no longer looks broken in the light theme (its white thumb disappeared into the white card): off is a grey thumb on a light grey track, on is the accent colour, in the dark theme too. The choices on the right of each setting line up with their names instead of sitting a few pixels higher, and the theme list is titled "Theme" instead of "Options". Checked on the emulator in English, light and dark themes.
 - AI chat, "Delete all chats": the person's own words that the chat kept between conversations (a decided step, stuck points and triggers from trauma work) and the record of what the chats were about are deleted with the chats; only the name and which practices helped stay, as the dialog says. They used to stay behind. Checked by tests.
 - Restoring a backup: a file larger than any backup (a video picked by mistake) is rejected by its size before it is read, instead of being loaded into memory whole, which could close the app. Checked by build only.
 - The error log keeps its 2 MB cap during a run too, not only at start, so an error repeating in a loop cannot fill the phone's storage. Checked by build only.

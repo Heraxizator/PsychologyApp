@@ -22,7 +22,8 @@ public static class JournalCalendarBuilder
             {
                 Date = date,
                 DayLabel = date.ToDateTime(TimeOnly.MinValue).ToString("ddd", labelCulture),
-                MoodGlyph = hasEntry ? AppStrings.MoodEmojiFor(moodLevel) : "·",
+                // A day with no check-in shows its date, so the strip reads as a calendar; a lone dot looked like debris.
+                MoodGlyph = hasEntry ? AppStrings.MoodEmojiFor(moodLevel) : date.Day.ToString(labelCulture),
                 MoodLevel = hasEntry ? moodLevel : null,
                 HasEntry = hasEntry,
                 IsSelected = selectedDay == date

@@ -56,9 +56,12 @@
                                 FontSize="12"
                                 HorizontalTextAlignment="Center"
                                 LineBreakMode="NoWrap" />
+                            <!-- The emoji of a check-in, or the date of a day without one; the colour only reaches the date. -->
                             <Label
                                 Text="{Binding MoodGlyph}"
                                 FontSize="16"
+                                FontFamily="{StaticResource MediumFontFamily}"
+                                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
                                 HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
                     </Border>
