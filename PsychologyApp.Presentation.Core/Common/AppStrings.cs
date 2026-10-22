@@ -62,7 +62,6 @@ public static partial class AppStrings
     public static string SettingsPrimaryConcernSection => R(nameof(SettingsPrimaryConcernSection));
     public static string SettingsQuestionnaireAutoAdvanceLabel => R(nameof(SettingsQuestionnaireAutoAdvanceLabel));
     public static string SettingsApplyButton => R(nameof(SettingsApplyButton));
-    public static string SettingsPickerOptions => R(nameof(SettingsPickerOptions));
     public static string SettingsPickerColors => R(nameof(SettingsPickerColors));
     public static string SettingsPickerShapes => R(nameof(SettingsPickerShapes));
     public static string SettingsPickerSizes => R(nameof(SettingsPickerSizes));

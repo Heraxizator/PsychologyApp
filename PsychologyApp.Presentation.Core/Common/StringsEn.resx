@@ -327,9 +327,6 @@
   <data name="SettingsApplyButton" xml:space="preserve">
     <value>Apply</value>
   </data>
-  <data name="SettingsPickerOptions" xml:space="preserve">
-    <value>Options</value>
-  </data>
   <data name="SettingsPickerColors" xml:space="preserve">
     <value>Colors</value>
   </data>

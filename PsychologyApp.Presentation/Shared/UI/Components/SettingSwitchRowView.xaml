@@ -20,10 +20,10 @@
                 Text="{Binding LabelText, Source={x:Reference Root}}"
                 Style="{StaticResource BodyStyle}"
                 VerticalOptions="Center" />
+            <!-- No local colours: a local value would override the On/Off states of the Switch style, and a white thumb
+                 on the white card made the switch look broken when off. -->
             <Switch
                 Grid.Column="1"
-                OnColor="{DynamicResource Primary}"
-                ThumbColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray100}}"
                 IsEnabled="{Binding IsRowEnabled, Source={x:Reference Root}}"
                 IsToggled="{Binding IsToggled, Source={x:Reference Root}, Mode=TwoWay}" />
         </Grid>

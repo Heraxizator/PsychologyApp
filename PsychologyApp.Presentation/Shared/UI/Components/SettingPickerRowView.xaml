@@ -29,6 +29,8 @@
             BackgroundColor="Transparent"
             HorizontalOptions="Fill"
             HorizontalTextAlignment="End"
+            VerticalOptions="Center"
+            VerticalTextAlignment="Center"
             IsEnabled="{Binding IsRowEnabled, Source={x:Reference Root}}"
             ItemsSource="{Binding ItemsSource, Source={x:Reference Root}}"
             SelectedIndexChanged="OnPickerSelectedIndexChanged" />

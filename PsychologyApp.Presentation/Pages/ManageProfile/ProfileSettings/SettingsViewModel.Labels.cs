@@ -36,7 +36,7 @@ public partial class SettingsViewModel
     public string FormHelperText => AppStrings.SettingsFormHelper;
     public string ColorHelperText => AppStrings.SettingsColorHelper;
     public string LanguagePickerTitle => AppStrings.SettingsPickerLanguages;
-    public string ThemePickerTitle => AppStrings.SettingsPickerOptions;
+    public string ThemePickerTitle => AppStrings.SettingsThemeLabel;
     public string ColorPickerTitle => AppStrings.SettingsPickerColors;
     public string FormPickerTitle => AppStrings.SettingsPickerShapes;
     public string SizePickerTitle => AppStrings.SettingsPickerSizes;

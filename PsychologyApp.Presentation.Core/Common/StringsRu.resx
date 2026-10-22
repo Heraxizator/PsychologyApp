@@ -327,9 +327,6 @@
   <data name="SettingsApplyButton" xml:space="preserve">
     <value>Применить</value>
   </data>
-  <data name="SettingsPickerOptions" xml:space="preserve">
-    <value>Варианты</value>
-  </data>
   <data name="SettingsPickerColors" xml:space="preserve">
     <value>Цвета</value>
   </data>
