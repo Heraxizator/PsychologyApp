@@ -37,6 +37,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="tests:TestItem">
                     <testsUi:TestListCardView
+                        TestId="{Binding TestId}"
                         Title="{Binding Title}"
                         Subtitle="{Binding Subtitle}"
                         MetaText="{Binding MetaText}"

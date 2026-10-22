@@ -10,7 +10,7 @@ namespace PsychologyApp.Presentation.Tests;
 /// </summary>
 public sealed class QuestionnaireScoreRangeTests
 {
-    private static string RawRoot()
+    internal static string RawRoot()
     {
         string? directory = AppContext.BaseDirectory;
         while (directory is not null)

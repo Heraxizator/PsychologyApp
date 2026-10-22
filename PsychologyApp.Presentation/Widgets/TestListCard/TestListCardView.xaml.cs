@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Widgets.TestListCard;
@@ -7,6 +8,78 @@ public partial class TestListCardView : ContentView
     public TestListCardView()
     {
         InitializeComponent();
+        ApplyLook();
+        Loaded += (_, _) =>
+        {
+            ApplyLook();
+            if (Microsoft.Maui.Controls.Application.Current is { } app)
+            {
+                app.RequestedThemeChanged += OnThemeChanged;
+            }
+        };
+        Unloaded += (_, _) =>
+        {
+            if (Microsoft.Maui.Controls.Application.Current is { } app)
+            {
+                app.RequestedThemeChanged -= OnThemeChanged;
+            }
+        };
+    }
+
+    /// <summary>Which test the card shows; picks its icon and tile colours (<see cref="TestCardLook"/>).</summary>
+    public static readonly BindableProperty TestIdProperty =
+        BindableProperty.Create(nameof(TestId), typeof(string), typeof(TestListCardView), string.Empty, propertyChanged: (b, _, _) => ((TestListCardView)b).ApplyLook());
+
+    public string TestId
+    {
+        get => (string)GetValue(TestIdProperty);
+        set => SetValue(TestIdProperty, value);
+    }
+
+    public static readonly BindableProperty IconNameProperty =
+        BindableProperty.Create(nameof(IconName), typeof(string), typeof(TestListCardView), TestCardLook.DefaultIcon);
+
+    public string IconName
+    {
+        get => (string)GetValue(IconNameProperty);
+        private set => SetValue(IconNameProperty, value);
+    }
+
+    public static readonly BindableProperty TileColorProperty =
+        BindableProperty.Create(nameof(TileColor), typeof(Color), typeof(TestListCardView), Colors.Transparent);
+
+    public Color TileColor
+    {
+        get => (Color)GetValue(TileColorProperty);
+        private set => SetValue(TileColorProperty, value);
+    }
+
+    public static readonly BindableProperty IconTintProperty =
+        BindableProperty.Create(nameof(IconTint), typeof(Color), typeof(TestListCardView), Colors.Transparent);
+
+    public Color IconTint
+    {
+        get => (Color)GetValue(IconTintProperty);
+        private set => SetValue(IconTintProperty, value);
+    }
+
+    private void OnThemeChanged(object? sender, AppThemeChangedEventArgs e) => Dispatcher.Dispatch(ApplyLook);
+
+    /// <summary>The colours for the current theme; a test with no group keeps the accent tile it always had.</summary>
+    private void ApplyLook()
+    {
+        (string icon, TechniqueFlavor flavor) = TestCardLook.For(TestId);
+        IconName = icon;
+        bool dark = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark;
+        if (TechniqueFlavors.Colors(flavor, dark) is { } colours)
+        {
+            TileColor = Color.FromArgb(colours.Tile);
+            IconTint = Color.FromArgb(colours.Icon);
+            return;
+        }
+
+        TileColor = AppResources.ThemedColor("PrimaryTint", "PrimaryTintDark", Colors.Transparent);
+        IconTint = AppResources.Color("Primary", Colors.DodgerBlue);
     }
 
     public static readonly BindableProperty TitleProperty =

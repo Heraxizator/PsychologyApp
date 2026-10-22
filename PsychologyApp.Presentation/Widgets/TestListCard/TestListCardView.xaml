@@ -21,11 +21,12 @@
                     <Border
                         Grid.Column="0"
                         Style="{StaticResource IconTileStyle}"
+                        BackgroundColor="{TemplateBinding TileColor}"
                         VerticalOptions="Start">
                         <ui:MaterialIconView
-                            IconName="Quiz"
+                            IconName="{TemplateBinding IconName}"
                             IconSize="22"
-                            IconColor="{DynamicResource Primary}"
+                            IconColor="{TemplateBinding IconTint}"
                             HorizontalOptions="Center"
                             VerticalOptions="Center" />
                     </Border>
