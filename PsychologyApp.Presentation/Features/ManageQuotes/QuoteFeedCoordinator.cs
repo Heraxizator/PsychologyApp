@@ -5,6 +5,7 @@ using PsychologyApp.Presentation.Entities.FilterChip;
 using PsychologyApp.Presentation.Entities.Quote;
 using PsychologyApp.Presentation.Features.ManageQuotes.Index;
 using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Services.Preferences;
 using System.Collections.ObjectModel;
 
 namespace PsychologyApp.Presentation.Features.ManageQuotes;
@@ -12,12 +13,16 @@ namespace PsychologyApp.Presentation.Features.ManageQuotes;
 public sealed class QuoteFeedCoordinator
 {
     private readonly IUserProgressService _userProgressService;
+    private readonly IUserPreferencesStore _preferences;
     private readonly HashSet<string> _knownQuoteTexts = new(StringComparer.Ordinal);
     private QuoteFeedMode _feedMode = QuoteFeedMode.All;
     private string? _selectedThemeKey;
 
-    public QuoteFeedCoordinator(IUserProgressService userProgressService) =>
+    public QuoteFeedCoordinator(IUserProgressService userProgressService, IUserPreferencesStore preferences)
+    {
         _userProgressService = userProgressService;
+        _preferences = preferences;
+    }
 
     public QuoteFeedMode FeedMode => _feedMode;
 
@@ -271,7 +276,7 @@ public sealed class QuoteFeedCoordinator
         {
             int? todayMood = await ResolveTodayMoodLevelAsync(cancellationToken);
             IReadOnlyList<string> themes = QuotePersonalizationPolicy.ResolveThemes(
-                UserPreferences.OnboardingConcern,
+                _preferences.Load().OnboardingConcern,
                 todayMood);
             await quotService.EnsureThemedQuotesInFeedAsync(themes, count, cancellationToken);
             return await quotService.GetUnreadByThemesAsync(themes, count, cancellationToken);
@@ -314,7 +319,7 @@ public sealed class QuoteFeedCoordinator
         {
             int? todayMood = await ResolveTodayMoodLevelAsync(cancellationToken);
             IReadOnlyList<string> themes = QuotePersonalizationPolicy.ResolveThemes(
-                UserPreferences.OnboardingConcern,
+                _preferences.Load().OnboardingConcern,
                 todayMood);
             await quotService.TryLoadThemedSingleAsync(themes, cancellationToken);
             return;

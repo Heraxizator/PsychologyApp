@@ -60,7 +60,6 @@ public static partial class UserPreferences
     public static string GetPersistedLanguage() =>
         NormalizeLanguageKey(Current.Language);
 
-    public static string OnboardingConcern => Current.OnboardingConcern;
 
     /// <summary>The current settings; change them with <c>with { … }</c> and pass the result to <see cref="Save"/>.</summary>
     public static UserPreferencesState Load() => Current;
