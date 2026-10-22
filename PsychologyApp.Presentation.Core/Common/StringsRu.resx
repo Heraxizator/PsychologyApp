@@ -1305,11 +1305,8 @@
   <data name="ProfileUserLabel" xml:space="preserve">
     <value>Пользователь</value>
   </data>
-  <data name="ProfileStandardUser" xml:space="preserve">
-    <value>Стандартный</value>
-  </data>
   <data name="ProfileTechniquesCompleted" xml:space="preserve">
-    <value>Пройдено техник</value>
+    <value>Пройдено практик</value>
   </data>
   <data name="ProfileFollowers" xml:space="preserve">
     <value>Подписчиков</value>

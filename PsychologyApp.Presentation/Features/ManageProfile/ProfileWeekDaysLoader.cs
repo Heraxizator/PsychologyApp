@@ -1,8 +1,7 @@
-using System.Globalization;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Entities.Journal;
-using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Features.ManageJournal;
 
 namespace PsychologyApp.Presentation.Features.ManageProfile;
 
@@ -24,29 +23,13 @@ public sealed class ProfileWeekDaysLoader(IUserProgressService userProgressServi
         IReadOnlyList<MoodEntryDTO> moods =
             await userProgressService.GetMoodsAsync(fromUtc, toUtcExclusive, MoodLookbackLimit, cancellationToken);
 
-        Dictionary<DateOnly, MoodEntryDTO> byDay = moods
+        // The latest check-in of each day, drawn by the same builder as the journal strip.
+        Dictionary<DateOnly, int> moodLevelByDay = moods
             .GroupBy(entry => DateOnly.FromDateTime(entry.RecordedAt.ToLocalTime()))
             .ToDictionary(
                 group => group.Key,
-                group => group.OrderByDescending(entry => entry.RecordedAt).First());
+                group => group.OrderByDescending(entry => entry.RecordedAt).First().MoodLevel);
 
-        List<JournalDayChip> chips = [];
-        for (int offset = 6; offset >= 0; offset--)
-        {
-            DateOnly date = today.AddDays(-offset);
-            byDay.TryGetValue(date, out MoodEntryDTO? entry);
-            chips.Add(new JournalDayChip
-            {
-                Date = date,
-                DayLabel = date.ToDateTime(TimeOnly.MinValue)
-                    .ToString("ddd", CultureInfo.CurrentCulture),
-                MoodGlyph = entry is null ? "·" : AppStrings.MoodEmojiFor(entry.MoodLevel),
-                MoodLevel = entry?.MoodLevel,
-                HasEntry = entry is not null,
-                IsSelected = false
-            });
-        }
-
-        return chips;
+        return JournalCalendarBuilder.BuildWeekDays(today, moodLevelByDay, selectedDay: null);
     }
 }

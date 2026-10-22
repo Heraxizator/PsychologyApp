@@ -35,7 +35,8 @@ public sealed class ProfileStatsLoader(IUserProgressService userProgressService)
         {
             TechniquesCompletedCount = techniques.ToString(),
             TestsCompletedCount = tests.ToString(),
-            StreakCount = AppStrings.ProfileStreakCount(streak),
+            // A bare number: the label under it ("Day streak") already says what it counts.
+            StreakCount = streak.ToString(System.Globalization.CultureInfo.CurrentCulture),
             LastPracticeDisplay = lastPractice is null
                 ? string.Empty
                 : AppStrings.ProfileLastPractice(lastPractice.Value.ToLocalTime().ToString("d"))

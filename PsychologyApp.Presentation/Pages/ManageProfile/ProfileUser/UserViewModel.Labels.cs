@@ -12,7 +12,6 @@ public partial class UserViewModel
     public string OptionsLabel => AppStrings.OptionsTitle;
     public string OptionsCardSubtitle => AppStrings.ProfileOptionsCardSubtitle;
     public string UserLabel => AppStrings.ProfileUserLabel;
-    public string StandardUserLabel => AppStrings.ProfileStandardUser;
     public string TechniquesCompletedLabel => AppStrings.ProfileTechniquesCompleted;
     public string TestsCompletedLabel => AppStrings.ProfileTestsCompleted;
     public string StreakLabel => AppStrings.ProfileStreakDays;
@@ -57,7 +56,6 @@ public partial class UserViewModel
             nameof(OptionsLabel),
             nameof(OptionsCardSubtitle),
             nameof(UserLabel),
-            nameof(StandardUserLabel),
             nameof(TechniquesCompletedLabel),
             nameof(TestsCompletedLabel),
             nameof(StreakLabel),

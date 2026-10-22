@@ -772,7 +772,7 @@
     <value>Tap the heart on a quote to add it here.</value>
   </data>
   <data name="ProfileTestsCompleted" xml:space="preserve">
-    <value>Tests completed</value>
+    <value>Tests done</value>
   </data>
   <data name="ProfileStreakDays" xml:space="preserve">
     <value>Day streak</value>
@@ -1305,11 +1305,8 @@
   <data name="ProfileUserLabel" xml:space="preserve">
     <value>User</value>
   </data>
-  <data name="ProfileStandardUser" xml:space="preserve">
-    <value>Standard</value>
-  </data>
   <data name="ProfileTechniquesCompleted" xml:space="preserve">
-    <value>Techniques completed</value>
+    <value>Practices done</value>
   </data>
   <data name="ProfileFollowers" xml:space="preserve">
     <value>Followers</value>

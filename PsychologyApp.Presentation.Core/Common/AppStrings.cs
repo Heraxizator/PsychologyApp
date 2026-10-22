@@ -649,7 +649,6 @@ public static partial class AppStrings
     public static string ProfileTitle => R(nameof(ProfileTitle));
     public static string ProfileLoadingText => R(nameof(ProfileLoadingText));
     public static string ProfileUserLabel => R(nameof(ProfileUserLabel));
-    public static string ProfileStandardUser => R(nameof(ProfileStandardUser));
     public static string ProfileTechniquesCompleted => R(nameof(ProfileTechniquesCompleted));
     public static string ProfileFollowers => R(nameof(ProfileFollowers));
     public static string ProfileRecommended => R(nameof(ProfileRecommended));
