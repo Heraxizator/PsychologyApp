@@ -427,6 +427,18 @@ public partial class AppShell : Shell
         });
     }
 
+    /// <summary>Back with the menu open closes the menu, as on any Android app; Shell left it to the system, which closed the app.</summary>
+    protected override bool OnBackButtonPressed()
+    {
+        if (FlyoutIsPresented)
+        {
+            FlyoutIsPresented = false;
+            return true;
+        }
+
+        return base.OnBackButtonPressed();
+    }
+
     private AppMenuEntry MenuEntry(string icon, string title, Func<INavigationService, Task> open) =>
         new(icon, title, new AsyncCommand(async () =>
         {
