@@ -109,8 +109,7 @@ public sealed class TechniqueCardPlatformView : LinearLayout
     {
         _fonts = fonts;
         Orientation = global::Android.Widget.Orientation.Vertical;
-        int padding = Px(16);
-        SetPadding(padding, padding, padding, padding);
+        SetPadding(Px(16), Px(14), Px(16), Px(14));
         Background = _surface;
         Elevation = Px(2);
         if (OperatingSystem.IsAndroidVersionAtLeast(28))
@@ -130,13 +129,29 @@ public sealed class TechniqueCardPlatformView : LinearLayout
         _icon = Text(context, maxLines: 1);
         _icon.Gravity = GravityFlags.Center;
         _tile.AddView(_icon, new FrameLayout.LayoutParams(Px(IconDp), Px(IconDp), GravityFlags.Center));
-        top.AddView(_tile, new LayoutParams(Px(TileDp), Px(TileDp)));
+        // The tile sits at the top of the text, as on the test cards, rather than floating in the middle of a tall card.
+        top.AddView(_tile, new LayoutParams(Px(TileDp), Px(TileDp)) { Gravity = GravityFlags.Top });
 
+        // Everything the card says is in one column with one left edge: title, subtitle, the length and group, then whether
+        // the person has tried it and the school. Full-width lines under the tile made the card tall and its text ragged.
         LinearLayout texts = new(context) { Orientation = global::Android.Widget.Orientation.Vertical };
         _title = Text(context, maxLines: 2);
         _subtitle = Text(context, maxLines: 2);
+        _meta = Text(context, maxLines: 1);
         texts.AddView(_title);
-        texts.AddView(_subtitle, Margins(top: 6));
+        texts.AddView(_subtitle, Margins(top: 2));
+        texts.AddView(_meta, Margins(top: 8));
+
+        LinearLayout status = new(context) { Orientation = global::Android.Widget.Orientation.Horizontal };
+        _date = Text(context, maxLines: 1);
+        _author = Text(context, maxLines: 1);
+        _author.Gravity = GravityFlags.End;
+        status.AddView(_date, new LayoutParams(0, ViewGroup.LayoutParams.WrapContent, 1f));
+        LayoutParams authorLayout = new(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent);
+        authorLayout.SetMargins(Px(12), 0, 0, 0);
+        status.AddView(_author, authorLayout);
+        texts.AddView(status, Margins(top: 2));
+
         LayoutParams textsLayout = new(0, ViewGroup.LayoutParams.WrapContent, 1f);
         textsLayout.SetMargins(Px(12), 0, Px(12), 0);
         top.AddView(texts, textsLayout);
@@ -144,19 +159,6 @@ public sealed class TechniqueCardPlatformView : LinearLayout
         _chevron = Text(context, maxLines: 1);
         top.AddView(_chevron);
         AddView(top);
-
-        _meta = Text(context, maxLines: 1);
-        AddView(_meta, Margins(top: 8));
-
-        LinearLayout bottom = new(context) { Orientation = global::Android.Widget.Orientation.Horizontal };
-        _date = Text(context, maxLines: 1);
-        _author = Text(context, maxLines: 1);
-        _author.Gravity = GravityFlags.End;
-        bottom.AddView(_date, new LayoutParams(0, ViewGroup.LayoutParams.WrapContent, 1f));
-        LayoutParams authorLayout = new(ViewGroup.LayoutParams.WrapContent, ViewGroup.LayoutParams.WrapContent);
-        authorLayout.SetMargins(Px(12), 0, 0, 0);
-        bottom.AddView(_author, authorLayout);
-        AddView(bottom, Margins(top: 8));
 
         _chevron.Text = Glyph("KeyboardArrowRight");
         ApplyAppearance();

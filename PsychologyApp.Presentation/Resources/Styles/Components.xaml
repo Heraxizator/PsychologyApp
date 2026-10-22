@@ -224,8 +224,10 @@
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
     </Style>
 
+    <!-- The list gives the gap between cards (ListItemSpacing); the margin only leaves room for the shadow. -->
     <Style x:Key="TestListCardStyle" TargetType="Border" BasedOn="{StaticResource ListCardItemStyle}">
-        <Setter Property="Padding" Value="16,16" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="Padding" Value="16,14" />
         <Setter Property="StrokeShape" Value="{DynamicResource UiCornerRadiusCompactShape}" />
     </Style>
 

@@ -20,69 +20,68 @@
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
                 </Border.GestureRecognizers>
-                <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="8">
-                    <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                        <Border
-                            Grid.Column="0"
-                            Style="{StaticResource LargeIconTileStyle}"
-                            BackgroundColor="{TemplateBinding TileColor}">
-                            <Grid x:Name="IconHost">
-                                <ui:MaterialIconView
-                                    IsVisible="{TemplateBinding HasIcon}"
-                                    WidthRequest="28"
-                                    HeightRequest="28"
-                                    VerticalOptions="Center"
-                                    HorizontalOptions="Center"
-                                    IconName="{TemplateBinding IconName}"
-                                    IconColor="{TemplateBinding IconTint}" />
-                            </Grid>
-                        </Border>
-                        <VerticalStackLayout
-                            Grid.Column="1"
-                            Spacing="6"
-                            VerticalOptions="Center">
+                <!-- Same layout as the Android card (TechniqueCardHandler): every line of text in one column with one left edge. -->
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                    <Border
+                        Grid.Column="0"
+                        VerticalOptions="Start"
+                        Style="{StaticResource LargeIconTileStyle}"
+                        BackgroundColor="{TemplateBinding TileColor}">
+                        <Grid x:Name="IconHost">
+                            <ui:MaterialIconView
+                                IsVisible="{TemplateBinding HasIcon}"
+                                WidthRequest="28"
+                                HeightRequest="28"
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"
+                                IconName="{TemplateBinding IconName}"
+                                IconColor="{TemplateBinding IconTint}" />
+                        </Grid>
+                    </Border>
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        Spacing="2"
+                        VerticalOptions="Center">
+                        <Label
+                            Text="{TemplateBinding Title}"
+                            Style="{StaticResource ListRowTitleStyle}"
+                            MaxLines="2"
+                            LineBreakMode="TailTruncation" />
+                        <Label
+                            Text="{TemplateBinding Subtitle}"
+                            Style="{StaticResource CaptionStyle}"
+                            MaxLines="2"
+                            LineBreakMode="TailTruncation" />
+                        <Label
+                            Margin="0,6,0,0"
+                            Text="{TemplateBinding MetaText}"
+                            Style="{StaticResource CaptionStyle}"
+                            FontFamily="{StaticResource SemiBoldFontFamily}"
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
+                            MaxLines="1"
+                            LineBreakMode="TailTruncation" />
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
                             <Label
-                                Text="{TemplateBinding Title}"
-                                Style="{StaticResource ListRowTitleStyle}"
-                                MaxLines="2"
-                                LineBreakMode="TailTruncation" />
-                            <Label
-                                Text="{TemplateBinding Subtitle}"
+                                Grid.Column="0"
+                                Text="{TemplateBinding Date}"
                                 Style="{StaticResource CaptionStyle}"
-                                MaxLines="2"
+                                MaxLines="1"
                                 LineBreakMode="TailTruncation" />
-                        </VerticalStackLayout>
-                        <Label
-                            Grid.Column="2"
-                            VerticalOptions="Center"
-                            TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                            Text="{mi:Material Icon=KeyboardArrowRight}" />
-                    </Grid>
-                    <!-- The group and the length on a line of their own (they used to share it with the date and were cut off), the date and the author under them. -->
+                            <Label
+                                Grid.Column="1"
+                                IsVisible="{TemplateBinding HasAuthor}"
+                                Text="{TemplateBinding Author}"
+                                Style="{StaticResource CaptionStyle}"
+                                HorizontalTextAlignment="End"
+                                MaxLines="1"
+                                LineBreakMode="TailTruncation" />
+                        </Grid>
+                    </VerticalStackLayout>
                     <Label
-                        Grid.Row="1"
-                        Text="{TemplateBinding MetaText}"
-                        Style="{StaticResource CaptionStyle}"
-                        FontFamily="{StaticResource SemiBoldFontFamily}"
-                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
-                        MaxLines="1"
-                        LineBreakMode="TailTruncation" />
-                    <Grid Grid.Row="2" ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                        <Label
-                            Grid.Column="0"
-                            Text="{TemplateBinding Date}"
-                            Style="{StaticResource CaptionStyle}"
-                            MaxLines="1"
-                            LineBreakMode="TailTruncation" />
-                        <Label
-                            Grid.Column="1"
-                            IsVisible="{TemplateBinding HasAuthor}"
-                            Text="{TemplateBinding Author}"
-                            Style="{StaticResource CaptionStyle}"
-                            HorizontalTextAlignment="End"
-                            MaxLines="1"
-                            LineBreakMode="TailTruncation" />
-                    </Grid>
+                        Grid.Column="2"
+                        VerticalOptions="Center"
+                        TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                        Text="{mi:Material Icon=KeyboardArrowRight}" />
                 </Grid>
             </Border>
         </ControlTemplate>

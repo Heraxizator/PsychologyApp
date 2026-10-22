@@ -23,7 +23,7 @@
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{TemplateBinding TapCommand}" />
                 </Border.GestureRecognizers>
-                <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="6">
+                <Grid RowDefinitions="Auto,Auto" RowSpacing="6">
                     <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
                         <Label
                             Grid.Column="0"
@@ -43,7 +43,8 @@
                     <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
                         <Border
                             Grid.Column="0"
-                            Style="{StaticResource IconTileStyle}">
+                            Style="{StaticResource IconTileStyle}"
+                            VerticalOptions="Start">
                             <ui:MaterialIconView
                                 WidthRequest="28"
                                 HeightRequest="28"
@@ -53,7 +54,7 @@
                         </Border>
                         <VerticalStackLayout
                             Grid.Column="1"
-                            Spacing="6"
+                            Spacing="2"
                             VerticalOptions="Center">
                             <Label
                                 Text="{TemplateBinding Title}"
@@ -65,6 +66,15 @@
                                 Style="{StaticResource CaptionStyle}"
                                 MaxLines="2"
                                 LineBreakMode="TailTruncation" />
+                            <!-- Under the subtitle, on the same left edge as the title: alone under the tile it read as a loose line. -->
+                            <Label
+                                IsVisible="{TemplateBinding HasHint}"
+                                Margin="0,4,0,0"
+                                Text="{TemplateBinding HintText}"
+                                Style="{StaticResource CaptionStyle}"
+                                TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                MaxLines="2"
+                                LineBreakMode="TailTruncation" />
                         </VerticalStackLayout>
                         <Label
                             Grid.Column="2"
@@ -73,13 +83,6 @@
                             Text="{mi:Material Icon=KeyboardArrowRight}" />
                     </Grid>
 
-                    <Label
-                        Grid.Row="2"
-                        IsVisible="{TemplateBinding HasHint}"
-                        Text="{TemplateBinding HintText}"
-                        Style="{StaticResource CaptionStyle}"
-                        MaxLines="2"
-                        LineBreakMode="TailTruncation" />
                 </Grid>
             </Border>
         </ControlTemplate>
