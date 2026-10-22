@@ -7,6 +7,7 @@ using PsychologyApp.Application.Quot;
 using PsychologyApp.Presentation.Entities.Audio;
 using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Entities.Profile;
+using PsychologyApp.Presentation.Entities.Quote;
 using PsychologyApp.Presentation.Features.PlayMusic;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Features.ManageProfile;

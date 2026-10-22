@@ -135,6 +135,69 @@
     <Compile Include="AsyncCommandTests.cs" />
     <Compile Include="BaseViewModelLoadingOverlayTests.cs" />
     <Compile Include="BaseViewModelPreferencesTests.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/EntryDraftCoordinator.cs" Link="Linked/Features/RunTechniqueSession/EntryDraftCoordinator.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/CustomTechniqueSessionOperations.cs" Link="Linked/Features/RunTechniqueSession/CustomTechniqueSessionOperations.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/PracticeDashboardLoader.cs" Link="Linked/Features/RunTechniqueSession/PracticeDashboardLoader.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageQuotes/QuoteFeedCoordinator.cs" Link="Linked/Features/ManageQuotes/QuoteFeedCoordinator.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Entities/Audio/Audio.cs" Link="Linked/Entities/Audio/Audio.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Entities/Quote/QuoteFeedMode.cs" Link="Linked/Entities/Quote/QuoteFeedMode.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/PlayMusic/MusicPlaylistPresenter.cs" Link="Linked/Features/PlayMusic/MusicPlaylistPresenter.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Services/Progress/WeeklyInsightLoader.cs" Link="Linked/Shared/Services/Progress/WeeklyInsightLoader.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/Index/ProfileFeaturedTechniquesBuilder.cs" Link="Linked/Features/ManageProfile/Index/ProfileFeaturedTechniquesBuilder.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Entities/FilterChip/FilterChipTabItem.cs" Link="Linked/Entities/FilterChip/FilterChipTabItem.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageQuotes/Index/QuoteItemCommandsFactory.cs" Link="Linked/Features/ManageQuotes/Index/QuoteItemCommandsFactory.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Entities/Quote/QuoteItem.cs" Link="Linked/Entities/Quote/QuoteItem.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageQuotes/IQuotesChangeNotifier.cs" Link="Linked/Features/ManageQuotes/IQuotesChangeNotifier.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Services/Clipboard/IAppClipboardService.cs" Link="Linked/Shared/Services/Clipboard/IAppClipboardService.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/Infrastructure/MusicAudioCache.cs" Link="Linked/Shared/Common/Infrastructure/MusicAudioCache.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageQuotes/QuoteThemeLabels.cs" Link="Linked/Features/ManageQuotes/QuoteThemeLabels.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/PlayMusic/IAudioPlaybackService.cs" Link="Linked/Features/PlayMusic/IAudioPlaybackService.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/PlayMusic/MusicPlayer/MusicPlayerViewModel.cs" Link="Linked/Pages/PlayMusic/MusicPlayer/MusicPlayerViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/PlayMusic/MusicPlayer/MusicPlayerViewModel.Labels.cs" Link="Linked/Pages/PlayMusic/MusicPlayer/MusicPlayerViewModel.Labels.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/PlayMusic/MusicPlayer/MusicPlayerViewModel.Playback.cs" Link="Linked/Pages/PlayMusic/MusicPlayer/MusicPlayerViewModel.Playback.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/PlayMusic/MusicPlayer/MusicPlayerViewModel.Playback.Playlist.cs" Link="Linked/Pages/PlayMusic/MusicPlayer/MusicPlayerViewModel.Playback.Playlist.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/PlayMusic/MusicPlayer/MusicPlayerViewModel.Properties.cs" Link="Linked/Pages/PlayMusic/MusicPlayer/MusicPlayerViewModel.Properties.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/PlayMusic/MusicPlaybackPresenter.cs" Link="Linked/Features/PlayMusic/MusicPlaybackPresenter.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/UI/Components/MaterialIconNames.cs" Link="Linked/Shared/UI/Components/MaterialIconNames.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Entities/Audio/MusicPlaylist.cs" Link="Linked/Entities/Audio/MusicPlaylist.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/PlayMusic/MusicPlaylistViewApplier.cs" Link="Linked/Features/PlayMusic/MusicPlaylistViewApplier.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Entities/Audio/PrayerCatalog.cs" Link="Linked/Entities/Audio/PrayerCatalog.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/TechniqueListBuilder.cs" Link="Linked/Features/RunTechniqueSession/TechniqueListBuilder.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/SendReviewForm/FormViewModel.cs" Link="Linked/Features/SendReviewForm/FormViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/SendReviewForm/FormViewModel.Labels.cs" Link="Linked/Features/SendReviewForm/FormViewModel.Labels.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/SendReviewForm/FormViewModel.Send.Channels.cs" Link="Linked/Features/SendReviewForm/FormViewModel.Send.Channels.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/SendReviewForm/FormViewModel.Send.cs" Link="Linked/Features/SendReviewForm/FormViewModel.Send.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Services/Notifications/IMoodReminderScheduler.cs" Link="Linked/Shared/Services/Notifications/IMoodReminderScheduler.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Services/Notifications/MoodReminderCoordinator.cs" Link="Linked/Shared/Services/Notifications/MoodReminderCoordinator.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageQuotes/QuoteFeedState.cs" Link="Linked/Features/ManageQuotes/QuoteFeedState.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageQuotes/QuoteSearchController.cs" Link="Linked/Features/ManageQuotes/QuoteSearchController.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/TechniqueDashboardApplier.cs" Link="Linked/Features/RunTechniqueSession/TechniqueDashboardApplier.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/ProfileQuotesLoader.cs" Link="Linked/Features/ManageProfile/ProfileQuotesLoader.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/ProfileQuotesPresenter.cs" Link="Linked/Features/ManageProfile/ProfileQuotesPresenter.cs" />
+    <Compile Include="PracticeSessionServicesTests.cs" />
+    <Compile Include="QuestionViewModelReloadTests.cs" />
+    <Compile Include="ExtractedServicesTests.cs" />
+    <Compile Include="MusicPlayerViewModelTests.cs" />
+    <Compile Include="TechniqueListBuilderTests.cs" />
+    <Compile Include="FormViewModelTests.cs" />
+    <Compile Include="MoodReminderCoordinatorTests.cs" />
+    <Compile Include="QuoteSearchControllerTests.cs" />
+    <Compile Include="SlimmingServicesTests.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/ListSessionDraftCoordinator.cs" Link="Linked/Features/RunTechniqueSession/ListSessionDraftCoordinator.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/Serialization/SessionDraftJsonSerializerContext.cs" Link="Linked/Features/RunTechniqueSession/Serialization/SessionDraftJsonSerializerContext.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/Preferences/SessionDraftStore.cs" Link="Linked/Shared/Common/Preferences/SessionDraftStore.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/TestHistory/TestHistoryViewModel.cs" Link="Linked/Pages/RunTests/TestHistory/TestHistoryViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/TestHistory/TestHistoryViewModel.Labels.cs" Link="Linked/Pages/RunTests/TestHistory/TestHistoryViewModel.Labels.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/TestHistory/TestHistoryViewModel.Load.cs" Link="Linked/Pages/RunTests/TestHistory/TestHistoryViewModel.Load.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/TestResult/TestResultViewModel.AnswerDetail.cs" Link="Linked/Pages/RunTests/TestResult/TestResultViewModel.AnswerDetail.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/TestResult/TestResultViewModel.Commands.cs" Link="Linked/Pages/RunTests/TestResult/TestResultViewModel.Commands.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/TestResult/TestResultViewModel.cs" Link="Linked/Pages/RunTests/TestResult/TestResultViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/TestResult/TestResultViewModel.Labels.cs" Link="Linked/Pages/RunTests/TestResult/TestResultViewModel.Labels.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/TestResult/TestResultViewModel.Recommendation.cs" Link="Linked/Pages/RunTests/TestResult/TestResultViewModel.Recommendation.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Entities/Test/TestResultInfo.cs" Link="Linked/Entities/Test/TestResultInfo.cs" />
+    <Compile Include="TestModuleOperationsTests.cs" />
+    <Compile Include="TestHistoryViewModelTests.cs" />
+    <Compile Include="TestResultViewModelTests.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/RunTests/TestRetakeOperations.cs" Link="Linked/Features/RunTests/TestRetakeOperations.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/RunTests/TestHistoryLoader.cs" Link="Linked/Features/RunTests/TestHistoryLoader.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/RunTests/TestsListLoader.cs" Link="Linked/Features/RunTests/TestsListLoader.cs" />

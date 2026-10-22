@@ -321,7 +321,7 @@ public sealed class QuoteViewModelTests
             NullLogger<QuoteViewModel>.Instance,
             toast.Object,
             settings,
-            new QuoteFeedCoordinator(Mock.Of<IUserProgressService>()),
+            new QuoteFeedCoordinator(Mock.Of<IUserProgressService>(), new InMemoryUserPreferencesStore()),
             new QuoteItemCommandsFactory(
                 quotService,
                 notifier ?? new QuotesChangeNotifier(),

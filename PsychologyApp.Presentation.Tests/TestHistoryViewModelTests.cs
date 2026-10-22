@@ -8,7 +8,6 @@ using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Features.RunTests;
-using PsychologyApp.Presentation.Pages.RunTests.TestsList;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;

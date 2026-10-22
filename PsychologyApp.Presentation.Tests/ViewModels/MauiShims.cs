@@ -386,3 +386,21 @@ namespace PsychologyApp.Presentation.Shared.Common
         public static string GetPersistedLanguage() => Persisted;
     }
 }
+
+namespace MauiIcons.Material
+{
+    /// <summary>The icons the app names; the real enum comes from the MauiIcons package.</summary>
+    public enum MaterialIcons
+    {
+        Assignment, AutoAwesome, CheckCircle, DoneAll, EmojiEvents, Favorite, FavoriteBorder, FormatQuote, History, Insights, LibraryMusic, Search, SearchOff, SelfImprovement, Whatshot, WorkspacePremium
+    }
+}
+
+namespace Microsoft.Maui.Graphics
+{
+    /// <summary>Only what the view models do with a colour: make it from the hex code of a test result.</summary>
+    public sealed record Color(string Hex)
+    {
+        public static Color FromArgb(string hex) => new(hex);
+    }
+}

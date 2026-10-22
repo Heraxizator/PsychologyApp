@@ -4,6 +4,7 @@ using Moq;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
+using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using Xunit;
 

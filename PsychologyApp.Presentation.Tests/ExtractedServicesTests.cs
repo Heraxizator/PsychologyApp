@@ -5,6 +5,7 @@ using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Quot;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Entities.Audio;
+using PsychologyApp.Presentation.Entities.Quote;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Shared.Navigation;
@@ -15,7 +16,6 @@ using PsychologyApp.Presentation.Shared.Services.Progress;
 using PsychologyApp.Presentation.Features.ManageProfile;
 using PsychologyApp.Presentation.Features.ManageProfile.Index;
 using PsychologyApp.Presentation.Features.ManageQuotes;
-using PsychologyApp.Presentation.Pages.ManageQuotes.QuoteFeed;
 using System.Collections.ObjectModel;
 using Xunit;
 
@@ -57,6 +57,8 @@ public sealed class PracticeDashboardLoaderTests
             .ReturnsAsync(new Dictionary<string, DateTime>(StringComparer.Ordinal));
         progress.Setup(p => p.GetSessionDraftKeysAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new HashSet<string>(StringComparer.Ordinal));
+        progress.Setup(p => p.GetRecentSessionResultsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
         Mock<IUserPreferencesStore> preferences = new();
         preferences.Setup(p => p.Load()).Returns(new UserPreferencesState { OnboardingConcern = OnboardingConcernKeys.Mood });
         Mock<INavigationService> navigation = new();
@@ -120,7 +122,8 @@ public sealed class WeeklyInsightLoaderTests
 public sealed class QuoteFeedCoordinatorTests
 {
     private static QuoteFeedCoordinator CreateCoordinator(
-        int? todayMoodLevel = null)
+        int? todayMoodLevel = null,
+        string concern = OnboardingConcernKeys.Explore)
     {
         Mock<IUserProgressService> progress = new();
         if (todayMoodLevel is int mood)
@@ -143,7 +146,9 @@ public sealed class QuoteFeedCoordinatorTests
                 .ReturnsAsync(Array.Empty<MoodEntryDTO>());
         }
 
-        return new QuoteFeedCoordinator(progress.Object);
+        InMemoryUserPreferencesStore preferences = new();
+        preferences.Save(new UserPreferencesState { OnboardingConcern = concern });
+        return new QuoteFeedCoordinator(progress.Object, preferences);
     }
 
     [Fact]
@@ -181,6 +186,25 @@ public sealed class QuoteFeedCoordinatorTests
         quotService.Verify(
             s => s.GetUnreadAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()),
             Times.Never);
+    }
+
+    [Fact]
+    public async Task The_for_you_feed_follows_the_concern_chosen_in_onboarding()
+    {
+        QuoteFeedCoordinator coordinator = CreateCoordinator(concern: OnboardingConcernKeys.Anxiety);
+        coordinator.SetFeedMode(QuoteFeedMode.ForYou);
+        Mock<IQuotService> quotService = new();
+        quotService
+            .Setup(s => s.GetUnreadByThemesAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(Array.Empty<QuotDTO>());
+
+        await coordinator.FetchQuotesAsync(quotService.Object, 20, CancellationToken.None);
+
+        IReadOnlyList<string> expected = QuotePersonalizationPolicy.ResolveThemes(OnboardingConcernKeys.Anxiety, null);
+        Assert.NotEqual(expected, QuotePersonalizationPolicy.ResolveThemes(OnboardingConcernKeys.Explore, null));
+        quotService.Verify(
+            s => s.GetUnreadByThemesAsync(It.Is<IReadOnlyList<string>>(t => t.SequenceEqual(expected)), 20, It.IsAny<CancellationToken>()),
+            Times.Once);
     }
 
     [Fact]

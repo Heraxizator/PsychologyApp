@@ -8,6 +8,7 @@ using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
+using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Shared.Services.Notifications;
 using System.Text.Json;
 using Xunit;
@@ -53,7 +54,7 @@ public sealed class TechniqueSessionCompletionServiceTests
                     && request.PageName == "Paper technique"
                     && request.PreIntensity == 7
                     && request.DeleteDraft
-                    && request.DurationSeconds is >= 110 and <= 130),
+                    && request.DurationSeconds >= 110 && request.DurationSeconds <= 130),
                 It.IsAny<CancellationToken>()),
             Times.Once);
         navigation.Verify(n => n.GoToPracticeCompletionAsync(3, "Paper", 42L), Times.Once);

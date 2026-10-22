@@ -20,7 +20,7 @@ public sealed class QuoteSearchControllerTests
         feedState.SetFeedItems([CreateFeedItem("Feed quote")]);
         Mock<IQuoteSearchService> searchService = new();
         searchService
-            .Setup(s => s.SearchCatalogAsync("calm", It.IsAny<CancellationToken>()))
+            .Setup(s => s.SearchCatalogAsync("calm", It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([
                 new QuotSeed("Seneca", "Calm quote", "calm"),
                 new QuotSeed("Marcus", "Peace quote", "calm")
@@ -43,7 +43,7 @@ public sealed class QuoteSearchControllerTests
         bool searchCleared = false;
         Mock<IQuoteSearchService> searchService = new();
         searchService
-            .Setup(s => s.SearchCatalogAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+            .Setup(s => s.SearchCatalogAsync(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([new QuotSeed("A", "Result", "wisdom")]);
 
         QuoteSearchController controller = CreateController(
@@ -66,10 +66,10 @@ public sealed class QuoteSearchControllerTests
         QuoteFeedState feedState = new();
         Mock<IQuoteSearchService> searchService = new();
         searchService
-            .Setup(s => s.SearchCatalogAsync("first", It.IsAny<CancellationToken>()))
+            .Setup(s => s.SearchCatalogAsync("first", It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([new QuotSeed("A", "First", "wisdom")]);
         searchService
-            .Setup(s => s.SearchCatalogAsync("second", It.IsAny<CancellationToken>()))
+            .Setup(s => s.SearchCatalogAsync("second", It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([new QuotSeed("B", "Second", "calm")]);
 
         QuoteSearchController controller = CreateController(feedState, searchService.Object);
@@ -80,10 +80,10 @@ public sealed class QuoteSearchControllerTests
         Assert.Single(feedState.DisplayItems);
         Assert.Equal("Second", feedState.DisplayItems[0].Text);
         searchService.Verify(
-            s => s.SearchCatalogAsync("first", It.IsAny<CancellationToken>()),
+            s => s.SearchCatalogAsync("first", It.IsAny<int>(), It.IsAny<CancellationToken>()),
             Times.Never);
         searchService.Verify(
-            s => s.SearchCatalogAsync("second", It.IsAny<CancellationToken>()),
+            s => s.SearchCatalogAsync("second", It.IsAny<int>(), It.IsAny<CancellationToken>()),
             Times.Once);
     }
 

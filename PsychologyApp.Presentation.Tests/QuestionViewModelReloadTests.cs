@@ -8,7 +8,6 @@ using PsychologyApp.Presentation.Features.RunTests;
 using PsychologyApp.Presentation.Pages.RunTests.Question;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
-using PsychologyApp.Presentation.Pages.RunTests.TestsList;
 using System.Reflection;
 using Xunit;
 
@@ -16,11 +15,12 @@ namespace PsychologyApp.Presentation.Tests;
 
 public sealed class QuestionViewModelReloadTests
 {
-    private static readonly QuestionnaireSubmissionService SubmissionService = new();
+    private static readonly QuestionnaireSubmissionService SubmissionService = new(new QuestionnaireScoringService());
     private static readonly Mock<ITestCatalogService> CatalogService = new();
     private static readonly QuestionnaireDetailBuilder DetailBuilder =
         new(new QuestionnaireResultDetailService(), CatalogService.Object);
-    private static readonly TestRunCoordinator RunCoordinator = new(SubmissionService, DetailBuilder);
+    private static readonly TestRunCoordinator RunCoordinator =
+        new(SubmissionService, DetailBuilder, Mock.Of<PsychologyApp.Application.ClinicalCare.IClinicalCareService>());
     private static readonly ILogger<QuestionViewModel> Logger = NullLogger<QuestionViewModel>.Instance;
 
     [Fact]

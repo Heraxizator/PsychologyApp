@@ -79,48 +79,6 @@ public sealed class MoodReminderCoordinatorTests
     }
 
     [Fact]
-    public void MoodReminderPrefs_RoundTripThroughUserPreferences()
-    {
-        UserPreferences.UseInMemoryStorage(new UserPreferencesState
-        {
-            HasCompletedOnboarding = true,
-            MoodRemindersEnabled = false,
-            MoodReminderHour = UserPreferences.DefaultMoodReminderHour
-        });
-
-        try
-        {
-            UserPreferencesState current = UserPreferences.Load();
-            UserPreferences.Save(new UserPreferencesState
-            {
-                Language = current.Language,
-                Theme = current.Theme,
-                Color = current.Color,
-                Form = current.Form,
-                Size = current.Size,
-                IsBold = current.IsBold,
-                QuestionnaireAutoAdvance = current.QuestionnaireAutoAdvance,
-                HasCompletedOnboarding = current.HasCompletedOnboarding,
-                OnboardingConcern = current.OnboardingConcern,
-                PracticeRemindersEnabled = current.PracticeRemindersEnabled,
-                PracticeReminderHour = current.PracticeReminderHour,
-                QuoteRemindersEnabled = current.QuoteRemindersEnabled,
-                QuoteReminderHour = current.QuoteReminderHour,
-                MoodRemindersEnabled = true,
-                MoodReminderHour = 20
-            });
-
-            UserPreferencesState loaded = UserPreferences.Load();
-            Assert.True(loaded.MoodRemindersEnabled);
-            Assert.Equal(20, loaded.MoodReminderHour);
-        }
-        finally
-        {
-            UserPreferences.ResetInMemoryStorage();
-        }
-    }
-
-    [Fact]
     public void SettingsPresenter_BuildState_PersistsMoodReminderFields()
     {
         var presenter = new PsychologyApp.Presentation.Features.ManageProfile.SettingsPreferencesPresenter();

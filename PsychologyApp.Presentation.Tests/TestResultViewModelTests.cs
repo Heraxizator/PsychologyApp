@@ -55,7 +55,7 @@ public sealed class TestResultViewModelTests
             TechniqueCatalogTestHelper.CreateGateway(),
             TestRunTestHelpers.CreateRetakeOperations(),
             progress.Object,
-            new TestTrendResolver(catalog.Object),
+            new TestTrendResolver(new TestTrendService(catalog.Object)),
             new TestResultInfo
             {
                 Score = 3,
@@ -107,7 +107,7 @@ public sealed class TestResultViewModelTests
             TechniqueCatalogTestHelper.CreateGateway(),
             TestRunTestHelpers.CreateRetakeOperations(),
             progress.Object,
-            new TestTrendResolver(catalog.Object),
+            new TestTrendResolver(new TestTrendService(catalog.Object)),
             new TestResultInfo
             {
                 Score = 20,
@@ -136,7 +136,7 @@ public sealed class TestResultViewModelTests
             TechniqueCatalogTestHelper.CreateGateway(),
             TestRunTestHelpers.CreateRetakeOperations(),
             progress.Object,
-            new TestTrendResolver(catalog.Object),
+            new TestTrendResolver(new TestTrendService(catalog.Object)),
             new TestResultInfo
             {
                 Score = 5,
