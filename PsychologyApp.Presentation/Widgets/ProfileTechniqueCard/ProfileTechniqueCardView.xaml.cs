@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.UI.Components;
 using System.Windows.Input;
 
@@ -8,7 +9,55 @@ public partial class ProfileTechniqueCardView : ContentView
     public ProfileTechniqueCardView()
     {
         InitializeComponent();
+        ApplyFlavor();
+        Loaded += (_, _) =>
+        {
+            ApplyFlavor();
+            if (Microsoft.Maui.Controls.Application.Current is { } app)
+            {
+                app.RequestedThemeChanged += OnThemeChanged;
+            }
+        };
+        Unloaded += (_, _) =>
+        {
+            if (Microsoft.Maui.Controls.Application.Current is { } app)
+            {
+                app.RequestedThemeChanged -= OnThemeChanged;
+            }
+        };
     }
+
+    /// <summary>A <c>TechniqueFlavor</c> name; colours the icon tile as on the practice list.</summary>
+    public static readonly BindableProperty FlavorProperty =
+        BindableProperty.Create(nameof(Flavor), typeof(string), typeof(ProfileTechniqueCardView), string.Empty, propertyChanged: (b, _, _) => ((ProfileTechniqueCardView)b).ApplyFlavor());
+
+    public string Flavor
+    {
+        get => (string)GetValue(FlavorProperty);
+        set => SetValue(FlavorProperty, value);
+    }
+
+    public static readonly BindableProperty TileColorProperty =
+        BindableProperty.Create(nameof(TileColor), typeof(Color), typeof(ProfileTechniqueCardView), Colors.Transparent);
+
+    public Color TileColor
+    {
+        get => (Color)GetValue(TileColorProperty);
+        private set => SetValue(TileColorProperty, value);
+    }
+
+    public static readonly BindableProperty IconTintProperty =
+        BindableProperty.Create(nameof(IconTint), typeof(Color), typeof(ProfileTechniqueCardView), null);
+
+    public Color? IconTint
+    {
+        get => (Color?)GetValue(IconTintProperty);
+        private set => SetValue(IconTintProperty, value);
+    }
+
+    private void OnThemeChanged(object? sender, AppThemeChangedEventArgs e) => Dispatcher.Dispatch(ApplyFlavor);
+
+    private void ApplyFlavor() => (TileColor, IconTint) = FlavorTile.Colours(TechniqueFlavors.Parse(Flavor));
 
     private readonly LazyImageSlot _imageSlot = new(52);
 

@@ -20,7 +20,8 @@
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
                     <Border
                         Grid.Column="0"
-                        Style="{StaticResource LargeIconTileStyle}">
+                        Style="{StaticResource LargeIconTileStyle}"
+                        BackgroundColor="{TemplateBinding TileColor}">
                         <Grid x:Name="IconHost">
                             <ui:MaterialIconView
                                 IsVisible="{TemplateBinding HasIcon}"
@@ -28,7 +29,8 @@
                                 HeightRequest="28"
                                 VerticalOptions="Center"
                                 HorizontalOptions="Center"
-                                IconName="{TemplateBinding IconName}" />
+                                IconName="{TemplateBinding IconName}"
+                                IconColor="{TemplateBinding IconTint}" />
                         </Grid>
                     </Border>
                     <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">

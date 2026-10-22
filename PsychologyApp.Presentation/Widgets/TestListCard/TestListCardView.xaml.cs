@@ -70,16 +70,9 @@ public partial class TestListCardView : ContentView
     {
         (string icon, TechniqueFlavor flavor) = TestCardLook.For(TestId);
         IconName = icon;
-        bool dark = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark;
-        if (TechniqueFlavors.Colors(flavor, dark) is { } colours)
-        {
-            TileColor = Color.FromArgb(colours.Tile);
-            IconTint = Color.FromArgb(colours.Icon);
-            return;
-        }
-
-        TileColor = AppResources.ThemedColor("PrimaryTint", "PrimaryTintDark", Colors.Transparent);
-        IconTint = AppResources.Color("Primary", Colors.DodgerBlue);
+        (Color tile, Color? tint) = FlavorTile.Colours(flavor);
+        TileColor = tile;
+        IconTint = tint ?? AppResources.Color("Primary", Colors.DodgerBlue);
     }
 
     public static readonly BindableProperty TitleProperty =

@@ -58,20 +58,7 @@ public partial class TechniqueListCardView : ContentView
     private void OnThemeChanged(object? sender, AppThemeChangedEventArgs e) => Dispatcher.Dispatch(ApplyFlavor);
 
     /// <summary>The group colours for the current theme; a practice with no group keeps the usual accent tint.</summary>
-    private void ApplyFlavor()
-    {
-        bool dark = Microsoft.Maui.Controls.Application.Current?.RequestedTheme == AppTheme.Dark;
-        if (TechniqueFlavors.Colors(TechniqueFlavors.Parse(Flavor), dark) is { } colours)
-        {
-            TileColor = Color.FromArgb(colours.Tile);
-            IconTint = Color.FromArgb(colours.Icon);
-            return;
-        }
-
-        string key = dark ? "PrimaryTintDark" : "PrimaryTint";
-        TileColor = AppResources.Color(key, Colors.Transparent);
-        IconTint = null;
-    }
+    private void ApplyFlavor() => (TileColor, IconTint) = FlavorTile.Colours(TechniqueFlavors.Parse(Flavor));
 
     private readonly LazyImageSlot _imageSlot = new(40);
 

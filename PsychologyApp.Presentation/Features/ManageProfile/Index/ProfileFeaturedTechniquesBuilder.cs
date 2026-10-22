@@ -1,3 +1,4 @@
+using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Features.RunTechniqueSession.Index;
 using PsychologyApp.Application.Recommendations;
 using PsychologyApp.Domain.Practice;
@@ -47,6 +48,7 @@ public sealed class ProfileFeaturedTechniquesBuilder(
             items.Add(new TechniqueItem
             {
                 IconName = definition.ListIcon,
+                Flavor = TechniqueFlavors.For(techniqueId).ToString(),
                 DurationText = durationText,
                 Title = definition.PageName,
                 Subtitle = definition.ListSubtitle,
