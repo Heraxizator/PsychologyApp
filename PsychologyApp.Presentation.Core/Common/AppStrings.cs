@@ -1001,21 +1001,40 @@ public static partial class AppStrings
     private static string T(string russian, string english) =>
         IsEnglish(Language) ? english : russian;
 
-    private static readonly System.Resources.ResourceManager RussianTexts =
-        new("PsychologyApp.Presentation.Common.StringsRu", typeof(AppStrings).Assembly);
+    /// <summary>One resource set per language: StringsRu.resx, StringsEn.resx, StringsFr.resx and so on.</summary>
+    private static readonly Dictionary<string, System.Resources.ResourceManager> Texts = AppLanguages.All.ToDictionary(
+        key => key,
+        key => new System.Resources.ResourceManager(
+            $"PsychologyApp.Presentation.Common.Strings{char.ToUpperInvariant(key[0])}{key[1..]}", typeof(AppStrings).Assembly),
+        StringComparer.Ordinal);
 
-    private static readonly System.Resources.ResourceManager EnglishTexts =
-        new("PsychologyApp.Presentation.Common.StringsEn", typeof(AppStrings).Assembly);
+    /// <summary>The text for the key in the current language; a text not translated yet falls back to English, then to Russian.</summary>
+    private static string R(string key)
+    {
+        string language = AppLanguages.Normalize(Language);
+        return Text(language, key)
+            ?? Text(AppLanguages.English, key)
+            ?? Text(AppLanguages.Russian, key)
+            ?? key;
+    }
 
-    /// <summary>The text for the key in the current language (StringsRu.resx / StringsEn.resx); a missing English text falls back to Russian.</summary>
-    private static string R(string key) =>
-        (IsEnglish(Language) ? EnglishTexts.GetString(key) : null) ?? RussianTexts.GetString(key) ?? key;
+    // A language whose resx is not in the assembly yet reads as having no text, not as an error.
+    private static string? Text(string language, string key)
+    {
+        try
+        {
+            return Texts[language].GetString(key);
+        }
+        catch (System.Resources.MissingManifestResourceException)
+        {
+            return null;
+        }
+    }
 
     private static string F(string key, params object?[] args) =>
         string.Format(System.Globalization.CultureInfo.CurrentCulture, R(key), args);
 
+    /// <summary>Whether the content for this interface language is the English one: true for every language but Russian (<see cref="AppLanguages.ContentLanguage"/>).</summary>
     public static bool IsEnglish(string language) =>
-        language.Equals("en", StringComparison.OrdinalIgnoreCase)
-        || language.Equals("English", StringComparison.OrdinalIgnoreCase)
-        || language.Equals("Английский", StringComparison.OrdinalIgnoreCase);
+        AppLanguages.ContentLanguage(language) == AppLanguages.English;
 }

@@ -40,10 +40,33 @@ public sealed class AppStringsResourceTests
         }
     }
 
+    [Theory]
+    [InlineData("StringsFr.resx")]
+    [InlineData("StringsDe.resx")]
+    [InlineData("StringsEs.resx")]
+    [InlineData("StringsPt.resx")]
+    [InlineData("StringsZh.resx")]
+    public void A_translation_has_only_known_keys_and_the_same_placeholders_as_English(string file)
+    {
+        System.Text.RegularExpressions.Regex placeholder = new(@"{(d+)[^}]*}");
+        Dictionary<string, string> english = System.Xml.Linq.XDocument.Load(FindResource("StringsEn.resx")).Root!.Elements("data")
+            .ToDictionary(d => (string)d.Attribute("name")!, d => (string)d.Element("value")!);
+
+        foreach (System.Xml.Linq.XElement data in System.Xml.Linq.XDocument.Load(FindResource(file)).Root!.Elements("data"))
+        {
+            string key = (string)data.Attribute("name")!;
+            Assert.True(english.ContainsKey(key), $"{file}: {key} is not an English key");
+            string[] holes = placeholder.Matches((string)data.Element("value")!).Select(m => m.Groups[1].Value).Distinct().Order().ToArray();
+            string[] englishHoles = placeholder.Matches(english[key]).Select(m => m.Groups[1].Value).Distinct().Order().ToArray();
+            Assert.True(holes.SequenceEqual(englishHoles), $"{file}: {key} has other placeholders than English");
+            Assert.False(string.IsNullOrWhiteSpace((string)data.Element("value")!), $"{file}: {key} is empty");
+        }
+    }
+
     [Fact]
     public void BothLanguagesUseTheSamePlaceholders()
     {
-        System.Text.RegularExpressions.Regex placeholder = new(@"{(d+)}");
+        System.Text.RegularExpressions.Regex placeholder = new(@"{(d+)[^}]*}");
         System.Xml.Linq.XDocument ru = System.Xml.Linq.XDocument.Load(FindResource("StringsRu.resx"));
         System.Xml.Linq.XDocument en = System.Xml.Linq.XDocument.Load(FindResource("StringsEn.resx"));
         Dictionary<string, string> enValues = en.Root!.Elements("data").ToDictionary(d => (string)d.Attribute("name")!, d => (string)d.Element("value")!);
@@ -52,8 +75,8 @@ public sealed class AppStringsResourceTests
         foreach (System.Xml.Linq.XElement data in ru.Root!.Elements("data"))
         {
             string key = (string)data.Attribute("name")!;
-            string[] ruHoles = placeholder.Matches((string)data.Element("value")!).Select(m => m.Value).Distinct().Order().ToArray();
-            string[] enHoles = placeholder.Matches(enValues[key]).Select(m => m.Value).Distinct().Order().ToArray();
+            string[] ruHoles = placeholder.Matches((string)data.Element("value")!).Select(m => m.Groups[1].Value).Distinct().Order().ToArray();
+            string[] enHoles = placeholder.Matches(enValues[key]).Select(m => m.Groups[1].Value).Distinct().Order().ToArray();
             Assert.True(ruHoles.SequenceEqual(enHoles), $"{key}: placeholders differ between languages");
         }
     }

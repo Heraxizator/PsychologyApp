@@ -25,6 +25,7 @@
     <!-- One card per chat, as elsewhere in the app: the initial, the title and time, the last line; the new-chat button in the corner. -->
     <Grid>
         <CollectionView
+            IsVisible="{Binding IsChatAvailable}"
             ItemsSource="{Binding Chats}"
             SelectionMode="None"
             VerticalScrollBarVisibility="Never"
@@ -121,7 +122,35 @@
             the promise that it stays on the phone, one big way to start and a few ready first lines for someone who does
             not know what to write. The scene is decoration only; screen readers skip it.
         -->
-        <ScrollView IsVisible="{Binding IsEmpty}" VerticalScrollBarVisibility="Never">
+        <!-- A language the chat cannot read for crisis words: it says so plainly and keeps the way to help one tap away. -->
+        <VerticalStackLayout
+            IsVisible="{Binding IsChatUnavailable}"
+            VerticalOptions="Center"
+            Spacing="16"
+            Padding="32,0,32,48">
+            <avatar:CompanionAvatarView
+                WidthRequest="72"
+                HeightRequest="72"
+                IconSize="32"
+                ShowStatus="False"
+                HorizontalOptions="Center"
+                AutomationProperties.IsInAccessibleTree="False" />
+            <Label
+                Text="{Binding UnavailableTitle}"
+                Style="{StaticResource PageTitleStyle}"
+                HorizontalTextAlignment="Center" />
+            <Label
+                Text="{Binding UnavailableBody}"
+                Style="{StaticResource BodyStyle}"
+                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                HorizontalTextAlignment="Center" />
+            <ui:ButtonView
+                Variant="Secondary"
+                BodyText="{Binding CrisisHubText}"
+                TapCommand="{Binding OpenCrisisHubCommand}" />
+        </VerticalStackLayout>
+
+        <ScrollView IsVisible="{Binding ShowEmptyState}" VerticalScrollBarVisibility="Never">
             <VerticalStackLayout
                 VerticalOptions="Center"
                 Spacing="16"

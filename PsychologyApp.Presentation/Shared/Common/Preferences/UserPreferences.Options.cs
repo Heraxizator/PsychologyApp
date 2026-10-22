@@ -22,20 +22,13 @@ public static partial class UserPreferences
     public const int MoodReminderFallbackHour = 20;
     public const int DefaultChatReminderHour = 19;
 
-    public static bool IsEnglish(string language) =>
-        language.Equals("en", StringComparison.OrdinalIgnoreCase)
-        || language.Equals("English", StringComparison.OrdinalIgnoreCase)
-        || language.Equals("Английский", StringComparison.OrdinalIgnoreCase);
+    /// <summary>Whether this interface language shows the English content (every language but Russian, see <see cref="AppLanguages"/>).</summary>
+    public static bool IsEnglish(string language) => AppStrings.IsEnglish(language);
 
     public static bool IsDarkTheme(string theme) =>
         NormalizeThemeKey(theme) == "dark";
 
-    public static string NormalizeLanguageKey(string value) => value switch
-    {
-        "en" or "EN" or "English" or "english" or "Английский" => "en",
-        "ru" or "RU" or "Russian" or "russian" or "Русский" => "ru",
-        _ => string.IsNullOrWhiteSpace(value) ? DefaultLanguage : value
-    };
+    public static string NormalizeLanguageKey(string value) => AppLanguages.Normalize(value);
 
     public static string NormalizeThemeKey(string value) => value switch
     {
@@ -68,15 +61,8 @@ public static partial class UserPreferences
         _ => string.IsNullOrWhiteSpace(value) ? DefaultSize : value
     };
 
-    public static string GetLanguageLabel(string key, string? language = null)
-    {
-        string lang = language ?? Current.Language;
-        return NormalizeLanguageKey(key) switch
-        {
-            "en" => "English",
-            _ => IsEnglish(lang) ? "Russian" : "Русский"
-        };
-    }
+    /// <summary>Each language under its own name, whatever the interface is in, so a person can always find theirs.</summary>
+    public static string GetLanguageLabel(string key, string? language = null) => AppLanguages.NativeName(NormalizeLanguageKey(key));
 
     public static string GetThemeLabel(string key, string? language = null)
     {
@@ -209,7 +195,7 @@ public static partial class UserPreferences
     public static IReadOnlyList<string> GetQuoteReminderHourOptions(string? language = null) =>
         QuoteReminderHourKeys.Select(hour => GetQuoteReminderHourLabel(hour, language)).ToArray();
 
-    public static IReadOnlyList<string> LanguageKeys { get; } = ["ru", "en"];
+    public static IReadOnlyList<string> LanguageKeys => AppLanguages.All;
 
     public static IReadOnlyList<string> ThemeKeys { get; } = ["dark", "light"];
 

@@ -11,7 +11,7 @@ public sealed class PreferenceLabelConverterTests : IDisposable
     public void Dispose() => AppStrings.LanguageOverride = null;
 
     [Fact]
-    public void Convert_ReturnsRussianLabelInEnglishUi()
+    public void A_language_is_listed_under_its_own_name_whatever_the_interface_is_in()
     {
         AppStrings.LanguageOverride = "en";
         PreferenceLabelConverter converter = new();
@@ -19,7 +19,7 @@ public sealed class PreferenceLabelConverterTests : IDisposable
         string label = Assert.IsType<string>(
             converter.Convert("ru", typeof(string), PreferenceLabelKind.Language, CultureInfo.InvariantCulture));
 
-        Assert.Equal("Russian", label);
+        Assert.Equal("Русский", label);
     }
 
     [Fact]

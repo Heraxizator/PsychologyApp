@@ -135,6 +135,7 @@
     <Compile Include="AsyncCommandTests.cs" />
     <Compile Include="BaseViewModelLoadingOverlayTests.cs" />
     <Compile Include="BaseViewModelPreferencesTests.cs" />
+    <Compile Include="AppLanguagesTests.cs" />
     <Compile Include="TestCardLookTests.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/UserProfileRefreshCoordinator.cs" Link="Linked/Features/ManageProfile/UserProfileRefreshCoordinator.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/ProfilePracticeHistoryLoader.cs" Link="Linked/Features/ManageProfile/ProfilePracticeHistoryLoader.cs" />

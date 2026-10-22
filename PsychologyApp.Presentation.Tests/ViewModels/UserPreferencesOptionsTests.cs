@@ -50,7 +50,10 @@ public sealed class UserPreferencesOptionsTests
     [InlineData("Английский", true)]
     [InlineData("ru", false)]
     [InlineData("Русский", false)]
-    public void TheLanguageNameTellsEnglishFromRussian(string language, bool english) =>
+    [InlineData("fr", true)]
+    [InlineData("Deutsch", true)]
+    [InlineData("中文", true)]
+    public void EveryLanguageButRussianShowsTheEnglishContent(string language, bool english) =>
         Assert.Equal(english, UserPreferences.IsEnglish(language));
 
     [Fact]

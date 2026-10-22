@@ -15,7 +15,8 @@ public sealed class ChatReminderCoordinator(
     {
         UserPreferencesState state = preferencesStore.Load();
 
-        if (!ChatReminderPolicy.ShouldSchedule(state.ChatRemindersEnabled, state.HasCompletedOnboarding))
+        // No reminder to talk in a language the chat is closed in.
+        if (!ChatReminderPolicy.ShouldSchedule(state.ChatRemindersEnabled, state.HasCompletedOnboarding) || !AppLanguages.HasChat(state.Language))
         {
             scheduler.Cancel();
             return;

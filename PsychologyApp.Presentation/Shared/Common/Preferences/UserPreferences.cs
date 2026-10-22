@@ -230,8 +230,7 @@ public static partial class UserPreferences
 
     public static void ApplyLanguage(string language)
     {
-        string cultureName = IsEnglish(language) ? "en" : "ru";
-        CultureInfo culture = CultureInfo.GetCultureInfo(cultureName);
+        CultureInfo culture = CultureInfo.GetCultureInfo(AppLanguages.CultureName(NormalizeLanguageKey(language)));
         CultureInfo.CurrentCulture = culture;
         CultureInfo.CurrentUICulture = culture;
         CultureInfo.DefaultThreadCurrentCulture = culture;
@@ -313,10 +312,8 @@ public static partial class UserPreferences
             return NormalizeLanguageKey(Preferences.Get(LanguageKey, DefaultLanguage));
         }
 
-        string systemLanguage = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-        return string.Equals(systemLanguage, "en", StringComparison.OrdinalIgnoreCase)
-            ? "en"
-            : "ru";
+        // The first start follows the phone's language when the app has it, Russian otherwise.
+        return AppLanguages.FromSystem(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName) ?? DefaultLanguage;
     }
 
     private static string ResolveThemePreference()

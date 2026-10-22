@@ -45,6 +45,12 @@
   <data name="ChatOpenerLonely" xml:space="preserve">
     <value>Мне одиноко</value>
   </data>
+  <data name="ChatUnavailableTitle" xml:space="preserve">
+    <value>Чат пока говорит по-русски и по-английски</value>
+  </data>
+  <data name="ChatUnavailableBody" xml:space="preserve">
+    <value>Только на этих языках он умеет заметить, что человеку угрожает опасность, поэтому на вашем языке он закрыт, пока это не готово. Практики, тесты и дневник работают как обычно, а кризисная помощь всегда рядом.</value>
+  </data>
   <data name="ChatRename" xml:space="preserve">
     <value>Переименовать</value>
   </data>

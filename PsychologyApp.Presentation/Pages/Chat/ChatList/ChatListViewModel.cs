@@ -64,6 +64,7 @@ public sealed class ChatListViewModel : BaseViewModel
 
         BindNavigation(navigationService);
         NewChatCommand = new AsyncCommand(() => NavigationService!.GoToChatAsync(null));
+        OpenCrisisHubCommand = new AsyncCommand(() => NavigationService!.GoToCrisisHubAsync());
     }
 
     /// <summary>Set by the page: shows a text prompt and returns the entered text, or null when cancelled.</summary>
@@ -72,6 +73,15 @@ public sealed class ChatListViewModel : BaseViewModel
     public RangeObservableCollection<ChatListItem> Chats { get; } = [];
 
     public ICommand NewChatCommand { get; }
+    public ICommand OpenCrisisHubCommand { get; }
+
+    /// <summary>The chat reads crisis words only in its own languages; in any other it stays closed (<see cref="AppLanguages.HasChat"/>).</summary>
+    public bool IsChatAvailable => AppLanguages.HasChat(AppStrings.Language);
+    public bool IsChatUnavailable => !IsChatAvailable;
+    public bool ShowEmptyState => IsEmpty && IsChatAvailable;
+    public string UnavailableTitle => AppStrings.ChatUnavailableTitle;
+    public string UnavailableBody => AppStrings.ChatUnavailableBody;
+    public string CrisisHubText => AppStrings.CrisisHubTitle;
 
     public bool IsEmpty
     {
@@ -81,6 +91,7 @@ public sealed class ChatListViewModel : BaseViewModel
             if (SetProperty(ref _isEmpty, value))
             {
                 OnPropertyChanged(nameof(HasChats));
+                OnPropertyChanged(nameof(ShowEmptyState));
             }
         }
     }
@@ -88,7 +99,7 @@ public sealed class ChatListViewModel : BaseViewModel
     /// <summary>The tab is named after the assistant, like the other tabs are named after what they hold.</summary>
     public string Title => AppStrings.ShellTabChatShort;
     /// <summary>The round button in the corner is for a second chat; with no chats the empty state has its own big button.</summary>
-    public bool HasChats => !IsEmpty;
+    public bool HasChats => !IsEmpty && IsChatAvailable;
 
     public string NewChatText => AppStrings.ChatNew;
     public string StartChatText => AppStrings.ChatHeroStart;
@@ -131,7 +142,8 @@ public sealed class ChatListViewModel : BaseViewModel
 
     protected override void RefreshLocalizedProperties() =>
         Notify(nameof(Title), nameof(NewChatText), nameof(StartChatText), nameof(EmptyTitle), nameof(EmptyBody), nameof(EmptyPrivacy),
-            nameof(OpenersTitle), nameof(Openers));
+            nameof(OpenersTitle), nameof(Openers), nameof(IsChatAvailable), nameof(IsChatUnavailable), nameof(ShowEmptyState), nameof(HasChats),
+            nameof(UnavailableTitle), nameof(UnavailableBody), nameof(CrisisHubText));
 
     private ChatListItem ToItem(ChatSessionDTO session, DateTime now)
     {

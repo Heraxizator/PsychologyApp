@@ -127,7 +127,7 @@ public sealed class DeviceSpeechInput : ISpeechInput
     }
 
     private static CultureInfo CurrentCulture() =>
-        AppStrings.IsEnglish(AppStrings.Language) ? new CultureInfo("en-US") : new CultureInfo("ru-RU");
+        new(AppLanguages.SpeechLocale(AppStrings.Language));
 
     private static bool DetectSupport()
     {

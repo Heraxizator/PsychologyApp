@@ -45,6 +45,12 @@
   <data name="ChatOpenerLonely" xml:space="preserve">
     <value>I feel lonely</value>
   </data>
+  <data name="ChatUnavailableTitle" xml:space="preserve">
+    <value>The chat speaks English and Russian for now</value>
+  </data>
+  <data name="ChatUnavailableBody" xml:space="preserve">
+    <value>It can notice that someone is in danger only in these languages, so in yours it stays closed until that is ready. Practices, tests and the journal work as usual, and crisis help is always here.</value>
+  </data>
   <data name="ChatRename" xml:space="preserve">
     <value>Rename</value>
   </data>

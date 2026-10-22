@@ -6,6 +6,7 @@ using Xunit;
 
 namespace PsychologyApp.Presentation.Tests.ViewModels;
 
+[Collection("Localization")]
 public sealed class ChatListViewModelTests
 {
     private static readonly DateTime Now = new(2026, 10, 6, 12, 0, 0, DateTimeKind.Utc);
@@ -200,6 +201,25 @@ public sealed class ChatListViewModelTests
 
         _navigation.Verify(n => n.GoToChatAsync(7L), Times.Once);
         _navigation.Verify(n => n.GoToChatAsync(null), Times.Once);
+    }
+
+    [Fact]
+    public async Task InALanguageWithoutTheChatTheListSaysSoAndOffersNoWayToStartOne()
+    {
+        ChatListViewModel viewModel = Create();
+        await viewModel.RefreshAsync();
+        string? previous = AppStrings.LanguageOverride;
+        AppStrings.LanguageOverride = "fr";
+        try
+        {
+            Assert.True(viewModel.IsChatUnavailable);
+            Assert.False(viewModel.ShowEmptyState);
+            Assert.False(viewModel.HasChats);
+        }
+        finally
+        {
+            AppStrings.LanguageOverride = previous;
+        }
     }
 
     [Fact]

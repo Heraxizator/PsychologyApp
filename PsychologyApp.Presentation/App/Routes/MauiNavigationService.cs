@@ -238,8 +238,10 @@ public sealed class MauiNavigationService : INavigationService
             return Task.CompletedTask;
         });
 
+    // Every way into a chat (the tab, articles, reminders) passes here: in a language the chat cannot read for crisis words
+    // the chat list opens instead, and says why.
     public Task GoToChatAsync(long? sessionId = null, string? topic = null, string? opener = null) =>
-        NavigationCoordinator.RunPushAsync(() =>
+        !AppLanguages.HasChat(AppStrings.Language) ? GoToChatListAsync() : NavigationCoordinator.RunPushAsync(() =>
         {
             INavigation hostNavigation = ResolveNavigation();
             return hostNavigation.PushAsync(PrepareSecondaryPage(_pageFactory.CreateChatPage(sessionId, hostNavigation, topic, opener)), true);
