@@ -19,3 +19,5 @@ global using PsychologyApp.Presentation.Shared.Common.Localization;
 global using Microsoft.Maui.ApplicationModel.DataTransfer;
 global using Microsoft.Maui.Storage;
 global using Microsoft.Maui.Graphics;
+global using Microsoft.Maui.Dispatching;
+global using Microsoft.Maui.Devices;

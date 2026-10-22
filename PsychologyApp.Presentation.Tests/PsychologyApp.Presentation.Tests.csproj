@@ -135,6 +135,79 @@
     <Compile Include="AsyncCommandTests.cs" />
     <Compile Include="BaseViewModelLoadingOverlayTests.cs" />
     <Compile Include="BaseViewModelPreferencesTests.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/UserProfileRefreshCoordinator.cs" Link="Linked/Features/ManageProfile/UserProfileRefreshCoordinator.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/ProfilePracticeHistoryLoader.cs" Link="Linked/Features/ManageProfile/ProfilePracticeHistoryLoader.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/PracticeHistoryFormatter.cs" Link="Linked/Features/ManageProfile/PracticeHistoryFormatter.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/TechniquesListInitializer.cs" Link="Linked/Features/RunTechniqueSession/TechniquesListInitializer.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Entities/Profile/PracticeHistoryItem.cs" Link="Linked/Entities/Profile/PracticeHistoryItem.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/Localization/LanguageContentReloader.cs" Link="Linked/Shared/Common/Localization/LanguageContentReloader.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ManageQuotes/QuoteFeed/QuoteViewModel.cs" Link="Linked/Pages/ManageQuotes/QuoteFeed/QuoteViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ManageQuotes/QuoteFeed/QuoteViewModel.Feed.cs" Link="Linked/Pages/ManageQuotes/QuoteFeed/QuoteViewModel.Feed.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ManageQuotes/QuoteFeed/QuoteViewModel.Init.cs" Link="Linked/Pages/ManageQuotes/QuoteFeed/QuoteViewModel.Init.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ManageQuotes/QuoteFeed/QuoteViewModel.Init.Load.cs" Link="Linked/Pages/ManageQuotes/QuoteFeed/QuoteViewModel.Init.Load.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ManageQuotes/QuoteFeed/QuoteViewModel.Labels.cs" Link="Linked/Pages/ManageQuotes/QuoteFeed/QuoteViewModel.Labels.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ManageQuotes/QuoteFeed/QuoteViewModel.Properties.cs" Link="Linked/Pages/ManageQuotes/QuoteFeed/QuoteViewModel.Properties.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/LuscherTest/LuscherTestViewModel.cs" Link="Linked/Pages/RunTests/LuscherTest/LuscherTestViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/LuscherTest/LuscherTestViewModel.Init.cs" Link="Linked/Pages/RunTests/LuscherTest/LuscherTestViewModel.Init.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/LuscherTest/LuscherTestViewModel.Labels.cs" Link="Linked/Pages/RunTests/LuscherTest/LuscherTestViewModel.Labels.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/LuscherTest/LuscherTestViewModel.Recommendation.cs" Link="Linked/Pages/RunTests/LuscherTest/LuscherTestViewModel.Recommendation.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/LuscherTest/LuscherTestViewModel.Results.Display.cs" Link="Linked/Pages/RunTests/LuscherTest/LuscherTestViewModel.Results.Display.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/LuscherTest/LuscherTestViewModel.Results.Labels.cs" Link="Linked/Pages/RunTests/LuscherTest/LuscherTestViewModel.Results.Labels.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/LuscherTest/LuscherTestViewModel.Results.Scoring.cs" Link="Linked/Pages/RunTests/LuscherTest/LuscherTestViewModel.Results.Scoring.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTests/BaseTest/BaseTestViewModel.ColorVisibility.Properties.cs" Link="Linked/Features/RunTests/BaseTest/BaseTestViewModel.ColorVisibility.Properties.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTests/BaseTest/BaseTestViewModel.cs" Link="Linked/Features/RunTests/BaseTest/BaseTestViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTests/BaseTest/BaseTestViewModel.Handlers.cs" Link="Linked/Features/RunTests/BaseTest/BaseTestViewModel.Handlers.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTests/BaseTest/BaseTestViewModel.Results.Colors.cs" Link="Linked/Features/RunTests/BaseTest/BaseTestViewModel.Results.Colors.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTests/BaseTest/BaseTestViewModel.Results.Properties.cs" Link="Linked/Features/RunTests/BaseTest/BaseTestViewModel.Results.Properties.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Entities/Test/LuscherColorDisplayItem.cs" Link="Linked/Entities/Test/LuscherColorDisplayItem.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTests/LuscherColorDisplayFactory.cs" Link="Linked/Features/RunTests/LuscherColorDisplayFactory.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTests/LuscherStrings.cs" Link="Linked/Features/RunTests/LuscherStrings.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/Localization/ColourStrings.cs" Link="Linked/Shared/Common/Localization/ColourStrings.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTests/LuscherColorMapper.cs" Link="Linked/Features/RunTests/LuscherColorMapper.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueSession/SubViewModels/Polarity/PolarityViewModel.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueSession/SubViewModels/Polarity/PolarityViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueSession/SubViewModels/Polarity/PolarityViewModel.Fields.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueSession/SubViewModels/Polarity/PolarityViewModel.Fields.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueSession/SubViewModels/Polarity/PolarityViewModel.Labels.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueSession/SubViewModels/Polarity/PolarityViewModel.Labels.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueSession/SubViewModels/Polarity/PolarityViewModel.Session.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueSession/SubViewModels/Polarity/PolarityViewModel.Session.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueSession/SubViewModels/PaperList/PaperListViewModel.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueSession/SubViewModels/PaperList/PaperListViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueSession/SubViewModels/PaperList/PaperListViewModel.Fields.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueSession/SubViewModels/PaperList/PaperListViewModel.Fields.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueSession/SubViewModels/PaperList/PaperListViewModel.Labels.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueSession/SubViewModels/PaperList/PaperListViewModel.Labels.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueSession/SubViewModels/PaperList/PaperListViewModel.Session.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueSession/SubViewModels/PaperList/PaperListViewModel.Session.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueSession/TechniqueSessionViewModel.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueSession/TechniqueSessionViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueSession/TechniqueSessionViewModel.Help.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueSession/TechniqueSessionViewModel.Help.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueSession/TechniqueSessionViewModel.LastNote.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueSession/TechniqueSessionViewModel.LastNote.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueSession/TechniqueSessionViewModel.Session.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueSession/TechniqueSessionViewModel.Session.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueSession/TechniqueSessionViewModel.Wizard.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueSession/TechniqueSessionViewModel.Wizard.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/ITechniqueSessionScreen.cs" Link="Linked/Features/RunTechniqueSession/ITechniqueSessionScreen.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/RecentProblemStore.cs" Link="Linked/Features/RunTechniqueSession/RecentProblemStore.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Services/Preferences/ChipUsageStore.cs" Link="Linked/Shared/Services/Preferences/ChipUsageStore.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/TechniqueEntryFeedback.cs" Link="Linked/Shared/Common/TechniqueEntryFeedback.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Collections.cs" Link="Linked/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Collections.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Commands.cs" Link="Linked/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Commands.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.cs" Link="Linked/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Dashboard.cs" Link="Linked/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Dashboard.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Dashboard.Properties.cs" Link="Linked/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Dashboard.Properties.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Init.cs" Link="Linked/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Init.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Labels.cs" Link="Linked/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Labels.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.LoadMore.cs" Link="Linked/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.LoadMore.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Messenger.cs" Link="Linked/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Messenger.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Sections.cs" Link="Linked/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Sections.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ManageProfile/ProfileUser/UserViewModel.Clinical.cs" Link="Linked/Pages/ManageProfile/ProfileUser/UserViewModel.Clinical.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ManageProfile/ProfileUser/UserViewModel.Collections.cs" Link="Linked/Pages/ManageProfile/ProfileUser/UserViewModel.Collections.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ManageProfile/ProfileUser/UserViewModel.Commands.cs" Link="Linked/Pages/ManageProfile/ProfileUser/UserViewModel.Commands.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ManageProfile/ProfileUser/UserViewModel.cs" Link="Linked/Pages/ManageProfile/ProfileUser/UserViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ManageProfile/ProfileUser/UserViewModel.Labels.cs" Link="Linked/Pages/ManageProfile/ProfileUser/UserViewModel.Labels.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ManageProfile/ProfileUser/UserViewModel.Quotes.cs" Link="Linked/Pages/ManageProfile/ProfileUser/UserViewModel.Quotes.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ManageProfile/ProfileUser/UserViewModel.Refresh.cs" Link="Linked/Pages/ManageProfile/ProfileUser/UserViewModel.Refresh.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ManageProfile/ProfileUser/UserViewModel.Stats.cs" Link="Linked/Pages/ManageProfile/ProfileUser/UserViewModel.Stats.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/Index/ProfileScreenCoordinator.cs" Link="Linked/Features/ManageProfile/Index/ProfileScreenCoordinator.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/ProfileWeekDaysLoader.cs" Link="Linked/Features/ManageProfile/ProfileWeekDaysLoader.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/Diagnostics/PerfTrace.cs" Link="Linked/Shared/Common/Diagnostics/PerfTrace.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/ProfilePracticeHistoryTapFactory.cs" Link="Linked/Features/ManageProfile/ProfilePracticeHistoryTapFactory.cs" />
+    <Compile Include="Phase5LoaderTests.cs" />
+    <Compile Include="QuoteViewModelTests.cs" />
+    <Compile Include="LuscherTestViewModelTests.cs" />
+    <Compile Include="PracticeSessionViewModelTests.cs" />
+    <Compile Include="ProfileAndTechniquesViewModelTests.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/EntryDraftCoordinator.cs" Link="Linked/Features/RunTechniqueSession/EntryDraftCoordinator.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/CustomTechniqueSessionOperations.cs" Link="Linked/Features/RunTechniqueSession/CustomTechniqueSessionOperations.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/PracticeDashboardLoader.cs" Link="Linked/Features/RunTechniqueSession/PracticeDashboardLoader.cs" />

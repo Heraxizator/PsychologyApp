@@ -66,9 +66,11 @@ namespace Microsoft.Maui.Controls
 
     public sealed class Command : ICommand
     {
-        private readonly Action _execute;
+        private readonly Action<object> _execute;
 
-        public Command(Action execute) => _execute = execute;
+        public Command(Action execute) => _execute = _ => execute();
+
+        public Command(Action<object> execute) => _execute = execute;
 
         public event EventHandler? CanExecuteChanged
         {
@@ -78,7 +80,7 @@ namespace Microsoft.Maui.Controls
 
         public bool CanExecute(object? parameter) => true;
 
-        public void Execute(object? parameter) => _execute();
+        public void Execute(object? parameter) => _execute(parameter!);
     }
 }
 
@@ -288,6 +290,18 @@ namespace Microsoft.Maui.ApplicationModel.Communication
 
 namespace Microsoft.Maui.Storage
 {
+    /// <summary>Key-value settings kept in memory for the test run.</summary>
+    public sealed class Preferences
+    {
+        private readonly System.Collections.Concurrent.ConcurrentDictionary<string, string> _values = new(StringComparer.Ordinal);
+
+        public static Preferences Default { get; } = new();
+
+        public string Get(string key, string defaultValue) => _values.TryGetValue(key, out string? value) ? value : defaultValue;
+
+        public void Set(string key, string value) => _values[key] = value;
+    }
+
     public static class FileSystem
     {
         public static string CacheDirectory { get; set; } = Path.GetTempPath();
@@ -402,5 +416,44 @@ namespace Microsoft.Maui.Graphics
     public sealed record Color(string Hex)
     {
         public static Color FromArgb(string hex) => new(hex);
+    }
+
+    public static class Colors
+    {
+        public static Color Transparent { get; } = new("#00000000");
+        public static Color Black { get; } = new("#000000");
+        public static Color Gray { get; } = new("#808080");
+        public static Color Red { get; } = new("#FF0000");
+        public static Color Green { get; } = new("#008000");
+        public static Color Blue { get; } = new("#0000FF");
+        public static Color Yellow { get; } = new("#FFFF00");
+        public static Color Purple { get; } = new("#800080");
+        public static Color Brown { get; } = new("#A52A2A");
+    }
+}
+
+namespace Microsoft.Maui.Dispatching
+{
+    public interface IDispatcher
+    {
+        bool Dispatch(Action action);
+    }
+}
+
+namespace Microsoft.Maui.Devices
+{
+    public enum HapticFeedbackType
+    {
+        Click,
+        LongPress
+    }
+
+    public sealed class HapticFeedback
+    {
+        public static HapticFeedback Default { get; } = new();
+
+        public void Perform(HapticFeedbackType type)
+        {
+        }
     }
 }

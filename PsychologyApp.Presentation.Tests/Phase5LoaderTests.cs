@@ -16,6 +16,7 @@ using PsychologyApp.Presentation.Features.ManageProfile;
 using PsychologyApp.Presentation.Features.ManageQuotes;
 using PsychologyApp.Presentation.Shared.Services.Clipboard;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
+using PsychologyApp.Presentation.Features.ManageQuotes.Index;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
@@ -29,7 +30,7 @@ public sealed class QuoteFeedCoordinatorLoadTests
     }
 
     [Fact]
-    public async Task LoadItemsAsync_SeedsMapsAndDedupesQuotes()
+    public async Task LoadItemsAsync_MapsAndDedupesQuotes_AndAddsNoNewQuoteWhileUnreadRemain()
     {
         Mock<IQuotService> quotService = new();
         quotService
@@ -47,7 +48,7 @@ public sealed class QuoteFeedCoordinatorLoadTests
             .Setup(s => s.IsAllCaughtUpAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(false);
 
-        QuoteFeedCoordinator coordinator = new();
+        QuoteFeedCoordinator coordinator = new(Mock.Of<IUserProgressService>(), new InMemoryUserPreferencesStore());
         QuoteItemCommandsFactory factory = CreateQuoteItemFactory(quotService.Object);
         bool failed = false;
 
@@ -62,11 +63,40 @@ public sealed class QuoteFeedCoordinatorLoadTests
             () => failed = true,
             CancellationToken.None);
 
-        quotService.Verify(s => s.TryLoadSingleAsync(It.IsAny<CancellationToken>()), Times.Once);
+        quotService.Verify(s => s.TryLoadSingleAsync(It.IsAny<CancellationToken>()), Times.Never);
         Assert.False(failed);
         Assert.Equal(2, result.Items.Count);
         Assert.Equal("Alpha", result.Items[0].Text);
         Assert.Equal("Beta", result.Items[1].Text);
+    }
+
+    [Fact]
+    public async Task LoadItemsAsync_AddsOneNewQuoteWhenEverythingIsRead()
+    {
+        Mock<IQuotService> quotService = new();
+        quotService
+            .Setup(s => s.TryLoadSingleAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(true);
+        quotService
+            .Setup(s => s.GetUnreadAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+        quotService
+            .Setup(s => s.IsAllCaughtUpAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(false);
+        QuoteFeedCoordinator coordinator = new(Mock.Of<IUserProgressService>(), new InMemoryUserPreferencesStore());
+
+        await coordinator.LoadItemsAsync(
+            quotService.Object,
+            CreateQuoteItemFactory(quotService.Object),
+            count: 20,
+            resetKnown: true,
+            seedNewQuote: true,
+            dailyQuoteText: null,
+            _ => Task.CompletedTask,
+            () => { },
+            CancellationToken.None);
+
+        quotService.Verify(s => s.TryLoadSingleAsync(It.IsAny<CancellationToken>()), Times.Once);
     }
 
     [Fact]
@@ -83,8 +113,8 @@ public sealed class QuoteFeedCoordinatorLoadTests
             .Setup(s => s.IsAllCaughtUpAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(false);
 
-        QuoteFeedCoordinator firstCoordinator = new();
-        QuoteFeedCoordinator secondCoordinator = new();
+        QuoteFeedCoordinator firstCoordinator = new(Mock.Of<IUserProgressService>(), new InMemoryUserPreferencesStore());
+        QuoteFeedCoordinator secondCoordinator = new(Mock.Of<IUserProgressService>(), new InMemoryUserPreferencesStore());
         QuoteItemCommandsFactory factory = CreateQuoteItemFactory(quotService.Object);
 
         await firstCoordinator.LoadItemsAsync(
@@ -203,7 +233,7 @@ public sealed class UserProfileRefreshCoordinatorTests
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(3);
         progress.Setup(p => p.GetLastTechniqueCompletionDateAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(new DateTime(2026, 6, 1, 0, 0, 0, DateTimeKind.Utc));
-        progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+        progress.Setup(p => p.GetRecentSessionResultsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
         Mock<IQuotService> quotService = new();
@@ -212,7 +242,7 @@ public sealed class UserProfileRefreshCoordinatorTests
 
         UserProfileRefreshSnapshot? snapshot = await coordinator.LoadDashboardAsync(
             new ProfileStatsLoader(progress.Object),
-            new ProfilePracticeHistoryLoader(progress.Object),
+            new ProfilePracticeHistoryLoader(progress.Object, new PracticeHistoryFormatter(Mock.Of<PsychologyApp.Application.Practice.ITechniqueCatalogService>())),
             quotesLoader,
             generation: 1,
             () => 1,
@@ -234,7 +264,7 @@ public sealed class UserProfileRefreshCoordinatorTests
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
         progress.Setup(p => p.GetLastTechniqueCompletionDateAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync((DateTime?)null);
-        progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+        progress.Setup(p => p.GetRecentSessionResultsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
         Mock<IQuotService> quotService = new();
@@ -243,7 +273,7 @@ public sealed class UserProfileRefreshCoordinatorTests
 
         UserProfileRefreshSnapshot? snapshot = await coordinator.LoadDashboardAsync(
             new ProfileStatsLoader(progress.Object),
-            new ProfilePracticeHistoryLoader(progress.Object),
+            new ProfilePracticeHistoryLoader(progress.Object, new PracticeHistoryFormatter(Mock.Of<PsychologyApp.Application.Practice.ITechniqueCatalogService>())),
             quotesLoader,
             generation: 1,
             () => 2,

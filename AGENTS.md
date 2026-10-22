@@ -177,6 +177,10 @@ dotnet test PsychologyApp.Presentation.Tests
 bash scripts/android-run.sh   # для изменений интерфейса — и посмотреть на устройстве
 ```
 
+`PsychologyApp.Presentation.Tests` собирается под net10.0 по явному списку файлов в csproj: новый файл теста и
+проверяемые им файлы Presentation (как `Link`) вписываются туда, иначе тест не компилируется и не запускается нигде,
+в том числе в CI. Типы MAUI заменены заглушками в `ViewModels/MauiShims.cs`.
+
 ## Git и CHANGELOG
 
 - Коммиты по [CONTRIBUTING.md](CONTRIBUTING.md): `type(scope): summary`, одно логическое изменение на коммит.

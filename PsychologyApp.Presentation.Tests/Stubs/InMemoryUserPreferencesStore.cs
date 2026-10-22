@@ -26,7 +26,8 @@ public sealed class InMemoryUserPreferencesStore : IUserPreferencesStore
     {
     }
 
-    public void ApplyPreview(UserPreferencesState state) => _state = state;
+    // Like the real store: the look changes and listeners hear of it, what is saved stays as it was.
+    public void ApplyPreview(UserPreferencesState state) => Changed?.Invoke();
 
     public void CompleteOnboarding(string concern, bool? practiceRemindersEnabled = null, int? practiceReminderHour = null) =>
         Save(_state with

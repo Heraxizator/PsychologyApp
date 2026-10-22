@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
+using PsychologyApp.Application.Practice;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
@@ -51,7 +52,7 @@ public sealed class PracticeSessionViewModelTests
     }
 
     [Fact]
-    public async Task TechniqueSessionViewModel_Constructor_AttachesBeforeLoadingEntryDraft()
+    public async Task OpeningAnEntryPracticeLoadsItsSavedDraft()
     {
         TaskCompletionSource draftLoadStarted = new(TaskCreationOptions.RunContinuationsAsynchronously);
         Mock<IUserProgressService> progress = new();
@@ -65,13 +66,15 @@ public sealed class PracticeSessionViewModelTests
         EntryDraftCoordinator draftCoordinator = new(NullLogger<EntryDraftCoordinator>.Instance);
         ListTechniqueSessionHelper sessionHelper = CreateSessionHelper(progress.Object);
 
-        _ = new TechniqueSessionViewModel(
+        TechniqueSessionViewModel viewModel = new(
             TechniqueId.Spin,
             CreateNavigationService(),
             progress.Object,
             sessionHelper,
-            draftCoordinator);
+            draftCoordinator,
+            Catalog());
 
+        await viewModel.InitializeTechniqueAsync(TechniqueId.Spin);
         await draftLoadStarted.Task.WaitAsync(TimeSpan.FromSeconds(1));
 
         progress.Verify(
@@ -94,7 +97,8 @@ public sealed class PracticeSessionViewModelTests
             CreateNavigationService(),
             progress.Object,
             sessionHelper,
-            draftCoordinator);
+            draftCoordinator,
+            Catalog());
 
         draftCoordinator.MarkSessionCompleted();
         viewModel.SaveEntryDraftIfNeeded();
@@ -117,7 +121,8 @@ public sealed class PracticeSessionViewModelTests
             CreateNavigationService(),
             progress.Object,
             CreateSessionHelper(progress.Object),
-            coordinator);
+            coordinator,
+            Catalog());
     }
 
     private static PaperListViewModel CreatePaperListViewModel(bool clearTextAfterAdd)
@@ -135,8 +140,12 @@ public sealed class PracticeSessionViewModelTests
             clearTextAfterAdd,
             progress.Object,
             CreateSessionHelper(progress.Object),
-            coordinator);
+            coordinator,
+            Catalog());
     }
+
+    private static ITechniqueCatalogService Catalog() =>
+        new TechniqueCatalogService(new BuiltInTechniqueCatalogProvider(() => "ru"));
 
     private static TestNavigationService CreateNavigationService()
     {

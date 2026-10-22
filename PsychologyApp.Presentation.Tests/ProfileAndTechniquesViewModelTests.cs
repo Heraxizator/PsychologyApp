@@ -12,7 +12,6 @@ using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
-using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Entities.Profile;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
@@ -27,6 +26,7 @@ using PsychologyApp.Presentation.Shared.Services.Clipboard;
 using PsychologyApp.Presentation.Shared.Services.Toasts;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.Techniques;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
+using PsychologyApp.Presentation.Features.ManageQuotes.Index;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
@@ -36,7 +36,6 @@ public sealed class UserViewModelTests
 {
     public UserViewModelTests()
     {
-        UserPreferences.UseInMemoryStorage();
         AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
     }
 
@@ -56,15 +55,17 @@ public sealed class UserViewModelTests
             new QuotesChangeNotifier(),
             new ProfileStatsLoader(progress.Object),
             new ProfileQuotesLoader(quotService.Object, new ProfileQuotesPresenter()),
-            new ProfilePracticeHistoryLoader(progress.Object),
+            new ProfilePracticeHistoryLoader(progress.Object, new PracticeHistoryFormatter(Mock.Of<ITechniqueCatalogService>())),
             new ProfileFeaturedTechniquesBuilder(
                 preferences.Object,
                 TechniqueCatalogTestHelper.CreateGateway(),
                 TechniqueCatalogTestHelper.CreateRecommendationService()),
             TopViewModelTestHelpers.CreateQuoteCommandsFactory(quotService.Object),
             new ProfileScreenCoordinator(new UserProfileRefreshCoordinator()),
-            TopViewModelTestHelpers.CreateLanguageReloader(quotService.Object),
-            Mock.Of<IClinicalCareService>());
+            TopViewModelTestHelpers.CreateLanguageReloader(quotService.Object, preferences.Object),
+            Mock.Of<IClinicalCareService>(),
+            new ProfileWeekDaysLoader(progress.Object),
+            preferences.Object);
 
         Assert.Equal(4, viewModel.Techniques.Count);
         Assert.Equal("0", viewModel.TechniquesCompletedCount);
@@ -78,7 +79,7 @@ public sealed class UserViewModelTests
         progress.Setup(p => p.CountTestResultsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0L);
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
         progress.Setup(p => p.GetLastTechniqueCompletionDateAsync(It.IsAny<CancellationToken>())).ReturnsAsync((DateTime?)null);
-        progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+        progress.Setup(p => p.GetRecentSessionResultsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
 
         Mock<IQuotService> quotService = new();
@@ -97,15 +98,17 @@ public sealed class UserViewModelTests
             new QuotesChangeNotifier(),
             new ProfileStatsLoader(progress.Object),
             quotesLoader,
-            new ProfilePracticeHistoryLoader(progress.Object),
+            new ProfilePracticeHistoryLoader(progress.Object, new PracticeHistoryFormatter(Mock.Of<ITechniqueCatalogService>())),
             new ProfileFeaturedTechniquesBuilder(
                 preferences.Object,
                 TechniqueCatalogTestHelper.CreateGateway(),
                 TechniqueCatalogTestHelper.CreateRecommendationService()),
             TopViewModelTestHelpers.CreateQuoteCommandsFactory(quotService.Object),
             new ProfileScreenCoordinator(new UserProfileRefreshCoordinator()),
-            TopViewModelTestHelpers.CreateLanguageReloader(quotService.Object),
-            Mock.Of<IClinicalCareService>());
+            TopViewModelTestHelpers.CreateLanguageReloader(quotService.Object, preferences.Object),
+            Mock.Of<IClinicalCareService>(),
+            new ProfileWeekDaysLoader(progress.Object),
+            preferences.Object);
 
         await viewModel.InitAsync();
         await Task.Delay(100);
@@ -126,6 +129,7 @@ public sealed class UserViewModelTests
     }
 }
 
+[Collection("Localization")]
 public sealed class TechniquesViewModelTests
 {
     public TechniquesViewModelTests()
@@ -142,6 +146,7 @@ public sealed class TechniquesViewModelTests
         progress.Setup(p => p.GetLastTechniqueCompletionDateAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync((DateTime?)null);
         progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
+        progress.Setup(p => p.GetRecentSessionResultsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
         progress.Setup(p => p.GetLastPracticeDatesAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new Dictionary<string, DateTime>(StringComparer.Ordinal));
         progress.Setup(p => p.GetSessionDraftKeysAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
@@ -165,7 +170,8 @@ public sealed class TechniquesViewModelTests
             techniqueService.Object,
             navigation.Object,
             dashboardLoader,
-            progress.Object);
+            progress.Object,
+            preferences: preferences.Object);
 
         await viewModel.TryOpenPendingTechniqueAsync();
 
@@ -177,6 +183,7 @@ public sealed class TechniquesViewModelTests
     {
         Mock<IUserProgressService> progress = new();
         progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
+        progress.Setup(p => p.GetRecentSessionResultsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(2);
         progress.Setup(p => p.GetAtRiskStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
         progress.Setup(p => p.GetLastTechniqueCompletionDateAsync(It.IsAny<CancellationToken>()))
@@ -228,6 +235,7 @@ public sealed class TechniquesViewModelTests
 
         Mock<IUserProgressService> progress = new();
         progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
+        progress.Setup(p => p.GetRecentSessionResultsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
         progress.Setup(p => p.GetAtRiskStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
         progress.Setup(p => p.GetLastTechniqueCompletionDateAsync(It.IsAny<CancellationToken>()))
@@ -300,7 +308,8 @@ public sealed class TechniquesViewModelTests
         INavigationService navigationService,
         PracticeDashboardLoader dashboardLoader,
         IUserProgressService userProgressService,
-        ITechniqueMessenger? techniqueMessenger = null)
+        ITechniqueMessenger? techniqueMessenger = null,
+        IUserPreferencesStore? preferences = null)
     {
         Mock<IDatabaseReadySignal> databaseReady = new();
         databaseReady.Setup(d => d.WaitAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
@@ -320,7 +329,8 @@ public sealed class TechniquesViewModelTests
                 Mock.Of<Microsoft.Extensions.Logging.ILogger<PracticeClinicalDashboardEnricher>>()),
             Mock.Of<IClinicalCareService>(),
             Options.Create(new AppSettings()),
-            Mock.Of<Microsoft.Extensions.Logging.ILogger<TechniquesViewModel>>());
+            Mock.Of<Microsoft.Extensions.Logging.ILogger<TechniquesViewModel>>(),
+            preferences ?? new InMemoryUserPreferencesStore());
     }
 }
 
@@ -335,12 +345,13 @@ file static class TopViewModelTestHelpers
             Options.Create(new AppSettings()),
             NullLogger<QuoteItemCommandsFactory>.Instance);
 
-    public static LanguageContentReloader CreateLanguageReloader(IQuotService quotService) =>
+    public static LanguageContentReloader CreateLanguageReloader(IQuotService quotService, IUserPreferencesStore preferences) =>
         new(
             quotService,
             new CachedQuotContentProvider(Mock.Of<IQuotContentProvider>()),
             new CachedTestCatalogProvider(
                 Mock.Of<ITestCatalogProvider>()),
             new CachedTechniqueCatalogProvider(Mock.Of<ITechniqueCatalogProvider>()),
-            Mock.Of<ITechniqueCatalogService>());
+            Mock.Of<ITechniqueCatalogService>(),
+            preferences);
 }

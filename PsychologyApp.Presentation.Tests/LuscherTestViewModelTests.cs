@@ -24,7 +24,9 @@ public sealed class LuscherTestViewModelTests
         var navigation = new Mock<INavigation>();
         LuscherTestViewModel viewModel = new(
             LuscherMode.Brief,
-            new TestNavigationService(navigation.Object));
+            new TestNavigationService(navigation.Object),
+            null,
+            new LuscherResultService());
 
         InvokeColorHandler(viewModel, ColourValue.Red);
         InvokeColorHandler(viewModel, ColourValue.Blue);
@@ -41,7 +43,9 @@ public sealed class LuscherTestViewModelTests
         var navigation = new Mock<INavigation>();
         LuscherTestViewModel viewModel = new(
             LuscherMode.Standard,
-            new TestNavigationService(navigation.Object));
+            new TestNavigationService(navigation.Object),
+            null,
+            new LuscherResultService());
 
         ColourValue[] colors =
         [
@@ -130,7 +134,9 @@ public sealed class LuscherTestViewModelTests
         var navigation = new Mock<INavigation>();
         LuscherTestViewModel viewModel = new(
             LuscherMode.Brief,
-            new TestNavigationService(navigation.Object));
+            new TestNavigationService(navigation.Object),
+            null,
+            new LuscherResultService());
 
         Assert.Equal(AppStrings.TestsStepOf(1, 2), viewModel.BriefStepLabel);
 
