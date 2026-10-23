@@ -1,0 +1,273 @@
+{
+  "id": "Grounding",
+  "title": "Anclaje 5-4-3-2-1",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "Estoy aquí. Vamos a volver al momento presente a través de tus sentidos. Lleva unos tres minutos.",
+        "Volvamos juntos y con calma al presente. Tres minutos, paso a paso."
+      ],
+      "next": "intro_breath"
+    },
+    {
+      "id": "intro_breath",
+      "kind": "say",
+      "text": [
+        "Primero, haz una exhalación lenta, más larga que la inhalación. No hace falta nada más."
+      ],
+      "next": "ask_before"
+    },
+    {
+      "id": "ask_before",
+      "kind": "askRating",
+      "text": [
+        "¿Qué tan fuerte es tu ansiedad o tensión ahora mismo? De 0 a 10.",
+        "Valora tu tensión ahora: 0 es calma, 10 es muy difícil."
+      ],
+      "capture": "rating_before",
+      "next": "step_see"
+    },
+    {
+      "id": "step_see",
+      "kind": "say",
+      "text": [
+        "Bien. Empecemos. Mira a tu alrededor, sin prisa."
+      ],
+      "next": "ask_see"
+    },
+    {
+      "id": "ask_see",
+      "kind": "askText",
+      "text": [
+        "Nombra 5 cosas que ves. Separadas por comas está bien."
+      ],
+      "hint": "Por ejemplo: ventana, taza, libro, lámpara, mi mano",
+      "capture": "see",
+      "suggestions": [
+        "Ventana",
+        "Mesa",
+        "Teléfono",
+        "Ordenador",
+        "Portátil",
+        "Pantalla",
+        "Teclado",
+        "Taza",
+        "Lámpara",
+        "Mano",
+        "Puerta",
+        "Libro",
+        "Silla",
+        "Pared",
+        "Cuadro",
+        "Planta",
+        "Reloj",
+        "Armario",
+        "Cielo",
+        "Coche"
+      ],
+      "next": "react_see"
+    },
+    {
+      "id": "react_see",
+      "kind": "say",
+      "text": [
+        "Ves: {see}. Muy bien. Exhala.",
+        "{see}. Bien, puedes ver todo eso ahora mismo. Exhala."
+      ],
+      "next": "ask_touch"
+    },
+    {
+      "id": "ask_touch",
+      "kind": "askText",
+      "text": [
+        "Ahora 4 cosas que sientes con el cuerpo: lo que te sostiene, la ropa sobre la piel, el aire."
+      ],
+      "hint": "Por ejemplo: silla, suelo, tela, aire fresco",
+      "capture": "touch",
+      "suggestions": [
+        "Silla",
+        "El suelo bajo mis pies",
+        "La ropa",
+        "El fresco",
+        "El calor",
+        "El teléfono en la mano",
+        "El respaldo de la silla",
+        "La tela sobre la piel",
+        "La respiración en el pecho",
+        "El viento",
+        "El ratón",
+        "Las llaves",
+        "La almohada",
+        "El reloj en la muñeca"
+      ],
+      "next": "react_touch"
+    },
+    {
+      "id": "react_touch",
+      "kind": "say",
+      "text": [
+        "Sientes: {touch}. Tu cuerpo está aquí y tiene apoyo."
+      ],
+      "next": "ask_hear"
+    },
+    {
+      "id": "ask_hear",
+      "kind": "askText",
+      "text": [
+        "Escucha. Nombra 3 sonidos a tu alrededor, incluso los más suaves. Puedes oír tu propia respiración."
+      ],
+      "hint": "Por ejemplo: reloj, calle, respiración",
+      "capture": "hear",
+      "suggestions": [
+        "La calle",
+        "Reloj",
+        "La respiración",
+        "Voces",
+        "La nevera",
+        "El viento",
+        "El silencio",
+        "Ordenador",
+        "Los coches",
+        "Los pájaros",
+        "La música",
+        "El aire acondicionado",
+        "Pasos",
+        "La lluvia"
+      ],
+      "next": "react_hear"
+    },
+    {
+      "id": "react_hear",
+      "kind": "say",
+      "text": [
+        "Oyes: {hear}. Fíjate en que los sonidos simplemente existen y puedes distinguirlos."
+      ],
+      "next": "ask_smell"
+    },
+    {
+      "id": "ask_smell",
+      "kind": "askText",
+      "text": [
+        "Ahora 2 olores. Si ahora no hueles nada, recuerda tus favoritos."
+      ],
+      "hint": "Por ejemplo: café, aire fresco",
+      "capture": "smell",
+      "suggestions": [
+        "Café",
+        "Aire fresco",
+        "Jabón",
+        "Comida",
+        "Perfume",
+        "Casi nada",
+        "Té",
+        "Pan",
+        "Libros",
+        "Flores",
+        "Crema de manos",
+        "Madera"
+      ],
+      "next": "ask_taste"
+    },
+    {
+      "id": "ask_taste",
+      "kind": "askText",
+      "text": [
+        "Y el último: 1 sabor o una sensación agradable. Por ejemplo, el agua en la boca o una tela suave bajo los dedos."
+      ],
+      "hint": "Por ejemplo: el sabor del agua",
+      "capture": "taste",
+      "suggestions": [
+        "Agua",
+        "Té",
+        "Una tela suave",
+        "Las palmas calientes",
+        "La boca fresca",
+        "Café",
+        "Un chicle de menta",
+        "Chocolate",
+        "Una manzana",
+        "Una manta calentita"
+      ],
+      "next": "wrap"
+    },
+    {
+      "id": "wrap",
+      "kind": "say",
+      "text": [
+        "Has recorrido los cinco sentidos. Haz una inhalación y una exhalación lentas más.",
+        "Listo: los cinco sentidos completos. Una respiración tranquila más."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "¿Cómo está la tensión ahora? De 0 a 10.",
+        "Valora tu tensión una vez más, de 0 a 10."
+      ],
+      "capture": "rating_after",
+      "routes": [
+        {
+          "below": "rating_before",
+          "next": "end_better"
+        },
+        {
+          "same": "rating_before",
+          "next": "end_same"
+        },
+        {
+          "next": "end_worse"
+        }
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [
+        "Antes {rating_before}, ahora {rating_after}. Tu atención ha vuelto al presente. Puedes repetirlo en cualquier lugar: el 5-4-3-2-1 siempre va contigo."
+      ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [
+        "La tensión sigue en {rating_after}. Pasa: inténtalo otra vez más despacio, o pon las manos bajo agua tibia durante un minuto."
+      ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [
+        "La tensión subió (antes {rating_before}, ahora {rating_after}), y no es culpa tuya. Si es muy fuerte o no se pasa, acude a alguien cercano o a un profesional. Si tu vida está en peligro, llama al número de emergencias."
+      ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [
+        "Siento mucho que estés sufriendo tanto ahora mismo. Lo que has escrito importa más que cualquier técnica, así que detengo el ejercicio."
+      ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [
+        "Por favor, habla ahora mismo con una persona real. Si tu vida puede estar en peligro, llama al número de emergencias (112 en España y la UE, 911 en México; en España, el 024 atiende la conducta suicida). Si hay alguien cerca, dile que no estás bien."
+      ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [
+        "Soy una aplicación, no un profesional, y no puedo protegerte. Mereces apoyo. Por favor, búscalo."
+      ]
+    }
+  ]
+}

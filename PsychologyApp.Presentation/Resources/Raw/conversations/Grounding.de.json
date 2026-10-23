@@ -1,0 +1,273 @@
+{
+  "id": "Grounding",
+  "title": "Erdung 5-4-3-2-1",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "Ich bin da. Wir kommen über deine Sinne in den gegenwärtigen Moment zurück. Das dauert etwa drei Minuten.",
+        "Lass uns gemeinsam ruhig in die Gegenwart zurückkehren. Drei Minuten, Schritt für Schritt."
+      ],
+      "next": "intro_breath"
+    },
+    {
+      "id": "intro_breath",
+      "kind": "say",
+      "text": [
+        "Atme zuerst einmal langsam aus, länger als du einatmest. Mehr braucht es nicht."
+      ],
+      "next": "ask_before"
+    },
+    {
+      "id": "ask_before",
+      "kind": "askRating",
+      "text": [
+        "Wie stark ist deine Angst oder Anspannung gerade? Von 0 bis 10.",
+        "Bewerte deine Anspannung jetzt: 0 ist ruhig, 10 ist sehr schwer."
+      ],
+      "capture": "rating_before",
+      "next": "step_see"
+    },
+    {
+      "id": "step_see",
+      "kind": "say",
+      "text": [
+        "Gut. Lass uns anfangen. Schau dich um, ohne Eile."
+      ],
+      "next": "ask_see"
+    },
+    {
+      "id": "ask_see",
+      "kind": "askText",
+      "text": [
+        "Nenne 5 Dinge, die du siehst. Mit Kommas getrennt ist gut."
+      ],
+      "hint": "Zum Beispiel: Fenster, Tasse, Buch, Lampe, meine Hand",
+      "capture": "see",
+      "suggestions": [
+        "Fenster",
+        "Tisch",
+        "Handy",
+        "Computer",
+        "Laptop",
+        "Bildschirm",
+        "Tastatur",
+        "Tasse",
+        "Lampe",
+        "Hand",
+        "Tür",
+        "Buch",
+        "Stuhl",
+        "Wand",
+        "Bild",
+        "Pflanze",
+        "Uhr",
+        "Schrank",
+        "Himmel",
+        "Auto"
+      ],
+      "next": "react_see"
+    },
+    {
+      "id": "react_see",
+      "kind": "say",
+      "text": [
+        "Du siehst: {see}. Gut so. Atme aus.",
+        "{see}. Gut, das alles siehst du gerade. Atme aus."
+      ],
+      "next": "ask_touch"
+    },
+    {
+      "id": "ask_touch",
+      "kind": "askText",
+      "text": [
+        "Jetzt 4 Dinge, die du mit dem Körper spürst: was dich trägt, Kleidung auf der Haut, die Luft."
+      ],
+      "hint": "Zum Beispiel: Stuhl, Boden, Stoff, kühle Luft",
+      "capture": "touch",
+      "suggestions": [
+        "Stuhl",
+        "Boden unter den Füßen",
+        "Kleidung",
+        "Kühle",
+        "Wärme",
+        "Handy in der Hand",
+        "Stuhllehne",
+        "Stoff auf der Haut",
+        "Atem in der Brust",
+        "Wind",
+        "Computermaus",
+        "Schlüssel",
+        "Kissen",
+        "Uhr am Handgelenk"
+      ],
+      "next": "react_touch"
+    },
+    {
+      "id": "react_touch",
+      "kind": "say",
+      "text": [
+        "Du spürst: {touch}. Dein Körper ist hier, und er wird getragen."
+      ],
+      "next": "ask_hear"
+    },
+    {
+      "id": "ask_hear",
+      "kind": "askText",
+      "text": [
+        "Hör hin. Nenne 3 Geräusche um dich herum, auch die leisesten. Du kannst deinen eigenen Atem hören."
+      ],
+      "hint": "Zum Beispiel: Uhr, Straße, Atmen",
+      "capture": "hear",
+      "suggestions": [
+        "Straße",
+        "Uhr",
+        "Atmen",
+        "Stimmen",
+        "Kühlschrank",
+        "Wind",
+        "Stille",
+        "Computer",
+        "Autos",
+        "Vögel",
+        "Musik",
+        "Klimaanlage",
+        "Schritte",
+        "Regen"
+      ],
+      "next": "react_hear"
+    },
+    {
+      "id": "react_hear",
+      "kind": "say",
+      "text": [
+        "Du hörst: {hear}. Bemerke, dass die Geräusche einfach da sind und du sie unterscheiden kannst."
+      ],
+      "next": "ask_smell"
+    },
+    {
+      "id": "ask_smell",
+      "kind": "askText",
+      "text": [
+        "Jetzt 2 Gerüche. Wenn du gerade nichts riechst, erinnere dich an deine Lieblingsgerüche."
+      ],
+      "hint": "Zum Beispiel: Kaffee, frische Luft",
+      "capture": "smell",
+      "suggestions": [
+        "Kaffee",
+        "Frische Luft",
+        "Seife",
+        "Essen",
+        "Parfüm",
+        "Fast nichts",
+        "Tee",
+        "Brot",
+        "Bücher",
+        "Blumen",
+        "Handcreme",
+        "Holz"
+      ],
+      "next": "ask_taste"
+    },
+    {
+      "id": "ask_taste",
+      "kind": "askText",
+      "text": [
+        "Und zum Schluss: 1 Geschmack oder eine angenehme Empfindung. Zum Beispiel Wasser im Mund oder weicher Stoff unter den Fingern."
+      ],
+      "hint": "Zum Beispiel: der Geschmack von Wasser",
+      "capture": "taste",
+      "suggestions": [
+        "Wasser",
+        "Tee",
+        "Weicher Stoff",
+        "Warme Handflächen",
+        "Frischer Mund",
+        "Kaffee",
+        "Minzkaugummi",
+        "Schokolade",
+        "Ein Apfel",
+        "Eine warme Decke"
+      ],
+      "next": "wrap"
+    },
+    {
+      "id": "wrap",
+      "kind": "say",
+      "text": [
+        "Du bist alle fünf Sinne durchgegangen. Atme noch einmal langsam ein und aus.",
+        "Geschafft: alle fünf Sinne. Noch ein ruhiger Atemzug ein und aus."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "Wie ist die Anspannung jetzt? Von 0 bis 10.",
+        "Bewerte deine Anspannung noch einmal, von 0 bis 10."
+      ],
+      "capture": "rating_after",
+      "routes": [
+        {
+          "below": "rating_before",
+          "next": "end_better"
+        },
+        {
+          "same": "rating_before",
+          "next": "end_same"
+        },
+        {
+          "next": "end_worse"
+        }
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [
+        "Vorher {rating_before}, jetzt {rating_after}. Deine Aufmerksamkeit ist zurück in der Gegenwart. Das kannst du überall wiederholen: 5-4-3-2-1 hast du immer dabei."
+      ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [
+        "Die Anspannung ist bei {rating_after} geblieben. Das kommt vor: Versuch es langsamer noch einmal oder lass eine Minute lang warmes Wasser über deine Hände laufen."
+      ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [
+        "Die Anspannung ist gestiegen (vorher {rating_before}, jetzt {rating_after}), und das ist nicht deine Schuld. Wenn es sehr stark ist oder nicht vergeht, wende dich an einen nahen Menschen oder eine Fachperson. Wenn dein Leben in Gefahr ist, ruf den Notruf an."
+      ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [
+        "Es tut mir sehr leid, dass du gerade so viel Schmerz hast. Was du geschrieben hast, ist wichtiger als jede Technik, deshalb beende ich die Übung."
+      ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [
+        "Bitte sprich jetzt mit einem echten Menschen. Wenn dein Leben in Gefahr sein könnte, ruf den Notruf an (112; in Deutschland erreichst du die TelefonSeelsorge unter 0800 111 0 111). Wenn jemand in der Nähe ist, sag ihm, dass es dir nicht gut geht."
+      ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [
+        "Ich bin eine App, keine Fachperson, und ich kann dich nicht schützen. Du verdienst Unterstützung. Bitte hol sie dir."
+      ]
+    }
+  ]
+}

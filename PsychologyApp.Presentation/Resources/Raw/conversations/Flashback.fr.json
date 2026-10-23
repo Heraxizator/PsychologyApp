@@ -1,0 +1,212 @@
+{
+  "id": "Flashback",
+  "title": "Un souvenir a pris le dessus",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "Je suis là avec vous. Ce qui se passe en ce moment est un souvenir. Il est très fort, mais il appartient au passé. Ensemble, nous allons revenir au présent."
+      ],
+      "next": "ask_before"
+    },
+    {
+      "id": "ask_before",
+      "kind": "askRating",
+      "text": [
+        "Quelle est son intensité en ce moment ? De 0 à 10."
+      ],
+      "capture": "rating_before",
+      "next": "say_now"
+    },
+    {
+      "id": "say_now",
+      "kind": "say",
+      "text": [
+        "Dites-vous, à voix haute si vous pouvez : « C'est un souvenir. C'était avant, et maintenant c'est aujourd'hui. Je suis ici. »"
+      ],
+      "next": "ask_where"
+    },
+    {
+      "id": "ask_where",
+      "kind": "askText",
+      "text": [
+        "Où êtes-vous maintenant, et quel moment de la journée est-il ?"
+      ],
+      "hint": "Par exemple : à la maison, le soir",
+      "capture": "now",
+      "suggestions": [
+        "À la maison",
+        "Au travail",
+        "Dehors",
+        "Dans les transports",
+        "Chez quelqu'un",
+        "Matin",
+        "Après-midi",
+        "Soir",
+        "Nuit"
+      ],
+      "next": "react_where"
+    },
+    {
+      "id": "react_where",
+      "kind": "say",
+      "text": [
+        "Maintenant : {now}. C'est le présent. Ce qui est revenu appartient à un autre temps."
+      ],
+      "next": "say_feet"
+    },
+    {
+      "id": "say_feet",
+      "kind": "say",
+      "text": [
+        "Posez les pieds au sol et appuyez. Sentez l'appui. Serrez les poings quelques secondes, puis relâchez."
+      ],
+      "next": "ask_see"
+    },
+    {
+      "id": "ask_see",
+      "kind": "askText",
+      "text": [
+        "Nommez trois choses que vous voyez autour de vous."
+      ],
+      "hint": "Par exemple : fenêtre, tasse, lampe",
+      "capture": "see",
+      "suggestions": [
+        "Fenêtre",
+        "Table",
+        "Téléphone",
+        "Tasse",
+        "Lampe",
+        "Porte",
+        "Chaise",
+        "Mur",
+        "Tableau",
+        "Plante",
+        "Horloge",
+        "Ciel"
+      ],
+      "next": "react_see"
+    },
+    {
+      "id": "react_see",
+      "kind": "say",
+      "text": [
+        "{see}. Voilà ce qui vous entoure maintenant."
+      ],
+      "next": "say_breath"
+    },
+    {
+      "id": "say_breath",
+      "kind": "say",
+      "text": [
+        "Faites cinq expirations lentes, plus longues que l'inspiration. Si vous pouvez, passez-vous de l'eau froide sur le visage ou tenez quelque chose de froid."
+      ],
+      "next": "ask_safe"
+    },
+    {
+      "id": "ask_safe",
+      "kind": "askChoice",
+      "text": [
+        "Êtes-vous en sécurité en ce moment, là où vous êtes ?"
+      ],
+      "choices": [
+        {
+          "label": "Oui",
+          "next": "ask_after"
+        },
+        {
+          "label": "Je ne suis pas sûr·e",
+          "next": "unsure"
+        },
+        {
+          "label": "Non",
+          "next": "not_safe"
+        }
+      ]
+    },
+    {
+      "id": "unsure",
+      "kind": "say",
+      "text": [
+        "Regardez encore une fois autour de vous. Ce qui s'est passé à l'époque est-il ici maintenant ? Le plus souvent, non. Le corps réagit comme si le danger était proche, mais il est dans le passé."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "not_safe",
+      "kind": "say",
+      "text": [
+        "Si vous êtes en danger en ce moment, appelez le numéro d'urgence (112 en Europe) et allez dans un endroit sûr. Si le danger est dans le souvenir et pas autour de vous, revenez à ce que vous voyez et à ce que vous sentez sous vos pieds."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "Quelle est son intensité maintenant ? De 0 à 10."
+      ],
+      "capture": "rating_after",
+      "routes": [
+        {
+          "below": "rating_before",
+          "next": "end_better"
+        },
+        {
+          "same": "rating_before",
+          "next": "end_same"
+        },
+        {
+          "next": "end_worse"
+        }
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [
+        "C'était {rating_before}, maintenant {rating_after}. Vous êtes revenu·e au présent. Les flash-back après un traumatisme sont une réaction courante, et ils se soignent bien. Par où commencer : l'article « Après un traumatisme » dans l'onglet Articles."
+      ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [
+        "C'est {rating_after} maintenant. Refaites les étapes plus lentement et passez-vous de l'eau froide sur le visage. Si les flash-back sont fréquents, il vaut la peine de consulter un spécialiste du traumatisme : cela se soigne bien."
+      ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [
+        "C'est devenu plus difficile (c'était {rating_before}, maintenant {rating_after}), et ce n'est pas de votre faute. Appelez un proche ou une ligne d'écoute. Si votre vie est en danger, appelez le numéro d'urgence."
+      ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [
+        "Je suis vraiment désolé que vous souffriez autant en ce moment. Ce que vous avez écrit compte plus que n'importe quelle technique, alors j'arrête l'exercice."
+      ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [
+        "Parlez à une vraie personne dès maintenant. Si votre vie est peut-être en danger, appelez le numéro d'urgence (112 en Europe ; en France, le 3114 pour la prévention du suicide). Si quelqu'un est près de vous, dites-lui que ça ne va pas."
+      ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [
+        "Je suis une application, pas un professionnel, et je ne peux pas assurer votre sécurité. Vous méritez du soutien. N'hésitez pas à en demander."
+      ]
+    }
+  ]
+}

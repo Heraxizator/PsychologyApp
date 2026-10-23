@@ -1,0 +1,195 @@
+{
+  "id": "Spin",
+  "title": "Spin",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "O \"Spin\" ajuda a reduzir a carga de um episódio que não sai da cabeça. Uns poucos minutos, sem respostas longas.",
+        "Vamos afrouxar um episódio que fica girando na sua cabeça. Respostas curtas ou as sugestões já bastam."
+      ],
+      "next": "ask_episode"
+    },
+    {
+      "id": "ask_episode",
+      "kind": "askText",
+      "text": [
+        "Que episódio está incomodando você? Poucas palavras bastam.",
+        "Que episódio fica voltando? Em poucas palavras, do seu jeito."
+      ],
+      "hint": "Ex.: a conversa de ontem que não sai da cabeça",
+      "capture": "f0",
+      "recent": true,
+      "suggestions": [
+        "Uma briga com alguém próximo",
+        "Algo no trabalho",
+        "Um conflito com meu chefe",
+        "Os estudos ou uma prova",
+        "A saúde",
+        "Dinheiro",
+        "A solidão",
+        "Um fracasso",
+        "Um término",
+        "A relação com meus pais",
+        "Os filhos",
+        "Uma mudança de casa",
+        "O futuro",
+        "Críticas a mim"
+      ],
+      "next": "ask_feeling"
+    },
+    {
+      "id": "ask_feeling",
+      "kind": "askText",
+      "text": [
+        "Quando você lembra de \"{f0}\", qual é o sentimento principal? Escolha na paleta ou escreva.",
+        "O que você sente com mais força quando pensa em \"{f0}\"?"
+      ],
+      "hint": "Mágoa, medo, raiva…",
+      "capture": "f1",
+      "emotions": true,
+      "next": "ask_rating"
+    },
+    {
+      "id": "ask_rating",
+      "kind": "askRating",
+      "text": [
+        "Qual a intensidade desse sentimento agora? De 0 a 10.",
+        "Avalie o sentimento agora: 0 é quando quase não mexe com você, 10 é quando toma conta."
+      ],
+      "capture": "f2",
+      "routes": [
+        {
+          "max": 2,
+          "next": "end_low"
+        },
+        {
+          "next": "replay_intro"
+        }
+      ]
+    },
+    {
+      "id": "replay_intro",
+      "kind": "say",
+      "text": [
+        "Agora passe o episódio na sua mente mais uma vez — devagar, como um filme que você assiste de lado. Sem julgar, só assista até o fim. Depois solte o ar longamente.",
+        "Reveja o episódio do começo ao fim, sem pressa, como se estivesse sentado na plateia. Assista até o fim e solte o ar."
+      ],
+      "next": "replay_ready"
+    },
+    {
+      "id": "replay_ready",
+      "kind": "askChoice",
+      "text": [
+        "Terminou de assistir?"
+      ],
+      "choices": [
+        {
+          "label": "Sim",
+          "next": "ask_after"
+        },
+        {
+          "label": "Mais uma vez",
+          "next": "replay_again"
+        },
+        {
+          "label": "Preciso de uma pausa",
+          "next": "end_pause"
+        }
+      ]
+    },
+    {
+      "id": "replay_again",
+      "kind": "say",
+      "text": [
+        "Tudo bem, mais uma vez. Do começo ao fim, devagar. Perceba quais detalhes já perderam a cor.",
+        "Mais uma rodada. Sem pressa, perceba o que já não prende você como antes."
+      ],
+      "next": "replay_ready"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "E agora: qual a intensidade do sentimento? De 0 a 10.",
+        "Avalie de novo: qual a intensidade do sentimento agora?"
+      ],
+      "capture": "rating_after",
+      "routes": [
+        {
+          "below": "f2",
+          "next": "end_better"
+        },
+        {
+          "same": "f2",
+          "next": "end_same"
+        },
+        {
+          "next": "end_worse"
+        }
+      ]
+    },
+    {
+      "id": "end_low",
+      "kind": "end",
+      "text": [
+        "A carga está pequena agora ({f2}). Isso é um bom sinal: o episódio já não prende você com tanta força. Se ele voltar, você pode refazer o \"Spin\"."
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [
+        "Antes {f2}, agora {rating_after}. A carga está diminuindo. Se o episódio voltar, repita a prática amanhã — costuma ficar mais fácil a cada vez."
+      ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [
+        "A intensidade continuou igual ({rating_after}). É normal: às vezes são precisas algumas rodadas em dias diferentes. Você já fez algo importante — olhou de frente para isso."
+      ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [
+        "Ficou mais forte: antes {f2}, agora {rating_after}. Isso acontece quando se toca em algo doloroso, e não é culpa sua. Solte o ar devagar três vezes. Se o peso continuar, converse com alguém próximo ou com um profissional."
+      ]
+    },
+    {
+      "id": "end_pause",
+      "kind": "end",
+      "pause": true,
+      "text": [
+        "Tudo bem, vamos parar por aqui. Faça uma pausa e beba um pouco de água. Você pode voltar quando quiser."
+      ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [
+        "Sinto muito que você esteja sofrendo tanto agora. O que você escreveu importa mais do que qualquer técnica, então vou parar o exercício."
+      ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [
+        "Por favor, fale agora com uma pessoa de verdade. Se sua vida pode estar em risco, ligue para a emergência (no Brasil, SAMU 192; o CVV atende pelo 188, 24 horas; em Portugal, 112). Você encontra linhas de apoio perto de você em findahelpline.com. Se houver alguém por perto, diga que você não está bem."
+      ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [
+        "Sou um aplicativo, não um profissional, e não consigo garantir sua segurança. Você merece apoio. Por favor, procure ajuda."
+      ]
+    }
+  ]
+}

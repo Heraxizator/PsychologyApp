@@ -1,0 +1,212 @@
+{
+  "id": "Flashback",
+  "title": "Un recuerdo me ha desbordado",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "Estoy aquí contigo. Lo que está pasando ahora es un recuerdo. Es muy fuerte, pero pertenece al pasado. Ahora vamos a volver juntos al presente."
+      ],
+      "next": "ask_before"
+    },
+    {
+      "id": "ask_before",
+      "kind": "askRating",
+      "text": [
+        "¿Qué tan fuerte es ahora mismo? De 0 a 10."
+      ],
+      "capture": "rating_before",
+      "next": "say_now"
+    },
+    {
+      "id": "say_now",
+      "kind": "say",
+      "text": [
+        "Dite, en voz alta si puedes: «Esto es un recuerdo. Eso fue entonces, y ahora es hoy. Estoy aquí»."
+      ],
+      "next": "ask_where"
+    },
+    {
+      "id": "ask_where",
+      "kind": "askText",
+      "text": [
+        "¿Dónde estás ahora y qué momento del día es?"
+      ],
+      "hint": "Por ejemplo: en casa, por la noche",
+      "capture": "now",
+      "suggestions": [
+        "En casa",
+        "En el trabajo",
+        "En la calle",
+        "En el transporte",
+        "De visita",
+        "Mañana",
+        "Tarde",
+        "Anochecer",
+        "Noche"
+      ],
+      "next": "react_where"
+    },
+    {
+      "id": "react_where",
+      "kind": "say",
+      "text": [
+        "Ahora: {now}. Esto es el presente. Lo que volvió pertenece a otro tiempo."
+      ],
+      "next": "say_feet"
+    },
+    {
+      "id": "say_feet",
+      "kind": "say",
+      "text": [
+        "Apoya los pies en el suelo y presiona. Siente el apoyo. Aprieta los puños unos segundos y suéltalos."
+      ],
+      "next": "ask_see"
+    },
+    {
+      "id": "ask_see",
+      "kind": "askText",
+      "text": [
+        "Nombra tres cosas que ves a tu alrededor."
+      ],
+      "hint": "Por ejemplo: ventana, taza, lámpara",
+      "capture": "see",
+      "suggestions": [
+        "Ventana",
+        "Mesa",
+        "Teléfono",
+        "Taza",
+        "Lámpara",
+        "Puerta",
+        "Silla",
+        "Pared",
+        "Cuadro",
+        "Planta",
+        "Reloj",
+        "Cielo"
+      ],
+      "next": "react_see"
+    },
+    {
+      "id": "react_see",
+      "kind": "say",
+      "text": [
+        "{see}. Eso es lo que te rodea ahora."
+      ],
+      "next": "say_breath"
+    },
+    {
+      "id": "say_breath",
+      "kind": "say",
+      "text": [
+        "Haz cinco exhalaciones lentas, más largas que la inhalación. Si puedes, échate agua fría en la cara o sujeta algo frío."
+      ],
+      "next": "ask_safe"
+    },
+    {
+      "id": "ask_safe",
+      "kind": "askChoice",
+      "text": [
+        "¿Estás a salvo ahora mismo, donde estás?"
+      ],
+      "choices": [
+        {
+          "label": "Sí",
+          "next": "ask_after"
+        },
+        {
+          "label": "No estoy seguro",
+          "next": "unsure"
+        },
+        {
+          "label": "No",
+          "next": "not_safe"
+        }
+      ]
+    },
+    {
+      "id": "unsure",
+      "kind": "say",
+      "text": [
+        "Mira a tu alrededor una vez más. ¿Lo que pasó entonces está aquí ahora? Casi siempre, no. El cuerpo reacciona como si el peligro estuviera cerca, pero está en el pasado."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "not_safe",
+      "kind": "say",
+      "text": [
+        "Si estás en peligro ahora mismo, llama al número de emergencias (112 en España y la UE, 911 en México) y ve a un lugar seguro. Si el peligro está en el recuerdo y no a tu alrededor, vuelve a lo que ves y a lo que sientes bajo los pies."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "¿Qué tan fuerte es ahora? De 0 a 10."
+      ],
+      "capture": "rating_after",
+      "routes": [
+        {
+          "below": "rating_before",
+          "next": "end_better"
+        },
+        {
+          "same": "rating_before",
+          "next": "end_same"
+        },
+        {
+          "next": "end_worse"
+        }
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [
+        "Antes {rating_before}, ahora {rating_after}. Has vuelto al presente. Los recuerdos intrusivos tras un trauma son una reacción frecuente y responden bien al tratamiento. Por dónde empezar está en el artículo «Después de un trauma», en la sección Artículos."
+      ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [
+        "Ahora es {rating_after}. Repite los pasos más despacio y échate agua fría en la cara. Si los recuerdos intrusivos son frecuentes, vale la pena acudir a un especialista en trauma: responde bien al tratamiento."
+      ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [
+        "Se ha hecho más difícil (antes {rating_before}, ahora {rating_after}), y no es culpa tuya. Llama a alguien cercano o a una línea de ayuda. Si tu vida está en peligro, llama al número de emergencias."
+      ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [
+        "Siento mucho que estés sufriendo tanto ahora mismo. Lo que has escrito importa más que cualquier técnica, así que detengo el ejercicio."
+      ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [
+        "Por favor, habla ahora mismo con una persona real. Si tu vida puede estar en peligro, llama al número de emergencias (112 en España y la UE, 911 en México; en España, el 024 atiende la conducta suicida). Si hay alguien cerca, dile que no estás bien."
+      ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [
+        "Soy una aplicación, no un profesional, y no puedo protegerte. Mereces apoyo. Por favor, búscalo."
+      ]
+    }
+  ]
+}

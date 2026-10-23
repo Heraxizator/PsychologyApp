@@ -1,0 +1,212 @@
+{
+  "id": "Flashback",
+  "title": "Eine Erinnerung hat mich überwältigt",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "Ich bin bei dir. Was gerade passiert, ist eine Erinnerung. Sie ist sehr stark, aber sie gehört zur Vergangenheit. Gemeinsam kommen wir jetzt in die Gegenwart zurück."
+      ],
+      "next": "ask_before"
+    },
+    {
+      "id": "ask_before",
+      "kind": "askRating",
+      "text": [
+        "Wie stark ist es gerade? Von 0 bis 10."
+      ],
+      "capture": "rating_before",
+      "next": "say_now"
+    },
+    {
+      "id": "say_now",
+      "kind": "say",
+      "text": [
+        "Sag dir, laut, wenn du kannst: „Das ist eine Erinnerung. Das war damals, und jetzt ist heute. Ich bin hier.“"
+      ],
+      "next": "ask_where"
+    },
+    {
+      "id": "ask_where",
+      "kind": "askText",
+      "text": [
+        "Wo bist du jetzt, und welche Tageszeit ist es?"
+      ],
+      "hint": "Zum Beispiel: zu Hause, abends",
+      "capture": "now",
+      "suggestions": [
+        "Zu Hause",
+        "Auf der Arbeit",
+        "Draußen",
+        "Unterwegs in Bus oder Bahn",
+        "Zu Besuch",
+        "Morgen",
+        "Nachmittag",
+        "Abend",
+        "Nacht"
+      ],
+      "next": "react_where"
+    },
+    {
+      "id": "react_where",
+      "kind": "say",
+      "text": [
+        "Jetzt: {now}. Das ist die Gegenwart. Was zurückgekommen ist, gehört zu einer anderen Zeit."
+      ],
+      "next": "say_feet"
+    },
+    {
+      "id": "say_feet",
+      "kind": "say",
+      "text": [
+        "Stell die Füße auf den Boden und drück sie hinein. Spür den Halt. Ball die Fäuste ein paar Sekunden lang und lass los."
+      ],
+      "next": "ask_see"
+    },
+    {
+      "id": "ask_see",
+      "kind": "askText",
+      "text": [
+        "Nenne drei Dinge, die du um dich herum siehst."
+      ],
+      "hint": "Zum Beispiel: Fenster, Tasse, Lampe",
+      "capture": "see",
+      "suggestions": [
+        "Fenster",
+        "Tisch",
+        "Handy",
+        "Tasse",
+        "Lampe",
+        "Tür",
+        "Stuhl",
+        "Wand",
+        "Bild",
+        "Pflanze",
+        "Uhr",
+        "Himmel"
+      ],
+      "next": "react_see"
+    },
+    {
+      "id": "react_see",
+      "kind": "say",
+      "text": [
+        "{see}. Das ist es, was jetzt um dich herum ist."
+      ],
+      "next": "say_breath"
+    },
+    {
+      "id": "say_breath",
+      "kind": "say",
+      "text": [
+        "Atme fünfmal langsam aus, länger als ein. Wenn du kannst, spritz dir kaltes Wasser ins Gesicht oder halte etwas Kaltes in der Hand."
+      ],
+      "next": "ask_safe"
+    },
+    {
+      "id": "ask_safe",
+      "kind": "askChoice",
+      "text": [
+        "Bist du gerade dort, wo du bist, in Sicherheit?"
+      ],
+      "choices": [
+        {
+          "label": "Ja",
+          "next": "ask_after"
+        },
+        {
+          "label": "Ich bin nicht sicher",
+          "next": "unsure"
+        },
+        {
+          "label": "Nein",
+          "next": "not_safe"
+        }
+      ]
+    },
+    {
+      "id": "unsure",
+      "kind": "say",
+      "text": [
+        "Schau dich noch einmal um. Ist das, was damals passiert ist, jetzt hier? Meistens nicht. Der Körper reagiert, als wäre die Gefahr nah, aber sie liegt in der Vergangenheit."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "not_safe",
+      "kind": "say",
+      "text": [
+        "Wenn du gerade in Gefahr bist, ruf den Notruf an (112) und geh an einen sicheren Ort. Wenn die Gefahr in der Erinnerung ist und nicht um dich herum, kehr zu dem zurück, was du siehst und was du unter deinen Füßen spürst."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "Wie stark ist es jetzt? Von 0 bis 10."
+      ],
+      "capture": "rating_after",
+      "routes": [
+        {
+          "below": "rating_before",
+          "next": "end_better"
+        },
+        {
+          "same": "rating_before",
+          "next": "end_same"
+        },
+        {
+          "next": "end_worse"
+        }
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [
+        "Vorher {rating_before}, jetzt {rating_after}. Du bist in die Gegenwart zurückgekommen. Flashbacks nach einem Trauma sind eine häufige Reaktion und lassen sich gut behandeln. Wo du anfangen kannst, steht im Artikel „Nach einem Trauma“ im Bereich Artikel."
+      ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [
+        "Jetzt {rating_after}. Geh die Schritte noch einmal langsamer durch und spritz dir kaltes Wasser ins Gesicht. Wenn Flashbacks häufig sind, lohnt sich eine Traumafachperson: Das lässt sich gut behandeln."
+      ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [
+        "Es ist schwerer geworden (vorher {rating_before}, jetzt {rating_after}), und das ist nicht deine Schuld. Ruf einen nahen Menschen oder ein Hilfetelefon an. Wenn dein Leben in Gefahr ist, ruf den Notruf an."
+      ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [
+        "Es tut mir sehr leid, dass du gerade so viel Schmerz hast. Was du geschrieben hast, ist wichtiger als jede Technik, deshalb beende ich die Übung."
+      ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [
+        "Bitte sprich jetzt mit einem echten Menschen. Wenn dein Leben in Gefahr sein könnte, ruf den Notruf an (112; in Deutschland erreichst du die TelefonSeelsorge unter 0800 111 0 111). Wenn jemand in der Nähe ist, sag ihm, dass es dir nicht gut geht."
+      ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [
+        "Ich bin eine App, keine Fachperson, und ich kann dich nicht schützen. Du verdienst Unterstützung. Bitte hol sie dir."
+      ]
+    }
+  ]
+}

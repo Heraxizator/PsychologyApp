@@ -1,0 +1,205 @@
+{
+  "id": "Extend",
+  "title": "Plan B",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "Cuando todo parece depender de un solo resultado, la ansiedad crece. Busquemos algunas salidas alternativas, aunque sean modestas.",
+        "Jugárselo todo a una carta te aprieta. Reunamos juntos algunas alternativas: lleva un par de minutos."
+      ],
+      "next": "ask_problem"
+    },
+    {
+      "id": "ask_problem",
+      "kind": "askText",
+      "text": [
+        "¿Qué te preocupa? ¿Qué pasa si el plan principal no sale bien?",
+        "¿Qué resultado te inquieta? En pocas palabras, con tus palabras."
+      ],
+      "hint": "P. ej., no me darán el puesto",
+      "capture": "f0",
+      "recent": true,
+      "suggestions": [
+        "Una pelea con alguien cercano",
+        "Algo en el trabajo",
+        "Un conflicto con mi jefe",
+        "Los estudios o un examen",
+        "La salud",
+        "El dinero",
+        "La soledad",
+        "Un fracaso",
+        "Una ruptura",
+        "La relación con mis padres",
+        "Los hijos",
+        "Una mudanza",
+        "El futuro",
+        "Las críticas hacia mí"
+      ],
+      "next": "ask_before"
+    },
+    {
+      "id": "ask_before",
+      "kind": "askRating",
+      "text": [
+        "¿Cuánta ansiedad sientes cuando piensas que el plan principal podría fallar? De 0 a 10.",
+        "Valora tu ansiedad ahora: 0 es calma, 10 es mucha ansiedad."
+      ],
+      "capture": "rating_before",
+      "next": "ask_backup_1"
+    },
+    {
+      "id": "ask_backup_1",
+      "kind": "askText",
+      "text": [
+        "Si el plan principal no funciona, ¿cuál es tu primera alternativa? Hasta la más modesta cuenta.",
+        "Imagina que el plan A no salió. ¿Qué podrías hacer en su lugar?"
+      ],
+      "hint": "P. ej., aceptar un proyecto como autónomo",
+      "capture": "f1",
+      "suggestions": [
+        "Pedir ayuda",
+        "Esperar y volver a intentarlo",
+        "Buscar otro camino",
+        "Exigirme menos",
+        "Tomar un descanso",
+        "Hablarlo con alguien cercano",
+        "Ir a un especialista",
+        "Buscar un trabajo extra",
+        "Hacer un curso",
+        "Dividir la tarea en pasos",
+        "Aplazar la decisión",
+        "Empezar por poco"
+      ],
+      "next": "ask_backup_2"
+    },
+    {
+      "id": "ask_backup_2",
+      "kind": "askText",
+      "text": [
+        "Bien: «{f1}». ¿Y una segunda opción?",
+        "«{f1}» ya es una salida. ¿Qué más podrías hacer?"
+      ],
+      "hint": "P. ej., formarme para un puesto parecido",
+      "capture": "f2",
+      "suggestions": [
+        "Pedir ayuda",
+        "Esperar y volver a intentarlo",
+        "Buscar otro camino",
+        "Exigirme menos",
+        "Tomar un descanso",
+        "Hablarlo con alguien cercano",
+        "Ir a un especialista",
+        "Buscar un trabajo extra",
+        "Hacer un curso",
+        "Dividir la tarea en pasos",
+        "Aplazar la decisión",
+        "Empezar por poco"
+      ],
+      "next": "ask_backup_3"
+    },
+    {
+      "id": "ask_backup_3",
+      "kind": "askText",
+      "text": [
+        "Y una tercera, aunque sea la más sencilla.",
+        "Una última opción, la tercera. Puede ser muy pequeña."
+      ],
+      "hint": "P. ej., recortar gastos por un tiempo",
+      "capture": "f3",
+      "suggestions": [
+        "Pedir ayuda",
+        "Esperar y volver a intentarlo",
+        "Buscar otro camino",
+        "Exigirme menos",
+        "Tomar un descanso",
+        "Hablarlo con alguien cercano",
+        "Ir a un especialista",
+        "Buscar un trabajo extra",
+        "Hacer un curso",
+        "Dividir la tarea en pasos",
+        "Aplazar la decisión",
+        "Empezar por poco"
+      ],
+      "next": "summary"
+    },
+    {
+      "id": "summary",
+      "kind": "say",
+      "text": [
+        "Así que tienes salidas: «{f1}», «{f2}», «{f3}». Ya no es todo o nada.",
+        "Mira: «{f1}», «{f2}» y «{f3}». Aunque falle el plan principal, tienes adónde ir."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "¿Cuánta ansiedad sientes ahora que tienes alternativas? De 0 a 10.",
+        "Valora otra vez tu ansiedad de 0 a 10. ¿Qué cambió?"
+      ],
+      "capture": "rating_after",
+      "routes": [
+        {
+          "below": "rating_before",
+          "next": "end_better"
+        },
+        {
+          "same": "rating_before",
+          "next": "end_same"
+        },
+        {
+          "next": "end_worse"
+        }
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [
+        "Antes {rating_before}, ahora {rating_after}. Tener opciones alivia la mente. Guarda esta lista: puedes volver a ella antes de algo importante."
+      ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [
+        "La ansiedad sigue igual ({rating_after}). Es normal: a veces lo importante es saber que hay salidas. Quizá puedas dar un primer paso pequeño hacia una de las opciones."
+      ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [
+        "La ansiedad aumentó: antes {rating_before}, ahora {rating_after}. Pasa cuando miras de frente algo difícil, y no es culpa tuya. Haz tres exhalaciones lentas. Si el peso sigue, habla con alguien cercano o con un profesional."
+      ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [
+        "Siento mucho que estés sufriendo tanto ahora mismo. Lo que has escrito importa más que cualquier técnica, así que detengo el ejercicio."
+      ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [
+        "Por favor, habla ahora mismo con una persona real. Si tu vida puede estar en peligro, llama al número de emergencias (112 en España y la UE, 911 en México; en España, el 024 atiende la conducta suicida). Puedes encontrar líneas de ayuda cercanas en findahelpline.com. Si hay alguien cerca, dile que no estás bien."
+      ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [
+        "Soy una aplicación, no un profesional, y no puedo protegerte. Mereces apoyo. Por favor, búscalo."
+      ]
+    }
+  ]
+}

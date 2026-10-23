@@ -1,0 +1,205 @@
+{
+  "id": "Extend",
+  "title": "Plano B",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "Quando tudo parece depender de um único resultado, a ansiedade cresce. Vamos encontrar algumas saídas alternativas — mesmo que modestas.",
+        "Apostar tudo em uma coisa só aperta. Vamos reunir juntos algumas alternativas: leva uns dois minutos."
+      ],
+      "next": "ask_problem"
+    },
+    {
+      "id": "ask_problem",
+      "kind": "askText",
+      "text": [
+        "O que preocupa você? O que acontece se o plano principal não der certo?",
+        "Com qual resultado você está ansioso? Em poucas palavras, do seu jeito."
+      ],
+      "hint": "Ex.: não vou conseguir a vaga",
+      "capture": "f0",
+      "recent": true,
+      "suggestions": [
+        "Uma briga com alguém próximo",
+        "Algo no trabalho",
+        "Um conflito com meu chefe",
+        "Os estudos ou uma prova",
+        "A saúde",
+        "Dinheiro",
+        "A solidão",
+        "Um fracasso",
+        "Um término",
+        "A relação com meus pais",
+        "Os filhos",
+        "Uma mudança de casa",
+        "O futuro",
+        "Críticas a mim"
+      ],
+      "next": "ask_before"
+    },
+    {
+      "id": "ask_before",
+      "kind": "askRating",
+      "text": [
+        "Qual o tamanho da sua ansiedade quando pensa que o plano principal pode falhar? De 0 a 10.",
+        "Avalie sua ansiedade agora: 0 é calma, 10 é muita ansiedade."
+      ],
+      "capture": "rating_before",
+      "next": "ask_backup_1"
+    },
+    {
+      "id": "ask_backup_1",
+      "kind": "askText",
+      "text": [
+        "Se o plano principal não funcionar, qual é sua primeira alternativa? Até a mais modesta conta.",
+        "Imagine que o plano A não deu certo. O que você poderia fazer no lugar?"
+      ],
+      "hint": "Ex.: pegar um projeto como freelancer",
+      "capture": "f1",
+      "suggestions": [
+        "Pedir ajuda",
+        "Esperar e tentar de novo",
+        "Encontrar outro caminho",
+        "Cobrar menos de mim",
+        "Fazer uma pausa",
+        "Conversar com alguém próximo",
+        "Procurar um especialista",
+        "Arrumar um trabalho extra",
+        "Fazer um curso",
+        "Dividir a tarefa em etapas",
+        "Adiar a decisão",
+        "Começar pequeno"
+      ],
+      "next": "ask_backup_2"
+    },
+    {
+      "id": "ask_backup_2",
+      "kind": "askText",
+      "text": [
+        "Ótimo: \"{f1}\". E uma segunda opção?",
+        "\"{f1}\" já é uma saída. O que mais você poderia fazer?"
+      ],
+      "hint": "Ex.: me capacitar para uma função parecida",
+      "capture": "f2",
+      "suggestions": [
+        "Pedir ajuda",
+        "Esperar e tentar de novo",
+        "Encontrar outro caminho",
+        "Cobrar menos de mim",
+        "Fazer uma pausa",
+        "Conversar com alguém próximo",
+        "Procurar um especialista",
+        "Arrumar um trabalho extra",
+        "Fazer um curso",
+        "Dividir a tarefa em etapas",
+        "Adiar a decisão",
+        "Começar pequeno"
+      ],
+      "next": "ask_backup_3"
+    },
+    {
+      "id": "ask_backup_3",
+      "kind": "askText",
+      "text": [
+        "E uma terceira — mesmo que seja a mais simples.",
+        "Uma última, a terceira opção. Pode ser bem pequena."
+      ],
+      "hint": "Ex.: cortar gastos por um tempo",
+      "capture": "f3",
+      "suggestions": [
+        "Pedir ajuda",
+        "Esperar e tentar de novo",
+        "Encontrar outro caminho",
+        "Cobrar menos de mim",
+        "Fazer uma pausa",
+        "Conversar com alguém próximo",
+        "Procurar um especialista",
+        "Arrumar um trabalho extra",
+        "Fazer um curso",
+        "Dividir a tarefa em etapas",
+        "Adiar a decisão",
+        "Começar pequeno"
+      ],
+      "next": "summary"
+    },
+    {
+      "id": "summary",
+      "kind": "say",
+      "text": [
+        "Então você tem saídas: \"{f1}\", \"{f2}\", \"{f3}\". Já não é tudo ou nada.",
+        "Veja: \"{f1}\", \"{f2}\" e \"{f3}\". Mesmo que o plano principal falhe, você tem para onde ir."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "Qual o tamanho da sua ansiedade agora que você tem alternativas? De 0 a 10.",
+        "Avalie sua ansiedade de novo, de 0 a 10. O que mudou?"
+      ],
+      "capture": "rating_after",
+      "routes": [
+        {
+          "below": "rating_before",
+          "next": "end_better"
+        },
+        {
+          "same": "rating_before",
+          "next": "end_same"
+        },
+        {
+          "next": "end_worse"
+        }
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [
+        "Antes {rating_before}, agora {rating_after}. Ter escolha alivia a mente. Guarde essa lista — você pode voltar a ela antes de algo importante."
+      ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [
+        "A ansiedade ficou igual ({rating_after}). É normal: às vezes o que importa é saber que as saídas existem. Talvez você possa dar um primeiro passo pequeno em uma das opções."
+      ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [
+        "A ansiedade aumentou: antes {rating_before}, agora {rating_after}. Isso acontece quando se olha de frente para algo difícil, e não é culpa sua. Solte o ar devagar três vezes. Se o peso continuar, converse com alguém próximo ou com um profissional."
+      ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [
+        "Sinto muito que você esteja sofrendo tanto agora. O que você escreveu importa mais do que qualquer técnica, então vou parar o exercício."
+      ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [
+        "Por favor, fale agora com uma pessoa de verdade. Se sua vida pode estar em risco, ligue para a emergência (no Brasil, SAMU 192; o CVV atende pelo 188, 24 horas; em Portugal, 112). Você encontra linhas de apoio perto de você em findahelpline.com. Se houver alguém por perto, diga que você não está bem."
+      ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [
+        "Sou um aplicativo, não um profissional, e não consigo garantir sua segurança. Você merece apoio. Por favor, procure ajuda."
+      ]
+    }
+  ]
+}

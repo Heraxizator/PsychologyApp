@@ -1,0 +1,205 @@
+{
+  "id": "Extend",
+  "title": "Plan B",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "Quand tout semble dépendre d'une seule issue, l'anxiété grandit. Trouvons quelques solutions de repli — même modestes.",
+        "Un pari « tout ou rien » vous serre la gorge. Rassemblons ensemble quelques solutions de repli : cela prend deux minutes."
+      ],
+      "next": "ask_problem"
+    },
+    {
+      "id": "ask_problem",
+      "kind": "askText",
+      "text": [
+        "Qu'est-ce qui vous inquiète ? Que se passe-t-il si le plan principal ne marche pas ?",
+        "Quelle issue vous inquiète ? En bref, avec vos mots."
+      ],
+      "hint": "Par ex. je n'aurai pas le poste",
+      "capture": "f0",
+      "recent": true,
+      "suggestions": [
+        "Une dispute avec un proche",
+        "Quelque chose au travail",
+        "Un conflit avec mon chef",
+        "Les études ou un examen",
+        "La santé",
+        "L'argent",
+        "La solitude",
+        "Un échec",
+        "Une rupture",
+        "La relation avec mes parents",
+        "Les enfants",
+        "Un déménagement",
+        "L'avenir",
+        "Les critiques à mon égard"
+      ],
+      "next": "ask_before"
+    },
+    {
+      "id": "ask_before",
+      "kind": "askRating",
+      "text": [
+        "Quelle anxiété ressentez-vous quand vous pensez que le plan principal pourrait échouer ? De 0 à 10.",
+        "Évaluez votre anxiété maintenant : 0, c'est le calme ; 10, c'est très anxieux·se."
+      ],
+      "capture": "rating_before",
+      "next": "ask_backup_1"
+    },
+    {
+      "id": "ask_backup_1",
+      "kind": "askText",
+      "text": [
+        "Si le plan principal ne marche pas, quelle est votre première solution de repli ? Même la plus modeste compte.",
+        "Imaginez que le plan A n'a pas abouti. Que pourriez-vous faire à la place ?"
+      ],
+      "hint": "Par ex. prendre une mission en freelance",
+      "capture": "f1",
+      "suggestions": [
+        "Demander de l'aide",
+        "Attendre et réessayer",
+        "Trouver un autre moyen",
+        "Être moins exigeant·e envers moi",
+        "Faire une pause",
+        "En parler à un proche",
+        "Consulter un spécialiste",
+        "Trouver un travail d'appoint",
+        "Suivre une formation",
+        "Découper la tâche en étapes",
+        "Reporter la décision",
+        "Commencer petit"
+      ],
+      "next": "ask_backup_2"
+    },
+    {
+      "id": "ask_backup_2",
+      "kind": "askText",
+      "text": [
+        "Bien : « {f1} ». Et une deuxième solution ?",
+        "« {f1} », c'est déjà une issue. Que pourriez-vous faire d'autre ?"
+      ],
+      "hint": "Par ex. se former à un métier proche",
+      "capture": "f2",
+      "suggestions": [
+        "Demander de l'aide",
+        "Attendre et réessayer",
+        "Trouver un autre moyen",
+        "Être moins exigeant·e envers moi",
+        "Faire une pause",
+        "En parler à un proche",
+        "Consulter un spécialiste",
+        "Trouver un travail d'appoint",
+        "Suivre une formation",
+        "Découper la tâche en étapes",
+        "Reporter la décision",
+        "Commencer petit"
+      ],
+      "next": "ask_backup_3"
+    },
+    {
+      "id": "ask_backup_3",
+      "kind": "askText",
+      "text": [
+        "Et une troisième — même la plus simple.",
+        "Une dernière, la troisième. Elle peut être toute petite."
+      ],
+      "hint": "Par ex. réduire temporairement les dépenses",
+      "capture": "f3",
+      "suggestions": [
+        "Demander de l'aide",
+        "Attendre et réessayer",
+        "Trouver un autre moyen",
+        "Être moins exigeant·e envers moi",
+        "Faire une pause",
+        "En parler à un proche",
+        "Consulter un spécialiste",
+        "Trouver un travail d'appoint",
+        "Suivre une formation",
+        "Découper la tâche en étapes",
+        "Reporter la décision",
+        "Commencer petit"
+      ],
+      "next": "summary"
+    },
+    {
+      "id": "summary",
+      "kind": "say",
+      "text": [
+        "Vous avez donc des issues : « {f1} », « {f2} », « {f3} ». Ce n'est plus tout ou rien.",
+        "Regardez : « {f1} », « {f2} » et « {f3} ». Même si le plan principal échoue, vous avez où aller."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "Quelle anxiété ressentez-vous maintenant que vous avez des solutions de repli ? De 0 à 10.",
+        "Évaluez de nouveau votre anxiété de 0 à 10. Qu'est-ce qui a changé ?"
+      ],
+      "capture": "rating_after",
+      "routes": [
+        {
+          "below": "rating_before",
+          "next": "end_better"
+        },
+        {
+          "same": "rating_before",
+          "next": "end_same"
+        },
+        {
+          "next": "end_worse"
+        }
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [
+        "C'était {rating_before}, maintenant {rating_after}. Avoir le choix soulage l'esprit. Gardez cette liste — vous pourrez y revenir avant un événement important."
+      ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [
+        "L'anxiété est restée la même ({rating_after}). C'est normal : parfois, il suffit de savoir que les issues existent. Faites peut-être un premier petit pas vers l'une des options."
+      ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [
+        "L'anxiété a augmenté : c'était {rating_before}, maintenant {rating_after}. Cela arrive quand on regarde en face quelque chose de difficile, et ce n'est pas de votre faute. Faites trois expirations lentes. Si la lourdeur reste, parlez-en à un proche ou à un professionnel."
+      ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [
+        "Je suis vraiment désolé que vous souffriez autant en ce moment. Ce que vous avez écrit compte plus que n'importe quelle technique, alors j'arrête l'exercice."
+      ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [
+        "Parlez à une vraie personne dès maintenant. Si votre vie est peut-être en danger, appelez le numéro d'urgence (112 en Europe ; en France, le 3114 pour la prévention du suicide). Vous trouverez des lignes d'écoute près de chez vous sur findahelpline.com. Si quelqu'un est près de vous, dites-lui que ça ne va pas."
+      ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [
+        "Je suis une application, pas un professionnel, et je ne peux pas assurer votre sécurité. Vous méritez du soutien. N'hésitez pas à en demander."
+      ]
+    }
+  ]
+}

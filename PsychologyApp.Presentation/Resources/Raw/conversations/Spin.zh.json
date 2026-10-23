@@ -1,0 +1,195 @@
+{
+  "id": "Spin",
+  "title": "旋转",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "“旋转”帮助你减轻一件挥之不去的事带来的情绪负荷。只需几分钟，不用长篇回答。",
+        "让我们松开那件在你脑中反复打转的事。简短回答或点选建议就够了。"
+      ],
+      "next": "ask_episode"
+    },
+    {
+      "id": "ask_episode",
+      "kind": "askText",
+      "text": [
+        "哪件事在困扰你？几个字就够了。",
+        "哪件事总是反复出现？用你自己的话简单说说。"
+      ],
+      "hint": "例如：昨天那段让你放不下的谈话",
+      "capture": "f0",
+      "recent": true,
+      "suggestions": [
+        "和亲近的人吵架",
+        "工作上的事",
+        "和上司的冲突",
+        "学习或考试",
+        "健康",
+        "钱",
+        "孤独",
+        "一次失败",
+        "分手",
+        "和父母的关系",
+        "孩子",
+        "搬家",
+        "未来",
+        "别人对我的批评"
+      ],
+      "next": "ask_feeling"
+    },
+    {
+      "id": "ask_feeling",
+      "kind": "askText",
+      "text": [
+        "想起“{f0}”时，主要是什么感受？在调色板里选，或者写下来。",
+        "想到“{f0}”时，你最强烈的感受是什么？"
+      ],
+      "hint": "委屈、恐惧、愤怒……",
+      "capture": "f1",
+      "emotions": true,
+      "next": "ask_rating"
+    },
+    {
+      "id": "ask_rating",
+      "kind": "askRating",
+      "text": [
+        "这种感受现在有多强烈？0 到 10。",
+        "现在给这种感受打分：0 表示几乎没有触动，10 表示被它淹没。"
+      ],
+      "capture": "f2",
+      "routes": [
+        {
+          "max": 2,
+          "next": "end_low"
+        },
+        {
+          "next": "replay_intro"
+        }
+      ]
+    },
+    {
+      "id": "replay_intro",
+      "kind": "say",
+      "text": [
+        "现在在脑中再放一遍这件事——慢慢地，就像从旁边看一部电影。不评判，只是看到结尾。然后长长地呼一口气。",
+        "从头到尾重放这件事，不着急，就像你坐在观众席上。看完它，然后呼气。"
+      ],
+      "next": "replay_ready"
+    },
+    {
+      "id": "replay_ready",
+      "kind": "askChoice",
+      "text": [
+        "看完了吗？"
+      ],
+      "choices": [
+        {
+          "label": "是",
+          "next": "ask_after"
+        },
+        {
+          "label": "再来一次",
+          "next": "replay_again"
+        },
+        {
+          "label": "我需要停一下",
+          "next": "end_pause"
+        }
+      ]
+    },
+    {
+      "id": "replay_again",
+      "kind": "say",
+      "text": [
+        "好，再来一次。从最开始到结尾，慢慢地。留意哪些细节已经变淡了。",
+        "再来一轮。慢慢来，留意哪些东西已经不像以前那样牵动你了。"
+      ],
+      "next": "replay_ready"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "那现在呢：这种感受有多强烈？0 到 10。",
+        "再打一次分：这种感受现在有多强烈？"
+      ],
+      "capture": "rating_after",
+      "routes": [
+        {
+          "below": "f2",
+          "next": "end_better"
+        },
+        {
+          "same": "f2",
+          "next": "end_same"
+        },
+        {
+          "next": "end_worse"
+        }
+      ]
+    },
+    {
+      "id": "end_low",
+      "kind": "end",
+      "text": [
+        "现在的情绪负荷很小（{f2}）。这是好迹象：这件事不再那么紧紧抓住你了。如果它又回来，你可以再做一次“旋转”。"
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [
+        "之前 {f2}，现在 {rating_after}。情绪负荷在下降。如果这件事又回来，明天再练一次——通常一次比一次容易。"
+      ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [
+        "强度没有变化（{rating_after}）。这很正常：有时需要在不同的日子里多做几轮。你已经做了一件重要的事——你正视了它。"
+      ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [
+        "感受变强了：之前 {f2}，现在 {rating_after}。触碰到痛苦的东西时会这样，这不是你的错。慢慢呼气三次。如果沉重感一直不散，和亲近的人或专业人士谈谈。"
+      ]
+    },
+    {
+      "id": "end_pause",
+      "kind": "end",
+      "pause": true,
+      "text": [
+        "好，我们就停在这里。休息一下，喝点水。你随时可以回来。"
+      ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [
+        "很抱歉你现在这么痛苦。你写下的话比任何技巧都重要，所以我先停下这个练习。"
+      ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [
+        "请现在就和一个真实的人说说话。如果你的生命可能有危险，请拨打当地急救电话（中国大陆：急救 120，报警 110；心理援助热线 12356）。你也可以在 findahelpline.com 找到附近的求助热线。如果身边有人，告诉他你现在不太好。"
+      ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [
+        "我只是一个应用，不是专业人士，无法保证你的安全。你值得被支持。请去寻求帮助。"
+      ]
+    }
+  ]
+}

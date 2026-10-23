@@ -1,0 +1,326 @@
+{
+  "id": "Observer",
+  "title": "观察者视角",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "让我们一起从外面看看你的处境。大约需要五分钟。",
+        "你好。我们从困扰你的事情前退后几步，换个角度看它。五分钟，不会更久。"
+      ],
+      "next": "intro_note"
+    },
+    {
+      "id": "intro_note",
+      "kind": "say",
+      "text": [
+        "想到什么就答什么，答案没有对错。所有内容都只保存在你的设备上。"
+      ],
+      "next": "ask_situation"
+    },
+    {
+      "id": "ask_situation",
+      "kind": "askText",
+      "text": [
+        "发生了什么，或者你在脑中反复回放什么？两三句话就够了。",
+        "你想想一想哪个情境？用你自己的话简单告诉我。"
+      ],
+      "hint": "例如：昨天和上司的谈话",
+      "capture": "situation",
+      "suggestions": [
+        "和亲近的人吵架",
+        "工作上的事",
+        "和上司的冲突",
+        "学习或考试",
+        "健康",
+        "钱",
+        "孤独",
+        "一次失败",
+        "分手",
+        "和父母的关系",
+        "孩子",
+        "搬家",
+        "未来",
+        "别人对我的批评"
+      ],
+      "recent": true,
+      "next": "ask_feeling"
+    },
+    {
+      "id": "ask_feeling",
+      "kind": "askChoice",
+      "text": [
+        "谢谢你愿意说出来。想到这件事时，你最强烈的感受是什么？",
+        "明白了。这里主要是哪种感受？"
+      ],
+      "capture": "feeling",
+      "choices": [
+        {
+          "label": "焦虑",
+          "value": "焦虑",
+          "next": "ask_body"
+        },
+        {
+          "label": "委屈",
+          "value": "委屈",
+          "next": "ask_body"
+        },
+        {
+          "label": "愤怒",
+          "value": "愤怒",
+          "next": "ask_body"
+        },
+        {
+          "label": "内疚",
+          "value": "内疚",
+          "next": "ask_body"
+        },
+        {
+          "label": "悲伤",
+          "value": "悲伤",
+          "next": "ask_body"
+        },
+        {
+          "label": "别的感受",
+          "next": "ask_feeling_other"
+        }
+      ]
+    },
+    {
+      "id": "ask_feeling_other",
+      "kind": "askText",
+      "text": [
+        "你会怎么称呼这种感受？一两个词就够了。"
+      ],
+      "capture": "feeling",
+      "emotions": true,
+      "next": "ask_body"
+    },
+    {
+      "id": "ask_body",
+      "kind": "askText",
+      "text": [
+        "这种感受是“{feeling}”。它在你身体的哪里：胸口、腹部、肩膀？几个字就行。",
+        "留意“{feeling}”出现在身体的哪里。你在那里感觉到了什么？"
+      ],
+      "hint": "例如：胸口发紧",
+      "capture": "body",
+      "suggestions": [
+        "胸口发紧",
+        "喉咙哽住",
+        "肩膀紧绷",
+        "腹部沉重",
+        "脸发烫",
+        "手发抖",
+        "心跳加速",
+        "手发凉",
+        "胃里打结",
+        "头昏沉"
+      ],
+      "next": "ask_before"
+    },
+    {
+      "id": "ask_before",
+      "kind": "askRating",
+      "text": [
+        "这件事现在压在你心上有多重？从 0（完全没有）到 10（重得不能再重）。",
+        "现在给紧张程度打分：0 是平静，10 是非常难受。"
+      ],
+      "capture": "rating_before",
+      "routes": [
+        {
+          "max": 2,
+          "next": "before_low"
+        },
+        {
+          "max": 8,
+          "next": "observer_intro"
+        },
+        {
+          "next": "before_high"
+        }
+      ]
+    },
+    {
+      "id": "before_low",
+      "kind": "say",
+      "text": [
+        "紧张程度不高，这很好。这个技巧仍然能帮你练习拉开距离。"
+      ],
+      "next": "observer_intro"
+    },
+    {
+      "id": "before_high",
+      "kind": "say",
+      "text": [
+        "这是非常强烈的紧张。继续之前，慢慢呼气三次，呼气比吸气更长。我等你。"
+      ],
+      "next": "before_high_ready"
+    },
+    {
+      "id": "before_high_ready",
+      "kind": "askChoice",
+      "text": [
+        "准备好继续了吗？"
+      ],
+      "choices": [
+        {
+          "label": "好，继续",
+          "next": "observer_intro"
+        },
+        {
+          "label": "我需要休息一下",
+          "next": "end_pause"
+        }
+      ]
+    },
+    {
+      "id": "observer_intro",
+      "kind": "say",
+      "text": [
+        "现在想象你后退了几步。你从旁边看这个场景，就像一个平静的人，既不认识你，也不知道你的故事。他只看到正在发生的事。",
+        "在心里往后退一小步。还是同一个场景，但你已经不在其中，你是一个不做任何评判的旁观者。"
+      ],
+      "next": "ask_observer"
+    },
+    {
+      "id": "ask_observer",
+      "kind": "askText",
+      "text": [
+        "这个观察者看到了什么？用第三人称中立地描述情境：“一个人……”，不用“应该”“总是”“从不”。",
+        "用观察者的眼睛描述同一件事：谁做了什么、说了什么。只写事实，用第三人称。"
+      ],
+      "hint": "例如：两个人在大声说话",
+      "capture": "observer",
+      "suggestions": [
+        "两个人在争论",
+        "一个疲惫、难过的人",
+        "一个普通的工作场景",
+        "每个人都在维护自己的立场",
+        "一周后就会忘了",
+        "人们互相误解了",
+        "一个非常努力的人",
+        "不愉快，但并不危险",
+        "每个人都有自己的看法",
+        "这个人需要休息"
+      ],
+      "next": "reflect"
+    },
+    {
+      "id": "reflect",
+      "kind": "say",
+      "text": [
+        "从里面看是：“{situation}”。从外面看是：“{observer}”。留意这两种描述有什么不同。",
+        "身处其中时你说：“{situation}”。观察者说：“{observer}”。你感觉到区别了吗？"
+      ],
+      "next": "ask_advice"
+    },
+    {
+      "id": "ask_advice",
+      "kind": "askText",
+      "text": [
+        "这个平静的观察者会对场景里的这个人说什么？一句温和的话。",
+        "如果观察者能对处在这个情境中的人说一句支持的话，会是什么？"
+      ],
+      "hint": "例如：你做得比你想象的好",
+      "capture": "advice",
+      "suggestions": [
+        "你做得比你想象的好",
+        "这会过去的",
+        "你有权这样感受",
+        "停一停，呼口气",
+        "你并不孤单",
+        "犯错没关系",
+        "你已经做了很多",
+        "照顾好自己"
+      ],
+      "next": "advice_echo"
+    },
+    {
+      "id": "advice_echo",
+      "kind": "say",
+      "text": [
+        "“{advice}”。记住这句话，它属于你。",
+        "“{advice}”。说得真好。把它留在心里。"
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "现在说实话：紧张程度此刻有多强？0 到 10。",
+        "再从 0 到 10 给紧张程度打分。有什么变化？"
+      ],
+      "capture": "rating_after",
+      "routes": [
+        {
+          "below": "rating_before",
+          "next": "end_better"
+        },
+        {
+          "same": "rating_before",
+          "next": "end_same"
+        },
+        {
+          "next": "end_worse"
+        }
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [
+        "之前 {rating_before}，现在 {rating_after}。拉开距离起作用了。每当情绪占上风时，你都可以回到观察者视角。"
+      ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [
+        "紧张程度没有变化（{rating_after}）。这很正常：有时一次不够。喘口气，晚些时候再回到这个技巧，也许换一个情境。"
+      ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [
+        "感受变强了：之前 {rating_before}，现在 {rating_after}。触及艰难的话题时会这样，这不是你的错。慢慢呼气三次。如果沉重感不消散，和亲近的人或专业人士谈谈。"
+      ]
+    },
+    {
+      "id": "end_pause",
+      "kind": "end",
+      "pause": true,
+      "text": [
+        "好，我们就停在这里。休息一下，喝点水，随时可以回来。能走到这里，你做得很好。"
+      ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [
+        "很抱歉你现在这么痛苦。你写下的话比任何技巧都重要，所以我先停下这个练习。"
+      ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [
+        "请现在就和一个真实的人说说话。如果你的生命可能有危险，请拨打当地急救电话（中国大陆：急救 120，报警 110；心理援助热线 12356）。你也可以在 findahelpline.com 找到附近的求助热线。如果身边有人，告诉他你现在不太好。"
+      ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [
+        "我只是一个应用，不是专业人士，无法保证你的安全。你值得被支持。请去寻求帮助。"
+      ]
+    }
+  ]
+}

@@ -55,6 +55,41 @@ public class ConversationScenarioParserTests
         Assert.True(File.Exists(Path.Combine(dir, $"{id}.en.json")));
     }
 
+    public static TheoryData<TechniqueId, string> Translations()
+    {
+        TheoryData<TechniqueId, string> data = [];
+        foreach (TechniqueId id in new[] { TechniqueId.Observer, TechniqueId.Grounding, TechniqueId.Flashback, TechniqueId.Spin, TechniqueId.Extend })
+        {
+            foreach (string language in new[] { "fr", "de", "es", "pt", "zh" })
+            {
+                data.Add(id, language);
+            }
+        }
+
+        return data;
+    }
+
+    /// <summary>A translated dialogue must take the same path as the English one: same steps, answers, routes and crisis exit.</summary>
+    [Theory]
+    [MemberData(nameof(Translations))]
+    public void A_translated_dialogue_follows_the_english_one_step_by_step(TechniqueId id, string language)
+    {
+        string dir = Path.Combine(AppContext.BaseDirectory, "conversations");
+        ConversationScenario english = ConversationScenarioParser.Parse(File.ReadAllText(Path.Combine(dir, $"{id}.en.json"))).Value!;
+        ParseResult<ConversationScenario> parsed = ConversationScenarioParser.Parse(File.ReadAllText(Path.Combine(dir, $"{id}.{language}.json")));
+
+        Assert.True(parsed.IsSuccess, parsed.Error);
+        ConversationScenario translated = parsed.Value!;
+        Assert.Equal((english.Start, english.CrisisNode), (translated.Start, translated.CrisisNode));
+        Assert.Equal(Shape(english), Shape(translated));
+    }
+
+    private static IEnumerable<string> Shape(ConversationScenario scenario) =>
+        scenario.Nodes.Values.OrderBy(node => node.Id, StringComparer.Ordinal).Select(node => string.Join("|",
+            node.Id, node.Kind, node.Next, node.Capture, node.Text.Count, node.Suggestions?.Count, node.OffersEmotions, node.OffersRecent, node.IsPause,
+            string.Join(",", node.Choices?.Select(choice => choice.Next) ?? []),
+            node.Routes?.Count));
+
     [Fact]
     public void Valid_scenario_parses()
     {

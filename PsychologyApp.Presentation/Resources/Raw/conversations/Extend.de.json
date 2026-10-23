@@ -1,0 +1,205 @@
+{
+  "id": "Extend",
+  "title": "Plan B",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "Wenn alles an einem einzigen Ausgang zu hängen scheint, wächst die Angst. Lass uns ein paar Ausweichmöglichkeiten finden — auch bescheidene.",
+        "Alles oder nichts setzt dich unter Druck. Lass uns gemeinsam ein paar Ausweichmöglichkeiten sammeln: Das dauert ein paar Minuten."
+      ],
+      "next": "ask_problem"
+    },
+    {
+      "id": "ask_problem",
+      "kind": "askText",
+      "text": [
+        "Was macht dir Sorgen? Was passiert, wenn der Hauptplan nicht klappt?",
+        "Vor welchem Ausgang hast du Angst? Kurz, in deinen eigenen Worten."
+      ],
+      "hint": "Z. B. ich bekomme die Stelle nicht",
+      "capture": "f0",
+      "recent": true,
+      "suggestions": [
+        "Streit mit einem nahen Menschen",
+        "Etwas auf der Arbeit",
+        "Konflikt mit meinem Chef",
+        "Studium oder eine Prüfung",
+        "Gesundheit",
+        "Geld",
+        "Einsamkeit",
+        "Ein Misserfolg",
+        "Eine Trennung",
+        "Beziehung zu meinen Eltern",
+        "Kinder",
+        "Ein Umzug",
+        "Die Zukunft",
+        "Kritik an mir"
+      ],
+      "next": "ask_before"
+    },
+    {
+      "id": "ask_before",
+      "kind": "askRating",
+      "text": [
+        "Wie viel Angst hast du, wenn du daran denkst, dass der Hauptplan scheitern könnte? Von 0 bis 10.",
+        "Bewerte deine Angst jetzt: 0 ist ruhig, 10 ist sehr ängstlich."
+      ],
+      "capture": "rating_before",
+      "next": "ask_backup_1"
+    },
+    {
+      "id": "ask_backup_1",
+      "kind": "askText",
+      "text": [
+        "Wenn der Hauptplan nicht klappt, was ist deine erste Ausweichmöglichkeit? Auch die bescheidenste zählt.",
+        "Stell dir vor, Plan A hat nicht geklappt. Was könntest du stattdessen tun?"
+      ],
+      "hint": "Z. B. ein freiberufliches Projekt annehmen",
+      "capture": "f1",
+      "suggestions": [
+        "Um Hilfe bitten",
+        "Abwarten und es erneut versuchen",
+        "Einen anderen Weg finden",
+        "Weniger von mir verlangen",
+        "Eine Pause machen",
+        "Mit einem nahen Menschen darüber reden",
+        "Zu einer Fachperson gehen",
+        "Einen Nebenjob finden",
+        "Einen Kurs machen",
+        "Die Aufgabe in Schritte teilen",
+        "Die Entscheidung verschieben",
+        "Klein anfangen"
+      ],
+      "next": "ask_backup_2"
+    },
+    {
+      "id": "ask_backup_2",
+      "kind": "askText",
+      "text": [
+        "Gut: „{f1}“. Und eine zweite Möglichkeit?",
+        "„{f1}“ ist schon ein Ausweg. Was könntest du noch tun?"
+      ],
+      "hint": "Z. B. eine Weiterbildung für einen verwandten Beruf",
+      "capture": "f2",
+      "suggestions": [
+        "Um Hilfe bitten",
+        "Abwarten und es erneut versuchen",
+        "Einen anderen Weg finden",
+        "Weniger von mir verlangen",
+        "Eine Pause machen",
+        "Mit einem nahen Menschen darüber reden",
+        "Zu einer Fachperson gehen",
+        "Einen Nebenjob finden",
+        "Einen Kurs machen",
+        "Die Aufgabe in Schritte teilen",
+        "Die Entscheidung verschieben",
+        "Klein anfangen"
+      ],
+      "next": "ask_backup_3"
+    },
+    {
+      "id": "ask_backup_3",
+      "kind": "askText",
+      "text": [
+        "Und eine dritte — auch die einfachste.",
+        "Eine letzte, dritte Möglichkeit. Sie darf ganz klein sein."
+      ],
+      "hint": "Z. B. vorübergehend Ausgaben senken",
+      "capture": "f3",
+      "suggestions": [
+        "Um Hilfe bitten",
+        "Abwarten und es erneut versuchen",
+        "Einen anderen Weg finden",
+        "Weniger von mir verlangen",
+        "Eine Pause machen",
+        "Mit einem nahen Menschen darüber reden",
+        "Zu einer Fachperson gehen",
+        "Einen Nebenjob finden",
+        "Einen Kurs machen",
+        "Die Aufgabe in Schritte teilen",
+        "Die Entscheidung verschieben",
+        "Klein anfangen"
+      ],
+      "next": "summary"
+    },
+    {
+      "id": "summary",
+      "kind": "say",
+      "text": [
+        "Du hast also Auswege: „{f1}“, „{f2}“, „{f3}“. Es heißt nicht mehr alles oder nichts.",
+        "Schau: „{f1}“, „{f2}“ und „{f3}“. Selbst wenn der Hauptplan scheitert, hast du Möglichkeiten."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "Wie viel Angst hast du jetzt, wo du Ausweichmöglichkeiten hast? Von 0 bis 10.",
+        "Bewerte deine Angst noch einmal von 0 bis 10. Was hat sich verändert?"
+      ],
+      "capture": "rating_after",
+      "routes": [
+        {
+          "below": "rating_before",
+          "next": "end_better"
+        },
+        {
+          "same": "rating_before",
+          "next": "end_same"
+        },
+        {
+          "next": "end_worse"
+        }
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [
+        "Vorher {rating_before}, jetzt {rating_after}. Eine Wahl zu haben entlastet den Kopf. Bewahre diese Liste auf — du kannst vor einem wichtigen Ereignis darauf zurückgreifen."
+      ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [
+        "Die Angst ist gleich geblieben ({rating_after}). Das ist normal: Manchmal zählt einfach, zu wissen, dass es Auswege gibt. Mach vielleicht einen ersten kleinen Schritt bei einer der Möglichkeiten."
+      ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [
+        "Die Angst ist gestiegen: vorher {rating_before}, jetzt {rating_after}. Das passiert, wenn man etwas Schwerem direkt ins Auge sieht, und es ist nicht deine Schuld. Atme dreimal langsam aus. Wenn die Schwere bleibt, sprich mit einem nahen Menschen oder einer Fachperson."
+      ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [
+        "Es tut mir sehr leid, dass du gerade so viel Schmerz hast. Was du geschrieben hast, ist wichtiger als jede Technik, deshalb beende ich die Übung."
+      ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [
+        "Bitte sprich jetzt mit einem echten Menschen. Wenn dein Leben in Gefahr sein könnte, ruf den Notruf an (112; in Deutschland erreichst du die TelefonSeelsorge unter 0800 111 0 111). Hilfetelefone in deiner Nähe findest du auf findahelpline.com. Wenn jemand in der Nähe ist, sag ihm, dass es dir nicht gut geht."
+      ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [
+        "Ich bin eine App, keine Fachperson, und ich kann dich nicht schützen. Du verdienst Unterstützung. Bitte hol sie dir."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,326 @@
+{
+  "id": "Observer",
+  "title": "Position d'observateur",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "Regardons ensemble votre situation de l'extérieur. Cela prend environ cinq minutes.",
+        "Bonjour. Nous allons reculer de quelques pas par rapport à ce qui vous préoccupe et le voir autrement. Cinq minutes, pas plus."
+      ],
+      "next": "intro_note"
+    },
+    {
+      "id": "intro_note",
+      "kind": "say",
+      "text": [
+        "Répondez comme ça vient, il n'y a pas de bonnes réponses. Tout reste sur votre appareil."
+      ],
+      "next": "ask_situation"
+    },
+    {
+      "id": "ask_situation",
+      "kind": "askText",
+      "text": [
+        "Que s'est-il passé, ou que ressassez-vous ? Deux ou trois phrases suffisent.",
+        "À quelle situation aimeriez-vous réfléchir ? Dites-le-moi brièvement, avec vos mots."
+      ],
+      "hint": "Par exemple : la discussion d'hier avec mon chef",
+      "capture": "situation",
+      "suggestions": [
+        "Une dispute avec un proche",
+        "Quelque chose au travail",
+        "Un conflit avec mon chef",
+        "Les études ou un examen",
+        "La santé",
+        "L'argent",
+        "La solitude",
+        "Un échec",
+        "Une rupture",
+        "La relation avec mes parents",
+        "Les enfants",
+        "Un déménagement",
+        "L'avenir",
+        "Les critiques à mon égard"
+      ],
+      "recent": true,
+      "next": "ask_feeling"
+    },
+    {
+      "id": "ask_feeling",
+      "kind": "askChoice",
+      "text": [
+        "Merci de l'avoir partagé. Que ressentez-vous le plus fort quand vous y pensez ?",
+        "Je vois. Quel est le sentiment principal ici ?"
+      ],
+      "capture": "feeling",
+      "choices": [
+        {
+          "label": "Anxiété",
+          "value": "anxiété",
+          "next": "ask_body"
+        },
+        {
+          "label": "Blessure",
+          "value": "blessure",
+          "next": "ask_body"
+        },
+        {
+          "label": "Colère",
+          "value": "colère",
+          "next": "ask_body"
+        },
+        {
+          "label": "Culpabilité",
+          "value": "culpabilité",
+          "next": "ask_body"
+        },
+        {
+          "label": "Tristesse",
+          "value": "tristesse",
+          "next": "ask_body"
+        },
+        {
+          "label": "Autre chose",
+          "next": "ask_feeling_other"
+        }
+      ]
+    },
+    {
+      "id": "ask_feeling_other",
+      "kind": "askText",
+      "text": [
+        "Comment appelleriez-vous ce sentiment ? Un ou deux mots suffisent."
+      ],
+      "capture": "feeling",
+      "emotions": true,
+      "next": "ask_body"
+    },
+    {
+      "id": "ask_body",
+      "kind": "askText",
+      "text": [
+        "Le sentiment, c'est « {feeling} ». Où se loge-t-il dans votre corps : poitrine, ventre, épaules ? Quelques mots.",
+        "Remarquez où « {feeling} » se manifeste dans votre corps. Que ressentez-vous à cet endroit ?"
+      ],
+      "hint": "Par exemple : un serrement dans la poitrine",
+      "capture": "body",
+      "suggestions": [
+        "Poitrine serrée",
+        "Boule dans la gorge",
+        "Épaules tendues",
+        "Ventre lourd",
+        "Visage chaud",
+        "Mains tremblantes",
+        "Cœur qui s'emballe",
+        "Mains froides",
+        "Nœud à l'estomac",
+        "Tête lourde"
+      ],
+      "next": "ask_before"
+    },
+    {
+      "id": "ask_before",
+      "kind": "askRating",
+      "text": [
+        "À quel point cela vous pèse-t-il en ce moment ? De 0 (pas du tout) à 10 (impossible d'être plus fort).",
+        "Évaluez votre tension maintenant : 0, c'est le calme ; 10, c'est très difficile."
+      ],
+      "capture": "rating_before",
+      "routes": [
+        {
+          "max": 2,
+          "next": "before_low"
+        },
+        {
+          "max": 8,
+          "next": "observer_intro"
+        },
+        {
+          "next": "before_high"
+        }
+      ]
+    },
+    {
+      "id": "before_low",
+      "kind": "say",
+      "text": [
+        "La tension est faible, c'est bien. La technique vous aidera quand même à développer la capacité de prendre du recul."
+      ],
+      "next": "observer_intro"
+    },
+    {
+      "id": "before_high",
+      "kind": "say",
+      "text": [
+        "C'est une tension très forte. Avant de continuer, expirez lentement, plus longtemps que vous n'inspirez, trois fois. J'attends."
+      ],
+      "next": "before_high_ready"
+    },
+    {
+      "id": "before_high_ready",
+      "kind": "askChoice",
+      "text": [
+        "Prêt·e à continuer ?"
+      ],
+      "choices": [
+        {
+          "label": "Oui, continuons",
+          "next": "observer_intro"
+        },
+        {
+          "label": "J'ai besoin d'une pause",
+          "next": "end_pause"
+        }
+      ]
+    },
+    {
+      "id": "observer_intro",
+      "kind": "say",
+      "text": [
+        "Maintenant, imaginez que vous avez reculé de quelques pas. Vous regardez cette scène de côté, comme une personne calme qui ne connaît ni vous ni votre histoire. Elle voit seulement ce qui se passe.",
+        "Faites un petit pas en arrière dans votre tête. C'est la même scène, mais vous n'y êtes plus : vous êtes un spectateur qui ne juge rien."
+      ],
+      "next": "ask_observer"
+    },
+    {
+      "id": "ask_observer",
+      "kind": "askText",
+      "text": [
+        "Que voit cet observateur ? Décrivez la situation à la troisième personne, de façon neutre : « Une personne… », sans « devrait », « toujours », « jamais ».",
+        "Décrivez la même chose avec les yeux de l'observateur : qui fait et dit quoi. Seulement des faits, à la troisième personne."
+      ],
+      "hint": "Par exemple : deux personnes parlent en élevant la voix",
+      "capture": "observer",
+      "suggestions": [
+        "Deux personnes qui se disputent",
+        "Une personne fatiguée et contrariée",
+        "Une situation de travail ordinaire",
+        "Chacun défend son point de vue",
+        "Dans une semaine, ce sera oublié",
+        "Les gens se sont mal compris",
+        "Une personne qui fait de gros efforts",
+        "Désagréable, mais pas dangereux",
+        "Chacun a son point de vue",
+        "La personne a besoin de repos"
+      ],
+      "next": "reflect"
+    },
+    {
+      "id": "reflect",
+      "kind": "say",
+      "text": [
+        "De l'intérieur, c'était : « {situation} ». De l'extérieur : « {observer} ». Remarquez en quoi ces deux descriptions diffèrent.",
+        "Dans la situation, vous disiez : « {situation} ». L'observateur dit : « {observer} ». Sentez-vous la différence ?"
+      ],
+      "next": "ask_advice"
+    },
+    {
+      "id": "ask_advice",
+      "kind": "askText",
+      "text": [
+        "Que dirait cet observateur calme à la personne de cette scène ? Une phrase bienveillante.",
+        "Si l'observateur pouvait dire une phrase de soutien à la personne dans cette situation, quelle serait-elle ?"
+      ],
+      "hint": "Par exemple : tu t'en sors mieux que tu ne le crois",
+      "capture": "advice",
+      "suggestions": [
+        "Tu t'en sors mieux que tu ne le crois",
+        "Ça va passer",
+        "Tu as le droit de ressentir ça",
+        "Fais une pause et expire",
+        "Tu n'es pas seul·e",
+        "On a le droit de se tromper",
+        "Tu as déjà fait beaucoup",
+        "Prends soin de toi"
+      ],
+      "next": "advice_echo"
+    },
+    {
+      "id": "advice_echo",
+      "kind": "say",
+      "text": [
+        "« {advice} ». Retenez cette phrase, elle est à vous.",
+        "« {advice} ». De belles paroles. Gardez-les."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "Maintenant, honnêtement : quelle est la force de la tension en ce moment ? De 0 à 10.",
+        "Évaluez de nouveau votre tension de 0 à 10. Qu'est-ce qui a changé ?"
+      ],
+      "capture": "rating_after",
+      "routes": [
+        {
+          "below": "rating_before",
+          "next": "end_better"
+        },
+        {
+          "same": "rating_before",
+          "next": "end_same"
+        },
+        {
+          "next": "end_worse"
+        }
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [
+        "C'était {rating_before}, maintenant {rating_after}. Le recul a donc fonctionné. Vous pouvez revenir à la position d'observateur chaque fois que les émotions prennent le dessus."
+      ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [
+        "La tension est restée la même ({rating_after}). C'est normal : parfois une fois ne suffit pas. Soufflez un peu et revenez à cette technique plus tard, peut-être avec une autre situation."
+      ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [
+        "C'est devenu plus fort : c'était {rating_before}, maintenant {rating_after}. Cela arrive quand on touche un sujet difficile, et ce n'est pas de votre faute. Faites trois expirations lentes. Si la lourdeur ne passe pas, parlez-en à un proche ou à un professionnel."
+      ]
+    },
+    {
+      "id": "end_pause",
+      "kind": "end",
+      "pause": true,
+      "text": [
+        "D'accord, arrêtons-nous ici. Faites une pause, buvez un peu d'eau et revenez quand vous voulez. Bravo d'être allé·e jusque-là."
+      ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [
+        "Je suis vraiment désolé que vous souffriez autant en ce moment. Ce que vous avez écrit compte plus que n'importe quelle technique, alors j'arrête l'exercice."
+      ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [
+        "Parlez à une vraie personne dès maintenant. Si votre vie est peut-être en danger, appelez le numéro d'urgence (112 en Europe ; en France, le 3114 pour la prévention du suicide). Vous trouverez des lignes d'écoute près de chez vous sur findahelpline.com. Si quelqu'un est près de vous, dites-lui que ça ne va pas."
+      ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [
+        "Je suis une application, pas un professionnel, et je ne peux pas assurer votre sécurité. Vous méritez du soutien. N'hésitez pas à en demander."
+      ]
+    }
+  ]
+}

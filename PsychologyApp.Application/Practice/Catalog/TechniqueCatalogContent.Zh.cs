@@ -54,7 +54,7 @@ internal static class TechniqueCatalogContentZh
             "5. 比较三个答案，记下有什么变化"
         ],
         "跨时间比较重要性，有助于把问题放到你整个人生的背景中去看。",
-        TechniqueUiKind.Entry, "技巧 #2", "26.01.2023", "重要性比较", "当问题显得太大时", "问题的规模", "神经语言程序学", 7, "CompareArrows",
+        TechniqueUiKind.Entry, "技巧 #2", "26.01.2023", "重要性比较", "当问题显得太大时", "问题的规模", "NLP", 7, "CompareArrows",
         [
             new TechniqueEntrySeed("问题", "现在什么让你觉得难以忍受？", Suggestions: ProblemTopics, Role: EntryFieldRole.Problem),
             new TechniqueEntrySeed("过去重要的", "例如：学业、感情、事业", Suggestions: ["学业", "家庭", "朋友", "健康", "事业", "爱好", "运动", "爱情", "旅行", "自由", "认可", "家"]),
@@ -110,7 +110,7 @@ internal static class TechniqueCatalogContentZh
             "2. 评估 50 年后它的重要性（0 到 10）"
         ],
         "把问题放到更远的未来，能降低它在主观上的重要性。",
-        TechniqueUiKind.Entry, "技巧 #5", "30.01.2023", "50 年后", "把问题放到未来去看", "问题的规模", "神经语言程序学", 2, "Schedule",
+        TechniqueUiKind.Entry, "技巧 #5", "30.01.2023", "50 年后", "把问题放到未来去看", "问题的规模", "NLP", 2, "Schedule",
         [
             new TechniqueEntrySeed("问题", "今天什么让你觉得像一场灾难？", Suggestions: ProblemTopics, Role: EntryFieldRole.Problem),
             new TechniqueEntrySeed("50 年后的重要性", "", EntryFieldKind.Rating0To10)
@@ -130,7 +130,7 @@ internal static class TechniqueCatalogContentZh
             "3. 一直保持这个光斑，直到紧张缓解"
         ],
         "去掉记忆中的细节，常常能减轻它的情绪负荷。",
-        TechniqueUiKind.Entry, "技巧 #6", "30.01.2023", "白色光斑", "软化痛苦的记忆", "艰难时刻", "神经语言程序学", 3, "BlurOn",
+        TechniqueUiKind.Entry, "技巧 #6", "30.01.2023", "白色光斑", "软化痛苦的记忆", "艰难时刻", "NLP", 3, "BlurOn",
         [new TechniqueEntrySeed("事件", "简单说：发生了什么，什么最让你痛", Suggestions: ProblemTopics, Role: EntryFieldRole.Problem)],
         Theory(
             "细节会加剧感受。白色光斑去掉了触发点，让神经系统喘口气。",
@@ -180,7 +180,7 @@ internal static class TechniqueCatalogContentZh
             "3. 一直重复，直到情绪缓和"
         ],
         "“像第一次那样”重复描述问题的句子，可以降低情绪强度。",
-        TechniqueUiKind.Copied, "技巧 #8", "21.01.2025", "重复说", "像第一次那样听这个问题", "问题的规模", "神经语言程序学", 2, "Repeat",
+        TechniqueUiKind.Copied, "技巧 #8", "21.01.2025", "重复说", "像第一次那样听这个问题", "问题的规模", "NLP", 2, "Repeat",
         [new TechniqueEntrySeed("句子", "我害怕失去工作", Suggestions: HarshThoughts)],
         Theory(
             "一句熟悉的话，慢慢地、平淡地、不带戏剧性地说出来，就会失去分量。",
@@ -197,7 +197,7 @@ internal static class TechniqueCatalogContentZh
             "3. 留意有退路时焦虑如何变化"
         ],
         "备选方案能降低对单一结果的过度重视。",
-        TechniqueUiKind.Entry, "技巧 #9", "21.01.2025", "备用计划", "用备用计划降低压力", "问题的规模", "神经语言程序学", 3, "Backup",
+        TechniqueUiKind.Entry, "技巧 #9", "21.01.2025", "备用计划", "用备用计划降低压力", "问题的规模", "NLP", 3, "Backup",
         [
             new TechniqueEntrySeed("问题", "如果主要计划失败了呢？", Suggestions: ProblemTopics, Role: EntryFieldRole.Problem),
             new TechniqueEntrySeed("备选方案 1", "例如：接一个自由职业项目", Suggestions: BackupOptions),
@@ -219,7 +219,7 @@ internal static class TechniqueCatalogContentZh
             "3. 把它缩小并推远，直到不再在意"
         ],
         "在想象中缩小并推远问题，能降低你对它的情绪关注。",
-        TechniqueUiKind.Entry, "技巧 #10", "22.01.2025", "缩小它", "让问题变小、变远", "问题的规模", "神经语言程序学", 2, "ZoomOutMap",
+        TechniqueUiKind.Entry, "技巧 #10", "22.01.2025", "缩小它", "让问题变小、变远", "问题的规模", "NLP", 2, "ZoomOutMap",
         [new TechniqueEntrySeed("困扰你的事", "例如：让你睡不着的冲突", Suggestions: ProblemTopics, Role: EntryFieldRole.Problem)],
         Theory(
             "画面的大小和距离会影响它的分量。一个又小又远的东西，很少会牵动你的神经。",
@@ -236,7 +236,7 @@ internal static class TechniqueCatalogContentZh
             "3. 留意身体和心情有什么变化"
         ],
         "过多的关注会放大重要性。短暂的停顿可以检验这个想法控制你的程度。",
-        TechniqueUiKind.Entry, "技巧 #11", "22.01.2025", "检验一下", "看看放下会怎样", "问题的规模", "神经语言程序学", 2, "FactCheck",
+        TechniqueUiKind.Entry, "技巧 #11", "22.01.2025", "检验一下", "看看放下会怎样", "问题的规模", "NLP", 2, "FactCheck",
         [new TechniqueEntrySeed("让你反复纠结的事", "哪个想法不断回来？", Suggestions: ProblemTopics, Role: EntryFieldRole.Problem)],
         Theory(
             "如果一个想法关乎生存，放下它会让人觉得危险。这个实验通常会表明，什么灾难都不会发生。",
@@ -254,7 +254,7 @@ internal static class TechniqueCatalogContentZh
             "4. 换个视角后评估紧张程度"
         ],
         "转换感知视角，有助于从情绪高峰中退后一步，更全面地看待情境。",
-        TechniqueUiKind.Entry, "技巧 #12", "12.06.2026", "观察者视角", "从情绪中退后一步，从外面看情境", "艰难时刻", "神经语言程序学", 4, "Visibility",
+        TechniqueUiKind.Entry, "技巧 #12", "12.06.2026", "观察者视角", "从情绪中退后一步，从外面看情境", "艰难时刻", "NLP", 4, "Visibility",
         [
             new TechniqueEntrySeed("情境", "发生了什么，或者你在脑中反复回放什么？", Suggestions: ProblemTopics, Role: EntryFieldRole.Problem),
             new TechniqueEntrySeed("第一人称的感受", "身处其中时，你有什么感受？", Role: EntryFieldRole.Emotion),
@@ -277,7 +277,7 @@ internal static class TechniqueCatalogContentZh
             "4. 评估资源状态的强度"
         ],
         "锚把一个身体手势和资源状态连接起来，让你能更快地找回支撑。",
-        TechniqueUiKind.Entry, "技巧 #13", "12.06.2026", "资源锚", "通过手势和回忆找回支撑", "艰难时刻", "神经语言程序学", 4, "SelfImprovement",
+        TechniqueUiKind.Entry, "技巧 #13", "12.06.2026", "资源锚", "通过手势和回忆找回支撑", "艰难时刻", "NLP", 4, "SelfImprovement",
         [
             new TechniqueEntrySeed("资源回忆", "你什么时候感到强大、平静或快乐？", Suggestions: ["一次成功的发言", "一次海边度假", "亲近的人的拥抱", "完成了一件难事", "在大自然中散步", "通过了考试", "孩子出生", "赢得比赛", "和朋友度过的夜晚", "上司的表扬", "新工作的第一天", "一个不赶时间的早晨"]),
             new TechniqueEntrySeed("身体感觉", "你在哪里感觉到？温暖、轻盈、踏实……", Suggestions: ["胸口温暖", "轻盈", "肩膀舒展", "均匀的呼吸", "双腿稳稳的", "一个微笑", "平静的心", "挺直的背", "双手有力量", "放松的腹部"]),
@@ -348,7 +348,7 @@ internal static class TechniqueCatalogContentZh
             "4. 写下这一步后，评估你的精力"
         ],
         "行为激活：一个小行动能找回前进和掌控的感觉。",
-        TechniqueUiKind.Entry, "技巧 #16", "04.07.2026", "一小步", "用最小的行动找回动力", "艰难时刻", "认知行为疗法", 5, "DirectionsWalk",
+        TechniqueUiKind.Entry, "技巧 #16", "04.07.2026", "一小步", "用最小的行动找回动力", "艰难时刻", "CBT", 5, "DirectionsWalk",
         [
             new TechniqueEntrySeed("让你觉得沉重的事", "现在什么显得困难、无聊或不可能？", Suggestions: ["疲惫", "没精力", "要做的事太多", "无聊", "不敢开始", "什么都好像不重要", "没睡好", "没心情", "孤独", "拖延", "头疼", "不知道从哪里开始"], Role: EntryFieldRole.Problem),
             new TechniqueEntrySeed("今天最小的一步", "例如：起床、洗脸、发一条消息", Suggestions: ["起床", "洗把脸", "喝点水", "发一条消息", "出门走 5 分钟", "收拾一样东西", "打开窗户", "伸展 2 分钟", "洗个澡", "吃点东西", "给亲近的人打电话", "打开需要的文件", "写一份今天的计划", "洗一个杯子"]),
@@ -372,7 +372,7 @@ internal static class TechniqueCatalogContentZh
             "5. 再次给情绪打分"
         ],
         "结构化的认知行为疗法记录，帮助你看到情境、想法和情绪之间的联系。",
-        TechniqueUiKind.Entry, "技巧 #17", "04.07.2026", "想法记录", "拆解一个想法，减轻情绪负荷", "艰难时刻", "认知行为疗法", 7, "EditNote",
+        TechniqueUiKind.Entry, "技巧 #17", "04.07.2026", "想法记录", "拆解一个想法，减轻情绪负荷", "艰难时刻", "CBT", 7, "EditNote",
         [
             new TechniqueEntrySeed("情境", "发生了什么？在哪里、什么时候？", Suggestions: ProblemTopics, Role: EntryFieldRole.Problem),
             new TechniqueEntrySeed("自动想法", "那一刻你在想什么？", Suggestions: HarshThoughts),
@@ -396,7 +396,7 @@ internal static class TechniqueCatalogContentZh
             "4. 评估温暖或释然的程度"
         ],
         "自我关怀能减少严厉的自我批评，帮助你在犯错后恢复。",
-        TechniqueUiKind.Entry, "技巧 #18", "04.07.2026", "对自己说温和的话", "用支持缓和自我批评", "艰难时刻", "认知行为疗法", 5, "Favorite",
+        TechniqueUiKind.Entry, "技巧 #18", "04.07.2026", "对自己说温和的话", "用支持缓和自我批评", "艰难时刻", "CBT", 5, "Favorite",
         [
             new TechniqueEntrySeed("你批评自己的地方", "你对自己说什么，或者在责怪自己什么？", Suggestions: ["工作上出了错", "没做完", "对亲近的人发了脾气", "拿自己和别人比", "又在拖延", "我的外貌", "我的体重", "说错了话", "不是一个足够好的父母", "挣得太少", "没有遵守承诺", "太敏感"]),
             new TechniqueEntrySeed("你会对朋友说的话", "在这种情况下，你会怎样支持亲近的人？", Role: EntryFieldRole.Kindness),

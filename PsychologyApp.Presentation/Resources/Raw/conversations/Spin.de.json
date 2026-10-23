@@ -1,0 +1,195 @@
+{
+  "id": "Spin",
+  "title": "Spin",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "„Spin“ hilft, die Ladung einer Situation zu senken, die dich nicht loslässt. Ein paar Minuten, keine langen Antworten.",
+        "Lass uns den Griff einer Situation lockern, die in deinem Kopf kreist. Kurze Antworten oder die Vorschläge reichen."
+      ],
+      "next": "ask_episode"
+    },
+    {
+      "id": "ask_episode",
+      "kind": "askText",
+      "text": [
+        "Welche Situation belastet dich? Ein paar Worte reichen.",
+        "Welche Situation kommt immer wieder? Kurz, in deinen eigenen Worten."
+      ],
+      "hint": "Z. B. das Gespräch von gestern, das dich nicht loslässt",
+      "capture": "f0",
+      "recent": true,
+      "suggestions": [
+        "Streit mit einem nahen Menschen",
+        "Etwas auf der Arbeit",
+        "Konflikt mit meinem Chef",
+        "Studium oder eine Prüfung",
+        "Gesundheit",
+        "Geld",
+        "Einsamkeit",
+        "Ein Misserfolg",
+        "Eine Trennung",
+        "Beziehung zu meinen Eltern",
+        "Kinder",
+        "Ein Umzug",
+        "Die Zukunft",
+        "Kritik an mir"
+      ],
+      "next": "ask_feeling"
+    },
+    {
+      "id": "ask_feeling",
+      "kind": "askText",
+      "text": [
+        "Wenn du an „{f0}“ denkst, was ist das Hauptgefühl? Wähle es in der Palette oder schreib es auf.",
+        "Was fühlst du am stärksten, wenn du an „{f0}“ denkst?"
+      ],
+      "hint": "Kränkung, Angst, Wut…",
+      "capture": "f1",
+      "emotions": true,
+      "next": "ask_rating"
+    },
+    {
+      "id": "ask_rating",
+      "kind": "askRating",
+      "text": [
+        "Wie stark ist dieses Gefühl gerade? Von 0 bis 10.",
+        "Bewerte das Gefühl jetzt: 0 heißt, es berührt dich kaum; 10 heißt, es überwältigt dich."
+      ],
+      "capture": "f2",
+      "routes": [
+        {
+          "max": 2,
+          "next": "end_low"
+        },
+        {
+          "next": "replay_intro"
+        }
+      ]
+    },
+    {
+      "id": "replay_intro",
+      "kind": "say",
+      "text": [
+        "Spiel die Situation jetzt noch einmal im Kopf ab — langsam, wie einen Film, den du von der Seite ansiehst. Ohne zu urteilen, schau ihn einfach bis zum Ende. Atme dann lange aus.",
+        "Spiel die Situation vom Anfang bis zum Ende ab, ohne Eile, als säßest du im Publikum. Schau sie dir ganz an und atme aus."
+      ],
+      "next": "replay_ready"
+    },
+    {
+      "id": "replay_ready",
+      "kind": "askChoice",
+      "text": [
+        "Fertig angeschaut?"
+      ],
+      "choices": [
+        {
+          "label": "Ja",
+          "next": "ask_after"
+        },
+        {
+          "label": "Noch einmal",
+          "next": "replay_again"
+        },
+        {
+          "label": "Ich brauche eine Pause",
+          "next": "end_pause"
+        }
+      ]
+    },
+    {
+      "id": "replay_again",
+      "kind": "say",
+      "text": [
+        "Gut, noch einmal. Vom Anfang bis zum Ende, langsam. Bemerke, welche Details verblasst sind.",
+        "Noch eine Runde. Lass dir Zeit und bemerke, was dich nicht mehr so packt wie vorher."
+      ],
+      "next": "replay_ready"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "Und jetzt: Wie stark ist das Gefühl? Von 0 bis 10.",
+        "Bewerte noch einmal: Wie stark ist das Gefühl jetzt?"
+      ],
+      "capture": "rating_after",
+      "routes": [
+        {
+          "below": "f2",
+          "next": "end_better"
+        },
+        {
+          "same": "f2",
+          "next": "end_same"
+        },
+        {
+          "next": "end_worse"
+        }
+      ]
+    },
+    {
+      "id": "end_low",
+      "kind": "end",
+      "text": [
+        "Die Ladung ist gerade gering ({f2}). Das ist ein gutes Zeichen: Die Situation hält dich nicht mehr so fest. Wenn sie wiederkommt, kannst du „Spin“ wiederholen."
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [
+        "Vorher {f2}, jetzt {rating_after}. Die Ladung sinkt. Wenn die Situation wiederkommt, mach die Übung morgen noch einmal — meist wird es jedes Mal leichter."
+      ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [
+        "Die Stärke ist gleich geblieben ({rating_after}). Das ist normal: Manchmal braucht es ein paar Runden an verschiedenen Tagen. Du hast schon etwas Wichtiges getan — du hast hingeschaut."
+      ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [
+        "Es ist stärker geworden: vorher {f2}, jetzt {rating_after}. Das passiert, wenn man etwas Schmerzhaftes berührt, und es ist nicht deine Schuld. Atme dreimal langsam aus. Wenn die Schwere bleibt, sprich mit einem nahen Menschen oder einer Fachperson."
+      ]
+    },
+    {
+      "id": "end_pause",
+      "kind": "end",
+      "pause": true,
+      "text": [
+        "Gut, lass uns hier aufhören. Mach eine Pause und trink etwas Wasser. Du kannst jederzeit zurückkommen."
+      ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [
+        "Es tut mir sehr leid, dass du gerade so viel Schmerz hast. Was du geschrieben hast, ist wichtiger als jede Technik, deshalb beende ich die Übung."
+      ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [
+        "Bitte sprich jetzt mit einem echten Menschen. Wenn dein Leben in Gefahr sein könnte, ruf den Notruf an (112; in Deutschland erreichst du die TelefonSeelsorge unter 0800 111 0 111). Hilfetelefone in deiner Nähe findest du auf findahelpline.com. Wenn jemand in der Nähe ist, sag ihm, dass es dir nicht gut geht."
+      ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [
+        "Ich bin eine App, keine Fachperson, und ich kann dich nicht schützen. Du verdienst Unterstützung. Bitte hol sie dir."
+      ]
+    }
+  ]
+}

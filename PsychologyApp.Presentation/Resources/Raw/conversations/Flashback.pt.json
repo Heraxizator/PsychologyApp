@@ -1,0 +1,212 @@
+{
+  "id": "Flashback",
+  "title": "Uma lembrança tomou conta",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "Estou aqui com você. O que está acontecendo agora é uma lembrança. Ela é muito forte, mas é do passado. Juntos, vamos voltar ao presente agora."
+      ],
+      "next": "ask_before"
+    },
+    {
+      "id": "ask_before",
+      "kind": "askRating",
+      "text": [
+        "Qual a intensidade agora? De 0 a 10."
+      ],
+      "capture": "rating_before",
+      "next": "say_now"
+    },
+    {
+      "id": "say_now",
+      "kind": "say",
+      "text": [
+        "Diga a si mesmo, em voz alta se puder: \"Isto é uma lembrança. Aquilo foi antes, e agora é hoje. Eu estou aqui.\""
+      ],
+      "next": "ask_where"
+    },
+    {
+      "id": "ask_where",
+      "kind": "askText",
+      "text": [
+        "Onde você está agora, e que hora do dia é?"
+      ],
+      "hint": "Por exemplo: em casa, à noite",
+      "capture": "now",
+      "suggestions": [
+        "Em casa",
+        "No trabalho",
+        "Na rua",
+        "No transporte",
+        "Na casa de alguém",
+        "Manhã",
+        "Tarde",
+        "Noite",
+        "Madrugada"
+      ],
+      "next": "react_where"
+    },
+    {
+      "id": "react_where",
+      "kind": "say",
+      "text": [
+        "Agora: {now}. Este é o presente. O que voltou pertence a outro tempo."
+      ],
+      "next": "say_feet"
+    },
+    {
+      "id": "say_feet",
+      "kind": "say",
+      "text": [
+        "Coloque os pés no chão e pressione. Sinta o apoio. Feche as mãos com força por alguns segundos e solte."
+      ],
+      "next": "ask_see"
+    },
+    {
+      "id": "ask_see",
+      "kind": "askText",
+      "text": [
+        "Diga três coisas que você vê ao seu redor."
+      ],
+      "hint": "Por exemplo: janela, xícara, luminária",
+      "capture": "see",
+      "suggestions": [
+        "Janela",
+        "Mesa",
+        "Celular",
+        "Xícara",
+        "Luminária",
+        "Porta",
+        "Cadeira",
+        "Parede",
+        "Quadro",
+        "Planta",
+        "Relógio",
+        "Céu"
+      ],
+      "next": "react_see"
+    },
+    {
+      "id": "react_see",
+      "kind": "say",
+      "text": [
+        "{see}. É isso que está ao seu redor agora."
+      ],
+      "next": "say_breath"
+    },
+    {
+      "id": "say_breath",
+      "kind": "say",
+      "text": [
+        "Solte o ar devagar cinco vezes, por mais tempo do que inspira. Se puder, jogue água fria no rosto ou segure algo gelado."
+      ],
+      "next": "ask_safe"
+    },
+    {
+      "id": "ask_safe",
+      "kind": "askChoice",
+      "text": [
+        "Você está seguro agora, onde está?"
+      ],
+      "choices": [
+        {
+          "label": "Sim",
+          "next": "ask_after"
+        },
+        {
+          "label": "Não tenho certeza",
+          "next": "unsure"
+        },
+        {
+          "label": "Não",
+          "next": "not_safe"
+        }
+      ]
+    },
+    {
+      "id": "unsure",
+      "kind": "say",
+      "text": [
+        "Olhe ao redor mais uma vez. O que aconteceu naquela época está aqui agora? Quase sempre, não. O corpo reage como se o perigo estivesse perto, mas ele está no passado."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "not_safe",
+      "kind": "say",
+      "text": [
+        "Se você está em perigo agora, ligue para a emergência (no Brasil, 190 ou SAMU 192; em Portugal, 112) e vá para um lugar seguro. Se o perigo está na lembrança e não ao seu redor, volte para o que você vê e o que sente sob os pés."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "Qual a intensidade agora? De 0 a 10."
+      ],
+      "capture": "rating_after",
+      "routes": [
+        {
+          "below": "rating_before",
+          "next": "end_better"
+        },
+        {
+          "same": "rating_before",
+          "next": "end_same"
+        },
+        {
+          "next": "end_worse"
+        }
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [
+        "Antes {rating_before}, agora {rating_after}. Você voltou ao presente. Flashbacks depois de um trauma são uma reação comum e respondem bem ao tratamento. Por onde começar está no artigo \"Depois de um trauma\", na aba Artigos."
+      ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [
+        "Agora está em {rating_after}. Faça os passos de novo, mais devagar, e jogue água fria no rosto. Se os flashbacks forem frequentes, vale a pena procurar um especialista em trauma: isso responde bem ao tratamento."
+      ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [
+        "Ficou mais difícil (antes {rating_before}, agora {rating_after}), e isso não é culpa sua. Ligue para alguém próximo ou para uma linha de apoio. Se sua vida estiver em risco, ligue para a emergência."
+      ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [
+        "Sinto muito que você esteja sofrendo tanto agora. O que você escreveu importa mais do que qualquer técnica, então vou parar o exercício."
+      ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [
+        "Por favor, fale agora com uma pessoa de verdade. Se sua vida pode estar em risco, ligue para a emergência (no Brasil, SAMU 192; o CVV atende pelo 188, 24 horas; em Portugal, 112). Se houver alguém por perto, diga que você não está bem."
+      ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [
+        "Sou um aplicativo, não um profissional, e não consigo garantir sua segurança. Você merece apoio. Por favor, procure ajuda."
+      ]
+    }
+  ]
+}

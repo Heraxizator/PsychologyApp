@@ -1,0 +1,326 @@
+{
+  "id": "Observer",
+  "title": "Beobachterposition",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "Lass uns deine Situation gemeinsam von außen betrachten. Das dauert etwa fünf Minuten.",
+        "Hallo. Wir treten ein paar Schritte von dem zurück, was dich belastet, und sehen es anders. Fünf Minuten, nicht mehr."
+      ],
+      "next": "intro_note"
+    },
+    {
+      "id": "intro_note",
+      "kind": "say",
+      "text": [
+        "Antworte, wie es kommt, es gibt keine richtigen Antworten. Alles bleibt auf deinem Gerät."
+      ],
+      "next": "ask_situation"
+    },
+    {
+      "id": "ask_situation",
+      "kind": "askText",
+      "text": [
+        "Was ist passiert, oder was spielst du im Kopf immer wieder durch? Zwei oder drei Sätze reichen.",
+        "Über welche Situation möchtest du nachdenken? Erzähl kurz, in deinen eigenen Worten."
+      ],
+      "hint": "Zum Beispiel: das Gespräch gestern mit meinem Chef",
+      "capture": "situation",
+      "suggestions": [
+        "Streit mit einem nahen Menschen",
+        "Etwas auf der Arbeit",
+        "Konflikt mit meinem Chef",
+        "Studium oder eine Prüfung",
+        "Gesundheit",
+        "Geld",
+        "Einsamkeit",
+        "Ein Misserfolg",
+        "Eine Trennung",
+        "Beziehung zu meinen Eltern",
+        "Kinder",
+        "Ein Umzug",
+        "Die Zukunft",
+        "Kritik an mir"
+      ],
+      "recent": true,
+      "next": "ask_feeling"
+    },
+    {
+      "id": "ask_feeling",
+      "kind": "askChoice",
+      "text": [
+        "Danke, dass du es teilst. Was fühlst du am stärksten, wenn du daran denkst?",
+        "Verstehe. Welches Gefühl ist hier das wichtigste?"
+      ],
+      "capture": "feeling",
+      "choices": [
+        {
+          "label": "Angst",
+          "value": "Angst",
+          "next": "ask_body"
+        },
+        {
+          "label": "Kränkung",
+          "value": "Kränkung",
+          "next": "ask_body"
+        },
+        {
+          "label": "Wut",
+          "value": "Wut",
+          "next": "ask_body"
+        },
+        {
+          "label": "Schuld",
+          "value": "Schuld",
+          "next": "ask_body"
+        },
+        {
+          "label": "Traurigkeit",
+          "value": "Traurigkeit",
+          "next": "ask_body"
+        },
+        {
+          "label": "Etwas anderes",
+          "next": "ask_feeling_other"
+        }
+      ]
+    },
+    {
+      "id": "ask_feeling_other",
+      "kind": "askText",
+      "text": [
+        "Wie würdest du dieses Gefühl nennen? Ein oder zwei Worte reichen."
+      ],
+      "capture": "feeling",
+      "emotions": true,
+      "next": "ask_body"
+    },
+    {
+      "id": "ask_body",
+      "kind": "askText",
+      "text": [
+        "Das Gefühl ist „{feeling}“. Wo sitzt es in deinem Körper: Brust, Bauch, Schultern? Ein paar Worte.",
+        "Bemerke, wo sich „{feeling}“ in deinem Körper zeigt. Was spürst du dort?"
+      ],
+      "hint": "Zum Beispiel: Enge in der Brust",
+      "capture": "body",
+      "suggestions": [
+        "Enge Brust",
+        "Kloß im Hals",
+        "Angespannte Schultern",
+        "Schwerer Bauch",
+        "Heißes Gesicht",
+        "Zitternde Hände",
+        "Herzrasen",
+        "Kalte Hände",
+        "Knoten im Magen",
+        "Schwerer Kopf"
+      ],
+      "next": "ask_before"
+    },
+    {
+      "id": "ask_before",
+      "kind": "askRating",
+      "text": [
+        "Wie stark belastet dich das gerade? Von 0 (gar nicht) bis 10 (stärker geht es nicht).",
+        "Bewerte deine Anspannung jetzt: 0 ist ruhig, 10 ist sehr schwer."
+      ],
+      "capture": "rating_before",
+      "routes": [
+        {
+          "max": 2,
+          "next": "before_low"
+        },
+        {
+          "max": 8,
+          "next": "observer_intro"
+        },
+        {
+          "next": "before_high"
+        }
+      ]
+    },
+    {
+      "id": "before_low",
+      "kind": "say",
+      "text": [
+        "Die Anspannung ist gering, das ist gut. Die Technik hilft dir trotzdem, Abstand nehmen zu üben."
+      ],
+      "next": "observer_intro"
+    },
+    {
+      "id": "before_high",
+      "kind": "say",
+      "text": [
+        "Das ist eine sehr starke Anspannung. Bevor wir weitermachen, atme dreimal langsam aus, länger als du einatmest. Ich warte."
+      ],
+      "next": "before_high_ready"
+    },
+    {
+      "id": "before_high_ready",
+      "kind": "askChoice",
+      "text": [
+        "Bereit weiterzumachen?"
+      ],
+      "choices": [
+        {
+          "label": "Ja, weiter",
+          "next": "observer_intro"
+        },
+        {
+          "label": "Ich brauche eine Pause",
+          "next": "end_pause"
+        }
+      ]
+    },
+    {
+      "id": "observer_intro",
+      "kind": "say",
+      "text": [
+        "Stell dir jetzt vor, du bist ein paar Schritte zurückgetreten. Du siehst die Szene von der Seite, wie ein ruhiger Mensch, der weder dich noch deine Geschichte kennt. Er sieht nur, was geschieht.",
+        "Tritt in Gedanken einen kleinen Schritt zurück. Es ist dieselbe Szene, aber du bist nicht mehr darin — du bist ein Zuschauer, der nichts bewertet."
+      ],
+      "next": "ask_observer"
+    },
+    {
+      "id": "ask_observer",
+      "kind": "askText",
+      "text": [
+        "Was sieht dieser Beobachter? Beschreibe die Situation in der dritten Person, neutral: „Ein Mensch …“, ohne „sollte“, „immer“, „nie“.",
+        "Beschreibe dasselbe mit den Augen des Beobachters: Wer tut und sagt was. Nur Fakten, dritte Person."
+      ],
+      "hint": "Zum Beispiel: Zwei Menschen sprechen mit erhobener Stimme",
+      "capture": "observer",
+      "suggestions": [
+        "Zwei Menschen streiten",
+        "Ein müder, aufgebrachter Mensch",
+        "Eine gewöhnliche Arbeitssituation",
+        "Jeder verteidigt seine Sicht",
+        "In einer Woche ist das vergessen",
+        "Die Menschen haben sich missverstanden",
+        "Ein Mensch, der sich sehr bemüht",
+        "Unangenehm, aber nicht gefährlich",
+        "Jeder hat seine eigene Sicht",
+        "Der Mensch braucht Ruhe"
+      ],
+      "next": "reflect"
+    },
+    {
+      "id": "reflect",
+      "kind": "say",
+      "text": [
+        "Von innen war es: „{situation}“. Von außen: „{observer}“. Bemerke, wie sich die beiden Beschreibungen unterscheiden.",
+        "In der Situation hast du gesagt: „{situation}“. Der Beobachter sagt: „{observer}“. Spürst du den Unterschied?"
+      ],
+      "next": "ask_advice"
+    },
+    {
+      "id": "ask_advice",
+      "kind": "askText",
+      "text": [
+        "Was würde dieser ruhige Beobachter dem Menschen in dieser Szene sagen? Ein freundlicher Satz.",
+        "Wenn der Beobachter dem Menschen in dieser Situation einen unterstützenden Satz sagen könnte, welcher wäre es?"
+      ],
+      "hint": "Zum Beispiel: Du machst das besser, als du denkst",
+      "capture": "advice",
+      "suggestions": [
+        "Du machst das besser, als du denkst",
+        "Das geht vorbei",
+        "Du darfst so fühlen",
+        "Halt kurz inne und atme aus",
+        "Du bist nicht allein",
+        "Fehler zu machen ist in Ordnung",
+        "Du hast schon viel geschafft",
+        "Pass auf dich auf"
+      ],
+      "next": "advice_echo"
+    },
+    {
+      "id": "advice_echo",
+      "kind": "say",
+      "text": [
+        "„{advice}“. Merk dir diesen Satz, er gehört dir.",
+        "„{advice}“. Gute Worte. Behalte sie."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "Jetzt ehrlich: Wie stark ist die Anspannung gerade? Von 0 bis 10.",
+        "Bewerte deine Anspannung noch einmal von 0 bis 10. Was hat sich verändert?"
+      ],
+      "capture": "rating_after",
+      "routes": [
+        {
+          "below": "rating_before",
+          "next": "end_better"
+        },
+        {
+          "same": "rating_before",
+          "next": "end_same"
+        },
+        {
+          "next": "end_worse"
+        }
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [
+        "Vorher {rating_before}, jetzt {rating_after}. Der Abstand hat also gewirkt. Du kannst jederzeit in die Beobachterposition zurückkehren, wenn Gefühle dich überrollen."
+      ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [
+        "Die Anspannung ist gleich geblieben ({rating_after}). Das ist normal: Manchmal reicht einmal nicht. Atme durch und komm später zu dieser Technik zurück, vielleicht mit einer anderen Situation."
+      ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [
+        "Es ist stärker geworden: vorher {rating_before}, jetzt {rating_after}. Das passiert, wenn man ein schweres Thema berührt, und es ist nicht deine Schuld. Atme dreimal langsam aus. Wenn die Schwere nicht vergeht, sprich mit einem nahen Menschen oder einer Fachperson."
+      ]
+    },
+    {
+      "id": "end_pause",
+      "kind": "end",
+      "pause": true,
+      "text": [
+        "Gut, lass uns hier aufhören. Mach eine Pause, trink etwas Wasser und komm zurück, wann du willst. Gut gemacht, dass du so weit gekommen bist."
+      ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [
+        "Es tut mir sehr leid, dass du gerade so viel Schmerz hast. Was du geschrieben hast, ist wichtiger als jede Technik, deshalb beende ich die Übung."
+      ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [
+        "Bitte sprich jetzt mit einem echten Menschen. Wenn dein Leben in Gefahr sein könnte, ruf den Notruf an (112; in Deutschland erreichst du die TelefonSeelsorge unter 0800 111 0 111). Hilfetelefone in deiner Nähe findest du auf findahelpline.com. Wenn jemand in der Nähe ist, sag ihm, dass es dir nicht gut geht."
+      ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [
+        "Ich bin eine App, keine Fachperson, und ich kann dich nicht schützen. Du verdienst Unterstützung. Bitte hol sie dir."
+      ]
+    }
+  ]
+}

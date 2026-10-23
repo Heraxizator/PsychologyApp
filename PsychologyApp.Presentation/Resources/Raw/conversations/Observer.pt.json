@@ -1,0 +1,326 @@
+{
+  "id": "Observer",
+  "title": "Posição de observador",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "Vamos olhar juntos a sua situação de fora. Leva uns cinco minutos.",
+        "Oi. Vamos dar uns passos para trás em relação ao que incomoda você e ver de outro jeito. Cinco minutos, não mais."
+      ],
+      "next": "intro_note"
+    },
+    {
+      "id": "intro_note",
+      "kind": "say",
+      "text": [
+        "Responda do jeito que vier, não há respostas certas. Tudo fica no seu aparelho."
+      ],
+      "next": "ask_situation"
+    },
+    {
+      "id": "ask_situation",
+      "kind": "askText",
+      "text": [
+        "O que aconteceu, ou o que você fica repassando na cabeça? Duas ou três frases bastam.",
+        "Sobre qual situação você gostaria de pensar? Conte em poucas palavras, do seu jeito."
+      ],
+      "hint": "Por exemplo: a conversa de ontem com meu chefe",
+      "capture": "situation",
+      "suggestions": [
+        "Uma briga com alguém próximo",
+        "Algo no trabalho",
+        "Um conflito com meu chefe",
+        "Os estudos ou uma prova",
+        "A saúde",
+        "Dinheiro",
+        "A solidão",
+        "Um fracasso",
+        "Um término",
+        "A relação com meus pais",
+        "Os filhos",
+        "Uma mudança de casa",
+        "O futuro",
+        "Críticas a mim"
+      ],
+      "recent": true,
+      "next": "ask_feeling"
+    },
+    {
+      "id": "ask_feeling",
+      "kind": "askChoice",
+      "text": [
+        "Obrigado por contar. O que você sente com mais força quando pensa nisso?",
+        "Entendo. Qual é o sentimento principal aqui?"
+      ],
+      "capture": "feeling",
+      "choices": [
+        {
+          "label": "Ansiedade",
+          "value": "ansiedade",
+          "next": "ask_body"
+        },
+        {
+          "label": "Mágoa",
+          "value": "mágoa",
+          "next": "ask_body"
+        },
+        {
+          "label": "Raiva",
+          "value": "raiva",
+          "next": "ask_body"
+        },
+        {
+          "label": "Culpa",
+          "value": "culpa",
+          "next": "ask_body"
+        },
+        {
+          "label": "Tristeza",
+          "value": "tristeza",
+          "next": "ask_body"
+        },
+        {
+          "label": "Outra coisa",
+          "next": "ask_feeling_other"
+        }
+      ]
+    },
+    {
+      "id": "ask_feeling_other",
+      "kind": "askText",
+      "text": [
+        "Como você chamaria esse sentimento? Uma ou duas palavras bastam."
+      ],
+      "capture": "feeling",
+      "emotions": true,
+      "next": "ask_body"
+    },
+    {
+      "id": "ask_body",
+      "kind": "askText",
+      "text": [
+        "O sentimento é \"{feeling}\". Onde ele mora no seu corpo: peito, barriga, ombros? Poucas palavras.",
+        "Perceba onde \"{feeling}\" aparece no seu corpo. O que você sente ali?"
+      ],
+      "hint": "Por exemplo: aperto no peito",
+      "capture": "body",
+      "suggestions": [
+        "Aperto no peito",
+        "Nó na garganta",
+        "Ombros tensos",
+        "Barriga pesada",
+        "Rosto quente",
+        "Mãos tremendo",
+        "Coração acelerado",
+        "Mãos frias",
+        "Nó no estômago",
+        "Cabeça pesada"
+      ],
+      "next": "ask_before"
+    },
+    {
+      "id": "ask_before",
+      "kind": "askRating",
+      "text": [
+        "O quanto isso está pesando em você agora? De 0 (nada) a 10 (não poderia ser mais forte).",
+        "Avalie sua tensão agora: 0 é calma, 10 é muito difícil."
+      ],
+      "capture": "rating_before",
+      "routes": [
+        {
+          "max": 2,
+          "next": "before_low"
+        },
+        {
+          "max": 8,
+          "next": "observer_intro"
+        },
+        {
+          "next": "before_high"
+        }
+      ]
+    },
+    {
+      "id": "before_low",
+      "kind": "say",
+      "text": [
+        "A tensão está baixa, e isso é bom. A técnica ainda vai ajudar você a treinar o distanciamento."
+      ],
+      "next": "observer_intro"
+    },
+    {
+      "id": "before_high",
+      "kind": "say",
+      "text": [
+        "Essa é uma tensão muito forte. Antes de continuar, solte o ar devagar, por mais tempo do que inspira, três vezes. Eu espero."
+      ],
+      "next": "before_high_ready"
+    },
+    {
+      "id": "before_high_ready",
+      "kind": "askChoice",
+      "text": [
+        "Pronto para continuar?"
+      ],
+      "choices": [
+        {
+          "label": "Sim, vamos continuar",
+          "next": "observer_intro"
+        },
+        {
+          "label": "Preciso de uma pausa",
+          "next": "end_pause"
+        }
+      ]
+    },
+    {
+      "id": "observer_intro",
+      "kind": "say",
+      "text": [
+        "Agora imagine que você deu alguns passos para trás. Você vê essa cena de lado, como uma pessoa calma que não conhece você nem a sua história. Ela vê só o que está acontecendo.",
+        "Dê um pequeno passo para trás na sua mente. É a mesma cena, mas você não está mais nela: é um espectador que não julga nada."
+      ],
+      "next": "ask_observer"
+    },
+    {
+      "id": "ask_observer",
+      "kind": "askText",
+      "text": [
+        "O que esse observador vê? Descreva a situação em terceira pessoa, de forma neutra: \"Uma pessoa...\", sem \"deveria\", \"sempre\", \"nunca\".",
+        "Descreva a mesma coisa pelos olhos do observador: quem faz e diz o quê. Só fatos, em terceira pessoa."
+      ],
+      "hint": "Por exemplo: duas pessoas estão falando alto",
+      "capture": "observer",
+      "suggestions": [
+        "Duas pessoas discutindo",
+        "Uma pessoa cansada e chateada",
+        "Uma situação comum de trabalho",
+        "Cada um defende seu lado",
+        "Em uma semana isso vai estar esquecido",
+        "As pessoas se entenderam mal",
+        "Uma pessoa se esforçando muito",
+        "Desagradável, mas não perigoso",
+        "Cada um tem seu ponto de vista",
+        "A pessoa precisa descansar"
+      ],
+      "next": "reflect"
+    },
+    {
+      "id": "reflect",
+      "kind": "say",
+      "text": [
+        "De dentro era: \"{situation}\". De fora: \"{observer}\". Perceba como essas duas descrições são diferentes.",
+        "Dentro da situação você disse: \"{situation}\". O observador diz: \"{observer}\". Sente a diferença?"
+      ],
+      "next": "ask_advice"
+    },
+    {
+      "id": "ask_advice",
+      "kind": "askText",
+      "text": [
+        "O que esse observador calmo diria para a pessoa nessa cena? Uma frase gentil.",
+        "Se o observador pudesse dizer uma frase de apoio para a pessoa nessa situação, qual seria?"
+      ],
+      "hint": "Por exemplo: você está indo melhor do que pensa",
+      "capture": "advice",
+      "suggestions": [
+        "Você está indo melhor do que pensa",
+        "Isso vai passar",
+        "Você tem o direito de se sentir assim",
+        "Faça uma pausa e solte o ar",
+        "Você não está sozinho",
+        "Tudo bem errar",
+        "Você já fez muito",
+        "Cuide de você"
+      ],
+      "next": "advice_echo"
+    },
+    {
+      "id": "advice_echo",
+      "kind": "say",
+      "text": [
+        "\"{advice}\". Guarde essa frase, ela é sua.",
+        "\"{advice}\". Boas palavras. Guarde-as."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "Agora, com sinceridade: qual a intensidade da tensão neste momento? De 0 a 10.",
+        "Avalie sua tensão de 0 a 10 de novo. O que mudou?"
+      ],
+      "capture": "rating_after",
+      "routes": [
+        {
+          "below": "rating_before",
+          "next": "end_better"
+        },
+        {
+          "same": "rating_before",
+          "next": "end_same"
+        },
+        {
+          "next": "end_worse"
+        }
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [
+        "Antes {rating_before}, agora {rating_after}. Então o distanciamento funcionou. Você pode voltar à posição de observador sempre que as emoções tomarem conta."
+      ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [
+        "A tensão ficou igual ({rating_after}). É normal: às vezes uma vez não basta. Respire um pouco e volte a esta técnica depois, talvez com outra situação."
+      ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [
+        "Ficou mais forte: antes {rating_before}, agora {rating_after}. Isso acontece quando se toca em um assunto difícil, e não é culpa sua. Solte o ar devagar três vezes. Se o peso não passar, converse com alguém próximo ou com um profissional."
+      ]
+    },
+    {
+      "id": "end_pause",
+      "kind": "end",
+      "pause": true,
+      "text": [
+        "Tudo bem, vamos parar por aqui. Faça uma pausa, beba um pouco de água e volte quando quiser. Muito bem por ter chegado até aqui."
+      ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [
+        "Sinto muito que você esteja sofrendo tanto agora. O que você escreveu importa mais do que qualquer técnica, então vou parar o exercício."
+      ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [
+        "Por favor, fale agora com uma pessoa de verdade. Se sua vida pode estar em risco, ligue para a emergência (no Brasil, SAMU 192; o CVV atende pelo 188, 24 horas; em Portugal, 112). Você encontra linhas de apoio perto de você em findahelpline.com. Se houver alguém por perto, diga que você não está bem."
+      ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [
+        "Sou um aplicativo, não um profissional, e não consigo garantir sua segurança. Você merece apoio. Por favor, procure ajuda."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+{
+  "id": "Spin",
+  "title": "Spin",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "« Spin » aide à réduire la charge d'un épisode qui ne vous lâche pas. Quelques minutes, pas de longues réponses.",
+        "Desserrons l'emprise d'un épisode qui tourne dans votre tête. Des réponses courtes ou les suggestions suffisent."
+      ],
+      "next": "ask_episode"
+    },
+    {
+      "id": "ask_episode",
+      "kind": "askText",
+      "text": [
+        "Quel épisode vous préoccupe ? Quelques mots suffisent.",
+        "Quel épisode revient sans cesse ? En bref, avec vos mots."
+      ],
+      "hint": "Par ex. la conversation d'hier qui ne vous lâche pas",
+      "capture": "f0",
+      "recent": true,
+      "suggestions": [
+        "Une dispute avec un proche",
+        "Quelque chose au travail",
+        "Un conflit avec mon chef",
+        "Les études ou un examen",
+        "La santé",
+        "L'argent",
+        "La solitude",
+        "Un échec",
+        "Une rupture",
+        "La relation avec mes parents",
+        "Les enfants",
+        "Un déménagement",
+        "L'avenir",
+        "Les critiques à mon égard"
+      ],
+      "next": "ask_feeling"
+    },
+    {
+      "id": "ask_feeling",
+      "kind": "askText",
+      "text": [
+        "Quand vous repensez à « {f0} », quel est le sentiment principal ? Choisissez-le dans la palette ou écrivez-le.",
+        "Que ressentez-vous le plus fort quand vous pensez à « {f0} » ?"
+      ],
+      "hint": "Blessure, peur, colère…",
+      "capture": "f1",
+      "emotions": true,
+      "next": "ask_rating"
+    },
+    {
+      "id": "ask_rating",
+      "kind": "askRating",
+      "text": [
+        "Quelle est la force de ce sentiment en ce moment ? De 0 à 10.",
+        "Évaluez le sentiment maintenant : 0, il vous touche à peine ; 10, il vous submerge."
+      ],
+      "capture": "f2",
+      "routes": [
+        {
+          "max": 2,
+          "next": "end_low"
+        },
+        {
+          "next": "replay_intro"
+        }
+      ]
+    },
+    {
+      "id": "replay_intro",
+      "kind": "say",
+      "text": [
+        "Maintenant, repassez l'épisode dans votre tête — lentement, comme un film que vous regardez de côté. Sans juger, regardez-le jusqu'au bout. Puis expirez longuement.",
+        "Rejouez l'épisode du début à la fin, sans vous presser, comme si vous étiez dans la salle. Regardez-le jusqu'au bout et expirez."
+      ],
+      "next": "replay_ready"
+    },
+    {
+      "id": "replay_ready",
+      "kind": "askChoice",
+      "text": [
+        "Vous avez fini de regarder ?"
+      ],
+      "choices": [
+        {
+          "label": "Oui",
+          "next": "ask_after"
+        },
+        {
+          "label": "Encore une fois",
+          "next": "replay_again"
+        },
+        {
+          "label": "J'ai besoin d'une pause",
+          "next": "end_pause"
+        }
+      ]
+    },
+    {
+      "id": "replay_again",
+      "kind": "say",
+      "text": [
+        "D'accord, encore une fois. Du tout début à la fin, lentement. Remarquez quels détails se sont estompés.",
+        "Encore un tour. Prenez votre temps et remarquez ce qui ne vous accroche plus autant."
+      ],
+      "next": "replay_ready"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "Et maintenant : quelle est la force du sentiment ? De 0 à 10.",
+        "Évaluez de nouveau : quelle est la force du sentiment maintenant ?"
+      ],
+      "capture": "rating_after",
+      "routes": [
+        {
+          "below": "f2",
+          "next": "end_better"
+        },
+        {
+          "same": "f2",
+          "next": "end_same"
+        },
+        {
+          "next": "end_worse"
+        }
+      ]
+    },
+    {
+      "id": "end_low",
+      "kind": "end",
+      "text": [
+        "La charge est faible en ce moment ({f2}). C'est bon signe : l'épisode vous tient moins fort. S'il revient, vous pouvez refaire « Spin »."
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [
+        "C'était {f2}, maintenant {rating_after}. La charge diminue. Si l'épisode revient, refaites la pratique demain — en général, c'est plus facile à chaque fois."
+      ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [
+        "L'intensité est restée la même ({rating_after}). C'est normal : il faut parfois plusieurs fois, sur différents jours. Vous avez déjà fait quelque chose d'important — vous l'avez regardé en face."
+      ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [
+        "C'est devenu plus fort : c'était {f2}, maintenant {rating_after}. Cela arrive quand on touche quelque chose de douloureux, et ce n'est pas de votre faute. Faites trois expirations lentes. Si la lourdeur reste, parlez-en à un proche ou à un professionnel."
+      ]
+    },
+    {
+      "id": "end_pause",
+      "kind": "end",
+      "pause": true,
+      "text": [
+        "D'accord, arrêtons-nous ici. Faites une pause et buvez un peu d'eau. Vous pouvez revenir quand vous voulez."
+      ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [
+        "Je suis vraiment désolé que vous souffriez autant en ce moment. Ce que vous avez écrit compte plus que n'importe quelle technique, alors j'arrête l'exercice."
+      ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [
+        "Parlez à une vraie personne dès maintenant. Si votre vie est peut-être en danger, appelez le numéro d'urgence (112 en Europe ; en France, le 3114 pour la prévention du suicide). Vous trouverez des lignes d'écoute près de chez vous sur findahelpline.com. Si quelqu'un est près de vous, dites-lui que ça ne va pas."
+      ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [
+        "Je suis une application, pas un professionnel, et je ne peux pas assurer votre sécurité. Vous méritez du soutien. N'hésitez pas à en demander."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,273 @@
+{
+  "id": "Grounding",
+  "title": "Ancoragem 5-4-3-2-1",
+  "start": "intro",
+  "crisis": "crisis",
+  "nodes": [
+    {
+      "id": "intro",
+      "kind": "say",
+      "text": [
+        "Estou aqui. Vamos voltar ao momento presente pelos seus sentidos. Leva uns três minutos.",
+        "Vamos voltar juntos, com calma, ao presente. Três minutos, passo a passo."
+      ],
+      "next": "intro_breath"
+    },
+    {
+      "id": "intro_breath",
+      "kind": "say",
+      "text": [
+        "Primeiro, solte o ar devagar, por mais tempo do que inspirou. Não precisa de mais nada."
+      ],
+      "next": "ask_before"
+    },
+    {
+      "id": "ask_before",
+      "kind": "askRating",
+      "text": [
+        "Qual a intensidade da sua ansiedade ou tensão agora? De 0 a 10.",
+        "Avalie sua tensão agora: 0 é calma, 10 é muito difícil."
+      ],
+      "capture": "rating_before",
+      "next": "step_see"
+    },
+    {
+      "id": "step_see",
+      "kind": "say",
+      "text": [
+        "Certo. Vamos começar. Olhe ao redor, sem pressa."
+      ],
+      "next": "ask_see"
+    },
+    {
+      "id": "ask_see",
+      "kind": "askText",
+      "text": [
+        "Diga 5 coisas que você vê. Pode separar por vírgulas."
+      ],
+      "hint": "Por exemplo: janela, xícara, livro, luminária, minha mão",
+      "capture": "see",
+      "suggestions": [
+        "Janela",
+        "Mesa",
+        "Celular",
+        "Computador",
+        "Notebook",
+        "Monitor",
+        "Teclado",
+        "Xícara",
+        "Luminária",
+        "Mão",
+        "Porta",
+        "Livro",
+        "Cadeira",
+        "Parede",
+        "Quadro",
+        "Planta",
+        "Relógio",
+        "Armário",
+        "Céu",
+        "Carro"
+      ],
+      "next": "react_see"
+    },
+    {
+      "id": "react_see",
+      "kind": "say",
+      "text": [
+        "Você vê: {see}. Ótimo. Solte o ar.",
+        "{see}. Muito bem, você está vendo tudo isso agora. Solte o ar."
+      ],
+      "next": "ask_touch"
+    },
+    {
+      "id": "ask_touch",
+      "kind": "askText",
+      "text": [
+        "Agora 4 coisas que você sente com o corpo: o que apoia você, a roupa na pele, o ar."
+      ],
+      "hint": "Por exemplo: cadeira, chão, tecido, ar fresco",
+      "capture": "touch",
+      "suggestions": [
+        "Cadeira",
+        "O chão sob os pés",
+        "A roupa",
+        "O frescor",
+        "O calor",
+        "O celular na mão",
+        "O encosto da cadeira",
+        "O tecido na pele",
+        "A respiração no peito",
+        "O vento",
+        "O mouse",
+        "As chaves",
+        "O travesseiro",
+        "O relógio no pulso"
+      ],
+      "next": "react_touch"
+    },
+    {
+      "id": "react_touch",
+      "kind": "say",
+      "text": [
+        "Você sente: {touch}. Seu corpo está aqui, e está apoiado."
+      ],
+      "next": "ask_hear"
+    },
+    {
+      "id": "ask_hear",
+      "kind": "askText",
+      "text": [
+        "Escute. Diga 3 sons ao seu redor, mesmo os mais baixinhos. Você pode ouvir sua própria respiração."
+      ],
+      "hint": "Por exemplo: relógio, rua, respiração",
+      "capture": "hear",
+      "suggestions": [
+        "A rua",
+        "Relógio",
+        "A respiração",
+        "Vozes",
+        "A geladeira",
+        "O vento",
+        "O silêncio",
+        "Computador",
+        "Os carros",
+        "Os pássaros",
+        "Música",
+        "O ar-condicionado",
+        "Passos",
+        "A chuva"
+      ],
+      "next": "react_hear"
+    },
+    {
+      "id": "react_hear",
+      "kind": "say",
+      "text": [
+        "Você ouve: {hear}. Perceba que os sons simplesmente existem, e você consegue distingui-los."
+      ],
+      "next": "ask_smell"
+    },
+    {
+      "id": "ask_smell",
+      "kind": "askText",
+      "text": [
+        "Agora 2 cheiros. Se não sentir nenhum agora, lembre dos seus favoritos."
+      ],
+      "hint": "Por exemplo: café, ar fresco",
+      "capture": "smell",
+      "suggestions": [
+        "Café",
+        "Ar fresco",
+        "Sabonete",
+        "Comida",
+        "Perfume",
+        "Quase nada",
+        "Chá",
+        "Pão",
+        "Livros",
+        "Flores",
+        "Creme para as mãos",
+        "Madeira"
+      ],
+      "next": "ask_taste"
+    },
+    {
+      "id": "ask_taste",
+      "kind": "askText",
+      "text": [
+        "E o último: 1 sabor ou sensação agradável. Por exemplo, água na boca ou um tecido macio sob os dedos."
+      ],
+      "hint": "Por exemplo: o gosto da água",
+      "capture": "taste",
+      "suggestions": [
+        "Água",
+        "Chá",
+        "Um tecido macio",
+        "As palmas quentes",
+        "A boca fresca",
+        "Café",
+        "Um chiclete de menta",
+        "Chocolate",
+        "Uma maçã",
+        "Um cobertor quentinho"
+      ],
+      "next": "wrap"
+    },
+    {
+      "id": "wrap",
+      "kind": "say",
+      "text": [
+        "Você passou pelos cinco sentidos. Respire devagar mais uma vez.",
+        "Pronto: os cinco sentidos completos. Mais uma respiração tranquila."
+      ],
+      "next": "ask_after"
+    },
+    {
+      "id": "ask_after",
+      "kind": "askRating",
+      "text": [
+        "Como está a tensão agora? De 0 a 10.",
+        "Avalie sua tensão mais uma vez, de 0 a 10."
+      ],
+      "capture": "rating_after",
+      "routes": [
+        {
+          "below": "rating_before",
+          "next": "end_better"
+        },
+        {
+          "same": "rating_before",
+          "next": "end_same"
+        },
+        {
+          "next": "end_worse"
+        }
+      ]
+    },
+    {
+      "id": "end_better",
+      "kind": "end",
+      "text": [
+        "Antes {rating_before}, agora {rating_after}. Sua atenção voltou ao presente. Você pode repetir isso em qualquer lugar: o 5-4-3-2-1 está sempre com você."
+      ]
+    },
+    {
+      "id": "end_same",
+      "kind": "end",
+      "text": [
+        "A tensão ficou em {rating_after}. Acontece: tente de novo mais devagar, ou deixe água morna correr pelas mãos por um minuto."
+      ]
+    },
+    {
+      "id": "end_worse",
+      "kind": "end",
+      "text": [
+        "A tensão subiu (antes {rating_before}, agora {rating_after}), e isso não é culpa sua. Se estiver muito forte ou não passar, procure alguém próximo ou um profissional. Se sua vida estiver em risco, ligue para a emergência."
+      ]
+    },
+    {
+      "id": "crisis",
+      "kind": "say",
+      "text": [
+        "Sinto muito que você esteja sofrendo tanto agora. O que você escreveu importa mais do que qualquer técnica, então vou parar o exercício."
+      ],
+      "next": "crisis_help"
+    },
+    {
+      "id": "crisis_help",
+      "kind": "say",
+      "text": [
+        "Por favor, fale agora com uma pessoa de verdade. Se sua vida pode estar em risco, ligue para a emergência (no Brasil, SAMU 192; o CVV atende pelo 188, 24 horas; em Portugal, 112). Se houver alguém por perto, diga que você não está bem."
+      ],
+      "next": "crisis_end"
+    },
+    {
+      "id": "crisis_end",
+      "kind": "end",
+      "text": [
+        "Sou um aplicativo, não um profissional, e não consigo garantir sua segurança. Você merece apoio. Por favor, procure ajuda."
+      ]
+    }
+  ]
+}
