@@ -1546,22 +1546,22 @@
     <value>Свяжитесь с кем-то надёжным — другом, родным или специалистом.</value>
   </data>
   <data name="CrisisHubSafetyPlanStep3" xml:space="preserve">
-    <value>Если есть угроза жизни — звоните в экстренные службы (112).</value>
+    <value>Если есть угроза жизни — звоните в экстренные службы ({0}).</value>
   </data>
   <data name="CrisisHubHotlineTitle" xml:space="preserve">
     <value>Позвонить сейчас</value>
   </data>
-  <data name="CrisisHubHotlineRu" xml:space="preserve">
-    <value>Россия: 112 — экстренные службы (звонок бесплатный). 8-800-2000-122 — детский телефон доверия, для детей, подростков и родителей. Линию для взрослых в вашем регионе найдите на findahelpline.com</value>
-  </data>
   <data name="CrisisHubHotlineIntl" xml:space="preserve">
     <value>Международно: findahelpline.com</value>
   </data>
-  <data name="CrisisHubCallHotlineRu" xml:space="preserve">
-    <value>Детский телефон доверия 8-800-2000-122</value>
+  <data name="CrisisHubCallHotline" xml:space="preserve">
+    <value>{0} {1}</value>
   </data>
   <data name="CrisisHubCallEmergency" xml:space="preserve">
-    <value>Позвонить в 112</value>
+    <value>Позвонить в {0}</value>
+  </data>
+  <data name="CrisisHubHotlineRuName" xml:space="preserve">
+    <value>Детский телефон доверия</value>
   </data>
   <data name="CrisisHubOpenHelpline" xml:space="preserve">
     <value>Открыть findahelpline.com</value>
@@ -3987,5 +3987,71 @@
   </data>
   <data name="MoodWidgetPractice" xml:space="preserve">
     <value>Практика дня</value>
+  </data>
+  <data name="SettingsThemeDark" xml:space="preserve">
+    <value>Тёмная</value>
+  </data>
+  <data name="SettingsThemeLight" xml:space="preserve">
+    <value>Светлая</value>
+  </data>
+  <data name="SettingsColorBlue" xml:space="preserve">
+    <value>Синий</value>
+  </data>
+  <data name="SettingsColorRed" xml:space="preserve">
+    <value>Красный</value>
+  </data>
+  <data name="SettingsColorYellow" xml:space="preserve">
+    <value>Желтый</value>
+  </data>
+  <data name="SettingsColorGreen" xml:space="preserve">
+    <value>Зелёный</value>
+  </data>
+  <data name="SettingsFormRounded" xml:space="preserve">
+    <value>С закруглением</value>
+  </data>
+  <data name="SettingsFormSquare" xml:space="preserve">
+    <value>Без закругления</value>
+  </data>
+  <data name="SettingsSizeLarge" xml:space="preserve">
+    <value>Большой</value>
+  </data>
+  <data name="SettingsSizeMedium" xml:space="preserve">
+    <value>Средний</value>
+  </data>
+  <data name="SettingsSizeSmall" xml:space="preserve">
+    <value>Малый</value>
+  </data>
+  <data name="LuscherColourBlack" xml:space="preserve">
+    <value>Чёрный</value>
+  </data>
+  <data name="LuscherColourRed" xml:space="preserve">
+    <value>Красный</value>
+  </data>
+  <data name="LuscherColourBrown" xml:space="preserve">
+    <value>Коричневый</value>
+  </data>
+  <data name="LuscherColourYellow" xml:space="preserve">
+    <value>Жёлтый</value>
+  </data>
+  <data name="LuscherColourGreen" xml:space="preserve">
+    <value>Зелёный</value>
+  </data>
+  <data name="LuscherColourBlue" xml:space="preserve">
+    <value>Синий</value>
+  </data>
+  <data name="LuscherColourPurple" xml:space="preserve">
+    <value>Фиолетовый</value>
+  </data>
+  <data name="LuscherColourGray" xml:space="preserve">
+    <value>Серый</value>
+  </data>
+  <data name="ProfileQuotesShowingSome" xml:space="preserve">
+    <value>Показано {0} из {1} избранных</value>
+  </data>
+  <data name="ProfileQuotesShowingOne" xml:space="preserve">
+    <value>Показана 1 избранная</value>
+  </data>
+  <data name="ProfileQuotesShowingAll" xml:space="preserve">
+    <value>Показано {0} избранных</value>
   </data>
 </root>

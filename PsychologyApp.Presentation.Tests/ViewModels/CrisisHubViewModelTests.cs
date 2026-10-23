@@ -2,6 +2,7 @@ using Microsoft.Maui.ApplicationModel;
 using Moq;
 using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Presentation.Pages.ClinicalCare.CrisisHub;
+using PsychologyApp.Presentation.Shared.Common;
 using Xunit;
 
 namespace PsychologyApp.Presentation.Tests.ViewModels;
@@ -62,15 +63,49 @@ public sealed class CrisisHubViewModelTests
         Assert.False(viewModel.ShowContinueSoft);
     }
 
-    [Fact]
-    public async Task TheDialButtonsCallTheRussianHelplineAndTheEmergencyNumber()
+    [Theory]
+    [InlineData("RU", "tel:88002000122", "tel:112")]
+    [InlineData("BR", "tel:188", "tel:192")]
+    [InlineData("DE", "tel:08001110111", "tel:112")]
+    public async Task TheDialButtonsCallTheLinesOfTheCountryThePhoneIsIn(string country, string hotline, string emergency)
     {
-        CrisisHubViewModel viewModel = await CreateAsync(red: true);
+        DeviceCountry.Override = country;
+        try
+        {
+            CrisisHubViewModel viewModel = await CreateAsync(red: true);
 
-        await VmTestHelpers.RunAsync(viewModel.CallHotlineRuCommand);
-        await VmTestHelpers.RunAsync(viewModel.CallEmergencyCommand);
+            await VmTestHelpers.RunAsync(viewModel.CallHotlineCommand);
+            await VmTestHelpers.RunAsync(viewModel.CallEmergencyCommand);
 
-        Assert.Equal(["tel:88002000122", "tel:112"], Launcher.Opened);
+            Assert.True(viewModel.HasHotline);
+            Assert.Equal([hotline, emergency], Launcher.Opened);
+            Assert.Contains(emergency["tel:".Length..], viewModel.SafetyPlanStep3);
+        }
+        finally
+        {
+            DeviceCountry.Override = null;
+        }
+    }
+
+    [Fact]
+    public async Task InACountryWithoutAListedLineOnlyTheEmergencyNumberAndTheDirectoryAreOffered()
+    {
+        DeviceCountry.Override = "JP";
+        try
+        {
+            CrisisHubViewModel viewModel = await CreateAsync(red: true);
+
+            await VmTestHelpers.RunAsync(viewModel.CallHotlineCommand);
+            await VmTestHelpers.RunAsync(viewModel.CallEmergencyCommand);
+
+            Assert.False(viewModel.HasHotline);
+            Assert.Equal(["tel:112"], Launcher.Opened);
+            Assert.Contains("112", viewModel.CallEmergencyText);
+        }
+        finally
+        {
+            DeviceCountry.Override = null;
+        }
     }
 
     [Fact]
@@ -135,11 +170,11 @@ public sealed class CrisisHubViewModelTests
         string? previous = AppStrings.LanguageOverride;
         try
         {
-            foreach (string language in new[] { "ru", "en" })
+            foreach (string language in AppLanguages.All)
             {
                 AppStrings.LanguageOverride = language;
                 CrisisHubViewModel viewModel = await CreateAsync(red: true);
-                foreach (string text in new[] { viewModel.PageTitle, viewModel.LeadText, viewModel.HotlineRu, viewModel.CallEmergencyText, viewModel.SpecialistHint })
+                foreach (string text in new[] { viewModel.PageTitle, viewModel.LeadText, viewModel.HotlineIntl, viewModel.CallEmergencyText, viewModel.SpecialistHint })
                 {
                     Assert.False(string.IsNullOrWhiteSpace(text), language);
                 }

@@ -22,8 +22,8 @@ public sealed class CrisisHubViewModel : BaseViewModel
         _clinicalCareService = clinicalCareService;
         BackCommand = new AsyncCommand(() => navigationService.GoBackAsync());
         OpenHelplineCommand = new AsyncCommand(OpenHelplineAsync);
-        CallHotlineRuCommand = new AsyncCommand(() => PhoneCall.DialAsync(AppStrings.CrisisHubHotlineRuNumber));
-        CallEmergencyCommand = new AsyncCommand(() => PhoneCall.DialAsync(AppStrings.CrisisHubEmergencyNumber));
+        CallHotlineCommand = new AsyncCommand(() => Lines.LineNumber is { } number ? PhoneCall.DialAsync(number) : Task.CompletedTask);
+        CallEmergencyCommand = new AsyncCommand(() => PhoneCall.DialAsync(Lines.Emergency));
         RecheckCommand = new AsyncCommand(() => _navigationService.GoToRiskCheckAsync(AppStrings.RiskCheckSourceManual));
         ContinueSoftCommand = new AsyncCommand(ContinueSoftAsync);
         OpenSafetyPlanCommand = new AsyncCommand(() => _navigationService.GoToSafetyPlanAsync());
@@ -36,16 +36,20 @@ public sealed class CrisisHubViewModel : BaseViewModel
     public string SafetyPlanTitle => AppStrings.CrisisHubSafetyPlanTitle;
     public string SafetyPlanStep1 => AppStrings.CrisisHubSafetyPlanStep1;
     public string SafetyPlanStep2 => AppStrings.CrisisHubSafetyPlanStep2;
-    public string SafetyPlanStep3 => AppStrings.CrisisHubSafetyPlanStep3;
+    public string SafetyPlanStep3 => AppStrings.CrisisHubSafetyPlanStep3(Lines.Emergency);
     public string SafetyPlanStepNumber1 => AppStrings.CrisisHubSafetyPlanStepNumber1;
     public string SafetyPlanStepNumber2 => AppStrings.CrisisHubSafetyPlanStepNumber2;
     public string SafetyPlanStepNumber3 => AppStrings.CrisisHubSafetyPlanStepNumber3;
     public string HotlineTitle => AppStrings.CrisisHubHotlineTitle;
-    public string HotlineRu => AppStrings.CrisisHubHotlineRu;
     public string HotlineIntl => AppStrings.CrisisHubHotlineIntl;
-    public string CallHotlineRuText => AppStrings.CrisisHubCallHotlineRu;
-    public string CallEmergencyText => AppStrings.CrisisHubCallEmergency;
-    public string EmergencyBadge => AppStrings.CrisisHubEmergencyBadge;
+    // The country is read once, when the screen opens; the line's name follows the interface language.
+    private readonly string? _country = DeviceCountry.Code;
+    private CrisisLines.Lines Lines => CrisisLines.For(_country);
+
+    public bool HasHotline => Lines.HasLine;
+    public string CallHotlineText => Lines.HasLine ? AppStrings.CrisisHubCallHotline(Lines.LineName!, Lines.LineDisplay!) : string.Empty;
+    public string CallEmergencyText => AppStrings.CrisisHubCallEmergency(Lines.Emergency);
+    public string EmergencyBadge => Lines.Emergency;
     public string OpenHelplineText => AppStrings.CrisisHubOpenHelpline;
     public string RecheckText => AppStrings.CrisisHubRecheck;
     public string ContinueSoftText => AppStrings.CrisisHubContinueSoft;
@@ -72,7 +76,7 @@ public sealed class CrisisHubViewModel : BaseViewModel
 
     public ICommand BackCommand { get; }
     public ICommand OpenHelplineCommand { get; }
-    public ICommand CallHotlineRuCommand { get; }
+    public ICommand CallHotlineCommand { get; }
     public ICommand CallEmergencyCommand { get; }
     public ICommand RecheckCommand { get; }
     public ICommand ContinueSoftCommand { get; }
@@ -94,9 +98,8 @@ public sealed class CrisisHubViewModel : BaseViewModel
             nameof(SafetyPlanStepNumber2),
             nameof(SafetyPlanStepNumber3),
             nameof(HotlineTitle),
-            nameof(HotlineRu),
             nameof(HotlineIntl),
-            nameof(CallHotlineRuText),
+            nameof(CallHotlineText),
             nameof(CallEmergencyText),
             nameof(EmergencyBadge),
             nameof(OpenHelplineText),

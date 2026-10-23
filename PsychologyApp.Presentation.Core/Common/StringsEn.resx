@@ -1546,22 +1546,22 @@
     <value>Reach a trusted person — a friend, relative, or specialist.</value>
   </data>
   <data name="CrisisHubSafetyPlanStep3" xml:space="preserve">
-    <value>If life is at risk — call emergency services (112).</value>
+    <value>If life is at risk — call emergency services ({0}).</value>
   </data>
   <data name="CrisisHubHotlineTitle" xml:space="preserve">
     <value>Call now</value>
   </data>
-  <data name="CrisisHubHotlineRu" xml:space="preserve">
-    <value>Russia: 112 — emergency services (free). 8-800-2000-122 — the children's helpline, for children, teenagers and parents. For an adult helpline near you, see findahelpline.com</value>
-  </data>
   <data name="CrisisHubHotlineIntl" xml:space="preserve">
     <value>International: findahelpline.com</value>
   </data>
-  <data name="CrisisHubCallHotlineRu" xml:space="preserve">
-    <value>Children's helpline 8-800-2000-122</value>
+  <data name="CrisisHubCallHotline" xml:space="preserve">
+    <value>{0} {1}</value>
   </data>
   <data name="CrisisHubCallEmergency" xml:space="preserve">
-    <value>Call 112</value>
+    <value>Call {0}</value>
+  </data>
+  <data name="CrisisHubHotlineRuName" xml:space="preserve">
+    <value>Children's helpline</value>
   </data>
   <data name="CrisisHubOpenHelpline" xml:space="preserve">
     <value>Open findahelpline.com</value>
@@ -3981,5 +3981,71 @@
   </data>
   <data name="MoodWidgetPractice" xml:space="preserve">
     <value>Practice of the day</value>
+  </data>
+  <data name="SettingsThemeDark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="SettingsThemeLight" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="SettingsColorBlue" xml:space="preserve">
+    <value>Blue</value>
+  </data>
+  <data name="SettingsColorRed" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="SettingsColorYellow" xml:space="preserve">
+    <value>Yellow</value>
+  </data>
+  <data name="SettingsColorGreen" xml:space="preserve">
+    <value>Green</value>
+  </data>
+  <data name="SettingsFormRounded" xml:space="preserve">
+    <value>Rounded</value>
+  </data>
+  <data name="SettingsFormSquare" xml:space="preserve">
+    <value>Square corners</value>
+  </data>
+  <data name="SettingsSizeLarge" xml:space="preserve">
+    <value>Large</value>
+  </data>
+  <data name="SettingsSizeMedium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="SettingsSizeSmall" xml:space="preserve">
+    <value>Small</value>
+  </data>
+  <data name="LuscherColourBlack" xml:space="preserve">
+    <value>Black</value>
+  </data>
+  <data name="LuscherColourRed" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="LuscherColourBrown" xml:space="preserve">
+    <value>Brown</value>
+  </data>
+  <data name="LuscherColourYellow" xml:space="preserve">
+    <value>Yellow</value>
+  </data>
+  <data name="LuscherColourGreen" xml:space="preserve">
+    <value>Green</value>
+  </data>
+  <data name="LuscherColourBlue" xml:space="preserve">
+    <value>Blue</value>
+  </data>
+  <data name="LuscherColourPurple" xml:space="preserve">
+    <value>Purple</value>
+  </data>
+  <data name="LuscherColourGray" xml:space="preserve">
+    <value>Gray</value>
+  </data>
+  <data name="ProfileQuotesShowingSome" xml:space="preserve">
+    <value>Showing {0} of {1} favorites</value>
+  </data>
+  <data name="ProfileQuotesShowingOne" xml:space="preserve">
+    <value>Showing 1 favorite</value>
+  </data>
+  <data name="ProfileQuotesShowingAll" xml:space="preserve">
+    <value>Showing {0} favorites</value>
   </data>
 </root>

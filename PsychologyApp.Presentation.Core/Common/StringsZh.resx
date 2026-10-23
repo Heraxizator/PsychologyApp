@@ -1546,22 +1546,22 @@
     <value>联系一个你信任的人——朋友、家人或专业人士。</value>
   </data>
   <data name="CrisisHubSafetyPlanStep3" xml:space="preserve">
-    <value>如有生命危险——请拨打急救电话（112）。</value>
+    <value>如有生命危险——请拨打急救电话（{0}）。</value>
   </data>
   <data name="CrisisHubHotlineTitle" xml:space="preserve">
     <value>立即拨打</value>
   </data>
-  <data name="CrisisHubHotlineRu" xml:space="preserve">
-    <value>俄罗斯：112——紧急服务（免费）。8-800-2000-122——面向儿童、青少年和家长的求助热线。如需寻找附近面向成年人的求助热线，请访问 findahelpline.com</value>
-  </data>
   <data name="CrisisHubHotlineIntl" xml:space="preserve">
     <value>国际：findahelpline.com</value>
   </data>
-  <data name="CrisisHubCallHotlineRu" xml:space="preserve">
-    <value>儿童求助热线 8-800-2000-122</value>
+  <data name="CrisisHubCallHotline" xml:space="preserve">
+    <value>{0} {1}</value>
   </data>
   <data name="CrisisHubCallEmergency" xml:space="preserve">
-    <value>拨打 112</value>
+    <value>拨打 {0}</value>
+  </data>
+  <data name="CrisisHubHotlineRuName" xml:space="preserve">
+    <value>儿童求助热线</value>
   </data>
   <data name="CrisisHubOpenHelpline" xml:space="preserve">
     <value>打开 findahelpline.com</value>
@@ -3981,5 +3981,71 @@
   </data>
   <data name="MoodWidgetPractice" xml:space="preserve">
     <value>今日练习</value>
+  </data>
+  <data name="SettingsThemeDark" xml:space="preserve">
+    <value>深色</value>
+  </data>
+  <data name="SettingsThemeLight" xml:space="preserve">
+    <value>浅色</value>
+  </data>
+  <data name="SettingsColorBlue" xml:space="preserve">
+    <value>蓝色</value>
+  </data>
+  <data name="SettingsColorRed" xml:space="preserve">
+    <value>红色</value>
+  </data>
+  <data name="SettingsColorYellow" xml:space="preserve">
+    <value>黄色</value>
+  </data>
+  <data name="SettingsColorGreen" xml:space="preserve">
+    <value>绿色</value>
+  </data>
+  <data name="SettingsFormRounded" xml:space="preserve">
+    <value>圆角</value>
+  </data>
+  <data name="SettingsFormSquare" xml:space="preserve">
+    <value>直角</value>
+  </data>
+  <data name="SettingsSizeLarge" xml:space="preserve">
+    <value>大</value>
+  </data>
+  <data name="SettingsSizeMedium" xml:space="preserve">
+    <value>中</value>
+  </data>
+  <data name="SettingsSizeSmall" xml:space="preserve">
+    <value>小</value>
+  </data>
+  <data name="LuscherColourBlack" xml:space="preserve">
+    <value>黑色</value>
+  </data>
+  <data name="LuscherColourRed" xml:space="preserve">
+    <value>红色</value>
+  </data>
+  <data name="LuscherColourBrown" xml:space="preserve">
+    <value>棕色</value>
+  </data>
+  <data name="LuscherColourYellow" xml:space="preserve">
+    <value>黄色</value>
+  </data>
+  <data name="LuscherColourGreen" xml:space="preserve">
+    <value>绿色</value>
+  </data>
+  <data name="LuscherColourBlue" xml:space="preserve">
+    <value>蓝色</value>
+  </data>
+  <data name="LuscherColourPurple" xml:space="preserve">
+    <value>紫色</value>
+  </data>
+  <data name="LuscherColourGray" xml:space="preserve">
+    <value>灰色</value>
+  </data>
+  <data name="ProfileQuotesShowingSome" xml:space="preserve">
+    <value>显示 {1} 条收藏中的 {0} 条</value>
+  </data>
+  <data name="ProfileQuotesShowingOne" xml:space="preserve">
+    <value>显示 1 条收藏</value>
+  </data>
+  <data name="ProfileQuotesShowingAll" xml:space="preserve">
+    <value>显示 {0} 条收藏</value>
   </data>
 </root>

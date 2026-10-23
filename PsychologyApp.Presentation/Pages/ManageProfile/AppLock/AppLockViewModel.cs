@@ -19,9 +19,13 @@ public sealed class AppLockViewModel : BaseViewModel
     {
         _authenticator = authenticator;
         UnlockCommand = new AsyncCommand(UnlockAsync);
-        CallEmergencyCommand = new AsyncCommand(() => PhoneCall.DialAsync(AppStrings.CrisisHubEmergencyNumber));
-        CallHotlineCommand = new AsyncCommand(() => PhoneCall.DialAsync(AppStrings.CrisisHubHotlineRuNumber));
+        CallEmergencyCommand = new AsyncCommand(() => PhoneCall.DialAsync(Lines.Emergency));
+        CallHotlineCommand = new AsyncCommand(() => Lines.LineNumber is { } number ? PhoneCall.DialAsync(number) : Task.CompletedTask);
     }
+
+    // The same numbers as the crisis screen: those of the country the phone is in.
+    private readonly string? _country = DeviceCountry.Code;
+    private CrisisLines.Lines Lines => CrisisLines.For(_country);
 
     /// <summary>Completes once the phone's unlock was passed.</summary>
     public Task Unlocked => _unlocked.Task;
@@ -30,8 +34,9 @@ public sealed class AppLockViewModel : BaseViewModel
     public string LeadText => AppStrings.AppLockLead;
     public string UnlockText => AppStrings.AppLockUnlock;
     public string HelpTitle => AppStrings.AppLockHelpTitle;
-    public string CallEmergencyText => AppStrings.CrisisHubCallEmergency;
-    public string CallHotlineText => AppStrings.CrisisHubCallHotlineRu;
+    public string CallEmergencyText => AppStrings.CrisisHubCallEmergency(Lines.Emergency);
+    public bool HasHotline => Lines.HasLine;
+    public string CallHotlineText => Lines.HasLine ? AppStrings.CrisisHubCallHotline(Lines.LineName!, Lines.LineDisplay!) : string.Empty;
 
     public ICommand UnlockCommand { get; }
     public ICommand CallEmergencyCommand { get; }

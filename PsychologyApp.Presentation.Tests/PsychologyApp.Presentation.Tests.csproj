@@ -86,6 +86,8 @@
     <Compile Include="../PsychologyApp.Presentation/App/Routes/INavigationService.cs" Link="Linked/ViewModels/INavigationService.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/ClinicalCare/CrisisHub/CrisisHubViewModel.cs" Link="Linked/ViewModels/CrisisHubViewModel.cs" />
     <Compile Include="../PsychologyApp.Presentation/Shared/Common/PhoneCall.cs" Link="Linked/ViewModels/PhoneCall.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/DeviceCountry.cs" Link="Linked/ViewModels/DeviceCountry.cs" />
+    <Compile Include="CrisisLinesTests.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/ManageProfile/ProfileSettings/SettingsViewModel*.cs" Link="Linked/ViewModels/Settings/%(Filename)%(Extension)" />
     <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/SettingsPreferencesPresenter.cs" Link="Linked/ViewModels/Settings/%(Filename)%(Extension)" />
     <Compile Include="../PsychologyApp.Presentation/Shared/Common/Localization/ILanguageContentReloader.cs" Link="Linked/ViewModels/Settings/%(Filename)%(Extension)" />

@@ -29,7 +29,7 @@ public static partial class AppStrings
     public static string TestsLuscherPassOf(int current, int total) => F(nameof(TestsLuscherPassOf), current, total);
     public static string TestsLuscherHistoryFirstPass => R(nameof(TestsLuscherHistoryFirstPass));
     public static string TestsLuscherHistorySecondPass => R(nameof(TestsLuscherHistorySecondPass));
-    public static string TestsLuscherHistoryBk(double bk) => T($"{TestsBkLabel}: {bk}", $"{TestsBkLabel}: {bk}");
+    public static string TestsLuscherHistoryBk(double bk) => $"{TestsBkLabel}: {bk}";
     public static string TestsStandardDescription => R(nameof(TestsStandardDescription));
     public static string TestsBriefDescription => R(nameof(TestsBriefDescription));
     public static string TestsAnswerAllToast => R(nameof(TestsAnswerAllToast));

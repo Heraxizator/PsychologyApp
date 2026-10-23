@@ -59,7 +59,7 @@ public sealed class UserPreferencesOptionsTests
     [Fact]
     public void EveryStoredKeyHasALabelInBothLanguages()
     {
-        foreach (string language in new[] { "ru", "en" })
+        foreach (string language in AppLanguages.All)
         {
             foreach (string key in UserPreferences.ThemeKeys) Assert.False(string.IsNullOrWhiteSpace(UserPreferences.GetThemeLabel(key, language)));
             foreach (string key in UserPreferences.ColorKeys) Assert.False(string.IsNullOrWhiteSpace(UserPreferences.GetColorLabel(key, language)));
@@ -72,7 +72,7 @@ public sealed class UserPreferencesOptionsTests
     [Fact]
     public void ALabelParsesBackToItsKey()
     {
-        foreach (string language in new[] { "ru", "en" })
+        foreach (string language in AppLanguages.All)
         {
             foreach (string key in UserPreferences.ThemeKeys) Assert.Equal(key, UserPreferences.ParseThemeKey(UserPreferences.GetThemeLabel(key, language)));
             foreach (string key in UserPreferences.ColorKeys) Assert.Equal(key, UserPreferences.ParseColorKey(UserPreferences.GetColorLabel(key, language)));
@@ -115,12 +115,23 @@ public sealed class UserPreferencesOptionsTests
         foreach (string key in UserPreferences.OnboardingConcernKeysList)
         {
             Assert.Equal(key, UserPreferences.NormalizeOnboardingConcernKey(key));
-            Assert.False(string.IsNullOrWhiteSpace(UserPreferences.GetOnboardingConcernLabel(key, "ru")));
-            Assert.False(string.IsNullOrWhiteSpace(UserPreferences.GetOnboardingConcernLabel(key, "en")));
-            Assert.Equal(key, UserPreferences.ParseOnboardingConcernKey(UserPreferences.GetOnboardingConcernLabel(key, "en")));
+            foreach (string language in AppLanguages.All)
+            {
+                Assert.False(string.IsNullOrWhiteSpace(UserPreferences.GetOnboardingConcernLabel(key, language)));
+                Assert.Equal(key, UserPreferences.ParseOnboardingConcernKey(UserPreferences.GetOnboardingConcernLabel(key, language)));
+            }
         }
 
         Assert.Equal(UserPreferences.DefaultOnboardingConcern, UserPreferences.NormalizeOnboardingConcernKey("nonsense"));
+    }
+
+    [Fact]
+    public void TheSettingValuesAreShownInTheInterfaceLanguageNotInEnglish()
+    {
+        Assert.Equal("Sombre", UserPreferences.GetThemeLabel("dark", AppLanguages.French));
+        Assert.Equal("Grün", UserPreferences.GetColorLabel("green", AppLanguages.German));
+        Assert.Equal("圆角", UserPreferences.GetFormLabel("rounded", AppLanguages.Chinese));
+        Assert.Equal("Pequeño", UserPreferences.GetSizeLabel("small", AppLanguages.Spanish));
     }
 
     [Fact]

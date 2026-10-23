@@ -7,47 +7,17 @@ public static class ColourStrings
 {
     public static string GetColorName(ColourValue colour)
     {
-        if (colour == ColourValue.Black)
-        {
-            return T("Чёрный", "Black");
-        }
-
-        if (colour == ColourValue.Red)
-        {
-            return T("Красный", "Red");
-        }
-
-        if (colour == ColourValue.Brown)
-        {
-            return T("Коричневый", "Brown");
-        }
-
-        if (colour == ColourValue.Yellow)
-        {
-            return T("Жёлтый", "Yellow");
-        }
-
-        if (colour == ColourValue.Green)
-        {
-            return T("Зелёный", "Green");
-        }
-
-        if (colour == ColourValue.Blue)
-        {
-            return T("Синий", "Blue");
-        }
-
-        if (colour == ColourValue.Purple)
-        {
-            return T("Фиолетовый", "Purple");
-        }
-
-        if (colour == ColourValue.Gray)
-        {
-            return T("Серый", "Gray");
-        }
-
-        return colour.ToString();
+        string? name =
+            colour == ColourValue.Black ? "Black"
+            : colour == ColourValue.Red ? "Red"
+            : colour == ColourValue.Brown ? "Brown"
+            : colour == ColourValue.Yellow ? "Yellow"
+            : colour == ColourValue.Green ? "Green"
+            : colour == ColourValue.Blue ? "Blue"
+            : colour == ColourValue.Purple ? "Purple"
+            : colour == ColourValue.Gray ? "Gray"
+            : null;
+        return name is null ? colour.ToString() : AppStrings.In(AppStrings.Language, $"LuscherColour{name}");
     }
 
     public static string GetExplanation(ColourValue colour, ColourMeaningType meaningType)
@@ -221,7 +191,4 @@ public static class ColourStrings
 
         return "You are proactive as never before. You are fully engaged in the here-and-now. You are sociable, moderately cheerful, and resourceful. You have a goal and feel confident calm about tomorrow. You seem to have found your purpose.";
     }
-
-    private static string T(string russian, string english) =>
-        UserPreferences.IsEnglish(AppStrings.Language) ? english : russian;
 }

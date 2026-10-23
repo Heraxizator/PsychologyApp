@@ -77,13 +77,13 @@
                     </Grid>
                 </Border>
 
-                <Border Style="{StaticResource BrandCardStyle}">
+                <Border Style="{StaticResource BrandCardStyle}" IsVisible="{Binding HasHotline}">
                     <Border.Behaviors>
                         <behaviors:ListItemRevealBehavior RevealIndex="2" />
                         <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
                     </Border.Behaviors>
                     <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding CallHotlineRuCommand}" />
+                        <TapGestureRecognizer Command="{Binding CallHotlineCommand}" />
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
                         <Border
@@ -98,7 +98,7 @@
                         </Border>
                         <Label
                             Grid.Column="1"
-                            Text="{Binding CallHotlineRuText}"
+                            Text="{Binding CallHotlineText}"
                             Style="{StaticResource ListRowTitleStyle}"
                             VerticalOptions="Center" />
                         <Label

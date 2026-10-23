@@ -27,7 +27,7 @@
                 <VerticalStackLayout Spacing="12">
                     <Label Text="{Binding HelpTitle}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" />
                     <ui:ButtonView Variant="Secondary" BodyText="{Binding CallEmergencyText}" TapCommand="{Binding CallEmergencyCommand}" />
-                    <ui:ButtonView Variant="Secondary" BodyText="{Binding CallHotlineText}" TapCommand="{Binding CallHotlineCommand}" />
+                    <ui:ButtonView Variant="Secondary" IsVisible="{Binding HasHotline}" BodyText="{Binding CallHotlineText}" TapCommand="{Binding CallHotlineCommand}" />
                 </VerticalStackLayout>
             </Border>
         </VerticalStackLayout>

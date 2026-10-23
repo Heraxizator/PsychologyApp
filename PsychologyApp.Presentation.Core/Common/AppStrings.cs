@@ -56,7 +56,7 @@ public static partial class AppStrings
     public static string PracticeReminderBodyNamed(string techniqueName, string reason) =>
         string.IsNullOrWhiteSpace(reason)
             ? F("PracticeReminderBodyNamed.1", techniqueName)
-            : T($"{reason} — {techniqueName}", $"{reason} — {techniqueName}");
+            : $"{reason} — {techniqueName}";
     public static string SettingsPrimaryConcernLabel => R(nameof(SettingsPrimaryConcernLabel));
     public static string SettingsPrimaryConcernPickerTitle => R(nameof(SettingsPrimaryConcernPickerTitle));
     public static string SettingsPrimaryConcernSection => R(nameof(SettingsPrimaryConcernSection));
@@ -280,7 +280,7 @@ public static partial class AppStrings
         F("TodayMoodLine.1", MoodEmoji(level), level, max);
     public static string MoodHistoryTitle => R(nameof(MoodHistoryTitle));
     public static string MoodHistoryEntry(string date, int level, int max) =>
-        T($"{date}: {MoodEmoji(level)} {level}/{max}", $"{date}: {MoodEmoji(level)} {level}/{max}");
+        $"{date}: {MoodEmoji(level)} {level}/{max}";
     public static string ProfileMoodTrendTitle => R(nameof(ProfileMoodTrendTitle));
     public static string ProfileMoodCheckInTitle => R(nameof(ProfileMoodCheckInTitle));
     public static string ProfileWeeklyInsightTitle => R(nameof(ProfileWeeklyInsightTitle));
@@ -311,7 +311,7 @@ public static partial class AppStrings
         F("JournalDayEmptyHint.1", day);
     public static string JournalPickMoodHint => R(nameof(JournalPickMoodHint));
     public static string JournalDayMoodLine(DateOnly day, int level, int max) =>
-        T($"{day:d}: {MoodEmoji(level)} {level}/{max}", $"{day:d}: {MoodEmoji(level)} {level}/{max}");
+        $"{day:d}: {MoodEmoji(level)} {level}/{max}";
     public static string JournalMoodStatsTitle => R(nameof(JournalMoodStatsTitle));
     public static string JournalMoodStreakLabel => R(nameof(JournalMoodStreakLabel));
     public static string JournalDynamicsTitle => R(nameof(JournalDynamicsTitle));
@@ -475,7 +475,7 @@ public static partial class AppStrings
     public static string MoodNotesEmpty => R(nameof(MoodNotesEmpty));
     public static string JournalNeedMoodToSave => R(nameof(JournalNeedMoodToSave));
     public static string WeekRangeLabel(DateOnly start, DateOnly end) =>
-        T($"{start:dd MMM} – {end:dd MMM}", $"{start:dd MMM} – {end:dd MMM}");
+        $"{start:dd MMM} – {end:dd MMM}";
     public static string WeekPracticesLabel => R(nameof(WeekPracticesLabel));
     public static string WeekMoodCheckInsLabel => R(nameof(WeekMoodCheckInsLabel));
     public static string WeekAvgMoodLabel => R(nameof(WeekAvgMoodLabel));
@@ -662,22 +662,12 @@ public static partial class AppStrings
             return string.Empty;
         }
 
-        if (IsEnglish(Language))
-        {
-            if (total > shown)
-            {
-                return $"Showing {shown} of {total} favorites";
-            }
-
-            return total == 1 ? "Showing 1 favorite" : $"Showing {total} favorites";
-        }
-
         if (total > shown)
         {
-            return $"Показано {shown} из {total} избранных";
+            return F("ProfileQuotesShowingSome", shown, total);
         }
 
-        return shown == 1 ? "Показана 1 избранная" : $"Показано {shown} избранных";
+        return total == 1 ? R("ProfileQuotesShowingOne") : F("ProfileQuotesShowingAll", total);
     }
     public static string QuotesFavoriteAdded => R(nameof(QuotesFavoriteAdded));
     public static string QuotesFavoriteRemoved => R(nameof(QuotesFavoriteRemoved));
@@ -764,18 +754,15 @@ public static partial class AppStrings
     public static string CrisisHubSafetyPlanTitle => R(nameof(CrisisHubSafetyPlanTitle));
     public static string CrisisHubSafetyPlanStep1 => R(nameof(CrisisHubSafetyPlanStep1));
     public static string CrisisHubSafetyPlanStep2 => R(nameof(CrisisHubSafetyPlanStep2));
-    public static string CrisisHubSafetyPlanStep3 => R(nameof(CrisisHubSafetyPlanStep3));
+    public static string CrisisHubSafetyPlanStep3(string emergencyNumber) => F(nameof(CrisisHubSafetyPlanStep3), emergencyNumber);
     public static string CrisisHubSafetyPlanStepNumber1 => "1";
     public static string CrisisHubSafetyPlanStepNumber2 => "2";
     public static string CrisisHubSafetyPlanStepNumber3 => "3";
     public static string CrisisHubHotlineTitle => R(nameof(CrisisHubHotlineTitle));
-    public static string CrisisHubHotlineRu => R(nameof(CrisisHubHotlineRu));
-    public static string CrisisHubHotlineRuNumber => "88002000122";
-    public static string CrisisHubEmergencyNumber => "112";
+    public static string CrisisHubHotlineRuName => R(nameof(CrisisHubHotlineRuName));
     public static string CrisisHubHotlineIntl => R(nameof(CrisisHubHotlineIntl));
-    public static string CrisisHubCallHotlineRu => R(nameof(CrisisHubCallHotlineRu));
-    public static string CrisisHubCallEmergency => R(nameof(CrisisHubCallEmergency));
-    public static string CrisisHubEmergencyBadge => "112";
+    public static string CrisisHubCallHotline(string name, string number) => F(nameof(CrisisHubCallHotline), name, number);
+    public static string CrisisHubCallEmergency(string number) => F(nameof(CrisisHubCallEmergency), number);
     public static string CrisisHubOpenHelpline => R(nameof(CrisisHubOpenHelpline));
     public static string CrisisHubRecheck => R(nameof(CrisisHubRecheck));
     public static string CrisisHubContinueSoft => R(nameof(CrisisHubContinueSoft));
@@ -910,11 +897,11 @@ public static partial class AppStrings
     {
         string emoji = MoodEmojiFor(moodLevel);
         string mood = FormatAverageMood(moodLevel);
-        string header = T($"{day}: {emoji} {mood}", $"{day}: {emoji} {mood}");
+        string header = $"{day}: {emoji} {mood}";
         List<string> parts = [header];
         if (factorLabels.Count > 0)
         {
-            parts.Add(T($"Факторы: {string.Join(", ", factorLabels)}", $"Factors: {string.Join(", ", factorLabels)}"));
+            parts.Add(JournalFactorsSummaryLine(string.Join(", ", factorLabels)));
         }
 
         string body = StripFactorLines(note);
@@ -998,9 +985,6 @@ public static partial class AppStrings
     public static string ClinicalRedBanner => R(nameof(ClinicalRedBanner));
     public static string ClinicalStatusUnavailableBanner => R(nameof(ClinicalStatusUnavailableBanner));
 
-    private static string T(string russian, string english) =>
-        IsEnglish(Language) ? english : russian;
-
     /// <summary>One resource set per language: StringsRu.resx, StringsEn.resx, StringsFr.resx and so on.</summary>
     private static readonly Dictionary<string, System.Resources.ResourceManager> Texts = AppLanguages.All.ToDictionary(
         key => key,
@@ -1009,14 +993,14 @@ public static partial class AppStrings
         StringComparer.Ordinal);
 
     /// <summary>The text for the key in the current language; a text not translated yet falls back to English, then to Russian.</summary>
-    private static string R(string key)
-    {
-        string language = AppLanguages.Normalize(Language);
-        return Text(language, key)
+    private static string R(string key) => In(Language, key);
+
+    /// <summary>The text for the key in the given language, falling back the same way. For labels that must be read in a language other than the current one (a stored setting shown or parsed back).</summary>
+    public static string In(string language, string key) =>
+        Text(AppLanguages.Normalize(language), key)
             ?? Text(AppLanguages.English, key)
             ?? Text(AppLanguages.Russian, key)
             ?? key;
-    }
 
     // A language whose resx is not in the assembly yet reads as having no text, not as an error.
     private static string? Text(string language, string key)

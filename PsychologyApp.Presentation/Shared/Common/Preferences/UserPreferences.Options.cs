@@ -34,7 +34,7 @@ public static partial class UserPreferences
     {
         "dark" or "Dark" or "Тёмная" or "Темная" => "dark",
         "light" or "Light" or "Светлая" => "light",
-        _ => string.IsNullOrWhiteSpace(value) ? DefaultTheme : value
+        _ => KeyOfLabel(value, ThemeKeys, ThemeLabelKey) ?? (string.IsNullOrWhiteSpace(value) ? DefaultTheme : value)
     };
 
     public static string NormalizeColorKey(string value) => value switch
@@ -43,14 +43,14 @@ public static partial class UserPreferences
         "red" or "Red" or "Красный" => "red",
         "yellow" or "Yellow" or "Желтый" => "yellow",
         "green" or "Green" or "Зелёный" or "Зеленый" => "green",
-        _ => string.IsNullOrWhiteSpace(value) ? DefaultColor : value
+        _ => KeyOfLabel(value, ColorKeys, ColorLabelKey) ?? (string.IsNullOrWhiteSpace(value) ? DefaultColor : value)
     };
 
     public static string NormalizeFormKey(string value) => value switch
     {
         "rounded" or "Rounded" or "Normal" or "С закруглением" => "rounded",
         "square" or "Square" or "Square corners" or "Без закругления" => "square",
-        _ => string.IsNullOrWhiteSpace(value) ? DefaultForm : value
+        _ => KeyOfLabel(value, FormKeys, FormLabelKey) ?? (string.IsNullOrWhiteSpace(value) ? DefaultForm : value)
     };
 
     public static string NormalizeSizeKey(string value) => value switch
@@ -58,54 +58,47 @@ public static partial class UserPreferences
         "large" or "Large" or "Большой" => "large",
         "medium" or "Medium" or "Средний" => "medium",
         "small" or "Small" or "Малый" => "small",
-        _ => string.IsNullOrWhiteSpace(value) ? DefaultSize : value
+        _ => KeyOfLabel(value, SizeKeys, SizeLabelKey) ?? (string.IsNullOrWhiteSpace(value) ? DefaultSize : value)
     };
 
     /// <summary>Each language under its own name, whatever the interface is in, so a person can always find theirs.</summary>
     public static string GetLanguageLabel(string key, string? language = null) => AppLanguages.NativeName(NormalizeLanguageKey(key));
 
-    public static string GetThemeLabel(string key, string? language = null)
-    {
-        string lang = language ?? Current.Language;
-        return NormalizeThemeKey(key) switch
-        {
-            "dark" => IsEnglish(lang) ? "Dark" : "Тёмная",
-            _ => IsEnglish(lang) ? "Light" : "Светлая"
-        };
-    }
+    public static string GetThemeLabel(string key, string? language = null) =>
+        AppStrings.In(language ?? Current.Language, ThemeLabelKey(NormalizeThemeKey(key)));
 
-    public static string GetColorLabel(string key, string? language = null)
-    {
-        string lang = language ?? Current.Language;
-        return NormalizeColorKey(key) switch
-        {
-            "red" => IsEnglish(lang) ? "Red" : "Красный",
-            "yellow" => IsEnglish(lang) ? "Yellow" : "Желтый",
-            "green" => IsEnglish(lang) ? "Green" : "Зелёный",
-            _ => IsEnglish(lang) ? "Blue" : "Синий"
-        };
-    }
+    public static string GetColorLabel(string key, string? language = null) =>
+        AppStrings.In(language ?? Current.Language, ColorLabelKey(NormalizeColorKey(key)));
 
-    public static string GetFormLabel(string key, string? language = null)
-    {
-        string lang = language ?? Current.Language;
-        return NormalizeFormKey(key) switch
-        {
-            "square" => IsEnglish(lang) ? "Square corners" : "Без закругления",
-            _ => IsEnglish(lang) ? "Rounded" : "С закруглением"
-        };
-    }
+    public static string GetFormLabel(string key, string? language = null) =>
+        AppStrings.In(language ?? Current.Language, FormLabelKey(NormalizeFormKey(key)));
 
-    public static string GetSizeLabel(string key, string? language = null)
+    public static string GetSizeLabel(string key, string? language = null) =>
+        AppStrings.In(language ?? Current.Language, SizeLabelKey(NormalizeSizeKey(key)));
+
+    private static string ThemeLabelKey(string key) => key == "dark" ? "SettingsThemeDark" : "SettingsThemeLight";
+
+    private static string ColorLabelKey(string key) => key switch
     {
-        string lang = language ?? Current.Language;
-        return NormalizeSizeKey(key) switch
-        {
-            "large" => IsEnglish(lang) ? "Large" : "Большой",
-            "small" => IsEnglish(lang) ? "Small" : "Малый",
-            _ => IsEnglish(lang) ? "Medium" : "Средний"
-        };
-    }
+        "red" => "SettingsColorRed",
+        "yellow" => "SettingsColorYellow",
+        "green" => "SettingsColorGreen",
+        _ => "SettingsColorBlue"
+    };
+
+    private static string FormLabelKey(string key) => key == "square" ? "SettingsFormSquare" : "SettingsFormRounded";
+
+    private static string SizeLabelKey(string key) => key switch
+    {
+        "large" => "SettingsSizeLarge",
+        "small" => "SettingsSizeSmall",
+        _ => "SettingsSizeMedium"
+    };
+
+    /// <summary>A label shown in any of the languages back to its key: the picker hands back what it displayed, and the language may have changed since.</summary>
+    private static string? KeyOfLabel(string value, IReadOnlyList<string> keys, Func<string, string> labelKey) =>
+        keys.FirstOrDefault(key => AppLanguages.All.Any(language =>
+            string.Equals(AppStrings.In(language, labelKey(key)), value, StringComparison.OrdinalIgnoreCase)));
 
     public static IReadOnlyList<int> PracticeReminderHourKeys { get; } =
         Enumerable.Range(PracticeReminderPolicy.MinHour, PracticeReminderPolicy.MaxHour - PracticeReminderPolicy.MinHour + 1).ToArray();
@@ -225,21 +218,19 @@ public static partial class UserPreferences
             OnboardingConcernKeys.Mood,
         OnboardingConcernKeys.Explore or "Explore" or "Just exploring" or "Просто попробовать" =>
             OnboardingConcernKeys.Explore,
-        _ => OnboardingConcernKeys.Default
+        _ => KeyOfLabel(value, OnboardingConcernKeysList, ConcernLabelKey) ?? OnboardingConcernKeys.Default
     };
 
-    public static string GetOnboardingConcernLabel(string key, string? language = null)
+    public static string GetOnboardingConcernLabel(string key, string? language = null) =>
+        AppStrings.In(language ?? GetPersistedLanguage(), ConcernLabelKey(NormalizeOnboardingConcernKey(key)));
+
+    private static string ConcernLabelKey(string key) => key switch
     {
-        string ui = language ?? GetPersistedLanguage();
-        bool en = IsEnglish(ui);
-        return NormalizeOnboardingConcernKey(key) switch
-        {
-            OnboardingConcernKeys.Anxiety => en ? "Anxiety" : "Тревога",
-            OnboardingConcernKeys.Body => en ? "Body / symptoms" : "Тело / симптомы",
-            OnboardingConcernKeys.Mood => en ? "Mood" : "Настроение",
-            _ => en ? "Just exploring" : "Просто попробовать"
-        };
-    }
+        OnboardingConcernKeys.Anxiety => "OnboardingConcernAnxiety",
+        OnboardingConcernKeys.Body => "OnboardingConcernBody",
+        OnboardingConcernKeys.Mood => "OnboardingConcernMood",
+        _ => "OnboardingConcernExplore"
+    };
 
     public static string ParseOnboardingConcernKey(string displayOrKey) =>
         NormalizeOnboardingConcernKey(displayOrKey);
