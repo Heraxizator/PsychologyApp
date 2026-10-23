@@ -1,0 +1,228 @@
+{
+  "title": "Escala de Autoestima de Rosenberg",
+  "subtitle": "Autoestima",
+  "estimatedMinutes": 3,
+  "questionCount": 10,
+  "construct": "Autoestima",
+  "betterWhen": "higher",
+  "description": "Dez afirmações sobre como você se sente em relação a si mesmo. Uma pontuação total maior indica autoestima mais alta.",
+  "algorithm": [
+    "1. Leia cada afirmação.",
+    "2. Escolha o quanto você concorda com ela sobre si."
+  ],
+  "comment": "Isto rastreia a autoestima; não é um diagnóstico.",
+  "analyzerId": "rses",
+  "singleAnswer": true,
+  "questions": [
+    {
+      "text": "Eu sinto que sou uma pessoa de valor, no mínimo tanto quanto as outras pessoas",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Discordo totalmente"
+        },
+        {
+          "ball": 1,
+          "text": "Discordo"
+        },
+        {
+          "ball": 2,
+          "text": "Concordo"
+        },
+        {
+          "ball": 3,
+          "text": "Concordo totalmente"
+        }
+      ]
+    },
+    {
+      "text": "Eu acho que eu tenho várias boas qualidades",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Discordo totalmente"
+        },
+        {
+          "ball": 1,
+          "text": "Discordo"
+        },
+        {
+          "ball": 2,
+          "text": "Concordo"
+        },
+        {
+          "ball": 3,
+          "text": "Concordo totalmente"
+        }
+      ]
+    },
+    {
+      "text": "Levando tudo em conta, eu penso que sou um fracasso",
+      "answers": [
+        {
+          "ball": 3,
+          "text": "Discordo totalmente"
+        },
+        {
+          "ball": 2,
+          "text": "Discordo"
+        },
+        {
+          "ball": 1,
+          "text": "Concordo"
+        },
+        {
+          "ball": 0,
+          "text": "Concordo totalmente"
+        }
+      ]
+    },
+    {
+      "text": "Eu acho que sou capaz de fazer as coisas tão bem quanto a maioria das pessoas",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Discordo totalmente"
+        },
+        {
+          "ball": 1,
+          "text": "Discordo"
+        },
+        {
+          "ball": 2,
+          "text": "Concordo"
+        },
+        {
+          "ball": 3,
+          "text": "Concordo totalmente"
+        }
+      ]
+    },
+    {
+      "text": "Eu acho que eu não tenho muito do que me orgulhar",
+      "answers": [
+        {
+          "ball": 3,
+          "text": "Discordo totalmente"
+        },
+        {
+          "ball": 2,
+          "text": "Discordo"
+        },
+        {
+          "ball": 1,
+          "text": "Concordo"
+        },
+        {
+          "ball": 0,
+          "text": "Concordo totalmente"
+        }
+      ]
+    },
+    {
+      "text": "Eu tenho uma atitude positiva com relação a mim mesmo",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Discordo totalmente"
+        },
+        {
+          "ball": 1,
+          "text": "Discordo"
+        },
+        {
+          "ball": 2,
+          "text": "Concordo"
+        },
+        {
+          "ball": 3,
+          "text": "Concordo totalmente"
+        }
+      ]
+    },
+    {
+      "text": "No conjunto, eu estou satisfeito comigo",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Discordo totalmente"
+        },
+        {
+          "ball": 1,
+          "text": "Discordo"
+        },
+        {
+          "ball": 2,
+          "text": "Concordo"
+        },
+        {
+          "ball": 3,
+          "text": "Concordo totalmente"
+        }
+      ]
+    },
+    {
+      "text": "Eu gostaria de poder ter mais respeito por mim mesmo",
+      "answers": [
+        {
+          "ball": 3,
+          "text": "Discordo totalmente"
+        },
+        {
+          "ball": 2,
+          "text": "Discordo"
+        },
+        {
+          "ball": 1,
+          "text": "Concordo"
+        },
+        {
+          "ball": 0,
+          "text": "Concordo totalmente"
+        }
+      ]
+    },
+    {
+      "text": "Às vezes eu me sinto inútil",
+      "answers": [
+        {
+          "ball": 3,
+          "text": "Discordo totalmente"
+        },
+        {
+          "ball": 2,
+          "text": "Discordo"
+        },
+        {
+          "ball": 1,
+          "text": "Concordo"
+        },
+        {
+          "ball": 0,
+          "text": "Concordo totalmente"
+        }
+      ]
+    },
+    {
+      "text": "Às vezes eu acho que não presto para nada",
+      "answers": [
+        {
+          "ball": 3,
+          "text": "Discordo totalmente"
+        },
+        {
+          "ball": 2,
+          "text": "Discordo"
+        },
+        {
+          "ball": 1,
+          "text": "Concordo"
+        },
+        {
+          "ball": 0,
+          "text": "Concordo totalmente"
+        }
+      ]
+    }
+  ]
+}

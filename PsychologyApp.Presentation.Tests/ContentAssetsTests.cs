@@ -3,38 +3,35 @@ using Xunit;
 
 namespace PsychologyApp.Presentation.Tests;
 
+/// <summary>A language reads its own content file when there is one, otherwise the English one, never an empty screen.</summary>
 [Collection("Localization")]
 public sealed class ContentAssetsTests
 {
-    [Fact]
-    public void Localized_ReturnsOriginalPathForRussian()
+    [Theory]
+    [InlineData("ru", new[] { "tests/beck.json" })]
+    [InlineData("en", new[] { "tests/beck.en.json", "tests/beck.json" })]
+    [InlineData("fr", new[] { "tests/beck.fr.json", "tests/beck.en.json", "tests/beck.json" })]
+    public void A_language_tries_its_own_file_then_english_then_the_original(string language, string[] expected) =>
+        WithLanguage(language, () => Assert.Equal(expected, ContentAssets.Candidates("tests/beck.json")));
+
+    [Theory]
+    [InlineData("ru", new[] { "quotes/quotes.ru.json" })]
+    [InlineData("en", new[] { "quotes/quotes.en.json" })]
+    [InlineData("zh", new[] { "quotes/quotes.zh.json", "quotes/quotes.en.json" })]
+    public void Quotes_come_from_the_language_file_or_the_english_one(string language, string[] expected) =>
+        WithLanguage(language, () => Assert.Equal(expected, ContentAssets.QuotesFiles));
+
+    private static void WithLanguage(string language, Action check)
     {
+        string? previous = AppStrings.LanguageOverride;
         try
         {
-            AppStrings.LanguageOverride = "ru";
-
-            Assert.Equal("tests/beck.json", ContentAssets.Localized("tests/beck.json"));
-            Assert.Equal("quotes/quotes.ru.json", ContentAssets.QuotesFile);
+            AppStrings.LanguageOverride = language;
+            check();
         }
         finally
         {
-            AppStrings.LanguageOverride = null;
-        }
-    }
-
-    [Fact]
-    public void Localized_ReturnsEnglishAssetsWhenLanguageOverrideIsEn()
-    {
-        try
-        {
-            AppStrings.LanguageOverride = "en";
-
-            Assert.Equal("tests/beck.en.json", ContentAssets.Localized("tests/beck.json"));
-            Assert.Equal("quotes/quotes.en.json", ContentAssets.QuotesFile);
-        }
-        finally
-        {
-            AppStrings.LanguageOverride = null;
+            AppStrings.LanguageOverride = previous;
         }
     }
 }

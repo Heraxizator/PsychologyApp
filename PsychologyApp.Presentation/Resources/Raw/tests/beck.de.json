@@ -1,0 +1,440 @@
+{
+  "title": "Beck-Inventar",
+  "subtitle": "Depressions-Screening",
+  "estimatedMinutes": 5,
+  "questionCount": 21,
+  "construct": "Depression",
+  "betterWhen": "lower",
+  "description": "Schätze deine depressiven Symptome der letzten Woche in 5–7 Minuten ein.",
+  "algorithm": [
+    "1. Dieser Fragebogen enthält Gruppen von Aussagen. Lies jede Gruppe sorgfältig durch.",
+    "2. Wähle in jeder Gruppe die Aussage, die am besten beschreibt, wie du dich IN DIESER WOCHE UND HEUTE gefühlt hast.",
+    "3. Kreuze die gewählte Aussage an.",
+    "4. Wenn mehrere Aussagen einer Gruppe gleich gut passen, kannst du mehr als eine ankreuzen."
+  ],
+  "comment": "Lies alle Aussagen einer Gruppe, bevor du wählst. Das ist ein Screening, keine Diagnose.",
+  "analyzerId": "beck",
+  "singleAnswer": false,
+  "questions": [
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich bin nicht traurig."
+        },
+        {
+          "ball": 1,
+          "text": "Ich bin traurig."
+        },
+        {
+          "ball": 2,
+          "text": "Ich bin die ganze Zeit traurig und komme nicht davon los."
+        },
+        {
+          "ball": 3,
+          "text": "Ich bin so traurig und unglücklich, dass ich es nicht aushalte."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich sehe nicht besonders mutlos in die Zukunft."
+        },
+        {
+          "ball": 1,
+          "text": "Ich sehe mutlos in die Zukunft."
+        },
+        {
+          "ball": 2,
+          "text": "Ich habe das Gefühl, nichts zu haben, worauf ich mich freuen kann."
+        },
+        {
+          "ball": 3,
+          "text": "Ich habe das Gefühl, dass meine Zukunft hoffnungslos ist und nichts besser werden kann."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich fühle mich nicht als Versager."
+        },
+        {
+          "ball": 1,
+          "text": "Ich habe das Gefühl, öfter versagt zu haben als der Durchschnitt."
+        },
+        {
+          "ball": 2,
+          "text": "Wenn ich auf mein Leben zurückblicke, sehe ich viele Fehlschläge."
+        },
+        {
+          "ball": 3,
+          "text": "Ich habe das Gefühl, als Mensch ein völliger Versager zu sein."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich kann die Dinge genauso genießen wie früher."
+        },
+        {
+          "ball": 1,
+          "text": "Ich kann die Dinge nicht mehr so genießen wie früher."
+        },
+        {
+          "ball": 2,
+          "text": "Nichts bereitet mir mehr echte Befriedigung."
+        },
+        {
+          "ball": 3,
+          "text": "Ich bin mit allem unzufrieden oder gelangweilt."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich habe keine besonderen Schuldgefühle."
+        },
+        {
+          "ball": 1,
+          "text": "Ich fühle mich schuldig wegen vieler Dinge, die ich getan habe oder hätte tun sollen."
+        },
+        {
+          "ball": 2,
+          "text": "Ich habe die meiste Zeit ziemliche Schuldgefühle."
+        },
+        {
+          "ball": 3,
+          "text": "Ich habe ständig Schuldgefühle."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich habe nicht das Gefühl, bestraft zu werden."
+        },
+        {
+          "ball": 1,
+          "text": "Ich habe das Gefühl, ich könnte bestraft werden."
+        },
+        {
+          "ball": 2,
+          "text": "Ich erwarte, bestraft zu werden."
+        },
+        {
+          "ball": 3,
+          "text": "Ich habe das Gefühl, bestraft zu werden."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich bin nicht von mir enttäuscht."
+        },
+        {
+          "ball": 1,
+          "text": "Ich bin von mir enttäuscht."
+        },
+        {
+          "ball": 2,
+          "text": "Ich finde mich fürchterlich."
+        },
+        {
+          "ball": 3,
+          "text": "Ich hasse mich."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich habe nicht das Gefühl, schlechter zu sein als andere."
+        },
+        {
+          "ball": 1,
+          "text": "Ich kritisiere mich wegen meiner Schwächen oder Fehler."
+        },
+        {
+          "ball": 2,
+          "text": "Ich mache mir ständig Vorwürfe wegen meiner Fehler."
+        },
+        {
+          "ball": 3,
+          "text": "Ich gebe mir die Schuld für alles Schlimme, was passiert."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich denke nicht daran, mir das Leben zu nehmen."
+        },
+        {
+          "ball": 1,
+          "text": "Ich denke manchmal daran, mir das Leben zu nehmen, würde es aber nicht tun."
+        },
+        {
+          "ball": 2,
+          "text": "Ich möchte mir das Leben nehmen."
+        },
+        {
+          "ball": 3,
+          "text": "Ich würde mir das Leben nehmen, wenn ich die Gelegenheit hätte."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich weine nicht öfter als früher."
+        },
+        {
+          "ball": 1,
+          "text": "Ich weine jetzt mehr als früher."
+        },
+        {
+          "ball": 2,
+          "text": "Ich weine wegen jeder Kleinigkeit."
+        },
+        {
+          "ball": 3,
+          "text": "Ich möchte weinen, aber ich kann nicht."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich bin nicht reizbarer als sonst."
+        },
+        {
+          "ball": 1,
+          "text": "Ich bin jetzt etwas reizbarer als sonst."
+        },
+        {
+          "ball": 2,
+          "text": "Ich bin einen großen Teil der Zeit ziemlich verärgert oder gereizt."
+        },
+        {
+          "ball": 3,
+          "text": "Ich fühle mich die ganze Zeit gereizt."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich habe das Interesse an anderen Menschen nicht verloren."
+        },
+        {
+          "ball": 1,
+          "text": "Ich interessiere mich weniger für andere Menschen als früher."
+        },
+        {
+          "ball": 2,
+          "text": "Ich habe das Interesse an anderen Menschen größtenteils verloren."
+        },
+        {
+          "ball": 3,
+          "text": "Ich habe jedes Interesse an anderen Menschen verloren."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich treffe Entscheidungen etwa so gut wie früher."
+        },
+        {
+          "ball": 1,
+          "text": "Ich schiebe Entscheidungen öfter auf als früher."
+        },
+        {
+          "ball": 2,
+          "text": "Es fällt mir schwerer als früher, Entscheidungen zu treffen."
+        },
+        {
+          "ball": 3,
+          "text": "Ich kann überhaupt keine Entscheidungen mehr treffen."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich habe nicht das Gefühl, schlechter auszusehen als früher."
+        },
+        {
+          "ball": 1,
+          "text": "Ich mache mir Sorgen, alt oder unattraktiv auszusehen."
+        },
+        {
+          "ball": 2,
+          "text": "Ich habe das Gefühl, dass dauerhafte Veränderungen meines Aussehens mich unattraktiv machen."
+        },
+        {
+          "ball": 3,
+          "text": "Ich finde mich hässlich."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich kann etwa so gut arbeiten wie früher."
+        },
+        {
+          "ball": 1,
+          "text": "Ich muss mir einen Ruck geben, um etwas anzufangen."
+        },
+        {
+          "ball": 2,
+          "text": "Ich muss mich zu allem sehr stark zwingen."
+        },
+        {
+          "ball": 3,
+          "text": "Ich kann überhaupt keine Arbeit mehr leisten."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich schlafe so gut wie sonst."
+        },
+        {
+          "ball": 1,
+          "text": "Ich schlafe nicht mehr so gut wie früher."
+        },
+        {
+          "ball": 2,
+          "text": "Ich wache 1–2 Stunden früher auf als sonst und kann nur schwer wieder einschlafen."
+        },
+        {
+          "ball": 3,
+          "text": "Ich wache mehrere Stunden früher auf als früher und kann nicht mehr einschlafen."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich werde nicht schneller müde als sonst."
+        },
+        {
+          "ball": 1,
+          "text": "Ich werde schneller müde als früher."
+        },
+        {
+          "ball": 2,
+          "text": "Fast alles ermüdet mich."
+        },
+        {
+          "ball": 3,
+          "text": "Ich bin zu müde, um etwas zu tun."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Mein Appetit ist nicht schlechter als sonst."
+        },
+        {
+          "ball": 1,
+          "text": "Mein Appetit ist nicht mehr so gut wie früher."
+        },
+        {
+          "ball": 2,
+          "text": "Mein Appetit hat sehr stark nachgelassen."
+        },
+        {
+          "ball": 3,
+          "text": "Ich habe überhaupt keinen Appetit mehr."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich habe in letzter Zeit kaum oder gar nicht abgenommen."
+        },
+        {
+          "ball": 1,
+          "text": "Ich habe mehr als 2 kg abgenommen."
+        },
+        {
+          "ball": 2,
+          "text": "Ich habe mehr als 5 kg abgenommen."
+        },
+        {
+          "ball": 3,
+          "text": "Ich habe mehr als 7 kg abgenommen."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich mache mir keine größeren Sorgen um meine Gesundheit als sonst."
+        },
+        {
+          "ball": 1,
+          "text": "Ich mache mir Sorgen über körperliche Probleme wie Schmerzen, Magenbeschwerden oder Verstopfung."
+        },
+        {
+          "ball": 2,
+          "text": "Ich mache mir so große Sorgen über körperliche Probleme, dass es mir schwerfällt, an etwas anderes zu denken."
+        },
+        {
+          "ball": 3,
+          "text": "Ich mache mir so große Sorgen über meine körperlichen Probleme, dass ich an nichts anderes mehr denken kann."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Ich habe in letzter Zeit keine Veränderung meines Interesses an Sex bemerkt."
+        },
+        {
+          "ball": 1,
+          "text": "Ich interessiere mich weniger für Sex als früher."
+        },
+        {
+          "ball": 2,
+          "text": "Ich interessiere mich jetzt viel weniger für Sex."
+        },
+        {
+          "ball": 3,
+          "text": "Ich habe das Interesse an Sex völlig verloren."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,440 @@
+{
+  "title": "Inventaire de Beck",
+  "subtitle": "Dépistage de la dépression",
+  "estimatedMinutes": 5,
+  "questionCount": 21,
+  "construct": "Dépression",
+  "betterWhen": "lower",
+  "description": "Évaluez vos symptômes dépressifs de la semaine écoulée en 5 à 7 minutes.",
+  "algorithm": [
+    "1. Ce questionnaire contient des groupes d'énoncés. Lisez attentivement chaque groupe.",
+    "2. Dans chaque groupe, choisissez l'énoncé qui décrit le mieux ce que vous avez ressenti CETTE SEMAINE ET AUJOURD'HUI.",
+    "3. Cochez l'énoncé choisi.",
+    "4. Si plusieurs énoncés d'un groupe vous semblent convenir autant, vous pouvez en cocher plusieurs."
+  ],
+  "comment": "Lisez tous les énoncés de chaque groupe avant de choisir. C'est un outil de dépistage, pas un diagnostic.",
+  "analyzerId": "beck",
+  "singleAnswer": false,
+  "questions": [
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je ne me sens pas triste."
+        },
+        {
+          "ball": 1,
+          "text": "Je me sens triste."
+        },
+        {
+          "ball": 2,
+          "text": "Je suis triste tout le temps et je n'arrive pas à m'en sortir."
+        },
+        {
+          "ball": 3,
+          "text": "Je suis si triste et si malheureux·se que je ne peux pas le supporter."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je ne suis pas découragé·e face à mon avenir."
+        },
+        {
+          "ball": 1,
+          "text": "Je me sens découragé·e face à mon avenir."
+        },
+        {
+          "ball": 2,
+          "text": "J'ai le sentiment de n'avoir rien à attendre."
+        },
+        {
+          "ball": 3,
+          "text": "J'ai le sentiment que mon avenir est sans espoir et que les choses ne peuvent pas s'améliorer."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je n'ai pas le sentiment d'être un échec."
+        },
+        {
+          "ball": 1,
+          "text": "J'ai le sentiment d'avoir échoué plus que la plupart des gens."
+        },
+        {
+          "ball": 2,
+          "text": "Quand je repense à ma vie, je vois beaucoup d'échecs."
+        },
+        {
+          "ball": 3,
+          "text": "J'ai le sentiment d'être un échec total en tant que personne."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je retire autant de satisfaction des choses qu'avant."
+        },
+        {
+          "ball": 1,
+          "text": "Je n'apprécie plus les choses comme avant."
+        },
+        {
+          "ball": 2,
+          "text": "Je ne retire plus de vraie satisfaction de rien."
+        },
+        {
+          "ball": 3,
+          "text": "Tout m'ennuie ou me déçoit."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je ne me sens pas particulièrement coupable."
+        },
+        {
+          "ball": 1,
+          "text": "Je me sens coupable de beaucoup de choses que j'ai faites ou que j'aurais dû faire."
+        },
+        {
+          "ball": 2,
+          "text": "Je me sens assez coupable la plupart du temps."
+        },
+        {
+          "ball": 3,
+          "text": "Je me sens coupable tout le temps."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je n'ai pas le sentiment d'être puni·e."
+        },
+        {
+          "ball": 1,
+          "text": "J'ai le sentiment que je pourrais être puni·e."
+        },
+        {
+          "ball": 2,
+          "text": "Je m'attends à être puni·e."
+        },
+        {
+          "ball": 3,
+          "text": "J'ai le sentiment d'être puni·e."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je ne suis pas déçu·e par moi-même."
+        },
+        {
+          "ball": 1,
+          "text": "Je suis déçu·e par moi-même."
+        },
+        {
+          "ball": 2,
+          "text": "Je me dégoûte."
+        },
+        {
+          "ball": 3,
+          "text": "Je me déteste."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je n'ai pas le sentiment d'être pire que les autres."
+        },
+        {
+          "ball": 1,
+          "text": "Je suis critique envers moi-même pour mes faiblesses ou mes erreurs."
+        },
+        {
+          "ball": 2,
+          "text": "Je me reproche sans cesse mes défauts."
+        },
+        {
+          "ball": 3,
+          "text": "Je me reproche tout ce qui arrive de mal."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je n'ai aucune pensée de me tuer."
+        },
+        {
+          "ball": 1,
+          "text": "J'ai des pensées de me tuer, mais je ne les mettrais pas à exécution."
+        },
+        {
+          "ball": 2,
+          "text": "J'aimerais me tuer."
+        },
+        {
+          "ball": 3,
+          "text": "Je me tuerais si j'en avais l'occasion."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je ne pleure pas plus que d'habitude."
+        },
+        {
+          "ball": 1,
+          "text": "Je pleure plus qu'avant."
+        },
+        {
+          "ball": 2,
+          "text": "Je pleure pour un rien."
+        },
+        {
+          "ball": 3,
+          "text": "J'ai envie de pleurer mais je n'y arrive pas."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je ne suis pas plus irrité·e par les choses que d'habitude."
+        },
+        {
+          "ball": 1,
+          "text": "Je suis un peu plus irrité·e que d'habitude."
+        },
+        {
+          "ball": 2,
+          "text": "Je suis assez agacé·e ou irrité·e une bonne partie du temps."
+        },
+        {
+          "ball": 3,
+          "text": "Je me sens irrité·e tout le temps."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je n'ai pas perdu l'intérêt pour les autres."
+        },
+        {
+          "ball": 1,
+          "text": "Je m'intéresse moins aux autres qu'avant."
+        },
+        {
+          "ball": 2,
+          "text": "J'ai perdu la plus grande partie de mon intérêt pour les autres."
+        },
+        {
+          "ball": 3,
+          "text": "J'ai perdu tout intérêt pour les autres."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je prends des décisions à peu près aussi bien qu'avant."
+        },
+        {
+          "ball": 1,
+          "text": "Je repousse mes décisions plus qu'avant."
+        },
+        {
+          "ball": 2,
+          "text": "J'ai plus de mal à prendre des décisions qu'avant."
+        },
+        {
+          "ball": 3,
+          "text": "Je n'arrive plus du tout à prendre de décisions."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je n'ai pas le sentiment d'avoir moins bonne apparence qu'avant."
+        },
+        {
+          "ball": 1,
+          "text": "J'ai peur d'avoir l'air vieux·vieille ou peu attirant·e."
+        },
+        {
+          "ball": 2,
+          "text": "J'ai le sentiment que des changements permanents dans mon apparence me rendent peu attirant·e."
+        },
+        {
+          "ball": 3,
+          "text": "Je pense que je suis laid·e."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je peux travailler à peu près aussi bien qu'avant."
+        },
+        {
+          "ball": 1,
+          "text": "Il me faut un effort supplémentaire pour me mettre à faire quelque chose."
+        },
+        {
+          "ball": 2,
+          "text": "Je dois me forcer énormément pour faire quoi que ce soit."
+        },
+        {
+          "ball": 3,
+          "text": "Je ne peux faire aucun travail."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je dors aussi bien que d'habitude."
+        },
+        {
+          "ball": 1,
+          "text": "Je ne dors pas aussi bien qu'avant."
+        },
+        {
+          "ball": 2,
+          "text": "Je me réveille 1 à 2 heures plus tôt que d'habitude et j'ai du mal à me rendormir."
+        },
+        {
+          "ball": 3,
+          "text": "Je me réveille plusieurs heures plus tôt qu'avant et je n'arrive pas à me rendormir."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je ne suis pas plus fatigué·e que d'habitude."
+        },
+        {
+          "ball": 1,
+          "text": "Je me fatigue plus facilement qu'avant."
+        },
+        {
+          "ball": 2,
+          "text": "Presque tout ce que je fais me fatigue."
+        },
+        {
+          "ball": 3,
+          "text": "Je suis trop fatigué·e pour faire quoi que ce soit."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Mon appétit n'est pas moins bon que d'habitude."
+        },
+        {
+          "ball": 1,
+          "text": "Mon appétit n'est pas aussi bon qu'avant."
+        },
+        {
+          "ball": 2,
+          "text": "Mon appétit est bien moins bon maintenant."
+        },
+        {
+          "ball": 3,
+          "text": "Je n'ai plus du tout d'appétit."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je n'ai pas beaucoup maigri ces derniers temps, si tant est que j'aie maigri."
+        },
+        {
+          "ball": 1,
+          "text": "J'ai perdu plus de 2 kg."
+        },
+        {
+          "ball": 2,
+          "text": "J'ai perdu plus de 5 kg."
+        },
+        {
+          "ball": 3,
+          "text": "J'ai perdu plus de 7 kg."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je ne m'inquiète pas plus pour ma santé que d'habitude."
+        },
+        {
+          "ball": 1,
+          "text": "Je m'inquiète de problèmes physiques comme des douleurs, des maux d'estomac ou la constipation."
+        },
+        {
+          "ball": 2,
+          "text": "Je m'inquiète beaucoup de problèmes physiques et j'ai du mal à penser à autre chose."
+        },
+        {
+          "ball": 3,
+          "text": "Je m'inquiète tellement de mes problèmes physiques que je ne peux penser à rien d'autre."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Je n'ai remarqué aucun changement récent dans mon intérêt pour la sexualité."
+        },
+        {
+          "ball": 1,
+          "text": "Je m'intéresse moins à la sexualité qu'avant."
+        },
+        {
+          "ball": 2,
+          "text": "Je m'intéresse beaucoup moins à la sexualité maintenant."
+        },
+        {
+          "ball": 3,
+          "text": "J'ai complètement perdu l'intérêt pour la sexualité."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,228 @@
+{
+  "title": "Rosenberg-Selbstwertskala",
+  "subtitle": "Selbstwert",
+  "estimatedMinutes": 3,
+  "questionCount": 10,
+  "construct": "Selbstwert",
+  "betterWhen": "higher",
+  "description": "Zehn Aussagen darüber, wie du dich selbst siehst. Ein höherer Gesamtwert bedeutet ein höheres Selbstwertgefühl.",
+  "algorithm": [
+    "1. Lies jede Aussage.",
+    "2. Wähle, wie sehr sie auf dich zutrifft."
+  ],
+  "comment": "Dies erfasst das Selbstwertgefühl; es ist keine Diagnose.",
+  "analyzerId": "rses",
+  "singleAnswer": true,
+  "questions": [
+    {
+      "text": "Ich halte mich für einen wertvollen Menschen, jedenfalls bin ich nicht weniger wertvoll als andere auch",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Trifft gar nicht zu"
+        },
+        {
+          "ball": 1,
+          "text": "Trifft eher nicht zu"
+        },
+        {
+          "ball": 2,
+          "text": "Trifft eher zu"
+        },
+        {
+          "ball": 3,
+          "text": "Trifft voll und ganz zu"
+        }
+      ]
+    },
+    {
+      "text": "Ich besitze eine Reihe guter Eigenschaften",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Trifft gar nicht zu"
+        },
+        {
+          "ball": 1,
+          "text": "Trifft eher nicht zu"
+        },
+        {
+          "ball": 2,
+          "text": "Trifft eher zu"
+        },
+        {
+          "ball": 3,
+          "text": "Trifft voll und ganz zu"
+        }
+      ]
+    },
+    {
+      "text": "Alles in allem neige ich dazu, mich für einen Versager zu halten",
+      "answers": [
+        {
+          "ball": 3,
+          "text": "Trifft gar nicht zu"
+        },
+        {
+          "ball": 2,
+          "text": "Trifft eher nicht zu"
+        },
+        {
+          "ball": 1,
+          "text": "Trifft eher zu"
+        },
+        {
+          "ball": 0,
+          "text": "Trifft voll und ganz zu"
+        }
+      ]
+    },
+    {
+      "text": "Ich kann vieles genauso gut wie die meisten anderen Menschen auch",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Trifft gar nicht zu"
+        },
+        {
+          "ball": 1,
+          "text": "Trifft eher nicht zu"
+        },
+        {
+          "ball": 2,
+          "text": "Trifft eher zu"
+        },
+        {
+          "ball": 3,
+          "text": "Trifft voll und ganz zu"
+        }
+      ]
+    },
+    {
+      "text": "Ich fürchte, es gibt nicht viel, worauf ich stolz sein kann",
+      "answers": [
+        {
+          "ball": 3,
+          "text": "Trifft gar nicht zu"
+        },
+        {
+          "ball": 2,
+          "text": "Trifft eher nicht zu"
+        },
+        {
+          "ball": 1,
+          "text": "Trifft eher zu"
+        },
+        {
+          "ball": 0,
+          "text": "Trifft voll und ganz zu"
+        }
+      ]
+    },
+    {
+      "text": "Ich habe eine positive Einstellung zu mir selbst gefunden",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Trifft gar nicht zu"
+        },
+        {
+          "ball": 1,
+          "text": "Trifft eher nicht zu"
+        },
+        {
+          "ball": 2,
+          "text": "Trifft eher zu"
+        },
+        {
+          "ball": 3,
+          "text": "Trifft voll und ganz zu"
+        }
+      ]
+    },
+    {
+      "text": "Alles in allem bin ich mit mir selbst zufrieden",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Trifft gar nicht zu"
+        },
+        {
+          "ball": 1,
+          "text": "Trifft eher nicht zu"
+        },
+        {
+          "ball": 2,
+          "text": "Trifft eher zu"
+        },
+        {
+          "ball": 3,
+          "text": "Trifft voll und ganz zu"
+        }
+      ]
+    },
+    {
+      "text": "Ich wünschte, ich könnte vor mir selbst mehr Achtung haben",
+      "answers": [
+        {
+          "ball": 3,
+          "text": "Trifft gar nicht zu"
+        },
+        {
+          "ball": 2,
+          "text": "Trifft eher nicht zu"
+        },
+        {
+          "ball": 1,
+          "text": "Trifft eher zu"
+        },
+        {
+          "ball": 0,
+          "text": "Trifft voll und ganz zu"
+        }
+      ]
+    },
+    {
+      "text": "Ab und zu fühle ich mich richtig nutzlos",
+      "answers": [
+        {
+          "ball": 3,
+          "text": "Trifft gar nicht zu"
+        },
+        {
+          "ball": 2,
+          "text": "Trifft eher nicht zu"
+        },
+        {
+          "ball": 1,
+          "text": "Trifft eher zu"
+        },
+        {
+          "ball": 0,
+          "text": "Trifft voll und ganz zu"
+        }
+      ]
+    },
+    {
+      "text": "Hin und wieder denke ich, dass ich gar nichts tauge",
+      "answers": [
+        {
+          "ball": 3,
+          "text": "Trifft gar nicht zu"
+        },
+        {
+          "ball": 2,
+          "text": "Trifft eher nicht zu"
+        },
+        {
+          "ball": 1,
+          "text": "Trifft eher zu"
+        },
+        {
+          "ball": 0,
+          "text": "Trifft voll und ganz zu"
+        }
+      ]
+    }
+  ]
+}

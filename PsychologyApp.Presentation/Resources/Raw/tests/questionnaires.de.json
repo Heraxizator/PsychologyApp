@@ -1,0 +1,770 @@
+[
+  {
+    "title": "Fragebogen nach Heck und Hess",
+    "subtitle": "Neurotizismus-Screening",
+    "estimatedMinutes": 8,
+    "questionCount": 40,
+    "construct": "Neurotizismus",
+    "betterWhen": "lower",
+    "description": "40 Aussagen zur emotionalen Reaktivität. Antworte mit Ja oder Nein über dich.",
+    "algorithm": [
+      "1. Du erhältst eine Liste von Aussagen.",
+      "2. Antworte bei jeder Aussage mit Ja, wenn du zustimmst (sie auf dich zutrifft), oder mit Nein, wenn nicht."
+    ],
+    "comment": "Wenn du dir Sorgen machst, wende dich an eine qualifizierte Fachperson.",
+    "analyzerId": "heck_hess",
+    "answers": [
+      "Ja",
+      "Nein"
+    ],
+    "balls": [
+      1,
+      0
+    ],
+    "questions": [
+      "Fühlst du dich innerlich angespannt?",
+      "Ich bin oft so von etwas eingenommen, dass ich nicht einschlafen kann.",
+      "Ich fühle mich leicht verletzt.",
+      "Es fällt mir schwer, mit Fremden zu sprechen.",
+      "Fühlst du dich oft ohne besonderen Grund gleichgültig und müde?",
+      "Ich habe oft das Gefühl, dass Menschen mich kritisch mustern.",
+      "Quälen dich oft unnütze Gedanken, die nicht aus dem Kopf gehen, auch wenn du es versuchst?",
+      "Ich bin ziemlich nervös.",
+      "Ich habe das Gefühl, dass mich niemand versteht.",
+      "Ich bin ziemlich reizbar.",
+      "Wenn die Leute nicht gegen mich wären, liefen meine Angelegenheiten erfolgreicher.",
+      "Unangenehme Dinge nehme ich mir zu sehr und zu lange zu Herzen.",
+      "Schon der Gedanke an ein mögliches Scheitern beunruhigt mich.",
+      "Ich habe sehr seltsame und ungewöhnliche Erlebnisse gehabt.",
+      "Bist du manchmal ohne erkennbaren Grund mal fröhlich, mal traurig?",
+      "Tagsüber träume und fantasiere ich mehr, als ich sollte.",
+      "Ändert sich deine Stimmung leicht?",
+      "Ich kämpfe oft mit mir, um meine Schüchternheit nicht zu zeigen.",
+      "Ich wäre gern so glücklich, wie andere Menschen es zu sein scheinen.",
+      "Ich zittere manchmal oder habe Schüttelfrost.",
+      "Ändert sich deine Stimmung oft, mit oder ohne ernsten Grund?",
+      "Hast du manchmal Angst, auch wenn keine echte Gefahr besteht?",
+      "Kritik oder Tadel verletzen mich tief.",
+      "Manchmal bin ich so unruhig, dass ich nicht still sitzen kann.",
+      "Machst du dir manchmal zu viele Sorgen um Kleinigkeiten?",
+      "Ich fühle mich oft unzufrieden.",
+      "Es fällt mir schwer, mich auf eine Aufgabe oder Arbeit zu konzentrieren.",
+      "Ich tue vieles, was ich später bereue.",
+      "Meistens bin ich glücklich.",
+      "Ich bin nicht selbstsicher genug.",
+      "Ich leide unter einem Minderwertigkeitsgefühl.",
+      "Manchmal fühle ich mich völlig wertlos.",
+      "Ich fühle mich oft einfach furchtbar.",
+      "Ich analysiere mich viel.",
+      "Manchmal tut mir alles weh.",
+      "Ich habe bedrückende Stimmungen.",
+      "Mit meinen Nerven stimmt etwas nicht.",
+      "Es fällt mir schwer, beim Kennenlernen ein Gespräch in Gang zu halten.",
+      "Der schwerste Kampf ist für mich der Kampf mit mir selbst.",
+      "Hast du manchmal das Gefühl, dass die Schwierigkeiten groß und unüberwindbar sind?"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Hare-Test",
+    "subtitle": "Psychopathie-Screening",
+    "estimatedMinutes": 8,
+    "questionCount": 40,
+    "construct": "Psychopathie",
+    "betterWhen": "lower",
+    "description": "Erfasst zwischenmenschliche Muster und Verhaltensmuster. Antworte ehrlich — es gibt keine richtigen Antworten.",
+    "algorithm": [
+      "1. Du erhältst eine Liste von Aussagen.",
+      "2. Gib bei jeder Aussage eine der vorgeschlagenen Antworten."
+    ],
+    "comment": "Wenn du dir Sorgen machst, wende dich an eine qualifizierte Fachperson.",
+    "analyzerId": "haer",
+    "answers": [
+      "Ja",
+      "Nein"
+    ],
+    "balls": [
+      1,
+      0
+    ],
+    "questions": [
+      "Mir fehlen nie die Worte.",
+      "In wichtigen Beziehungen stehe ich über den meisten Menschen.",
+      "Ich langweile mich leicht.",
+      "Ich lüge, um Dinge zu glätten.",
+      "In manchen Dingen täusche ich Menschen.",
+      "Ich fühle mich selten schuldig.",
+      "Ich bin ein emotionaler Mensch.",
+      "Ich binde mich selten emotional an andere.",
+      "Andere bezahlen oft für mich.",
+      "Ich bin ungeduldig.",
+      "Ich führe ein ungeordnetes Sexualleben.",
+      "Ich war ein schwieriges Kind.",
+      "Es fällt mir schwer, an langfristigen Zielen festzuhalten.",
+      "Ich bin impulsiv.",
+      "Ich erledige Arbeit oft nachlässig.",
+      "Ich versuche, Verantwortung zu vermeiden.",
+      "Meine Liebesbeziehungen zerbrechen meist schnell.",
+      "Als Jugendlicher habe ich mehrere Straftaten begangen.",
+      "Ich habe gegen Bewährungsauflagen verstoßen.",
+      "Ich habe verschiedene Arten von Straftaten begangen.",
+      "Ich bin weder schüchtern noch ängstlich; ich spreche mit Autorität und Selbstsicherheit.",
+      "Ich bin außergewöhnlich.",
+      "Ich brauche Risiko, um mich lebendig zu fühlen.",
+      "Ich bin überwiegend ein ehrlicher Mensch.",
+      "Ich fühle mich schlecht, wenn ich Menschen täusche.",
+      "Wenn jemand eine Strafe verdient, fühle ich mich deswegen nicht allzu schlecht.",
+      "Ich finde, starke Gefühle sind etwas für Schwache.",
+      "Ich finde, wenn Menschen gekränkt sind, ist das ihr Problem.",
+      "Ich schaue immer zuerst auf mich.",
+      "Ich handle nie unüberlegt.",
+      "Ich finde, Sex sollte man nicht leichtnehmen.",
+      "In der Schule bekam ich oft Ärger.",
+      "Mir fehlt eine Richtung im Leben.",
+      "Ich gebe nie einer Versuchung nach.",
+      "Ich halte immer mein Wort.",
+      "An meinen Problemen sind meist andere schuld.",
+      "Ich mag keine Verpflichtungen in Beziehungen.",
+      "In der Schule habe ich andere schikaniert.",
+      "Ich habe vor Gericht Respektlosigkeit gezeigt.",
+      "Ich wäre nicht stolz darauf, Straftaten begangen zu haben."
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Fragebogen nach L. G. Potschebut",
+    "subtitle": "Aggressivitäts-Screening",
+    "estimatedMinutes": 8,
+    "questionCount": 40,
+    "construct": "Aggressivität",
+    "betterWhen": "lower",
+    "description": "Schätze ein, wie oft aggressive Reaktionen in Alltagssituationen auftreten.",
+    "algorithm": [
+      "1. Du erhältst eine Liste von Aussagen.",
+      "2. Gib bei jeder Aussage eine der vorgeschlagenen Antworten."
+    ],
+    "comment": "Wenn du dir Sorgen machst, wende dich an eine qualifizierte Fachperson.",
+    "analyzerId": "pochebut",
+    "answers": [
+      "Ja",
+      "Nein"
+    ],
+    "balls": [
+      1,
+      0
+    ],
+    "questions": [
+      "Im Streit werde ich oft laut.",
+      "Wenn mich jemand ärgert, sage ich ihm vielleicht alles, was ich von ihm halte.",
+      "Wenn ich körperliche Gewalt brauche, um meine Rechte zu verteidigen, setze ich sie ohne Zögern ein.",
+      "Wenn ich jemand Unangenehmem begegne, kneife oder schubse ich ihn vielleicht unbemerkt.",
+      "Mitten im Streit haue ich vielleicht mit der Faust auf den Tisch, um Aufmerksamkeit zu bekommen oder recht zu behalten.",
+      "Ich habe ständig das Gefühl, dass andere meine Rechte nicht respektieren.",
+      "Wenn ich an die Vergangenheit denke, tue ich mir manchmal selbst leid.",
+      "Auch wenn ich es nicht zeige, nagt manchmal Neid an mir.",
+      "Wenn mir das Verhalten von Bekannten nicht gefällt, sage ich es ihnen direkt.",
+      "In großer Wut benutze ich harte Worte und fluche.",
+      "Wenn jemand die Hand gegen mich erhebt, versuche ich, zuerst zuzuschlagen.",
+      "Manchmal werde ich so wütend, dass ich Dinge werfe.",
+      "Ich habe oft das Bedürfnis, Möbel umzustellen oder ganz auszutauschen.",
+      "Im Umgang mit anderen fühle ich mich oft wie ein Pulverfass kurz vor der Explosion.",
+      "Manchmal habe ich Lust, jemandem einen gemeinen Streich zu spielen.",
+      "Wenn ich wütend bin, werde ich meist mürrisch.",
+      "Im Gespräch versuche ich, aufmerksam zuzuhören, ohne zu unterbrechen.",
+      "In meiner Jugend juckte es mich oft in den Fäusten, und ich war immer bereit, sie einzusetzen.",
+      "Wenn ich weiß, dass mich jemand absichtlich geschubst hat, kann es zu einer Schlägerei kommen.",
+      "Kreatives Chaos auf meinem Schreibtisch hilft mir, effektiv zu arbeiten.",
+      "Ich erinnere mich, so wütend gewesen zu sein, dass ich griff, was gerade da war, und es zerbrach.",
+      "Manchmal reizen mich Menschen schon durch ihre bloße Anwesenheit.",
+      "Mich überraschen oft versteckte Motive hinter den guten Taten anderer mir gegenüber.",
+      "Wenn mich jemand kränkt, habe ich keine Lust mehr, mit irgendwem zu reden.",
+      "Über Menschen, die ich nicht mag, sage ich manchmal absichtlich Gemeines.",
+      "Wenn ich rasend bin, brülle ich die übelsten Beleidigungen.",
+      "Als Kind bin ich Raufereien aus dem Weg gegangen.",
+      "Ich weiß, wann und warum es in Ordnung ist, jemanden zu schlagen.",
+      "Wenn ich wütend bin, knalle ich vielleicht die Tür zu.",
+      "Mir scheint, die Menschen um mich herum mögen mich nicht.",
+      "Ich teile meine Gefühle und Erlebnisse ständig mit anderen.",
+      "Sehr oft schaden mir meine Worte und Taten.",
+      "Wenn mich jemand anschreit, schreie ich zurück.",
+      "Wenn mich jemand zuerst schlägt, schlage ich zurück.",
+      "Es reizt mich, wenn Dinge nicht an ihrem Platz sind.",
+      "Wenn ich etwas Kaputtes nicht reparieren kann, zerstöre ich es aus Wut ganz.",
+      "Andere Menschen kommen mir immer erfolgreicher vor.",
+      "Wenn ich an jemanden denke, den ich nicht mag, kann mich der Wunsch packen, ihm zu schaden.",
+      "Manchmal scheint es, als hätte mir das Schicksal einen grausamen Streich gespielt.",
+      "Wenn mich jemand schlecht behandelt, nimmt mich das sehr mit."
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "GAD-7-Skala",
+    "subtitle": "Angst-Screening",
+    "estimatedMinutes": 2,
+    "questionCount": 7,
+    "construct": "Angst",
+    "betterWhen": "lower",
+    "description": "Sieben Fragen dazu, wie oft dich jedes Symptom in den letzten zwei Wochen beeinträchtigt hat.",
+    "algorithm": [
+      "1. Denk an die letzten zwei Wochen.",
+      "2. Wähle bei jedem Punkt, wie oft dich das Symptom beeinträchtigt hat."
+    ],
+    "comment": "Das ist ein Screening, keine Diagnose. Hol dir professionelle Hilfe, wenn die Angst stark ist.",
+    "analyzerId": "gad7",
+    "answers": [
+      "Überhaupt nicht",
+      "An einzelnen Tagen",
+      "An mehr als der Hälfte der Tage",
+      "Beinahe jeden Tag"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Nervosität, Ängstlichkeit oder Anspannung",
+      "Nicht in der Lage sein, Sorgen zu stoppen oder zu kontrollieren",
+      "Übermäßige Sorgen bezüglich verschiedener Angelegenheiten",
+      "Schwierigkeiten, zu entspannen",
+      "So ruhelos, dass es schwerfällt, still zu sitzen",
+      "Schnelle Verärgerung oder Gereiztheit",
+      "Gefühl der Angst, so als würde etwas Schlimmes passieren"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "K10-Skala",
+    "subtitle": "Psychische Belastung",
+    "estimatedMinutes": 3,
+    "questionCount": 10,
+    "construct": "Psychische Belastung",
+    "betterWhen": "lower",
+    "description": "Zehn Fragen dazu, wie oft du jeden Zustand in den letzten vier Wochen erlebt hast.",
+    "algorithm": [
+      "1. Denk an die letzten vier Wochen.",
+      "2. Wähle bei jedem Punkt, wie oft er auf dich zutraf."
+    ],
+    "comment": "Das ist ein Screening, keine Diagnose. Such dir Unterstützung, wenn die Belastung hoch ist.",
+    "analyzerId": "k10",
+    "answers": [
+      "Nie",
+      "Selten",
+      "Manchmal",
+      "Meistens",
+      "Immer"
+    ],
+    "balls": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "questions": [
+      "Ohne guten Grund erschöpft",
+      "Nervös",
+      "So nervös, dass dich nichts beruhigen konnte",
+      "Hoffnungslos",
+      "Unruhig oder zappelig",
+      "So unruhig, dass du nicht still sitzen konntest",
+      "Niedergeschlagen",
+      "Dass alles eine Anstrengung war",
+      "So traurig, dass dich nichts aufheitern konnte",
+      "Wertlos"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "WHO-5-Index",
+    "subtitle": "Subjektives Wohlbefinden",
+    "estimatedMinutes": 2,
+    "questionCount": 5,
+    "construct": "Wohlbefinden",
+    "betterWhen": "higher",
+    "description": "Fünf Fragen zum positiven Wohlbefinden in den letzten zwei Wochen. Ein höherer Gesamtwert bedeutet höheres subjektives Wohlbefinden.",
+    "algorithm": [
+      "1. Denk an die letzten zwei Wochen.",
+      "2. Gib bei jedem Punkt an, wie oft du dich so gefühlt hast."
+    ],
+    "comment": "Dies erfasst das subjektive Wohlbefinden; es ist keine Diagnose.",
+    "analyzerId": "who5",
+    "answers": [
+      "Immer",
+      "Meistens",
+      "Mehr als die Hälfte der Zeit",
+      "Weniger als die Hälfte der Zeit",
+      "Manchmal",
+      "Zu keinem Zeitpunkt"
+    ],
+    "balls": [
+      5,
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "questions": [
+      "Ich war froh und guter Laune",
+      "Ich habe mich ruhig und entspannt gefühlt",
+      "Ich habe mich energisch und aktiv gefühlt",
+      "Beim Aufwachen habe ich mich frisch und ausgeruht gefühlt",
+      "Mein Alltag war voller Dinge, die mich interessieren"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "PHQ-9-Skala",
+    "subtitle": "Depressions-Screening",
+    "estimatedMinutes": 3,
+    "questionCount": 9,
+    "construct": "Depression",
+    "betterWhen": "lower",
+    "description": "Neun Fragen zu depressiven Symptomen in den letzten zwei Wochen. Gib an, wie oft dich jedes Symptom beeinträchtigt hat.",
+    "algorithm": [
+      "1. Denk an die letzten zwei Wochen.",
+      "2. Wähle bei jedem Punkt, wie oft dich das Symptom beeinträchtigt hat."
+    ],
+    "comment": "Das ist ein Screening, keine Diagnose. Hol dir professionelle Hilfe, wenn die Symptome stark sind.",
+    "analyzerId": "phq9",
+    "answers": [
+      "Überhaupt nicht",
+      "An einzelnen Tagen",
+      "An mehr als der Hälfte der Tage",
+      "Beinahe jeden Tag"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Wenig Interesse oder Freude an Ihren Tätigkeiten",
+      "Niedergeschlagenheit, Schwermut oder Hoffnungslosigkeit",
+      "Schwierigkeiten, ein- oder durchzuschlafen, oder vermehrter Schlaf",
+      "Müdigkeit oder Gefühl, keine Energie zu haben",
+      "Verminderter Appetit oder übermäßiges Bedürfnis zu essen",
+      "Schlechte Meinung von sich selbst; Gefühl, ein Versager zu sein oder die Familie enttäuscht zu haben",
+      "Schwierigkeiten, sich auf etwas zu konzentrieren, z. B. beim Zeitunglesen oder Fernsehen",
+      "Waren Ihre Bewegungen oder Ihre Sprache so verlangsamt, dass es auch anderen auffallen würde? Oder waren Sie im Gegenteil zappelig oder ruhelos",
+      "Gedanken, dass Sie lieber tot wären oder sich Leid zufügen möchten"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "ISI-7-Index",
+    "subtitle": "Schweregrad der Schlaflosigkeit",
+    "estimatedMinutes": 2,
+    "questionCount": 7,
+    "construct": "Schlaflosigkeit",
+    "betterWhen": "lower",
+    "description": "Sieben Fragen zu Schlafproblemen in den letzten zwei Wochen. Bewerte den Schweregrad jeder Schwierigkeit.",
+    "algorithm": [
+      "1. Denk an die letzten zwei Wochen.",
+      "2. Wähle bei jedem Punkt, wie sehr dich das beschriebene Problem beeinträchtigt hat."
+    ],
+    "comment": "Dies erfasst Schlaflosigkeit; es ist keine Diagnose. Hol dir Hilfe, wenn die Schlafprobleme anhalten.",
+    "analyzerId": "isi",
+    "answers": [
+      "Keine",
+      "Leicht",
+      "Mittel",
+      "Schwer",
+      "Sehr schwer"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "questions": [
+      "Schwierigkeiten beim Einschlafen",
+      "Schwierigkeiten beim Durchschlafen",
+      "Zu frühes Aufwachen",
+      "Wie unzufrieden bist du mit deinem derzeitigen Schlaf",
+      "Wie sehr fallen deine Schlafprobleme deiner Meinung nach anderen auf",
+      "Wie besorgt oder belastet bist du wegen deiner derzeitigen Schlafprobleme",
+      "Wie sehr beeinträchtigen deine Schlafprobleme deinen Alltag"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "ESS-8-Skala",
+    "subtitle": "Tagesschläfrigkeit",
+    "estimatedMinutes": 2,
+    "questionCount": 8,
+    "construct": "Tagesschläfrigkeit",
+    "betterWhen": "lower",
+    "description": "Acht Alltagssituationen. Bewerte, wie wahrscheinlich du in jeder einnicken würdest.",
+    "algorithm": [
+      "1. Stell dir jede der genannten Situationen vor.",
+      "2. Wähle, wie wahrscheinlich du in dieser Situation einnicken würdest."
+    ],
+    "comment": "Dies erfasst Tagesschläfrigkeit; es ist keine Diagnose. Wende dich an eine Ärztin oder einen Arzt, wenn die Schläfrigkeit stark ist.",
+    "analyzerId": "ess",
+    "answers": [
+      "Würde nie einnicken",
+      "Geringe Wahrscheinlichkeit",
+      "Mittlere Wahrscheinlichkeit",
+      "Hohe Wahrscheinlichkeit"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Im Sitzen lesen",
+      "Fernsehen",
+      "Untätig an einem öffentlichen Ort sitzen",
+      "Als Beifahrer eine Stunde lang ohne Pause im Auto",
+      "Nachmittags hinlegen, um sich auszuruhen",
+      "Im Sitzen mit jemandem reden",
+      "Nach einem Mittagessen ohne Alkohol ruhig sitzen",
+      "Im Auto, das ein paar Minuten im Verkehr steht"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "PHQ-15-Skala",
+    "subtitle": "Körperliche Beschwerden",
+    "estimatedMinutes": 4,
+    "questionCount": 15,
+    "construct": "Körperliche Beschwerden",
+    "betterWhen": "lower",
+    "description": "Fünfzehn Fragen zu körperlichen Beschwerden in den letzten vier Wochen. Gib an, wie sehr dich jede Beschwerde beeinträchtigt hat.",
+    "algorithm": [
+      "1. Denk an die letzten vier Wochen.",
+      "2. Wähle bei jedem Punkt, wie sehr dich die Beschwerde beeinträchtigt hat."
+    ],
+    "comment": "Dies erfasst körperliche Beschwerden; es ist keine Diagnose. Geh zu einer Ärztin oder einem Arzt, wenn sie anhalten.",
+    "analyzerId": "phq15",
+    "answers": [
+      "Nicht beeinträchtigt",
+      "Wenig beeinträchtigt",
+      "Stark beeinträchtigt"
+    ],
+    "balls": [
+      0,
+      1,
+      2
+    ],
+    "questions": [
+      "Bauchschmerzen",
+      "Rückenschmerzen",
+      "Schmerzen in Armen, Beinen oder Gelenken",
+      "Menstruationsschmerzen oder andere Probleme mit der Periode",
+      "Kopfschmerzen",
+      "Schmerzen im Brustbereich",
+      "Schwindel",
+      "Ohnmachtsanfälle",
+      "Herzklopfen oder Herzrasen",
+      "Kurzatmigkeit",
+      "Schmerzen oder Probleme beim Geschlechtsverkehr",
+      "Verstopfung, nervöser Darm oder Durchfall",
+      "Übelkeit, Blähungen oder Verdauungsbeschwerden",
+      "Müdigkeit oder Gefühl, keine Energie zu haben",
+      "Schlafstörungen"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "SCOFF-Fragebogen",
+    "subtitle": "Screening auf Essstörungen",
+    "estimatedMinutes": 1,
+    "questionCount": 5,
+    "construct": "Essverhalten",
+    "betterWhen": "lower",
+    "description": "Fünf kurze Fragen, um mögliche Essstörungen zu erkennen. Antworte mit Ja oder Nein.",
+    "algorithm": [
+      "1. Lies jede Frage sorgfältig.",
+      "2. Antworte mit Ja, wenn es auf dich zutrifft, sonst mit Nein."
+    ],
+    "comment": "Das ist ein Screening, keine Diagnose. Hol dir professionelle Hilfe, wenn es positiv ausfällt.",
+    "analyzerId": "scoff",
+    "answers": [
+      "Ja",
+      "Nein"
+    ],
+    "balls": [
+      1,
+      0
+    ],
+    "questions": [
+      "Bringst du dich zum Erbrechen, weil du dich unangenehm voll fühlst?",
+      "Machst du dir Sorgen, die Kontrolle darüber verloren zu haben, wie viel du isst?",
+      "Hast du in letzter Zeit innerhalb von drei Monaten mehr als 6 kg abgenommen?",
+      "Findest du dich zu dick, während andere dich zu dünn finden?",
+      "Würdest du sagen, dass Essen dein Leben bestimmt?"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "SWLS-Skala",
+    "subtitle": "Lebenszufriedenheit",
+    "estimatedMinutes": 2,
+    "questionCount": 5,
+    "construct": "Lebenszufriedenheit",
+    "betterWhen": "higher",
+    "description": "Fünf Aussagen zur Lebenszufriedenheit. Ein höherer Gesamtwert bedeutet höhere subjektive Zufriedenheit.",
+    "algorithm": [
+      "1. Lies jede Aussage.",
+      "2. Wähle, wie sehr du zustimmst."
+    ],
+    "comment": "Dies erfasst die subjektive Lebenszufriedenheit; es ist keine Diagnose.",
+    "analyzerId": "swls",
+    "answers": [
+      "Trifft gar nicht zu",
+      "Trifft eher nicht zu",
+      "Stimme eher nicht zu",
+      "Weder noch",
+      "Stimme eher zu",
+      "Trifft eher zu",
+      "Trifft voll und ganz zu"
+    ],
+    "balls": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "questions": [
+      "In den meisten Dingen ist mein Leben nahezu ideal",
+      "Meine Lebensbedingungen sind hervorragend",
+      "Ich bin mit meinem Leben zufrieden",
+      "Bisher habe ich die wichtigen Dinge bekommen, die ich mir im Leben wünsche",
+      "Wenn ich mein Leben noch einmal leben könnte, würde ich fast nichts ändern"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "PHQ-2",
+    "subtitle": "Kurzes Depressions-Screening",
+    "estimatedMinutes": 1,
+    "questionCount": 2,
+    "construct": "Depression",
+    "betterWhen": "lower",
+    "description": "Zwei Fragen zu depressiven Symptomen in den letzten zwei Wochen. Ab einem Gesamtwert von 3 ist das Screening positiv.",
+    "algorithm": [
+      "1. Denk an die letzten zwei Wochen.",
+      "2. Wähle bei jeder Frage, wie oft dich das Symptom beeinträchtigt hat."
+    ],
+    "comment": "Das ist ein Screening, keine Diagnose. Wenn es positiv ist, erwäge den PHQ-9 oder ein Gespräch mit einer Fachperson.",
+    "analyzerId": "phq2",
+    "answers": [
+      "Überhaupt nicht",
+      "An einzelnen Tagen",
+      "An mehr als der Hälfte der Tage",
+      "Beinahe jeden Tag"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Wenig Interesse oder Freude an Ihren Tätigkeiten",
+      "Niedergeschlagenheit, Hoffnungslosigkeit oder Pessimismus"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "GAD-2",
+    "subtitle": "Kurzes Angst-Screening",
+    "estimatedMinutes": 1,
+    "questionCount": 2,
+    "construct": "Angst",
+    "betterWhen": "lower",
+    "description": "Zwei Fragen zu Angstsymptomen in den letzten zwei Wochen. Ab einem Gesamtwert von 3 ist das Screening positiv.",
+    "algorithm": [
+      "1. Denk an die letzten zwei Wochen.",
+      "2. Wähle bei jeder Frage, wie oft dich das Symptom beeinträchtigt hat."
+    ],
+    "comment": "Das ist ein Screening, keine Diagnose. Wenn es positiv ist, erwäge den GAD-7 oder ein Gespräch mit einer Fachperson.",
+    "analyzerId": "gad2",
+    "answers": [
+      "Überhaupt nicht",
+      "An einzelnen Tagen",
+      "An mehr als der Hälfte der Tage",
+      "Beinahe jeden Tag"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Nervosität, Ängstlichkeit oder Anspannung",
+      "Nicht in der Lage sein, Sorgen zu stoppen oder zu kontrollieren"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "HADS — Angst",
+    "subtitle": "Angst-Subskala",
+    "estimatedMinutes": 3,
+    "questionCount": 7,
+    "construct": "Angst",
+    "betterWhen": "lower",
+    "description": "Sieben Fragen zu Angstgefühlen in der letzten Woche.",
+    "algorithm": [
+      "1. Gib an, wie oft du jeden Zustand in der letzten Woche erlebt hast.",
+      "2. Wähle eine von vier Möglichkeiten."
+    ],
+    "comment": "Das ist ein Screening, keine Diagnose. Ab einem Gesamtwert von 8 erwäge professionelle Unterstützung.",
+    "analyzerId": "hads_a",
+    "answers": [
+      "Überhaupt nicht oder selten",
+      "Manchmal",
+      "Oft",
+      "Meistens"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Ich fühle mich angespannt oder überreizt",
+      "Mich überkommt eine ängstliche Vorahnung, dass etwas Schreckliches passieren könnte",
+      "Mir gehen beunruhigende Gedanken durch den Kopf",
+      "Es fällt mir schwer, mich zu entspannen und ruhig zu werden",
+      "Ich habe manchmal ein ängstliches Gefühl in der Magengegend",
+      "Ich fühle mich rastlos, muss immer in Bewegung sein",
+      "Mich überkommt plötzlich ein panikartiger Zustand"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "HADS — Depression",
+    "subtitle": "Depressions-Subskala",
+    "estimatedMinutes": 3,
+    "questionCount": 7,
+    "construct": "Depression",
+    "betterWhen": "lower",
+    "description": "Sieben Fragen zu depressiven Gefühlen in der letzten Woche.",
+    "algorithm": [
+      "1. Gib an, wie oft du jeden Zustand in der letzten Woche erlebt hast.",
+      "2. Wähle eine von vier Möglichkeiten."
+    ],
+    "comment": "Das ist ein Screening, keine Diagnose. Ab einem Gesamtwert von 8 erwäge professionelle Unterstützung.",
+    "analyzerId": "hads_d",
+    "answers": [
+      "Überhaupt nicht oder selten",
+      "Manchmal",
+      "Oft",
+      "Meistens"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Ich kann mich nicht mehr so freuen wie früher",
+      "Es fällt mir schwer, zu lachen und die lustige Seite der Dinge zu sehen",
+      "Ich fühle mich niedergeschlagen und bin selten gut gelaunt",
+      "Ich fühle mich in meinen Aktivitäten gebremst oder kann im Gegenteil nicht stillsitzen",
+      "Ich habe kaum Interesse an meinem Aussehen",
+      "Ich blicke mit wenig Freude in die Zukunft",
+      "Es fällt mir schwer, ein Buch, einen Film oder eine Sendung zu genießen"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "PC-PTSD-5-Screening",
+    "subtitle": "Posttraumatische Reaktion",
+    "estimatedMinutes": 1,
+    "questionCount": 5,
+    "construct": "Trauma",
+    "betterWhen": "lower",
+    "description": "Manchmal erleben Menschen etwas ungewöhnlich oder besonders Beängstigendes, Schreckliches oder Traumatisches: einen schweren Unfall oder Brand, einen körperlichen oder sexuellen Übergriff oder Missbrauch, Krieg, den plötzlichen Tod eines nahen Menschen. Wenn dir so etwas passiert ist, beantworte, ob du im letzten Monat Folgendes erlebt hast. Wenn es kein solches Ereignis gab, ist dieser Fragebogen nicht für dich.",
+    "algorithm": [
+      "1. Denk an den letzten Monat.",
+      "2. Beantworte jede Frage mit „Ja“ oder „Nein“."
+    ],
+    "comment": "Das ist ein kurzes Screening, keine Diagnose. Bei drei oder mehr „Ja“-Antworten mach die ausführliche PCL-5-Skala und wende dich an eine Traumafachperson.",
+    "analyzerId": "pcptsd5",
+    "answers": [
+      "Ja",
+      "Nein"
+    ],
+    "balls": [
+      1,
+      0
+    ],
+    "questions": [
+      "Hattest du Albträume von dem Ereignis oder musstest daran denken, obwohl du es nicht wolltest?",
+      "Hast du dich sehr bemüht, nicht daran zu denken, oder Situationen gemieden, die dich daran erinnerten?",
+      "Warst du ständig auf der Hut, wachsam oder leicht schreckhaft?",
+      "Hast du dich wie betäubt oder losgelöst von Menschen, Aktivitäten oder deiner Umgebung gefühlt?",
+      "Hast du dich schuldig gefühlt oder konntest nicht aufhören, dir oder anderen die Schuld an dem Ereignis oder seinen Folgen zu geben?"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "PCL-5-Skala",
+    "subtitle": "Posttraumatische Symptome",
+    "estimatedMinutes": 5,
+    "questionCount": 20,
+    "construct": "Trauma",
+    "betterWhen": "lower",
+    "description": "Zwanzig Fragen zu Problemen, die Menschen manchmal nach einem sehr belastenden Erlebnis haben. Antworte zu dem Erlebnis, das dich am meisten belastet, und für den letzten Monat. Du kannst die Skala alle zwei Wochen wiederholen, um zu sehen, wie sich die Symptome verändern.",
+    "algorithm": [
+      "1. Denk an den letzten Monat.",
+      "2. Wähle, wie sehr dich jedes Problem belastet hat."
+    ],
+    "comment": "Das ist eine Symptomskala, keine Diagnose. Bei hohen Werten wende dich an eine Fachperson für Trauma.",
+    "analyzerId": "pcl5",
+    "answers": [
+      "Überhaupt nicht",
+      "Ein wenig",
+      "Mäßig",
+      "Ziemlich",
+      "Extrem"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "questions": [
+      "Wiederholte, belastende und ungewollte Erinnerungen an das belastende Erlebnis",
+      "Wiederholte, belastende Träume von dem belastenden Erlebnis",
+      "Plötzliches Gefühl oder Handeln, als würde das belastende Erlebnis tatsächlich wieder passieren (als wärst du wirklich wieder dort)",
+      "Sehr aufgewühlt sein, wenn dich etwas an das belastende Erlebnis erinnert hat",
+      "Starke körperliche Reaktionen, wenn dich etwas an das belastende Erlebnis erinnert hat (zum Beispiel Herzklopfen, Atemnot, Schwitzen)",
+      "Vermeiden von Erinnerungen, Gedanken oder Gefühlen im Zusammenhang mit dem belastenden Erlebnis",
+      "Vermeiden äußerer Dinge, die an das belastende Erlebnis erinnern (zum Beispiel Menschen, Orte, Gespräche, Aktivitäten, Gegenstände oder Situationen)",
+      "Schwierigkeiten, sich an wichtige Teile des belastenden Erlebnisses zu erinnern",
+      "Starke negative Überzeugungen über dich selbst, andere Menschen oder die Welt (zum Beispiel Gedanken wie: Ich bin schlecht, mit mir stimmt etwas ernsthaft nicht, niemandem kann man trauen, die Welt ist völlig gefährlich)",
+      "Dir selbst oder jemand anderem die Schuld am belastenden Erlebnis oder an dem geben, was danach passiert ist",
+      "Starke negative Gefühle wie Angst, Entsetzen, Wut, Schuld oder Scham",
+      "Verlust des Interesses an Aktivitäten, die dir früher Freude gemacht haben",
+      "Sich distanziert oder abgeschnitten von anderen Menschen fühlen",
+      "Schwierigkeiten, positive Gefühle zu erleben (zum Beispiel kein Glück oder keine liebevollen Gefühle für nahe Menschen empfinden zu können)",
+      "Gereiztes Verhalten, Wutausbrüche oder aggressives Handeln",
+      "Zu viele Risiken eingehen oder Dinge tun, die dir schaden könnten",
+      "„Übermäßig wachsam“ oder ständig auf der Hut sein",
+      "Nervös oder leicht schreckhaft sein",
+      "Konzentrationsschwierigkeiten",
+      "Schwierigkeiten beim Ein- oder Durchschlafen"
+    ],
+    "singleAnswer": true
+  }
+]

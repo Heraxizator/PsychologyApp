@@ -83,7 +83,7 @@ public static class MauiProgram
         builder.Services.AddPsychologyAppCachedTestCatalog(sp =>
             new CachedTestCatalogProvider(
                 sp.GetRequiredService<MauiTestCatalogProvider>(),
-                () => AppStrings.IsEnglish(AppStrings.Language) ? "en" : "ru"));
+                () => AppLanguages.Normalize(AppStrings.Language)));
         builder.Services.AddSingleton(sp => new BuiltInTechniqueCatalogProvider(
             () => AppLanguages.Normalize(AppStrings.Language)));
         builder.Services.AddPsychologyAppPresentation();

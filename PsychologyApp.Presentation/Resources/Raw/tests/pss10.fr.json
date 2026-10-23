@@ -1,0 +1,268 @@
+{
+  "title": "Échelle de stress perçu PSS-10",
+  "subtitle": "Stress perçu",
+  "estimatedMinutes": 3,
+  "questionCount": 10,
+  "construct": "Stress",
+  "betterWhen": "lower",
+  "description": "Dix questions sur la fréquence à laquelle vous avez vécu certaines situations de stress au cours du dernier mois.",
+  "algorithm": [
+    "1. Pensez au dernier mois.",
+    "2. Pour chaque question, choisissez à quelle fréquence c'était vrai pour vous."
+  ],
+  "comment": "Cet outil dépiste le stress perçu ; ce n'est pas un diagnostic.",
+  "analyzerId": "pss10",
+  "singleAnswer": true,
+  "questions": [
+    {
+      "text": "Au cours du dernier mois, combien de fois avez-vous été dérangé·e par un événement inattendu ?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Jamais"
+        },
+        {
+          "ball": 1,
+          "text": "Presque jamais"
+        },
+        {
+          "ball": 2,
+          "text": "Parfois"
+        },
+        {
+          "ball": 3,
+          "text": "Assez souvent"
+        },
+        {
+          "ball": 4,
+          "text": "Très souvent"
+        }
+      ]
+    },
+    {
+      "text": "Au cours du dernier mois, combien de fois vous a-t-il semblé difficile de contrôler les choses importantes de votre vie ?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Jamais"
+        },
+        {
+          "ball": 1,
+          "text": "Presque jamais"
+        },
+        {
+          "ball": 2,
+          "text": "Parfois"
+        },
+        {
+          "ball": 3,
+          "text": "Assez souvent"
+        },
+        {
+          "ball": 4,
+          "text": "Très souvent"
+        }
+      ]
+    },
+    {
+      "text": "Au cours du dernier mois, combien de fois vous êtes-vous senti·e nerveux·se et stressé·e ?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Jamais"
+        },
+        {
+          "ball": 1,
+          "text": "Presque jamais"
+        },
+        {
+          "ball": 2,
+          "text": "Parfois"
+        },
+        {
+          "ball": 3,
+          "text": "Assez souvent"
+        },
+        {
+          "ball": 4,
+          "text": "Très souvent"
+        }
+      ]
+    },
+    {
+      "text": "Au cours du dernier mois, combien de fois vous êtes-vous senti·e confiant·e dans votre capacité à gérer vos problèmes personnels ?",
+      "answers": [
+        {
+          "ball": 4,
+          "text": "Jamais"
+        },
+        {
+          "ball": 3,
+          "text": "Presque jamais"
+        },
+        {
+          "ball": 2,
+          "text": "Parfois"
+        },
+        {
+          "ball": 1,
+          "text": "Assez souvent"
+        },
+        {
+          "ball": 0,
+          "text": "Très souvent"
+        }
+      ]
+    },
+    {
+      "text": "Au cours du dernier mois, combien de fois avez-vous senti que les choses allaient comme vous le vouliez ?",
+      "answers": [
+        {
+          "ball": 4,
+          "text": "Jamais"
+        },
+        {
+          "ball": 3,
+          "text": "Presque jamais"
+        },
+        {
+          "ball": 2,
+          "text": "Parfois"
+        },
+        {
+          "ball": 1,
+          "text": "Assez souvent"
+        },
+        {
+          "ball": 0,
+          "text": "Très souvent"
+        }
+      ]
+    },
+    {
+      "text": "Au cours du dernier mois, combien de fois avez-vous pensé que vous ne pouviez pas assumer toutes les choses que vous deviez faire ?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Jamais"
+        },
+        {
+          "ball": 1,
+          "text": "Presque jamais"
+        },
+        {
+          "ball": 2,
+          "text": "Parfois"
+        },
+        {
+          "ball": 3,
+          "text": "Assez souvent"
+        },
+        {
+          "ball": 4,
+          "text": "Très souvent"
+        }
+      ]
+    },
+    {
+      "text": "Au cours du dernier mois, combien de fois avez-vous été capable de maîtriser votre énervement ?",
+      "answers": [
+        {
+          "ball": 4,
+          "text": "Jamais"
+        },
+        {
+          "ball": 3,
+          "text": "Presque jamais"
+        },
+        {
+          "ball": 2,
+          "text": "Parfois"
+        },
+        {
+          "ball": 1,
+          "text": "Assez souvent"
+        },
+        {
+          "ball": 0,
+          "text": "Très souvent"
+        }
+      ]
+    },
+    {
+      "text": "Au cours du dernier mois, combien de fois avez-vous senti que vous dominiez la situation ?",
+      "answers": [
+        {
+          "ball": 4,
+          "text": "Jamais"
+        },
+        {
+          "ball": 3,
+          "text": "Presque jamais"
+        },
+        {
+          "ball": 2,
+          "text": "Parfois"
+        },
+        {
+          "ball": 1,
+          "text": "Assez souvent"
+        },
+        {
+          "ball": 0,
+          "text": "Très souvent"
+        }
+      ]
+    },
+    {
+      "text": "Au cours du dernier mois, combien de fois vous êtes-vous senti·e irrité·e parce que les événements échappaient à votre contrôle ?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Jamais"
+        },
+        {
+          "ball": 1,
+          "text": "Presque jamais"
+        },
+        {
+          "ball": 2,
+          "text": "Parfois"
+        },
+        {
+          "ball": 3,
+          "text": "Assez souvent"
+        },
+        {
+          "ball": 4,
+          "text": "Très souvent"
+        }
+      ]
+    },
+    {
+      "text": "Au cours du dernier mois, combien de fois avez-vous trouvé que les difficultés s'accumulaient à tel point que vous ne pouviez les surmonter ?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Jamais"
+        },
+        {
+          "ball": 1,
+          "text": "Presque jamais"
+        },
+        {
+          "ball": 2,
+          "text": "Parfois"
+        },
+        {
+          "ball": 3,
+          "text": "Assez souvent"
+        },
+        {
+          "ball": 4,
+          "text": "Très souvent"
+        }
+      ]
+    }
+  ]
+}

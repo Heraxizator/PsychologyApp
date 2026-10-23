@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Kurzer Lüscher-Test",
+    "subtitle": "Alternative Version",
+    "estimatedMinutes": 2,
+    "questionCount": 2,
+    "construct": "Emotionaler Zustand",
+    "betterWhen": "lower",
+    "description": "Wähle die gerade angenehmste und unangenehmste Farbe — nicht deine Lieblingsfarben im Allgemeinen.",
+    "algorithm": [
+      "1. Wähle die angenehmste Farbe",
+      "2. Wähle die unangenehmste Farbe"
+    ],
+    "comment": "Wähle nicht deine Lieblingsfarben. Der Test misst deinen aktuellen emotionalen Zustand.",
+    "navigationTarget": "brief"
+  },
+  {
+    "title": "Vollständiger Lüscher-Test",
+    "subtitle": "Standardversion",
+    "estimatedMinutes": 7,
+    "questionCount": 8,
+    "construct": "Emotionaler Zustand",
+    "betterWhen": "lower",
+    "description": "Ordne 8 Farben zweimal von der angenehmsten zur unangenehmsten — so, wie du dich hier und jetzt fühlst.",
+    "algorithm": [
+      "1. Ordne 8 Farben von der angenehmsten zur unangenehmsten",
+      "2. Wiederhole Schritt 1, ohne auf dein erstes Ergebnis zu schauen"
+    ],
+    "comment": "Wähle nicht deine Lieblingsfarben. Der Test misst deinen aktuellen emotionalen Zustand.",
+    "navigationTarget": "standard"
+  }
+]

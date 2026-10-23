@@ -1,0 +1,440 @@
+{
+  "title": "Inventario de Beck",
+  "subtitle": "Cribado de depresión",
+  "estimatedMinutes": 5,
+  "questionCount": 21,
+  "construct": "Depresión",
+  "betterWhen": "lower",
+  "description": "Evalúa tus síntomas depresivos de la última semana en 5–7 minutos.",
+  "algorithm": [
+    "1. Este cuestionario contiene grupos de afirmaciones. Lee con atención cada grupo.",
+    "2. En cada grupo, elige la afirmación que mejor describa cómo te has sentido ESTA SEMANA Y HOY.",
+    "3. Marca la afirmación elegida.",
+    "4. Si varias afirmaciones de un grupo te parecen igual de adecuadas, puedes marcar más de una."
+  ],
+  "comment": "Lee todas las afirmaciones de cada grupo antes de elegir. Es una herramienta de cribado, no un diagnóstico.",
+  "analyzerId": "beck",
+  "singleAnswer": false,
+  "questions": [
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "No me siento triste."
+        },
+        {
+          "ball": 1,
+          "text": "Me siento triste."
+        },
+        {
+          "ball": 2,
+          "text": "Me siento triste todo el tiempo y no puedo salir de ello."
+        },
+        {
+          "ball": 3,
+          "text": "Me siento tan triste y desgraciado que no puedo soportarlo."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "No me siento desanimado respecto a mi futuro."
+        },
+        {
+          "ball": 1,
+          "text": "Me siento desanimado respecto a mi futuro."
+        },
+        {
+          "ball": 2,
+          "text": "Siento que no tengo nada que esperar."
+        },
+        {
+          "ball": 3,
+          "text": "Siento que mi futuro es desesperanzador y que las cosas no pueden mejorar."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "No me siento un fracasado."
+        },
+        {
+          "ball": 1,
+          "text": "Siento que he fracasado más que la mayoría de las personas."
+        },
+        {
+          "ball": 2,
+          "text": "Cuando miro atrás en mi vida, veo muchos fracasos."
+        },
+        {
+          "ball": 3,
+          "text": "Siento que soy un completo fracaso como persona."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Disfruto de las cosas tanto como antes."
+        },
+        {
+          "ball": 1,
+          "text": "No disfruto de las cosas como antes."
+        },
+        {
+          "ball": 2,
+          "text": "Ya nada me produce una satisfacción real."
+        },
+        {
+          "ball": 3,
+          "text": "Todo me aburre o me deja insatisfecho."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "No me siento especialmente culpable."
+        },
+        {
+          "ball": 1,
+          "text": "Me siento culpable de muchas cosas que he hecho o debería haber hecho."
+        },
+        {
+          "ball": 2,
+          "text": "Me siento bastante culpable la mayor parte del tiempo."
+        },
+        {
+          "ball": 3,
+          "text": "Me siento culpable todo el tiempo."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "No siento que esté siendo castigado."
+        },
+        {
+          "ball": 1,
+          "text": "Siento que puedo ser castigado."
+        },
+        {
+          "ball": 2,
+          "text": "Espero ser castigado."
+        },
+        {
+          "ball": 3,
+          "text": "Siento que estoy siendo castigado."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "No estoy decepcionado de mí mismo."
+        },
+        {
+          "ball": 1,
+          "text": "Estoy decepcionado de mí mismo."
+        },
+        {
+          "ball": 2,
+          "text": "Me doy asco."
+        },
+        {
+          "ball": 3,
+          "text": "Me odio."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "No siento que sea peor que los demás."
+        },
+        {
+          "ball": 1,
+          "text": "Me critico por mis debilidades o errores."
+        },
+        {
+          "ball": 2,
+          "text": "Me culpo todo el tiempo por mis fallos."
+        },
+        {
+          "ball": 3,
+          "text": "Me culpo de todo lo malo que sucede."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "No tengo ningún pensamiento de quitarme la vida."
+        },
+        {
+          "ball": 1,
+          "text": "Tengo pensamientos de quitarme la vida, pero no los llevaría a cabo."
+        },
+        {
+          "ball": 2,
+          "text": "Me gustaría quitarme la vida."
+        },
+        {
+          "ball": 3,
+          "text": "Me quitaría la vida si tuviera la oportunidad."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "No lloro más de lo habitual."
+        },
+        {
+          "ball": 1,
+          "text": "Lloro más que antes."
+        },
+        {
+          "ball": 2,
+          "text": "Lloro por cualquier cosa."
+        },
+        {
+          "ball": 3,
+          "text": "Tengo ganas de llorar, pero no puedo."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Las cosas no me irritan más que antes."
+        },
+        {
+          "ball": 1,
+          "text": "Ahora me irrito un poco más que de costumbre."
+        },
+        {
+          "ball": 2,
+          "text": "Estoy bastante molesto o irritado buena parte del tiempo."
+        },
+        {
+          "ball": 3,
+          "text": "Me siento irritado todo el tiempo."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "No he perdido el interés por los demás."
+        },
+        {
+          "ball": 1,
+          "text": "Me intereso menos por los demás que antes."
+        },
+        {
+          "ball": 2,
+          "text": "He perdido la mayor parte de mi interés por los demás."
+        },
+        {
+          "ball": 3,
+          "text": "He perdido todo mi interés por los demás."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Tomo decisiones más o menos igual de bien que siempre."
+        },
+        {
+          "ball": 1,
+          "text": "Aplazo las decisiones más que antes."
+        },
+        {
+          "ball": 2,
+          "text": "Me cuesta más que antes tomar decisiones."
+        },
+        {
+          "ball": 3,
+          "text": "Ya no soy capaz de tomar ninguna decisión."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "No siento que mi aspecto sea peor que antes."
+        },
+        {
+          "ball": 1,
+          "text": "Me preocupa parecer mayor o poco atractivo."
+        },
+        {
+          "ball": 2,
+          "text": "Siento que hay cambios permanentes en mi aspecto que me hacen poco atractivo."
+        },
+        {
+          "ball": 3,
+          "text": "Creo que soy feo."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Puedo trabajar más o menos igual de bien que antes."
+        },
+        {
+          "ball": 1,
+          "text": "Me cuesta un esfuerzo extra empezar a hacer algo."
+        },
+        {
+          "ball": 2,
+          "text": "Tengo que esforzarme muchísimo para hacer cualquier cosa."
+        },
+        {
+          "ball": 3,
+          "text": "No puedo hacer ningún trabajo."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Duermo tan bien como de costumbre."
+        },
+        {
+          "ball": 1,
+          "text": "No duermo tan bien como antes."
+        },
+        {
+          "ball": 2,
+          "text": "Me despierto 1–2 horas antes de lo habitual y me cuesta volver a dormirme."
+        },
+        {
+          "ball": 3,
+          "text": "Me despierto varias horas antes que antes y no puedo volver a dormirme."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "No me canso más de lo habitual."
+        },
+        {
+          "ball": 1,
+          "text": "Me canso con más facilidad que antes."
+        },
+        {
+          "ball": 2,
+          "text": "Me canso haciendo casi cualquier cosa."
+        },
+        {
+          "ball": 3,
+          "text": "Estoy demasiado cansado para hacer nada."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Mi apetito no es peor que de costumbre."
+        },
+        {
+          "ball": 1,
+          "text": "Mi apetito no es tan bueno como antes."
+        },
+        {
+          "ball": 2,
+          "text": "Ahora mi apetito es mucho peor."
+        },
+        {
+          "ball": 3,
+          "text": "Ya no tengo nada de apetito."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Últimamente no he perdido peso, o casi nada."
+        },
+        {
+          "ball": 1,
+          "text": "He perdido más de 2 kg."
+        },
+        {
+          "ball": 2,
+          "text": "He perdido más de 5 kg."
+        },
+        {
+          "ball": 3,
+          "text": "He perdido más de 7 kg."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "No me preocupa mi salud más que de costumbre."
+        },
+        {
+          "ball": 1,
+          "text": "Me preocupan problemas físicos como dolores, malestar de estómago o estreñimiento."
+        },
+        {
+          "ball": 2,
+          "text": "Me preocupan mucho los problemas físicos y me cuesta pensar en otra cosa."
+        },
+        {
+          "ball": 3,
+          "text": "Me preocupan tanto mis problemas físicos que no puedo pensar en nada más."
+        }
+      ]
+    },
+    {
+      "answers": [
+        {
+          "ball": 0,
+          "text": "No he notado ningún cambio reciente en mi interés por el sexo."
+        },
+        {
+          "ball": 1,
+          "text": "Me interesa menos el sexo que antes."
+        },
+        {
+          "ball": 2,
+          "text": "Ahora me interesa mucho menos el sexo."
+        },
+        {
+          "ball": 3,
+          "text": "He perdido por completo el interés por el sexo."
+        }
+      ]
+    }
+  ]
+}

@@ -72,19 +72,39 @@ public sealed class QuestionnaireScoreRangeTests
         }
     }
 
+    private static readonly string[] Scored = ["questionnaires", "beck", "pss10", "rses"];
+
+    // Russian is the original (no suffix); the other languages are compared with the English file they were translated from.
+    private static readonly string[] Translations = ["", ".fr", ".de", ".es", ".pt", ".zh"];
+
+    public static TheoryData<string, string> TranslatedFiles
+    {
+        get
+        {
+            TheoryData<string, string> data = [];
+            foreach (string name in Scored)
+            {
+                foreach (string suffix in Translations)
+                {
+                    data.Add(name, name + suffix + ".json");
+                }
+            }
+
+            return data;
+        }
+    }
+
     [Theory]
-    [InlineData("questionnaires")]
-    [InlineData("beck")]
-    [InlineData("pss10")]
-    [InlineData("rses")]
-    public void A_test_is_scored_the_same_in_Russian_and_English(string name)
+    [MemberData(nameof(TranslatedFiles))]
+    public void A_test_is_scored_the_same_in_every_language(string name, string file)
     {
         // The Russian Rosenberg item 2 had drifted into "not much to be proud of", reverse-scored, while the English one
         // kept "a number of good qualities": the same answers gave a different self-esteem score in each language.
-        Assert.Equal(Keys(Load(name + ".en.json")), Keys(Load(name + ".json")));
+        Assert.Equal(Keys(Load(name + ".en.json")), Keys(Load(file)));
     }
 
-    public static TheoryData<string> Files => ["questionnaires.json", "questionnaires.en.json", "beck.json", "beck.en.json", "pss10.json", "pss10.en.json", "rses.json", "rses.en.json"];
+    public static TheoryData<string> Files =>
+        [.. Scored.SelectMany(name => Translations.Append(".en").Select(suffix => name + suffix + ".json"))];
 
     [Theory]
     [MemberData(nameof(Files))]

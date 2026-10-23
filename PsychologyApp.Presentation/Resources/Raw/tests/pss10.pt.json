@@ -1,0 +1,268 @@
+{
+  "title": "Escala de Estresse Percebido PSS-10",
+  "subtitle": "Estresse percebido",
+  "estimatedMinutes": 3,
+  "questionCount": 10,
+  "construct": "Estresse",
+  "betterWhen": "lower",
+  "description": "Dez perguntas sobre com que frequência você viveu certas situações de estresse no último mês.",
+  "algorithm": [
+    "1. Pense no último mês.",
+    "2. Em cada pergunta, escolha com que frequência isso foi verdade para você."
+  ],
+  "comment": "Isto rastreia o estresse percebido; não é um diagnóstico.",
+  "analyzerId": "pss10",
+  "singleAnswer": true,
+  "questions": [
+    {
+      "text": "No último mês, com que frequência você ficou chateado por causa de algo que aconteceu inesperadamente?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Nunca"
+        },
+        {
+          "ball": 1,
+          "text": "Quase nunca"
+        },
+        {
+          "ball": 2,
+          "text": "Às vezes"
+        },
+        {
+          "ball": 3,
+          "text": "Quase sempre"
+        },
+        {
+          "ball": 4,
+          "text": "Sempre"
+        }
+      ]
+    },
+    {
+      "text": "No último mês, com que frequência você sentiu que foi incapaz de controlar as coisas importantes da sua vida?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Nunca"
+        },
+        {
+          "ball": 1,
+          "text": "Quase nunca"
+        },
+        {
+          "ball": 2,
+          "text": "Às vezes"
+        },
+        {
+          "ball": 3,
+          "text": "Quase sempre"
+        },
+        {
+          "ball": 4,
+          "text": "Sempre"
+        }
+      ]
+    },
+    {
+      "text": "No último mês, com que frequência você se sentiu nervoso e estressado?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Nunca"
+        },
+        {
+          "ball": 1,
+          "text": "Quase nunca"
+        },
+        {
+          "ball": 2,
+          "text": "Às vezes"
+        },
+        {
+          "ball": 3,
+          "text": "Quase sempre"
+        },
+        {
+          "ball": 4,
+          "text": "Sempre"
+        }
+      ]
+    },
+    {
+      "text": "No último mês, com que frequência você se sentiu confiante na sua capacidade de lidar com seus problemas pessoais?",
+      "answers": [
+        {
+          "ball": 4,
+          "text": "Nunca"
+        },
+        {
+          "ball": 3,
+          "text": "Quase nunca"
+        },
+        {
+          "ball": 2,
+          "text": "Às vezes"
+        },
+        {
+          "ball": 1,
+          "text": "Quase sempre"
+        },
+        {
+          "ball": 0,
+          "text": "Sempre"
+        }
+      ]
+    },
+    {
+      "text": "No último mês, com que frequência você sentiu que as coisas estavam acontecendo de acordo com a sua vontade?",
+      "answers": [
+        {
+          "ball": 4,
+          "text": "Nunca"
+        },
+        {
+          "ball": 3,
+          "text": "Quase nunca"
+        },
+        {
+          "ball": 2,
+          "text": "Às vezes"
+        },
+        {
+          "ball": 1,
+          "text": "Quase sempre"
+        },
+        {
+          "ball": 0,
+          "text": "Sempre"
+        }
+      ]
+    },
+    {
+      "text": "No último mês, com que frequência você achou que não conseguiria lidar com todas as coisas que tinha para fazer?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Nunca"
+        },
+        {
+          "ball": 1,
+          "text": "Quase nunca"
+        },
+        {
+          "ball": 2,
+          "text": "Às vezes"
+        },
+        {
+          "ball": 3,
+          "text": "Quase sempre"
+        },
+        {
+          "ball": 4,
+          "text": "Sempre"
+        }
+      ]
+    },
+    {
+      "text": "No último mês, com que frequência você foi capaz de controlar as irritações da sua vida?",
+      "answers": [
+        {
+          "ball": 4,
+          "text": "Nunca"
+        },
+        {
+          "ball": 3,
+          "text": "Quase nunca"
+        },
+        {
+          "ball": 2,
+          "text": "Às vezes"
+        },
+        {
+          "ball": 1,
+          "text": "Quase sempre"
+        },
+        {
+          "ball": 0,
+          "text": "Sempre"
+        }
+      ]
+    },
+    {
+      "text": "No último mês, com que frequência você sentiu que as coisas estavam sob o seu controle?",
+      "answers": [
+        {
+          "ball": 4,
+          "text": "Nunca"
+        },
+        {
+          "ball": 3,
+          "text": "Quase nunca"
+        },
+        {
+          "ball": 2,
+          "text": "Às vezes"
+        },
+        {
+          "ball": 1,
+          "text": "Quase sempre"
+        },
+        {
+          "ball": 0,
+          "text": "Sempre"
+        }
+      ]
+    },
+    {
+      "text": "No último mês, com que frequência você ficou irritado por coisas que estavam fora do seu controle?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Nunca"
+        },
+        {
+          "ball": 1,
+          "text": "Quase nunca"
+        },
+        {
+          "ball": 2,
+          "text": "Às vezes"
+        },
+        {
+          "ball": 3,
+          "text": "Quase sempre"
+        },
+        {
+          "ball": 4,
+          "text": "Sempre"
+        }
+      ]
+    },
+    {
+      "text": "No último mês, com que frequência você sentiu que as dificuldades se acumulavam a ponto de você acreditar que não poderia superá-las?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Nunca"
+        },
+        {
+          "ball": 1,
+          "text": "Quase nunca"
+        },
+        {
+          "ball": 2,
+          "text": "Às vezes"
+        },
+        {
+          "ball": 3,
+          "text": "Quase sempre"
+        },
+        {
+          "ball": 4,
+          "text": "Sempre"
+        }
+      ]
+    }
+  ]
+}

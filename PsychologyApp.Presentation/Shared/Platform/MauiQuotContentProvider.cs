@@ -31,7 +31,8 @@ public sealed class MauiQuotContentProvider : IQuotContentProvider
 
     private async Task<IReadOnlyList<QuotSeed>> EnsureCacheAsync(CancellationToken cancellationToken)
     {
-        string assetPath = ContentAssets.QuotesFile;
+        IReadOnlyList<string> candidates = ContentAssets.QuotesFiles;
+        string assetPath = candidates[0];
         if (_cache is not null && _loadedAsset == assetPath)
         {
             return _cache;
@@ -46,7 +47,7 @@ public sealed class MauiQuotContentProvider : IQuotContentProvider
             }
 
             // Android asset streams complete synchronously: open on the pool so the 200 KB parse stays off the UI thread.
-            await using Stream stream = await Task.Run(() => FileSystem.OpenAppPackageFileAsync(assetPath), cancellationToken).ConfigureAwait(false);
+            await using Stream stream = await Task.Run(() => OpenFirstAsync(candidates), cancellationToken).ConfigureAwait(false);
             List<QuoteJsonEntry>? entries = await JsonSerializer.DeserializeAsync(
                 stream,
                 AppJsonSerializerContext.Default.ListQuoteJsonEntry,
@@ -80,5 +81,22 @@ public sealed class MauiQuotContentProvider : IQuotContentProvider
         {
             _gate.Release();
         }
+    }
+
+    private static async Task<Stream> OpenFirstAsync(IReadOnlyList<string> candidates)
+    {
+        for (int i = 0; i < candidates.Count - 1; i++)
+        {
+            try
+            {
+                return await FileSystem.OpenAppPackageFileAsync(candidates[i]);
+            }
+            catch (Exception missing) when (missing is not OperationCanceledException)
+            {
+                // No quotes of this language yet: the English ones are shown.
+            }
+        }
+
+        return await FileSystem.OpenAppPackageFileAsync(candidates[^1]);
     }
 }

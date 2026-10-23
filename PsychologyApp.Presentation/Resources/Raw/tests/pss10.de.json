@@ -1,0 +1,268 @@
+{
+  "title": "Skala zum wahrgenommenen Stress PSS-10",
+  "subtitle": "Wahrgenommener Stress",
+  "estimatedMinutes": 3,
+  "questionCount": 10,
+  "construct": "Stress",
+  "betterWhen": "lower",
+  "description": "Zehn Fragen dazu, wie oft du im letzten Monat bestimmte stressbezogene Erfahrungen gemacht hast.",
+  "algorithm": [
+    "1. Denk an den letzten Monat.",
+    "2. Wähle bei jeder Frage, wie oft es auf dich zutraf."
+  ],
+  "comment": "Dies erfasst wahrgenommenen Stress; es ist keine Diagnose.",
+  "analyzerId": "pss10",
+  "singleAnswer": true,
+  "questions": [
+    {
+      "text": "Wie oft warst du im letzten Monat aufgewühlt, weil etwas Unerwartetes passiert ist?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Nie"
+        },
+        {
+          "ball": 1,
+          "text": "Fast nie"
+        },
+        {
+          "ball": 2,
+          "text": "Manchmal"
+        },
+        {
+          "ball": 3,
+          "text": "Ziemlich oft"
+        },
+        {
+          "ball": 4,
+          "text": "Sehr oft"
+        }
+      ]
+    },
+    {
+      "text": "Wie oft hattest du im letzten Monat das Gefühl, die wichtigen Dinge in deinem Leben nicht beeinflussen zu können?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Nie"
+        },
+        {
+          "ball": 1,
+          "text": "Fast nie"
+        },
+        {
+          "ball": 2,
+          "text": "Manchmal"
+        },
+        {
+          "ball": 3,
+          "text": "Ziemlich oft"
+        },
+        {
+          "ball": 4,
+          "text": "Sehr oft"
+        }
+      ]
+    },
+    {
+      "text": "Wie oft hast du dich im letzten Monat nervös und gestresst gefühlt?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Nie"
+        },
+        {
+          "ball": 1,
+          "text": "Fast nie"
+        },
+        {
+          "ball": 2,
+          "text": "Manchmal"
+        },
+        {
+          "ball": 3,
+          "text": "Ziemlich oft"
+        },
+        {
+          "ball": 4,
+          "text": "Sehr oft"
+        }
+      ]
+    },
+    {
+      "text": "Wie oft warst du im letzten Monat zuversichtlich, persönliche Probleme bewältigen zu können?",
+      "answers": [
+        {
+          "ball": 4,
+          "text": "Nie"
+        },
+        {
+          "ball": 3,
+          "text": "Fast nie"
+        },
+        {
+          "ball": 2,
+          "text": "Manchmal"
+        },
+        {
+          "ball": 1,
+          "text": "Ziemlich oft"
+        },
+        {
+          "ball": 0,
+          "text": "Sehr oft"
+        }
+      ]
+    },
+    {
+      "text": "Wie oft hattest du im letzten Monat das Gefühl, dass sich die Dinge zu deinen Gunsten entwickeln?",
+      "answers": [
+        {
+          "ball": 4,
+          "text": "Nie"
+        },
+        {
+          "ball": 3,
+          "text": "Fast nie"
+        },
+        {
+          "ball": 2,
+          "text": "Manchmal"
+        },
+        {
+          "ball": 1,
+          "text": "Ziemlich oft"
+        },
+        {
+          "ball": 0,
+          "text": "Sehr oft"
+        }
+      ]
+    },
+    {
+      "text": "Wie oft hattest du im letzten Monat das Gefühl, mit all deinen Aufgaben nicht zurechtzukommen?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Nie"
+        },
+        {
+          "ball": 1,
+          "text": "Fast nie"
+        },
+        {
+          "ball": 2,
+          "text": "Manchmal"
+        },
+        {
+          "ball": 3,
+          "text": "Ziemlich oft"
+        },
+        {
+          "ball": 4,
+          "text": "Sehr oft"
+        }
+      ]
+    },
+    {
+      "text": "Wie oft konntest du im letzten Monat ärgerliche Situationen in deinem Leben gut beeinflussen?",
+      "answers": [
+        {
+          "ball": 4,
+          "text": "Nie"
+        },
+        {
+          "ball": 3,
+          "text": "Fast nie"
+        },
+        {
+          "ball": 2,
+          "text": "Manchmal"
+        },
+        {
+          "ball": 1,
+          "text": "Ziemlich oft"
+        },
+        {
+          "ball": 0,
+          "text": "Sehr oft"
+        }
+      ]
+    },
+    {
+      "text": "Wie oft hattest du im letzten Monat das Gefühl, alles im Griff zu haben?",
+      "answers": [
+        {
+          "ball": 4,
+          "text": "Nie"
+        },
+        {
+          "ball": 3,
+          "text": "Fast nie"
+        },
+        {
+          "ball": 2,
+          "text": "Manchmal"
+        },
+        {
+          "ball": 1,
+          "text": "Ziemlich oft"
+        },
+        {
+          "ball": 0,
+          "text": "Sehr oft"
+        }
+      ]
+    },
+    {
+      "text": "Wie oft hast du dich im letzten Monat über Dinge geärgert, auf die du keinen Einfluss hattest?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Nie"
+        },
+        {
+          "ball": 1,
+          "text": "Fast nie"
+        },
+        {
+          "ball": 2,
+          "text": "Manchmal"
+        },
+        {
+          "ball": 3,
+          "text": "Ziemlich oft"
+        },
+        {
+          "ball": 4,
+          "text": "Sehr oft"
+        }
+      ]
+    },
+    {
+      "text": "Wie oft hattest du im letzten Monat das Gefühl, dass sich die Schwierigkeiten so auftürmen, dass du sie nicht bewältigen kannst?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Nie"
+        },
+        {
+          "ball": 1,
+          "text": "Fast nie"
+        },
+        {
+          "ball": 2,
+          "text": "Manchmal"
+        },
+        {
+          "ball": 3,
+          "text": "Ziemlich oft"
+        },
+        {
+          "ball": 4,
+          "text": "Sehr oft"
+        }
+      ]
+    }
+  ]
+}

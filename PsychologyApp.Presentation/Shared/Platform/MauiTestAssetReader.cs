@@ -12,15 +12,20 @@ public sealed class MauiTestAssetReader : ITestAssetReader
 
     private static async Task<Stream> OpenCoreAsync(string assetPath)
     {
-        string localizedPath = ContentAssets.Localized(assetPath);
+        IReadOnlyList<string> candidates = ContentAssets.Candidates(assetPath);
+        for (int i = 0; i < candidates.Count - 1; i++)
+        {
+            try
+            {
+                return await FileSystem.OpenAppPackageFileAsync(candidates[i]);
+            }
+            catch (Exception missing) when (missing is not OperationCanceledException)
+            {
+                // This language has no file of its own yet (on Android a missing asset is a Java exception, not
+                // FileNotFoundException): the next one in line is shown instead.
+            }
+        }
 
-        try
-        {
-            return await FileSystem.OpenAppPackageFileAsync(localizedPath);
-        }
-        catch when (!string.Equals(localizedPath, assetPath, StringComparison.Ordinal))
-        {
-            return await FileSystem.OpenAppPackageFileAsync(assetPath);
-        }
+        return await FileSystem.OpenAppPackageFileAsync(candidates[^1]);
     }
 }

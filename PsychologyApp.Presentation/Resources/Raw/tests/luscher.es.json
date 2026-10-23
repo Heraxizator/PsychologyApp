@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Test de Lüscher breve",
+    "subtitle": "Versión alternativa",
+    "estimatedMinutes": 2,
+    "questionCount": 2,
+    "construct": "Estado emocional",
+    "betterWhen": "lower",
+    "description": "Elige el color más y el menos agradable ahora mismo, no tus colores favoritos en general.",
+    "algorithm": [
+      "1. Elige el color más agradable",
+      "2. Elige el color menos agradable"
+    ],
+    "comment": "No elijas tus colores favoritos. El test mide tu estado emocional actual.",
+    "navigationTarget": "brief"
+  },
+  {
+    "title": "Test de Lüscher completo",
+    "subtitle": "Versión estándar",
+    "estimatedMinutes": 7,
+    "questionCount": 8,
+    "construct": "Estado emocional",
+    "betterWhen": "lower",
+    "description": "Ordena dos veces 8 colores del más al menos agradable, según cómo te sientes aquí y ahora.",
+    "algorithm": [
+      "1. Ordena 8 colores del más al menos agradable",
+      "2. Repite el paso 1 sin mirar tu primer resultado"
+    ],
+    "comment": "No elijas tus colores favoritos. El test mide tu estado emocional actual.",
+    "navigationTarget": "standard"
+  }
+]

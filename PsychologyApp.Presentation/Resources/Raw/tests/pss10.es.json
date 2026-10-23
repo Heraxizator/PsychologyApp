@@ -1,0 +1,268 @@
+{
+  "title": "Escala de estrés percibido PSS-10",
+  "subtitle": "Estrés percibido",
+  "estimatedMinutes": 3,
+  "questionCount": 10,
+  "construct": "Estrés",
+  "betterWhen": "lower",
+  "description": "Diez preguntas sobre con qué frecuencia viviste ciertas experiencias de estrés durante el último mes.",
+  "algorithm": [
+    "1. Piensa en el último mes.",
+    "2. En cada pregunta, elige con qué frecuencia fue cierto para ti."
+  ],
+  "comment": "Evalúa el estrés percibido; no es un diagnóstico.",
+  "analyzerId": "pss10",
+  "singleAnswer": true,
+  "questions": [
+    {
+      "text": "En el último mes, ¿con qué frecuencia te has sentido afectado por algo que ocurrió inesperadamente?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Nunca"
+        },
+        {
+          "ball": 1,
+          "text": "Casi nunca"
+        },
+        {
+          "ball": 2,
+          "text": "De vez en cuando"
+        },
+        {
+          "ball": 3,
+          "text": "A menudo"
+        },
+        {
+          "ball": 4,
+          "text": "Muy a menudo"
+        }
+      ]
+    },
+    {
+      "text": "En el último mes, ¿con qué frecuencia has sentido que eras incapaz de controlar las cosas importantes de tu vida?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Nunca"
+        },
+        {
+          "ball": 1,
+          "text": "Casi nunca"
+        },
+        {
+          "ball": 2,
+          "text": "De vez en cuando"
+        },
+        {
+          "ball": 3,
+          "text": "A menudo"
+        },
+        {
+          "ball": 4,
+          "text": "Muy a menudo"
+        }
+      ]
+    },
+    {
+      "text": "En el último mes, ¿con qué frecuencia te has sentido nervioso y estresado?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Nunca"
+        },
+        {
+          "ball": 1,
+          "text": "Casi nunca"
+        },
+        {
+          "ball": 2,
+          "text": "De vez en cuando"
+        },
+        {
+          "ball": 3,
+          "text": "A menudo"
+        },
+        {
+          "ball": 4,
+          "text": "Muy a menudo"
+        }
+      ]
+    },
+    {
+      "text": "En el último mes, ¿con qué frecuencia has sentido confianza en tu capacidad para manejar tus problemas personales?",
+      "answers": [
+        {
+          "ball": 4,
+          "text": "Nunca"
+        },
+        {
+          "ball": 3,
+          "text": "Casi nunca"
+        },
+        {
+          "ball": 2,
+          "text": "De vez en cuando"
+        },
+        {
+          "ball": 1,
+          "text": "A menudo"
+        },
+        {
+          "ball": 0,
+          "text": "Muy a menudo"
+        }
+      ]
+    },
+    {
+      "text": "En el último mes, ¿con qué frecuencia has sentido que las cosas te iban bien?",
+      "answers": [
+        {
+          "ball": 4,
+          "text": "Nunca"
+        },
+        {
+          "ball": 3,
+          "text": "Casi nunca"
+        },
+        {
+          "ball": 2,
+          "text": "De vez en cuando"
+        },
+        {
+          "ball": 1,
+          "text": "A menudo"
+        },
+        {
+          "ball": 0,
+          "text": "Muy a menudo"
+        }
+      ]
+    },
+    {
+      "text": "En el último mes, ¿con qué frecuencia has sentido que no podías afrontar todas las cosas que tenías que hacer?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Nunca"
+        },
+        {
+          "ball": 1,
+          "text": "Casi nunca"
+        },
+        {
+          "ball": 2,
+          "text": "De vez en cuando"
+        },
+        {
+          "ball": 3,
+          "text": "A menudo"
+        },
+        {
+          "ball": 4,
+          "text": "Muy a menudo"
+        }
+      ]
+    },
+    {
+      "text": "En el último mes, ¿con qué frecuencia has podido controlar las dificultades de tu vida?",
+      "answers": [
+        {
+          "ball": 4,
+          "text": "Nunca"
+        },
+        {
+          "ball": 3,
+          "text": "Casi nunca"
+        },
+        {
+          "ball": 2,
+          "text": "De vez en cuando"
+        },
+        {
+          "ball": 1,
+          "text": "A menudo"
+        },
+        {
+          "ball": 0,
+          "text": "Muy a menudo"
+        }
+      ]
+    },
+    {
+      "text": "En el último mes, ¿con qué frecuencia has sentido que tenías todo bajo control?",
+      "answers": [
+        {
+          "ball": 4,
+          "text": "Nunca"
+        },
+        {
+          "ball": 3,
+          "text": "Casi nunca"
+        },
+        {
+          "ball": 2,
+          "text": "De vez en cuando"
+        },
+        {
+          "ball": 1,
+          "text": "A menudo"
+        },
+        {
+          "ball": 0,
+          "text": "Muy a menudo"
+        }
+      ]
+    },
+    {
+      "text": "En el último mes, ¿con qué frecuencia te has enfadado por cosas que estaban fuera de tu control?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Nunca"
+        },
+        {
+          "ball": 1,
+          "text": "Casi nunca"
+        },
+        {
+          "ball": 2,
+          "text": "De vez en cuando"
+        },
+        {
+          "ball": 3,
+          "text": "A menudo"
+        },
+        {
+          "ball": 4,
+          "text": "Muy a menudo"
+        }
+      ]
+    },
+    {
+      "text": "En el último mes, ¿con qué frecuencia has sentido que las dificultades se acumulaban tanto que no podías superarlas?",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Nunca"
+        },
+        {
+          "ball": 1,
+          "text": "Casi nunca"
+        },
+        {
+          "ball": 2,
+          "text": "De vez en cuando"
+        },
+        {
+          "ball": 3,
+          "text": "A menudo"
+        },
+        {
+          "ball": 4,
+          "text": "Muy a menudo"
+        }
+      ]
+    }
+  ]
+}

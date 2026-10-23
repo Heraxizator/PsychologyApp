@@ -1,0 +1,770 @@
+[
+  {
+    "title": "Questionário de Heck e Hess",
+    "subtitle": "Rastreio de neuroticismo",
+    "estimatedMinutes": 8,
+    "questionCount": 40,
+    "construct": "Neuroticismo",
+    "betterWhen": "lower",
+    "description": "40 afirmações sobre reatividade emocional. Responda Sim ou Não sobre você.",
+    "algorithm": [
+      "1. Você recebe uma lista de afirmações.",
+      "2. Para cada afirmação, responda Sim se concordar (se for verdade para você) ou Não se discordar."
+    ],
+    "comment": "Se algo preocupar você, procure um especialista qualificado.",
+    "analyzerId": "heck_hess",
+    "answers": [
+      "Sim",
+      "Não"
+    ],
+    "balls": [
+      1,
+      0
+    ],
+    "questions": [
+      "Você se sente tenso por dentro?",
+      "Muitas vezes fico tão envolvido em algo que não consigo dormir.",
+      "Eu me magoo com facilidade.",
+      "Tenho dificuldade em conversar com desconhecidos.",
+      "Você se sente muitas vezes indiferente e cansado sem motivo especial?",
+      "Muitas vezes sinto que as pessoas me observam de forma crítica.",
+      "Você costuma ser incomodado por pensamentos inúteis que não saem da cabeça mesmo quando tenta?",
+      "Sou bastante nervoso.",
+      "Sinto que ninguém me entende.",
+      "Sou bastante irritável.",
+      "Se as pessoas não estivessem contra mim, minhas coisas dariam mais certo.",
+      "Levo as coisas desagradáveis muito a sério e por muito tempo.",
+      "Até a ideia de um possível fracasso me preocupa.",
+      "Já tive experiências muito estranhas e incomuns.",
+      "Às vezes você se sente alegre e às vezes triste sem motivo aparente?",
+      "Ao longo do dia, sonho acordado e fantasio mais do que deveria.",
+      "Seu humor muda com facilidade?",
+      "Muitas vezes luto comigo mesmo para não mostrar minha timidez.",
+      "Gostaria de ser tão feliz quanto as outras pessoas parecem ser.",
+      "Às vezes tremo ou sinto calafrios.",
+      "Seu humor muda com frequência, com ou sem um motivo sério?",
+      "Às vezes você sente medo mesmo quando não há perigo real?",
+      "Críticas ou broncas me magoam profundamente.",
+      "Às vezes fico tão inquieto que não consigo ficar parado.",
+      "Às vezes você se preocupa demais com coisas pequenas?",
+      "Muitas vezes me sinto insatisfeito.",
+      "Tenho dificuldade em me concentrar em uma tarefa ou no trabalho.",
+      "Faço muitas coisas das quais me arrependo depois.",
+      "Na maior parte do tempo, sou feliz.",
+      "Não tenho confiança suficiente em mim.",
+      "Sofro com um sentimento de inferioridade.",
+      "Às vezes me sinto completamente sem valor.",
+      "Muitas vezes me sinto simplesmente péssimo.",
+      "Eu me analiso muito.",
+      "Às vezes tudo dói.",
+      "Tenho estados de ânimo opressivos.",
+      "Tem algo errado com meus nervos.",
+      "Tenho dificuldade em manter uma conversa quando conheço alguém.",
+      "A luta mais difícil para mim é a luta comigo mesmo.",
+      "Às vezes você sente que as dificuldades são grandes e insuperáveis?"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Teste de Hare",
+    "subtitle": "Rastreio de psicopatia",
+    "estimatedMinutes": 8,
+    "questionCount": 40,
+    "construct": "Psicopatia",
+    "betterWhen": "lower",
+    "description": "Rastreia padrões interpessoais e de comportamento. Responda com sinceridade — não há respostas certas.",
+    "algorithm": [
+      "1. Você recebe uma lista de afirmações.",
+      "2. Para cada afirmação, escolha uma das respostas sugeridas."
+    ],
+    "comment": "Se algo preocupar você, procure um especialista qualificado.",
+    "analyzerId": "haer",
+    "answers": [
+      "Sim",
+      "Não"
+    ],
+    "balls": [
+      1,
+      0
+    ],
+    "questions": [
+      "Nunca fico sem palavras.",
+      "Em relações importantes, estou acima da maioria das pessoas.",
+      "Fico entediado com facilidade.",
+      "Minto para amenizar as coisas.",
+      "Engano as pessoas em alguns assuntos.",
+      "Raramente me sinto culpado.",
+      "Sou uma pessoa emotiva.",
+      "Raramente me apego emocionalmente aos outros.",
+      "Os outros costumam pagar por mim.",
+      "Sou impaciente.",
+      "Levo uma vida sexual desregrada.",
+      "Fui uma criança difícil.",
+      "Tenho dificuldade em me manter comprometido com metas de longo prazo.",
+      "Sou impulsivo.",
+      "Muitas vezes faço o trabalho sem cuidado.",
+      "Tento evitar responsabilidades.",
+      "Meus relacionamentos amorosos costumam acabar rápido.",
+      "Cometi vários delitos quando era menor de idade.",
+      "Descumpri as condições de uma liberdade condicional.",
+      "Cometi vários tipos de crimes.",
+      "Não sou tímido nem acanhado; falo com autoridade e confiança.",
+      "Sou excepcional.",
+      "Preciso de risco para me sentir vivo.",
+      "Na maior parte, sou uma pessoa honesta.",
+      "Eu me sinto mal quando engano as pessoas.",
+      "Se alguém merece punição, não me sinto muito mal com isso.",
+      "Acho que emoções fortes são para os fracos.",
+      "Acho que, se as pessoas se ofendem, o problema é delas.",
+      "Sempre penso primeiro em mim.",
+      "Nunca ajo de forma precipitada.",
+      "Acho que sexo não deve ser tratado com leviandade.",
+      "Na escola, eu me metia em encrenca com frequência.",
+      "Falta rumo na minha vida.",
+      "Nunca cedo à tentação.",
+      "Sempre cumpro minha palavra.",
+      "Meus problemas são, na maioria, culpa dos outros.",
+      "Não gosto de compromissos em relacionamentos.",
+      "Na escola, eu praticava bullying.",
+      "Faltei com o respeito ao tribunal.",
+      "Eu não teria orgulho de ter cometido crimes."
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Questionário de L. G. Pochebut",
+    "subtitle": "Rastreio de agressividade",
+    "estimatedMinutes": 8,
+    "questionCount": 40,
+    "construct": "Agressividade",
+    "betterWhen": "lower",
+    "description": "Avalie com que frequência reações agressivas aparecem em situações do dia a dia.",
+    "algorithm": [
+      "1. Você recebe uma lista de afirmações.",
+      "2. Para cada afirmação, escolha uma das respostas sugeridas."
+    ],
+    "comment": "Se algo preocupar você, procure um especialista qualificado.",
+    "analyzerId": "pochebut",
+    "answers": [
+      "Sim",
+      "Não"
+    ],
+    "balls": [
+      1,
+      0
+    ],
+    "questions": [
+      "Durante uma discussão, costumo levantar a voz.",
+      "Se alguém me irrita, posso dizer tudo o que penso dessa pessoa.",
+      "Se eu precisar de força física para defender meus direitos, vou usá-la sem hesitar.",
+      "Quando encontro alguém desagradável, posso beliscar ou empurrar a pessoa sem que percebam.",
+      "No meio de uma discussão, posso bater o punho na mesa para chamar atenção ou provar que tenho razão.",
+      "Sinto constantemente que os outros não respeitam meus direitos.",
+      "Ao lembrar do passado, às vezes sinto pena de mim.",
+      "Embora eu não demonstre, às vezes a inveja me corrói.",
+      "Se desaprovo o comportamento de conhecidos, digo isso diretamente a eles.",
+      "Com muita raiva, uso palavras duras e xingo.",
+      "Se alguém levanta a mão contra mim, tento bater primeiro.",
+      "Às vezes fico tão furioso que jogo coisas.",
+      "Muitas vezes sinto necessidade de mudar os móveis de lugar ou trocá-los por completo.",
+      "Ao lidar com os outros, muitas vezes me sinto como um barril de pólvora prestes a explodir.",
+      "Às vezes tenho vontade de fazer uma brincadeira maldosa com alguém.",
+      "Quando estou com raiva, geralmente fico carrancudo.",
+      "Numa conversa, procuro ouvir com atenção sem interromper.",
+      "Na juventude, meus punhos coçavam com frequência e eu estava sempre pronto para usá-los.",
+      "Se sei que alguém me empurrou de propósito, pode acabar em briga.",
+      "A bagunça criativa na minha mesa me ajuda a trabalhar com eficiência.",
+      "Lembro de ter ficado com tanta raiva que peguei o que estava à mão e quebrei.",
+      "Às vezes as pessoas me irritam só por estarem presentes.",
+      "Muitas vezes me surpreendo com motivos ocultos por trás das boas ações de alguém comigo.",
+      "Se alguém me ofende, perco a vontade de falar com qualquer pessoa.",
+      "Às vezes falo coisas maldosas de propósito sobre pessoas de quem não gosto.",
+      "Quando estou furioso, grito os piores insultos.",
+      "Na infância, eu evitava brigas.",
+      "Sei quando e por que é aceitável bater em alguém.",
+      "Quando estou com raiva, posso bater a porta.",
+      "Parece que as pessoas ao meu redor não gostam de mim.",
+      "Compartilho constantemente meus sentimentos e vivências com os outros.",
+      "Muitas vezes minhas palavras e ações me prejudicam.",
+      "Quando gritam comigo, eu grito de volta.",
+      "Se alguém me bate primeiro, eu revido.",
+      "Fico irritado quando as coisas não estão no lugar.",
+      "Se não consigo consertar algo quebrado, com raiva eu destruo de vez.",
+      "Os outros sempre me parecem mais bem-sucedidos.",
+      "Quando penso em alguém de quem não gosto, posso ficar agitado com vontade de prejudicá-lo.",
+      "Às vezes parece que o destino me pregou uma peça cruel.",
+      "Se alguém me trata mal, fico muito abalado."
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Escala GAD-7",
+    "subtitle": "Rastreio de ansiedade",
+    "estimatedMinutes": 2,
+    "questionCount": 7,
+    "construct": "Ansiedade",
+    "betterWhen": "lower",
+    "description": "Sete perguntas sobre com que frequência cada sintoma incomodou você nas últimas duas semanas.",
+    "algorithm": [
+      "1. Pense nas últimas duas semanas.",
+      "2. Para cada item, escolha com que frequência o sintoma incomodou você."
+    ],
+    "comment": "Este é um instrumento de rastreio, não um diagnóstico. Procure ajuda profissional se a ansiedade for intensa.",
+    "analyzerId": "gad7",
+    "answers": [
+      "Nenhuma vez",
+      "Vários dias",
+      "Mais da metade dos dias",
+      "Quase todos os dias"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Sentir-se nervoso, ansioso ou muito tenso",
+      "Não ser capaz de impedir ou de controlar as preocupações",
+      "Preocupar-se muito com diversas coisas",
+      "Dificuldade para relaxar",
+      "Ficar tão agitado que se torna difícil permanecer sentado",
+      "Ficar facilmente aborrecido ou irritado",
+      "Sentir medo como se algo horrível fosse acontecer"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Escala K10",
+    "subtitle": "Sofrimento psicológico",
+    "estimatedMinutes": 3,
+    "questionCount": 10,
+    "construct": "Sofrimento psicológico",
+    "betterWhen": "lower",
+    "description": "Dez perguntas sobre com que frequência você viveu cada estado nas últimas quatro semanas.",
+    "algorithm": [
+      "1. Pense nas últimas quatro semanas.",
+      "2. Para cada item, escolha com que frequência isso foi verdade para você."
+    ],
+    "comment": "Este é um instrumento de rastreio, não um diagnóstico. Busque apoio se o sofrimento for alto.",
+    "analyzerId": "k10",
+    "answers": [
+      "Nunca",
+      "Poucas vezes",
+      "Às vezes",
+      "Na maior parte do tempo",
+      "O tempo todo"
+    ],
+    "balls": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "questions": [
+      "Esgotado sem um bom motivo",
+      "Nervoso",
+      "Tão nervoso que nada conseguia acalmar você",
+      "Sem esperança",
+      "Inquieto ou agitado",
+      "Tão inquieto que não conseguia ficar sentado",
+      "Deprimido",
+      "Que tudo era um esforço",
+      "Tão triste que nada conseguia animar você",
+      "Sem valor"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Índice WHO-5",
+    "subtitle": "Bem-estar subjetivo",
+    "estimatedMinutes": 2,
+    "questionCount": 5,
+    "construct": "Bem-estar",
+    "betterWhen": "higher",
+    "description": "Cinco perguntas sobre bem-estar positivo nas últimas duas semanas. Uma pontuação total maior indica maior bem-estar subjetivo.",
+    "algorithm": [
+      "1. Pense nas últimas duas semanas.",
+      "2. Para cada item, marque com que frequência você se sentiu assim."
+    ],
+    "comment": "Isto rastreia o bem-estar subjetivo; não é um diagnóstico.",
+    "analyzerId": "who5",
+    "answers": [
+      "O tempo todo",
+      "Na maior parte do tempo",
+      "Mais da metade do tempo",
+      "Menos da metade do tempo",
+      "Às vezes",
+      "Em nenhum momento"
+    ],
+    "balls": [
+      5,
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "questions": [
+      "Eu me senti alegre e de bom humor",
+      "Eu me senti calmo e tranquilo",
+      "Eu me senti ativo e cheio de energia",
+      "Acordei me sentindo descansado e disposto",
+      "Meu dia a dia foi cheio de coisas que me interessam"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Escala PHQ-9",
+    "subtitle": "Rastreio de depressão",
+    "estimatedMinutes": 3,
+    "questionCount": 9,
+    "construct": "Depressão",
+    "betterWhen": "lower",
+    "description": "Nove perguntas sobre sintomas depressivos nas últimas duas semanas. Avalie com que frequência cada sintoma incomodou você.",
+    "algorithm": [
+      "1. Pense nas últimas duas semanas.",
+      "2. Para cada item, escolha com que frequência o sintoma incomodou você."
+    ],
+    "comment": "Este é um instrumento de rastreio, não um diagnóstico. Procure ajuda profissional se os sintomas forem intensos.",
+    "analyzerId": "phq9",
+    "answers": [
+      "Nenhuma vez",
+      "Vários dias",
+      "Mais da metade dos dias",
+      "Quase todos os dias"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Pouco interesse ou pouco prazer em fazer as coisas",
+      "Se sentir para baixo, deprimido ou sem perspectiva",
+      "Dificuldade para pegar no sono ou permanecer dormindo, ou dormir mais do que de costume",
+      "Se sentir cansado ou com pouca energia",
+      "Falta de apetite ou comendo demais",
+      "Se sentir mal consigo mesmo ou achar que você é um fracasso ou que decepcionou sua família ou você mesmo",
+      "Dificuldade para se concentrar nas coisas, como ler o jornal ou ver televisão",
+      "Lentidão para se movimentar ou falar, a ponto das outras pessoas perceberem? Ou o oposto: estar tão agitado ou irrequieto que você fica andando de um lado para o outro muito mais do que de costume",
+      "Pensar em se ferir de alguma maneira ou que seria melhor estar morto"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Índice ISI-7",
+    "subtitle": "Gravidade da insônia",
+    "estimatedMinutes": 2,
+    "questionCount": 7,
+    "construct": "Insônia",
+    "betterWhen": "lower",
+    "description": "Sete perguntas sobre problemas de sono nas últimas duas semanas. Avalie a gravidade de cada dificuldade.",
+    "algorithm": [
+      "1. Pense nas últimas duas semanas.",
+      "2. Para cada item, escolha o quanto o problema descrito incomodou você."
+    ],
+    "comment": "Isto rastreia a insônia; não é um diagnóstico. Procure ajuda se os problemas de sono continuarem.",
+    "analyzerId": "isi",
+    "answers": [
+      "Nenhuma",
+      "Leve",
+      "Moderada",
+      "Grave",
+      "Muito grave"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "questions": [
+      "Dificuldade para pegar no sono",
+      "Dificuldade para continuar dormindo",
+      "Acordar cedo demais",
+      "O quanto você está insatisfeito com seu padrão de sono atual",
+      "O quanto você acha que seus problemas de sono são percebidos pelos outros",
+      "O quanto você está preocupado ou angustiado com seus problemas de sono atuais",
+      "O quanto seus problemas de sono atrapalham seu dia a dia"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Escala ESS-8",
+    "subtitle": "Sonolência diurna",
+    "estimatedMinutes": 2,
+    "questionCount": 8,
+    "construct": "Sonolência diurna",
+    "betterWhen": "lower",
+    "description": "Oito situações do dia a dia. Avalie a chance de você cochilar em cada uma.",
+    "algorithm": [
+      "1. Imagine cada situação da lista.",
+      "2. Escolha a chance de você cochilar nessa situação."
+    ],
+    "comment": "Isto rastreia a sonolência diurna; não é um diagnóstico. Procure um médico se a sonolência for intensa.",
+    "analyzerId": "ess",
+    "answers": [
+      "Nunca cochilaria",
+      "Pequena chance",
+      "Chance moderada",
+      "Grande chance"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Sentado e lendo",
+      "Assistindo à TV",
+      "Sentado, quieto, em um lugar público",
+      "Como passageiro de um carro por uma hora sem parar",
+      "Deitado para descansar à tarde",
+      "Sentado e conversando com alguém",
+      "Sentado quieto depois do almoço, sem bebida alcoólica",
+      "Em um carro parado por alguns minutos no trânsito"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Escala PHQ-15",
+    "subtitle": "Sintomas somáticos",
+    "estimatedMinutes": 4,
+    "questionCount": 15,
+    "construct": "Sintomas somáticos",
+    "betterWhen": "lower",
+    "description": "Quinze perguntas sobre sintomas físicos nas últimas quatro semanas. Avalie o quanto cada sintoma incomodou você.",
+    "algorithm": [
+      "1. Pense nas últimas quatro semanas.",
+      "2. Para cada item, escolha o quanto o sintoma incomodou você."
+    ],
+    "comment": "Isto rastreia sintomas somáticos; não é um diagnóstico. Procure um médico se os sintomas continuarem.",
+    "analyzerId": "phq15",
+    "answers": [
+      "Não incomodou",
+      "Incomodou um pouco",
+      "Incomodou muito"
+    ],
+    "balls": [
+      0,
+      1,
+      2
+    ],
+    "questions": [
+      "Dor de estômago",
+      "Dor nas costas",
+      "Dor nos braços, nas pernas ou nas articulações",
+      "Cólicas menstruais ou outros problemas com a menstruação",
+      "Dores de cabeça",
+      "Dor no peito",
+      "Tontura",
+      "Desmaios",
+      "Sentir o coração bater forte ou acelerado",
+      "Falta de ar",
+      "Dor ou problemas durante a relação sexual",
+      "Prisão de ventre, intestino solto ou diarreia",
+      "Náusea, gases ou indigestão",
+      "Sentir-se cansado ou com pouca energia",
+      "Dificuldade para dormir"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Questionário SCOFF",
+    "subtitle": "Rastreio de transtornos alimentares",
+    "estimatedMinutes": 1,
+    "questionCount": 5,
+    "construct": "Comportamento alimentar",
+    "betterWhen": "lower",
+    "description": "Cinco perguntas curtas para rastrear possíveis transtornos alimentares. Responda sim ou não.",
+    "algorithm": [
+      "1. Leia cada pergunta com atenção.",
+      "2. Responda sim se for verdade para você, ou não se não for."
+    ],
+    "comment": "Este é um instrumento de rastreio, não um diagnóstico. Procure ajuda profissional se o resultado for positivo.",
+    "analyzerId": "scoff",
+    "answers": [
+      "Sim",
+      "Não"
+    ],
+    "balls": [
+      1,
+      0
+    ],
+    "questions": [
+      "Você provoca o vômito porque se sente desconfortavelmente cheio?",
+      "Você se preocupa por ter perdido o controle sobre o quanto come?",
+      "Você perdeu recentemente mais de 6 kg em um período de três meses?",
+      "Você se acha gordo quando os outros dizem que você está magro demais?",
+      "Você diria que a comida domina sua vida?"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Escala SWLS",
+    "subtitle": "Satisfação com a vida",
+    "estimatedMinutes": 2,
+    "questionCount": 5,
+    "construct": "Satisfação com a vida",
+    "betterWhen": "higher",
+    "description": "Cinco afirmações sobre satisfação com a vida. Uma pontuação total maior indica maior satisfação subjetiva.",
+    "algorithm": [
+      "1. Leia cada afirmação.",
+      "2. Escolha o quanto você concorda."
+    ],
+    "comment": "Isto rastreia a satisfação subjetiva com a vida; não é um diagnóstico.",
+    "analyzerId": "swls",
+    "answers": [
+      "Discordo totalmente",
+      "Discordo",
+      "Discordo um pouco",
+      "Não concordo nem discordo",
+      "Concordo um pouco",
+      "Concordo",
+      "Concordo totalmente"
+    ],
+    "balls": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "questions": [
+      "A minha vida está próxima do meu ideal na maioria dos aspectos",
+      "As minhas condições de vida são excelentes",
+      "Eu estou satisfeito com a minha vida",
+      "Até agora eu tenho conseguido as coisas importantes que eu quero na vida",
+      "Se eu pudesse viver uma segunda vez, não mudaria quase nada na minha vida"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "PHQ-2",
+    "subtitle": "Rastreio breve de depressão",
+    "estimatedMinutes": 1,
+    "questionCount": 2,
+    "construct": "Depressão",
+    "betterWhen": "lower",
+    "description": "Duas perguntas sobre sintomas depressivos nas últimas duas semanas. O rastreio é positivo com pontuação total de 3 ou mais.",
+    "algorithm": [
+      "1. Pense nas últimas duas semanas.",
+      "2. Para cada pergunta, escolha com que frequência o sintoma incomodou você."
+    ],
+    "comment": "Isto é um rastreio, não um diagnóstico. Se for positivo, considere o PHQ-9 ou uma consulta profissional.",
+    "analyzerId": "phq2",
+    "answers": [
+      "Nenhuma vez",
+      "Vários dias",
+      "Mais da metade dos dias",
+      "Quase todos os dias"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Pouco interesse ou pouco prazer em fazer as coisas",
+      "Se sentir para baixo, sem esperança ou pessimista"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "GAD-2",
+    "subtitle": "Rastreio breve de ansiedade",
+    "estimatedMinutes": 1,
+    "questionCount": 2,
+    "construct": "Ansiedade",
+    "betterWhen": "lower",
+    "description": "Duas perguntas sobre sintomas de ansiedade nas últimas duas semanas. O rastreio é positivo com pontuação total de 3 ou mais.",
+    "algorithm": [
+      "1. Pense nas últimas duas semanas.",
+      "2. Para cada pergunta, escolha com que frequência o sintoma incomodou você."
+    ],
+    "comment": "Isto é um rastreio, não um diagnóstico. Se for positivo, considere o GAD-7 ou uma consulta profissional.",
+    "analyzerId": "gad2",
+    "answers": [
+      "Nenhuma vez",
+      "Vários dias",
+      "Mais da metade dos dias",
+      "Quase todos os dias"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Sentir-se nervoso, ansioso ou muito tenso",
+      "Não ser capaz de impedir ou de controlar as preocupações"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "HADS — ansiedade",
+    "subtitle": "Subescala de ansiedade",
+    "estimatedMinutes": 3,
+    "questionCount": 7,
+    "construct": "Ansiedade",
+    "betterWhen": "lower",
+    "description": "Sete perguntas sobre sentimentos de ansiedade na última semana.",
+    "algorithm": [
+      "1. Responda com que frequência você sentiu cada estado na última semana.",
+      "2. Escolha uma das quatro opções."
+    ],
+    "comment": "Isto é um rastreio, não um diagnóstico. Se o total for 8 ou mais, considere apoio profissional.",
+    "analyzerId": "hads_a",
+    "answers": [
+      "Nunca ou raramente",
+      "Às vezes",
+      "Muitas vezes",
+      "Na maior parte do tempo"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Eu me sinto tenso ou contraído",
+      "Eu sinto uma espécie de medo, como se alguma coisa ruim fosse acontecer",
+      "Estou com a cabeça cheia de preocupações",
+      "Tenho dificuldade em ficar à vontade e me sentir relaxado",
+      "Eu tenho uma sensação ruim de medo, como um frio na barriga ou um aperto no estômago",
+      "Eu me sinto inquieto, como se eu não pudesse ficar parado em lugar nenhum",
+      "De repente, tenho a sensação de entrar em pânico"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "HADS — depressão",
+    "subtitle": "Subescala de depressão",
+    "estimatedMinutes": 3,
+    "questionCount": 7,
+    "construct": "Depressão",
+    "betterWhen": "lower",
+    "description": "Sete perguntas sobre sentimentos depressivos na última semana.",
+    "algorithm": [
+      "1. Responda com que frequência você sentiu cada estado na última semana.",
+      "2. Escolha uma das quatro opções."
+    ],
+    "comment": "Isto é um rastreio, não um diagnóstico. Se o total for 8 ou mais, considere apoio profissional.",
+    "analyzerId": "hads_d",
+    "answers": [
+      "Nunca ou raramente",
+      "Às vezes",
+      "Muitas vezes",
+      "Na maior parte do tempo"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Já não sinto prazer nas coisas de que gostava",
+      "Tenho dificuldade em dar risada e me divertir com coisas engraçadas",
+      "Eu me sinto para baixo e raramente estou alegre",
+      "Estou lento para pensar e fazer as coisas ou, ao contrário, não consigo ficar parado",
+      "Perdi o interesse em cuidar da minha aparência",
+      "Fico pouco animado esperando as coisas boas que estão por vir",
+      "Tenho dificuldade em gostar de um bom livro, filme ou programa de TV"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Rastreio PC-PTSD-5",
+    "subtitle": "Reação pós-traumática",
+    "estimatedMinutes": 1,
+    "questionCount": 5,
+    "construct": "Trauma",
+    "betterWhen": "lower",
+    "description": "Às vezes acontecem com as pessoas coisas incomuns ou especialmente assustadoras, horríveis ou traumáticas: um acidente grave ou incêndio, uma agressão física ou sexual ou um abuso, uma guerra, a morte repentina de alguém próximo. Se algo assim aconteceu na sua vida, responda se, no último mês, você teve o seguinte. Se não houve um acontecimento assim, este questionário não é para você.",
+    "algorithm": [
+      "1. Pense no último mês.",
+      "2. Responda \"sim\" ou \"não\" a cada pergunta."
+    ],
+    "comment": "Isto é um rastreio curto, não um diagnóstico. Com três ou mais respostas \"sim\", faça a escala detalhada PCL-5 e procure um especialista em trauma.",
+    "analyzerId": "pcptsd5",
+    "answers": [
+      "Sim",
+      "Não"
+    ],
+    "balls": [
+      1,
+      0
+    ],
+    "questions": [
+      "Teve pesadelos com o acontecimento ou pensou nele quando não queria?",
+      "Esforçou-se para não pensar no acontecimento ou fez de tudo para evitar situações que o lembrassem?",
+      "Ficou constantemente em alerta, vigilante ou se assustando facilmente?",
+      "Sentiu-se anestesiado ou desligado das pessoas, das atividades ou do ambiente ao seu redor?",
+      "Sentiu-se culpado ou incapaz de parar de culpar a si mesmo ou outras pessoas pelo acontecimento ou pelos problemas que ele causou?"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Escala PCL-5",
+    "subtitle": "Sintomas pós-traumáticos",
+    "estimatedMinutes": 5,
+    "questionCount": 20,
+    "construct": "Trauma",
+    "betterWhen": "lower",
+    "description": "Vinte perguntas sobre problemas que as pessoas às vezes têm depois de uma experiência muito estressante. Responda sobre a experiência que mais incomoda você e sobre o último mês. Você pode repetir a escala a cada duas semanas para ver como os sintomas mudam.",
+    "algorithm": [
+      "1. Pense no último mês.",
+      "2. Escolha o quanto cada problema incomodou você."
+    ],
+    "comment": "Esta é uma escala de sintomas, não um diagnóstico. Com pontuações altas, procure um especialista em trauma.",
+    "analyzerId": "pcl5",
+    "answers": [
+      "Nenhuma vez",
+      "Um pouco",
+      "Moderadamente",
+      "Bastante",
+      "Extremamente"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "questions": [
+      "Lembranças repetidas, perturbadoras e indesejadas da experiência estressante",
+      "Sonhos repetidos e perturbadores com a experiência estressante",
+      "De repente sentir ou agir como se a experiência estressante estivesse acontecendo de novo (como se você estivesse de volta lá, revivendo tudo)",
+      "Ficar muito abalado quando algo lembrou você da experiência estressante",
+      "Ter reações físicas fortes quando algo lembrou você da experiência estressante (por exemplo, coração disparado, dificuldade para respirar, suor)",
+      "Evitar lembranças, pensamentos ou sentimentos ligados à experiência estressante",
+      "Evitar coisas que lembrem a experiência estressante (por exemplo, pessoas, lugares, conversas, atividades, objetos ou situações)",
+      "Dificuldade para lembrar partes importantes da experiência estressante",
+      "Ter crenças negativas fortes sobre você, os outros ou o mundo (por exemplo, pensamentos como: eu sou mau, tem algo muito errado comigo, não dá para confiar em ninguém, o mundo é totalmente perigoso)",
+      "Culpar a si mesmo ou outra pessoa pela experiência estressante ou pelo que aconteceu depois",
+      "Ter sentimentos negativos fortes, como medo, horror, raiva, culpa ou vergonha",
+      "Perda de interesse por atividades de que você gostava",
+      "Sentir-se distante ou isolado das outras pessoas",
+      "Dificuldade para sentir emoções positivas (por exemplo, não conseguir sentir felicidade ou afeto pelas pessoas próximas)",
+      "Comportamento irritável, explosões de raiva ou agir de forma agressiva",
+      "Correr riscos demais ou fazer coisas que podem prejudicar você",
+      "Estar \"superalerta\", vigilante ou em guarda",
+      "Ficar sobressaltado ou se assustar facilmente",
+      "Dificuldade para se concentrar",
+      "Dificuldade para pegar no sono ou continuar dormindo"
+    ],
+    "singleAnswer": true
+  }
+]

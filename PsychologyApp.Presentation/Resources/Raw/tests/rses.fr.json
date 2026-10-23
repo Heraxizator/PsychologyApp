@@ -1,0 +1,228 @@
+{
+  "title": "Échelle d'estime de soi de Rosenberg",
+  "subtitle": "Estime de soi",
+  "estimatedMinutes": 3,
+  "questionCount": 10,
+  "construct": "Estime de soi",
+  "betterWhen": "higher",
+  "description": "Dix énoncés sur ce que vous ressentez envers vous-même. Un score total plus élevé signifie une meilleure estime de soi.",
+  "algorithm": [
+    "1. Lisez chaque énoncé.",
+    "2. Choisissez à quel point vous êtes d'accord avec lui à votre sujet."
+  ],
+  "comment": "Cet outil dépiste l'estime de soi ; ce n'est pas un diagnostic.",
+  "analyzerId": "rses",
+  "singleAnswer": true,
+  "questions": [
+    {
+      "text": "Je pense que je suis une personne de valeur, au moins égale à n'importe qui d'autre",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Tout à fait en désaccord"
+        },
+        {
+          "ball": 1,
+          "text": "Plutôt en désaccord"
+        },
+        {
+          "ball": 2,
+          "text": "Plutôt en accord"
+        },
+        {
+          "ball": 3,
+          "text": "Tout à fait en accord"
+        }
+      ]
+    },
+    {
+      "text": "Je pense que je possède un certain nombre de belles qualités",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Tout à fait en désaccord"
+        },
+        {
+          "ball": 1,
+          "text": "Plutôt en désaccord"
+        },
+        {
+          "ball": 2,
+          "text": "Plutôt en accord"
+        },
+        {
+          "ball": 3,
+          "text": "Tout à fait en accord"
+        }
+      ]
+    },
+    {
+      "text": "Tout bien considéré, je suis porté·e à me considérer comme un·e raté·e",
+      "answers": [
+        {
+          "ball": 3,
+          "text": "Tout à fait en désaccord"
+        },
+        {
+          "ball": 2,
+          "text": "Plutôt en désaccord"
+        },
+        {
+          "ball": 1,
+          "text": "Plutôt en accord"
+        },
+        {
+          "ball": 0,
+          "text": "Tout à fait en accord"
+        }
+      ]
+    },
+    {
+      "text": "Je suis capable de faire les choses aussi bien que la majorité des gens",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Tout à fait en désaccord"
+        },
+        {
+          "ball": 1,
+          "text": "Plutôt en désaccord"
+        },
+        {
+          "ball": 2,
+          "text": "Plutôt en accord"
+        },
+        {
+          "ball": 3,
+          "text": "Tout à fait en accord"
+        }
+      ]
+    },
+    {
+      "text": "Je sens peu de raisons d'être fier·ère de moi",
+      "answers": [
+        {
+          "ball": 3,
+          "text": "Tout à fait en désaccord"
+        },
+        {
+          "ball": 2,
+          "text": "Plutôt en désaccord"
+        },
+        {
+          "ball": 1,
+          "text": "Plutôt en accord"
+        },
+        {
+          "ball": 0,
+          "text": "Tout à fait en accord"
+        }
+      ]
+    },
+    {
+      "text": "J'ai une attitude positive vis-à-vis de moi-même",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Tout à fait en désaccord"
+        },
+        {
+          "ball": 1,
+          "text": "Plutôt en désaccord"
+        },
+        {
+          "ball": 2,
+          "text": "Plutôt en accord"
+        },
+        {
+          "ball": 3,
+          "text": "Tout à fait en accord"
+        }
+      ]
+    },
+    {
+      "text": "Dans l'ensemble, je suis satisfait·e de moi",
+      "answers": [
+        {
+          "ball": 0,
+          "text": "Tout à fait en désaccord"
+        },
+        {
+          "ball": 1,
+          "text": "Plutôt en désaccord"
+        },
+        {
+          "ball": 2,
+          "text": "Plutôt en accord"
+        },
+        {
+          "ball": 3,
+          "text": "Tout à fait en accord"
+        }
+      ]
+    },
+    {
+      "text": "J'aimerais avoir plus de respect pour moi-même",
+      "answers": [
+        {
+          "ball": 3,
+          "text": "Tout à fait en désaccord"
+        },
+        {
+          "ball": 2,
+          "text": "Plutôt en désaccord"
+        },
+        {
+          "ball": 1,
+          "text": "Plutôt en accord"
+        },
+        {
+          "ball": 0,
+          "text": "Tout à fait en accord"
+        }
+      ]
+    },
+    {
+      "text": "Parfois je me sens vraiment inutile",
+      "answers": [
+        {
+          "ball": 3,
+          "text": "Tout à fait en désaccord"
+        },
+        {
+          "ball": 2,
+          "text": "Plutôt en désaccord"
+        },
+        {
+          "ball": 1,
+          "text": "Plutôt en accord"
+        },
+        {
+          "ball": 0,
+          "text": "Tout à fait en accord"
+        }
+      ]
+    },
+    {
+      "text": "Il m'arrive de penser que je suis un·e bon·ne à rien",
+      "answers": [
+        {
+          "ball": 3,
+          "text": "Tout à fait en désaccord"
+        },
+        {
+          "ball": 2,
+          "text": "Plutôt en désaccord"
+        },
+        {
+          "ball": 1,
+          "text": "Plutôt en accord"
+        },
+        {
+          "ball": 0,
+          "text": "Tout à fait en accord"
+        }
+      ]
+    }
+  ]
+}

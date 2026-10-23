@@ -1,0 +1,770 @@
+[
+  {
+    "title": "Questionnaire de Heck et Hess",
+    "subtitle": "Dépistage du névrosisme",
+    "estimatedMinutes": 8,
+    "questionCount": 40,
+    "construct": "Névrosisme",
+    "betterWhen": "lower",
+    "description": "40 énoncés sur la réactivité émotionnelle. Répondez Oui ou Non à votre sujet.",
+    "algorithm": [
+      "1. Une liste d'énoncés vous est proposée.",
+      "2. Pour chaque énoncé, répondez Oui si vous êtes d'accord (s'il est vrai pour vous) ou Non si vous n'êtes pas d'accord."
+    ],
+    "comment": "En cas d'inquiétude, consultez un spécialiste qualifié.",
+    "analyzerId": "heck_hess",
+    "answers": [
+      "Oui",
+      "Non"
+    ],
+    "balls": [
+      1,
+      0
+    ],
+    "questions": [
+      "Vous sentez-vous tendu·e intérieurement ?",
+      "Je suis souvent tellement absorbé·e par quelque chose que je n'arrive pas à m'endormir.",
+      "Je me sens facilement blessé·e.",
+      "J'ai du mal à parler à des inconnus.",
+      "Vous sentez-vous souvent indifférent·e et fatigué·e sans raison particulière ?",
+      "J'ai souvent l'impression que les gens m'examinent d'un œil critique.",
+      "Êtes-vous souvent troublé·e par des pensées inutiles qui ne quittent pas votre tête même quand vous essayez ?",
+      "Je suis assez nerveux·se.",
+      "J'ai le sentiment que personne ne me comprend.",
+      "Je suis assez irritable.",
+      "Si les gens n'étaient pas contre moi, mes affaires marcheraient mieux.",
+      "Je prends les choses désagréables trop à cœur et trop longtemps.",
+      "Même l'idée d'un échec possible m'inquiète.",
+      "J'ai vécu des expériences très étranges et inhabituelles.",
+      "Vous arrive-t-il de vous sentir tantôt joyeux·se, tantôt triste sans raison apparente ?",
+      "Dans la journée, je rêvasse et je me perds dans mes pensées plus que je ne le devrais.",
+      "Votre humeur change-t-elle facilement ?",
+      "Je lutte souvent contre moi-même pour ne pas montrer ma timidité.",
+      "J'aimerais être aussi heureux·se que les autres semblent l'être.",
+      "Il m'arrive de trembler ou d'avoir des frissons.",
+      "Votre humeur change-t-elle souvent, avec ou sans raison sérieuse ?",
+      "Vous arrive-t-il d'avoir peur même quand il n'y a pas de vrai danger ?",
+      "Les critiques ou les reproches me blessent profondément.",
+      "Parfois je suis si agité·e que je ne tiens pas en place.",
+      "Vous arrive-t-il de trop vous inquiéter pour des choses sans importance ?",
+      "Je me sens souvent insatisfait·e.",
+      "J'ai du mal à me concentrer sur une tâche ou un travail.",
+      "Je fais beaucoup de choses que je regrette ensuite.",
+      "La plupart du temps, je suis heureux·se.",
+      "Je ne suis pas assez sûr·e de moi.",
+      "Je souffre d'un sentiment d'infériorité.",
+      "Parfois je me sens totalement sans valeur.",
+      "Je me sens souvent tout simplement très mal.",
+      "Je m'analyse beaucoup.",
+      "Parfois tout me fait mal.",
+      "J'ai des humeurs pesantes.",
+      "Quelque chose ne va pas avec mes nerfs.",
+      "J'ai du mal à entretenir la conversation quand je rencontre quelqu'un.",
+      "Le combat le plus dur pour moi, c'est celui contre moi-même.",
+      "Vous arrive-t-il de sentir que les difficultés sont grandes et insurmontables ?"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Test de Hare",
+    "subtitle": "Dépistage de la psychopathie",
+    "estimatedMinutes": 8,
+    "questionCount": 40,
+    "construct": "Psychopathie",
+    "betterWhen": "lower",
+    "description": "Dépiste des schémas relationnels et comportementaux. Répondez honnêtement : il n'y a pas de bonnes réponses.",
+    "algorithm": [
+      "1. Une liste d'énoncés vous est proposée.",
+      "2. Pour chaque énoncé, choisissez l'une des réponses proposées."
+    ],
+    "comment": "En cas d'inquiétude, consultez un spécialiste qualifié.",
+    "analyzerId": "haer",
+    "answers": [
+      "Oui",
+      "Non"
+    ],
+    "balls": [
+      1,
+      0
+    ],
+    "questions": [
+      "Je ne suis jamais à court de mots.",
+      "Dans les relations importantes, je suis au-dessus de la plupart des gens.",
+      "Je m'ennuie facilement.",
+      "Je mens pour arranger les choses.",
+      "Je trompe les gens sur certains sujets.",
+      "Je me sens rarement coupable.",
+      "Je suis une personne émotive.",
+      "Je m'attache rarement aux autres sur le plan émotionnel.",
+      "Les autres paient souvent pour moi.",
+      "Je suis impatient·e.",
+      "J'ai une vie sexuelle désordonnée.",
+      "J'étais un enfant difficile.",
+      "J'ai du mal à rester engagé·e envers des objectifs à long terme.",
+      "Je suis impulsif·ve.",
+      "Je fais souvent mon travail sans soin.",
+      "J'essaie d'éviter les responsabilités.",
+      "Mes relations amoureuses se défont généralement vite.",
+      "J'ai commis plusieurs délits quand j'étais mineur·e.",
+      "J'ai enfreint les conditions d'une mise à l'épreuve.",
+      "J'ai commis plusieurs types de délits.",
+      "Je ne suis ni timide ni réservé·e ; je parle avec autorité et assurance.",
+      "Je suis exceptionnel·le.",
+      "J'ai besoin de risque pour me sentir vivant·e.",
+      "Je suis surtout une personne honnête.",
+      "Je me sens mal quand je trompe les gens.",
+      "Si quelqu'un mérite une punition, je ne me sens pas trop mal à ce sujet.",
+      "Je pense que les émotions fortes sont pour les faibles.",
+      "Je pense que si les gens se vexent, c'est leur problème.",
+      "Je pense toujours d'abord à moi.",
+      "Je n'agis jamais de façon irréfléchie.",
+      "Je pense que la sexualité ne doit pas être prise à la légère.",
+      "J'avais souvent des ennuis à l'école.",
+      "Je manque de direction dans ma vie.",
+      "Je ne cède jamais à la tentation.",
+      "Je tiens toujours parole.",
+      "Mes problèmes sont surtout la faute des autres.",
+      "Je n'aime pas les engagements dans les relations.",
+      "Je harcelais les autres à l'école.",
+      "J'ai manqué de respect au tribunal.",
+      "Je ne serais pas fier·ère d'avoir commis des délits."
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Questionnaire de L. G. Potchebout",
+    "subtitle": "Dépistage de l'agressivité",
+    "estimatedMinutes": 8,
+    "questionCount": 40,
+    "construct": "Agressivité",
+    "betterWhen": "lower",
+    "description": "Évaluez à quelle fréquence des réactions agressives apparaissent dans les situations du quotidien.",
+    "algorithm": [
+      "1. Une liste d'énoncés vous est proposée.",
+      "2. Pour chaque énoncé, choisissez l'une des réponses proposées."
+    ],
+    "comment": "En cas d'inquiétude, consultez un spécialiste qualifié.",
+    "analyzerId": "pochebut",
+    "answers": [
+      "Oui",
+      "Non"
+    ],
+    "balls": [
+      1,
+      0
+    ],
+    "questions": [
+      "Pendant une dispute, j'élève souvent la voix.",
+      "Si quelqu'un m'agace, je peux lui dire tout ce que je pense de lui.",
+      "S'il me faut la force physique pour défendre mes droits, je l'utiliserai sans hésiter.",
+      "Quand je croise quelqu'un de désagréable, je peux le pincer ou le pousser discrètement.",
+      "Pris·e dans une dispute, je peux taper du poing sur la table pour attirer l'attention ou prouver que j'ai raison.",
+      "J'ai constamment le sentiment que les autres ne respectent pas mes droits.",
+      "En repensant au passé, il m'arrive d'avoir de la peine pour moi-même.",
+      "Même si je ne le montre pas, l'envie me ronge parfois.",
+      "Si je désapprouve le comportement de connaissances, je le leur dis directement.",
+      "Dans une forte colère, j'utilise des mots durs et je jure.",
+      "Si quelqu'un lève la main sur moi, j'essaie de frapper le premier.",
+      "Il m'arrive d'être si furieux·se que je lance des objets.",
+      "J'ai souvent besoin de réorganiser les meubles ou de les changer complètement.",
+      "Dans mes échanges, je me sens souvent comme un baril de poudre prêt à exploser.",
+      "J'ai parfois envie de faire une mauvaise blague à quelqu'un.",
+      "Quand je suis en colère, je deviens généralement sombre.",
+      "Dans une conversation, j'essaie d'écouter attentivement sans interrompre.",
+      "Dans ma jeunesse, les poings me démangeaient souvent et j'étais toujours prêt·e à m'en servir.",
+      "Si je sais que quelqu'un m'a bousculé·e exprès, cela peut finir en bagarre.",
+      "Un désordre créatif sur mon bureau m'aide à travailler efficacement.",
+      "Je me souviens avoir été si en colère que j'ai attrapé ce qui me tombait sous la main et l'ai cassé.",
+      "Parfois les gens m'irritent rien que par leur présence.",
+      "Je suis souvent surpris·e par les motifs cachés derrière les bonnes actions de quelqu'un envers moi.",
+      "Si quelqu'un me vexe, je n'ai plus envie de parler à personne.",
+      "Il m'arrive de dire exprès des méchancetés sur les gens que je n'aime pas.",
+      "Quand je suis furieux·se, je crie les pires insultes.",
+      "Enfant, j'évitais les bagarres.",
+      "Je sais quand et pourquoi il est acceptable de frapper quelqu'un.",
+      "Quand je suis en colère, je peux claquer la porte.",
+      "J'ai l'impression que les gens autour de moi ne m'aiment pas.",
+      "Je partage constamment mes sentiments et mon vécu avec les autres.",
+      "Très souvent, mes paroles et mes actes me nuisent.",
+      "Quand on me crie dessus, je crie aussi.",
+      "Si quelqu'un me frappe en premier, je rends le coup.",
+      "Cela m'irrite quand les choses ne sont pas à leur place.",
+      "Si je n'arrive pas à réparer un objet cassé, de colère je le détruis complètement.",
+      "Les autres me semblent toujours mieux réussir.",
+      "Quand je pense à quelqu'un que je n'aime pas, je peux m'emballer avec l'envie de lui nuire.",
+      "Parfois il me semble que le destin m'a joué un mauvais tour.",
+      "Si quelqu'un me traite mal, j'en suis très affecté·e."
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Échelle GAD-7",
+    "subtitle": "Dépistage de l'anxiété",
+    "estimatedMinutes": 2,
+    "questionCount": 7,
+    "construct": "Anxiété",
+    "betterWhen": "lower",
+    "description": "Sept questions sur la fréquence à laquelle chaque symptôme vous a gêné·e au cours des deux dernières semaines.",
+    "algorithm": [
+      "1. Pensez aux deux dernières semaines.",
+      "2. Pour chaque élément, choisissez à quelle fréquence le symptôme vous a gêné·e."
+    ],
+    "comment": "C'est un outil de dépistage, pas un diagnostic. Cherchez une aide professionnelle si l'anxiété est forte.",
+    "analyzerId": "gad7",
+    "answers": [
+      "Jamais",
+      "Plusieurs jours",
+      "Plus de la moitié du temps",
+      "Presque tous les jours"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Sentiment de nervosité, d'anxiété ou de tension",
+      "Incapable d'arrêter de s'inquiéter ou de contrôler ses inquiétudes",
+      "Inquiétudes excessives à propos de différentes choses",
+      "Difficulté à se détendre",
+      "Agitation telle qu'il est difficile de tenir en place",
+      "Devenir facilement contrarié·e ou irritable",
+      "Avoir peur que quelque chose de terrible puisse arriver"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Échelle K10",
+    "subtitle": "Détresse psychologique",
+    "estimatedMinutes": 3,
+    "questionCount": 10,
+    "construct": "Détresse psychologique",
+    "betterWhen": "lower",
+    "description": "Dix questions sur la fréquence à laquelle vous avez ressenti chaque état au cours des quatre dernières semaines.",
+    "algorithm": [
+      "1. Pensez aux quatre dernières semaines.",
+      "2. Pour chaque élément, choisissez à quelle fréquence c'était vrai pour vous."
+    ],
+    "comment": "C'est un outil de dépistage, pas un diagnostic. Cherchez du soutien si la détresse est élevée.",
+    "analyzerId": "k10",
+    "answers": [
+      "Jamais",
+      "Rarement",
+      "Parfois",
+      "La plupart du temps",
+      "Tout le temps"
+    ],
+    "balls": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "questions": [
+      "Épuisé·e sans véritable raison",
+      "Nerveux·se",
+      "Si nerveux·se que rien ne pouvait vous calmer",
+      "Désespéré·e",
+      "Agité·e ou incapable de tenir en place",
+      "Si agité·e que vous ne pouviez pas rester assis·e",
+      "Déprimé·e",
+      "Que tout était un effort",
+      "Si triste que rien ne pouvait vous remonter le moral",
+      "Sans valeur"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Indice WHO-5",
+    "subtitle": "Bien-être subjectif",
+    "estimatedMinutes": 2,
+    "questionCount": 5,
+    "construct": "Bien-être",
+    "betterWhen": "higher",
+    "description": "Cinq questions sur le bien-être positif des deux dernières semaines. Un score total plus élevé signifie un meilleur bien-être subjectif.",
+    "algorithm": [
+      "1. Pensez aux deux dernières semaines.",
+      "2. Pour chaque élément, indiquez à quelle fréquence vous vous êtes senti·e ainsi."
+    ],
+    "comment": "Cet outil dépiste le bien-être subjectif ; ce n'est pas un diagnostic.",
+    "analyzerId": "who5",
+    "answers": [
+      "Tout le temps",
+      "La plupart du temps",
+      "Plus de la moitié du temps",
+      "Moins de la moitié du temps",
+      "Parfois",
+      "Jamais"
+    ],
+    "balls": [
+      5,
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "questions": [
+      "Je me suis senti·e bien et de bonne humeur",
+      "Je me suis senti·e calme et tranquille",
+      "Je me suis senti·e plein·e d'énergie et vigoureux·se",
+      "Je me suis réveillé·e en me sentant frais·che et dispos·e",
+      "Ma vie quotidienne a été remplie de choses intéressantes"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Échelle PHQ-9",
+    "subtitle": "Dépistage de la dépression",
+    "estimatedMinutes": 3,
+    "questionCount": 9,
+    "construct": "Dépression",
+    "betterWhen": "lower",
+    "description": "Neuf questions sur les symptômes dépressifs des deux dernières semaines. Indiquez à quelle fréquence chaque symptôme vous a gêné·e.",
+    "algorithm": [
+      "1. Pensez aux deux dernières semaines.",
+      "2. Pour chaque élément, choisissez à quelle fréquence le symptôme vous a gêné·e."
+    ],
+    "comment": "C'est un outil de dépistage, pas un diagnostic. Cherchez une aide professionnelle si les symptômes sont forts.",
+    "analyzerId": "phq9",
+    "answers": [
+      "Jamais",
+      "Plusieurs jours",
+      "Plus de la moitié du temps",
+      "Presque tous les jours"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Peu d'intérêt ou de plaisir à faire les choses",
+      "Être triste, déprimé·e ou désespéré·e",
+      "Difficultés à s'endormir ou à rester endormi·e, ou dormir trop",
+      "Se sentir fatigué·e ou manquer d'énergie",
+      "Avoir peu d'appétit ou manger trop",
+      "Avoir une mauvaise opinion de soi-même, ou le sentiment d'être nul·le, ou d'avoir déçu sa famille ou s'être déçu·e soi-même",
+      "Avoir du mal à se concentrer, par exemple pour lire ou regarder la télévision",
+      "Bouger ou parler si lentement que les autres auraient pu le remarquer, ou au contraire être si agité·e que vous bougez plus que d'habitude",
+      "Penser qu'il vaudrait mieux mourir ou envisager de vous faire du mal d'une manière ou d'une autre"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Indice ISI-7",
+    "subtitle": "Sévérité de l'insomnie",
+    "estimatedMinutes": 2,
+    "questionCount": 7,
+    "construct": "Insomnie",
+    "betterWhen": "lower",
+    "description": "Sept questions sur les problèmes de sommeil des deux dernières semaines. Évaluez la sévérité de chaque difficulté.",
+    "algorithm": [
+      "1. Pensez aux deux dernières semaines.",
+      "2. Pour chaque élément, choisissez à quel point le problème décrit vous a gêné·e."
+    ],
+    "comment": "Cet outil dépiste l'insomnie ; ce n'est pas un diagnostic. Cherchez de l'aide si les problèmes de sommeil persistent.",
+    "analyzerId": "isi",
+    "answers": [
+      "Aucune",
+      "Légère",
+      "Moyenne",
+      "Sévère",
+      "Très sévère"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "questions": [
+      "Difficultés à s'endormir",
+      "Difficultés à rester endormi·e",
+      "Réveil trop tôt le matin",
+      "À quel point êtes-vous insatisfait·e de votre sommeil actuel",
+      "À quel point pensez-vous que vos problèmes de sommeil sont visibles pour les autres",
+      "À quel point êtes-vous inquiet·e ou affecté·e par vos problèmes de sommeil actuels",
+      "À quel point vos problèmes de sommeil gênent-ils votre vie quotidienne"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Échelle ESS-8",
+    "subtitle": "Somnolence diurne",
+    "estimatedMinutes": 2,
+    "questionCount": 8,
+    "construct": "Somnolence diurne",
+    "betterWhen": "lower",
+    "description": "Huit situations du quotidien. Évaluez la probabilité que vous vous assoupissiez dans chacune.",
+    "algorithm": [
+      "1. Imaginez chaque situation de la liste.",
+      "2. Choisissez la probabilité que vous vous assoupissiez dans cette situation."
+    ],
+    "comment": "Cet outil dépiste la somnolence diurne ; ce n'est pas un diagnostic. Consultez un médecin si la somnolence est forte.",
+    "analyzerId": "ess",
+    "answers": [
+      "Ne somnolerait jamais",
+      "Faible chance",
+      "Chance moyenne",
+      "Forte chance"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Assis·e en train de lire",
+      "En regardant la télévision",
+      "Assis·e inactif·ve dans un lieu public",
+      "Comme passager·ère d'une voiture pendant une heure sans arrêt",
+      "Allongé·e l'après-midi pour se reposer",
+      "Assis·e en parlant avec quelqu'un",
+      "Assis·e au calme après un déjeuner sans alcool",
+      "Dans une voiture immobilisée quelques minutes dans un embouteillage"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Échelle PHQ-15",
+    "subtitle": "Symptômes somatiques",
+    "estimatedMinutes": 4,
+    "questionCount": 15,
+    "construct": "Symptômes somatiques",
+    "betterWhen": "lower",
+    "description": "Quinze questions sur les symptômes physiques des quatre dernières semaines. Indiquez à quel point chaque symptôme vous a gêné·e.",
+    "algorithm": [
+      "1. Pensez aux quatre dernières semaines.",
+      "2. Pour chaque élément, choisissez à quel point le symptôme vous a gêné·e."
+    ],
+    "comment": "Cet outil dépiste les symptômes somatiques ; ce n'est pas un diagnostic. Consultez un médecin si les symptômes persistent.",
+    "analyzerId": "phq15",
+    "answers": [
+      "Pas du tout gêné·e",
+      "Un peu gêné·e",
+      "Très gêné·e"
+    ],
+    "balls": [
+      0,
+      1,
+      2
+    ],
+    "questions": [
+      "Maux d'estomac",
+      "Mal au dos",
+      "Douleurs aux bras, aux jambes ou aux articulations",
+      "Douleurs menstruelles ou autres problèmes de règles",
+      "Maux de tête",
+      "Douleurs dans la poitrine",
+      "Vertiges",
+      "Évanouissements",
+      "Cœur qui bat fort ou s'emballe",
+      "Essoufflement",
+      "Douleurs ou problèmes pendant les rapports sexuels",
+      "Constipation, selles molles ou diarrhée",
+      "Nausées, ballonnements ou indigestion",
+      "Se sentir fatigué·e ou manquer d'énergie",
+      "Troubles du sommeil"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Questionnaire SCOFF",
+    "subtitle": "Dépistage des troubles alimentaires",
+    "estimatedMinutes": 1,
+    "questionCount": 5,
+    "construct": "Comportement alimentaire",
+    "betterWhen": "lower",
+    "description": "Cinq questions courtes pour dépister d'éventuels troubles alimentaires. Répondez oui ou non.",
+    "algorithm": [
+      "1. Lisez attentivement chaque question.",
+      "2. Répondez oui si c'est vrai pour vous, non sinon."
+    ],
+    "comment": "C'est un outil de dépistage, pas un diagnostic. Cherchez une aide professionnelle si le dépistage est positif.",
+    "analyzerId": "scoff",
+    "answers": [
+      "Oui",
+      "Non"
+    ],
+    "balls": [
+      1,
+      0
+    ],
+    "questions": [
+      "Vous faites-vous vomir parce que vous vous sentez désagréablement plein·e ?",
+      "Craignez-vous d'avoir perdu le contrôle de la quantité que vous mangez ?",
+      "Avez-vous récemment perdu plus de 6 kg en trois mois ?",
+      "Pensez-vous être gros·se alors que les autres vous trouvent trop mince ?",
+      "Diriez-vous que la nourriture domine votre vie ?"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Échelle SWLS",
+    "subtitle": "Satisfaction de vie",
+    "estimatedMinutes": 2,
+    "questionCount": 5,
+    "construct": "Satisfaction de vie",
+    "betterWhen": "higher",
+    "description": "Cinq énoncés sur la satisfaction de vie. Un score total plus élevé signifie une plus grande satisfaction subjective.",
+    "algorithm": [
+      "1. Lisez chaque énoncé.",
+      "2. Choisissez à quel point vous êtes d'accord."
+    ],
+    "comment": "Cet outil dépiste la satisfaction de vie subjective ; ce n'est pas un diagnostic.",
+    "analyzerId": "swls",
+    "answers": [
+      "Tout à fait en désaccord",
+      "Plutôt en désaccord",
+      "Légèrement en désaccord",
+      "Ni en désaccord ni en accord",
+      "Légèrement en accord",
+      "Plutôt en accord",
+      "Tout à fait en accord"
+    ],
+    "balls": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "questions": [
+      "En général, ma vie correspond de près à mes idéaux",
+      "Mes conditions de vie sont excellentes",
+      "Je suis satisfait·e de ma vie",
+      "Jusqu'à maintenant, j'ai obtenu les choses importantes que je voulais de la vie",
+      "Si je pouvais recommencer ma vie, je n'y changerais presque rien"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "PHQ-2",
+    "subtitle": "Dépistage court de la dépression",
+    "estimatedMinutes": 1,
+    "questionCount": 2,
+    "construct": "Dépression",
+    "betterWhen": "lower",
+    "description": "Deux questions sur les symptômes dépressifs des deux dernières semaines. Le dépistage est positif à partir d'un score total de 3.",
+    "algorithm": [
+      "1. Pensez aux deux dernières semaines.",
+      "2. Pour chaque question, choisissez à quelle fréquence le symptôme vous a gêné·e."
+    ],
+    "comment": "C'est un dépistage, pas un diagnostic. S'il est positif, envisagez le PHQ-9 ou une consultation professionnelle.",
+    "analyzerId": "phq2",
+    "answers": [
+      "Jamais",
+      "Plusieurs jours",
+      "Plus de la moitié du temps",
+      "Presque tous les jours"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Peu d'intérêt ou de plaisir à faire les choses",
+      "Être triste, désespéré·e ou pessimiste"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "GAD-2",
+    "subtitle": "Dépistage court de l'anxiété",
+    "estimatedMinutes": 1,
+    "questionCount": 2,
+    "construct": "Anxiété",
+    "betterWhen": "lower",
+    "description": "Deux questions sur les symptômes d'anxiété des deux dernières semaines. Le dépistage est positif à partir d'un score total de 3.",
+    "algorithm": [
+      "1. Pensez aux deux dernières semaines.",
+      "2. Pour chaque question, choisissez à quelle fréquence le symptôme vous a gêné·e."
+    ],
+    "comment": "C'est un dépistage, pas un diagnostic. S'il est positif, envisagez le GAD-7 ou une consultation professionnelle.",
+    "analyzerId": "gad2",
+    "answers": [
+      "Jamais",
+      "Plusieurs jours",
+      "Plus de la moitié du temps",
+      "Presque tous les jours"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Sentiment de nervosité, d'anxiété ou de tension",
+      "Incapable d'arrêter de s'inquiéter ou de contrôler ses inquiétudes"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "HADS — anxiété",
+    "subtitle": "Sous-échelle d'anxiété",
+    "estimatedMinutes": 3,
+    "questionCount": 7,
+    "construct": "Anxiété",
+    "betterWhen": "lower",
+    "description": "Sept questions sur les sentiments d'anxiété de la semaine écoulée.",
+    "algorithm": [
+      "1. Indiquez à quelle fréquence vous avez ressenti chaque état la semaine dernière.",
+      "2. Choisissez l'une des quatre options."
+    ],
+    "comment": "C'est un dépistage, pas un diagnostic. Si le total est de 8 ou plus, envisagez un soutien professionnel.",
+    "analyzerId": "hads_a",
+    "answers": [
+      "Jamais ou rarement",
+      "Parfois",
+      "Souvent",
+      "La plupart du temps"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Je me sens tendu·e ou énervé·e",
+      "J'ai une sensation de peur comme si quelque chose d'horrible allait m'arriver",
+      "Je me fais du souci",
+      "J'ai du mal à me détendre et à me sentir calme",
+      "J'éprouve des sensations de peur et j'ai l'estomac noué",
+      "J'ai la bougeotte et n'arrive pas à tenir en place",
+      "J'éprouve des sensations soudaines de panique"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "HADS — dépression",
+    "subtitle": "Sous-échelle de dépression",
+    "estimatedMinutes": 3,
+    "questionCount": 7,
+    "construct": "Dépression",
+    "betterWhen": "lower",
+    "description": "Sept questions sur les sentiments dépressifs de la semaine écoulée.",
+    "algorithm": [
+      "1. Indiquez à quelle fréquence vous avez ressenti chaque état la semaine dernière.",
+      "2. Choisissez l'une des quatre options."
+    ],
+    "comment": "C'est un dépistage, pas un diagnostic. Si le total est de 8 ou plus, envisagez un soutien professionnel.",
+    "analyzerId": "hads_d",
+    "answers": [
+      "Jamais ou rarement",
+      "Parfois",
+      "Souvent",
+      "La plupart du temps"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "questions": [
+      "Je ne prends plus plaisir aux mêmes choses qu'autrefois",
+      "J'ai du mal à rire et à voir le bon côté des choses",
+      "Je me sens abattu·e et rarement de bonne humeur",
+      "J'ai l'impression de fonctionner au ralenti ou, au contraire, de ne pas tenir en place",
+      "Je ne m'intéresse plus à mon apparence",
+      "J'envisage les choses à venir avec peu de plaisir",
+      "J'ai du mal à apprécier un bon livre, un film ou une émission"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Dépistage PC-PTSD-5",
+    "subtitle": "Réaction post-traumatique",
+    "estimatedMinutes": 1,
+    "questionCount": 5,
+    "construct": "Traumatisme",
+    "betterWhen": "lower",
+    "description": "Il arrive que des personnes vivent des événements inhabituels ou particulièrement effrayants, horribles ou traumatisants : un accident grave ou un incendie, une agression physique ou sexuelle, des violences, la guerre, la mort soudaine d'un proche. Si quelque chose de ce genre vous est arrivé, indiquez si, au cours du dernier mois, vous avez vécu ce qui suit. S'il n'y a pas eu d'événement de ce type, ce questionnaire n'est pas pour vous.",
+    "algorithm": [
+      "1. Pensez au dernier mois.",
+      "2. Répondez « oui » ou « non » à chaque question."
+    ],
+    "comment": "C'est un dépistage court, pas un diagnostic. Avec trois « oui » ou plus, passez l'échelle détaillée PCL-5 et consultez un spécialiste du traumatisme.",
+    "analyzerId": "pcptsd5",
+    "answers": [
+      "Oui",
+      "Non"
+    ],
+    "balls": [
+      1,
+      0
+    ],
+    "questions": [
+      "Avez-vous fait des cauchemars au sujet de l'événement ou y avez-vous pensé alors que vous ne le vouliez pas ?",
+      "Vous êtes-vous efforcé·e de ne pas y penser ou avez-vous tout fait pour éviter les situations qui vous le rappelaient ?",
+      "Avez-vous été constamment sur vos gardes, vigilant·e ou facilement sursautant·e ?",
+      "Vous êtes-vous senti·e engourdi·e ou détaché·e des autres, de vos activités ou de votre entourage ?",
+      "Vous êtes-vous senti·e coupable ou incapable d'arrêter de vous blâmer ou de blâmer les autres pour l'événement ou les problèmes qu'il a pu causer ?"
+    ],
+    "singleAnswer": true
+  },
+  {
+    "title": "Échelle PCL-5",
+    "subtitle": "Symptômes post-traumatiques",
+    "estimatedMinutes": 5,
+    "questionCount": 20,
+    "construct": "Traumatisme",
+    "betterWhen": "lower",
+    "description": "Vingt questions sur des problèmes que l'on peut avoir après une expérience très stressante. Répondez à propos de l'expérience qui vous trouble le plus, et pour le dernier mois. Vous pouvez refaire l'échelle toutes les deux semaines pour voir comment les symptômes évoluent.",
+    "algorithm": [
+      "1. Pensez au dernier mois.",
+      "2. Choisissez à quel point chaque problème vous a gêné·e."
+    ],
+    "comment": "C'est une échelle de symptômes, pas un diagnostic. Avec un score élevé, consultez un spécialiste du traumatisme.",
+    "analyzerId": "pcl5",
+    "answers": [
+      "Jamais",
+      "Un peu",
+      "Modérément",
+      "Beaucoup",
+      "Extrêmement"
+    ],
+    "balls": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "questions": [
+      "Des souvenirs répétés, pénibles et involontaires de l'expérience stressante",
+      "Des rêves répétés et pénibles de l'expérience stressante",
+      "Se sentir ou agir soudainement comme si l'expérience stressante se produisait à nouveau (comme si vous y étiez réellement, en train de la revivre)",
+      "Se sentir très bouleversé·e quand quelque chose vous a rappelé l'expérience stressante",
+      "Avoir de fortes réactions physiques quand quelque chose vous a rappelé l'expérience stressante (par exemple, cœur qui bat fort, difficulté à respirer, transpiration)",
+      "Éviter les souvenirs, pensées ou sentiments liés à l'expérience stressante",
+      "Éviter ce qui rappelle l'expérience stressante (par exemple, des personnes, des lieux, des conversations, des activités, des objets ou des situations)",
+      "Avoir du mal à se souvenir de parties importantes de l'expérience stressante",
+      "Avoir de fortes croyances négatives sur vous-même, les autres ou le monde (par exemple, des pensées comme : je suis mauvais·e, quelque chose ne va vraiment pas chez moi, on ne peut faire confiance à personne, le monde est complètement dangereux)",
+      "Vous blâmer ou blâmer quelqu'un d'autre pour l'expérience stressante ou ce qui s'est passé ensuite",
+      "Ressentir de forts sentiments négatifs comme la peur, l'horreur, la colère, la culpabilité ou la honte",
+      "Perdre l'intérêt pour des activités que vous aimiez auparavant",
+      "Se sentir distant·e ou coupé·e des autres",
+      "Avoir du mal à ressentir des émotions positives (par exemple, être incapable de ressentir du bonheur ou de l'affection pour vos proches)",
+      "Comportement irritable, accès de colère ou agressivité",
+      "Prendre trop de risques ou faire des choses qui pourraient vous nuire",
+      "Être « hyper-vigilant·e », sur le qui-vive ou sur vos gardes",
+      "Sursauter facilement ou être nerveux·se",
+      "Avoir du mal à vous concentrer",
+      "Avoir du mal à vous endormir ou à rester endormi·e"
+    ],
+    "singleAnswer": true
+  }
+]
