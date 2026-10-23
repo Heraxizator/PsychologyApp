@@ -108,24 +108,46 @@ public class TechniqueCatalogTests
         Assert.Equal(2, definition.Entries!.Count(entry => entry.Kind == EntryFieldKind.Rating0To10));
     }
 
-    [Fact]
-    public async Task Russian_and_english_fields_offer_the_same_help()
+    [Theory]
+    [InlineData("ru")]
+    [InlineData("fr")]
+    [InlineData("de")]
+    [InlineData("es")]
+    [InlineData("pt")]
+    [InlineData("zh")]
+    public async Task Every_language_offers_the_same_fields_and_help_as_english(string language)
     {
-        ITechniqueCatalogService russian = new TechniqueCatalogService(new BuiltInTechniqueCatalogProvider(() => "ru"));
+        ITechniqueCatalogService translated = new TechniqueCatalogService(new BuiltInTechniqueCatalogProvider(() => language));
         ITechniqueCatalogService english = new TechniqueCatalogService(new BuiltInTechniqueCatalogProvider(() => "en"));
 
         foreach (TechniqueId id in Enum.GetValues<TechniqueId>())
         {
-            IReadOnlyList<TechniqueEntrySeed> ru = (await russian.GetAsync(id)).Entries ?? [];
-            IReadOnlyList<TechniqueEntrySeed> en = (await english.GetAsync(id)).Entries ?? [];
+            BuiltInTechniqueDefinition other = await translated.GetAsync(id);
+            BuiltInTechniqueDefinition en = await english.GetAsync(id);
+            IReadOnlyList<TechniqueEntrySeed> otherFields = other.Entries ?? [];
+            IReadOnlyList<TechniqueEntrySeed> enFields = en.Entries ?? [];
 
-            Assert.Equal(ru.Count, en.Count);
-            for (int i = 0; i < ru.Count; i++)
+            Assert.Equal(en.UiKind, other.UiKind);
+            Assert.Equal(enFields.Count, otherFields.Count);
+            for (int i = 0; i < enFields.Count; i++)
             {
-                Assert.True(ru[i].Role == en[i].Role, $"{id} field {i}: role differs");
-                Assert.True((ru[i].Suggestions?.Count ?? 0) == (en[i].Suggestions?.Count ?? 0), $"{id} field {i}: suggestion count differs");
+                Assert.True(enFields[i].Role == otherFields[i].Role, $"{language} {id} field {i}: role differs");
+                Assert.True(enFields[i].Kind == otherFields[i].Kind, $"{language} {id} field {i}: kind differs");
+                Assert.True((enFields[i].Suggestions?.Count ?? 0) == (otherFields[i].Suggestions?.Count ?? 0), $"{language} {id} field {i}: suggestion count differs");
             }
         }
+    }
+
+    [Theory]
+    [InlineData("fr", TechniqueId.Grounding, "Ancrage 5-4-3-2-1")]
+    [InlineData("de", TechniqueId.Breathing, "Box-Atmung")]
+    [InlineData("zh", TechniqueId.SmallStep, "一小步")]
+    [InlineData("ja", TechniqueId.SmallStep, "One small step")]
+    public async Task A_language_shows_its_own_practice_names_and_an_unknown_one_gets_english(string language, TechniqueId id, string pageName)
+    {
+        ITechniqueCatalogService catalog = new TechniqueCatalogService(new BuiltInTechniqueCatalogProvider(() => language));
+
+        Assert.Equal(pageName, (await catalog.GetAsync(id)).PageName);
     }
 
     [Fact]

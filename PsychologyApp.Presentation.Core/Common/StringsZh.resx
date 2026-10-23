@@ -2431,7 +2431,7 @@
     <value>幸福感处于中等水平。加强那些带来活力和兴趣的习惯。</value>
   </data>
   <data name="TestRecommendationReasonK10.RecommendationLane.High" xml:space="preserve">
-    <value>困扰程度高时，Spin 有助于减轻痛苦记忆带来的情绪负荷。</value>
+    <value>困扰程度高时，“旋转”有助于减轻痛苦记忆带来的情绪负荷。</value>
   </data>
   <data name="TestRecommendationReasonK10.RecommendationLane.Mid" xml:space="preserve">
     <value>经历调整练习有助于重新看待困难的经历。</value>
@@ -2497,13 +2497,13 @@
     <value>中度白天嗜睡。可以考虑和医生谈谈。</value>
   </data>
   <data name="TestRecommendationReasonIsi.RecommendationLane.High" xml:space="preserve">
-    <value>失眠严重时，Spin 有助于减轻焦虑想法带来的情绪负荷。</value>
+    <value>失眠严重时，“旋转”有助于减轻焦虑想法带来的情绪负荷。</value>
   </data>
   <data name="TestRecommendationReasonIsi.RecommendationLane.Mid" xml:space="preserve">
     <value>经历调整练习有助于重新看待影响睡眠的困难经历。</value>
   </data>
   <data name="TestRecommendationReasonEss.RecommendationLane.High" xml:space="preserve">
-    <value>嗜睡严重时，Spin 有助于减轻痛苦记忆带来的情绪负荷。</value>
+    <value>嗜睡严重时，“旋转”有助于减轻痛苦记忆带来的情绪负荷。</value>
   </data>
   <data name="TestRecommendationReasonEss.RecommendationLane.Mid" xml:space="preserve">
     <value>经历调整练习有助于重新审视影响清醒程度的习惯。</value>
@@ -2563,7 +2563,7 @@
     <value>生活满意度高。保持那些帮助你维持这种状态的做法。</value>
   </data>
   <data name="TestRecommendationReasonPhq15.RecommendationLane.High" xml:space="preserve">
-    <value>躯体负担高时，Spin 有助于减轻痛苦记忆带来的情绪负荷。</value>
+    <value>躯体负担高时，“旋转”有助于减轻痛苦记忆带来的情绪负荷。</value>
   </data>
   <data name="TestRecommendationReasonPhq15.RecommendationLane.Mid" xml:space="preserve">
     <value>经历调整练习有助于重新看待身体与情绪之间的联系。</value>
@@ -2617,28 +2617,28 @@
     <value>自尊在正常范围内。在困难时期继续支持自己。</value>
   </data>
   <data name="TestRecommendationReasonPss10.RecommendationLane.High" xml:space="preserve">
-    <value>压力高时，Spin 有助于减轻情绪负荷。</value>
+    <value>压力高时，“旋转”有助于减轻情绪负荷。</value>
   </data>
   <data name="TestRecommendationReasonPss10.RecommendationLane.Mid" xml:space="preserve">
     <value>压力中等时，呼吸可以让神经系统平静下来。</value>
   </data>
   <data name="TestRecommendationReasonHadsAnxiety.RecommendationLane.High" xml:space="preserve">
-    <value>焦虑偏高时，Spin 可以减轻情绪负荷。</value>
+    <value>焦虑偏高时，“旋转”可以减轻情绪负荷。</value>
   </data>
   <data name="TestRecommendationReasonHadsAnxiety.RecommendationLane.Mid" xml:space="preserve">
     <value>焦虑处于临界时，呼吸有助于稳定你的感受。</value>
   </data>
   <data name="TestRecommendationReasonHadsDepression.RecommendationLane.High" xml:space="preserve">
-    <value>抑郁偏高时，One small step 帮助你重新找回动力。</value>
+    <value>抑郁偏高时，“一小步”帮助你重新找回动力。</value>
   </data>
   <data name="TestRecommendationReasonHadsDepression.RecommendationLane.Mid" xml:space="preserve">
-    <value>症状处于临界时，Paper 帮助你卸下想法。</value>
+    <value>症状处于临界时，“一张纸”帮助你卸下想法。</value>
   </data>
   <data name="TestRecommendationReasonRses.RecommendationLane.High" xml:space="preserve">
-    <value>自尊偏低时，Kind words to yourself 可以缓和自我批评。</value>
+    <value>自尊偏低时，“对自己说温和的话”可以缓和自我批评。</value>
   </data>
   <data name="TestRecommendationReasonRses.RecommendationLane.Mid" xml:space="preserve">
-    <value>One small step 能增强你有能力行动的感觉。</value>
+    <value>“一小步”能增强你有能力行动的感觉。</value>
   </data>
   <data name="TodayRecommendationReason.default" xml:space="preserve">
     <value>今日练习</value>
@@ -2791,7 +2791,7 @@
     <value>分数偏高。处理过去的经历和信念可能会有帮助。</value>
   </data>
   <data name="TestRecommendationReasonBeck.1" xml:space="preserve">
-    <value>有抑郁症状时，Spin 有助于减轻痛苦记忆带来的情绪负荷。</value>
+    <value>有抑郁症状时，“旋转”有助于减轻痛苦记忆带来的情绪负荷。</value>
   </data>
   <data name="TestRecommendationReasonBeck.2" xml:space="preserve">
     <value>作为预防，把想法写在纸上会有帮助。</value>
@@ -2803,16 +2803,16 @@
     <value>比较重要性能帮助你拉开距离、看得更全面。</value>
   </data>
   <data name="TestRecommendationReasonHaer.1" xml:space="preserve">
-    <value>“50 years later”把问题放到更远的未来去看。</value>
+    <value>“50 年后”把问题放到更远的未来去看。</value>
   </data>
   <data name="TestRecommendationReasonHaer.2" xml:space="preserve">
     <value>经历调整练习有助于重新审视信念。</value>
   </data>
   <data name="TestRecommendationReasonPochebut.1" xml:space="preserve">
-    <value>“Shrink it”在视觉上降低诱因的重要性。</value>
+    <value>“缩小它”在视觉上降低诱因的重要性。</value>
   </data>
   <data name="TestRecommendationReasonPochebut.2" xml:space="preserve">
-    <value>“Check it”帮助你放下反复打转的想法。</value>
+    <value>“检验一下”帮助你放下反复打转的想法。</value>
   </data>
   <data name="TestRecommendationReasonGad7.1" xml:space="preserve">
     <value>焦虑时，两极练习帮助你看到情境的两面。</value>
@@ -2827,7 +2827,7 @@
     <value>经历调整练习能增强意义感和资源感。</value>
   </data>
   <data name="TestRecommendationReasonPhq9.1" xml:space="preserve">
-    <value>有抑郁症状时，Spin 有助于减轻痛苦记忆带来的情绪负荷。</value>
+    <value>有抑郁症状时，“旋转”有助于减轻痛苦记忆带来的情绪负荷。</value>
   </data>
   <data name="TestRecommendationReasonPhq9.2" xml:space="preserve">
     <value>作为预防，把想法写在纸上会有帮助。</value>
@@ -2845,7 +2845,7 @@
     <value>筛查阳性。请咨询进食障碍方面的专科医生。</value>
   </data>
   <data name="TestRecommendationReasonScoff.1" xml:space="preserve">
-    <value>有进食障碍迹象时，Spin 有助于减轻痛苦记忆带来的情绪负荷。</value>
+    <value>有进食障碍迹象时，“旋转”有助于减轻痛苦记忆带来的情绪负荷。</value>
   </data>
   <data name="TestRecommendationReasonScoff.2" xml:space="preserve">
     <value>作为预防，把想法写在纸上会有帮助。</value>
@@ -2881,7 +2881,7 @@
     <value>焦虑筛查阳性。可以考虑做 GAD-7 或咨询专业人士。</value>
   </data>
   <data name="TestRecommendationReasonPhq2.1" xml:space="preserve">
-    <value>有抑郁迹象时，One small step 帮助你重新找回动力。</value>
+    <value>有抑郁迹象时，“一小步”帮助你重新找回动力。</value>
   </data>
   <data name="TestRecommendationReasonPhq2.2" xml:space="preserve">
     <value>作为预防，把想法写在纸上会有帮助。</value>

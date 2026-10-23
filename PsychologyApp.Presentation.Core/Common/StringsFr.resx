@@ -2629,16 +2629,16 @@
     <value>En cas d'anxiété limite, la respiration aide à vous stabiliser.</value>
   </data>
   <data name="TestRecommendationReasonHadsDepression.RecommendationLane.High" xml:space="preserve">
-    <value>En cas de dépression élevée, One small step aide à retrouver de l'élan.</value>
+    <value>En cas de dépression élevée, « Un petit pas » aide à retrouver de l'élan.</value>
   </data>
   <data name="TestRecommendationReasonHadsDepression.RecommendationLane.Mid" xml:space="preserve">
-    <value>En cas de symptômes limites, Paper aide à décharger les pensées.</value>
+    <value>En cas de symptômes limites, « Feuille de papier » aide à décharger les pensées.</value>
   </data>
   <data name="TestRecommendationReasonRses.RecommendationLane.High" xml:space="preserve">
-    <value>En cas d'estime de soi basse, Kind words to yourself adoucit l'autocritique.</value>
+    <value>En cas d'estime de soi basse, « Des mots bienveillants pour soi » adoucit l'autocritique.</value>
   </data>
   <data name="TestRecommendationReasonRses.RecommendationLane.Mid" xml:space="preserve">
-    <value>One small step soutient le sentiment de pouvoir agir.</value>
+    <value>« Un petit pas » soutient le sentiment de pouvoir agir.</value>
   </data>
   <data name="TodayRecommendationReason.default" xml:space="preserve">
     <value>Pratique du jour</value>
@@ -2803,16 +2803,16 @@
     <value>Comparer l'importance renforce la prise de recul.</value>
   </data>
   <data name="TestRecommendationReasonHaer.1" xml:space="preserve">
-    <value>« 50 years later » projette le problème dans le temps.</value>
+    <value>« 50 ans plus tard » projette le problème dans le temps.</value>
   </data>
   <data name="TestRecommendationReasonHaer.2" xml:space="preserve">
     <value>La modification de l'expérience aide à revoir les croyances.</value>
   </data>
   <data name="TestRecommendationReasonPochebut.1" xml:space="preserve">
-    <value>« Shrink it » réduit visuellement l'importance du déclencheur.</value>
+    <value>« Rendre petit » réduit visuellement l'importance du déclencheur.</value>
   </data>
   <data name="TestRecommendationReasonPochebut.2" xml:space="preserve">
-    <value>« Check it » aide à lâcher une pensée qui tourne en boucle.</value>
+    <value>« Vérifier » aide à lâcher une pensée qui tourne en boucle.</value>
   </data>
   <data name="TestRecommendationReasonGad7.1" xml:space="preserve">
     <value>En cas d'anxiété, les polarités aident à voir les deux côtés d'une situation.</value>
@@ -2881,7 +2881,7 @@
     <value>Dépistage de l'anxiété positif. Envisagez le GAD-7 ou une consultation professionnelle.</value>
   </data>
   <data name="TestRecommendationReasonPhq2.1" xml:space="preserve">
-    <value>En cas de signes de dépression, One small step aide à retrouver de l'élan.</value>
+    <value>En cas de signes de dépression, « Un petit pas » aide à retrouver de l'élan.</value>
   </data>
   <data name="TestRecommendationReasonPhq2.2" xml:space="preserve">
     <value>En prévention, écrire ses pensées sur papier est utile.</value>

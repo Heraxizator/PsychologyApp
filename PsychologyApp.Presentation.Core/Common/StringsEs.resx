@@ -2629,16 +2629,16 @@
     <value>Con ansiedad en el límite, la respiración te ayuda a estabilizarte.</value>
   </data>
   <data name="TestRecommendationReasonHadsDepression.RecommendationLane.High" xml:space="preserve">
-    <value>Con depresión elevada, One small step ayuda a recuperar el impulso.</value>
+    <value>Con depresión elevada, «Un pequeño paso» ayuda a recuperar el impulso.</value>
   </data>
   <data name="TestRecommendationReasonHadsDepression.RecommendationLane.Mid" xml:space="preserve">
-    <value>Con síntomas en el límite, Paper ayuda a descargar los pensamientos.</value>
+    <value>Con síntomas en el límite, «Hoja de papel» ayuda a descargar los pensamientos.</value>
   </data>
   <data name="TestRecommendationReasonRses.RecommendationLane.High" xml:space="preserve">
-    <value>Con autoestima baja, Kind words to yourself suaviza la autocrítica.</value>
+    <value>Con autoestima baja, «Palabras amables para ti» suaviza la autocrítica.</value>
   </data>
   <data name="TestRecommendationReasonRses.RecommendationLane.Mid" xml:space="preserve">
-    <value>One small step refuerza la sensación de poder actuar.</value>
+    <value>«Un pequeño paso» refuerza la sensación de poder actuar.</value>
   </data>
   <data name="TodayRecommendationReason.default" xml:space="preserve">
     <value>Práctica del día</value>
@@ -2803,16 +2803,16 @@
     <value>Comparar la importancia da perspectiva.</value>
   </data>
   <data name="TestRecommendationReasonHaer.1" xml:space="preserve">
-    <value>«50 years later» lleva el problema hacia adelante en el tiempo.</value>
+    <value>«50 años después» lleva el problema hacia adelante en el tiempo.</value>
   </data>
   <data name="TestRecommendationReasonHaer.2" xml:space="preserve">
     <value>La modificación de la experiencia ayuda a revisar las creencias.</value>
   </data>
   <data name="TestRecommendationReasonPochebut.1" xml:space="preserve">
-    <value>«Shrink it» reduce visualmente la importancia del desencadenante.</value>
+    <value>«Hazlo pequeño» reduce visualmente la importancia del desencadenante.</value>
   </data>
   <data name="TestRecommendationReasonPochebut.2" xml:space="preserve">
-    <value>«Check it» ayuda a soltar un pensamiento que da vueltas.</value>
+    <value>«Compruébalo» ayuda a soltar un pensamiento que da vueltas.</value>
   </data>
   <data name="TestRecommendationReasonGad7.1" xml:space="preserve">
     <value>Con ansiedad, las polaridades ayudan a ver ambos lados de una situación.</value>
@@ -2881,7 +2881,7 @@
     <value>Cribado de ansiedad positivo. Considera el GAD-7 o una consulta profesional.</value>
   </data>
   <data name="TestRecommendationReasonPhq2.1" xml:space="preserve">
-    <value>Con signos de depresión, One small step ayuda a recuperar el impulso.</value>
+    <value>Con signos de depresión, «Un pequeño paso» ayuda a recuperar el impulso.</value>
   </data>
   <data name="TestRecommendationReasonPhq2.2" xml:space="preserve">
     <value>Como prevención, escribir tus pensamientos en papel es útil.</value>

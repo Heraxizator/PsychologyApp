@@ -11,10 +11,7 @@ public sealed class BuiltInTechniqueCatalogProvider(Func<string>? languageKeyPro
     {
         cancellationToken.ThrowIfCancellationRequested();
         string languageKey = languageKeyProvider?.Invoke() ?? "ru";
-        IReadOnlyDictionary<TechniqueId, BuiltInTechniqueDefinition> definitions =
-            string.Equals(languageKey, "en", StringComparison.OrdinalIgnoreCase)
-                ? BuiltInTechniqueCatalogRegistry.English
-                : BuiltInTechniqueCatalogRegistry.Russian;
+        IReadOnlyDictionary<TechniqueId, BuiltInTechniqueDefinition> definitions = BuiltInTechniqueCatalogRegistry.For(languageKey);
 
         IReadOnlyList<BuiltInTechniqueDefinition> ordered = Enum.GetValues<TechniqueId>()
             .Select(id => definitions[id])

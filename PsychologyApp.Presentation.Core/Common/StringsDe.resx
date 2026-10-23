@@ -2629,16 +2629,16 @@
     <value>Bei grenzwertiger Angst stabilisiert Atmen dein Befinden.</value>
   </data>
   <data name="TestRecommendationReasonHadsDepression.RecommendationLane.High" xml:space="preserve">
-    <value>Bei erhöhter Depression bringt One small step wieder Schwung.</value>
+    <value>Bei erhöhter Depression bringt „Ein kleiner Schritt“ wieder Schwung.</value>
   </data>
   <data name="TestRecommendationReasonHadsDepression.RecommendationLane.Mid" xml:space="preserve">
-    <value>Bei grenzwertigen Symptomen hilft Paper, Gedanken abzuladen.</value>
+    <value>Bei grenzwertigen Symptomen hilft „Blatt Papier“, Gedanken abzuladen.</value>
   </data>
   <data name="TestRecommendationReasonRses.RecommendationLane.High" xml:space="preserve">
-    <value>Bei geringem Selbstwertgefühl mildert Kind words to yourself die Selbstkritik.</value>
+    <value>Bei geringem Selbstwertgefühl mildert „Freundliche Worte an dich selbst“ die Selbstkritik.</value>
   </data>
   <data name="TestRecommendationReasonRses.RecommendationLane.Mid" xml:space="preserve">
-    <value>One small step stärkt das Gefühl, handeln zu können.</value>
+    <value>„Ein kleiner Schritt“ stärkt das Gefühl, handeln zu können.</value>
   </data>
   <data name="TodayRecommendationReason.default" xml:space="preserve">
     <value>Übung des Tages</value>
@@ -2803,16 +2803,16 @@
     <value>Der Vergleich von Wichtigkeit stärkt den Abstand.</value>
   </data>
   <data name="TestRecommendationReasonHaer.1" xml:space="preserve">
-    <value>„50 years later“ verschiebt das Problem in die Zukunft.</value>
+    <value>„50 Jahre später“ verschiebt das Problem in die Zukunft.</value>
   </data>
   <data name="TestRecommendationReasonHaer.2" xml:space="preserve">
     <value>Die Veränderung von Erfahrungen hilft, Überzeugungen neu zu betrachten.</value>
   </data>
   <data name="TestRecommendationReasonPochebut.1" xml:space="preserve">
-    <value>„Shrink it“ verkleinert die Bedeutung des Auslösers sichtbar.</value>
+    <value>„Mach es klein“ verkleinert die Bedeutung des Auslösers sichtbar.</value>
   </data>
   <data name="TestRecommendationReasonPochebut.2" xml:space="preserve">
-    <value>„Check it“ hilft, einen kreisenden Gedanken loszulassen.</value>
+    <value>„Prüf es“ hilft, einen kreisenden Gedanken loszulassen.</value>
   </data>
   <data name="TestRecommendationReasonGad7.1" xml:space="preserve">
     <value>Bei Angst helfen Polaritäten, beide Seiten einer Situation zu sehen.</value>
@@ -2881,7 +2881,7 @@
     <value>Angst-Screening positiv. Erwäge den GAD-7 oder ein Gespräch mit einer Fachperson.</value>
   </data>
   <data name="TestRecommendationReasonPhq2.1" xml:space="preserve">
-    <value>Bei Anzeichen einer Depression bringt One small step wieder Schwung.</value>
+    <value>Bei Anzeichen einer Depression bringt „Ein kleiner Schritt“ wieder Schwung.</value>
   </data>
   <data name="TestRecommendationReasonPhq2.2" xml:space="preserve">
     <value>Zur Vorbeugung hilft es, Gedanken auf Papier zu schreiben.</value>

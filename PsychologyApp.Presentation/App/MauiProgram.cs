@@ -85,7 +85,7 @@ public static class MauiProgram
                 sp.GetRequiredService<MauiTestCatalogProvider>(),
                 () => AppStrings.IsEnglish(AppStrings.Language) ? "en" : "ru"));
         builder.Services.AddSingleton(sp => new BuiltInTechniqueCatalogProvider(
-            () => AppStrings.IsEnglish(AppStrings.Language) ? "en" : "ru"));
+            () => AppLanguages.Normalize(AppStrings.Language)));
         builder.Services.AddPsychologyAppPresentation();
         // Navigation for the shell itself (menu, notification taps): no owner page, so it acts on the current tab's stack.
         // INavigationService is not registered on its own; it is always made through the context factory.
