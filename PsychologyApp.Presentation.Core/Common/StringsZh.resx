@@ -12,4 +12,3974 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ChatsTitle" xml:space="preserve">
+    <value>对话</value>
+  </data>
+  <data name="ChatNew" xml:space="preserve">
+    <value>新对话</value>
+  </data>
+  <data name="ChatInputPlaceholder" xml:space="preserve">
+    <value>输入消息…</value>
+  </data>
+  <data name="ChatEmptyTitle" xml:space="preserve">
+    <value>还没有对话</value>
+  </data>
+  <data name="ChatEmptyBody" xml:space="preserve">
+    <value>告诉我发生了什么。我会倾听，帮你理清思路，并推荐一个练习。</value>
+  </data>
+  <data name="ChatEmptyPrivacy" xml:space="preserve">
+    <value>对话只保存在这部手机上，不会发送到任何地方</value>
+  </data>
+  <data name="ChatOpenersTitle" xml:space="preserve">
+    <value>或者从这里开始</value>
+  </data>
+  <data name="ChatOpenerAnxious" xml:space="preserve">
+    <value>我感到焦虑</value>
+  </data>
+  <data name="ChatOpenerSleep" xml:space="preserve">
+    <value>我睡不着</value>
+  </data>
+  <data name="ChatOpenerSad" xml:space="preserve">
+    <value>我很难过</value>
+  </data>
+  <data name="ChatOpenerLonely" xml:space="preserve">
+    <value>我感到孤独</value>
+  </data>
+  <data name="ChatUnavailableTitle" xml:space="preserve">
+    <value>聊天目前只支持俄语和英语</value>
+  </data>
+  <data name="ChatUnavailableBody" xml:space="preserve">
+    <value>只有在这两种语言中，它才能察觉到有人处于危险之中，因此在你的语言准备好之前，聊天会保持关闭。练习、测试和日记照常可用，危机求助也一直在这里。</value>
+  </data>
+  <data name="ChatRename" xml:space="preserve">
+    <value>重命名</value>
+  </data>
+  <data name="ChatDelete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="ChatRenameTitle" xml:space="preserve">
+    <value>对话名称</value>
+  </data>
+  <data name="ChatRenameMessage" xml:space="preserve">
+    <value>这段对话要叫什么名字？</value>
+  </data>
+  <data name="ChatRenameAccept" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="ChatCancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="ChatDeleteTitle" xml:space="preserve">
+    <value>删除这段对话？</value>
+  </data>
+  <data name="ChatDeleteBody" xml:space="preserve">
+    <value>对话及其记录将从此设备上删除，且无法恢复。</value>
+  </data>
+  <data name="ChatHeroTitle" xml:space="preserve">
+    <value>聊聊</value>
+  </data>
+  <data name="ChatHeroFreshSubtitle" xml:space="preserve">
+    <value>告诉我发生了什么，我会帮你理清思路</value>
+  </data>
+  <data name="ChatHeroContinue" xml:space="preserve">
+    <value>继续</value>
+  </data>
+  <data name="ChatHeroStart" xml:space="preserve">
+    <value>开始聊天</value>
+  </data>
+  <data name="ChatHeroAllChats" xml:space="preserve">
+    <value>所有对话</value>
+  </data>
+  <data name="ChatHeroNewChat" xml:space="preserve">
+    <value>新对话</value>
+  </data>
+  <data name="ChatStatusIdle" xml:space="preserve">
+    <value>AI 聊天 · 离线</value>
+  </data>
+  <data name="ChatStatusPractice" xml:space="preserve">
+    <value>AI 聊天 · 练习</value>
+  </data>
+  <data name="ChatError" xml:space="preserve">
+    <value>消息发送失败，请重试。</value>
+  </data>
+  <data name="ChatLoadingText" xml:space="preserve">
+    <value>正在打开对话…</value>
+  </data>
+  <data name="ChatScrollToNewest" xml:space="preserve">
+    <value>跳到最新消息</value>
+  </data>
+  <data name="ChatScrollToOldest" xml:space="preserve">
+    <value>跳到对话开头</value>
+  </data>
+  <data name="ChatStressTestTitle" xml:space="preserve">
+    <value>压力测试（PSS-10）</value>
+  </data>
+  <data name="ChatReminderTitle" xml:space="preserve">
+    <value>AI 聊天在这里</value>
+  </data>
+  <data name="ChatReminderBody" xml:space="preserve">
+    <value>有一阵子没聊了。现在怎么样？</value>
+  </data>
+  <data name="ChatProfileTitle" xml:space="preserve">
+    <value>AI 聊天</value>
+  </data>
+  <data name="ChatProfileOpen" xml:space="preserve">
+    <value>打开 AI 聊天资料</value>
+  </data>
+  <data name="ChatProfileOnline" xml:space="preserve">
+    <value>在线</value>
+  </data>
+  <data name="ChatProfileOffline" xml:space="preserve">
+    <value>离线可用</value>
+  </data>
+  <data name="ChatProfileStatChats" xml:space="preserve">
+    <value>对话</value>
+  </data>
+  <data name="ChatProfileStatMessages" xml:space="preserve">
+    <value>你的消息</value>
+  </data>
+  <data name="ChatProfileStatDays" xml:space="preserve">
+    <value>相伴天数</value>
+  </data>
+  <data name="ChatProfileStatStreak" xml:space="preserve">
+    <value>连续天数</value>
+  </data>
+  <data name="ChatProfileTrustTitle" xml:space="preserve">
+    <value>信任程度</value>
+  </data>
+  <data name="ChatProfileNameTitle" xml:space="preserve">
+    <value>怎么称呼你</value>
+  </data>
+  <data name="ChatProfileNameEmpty" xml:space="preserve">
+    <value>还没有名字</value>
+  </data>
+  <data name="ChatProfileNameHint" xml:space="preserve">
+    <value>聊天时偶尔会用名字称呼你</value>
+  </data>
+  <data name="ChatProfileNameEdit" xml:space="preserve">
+    <value>修改</value>
+  </data>
+  <data name="ChatProfileNamePromptTitle" xml:space="preserve">
+    <value>你的名字</value>
+  </data>
+  <data name="ChatProfileNamePromptMessage" xml:space="preserve">
+    <value>我该怎么称呼你？留空即可删除名字。</value>
+  </data>
+  <data name="ChatProfileInsightsTitle" xml:space="preserve">
+    <value>你的对话显示了什么</value>
+  </data>
+  <data name="ChatProfileTensionTitle" xml:space="preserve">
+    <value>紧张程度的变化</value>
+  </data>
+  <data name="ChatProfileTensionStart" xml:space="preserve">
+    <value>开始时</value>
+  </data>
+  <data name="ChatProfileTensionEnd" xml:space="preserve">
+    <value>结束时</value>
+  </data>
+  <data name="ChatProfilePracticesTitle" xml:space="preserve">
+    <value>对你有帮助的</value>
+  </data>
+  <data name="ChatProfilePracticesEmpty" xml:space="preserve">
+    <value>在对话中做一次练习，并评估练习前后的紧张程度，这里就会显示对你有帮助的方法。</value>
+  </data>
+  <data name="ChatProfilePracticeBest" xml:space="preserve">
+    <value>最佳</value>
+  </data>
+  <data name="ChatProfilePracticeStart" xml:space="preserve">
+    <value>开始</value>
+  </data>
+  <data name="ChatProfileEmotionsTitle" xml:space="preserve">
+    <value>你最常聊的话题</value>
+  </data>
+  <data name="ChatProfileAboutTitle" xml:space="preserve">
+    <value>关于 AI 聊天</value>
+  </data>
+  <data name="ChatProfileActionsTitle" xml:space="preserve">
+    <value>管理</value>
+  </data>
+  <data name="ChatProfileAllChats" xml:space="preserve">
+    <value>所有对话</value>
+  </data>
+  <data name="ChatProfileForget" xml:space="preserve">
+    <value>忘记我的名字和偏好</value>
+  </data>
+  <data name="ChatProfileForgetTitle" xml:space="preserve">
+    <value>忘记关于你的信息？</value>
+  </data>
+  <data name="ChatProfileForgetBody" xml:space="preserve">
+    <value>聊天会忘记你的名字和哪些练习对你有帮助。你的对话会保留。</value>
+  </data>
+  <data name="ChatProfileDeleteAll" xml:space="preserve">
+    <value>删除所有对话</value>
+  </data>
+  <data name="ChatProfileDeleteAllTitle" xml:space="preserve">
+    <value>删除所有对话？</value>
+  </data>
+  <data name="ChatProfileDeleteAllBody" xml:space="preserve">
+    <value>所有对话都将从此设备上删除，且无法恢复。你的名字和偏好会保留。</value>
+  </data>
+  <data name="ChatProfileConfirm" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="ChatProfileLoadingText" xml:space="preserve">
+    <value>正在统计…</value>
+  </data>
+  <data name="OptionsTitle" xml:space="preserve">
+    <value>选项</value>
+  </data>
+  <data name="OptionsSettingsTitle" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="OptionsSettingsSubtitle" xml:space="preserve">
+    <value>主题、颜色和显示</value>
+  </data>
+  <data name="OptionsAppSection" xml:space="preserve">
+    <value>应用</value>
+  </data>
+  <data name="OptionsSafetySection" xml:space="preserve">
+    <value>安全</value>
+  </data>
+  <data name="OptionsSupportSection" xml:space="preserve">
+    <value>支持</value>
+  </data>
+  <data name="ProfileSettingsCardSubtitle" xml:space="preserve">
+    <value>主题、语言和字体</value>
+  </data>
+  <data name="OptionsAboutTitle" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="OptionsAboutSubtitle" xml:space="preserve">
+    <value>应用信息</value>
+  </data>
+  <data name="OptionsFeedbackTitle" xml:space="preserve">
+    <value>反馈</value>
+  </data>
+  <data name="OptionsFeedbackSubtitle" xml:space="preserve">
+    <value>报告问题或提出建议</value>
+  </data>
+  <data name="OptionsDonateTitle" xml:space="preserve">
+    <value>支持项目</value>
+  </data>
+  <data name="OptionsDonateSubtitle" xml:space="preserve">
+    <value>帮助应用成长</value>
+  </data>
+  <data name="ProfileOptionsCardSubtitle" xml:space="preserve">
+    <value>设置、支持、Alice AI</value>
+  </data>
+  <data name="OptionsAliceTitle" xml:space="preserve">
+    <value>Alice AI</value>
+  </data>
+  <data name="OptionsAliceSubtitle" xml:space="preserve">
+    <value>Yandex 语音助手</value>
+  </data>
+  <data name="AliceDisclaimerHeader" xml:space="preserve">
+    <value>重要提示</value>
+  </data>
+  <data name="AliceDisclaimerBody" xml:space="preserve">
+    <value>Alice 是 Yandex 的外部服务，需要联网。回答仅供参考，不能代替专业帮助。</value>
+  </data>
+  <data name="AliceOpenInBrowser" xml:space="preserve">
+    <value>在浏览器中打开</value>
+  </data>
+  <data name="AliceOpenFailed" xml:space="preserve">
+    <value>无法打开 Alice</value>
+  </data>
+  <data name="AliceLoadingText" xml:space="preserve">
+    <value>正在加载 Alice…</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="SettingsDesignSection" xml:space="preserve">
+    <value>外观</value>
+  </data>
+  <data name="SettingsFontSection" xml:space="preserve">
+    <value>字体</value>
+  </data>
+  <data name="SettingsLanguageLabel" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="SettingsThemeLabel" xml:space="preserve">
+    <value>主题</value>
+  </data>
+  <data name="SettingsColorLabel" xml:space="preserve">
+    <value>颜色</value>
+  </data>
+  <data name="SettingsFormLabel" xml:space="preserve">
+    <value>形状</value>
+  </data>
+  <data name="SettingsSizeLabel" xml:space="preserve">
+    <value>大小</value>
+  </data>
+  <data name="SettingsBoldLabel" xml:space="preserve">
+    <value>粗体</value>
+  </data>
+  <data name="SettingsTestsSection" xml:space="preserve">
+    <value>测试</value>
+  </data>
+  <data name="SettingsRemindersSection" xml:space="preserve">
+    <value>提醒</value>
+  </data>
+  <data name="SettingsPracticeRemindersLabel" xml:space="preserve">
+    <value>练习提醒</value>
+  </data>
+  <data name="SettingsPracticeReminderHourLabel" xml:space="preserve">
+    <value>提醒时间</value>
+  </data>
+  <data name="SettingsPracticeReminderHourPickerTitle" xml:space="preserve">
+    <value>时间</value>
+  </data>
+  <data name="PracticeReminderTitle" xml:space="preserve">
+    <value>该练习了</value>
+  </data>
+  <data name="PracticeReminderBody" xml:space="preserve">
+    <value>花几分钟练习一下，保持你的进步。</value>
+  </data>
+  <data name="SettingsPrimaryConcernLabel" xml:space="preserve">
+    <value>主要困扰</value>
+  </data>
+  <data name="SettingsPrimaryConcernPickerTitle" xml:space="preserve">
+    <value>什么在困扰你？</value>
+  </data>
+  <data name="SettingsPrimaryConcernSection" xml:space="preserve">
+    <value>个性化</value>
+  </data>
+  <data name="SettingsQuestionnaireAutoAdvanceLabel" xml:space="preserve">
+    <value>自动进入下一题</value>
+  </data>
+  <data name="SettingsApplyButton" xml:space="preserve">
+    <value>应用</value>
+  </data>
+  <data name="SettingsPickerColors" xml:space="preserve">
+    <value>颜色</value>
+  </data>
+  <data name="SettingsPickerShapes" xml:space="preserve">
+    <value>形状</value>
+  </data>
+  <data name="SettingsPickerSizes" xml:space="preserve">
+    <value>大小</value>
+  </data>
+  <data name="SettingsPickerLanguages" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="SettingsAppliedTitle" xml:space="preserve">
+    <value>提示</value>
+  </data>
+  <data name="SettingsAppliedMessage" xml:space="preserve">
+    <value>设置已应用</value>
+  </data>
+  <data name="SettingsFormHelper" xml:space="preserve">
+    <value>卡片和输入框的圆角</value>
+  </data>
+  <data name="SettingsColorHelper" xml:space="preserve">
+    <value>按钮和强调色的主色</value>
+  </data>
+  <data name="SettingsReplayOnboarding" xml:space="preserve">
+    <value>重新查看引导</value>
+  </data>
+  <data name="TechniqueTheory" xml:space="preserve">
+    <value>理论</value>
+  </data>
+  <data name="TechniqueAlgorithm" xml:space="preserve">
+    <value>步骤</value>
+  </data>
+  <data name="TechniqueFinish" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="TechniqueTitle" xml:space="preserve">
+    <value>技巧</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>发送</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="DescriptionLabel" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>正在保存…</value>
+  </data>
+  <data name="DesignerLoadError" xml:space="preserve">
+    <value>无法加载技巧</value>
+  </data>
+  <data name="DesignerSaveError" xml:space="preserve">
+    <value>无法保存技巧</value>
+  </data>
+  <data name="ThemeLabel" xml:space="preserve">
+    <value>主题</value>
+  </data>
+  <data name="AuthorLabel" xml:space="preserve">
+    <value>作者</value>
+  </data>
+  <data name="MessageLabel" xml:space="preserve">
+    <value>消息</value>
+  </data>
+  <data name="FormLabel" xml:space="preserve">
+    <value>你的笔记</value>
+  </data>
+  <data name="ActionsListLabel" xml:space="preserve">
+    <value>行动清单</value>
+  </data>
+  <data name="PracticeHomeTitle" xml:space="preserve">
+    <value>练习</value>
+  </data>
+  <data name="PracticeMyTechniques" xml:space="preserve">
+    <value>我的技巧</value>
+  </data>
+  <data name="PracticeCatalog" xml:space="preserve">
+    <value>练习目录</value>
+  </data>
+  <data name="PracticeCatalogHint" xml:space="preserve">
+    <value>选择一个技巧或创建自己的技巧</value>
+  </data>
+  <data name="PracticeCreate" xml:space="preserve">
+    <value>创建</value>
+  </data>
+  <data name="PracticeTechniquesList" xml:space="preserve">
+    <value>技巧列表</value>
+  </data>
+  <data name="PracticeInitError" xml:space="preserve">
+    <value>初始化失败</value>
+  </data>
+  <data name="PracticeLoadMoreError" xml:space="preserve">
+    <value>无法加载更多技巧</value>
+  </data>
+  <data name="PracticeLoadingText" xml:space="preserve">
+    <value>正在加载练习</value>
+  </data>
+  <data name="PracticeLoadingMoreText" xml:space="preserve">
+    <value>正在加载…</value>
+  </data>
+  <data name="PracticeDesignTitle" xml:space="preserve">
+    <value>创建技巧</value>
+  </data>
+  <data name="PracticeConstructor" xml:space="preserve">
+    <value>构建器</value>
+  </data>
+  <data name="PracticeCustomTechnique" xml:space="preserve">
+    <value>自定义技巧</value>
+  </data>
+  <data name="PracticeDeleteConfirm" xml:space="preserve">
+    <value>确定要删除你的技巧吗？</value>
+  </data>
+  <data name="ReviewTitle" xml:space="preserve">
+    <value>反馈</value>
+  </data>
+  <data name="ReviewPage" xml:space="preserve">
+    <value>评价</value>
+  </data>
+  <data name="ReviewExplanationHeader" xml:space="preserve">
+    <value>使用方式</value>
+  </data>
+  <data name="ReviewExplanation" xml:space="preserve">
+    <value>你可以报告问题或提出改进应用的建议。支持团队会收到你的消息。</value>
+  </data>
+  <data name="ReviewExplanationShare" xml:space="preserve">
+    <value>描述问题或想法，并选择发送方式：电子邮件、聊天软件或笔记。应用不会自行向开发者发送任何内容。</value>
+  </data>
+  <data name="ReviewShareButton" xml:space="preserve">
+    <value>分享</value>
+  </data>
+  <data name="ReviewMessagePlaceholder" xml:space="preserve">
+    <value>描述问题或想法…</value>
+  </data>
+  <data name="ReviewMessageRequired" xml:space="preserve">
+    <value>请先输入消息再发送</value>
+  </data>
+  <data name="ReviewSendSuccessTitle" xml:space="preserve">
+    <value>谢谢</value>
+  </data>
+  <data name="ReviewSendSuccessMessage" xml:space="preserve">
+    <value>你的消息已发送</value>
+  </data>
+  <data name="ReviewEmailSubject" xml:space="preserve">
+    <value>Psychology App 反馈</value>
+  </data>
+  <data name="ReviewSmsRecipientMissing" xml:space="preserve">
+    <value>未设置短信收件人</value>
+  </data>
+  <data name="ReviewSmsNotSupported" xml:space="preserve">
+    <value>此设备不支持短信</value>
+  </data>
+  <data name="ReviewSmsFailed" xml:space="preserve">
+    <value>无法打开短信应用</value>
+  </data>
+  <data name="ReviewEmailNotSupported" xml:space="preserve">
+    <value>此设备不支持电子邮件</value>
+  </data>
+  <data name="ReviewEmailFailed" xml:space="preserve">
+    <value>无法打开邮件应用</value>
+  </data>
+  <data name="ReviewShareTitle" xml:space="preserve">
+    <value>应用反馈</value>
+  </data>
+  <data name="ReviewShareFailed" xml:space="preserve">
+    <value>无法打开分享菜单</value>
+  </data>
+  <data name="DonateTitle" xml:space="preserve">
+    <value>捐助</value>
+  </data>
+  <data name="DonateMoreInfo" xml:space="preserve">
+    <value>了解更多</value>
+  </data>
+  <data name="DonateBody" xml:space="preserve">
+    <value>本项目完全依靠捐助运行。我们不展示广告，也不出售付费服务。捐助用于支持开发者和设计师。</value>
+  </data>
+  <data name="DonateButton" xml:space="preserve">
+    <value>捐助</value>
+  </data>
+  <data name="DonateOpenFailed" xml:space="preserve">
+    <value>无法打开捐助页面</value>
+  </data>
+  <data name="InfoAboutBody" xml:space="preserve">
+    <value>本应用汇集了简单而有效的技巧，帮助你应对压力、恐惧、怀疑、侵入性想法、限制性信念和破坏性模式。这些方法广为人知并经过时间检验，其中一些来自神经语言程序学（NLP）或 Zivorad Slavinski 的研究。这些工具可以帮你节省时间、精力和金钱，不需要深厚的心理学知识。祝你练习顺利！</value>
+  </data>
+  <data name="CleanerPrayersPage" xml:space="preserve">
+    <value>祈祷</value>
+  </data>
+  <data name="CleanerPrayerCollection" xml:space="preserve">
+    <value>祈祷文集</value>
+  </data>
+  <data name="CleanerLoad" xml:space="preserve">
+    <value>加载</value>
+  </data>
+  <data name="CleanerSearchingPrayers" xml:space="preserve">
+    <value>正在加载祈祷文</value>
+  </data>
+  <data name="CleanerPreparingAudio" xml:space="preserve">
+    <value>正在准备音频…</value>
+  </data>
+  <data name="CleanerPlaybackError" xml:space="preserve">
+    <value>无法播放音频。请检查网络连接。</value>
+  </data>
+  <data name="CleanerOfflineBadge" xml:space="preserve">
+    <value>可离线收听</value>
+  </data>
+  <data name="CleanerPlayNext" xml:space="preserve">
+    <value>下一首</value>
+  </data>
+  <data name="CleanerReplay" xml:space="preserve">
+    <value>重播</value>
+  </data>
+  <data name="CleanerMoreInfoBody" xml:space="preserve">
+    <value>适合早晨、晚上和静修时收听的祈祷音频。首次收听需要联网，之后可离线播放。</value>
+  </data>
+  <data name="CleanerCollectionSubtitle" xml:space="preserve">
+    <value>选择一篇祈祷文，点击卡片开始收听。</value>
+  </data>
+  <data name="CleanerCategoryAll" xml:space="preserve">
+    <value>全部</value>
+  </data>
+  <data name="CleanerCategoryMorning" xml:space="preserve">
+    <value>早晨</value>
+  </data>
+  <data name="CleanerCategoryEvening" xml:space="preserve">
+    <value>晚上</value>
+  </data>
+  <data name="CleanerCategoryPenitential" xml:space="preserve">
+    <value>忏悔</value>
+  </data>
+  <data name="CleanerCategoryCore" xml:space="preserve">
+    <value>基本祈祷</value>
+  </data>
+  <data name="CleanerPrayerMain" xml:space="preserve">
+    <value>主要祈祷</value>
+  </data>
+  <data name="CleanerPsalm50" xml:space="preserve">
+    <value>诗篇 50</value>
+  </data>
+  <data name="CleanerPsalm50Desc" xml:space="preserve">
+    <value>忏悔诗篇；传统上每天诵读三次</value>
+  </data>
+  <data name="CleanerPsalm90" xml:space="preserve">
+    <value>诗篇 90</value>
+  </data>
+  <data name="CleanerPsalm90Desc" xml:space="preserve">
+    <value>祈求上帝保护和帮助的祷文</value>
+  </data>
+  <data name="CleanerOurFather" xml:space="preserve">
+    <value>主祷文</value>
+  </data>
+  <data name="CleanerOurFatherDesc" xml:space="preserve">
+    <value>基督教的核心祷文</value>
+  </data>
+  <data name="CleanerJesusPrayer" xml:space="preserve">
+    <value>耶稣祷文</value>
+  </data>
+  <data name="CleanerJesusPrayerDesc" xml:space="preserve">
+    <value>向基督诵念的简短心祷</value>
+  </data>
+  <data name="CleanerHeavenlyKing" xml:space="preserve">
+    <value>天上的君王</value>
+  </data>
+  <data name="CleanerHeavenlyKingDesc" xml:space="preserve">
+    <value>晨祷的开篇祷文</value>
+  </data>
+  <data name="CleanerMorningPrayer" xml:space="preserve">
+    <value>晨祷</value>
+  </data>
+  <data name="CleanerMorningPrayerDesc" xml:space="preserve">
+    <value>一组简短的晨间祷文</value>
+  </data>
+  <data name="CleanerSymbolOfFaith" xml:space="preserve">
+    <value>信经</value>
+  </data>
+  <data name="CleanerSymbolOfFaithDesc" xml:space="preserve">
+    <value>东正教信仰的简要宣认</value>
+  </data>
+  <data name="CleanerEveningPrayer" xml:space="preserve">
+    <value>晚祷</value>
+  </data>
+  <data name="CleanerEveningPrayerDesc" xml:space="preserve">
+    <value>一组简短的晚间祷文</value>
+  </data>
+  <data name="CleanerTrisagion" xml:space="preserve">
+    <value>三圣颂</value>
+  </data>
+  <data name="CleanerTrisagionDesc" xml:space="preserve">
+    <value>“圣哉上帝，圣哉大能者……”</value>
+  </data>
+  <data name="CleanerVirginMary" xml:space="preserve">
+    <value>欢喜吧，童贞女</value>
+  </data>
+  <data name="CleanerVirginMaryDesc" xml:space="preserve">
+    <value>献给至圣诞神女的祷文</value>
+  </data>
+  <data name="CleanerHolySpirit" xml:space="preserve">
+    <value>向圣灵祈祷</value>
+  </data>
+  <data name="CleanerHolySpiritDesc" xml:space="preserve">
+    <value>祈求圣灵恩赐与坚固的祷文</value>
+  </data>
+  <data name="CleanerDoxology" xml:space="preserve">
+    <value>荣颂</value>
+  </data>
+  <data name="CleanerDoxologyDesc" xml:space="preserve">
+    <value>献给上帝的大荣颂</value>
+  </data>
+  <data name="CleanerSearchPlaceholder" xml:space="preserve">
+    <value>搜索祈祷文</value>
+  </data>
+  <data name="CleanerNoPrayersFound" xml:space="preserve">
+    <value>未找到祈祷文</value>
+  </data>
+  <data name="CleanerCatalogEmpty" xml:space="preserve">
+    <value>目录中还没有祈祷文</value>
+  </data>
+  <data name="CleanerNowPlaying" xml:space="preserve">
+    <value>正在播放</value>
+  </data>
+  <data name="DesignerNamePlaceholder" xml:space="preserve">
+    <value>Slavinski 旋转技巧</value>
+  </data>
+  <data name="DesignerDescriptionPlaceholder" xml:space="preserve">
+    <value>即时化解的方法…</value>
+  </data>
+  <data name="DesignerThemePlaceholder" xml:space="preserve">
+    <value>艰难时刻</value>
+  </data>
+  <data name="DesignerAuthorPlaceholder" xml:space="preserve">
+    <value>Zivorad Slavinski</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="Repeat" xml:space="preserve">
+    <value>重复</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="ConcernLabel" xml:space="preserve">
+    <value>困扰</value>
+  </data>
+  <data name="FirstPolarityLabel" xml:space="preserve">
+    <value>第一极</value>
+  </data>
+  <data name="SecondPolarityLabel" xml:space="preserve">
+    <value>第二极</value>
+  </data>
+  <data name="TechniqueStepBack" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="TechniqueStepNext" xml:space="preserve">
+    <value>下一步</value>
+  </data>
+  <data name="ProverbLabel" xml:space="preserve">
+    <value>谚语</value>
+  </data>
+  <data name="QuoteAddFavoriteHint" xml:space="preserve">
+    <value>加入收藏</value>
+  </data>
+  <data name="QuoteCopyHint" xml:space="preserve">
+    <value>复制名言</value>
+  </data>
+  <data name="QuoteShareHint" xml:space="preserve">
+    <value>分享名言</value>
+  </data>
+  <data name="PolarityNegativePlaceholder" xml:space="preserve">
+    <value>神经症</value>
+  </data>
+  <data name="PolarityPositivePlaceholder" xml:space="preserve">
+    <value>平静</value>
+  </data>
+  <data name="StartupErrorTitle" xml:space="preserve">
+    <value>启动错误</value>
+  </data>
+  <data name="StartupErrorMessage" xml:space="preserve">
+    <value>应用启动失败，请重新打开。</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="UnexpectedErrorMessage" xml:space="preserve">
+    <value>发生了意外错误，请重试。</value>
+  </data>
+  <data name="TestsResultSaveFailedMessage" xml:space="preserve">
+    <value>测试结果保存失败，请重试。</value>
+  </data>
+  <data name="TestsResultNavigationFailedMessage" xml:space="preserve">
+    <value>结果已保存，但无法打开结果页面。请再次点击“完成”。</value>
+  </data>
+  <data name="TechniqueNotFound" xml:space="preserve">
+    <value>未找到该技巧。</value>
+  </data>
+  <data name="QuoteNotFound" xml:space="preserve">
+    <value>未找到该名言。</value>
+  </data>
+  <data name="PracticeEmptyTitle" xml:space="preserve">
+    <value>还没有技巧</value>
+  </data>
+  <data name="PracticeEmptyBody" xml:space="preserve">
+    <value>点击“创建”添加你的第一个技巧</value>
+  </data>
+  <data name="TestsEmptyTitle" xml:space="preserve">
+    <value>测试暂不可用</value>
+  </data>
+  <data name="TestsEmptyBody" xml:space="preserve">
+    <value>点击“刷新”重新加载列表</value>
+  </data>
+  <data name="TestsEmptyRefresh" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="TestsLoadingText" xml:space="preserve">
+    <value>正在加载测试</value>
+  </data>
+  <data name="QuotesEmptyTitle" xml:space="preserve">
+    <value>未找到名言</value>
+  </data>
+  <data name="QuotesEmptyBody" xml:space="preserve">
+    <value>点击“刷新”重新加载名言</value>
+  </data>
+  <data name="QuotesRefreshButton" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="ProfileQuotesEmpty" xml:space="preserve">
+    <value>还没有收藏的名言</value>
+  </data>
+  <data name="QuotesFavoritesEmptyBody" xml:space="preserve">
+    <value>点击名言上的爱心即可添加到这里。</value>
+  </data>
+  <data name="ProfileTestsCompleted" xml:space="preserve">
+    <value>已完成测试</value>
+  </data>
+  <data name="ProfileStreakDays" xml:space="preserve">
+    <value>连续天数</value>
+  </data>
+  <data name="ProfileStreakHint" xml:space="preserve">
+    <value>统计完成练习的天数</value>
+  </data>
+  <data name="TodayForYou" xml:space="preserve">
+    <value>今日推荐</value>
+  </data>
+  <data name="TodayRecommended" xml:space="preserve">
+    <value>推荐练习</value>
+  </data>
+  <data name="TodayStartPractice" xml:space="preserve">
+    <value>开始</value>
+  </data>
+  <data name="ComebackBanner" xml:space="preserve">
+    <value>欢迎回来——从一个简短的练习开始吧</value>
+  </data>
+  <data name="OnboardingRemindersLabel" xml:space="preserve">
+    <value>提醒我练习</value>
+  </data>
+  <data name="OnboardingReminderHourLabel" xml:space="preserve">
+    <value>提醒时间</value>
+  </data>
+  <data name="TodayMoodQuestion" xml:space="preserve">
+    <value>你感觉怎么样？</value>
+  </data>
+  <data name="TodayMoodSaved" xml:space="preserve">
+    <value>心情已保存</value>
+  </data>
+  <data name="MoodHistoryTitle" xml:space="preserve">
+    <value>最近</value>
+  </data>
+  <data name="ProfileMoodTrendTitle" xml:space="preserve">
+    <value>心情</value>
+  </data>
+  <data name="ProfileMoodCheckInTitle" xml:space="preserve">
+    <value>你今天感觉怎么样？</value>
+  </data>
+  <data name="ProfileWeeklyInsightTitle" xml:space="preserve">
+    <value>本周</value>
+  </data>
+  <data name="JournalTitle" xml:space="preserve">
+    <value>日记</value>
+  </data>
+  <data name="OpenJournalLabel" xml:space="preserve">
+    <value>你感觉怎么样？</value>
+  </data>
+  <data name="JournalCardSubtitle" xml:space="preserve">
+    <value>心情、笔记和趋势</value>
+  </data>
+  <data name="JournalTodayTitle" xml:space="preserve">
+    <value>今天</value>
+  </data>
+  <data name="JournalEntriesTitle" xml:space="preserve">
+    <value>记录</value>
+  </data>
+  <data name="JournalWeekEmpty" xml:space="preserve">
+    <value>本周记录还不多——记一下心情吧</value>
+  </data>
+  <data name="JournalNotePlaceholder" xml:space="preserve">
+    <value>是什么影响了你？（可选）</value>
+  </data>
+  <data name="JournalNoteSectionTitle" xml:space="preserve">
+    <value>笔记</value>
+  </data>
+  <data name="JournalAddNoteLabel" xml:space="preserve">
+    <value>添加笔记</value>
+  </data>
+  <data name="JournalShowHintsLabel" xml:space="preserve">
+    <value>提示</value>
+  </data>
+  <data name="JournalHideHintsLabel" xml:space="preserve">
+    <value>隐藏提示</value>
+  </data>
+  <data name="JournalHowNowQuestion" xml:space="preserve">
+    <value>你现在怎么样？</value>
+  </data>
+  <data name="JournalMoreMenuLabel" xml:space="preserve">
+    <value>更多</value>
+  </data>
+  <data name="JournalSlotPickerTitle" xml:space="preserve">
+    <value>记录时间</value>
+  </data>
+  <data name="JournalNoteSaveHint" xml:space="preserve">
+    <value>心情会立即保存。笔记请使用下方按钮保存。</value>
+  </data>
+  <data name="JournalSaveLabel" xml:space="preserve">
+    <value>保存笔记</value>
+  </data>
+  <data name="JournalDeleteLabel" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="JournalDeleteConfirmTitle" xml:space="preserve">
+    <value>删除这条记录？</value>
+  </data>
+  <data name="JournalDeleteConfirmMessage" xml:space="preserve">
+    <value>这一天的心情和笔记将被删除。</value>
+  </data>
+  <data name="JournalDeleteConfirmAccept" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="JournalDeleteConfirmCancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="JournalNoNoteCaption" xml:space="preserve">
+    <value>无笔记</value>
+  </data>
+  <data name="JournalEditTodayHint" xml:space="preserve">
+    <value>编辑今天</value>
+  </data>
+  <data name="JournalPickMoodHint" xml:space="preserve">
+    <value>请在上方选择心情</value>
+  </data>
+  <data name="JournalMoodStatsTitle" xml:space="preserve">
+    <value>概览</value>
+  </data>
+  <data name="JournalMoodStreakLabel" xml:space="preserve">
+    <value>连续天数</value>
+  </data>
+  <data name="JournalDynamicsTitle" xml:space="preserve">
+    <value>趋势</value>
+  </data>
+  <data name="JournalOverviewInsightEmpty" xml:space="preserve">
+    <value>记录还不多——这周记一下心情吧</value>
+  </data>
+  <data name="ProfileMoodCheckInBanner" xml:space="preserve">
+    <value>今天还没有记录心情</value>
+  </data>
+  <data name="JournalTryQuietQuote" xml:space="preserve">
+    <value>一句短短的名言也许有帮助</value>
+  </data>
+  <data name="PracticeOpenJournalRow" xml:space="preserve">
+    <value>添加日记</value>
+  </data>
+  <data name="JournalQuestionsSectionTitle" xml:space="preserve">
+    <value>问题</value>
+  </data>
+  <data name="JournalFactorsSectionTitle" xml:space="preserve">
+    <value>当天的因素</value>
+  </data>
+  <data name="JournalWeekNavPrev" xml:space="preserve">
+    <value>上一周</value>
+  </data>
+  <data name="JournalWeekNavNext" xml:space="preserve">
+    <value>下一周</value>
+  </data>
+  <data name="JournalMonthNavPrev" xml:space="preserve">
+    <value>上个月</value>
+  </data>
+  <data name="JournalMonthNavNext" xml:space="preserve">
+    <value>下个月</value>
+  </data>
+  <data name="JournalFilter7Days" xml:space="preserve">
+    <value>7 天</value>
+  </data>
+  <data name="JournalFilter30Days" xml:space="preserve">
+    <value>30 天</value>
+  </data>
+  <data name="JournalFilter90Days" xml:space="preserve">
+    <value>90 天</value>
+  </data>
+  <data name="JournalYesterdayTitle" xml:space="preserve">
+    <value>昨天</value>
+  </data>
+  <data name="JournalPastDayCheckInTitle" xml:space="preserve">
+    <value>那天你的心情怎么样？</value>
+  </data>
+  <data name="JournalPromptHelped" xml:space="preserve">
+    <value>什么有帮助？</value>
+  </data>
+  <data name="JournalPromptBlocked" xml:space="preserve">
+    <value>什么阻碍了你？</value>
+  </data>
+  <data name="JournalPromptGrateful" xml:space="preserve">
+    <value>感恩什么？</value>
+  </data>
+  <data name="JournalPromptNext" xml:space="preserve">
+    <value>接下来做什么？</value>
+  </data>
+  <data name="JournalSearchPlaceholder" xml:space="preserve">
+    <value>搜索笔记</value>
+  </data>
+  <data name="JournalSearchEmpty" xml:space="preserve">
+    <value>没有匹配的笔记</value>
+  </data>
+  <data name="JournalTimelineEmpty" xml:space="preserve">
+    <value>还没有记录——在日记中记下心情，开始连续记录吧</value>
+  </data>
+  <data name="JournalTryShortPractice" xml:space="preserve">
+    <value>一个简短的练习也许有帮助</value>
+  </data>
+  <data name="JournalPromptBlockedShort" xml:space="preserve">
+    <value>阻碍</value>
+  </data>
+  <data name="JournalPromptGratefulShort" xml:space="preserve">
+    <value>感恩</value>
+  </data>
+  <data name="JournalFactorSleep" xml:space="preserve">
+    <value>睡眠: </value>
+  </data>
+  <data name="JournalFactorPeople" xml:space="preserve">
+    <value>人际: </value>
+  </data>
+  <data name="JournalFactorPractice" xml:space="preserve">
+    <value>练习: </value>
+  </data>
+  <data name="JournalFactorWalk" xml:space="preserve">
+    <value>散步: </value>
+  </data>
+  <data name="JournalFactorWork" xml:space="preserve">
+    <value>工作: </value>
+  </data>
+  <data name="JournalFactorSport" xml:space="preserve">
+    <value>运动: </value>
+  </data>
+  <data name="JournalFactorRest" xml:space="preserve">
+    <value>休息: </value>
+  </data>
+  <data name="JournalFactorStress" xml:space="preserve">
+    <value>压力: </value>
+  </data>
+  <data name="JournalFactorHome" xml:space="preserve">
+    <value>家庭: </value>
+  </data>
+  <data name="JournalFactorSleepLabel" xml:space="preserve">
+    <value>睡眠</value>
+  </data>
+  <data name="JournalFactorPeopleLabel" xml:space="preserve">
+    <value>人际</value>
+  </data>
+  <data name="JournalFactorPracticeLabel" xml:space="preserve">
+    <value>练习</value>
+  </data>
+  <data name="JournalFactorWalkLabel" xml:space="preserve">
+    <value>散步</value>
+  </data>
+  <data name="JournalFactorWorkLabel" xml:space="preserve">
+    <value>工作</value>
+  </data>
+  <data name="JournalFactorSportLabel" xml:space="preserve">
+    <value>运动</value>
+  </data>
+  <data name="JournalFactorRestLabel" xml:space="preserve">
+    <value>休息</value>
+  </data>
+  <data name="JournalFactorStressLabel" xml:space="preserve">
+    <value>压力</value>
+  </data>
+  <data name="JournalFactorHomeLabel" xml:space="preserve">
+    <value>家庭</value>
+  </data>
+  <data name="JournalYearNavPrev" xml:space="preserve">
+    <value>上一年</value>
+  </data>
+  <data name="JournalYearNavNext" xml:space="preserve">
+    <value>下一年</value>
+  </data>
+  <data name="JournalYearHeatmapTitle" xml:space="preserve">
+    <value>像素里的一年</value>
+  </data>
+  <data name="JournalCalendarScaleWeek" xml:space="preserve">
+    <value>周</value>
+  </data>
+  <data name="JournalCalendarScaleMonth" xml:space="preserve">
+    <value>月</value>
+  </data>
+  <data name="JournalCalendarScaleYear" xml:space="preserve">
+    <value>年</value>
+  </data>
+  <data name="JournalCalendarSectionTitle" xml:space="preserve">
+    <value>日历</value>
+  </data>
+  <data name="JournalStatsSectionTitle" xml:space="preserve">
+    <value>小结</value>
+  </data>
+  <data name="JournalStreakMetricLabel" xml:space="preserve">
+    <value>连续</value>
+  </data>
+  <data name="JournalPeriodNavPrev" xml:space="preserve">
+    <value>上一段</value>
+  </data>
+  <data name="JournalPeriodNavNext" xml:space="preserve">
+    <value>下一段</value>
+  </data>
+  <data name="JournalSlotMorning" xml:space="preserve">
+    <value>早上</value>
+  </data>
+  <data name="JournalSlotEvening" xml:space="preserve">
+    <value>晚上</value>
+  </data>
+  <data name="JournalExportLabel" xml:space="preserve">
+    <value>导出 CSV</value>
+  </data>
+  <data name="JournalExportTitle" xml:space="preserve">
+    <value>心情日记</value>
+  </data>
+  <data name="JournalExportEmpty" xml:space="preserve">
+    <value>没有可导出的记录</value>
+  </data>
+  <data name="JournalExportFailed" xml:space="preserve">
+    <value>无法生成文件。你的记录是安全的，请重试。</value>
+  </data>
+  <data name="JournalSlotFullHint" xml:space="preserve">
+    <value>这一天已经有两条记录——请选择早上或晚上</value>
+  </data>
+  <data name="MoodNotesEmpty" xml:space="preserve">
+    <value>还没有心情记录——在上方添加一条吧</value>
+  </data>
+  <data name="JournalNeedMoodToSave" xml:space="preserve">
+    <value>请先选择心情</value>
+  </data>
+  <data name="WeekPracticesLabel" xml:space="preserve">
+    <value>练习</value>
+  </data>
+  <data name="WeekMoodCheckInsLabel" xml:space="preserve">
+    <value>心情记录</value>
+  </data>
+  <data name="WeekAvgMoodLabel" xml:space="preserve">
+    <value>平均心情</value>
+  </data>
+  <data name="WeekRiskLabel" xml:space="preserve">
+    <value>风险</value>
+  </data>
+  <data name="WeekStreakLabel" xml:space="preserve">
+    <value>连续</value>
+  </data>
+  <data name="ProfileMoodTrendHint" xml:space="preserve">
+    <value>在这里记录心情，就能看到趋势</value>
+  </data>
+  <data name="ChartFirstMeasurement" xml:space="preserve">
+    <value>第一次测量</value>
+  </data>
+  <data name="PracticeReflectionQuestion" xml:space="preserve">
+    <value>你现在感觉怎么样？</value>
+  </data>
+  <data name="PracticeReflectionNotePlaceholder" xml:space="preserve">
+    <value>简短笔记（可选）</value>
+  </data>
+  <data name="PracticePreSudsLabel" xml:space="preserve">
+    <value>练习前强度（0–10）</value>
+  </data>
+  <data name="PracticePostSudsLabel" xml:space="preserve">
+    <value>练习后强度（0–10）</value>
+  </data>
+  <data name="PracticeSudsSectionTitle" xml:space="preserve">
+    <value>强度有什么变化？</value>
+  </data>
+  <data name="PracticeReflectionSectionTitle" xml:space="preserve">
+    <value>心情</value>
+  </data>
+  <data name="PracticeLastNoteTitle" xml:space="preserve">
+    <value>上次你注意到的</value>
+  </data>
+  <data name="PracticeCompletedTitle" xml:space="preserve">
+    <value>完成了！</value>
+  </data>
+  <data name="PracticeCrisis" xml:space="preserve">
+    <value>你写的内容听起来非常沉重。你并不孤单：现在就可以从这里获得帮助。</value>
+  </data>
+  <data name="ProfileMoodNotesTitle" xml:space="preserve">
+    <value>心情笔记</value>
+  </data>
+  <data name="PracticeGoHomeButton" xml:space="preserve">
+    <value>回到首页</value>
+  </data>
+  <data name="PracticeMoreButton" xml:space="preserve">
+    <value>再练一个</value>
+  </data>
+  <data name="PracticeNextCaption" xml:space="preserve">
+    <value>下一个练习</value>
+  </data>
+  <data name="PracticeNextReason" xml:space="preserve">
+    <value>保持节奏</value>
+  </data>
+  <data name="PracticeHistoryTitle" xml:space="preserve">
+    <value>最近的练习</value>
+  </data>
+  <data name="PracticeHistoryEmpty" xml:space="preserve">
+    <value>还没有完成的练习</value>
+  </data>
+  <data name="QuoteCopied" xml:space="preserve">
+    <value>已复制</value>
+  </data>
+  <data name="TestHistoryTitle" xml:space="preserve">
+    <value>结果记录</value>
+  </data>
+  <data name="TestHistoryEmpty" xml:space="preserve">
+    <value>还没有保存的结果</value>
+  </data>
+  <data name="TestOpenHistory" xml:space="preserve">
+    <value>记录</value>
+  </data>
+  <data name="TechniqueContinueBadge" xml:space="preserve">
+    <value>继续</value>
+  </data>
+  <data name="TechniqueNotTriedYet" xml:space="preserve">
+    <value>尚未尝试</value>
+  </data>
+  <data name="TestNeverTakenYet" xml:space="preserve">
+    <value>尚未做过</value>
+  </data>
+  <data name="TestTryTechnique" xml:space="preserve">
+    <value>试试一个技巧</value>
+  </data>
+  <data name="TestResultImproved" xml:space="preserve">
+    <value>比上次好</value>
+  </data>
+  <data name="TestResultWorse" xml:space="preserve">
+    <value>比上次差</value>
+  </data>
+  <data name="TestResultSame" xml:space="preserve">
+    <value>和上次一样</value>
+  </data>
+  <data name="OnboardingAppName" xml:space="preserve">
+    <value>Psychology App</value>
+  </data>
+  <data name="OnboardingAppTagline" xml:space="preserve">
+    <value>平静触手可及——即使离线</value>
+  </data>
+  <data name="OnboardingWelcomeTitle" xml:space="preserve">
+    <value>属于你的空间</value>
+  </data>
+  <data name="OnboardingWelcomeBody" xml:space="preserve">
+    <value>在这里，你可以放松呼吸、更了解自己、找到支持——按照你自己的节奏。</value>
+  </data>
+  <data name="OnboardingValueOffline" xml:space="preserve">
+    <value>离线可用</value>
+  </data>
+  <data name="OnboardingValueNoJudgment" xml:space="preserve">
+    <value>不评判</value>
+  </data>
+  <data name="OnboardingValueOnDevice" xml:space="preserve">
+    <value>数据在你的设备上</value>
+  </data>
+  <data name="OnboardingBack" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="OnboardingOverviewTitle" xml:space="preserve">
+    <value>支持都在一个地方</value>
+  </data>
+  <data name="OnboardingOverviewSubtitle" xml:space="preserve">
+    <value>练习、AI 聊天、测试和日记在屏幕底部。文章、课程、身体、祈祷和名言在菜单 ☰ 中</value>
+  </data>
+  <data name="OnboardingOverviewLead" xml:space="preserve">
+    <value>常用功能在标签栏，其余在菜单中</value>
+  </data>
+  <data name="OnboardingModulePracticeHint" xml:space="preserve">
+    <value>几分钟内让神经系统平静下来</value>
+  </data>
+  <data name="OnboardingModuleTestsHint" xml:space="preserve">
+    <value>通过问卷和吕舍尔色彩测试了解自己</value>
+  </data>
+  <data name="OnboardingConcernTitle" xml:space="preserve">
+    <value>什么在困扰你？</value>
+  </data>
+  <data name="OnboardingConcernSubtitle" xml:space="preserve">
+    <value>我们会为你挑选第一个练习</value>
+  </data>
+  <data name="OnboardingConcernFooterHint" xml:space="preserve">
+    <value>点击一个选项继续</value>
+  </data>
+  <data name="OnboardingConcernAnxiety" xml:space="preserve">
+    <value>焦虑</value>
+  </data>
+  <data name="OnboardingConcernBody" xml:space="preserve">
+    <value>身体 / 症状</value>
+  </data>
+  <data name="OnboardingConcernMood" xml:space="preserve">
+    <value>心情</value>
+  </data>
+  <data name="OnboardingConcernExplore" xml:space="preserve">
+    <value>随便看看</value>
+  </data>
+  <data name="OnboardingConcernAnxietyHint" xml:space="preserve">
+    <value>当思绪挥之不去时</value>
+  </data>
+  <data name="OnboardingConcernBodyHint" xml:space="preserve">
+    <value>当身体发出压力信号时</value>
+  </data>
+  <data name="OnboardingConcernMoodHint" xml:space="preserve">
+    <value>当心里感到沉重时</value>
+  </data>
+  <data name="OnboardingConcernExploreHint" xml:space="preserve">
+    <value>我只是想看看</value>
+  </data>
+  <data name="OnboardingFinishTitle" xml:space="preserve">
+    <value>都准备好了——开始吧？</value>
+  </data>
+  <data name="OnboardingRecommendedCaption" xml:space="preserve">
+    <value>推荐练习</value>
+  </data>
+  <data name="OnboardingDisclaimerTitle" xml:space="preserve">
+    <value>重要提示</value>
+  </data>
+  <data name="OnboardingDisclaimerBody" xml:space="preserve">
+    <value>本应用不能代替专业帮助。情况严重时，请寻求专业人士的帮助。</value>
+  </data>
+  <data name="OnboardingStart" xml:space="preserve">
+    <value>现在试试</value>
+  </data>
+  <data name="OnboardingSkip" xml:space="preserve">
+    <value>跳过</value>
+  </data>
+  <data name="OnboardingNext" xml:space="preserve">
+    <value>下一步</value>
+  </data>
+  <data name="QuoteShareFooter" xml:space="preserve">
+    <value>Psychology App</value>
+  </data>
+  <data name="QuotesSearchError" xml:space="preserve">
+    <value>名言搜索失败</value>
+  </data>
+  <data name="LoadFailed" xml:space="preserve">
+    <value>加载失败</value>
+  </data>
+  <data name="RetryQuestion" xml:space="preserve">
+    <value>要重试吗？</value>
+  </data>
+  <data name="LoadError" xml:space="preserve">
+    <value>加载失败</value>
+  </data>
+  <data name="ProfileTitle" xml:space="preserve">
+    <value>个人资料</value>
+  </data>
+  <data name="ProfileLoadingText" xml:space="preserve">
+    <value>正在加载个人资料</value>
+  </data>
+  <data name="ProfileUserLabel" xml:space="preserve">
+    <value>用户</value>
+  </data>
+  <data name="ProfileTechniquesCompleted" xml:space="preserve">
+    <value>已完成练习</value>
+  </data>
+  <data name="ProfileFollowers" xml:space="preserve">
+    <value>关注者</value>
+  </data>
+  <data name="ProfileRecommended" xml:space="preserve">
+    <value>推荐</value>
+  </data>
+  <data name="ProfileBestQuotes" xml:space="preserve">
+    <value>收藏的名言</value>
+  </data>
+  <data name="ProfileQuotesSeeAll" xml:space="preserve">
+    <value>所有收藏的名言</value>
+  </data>
+  <data name="ProfileQuotesSeeAllSubtitle" xml:space="preserve">
+    <value>打开名言标签页</value>
+  </data>
+  <data name="QuotesFavoriteAdded" xml:space="preserve">
+    <value>已加入收藏</value>
+  </data>
+  <data name="QuotesFavoriteRemoved" xml:space="preserve">
+    <value>已从收藏中移除</value>
+  </data>
+  <data name="QuotesGoToTab" xml:space="preserve">
+    <value>前往名言</value>
+  </data>
+  <data name="QuotesFeedAll" xml:space="preserve">
+    <value>全部</value>
+  </data>
+  <data name="QuotesFeedFavorites" xml:space="preserve">
+    <value>收藏</value>
+  </data>
+  <data name="QuotesFeedForYou" xml:space="preserve">
+    <value>为你推荐</value>
+  </data>
+  <data name="QuotesThemeAll" xml:space="preserve">
+    <value>所有主题</value>
+  </data>
+  <data name="QuotesDailyTitle" xml:space="preserve">
+    <value>每日名言</value>
+  </data>
+  <data name="QuotesSearchPlaceholder" xml:space="preserve">
+    <value>搜索名言</value>
+  </data>
+  <data name="QuotesSearchEmptyTitle" xml:space="preserve">
+    <value>没有找到</value>
+  </data>
+  <data name="QuotesSearchEmptyBody" xml:space="preserve">
+    <value>换个关键词试试。</value>
+  </data>
+  <data name="QuotesShowAgain" xml:space="preserve">
+    <value>再次显示</value>
+  </data>
+  <data name="QuotesForYouHint" xml:space="preserve">
+    <value>根据你的主要困扰挑选</value>
+  </data>
+  <data name="QuotesForYouEmptyTitle" xml:space="preserve">
+    <value>还没有为你推荐的名言</value>
+  </data>
+  <data name="QuotesForYouEmptyBody" xml:space="preserve">
+    <value>我们会根据你的主要困扰挑选名言。请稍后再来，或切换到“全部”。</value>
+  </data>
+  <data name="SettingsQuoteRemindersLabel" xml:space="preserve">
+    <value>每日名言</value>
+  </data>
+  <data name="SettingsQuoteReminderHourLabel" xml:space="preserve">
+    <value>名言推送时间</value>
+  </data>
+  <data name="SettingsQuoteReminderHourPickerTitle" xml:space="preserve">
+    <value>时间</value>
+  </data>
+  <data name="SettingsMoodRemindersLabel" xml:space="preserve">
+    <value>提醒我记录心情</value>
+  </data>
+  <data name="SettingsMoodReminderHourLabel" xml:space="preserve">
+    <value>记录时间</value>
+  </data>
+  <data name="SettingsMoodReminderHourPickerTitle" xml:space="preserve">
+    <value>时间</value>
+  </data>
+  <data name="SettingsMoodReminderAuto" xml:space="preserve">
+    <value>我常用的时间</value>
+  </data>
+  <data name="SettingsChatRemindersLabel" xml:space="preserve">
+    <value>提醒我聊聊</value>
+  </data>
+  <data name="SettingsChatReminderHourLabel" xml:space="preserve">
+    <value>提醒时间</value>
+  </data>
+  <data name="SettingsChatReminderHourPickerTitle" xml:space="preserve">
+    <value>时间</value>
+  </data>
+  <data name="QuoteReminderTitle" xml:space="preserve">
+    <value>每日名言</value>
+  </data>
+  <data name="QuoteReminderBody" xml:space="preserve">
+    <value>打开应用，读读今天的一句话。</value>
+  </data>
+  <data name="QuoteThemeWisdom" xml:space="preserve">
+    <value>智慧</value>
+  </data>
+  <data name="QuoteThemeMotivation" xml:space="preserve">
+    <value>激励</value>
+  </data>
+  <data name="QuoteThemeResilience" xml:space="preserve">
+    <value>韧性</value>
+  </data>
+  <data name="QuoteThemeSelfAwareness" xml:space="preserve">
+    <value>自我认识</value>
+  </data>
+  <data name="QuoteThemeMindfulness" xml:space="preserve">
+    <value>正念</value>
+  </data>
+  <data name="QuoteThemeSelfEsteem" xml:space="preserve">
+    <value>自尊</value>
+  </data>
+  <data name="QuoteThemeHope" xml:space="preserve">
+    <value>希望</value>
+  </data>
+  <data name="QuoteThemeEmpathy" xml:space="preserve">
+    <value>同理心</value>
+  </data>
+  <data name="QuoteThemeHappiness" xml:space="preserve">
+    <value>幸福</value>
+  </data>
+  <data name="QuoteThemeHabits" xml:space="preserve">
+    <value>习惯</value>
+  </data>
+  <data name="QuoteThemeLove" xml:space="preserve">
+    <value>爱</value>
+  </data>
+  <data name="QuoteThemeRelationships" xml:space="preserve">
+    <value>人际关系</value>
+  </data>
+  <data name="QuoteThemeResponsibility" xml:space="preserve">
+    <value>责任</value>
+  </data>
+  <data name="QuoteThemePurpose" xml:space="preserve">
+    <value>意义</value>
+  </data>
+  <data name="QuoteThemeGrowth" xml:space="preserve">
+    <value>成长</value>
+  </data>
+  <data name="QuoteThemeHealing" xml:space="preserve">
+    <value>疗愈</value>
+  </data>
+  <data name="QuoteThemeSelfLove" xml:space="preserve">
+    <value>自爱</value>
+  </data>
+  <data name="QuoteThemeAcceptance" xml:space="preserve">
+    <value>接纳</value>
+  </data>
+  <data name="QuoteThemeGratitude" xml:space="preserve">
+    <value>感恩</value>
+  </data>
+  <data name="QuoteThemeCalm" xml:space="preserve">
+    <value>平静</value>
+  </data>
+  <data name="QuoteThemeAnxiety" xml:space="preserve">
+    <value>焦虑</value>
+  </data>
+  <data name="QuoteThemeGeneral" xml:space="preserve">
+    <value>综合</value>
+  </data>
+  <data name="QuotesAllReadTitle" xml:space="preserve">
+    <value>你都读完了</value>
+  </data>
+  <data name="QuotesAllReadBody" xml:space="preserve">
+    <value>现在没有新的名言。打开收藏，或稍后再来。</value>
+  </data>
+  <data name="QuotesShowFavorites" xml:space="preserve">
+    <value>查看收藏</value>
+  </data>
+  <data name="ProfileBsffSubtitle" xml:space="preserve">
+    <value>潜意识去程序化方法</value>
+  </data>
+  <data name="QuotesSearching" xml:space="preserve">
+    <value>正在搜索名言</value>
+  </data>
+  <data name="QuotesLoading" xml:space="preserve">
+    <value>正在加载名言</value>
+  </data>
+  <data name="QuoteShareTitle" xml:space="preserve">
+    <value>名言</value>
+  </data>
+  <data name="UnknownAuthor" xml:space="preserve">
+    <value>作者不详</value>
+  </data>
+  <data name="JournalCrisisPromptTitle" xml:space="preserve">
+    <value>现在是不是非常难熬？</value>
+  </data>
+  <data name="JournalCrisisPromptBody" xml:space="preserve">
+    <value>你的笔记里有让我们担心的词语。你并不孤单：危机求助页面有求助热线和你的安全计划。</value>
+  </data>
+  <data name="JournalCrisisPromptAccept" xml:space="preserve">
+    <value>打开求助</value>
+  </data>
+  <data name="JournalCrisisPromptDecline" xml:space="preserve">
+    <value>暂时不用</value>
+  </data>
+  <data name="CrisisHubTitle" xml:space="preserve">
+    <value>危机求助</value>
+  </data>
+  <data name="CrisisHubLead" xml:space="preserve">
+    <value>安全第一。本应用不能代替紧急救助。</value>
+  </data>
+  <data name="CrisisHubSafetyPlanTitle" xml:space="preserve">
+    <value>安全计划</value>
+  </data>
+  <data name="CrisisHubSafetyPlanStep1" xml:space="preserve">
+    <value>远离触发因素，找一个更安全的地方。</value>
+  </data>
+  <data name="CrisisHubSafetyPlanStep2" xml:space="preserve">
+    <value>联系一个你信任的人——朋友、家人或专业人士。</value>
+  </data>
+  <data name="CrisisHubSafetyPlanStep3" xml:space="preserve">
+    <value>如有生命危险——请拨打急救电话（112）。</value>
+  </data>
+  <data name="CrisisHubHotlineTitle" xml:space="preserve">
+    <value>立即拨打</value>
+  </data>
+  <data name="CrisisHubHotlineRu" xml:space="preserve">
+    <value>俄罗斯：112——紧急服务（免费）。8-800-2000-122——面向儿童、青少年和家长的求助热线。如需寻找附近面向成年人的求助热线，请访问 findahelpline.com</value>
+  </data>
+  <data name="CrisisHubHotlineIntl" xml:space="preserve">
+    <value>国际：findahelpline.com</value>
+  </data>
+  <data name="CrisisHubCallHotlineRu" xml:space="preserve">
+    <value>儿童求助热线 8-800-2000-122</value>
+  </data>
+  <data name="CrisisHubCallEmergency" xml:space="preserve">
+    <value>拨打 112</value>
+  </data>
+  <data name="CrisisHubOpenHelpline" xml:space="preserve">
+    <value>打开 findahelpline.com</value>
+  </data>
+  <data name="CrisisHubRecheck" xml:space="preserve">
+    <value>再次检查我的状态</value>
+  </data>
+  <data name="CrisisHubContinueSoft" xml:space="preserve">
+    <value>回到轻松的练习</value>
+  </data>
+  <data name="CrisisHubSpecialistHint" xml:space="preserve">
+    <value>请考虑寻求心理咨询师或医生的帮助。自助方法适合轻度到中度的状态。</value>
+  </data>
+  <data name="DataBackupTitle" xml:space="preserve">
+    <value>数据与备份</value>
+  </data>
+  <data name="DataBackupLead" xml:space="preserve">
+    <value>所有数据只保存在这台设备上。请做好备份，以免丢失。</value>
+  </data>
+  <data name="DataBackupExportTitle" xml:space="preserve">
+    <value>导出备份</value>
+  </data>
+  <data name="DataBackupExportSubtitle" xml:space="preserve">
+    <value>包含所有对话、心情记录、测试和练习记录的文件。</value>
+  </data>
+  <data name="DataBackupImportTitle" xml:space="preserve">
+    <value>从备份恢复</value>
+  </data>
+  <data name="DataBackupImportSubtitle" xml:space="preserve">
+    <value>添加所选备份文件中的数据。</value>
+  </data>
+  <data name="DataBackupSummaryTitle" xml:space="preserve">
+    <value>给专业人士的摘要</value>
+  </data>
+  <data name="DataBackupSummarySubtitle" xml:space="preserve">
+    <value>最近 30 天的文本文件，可分享给心理咨询师或医生。</value>
+  </data>
+  <data name="DataEraseTitle" xml:space="preserve">
+    <value>删除我的所有数据</value>
+  </data>
+  <data name="DataEraseSubtitle" xml:space="preserve">
+    <value>日记、练习、测试、对话和设置都会从这部手机上清除</value>
+  </data>
+  <data name="DataEraseConfirmTitle" xml:space="preserve">
+    <value>删除所有数据？</value>
+  </data>
+  <data name="DataEraseConfirmBody" xml:space="preserve">
+    <value>心情日记、练习及你的回答、测试结果、与 AI 聊天的对话、安全计划、身体记录和设置都将从这部手机上删除。只有在你保存过备份的情况下，才能从备份中恢复。</value>
+  </data>
+  <data name="DataEraseConfirmAccept" xml:space="preserve">
+    <value>全部删除</value>
+  </data>
+  <data name="DataEraseFinalTitle" xml:space="preserve">
+    <value>此操作无法撤销</value>
+  </data>
+  <data name="DataEraseFinalBody" xml:space="preserve">
+    <value>应用将从头开始，就像刚安装一样。确定删除吗？</value>
+  </data>
+  <data name="DataEraseFailedToast" xml:space="preserve">
+    <value>无法删除数据，请重试。</value>
+  </data>
+  <data name="AppLockLabel" xml:space="preserve">
+    <value>使用手机的指纹或 PIN 解锁</value>
+  </data>
+  <data name="AppLockHint" xml:space="preserve">
+    <value>在显示日记、对话和笔记之前，应用会要求解锁手机：指纹、面部或 PIN。无需另外设置或记住密码。</value>
+  </data>
+  <data name="AppLockNoScreenLock" xml:space="preserve">
+    <value>请先在手机设置中开启屏幕锁定（PIN、图案或指纹），然后再回到这里。</value>
+  </data>
+  <data name="AppLockTitle" xml:space="preserve">
+    <value>应用已受保护</value>
+  </data>
+  <data name="AppLockLead" xml:space="preserve">
+    <value>使用手机的指纹、面部或 PIN 解锁。</value>
+  </data>
+  <data name="AppLockUnlock" xml:space="preserve">
+    <value>解锁</value>
+  </data>
+  <data name="AppLockHelpTitle" xml:space="preserve">
+    <value>现在就需要帮助？</value>
+  </data>
+  <data name="AppLockPromptTitle" xml:space="preserve">
+    <value>Psychology App</value>
+  </data>
+  <data name="AppLockPromptSubtitle" xml:space="preserve">
+    <value>请确认是你本人</value>
+  </data>
+  <data name="AppLockEnableTitle" xml:space="preserve">
+    <value>开启解锁保护</value>
+  </data>
+  <data name="DataBackupExportedToast" xml:space="preserve">
+    <value>文件已可以分享</value>
+  </data>
+  <data name="ErrorLogTitle" xml:space="preserve">
+    <value>错误日志</value>
+  </data>
+  <data name="ErrorLogSubtitle" xml:space="preserve">
+    <value>分享技术错误文件，帮助找到崩溃原因。文件中不包含你的记录。</value>
+  </data>
+  <data name="ErrorLogEmptyToast" xml:space="preserve">
+    <value>没有记录到错误</value>
+  </data>
+  <data name="DataBackupImportRolledBackToast" xml:space="preserve">
+    <value>无法恢复数据。没有任何改动——请重试</value>
+  </data>
+  <data name="DataBackupImportFailedToast" xml:space="preserve">
+    <value>无法读取备份文件</value>
+  </data>
+  <data name="CrisisHubSafetyPlanLinkTitle" xml:space="preserve">
+    <value>我的安全计划</value>
+  </data>
+  <data name="CrisisHubSafetyPlanLinkSubtitle" xml:space="preserve">
+    <value>制定个人计划：预警信号、有帮助的方法、可以联系的人。</value>
+  </data>
+  <data name="SafetyPlanPageTitle" xml:space="preserve">
+    <value>安全计划</value>
+  </data>
+  <data name="SafetyPlanLead" xml:space="preserve">
+    <value>趁平静时填写——它会在艰难时刻帮到你。</value>
+  </data>
+  <data name="SafetyPlanWarningSignsTitle" xml:space="preserve">
+    <value>我的预警信号</value>
+  </data>
+  <data name="SafetyPlanWarningSignsPlaceholder" xml:space="preserve">
+    <value>例如：已经两晚没睡</value>
+  </data>
+  <data name="SafetyPlanCopingTitle" xml:space="preserve">
+    <value>对我有帮助的</value>
+  </data>
+  <data name="SafetyPlanCopingPlaceholder" xml:space="preserve">
+    <value>例如：出去散步、给朋友打电话</value>
+  </data>
+  <data name="SafetyPlanReasonsTitle" xml:space="preserve">
+    <value>继续下去的理由</value>
+  </data>
+  <data name="SafetyPlanReasonsPlaceholder" xml:space="preserve">
+    <value>例如：我的猫、今年春天的旅行</value>
+  </data>
+  <data name="SafetyPlanContactsTitle" xml:space="preserve">
+    <value>可以联系的人</value>
+  </data>
+  <data name="SafetyPlanContactNamePlaceholder" xml:space="preserve">
+    <value>姓名</value>
+  </data>
+  <data name="SafetyPlanContactPhonePlaceholder" xml:space="preserve">
+    <value>电话</value>
+  </data>
+  <data name="SafetyPlanTapToRemoveHint" xml:space="preserve">
+    <value>点击删除</value>
+  </data>
+  <data name="SafetyPlanCallAction" xml:space="preserve">
+    <value>拨打</value>
+  </data>
+  <data name="RiskCheckTitle" xml:space="preserve">
+    <value>安全自查</value>
+  </data>
+  <data name="RiskCheckLead" xml:space="preserve">
+    <value>如果你有伤害自己的念头——请现在就打开求助，不必先完成自查。</value>
+  </data>
+  <data name="RiskCheckSubtitle" xml:space="preserve">
+    <value>请如实回答，这有助于选择安全的方式。</value>
+  </data>
+  <data name="RiskCheckSelfHarm" xml:space="preserve">
+    <value>有自伤或自杀的念头</value>
+  </data>
+  <data name="RiskCheckDisorientation" xml:space="preserve">
+    <value>严重的定向障碍或与现实失去联系</value>
+  </data>
+  <data name="RiskCheckSubstance" xml:space="preserve">
+    <value>与酒精或物质有关的风险</value>
+  </data>
+  <data name="RiskCheckInsomnia" xml:space="preserve">
+    <value>严重失眠和精疲力竭</value>
+  </data>
+  <data name="RiskCheckSubmit" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="RiskCheckAnswerAll" xml:space="preserve">
+    <value>请回答全部四个问题，是或否。</value>
+  </data>
+  <data name="RiskCheckOpenHelpNow" xml:space="preserve">
+    <value>现在打开求助</value>
+  </data>
+  <data name="RiskCheckYes" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="RiskCheckNo" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="OptionsCrisisTitle" xml:space="preserve">
+    <value>危机求助</value>
+  </data>
+  <data name="OptionsCrisisSubtitle" xml:space="preserve">
+    <value>安全计划和求助热线</value>
+  </data>
+  <data name="ClinicalScorecardTitle" xml:space="preserve">
+    <value>本周概览</value>
+  </data>
+  <data name="PracticeHistorySeeAll" xml:space="preserve">
+    <value>全部</value>
+  </data>
+  <data name="PracticeHistoryPageTitle" xml:space="preserve">
+    <value>练习记录</value>
+  </data>
+  <data name="ProfileRiskCheckLabel" xml:space="preserve">
+    <value>我现在怎么样？</value>
+  </data>
+  <data name="ProfileRiskCheckSubtitle" xml:space="preserve">
+    <value>关于安全的简短问题</value>
+  </data>
+  <data name="JournalOverviewTitle" xml:space="preserve">
+    <value>概览</value>
+  </data>
+  <data name="JournalTimelineTitle" xml:space="preserve">
+    <value>记录</value>
+  </data>
+  <data name="JournalOpenOverview" xml:space="preserve">
+    <value>概览</value>
+  </data>
+  <data name="JournalOpenTimeline" xml:space="preserve">
+    <value>记录</value>
+  </data>
+  <data name="JournalRecentDaysTitle" xml:space="preserve">
+    <value>本周</value>
+  </data>
+  <data name="JournalPromptHelpedShort" xml:space="preserve">
+    <value>有帮助的</value>
+  </data>
+  <data name="JournalPromptNextShort" xml:space="preserve">
+    <value>接下来</value>
+  </data>
+  <data name="JournalShareLabel" xml:space="preserve">
+    <value>分享</value>
+  </data>
+  <data name="JournalShareTitle" xml:space="preserve">
+    <value>日记记录</value>
+  </data>
+  <data name="JournalReminderToggle" xml:space="preserve">
+    <value>提醒我记录心情</value>
+  </data>
+  <data name="JournalReminderHint" xml:space="preserve">
+    <value>可在设置中修改时间</value>
+  </data>
+  <data name="MoodReminderTitle" xml:space="preserve">
+    <value>日记</value>
+  </data>
+  <data name="MoodReminderBody" xml:space="preserve">
+    <value>你今天感觉怎么样？在日记里记一下吧。</value>
+  </data>
+  <data name="ClinicalScorecardEmpty" xml:space="preserve">
+    <value>数据还不够——练习和心情会显示在这里</value>
+  </data>
+  <data name="ClinicalRiskGreen" xml:space="preserve">
+    <value>低</value>
+  </data>
+  <data name="ClinicalRiskAmber" xml:space="preserve">
+    <value>偏高</value>
+  </data>
+  <data name="ClinicalRiskRed" xml:space="preserve">
+    <value>高</value>
+  </data>
+  <data name="LuscherCoStable" xml:space="preserve">
+    <value>没有无效的紧张；情绪稳定性高。行动目标明确、效率高。整体心情乐观。</value>
+  </data>
+  <data name="LuscherCoMildTension" xml:space="preserve">
+    <value>中等程度的紧张，可能降低效率。情绪稳定性总体尚可，偶有压力。</value>
+  </data>
+  <data name="LuscherCoModerateTension" xml:space="preserve">
+    <value>有明显的紧张和情绪负担。效率可能下降；建议恢复和休息。</value>
+  </data>
+  <data name="LuscherCoElevatedTension" xml:space="preserve">
+    <value>紧张程度偏高，情绪稳定性下降。持续努力可能显得勉强；建议休息并寻求支持。</value>
+  </data>
+  <data name="LuscherCoHighTension" xml:space="preserve">
+    <value>高度紧张，情绪不稳定。负担明显；专业支持可能会有帮助。</value>
+  </data>
+  <data name="LuscherBkExhausted" xml:space="preserve">
+    <value>植物神经系数低：疲惫、被动，需要充分恢复。</value>
+  </data>
+  <data name="LuscherBkConserving" xml:space="preserve">
+    <value>植物神经系数平衡：需要适度休息，精力足以应对日常事务。</value>
+  </data>
+  <data name="LuscherBkOptimal" xml:space="preserve">
+    <value>最佳调动状态：身体和心理资源都很好地准备好去行动。</value>
+  </data>
+  <data name="LuscherBkOveraroused" xml:space="preserve">
+    <value>植物神经系数高：情绪高度唤起，自主神经反应强烈。</value>
+  </data>
+  <data name="TherapyProgramTitle" xml:space="preserve">
+    <value>你的计划</value>
+  </data>
+  <data name="TherapyProgramAnxiety" xml:space="preserve">
+    <value>焦虑</value>
+  </data>
+  <data name="TherapyProgramMood" xml:space="preserve">
+    <value>心情</value>
+  </data>
+  <data name="TherapyProgramStress" xml:space="preserve">
+    <value>压力</value>
+  </data>
+  <data name="ClinicalAmberBanner" xml:space="preserve">
+    <value>你的状态需要关注——可以使用危机求助</value>
+  </data>
+  <data name="ClinicalRedBanner" xml:space="preserve">
+    <value>请先打开危机求助</value>
+  </data>
+  <data name="ClinicalStatusUnavailableBanner" xml:space="preserve">
+    <value>无法加载安全状态——请打开危机求助</value>
+  </data>
+  <data name="DialogueInputPlaceholder" xml:space="preserve">
+    <value>你的回答…</value>
+  </data>
+  <data name="DialogueTyping" xml:space="preserve">
+    <value>正在输入…</value>
+  </data>
+  <data name="DialogueFinish" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="DialogueClose" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="DialogueRatingScale" xml:space="preserve">
+    <value>0——完全没有，10——非常强烈</value>
+  </data>
+  <data name="DialogueLoadFailed" xml:space="preserve">
+    <value>无法打开对话，请稍后重试。</value>
+  </data>
+  <data name="ShellTabMusic" xml:space="preserve">
+    <value>音乐</value>
+  </data>
+  <data name="ShellTabPractice" xml:space="preserve">
+    <value>练习</value>
+  </data>
+  <data name="ShellTabDetector" xml:space="preserve">
+    <value>检测</value>
+  </data>
+  <data name="ShellTabArticles" xml:space="preserve">
+    <value>文章</value>
+  </data>
+  <data name="ShellTabMotivator" xml:space="preserve">
+    <value>激励</value>
+  </data>
+  <data name="ShellTabPracticeShort" xml:space="preserve">
+    <value>练习</value>
+  </data>
+  <data name="ShellTabDetectorShort" xml:space="preserve">
+    <value>测试</value>
+  </data>
+  <data name="ShellTabArticlesShort" xml:space="preserve">
+    <value>文章</value>
+  </data>
+  <data name="ShellTabMusicShort" xml:space="preserve">
+    <value>祈祷</value>
+  </data>
+  <data name="ShellTabMotivatorShort" xml:space="preserve">
+    <value>名言</value>
+  </data>
+  <data name="TestsFindProblemTitle" xml:space="preserve">
+    <value>找到问题</value>
+  </data>
+  <data name="TestsAboutPassageTitle" xml:space="preserve">
+    <value>关于这个测试</value>
+  </data>
+  <data name="TestsDescriptionHeader" xml:space="preserve">
+    <value>说明</value>
+  </data>
+  <data name="TestsAlgorithmHeader" xml:space="preserve">
+    <value>步骤</value>
+  </data>
+  <data name="TestsNoteHeader" xml:space="preserve">
+    <value>备注</value>
+  </data>
+  <data name="TestsStartButton" xml:space="preserve">
+    <value>开始</value>
+  </data>
+  <data name="TestsQuestionnaireTitle" xml:space="preserve">
+    <value>问卷</value>
+  </data>
+  <data name="TestsQuestionPrefix" xml:space="preserve">
+    <value>问题 </value>
+  </data>
+  <data name="TestsFinishButton" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="TestsStandardTitle" xml:space="preserve">
+    <value>完整测试</value>
+  </data>
+  <data name="TestsBriefTitle" xml:space="preserve">
+    <value>简短测试</value>
+  </data>
+  <data name="TestsColorInstruction" xml:space="preserve">
+    <value>按照你觉得舒服的顺序选择颜色</value>
+  </data>
+  <data name="TestsMoreInfo" xml:space="preserve">
+    <value>了解更多</value>
+  </data>
+  <data name="TestsRestart" xml:space="preserve">
+    <value>重新开始</value>
+  </data>
+  <data name="TestRetakeButton" xml:space="preserve">
+    <value>再做一次</value>
+  </data>
+  <data name="TestsFirstColor" xml:space="preserve">
+    <value>第一种颜色</value>
+  </data>
+  <data name="TestsSecondColor" xml:space="preserve">
+    <value>第二种颜色</value>
+  </data>
+  <data name="TestsLuscherResultsTitle" xml:space="preserve">
+    <value>结果</value>
+  </data>
+  <data name="TestsLuscherWantedRole" xml:space="preserve">
+    <value>最喜欢</value>
+  </data>
+  <data name="TestsLuscherUnwantedRole" xml:space="preserve">
+    <value>最不喜欢</value>
+  </data>
+  <data name="TestsLuscherFirstInstruction" xml:space="preserve">
+    <value>选择你最喜欢的颜色</value>
+  </data>
+  <data name="TestsLuscherSecondInstruction" xml:space="preserve">
+    <value>从剩下的颜色中，选择你最不喜欢的颜色</value>
+  </data>
+  <data name="TestsLuscherSecondPassInstruction" xml:space="preserve">
+    <value>再选一次：把 8 种颜色从最喜欢到最不喜欢重新排序</value>
+  </data>
+  <data name="TestsLuscherHistoryFirstPass" xml:space="preserve">
+    <value>第 1 轮</value>
+  </data>
+  <data name="TestsLuscherHistorySecondPass" xml:space="preserve">
+    <value>第 2 轮</value>
+  </data>
+  <data name="TestsStandardDescription" xml:space="preserve">
+    <value>这是完整的吕舍尔色彩测试，比简短版能更准确地评估心情。</value>
+  </data>
+  <data name="TestsBriefDescription" xml:space="preserve">
+    <value>这是简短的吕舍尔色彩测试。选择两种颜色——最喜欢的和最不喜欢的。</value>
+  </data>
+  <data name="TestsAnswerAllToast" xml:space="preserve">
+    <value>请回答所有问题</value>
+  </data>
+  <data name="TestsAnswerCurrentToast" xml:space="preserve">
+    <value>请回答这个问题</value>
+  </data>
+  <data name="TestsNextButton" xml:space="preserve">
+    <value>下一步</value>
+  </data>
+  <data name="TestsPreviousButton" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="TestsResultPageTitle" xml:space="preserve">
+    <value>测试结果</value>
+  </data>
+  <data name="TestsBackToList" xml:space="preserve">
+    <value>返回测试列表</value>
+  </data>
+  <data name="TestsResultRecommendationHint" xml:space="preserve">
+    <value>根据你的结果，我们挑选了一个可能有帮助的练习</value>
+  </data>
+  <data name="TestResultExplorePractice" xml:space="preserve">
+    <value>试试一个练习</value>
+  </data>
+  <data name="TestsContinueButton" xml:space="preserve">
+    <value>继续</value>
+  </data>
+  <data name="TestsListSectionTitle" xml:space="preserve">
+    <value>心理测试</value>
+  </data>
+  <data name="TestsListSectionSubtitle" xml:space="preserve">
+    <value>选择一个测试，更了解自己的感受</value>
+  </data>
+  <data name="TestHistoryTrendTitle" xml:space="preserve">
+    <value>分数趋势</value>
+  </data>
+  <data name="TestResultAnswersTitle" xml:space="preserve">
+    <value>你的回答</value>
+  </data>
+  <data name="TestsIntroLead" xml:space="preserve">
+    <value>花几分钟获得个人解读</value>
+  </data>
+  <data name="TestsQuestionLead" xml:space="preserve">
+    <value>请如实回答——答案没有对错之分</value>
+  </data>
+  <data name="TestsMultiChoiceHint" xml:space="preserve">
+    <value>可以选择多个选项</value>
+  </data>
+  <data name="TestsSingleChoiceHint" xml:space="preserve">
+    <value>单选</value>
+  </data>
+  <data name="TestsAnswerSelected" xml:space="preserve">
+    <value>已选择</value>
+  </data>
+  <data name="TestsAnswerNotSelected" xml:space="preserve">
+    <value>未选择</value>
+  </data>
+  <data name="TestsAnswerOption" xml:space="preserve">
+    <value>答案选项</value>
+  </data>
+  <data name="TestsCoLabel" xml:space="preserve">
+    <value>与自主常态的总偏差（CO）</value>
+  </data>
+  <data name="TestsBkLabel" xml:space="preserve">
+    <value>植物神经系数（VC）</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="ChatProfilePracticeDetail" xml:space="preserve">
+    <value>{1} 次中有 {0} 次有帮助</value>
+  </data>
+  <data name="PracticeReminderTitleNamed" xml:space="preserve">
+    <value>该做{0}了</value>
+  </data>
+  <data name="PracticeCustomTechniqueNumber" xml:space="preserve">
+    <value>自定义技巧 #{0}</value>
+  </data>
+  <data name="PoleNumber" xml:space="preserve">
+    <value>极 #{0}</value>
+  </data>
+  <data name="RecordNumber" xml:space="preserve">
+    <value>记录 #{0}</value>
+  </data>
+  <data name="PracticeEntryCount" xml:space="preserve">
+    <value>{0} 条记录</value>
+  </data>
+  <data name="TechniqueStepProgress" xml:space="preserve">
+    <value>第 {0} 步，共 {1} 步</value>
+  </data>
+  <data name="ProfileStreakCount" xml:space="preserve">
+    <value>{0} 天</value>
+  </data>
+  <data name="StreakAtRiskBanner" xml:space="preserve">
+    <value>保持你的 {0} 天连续记录——今天练习一下</value>
+  </data>
+  <data name="ComebackBannerWithTechnique" xml:space="preserve">
+    <value>欢迎回来——从{0}开始吧</value>
+  </data>
+  <data name="WeeklyInsightMoodOnly" xml:space="preserve">
+    <value>本周：心情 {0}</value>
+  </data>
+  <data name="TodayRecommendationReasonFromTest" xml:space="preserve">
+    <value>根据最近的测试（{0}）</value>
+  </data>
+  <data name="WeeklyInsightStreakPart" xml:space="preserve">
+    <value>连续 {0}</value>
+  </data>
+  <data name="JournalPracticeMoodInsight" xml:space="preserve">
+    <value>练习后（{0} 天）：平均心情 {1}</value>
+  </data>
+  <data name="JournalPracticeMoodCompareInsight" xml:space="preserve">
+    <value>有练习平均 {0} · 无练习平均 {1}（{2} 个练习日）</value>
+  </data>
+  <data name="JournalFactorsSummaryLine" xml:space="preserve">
+    <value>因素：{0}</value>
+  </data>
+  <data name="JournalFactorCountPill" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="JournalActivityCorrelationPill" xml:space="preserve">
+    <value>{0} · {1} · 平均 {2}</value>
+  </data>
+  <data name="JournalYearTitle" xml:space="preserve">
+    <value>{0} 年</value>
+  </data>
+  <data name="ChartSparseHint" xml:space="preserve">
+    <value>{0} 次测量——趋势仍在形成</value>
+  </data>
+  <data name="PracticeCompletedBody" xml:space="preserve">
+    <value>做得好！连续：{0} 天</value>
+  </data>
+  <data name="PracticeHistoryEntry" xml:space="preserve">
+    <value>{0}：{1}</value>
+  </data>
+  <data name="InfoAppVersion" xml:space="preserve">
+    <value>版本 {0}</value>
+  </data>
+  <data name="TestHistoryEntry" xml:space="preserve">
+    <value>{0}：{1}</value>
+  </data>
+  <data name="ProfileLastPractice" xml:space="preserve">
+    <value>上次练习：{0}</value>
+  </data>
+  <data name="TechniqueLastPractice" xml:space="preserve">
+    <value>上次练习：{0}</value>
+  </data>
+  <data name="TechniqueDuration" xml:space="preserve">
+    <value>约 {0} 分钟</value>
+  </data>
+  <data name="TechniqueMetaLine" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="RatingScaleMin" xml:space="preserve">
+    <value>0——没有</value>
+  </data>
+  <data name="RatingScaleMax" xml:space="preserve">
+    <value>10——非常强烈</value>
+  </data>
+  <data name="TechniqueRatingValue" xml:space="preserve">
+    <value>评分：{0}/10</value>
+  </data>
+  <data name="TechniqueRatingNegValue" xml:space="preserve">
+    <value>评分：{0}（−10 到 10）</value>
+  </data>
+  <data name="TestLastResult" xml:space="preserve">
+    <value>上次结果：{0}</value>
+  </data>
+  <data name="TestLastResultDated" xml:space="preserve">
+    <value>上次结果 · {0}：{1}</value>
+  </data>
+  <data name="TestCompletedAt" xml:space="preserve">
+    <value>完成时间：{0}</value>
+  </data>
+  <data name="OnboardingStepOf" xml:space="preserve">
+    <value>{0}/{1}</value>
+  </data>
+  <data name="OnboardingFinishSubtitle" xml:space="preserve">
+    <value>我们建议从“{0}”开始</value>
+  </data>
+  <data name="ProfileMoodTrendPreview" xml:space="preserve">
+    <value>心情：{0} · 风险：{1}</value>
+  </data>
+  <data name="ClinicalScorecardSummary" xml:space="preserve">
+    <value>本周：{0} 次练习，{1} 次心情记录 · 风险：{2}</value>
+  </data>
+  <data name="TherapyProgramWeekLabel" xml:space="preserve">
+    <value>第 {0} 周</value>
+  </data>
+  <data name="TestsLuscherPassOf" xml:space="preserve">
+    <value>第 {0} 轮，共 {1} 轮</value>
+  </data>
+  <data name="TestsStepOf" xml:space="preserve">
+    <value>{0}/{1}</value>
+  </data>
+  <data name="TestsResultTitle" xml:space="preserve">
+    <value>你的分数：{0}</value>
+  </data>
+  <data name="TestDuration" xml:space="preserve">
+    <value>约 {0} 分钟</value>
+  </data>
+  <data name="TestQuestionCount" xml:space="preserve">
+    <value>{0} 道题</value>
+  </data>
+  <data name="TestRecommendationFor" xml:space="preserve">
+    <value>推荐：{0}</value>
+  </data>
+  <data name="TestHistoryScore" xml:space="preserve">
+    <value>分数：{0}</value>
+  </data>
+  <data name="TestsRemainingDuration" xml:space="preserve">
+    <value>还剩约 {0} 分钟</value>
+  </data>
+  <data name="TestsScoreOutOf" xml:space="preserve">
+    <value>{0}/{1}</value>
+  </data>
+  <data name="TestsDecimalScoreOutOf" xml:space="preserve">
+    <value>{0}/{1}</value>
+  </data>
+  <data name="BackupProtectTitle" xml:space="preserve">
+    <value>要用密码短语保护备份吗？</value>
+  </data>
+  <data name="BackupProtectBody" xml:space="preserve">
+    <value>备份包含对话、笔记和安全计划。设有密码短语的文件，没有密码短语就无法读取。</value>
+  </data>
+  <data name="BackupProtectWith" xml:space="preserve">
+    <value>使用密码短语（推荐）</value>
+  </data>
+  <data name="BackupProtectWithout" xml:space="preserve">
+    <value>不保护</value>
+  </data>
+  <data name="BackupPassphraseTitle" xml:space="preserve">
+    <value>备份密码短语</value>
+  </data>
+  <data name="BackupPassphraseNewBody" xml:space="preserve">
+    <value>请设置至少 8 个字符的密码短语。它无法找回：没有它就打不开备份。</value>
+  </data>
+  <data name="BackupPassphraseConfirmBody" xml:space="preserve">
+    <value>请再次输入密码短语。</value>
+  </data>
+  <data name="BackupPassphraseOpenBody" xml:space="preserve">
+    <value>此备份受密码短语保护，请输入密码短语。</value>
+  </data>
+  <data name="BackupPassphrasePlaceholder" xml:space="preserve">
+    <value>密码短语</value>
+  </data>
+  <data name="BackupPassphraseTooShortToast" xml:space="preserve">
+    <value>密码短语少于 8 个字符</value>
+  </data>
+  <data name="BackupPassphraseMismatchToast" xml:space="preserve">
+    <value>两次输入的密码短语不一致</value>
+  </data>
+  <data name="BackupPassphraseWrongToast" xml:space="preserve">
+    <value>密码短语错误，或文件已被修改</value>
+  </data>
+  <data name="TodayRecommendationReason.anxiety" xml:space="preserve">
+    <value>适合缓解焦虑</value>
+  </data>
+  <data name="TodayRecommendationReason.body" xml:space="preserve">
+    <value>关注身体和症状</value>
+  </data>
+  <data name="TodayRecommendationReason.mood" xml:space="preserve">
+    <value>心情低落时有帮助</value>
+  </data>
+  <data name="PracticeMilestoneTitle.3" xml:space="preserve">
+    <value>连续 3 天！</value>
+  </data>
+  <data name="PracticeMilestoneTitle.7" xml:space="preserve">
+    <value>整整一周！</value>
+  </data>
+  <data name="PracticeMilestoneTitle.14" xml:space="preserve">
+    <value>连续 2 周！</value>
+  </data>
+  <data name="PracticeMilestoneTitle.30" xml:space="preserve">
+    <value>整整一个月！</value>
+  </data>
+  <data name="PracticeMilestoneBody.3" xml:space="preserve">
+    <value>开了个好头——继续保持。</value>
+  </data>
+  <data name="PracticeMilestoneBody.7" xml:space="preserve">
+    <value>连续 7 天——节奏很好。</value>
+  </data>
+  <data name="PracticeMilestoneBody.14" xml:space="preserve">
+    <value>14 天——习惯已经很稳固。</value>
+  </data>
+  <data name="PracticeMilestoneBody.30" xml:space="preserve">
+    <value>30 天——了不起的连续记录。</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.10" xml:space="preserve">
+    <value>完成 10 次练习！</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.25" xml:space="preserve">
+    <value>25 次练习！</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.50" xml:space="preserve">
+    <value>50 次练习！</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.100" xml:space="preserve">
+    <value>100 次练习！</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.250" xml:space="preserve">
+    <value>250 次练习！</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.500" xml:space="preserve">
+    <value>500 次练习！</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.1000" xml:space="preserve">
+    <value>1000 次练习！</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.10" xml:space="preserve">
+    <value>第一个真正的里程碑——习惯正在养成。</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.25" xml:space="preserve">
+    <value>你已经 25 次选择照顾自己。</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.50" xml:space="preserve">
+    <value>五十次练习——这已经是真正的习惯了。</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.100" xml:space="preserve">
+    <value>一百次练习！你为自己付出了很多。</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.250" xml:space="preserve">
+    <value>250 次练习——你的坚持令人钦佩。</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.500" xml:space="preserve">
+    <value>500 次练习——这已真正成为你生活的一部分。</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.1000" xml:space="preserve">
+    <value>1000 次练习！一段不可思议的旅程。</value>
+  </data>
+  <data name="TherapyProgramWeekGoal.1" xml:space="preserve">
+    <value>用每天的简短练习稳定状态</value>
+  </data>
+  <data name="TherapyProgramWeekGoal.2" xml:space="preserve">
+    <value>观察想法和身体信号</value>
+  </data>
+  <data name="TherapyProgramWeekGoal.3" xml:space="preserve">
+    <value>灵活性：尝试不同的技巧</value>
+  </data>
+  <data name="BeckScore.BeckBand.None" xml:space="preserve">
+    <value>0-9 - 无抑郁症状</value>
+  </data>
+  <data name="BeckScore.BeckBand.Mild" xml:space="preserve">
+    <value>10-15 - 轻度抑郁</value>
+  </data>
+  <data name="BeckScore.BeckBand.Moderate" xml:space="preserve">
+    <value>16-19 - 中度抑郁</value>
+  </data>
+  <data name="BeckScore.BeckBand.Marked" xml:space="preserve">
+    <value>20-29 - 明显抑郁（中等严重程度）</value>
+  </data>
+  <data name="BeckScoreDetail.BeckBand.None" xml:space="preserve">
+    <value>症状在正常范围内。保持睡眠和规律活动。</value>
+  </data>
+  <data name="BeckScoreDetail.BeckBand.Mild" xml:space="preserve">
+    <value>心情略有低落。散步、记录想法和简短练习会有帮助。</value>
+  </data>
+  <data name="BeckScoreDetail.BeckBand.Moderate" xml:space="preserve">
+    <value>中度抑郁。可以考虑和专业人士谈谈，并每天练习。</value>
+  </data>
+  <data name="BeckScoreDetail.BeckBand.Marked" xml:space="preserve">
+    <value>症状明显。请咨询心理咨询师或医生，并寻求支持。</value>
+  </data>
+  <data name="PochebutScore.PochebutBand.Low" xml:space="preserve">
+    <value>0-10 - 攻击性低</value>
+  </data>
+  <data name="PochebutScore.PochebutBand.Moderate" xml:space="preserve">
+    <value>11-24 - 攻击性中等</value>
+  </data>
+  <data name="PochebutScoreDetail.PochebutBand.Low" xml:space="preserve">
+    <value>攻击性反应很少。保持你的自我调节习惯。</value>
+  </data>
+  <data name="PochebutScoreDetail.PochebutBand.Moderate" xml:space="preserve">
+    <value>攻击性中等。停一停、深呼吸、换个角度看待情境会有帮助。</value>
+  </data>
+  <data name="Gad7Score.Gad7Band.Minimal" xml:space="preserve">
+    <value>0-4 — 极轻焦虑</value>
+  </data>
+  <data name="Gad7Score.Gad7Band.Mild" xml:space="preserve">
+    <value>5-9 — 轻度焦虑</value>
+  </data>
+  <data name="Gad7Score.Gad7Band.Moderate" xml:space="preserve">
+    <value>10-14 — 中度焦虑</value>
+  </data>
+  <data name="Gad7ScoreDetail.Gad7Band.Minimal" xml:space="preserve">
+    <value>焦虑症状在正常范围内。继续留意压力和休息。</value>
+  </data>
+  <data name="Gad7ScoreDetail.Gad7Band.Mild" xml:space="preserve">
+    <value>轻度焦虑。呼吸、散步和简短的着陆练习会有帮助。</value>
+  </data>
+  <data name="Gad7ScoreDetail.Gad7Band.Moderate" xml:space="preserve">
+    <value>中度焦虑。可以考虑和专业人士谈谈你的状态。</value>
+  </data>
+  <data name="K10Score.K10Band.Low" xml:space="preserve">
+    <value>10-15 — 低度困扰</value>
+  </data>
+  <data name="K10Score.K10Band.Mild" xml:space="preserve">
+    <value>16-21 — 轻度困扰</value>
+  </data>
+  <data name="K10Score.K10Band.Moderate" xml:space="preserve">
+    <value>22-29 — 中度困扰</value>
+  </data>
+  <data name="K10ScoreDetail.K10Band.Low" xml:space="preserve">
+    <value>心理困扰处于较低水平。保持日常作息和规律活动。</value>
+  </data>
+  <data name="K10ScoreDetail.K10Band.Mild" xml:space="preserve">
+    <value>轻度困扰。重构经历的练习和记录想法可能会有帮助。</value>
+  </data>
+  <data name="K10ScoreDetail.K10Band.Moderate" xml:space="preserve">
+    <value>中度困扰。不要独自承受——请寻求支持。</value>
+  </data>
+  <data name="Who5Score.Who5Band.Low" xml:space="preserve">
+    <value>0-12 — 幸福感低</value>
+  </data>
+  <data name="Who5Score.Who5Band.Fair" xml:space="preserve">
+    <value>13-18 — 幸福感一般</value>
+  </data>
+  <data name="Who5ScoreDetail.Who5Band.Low" xml:space="preserve">
+    <value>主观幸福感较低。规律睡眠、运动和记录想法会有帮助。</value>
+  </data>
+  <data name="Who5ScoreDetail.Who5Band.Fair" xml:space="preserve">
+    <value>幸福感处于中等水平。加强那些带来活力和兴趣的习惯。</value>
+  </data>
+  <data name="TestRecommendationReasonK10.RecommendationLane.High" xml:space="preserve">
+    <value>困扰程度高时，Spin 有助于减轻痛苦记忆带来的情绪负荷。</value>
+  </data>
+  <data name="TestRecommendationReasonK10.RecommendationLane.Mid" xml:space="preserve">
+    <value>经历调整练习有助于重新看待困难的经历。</value>
+  </data>
+  <data name="Phq9Score.Phq9Band.Minimal" xml:space="preserve">
+    <value>0-4 — 极轻抑郁</value>
+  </data>
+  <data name="Phq9Score.Phq9Band.Mild" xml:space="preserve">
+    <value>5-9 — 轻度抑郁</value>
+  </data>
+  <data name="Phq9Score.Phq9Band.Moderate" xml:space="preserve">
+    <value>10-14 — 中度抑郁</value>
+  </data>
+  <data name="Phq9Score.Phq9Band.ModeratelySevere" xml:space="preserve">
+    <value>15-19 — 中重度抑郁</value>
+  </data>
+  <data name="Phq9ScoreDetail.Phq9Band.Minimal" xml:space="preserve">
+    <value>抑郁症状在正常范围内。保持日常作息和活动。</value>
+  </data>
+  <data name="Phq9ScoreDetail.Phq9Band.Mild" xml:space="preserve">
+    <value>轻度抑郁。睡眠、运动和记录想法会有帮助。</value>
+  </data>
+  <data name="Phq9ScoreDetail.Phq9Band.Moderate" xml:space="preserve">
+    <value>中度抑郁。可以考虑和专业人士谈谈你的状态。</value>
+  </data>
+  <data name="Phq9ScoreDetail.Phq9Band.ModeratelySevere" xml:space="preserve">
+    <value>中重度抑郁。请咨询心理咨询师或医生。</value>
+  </data>
+  <data name="IsiScore.IsiBand.None" xml:space="preserve">
+    <value>0-7 — 无明显失眠</value>
+  </data>
+  <data name="IsiScore.IsiBand.Subthreshold" xml:space="preserve">
+    <value>8-14 — 阈下失眠</value>
+  </data>
+  <data name="IsiScore.IsiBand.Moderate" xml:space="preserve">
+    <value>15-21 — 中度失眠</value>
+  </data>
+  <data name="IsiScoreDetail.IsiBand.None" xml:space="preserve">
+    <value>无临床意义上的失眠。保持稳定的作息和良好的睡眠卫生。</value>
+  </data>
+  <data name="IsiScoreDetail.IsiBand.Subthreshold" xml:space="preserve">
+    <value>阈下失眠。睡前仪式和减少晚间刺激会有帮助。</value>
+  </data>
+  <data name="IsiScoreDetail.IsiBand.Moderate" xml:space="preserve">
+    <value>中度失眠。可以考虑和专业人士谈谈睡眠问题。</value>
+  </data>
+  <data name="EssScore.EssBand.Normal" xml:space="preserve">
+    <value>0-10 — 正常</value>
+  </data>
+  <data name="EssScore.EssBand.Mild" xml:space="preserve">
+    <value>11-12 — 轻度嗜睡</value>
+  </data>
+  <data name="EssScore.EssBand.Moderate" xml:space="preserve">
+    <value>13-15 — 中度嗜睡</value>
+  </data>
+  <data name="EssScoreDetail.EssBand.Normal" xml:space="preserve">
+    <value>白天嗜睡程度在正常范围内。保持规律睡眠。</value>
+  </data>
+  <data name="EssScoreDetail.EssBand.Mild" xml:space="preserve">
+    <value>轻度白天嗜睡。检查一下你的作息和就寝时间。</value>
+  </data>
+  <data name="EssScoreDetail.EssBand.Moderate" xml:space="preserve">
+    <value>中度白天嗜睡。可以考虑和医生谈谈。</value>
+  </data>
+  <data name="TestRecommendationReasonIsi.RecommendationLane.High" xml:space="preserve">
+    <value>失眠严重时，Spin 有助于减轻焦虑想法带来的情绪负荷。</value>
+  </data>
+  <data name="TestRecommendationReasonIsi.RecommendationLane.Mid" xml:space="preserve">
+    <value>经历调整练习有助于重新看待影响睡眠的困难经历。</value>
+  </data>
+  <data name="TestRecommendationReasonEss.RecommendationLane.High" xml:space="preserve">
+    <value>嗜睡严重时，Spin 有助于减轻痛苦记忆带来的情绪负荷。</value>
+  </data>
+  <data name="TestRecommendationReasonEss.RecommendationLane.Mid" xml:space="preserve">
+    <value>经历调整练习有助于重新审视影响清醒程度的习惯。</value>
+  </data>
+  <data name="Phq15Score.Phq15Band.Minimal" xml:space="preserve">
+    <value>0-4 — 躯体负担极轻</value>
+  </data>
+  <data name="Phq15Score.Phq15Band.Low" xml:space="preserve">
+    <value>5-9 — 躯体负担低</value>
+  </data>
+  <data name="Phq15Score.Phq15Band.Moderate" xml:space="preserve">
+    <value>10-14 — 躯体负担中等</value>
+  </data>
+  <data name="Phq15ScoreDetail.Phq15Band.Minimal" xml:space="preserve">
+    <value>躯体症状在正常范围内。保持日常作息和身体活动。</value>
+  </data>
+  <data name="Phq15ScoreDetail.Phq15Band.Low" xml:space="preserve">
+    <value>躯体负担较低。留意睡眠、压力和工作量。</value>
+  </data>
+  <data name="Phq15ScoreDetail.Phq15Band.Moderate" xml:space="preserve">
+    <value>躯体负担中等。可以考虑和医生谈谈这些症状。</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.ExtremelyDissatisfied" xml:space="preserve">
+    <value>5-9 — 极不满意</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.Dissatisfied" xml:space="preserve">
+    <value>10-14 — 不满意</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.SlightlyDissatisfied" xml:space="preserve">
+    <value>15-19 — 有点不满意</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.Neutral" xml:space="preserve">
+    <value>20 — 中立</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.SlightlySatisfied" xml:space="preserve">
+    <value>21-25 — 有点满意</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.Satisfied" xml:space="preserve">
+    <value>26-30 — 满意</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.ExtremelyDissatisfied" xml:space="preserve">
+    <value>生活满意度极低。记录想法和与专业人士交谈可能会有帮助。</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.Dissatisfied" xml:space="preserve">
+    <value>生活满意度低。规律睡眠、运动和有意义的目标会有帮助。</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.SlightlyDissatisfied" xml:space="preserve">
+    <value>生活满意度低于平均水平。加强那些带来意义感的习惯。</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.Neutral" xml:space="preserve">
+    <value>生活满意度中等。日常练习还有提升空间。</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.SlightlySatisfied" xml:space="preserve">
+    <value>生活满意度略高于平均水平。继续那些支持你的练习。</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.Satisfied" xml:space="preserve">
+    <value>生活满意度高。保持那些帮助你维持这种状态的做法。</value>
+  </data>
+  <data name="TestRecommendationReasonPhq15.RecommendationLane.High" xml:space="preserve">
+    <value>躯体负担高时，Spin 有助于减轻痛苦记忆带来的情绪负荷。</value>
+  </data>
+  <data name="TestRecommendationReasonPhq15.RecommendationLane.Mid" xml:space="preserve">
+    <value>经历调整练习有助于重新看待身体与情绪之间的联系。</value>
+  </data>
+  <data name="Pss10Score.Pss10Band.Low" xml:space="preserve">
+    <value>0–13 — 压力低</value>
+  </data>
+  <data name="Pss10Score.Pss10Band.Moderate" xml:space="preserve">
+    <value>14–26 — 压力中等</value>
+  </data>
+  <data name="Pss10ScoreDetail.Pss10Band.Low" xml:space="preserve">
+    <value>感知压力在正常范围内。保持休息和恢复的习惯。</value>
+  </data>
+  <data name="Pss10ScoreDetail.Pss10Band.Moderate" xml:space="preserve">
+    <value>压力中等。呼吸和着陆练习可以缓解紧张。</value>
+  </data>
+  <data name="HadsAnxietyScore.HadsBand.Normal" xml:space="preserve">
+    <value>0–7 — 正常</value>
+  </data>
+  <data name="HadsAnxietyScore.HadsBand.Borderline" xml:space="preserve">
+    <value>8–10 — 临界</value>
+  </data>
+  <data name="HadsAnxietyScoreDetail.HadsBand.Normal" xml:space="preserve">
+    <value>焦虑症状在正常范围内。</value>
+  </data>
+  <data name="HadsAnxietyScoreDetail.HadsBand.Borderline" xml:space="preserve">
+    <value>焦虑处于临界水平。呼吸和着陆练习有助于稳定你的感受。</value>
+  </data>
+  <data name="HadsDepressionScore.HadsBand.Normal" xml:space="preserve">
+    <value>0–7 — 正常</value>
+  </data>
+  <data name="HadsDepressionScore.HadsBand.Borderline" xml:space="preserve">
+    <value>8–10 — 临界</value>
+  </data>
+  <data name="HadsDepressionScoreDetail.HadsBand.Normal" xml:space="preserve">
+    <value>抑郁症状在正常范围内。</value>
+  </data>
+  <data name="HadsDepressionScoreDetail.HadsBand.Borderline" xml:space="preserve">
+    <value>临界水平。迈出小步和写下想法可能会有帮助。</value>
+  </data>
+  <data name="RsesScore.RsesBand.Low" xml:space="preserve">
+    <value>0–14 — 自尊偏低</value>
+  </data>
+  <data name="RsesScore.RsesBand.Normal" xml:space="preserve">
+    <value>15–25 — 自尊正常</value>
+  </data>
+  <data name="RsesScoreDetail.RsesBand.Low" xml:space="preserve">
+    <value>自尊偏低。自我关怀和温和的自我对话可能会有帮助。</value>
+  </data>
+  <data name="RsesScoreDetail.RsesBand.Normal" xml:space="preserve">
+    <value>自尊在正常范围内。在困难时期继续支持自己。</value>
+  </data>
+  <data name="TestRecommendationReasonPss10.RecommendationLane.High" xml:space="preserve">
+    <value>压力高时，Spin 有助于减轻情绪负荷。</value>
+  </data>
+  <data name="TestRecommendationReasonPss10.RecommendationLane.Mid" xml:space="preserve">
+    <value>压力中等时，呼吸可以让神经系统平静下来。</value>
+  </data>
+  <data name="TestRecommendationReasonHadsAnxiety.RecommendationLane.High" xml:space="preserve">
+    <value>焦虑偏高时，Spin 可以减轻情绪负荷。</value>
+  </data>
+  <data name="TestRecommendationReasonHadsAnxiety.RecommendationLane.Mid" xml:space="preserve">
+    <value>焦虑处于临界时，呼吸有助于稳定你的感受。</value>
+  </data>
+  <data name="TestRecommendationReasonHadsDepression.RecommendationLane.High" xml:space="preserve">
+    <value>抑郁偏高时，One small step 帮助你重新找回动力。</value>
+  </data>
+  <data name="TestRecommendationReasonHadsDepression.RecommendationLane.Mid" xml:space="preserve">
+    <value>症状处于临界时，Paper 帮助你卸下想法。</value>
+  </data>
+  <data name="TestRecommendationReasonRses.RecommendationLane.High" xml:space="preserve">
+    <value>自尊偏低时，Kind words to yourself 可以缓和自我批评。</value>
+  </data>
+  <data name="TestRecommendationReasonRses.RecommendationLane.Mid" xml:space="preserve">
+    <value>One small step 能增强你有能力行动的感觉。</value>
+  </data>
+  <data name="TodayRecommendationReason.default" xml:space="preserve">
+    <value>今日练习</value>
+  </data>
+  <data name="TherapyProgramWeekGoal.default" xml:space="preserve">
+    <value>巩固成果，自主选择</value>
+  </data>
+  <data name="BeckScore.default" xml:space="preserve">
+    <value>30-63 - 重度抑郁</value>
+  </data>
+  <data name="BeckScoreDetail.default" xml:space="preserve">
+    <value>重度抑郁。强烈建议寻求专业帮助。</value>
+  </data>
+  <data name="PochebutScore.default" xml:space="preserve">
+    <value>25-40 - 攻击性高</value>
+  </data>
+  <data name="PochebutScoreDetail.default" xml:space="preserve">
+    <value>攻击性高。降低诱因重要性、与诱因保持距离的练习特别有用。</value>
+  </data>
+  <data name="Gad7Score.default" xml:space="preserve">
+    <value>15-21 — 重度焦虑</value>
+  </data>
+  <data name="Gad7ScoreDetail.default" xml:space="preserve">
+    <value>重度焦虑。请咨询心理咨询师或医生。</value>
+  </data>
+  <data name="K10Score.default" xml:space="preserve">
+    <value>30-50 — 高度困扰</value>
+  </data>
+  <data name="K10ScoreDetail.default" xml:space="preserve">
+    <value>高度困扰。强烈建议寻求专业帮助。</value>
+  </data>
+  <data name="Who5Score.default" xml:space="preserve">
+    <value>19-25 — 幸福感良好</value>
+  </data>
+  <data name="Who5ScoreDetail.default" xml:space="preserve">
+    <value>幸福感良好。继续那些支持这种状态的练习。</value>
+  </data>
+  <data name="TestRecommendationReasonK10.default" xml:space="preserve">
+    <value>作为预防，把想法写在纸上会有帮助。</value>
+  </data>
+  <data name="Phq9Score.default" xml:space="preserve">
+    <value>20-27 — 重度抑郁</value>
+  </data>
+  <data name="Phq9ScoreDetail.default" xml:space="preserve">
+    <value>重度抑郁。建议尽快寻求专业帮助。</value>
+  </data>
+  <data name="IsiScore.default" xml:space="preserve">
+    <value>22-28 — 重度失眠</value>
+  </data>
+  <data name="IsiScoreDetail.default" xml:space="preserve">
+    <value>重度失眠。请咨询医生或睡眠专科医生。</value>
+  </data>
+  <data name="EssScore.default" xml:space="preserve">
+    <value>16-24 — 重度嗜睡</value>
+  </data>
+  <data name="EssScoreDetail.default" xml:space="preserve">
+    <value>白天严重嗜睡。建议就医咨询。</value>
+  </data>
+  <data name="TestRecommendationReasonIsi.default" xml:space="preserve">
+    <value>作为预防，把想法写在纸上会有帮助。</value>
+  </data>
+  <data name="TestRecommendationReasonEss.default" xml:space="preserve">
+    <value>作为预防，把想法写在纸上会有帮助。</value>
+  </data>
+  <data name="Phq15Score.default" xml:space="preserve">
+    <value>15-30 — 躯体负担高</value>
+  </data>
+  <data name="Phq15ScoreDetail.default" xml:space="preserve">
+    <value>躯体负担高。建议进行医学检查。</value>
+  </data>
+  <data name="SwlsScore.default" xml:space="preserve">
+    <value>31-35 — 极其满意</value>
+  </data>
+  <data name="SwlsScoreDetail.default" xml:space="preserve">
+    <value>生活满意度非常高。继续照顾好你的资源和平衡。</value>
+  </data>
+  <data name="TestRecommendationReasonPhq15.default" xml:space="preserve">
+    <value>作为预防，把想法写在纸上会有帮助。</value>
+  </data>
+  <data name="Pss10Score.default" xml:space="preserve">
+    <value>27–40 — 压力高</value>
+  </data>
+  <data name="Pss10ScoreDetail.default" xml:space="preserve">
+    <value>感知压力高。可以考虑减轻负担并寻求支持。</value>
+  </data>
+  <data name="HadsAnxietyScore.default" xml:space="preserve">
+    <value>11–21 — 焦虑偏高</value>
+  </data>
+  <data name="HadsAnxietyScoreDetail.default" xml:space="preserve">
+    <value>焦虑偏高。可以考虑寻求专业支持，并做自我调节练习。</value>
+  </data>
+  <data name="HadsDepressionScore.default" xml:space="preserve">
+    <value>11–21 — 抑郁偏高</value>
+  </data>
+  <data name="HadsDepressionScoreDetail.default" xml:space="preserve">
+    <value>症状偏高。建议寻求专业支持。</value>
+  </data>
+  <data name="RsesScore.default" xml:space="preserve">
+    <value>26–30 — 自尊较高</value>
+  </data>
+  <data name="RsesScoreDetail.default" xml:space="preserve">
+    <value>自尊较高。在自我接纳和现实的自我评价之间保持平衡。</value>
+  </data>
+  <data name="TestRecommendationReasonPss10.default" xml:space="preserve">
+    <value>作为预防，把想法写在纸上会有帮助。</value>
+  </data>
+  <data name="TestRecommendationReasonHadsAnxiety.default" xml:space="preserve">
+    <value>着陆练习帮助身体保持平静。</value>
+  </data>
+  <data name="TestRecommendationReasonHadsDepression.default" xml:space="preserve">
+    <value>想法记录有助于处理负面解读。</value>
+  </data>
+  <data name="TestRecommendationReasonRses.default" xml:space="preserve">
+    <value>经历调整练习能加强充满资源的状态。</value>
+  </data>
+  <data name="TodayRecommendationReasonLowMood.1" xml:space="preserve">
+    <value>心情低落时</value>
+  </data>
+  <data name="TodayRecommendationReasonContinueDraft.1" xml:space="preserve">
+    <value>从上次停下的地方继续</value>
+  </data>
+  <data name="WeeklyInsightTestImprovedPart.1" xml:space="preserve">
+    <value>测试 ↑</value>
+  </data>
+  <data name="WeeklyInsightTestWorsePart.1" xml:space="preserve">
+    <value>测试 ↓</value>
+  </data>
+  <data name="HeckHessScore.1" xml:space="preserve">
+    <value>0-24 - 神经质低</value>
+  </data>
+  <data name="HeckHessScore.2" xml:space="preserve">
+    <value>25-40 - 神经质高</value>
+  </data>
+  <data name="HeckHessScoreDetail.1" xml:space="preserve">
+    <value>情绪反应在正常范围内。继续留意压力和休息。</value>
+  </data>
+  <data name="HeckHessScoreDetail.2" xml:space="preserve">
+    <value>神经质偏高。两极练习和重要性比较练习可以缓解紧张。</value>
+  </data>
+  <data name="HaerScore.1" xml:space="preserve">
+    <value>0-28 - 精神病态倾向低</value>
+  </data>
+  <data name="HaerScore.2" xml:space="preserve">
+    <value>29-40 - 精神病态倾向高</value>
+  </data>
+  <data name="HaerScoreDetail.1" xml:space="preserve">
+    <value>分数处于低区间。这是筛查工具，不是诊断。</value>
+  </data>
+  <data name="HaerScoreDetail.2" xml:space="preserve">
+    <value>分数偏高。处理过去的经历和信念可能会有帮助。</value>
+  </data>
+  <data name="TestRecommendationReasonBeck.1" xml:space="preserve">
+    <value>有抑郁症状时，Spin 有助于减轻痛苦记忆带来的情绪负荷。</value>
+  </data>
+  <data name="TestRecommendationReasonBeck.2" xml:space="preserve">
+    <value>作为预防，把想法写在纸上会有帮助。</value>
+  </data>
+  <data name="TestRecommendationReasonHeckHess.1" xml:space="preserve">
+    <value>神经质高时，两极练习帮助你看到事情的两面。</value>
+  </data>
+  <data name="TestRecommendationReasonHeckHess.2" xml:space="preserve">
+    <value>比较重要性能帮助你拉开距离、看得更全面。</value>
+  </data>
+  <data name="TestRecommendationReasonHaer.1" xml:space="preserve">
+    <value>“50 years later”把问题放到更远的未来去看。</value>
+  </data>
+  <data name="TestRecommendationReasonHaer.2" xml:space="preserve">
+    <value>经历调整练习有助于重新审视信念。</value>
+  </data>
+  <data name="TestRecommendationReasonPochebut.1" xml:space="preserve">
+    <value>“Shrink it”在视觉上降低诱因的重要性。</value>
+  </data>
+  <data name="TestRecommendationReasonPochebut.2" xml:space="preserve">
+    <value>“Check it”帮助你放下反复打转的想法。</value>
+  </data>
+  <data name="TestRecommendationReasonGad7.1" xml:space="preserve">
+    <value>焦虑时，两极练习帮助你看到情境的两面。</value>
+  </data>
+  <data name="TestRecommendationReasonGad7.2" xml:space="preserve">
+    <value>比较重要性能帮助你拉开距离、看得更全面。</value>
+  </data>
+  <data name="TestRecommendationReasonWho5.1" xml:space="preserve">
+    <value>幸福感低时，把想法写在纸上会有帮助。</value>
+  </data>
+  <data name="TestRecommendationReasonWho5.2" xml:space="preserve">
+    <value>经历调整练习能增强意义感和资源感。</value>
+  </data>
+  <data name="TestRecommendationReasonPhq9.1" xml:space="preserve">
+    <value>有抑郁症状时，Spin 有助于减轻痛苦记忆带来的情绪负荷。</value>
+  </data>
+  <data name="TestRecommendationReasonPhq9.2" xml:space="preserve">
+    <value>作为预防，把想法写在纸上会有帮助。</value>
+  </data>
+  <data name="ScoffScore.1" xml:space="preserve">
+    <value>0-1 — 筛查阴性</value>
+  </data>
+  <data name="ScoffScore.2" xml:space="preserve">
+    <value>2-5 — 筛查阳性</value>
+  </data>
+  <data name="ScoffScoreDetail.1" xml:space="preserve">
+    <value>本次筛查未发现进食障碍的迹象。</value>
+  </data>
+  <data name="ScoffScoreDetail.2" xml:space="preserve">
+    <value>筛查阳性。请咨询进食障碍方面的专科医生。</value>
+  </data>
+  <data name="TestRecommendationReasonScoff.1" xml:space="preserve">
+    <value>有进食障碍迹象时，Spin 有助于减轻痛苦记忆带来的情绪负荷。</value>
+  </data>
+  <data name="TestRecommendationReasonScoff.2" xml:space="preserve">
+    <value>作为预防，把想法写在纸上会有帮助。</value>
+  </data>
+  <data name="TestRecommendationReasonSwls.1" xml:space="preserve">
+    <value>生活满意度低时，把想法写在纸上会有帮助。</value>
+  </data>
+  <data name="TestRecommendationReasonSwls.2" xml:space="preserve">
+    <value>经历调整练习能增强意义感和资源感。</value>
+  </data>
+  <data name="Phq2Score.1" xml:space="preserve">
+    <value>0–2 — 筛查阴性</value>
+  </data>
+  <data name="Phq2Score.2" xml:space="preserve">
+    <value>3–6 — 筛查阳性</value>
+  </data>
+  <data name="Phq2ScoreDetail.1" xml:space="preserve">
+    <value>抑郁症状不明显。继续留意自己的心情。</value>
+  </data>
+  <data name="Phq2ScoreDetail.2" xml:space="preserve">
+    <value>抑郁筛查阳性。可以考虑做 PHQ-9 或咨询专业人士。</value>
+  </data>
+  <data name="Gad2Score.1" xml:space="preserve">
+    <value>0–2 — 筛查阴性</value>
+  </data>
+  <data name="Gad2Score.2" xml:space="preserve">
+    <value>3–6 — 筛查阳性</value>
+  </data>
+  <data name="Gad2ScoreDetail.1" xml:space="preserve">
+    <value>焦虑症状不明显。继续留意自己的感受。</value>
+  </data>
+  <data name="Gad2ScoreDetail.2" xml:space="preserve">
+    <value>焦虑筛查阳性。可以考虑做 GAD-7 或咨询专业人士。</value>
+  </data>
+  <data name="TestRecommendationReasonPhq2.1" xml:space="preserve">
+    <value>有抑郁迹象时，One small step 帮助你重新找回动力。</value>
+  </data>
+  <data name="TestRecommendationReasonPhq2.2" xml:space="preserve">
+    <value>作为预防，把想法写在纸上会有帮助。</value>
+  </data>
+  <data name="TestRecommendationReasonGad2.1" xml:space="preserve">
+    <value>焦虑时，方块呼吸能让身体平静下来。</value>
+  </data>
+  <data name="TestRecommendationReasonGad2.2" xml:space="preserve">
+    <value>着陆练习帮助你留在当下。</value>
+  </data>
+  <data name="PracticeReminderBodyNamed.1" xml:space="preserve">
+    <value>今天：{0}。花几分钟练习一下吧。</value>
+  </data>
+  <data name="WeeklyInsightLine.1" xml:space="preserve">
+    <value>本周：{0} {2}</value>
+  </data>
+  <data name="WeeklyInsightLine.2" xml:space="preserve">
+    <value>本周：{0} {3} · 心情 {2}</value>
+  </data>
+  <data name="TodayMoodLine.1" xml:space="preserve">
+    <value>今天：{0} {1}/{2}</value>
+  </data>
+  <data name="JournalDayEmptyHint.1" xml:space="preserve">
+    <value>{0:d} 没有记录——你可以添加一条</value>
+  </data>
+  <data name="JournalOverviewInsightLine.1" xml:space="preserve">
+    <value>{0} {3} · 平均 {2}</value>
+  </data>
+  <data name="JournalOverviewInsightLine.2" xml:space="preserve">
+    <value>{0} {4} · 平均 {2} · 心情 {3}</value>
+  </data>
+  <data name="JournalOverviewInsightLine.3" xml:space="preserve">
+    <value>{0} · 连续 {1}</value>
+  </data>
+  <data name="JournalWeekInsightLine.1" xml:space="preserve">
+    <value>心情 {0}</value>
+  </data>
+  <data name="JournalWeekInsightLine.2" xml:space="preserve">
+    <value>连续 {0}</value>
+  </data>
+  <data name="JournalWeekInsightLine.3" xml:space="preserve">
+    <value>本周 {0} {2}</value>
+  </data>
+  <data name="JournalBestWorstPill.1" xml:space="preserve">
+    <value>最好 {0} {1} · 最差 {2} {3}</value>
+  </data>
+  <data name="JournalTimelineStreakLine.1" xml:space="preserve">
+    <value>连续打卡：{0}</value>
+  </data>
+  <data name="JournalOnThisDayLastYear.1" xml:space="preserve">
+    <value>一年前：{0}</value>
+  </data>
+  <data name="JournalOnThisDayLastYear.2" xml:space="preserve">
+    <value>一年前：{0} · {1}</value>
+  </data>
+  <data name="PracticeMoodDelta.1" xml:space="preserve">
+    <value>之前 {0} {1}/5 → 现在 {2} {3}/5</value>
+  </data>
+  <data name="DataBackupImportedToast.1" xml:space="preserve">
+    <value>已添加：心情 {0}，测试 {1}，练习 {2}，对话 {3}。已存在：{4}</value>
+  </data>
+  <data name="DataBackupImportedToast.2" xml:space="preserve">
+    <value>已添加：心情 {0}，测试 {1}，练习 {2}，对话 {3}</value>
+  </data>
+  <data name="JournalShareText.1" xml:space="preserve">
+    <value>{0}：心情 {1}</value>
+  </data>
+  <data name="JournalShareText.2" xml:space="preserve">
+    <value>{0}：心情 {1}
+{2}</value>
+  </data>
+  <data name="TherapyProgramBanner.1" xml:space="preserve">
+    <value>{0} · 第 {1} 周：{2}</value>
+  </data>
+  <data name="TherapyProgramBanner.2" xml:space="preserve">
+    <value>{0} · 第 {1} 周 · {2}/{3}</value>
+  </data>
+  <data name="TestResultDuration.1" xml:space="preserve">
+    <value>{0} 秒</value>
+  </data>
+  <data name="TestResultDuration.2" xml:space="preserve">
+    <value>{0} 分 {1} 秒</value>
+  </data>
+  <data name="BreathInhale" xml:space="preserve">
+    <value>吸气</value>
+  </data>
+  <data name="BreathHold" xml:space="preserve">
+    <value>屏息</value>
+  </data>
+  <data name="BreathExhale" xml:space="preserve">
+    <value>呼气</value>
+  </data>
+  <data name="BreathStart" xml:space="preserve">
+    <value>开始</value>
+  </data>
+  <data name="BreathFullscreen" xml:space="preserve">
+    <value>全屏</value>
+  </data>
+  <data name="ReliefDescription" xml:space="preserve">
+    <value>紧张程度：之前 {0}，现在 {1}</value>
+  </data>
+  <data name="BreathStop" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="BreathAgain" xml:space="preserve">
+    <value>再来一次</value>
+  </data>
+  <data name="BreathCycleFormat" xml:space="preserve">
+    <value>第 {0} 轮，共 {1} 轮</value>
+  </data>
+  <data name="BreathReady" xml:space="preserve">
+    <value>舒服地坐好，点击“开始”。跟着圆圈呼吸。</value>
+  </data>
+  <data name="BreathDone" xml:space="preserve">
+    <value>做得好。现在评估一下练习后的紧张程度。</value>
+  </data>
+  <data name="BreathCircleLabel" xml:space="preserve">
+    <value>呼吸圆圈：吸气时变大，呼气时变小</value>
+  </data>
+  <data name="TensionPickHint" xml:space="preserve">
+    <value>沿着滑条滑动：0 到 10</value>
+  </data>
+  <data name="TensionPickConfirm" xml:space="preserve">
+    <value>发送：{0}</value>
+  </data>
+  <data name="TensionChangeFormat" xml:space="preserve">
+    <value>之前 {0} → 现在 {1}</value>
+  </data>
+  <data name="TensionCalmWord" xml:space="preserve">
+    <value>平静</value>
+  </data>
+  <data name="TensionStrongWord" xml:space="preserve">
+    <value>非常强烈</value>
+  </data>
+  <data name="ChartPracticeLegend" xml:space="preserve">
+    <value>◆ — 一次练习（之后心情上升则为绿色）</value>
+  </data>
+  <data name="SkeletonLoadingLabel" xml:space="preserve">
+    <value>加载中</value>
+  </data>
+  <data name="PracticeFilterBody" xml:space="preserve">
+    <value>身体</value>
+  </data>
+  <data name="PracticeFilterMind" xml:space="preserve">
+    <value>想法</value>
+  </data>
+  <data name="PracticeFilterHeart" xml:space="preserve">
+    <value>内心</value>
+  </data>
+  <data name="PracticeFilterAction" xml:space="preserve">
+    <value>行动</value>
+  </data>
+  <data name="PracticeVoiceStart" xml:space="preserve">
+    <value>语音输入回答</value>
+  </data>
+  <data name="PracticeVoiceStop" xml:space="preserve">
+    <value>停止录音</value>
+  </data>
+  <data name="PracticeVoiceListening" xml:space="preserve">
+    <value>正在聆听…请说话，停顿即结束录音</value>
+  </data>
+  <data name="PracticeVoiceHolding" xml:space="preserve">
+    <value>请说话…松开即结束</value>
+  </data>
+  <data name="PracticeVoiceNothingHeard" xml:space="preserve">
+    <value>没有听清——请再试一次</value>
+  </data>
+  <data name="PracticeVoicePermissionDenied" xml:space="preserve">
+    <value>请在手机设置中允许使用麦克风，才能语音输入回答</value>
+  </data>
+  <data name="PracticeVoiceUnavailable" xml:space="preserve">
+    <value>设备上的语音识别不可用。请在手机设置中下载离线语言包</value>
+  </data>
+  <data name="PracticeRecentProblem" xml:space="preserve">
+    <value>和上次一样：{0}</value>
+  </data>
+  <data name="PracticeAssistTitle" xml:space="preserve">
+    <value>现成的句子——选一句，改成你自己的话</value>
+  </data>
+  <data name="PracticeEmotionHint" xml:space="preserve">
+    <value>哪个最接近？可以多选</value>
+  </data>
+  <data name="TechniqueStepSkip" xml:space="preserve">
+    <value>跳过</value>
+  </data>
+  <data name="StageEmptyText" xml:space="preserve">
+    <value>先写下或说出困扰你的事</value>
+  </data>
+  <data name="StageAgain" xml:space="preserve">
+    <value>再来一次</value>
+  </data>
+  <data name="StageResizeTitle" xml:space="preserve">
+    <value>把它变小</value>
+  </data>
+  <data name="StageResizeHint" xml:space="preserve">
+    <value>用两指捏合卡片或点击按钮——问题会缩小并飘远</value>
+  </data>
+  <data name="StageResizeAction" xml:space="preserve">
+    <value>推到远处</value>
+  </data>
+  <data name="StageResizeDone" xml:space="preserve">
+    <value>又小又远。现在感觉如何？</value>
+  </data>
+  <data name="StageWhiteSpotTitle" xml:space="preserve">
+    <value>白色光斑</value>
+  </data>
+  <data name="StageWhiteSpotHint" xml:space="preserve">
+    <value>看着画面融化在白光里。平静地呼吸</value>
+  </data>
+  <data name="StageWhiteSpotAction" xml:space="preserve">
+    <value>开始——40 秒</value>
+  </data>
+  <data name="StageWhiteSpotStop" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="StageWhiteSpotSeconds" xml:space="preserve">
+    <value>还剩 {0} 秒</value>
+  </data>
+  <data name="StageWhiteSpotDone" xml:space="preserve">
+    <value>只剩均匀的白光。留意内心的感受</value>
+  </data>
+  <data name="StagePaperTitle" xml:space="preserve">
+    <value>放下这个想法</value>
+  </data>
+  <data name="StagePaperHint" xml:space="preserve">
+    <value>向上滑动纸张或使用按钮：揉皱、撕碎、扔掉</value>
+  </data>
+  <data name="StagePaperCrumple" xml:space="preserve">
+    <value>揉皱</value>
+  </data>
+  <data name="StagePaperTear" xml:space="preserve">
+    <value>撕碎</value>
+  </data>
+  <data name="StagePaperThrow" xml:space="preserve">
+    <value>扔掉</value>
+  </data>
+  <data name="StagePaperDone" xml:space="preserve">
+    <value>纸张不见了。慢慢地呼气</value>
+  </data>
+  <data name="StageRepeatTitle" xml:space="preserve">
+    <value>大声说出来</value>
+  </data>
+  <data name="StageRepeatHint" xml:space="preserve">
+    <value>慢慢地说出这句话，就像第一次听到一样，然后点击圆圈</value>
+  </data>
+  <data name="StageRepeatCount" xml:space="preserve">
+    <value>重复次数：{0}</value>
+  </data>
+  <data name="StageRepeatCheck" xml:space="preserve">
+    <value>仔细听：这句话听起来还像开始时那么有力吗？</value>
+  </data>
+  <data name="StageRepeatButton" xml:space="preserve">
+    <value>已大声说出</value>
+  </data>
+  <data name="StagePauseTitle" xml:space="preserve">
+    <value>没有这个想法的一分钟</value>
+  </data>
+  <data name="StagePauseHint" xml:space="preserve">
+    <value>让这个想法离开一分钟：只是跟着圆圈呼吸</value>
+  </data>
+  <data name="StagePauseStart" xml:space="preserve">
+    <value>开始这一分钟</value>
+  </data>
+  <data name="StagePauseStop" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="StagePauseDone" xml:space="preserve">
+    <value>一分钟结束了。身体和心情有什么变化？</value>
+  </data>
+  <data name="StageFutureTitle" xml:space="preserve">
+    <value>从未来回望</value>
+  </data>
+  <data name="StageFutureHint" xml:space="preserve">
+    <value>移动滑块，看看问题如何随时间变化</value>
+  </data>
+  <data name="StageFutureStop0" xml:space="preserve">
+    <value>现在</value>
+  </data>
+  <data name="StageFutureStop1" xml:space="preserve">
+    <value>一个月后</value>
+  </data>
+  <data name="StageFutureStop2" xml:space="preserve">
+    <value>一年后</value>
+  </data>
+  <data name="StageFutureStop3" xml:space="preserve">
+    <value>5 年后</value>
+  </data>
+  <data name="StageFutureStop4" xml:space="preserve">
+    <value>10 年后</value>
+  </data>
+  <data name="StageFutureStop5" xml:space="preserve">
+    <value>50 年后</value>
+  </data>
+  <data name="TechniqueStepsSummary" xml:space="preserve">
+    <value>练习步骤：{0}</value>
+  </data>
+  <data name="PracticeMoreChips" xml:space="preserve">
+    <value>更多 +{0}</value>
+  </data>
+  <data name="PracticeAnswersTitle" xml:space="preserve">
+    <value>你的回答</value>
+  </data>
+  <data name="ExposureEntryTitle" xml:space="preserve">
+    <value>恐惧阶梯</value>
+  </data>
+  <data name="ExposureEntrySubtitle" xml:space="preserve">
+    <value>一步步走向你害怕的事：减弱焦虑最有效的方法</value>
+  </data>
+  <data name="ExposureTitle" xml:space="preserve">
+    <value>恐惧阶梯</value>
+  </data>
+  <data name="ExposureIntro" xml:space="preserve">
+    <value>焦虑靠回避维持：我们绕开让自己害怕的事，或者带着“安全网”去面对，于是永远发现不了危险其实被夸大了。在这里，你将在真实生活中一步步检验自己的恐惧。这是研究最充分、最有效的焦虑自助方法。</value>
+  </data>
+  <data name="ExposureScreenTitle" xml:space="preserve">
+    <value>先回答几个问题</value>
+  </data>
+  <data name="ExposureScreenLead" xml:space="preserve">
+    <value>这种方法并不适合每个人在没有专业人士的情况下独自使用。请如实回答：这是为了你的安全。</value>
+  </data>
+  <data name="ExposureScreenSelfHarm" xml:space="preserve">
+    <value>你现在有自杀或伤害自己的想法吗？</value>
+  </data>
+  <data name="ExposureScreenTrauma" xml:space="preserve">
+    <value>这种恐惧是否与你经历过的创伤（暴力、灾难、战争）有关，并伴有闪回或噩梦？</value>
+  </data>
+  <data name="ExposureScreenRituals" xml:space="preserve">
+    <value>仪式性行为或反复检查是否每天占用超过一小时？</value>
+  </data>
+  <data name="ExposureScreenDissociation" xml:space="preserve">
+    <value>你是否有时觉得世界或自己不真实、会“断片”、听到声音或看到不存在的东西？</value>
+  </data>
+  <data name="ExposureScreenSubstances" xml:space="preserve">
+    <value>你是否用酒精或其他物质来麻痹焦虑？</value>
+  </data>
+  <data name="ExposureScreenBody" xml:space="preserve">
+    <value>你是否患有心脏病、癫痫、哮喘，正在怀孕，或最近做过手术、受过伤？</value>
+  </data>
+  <data name="ExposureContinue" xml:space="preserve">
+    <value>继续</value>
+  </data>
+  <data name="ExposureReferralTitle" xml:space="preserve">
+    <value>最好在专业人士陪伴下进行</value>
+  </data>
+  <data name="ExposureReferral" xml:space="preserve">
+    <value>根据你的回答，最好和治疗师一起处理这种恐惧：有创伤、强迫性仪式、解离或物质使用时，这种方法需要根据你的情况调整，独自进行并不安全。这不是定论，而是说明你值得更有力的帮助。在寻找帮助期间，应用里的呼吸和着陆练习会陪着你。</value>
+  </data>
+  <data name="ExposureCrisisAction" xml:space="preserve">
+    <value>我现在需要帮助</value>
+  </data>
+  <data name="ExposureFearTitle" xml:space="preserve">
+    <value>我的恐惧</value>
+  </data>
+  <data name="ExposureFearKindQuestion" xml:space="preserve">
+    <value>你害怕什么？</value>
+  </data>
+  <data name="ExposureFearedQuestion" xml:space="preserve">
+    <value>你认为最坏的情况下会发生什么？</value>
+  </data>
+  <data name="ExposureFearedPlaceholder" xml:space="preserve">
+    <value>例如：所有人都会看出我很紧张</value>
+  </data>
+  <data name="ExposureFearedBelief" xml:space="preserve">
+    <value>你有多确定？</value>
+  </data>
+  <data name="ExposureSafetyQuestion" xml:space="preserve">
+    <value>你会做什么来防止它发生？</value>
+  </data>
+  <data name="ExposureSafetyHint" xml:space="preserve">
+    <value>这就是安全网。它能让你平静一分钟，却让大脑学不到：没有它也是安全的。</value>
+  </data>
+  <data name="ExposureAvoidedQuestion" xml:space="preserve">
+    <value>因为这种恐惧，你回避了什么？</value>
+  </data>
+  <data name="ExposureCircle" xml:space="preserve">
+    <value>焦虑循环：一个情境、一个可怕的预测、焦虑、回避或安全网、“呼，过去了”，于是恐惧看似得到了证实。阶梯会打破这个循环。</value>
+  </data>
+  <data name="ExposureNext" xml:space="preserve">
+    <value>下一步</value>
+  </data>
+  <data name="ExposureLadderTitle" xml:space="preserve">
+    <value>阶梯的台阶</value>
+  </data>
+  <data name="ExposureLadderLead" xml:space="preserve">
+    <value>选择 6 到 10 个情境，从略感不适到最困难的。右边的数字表示会有多害怕，从 0 到 100；用 − 和 + 调整。</value>
+  </data>
+  <data name="ExposureExamplesTitle" xml:space="preserve">
+    <value>示例：点击添加</value>
+  </data>
+  <data name="ExposureOwnStepTitle" xml:space="preserve">
+    <value>你自己的台阶</value>
+  </data>
+  <data name="ExposureOwnStepPlaceholder" xml:space="preserve">
+    <value>例如：给银行打电话</value>
+  </data>
+  <data name="ExposureOwnStepDistress" xml:space="preserve">
+    <value>会有多害怕（0 到 10）</value>
+  </data>
+  <data name="ExposureAdd" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="ExposureChosenTitle" xml:space="preserve">
+    <value>我的阶梯</value>
+  </data>
+  <data name="ExposureLadderCount" xml:space="preserve">
+    <value>台阶：{0}。至少需要 {1} 个。</value>
+  </data>
+  <data name="ExposureSaveLadder" xml:space="preserve">
+    <value>保存阶梯</value>
+  </data>
+  <data name="ExposureEasier" xml:space="preserve">
+    <value>更容易</value>
+  </data>
+  <data name="ExposureHarder" xml:space="preserve">
+    <value>更难</value>
+  </data>
+  <data name="ExposureRemoveStep" xml:space="preserve">
+    <value>删除这个台阶</value>
+  </data>
+  <data name="ExposureProgressPredictions" xml:space="preserve">
+    <value>已检验的预测：{0}。成真的：{1}。</value>
+  </data>
+  <data name="ExposureProgressSteps" xml:space="preserve">
+    <value>已攻克的台阶：{0}/{1}</value>
+  </data>
+  <data name="ExposureProgressBeliefDrop" xml:space="preserve">
+    <value>对恐惧的相信程度平均下降 {0}（满分 10）</value>
+  </data>
+  <data name="ExposureFearSummary" xml:space="preserve">
+    <value>你的恐惧：“{0}”</value>
+  </data>
+  <data name="ExposureCurrentTitle" xml:space="preserve">
+    <value>下一个台阶</value>
+  </data>
+  <data name="ExposureStartTask" xml:space="preserve">
+    <value>准备任务</value>
+  </data>
+  <data name="ExposurePendingTitle" xml:space="preserve">
+    <value>任务正在等你的反馈</value>
+  </data>
+  <data name="ExposureReportAction" xml:space="preserve">
+    <value>说说进展如何</value>
+  </data>
+  <data name="ExposureEasierHint" xml:space="preserve">
+    <value>这个台阶目前太陡了，这没关系。在中间加一个：同样的情境，稍微容易一点（时间更短、有人在旁边、选在安静的时候）。</value>
+  </data>
+  <data name="ExposureLadderDone" xml:space="preserve">
+    <value>你已经爬完了整个阶梯。恐惧不再主导这些情境。为了保持下去，时不时回到这些情境中，换新的地方、和新的人一起。</value>
+  </data>
+  <data name="ExposureStepMastered" xml:space="preserve">
+    <value>已攻克</value>
+  </data>
+  <data name="ExposureStepTasks" xml:space="preserve">
+    <value>任务：{0}</value>
+  </data>
+  <data name="ExposureLadderSection" xml:space="preserve">
+    <value>阶梯</value>
+  </data>
+  <data name="ExposureEditFear" xml:space="preserve">
+    <value>编辑我的恐惧</value>
+  </data>
+  <data name="ExposureEditLadder" xml:space="preserve">
+    <value>编辑阶梯</value>
+  </data>
+  <data name="ExposureDelete" xml:space="preserve">
+    <value>删除阶梯</value>
+  </data>
+  <data name="ExposureDeleteConfirm" xml:space="preserve">
+    <value>再点一次即全部删除</value>
+  </data>
+  <data name="ExposureBeforeTitle" xml:space="preserve">
+    <value>任务之前</value>
+  </data>
+  <data name="ExposurePredictionQuestion" xml:space="preserve">
+    <value>你认为会发生什么？</value>
+  </data>
+  <data name="ExposurePredictionPlaceholder" xml:space="preserve">
+    <value>尽量具体：别人会做什么、说什么，你会怎样</value>
+  </data>
+  <data name="ExposureBeliefBefore" xml:space="preserve">
+    <value>你有多确定它会发生？</value>
+  </data>
+  <data name="ExposureDropQuestion" xml:space="preserve">
+    <value>这次你会放下哪个安全网？</value>
+  </data>
+  <data name="ExposureRules" xml:space="preserve">
+    <value>规则：一直待到你检验了预测为止，而不是等到焦虑消失。不用安全网。会有焦虑，这很正常，也是安全的。你随时可以停下。</value>
+  </data>
+  <data name="ExposureGo" xml:space="preserve">
+    <value>我去做</value>
+  </data>
+  <data name="ExposureAfterTitle" xml:space="preserve">
+    <value>进展如何？</value>
+  </data>
+  <data name="ExposurePredictionReminder" xml:space="preserve">
+    <value>你预测的是：“{0}”，确定程度为 {1}/10。</value>
+  </data>
+  <data name="ExposureWhatHappenedQuestion" xml:space="preserve">
+    <value>实际发生了什么？</value>
+  </data>
+  <data name="ExposureWhatHappenedPlaceholder" xml:space="preserve">
+    <value>事实，就像摄像机看到的那样</value>
+  </data>
+  <data name="ExposureOutcomeQuestion" xml:space="preserve">
+    <value>预测成真了吗？</value>
+  </data>
+  <data name="ExposureOutcomeNo" xml:space="preserve">
+    <value>没有</value>
+  </data>
+  <data name="ExposureOutcomePartly" xml:space="preserve">
+    <value>部分成真</value>
+  </data>
+  <data name="ExposureOutcomeYes" xml:space="preserve">
+    <value>是的，成真了</value>
+  </data>
+  <data name="ExposureBeliefAfter" xml:space="preserve">
+    <value>现在你对同一个预测有多确定？</value>
+  </data>
+  <data name="ExposurePeak" xml:space="preserve">
+    <value>任务中最强烈的焦虑（0 到 10）</value>
+  </data>
+  <data name="ExposureUsedSafetyQuestion" xml:space="preserve">
+    <value>你用了安全网吗？</value>
+  </data>
+  <data name="ExposureLearnedQuestion" xml:space="preserve">
+    <value>你学到了什么？</value>
+  </data>
+  <data name="ExposureLearnedPlaceholder" xml:space="preserve">
+    <value>写给自己的一句话</value>
+  </data>
+  <data name="ExposureSaveReport" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="ExposureInterrupt" xml:space="preserve">
+    <value>我提前停下了</value>
+  </data>
+  <data name="ExposureFeedbackTitle" xml:space="preserve">
+    <value>结果</value>
+  </data>
+  <data name="ExposureBeliefChange" xml:space="preserve">
+    <value>对预测的相信程度：{0} → {1}/10</value>
+  </data>
+  <data name="ExposureInsightDisconfirmed" xml:space="preserve">
+    <value>恐惧预测会有伤害，但伤害并没有发生。大脑就是这样重新学习的：不是靠焦虑消失，而是靠预期没有成真。</value>
+  </data>
+  <data name="ExposureInsightCameTrue" xml:space="preserve">
+    <value>你害怕的事发生了，而你挺过来了。和你想象的相比，实际有多糟？是什么帮你应对的？重复这个台阶：一次巧合还不能算规律。</value>
+  </data>
+  <data name="ExposureInsightInterrupted" xml:space="preserve">
+    <value>停下不是失败。你依然去了让你害怕的地方。准备好了再试一次，或者从更容易的台阶开始。</value>
+  </data>
+  <data name="ExposureInsightSafety" xml:space="preserve">
+    <value>这次用了安全网。下次试着不用：这样大脑才能学到，没有它也是安全的。</value>
+  </data>
+  <data name="ExposureInsightMastered" xml:space="preserve">
+    <value>台阶已攻克：在这里，恐惧不再预测伤害。你可以继续往上走。</value>
+  </data>
+  <data name="ExposureInsightLadderDone" xml:space="preserve">
+    <value>这是最后一个台阶。你爬完了整个阶梯！</value>
+  </data>
+  <data name="ExposureInsightEasier" xml:space="preserve">
+    <value>连续两次都非常困难：这个台阶目前太陡了。在中间加一个更容易的。</value>
+  </data>
+  <data name="ExposureDone" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="ExposureBeliefMin" xml:space="preserve">
+    <value>0：完全不</value>
+  </data>
+  <data name="ExposureBeliefMax" xml:space="preserve">
+    <value>10：完全确定</value>
+  </data>
+  <data name="ExposureProgressStart" xml:space="preserve">
+    <value>阶梯已准备好。第一个任务是检验你的一个预测。</value>
+  </data>
+  <data name="ExposureLearnedSummary" xml:space="preserve">
+    <value>你学到了：“{0}”</value>
+  </data>
+  <data name="ExposureCatalogSubtitle" xml:space="preserve">
+    <value>一步步走向你害怕的事</value>
+  </data>
+  <data name="ExposureCatalogMeta" xml:space="preserve">
+    <value>每个任务约 10 分钟 · 焦虑</value>
+  </data>
+  <data name="ExposureCatalogBadge" xml:space="preserve">
+    <value>为期几周的计划</value>
+  </data>
+  <data name="ExposureCatalogAuthor" xml:space="preserve">
+    <value>认知行为疗法</value>
+  </data>
+  <data name="ArticlesLead" xml:space="preserve">
+    <value>关于焦虑、压力和身体如何运作，以及该怎么做的简短读物</value>
+  </data>
+  <data name="ArticleMinutes" xml:space="preserve">
+    <value>阅读约 {0} 分钟</value>
+  </data>
+  <data name="ArticlePracticeCaption" xml:space="preserve">
+    <value>练习</value>
+  </data>
+  <data name="ArticleProgrammeCaption" xml:space="preserve">
+    <value>计划</value>
+  </data>
+  <data name="ArticlesFilterAll" xml:space="preserve">
+    <value>全部</value>
+  </data>
+  <data name="PcPtsd5Score.Negative" xml:space="preserve">
+    <value>创伤后反应的迹象很少</value>
+  </data>
+  <data name="PcPtsd5Score.Positive" xml:space="preserve">
+    <value>存在创伤后反应的迹象</value>
+  </data>
+  <data name="PcPtsd5ScoreDetail.Negative" xml:space="preserve">
+    <value>回答“是”的少于三项。如果其中一些经历仍让你困扰，值得和专业人士谈谈。</value>
+  </data>
+  <data name="PcPtsd5ScoreDetail.Positive" xml:space="preserve">
+    <value>回答“是”的有三项或以上。这是筛查，不是诊断，但值得做更详细的 PCL-5 量表，并去看处理创伤的专业人士。创伤后应激障碍的治疗效果很好。</value>
+  </data>
+  <data name="Pcl5Score.Low" xml:space="preserve">
+    <value>症状较轻</value>
+  </data>
+  <data name="Pcl5Score.Elevated" xml:space="preserve">
+    <value>症状明显</value>
+  </data>
+  <data name="Pcl5Score.Probable" xml:space="preserve">
+    <value>创伤后应激障碍的可能性很高</value>
+  </data>
+  <data name="Pcl5ScoreDetail.Low" xml:space="preserve">
+    <value>80 分中不超过 20 分。创伤后症状很少。如果清单里的某些情况仍然困扰你，值得和专业人士谈谈。</value>
+  </data>
+  <data name="Pcl5ScoreDetail.Elevated" xml:space="preserve">
+    <value>80 分中 21 到 32 分。症状明显，可能会带来困扰。两周后再做一次量表；如果影响到生活，请去看创伤方面的专业人士。</value>
+  </data>
+  <data name="Pcl5ScoreDetail.Probable" xml:space="preserve">
+    <value>80 分中 33 分或以上。这在创伤后应激障碍中很常见。这不是诊断，但它是去看创伤专业人士的重要理由：创伤后应激障碍的治疗效果很好。</value>
+  </data>
+  <data name="TestRecommendationReasonPcPtsd5.Low" xml:space="preserve">
+    <value>当某些事让你想起过去时，着陆练习帮助你回到当下。</value>
+  </data>
+  <data name="TestRecommendationReasonPcPtsd5.High" xml:space="preserve">
+    <value>当痛苦的记忆占据你时，这个练习会有帮助。</value>
+  </data>
+  <data name="TestRecommendationReasonPcl5.Low" xml:space="preserve">
+    <value>这个练习帮助你觉察身体里紧张的位置，并让它放松。</value>
+  </data>
+  <data name="TestRecommendationReasonPcl5.Mid" xml:space="preserve">
+    <value>当某些事让你想起过去时，着陆练习帮助你回到当下。</value>
+  </data>
+  <data name="TestRecommendationReasonPcl5.High" xml:space="preserve">
+    <value>当痛苦的记忆占据你时，这个练习会有帮助。但在这样的分数下，最主要的帮助来自创伤方面的专业人士。</value>
+  </data>
+  <data name="ArticleTestsCaption" xml:space="preserve">
+    <value>测试</value>
+  </data>
+  <data name="ArticleReadCaption" xml:space="preserve">
+    <value>文章</value>
+  </data>
+  <data name="TraumaCatalogTitle" xml:space="preserve">
+    <value>创伤之后</value>
+  </data>
+  <data name="TraumaCatalogSubtitle" xml:space="preserve">
+    <value>筛查、闪回、噩梦、找到专业人士的途径</value>
+  </data>
+  <data name="TraumaCatalogMeta" xml:space="preserve">
+    <value>测试 · 练习 · 文章</value>
+  </data>
+  <data name="TraumaCatalogBadge" xml:space="preserve">
+    <value>模块</value>
+  </data>
+  <data name="TraumaCatalogAuthor" xml:space="preserve">
+    <value>创伤</value>
+  </data>
+  <data name="CrisisHubFlashbackTitle" xml:space="preserve">
+    <value>被一段记忆淹没了</value>
+  </data>
+  <data name="CrisisHubFlashbackSubtitle" xml:space="preserve">
+    <value>回到当下，约 3 分钟</value>
+  </data>
+  <data name="ArticleChecklistHint" xml:space="preserve">
+    <value>勾选符合你的情况</value>
+  </data>
+  <data name="ArticleQuizCaption" xml:space="preserve">
+    <value>自我检测</value>
+  </data>
+  <data name="ArticleCycleLoop" xml:space="preserve">
+    <value>……然后再次循环</value>
+  </data>
+  <data name="ArticleTaskCaption" xml:space="preserve">
+    <value>明天的任务</value>
+  </data>
+  <data name="ArticleSave" xml:space="preserve">
+    <value>收藏</value>
+  </data>
+  <data name="ArticleSaved" xml:space="preserve">
+    <value>已收藏</value>
+  </data>
+  <data name="ArticleListen" xml:space="preserve">
+    <value>收听</value>
+  </data>
+  <data name="ArticleStopListening" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="ArticleReadMark" xml:space="preserve">
+    <value>已读</value>
+  </data>
+  <data name="ArticleRight" xml:space="preserve">
+    <value>正确。</value>
+  </data>
+  <data name="ArticleNotQuite" xml:space="preserve">
+    <value>不完全对。</value>
+  </data>
+  <data name="ArticlesSearchPlaceholder" xml:space="preserve">
+    <value>搜索文章</value>
+  </data>
+  <data name="ArticlesNothingFound" xml:space="preserve">
+    <value>没有找到结果。换个词试试。</value>
+  </data>
+  <data name="ArticlesFilterSaved" xml:space="preserve">
+    <value>已收藏</value>
+  </data>
+  <data name="ArticlesNothingSaved" xml:space="preserve">
+    <value>你收藏的文章会显示在这里。</value>
+  </data>
+  <data name="ArticlesForYou" xml:space="preserve">
+    <value>为你推荐</value>
+  </data>
+  <data name="ArticlesCourses" xml:space="preserve">
+    <value>课程</value>
+  </data>
+  <data name="ArticlesCoursesLead" xml:space="preserve">
+    <value>每天：一篇简短读物、一个练习和一项任务。这就是有指导的自助。</value>
+  </data>
+  <data name="ArticlesCourseMeta" xml:space="preserve">
+    <value>{0} 天 · 每天最多 {1} 分钟</value>
+  </data>
+  <data name="PickContinueCourse" xml:space="preserve">
+    <value>继续课程</value>
+  </data>
+  <data name="PickContinueReading" xml:space="preserve">
+    <value>你还没读完</value>
+  </data>
+  <data name="PickTest" xml:space="preserve">
+    <value>根据你的 {0} 结果</value>
+  </data>
+  <data name="PickMood" xml:space="preserve">
+    <value>日记里有好几天比较难熬</value>
+  </data>
+  <data name="CourseCaption" xml:space="preserve">
+    <value>课程</value>
+  </data>
+  <data name="CourseStart" xml:space="preserve">
+    <value>开始课程</value>
+  </data>
+  <data name="CourseContinue" xml:space="preserve">
+    <value>继续：第 {0} 天</value>
+  </data>
+  <data name="CourseFinished" xml:space="preserve">
+    <value>课程已完成</value>
+  </data>
+  <data name="CourseDayLabel" xml:space="preserve">
+    <value>第 {0} 天</value>
+  </data>
+  <data name="CourseDayTomorrow" xml:space="preserve">
+    <value>明天开放</value>
+  </data>
+  <data name="CourseDayLocked" xml:space="preserve">
+    <value>完成前一天后开放</value>
+  </data>
+  <data name="CourseDayDone" xml:space="preserve">
+    <value>已完成</value>
+  </data>
+  <data name="CourseProgress" xml:space="preserve">
+    <value>已完成 {0}/{1}</value>
+  </data>
+  <data name="CourseMeasureTitle" xml:space="preserve">
+    <value>测量</value>
+  </data>
+  <data name="CourseMeasureHint" xml:space="preserve">
+    <value>在课程开始和结束时各做一次 {0} 测试，看看课程是否有帮助。</value>
+  </data>
+  <data name="CourseMeasureOnce" xml:space="preserve">
+    <value>{0}：{1} 分</value>
+  </data>
+  <data name="CourseMeasureChange" xml:space="preserve">
+    <value>{0}：之前 {1}，现在 {2}</value>
+  </data>
+  <data name="CourseTakeTest" xml:space="preserve">
+    <value>做 {0}</value>
+  </data>
+  <data name="CourseReset" xml:space="preserve">
+    <value>重新开始课程</value>
+  </data>
+  <data name="CourseResetConfirm" xml:space="preserve">
+    <value>你在这门课程中的回答将被删除。要重新开始吗？</value>
+  </data>
+  <data name="CourseReflectionPlaceholder" xml:space="preserve">
+    <value>你的回答。它只保存在你的手机上。</value>
+  </data>
+  <data name="CourseCompleteDay" xml:space="preserve">
+    <value>完成今天</value>
+  </data>
+  <data name="CourseDayClosed" xml:space="preserve">
+    <value>第 {0} 天已完成。下一天明天开放：试试今天的任务吧。</value>
+  </data>
+  <data name="CourseAllDone" xml:space="preserve">
+    <value>课程已完成。再测量一次，和开始时比较一下。</value>
+  </data>
+  <data name="CourseDayNotOpen" xml:space="preserve">
+    <value>这一天还没有开放。</value>
+  </data>
+  <data name="ArticleChatCaption" xml:space="preserve">
+    <value>AI 聊天</value>
+  </data>
+  <data name="ShellTabChatShort" xml:space="preserve">
+    <value>AI 聊天</value>
+  </data>
+  <data name="ShellTabLibraryShort" xml:space="preserve">
+    <value>资料库</value>
+  </data>
+  <data name="ShellTabJournalShort" xml:space="preserve">
+    <value>日记</value>
+  </data>
+  <data name="ForYouEmpty" xml:space="preserve">
+    <value>你开始的课程、没读完的文章，以及根据测试和日记给出的建议会显示在这里。做一个简短的测试，推荐会更准确。</value>
+  </data>
+  <data name="ForYouTakeTest" xml:space="preserve">
+    <value>做个测试</value>
+  </data>
+  <data name="ForYouSavedTitle" xml:space="preserve">
+    <value>已收藏的文章</value>
+  </data>
+  <data name="OnboardingModuleChatHint" xml:space="preserve">
+    <value>说出来，一步步理清困扰你的事</value>
+  </data>
+  <data name="OnboardingModuleLibraryHint" xml:space="preserve">
+    <value>文章、课程、祈祷和名言</value>
+  </data>
+  <data name="OnboardingModuleJournalHint" xml:space="preserve">
+    <value>记录心情，看看什么有帮助</value>
+  </data>
+  <data name="BodyTitle" xml:space="preserve">
+    <value>身体</value>
+  </data>
+  <data name="BodyLead" xml:space="preserve">
+    <value>身体常常在我们说出感受之前就察觉到了它。标记你在哪里、有什么感觉，看看背后可能是什么。</value>
+  </data>
+  <data name="BodyNotDiagnosis" xml:space="preserve">
+    <value>这不是诊断：这里寻找的是情绪，而不是疾病的原因。如果某种感觉是新出现的、强烈的、持续的或疼痛的，请先去看医生。</value>
+  </data>
+  <data name="BodyAreaQuestion" xml:space="preserve">
+    <value>你在哪里感觉到？</value>
+  </data>
+  <data name="BodySensationQuestion" xml:space="preserve">
+    <value>是什么样的感觉？</value>
+  </data>
+  <data name="BodyIntensity" xml:space="preserve">
+    <value>有多强烈？</value>
+  </data>
+  <data name="BodyFeelingQuestion" xml:space="preserve">
+    <value>背后可能是什么？</value>
+  </data>
+  <data name="BodyFeelingHint" xml:space="preserve">
+    <value>这样的情绪常常会以这种方式被感受到。这些只是猜测：选择符合的，或者别的。</value>
+  </data>
+  <data name="BodyOtherFeelings" xml:space="preserve">
+    <value>其他情绪</value>
+  </data>
+  <data name="BodyPromptVoice" xml:space="preserve">
+    <value>如果这种感觉会说话，它会说什么？</value>
+  </data>
+  <data name="BodyPromptBefore" xml:space="preserve">
+    <value>它是什么时候开始的？就在之前发生了什么？</value>
+  </data>
+  <data name="BodyNotePlaceholder" xml:space="preserve">
+    <value>想到的事情，或之前发生了什么（可选）</value>
+  </data>
+  <data name="BodyDoctorFirst" xml:space="preserve">
+    <value>疼痛或强烈的感觉可能是疾病的信号。如果它是新出现的或一直不消退，请先去看医生，之后再探索情绪。</value>
+  </data>
+  <data name="BodySave" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="BodySaved" xml:space="preserve">
+    <value>已保存。现在可能有帮助的是：</value>
+  </data>
+  <data name="BodyCrisis" xml:space="preserve">
+    <value>听起来你现在非常难受。你并不孤单：这里是你现在就可以求助的地方。</value>
+  </data>
+  <data name="BodyAgain" xml:space="preserve">
+    <value>再记录一次</value>
+  </data>
+  <data name="BodyPatternsTitle" xml:space="preserve">
+    <value>你的规律</value>
+  </data>
+  <data name="BodyPatternsEmpty" xml:space="preserve">
+    <value>当同样的感觉再次出现时，你的规律会显示在这里。</value>
+  </data>
+  <data name="BodyPatternTitle" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="BodyPatternCount" xml:space="preserve">
+    <value>记录次数：{0}</value>
+  </data>
+  <data name="BodyPatternFeeling" xml:space="preserve">
+    <value>最常见：{0}</value>
+  </data>
+  <data name="BodyPatternTime" xml:space="preserve">
+    <value>通常在{0}</value>
+  </data>
+  <data name="BodyRecentTitle" xml:space="preserve">
+    <value>最近的记录</value>
+  </data>
+  <data name="BodyDelete" xml:space="preserve">
+    <value>删除记录</value>
+  </data>
+  <data name="BodyDeleteConfirmTitle" xml:space="preserve">
+    <value>删除这条记录？</value>
+  </data>
+  <data name="BodyDeleteConfirmBody" xml:space="preserve">
+    <value>这条记录和你的笔记将从手机中删除。</value>
+  </data>
+  <data name="BodyDeleteConfirmAccept" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="BodyCancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="BodyAreaHead" xml:space="preserve">
+    <value>头部</value>
+  </data>
+  <data name="BodyAreaFace" xml:space="preserve">
+    <value>面部和下巴</value>
+  </data>
+  <data name="BodyAreaThroat" xml:space="preserve">
+    <value>喉咙</value>
+  </data>
+  <data name="BodyAreaShoulders" xml:space="preserve">
+    <value>脖子和肩膀</value>
+  </data>
+  <data name="BodyAreaChest" xml:space="preserve">
+    <value>胸口</value>
+  </data>
+  <data name="BodyAreaStomach" xml:space="preserve">
+    <value>腹部</value>
+  </data>
+  <data name="BodyAreaBack" xml:space="preserve">
+    <value>背部</value>
+  </data>
+  <data name="BodyAreaArms" xml:space="preserve">
+    <value>手臂</value>
+  </data>
+  <data name="BodyAreaLegs" xml:space="preserve">
+    <value>腿</value>
+  </data>
+  <data name="BodyAreaWholeBody" xml:space="preserve">
+    <value>全身</value>
+  </data>
+  <data name="BodySensationTight" xml:space="preserve">
+    <value>紧绷</value>
+  </data>
+  <data name="BodySensationHeavy" xml:space="preserve">
+    <value>沉重</value>
+  </data>
+  <data name="BodySensationHeat" xml:space="preserve">
+    <value>发热</value>
+  </data>
+  <data name="BodySensationCold" xml:space="preserve">
+    <value>发冷</value>
+  </data>
+  <data name="BodySensationLump" xml:space="preserve">
+    <value>哽住</value>
+  </data>
+  <data name="BodySensationTrembling" xml:space="preserve">
+    <value>颤抖</value>
+  </data>
+  <data name="BodySensationEmpty" xml:space="preserve">
+    <value>空虚</value>
+  </data>
+  <data name="BodySensationFluttering" xml:space="preserve">
+    <value>心慌</value>
+  </data>
+  <data name="BodySensationTingling" xml:space="preserve">
+    <value>刺麻</value>
+  </data>
+  <data name="BodySensationPain" xml:space="preserve">
+    <value>疼痛</value>
+  </data>
+  <data name="BodyFeelingAnxiety" xml:space="preserve">
+    <value>焦虑</value>
+  </data>
+  <data name="BodyFeelingFear" xml:space="preserve">
+    <value>恐惧</value>
+  </data>
+  <data name="BodyFeelingAnger" xml:space="preserve">
+    <value>愤怒</value>
+  </data>
+  <data name="BodyFeelingHurt" xml:space="preserve">
+    <value>委屈</value>
+  </data>
+  <data name="BodyFeelingSadness" xml:space="preserve">
+    <value>悲伤</value>
+  </data>
+  <data name="BodyFeelingShame" xml:space="preserve">
+    <value>羞耻</value>
+  </data>
+  <data name="BodyFeelingGuilt" xml:space="preserve">
+    <value>内疚</value>
+  </data>
+  <data name="BodyFeelingExhaustion" xml:space="preserve">
+    <value>疲惫</value>
+  </data>
+  <data name="BodyFeelingJoy" xml:space="preserve">
+    <value>喜悦、兴奋</value>
+  </data>
+  <data name="BodyFeelingUnknown" xml:space="preserve">
+    <value>我不知道</value>
+  </data>
+  <data name="BodyPartMorning" xml:space="preserve">
+    <value>早上</value>
+  </data>
+  <data name="BodyPartDay" xml:space="preserve">
+    <value>下午</value>
+  </data>
+  <data name="BodyPartEvening" xml:space="preserve">
+    <value>晚上</value>
+  </data>
+  <data name="BodyPartNight" xml:space="preserve">
+    <value>夜里</value>
+  </data>
+  <data name="BodySaveError" xml:space="preserve">
+    <value>无法保存记录，请重试。</value>
+  </data>
+  <data name="InsightsTitle" xml:space="preserve">
+    <value>什么对我有帮助</value>
+  </data>
+  <data name="InsightsLead" xml:space="preserve">
+    <value>这里只有你自己的数据：哪些练习让你更平静，测试结果如何变化，以及什么与你的心情相关。</value>
+  </data>
+  <data name="InsightsPracticesTitle" xml:space="preserve">
+    <value>让你更平静的练习</value>
+  </data>
+  <data name="InsightsPracticeLine" xml:space="preserve">
+    <value>紧张程度平均下降 {0} · 次数：{1}</value>
+  </data>
+  <data name="InsightsPracticesEmpty" xml:space="preserve">
+    <value>在练习前后评估你的紧张程度，对你有帮助的练习会显示在这里。</value>
+  </data>
+  <data name="InsightsTestsTitle" xml:space="preserve">
+    <value>测试</value>
+  </data>
+  <data name="InsightsTestChange" xml:space="preserve">
+    <value>最初 {0}，现在 {1}</value>
+  </data>
+  <data name="InsightsTestSingle" xml:space="preserve">
+    <value>结果：{0}</value>
+  </data>
+  <data name="InsightsTrendBetter" xml:space="preserve">
+    <value>更好</value>
+  </data>
+  <data name="InsightsTrendWorse" xml:space="preserve">
+    <value>更差</value>
+  </data>
+  <data name="InsightsTrendSame" xml:space="preserve">
+    <value>没有变化</value>
+  </data>
+  <data name="InsightsRetestHint" xml:space="preserve">
+    <value>已经过去两周：新的结果会显示有什么变化。</value>
+  </data>
+  <data name="InsightsRetest" xml:space="preserve">
+    <value>再做一次</value>
+  </data>
+  <data name="InsightsTestsEmpty" xml:space="preserve">
+    <value>做一次测试，两周后再做一次：变化会在这里显示。</value>
+  </data>
+  <data name="InsightsMoodTitle" xml:space="preserve">
+    <value>什么与你的心情相关</value>
+  </data>
+  <data name="InsightsMoodUp" xml:space="preserve">
+    <value>{0}：心情高 {1}</value>
+  </data>
+  <data name="InsightsMoodDown" xml:space="preserve">
+    <value>{0}：心情低 {1}</value>
+  </data>
+  <data name="InsightsMoodNote" xml:space="preserve">
+    <value>这些只是你记录中的巧合，不能证明因果关系。</value>
+  </data>
+  <data name="InsightsMoodEmpty" xml:space="preserve">
+    <value>在日记里标记影响你的事（睡眠、人、散步），与你心情相关的因素会显示在这里。</value>
+  </data>
+  <data name="InsightsBodyTitle" xml:space="preserve">
+    <value>身体里反复出现的感觉</value>
+  </data>
+  <data name="MoodWidgetTitle" xml:space="preserve">
+    <value>你现在感觉怎么样？</value>
+  </data>
+  <data name="MoodWidgetLevel" xml:space="preserve">
+    <value>心情 {0}/5</value>
+  </data>
+  <data name="MoodWidgetPractice" xml:space="preserve">
+    <value>今日练习</value>
+  </data>
 </root>

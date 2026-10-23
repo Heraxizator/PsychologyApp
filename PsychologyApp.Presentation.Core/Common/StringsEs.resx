@@ -12,4 +12,3974 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ChatsTitle" xml:space="preserve">
+    <value>Chats</value>
+  </data>
+  <data name="ChatNew" xml:space="preserve">
+    <value>Nuevo chat</value>
+  </data>
+  <data name="ChatInputPlaceholder" xml:space="preserve">
+    <value>Escribe un mensaje…</value>
+  </data>
+  <data name="ChatEmptyTitle" xml:space="preserve">
+    <value>Aún no hay conversaciones</value>
+  </data>
+  <data name="ChatEmptyBody" xml:space="preserve">
+    <value>Cuéntame qué pasa. Te escucharé, te ayudaré a ordenarlo y te sugeriré una práctica.</value>
+  </data>
+  <data name="ChatEmptyPrivacy" xml:space="preserve">
+    <value>La conversación se queda en este teléfono y no se envía a ningún sitio</value>
+  </data>
+  <data name="ChatOpenersTitle" xml:space="preserve">
+    <value>O empieza con</value>
+  </data>
+  <data name="ChatOpenerAnxious" xml:space="preserve">
+    <value>Tengo ansiedad</value>
+  </data>
+  <data name="ChatOpenerSleep" xml:space="preserve">
+    <value>No puedo dormir</value>
+  </data>
+  <data name="ChatOpenerSad" xml:space="preserve">
+    <value>Me siento triste</value>
+  </data>
+  <data name="ChatOpenerLonely" xml:space="preserve">
+    <value>Me siento solo/a</value>
+  </data>
+  <data name="ChatUnavailableTitle" xml:space="preserve">
+    <value>Por ahora el chat solo habla ruso e inglés</value>
+  </data>
+  <data name="ChatUnavailableBody" xml:space="preserve">
+    <value>Solo en estos idiomas sabe darse cuenta de que alguien está en peligro, así que en el tuyo permanece cerrado hasta que esté listo. Las prácticas, los tests y el diario funcionan como siempre, y la ayuda en crisis está siempre aquí.</value>
+  </data>
+  <data name="ChatRename" xml:space="preserve">
+    <value>Cambiar nombre</value>
+  </data>
+  <data name="ChatDelete" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="ChatRenameTitle" xml:space="preserve">
+    <value>Nombre del chat</value>
+  </data>
+  <data name="ChatRenameMessage" xml:space="preserve">
+    <value>¿Cómo quieres llamar a esta conversación?</value>
+  </data>
+  <data name="ChatRenameAccept" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="ChatCancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="ChatDeleteTitle" xml:space="preserve">
+    <value>¿Eliminar este chat?</value>
+  </data>
+  <data name="ChatDeleteBody" xml:space="preserve">
+    <value>La conversación y su historial se eliminarán de este dispositivo y no se podrán recuperar.</value>
+  </data>
+  <data name="ChatHeroTitle" xml:space="preserve">
+    <value>Hablar</value>
+  </data>
+  <data name="ChatHeroFreshSubtitle" xml:space="preserve">
+    <value>Cuéntame qué pasa y te ayudaré a ordenarlo</value>
+  </data>
+  <data name="ChatHeroContinue" xml:space="preserve">
+    <value>Continuar</value>
+  </data>
+  <data name="ChatHeroStart" xml:space="preserve">
+    <value>Empezar a hablar</value>
+  </data>
+  <data name="ChatHeroAllChats" xml:space="preserve">
+    <value>Todos los chats</value>
+  </data>
+  <data name="ChatHeroNewChat" xml:space="preserve">
+    <value>Nuevo chat</value>
+  </data>
+  <data name="ChatStatusIdle" xml:space="preserve">
+    <value>Chat IA · sin conexión</value>
+  </data>
+  <data name="ChatStatusPractice" xml:space="preserve">
+    <value>Chat IA · práctica</value>
+  </data>
+  <data name="ChatError" xml:space="preserve">
+    <value>No se pudo enviar el mensaje. Inténtalo de nuevo.</value>
+  </data>
+  <data name="ChatLoadingText" xml:space="preserve">
+    <value>Abriendo el chat…</value>
+  </data>
+  <data name="ChatScrollToNewest" xml:space="preserve">
+    <value>Ir a los mensajes más recientes</value>
+  </data>
+  <data name="ChatScrollToOldest" xml:space="preserve">
+    <value>Ir al inicio de la conversación</value>
+  </data>
+  <data name="ChatStressTestTitle" xml:space="preserve">
+    <value>Test de estrés (PSS-10)</value>
+  </data>
+  <data name="ChatReminderTitle" xml:space="preserve">
+    <value>El chat IA está aquí</value>
+  </data>
+  <data name="ChatReminderBody" xml:space="preserve">
+    <value>Ha pasado un tiempo. ¿Cómo va todo ahora?</value>
+  </data>
+  <data name="ChatProfileTitle" xml:space="preserve">
+    <value>Chat IA</value>
+  </data>
+  <data name="ChatProfileOpen" xml:space="preserve">
+    <value>Abrir el perfil del chat IA</value>
+  </data>
+  <data name="ChatProfileOnline" xml:space="preserve">
+    <value>En línea</value>
+  </data>
+  <data name="ChatProfileOffline" xml:space="preserve">
+    <value>Funciona sin conexión</value>
+  </data>
+  <data name="ChatProfileStatChats" xml:space="preserve">
+    <value>Chats</value>
+  </data>
+  <data name="ChatProfileStatMessages" xml:space="preserve">
+    <value>Tus mensajes</value>
+  </data>
+  <data name="ChatProfileStatDays" xml:space="preserve">
+    <value>Días juntos</value>
+  </data>
+  <data name="ChatProfileStatStreak" xml:space="preserve">
+    <value>Días seguidos</value>
+  </data>
+  <data name="ChatProfileTrustTitle" xml:space="preserve">
+    <value>Nivel de confianza</value>
+  </data>
+  <data name="ChatProfileNameTitle" xml:space="preserve">
+    <value>Cómo llamarte</value>
+  </data>
+  <data name="ChatProfileNameEmpty" xml:space="preserve">
+    <value>Aún sin nombre</value>
+  </data>
+  <data name="ChatProfileNameHint" xml:space="preserve">
+    <value>El chat te llamará por tu nombre de vez en cuando</value>
+  </data>
+  <data name="ChatProfileNameEdit" xml:space="preserve">
+    <value>Cambiar</value>
+  </data>
+  <data name="ChatProfileNamePromptTitle" xml:space="preserve">
+    <value>Tu nombre</value>
+  </data>
+  <data name="ChatProfileNamePromptMessage" xml:space="preserve">
+    <value>¿Cómo quieres que te llame? Déjalo vacío para quitar el nombre.</value>
+  </data>
+  <data name="ChatProfileInsightsTitle" xml:space="preserve">
+    <value>Lo que muestran tus conversaciones</value>
+  </data>
+  <data name="ChatProfileTensionTitle" xml:space="preserve">
+    <value>La tensión con el tiempo</value>
+  </data>
+  <data name="ChatProfileTensionStart" xml:space="preserve">
+    <value>Al principio</value>
+  </data>
+  <data name="ChatProfileTensionEnd" xml:space="preserve">
+    <value>Al final</value>
+  </data>
+  <data name="ChatProfilePracticesTitle" xml:space="preserve">
+    <value>Lo que te ayuda</value>
+  </data>
+  <data name="ChatProfilePracticesEmpty" xml:space="preserve">
+    <value>Haz una práctica desde un chat y valora la tensión antes y después: aquí aparecerá lo que te ayuda.</value>
+  </data>
+  <data name="ChatProfilePracticeBest" xml:space="preserve">
+    <value>Lo mejor</value>
+  </data>
+  <data name="ChatProfilePracticeStart" xml:space="preserve">
+    <value>Empezar</value>
+  </data>
+  <data name="ChatProfileEmotionsTitle" xml:space="preserve">
+    <value>De lo que más hablas</value>
+  </data>
+  <data name="ChatProfileAboutTitle" xml:space="preserve">
+    <value>Sobre el chat IA</value>
+  </data>
+  <data name="ChatProfileActionsTitle" xml:space="preserve">
+    <value>Gestionar</value>
+  </data>
+  <data name="ChatProfileAllChats" xml:space="preserve">
+    <value>Todos los chats</value>
+  </data>
+  <data name="ChatProfileForget" xml:space="preserve">
+    <value>Olvidar mi nombre y mis preferencias</value>
+  </data>
+  <data name="ChatProfileForgetTitle" xml:space="preserve">
+    <value>¿Olvidar lo que sabe de ti?</value>
+  </data>
+  <data name="ChatProfileForgetBody" xml:space="preserve">
+    <value>El chat olvidará tu nombre y qué prácticas te ayudaron. Tus chats se mantendrán.</value>
+  </data>
+  <data name="ChatProfileDeleteAll" xml:space="preserve">
+    <value>Eliminar todos los chats</value>
+  </data>
+  <data name="ChatProfileDeleteAllTitle" xml:space="preserve">
+    <value>¿Eliminar todos los chats?</value>
+  </data>
+  <data name="ChatProfileDeleteAllBody" xml:space="preserve">
+    <value>Todas las conversaciones se eliminarán de este dispositivo y no se podrán recuperar. Tu nombre y tus preferencias se mantendrán.</value>
+  </data>
+  <data name="ChatProfileConfirm" xml:space="preserve">
+    <value>Sí</value>
+  </data>
+  <data name="ChatProfileLoadingText" xml:space="preserve">
+    <value>Calculando tus estadísticas…</value>
+  </data>
+  <data name="OptionsTitle" xml:space="preserve">
+    <value>Opciones</value>
+  </data>
+  <data name="OptionsSettingsTitle" xml:space="preserve">
+    <value>Ajustes</value>
+  </data>
+  <data name="OptionsSettingsSubtitle" xml:space="preserve">
+    <value>Tema, color y visualización</value>
+  </data>
+  <data name="OptionsAppSection" xml:space="preserve">
+    <value>Aplicación</value>
+  </data>
+  <data name="OptionsSafetySection" xml:space="preserve">
+    <value>Seguridad</value>
+  </data>
+  <data name="OptionsSupportSection" xml:space="preserve">
+    <value>Ayuda</value>
+  </data>
+  <data name="ProfileSettingsCardSubtitle" xml:space="preserve">
+    <value>Tema, idioma y fuente</value>
+  </data>
+  <data name="OptionsAboutTitle" xml:space="preserve">
+    <value>Acerca de</value>
+  </data>
+  <data name="OptionsAboutSubtitle" xml:space="preserve">
+    <value>Información de la aplicación</value>
+  </data>
+  <data name="OptionsFeedbackTitle" xml:space="preserve">
+    <value>Comentarios</value>
+  </data>
+  <data name="OptionsFeedbackSubtitle" xml:space="preserve">
+    <value>Informar de un problema o proponer una idea</value>
+  </data>
+  <data name="OptionsDonateTitle" xml:space="preserve">
+    <value>Apoyar el proyecto</value>
+  </data>
+  <data name="OptionsDonateSubtitle" xml:space="preserve">
+    <value>Ayuda a que la aplicación crezca</value>
+  </data>
+  <data name="ProfileOptionsCardSubtitle" xml:space="preserve">
+    <value>Ajustes, ayuda, Alice IA</value>
+  </data>
+  <data name="OptionsAliceTitle" xml:space="preserve">
+    <value>Alice IA</value>
+  </data>
+  <data name="OptionsAliceSubtitle" xml:space="preserve">
+    <value>Asistente de voz de Yandex</value>
+  </data>
+  <data name="AliceDisclaimerHeader" xml:space="preserve">
+    <value>Importante</value>
+  </data>
+  <data name="AliceDisclaimerBody" xml:space="preserve">
+    <value>Alice es un servicio externo de Yandex. Se necesita conexión a internet. Las respuestas son solo informativas y no sustituyen la atención profesional.</value>
+  </data>
+  <data name="AliceOpenInBrowser" xml:space="preserve">
+    <value>Abrir en el navegador</value>
+  </data>
+  <data name="AliceOpenFailed" xml:space="preserve">
+    <value>No se pudo abrir Alice</value>
+  </data>
+  <data name="AliceLoadingText" xml:space="preserve">
+    <value>Cargando Alice…</value>
+  </data>
+  <data name="SettingsTitle" xml:space="preserve">
+    <value>Ajustes</value>
+  </data>
+  <data name="SettingsDesignSection" xml:space="preserve">
+    <value>Diseño</value>
+  </data>
+  <data name="SettingsFontSection" xml:space="preserve">
+    <value>Fuente</value>
+  </data>
+  <data name="SettingsLanguageLabel" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="SettingsThemeLabel" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+  <data name="SettingsColorLabel" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="SettingsFormLabel" xml:space="preserve">
+    <value>Forma</value>
+  </data>
+  <data name="SettingsSizeLabel" xml:space="preserve">
+    <value>Tamaño</value>
+  </data>
+  <data name="SettingsBoldLabel" xml:space="preserve">
+    <value>Negrita</value>
+  </data>
+  <data name="SettingsTestsSection" xml:space="preserve">
+    <value>Tests</value>
+  </data>
+  <data name="SettingsRemindersSection" xml:space="preserve">
+    <value>Recordatorios</value>
+  </data>
+  <data name="SettingsPracticeRemindersLabel" xml:space="preserve">
+    <value>Recordatorios de práctica</value>
+  </data>
+  <data name="SettingsPracticeReminderHourLabel" xml:space="preserve">
+    <value>Hora del recordatorio</value>
+  </data>
+  <data name="SettingsPracticeReminderHourPickerTitle" xml:space="preserve">
+    <value>Hora</value>
+  </data>
+  <data name="PracticeReminderTitle" xml:space="preserve">
+    <value>Hora de practicar</value>
+  </data>
+  <data name="PracticeReminderBody" xml:space="preserve">
+    <value>Dedica unos minutos a practicar y mantén tu progreso.</value>
+  </data>
+  <data name="SettingsPrimaryConcernLabel" xml:space="preserve">
+    <value>Preocupación principal</value>
+  </data>
+  <data name="SettingsPrimaryConcernPickerTitle" xml:space="preserve">
+    <value>¿Qué te preocupa?</value>
+  </data>
+  <data name="SettingsPrimaryConcernSection" xml:space="preserve">
+    <value>Personalización</value>
+  </data>
+  <data name="SettingsQuestionnaireAutoAdvanceLabel" xml:space="preserve">
+    <value>Pasar automáticamente a la siguiente pregunta</value>
+  </data>
+  <data name="SettingsApplyButton" xml:space="preserve">
+    <value>Aplicar</value>
+  </data>
+  <data name="SettingsPickerColors" xml:space="preserve">
+    <value>Colores</value>
+  </data>
+  <data name="SettingsPickerShapes" xml:space="preserve">
+    <value>Formas</value>
+  </data>
+  <data name="SettingsPickerSizes" xml:space="preserve">
+    <value>Tamaños</value>
+  </data>
+  <data name="SettingsPickerLanguages" xml:space="preserve">
+    <value>Idiomas</value>
+  </data>
+  <data name="SettingsAppliedTitle" xml:space="preserve">
+    <value>Información</value>
+  </data>
+  <data name="SettingsAppliedMessage" xml:space="preserve">
+    <value>Ajustes aplicados</value>
+  </data>
+  <data name="SettingsFormHelper" xml:space="preserve">
+    <value>Redondeo de tarjetas y campos de texto</value>
+  </data>
+  <data name="SettingsColorHelper" xml:space="preserve">
+    <value>Color principal de botones y acentos</value>
+  </data>
+  <data name="SettingsReplayOnboarding" xml:space="preserve">
+    <value>Repetir la introducción</value>
+  </data>
+  <data name="TechniqueTheory" xml:space="preserve">
+    <value>Teoría</value>
+  </data>
+  <data name="TechniqueAlgorithm" xml:space="preserve">
+    <value>Pasos</value>
+  </data>
+  <data name="TechniqueFinish" xml:space="preserve">
+    <value>Terminar</value>
+  </data>
+  <data name="TechniqueTitle" xml:space="preserve">
+    <value>Técnica</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Atrás</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="DescriptionLabel" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>Guardando…</value>
+  </data>
+  <data name="DesignerLoadError" xml:space="preserve">
+    <value>No se pudo cargar la técnica</value>
+  </data>
+  <data name="DesignerSaveError" xml:space="preserve">
+    <value>No se pudo guardar la técnica</value>
+  </data>
+  <data name="ThemeLabel" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+  <data name="AuthorLabel" xml:space="preserve">
+    <value>Autor</value>
+  </data>
+  <data name="MessageLabel" xml:space="preserve">
+    <value>Mensaje</value>
+  </data>
+  <data name="FormLabel" xml:space="preserve">
+    <value>Tus notas</value>
+  </data>
+  <data name="ActionsListLabel" xml:space="preserve">
+    <value>Lista de acciones</value>
+  </data>
+  <data name="PracticeHomeTitle" xml:space="preserve">
+    <value>Prácticas</value>
+  </data>
+  <data name="PracticeMyTechniques" xml:space="preserve">
+    <value>Mis técnicas</value>
+  </data>
+  <data name="PracticeCatalog" xml:space="preserve">
+    <value>Catálogo de prácticas</value>
+  </data>
+  <data name="PracticeCatalogHint" xml:space="preserve">
+    <value>Elige una técnica o crea la tuya</value>
+  </data>
+  <data name="PracticeCreate" xml:space="preserve">
+    <value>Crear</value>
+  </data>
+  <data name="PracticeTechniquesList" xml:space="preserve">
+    <value>Lista de técnicas</value>
+  </data>
+  <data name="PracticeInitError" xml:space="preserve">
+    <value>Error de inicialización</value>
+  </data>
+  <data name="PracticeLoadMoreError" xml:space="preserve">
+    <value>No se pudieron cargar más técnicas</value>
+  </data>
+  <data name="PracticeLoadingText" xml:space="preserve">
+    <value>Cargando prácticas</value>
+  </data>
+  <data name="PracticeLoadingMoreText" xml:space="preserve">
+    <value>Cargando…</value>
+  </data>
+  <data name="PracticeDesignTitle" xml:space="preserve">
+    <value>Crear técnica</value>
+  </data>
+  <data name="PracticeConstructor" xml:space="preserve">
+    <value>Constructor</value>
+  </data>
+  <data name="PracticeCustomTechnique" xml:space="preserve">
+    <value>Técnica propia</value>
+  </data>
+  <data name="PracticeDeleteConfirm" xml:space="preserve">
+    <value>¿Seguro que quieres eliminar tu técnica?</value>
+  </data>
+  <data name="ReviewTitle" xml:space="preserve">
+    <value>Comentarios</value>
+  </data>
+  <data name="ReviewPage" xml:space="preserve">
+    <value>Opinión</value>
+  </data>
+  <data name="ReviewExplanationHeader" xml:space="preserve">
+    <value>Cómo funciona</value>
+  </data>
+  <data name="ReviewExplanation" xml:space="preserve">
+    <value>Puedes informar de un problema o proponer ideas para mejorar la aplicación. El equipo de soporte recibirá tu mensaje.</value>
+  </data>
+  <data name="ReviewExplanationShare" xml:space="preserve">
+    <value>Describe un problema o una idea y elige dónde enviarlo: correo, mensajería o notas. La aplicación no envía nada al desarrollador por sí sola.</value>
+  </data>
+  <data name="ReviewShareButton" xml:space="preserve">
+    <value>Compartir</value>
+  </data>
+  <data name="ReviewMessagePlaceholder" xml:space="preserve">
+    <value>Describe el problema o la idea…</value>
+  </data>
+  <data name="ReviewMessageRequired" xml:space="preserve">
+    <value>Escribe un mensaje antes de enviarlo</value>
+  </data>
+  <data name="ReviewSendSuccessTitle" xml:space="preserve">
+    <value>Gracias</value>
+  </data>
+  <data name="ReviewSendSuccessMessage" xml:space="preserve">
+    <value>Tu mensaje se ha enviado</value>
+  </data>
+  <data name="ReviewEmailSubject" xml:space="preserve">
+    <value>Comentarios sobre Psychology App</value>
+  </data>
+  <data name="ReviewSmsRecipientMissing" xml:space="preserve">
+    <value>No hay destinatario de SMS configurado</value>
+  </data>
+  <data name="ReviewSmsNotSupported" xml:space="preserve">
+    <value>Este dispositivo no admite SMS</value>
+  </data>
+  <data name="ReviewSmsFailed" xml:space="preserve">
+    <value>No se pudo abrir la aplicación de SMS</value>
+  </data>
+  <data name="ReviewEmailNotSupported" xml:space="preserve">
+    <value>Este dispositivo no admite correo electrónico</value>
+  </data>
+  <data name="ReviewEmailFailed" xml:space="preserve">
+    <value>No se pudo abrir la aplicación de correo</value>
+  </data>
+  <data name="ReviewShareTitle" xml:space="preserve">
+    <value>Comentarios sobre la aplicación</value>
+  </data>
+  <data name="ReviewShareFailed" xml:space="preserve">
+    <value>No se pudo abrir el menú para compartir</value>
+  </data>
+  <data name="DonateTitle" xml:space="preserve">
+    <value>Donaciones</value>
+  </data>
+  <data name="DonateMoreInfo" xml:space="preserve">
+    <value>Más información</value>
+  </data>
+  <data name="DonateBody" xml:space="preserve">
+    <value>Este proyecto se mantiene solo con donaciones. No mostramos anuncios ni vendemos servicios de pago. Las donaciones apoyan a desarrolladores y diseñadores.</value>
+  </data>
+  <data name="DonateButton" xml:space="preserve">
+    <value>Donar</value>
+  </data>
+  <data name="DonateOpenFailed" xml:space="preserve">
+    <value>No se pudo abrir la página de donaciones</value>
+  </data>
+  <data name="InfoAboutBody" xml:space="preserve">
+    <value>Esta aplicación reúne técnicas sencillas pero eficaces para afrontar el estrés, el miedo, las dudas, los pensamientos intrusivos, las creencias limitantes y los patrones destructivos. Los métodos son conocidos y están probados. Algunos proceden de la PNL o del trabajo de Zivorad Slavinski. Estas herramientas pueden ahorrarte tiempo, energía y dinero. No requieren conocimientos profundos de psicología. ¡Te deseamos éxito en tu práctica!</value>
+  </data>
+  <data name="CleanerPrayersPage" xml:space="preserve">
+    <value>Oraciones</value>
+  </data>
+  <data name="CleanerPrayerCollection" xml:space="preserve">
+    <value>Colección de oraciones</value>
+  </data>
+  <data name="CleanerLoad" xml:space="preserve">
+    <value>Cargar</value>
+  </data>
+  <data name="CleanerSearchingPrayers" xml:space="preserve">
+    <value>Cargando oraciones</value>
+  </data>
+  <data name="CleanerPreparingAudio" xml:space="preserve">
+    <value>Preparando el audio…</value>
+  </data>
+  <data name="CleanerPlaybackError" xml:space="preserve">
+    <value>No se pudo reproducir el audio. Comprueba tu conexión a internet.</value>
+  </data>
+  <data name="CleanerOfflineBadge" xml:space="preserve">
+    <value>Disponible sin conexión</value>
+  </data>
+  <data name="CleanerPlayNext" xml:space="preserve">
+    <value>Siguiente</value>
+  </data>
+  <data name="CleanerReplay" xml:space="preserve">
+    <value>Repetir</value>
+  </data>
+  <data name="CleanerMoreInfoBody" xml:space="preserve">
+    <value>Oraciones en audio para la mañana, la noche y el recogimiento. Se necesita internet la primera vez; después las pistas se pueden escuchar sin conexión.</value>
+  </data>
+  <data name="CleanerCollectionSubtitle" xml:space="preserve">
+    <value>Elige una oración y toca una tarjeta para escucharla.</value>
+  </data>
+  <data name="CleanerCategoryAll" xml:space="preserve">
+    <value>Todas</value>
+  </data>
+  <data name="CleanerCategoryMorning" xml:space="preserve">
+    <value>Mañana</value>
+  </data>
+  <data name="CleanerCategoryEvening" xml:space="preserve">
+    <value>Noche</value>
+  </data>
+  <data name="CleanerCategoryPenitential" xml:space="preserve">
+    <value>Penitencia</value>
+  </data>
+  <data name="CleanerCategoryCore" xml:space="preserve">
+    <value>Esenciales</value>
+  </data>
+  <data name="CleanerPrayerMain" xml:space="preserve">
+    <value>Oración principal</value>
+  </data>
+  <data name="CleanerPsalm50" xml:space="preserve">
+    <value>Salmo 50</value>
+  </data>
+  <data name="CleanerPsalm50Desc" xml:space="preserve">
+    <value>Salmo penitencial; tradicionalmente se lee tres veces al día</value>
+  </data>
+  <data name="CleanerPsalm90" xml:space="preserve">
+    <value>Salmo 90</value>
+  </data>
+  <data name="CleanerPsalm90Desc" xml:space="preserve">
+    <value>Una oración por la protección y la ayuda de Dios</value>
+  </data>
+  <data name="CleanerOurFather" xml:space="preserve">
+    <value>Padre nuestro</value>
+  </data>
+  <data name="CleanerOurFatherDesc" xml:space="preserve">
+    <value>La oración cristiana central</value>
+  </data>
+  <data name="CleanerJesusPrayer" xml:space="preserve">
+    <value>Oración de Jesús</value>
+  </data>
+  <data name="CleanerJesusPrayerDesc" xml:space="preserve">
+    <value>Una breve oración del corazón dirigida a Cristo</value>
+  </data>
+  <data name="CleanerHeavenlyKing" xml:space="preserve">
+    <value>Rey celestial</value>
+  </data>
+  <data name="CleanerHeavenlyKingDesc" xml:space="preserve">
+    <value>Oración inicial de la regla de la mañana</value>
+  </data>
+  <data name="CleanerMorningPrayer" xml:space="preserve">
+    <value>Oraciones de la mañana</value>
+  </data>
+  <data name="CleanerMorningPrayerDesc" xml:space="preserve">
+    <value>Un breve ciclo de oraciones de la mañana</value>
+  </data>
+  <data name="CleanerSymbolOfFaith" xml:space="preserve">
+    <value>Símbolo de la fe</value>
+  </data>
+  <data name="CleanerSymbolOfFaithDesc" xml:space="preserve">
+    <value>La exposición breve de la fe ortodoxa</value>
+  </data>
+  <data name="CleanerEveningPrayer" xml:space="preserve">
+    <value>Oraciones de la noche</value>
+  </data>
+  <data name="CleanerEveningPrayerDesc" xml:space="preserve">
+    <value>Un breve ciclo de oraciones de la noche</value>
+  </data>
+  <data name="CleanerTrisagion" xml:space="preserve">
+    <value>Trisagio</value>
+  </data>
+  <data name="CleanerTrisagionDesc" xml:space="preserve">
+    <value>«Santo Dios, Santo Fuerte…»</value>
+  </data>
+  <data name="CleanerVirginMary" xml:space="preserve">
+    <value>Alégrate, Virgen</value>
+  </data>
+  <data name="CleanerVirginMaryDesc" xml:space="preserve">
+    <value>Una oración a la Santísima Madre de Dios</value>
+  </data>
+  <data name="CleanerHolySpirit" xml:space="preserve">
+    <value>Oración al Espíritu Santo</value>
+  </data>
+  <data name="CleanerHolySpiritDesc" xml:space="preserve">
+    <value>Una oración por los dones y la fortaleza del Espíritu</value>
+  </data>
+  <data name="CleanerDoxology" xml:space="preserve">
+    <value>Doxología</value>
+  </data>
+  <data name="CleanerDoxologyDesc" xml:space="preserve">
+    <value>La gran doxología a Dios</value>
+  </data>
+  <data name="CleanerSearchPlaceholder" xml:space="preserve">
+    <value>Buscar oraciones</value>
+  </data>
+  <data name="CleanerNoPrayersFound" xml:space="preserve">
+    <value>No se encontraron oraciones</value>
+  </data>
+  <data name="CleanerCatalogEmpty" xml:space="preserve">
+    <value>Aún no hay oraciones en el catálogo</value>
+  </data>
+  <data name="CleanerNowPlaying" xml:space="preserve">
+    <value>Reproduciendo</value>
+  </data>
+  <data name="DesignerNamePlaceholder" xml:space="preserve">
+    <value>Técnica de giro de Slavinski</value>
+  </data>
+  <data name="DesignerDescriptionPlaceholder" xml:space="preserve">
+    <value>Método de neutralización instantánea…</value>
+  </data>
+  <data name="DesignerThemePlaceholder" xml:space="preserve">
+    <value>Momento difícil</value>
+  </data>
+  <data name="DesignerAuthorPlaceholder" xml:space="preserve">
+    <value>Zivorad Slavinski</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Añadir</value>
+  </data>
+  <data name="Repeat" xml:space="preserve">
+    <value>Repetir</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="ConcernLabel" xml:space="preserve">
+    <value>Preocupación</value>
+  </data>
+  <data name="FirstPolarityLabel" xml:space="preserve">
+    <value>Primera polaridad</value>
+  </data>
+  <data name="SecondPolarityLabel" xml:space="preserve">
+    <value>Segunda polaridad</value>
+  </data>
+  <data name="TechniqueStepBack" xml:space="preserve">
+    <value>Atrás</value>
+  </data>
+  <data name="TechniqueStepNext" xml:space="preserve">
+    <value>Siguiente</value>
+  </data>
+  <data name="ProverbLabel" xml:space="preserve">
+    <value>Refrán</value>
+  </data>
+  <data name="QuoteAddFavoriteHint" xml:space="preserve">
+    <value>Añadir a favoritos</value>
+  </data>
+  <data name="QuoteCopyHint" xml:space="preserve">
+    <value>Copiar cita</value>
+  </data>
+  <data name="QuoteShareHint" xml:space="preserve">
+    <value>Compartir cita</value>
+  </data>
+  <data name="PolarityNegativePlaceholder" xml:space="preserve">
+    <value>Neurosis</value>
+  </data>
+  <data name="PolarityPositivePlaceholder" xml:space="preserve">
+    <value>Calma</value>
+  </data>
+  <data name="StartupErrorTitle" xml:space="preserve">
+    <value>Error de inicio</value>
+  </data>
+  <data name="StartupErrorMessage" xml:space="preserve">
+    <value>No se pudo iniciar la aplicación. Vuelve a abrirla.</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="UnexpectedErrorMessage" xml:space="preserve">
+    <value>Se produjo un error inesperado. Inténtalo de nuevo.</value>
+  </data>
+  <data name="TestsResultSaveFailedMessage" xml:space="preserve">
+    <value>No se pudo guardar el resultado del test. Inténtalo de nuevo.</value>
+  </data>
+  <data name="TestsResultNavigationFailedMessage" xml:space="preserve">
+    <value>El resultado se guardó, pero no se pudo abrir la pantalla del resultado. Vuelve a tocar Terminar.</value>
+  </data>
+  <data name="TechniqueNotFound" xml:space="preserve">
+    <value>No se encontró la técnica.</value>
+  </data>
+  <data name="QuoteNotFound" xml:space="preserve">
+    <value>No se encontró la cita.</value>
+  </data>
+  <data name="PracticeEmptyTitle" xml:space="preserve">
+    <value>Aún no hay técnicas</value>
+  </data>
+  <data name="PracticeEmptyBody" xml:space="preserve">
+    <value>Toca Crear para añadir tu primera técnica</value>
+  </data>
+  <data name="TestsEmptyTitle" xml:space="preserve">
+    <value>Los tests aún no están disponibles</value>
+  </data>
+  <data name="TestsEmptyBody" xml:space="preserve">
+    <value>Toca Actualizar para volver a cargar la lista</value>
+  </data>
+  <data name="TestsEmptyRefresh" xml:space="preserve">
+    <value>Actualizar</value>
+  </data>
+  <data name="TestsLoadingText" xml:space="preserve">
+    <value>Cargando tests</value>
+  </data>
+  <data name="QuotesEmptyTitle" xml:space="preserve">
+    <value>No se encontraron citas</value>
+  </data>
+  <data name="QuotesEmptyBody" xml:space="preserve">
+    <value>Toca Actualizar para volver a cargar las citas</value>
+  </data>
+  <data name="QuotesRefreshButton" xml:space="preserve">
+    <value>Actualizar</value>
+  </data>
+  <data name="ProfileQuotesEmpty" xml:space="preserve">
+    <value>Aún no hay citas favoritas</value>
+  </data>
+  <data name="QuotesFavoritesEmptyBody" xml:space="preserve">
+    <value>Toca el corazón de una cita para añadirla aquí.</value>
+  </data>
+  <data name="ProfileTestsCompleted" xml:space="preserve">
+    <value>Tests hechos</value>
+  </data>
+  <data name="ProfileStreakDays" xml:space="preserve">
+    <value>Días seguidos</value>
+  </data>
+  <data name="ProfileStreakHint" xml:space="preserve">
+    <value>Cuenta los días con una práctica completada</value>
+  </data>
+  <data name="TodayForYou" xml:space="preserve">
+    <value>Hoy para ti</value>
+  </data>
+  <data name="TodayRecommended" xml:space="preserve">
+    <value>Práctica recomendada</value>
+  </data>
+  <data name="TodayStartPractice" xml:space="preserve">
+    <value>Empezar</value>
+  </data>
+  <data name="ComebackBanner" xml:space="preserve">
+    <value>Bienvenido de nuevo — empieza con una práctica corta</value>
+  </data>
+  <data name="OnboardingRemindersLabel" xml:space="preserve">
+    <value>Recordarme practicar</value>
+  </data>
+  <data name="OnboardingReminderHourLabel" xml:space="preserve">
+    <value>Hora del recordatorio</value>
+  </data>
+  <data name="TodayMoodQuestion" xml:space="preserve">
+    <value>¿Cómo te sientes?</value>
+  </data>
+  <data name="TodayMoodSaved" xml:space="preserve">
+    <value>Estado de ánimo guardado</value>
+  </data>
+  <data name="MoodHistoryTitle" xml:space="preserve">
+    <value>Recientes</value>
+  </data>
+  <data name="ProfileMoodTrendTitle" xml:space="preserve">
+    <value>Estado de ánimo</value>
+  </data>
+  <data name="ProfileMoodCheckInTitle" xml:space="preserve">
+    <value>¿Cómo te sientes hoy?</value>
+  </data>
+  <data name="ProfileWeeklyInsightTitle" xml:space="preserve">
+    <value>Esta semana</value>
+  </data>
+  <data name="JournalTitle" xml:space="preserve">
+    <value>Diario</value>
+  </data>
+  <data name="OpenJournalLabel" xml:space="preserve">
+    <value>¿Cómo te sientes?</value>
+  </data>
+  <data name="JournalCardSubtitle" xml:space="preserve">
+    <value>Ánimo, notas y tendencias</value>
+  </data>
+  <data name="JournalTodayTitle" xml:space="preserve">
+    <value>Hoy</value>
+  </data>
+  <data name="JournalEntriesTitle" xml:space="preserve">
+    <value>Entradas</value>
+  </data>
+  <data name="JournalWeekEmpty" xml:space="preserve">
+    <value>Esta semana hay poco todavía — registra tu estado de ánimo</value>
+  </data>
+  <data name="JournalNotePlaceholder" xml:space="preserve">
+    <value>¿Qué influyó? (opcional)</value>
+  </data>
+  <data name="JournalNoteSectionTitle" xml:space="preserve">
+    <value>Nota</value>
+  </data>
+  <data name="JournalAddNoteLabel" xml:space="preserve">
+    <value>Añadir una nota</value>
+  </data>
+  <data name="JournalShowHintsLabel" xml:space="preserve">
+    <value>Sugerencias</value>
+  </data>
+  <data name="JournalHideHintsLabel" xml:space="preserve">
+    <value>Ocultar sugerencias</value>
+  </data>
+  <data name="JournalHowNowQuestion" xml:space="preserve">
+    <value>¿Cómo estás ahora mismo?</value>
+  </data>
+  <data name="JournalMoreMenuLabel" xml:space="preserve">
+    <value>Más</value>
+  </data>
+  <data name="JournalSlotPickerTitle" xml:space="preserve">
+    <value>Momento del registro</value>
+  </data>
+  <data name="JournalNoteSaveHint" xml:space="preserve">
+    <value>El estado de ánimo se guarda al instante. Para la nota, usa el botón de abajo.</value>
+  </data>
+  <data name="JournalSaveLabel" xml:space="preserve">
+    <value>Guardar nota</value>
+  </data>
+  <data name="JournalDeleteLabel" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="JournalDeleteConfirmTitle" xml:space="preserve">
+    <value>¿Eliminar la entrada?</value>
+  </data>
+  <data name="JournalDeleteConfirmMessage" xml:space="preserve">
+    <value>Se eliminarán el estado de ánimo y la nota de este día.</value>
+  </data>
+  <data name="JournalDeleteConfirmAccept" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="JournalDeleteConfirmCancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="JournalNoNoteCaption" xml:space="preserve">
+    <value>Sin nota</value>
+  </data>
+  <data name="JournalEditTodayHint" xml:space="preserve">
+    <value>Editar hoy</value>
+  </data>
+  <data name="JournalPickMoodHint" xml:space="preserve">
+    <value>Elige un estado de ánimo arriba</value>
+  </data>
+  <data name="JournalMoodStatsTitle" xml:space="preserve">
+    <value>Resumen</value>
+  </data>
+  <data name="JournalMoodStreakLabel" xml:space="preserve">
+    <value>Días seguidos</value>
+  </data>
+  <data name="JournalDynamicsTitle" xml:space="preserve">
+    <value>Tendencia</value>
+  </data>
+  <data name="JournalOverviewInsightEmpty" xml:space="preserve">
+    <value>Aún hay pocos registros — anota tu estado de ánimo esta semana</value>
+  </data>
+  <data name="ProfileMoodCheckInBanner" xml:space="preserve">
+    <value>Aún no has registrado tu estado de ánimo hoy</value>
+  </data>
+  <data name="JournalTryQuietQuote" xml:space="preserve">
+    <value>Una cita breve puede ayudar</value>
+  </data>
+  <data name="PracticeOpenJournalRow" xml:space="preserve">
+    <value>Añadir una nota al diario</value>
+  </data>
+  <data name="JournalQuestionsSectionTitle" xml:space="preserve">
+    <value>Preguntas</value>
+  </data>
+  <data name="JournalFactorsSectionTitle" xml:space="preserve">
+    <value>Factores del día</value>
+  </data>
+  <data name="JournalWeekNavPrev" xml:space="preserve">
+    <value>Semana anterior</value>
+  </data>
+  <data name="JournalWeekNavNext" xml:space="preserve">
+    <value>Semana siguiente</value>
+  </data>
+  <data name="JournalMonthNavPrev" xml:space="preserve">
+    <value>Mes anterior</value>
+  </data>
+  <data name="JournalMonthNavNext" xml:space="preserve">
+    <value>Mes siguiente</value>
+  </data>
+  <data name="JournalFilter7Days" xml:space="preserve">
+    <value>7 días</value>
+  </data>
+  <data name="JournalFilter30Days" xml:space="preserve">
+    <value>30 días</value>
+  </data>
+  <data name="JournalFilter90Days" xml:space="preserve">
+    <value>90 días</value>
+  </data>
+  <data name="JournalYesterdayTitle" xml:space="preserve">
+    <value>Ayer</value>
+  </data>
+  <data name="JournalPastDayCheckInTitle" xml:space="preserve">
+    <value>¿Cómo fue tu estado de ánimo ese día?</value>
+  </data>
+  <data name="JournalPromptHelped" xml:space="preserve">
+    <value>¿Qué ayudó?</value>
+  </data>
+  <data name="JournalPromptBlocked" xml:space="preserve">
+    <value>¿Qué estorbó?</value>
+  </data>
+  <data name="JournalPromptGrateful" xml:space="preserve">
+    <value>¿Qué agradeces?</value>
+  </data>
+  <data name="JournalPromptNext" xml:space="preserve">
+    <value>¿Y ahora qué?</value>
+  </data>
+  <data name="JournalSearchPlaceholder" xml:space="preserve">
+    <value>Buscar en las notas</value>
+  </data>
+  <data name="JournalSearchEmpty" xml:space="preserve">
+    <value>No hay notas que coincidan</value>
+  </data>
+  <data name="JournalTimelineEmpty" xml:space="preserve">
+    <value>Aún no hay registros — anota tu estado de ánimo en el diario para empezar una racha</value>
+  </data>
+  <data name="JournalTryShortPractice" xml:space="preserve">
+    <value>Una práctica corta puede ayudar</value>
+  </data>
+  <data name="JournalPromptBlockedShort" xml:space="preserve">
+    <value>Lo que estorbó</value>
+  </data>
+  <data name="JournalPromptGratefulShort" xml:space="preserve">
+    <value>Gratitud</value>
+  </data>
+  <data name="JournalFactorSleep" xml:space="preserve">
+    <value>Sueño: </value>
+  </data>
+  <data name="JournalFactorPeople" xml:space="preserve">
+    <value>Personas: </value>
+  </data>
+  <data name="JournalFactorPractice" xml:space="preserve">
+    <value>Práctica: </value>
+  </data>
+  <data name="JournalFactorWalk" xml:space="preserve">
+    <value>Paseo: </value>
+  </data>
+  <data name="JournalFactorWork" xml:space="preserve">
+    <value>Trabajo: </value>
+  </data>
+  <data name="JournalFactorSport" xml:space="preserve">
+    <value>Deporte: </value>
+  </data>
+  <data name="JournalFactorRest" xml:space="preserve">
+    <value>Descanso: </value>
+  </data>
+  <data name="JournalFactorStress" xml:space="preserve">
+    <value>Estrés: </value>
+  </data>
+  <data name="JournalFactorHome" xml:space="preserve">
+    <value>Casa: </value>
+  </data>
+  <data name="JournalFactorSleepLabel" xml:space="preserve">
+    <value>Sueño</value>
+  </data>
+  <data name="JournalFactorPeopleLabel" xml:space="preserve">
+    <value>Personas</value>
+  </data>
+  <data name="JournalFactorPracticeLabel" xml:space="preserve">
+    <value>Práctica</value>
+  </data>
+  <data name="JournalFactorWalkLabel" xml:space="preserve">
+    <value>Paseo</value>
+  </data>
+  <data name="JournalFactorWorkLabel" xml:space="preserve">
+    <value>Trabajo</value>
+  </data>
+  <data name="JournalFactorSportLabel" xml:space="preserve">
+    <value>Deporte</value>
+  </data>
+  <data name="JournalFactorRestLabel" xml:space="preserve">
+    <value>Descanso</value>
+  </data>
+  <data name="JournalFactorStressLabel" xml:space="preserve">
+    <value>Estrés</value>
+  </data>
+  <data name="JournalFactorHomeLabel" xml:space="preserve">
+    <value>Casa</value>
+  </data>
+  <data name="JournalYearNavPrev" xml:space="preserve">
+    <value>Año anterior</value>
+  </data>
+  <data name="JournalYearNavNext" xml:space="preserve">
+    <value>Año siguiente</value>
+  </data>
+  <data name="JournalYearHeatmapTitle" xml:space="preserve">
+    <value>El año en píxeles</value>
+  </data>
+  <data name="JournalCalendarScaleWeek" xml:space="preserve">
+    <value>Semana</value>
+  </data>
+  <data name="JournalCalendarScaleMonth" xml:space="preserve">
+    <value>Mes</value>
+  </data>
+  <data name="JournalCalendarScaleYear" xml:space="preserve">
+    <value>Año</value>
+  </data>
+  <data name="JournalCalendarSectionTitle" xml:space="preserve">
+    <value>Calendario</value>
+  </data>
+  <data name="JournalStatsSectionTitle" xml:space="preserve">
+    <value>Resumen</value>
+  </data>
+  <data name="JournalStreakMetricLabel" xml:space="preserve">
+    <value>Racha</value>
+  </data>
+  <data name="JournalPeriodNavPrev" xml:space="preserve">
+    <value>Anterior</value>
+  </data>
+  <data name="JournalPeriodNavNext" xml:space="preserve">
+    <value>Siguiente</value>
+  </data>
+  <data name="JournalSlotMorning" xml:space="preserve">
+    <value>Mañana</value>
+  </data>
+  <data name="JournalSlotEvening" xml:space="preserve">
+    <value>Noche</value>
+  </data>
+  <data name="JournalExportLabel" xml:space="preserve">
+    <value>Exportar CSV</value>
+  </data>
+  <data name="JournalExportTitle" xml:space="preserve">
+    <value>Diario de ánimo</value>
+  </data>
+  <data name="JournalExportEmpty" xml:space="preserve">
+    <value>No hay entradas para exportar</value>
+  </data>
+  <data name="JournalExportFailed" xml:space="preserve">
+    <value>No se pudo preparar el archivo. Tus entradas están a salvo; inténtalo de nuevo.</value>
+  </data>
+  <data name="JournalSlotFullHint" xml:space="preserve">
+    <value>Este día ya tiene dos registros — elige Mañana o Noche</value>
+  </data>
+  <data name="MoodNotesEmpty" xml:space="preserve">
+    <value>Aún no hay registros de ánimo — añade uno arriba</value>
+  </data>
+  <data name="JournalNeedMoodToSave" xml:space="preserve">
+    <value>Primero elige un estado de ánimo</value>
+  </data>
+  <data name="WeekPracticesLabel" xml:space="preserve">
+    <value>Prácticas</value>
+  </data>
+  <data name="WeekMoodCheckInsLabel" xml:space="preserve">
+    <value>Registros</value>
+  </data>
+  <data name="WeekAvgMoodLabel" xml:space="preserve">
+    <value>Ánimo medio</value>
+  </data>
+  <data name="WeekRiskLabel" xml:space="preserve">
+    <value>Riesgo</value>
+  </data>
+  <data name="WeekStreakLabel" xml:space="preserve">
+    <value>Racha</value>
+  </data>
+  <data name="ProfileMoodTrendHint" xml:space="preserve">
+    <value>Registra aquí tu ánimo para ver la tendencia</value>
+  </data>
+  <data name="ChartFirstMeasurement" xml:space="preserve">
+    <value>Primera medición</value>
+  </data>
+  <data name="PracticeReflectionQuestion" xml:space="preserve">
+    <value>¿Cómo te sientes ahora?</value>
+  </data>
+  <data name="PracticeReflectionNotePlaceholder" xml:space="preserve">
+    <value>Nota breve (opcional)</value>
+  </data>
+  <data name="PracticePreSudsLabel" xml:space="preserve">
+    <value>Intensidad antes (0–10)</value>
+  </data>
+  <data name="PracticePostSudsLabel" xml:space="preserve">
+    <value>Intensidad después (0–10)</value>
+  </data>
+  <data name="PracticeSudsSectionTitle" xml:space="preserve">
+    <value>¿Cómo cambió la intensidad?</value>
+  </data>
+  <data name="PracticeReflectionSectionTitle" xml:space="preserve">
+    <value>Estado de ánimo</value>
+  </data>
+  <data name="PracticeLastNoteTitle" xml:space="preserve">
+    <value>Lo que notaste la última vez</value>
+  </data>
+  <data name="PracticeCompletedTitle" xml:space="preserve">
+    <value>¡Hecho!</value>
+  </data>
+  <data name="PracticeCrisis" xml:space="preserve">
+    <value>Lo que has escrito suena muy duro. No estás solo/a: aquí tienes a dónde acudir ahora mismo.</value>
+  </data>
+  <data name="ProfileMoodNotesTitle" xml:space="preserve">
+    <value>Notas de ánimo</value>
+  </data>
+  <data name="PracticeGoHomeButton" xml:space="preserve">
+    <value>Ir al inicio</value>
+  </data>
+  <data name="PracticeMoreButton" xml:space="preserve">
+    <value>Otra práctica</value>
+  </data>
+  <data name="PracticeNextCaption" xml:space="preserve">
+    <value>Siguiente práctica</value>
+  </data>
+  <data name="PracticeNextReason" xml:space="preserve">
+    <value>Mantén el impulso</value>
+  </data>
+  <data name="PracticeHistoryTitle" xml:space="preserve">
+    <value>Prácticas recientes</value>
+  </data>
+  <data name="PracticeHistoryEmpty" xml:space="preserve">
+    <value>Aún no hay prácticas completadas</value>
+  </data>
+  <data name="QuoteCopied" xml:space="preserve">
+    <value>Copiado</value>
+  </data>
+  <data name="TestHistoryTitle" xml:space="preserve">
+    <value>Historial de resultados</value>
+  </data>
+  <data name="TestHistoryEmpty" xml:space="preserve">
+    <value>Aún no hay resultados guardados</value>
+  </data>
+  <data name="TestOpenHistory" xml:space="preserve">
+    <value>Historial</value>
+  </data>
+  <data name="TechniqueContinueBadge" xml:space="preserve">
+    <value>Continuar</value>
+  </data>
+  <data name="TechniqueNotTriedYet" xml:space="preserve">
+    <value>Aún sin probar</value>
+  </data>
+  <data name="TestNeverTakenYet" xml:space="preserve">
+    <value>Aún sin hacer</value>
+  </data>
+  <data name="TestTryTechnique" xml:space="preserve">
+    <value>Probar una técnica</value>
+  </data>
+  <data name="TestResultImproved" xml:space="preserve">
+    <value>Mejor que la última vez</value>
+  </data>
+  <data name="TestResultWorse" xml:space="preserve">
+    <value>Peor que la última vez</value>
+  </data>
+  <data name="TestResultSame" xml:space="preserve">
+    <value>Igual que la última vez</value>
+  </data>
+  <data name="OnboardingAppName" xml:space="preserve">
+    <value>Psychology App</value>
+  </data>
+  <data name="OnboardingAppTagline" xml:space="preserve">
+    <value>La calma a tu alcance — incluso sin conexión</value>
+  </data>
+  <data name="OnboardingWelcomeTitle" xml:space="preserve">
+    <value>Un espacio para ti</value>
+  </data>
+  <data name="OnboardingWelcomeBody" xml:space="preserve">
+    <value>Aquí puedes respirar, entenderte mejor y encontrar apoyo — a tu ritmo.</value>
+  </data>
+  <data name="OnboardingValueOffline" xml:space="preserve">
+    <value>Sin conexión</value>
+  </data>
+  <data name="OnboardingValueNoJudgment" xml:space="preserve">
+    <value>Sin juicios</value>
+  </data>
+  <data name="OnboardingValueOnDevice" xml:space="preserve">
+    <value>En tu dispositivo</value>
+  </data>
+  <data name="OnboardingBack" xml:space="preserve">
+    <value>Atrás</value>
+  </data>
+  <data name="OnboardingOverviewTitle" xml:space="preserve">
+    <value>Apoyo en un solo lugar</value>
+  </data>
+  <data name="OnboardingOverviewSubtitle" xml:space="preserve">
+    <value>Prácticas, chat IA, tests y diario en la parte inferior de la pantalla. Artículos, cursos, Cuerpo, oraciones y citas en el menú ☰</value>
+  </data>
+  <data name="OnboardingOverviewLead" xml:space="preserve">
+    <value>Lo esencial en las pestañas, el resto en el menú</value>
+  </data>
+  <data name="OnboardingModulePracticeHint" xml:space="preserve">
+    <value>Calma tu sistema nervioso en minutos</value>
+  </data>
+  <data name="OnboardingModuleTestsHint" xml:space="preserve">
+    <value>Conócete mejor con cuestionarios y el test de Lüscher</value>
+  </data>
+  <data name="OnboardingConcernTitle" xml:space="preserve">
+    <value>¿Qué te preocupa?</value>
+  </data>
+  <data name="OnboardingConcernSubtitle" xml:space="preserve">
+    <value>Elegiremos una primera práctica para ti</value>
+  </data>
+  <data name="OnboardingConcernFooterHint" xml:space="preserve">
+    <value>Toca una opción para continuar</value>
+  </data>
+  <data name="OnboardingConcernAnxiety" xml:space="preserve">
+    <value>Ansiedad</value>
+  </data>
+  <data name="OnboardingConcernBody" xml:space="preserve">
+    <value>Cuerpo / síntomas</value>
+  </data>
+  <data name="OnboardingConcernMood" xml:space="preserve">
+    <value>Estado de ánimo</value>
+  </data>
+  <data name="OnboardingConcernExplore" xml:space="preserve">
+    <value>Solo explorar</value>
+  </data>
+  <data name="OnboardingConcernAnxietyHint" xml:space="preserve">
+    <value>Cuando los pensamientos no te sueltan</value>
+  </data>
+  <data name="OnboardingConcernBodyHint" xml:space="preserve">
+    <value>Cuando el cuerpo avisa del estrés</value>
+  </data>
+  <data name="OnboardingConcernMoodHint" xml:space="preserve">
+    <value>Cuando por dentro pesa</value>
+  </data>
+  <data name="OnboardingConcernExploreHint" xml:space="preserve">
+    <value>Solo quiero echar un vistazo</value>
+  </data>
+  <data name="OnboardingFinishTitle" xml:space="preserve">
+    <value>Todo listo — ¿empezamos?</value>
+  </data>
+  <data name="OnboardingRecommendedCaption" xml:space="preserve">
+    <value>Práctica recomendada</value>
+  </data>
+  <data name="OnboardingDisclaimerTitle" xml:space="preserve">
+    <value>Importante</value>
+  </data>
+  <data name="OnboardingDisclaimerBody" xml:space="preserve">
+    <value>Esta aplicación no sustituye la atención profesional. Ante estados graves, acude a un especialista.</value>
+  </data>
+  <data name="OnboardingStart" xml:space="preserve">
+    <value>Probar ahora</value>
+  </data>
+  <data name="OnboardingSkip" xml:space="preserve">
+    <value>Omitir</value>
+  </data>
+  <data name="OnboardingNext" xml:space="preserve">
+    <value>Siguiente</value>
+  </data>
+  <data name="QuoteShareFooter" xml:space="preserve">
+    <value>Psychology App</value>
+  </data>
+  <data name="QuotesSearchError" xml:space="preserve">
+    <value>La búsqueda de citas falló</value>
+  </data>
+  <data name="LoadFailed" xml:space="preserve">
+    <value>Error al cargar</value>
+  </data>
+  <data name="RetryQuestion" xml:space="preserve">
+    <value>¿Intentarlo de nuevo?</value>
+  </data>
+  <data name="LoadError" xml:space="preserve">
+    <value>Error al cargar</value>
+  </data>
+  <data name="ProfileTitle" xml:space="preserve">
+    <value>Perfil</value>
+  </data>
+  <data name="ProfileLoadingText" xml:space="preserve">
+    <value>Cargando el perfil</value>
+  </data>
+  <data name="ProfileUserLabel" xml:space="preserve">
+    <value>Usuario</value>
+  </data>
+  <data name="ProfileTechniquesCompleted" xml:space="preserve">
+    <value>Prácticas hechas</value>
+  </data>
+  <data name="ProfileFollowers" xml:space="preserve">
+    <value>Seguidores</value>
+  </data>
+  <data name="ProfileRecommended" xml:space="preserve">
+    <value>Recomendado</value>
+  </data>
+  <data name="ProfileBestQuotes" xml:space="preserve">
+    <value>Citas favoritas</value>
+  </data>
+  <data name="ProfileQuotesSeeAll" xml:space="preserve">
+    <value>Todas las citas favoritas</value>
+  </data>
+  <data name="ProfileQuotesSeeAllSubtitle" xml:space="preserve">
+    <value>Abrir la pestaña Citas</value>
+  </data>
+  <data name="QuotesFavoriteAdded" xml:space="preserve">
+    <value>Añadida a favoritos</value>
+  </data>
+  <data name="QuotesFavoriteRemoved" xml:space="preserve">
+    <value>Quitada de favoritos</value>
+  </data>
+  <data name="QuotesGoToTab" xml:space="preserve">
+    <value>Ir a las citas</value>
+  </data>
+  <data name="QuotesFeedAll" xml:space="preserve">
+    <value>Todas</value>
+  </data>
+  <data name="QuotesFeedFavorites" xml:space="preserve">
+    <value>Favoritas</value>
+  </data>
+  <data name="QuotesFeedForYou" xml:space="preserve">
+    <value>Para ti</value>
+  </data>
+  <data name="QuotesThemeAll" xml:space="preserve">
+    <value>Todos los temas</value>
+  </data>
+  <data name="QuotesDailyTitle" xml:space="preserve">
+    <value>Cita del día</value>
+  </data>
+  <data name="QuotesSearchPlaceholder" xml:space="preserve">
+    <value>Buscar citas</value>
+  </data>
+  <data name="QuotesSearchEmptyTitle" xml:space="preserve">
+    <value>No se encontró nada</value>
+  </data>
+  <data name="QuotesSearchEmptyBody" xml:space="preserve">
+    <value>Prueba con otra búsqueda.</value>
+  </data>
+  <data name="QuotesShowAgain" xml:space="preserve">
+    <value>Mostrar de nuevo</value>
+  </data>
+  <data name="QuotesForYouHint" xml:space="preserve">
+    <value>Elegidas según tu preocupación principal</value>
+  </data>
+  <data name="QuotesForYouEmptyTitle" xml:space="preserve">
+    <value>Aún no hay citas para ti</value>
+  </data>
+  <data name="QuotesForYouEmptyBody" xml:space="preserve">
+    <value>Elegimos citas según tu preocupación principal. Vuelve más tarde o cambia a Todas.</value>
+  </data>
+  <data name="SettingsQuoteRemindersLabel" xml:space="preserve">
+    <value>Cita del día</value>
+  </data>
+  <data name="SettingsQuoteReminderHourLabel" xml:space="preserve">
+    <value>Hora de la cita</value>
+  </data>
+  <data name="SettingsQuoteReminderHourPickerTitle" xml:space="preserve">
+    <value>Hora</value>
+  </data>
+  <data name="SettingsMoodRemindersLabel" xml:space="preserve">
+    <value>Recordarme registrar el ánimo</value>
+  </data>
+  <data name="SettingsMoodReminderHourLabel" xml:space="preserve">
+    <value>Hora del registro</value>
+  </data>
+  <data name="SettingsMoodReminderHourPickerTitle" xml:space="preserve">
+    <value>Hora</value>
+  </data>
+  <data name="SettingsMoodReminderAuto" xml:space="preserve">
+    <value>Mi hora habitual</value>
+  </data>
+  <data name="SettingsChatRemindersLabel" xml:space="preserve">
+    <value>Recordarme hablar</value>
+  </data>
+  <data name="SettingsChatReminderHourLabel" xml:space="preserve">
+    <value>Hora del recordatorio</value>
+  </data>
+  <data name="SettingsChatReminderHourPickerTitle" xml:space="preserve">
+    <value>Hora</value>
+  </data>
+  <data name="QuoteReminderTitle" xml:space="preserve">
+    <value>Cita del día</value>
+  </data>
+  <data name="QuoteReminderBody" xml:space="preserve">
+    <value>Abre la aplicación y lee la reflexión de hoy.</value>
+  </data>
+  <data name="QuoteThemeWisdom" xml:space="preserve">
+    <value>Sabiduría</value>
+  </data>
+  <data name="QuoteThemeMotivation" xml:space="preserve">
+    <value>Motivación</value>
+  </data>
+  <data name="QuoteThemeResilience" xml:space="preserve">
+    <value>Resiliencia</value>
+  </data>
+  <data name="QuoteThemeSelfAwareness" xml:space="preserve">
+    <value>Autoconocimiento</value>
+  </data>
+  <data name="QuoteThemeMindfulness" xml:space="preserve">
+    <value>Atención plena</value>
+  </data>
+  <data name="QuoteThemeSelfEsteem" xml:space="preserve">
+    <value>Autoestima</value>
+  </data>
+  <data name="QuoteThemeHope" xml:space="preserve">
+    <value>Esperanza</value>
+  </data>
+  <data name="QuoteThemeEmpathy" xml:space="preserve">
+    <value>Empatía</value>
+  </data>
+  <data name="QuoteThemeHappiness" xml:space="preserve">
+    <value>Felicidad</value>
+  </data>
+  <data name="QuoteThemeHabits" xml:space="preserve">
+    <value>Hábitos</value>
+  </data>
+  <data name="QuoteThemeLove" xml:space="preserve">
+    <value>Amor</value>
+  </data>
+  <data name="QuoteThemeRelationships" xml:space="preserve">
+    <value>Relaciones</value>
+  </data>
+  <data name="QuoteThemeResponsibility" xml:space="preserve">
+    <value>Responsabilidad</value>
+  </data>
+  <data name="QuoteThemePurpose" xml:space="preserve">
+    <value>Propósito</value>
+  </data>
+  <data name="QuoteThemeGrowth" xml:space="preserve">
+    <value>Crecimiento</value>
+  </data>
+  <data name="QuoteThemeHealing" xml:space="preserve">
+    <value>Sanación</value>
+  </data>
+  <data name="QuoteThemeSelfLove" xml:space="preserve">
+    <value>Amor propio</value>
+  </data>
+  <data name="QuoteThemeAcceptance" xml:space="preserve">
+    <value>Aceptación</value>
+  </data>
+  <data name="QuoteThemeGratitude" xml:space="preserve">
+    <value>Gratitud</value>
+  </data>
+  <data name="QuoteThemeCalm" xml:space="preserve">
+    <value>Calma</value>
+  </data>
+  <data name="QuoteThemeAnxiety" xml:space="preserve">
+    <value>Ansiedad</value>
+  </data>
+  <data name="QuoteThemeGeneral" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="QuotesAllReadTitle" xml:space="preserve">
+    <value>Lo has leído todo</value>
+  </data>
+  <data name="QuotesAllReadBody" xml:space="preserve">
+    <value>Ahora no hay citas nuevas. Abre tus favoritas o vuelve más tarde.</value>
+  </data>
+  <data name="QuotesShowFavorites" xml:space="preserve">
+    <value>Ver favoritas</value>
+  </data>
+  <data name="ProfileBsffSubtitle" xml:space="preserve">
+    <value>Método de desprogramación del subconsciente</value>
+  </data>
+  <data name="QuotesSearching" xml:space="preserve">
+    <value>Buscando citas</value>
+  </data>
+  <data name="QuotesLoading" xml:space="preserve">
+    <value>Cargando citas</value>
+  </data>
+  <data name="QuoteShareTitle" xml:space="preserve">
+    <value>Cita</value>
+  </data>
+  <data name="UnknownAuthor" xml:space="preserve">
+    <value>Autor desconocido</value>
+  </data>
+  <data name="JournalCrisisPromptTitle" xml:space="preserve">
+    <value>¿Está siendo muy difícil ahora mismo?</value>
+  </data>
+  <data name="JournalCrisisPromptBody" xml:space="preserve">
+    <value>Tu nota contiene palabras que nos preocupan. No estás solo/a: en la pantalla de ayuda en crisis hay líneas de ayuda y tu plan de seguridad.</value>
+  </data>
+  <data name="JournalCrisisPromptAccept" xml:space="preserve">
+    <value>Abrir la ayuda</value>
+  </data>
+  <data name="JournalCrisisPromptDecline" xml:space="preserve">
+    <value>Ahora no</value>
+  </data>
+  <data name="CrisisHubTitle" xml:space="preserve">
+    <value>Ayuda en crisis</value>
+  </data>
+  <data name="CrisisHubLead" xml:space="preserve">
+    <value>La seguridad es lo primero. Esta aplicación no sustituye a los servicios de emergencia.</value>
+  </data>
+  <data name="CrisisHubSafetyPlanTitle" xml:space="preserve">
+    <value>Plan de seguridad</value>
+  </data>
+  <data name="CrisisHubSafetyPlanStep1" xml:space="preserve">
+    <value>Aléjate de lo que te desencadena y busca un lugar más seguro.</value>
+  </data>
+  <data name="CrisisHubSafetyPlanStep2" xml:space="preserve">
+    <value>Contacta con una persona de confianza: un amigo, un familiar o un profesional.</value>
+  </data>
+  <data name="CrisisHubSafetyPlanStep3" xml:space="preserve">
+    <value>Si hay una vida en peligro, llama a emergencias (112).</value>
+  </data>
+  <data name="CrisisHubHotlineTitle" xml:space="preserve">
+    <value>Llamar ahora</value>
+  </data>
+  <data name="CrisisHubHotlineRu" xml:space="preserve">
+    <value>Rusia: 112 — emergencias (gratis). 8-800-2000-122 — línea de ayuda para niños, adolescentes y padres. Para una línea de ayuda para adultos cerca de ti, consulta findahelpline.com</value>
+  </data>
+  <data name="CrisisHubHotlineIntl" xml:space="preserve">
+    <value>Internacional: findahelpline.com</value>
+  </data>
+  <data name="CrisisHubCallHotlineRu" xml:space="preserve">
+    <value>Línea infantil 8-800-2000-122</value>
+  </data>
+  <data name="CrisisHubCallEmergency" xml:space="preserve">
+    <value>Llamar al 112</value>
+  </data>
+  <data name="CrisisHubOpenHelpline" xml:space="preserve">
+    <value>Abrir findahelpline.com</value>
+  </data>
+  <data name="CrisisHubRecheck" xml:space="preserve">
+    <value>Volver a ver cómo estoy</value>
+  </data>
+  <data name="CrisisHubContinueSoft" xml:space="preserve">
+    <value>Volver a prácticas suaves</value>
+  </data>
+  <data name="CrisisHubSpecialistHint" xml:space="preserve">
+    <value>Considera acudir a un psicólogo o a un médico. La autoayuda es adecuada para estados leves o moderados.</value>
+  </data>
+  <data name="DataBackupTitle" xml:space="preserve">
+    <value>Datos y copia de seguridad</value>
+  </data>
+  <data name="DataBackupLead" xml:space="preserve">
+    <value>Todos los datos se quedan solo en este dispositivo. Haz una copia de seguridad para no perderlos.</value>
+  </data>
+  <data name="DataBackupExportTitle" xml:space="preserve">
+    <value>Exportar una copia</value>
+  </data>
+  <data name="DataBackupExportSubtitle" xml:space="preserve">
+    <value>Un archivo con todos los chats, registros de ánimo, tests e historial de prácticas.</value>
+  </data>
+  <data name="DataBackupImportTitle" xml:space="preserve">
+    <value>Restaurar una copia</value>
+  </data>
+  <data name="DataBackupImportSubtitle" xml:space="preserve">
+    <value>Añade los datos del archivo de copia elegido.</value>
+  </data>
+  <data name="DataBackupSummaryTitle" xml:space="preserve">
+    <value>Resumen para un profesional</value>
+  </data>
+  <data name="DataBackupSummarySubtitle" xml:space="preserve">
+    <value>Un archivo de texto de los últimos 30 días para compartir con un psicólogo o un médico.</value>
+  </data>
+  <data name="DataEraseTitle" xml:space="preserve">
+    <value>Eliminar todos mis datos</value>
+  </data>
+  <data name="DataEraseSubtitle" xml:space="preserve">
+    <value>El diario, las prácticas, los tests, los chats y los ajustes se borran de este teléfono</value>
+  </data>
+  <data name="DataEraseConfirmTitle" xml:space="preserve">
+    <value>¿Eliminar todos los datos?</value>
+  </data>
+  <data name="DataEraseConfirmBody" xml:space="preserve">
+    <value>Se eliminarán de este teléfono el diario de ánimo, las prácticas y tus respuestas, los resultados de los tests, las conversaciones con el chat IA, el plan de seguridad, los registros de Cuerpo y los ajustes. Solo se podrán recuperar desde una copia de seguridad, si guardaste una.</value>
+  </data>
+  <data name="DataEraseConfirmAccept" xml:space="preserve">
+    <value>Eliminar todo</value>
+  </data>
+  <data name="DataEraseFinalTitle" xml:space="preserve">
+    <value>No se puede deshacer</value>
+  </data>
+  <data name="DataEraseFinalBody" xml:space="preserve">
+    <value>La aplicación empezará de cero, como recién instalada. ¿Eliminar?</value>
+  </data>
+  <data name="DataEraseFailedToast" xml:space="preserve">
+    <value>No se pudieron eliminar los datos. Inténtalo de nuevo.</value>
+  </data>
+  <data name="AppLockLabel" xml:space="preserve">
+    <value>Desbloquear con la huella o el PIN del teléfono</value>
+  </data>
+  <data name="AppLockHint" xml:space="preserve">
+    <value>Antes de mostrar el diario, los chats y las notas, la aplicación pide el desbloqueo del teléfono: huella, rostro o PIN. No hay un PIN aparte que inventar ni olvidar.</value>
+  </data>
+  <data name="AppLockNoScreenLock" xml:space="preserve">
+    <value>Primero activa un bloqueo de pantalla en los ajustes del teléfono (PIN, patrón o huella) y luego vuelve aquí.</value>
+  </data>
+  <data name="AppLockTitle" xml:space="preserve">
+    <value>La aplicación está protegida</value>
+  </data>
+  <data name="AppLockLead" xml:space="preserve">
+    <value>Desbloquea con la huella, el rostro o el PIN del teléfono.</value>
+  </data>
+  <data name="AppLockUnlock" xml:space="preserve">
+    <value>Desbloquear</value>
+  </data>
+  <data name="AppLockHelpTitle" xml:space="preserve">
+    <value>¿Necesitas ayuda ahora mismo?</value>
+  </data>
+  <data name="AppLockPromptTitle" xml:space="preserve">
+    <value>Psychology App</value>
+  </data>
+  <data name="AppLockPromptSubtitle" xml:space="preserve">
+    <value>Confirma que eres tú</value>
+  </data>
+  <data name="AppLockEnableTitle" xml:space="preserve">
+    <value>Activar la protección</value>
+  </data>
+  <data name="DataBackupExportedToast" xml:space="preserve">
+    <value>El archivo está listo para compartir</value>
+  </data>
+  <data name="ErrorLogTitle" xml:space="preserve">
+    <value>Registro de errores</value>
+  </data>
+  <data name="ErrorLogSubtitle" xml:space="preserve">
+    <value>Comparte un archivo de errores técnicos para ayudar a encontrar la causa de un cierre inesperado. No contiene tus entradas.</value>
+  </data>
+  <data name="ErrorLogEmptyToast" xml:space="preserve">
+    <value>No hay errores registrados</value>
+  </data>
+  <data name="DataBackupImportRolledBackToast" xml:space="preserve">
+    <value>No se pudieron restaurar los datos. No se cambió nada; inténtalo de nuevo</value>
+  </data>
+  <data name="DataBackupImportFailedToast" xml:space="preserve">
+    <value>No se pudo leer el archivo de copia</value>
+  </data>
+  <data name="CrisisHubSafetyPlanLinkTitle" xml:space="preserve">
+    <value>Mi plan de seguridad</value>
+  </data>
+  <data name="CrisisHubSafetyPlanLinkSubtitle" xml:space="preserve">
+    <value>Crea un plan personal: señales de alerta, lo que ayuda, a quién llamar.</value>
+  </data>
+  <data name="SafetyPlanPageTitle" xml:space="preserve">
+    <value>Plan de seguridad</value>
+  </data>
+  <data name="SafetyPlanLead" xml:space="preserve">
+    <value>Rellénalo con calma: te ayudará en un momento difícil.</value>
+  </data>
+  <data name="SafetyPlanWarningSignsTitle" xml:space="preserve">
+    <value>Mis señales de alerta</value>
+  </data>
+  <data name="SafetyPlanWarningSignsPlaceholder" xml:space="preserve">
+    <value>Por ejemplo: llevo dos noches sin dormir</value>
+  </data>
+  <data name="SafetyPlanCopingTitle" xml:space="preserve">
+    <value>Lo que me ayuda</value>
+  </data>
+  <data name="SafetyPlanCopingPlaceholder" xml:space="preserve">
+    <value>Por ejemplo: salir a caminar, llamar a un amigo</value>
+  </data>
+  <data name="SafetyPlanReasonsTitle" xml:space="preserve">
+    <value>Razones para seguir</value>
+  </data>
+  <data name="SafetyPlanReasonsPlaceholder" xml:space="preserve">
+    <value>Por ejemplo: mi gato, el viaje de esta primavera</value>
+  </data>
+  <data name="SafetyPlanContactsTitle" xml:space="preserve">
+    <value>A quién llamar</value>
+  </data>
+  <data name="SafetyPlanContactNamePlaceholder" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="SafetyPlanContactPhonePlaceholder" xml:space="preserve">
+    <value>Teléfono</value>
+  </data>
+  <data name="SafetyPlanTapToRemoveHint" xml:space="preserve">
+    <value>Toca para quitar</value>
+  </data>
+  <data name="SafetyPlanCallAction" xml:space="preserve">
+    <value>Llamar</value>
+  </data>
+  <data name="RiskCheckTitle" xml:space="preserve">
+    <value>Revisión de seguridad</value>
+  </data>
+  <data name="RiskCheckLead" xml:space="preserve">
+    <value>Si tienes pensamientos de hacerte daño, abre la ayuda ahora. No hace falta terminar la revisión antes.</value>
+  </data>
+  <data name="RiskCheckSubtitle" xml:space="preserve">
+    <value>Responde con sinceridad. Esto ayuda a elegir un camino seguro.</value>
+  </data>
+  <data name="RiskCheckSelfHarm" xml:space="preserve">
+    <value>Pensamientos de autolesión o suicidio</value>
+  </data>
+  <data name="RiskCheckDisorientation" xml:space="preserve">
+    <value>Desorientación grave o pérdida de contacto con la realidad</value>
+  </data>
+  <data name="RiskCheckSubstance" xml:space="preserve">
+    <value>Riesgo relacionado con alcohol u otras sustancias</value>
+  </data>
+  <data name="RiskCheckInsomnia" xml:space="preserve">
+    <value>Insomnio grave y agotamiento</value>
+  </data>
+  <data name="RiskCheckSubmit" xml:space="preserve">
+    <value>Hecho</value>
+  </data>
+  <data name="RiskCheckAnswerAll" xml:space="preserve">
+    <value>Responde a las cuatro preguntas, sí o no.</value>
+  </data>
+  <data name="RiskCheckOpenHelpNow" xml:space="preserve">
+    <value>Abrir la ayuda ahora</value>
+  </data>
+  <data name="RiskCheckYes" xml:space="preserve">
+    <value>Sí</value>
+  </data>
+  <data name="RiskCheckNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="OptionsCrisisTitle" xml:space="preserve">
+    <value>Ayuda en crisis</value>
+  </data>
+  <data name="OptionsCrisisSubtitle" xml:space="preserve">
+    <value>Plan de seguridad y líneas de ayuda</value>
+  </data>
+  <data name="ClinicalScorecardTitle" xml:space="preserve">
+    <value>Resumen semanal</value>
+  </data>
+  <data name="PracticeHistorySeeAll" xml:space="preserve">
+    <value>Todo</value>
+  </data>
+  <data name="PracticeHistoryPageTitle" xml:space="preserve">
+    <value>Historial de prácticas</value>
+  </data>
+  <data name="ProfileRiskCheckLabel" xml:space="preserve">
+    <value>¿Cómo estoy ahora mismo?</value>
+  </data>
+  <data name="ProfileRiskCheckSubtitle" xml:space="preserve">
+    <value>Preguntas breves sobre seguridad</value>
+  </data>
+  <data name="JournalOverviewTitle" xml:space="preserve">
+    <value>Resumen</value>
+  </data>
+  <data name="JournalTimelineTitle" xml:space="preserve">
+    <value>Entradas</value>
+  </data>
+  <data name="JournalOpenOverview" xml:space="preserve">
+    <value>Resumen</value>
+  </data>
+  <data name="JournalOpenTimeline" xml:space="preserve">
+    <value>Entradas</value>
+  </data>
+  <data name="JournalRecentDaysTitle" xml:space="preserve">
+    <value>Esta semana</value>
+  </data>
+  <data name="JournalPromptHelpedShort" xml:space="preserve">
+    <value>Lo que ayudó</value>
+  </data>
+  <data name="JournalPromptNextShort" xml:space="preserve">
+    <value>Lo siguiente</value>
+  </data>
+  <data name="JournalShareLabel" xml:space="preserve">
+    <value>Compartir</value>
+  </data>
+  <data name="JournalShareTitle" xml:space="preserve">
+    <value>Entrada del diario</value>
+  </data>
+  <data name="JournalReminderToggle" xml:space="preserve">
+    <value>Recordarme registrar el ánimo</value>
+  </data>
+  <data name="JournalReminderHint" xml:space="preserve">
+    <value>Cambia la hora en Ajustes</value>
+  </data>
+  <data name="MoodReminderTitle" xml:space="preserve">
+    <value>Diario</value>
+  </data>
+  <data name="MoodReminderBody" xml:space="preserve">
+    <value>¿Cómo te sientes hoy? Anótalo en tu diario.</value>
+  </data>
+  <data name="ClinicalScorecardEmpty" xml:space="preserve">
+    <value>Aún no hay datos suficientes — aquí aparecerán las prácticas y el ánimo</value>
+  </data>
+  <data name="ClinicalRiskGreen" xml:space="preserve">
+    <value>bajo</value>
+  </data>
+  <data name="ClinicalRiskAmber" xml:space="preserve">
+    <value>elevado</value>
+  </data>
+  <data name="ClinicalRiskRed" xml:space="preserve">
+    <value>alto</value>
+  </data>
+  <data name="LuscherCoStable" xml:space="preserve">
+    <value>Sin tensión improductiva; alta estabilidad emocional. Las acciones son decididas y eficaces. El ánimo general es optimista.</value>
+  </data>
+  <data name="LuscherCoMildTension" xml:space="preserve">
+    <value>Tensión moderada que puede reducir la eficacia. La estabilidad emocional es en general suficiente, con momentos de tensión.</value>
+  </data>
+  <data name="LuscherCoModerateTension" xml:space="preserve">
+    <value>Tensión y carga emocional notables. La eficacia puede bajar; se recomiendan recuperación y descanso.</value>
+  </data>
+  <data name="LuscherCoElevatedTension" xml:space="preserve">
+    <value>Tensión elevada y estabilidad emocional reducida. El esfuerzo sostenido puede sentirse forzado; se recomiendan descanso y apoyo.</value>
+  </data>
+  <data name="LuscherCoHighTension" xml:space="preserve">
+    <value>Tensión alta e inestabilidad emocional. Carga importante; el apoyo profesional puede ser útil.</value>
+  </data>
+  <data name="LuscherBkExhausted" xml:space="preserve">
+    <value>Coeficiente vegetativo bajo: agotamiento, pasividad y gran necesidad de recuperación.</value>
+  </data>
+  <data name="LuscherBkConserving" xml:space="preserve">
+    <value>Coeficiente vegetativo equilibrado: necesidad moderada de descanso con energía suficiente para la rutina.</value>
+  </data>
+  <data name="LuscherBkOptimal" xml:space="preserve">
+    <value>Movilización óptima: los recursos físicos y mentales están bien alineados para actuar.</value>
+  </data>
+  <data name="LuscherBkOveraroused" xml:space="preserve">
+    <value>Coeficiente vegetativo alto: fuerte activación emocional y reactividad autonómica.</value>
+  </data>
+  <data name="TherapyProgramTitle" xml:space="preserve">
+    <value>Tu programa</value>
+  </data>
+  <data name="TherapyProgramAnxiety" xml:space="preserve">
+    <value>Ansiedad</value>
+  </data>
+  <data name="TherapyProgramMood" xml:space="preserve">
+    <value>Estado de ánimo</value>
+  </data>
+  <data name="TherapyProgramStress" xml:space="preserve">
+    <value>Estrés</value>
+  </data>
+  <data name="ClinicalAmberBanner" xml:space="preserve">
+    <value>Tu estado necesita atención — la ayuda en crisis está disponible</value>
+  </data>
+  <data name="ClinicalRedBanner" xml:space="preserve">
+    <value>Abre primero la ayuda en crisis</value>
+  </data>
+  <data name="ClinicalStatusUnavailableBanner" xml:space="preserve">
+    <value>No se pudo cargar el estado de seguridad — abre la ayuda en crisis</value>
+  </data>
+  <data name="DialogueInputPlaceholder" xml:space="preserve">
+    <value>Tu respuesta…</value>
+  </data>
+  <data name="DialogueTyping" xml:space="preserve">
+    <value>escribiendo…</value>
+  </data>
+  <data name="DialogueFinish" xml:space="preserve">
+    <value>Terminar</value>
+  </data>
+  <data name="DialogueClose" xml:space="preserve">
+    <value>Cerrar</value>
+  </data>
+  <data name="DialogueRatingScale" xml:space="preserve">
+    <value>0 — nada, 10 — muy fuerte</value>
+  </data>
+  <data name="DialogueLoadFailed" xml:space="preserve">
+    <value>No se pudo abrir el diálogo. Inténtalo más tarde.</value>
+  </data>
+  <data name="ShellTabMusic" xml:space="preserve">
+    <value>Música</value>
+  </data>
+  <data name="ShellTabPractice" xml:space="preserve">
+    <value>Prácticas</value>
+  </data>
+  <data name="ShellTabDetector" xml:space="preserve">
+    <value>Detector</value>
+  </data>
+  <data name="ShellTabArticles" xml:space="preserve">
+    <value>Artículos</value>
+  </data>
+  <data name="ShellTabMotivator" xml:space="preserve">
+    <value>Motivación</value>
+  </data>
+  <data name="ShellTabPracticeShort" xml:space="preserve">
+    <value>Prácticas</value>
+  </data>
+  <data name="ShellTabDetectorShort" xml:space="preserve">
+    <value>Tests</value>
+  </data>
+  <data name="ShellTabArticlesShort" xml:space="preserve">
+    <value>Artículos</value>
+  </data>
+  <data name="ShellTabMusicShort" xml:space="preserve">
+    <value>Oraciones</value>
+  </data>
+  <data name="ShellTabMotivatorShort" xml:space="preserve">
+    <value>Citas</value>
+  </data>
+  <data name="TestsFindProblemTitle" xml:space="preserve">
+    <value>Encontrar un problema</value>
+  </data>
+  <data name="TestsAboutPassageTitle" xml:space="preserve">
+    <value>Sobre este test</value>
+  </data>
+  <data name="TestsDescriptionHeader" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="TestsAlgorithmHeader" xml:space="preserve">
+    <value>Pasos</value>
+  </data>
+  <data name="TestsNoteHeader" xml:space="preserve">
+    <value>Nota</value>
+  </data>
+  <data name="TestsStartButton" xml:space="preserve">
+    <value>Empezar</value>
+  </data>
+  <data name="TestsQuestionnaireTitle" xml:space="preserve">
+    <value>Cuestionario</value>
+  </data>
+  <data name="TestsQuestionPrefix" xml:space="preserve">
+    <value>Pregunta </value>
+  </data>
+  <data name="TestsFinishButton" xml:space="preserve">
+    <value>Terminar</value>
+  </data>
+  <data name="TestsStandardTitle" xml:space="preserve">
+    <value>Test completo</value>
+  </data>
+  <data name="TestsBriefTitle" xml:space="preserve">
+    <value>Test breve</value>
+  </data>
+  <data name="TestsColorInstruction" xml:space="preserve">
+    <value>Elige los colores en el orden que te resulte agradable</value>
+  </data>
+  <data name="TestsMoreInfo" xml:space="preserve">
+    <value>Más información</value>
+  </data>
+  <data name="TestsRestart" xml:space="preserve">
+    <value>Empezar de nuevo</value>
+  </data>
+  <data name="TestRetakeButton" xml:space="preserve">
+    <value>Repetir</value>
+  </data>
+  <data name="TestsFirstColor" xml:space="preserve">
+    <value>Primer color</value>
+  </data>
+  <data name="TestsSecondColor" xml:space="preserve">
+    <value>Segundo color</value>
+  </data>
+  <data name="TestsLuscherResultsTitle" xml:space="preserve">
+    <value>Resultados</value>
+  </data>
+  <data name="TestsLuscherWantedRole" xml:space="preserve">
+    <value>El más agradable</value>
+  </data>
+  <data name="TestsLuscherUnwantedRole" xml:space="preserve">
+    <value>El menos agradable</value>
+  </data>
+  <data name="TestsLuscherFirstInstruction" xml:space="preserve">
+    <value>Elige el color que te resulte más agradable</value>
+  </data>
+  <data name="TestsLuscherSecondInstruction" xml:space="preserve">
+    <value>De los colores restantes, elige el que te resulte menos agradable</value>
+  </data>
+  <data name="TestsLuscherSecondPassInstruction" xml:space="preserve">
+    <value>Repite la elección: ordena de nuevo los 8 colores del más al menos agradable</value>
+  </data>
+  <data name="TestsLuscherHistoryFirstPass" xml:space="preserve">
+    <value>1.ª vuelta</value>
+  </data>
+  <data name="TestsLuscherHistorySecondPass" xml:space="preserve">
+    <value>2.ª vuelta</value>
+  </data>
+  <data name="TestsStandardDescription" xml:space="preserve">
+    <value>Este es el test de Lüscher completo. Evalúa el estado de ánimo con más precisión que la versión breve.</value>
+  </data>
+  <data name="TestsBriefDescription" xml:space="preserve">
+    <value>Este es el test de Lüscher breve. Elige dos colores: el más agradable y el menos agradable.</value>
+  </data>
+  <data name="TestsAnswerAllToast" xml:space="preserve">
+    <value>Responde a todas las preguntas</value>
+  </data>
+  <data name="TestsAnswerCurrentToast" xml:space="preserve">
+    <value>Responde a esta pregunta</value>
+  </data>
+  <data name="TestsNextButton" xml:space="preserve">
+    <value>Siguiente</value>
+  </data>
+  <data name="TestsPreviousButton" xml:space="preserve">
+    <value>Atrás</value>
+  </data>
+  <data name="TestsResultPageTitle" xml:space="preserve">
+    <value>Resultado del test</value>
+  </data>
+  <data name="TestsBackToList" xml:space="preserve">
+    <value>Volver a los tests</value>
+  </data>
+  <data name="TestsResultRecommendationHint" xml:space="preserve">
+    <value>Según tu resultado, elegimos una práctica que puede ayudarte</value>
+  </data>
+  <data name="TestResultExplorePractice" xml:space="preserve">
+    <value>Probar una práctica</value>
+  </data>
+  <data name="TestsContinueButton" xml:space="preserve">
+    <value>Continuar</value>
+  </data>
+  <data name="TestsListSectionTitle" xml:space="preserve">
+    <value>Tests psicológicos</value>
+  </data>
+  <data name="TestsListSectionSubtitle" xml:space="preserve">
+    <value>Elige un test para saber más sobre cómo te sientes</value>
+  </data>
+  <data name="TestHistoryTrendTitle" xml:space="preserve">
+    <value>Evolución de la puntuación</value>
+  </data>
+  <data name="TestResultAnswersTitle" xml:space="preserve">
+    <value>Tus respuestas</value>
+  </data>
+  <data name="TestsIntroLead" xml:space="preserve">
+    <value>Unos minutos para una interpretación personal</value>
+  </data>
+  <data name="TestsQuestionLead" xml:space="preserve">
+    <value>Responde con sinceridad: no hay respuestas correctas ni incorrectas</value>
+  </data>
+  <data name="TestsMultiChoiceHint" xml:space="preserve">
+    <value>Puedes elegir más de una opción</value>
+  </data>
+  <data name="TestsSingleChoiceHint" xml:space="preserve">
+    <value>Una sola respuesta</value>
+  </data>
+  <data name="TestsAnswerSelected" xml:space="preserve">
+    <value>Seleccionada</value>
+  </data>
+  <data name="TestsAnswerNotSelected" xml:space="preserve">
+    <value>No seleccionada</value>
+  </data>
+  <data name="TestsAnswerOption" xml:space="preserve">
+    <value>Opción de respuesta</value>
+  </data>
+  <data name="TestsCoLabel" xml:space="preserve">
+    <value>Desviación total de la norma autógena (DT)</value>
+  </data>
+  <data name="TestsBkLabel" xml:space="preserve">
+    <value>Coeficiente vegetativo (CV)</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Sí</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Aceptar</value>
+  </data>
+  <data name="ChatProfilePracticeDetail" xml:space="preserve">
+    <value>Ayudó {0} de {1} veces</value>
+  </data>
+  <data name="PracticeReminderTitleNamed" xml:space="preserve">
+    <value>Es hora de: {0}</value>
+  </data>
+  <data name="PracticeCustomTechniqueNumber" xml:space="preserve">
+    <value>Técnica propia n.º {0}</value>
+  </data>
+  <data name="PoleNumber" xml:space="preserve">
+    <value>Polo n.º {0}</value>
+  </data>
+  <data name="RecordNumber" xml:space="preserve">
+    <value>Entrada n.º {0}</value>
+  </data>
+  <data name="PracticeEntryCount" xml:space="preserve">
+    <value>{0} entradas</value>
+  </data>
+  <data name="TechniqueStepProgress" xml:space="preserve">
+    <value>Paso {0} de {1}</value>
+  </data>
+  <data name="ProfileStreakCount" xml:space="preserve">
+    <value>{0} días</value>
+  </data>
+  <data name="StreakAtRiskBanner" xml:space="preserve">
+    <value>Mantén tu racha de {0} días: practica hoy</value>
+  </data>
+  <data name="ComebackBannerWithTechnique" xml:space="preserve">
+    <value>Bienvenido de nuevo — empieza con {0}</value>
+  </data>
+  <data name="WeeklyInsightMoodOnly" xml:space="preserve">
+    <value>Esta semana: ánimo {0}</value>
+  </data>
+  <data name="TodayRecommendationReasonFromTest" xml:space="preserve">
+    <value>Tras un test reciente ({0})</value>
+  </data>
+  <data name="WeeklyInsightStreakPart" xml:space="preserve">
+    <value>racha {0}</value>
+  </data>
+  <data name="JournalPracticeMoodInsight" xml:space="preserve">
+    <value>Tras practicar ({0} días): ánimo medio {1}</value>
+  </data>
+  <data name="JournalPracticeMoodCompareInsight" xml:space="preserve">
+    <value>Con práctica media {0} · sin ella media {1} ({2} días de práctica)</value>
+  </data>
+  <data name="JournalFactorsSummaryLine" xml:space="preserve">
+    <value>Factores: {0}</value>
+  </data>
+  <data name="JournalFactorCountPill" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="JournalActivityCorrelationPill" xml:space="preserve">
+    <value>{0} · {1} · media {2}</value>
+  </data>
+  <data name="JournalYearTitle" xml:space="preserve">
+    <value>Año {0}</value>
+  </data>
+  <data name="ChartSparseHint" xml:space="preserve">
+    <value>{0} mediciones — la tendencia aún se está formando</value>
+  </data>
+  <data name="PracticeCompletedBody" xml:space="preserve">
+    <value>¡Buen trabajo! Racha: {0} días</value>
+  </data>
+  <data name="PracticeHistoryEntry" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="InfoAppVersion" xml:space="preserve">
+    <value>Versión {0}</value>
+  </data>
+  <data name="TestHistoryEntry" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="ProfileLastPractice" xml:space="preserve">
+    <value>Última práctica: {0}</value>
+  </data>
+  <data name="TechniqueLastPractice" xml:space="preserve">
+    <value>Última práctica: {0}</value>
+  </data>
+  <data name="TechniqueDuration" xml:space="preserve">
+    <value>~{0} min</value>
+  </data>
+  <data name="TechniqueMetaLine" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="RatingScaleMin" xml:space="preserve">
+    <value>0 — nada</value>
+  </data>
+  <data name="RatingScaleMax" xml:space="preserve">
+    <value>10 — muy fuerte</value>
+  </data>
+  <data name="TechniqueRatingValue" xml:space="preserve">
+    <value>Valoración: {0} de 10</value>
+  </data>
+  <data name="TechniqueRatingNegValue" xml:space="preserve">
+    <value>Valoración: {0} (de −10 a 10)</value>
+  </data>
+  <data name="TestLastResult" xml:space="preserve">
+    <value>Último resultado: {0}</value>
+  </data>
+  <data name="TestLastResultDated" xml:space="preserve">
+    <value>Último resultado · {0}: {1}</value>
+  </data>
+  <data name="TestCompletedAt" xml:space="preserve">
+    <value>Hecho el: {0}</value>
+  </data>
+  <data name="OnboardingStepOf" xml:space="preserve">
+    <value>{0} de {1}</value>
+  </data>
+  <data name="OnboardingFinishSubtitle" xml:space="preserve">
+    <value>Te recomendamos empezar con «{0}»</value>
+  </data>
+  <data name="ProfileMoodTrendPreview" xml:space="preserve">
+    <value>Ánimo: {0} · riesgo: {1}</value>
+  </data>
+  <data name="ClinicalScorecardSummary" xml:space="preserve">
+    <value>Esta semana: {0} prácticas, {1} registros de ánimo · riesgo: {2}</value>
+  </data>
+  <data name="TherapyProgramWeekLabel" xml:space="preserve">
+    <value>Semana {0}</value>
+  </data>
+  <data name="TestsLuscherPassOf" xml:space="preserve">
+    <value>Vuelta {0} de {1}</value>
+  </data>
+  <data name="TestsStepOf" xml:space="preserve">
+    <value>{0} de {1}</value>
+  </data>
+  <data name="TestsResultTitle" xml:space="preserve">
+    <value>Tu puntuación: {0}</value>
+  </data>
+  <data name="TestDuration" xml:space="preserve">
+    <value>~{0} min</value>
+  </data>
+  <data name="TestQuestionCount" xml:space="preserve">
+    <value>{0} preguntas</value>
+  </data>
+  <data name="TestRecommendationFor" xml:space="preserve">
+    <value>Recomendado: {0}</value>
+  </data>
+  <data name="TestHistoryScore" xml:space="preserve">
+    <value>Puntuación: {0}</value>
+  </data>
+  <data name="TestsRemainingDuration" xml:space="preserve">
+    <value>Quedan ~{0} min</value>
+  </data>
+  <data name="TestsScoreOutOf" xml:space="preserve">
+    <value>{0} de {1}</value>
+  </data>
+  <data name="TestsDecimalScoreOutOf" xml:space="preserve">
+    <value>{0} de {1}</value>
+  </data>
+  <data name="BackupProtectTitle" xml:space="preserve">
+    <value>¿Proteger la copia con una contraseña?</value>
+  </data>
+  <data name="BackupProtectBody" xml:space="preserve">
+    <value>La copia contiene los chats, las notas y el plan de seguridad. Un archivo con contraseña no se puede leer sin ella.</value>
+  </data>
+  <data name="BackupProtectWith" xml:space="preserve">
+    <value>Con contraseña (recomendado)</value>
+  </data>
+  <data name="BackupProtectWithout" xml:space="preserve">
+    <value>Sin protección</value>
+  </data>
+  <data name="BackupPassphraseTitle" xml:space="preserve">
+    <value>Contraseña de la copia</value>
+  </data>
+  <data name="BackupPassphraseNewBody" xml:space="preserve">
+    <value>Elige una contraseña de al menos 8 caracteres. No se puede recuperar: sin ella la copia no se abre.</value>
+  </data>
+  <data name="BackupPassphraseConfirmBody" xml:space="preserve">
+    <value>Repite la contraseña.</value>
+  </data>
+  <data name="BackupPassphraseOpenBody" xml:space="preserve">
+    <value>Esta copia está protegida con una contraseña. Escríbela.</value>
+  </data>
+  <data name="BackupPassphrasePlaceholder" xml:space="preserve">
+    <value>Contraseña</value>
+  </data>
+  <data name="BackupPassphraseTooShortToast" xml:space="preserve">
+    <value>La contraseña tiene menos de 8 caracteres</value>
+  </data>
+  <data name="BackupPassphraseMismatchToast" xml:space="preserve">
+    <value>Las contraseñas no coinciden</value>
+  </data>
+  <data name="BackupPassphraseWrongToast" xml:space="preserve">
+    <value>Contraseña incorrecta, o el archivo se modificó</value>
+  </data>
+  <data name="TodayRecommendationReason.anxiety" xml:space="preserve">
+    <value>Útil para la ansiedad</value>
+  </data>
+  <data name="TodayRecommendationReason.body" xml:space="preserve">
+    <value>Para el cuerpo y los síntomas</value>
+  </data>
+  <data name="TodayRecommendationReason.mood" xml:space="preserve">
+    <value>Ayuda cuando el ánimo está bajo</value>
+  </data>
+  <data name="PracticeMilestoneTitle.3" xml:space="preserve">
+    <value>¡3 días seguidos!</value>
+  </data>
+  <data name="PracticeMilestoneTitle.7" xml:space="preserve">
+    <value>¡Una semana entera!</value>
+  </data>
+  <data name="PracticeMilestoneTitle.14" xml:space="preserve">
+    <value>¡2 semanas seguidas!</value>
+  </data>
+  <data name="PracticeMilestoneTitle.30" xml:space="preserve">
+    <value>¡Un mes entero!</value>
+  </data>
+  <data name="PracticeMilestoneBody.3" xml:space="preserve">
+    <value>Un buen comienzo: sigue así.</value>
+  </data>
+  <data name="PracticeMilestoneBody.7" xml:space="preserve">
+    <value>7 días seguidos: un gran ritmo.</value>
+  </data>
+  <data name="PracticeMilestoneBody.14" xml:space="preserve">
+    <value>14 días: un hábito sólido.</value>
+  </data>
+  <data name="PracticeMilestoneBody.30" xml:space="preserve">
+    <value>30 días: una racha impresionante.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.10" xml:space="preserve">
+    <value>¡10 prácticas hechas!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.25" xml:space="preserve">
+    <value>¡25 prácticas!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.50" xml:space="preserve">
+    <value>¡50 prácticas!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.100" xml:space="preserve">
+    <value>¡100 prácticas!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.250" xml:space="preserve">
+    <value>¡250 prácticas!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.500" xml:space="preserve">
+    <value>¡500 prácticas!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneTitle.1000" xml:space="preserve">
+    <value>¡1000 prácticas!</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.10" xml:space="preserve">
+    <value>Un primer logro de verdad: estás creando un hábito.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.25" xml:space="preserve">
+    <value>25 veces elegiste cuidarte.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.50" xml:space="preserve">
+    <value>Cincuenta prácticas: ya es un hábito de verdad.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.100" xml:space="preserve">
+    <value>¡Cien prácticas! Un trabajo impresionante contigo.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.250" xml:space="preserve">
+    <value>250 prácticas: tu constancia es admirable.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.500" xml:space="preserve">
+    <value>500 prácticas: esto ya es parte de tu vida.</value>
+  </data>
+  <data name="PracticeLifetimeMilestoneBody.1000" xml:space="preserve">
+    <value>¡1000 prácticas! Un camino increíble.</value>
+  </data>
+  <data name="TherapyProgramWeekGoal.1" xml:space="preserve">
+    <value>Estabilizarte con prácticas diarias breves</value>
+  </data>
+  <data name="TherapyProgramWeekGoal.2" xml:space="preserve">
+    <value>Observar los pensamientos y las señales del cuerpo</value>
+  </data>
+  <data name="TherapyProgramWeekGoal.3" xml:space="preserve">
+    <value>Flexibilidad: probar técnicas variadas</value>
+  </data>
+  <data name="BeckScore.BeckBand.None" xml:space="preserve">
+    <value>0-9 - sin síntomas depresivos</value>
+  </data>
+  <data name="BeckScore.BeckBand.Mild" xml:space="preserve">
+    <value>10-15 - depresión leve</value>
+  </data>
+  <data name="BeckScore.BeckBand.Moderate" xml:space="preserve">
+    <value>16-19 - depresión moderada</value>
+  </data>
+  <data name="BeckScore.BeckBand.Marked" xml:space="preserve">
+    <value>20-29 - depresión marcada (gravedad media)</value>
+  </data>
+  <data name="BeckScoreDetail.BeckBand.None" xml:space="preserve">
+    <value>Los síntomas están dentro de lo normal. Mantén el sueño y la actividad regular.</value>
+  </data>
+  <data name="BeckScoreDetail.BeckBand.Mild" xml:space="preserve">
+    <value>Ánimo levemente bajo. Caminar, escribir tus pensamientos y prácticas breves pueden ayudar.</value>
+  </data>
+  <data name="BeckScoreDetail.BeckBand.Moderate" xml:space="preserve">
+    <value>Depresión moderada. Considera hablar con un profesional y practicar a diario.</value>
+  </data>
+  <data name="BeckScoreDetail.BeckBand.Marked" xml:space="preserve">
+    <value>Síntomas marcados. Consulta a un psicólogo o a un médico y busca apoyo.</value>
+  </data>
+  <data name="PochebutScore.PochebutBand.Low" xml:space="preserve">
+    <value>0-10 - agresividad baja</value>
+  </data>
+  <data name="PochebutScore.PochebutBand.Moderate" xml:space="preserve">
+    <value>11-24 - agresividad moderada</value>
+  </data>
+  <data name="PochebutScoreDetail.PochebutBand.Low" xml:space="preserve">
+    <value>Las reacciones agresivas son poco frecuentes. Mantén tus hábitos de autorregulación.</value>
+  </data>
+  <data name="PochebutScoreDetail.PochebutBand.Moderate" xml:space="preserve">
+    <value>Agresividad moderada. Hacer una pausa, respirar y ver la situación de otra forma ayudan.</value>
+  </data>
+  <data name="Gad7Score.Gad7Band.Minimal" xml:space="preserve">
+    <value>0-4 — ansiedad mínima</value>
+  </data>
+  <data name="Gad7Score.Gad7Band.Mild" xml:space="preserve">
+    <value>5-9 — ansiedad leve</value>
+  </data>
+  <data name="Gad7Score.Gad7Band.Moderate" xml:space="preserve">
+    <value>10-14 — ansiedad moderada</value>
+  </data>
+  <data name="Gad7ScoreDetail.Gad7Band.Minimal" xml:space="preserve">
+    <value>Los síntomas de ansiedad están dentro de lo normal. Sigue atento al estrés y al descanso.</value>
+  </data>
+  <data name="Gad7ScoreDetail.Gad7Band.Mild" xml:space="preserve">
+    <value>Ansiedad leve. La respiración, los paseos y breves ejercicios de anclaje ayudan.</value>
+  </data>
+  <data name="Gad7ScoreDetail.Gad7Band.Moderate" xml:space="preserve">
+    <value>Ansiedad moderada. Considera hablar de tu estado con un profesional.</value>
+  </data>
+  <data name="K10Score.K10Band.Low" xml:space="preserve">
+    <value>10-15 — malestar bajo</value>
+  </data>
+  <data name="K10Score.K10Band.Mild" xml:space="preserve">
+    <value>16-21 — malestar leve</value>
+  </data>
+  <data name="K10Score.K10Band.Moderate" xml:space="preserve">
+    <value>22-29 — malestar moderado</value>
+  </data>
+  <data name="K10ScoreDetail.K10Band.Low" xml:space="preserve">
+    <value>El malestar psicológico es bajo. Mantén tu rutina y una actividad regular.</value>
+  </data>
+  <data name="K10ScoreDetail.K10Band.Mild" xml:space="preserve">
+    <value>Malestar leve. Las prácticas de reencuadre de la experiencia y escribir tus pensamientos pueden ayudar.</value>
+  </data>
+  <data name="K10ScoreDetail.K10Band.Moderate" xml:space="preserve">
+    <value>Malestar moderado. No lo enfrentes en soledad: busca apoyo.</value>
+  </data>
+  <data name="Who5Score.Who5Band.Low" xml:space="preserve">
+    <value>0-12 — bienestar bajo</value>
+  </data>
+  <data name="Who5Score.Who5Band.Fair" xml:space="preserve">
+    <value>13-18 — bienestar aceptable</value>
+  </data>
+  <data name="Who5ScoreDetail.Who5Band.Low" xml:space="preserve">
+    <value>El bienestar subjetivo es bajo. Dormir con regularidad, moverte y escribir tus pensamientos pueden ayudar.</value>
+  </data>
+  <data name="Who5ScoreDetail.Who5Band.Fair" xml:space="preserve">
+    <value>El bienestar está en un nivel medio. Refuerza los hábitos que te dan energía e interés.</value>
+  </data>
+  <data name="TestRecommendationReasonK10.RecommendationLane.High" xml:space="preserve">
+    <value>Con un malestar alto, Spin ayuda a reducir la carga de los recuerdos dolorosos.</value>
+  </data>
+  <data name="TestRecommendationReasonK10.RecommendationLane.Mid" xml:space="preserve">
+    <value>La modificación de la experiencia ayuda a revisar experiencias difíciles.</value>
+  </data>
+  <data name="Phq9Score.Phq9Band.Minimal" xml:space="preserve">
+    <value>0-4 — depresión mínima</value>
+  </data>
+  <data name="Phq9Score.Phq9Band.Mild" xml:space="preserve">
+    <value>5-9 — depresión leve</value>
+  </data>
+  <data name="Phq9Score.Phq9Band.Moderate" xml:space="preserve">
+    <value>10-14 — depresión moderada</value>
+  </data>
+  <data name="Phq9Score.Phq9Band.ModeratelySevere" xml:space="preserve">
+    <value>15-19 — depresión moderadamente grave</value>
+  </data>
+  <data name="Phq9ScoreDetail.Phq9Band.Minimal" xml:space="preserve">
+    <value>Los síntomas depresivos están dentro de lo normal. Mantén tu rutina y tu actividad.</value>
+  </data>
+  <data name="Phq9ScoreDetail.Phq9Band.Mild" xml:space="preserve">
+    <value>Depresión leve. Dormir bien, moverte y escribir tus pensamientos pueden ayudar.</value>
+  </data>
+  <data name="Phq9ScoreDetail.Phq9Band.Moderate" xml:space="preserve">
+    <value>Depresión moderada. Considera hablar de tu estado con un profesional.</value>
+  </data>
+  <data name="Phq9ScoreDetail.Phq9Band.ModeratelySevere" xml:space="preserve">
+    <value>Depresión moderadamente grave. Consulta a un psicólogo o a un médico.</value>
+  </data>
+  <data name="IsiScore.IsiBand.None" xml:space="preserve">
+    <value>0-7 — sin insomnio significativo</value>
+  </data>
+  <data name="IsiScore.IsiBand.Subthreshold" xml:space="preserve">
+    <value>8-14 — insomnio subclínico</value>
+  </data>
+  <data name="IsiScore.IsiBand.Moderate" xml:space="preserve">
+    <value>15-21 — insomnio moderado</value>
+  </data>
+  <data name="IsiScoreDetail.IsiBand.None" xml:space="preserve">
+    <value>Sin insomnio clínicamente significativo. Mantén un horario de sueño estable y una buena higiene del sueño.</value>
+  </data>
+  <data name="IsiScoreDetail.IsiBand.Subthreshold" xml:space="preserve">
+    <value>Insomnio subclínico. Los rituales antes de dormir y reducir los estímulos por la noche ayudan.</value>
+  </data>
+  <data name="IsiScoreDetail.IsiBand.Moderate" xml:space="preserve">
+    <value>Insomnio moderado. Considera hablar de tu sueño con un profesional.</value>
+  </data>
+  <data name="EssScore.EssBand.Normal" xml:space="preserve">
+    <value>0-10 — normal</value>
+  </data>
+  <data name="EssScore.EssBand.Mild" xml:space="preserve">
+    <value>11-12 — somnolencia leve</value>
+  </data>
+  <data name="EssScore.EssBand.Moderate" xml:space="preserve">
+    <value>13-15 — somnolencia moderada</value>
+  </data>
+  <data name="EssScoreDetail.EssBand.Normal" xml:space="preserve">
+    <value>La somnolencia diurna está dentro de lo normal. Mantén un sueño regular.</value>
+  </data>
+  <data name="EssScoreDetail.EssBand.Mild" xml:space="preserve">
+    <value>Somnolencia diurna leve. Revisa tu horario de sueño y la hora de acostarte.</value>
+  </data>
+  <data name="EssScoreDetail.EssBand.Moderate" xml:space="preserve">
+    <value>Somnolencia diurna moderada. Considera hablarlo con un médico.</value>
+  </data>
+  <data name="TestRecommendationReasonIsi.RecommendationLane.High" xml:space="preserve">
+    <value>Con insomnio grave, Spin ayuda a reducir la carga de los pensamientos ansiosos.</value>
+  </data>
+  <data name="TestRecommendationReasonIsi.RecommendationLane.Mid" xml:space="preserve">
+    <value>La modificación de la experiencia ayuda a revisar experiencias difíciles que alteran el sueño.</value>
+  </data>
+  <data name="TestRecommendationReasonEss.RecommendationLane.High" xml:space="preserve">
+    <value>Con somnolencia intensa, Spin ayuda a reducir la carga de los recuerdos dolorosos.</value>
+  </data>
+  <data name="TestRecommendationReasonEss.RecommendationLane.Mid" xml:space="preserve">
+    <value>La modificación de la experiencia ayuda a revisar hábitos que afectan al estado de alerta.</value>
+  </data>
+  <data name="Phq15Score.Phq15Band.Minimal" xml:space="preserve">
+    <value>0-4 — carga somática mínima</value>
+  </data>
+  <data name="Phq15Score.Phq15Band.Low" xml:space="preserve">
+    <value>5-9 — carga somática baja</value>
+  </data>
+  <data name="Phq15Score.Phq15Band.Moderate" xml:space="preserve">
+    <value>10-14 — carga somática moderada</value>
+  </data>
+  <data name="Phq15ScoreDetail.Phq15Band.Minimal" xml:space="preserve">
+    <value>Los síntomas somáticos están dentro de lo normal. Mantén tu rutina y la actividad física.</value>
+  </data>
+  <data name="Phq15ScoreDetail.Phq15Band.Low" xml:space="preserve">
+    <value>Carga somática baja. Vigila el sueño, el estrés y la carga de trabajo.</value>
+  </data>
+  <data name="Phq15ScoreDetail.Phq15Band.Moderate" xml:space="preserve">
+    <value>Carga somática moderada. Considera hablar de los síntomas con un médico.</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.ExtremelyDissatisfied" xml:space="preserve">
+    <value>5-9 — muy insatisfecho</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.Dissatisfied" xml:space="preserve">
+    <value>10-14 — insatisfecho</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.SlightlyDissatisfied" xml:space="preserve">
+    <value>15-19 — algo insatisfecho</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.Neutral" xml:space="preserve">
+    <value>20 — neutral</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.SlightlySatisfied" xml:space="preserve">
+    <value>21-25 — algo satisfecho</value>
+  </data>
+  <data name="SwlsScore.SwlsBand.Satisfied" xml:space="preserve">
+    <value>26-30 — satisfecho</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.ExtremelyDissatisfied" xml:space="preserve">
+    <value>Satisfacción con la vida muy baja. Escribir tus pensamientos y hablar con un profesional pueden ayudar.</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.Dissatisfied" xml:space="preserve">
+    <value>Satisfacción con la vida baja. Dormir con regularidad, moverte y tener metas con sentido ayudan.</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.SlightlyDissatisfied" xml:space="preserve">
+    <value>Satisfacción con la vida por debajo de la media. Refuerza los hábitos que dan sentido.</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.Neutral" xml:space="preserve">
+    <value>Satisfacción con la vida neutral. Hay margen para mejorar las prácticas diarias.</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.SlightlySatisfied" xml:space="preserve">
+    <value>Satisfacción con la vida algo por encima de la media. Continúa con las prácticas que te apoyan.</value>
+  </data>
+  <data name="SwlsScoreDetail.SwlsBand.Satisfied" xml:space="preserve">
+    <value>Satisfacción con la vida alta. Mantén lo que te ayuda a conservar este estado.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq15.RecommendationLane.High" xml:space="preserve">
+    <value>Con una carga somática alta, Spin ayuda a reducir la carga de los recuerdos dolorosos.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq15.RecommendationLane.Mid" xml:space="preserve">
+    <value>La modificación de la experiencia ayuda a revisar el vínculo entre el cuerpo y las emociones.</value>
+  </data>
+  <data name="Pss10Score.Pss10Band.Low" xml:space="preserve">
+    <value>0–13 — estrés bajo</value>
+  </data>
+  <data name="Pss10Score.Pss10Band.Moderate" xml:space="preserve">
+    <value>14–26 — estrés moderado</value>
+  </data>
+  <data name="Pss10ScoreDetail.Pss10Band.Low" xml:space="preserve">
+    <value>El estrés percibido está dentro de lo normal. Mantén tus hábitos de descanso y recuperación.</value>
+  </data>
+  <data name="Pss10ScoreDetail.Pss10Band.Moderate" xml:space="preserve">
+    <value>Estrés moderado. Las prácticas de respiración y anclaje pueden aliviar la tensión.</value>
+  </data>
+  <data name="HadsAnxietyScore.HadsBand.Normal" xml:space="preserve">
+    <value>0–7 — normal</value>
+  </data>
+  <data name="HadsAnxietyScore.HadsBand.Borderline" xml:space="preserve">
+    <value>8–10 — límite</value>
+  </data>
+  <data name="HadsAnxietyScoreDetail.HadsBand.Normal" xml:space="preserve">
+    <value>Los síntomas de ansiedad están dentro de lo normal.</value>
+  </data>
+  <data name="HadsAnxietyScoreDetail.HadsBand.Borderline" xml:space="preserve">
+    <value>Ansiedad en el límite. La respiración y el anclaje pueden ayudarte a estabilizarte.</value>
+  </data>
+  <data name="HadsDepressionScore.HadsBand.Normal" xml:space="preserve">
+    <value>0–7 — normal</value>
+  </data>
+  <data name="HadsDepressionScore.HadsBand.Borderline" xml:space="preserve">
+    <value>8–10 — límite</value>
+  </data>
+  <data name="HadsDepressionScoreDetail.HadsBand.Normal" xml:space="preserve">
+    <value>Los síntomas depresivos están dentro de lo normal.</value>
+  </data>
+  <data name="HadsDepressionScoreDetail.HadsBand.Borderline" xml:space="preserve">
+    <value>Nivel límite. Dar pequeños pasos y escribir tus pensamientos puede ayudar.</value>
+  </data>
+  <data name="RsesScore.RsesBand.Low" xml:space="preserve">
+    <value>0–14 — autoestima baja</value>
+  </data>
+  <data name="RsesScore.RsesBand.Normal" xml:space="preserve">
+    <value>15–25 — autoestima normal</value>
+  </data>
+  <data name="RsesScoreDetail.RsesBand.Low" xml:space="preserve">
+    <value>Autoestima baja. La autocompasión y un diálogo interno amable pueden ayudar.</value>
+  </data>
+  <data name="RsesScoreDetail.RsesBand.Normal" xml:space="preserve">
+    <value>La autoestima está dentro de lo normal. Sigue apoyándote en los momentos difíciles.</value>
+  </data>
+  <data name="TestRecommendationReasonPss10.RecommendationLane.High" xml:space="preserve">
+    <value>Con estrés alto, Spin ayuda a reducir la carga emocional.</value>
+  </data>
+  <data name="TestRecommendationReasonPss10.RecommendationLane.Mid" xml:space="preserve">
+    <value>Con estrés moderado, la respiración calma el sistema nervioso.</value>
+  </data>
+  <data name="TestRecommendationReasonHadsAnxiety.RecommendationLane.High" xml:space="preserve">
+    <value>Con ansiedad elevada, Spin reduce la carga emocional.</value>
+  </data>
+  <data name="TestRecommendationReasonHadsAnxiety.RecommendationLane.Mid" xml:space="preserve">
+    <value>Con ansiedad en el límite, la respiración te ayuda a estabilizarte.</value>
+  </data>
+  <data name="TestRecommendationReasonHadsDepression.RecommendationLane.High" xml:space="preserve">
+    <value>Con depresión elevada, One small step ayuda a recuperar el impulso.</value>
+  </data>
+  <data name="TestRecommendationReasonHadsDepression.RecommendationLane.Mid" xml:space="preserve">
+    <value>Con síntomas en el límite, Paper ayuda a descargar los pensamientos.</value>
+  </data>
+  <data name="TestRecommendationReasonRses.RecommendationLane.High" xml:space="preserve">
+    <value>Con autoestima baja, Kind words to yourself suaviza la autocrítica.</value>
+  </data>
+  <data name="TestRecommendationReasonRses.RecommendationLane.Mid" xml:space="preserve">
+    <value>One small step refuerza la sensación de poder actuar.</value>
+  </data>
+  <data name="TodayRecommendationReason.default" xml:space="preserve">
+    <value>Práctica del día</value>
+  </data>
+  <data name="TherapyProgramWeekGoal.default" xml:space="preserve">
+    <value>Consolidar y elegir por tu cuenta</value>
+  </data>
+  <data name="BeckScore.default" xml:space="preserve">
+    <value>30-63 - depresión grave</value>
+  </data>
+  <data name="BeckScoreDetail.default" xml:space="preserve">
+    <value>Depresión grave. Se recomienda encarecidamente la ayuda profesional.</value>
+  </data>
+  <data name="PochebutScore.default" xml:space="preserve">
+    <value>25-40 - agresividad alta</value>
+  </data>
+  <data name="PochebutScoreDetail.default" xml:space="preserve">
+    <value>Agresividad alta. Son especialmente útiles las prácticas que restan importancia a los desencadenantes y dan distancia.</value>
+  </data>
+  <data name="Gad7Score.default" xml:space="preserve">
+    <value>15-21 — ansiedad grave</value>
+  </data>
+  <data name="Gad7ScoreDetail.default" xml:space="preserve">
+    <value>Ansiedad grave. Consulta a un psicólogo o a un médico.</value>
+  </data>
+  <data name="K10Score.default" xml:space="preserve">
+    <value>30-50 — malestar alto</value>
+  </data>
+  <data name="K10ScoreDetail.default" xml:space="preserve">
+    <value>Malestar alto. Se recomienda encarecidamente la ayuda profesional.</value>
+  </data>
+  <data name="Who5Score.default" xml:space="preserve">
+    <value>19-25 — buen bienestar</value>
+  </data>
+  <data name="Who5ScoreDetail.default" xml:space="preserve">
+    <value>Buen nivel de bienestar. Continúa con las prácticas que sostienen este estado.</value>
+  </data>
+  <data name="TestRecommendationReasonK10.default" xml:space="preserve">
+    <value>Como prevención, escribir tus pensamientos en papel es útil.</value>
+  </data>
+  <data name="Phq9Score.default" xml:space="preserve">
+    <value>20-27 — depresión grave</value>
+  </data>
+  <data name="Phq9ScoreDetail.default" xml:space="preserve">
+    <value>Depresión grave. Se recomienda ayuda profesional con urgencia.</value>
+  </data>
+  <data name="IsiScore.default" xml:space="preserve">
+    <value>22-28 — insomnio grave</value>
+  </data>
+  <data name="IsiScoreDetail.default" xml:space="preserve">
+    <value>Insomnio grave. Consulta a un médico o a un especialista del sueño.</value>
+  </data>
+  <data name="EssScore.default" xml:space="preserve">
+    <value>16-24 — somnolencia intensa</value>
+  </data>
+  <data name="EssScoreDetail.default" xml:space="preserve">
+    <value>Somnolencia diurna intensa. Se recomienda una consulta médica.</value>
+  </data>
+  <data name="TestRecommendationReasonIsi.default" xml:space="preserve">
+    <value>Como prevención, escribir tus pensamientos en papel es útil.</value>
+  </data>
+  <data name="TestRecommendationReasonEss.default" xml:space="preserve">
+    <value>Como prevención, escribir tus pensamientos en papel es útil.</value>
+  </data>
+  <data name="Phq15Score.default" xml:space="preserve">
+    <value>15-30 — carga somática alta</value>
+  </data>
+  <data name="Phq15ScoreDetail.default" xml:space="preserve">
+    <value>Carga somática alta. Se recomienda una evaluación médica.</value>
+  </data>
+  <data name="SwlsScore.default" xml:space="preserve">
+    <value>31-35 — muy satisfecho</value>
+  </data>
+  <data name="SwlsScoreDetail.default" xml:space="preserve">
+    <value>Satisfacción con la vida muy alta. Sigue cuidando tus recursos y tu equilibrio.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq15.default" xml:space="preserve">
+    <value>Como prevención, escribir tus pensamientos en papel es útil.</value>
+  </data>
+  <data name="Pss10Score.default" xml:space="preserve">
+    <value>27–40 — estrés alto</value>
+  </data>
+  <data name="Pss10ScoreDetail.default" xml:space="preserve">
+    <value>Estrés percibido alto. Considera reducir la carga y buscar apoyo.</value>
+  </data>
+  <data name="HadsAnxietyScore.default" xml:space="preserve">
+    <value>11–21 — ansiedad elevada</value>
+  </data>
+  <data name="HadsAnxietyScoreDetail.default" xml:space="preserve">
+    <value>Ansiedad elevada. Considera el apoyo profesional y prácticas de autorregulación.</value>
+  </data>
+  <data name="HadsDepressionScore.default" xml:space="preserve">
+    <value>11–21 — depresión elevada</value>
+  </data>
+  <data name="HadsDepressionScoreDetail.default" xml:space="preserve">
+    <value>Síntomas elevados. Se recomienda apoyo profesional.</value>
+  </data>
+  <data name="RsesScore.default" xml:space="preserve">
+    <value>26–30 — autoestima alta</value>
+  </data>
+  <data name="RsesScoreDetail.default" xml:space="preserve">
+    <value>Autoestima alta. Mantén el equilibrio entre aceptarte y valorarte de forma realista.</value>
+  </data>
+  <data name="TestRecommendationReasonPss10.default" xml:space="preserve">
+    <value>Como prevención, escribir tus pensamientos en papel es útil.</value>
+  </data>
+  <data name="TestRecommendationReasonHadsAnxiety.default" xml:space="preserve">
+    <value>El anclaje favorece la calma en el cuerpo.</value>
+  </data>
+  <data name="TestRecommendationReasonHadsDepression.default" xml:space="preserve">
+    <value>El registro de pensamientos ayuda a trabajar las interpretaciones negativas.</value>
+  </data>
+  <data name="TestRecommendationReasonRses.default" xml:space="preserve">
+    <value>La modificación de la experiencia refuerza los estados de recursos.</value>
+  </data>
+  <data name="TodayRecommendationReasonLowMood.1" xml:space="preserve">
+    <value>Cuando el ánimo está bajo</value>
+  </data>
+  <data name="TodayRecommendationReasonContinueDraft.1" xml:space="preserve">
+    <value>Sigue donde lo dejaste</value>
+  </data>
+  <data name="WeeklyInsightTestImprovedPart.1" xml:space="preserve">
+    <value>test ↑</value>
+  </data>
+  <data name="WeeklyInsightTestWorsePart.1" xml:space="preserve">
+    <value>test ↓</value>
+  </data>
+  <data name="HeckHessScore.1" xml:space="preserve">
+    <value>0-24 - neuroticismo bajo</value>
+  </data>
+  <data name="HeckHessScore.2" xml:space="preserve">
+    <value>25-40 - neuroticismo alto</value>
+  </data>
+  <data name="HeckHessScoreDetail.1" xml:space="preserve">
+    <value>La reactividad emocional está dentro de lo normal. Sigue atento al estrés y al descanso.</value>
+  </data>
+  <data name="HeckHessScoreDetail.2" xml:space="preserve">
+    <value>Neuroticismo elevado. Las prácticas de polaridades y de comparar la importancia pueden aliviar la tensión.</value>
+  </data>
+  <data name="HaerScore.1" xml:space="preserve">
+    <value>0-28 - psicopatía baja</value>
+  </data>
+  <data name="HaerScore.2" xml:space="preserve">
+    <value>29-40 - psicopatía alta</value>
+  </data>
+  <data name="HaerScoreDetail.1" xml:space="preserve">
+    <value>La puntuación está en el rango bajo. Es una herramienta de cribado, no un diagnóstico.</value>
+  </data>
+  <data name="HaerScoreDetail.2" xml:space="preserve">
+    <value>Puntuación elevada. Trabajar con experiencias pasadas y creencias puede ayudar.</value>
+  </data>
+  <data name="TestRecommendationReasonBeck.1" xml:space="preserve">
+    <value>Con síntomas depresivos, Spin ayuda a reducir la carga de los recuerdos dolorosos.</value>
+  </data>
+  <data name="TestRecommendationReasonBeck.2" xml:space="preserve">
+    <value>Como prevención, escribir tus pensamientos en papel es útil.</value>
+  </data>
+  <data name="TestRecommendationReasonHeckHess.1" xml:space="preserve">
+    <value>Con neuroticismo alto, las polaridades ayudan a ver ambos lados.</value>
+  </data>
+  <data name="TestRecommendationReasonHeckHess.2" xml:space="preserve">
+    <value>Comparar la importancia da perspectiva.</value>
+  </data>
+  <data name="TestRecommendationReasonHaer.1" xml:space="preserve">
+    <value>«50 years later» lleva el problema hacia adelante en el tiempo.</value>
+  </data>
+  <data name="TestRecommendationReasonHaer.2" xml:space="preserve">
+    <value>La modificación de la experiencia ayuda a revisar las creencias.</value>
+  </data>
+  <data name="TestRecommendationReasonPochebut.1" xml:space="preserve">
+    <value>«Shrink it» reduce visualmente la importancia del desencadenante.</value>
+  </data>
+  <data name="TestRecommendationReasonPochebut.2" xml:space="preserve">
+    <value>«Check it» ayuda a soltar un pensamiento que da vueltas.</value>
+  </data>
+  <data name="TestRecommendationReasonGad7.1" xml:space="preserve">
+    <value>Con ansiedad, las polaridades ayudan a ver ambos lados de una situación.</value>
+  </data>
+  <data name="TestRecommendationReasonGad7.2" xml:space="preserve">
+    <value>Comparar la importancia da perspectiva.</value>
+  </data>
+  <data name="TestRecommendationReasonWho5.1" xml:space="preserve">
+    <value>Con bienestar bajo, escribir tus pensamientos en papel es útil.</value>
+  </data>
+  <data name="TestRecommendationReasonWho5.2" xml:space="preserve">
+    <value>La modificación de la experiencia refuerza el sentido y los recursos.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq9.1" xml:space="preserve">
+    <value>Con síntomas depresivos, Spin ayuda a reducir la carga de los recuerdos dolorosos.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq9.2" xml:space="preserve">
+    <value>Como prevención, escribir tus pensamientos en papel es útil.</value>
+  </data>
+  <data name="ScoffScore.1" xml:space="preserve">
+    <value>0-1 — cribado negativo</value>
+  </data>
+  <data name="ScoffScore.2" xml:space="preserve">
+    <value>2-5 — cribado positivo</value>
+  </data>
+  <data name="ScoffScoreDetail.1" xml:space="preserve">
+    <value>Este cribado no muestra signos de un trastorno alimentario.</value>
+  </data>
+  <data name="ScoffScoreDetail.2" xml:space="preserve">
+    <value>Cribado positivo. Consulta a un especialista en trastornos alimentarios.</value>
+  </data>
+  <data name="TestRecommendationReasonScoff.1" xml:space="preserve">
+    <value>Con signos de un trastorno alimentario, Spin ayuda a reducir la carga de los recuerdos dolorosos.</value>
+  </data>
+  <data name="TestRecommendationReasonScoff.2" xml:space="preserve">
+    <value>Como prevención, escribir tus pensamientos en papel es útil.</value>
+  </data>
+  <data name="TestRecommendationReasonSwls.1" xml:space="preserve">
+    <value>Con poca satisfacción con la vida, escribir tus pensamientos en papel es útil.</value>
+  </data>
+  <data name="TestRecommendationReasonSwls.2" xml:space="preserve">
+    <value>La modificación de la experiencia refuerza el sentido y los recursos.</value>
+  </data>
+  <data name="Phq2Score.1" xml:space="preserve">
+    <value>0–2 — cribado negativo</value>
+  </data>
+  <data name="Phq2Score.2" xml:space="preserve">
+    <value>3–6 — cribado positivo</value>
+  </data>
+  <data name="Phq2ScoreDetail.1" xml:space="preserve">
+    <value>Los síntomas depresivos no son marcados. Sigue atento a tu ánimo.</value>
+  </data>
+  <data name="Phq2ScoreDetail.2" xml:space="preserve">
+    <value>Cribado de depresión positivo. Considera el PHQ-9 o una consulta profesional.</value>
+  </data>
+  <data name="Gad2Score.1" xml:space="preserve">
+    <value>0–2 — cribado negativo</value>
+  </data>
+  <data name="Gad2Score.2" xml:space="preserve">
+    <value>3–6 — cribado positivo</value>
+  </data>
+  <data name="Gad2ScoreDetail.1" xml:space="preserve">
+    <value>Los síntomas de ansiedad no son marcados. Sigue atento a cómo te sientes.</value>
+  </data>
+  <data name="Gad2ScoreDetail.2" xml:space="preserve">
+    <value>Cribado de ansiedad positivo. Considera el GAD-7 o una consulta profesional.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq2.1" xml:space="preserve">
+    <value>Con signos de depresión, One small step ayuda a recuperar el impulso.</value>
+  </data>
+  <data name="TestRecommendationReasonPhq2.2" xml:space="preserve">
+    <value>Como prevención, escribir tus pensamientos en papel es útil.</value>
+  </data>
+  <data name="TestRecommendationReasonGad2.1" xml:space="preserve">
+    <value>Con ansiedad, la respiración cuadrada calma el cuerpo.</value>
+  </data>
+  <data name="TestRecommendationReasonGad2.2" xml:space="preserve">
+    <value>El anclaje te ayuda a quedarte en el momento presente.</value>
+  </data>
+  <data name="PracticeReminderBodyNamed.1" xml:space="preserve">
+    <value>Hoy: {0}. Tómate unos minutos para practicar.</value>
+  </data>
+  <data name="WeeklyInsightLine.1" xml:space="preserve">
+    <value>Esta semana: {0} {2}</value>
+  </data>
+  <data name="WeeklyInsightLine.2" xml:space="preserve">
+    <value>Esta semana: {0} {3} · ánimo {2}</value>
+  </data>
+  <data name="TodayMoodLine.1" xml:space="preserve">
+    <value>Hoy: {0} {1}/{2}</value>
+  </data>
+  <data name="JournalDayEmptyHint.1" xml:space="preserve">
+    <value>No hay entrada del {0:d}; puedes añadir una</value>
+  </data>
+  <data name="JournalOverviewInsightLine.1" xml:space="preserve">
+    <value>{0} {3} · media {2}</value>
+  </data>
+  <data name="JournalOverviewInsightLine.2" xml:space="preserve">
+    <value>{0} {4} · media {2} · ánimo {3}</value>
+  </data>
+  <data name="JournalOverviewInsightLine.3" xml:space="preserve">
+    <value>{0} · racha {1}</value>
+  </data>
+  <data name="JournalWeekInsightLine.1" xml:space="preserve">
+    <value>ánimo {0}</value>
+  </data>
+  <data name="JournalWeekInsightLine.2" xml:space="preserve">
+    <value>racha {0}</value>
+  </data>
+  <data name="JournalWeekInsightLine.3" xml:space="preserve">
+    <value>{0} {2} esta semana</value>
+  </data>
+  <data name="JournalBestWorstPill.1" xml:space="preserve">
+    <value>Mejor {0} {1} · Peor {2} {3}</value>
+  </data>
+  <data name="JournalTimelineStreakLine.1" xml:space="preserve">
+    <value>Racha de registros: {0}</value>
+  </data>
+  <data name="JournalOnThisDayLastYear.1" xml:space="preserve">
+    <value>Hace un año: {0}</value>
+  </data>
+  <data name="JournalOnThisDayLastYear.2" xml:space="preserve">
+    <value>Hace un año: {0} · {1}</value>
+  </data>
+  <data name="PracticeMoodDelta.1" xml:space="preserve">
+    <value>Antes {0} {1}/5 → ahora {2} {3}/5</value>
+  </data>
+  <data name="DataBackupImportedToast.1" xml:space="preserve">
+    <value>Añadido: ánimo {0}, tests {1}, prácticas {2}, chats {3}. Ya existentes: {4}</value>
+  </data>
+  <data name="DataBackupImportedToast.2" xml:space="preserve">
+    <value>Añadido: ánimo {0}, tests {1}, prácticas {2}, chats {3}</value>
+  </data>
+  <data name="JournalShareText.1" xml:space="preserve">
+    <value>{0}: ánimo {1}</value>
+  </data>
+  <data name="JournalShareText.2" xml:space="preserve">
+    <value>{0}: ánimo {1}
+{2}</value>
+  </data>
+  <data name="TherapyProgramBanner.1" xml:space="preserve">
+    <value>{0} · semana {1}: {2}</value>
+  </data>
+  <data name="TherapyProgramBanner.2" xml:space="preserve">
+    <value>{0} · sem. {1} · {2}/{3}</value>
+  </data>
+  <data name="TestResultDuration.1" xml:space="preserve">
+    <value>{0} s</value>
+  </data>
+  <data name="TestResultDuration.2" xml:space="preserve">
+    <value>{0} min {1} s</value>
+  </data>
+  <data name="BreathInhale" xml:space="preserve">
+    <value>Inhala</value>
+  </data>
+  <data name="BreathHold" xml:space="preserve">
+    <value>Mantén</value>
+  </data>
+  <data name="BreathExhale" xml:space="preserve">
+    <value>Exhala</value>
+  </data>
+  <data name="BreathStart" xml:space="preserve">
+    <value>Empezar</value>
+  </data>
+  <data name="BreathFullscreen" xml:space="preserve">
+    <value>Pantalla completa</value>
+  </data>
+  <data name="ReliefDescription" xml:space="preserve">
+    <value>Tensión: antes {0}, ahora {1}</value>
+  </data>
+  <data name="BreathStop" xml:space="preserve">
+    <value>Parar</value>
+  </data>
+  <data name="BreathAgain" xml:space="preserve">
+    <value>Otra vez</value>
+  </data>
+  <data name="BreathCycleFormat" xml:space="preserve">
+    <value>Ciclo {0} de {1}</value>
+  </data>
+  <data name="BreathReady" xml:space="preserve">
+    <value>Siéntate cómodamente y pulsa Empezar. Respira con el círculo.</value>
+  </data>
+  <data name="BreathDone" xml:space="preserve">
+    <value>Muy bien. Ahora valora tu tensión después de la práctica.</value>
+  </data>
+  <data name="BreathCircleLabel" xml:space="preserve">
+    <value>Círculo de respiración: crece al inhalar y se encoge al exhalar</value>
+  </data>
+  <data name="TensionPickHint" xml:space="preserve">
+    <value>Desliza por la barra: de 0 a 10</value>
+  </data>
+  <data name="TensionPickConfirm" xml:space="preserve">
+    <value>Enviar: {0}</value>
+  </data>
+  <data name="TensionChangeFormat" xml:space="preserve">
+    <value>Antes {0} → ahora {1}</value>
+  </data>
+  <data name="TensionCalmWord" xml:space="preserve">
+    <value>calma</value>
+  </data>
+  <data name="TensionStrongWord" xml:space="preserve">
+    <value>muy fuerte</value>
+  </data>
+  <data name="ChartPracticeLegend" xml:space="preserve">
+    <value>◆ — una práctica (verde si después subió el ánimo)</value>
+  </data>
+  <data name="SkeletonLoadingLabel" xml:space="preserve">
+    <value>Cargando</value>
+  </data>
+  <data name="PracticeFilterBody" xml:space="preserve">
+    <value>Cuerpo</value>
+  </data>
+  <data name="PracticeFilterMind" xml:space="preserve">
+    <value>Pensamientos</value>
+  </data>
+  <data name="PracticeFilterHeart" xml:space="preserve">
+    <value>Corazón</value>
+  </data>
+  <data name="PracticeFilterAction" xml:space="preserve">
+    <value>Acción</value>
+  </data>
+  <data name="PracticeVoiceStart" xml:space="preserve">
+    <value>Dictar la respuesta</value>
+  </data>
+  <data name="PracticeVoiceStop" xml:space="preserve">
+    <value>Detener la grabación</value>
+  </data>
+  <data name="PracticeVoiceListening" xml:space="preserve">
+    <value>Escuchando… habla; una pausa termina la grabación</value>
+  </data>
+  <data name="PracticeVoiceHolding" xml:space="preserve">
+    <value>Habla… suelta para terminar</value>
+  </data>
+  <data name="PracticeVoiceNothingHeard" xml:space="preserve">
+    <value>No te entendí; inténtalo de nuevo</value>
+  </data>
+  <data name="PracticeVoicePermissionDenied" xml:space="preserve">
+    <value>Permite el acceso al micrófono en los ajustes del teléfono para dictar respuestas</value>
+  </data>
+  <data name="PracticeVoiceUnavailable" xml:space="preserve">
+    <value>El reconocimiento de voz en el dispositivo no está disponible. Descarga el paquete de idioma sin conexión en los ajustes del teléfono</value>
+  </data>
+  <data name="PracticeRecentProblem" xml:space="preserve">
+    <value>Igual que la última vez: {0}</value>
+  </data>
+  <data name="PracticeAssistTitle" xml:space="preserve">
+    <value>Frases listas: toma una y hazla tuya</value>
+  </data>
+  <data name="PracticeEmotionHint" xml:space="preserve">
+    <value>¿Qué se acerca más? Puedes elegir varias</value>
+  </data>
+  <data name="TechniqueStepSkip" xml:space="preserve">
+    <value>Omitir</value>
+  </data>
+  <data name="StageEmptyText" xml:space="preserve">
+    <value>Primero escribe o dicta lo que te preocupa</value>
+  </data>
+  <data name="StageAgain" xml:space="preserve">
+    <value>Otra vez</value>
+  </data>
+  <data name="StageResizeTitle" xml:space="preserve">
+    <value>Hazlo pequeño</value>
+  </data>
+  <data name="StageResizeHint" xml:space="preserve">
+    <value>Pellizca la tarjeta o pulsa el botón: el problema se encoge y se aleja</value>
+  </data>
+  <data name="StageResizeAction" xml:space="preserve">
+    <value>Alejarlo</value>
+  </data>
+  <data name="StageResizeDone" xml:space="preserve">
+    <value>Pequeño y lejano. ¿Cómo lo sientes ahora?</value>
+  </data>
+  <data name="StageWhiteSpotTitle" xml:space="preserve">
+    <value>Mancha blanca</value>
+  </data>
+  <data name="StageWhiteSpotHint" xml:space="preserve">
+    <value>Mira cómo la imagen se disuelve en luz blanca. Respira con calma</value>
+  </data>
+  <data name="StageWhiteSpotAction" xml:space="preserve">
+    <value>Empezar — 40 segundos</value>
+  </data>
+  <data name="StageWhiteSpotStop" xml:space="preserve">
+    <value>Parar</value>
+  </data>
+  <data name="StageWhiteSpotSeconds" xml:space="preserve">
+    <value>Quedan {0} s</value>
+  </data>
+  <data name="StageWhiteSpotDone" xml:space="preserve">
+    <value>Solo una luz blanca y uniforme. Nota cómo se siente por dentro</value>
+  </data>
+  <data name="StagePaperTitle" xml:space="preserve">
+    <value>Suelta el pensamiento</value>
+  </data>
+  <data name="StagePaperHint" xml:space="preserve">
+    <value>Desliza la hoja hacia arriba o usa los botones: arrugar, romper, tirar</value>
+  </data>
+  <data name="StagePaperCrumple" xml:space="preserve">
+    <value>Arrugar</value>
+  </data>
+  <data name="StagePaperTear" xml:space="preserve">
+    <value>Romper</value>
+  </data>
+  <data name="StagePaperThrow" xml:space="preserve">
+    <value>Tirar</value>
+  </data>
+  <data name="StagePaperDone" xml:space="preserve">
+    <value>La hoja ya no está. Exhala despacio</value>
+  </data>
+  <data name="StageRepeatTitle" xml:space="preserve">
+    <value>Dilo en voz alta</value>
+  </data>
+  <data name="StageRepeatHint" xml:space="preserve">
+    <value>Di la frase despacio, como si la oyeras por primera vez, y toca el círculo</value>
+  </data>
+  <data name="StageRepeatCount" xml:space="preserve">
+    <value>Repeticiones: {0}</value>
+  </data>
+  <data name="StageRepeatCheck" xml:space="preserve">
+    <value>Escucha: ¿la frase suena tan fuerte como al principio?</value>
+  </data>
+  <data name="StageRepeatButton" xml:space="preserve">
+    <value>Lo dije en voz alta</value>
+  </data>
+  <data name="StagePauseTitle" xml:space="preserve">
+    <value>Un minuto sin este pensamiento</value>
+  </data>
+  <data name="StagePauseHint" xml:space="preserve">
+    <value>Deja el pensamiento un minuto: solo respira con el círculo</value>
+  </data>
+  <data name="StagePauseStart" xml:space="preserve">
+    <value>Empezar el minuto</value>
+  </data>
+  <data name="StagePauseStop" xml:space="preserve">
+    <value>Parar</value>
+  </data>
+  <data name="StagePauseDone" xml:space="preserve">
+    <value>El minuto terminó. ¿Qué cambió en tu cuerpo y tu ánimo?</value>
+  </data>
+  <data name="StageFutureTitle" xml:space="preserve">
+    <value>Una mirada desde el futuro</value>
+  </data>
+  <data name="StageFutureHint" xml:space="preserve">
+    <value>Mueve el control deslizante y mira cómo cambia el problema con el tiempo</value>
+  </data>
+  <data name="StageFutureStop0" xml:space="preserve">
+    <value>Ahora</value>
+  </data>
+  <data name="StageFutureStop1" xml:space="preserve">
+    <value>Dentro de un mes</value>
+  </data>
+  <data name="StageFutureStop2" xml:space="preserve">
+    <value>Dentro de un año</value>
+  </data>
+  <data name="StageFutureStop3" xml:space="preserve">
+    <value>Dentro de 5 años</value>
+  </data>
+  <data name="StageFutureStop4" xml:space="preserve">
+    <value>Dentro de 10 años</value>
+  </data>
+  <data name="StageFutureStop5" xml:space="preserve">
+    <value>Dentro de 50 años</value>
+  </data>
+  <data name="TechniqueStepsSummary" xml:space="preserve">
+    <value>Pasos de la práctica: {0}</value>
+  </data>
+  <data name="PracticeMoreChips" xml:space="preserve">
+    <value>Más +{0}</value>
+  </data>
+  <data name="PracticeAnswersTitle" xml:space="preserve">
+    <value>Tus respuestas</value>
+  </data>
+  <data name="ExposureEntryTitle" xml:space="preserve">
+    <value>Escalera del miedo</value>
+  </data>
+  <data name="ExposureEntrySubtitle" xml:space="preserve">
+    <value>Paso a paso hacia lo que temes: la forma más eficaz de debilitar la ansiedad</value>
+  </data>
+  <data name="ExposureTitle" xml:space="preserve">
+    <value>Escalera del miedo</value>
+  </data>
+  <data name="ExposureIntro" xml:space="preserve">
+    <value>La ansiedad se alimenta de la evitación: rodeamos lo que nos asusta, o vamos con una red de seguridad, y nunca descubrimos que el peligro era exagerado. Aquí pondrás a prueba tus miedos en la vida real, paso a paso. Es la forma más estudiada y eficaz de ayudarte con la ansiedad.</value>
+  </data>
+  <data name="ExposureScreenTitle" xml:space="preserve">
+    <value>Primero, unas preguntas</value>
+  </data>
+  <data name="ExposureScreenLead" xml:space="preserve">
+    <value>Este método no es para todo el mundo sin un especialista. Responde con sinceridad: es por tu seguridad.</value>
+  </data>
+  <data name="ExposureScreenSelfHarm" xml:space="preserve">
+    <value>¿Tienes ahora pensamientos de suicidio o de hacerte daño?</value>
+  </data>
+  <data name="ExposureScreenTrauma" xml:space="preserve">
+    <value>¿El miedo está ligado a un trauma que viviste (violencia, una catástrofe, una guerra), con recuerdos intrusivos o pesadillas?</value>
+  </data>
+  <data name="ExposureScreenRituals" xml:space="preserve">
+    <value>¿Los rituales o las comprobaciones te ocupan más de una hora al día?</value>
+  </data>
+  <data name="ExposureScreenDissociation" xml:space="preserve">
+    <value>¿Tienes momentos en que el mundo o tú mismo parecen irreales, te «desconectas», oyes voces o ves cosas que no están?</value>
+  </data>
+  <data name="ExposureScreenSubstances" xml:space="preserve">
+    <value>¿Calmas tu ansiedad con alcohol u otras sustancias?</value>
+  </data>
+  <data name="ExposureScreenBody" xml:space="preserve">
+    <value>¿Tienes una enfermedad del corazón, epilepsia, asma, un embarazo, una operación o lesión reciente?</value>
+  </data>
+  <data name="ExposureContinue" xml:space="preserve">
+    <value>Continuar</value>
+  </data>
+  <data name="ExposureReferralTitle" xml:space="preserve">
+    <value>Mejor con un especialista</value>
+  </data>
+  <data name="ExposureReferral" xml:space="preserve">
+    <value>Según tus respuestas, es mejor trabajar este miedo junto a un terapeuta: con trauma, rituales compulsivos, disociación o consumo de sustancias, el método debe adaptarse a ti, y hacerlo a solas no es seguro. No es un veredicto: significa que mereces una ayuda más fuerte. Mientras la buscas, las prácticas de respiración y anclaje de la app están aquí para ti.</value>
+  </data>
+  <data name="ExposureCrisisAction" xml:space="preserve">
+    <value>Necesito ayuda ahora</value>
+  </data>
+  <data name="ExposureFearTitle" xml:space="preserve">
+    <value>Mi miedo</value>
+  </data>
+  <data name="ExposureFearKindQuestion" xml:space="preserve">
+    <value>¿A qué le tienes miedo?</value>
+  </data>
+  <data name="ExposureFearedQuestion" xml:space="preserve">
+    <value>¿Qué crees que pasaría en el peor de los casos?</value>
+  </data>
+  <data name="ExposureFearedPlaceholder" xml:space="preserve">
+    <value>Por ejemplo: todos verán que estoy nervioso</value>
+  </data>
+  <data name="ExposureFearedBelief" xml:space="preserve">
+    <value>¿Qué tan seguro estás de ello?</value>
+  </data>
+  <data name="ExposureSafetyQuestion" xml:space="preserve">
+    <value>¿Qué haces para que no ocurra?</value>
+  </data>
+  <data name="ExposureSafetyHint" xml:space="preserve">
+    <value>Es una red de seguridad. Te calma un minuto, pero impide que el cerebro aprenda que sin ella también era seguro.</value>
+  </data>
+  <data name="ExposureAvoidedQuestion" xml:space="preserve">
+    <value>¿Qué evitas por este miedo?</value>
+  </data>
+  <data name="ExposureCircle" xml:space="preserve">
+    <value>El círculo de la ansiedad: una situación, una predicción aterradora, ansiedad, evitación o una red de seguridad, «uf, ya pasó», y el miedo parece confirmado. La escalera rompe este círculo.</value>
+  </data>
+  <data name="ExposureNext" xml:space="preserve">
+    <value>Siguiente</value>
+  </data>
+  <data name="ExposureLadderTitle" xml:space="preserve">
+    <value>Peldaños de la escalera</value>
+  </data>
+  <data name="ExposureLadderLead" xml:space="preserve">
+    <value>Elige de 6 a 10 situaciones, desde algo incómodo hasta lo más difícil. El número de la derecha indica cuánto miedo dará, de 0 a 100; ajústalo con − y +.</value>
+  </data>
+  <data name="ExposureExamplesTitle" xml:space="preserve">
+    <value>Ejemplos: toca para añadir</value>
+  </data>
+  <data name="ExposureOwnStepTitle" xml:space="preserve">
+    <value>Tu propio peldaño</value>
+  </data>
+  <data name="ExposureOwnStepPlaceholder" xml:space="preserve">
+    <value>Por ejemplo: llamar al banco</value>
+  </data>
+  <data name="ExposureOwnStepDistress" xml:space="preserve">
+    <value>Cuánto miedo dará (de 0 a 10)</value>
+  </data>
+  <data name="ExposureAdd" xml:space="preserve">
+    <value>Añadir</value>
+  </data>
+  <data name="ExposureChosenTitle" xml:space="preserve">
+    <value>Mi escalera</value>
+  </data>
+  <data name="ExposureLadderCount" xml:space="preserve">
+    <value>Peldaños: {0}. Se necesitan al menos {1}.</value>
+  </data>
+  <data name="ExposureSaveLadder" xml:space="preserve">
+    <value>Guardar la escalera</value>
+  </data>
+  <data name="ExposureEasier" xml:space="preserve">
+    <value>Más fácil</value>
+  </data>
+  <data name="ExposureHarder" xml:space="preserve">
+    <value>Más difícil</value>
+  </data>
+  <data name="ExposureRemoveStep" xml:space="preserve">
+    <value>Quitar el peldaño</value>
+  </data>
+  <data name="ExposureProgressPredictions" xml:space="preserve">
+    <value>Predicciones puestas a prueba: {0}. Se cumplieron: {1}.</value>
+  </data>
+  <data name="ExposureProgressSteps" xml:space="preserve">
+    <value>Peldaños superados: {0} de {1}</value>
+  </data>
+  <data name="ExposureProgressBeliefDrop" xml:space="preserve">
+    <value>la creencia en el miedo baja de media {0} de 10</value>
+  </data>
+  <data name="ExposureFearSummary" xml:space="preserve">
+    <value>Tu miedo: «{0}»</value>
+  </data>
+  <data name="ExposureCurrentTitle" xml:space="preserve">
+    <value>Siguiente peldaño</value>
+  </data>
+  <data name="ExposureStartTask" xml:space="preserve">
+    <value>Preparar la tarea</value>
+  </data>
+  <data name="ExposurePendingTitle" xml:space="preserve">
+    <value>La tarea espera tu informe</value>
+  </data>
+  <data name="ExposureReportAction" xml:space="preserve">
+    <value>Contar cómo fue</value>
+  </data>
+  <data name="ExposureEasierHint" xml:space="preserve">
+    <value>Este peldaño es demasiado alto por ahora, y está bien. Añade uno intermedio: la misma situación, un poco más fácil (más corta, con alguien cerca, en un momento tranquilo).</value>
+  </data>
+  <data name="ExposureLadderDone" xml:space="preserve">
+    <value>Subiste toda la escalera. El miedo ya no dirige estas situaciones. Para que siga así, vuelve a ellas de vez en cuando, en lugares nuevos y con gente nueva.</value>
+  </data>
+  <data name="ExposureStepMastered" xml:space="preserve">
+    <value>superado</value>
+  </data>
+  <data name="ExposureStepTasks" xml:space="preserve">
+    <value>tareas: {0}</value>
+  </data>
+  <data name="ExposureLadderSection" xml:space="preserve">
+    <value>La escalera</value>
+  </data>
+  <data name="ExposureEditFear" xml:space="preserve">
+    <value>Editar mi miedo</value>
+  </data>
+  <data name="ExposureEditLadder" xml:space="preserve">
+    <value>Editar la escalera</value>
+  </data>
+  <data name="ExposureDelete" xml:space="preserve">
+    <value>Eliminar la escalera</value>
+  </data>
+  <data name="ExposureDeleteConfirm" xml:space="preserve">
+    <value>Toca otra vez para eliminarlo todo</value>
+  </data>
+  <data name="ExposureBeforeTitle" xml:space="preserve">
+    <value>Antes de la tarea</value>
+  </data>
+  <data name="ExposurePredictionQuestion" xml:space="preserve">
+    <value>¿Qué crees que pasará?</value>
+  </data>
+  <data name="ExposurePredictionPlaceholder" xml:space="preserve">
+    <value>Sé concreto: qué harán o dirán los demás, qué te pasará</value>
+  </data>
+  <data name="ExposureBeliefBefore" xml:space="preserve">
+    <value>¿Qué tan seguro estás de que pasará?</value>
+  </data>
+  <data name="ExposureDropQuestion" xml:space="preserve">
+    <value>¿A qué red de seguridad renunciarás esta vez?</value>
+  </data>
+  <data name="ExposureRules" xml:space="preserve">
+    <value>Las reglas: quédate hasta haber puesto a prueba la predicción, no hasta que la ansiedad se vaya. Sin red de seguridad. Habrá ansiedad, y eso es normal y seguro. Siempre puedes parar.</value>
+  </data>
+  <data name="ExposureGo" xml:space="preserve">
+    <value>Voy a hacerlo</value>
+  </data>
+  <data name="ExposureAfterTitle" xml:space="preserve">
+    <value>¿Cómo fue?</value>
+  </data>
+  <data name="ExposurePredictionReminder" xml:space="preserve">
+    <value>Predijiste: «{0}», y estabas seguro en un {1} de 10.</value>
+  </data>
+  <data name="ExposureWhatHappenedQuestion" xml:space="preserve">
+    <value>¿Qué pasó en realidad?</value>
+  </data>
+  <data name="ExposureWhatHappenedPlaceholder" xml:space="preserve">
+    <value>Los hechos, como los vería una cámara</value>
+  </data>
+  <data name="ExposureOutcomeQuestion" xml:space="preserve">
+    <value>¿Se cumplió la predicción?</value>
+  </data>
+  <data name="ExposureOutcomeNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="ExposureOutcomePartly" xml:space="preserve">
+    <value>En parte</value>
+  </data>
+  <data name="ExposureOutcomeYes" xml:space="preserve">
+    <value>Sí, se cumplió</value>
+  </data>
+  <data name="ExposureBeliefAfter" xml:space="preserve">
+    <value>¿Qué tan seguro estás ahora de la misma predicción?</value>
+  </data>
+  <data name="ExposurePeak" xml:space="preserve">
+    <value>La ansiedad más fuerte durante la tarea (de 0 a 10)</value>
+  </data>
+  <data name="ExposureUsedSafetyQuestion" xml:space="preserve">
+    <value>¿Usaste una red de seguridad?</value>
+  </data>
+  <data name="ExposureLearnedQuestion" xml:space="preserve">
+    <value>¿Qué aprendiste?</value>
+  </data>
+  <data name="ExposureLearnedPlaceholder" xml:space="preserve">
+    <value>Una frase para ti</value>
+  </data>
+  <data name="ExposureSaveReport" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="ExposureInterrupt" xml:space="preserve">
+    <value>Paré antes</value>
+  </data>
+  <data name="ExposureFeedbackTitle" xml:space="preserve">
+    <value>El resultado</value>
+  </data>
+  <data name="ExposureBeliefChange" xml:space="preserve">
+    <value>Creencia en la predicción: {0} → {1} de 10</value>
+  </data>
+  <data name="ExposureInsightDisconfirmed" xml:space="preserve">
+    <value>El miedo predijo un daño, y no ocurrió. Así reaprende el cerebro: no porque la ansiedad desaparezca, sino porque la expectativa no se cumple.</value>
+  </data>
+  <data name="ExposureInsightCameTrue" xml:space="preserve">
+    <value>Lo que temías pasó, y lo atravesaste. ¿Qué tan malo fue en realidad, comparado con lo que imaginabas? ¿Qué te ayudó? Repite este peldaño: una coincidencia todavía no es una regla.</value>
+  </data>
+  <data name="ExposureInsightInterrupted" xml:space="preserve">
+    <value>Parar no es un fracaso. Aun así estuviste donde da miedo. Vuelve a intentarlo cuando estés listo, o empieza por un peldaño más fácil.</value>
+  </data>
+  <data name="ExposureInsightSafety" xml:space="preserve">
+    <value>Esta vez hubo una red de seguridad. La próxima vez prueba sin ella: así el cerebro aprende que sin ella también era seguro.</value>
+  </data>
+  <data name="ExposureInsightMastered" xml:space="preserve">
+    <value>Peldaño superado: aquí el miedo ya no predice daño. Puedes subir más.</value>
+  </data>
+  <data name="ExposureInsightLadderDone" xml:space="preserve">
+    <value>Ese era el último peldaño. ¡Subiste toda la escalera!</value>
+  </data>
+  <data name="ExposureInsightEasier" xml:space="preserve">
+    <value>Dos veces seguidas muy difícil: el peldaño es demasiado alto por ahora. Añade uno más fácil en medio.</value>
+  </data>
+  <data name="ExposureDone" xml:space="preserve">
+    <value>Listo</value>
+  </data>
+  <data name="ExposureBeliefMin" xml:space="preserve">
+    <value>0: nada</value>
+  </data>
+  <data name="ExposureBeliefMax" xml:space="preserve">
+    <value>10: totalmente</value>
+  </data>
+  <data name="ExposureProgressStart" xml:space="preserve">
+    <value>La escalera está lista. La primera tarea es poner a prueba una de tus predicciones.</value>
+  </data>
+  <data name="ExposureLearnedSummary" xml:space="preserve">
+    <value>Aprendiste: «{0}»</value>
+  </data>
+  <data name="ExposureCatalogSubtitle" xml:space="preserve">
+    <value>Paso a paso hacia lo que temes</value>
+  </data>
+  <data name="ExposureCatalogMeta" xml:space="preserve">
+    <value>~10 min por tarea · Ansiedad</value>
+  </data>
+  <data name="ExposureCatalogBadge" xml:space="preserve">
+    <value>Un programa de unas semanas</value>
+  </data>
+  <data name="ExposureCatalogAuthor" xml:space="preserve">
+    <value>TCC</value>
+  </data>
+  <data name="ArticlesLead" xml:space="preserve">
+    <value>Lecturas breves sobre cómo funcionan la ansiedad, el estrés y el cuerpo, y qué hacer al respecto</value>
+  </data>
+  <data name="ArticleMinutes" xml:space="preserve">
+    <value>{0} min de lectura</value>
+  </data>
+  <data name="ArticlePracticeCaption" xml:space="preserve">
+    <value>Práctica</value>
+  </data>
+  <data name="ArticleProgrammeCaption" xml:space="preserve">
+    <value>Programa</value>
+  </data>
+  <data name="ArticlesFilterAll" xml:space="preserve">
+    <value>Todos</value>
+  </data>
+  <data name="PcPtsd5Score.Negative" xml:space="preserve">
+    <value>Pocas señales de una reacción postraumática</value>
+  </data>
+  <data name="PcPtsd5Score.Positive" xml:space="preserve">
+    <value>Hay señales de una reacción postraumática</value>
+  </data>
+  <data name="PcPtsd5ScoreDetail.Negative" xml:space="preserve">
+    <value>Menos de tres respuestas «sí». Si algunas de estas experiencias todavía te afectan, vale la pena hablarlo con un especialista.</value>
+  </data>
+  <data name="PcPtsd5ScoreDetail.Positive" xml:space="preserve">
+    <value>Tres o más respuestas «sí». Es un cribado, no un diagnóstico, pero es motivo para hacer la escala detallada PCL-5 y consultar a un especialista en trauma. El trastorno de estrés postraumático responde bien al tratamiento.</value>
+  </data>
+  <data name="Pcl5Score.Low" xml:space="preserve">
+    <value>Los síntomas son leves</value>
+  </data>
+  <data name="Pcl5Score.Elevated" xml:space="preserve">
+    <value>Los síntomas son notables</value>
+  </data>
+  <data name="Pcl5Score.Probable" xml:space="preserve">
+    <value>Una alta probabilidad de trastorno de estrés postraumático</value>
+  </data>
+  <data name="Pcl5ScoreDetail.Low" xml:space="preserve">
+    <value>Hasta 20 de 80. Hay pocos síntomas postraumáticos. Si algo de la lista todavía te molesta, vale la pena hablarlo con un especialista.</value>
+  </data>
+  <data name="Pcl5ScoreDetail.Elevated" xml:space="preserve">
+    <value>De 21 a 32 de 80. Los síntomas son notables y pueden estorbar. Repite la escala en dos semanas; si afectan a tu vida, consulta a un especialista en trauma.</value>
+  </data>
+  <data name="Pcl5ScoreDetail.Probable" xml:space="preserve">
+    <value>33 o más de 80. Es frecuente con el trastorno de estrés postraumático. No es un diagnóstico, pero sí un motivo serio para consultar a un especialista en trauma: el TEPT responde bien al tratamiento.</value>
+  </data>
+  <data name="TestRecommendationReasonPcPtsd5.Low" xml:space="preserve">
+    <value>El anclaje te ayuda a volver al presente cuando algo te recuerda el pasado.</value>
+  </data>
+  <data name="TestRecommendationReasonPcPtsd5.High" xml:space="preserve">
+    <value>Esta práctica ayuda cuando un recuerdo difícil toma el control.</value>
+  </data>
+  <data name="TestRecommendationReasonPcl5.Low" xml:space="preserve">
+    <value>Esta práctica te ayuda a notar dónde está la tensión en el cuerpo y a suavizarla.</value>
+  </data>
+  <data name="TestRecommendationReasonPcl5.Mid" xml:space="preserve">
+    <value>El anclaje te ayuda a volver al presente cuando algo te recuerda el pasado.</value>
+  </data>
+  <data name="TestRecommendationReasonPcl5.High" xml:space="preserve">
+    <value>Esta práctica ayuda cuando un recuerdo difícil toma el control. Pero con una puntuación así, la ayuda principal es un especialista en trauma.</value>
+  </data>
+  <data name="ArticleTestsCaption" xml:space="preserve">
+    <value>Tests</value>
+  </data>
+  <data name="ArticleReadCaption" xml:space="preserve">
+    <value>Artículo</value>
+  </data>
+  <data name="TraumaCatalogTitle" xml:space="preserve">
+    <value>Después de un trauma</value>
+  </data>
+  <data name="TraumaCatalogSubtitle" xml:space="preserve">
+    <value>Cribado, recuerdos intrusivos, pesadillas, el camino hacia un especialista</value>
+  </data>
+  <data name="TraumaCatalogMeta" xml:space="preserve">
+    <value>Test · prácticas · artículos</value>
+  </data>
+  <data name="TraumaCatalogBadge" xml:space="preserve">
+    <value>Módulo</value>
+  </data>
+  <data name="TraumaCatalogAuthor" xml:space="preserve">
+    <value>Trauma</value>
+  </data>
+  <data name="CrisisHubFlashbackTitle" xml:space="preserve">
+    <value>Un recuerdo me ha desbordado</value>
+  </data>
+  <data name="CrisisHubFlashbackSubtitle" xml:space="preserve">
+    <value>Volver al presente, unos 3 minutos</value>
+  </data>
+  <data name="ArticleChecklistHint" xml:space="preserve">
+    <value>Marca lo que te pasa a ti</value>
+  </data>
+  <data name="ArticleQuizCaption" xml:space="preserve">
+    <value>Ponte a prueba</value>
+  </data>
+  <data name="ArticleCycleLoop" xml:space="preserve">
+    <value>…y otra vez desde el principio</value>
+  </data>
+  <data name="ArticleTaskCaption" xml:space="preserve">
+    <value>Tarea para mañana</value>
+  </data>
+  <data name="ArticleSave" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="ArticleSaved" xml:space="preserve">
+    <value>Guardado</value>
+  </data>
+  <data name="ArticleListen" xml:space="preserve">
+    <value>Escuchar</value>
+  </data>
+  <data name="ArticleStopListening" xml:space="preserve">
+    <value>Parar</value>
+  </data>
+  <data name="ArticleReadMark" xml:space="preserve">
+    <value>Leído</value>
+  </data>
+  <data name="ArticleRight" xml:space="preserve">
+    <value>Correcto.</value>
+  </data>
+  <data name="ArticleNotQuite" xml:space="preserve">
+    <value>No del todo.</value>
+  </data>
+  <data name="ArticlesSearchPlaceholder" xml:space="preserve">
+    <value>Buscar artículos</value>
+  </data>
+  <data name="ArticlesNothingFound" xml:space="preserve">
+    <value>No se encontró nada. Prueba con otra palabra.</value>
+  </data>
+  <data name="ArticlesFilterSaved" xml:space="preserve">
+    <value>Guardados</value>
+  </data>
+  <data name="ArticlesNothingSaved" xml:space="preserve">
+    <value>Los artículos que guardes aparecerán aquí.</value>
+  </data>
+  <data name="ArticlesForYou" xml:space="preserve">
+    <value>Para ti</value>
+  </data>
+  <data name="ArticlesCourses" xml:space="preserve">
+    <value>Cursos</value>
+  </data>
+  <data name="ArticlesCoursesLead" xml:space="preserve">
+    <value>Cada día: una lectura breve, un ejercicio y una tarea. Así funciona la autoayuda guiada.</value>
+  </data>
+  <data name="ArticlesCourseMeta" xml:space="preserve">
+    <value>{0} días · hasta {1} min al día</value>
+  </data>
+  <data name="PickContinueCourse" xml:space="preserve">
+    <value>Continuar el curso</value>
+  </data>
+  <data name="PickContinueReading" xml:space="preserve">
+    <value>No lo terminaste</value>
+  </data>
+  <data name="PickTest" xml:space="preserve">
+    <value>Según tu resultado en {0}</value>
+  </data>
+  <data name="PickMood" xml:space="preserve">
+    <value>Varios días difíciles en tu diario</value>
+  </data>
+  <data name="CourseCaption" xml:space="preserve">
+    <value>Curso</value>
+  </data>
+  <data name="CourseStart" xml:space="preserve">
+    <value>Empezar el curso</value>
+  </data>
+  <data name="CourseContinue" xml:space="preserve">
+    <value>Continuar: día {0}</value>
+  </data>
+  <data name="CourseFinished" xml:space="preserve">
+    <value>Curso completado</value>
+  </data>
+  <data name="CourseDayLabel" xml:space="preserve">
+    <value>Día {0}</value>
+  </data>
+  <data name="CourseDayTomorrow" xml:space="preserve">
+    <value>Se abre mañana</value>
+  </data>
+  <data name="CourseDayLocked" xml:space="preserve">
+    <value>Después del día anterior</value>
+  </data>
+  <data name="CourseDayDone" xml:space="preserve">
+    <value>Hecho</value>
+  </data>
+  <data name="CourseProgress" xml:space="preserve">
+    <value>{0} de {1} hechos</value>
+  </data>
+  <data name="CourseMeasureTitle" xml:space="preserve">
+    <value>Medición</value>
+  </data>
+  <data name="CourseMeasureHint" xml:space="preserve">
+    <value>Haz el test {0} al principio y al final del curso para ver si te ayuda.</value>
+  </data>
+  <data name="CourseMeasureOnce" xml:space="preserve">
+    <value>{0}: {1} puntos</value>
+  </data>
+  <data name="CourseMeasureChange" xml:space="preserve">
+    <value>{0}: antes {1}, ahora {2}</value>
+  </data>
+  <data name="CourseTakeTest" xml:space="preserve">
+    <value>Hacer {0}</value>
+  </data>
+  <data name="CourseReset" xml:space="preserve">
+    <value>Empezar el curso de nuevo</value>
+  </data>
+  <data name="CourseResetConfirm" xml:space="preserve">
+    <value>Se borrarán tus respuestas de este curso. ¿Empezar de nuevo?</value>
+  </data>
+  <data name="CourseReflectionPlaceholder" xml:space="preserve">
+    <value>Tu respuesta. Se queda solo en tu teléfono.</value>
+  </data>
+  <data name="CourseCompleteDay" xml:space="preserve">
+    <value>Día hecho</value>
+  </data>
+  <data name="CourseDayClosed" xml:space="preserve">
+    <value>El día {0} está hecho. El siguiente se abre mañana: prueba la tarea.</value>
+  </data>
+  <data name="CourseAllDone" xml:space="preserve">
+    <value>Curso completado. Vuelve a medir y compara con el principio.</value>
+  </data>
+  <data name="CourseDayNotOpen" xml:space="preserve">
+    <value>Este día aún no está abierto.</value>
+  </data>
+  <data name="ArticleChatCaption" xml:space="preserve">
+    <value>Chat con IA</value>
+  </data>
+  <data name="ShellTabChatShort" xml:space="preserve">
+    <value>Chat IA</value>
+  </data>
+  <data name="ShellTabLibraryShort" xml:space="preserve">
+    <value>Biblioteca</value>
+  </data>
+  <data name="ShellTabJournalShort" xml:space="preserve">
+    <value>Diario</value>
+  </data>
+  <data name="ForYouEmpty" xml:space="preserve">
+    <value>Aquí aparecerán los cursos que empezaste, los artículos que no terminaste y sugerencias según tus tests y tu diario. Haz un test breve y las sugerencias serán más precisas.</value>
+  </data>
+  <data name="ForYouTakeTest" xml:space="preserve">
+    <value>Hacer un test</value>
+  </data>
+  <data name="ForYouSavedTitle" xml:space="preserve">
+    <value>Artículos guardados</value>
+  </data>
+  <data name="OnboardingModuleChatHint" xml:space="preserve">
+    <value>Habla y ordena paso a paso lo que te preocupa</value>
+  </data>
+  <data name="OnboardingModuleLibraryHint" xml:space="preserve">
+    <value>Artículos, cursos, oraciones y citas</value>
+  </data>
+  <data name="OnboardingModuleJournalHint" xml:space="preserve">
+    <value>Sigue tu ánimo y descubre qué te ayuda</value>
+  </data>
+  <data name="BodyTitle" xml:space="preserve">
+    <value>Cuerpo</value>
+  </data>
+  <data name="BodyLead" xml:space="preserve">
+    <value>El cuerpo suele notar un sentimiento antes de que podamos nombrarlo. Marca dónde y qué sientes, y mira qué puede haber detrás.</value>
+  </data>
+  <data name="BodyNotDiagnosis" xml:space="preserve">
+    <value>Esto no es un diagnóstico: busca sentimientos, no las causas de una enfermedad. Si una sensación es nueva, fuerte, duradera o dolorosa, consulta primero a un médico.</value>
+  </data>
+  <data name="BodyAreaQuestion" xml:space="preserve">
+    <value>¿Dónde lo sientes?</value>
+  </data>
+  <data name="BodySensationQuestion" xml:space="preserve">
+    <value>¿Cómo es?</value>
+  </data>
+  <data name="BodyIntensity" xml:space="preserve">
+    <value>¿Qué tan fuerte es?</value>
+  </data>
+  <data name="BodyFeelingQuestion" xml:space="preserve">
+    <value>¿Qué podría haber detrás?</value>
+  </data>
+  <data name="BodyFeelingHint" xml:space="preserve">
+    <value>Sentimientos como estos suelen sentirse así. Son suposiciones: elige lo que encaje, u otra cosa.</value>
+  </data>
+  <data name="BodyOtherFeelings" xml:space="preserve">
+    <value>Otros sentimientos</value>
+  </data>
+  <data name="BodyPromptVoice" xml:space="preserve">
+    <value>Si esta sensación pudiera hablar, ¿qué diría?</value>
+  </data>
+  <data name="BodyPromptBefore" xml:space="preserve">
+    <value>¿Cuándo empezó? ¿Qué pasó justo antes?</value>
+  </data>
+  <data name="BodyNotePlaceholder" xml:space="preserve">
+    <value>Lo que te venga a la mente, o lo que pasó antes (opcional)</value>
+  </data>
+  <data name="BodyDoctorFirst" xml:space="preserve">
+    <value>El dolor o una sensación fuerte pueden ser señal de una enfermedad. Si es nueva o no se pasa, consulta primero a un médico, y busca los sentimientos después.</value>
+  </data>
+  <data name="BodySave" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="BodySaved" xml:space="preserve">
+    <value>Guardado. Lo que puede ayudar ahora:</value>
+  </data>
+  <data name="BodyCrisis" xml:space="preserve">
+    <value>Parece que ahora mismo es muy difícil. No estás solo: aquí tienes a quién acudir ahora mismo.</value>
+  </data>
+  <data name="BodyAgain" xml:space="preserve">
+    <value>Volver a revisar</value>
+  </data>
+  <data name="BodyPatternsTitle" xml:space="preserve">
+    <value>Tus patrones</value>
+  </data>
+  <data name="BodyPatternsEmpty" xml:space="preserve">
+    <value>Cuando la misma sensación vuelva, tus patrones aparecerán aquí.</value>
+  </data>
+  <data name="BodyPatternTitle" xml:space="preserve">
+    <value>{0} · {1}</value>
+  </data>
+  <data name="BodyPatternCount" xml:space="preserve">
+    <value>Veces anotadas: {0}</value>
+  </data>
+  <data name="BodyPatternFeeling" xml:space="preserve">
+    <value>Lo más frecuente: {0}</value>
+  </data>
+  <data name="BodyPatternTime" xml:space="preserve">
+    <value>Normalmente {0}</value>
+  </data>
+  <data name="BodyRecentTitle" xml:space="preserve">
+    <value>Registros recientes</value>
+  </data>
+  <data name="BodyDelete" xml:space="preserve">
+    <value>Eliminar el registro</value>
+  </data>
+  <data name="BodyDeleteConfirmTitle" xml:space="preserve">
+    <value>¿Eliminar este registro?</value>
+  </data>
+  <data name="BodyDeleteConfirmBody" xml:space="preserve">
+    <value>El registro y tu nota se borrarán del teléfono.</value>
+  </data>
+  <data name="BodyDeleteConfirmAccept" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="BodyCancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="BodyAreaHead" xml:space="preserve">
+    <value>Cabeza</value>
+  </data>
+  <data name="BodyAreaFace" xml:space="preserve">
+    <value>Cara y mandíbula</value>
+  </data>
+  <data name="BodyAreaThroat" xml:space="preserve">
+    <value>Garganta</value>
+  </data>
+  <data name="BodyAreaShoulders" xml:space="preserve">
+    <value>Cuello y hombros</value>
+  </data>
+  <data name="BodyAreaChest" xml:space="preserve">
+    <value>Pecho</value>
+  </data>
+  <data name="BodyAreaStomach" xml:space="preserve">
+    <value>Estómago</value>
+  </data>
+  <data name="BodyAreaBack" xml:space="preserve">
+    <value>Espalda</value>
+  </data>
+  <data name="BodyAreaArms" xml:space="preserve">
+    <value>Brazos</value>
+  </data>
+  <data name="BodyAreaLegs" xml:space="preserve">
+    <value>Piernas</value>
+  </data>
+  <data name="BodyAreaWholeBody" xml:space="preserve">
+    <value>Todo el cuerpo</value>
+  </data>
+  <data name="BodySensationTight" xml:space="preserve">
+    <value>Opresión</value>
+  </data>
+  <data name="BodySensationHeavy" xml:space="preserve">
+    <value>Pesadez</value>
+  </data>
+  <data name="BodySensationHeat" xml:space="preserve">
+    <value>Calor</value>
+  </data>
+  <data name="BodySensationCold" xml:space="preserve">
+    <value>Frío</value>
+  </data>
+  <data name="BodySensationLump" xml:space="preserve">
+    <value>Un nudo</value>
+  </data>
+  <data name="BodySensationTrembling" xml:space="preserve">
+    <value>Temblor</value>
+  </data>
+  <data name="BodySensationEmpty" xml:space="preserve">
+    <value>Vacío</value>
+  </data>
+  <data name="BodySensationFluttering" xml:space="preserve">
+    <value>Mariposas</value>
+  </data>
+  <data name="BodySensationTingling" xml:space="preserve">
+    <value>Hormigueo</value>
+  </data>
+  <data name="BodySensationPain" xml:space="preserve">
+    <value>Dolor</value>
+  </data>
+  <data name="BodyFeelingAnxiety" xml:space="preserve">
+    <value>ansiedad</value>
+  </data>
+  <data name="BodyFeelingFear" xml:space="preserve">
+    <value>miedo</value>
+  </data>
+  <data name="BodyFeelingAnger" xml:space="preserve">
+    <value>enfado</value>
+  </data>
+  <data name="BodyFeelingHurt" xml:space="preserve">
+    <value>dolor emocional</value>
+  </data>
+  <data name="BodyFeelingSadness" xml:space="preserve">
+    <value>tristeza</value>
+  </data>
+  <data name="BodyFeelingShame" xml:space="preserve">
+    <value>vergüenza</value>
+  </data>
+  <data name="BodyFeelingGuilt" xml:space="preserve">
+    <value>culpa</value>
+  </data>
+  <data name="BodyFeelingExhaustion" xml:space="preserve">
+    <value>agotamiento</value>
+  </data>
+  <data name="BodyFeelingJoy" xml:space="preserve">
+    <value>alegría, emoción</value>
+  </data>
+  <data name="BodyFeelingUnknown" xml:space="preserve">
+    <value>no lo sé</value>
+  </data>
+  <data name="BodyPartMorning" xml:space="preserve">
+    <value>por la mañana</value>
+  </data>
+  <data name="BodyPartDay" xml:space="preserve">
+    <value>por la tarde</value>
+  </data>
+  <data name="BodyPartEvening" xml:space="preserve">
+    <value>al anochecer</value>
+  </data>
+  <data name="BodyPartNight" xml:space="preserve">
+    <value>por la noche</value>
+  </data>
+  <data name="BodySaveError" xml:space="preserve">
+    <value>No se pudo guardar el registro. Inténtalo de nuevo.</value>
+  </data>
+  <data name="InsightsTitle" xml:space="preserve">
+    <value>Lo que me ayuda</value>
+  </data>
+  <data name="InsightsLead" xml:space="preserve">
+    <value>Aquí solo están tus propios datos: qué prácticas te dejan más tranquilo, cómo cambian tus resultados en los tests y qué acompaña a tu ánimo.</value>
+  </data>
+  <data name="InsightsPracticesTitle" xml:space="preserve">
+    <value>Prácticas que te dejan más tranquilo</value>
+  </data>
+  <data name="InsightsPracticeLine" xml:space="preserve">
+    <value>La tensión baja {0} de media · veces: {1}</value>
+  </data>
+  <data name="InsightsPracticesEmpty" xml:space="preserve">
+    <value>Valora tu tensión antes y después de una práctica, y aquí aparecerán las que te ayudan.</value>
+  </data>
+  <data name="InsightsTestsTitle" xml:space="preserve">
+    <value>Tests</value>
+  </data>
+  <data name="InsightsTestChange" xml:space="preserve">
+    <value>Primero {0}, ahora {1}</value>
+  </data>
+  <data name="InsightsTestSingle" xml:space="preserve">
+    <value>Resultado: {0}</value>
+  </data>
+  <data name="InsightsTrendBetter" xml:space="preserve">
+    <value>mejor</value>
+  </data>
+  <data name="InsightsTrendWorse" xml:space="preserve">
+    <value>peor</value>
+  </data>
+  <data name="InsightsTrendSame" xml:space="preserve">
+    <value>sin cambios</value>
+  </data>
+  <data name="InsightsRetestHint" xml:space="preserve">
+    <value>Han pasado dos semanas: un nuevo resultado mostrará qué cambió.</value>
+  </data>
+  <data name="InsightsRetest" xml:space="preserve">
+    <value>Hacerlo de nuevo</value>
+  </data>
+  <data name="InsightsTestsEmpty" xml:space="preserve">
+    <value>Haz un test, y otra vez dentro de dos semanas: aquí se verá el cambio.</value>
+  </data>
+  <data name="InsightsMoodTitle" xml:space="preserve">
+    <value>Qué acompaña a tu ánimo</value>
+  </data>
+  <data name="InsightsMoodUp" xml:space="preserve">
+    <value>{0}: ánimo {1} más alto</value>
+  </data>
+  <data name="InsightsMoodDown" xml:space="preserve">
+    <value>{0}: ánimo {1} más bajo</value>
+  </data>
+  <data name="InsightsMoodNote" xml:space="preserve">
+    <value>Son coincidencias en tus registros, no una prueba de causa.</value>
+  </data>
+  <data name="InsightsMoodEmpty" xml:space="preserve">
+    <value>Anota en el diario qué te influyó (sueño, personas, un paseo), y aquí aparecerá qué acompaña a tu ánimo.</value>
+  </data>
+  <data name="InsightsBodyTitle" xml:space="preserve">
+    <value>Lo que vuelve una y otra vez al cuerpo</value>
+  </data>
+  <data name="MoodWidgetTitle" xml:space="preserve">
+    <value>¿Cómo estás ahora?</value>
+  </data>
+  <data name="MoodWidgetLevel" xml:space="preserve">
+    <value>Ánimo {0} de 5</value>
+  </data>
+  <data name="MoodWidgetPractice" xml:space="preserve">
+    <value>Práctica del día</value>
+  </data>
 </root>
