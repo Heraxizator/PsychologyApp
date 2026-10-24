@@ -85,6 +85,26 @@ public sealed class QuoteCatalogContentTests
         Assert.Contains(ru, e => e.Author == "Сунь-цзы");
     }
 
+    // The quote filters offer these themes: one missing from a translation would open an empty feed in that language.
+    private static readonly string[] FilterThemes =
+        ["wisdom", "motivation", "resilience", "calm", "anxiety", "mindfulness", "hope", "self-awareness", "relationships", "habits"];
+
+    [Theory]
+    [InlineData("fr")]
+    [InlineData("de")]
+    [InlineData("es")]
+    [InlineData("pt")]
+    [InlineData("zh")]
+    public async Task A_translated_catalog_fills_every_filter_without_repeats(string language)
+    {
+        List<QuoteJsonEntry> entries = await LoadAsync($"quotes/quotes.{language}.json");
+
+        Assert.True(entries.Count >= 100, $"{language} has only {entries.Count} quotes.");
+        Assert.Equal(entries.Count, entries.Select(entry => entry.Text.Trim()).Distinct(StringComparer.Ordinal).Count());
+        Assert.All(entries, entry => Assert.False(string.IsNullOrWhiteSpace(entry.Author)));
+        Assert.All(FilterThemes, theme => Assert.True(entries.Count(entry => entry.Theme == theme) >= 5, $"{language}: too few quotes on {theme}."));
+    }
+
     private static async Task<List<QuoteJsonEntry>> LoadAsync(string relativePath)
     {
         string assetPath = Path.Combine(GetRawAssetsRoot(), relativePath.Replace('/', Path.DirectorySeparatorChar));

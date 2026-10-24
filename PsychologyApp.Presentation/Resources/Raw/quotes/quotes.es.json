@@ -1,0 +1,517 @@
+[
+  {
+    "author": "Sócrates",
+    "text": "Solo sé que no sé nada.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Confucio",
+    "text": "No importa lo despacio que vayas, siempre que no te detengas.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Séneca",
+    "text": "Sufrimos más a menudo en la imaginación que en la realidad.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Séneca",
+    "text": "No es que tengamos poco tiempo, sino que perdemos mucho.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Lao Tse",
+    "text": "Conocer a los demás es inteligencia; conocerse a uno mismo es verdadera sabiduría.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "La felicidad de tu vida depende de la calidad de tus pensamientos.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Heráclito",
+    "text": "Nadie se baña dos veces en el mismo río.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Epicteto",
+    "text": "Nada grande se crea de repente.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Aristóteles",
+    "text": "Conocerse a uno mismo es el principio de toda sabiduría.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Séneca",
+    "text": "La vida es larga si sabes usarla.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Lao Tse",
+    "text": "Un viaje de mil millas comienza con un solo paso.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Nelson Mandela",
+    "text": "Siempre parece imposible hasta que se hace.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Séneca",
+    "text": "No es porque las cosas sean difíciles que no nos atrevemos; es porque no nos atrevemos que son difíciles.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Séneca",
+    "text": "Mientras aplazamos, la vida pasa deprisa.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Theodore Roosevelt",
+    "text": "Haz lo que puedas, con lo que tengas, donde estés.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "No pierdas más tiempo discutiendo cómo debe ser un buen hombre. Sé uno.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Epicteto",
+    "text": "Primero dite a ti mismo lo que quieres ser, y luego haz lo que tengas que hacer.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Maya Angelou",
+    "text": "Nada funcionará a menos que tú lo hagas.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Viktor Frankl",
+    "text": "Cuando ya no podemos cambiar una situación, tenemos el desafío de cambiarnos a nosotros mismos.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "El impedimento a la acción hace avanzar la acción. Lo que se interpone en el camino se convierte en el camino.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Séneca",
+    "text": "Las dificultades fortalecen la mente, como el trabajo fortalece el cuerpo.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Séneca",
+    "text": "A veces, incluso vivir es un acto de valentía.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Friedrich Nietzsche",
+    "text": "Quien tiene un porqué para vivir puede soportar casi cualquier cómo.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Confucio",
+    "text": "Nuestra mayor gloria no está en no caer nunca, sino en levantarnos cada vez que caemos.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Ernest Hemingway",
+    "text": "El mundo nos rompe a todos, y después muchos son fuertes en los lugares rotos.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Maya Angelou",
+    "text": "Puedes encontrar muchas derrotas, pero no debes ser derrotado.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Helen Keller",
+    "text": "Aunque el mundo está lleno de sufrimiento, también está lleno de su superación.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "Tienes poder sobre tu mente, no sobre los acontecimientos externos. Date cuenta de esto y encontrarás la fuerza.",
+    "theme": "calm"
+  },
+  {
+    "author": "Lao Tse",
+    "text": "La naturaleza no se apresura, y sin embargo todo se cumple.",
+    "theme": "calm"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Los sentimientos van y vienen como nubes en un cielo ventoso. La respiración consciente es mi ancla.",
+    "theme": "calm"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "En ningún lugar encuentra el hombre un retiro más tranquilo que en su propia alma.",
+    "theme": "calm"
+  },
+  {
+    "author": "Séneca",
+    "text": "El mejor remedio para la ira es la demora.",
+    "theme": "calm"
+  },
+  {
+    "author": "Epicteto",
+    "text": "La riqueza no consiste en tener grandes posesiones, sino en tener pocas necesidades.",
+    "theme": "calm"
+  },
+  {
+    "author": "Blaise Pascal",
+    "text": "Toda la desdicha de los hombres proviene de no saber quedarse tranquilos en una habitación.",
+    "theme": "calm"
+  },
+  {
+    "author": "Séneca",
+    "text": "Entrenemos la mente para desear lo que la situación exige.",
+    "theme": "calm"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Sonríe, respira y ve despacio.",
+    "theme": "calm"
+  },
+  {
+    "author": "Séneca",
+    "text": "Sufre más de lo necesario quien sufre antes de que sea necesario.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Epicteto",
+    "text": "Al hombre no le preocupan tanto los problemas reales como sus ansiedades imaginarias sobre ellos.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Michel de Montaigne",
+    "text": "Mi vida ha estado llena de terribles desgracias, la mayoría de las cuales nunca sucedieron.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Séneca",
+    "text": "Más a menudo nos asustamos que nos hacemos daño.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "Nunca dejes que el futuro te perturbe. Lo enfrentarás, si es necesario, con las mismas armas de la razón que hoy te protegen.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Por miedo a lo desconocido, la gente suele preferir un sufrimiento que le es familiar.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Søren Kierkegaard",
+    "text": "La angustia es el vértigo de la libertad.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Corrie ten Boom",
+    "text": "Preocuparse no le quita al mañana su tristeza; le quita al hoy su fuerza.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Epicteto",
+    "text": "No son los acontecimientos los que perturban a las personas, sino sus juicios sobre ellos.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "Limítate al presente.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "El momento presente está lleno de alegría y felicidad. Si estás atento, lo verás.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Séneca",
+    "text": "La verdadera felicidad es disfrutar del presente sin depender ansiosamente del futuro.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "Concéntrate en cada minuto en hacer lo que tienes delante con seriedad precisa y sincera.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Jon Kabat-Zinn",
+    "text": "No puedes detener las olas, pero puedes aprender a surfear.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Camina como si besaras la tierra con tus pies.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "Regálate algo: el momento presente.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Fiódor Dostoyevski",
+    "text": "La belleza salvará el mundo.",
+    "theme": "hope"
+  },
+  {
+    "author": "Ana Frank",
+    "text": "A pesar de todo, sigo creyendo en la bondad innata de las personas.",
+    "theme": "hope"
+  },
+  {
+    "author": "Cicerón",
+    "text": "Mientras respiro, espero.",
+    "theme": "hope"
+  },
+  {
+    "author": "Emily Dickinson",
+    "text": "La esperanza es esa cosa con plumas que se posa en el alma.",
+    "theme": "hope"
+  },
+  {
+    "author": "Desmond Tutu",
+    "text": "La esperanza es poder ver que hay luz a pesar de toda la oscuridad.",
+    "theme": "hope"
+  },
+  {
+    "author": "Martin Luther King",
+    "text": "Debemos aceptar la decepción finita, pero nunca perder la esperanza infinita.",
+    "theme": "hope"
+  },
+  {
+    "author": "Albert Camus",
+    "text": "En medio del invierno, descubrí que había en mí un verano invencible.",
+    "theme": "hope"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "Que algo te parezca difícil no significa que sea imposible de lograr.",
+    "theme": "hope"
+  },
+  {
+    "author": "Carl Gustav Jung",
+    "text": "Quien mira hacia fuera, sueña; quien mira hacia dentro, despierta.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Sócrates",
+    "text": "Una vida sin examen no merece ser vivida.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Séneca",
+    "text": "El más poderoso es quien se tiene a sí mismo en su poder.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "Se necesita muy poco para una vida feliz; todo está dentro de ti, en tu forma de pensar.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "Mira dentro de ti. Dentro está la fuente del bien.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Carl Rogers",
+    "text": "La curiosa paradoja es que cuando me acepto tal como soy, entonces puedo cambiar.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Lao Tse",
+    "text": "Quien vence a otros es fuerte; quien se vence a sí mismo es poderoso.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Rumi",
+    "text": "Ayer era inteligente, así que quería cambiar el mundo. Hoy soy sabio, así que me estoy cambiando a mí mismo.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Séneca",
+    "text": "Rodéate de personas que puedan mejorarte.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Cicerón",
+    "text": "La amistad hace más brillante la prosperidad y aligera la adversidad al compartirla.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Maya Angelou",
+    "text": "La gente olvidará lo que dijiste, pero nunca olvidará cómo la hiciste sentir.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Antoine de Saint-Exupéry",
+    "text": "Es el tiempo que has perdido con tu rosa lo que hace a tu rosa tan importante.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Antoine de Saint-Exupéry",
+    "text": "Solo se ve bien con el corazón. Lo esencial es invisible a los ojos.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Aristóteles",
+    "text": "Un amigo es un alma que habita en dos cuerpos.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Séneca",
+    "text": "Una de las cualidades más bellas de la verdadera amistad es comprender y ser comprendido.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Madre Teresa",
+    "text": "Las palabras amables pueden ser cortas y fáciles de decir, pero su eco es verdaderamente infinito.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Aristóteles",
+    "text": "Somos lo que hacemos repetidamente. La excelencia, entonces, no es un acto, sino un hábito.",
+    "theme": "habits"
+  },
+  {
+    "author": "Séneca",
+    "text": "Empieza a vivir ya, y cuenta cada día como una vida aparte.",
+    "theme": "habits"
+  },
+  {
+    "author": "Séneca",
+    "text": "Aplazar las cosas es el mayor desperdicio de la vida.",
+    "theme": "habits"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "Al amanecer, cuando te cueste levantarte, dite: me levanto para hacer mi trabajo de ser humano.",
+    "theme": "habits"
+  },
+  {
+    "author": "Epicteto",
+    "text": "Todo hábito y capacidad se confirma y crece con las acciones que le corresponden.",
+    "theme": "habits"
+  },
+  {
+    "author": "Ovidio",
+    "text": "La gota de agua horada la piedra, no por su fuerza, sino por su constancia.",
+    "theme": "habits"
+  },
+  {
+    "author": "León Tolstói",
+    "text": "Todos piensan en cambiar el mundo, pero nadie piensa en cambiarse a sí mismo.",
+    "theme": "habits"
+  },
+  {
+    "author": "Ana Frank",
+    "text": "Qué maravilloso es que nadie necesite esperar ni un momento para empezar a mejorar el mundo.",
+    "theme": "habits"
+  },
+  {
+    "author": "Reinhold Niebuhr",
+    "text": "Concédeme la serenidad para aceptar las cosas que no puedo cambiar, el valor para cambiar las que sí puedo y la sabiduría para reconocer la diferencia.",
+    "theme": "acceptance"
+  },
+  {
+    "author": "Epicteto",
+    "text": "Haz el mejor uso de lo que está en tu poder y toma el resto como venga.",
+    "theme": "acceptance"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "Acepta las cosas a las que el destino te ata.",
+    "theme": "acceptance"
+  },
+  {
+    "author": "Séneca",
+    "text": "La espera es el mayor obstáculo para vivir: depende del mañana y pierde el hoy.",
+    "theme": "acceptance"
+  },
+  {
+    "author": "Rumi",
+    "text": "La herida es el lugar por donde entra la luz.",
+    "theme": "healing"
+  },
+  {
+    "author": "Ovidio",
+    "text": "Descansa; un campo que ha descansado da una hermosa cosecha.",
+    "theme": "healing"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "El alma se tiñe del color de sus pensamientos.",
+    "theme": "healing"
+  },
+  {
+    "author": "Khalil Gibran",
+    "text": "Del sufrimiento han surgido las almas más fuertes.",
+    "theme": "healing"
+  },
+  {
+    "author": "Louise Hay",
+    "text": "Me amo y me apruebo.",
+    "theme": "self-love"
+  },
+  {
+    "author": "Oscar Wilde",
+    "text": "Amarse a uno mismo es el comienzo de un romance para toda la vida.",
+    "theme": "self-love"
+  },
+  {
+    "author": "Séneca",
+    "text": "¿Qué progreso he hecho? He empezado a ser amigo de mí mismo.",
+    "theme": "self-love"
+  },
+  {
+    "author": "Eleanor Roosevelt",
+    "text": "Nadie puede hacerte sentir inferior sin tu consentimiento.",
+    "theme": "self-love"
+  },
+  {
+    "author": "Cicerón",
+    "text": "La gratitud no es solo la mayor de las virtudes, sino la madre de todas las demás.",
+    "theme": "gratitude"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "Cuando te levantes por la mañana, piensa en el privilegio de estar vivo, de pensar, de disfrutar, de amar.",
+    "theme": "gratitude"
+  },
+  {
+    "author": "Séneca",
+    "text": "Nada es más honorable que un corazón agradecido.",
+    "theme": "gratitude"
+  },
+  {
+    "author": "Epicteto",
+    "text": "Sabio es quien no se lamenta por lo que no tiene, sino que se alegra por lo que tiene.",
+    "theme": "gratitude"
+  },
+  {
+    "author": "Aristóteles",
+    "text": "La felicidad depende de nosotros mismos.",
+    "theme": "happiness"
+  },
+  {
+    "author": "Dalái lama",
+    "text": "La felicidad no es algo hecho. Proviene de tus propias acciones.",
+    "theme": "happiness"
+  },
+  {
+    "author": "León Tolstói",
+    "text": "Si quieres ser feliz, sé feliz.",
+    "theme": "happiness"
+  }
+]

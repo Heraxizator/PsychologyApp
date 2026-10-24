@@ -1,0 +1,517 @@
+[
+  {
+    "author": "Sokrates",
+    "text": "Ich weiß, dass ich nichts weiß.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Konfuzius",
+    "text": "Es ist egal, wie langsam du gehst, solange du nicht stehen bleibst.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Seneca",
+    "text": "Wir leiden öfter in der Vorstellung als in der Wirklichkeit.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Seneca",
+    "text": "Wir haben nicht zu wenig Zeit, sondern wir verschwenden zu viel davon.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Laozi",
+    "text": "Wer andere kennt, ist klug; wer sich selbst kennt, ist erleuchtet.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Das Glück deines Lebens hängt von der Beschaffenheit deiner Gedanken ab.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Heraklit",
+    "text": "Man steigt nicht zweimal in denselben Fluss.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Epiktet",
+    "text": "Nichts Großes entsteht plötzlich.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Aristoteles",
+    "text": "Sich selbst zu kennen ist der Anfang aller Weisheit.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Seneca",
+    "text": "Das Leben ist lang, wenn man es zu nutzen weiß.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Laozi",
+    "text": "Auch eine Reise von tausend Meilen beginnt mit einem ersten Schritt.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Nelson Mandela",
+    "text": "Es scheint immer unmöglich, bis es getan ist.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Seneca",
+    "text": "Nicht weil es schwer ist, wagen wir es nicht, sondern weil wir es nicht wagen, ist es schwer.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Seneca",
+    "text": "Während wir aufschieben, eilt das Leben vorbei.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Theodore Roosevelt",
+    "text": "Tu, was du kannst, mit dem, was du hast, da, wo du bist.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Verliere keine Zeit mehr damit, darüber zu streiten, wie ein guter Mensch sein sollte. Sei einer.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Epiktet",
+    "text": "Sag dir zuerst, wer du sein willst, und dann tu, was du tun musst.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Maya Angelou",
+    "text": "Nichts wird funktionieren, wenn du es nicht tust.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Viktor Frankl",
+    "text": "Wenn wir eine Situation nicht mehr ändern können, sind wir herausgefordert, uns selbst zu ändern.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Das Hindernis für das Handeln fördert das Handeln. Was im Weg steht, wird zum Weg.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Seneca",
+    "text": "Schwierigkeiten stärken den Geist wie Arbeit den Körper.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Seneca",
+    "text": "Manchmal ist schon das Leben selbst ein Akt des Mutes.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Friedrich Nietzsche",
+    "text": "Wer ein Warum zum Leben hat, erträgt fast jedes Wie.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Konfuzius",
+    "text": "Unser größter Ruhm ist nicht, niemals zu fallen, sondern jedes Mal wieder aufzustehen.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Ernest Hemingway",
+    "text": "Die Welt zerbricht jeden, und danach sind viele an den zerbrochenen Stellen stark.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Maya Angelou",
+    "text": "Du wirst vielleicht viele Niederlagen erleben, aber du darfst dich nicht besiegen lassen.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Helen Keller",
+    "text": "Obwohl die Welt voller Leid ist, ist sie auch voll von seiner Überwindung.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Du hast Macht über deinen Geist, nicht über äußere Ereignisse. Erkenne das, und du wirst Kraft finden.",
+    "theme": "calm"
+  },
+  {
+    "author": "Laozi",
+    "text": "Die Natur eilt nicht, und doch wird alles vollbracht.",
+    "theme": "calm"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Gefühle kommen und gehen wie Wolken an einem windigen Himmel. Der bewusste Atem ist mein Anker.",
+    "theme": "calm"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Nirgends findet der Mensch einen ruhigeren Rückzugsort als in seiner eigenen Seele.",
+    "theme": "calm"
+  },
+  {
+    "author": "Seneca",
+    "text": "Das beste Heilmittel gegen den Zorn ist der Aufschub.",
+    "theme": "calm"
+  },
+  {
+    "author": "Epiktet",
+    "text": "Reichtum besteht nicht darin, viel zu besitzen, sondern wenig zu brauchen.",
+    "theme": "calm"
+  },
+  {
+    "author": "Blaise Pascal",
+    "text": "Alles Unglück der Menschen rührt daher, dass sie nicht ruhig in einem Zimmer bleiben können.",
+    "theme": "calm"
+  },
+  {
+    "author": "Seneca",
+    "text": "Üben wir unseren Geist darin, das zu wollen, was die Lage verlangt.",
+    "theme": "calm"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Lächle, atme und geh langsam.",
+    "theme": "calm"
+  },
+  {
+    "author": "Seneca",
+    "text": "Wer leidet, bevor es nötig ist, leidet mehr als nötig.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Epiktet",
+    "text": "Den Menschen beunruhigen weniger die wirklichen Probleme als seine eingebildeten Ängste darüber.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Michel de Montaigne",
+    "text": "Mein Leben war voller schrecklicher Unglücke, von denen die meisten nie eingetreten sind.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Seneca",
+    "text": "Wir haben öfter Angst, als dass wir verletzt werden.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Lass dich nie von der Zukunft beunruhigen. Du wirst ihr, wenn nötig, mit denselben Waffen der Vernunft begegnen, die dich heute schützen.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Aus Angst vor dem Unbekannten ziehen Menschen oft ein vertrautes Leid vor.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Søren Kierkegaard",
+    "text": "Angst ist der Schwindel der Freiheit.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Corrie ten Boom",
+    "text": "Sorgen nehmen dem Morgen nicht seinen Kummer, sie nehmen dem Heute seine Kraft.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Epiktet",
+    "text": "Nicht die Dinge selbst beunruhigen die Menschen, sondern ihre Urteile über die Dinge.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Beschränke dich auf die Gegenwart.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Der gegenwärtige Augenblick ist voller Freude und Glück. Wenn du achtsam bist, wirst du es sehen.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Seneca",
+    "text": "Wahres Glück heißt, die Gegenwart zu genießen, ohne ängstlich von der Zukunft abzuhängen.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Konzentriere dich jeden Augenblick darauf, das zu tun, was vor dir liegt, mit genauem und echtem Ernst.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Jon Kabat-Zinn",
+    "text": "Du kannst die Wellen nicht aufhalten, aber du kannst lernen zu surfen.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Geh, als würdest du die Erde mit deinen Füßen küssen.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Mach dir selbst ein Geschenk: den gegenwärtigen Augenblick.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Fjodor Dostojewski",
+    "text": "Die Schönheit wird die Welt retten.",
+    "theme": "hope"
+  },
+  {
+    "author": "Anne Frank",
+    "text": "Trotz allem glaube ich noch an das innere Gute im Menschen.",
+    "theme": "hope"
+  },
+  {
+    "author": "Cicero",
+    "text": "Solange ich atme, hoffe ich.",
+    "theme": "hope"
+  },
+  {
+    "author": "Emily Dickinson",
+    "text": "Die Hoffnung ist das Ding mit Federn, das in der Seele sitzt.",
+    "theme": "hope"
+  },
+  {
+    "author": "Desmond Tutu",
+    "text": "Hoffnung heißt, trotz aller Dunkelheit sehen zu können, dass es Licht gibt.",
+    "theme": "hope"
+  },
+  {
+    "author": "Martin Luther King",
+    "text": "Wir müssen begrenzte Enttäuschung hinnehmen, dürfen aber nie die unendliche Hoffnung verlieren.",
+    "theme": "hope"
+  },
+  {
+    "author": "Albert Camus",
+    "text": "Mitten im Winter habe ich erfahren, dass es in mir einen unbesiegbaren Sommer gibt.",
+    "theme": "hope"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Wenn dir etwas schwer erscheint, glaube nicht, dass es unmöglich ist.",
+    "theme": "hope"
+  },
+  {
+    "author": "Carl Gustav Jung",
+    "text": "Wer nach außen schaut, träumt; wer nach innen schaut, erwacht.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Sokrates",
+    "text": "Ein ungeprüftes Leben ist nicht lebenswert.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Seneca",
+    "text": "Am mächtigsten ist, wer sich selbst in der Gewalt hat.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Es braucht sehr wenig für ein glückliches Leben; alles liegt in dir, in deiner Art zu denken.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Schau in dich hinein. Innen ist die Quelle des Guten.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Carl Rogers",
+    "text": "Das merkwürdige Paradox ist: Wenn ich mich so annehme, wie ich bin, dann kann ich mich ändern.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Laozi",
+    "text": "Wer andere besiegt, ist stark; wer sich selbst besiegt, ist mächtig.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Rumi",
+    "text": "Gestern war ich klug, also wollte ich die Welt verändern. Heute bin ich weise, also verändere ich mich selbst.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Seneca",
+    "text": "Umgib dich mit Menschen, die dich besser machen.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Cicero",
+    "text": "Freundschaft macht das Glück strahlender und erleichtert das Unglück, indem sie es teilt.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Maya Angelou",
+    "text": "Die Menschen vergessen, was du gesagt hast, aber nie, wie du sie hast fühlen lassen.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Antoine de Saint-Exupéry",
+    "text": "Die Zeit, die du für deine Rose verloren hast, macht deine Rose so wichtig.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Antoine de Saint-Exupéry",
+    "text": "Man sieht nur mit dem Herzen gut. Das Wesentliche ist für die Augen unsichtbar.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Aristoteles",
+    "text": "Ein Freund ist eine Seele, die in zwei Körpern wohnt.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Seneca",
+    "text": "Eine der schönsten Eigenschaften wahrer Freundschaft ist, zu verstehen und verstanden zu werden.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Mutter Teresa",
+    "text": "Freundliche Worte können kurz und leicht zu sagen sein, aber ihr Echo ist wahrhaft endlos.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Aristoteles",
+    "text": "Wir sind, was wir wiederholt tun. Vortrefflichkeit ist daher keine Handlung, sondern eine Gewohnheit.",
+    "theme": "habits"
+  },
+  {
+    "author": "Seneca",
+    "text": "Beginne sofort zu leben und zähle jeden einzelnen Tag als ein eigenes Leben.",
+    "theme": "habits"
+  },
+  {
+    "author": "Seneca",
+    "text": "Aufschieben ist die größte Verschwendung des Lebens.",
+    "theme": "habits"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Wenn du morgens nur schwer aufstehst, sag dir: Ich stehe auf, um meine Arbeit als Mensch zu tun.",
+    "theme": "habits"
+  },
+  {
+    "author": "Epiktet",
+    "text": "Jede Gewohnheit und Fähigkeit wird durch die entsprechenden Handlungen gefestigt und wächst.",
+    "theme": "habits"
+  },
+  {
+    "author": "Ovid",
+    "text": "Steter Tropfen höhlt den Stein, nicht durch Kraft, sondern durch Beharrlichkeit.",
+    "theme": "habits"
+  },
+  {
+    "author": "Leo Tolstoi",
+    "text": "Jeder denkt daran, die Welt zu verändern, aber niemand denkt daran, sich selbst zu verändern.",
+    "theme": "habits"
+  },
+  {
+    "author": "Anne Frank",
+    "text": "Wie wunderbar ist es, dass niemand auch nur einen Augenblick warten muss, um die Welt zu verbessern.",
+    "theme": "habits"
+  },
+  {
+    "author": "Reinhold Niebuhr",
+    "text": "Gib mir die Gelassenheit, Dinge hinzunehmen, die ich nicht ändern kann, den Mut, Dinge zu ändern, die ich ändern kann, und die Weisheit, das eine vom anderen zu unterscheiden.",
+    "theme": "acceptance"
+  },
+  {
+    "author": "Epiktet",
+    "text": "Nutze das Beste von dem, was in deiner Macht steht, und nimm den Rest, wie er kommt.",
+    "theme": "acceptance"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Nimm die Dinge an, an die das Schicksal dich bindet.",
+    "theme": "acceptance"
+  },
+  {
+    "author": "Seneca",
+    "text": "Das Erwarten ist das größte Hindernis des Lebens: Es hängt am Morgen und verliert das Heute.",
+    "theme": "acceptance"
+  },
+  {
+    "author": "Rumi",
+    "text": "Die Wunde ist der Ort, an dem das Licht in dich eintritt.",
+    "theme": "healing"
+  },
+  {
+    "author": "Ovid",
+    "text": "Ruhe dich aus; ein Feld, das geruht hat, bringt eine reiche Ernte.",
+    "theme": "healing"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Die Seele nimmt die Farbe ihrer Gedanken an.",
+    "theme": "healing"
+  },
+  {
+    "author": "Khalil Gibran",
+    "text": "Aus dem Leiden sind die stärksten Seelen hervorgegangen.",
+    "theme": "healing"
+  },
+  {
+    "author": "Louise Hay",
+    "text": "Ich liebe und akzeptiere mich.",
+    "theme": "self-love"
+  },
+  {
+    "author": "Oscar Wilde",
+    "text": "Sich selbst zu lieben ist der Beginn einer lebenslangen Romanze.",
+    "theme": "self-love"
+  },
+  {
+    "author": "Seneca",
+    "text": "Welchen Fortschritt ich gemacht habe? Ich habe begonnen, mir selbst ein Freund zu sein.",
+    "theme": "self-love"
+  },
+  {
+    "author": "Eleanor Roosevelt",
+    "text": "Niemand kann dir ohne deine Zustimmung das Gefühl geben, minderwertig zu sein.",
+    "theme": "self-love"
+  },
+  {
+    "author": "Cicero",
+    "text": "Dankbarkeit ist nicht nur die größte aller Tugenden, sondern die Mutter aller anderen.",
+    "theme": "gratitude"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Wenn du morgens aufstehst, denk daran, welch ein Vorrecht es ist zu leben, zu denken, zu genießen, zu lieben.",
+    "theme": "gratitude"
+  },
+  {
+    "author": "Seneca",
+    "text": "Nichts ist ehrenvoller als ein dankbares Herz.",
+    "theme": "gratitude"
+  },
+  {
+    "author": "Epiktet",
+    "text": "Weise ist, wer nicht über das trauert, was er nicht hat, sondern sich über das freut, was er hat.",
+    "theme": "gratitude"
+  },
+  {
+    "author": "Aristoteles",
+    "text": "Das Glück hängt von uns selbst ab.",
+    "theme": "happiness"
+  },
+  {
+    "author": "Dalai Lama",
+    "text": "Glück ist nichts Fertiges. Es entsteht aus deinen eigenen Handlungen.",
+    "theme": "happiness"
+  },
+  {
+    "author": "Leo Tolstoi",
+    "text": "Wenn du glücklich sein willst, sei es.",
+    "theme": "happiness"
+  }
+]
