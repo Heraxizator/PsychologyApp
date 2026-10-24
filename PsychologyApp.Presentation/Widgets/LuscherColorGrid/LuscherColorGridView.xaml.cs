@@ -76,6 +76,8 @@ public partial class LuscherColorGridView : ContentView
 
     private static void SetTileColor(Border tile, ColourValue colour)
     {
+        // A screen reader user picks by name: the tile itself is only a colour.
+        SemanticProperties.SetDescription(tile, ColourStrings.GetColorName(colour));
         if (tile.Content is BoxView boxView)
         {
             boxView.Color = LuscherColorMapper.ToMauiColor(colour);

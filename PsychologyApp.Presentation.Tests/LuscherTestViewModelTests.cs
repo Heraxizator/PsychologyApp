@@ -18,6 +18,46 @@ public sealed class LuscherTestViewModelTests
         AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
     }
 
+    // A colour missing from a translation would show another colour's meaning, or the English one, as the person's result.
+    [Theory]
+    [InlineData("fr")]
+    [InlineData("de")]
+    [InlineData("es")]
+    [InlineData("pt")]
+    [InlineData("zh")]
+    public void Every_colour_is_explained_in_the_interface_language(string language)
+    {
+        ColourValue[] colours = [ColourValue.Black, ColourValue.Red, ColourValue.Blue, ColourValue.Purple, ColourValue.Yellow, ColourValue.Brown, ColourValue.Green, ColourValue.Gray];
+        Domain.Colour.Enums.ColourMeaningType[] types = [Domain.Colour.Enums.ColourMeaningType.Wanted, Domain.Colour.Enums.ColourMeaningType.Unwanted];
+
+        AppStrings.LanguageOverride = "en";
+        List<string> english = [.. types.SelectMany(type => colours.Select(colour => ColourStrings.GetExplanation(colour, type)))];
+        AppStrings.LanguageOverride = language;
+        List<string> translated = [.. types.SelectMany(type => colours.Select(colour => ColourStrings.GetExplanation(colour, type)))];
+        AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
+
+        Assert.Equal(translated.Count, translated.Distinct().Count());
+        Assert.All(translated.Zip(english), pair => Assert.NotEqual(pair.Second, pair.First));
+    }
+
+    [Theory]
+    [InlineData("ru")]
+    [InlineData("en")]
+    public void Each_colour_has_its_own_explanation_and_name(string language)
+    {
+        ColourValue[] colours = [ColourValue.Black, ColourValue.Red, ColourValue.Blue, ColourValue.Purple, ColourValue.Yellow, ColourValue.Brown, ColourValue.Green, ColourValue.Gray];
+        AppStrings.LanguageOverride = language;
+        List<string> wanted = [.. colours.Select(colour => ColourStrings.GetExplanation(colour, Domain.Colour.Enums.ColourMeaningType.Wanted))];
+        List<string> unwanted = [.. colours.Select(colour => ColourStrings.GetExplanation(colour, Domain.Colour.Enums.ColourMeaningType.Unwanted))];
+        List<string> names = [.. colours.Select(ColourStrings.GetColorName)];
+        AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
+
+        Assert.DoesNotContain(names, name => name.StartsWith('#'));
+        Assert.Equal(colours.Length, wanted.Distinct().Count());
+        Assert.Equal(colours.Length, unwanted.Distinct().Count());
+        Assert.Equal(colours.Length, names.Distinct().Count());
+    }
+
     [Fact]
     public void BriefFinish_ExposesRoleLabels()
     {
@@ -35,6 +75,21 @@ public sealed class LuscherTestViewModelTests
         Assert.Equal(AppStrings.TestsLuscherWantedRole, viewModel.FirstColorRoleLabel);
         Assert.Equal(AppStrings.TestsLuscherUnwantedRole, viewModel.SecondColorRoleLabel);
         Assert.False(string.IsNullOrWhiteSpace(viewModel.ResultsTitle));
+    }
+
+    [Fact]
+    public void The_step_header_is_hidden_once_the_result_shows()
+    {
+        // The page reads the flag only when it is announced: without the event, "Pick the colour you like least" stayed above the result.
+        LuscherTestViewModel viewModel = new(LuscherMode.Brief, new TestNavigationService(new Mock<INavigation>().Object), null, new LuscherResultService());
+        List<string?> changed = [];
+        InvokeColorHandler(viewModel, ColourValue.Red);
+        viewModel.PropertyChanged += (_, e) => changed.Add(e.PropertyName);
+
+        InvokeColorHandler(viewModel, ColourValue.Blue);
+
+        Assert.False(viewModel.ShowBriefProgress);
+        Assert.Contains(nameof(LuscherTestViewModel.ShowBriefProgress), changed);
     }
 
     [Fact]
