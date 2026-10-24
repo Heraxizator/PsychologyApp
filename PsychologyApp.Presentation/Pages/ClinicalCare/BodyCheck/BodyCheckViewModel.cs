@@ -332,7 +332,7 @@ public sealed class BodyCheckViewModel : BaseViewModel
     }
 
     private BodyPracticeItem Practice(TechniqueId id) =>
-        new(CompanionContent.TechniqueTitle(id, AppStrings.IsEnglish(AppStrings.Language)), new AsyncCommand(() => _navigation.GoToTechniqueAsync(id)));
+        new(CompanionContent.TechniqueTitle(id, AppStrings.Language), new AsyncCommand(() => _navigation.GoToTechniqueAsync(id)));
 
     private void Reset()
     {

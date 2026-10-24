@@ -1,3 +1,5 @@
+using PsychologyApp.Application.Practice.Catalog;
+
 namespace PsychologyApp.Application.Conversation.Companion;
 
 /// <summary>Scripted wording of the companion. Used on its own when no language model is installed and as a fallback when the model's reply is rejected.</summary>
@@ -99,6 +101,10 @@ public static class CompanionContent
         TechniqueId.Nightmare => english ? "Rewrite a nightmare" : "Переписать кошмар",
         _ => id.ToString()
     };
+
+    /// <summary>The practice's name as its catalogue card shows it, in any language of the app (outside the ru/en chat).</summary>
+    public static string TechniqueTitle(TechniqueId id, string? language) =>
+        BuiltInTechniqueCatalogRegistry.For(language)[id].ListTitle;
 
     public static string TechniqueWhy(TechniqueId id, bool english) => id switch
     {

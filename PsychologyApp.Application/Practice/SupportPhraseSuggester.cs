@@ -11,7 +11,7 @@ public interface ISupportPhraseSuggester
     /// Empty for other fields, and empty when the context reads as a crisis: then a ready phrase would only sound dismissive.
     /// </summary>
     /// <param name="context">What the person wrote in the earlier fields of the same practice (the automatic thought, the self-criticism).</param>
-    Task<IReadOnlyList<string>> SuggestAsync(EntryFieldRole role, string? context, bool english, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<string>> SuggestAsync(EntryFieldRole role, string? context, string? language, CancellationToken cancellationToken = default);
 }
 
 /// <summary>
@@ -23,7 +23,7 @@ public sealed class SupportPhraseSuggester(ILanguageModel languageModel, ICrisis
     public const int MaxSuggestions = 6;
     private const int ModelVariants = 2;
 
-    public async Task<IReadOnlyList<string>> SuggestAsync(EntryFieldRole role, string? context, bool english, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<string>> SuggestAsync(EntryFieldRole role, string? context, string? language, CancellationToken cancellationToken = default)
     {
         if (role is not (EntryFieldRole.Reframe or EntryFieldRole.Kindness or EntryFieldRole.SelfKindness)
             || crisisDetector.IsCrisis(context))
@@ -31,10 +31,12 @@ public sealed class SupportPhraseSuggester(ILanguageModel languageModel, ICrisis
             return [];
         }
 
-        List<string> scripted = SupportPhraseContent.Pick(role, context, english);
-        List<string> fromModel = role == EntryFieldRole.Kindness
+        List<string> scripted = SupportPhraseContent.Pick(role, context, language);
+        // The reply guard reads only Russian and English: in another language a model phrase could not be checked.
+        string? modelLanguage = language?.ToLowerInvariant() is "ru" or "en" ? language.ToLowerInvariant() : null;
+        List<string> fromModel = role == EntryFieldRole.Kindness || modelLanguage is null
             ? []
-            : await AskModelAsync(role, context, english, cancellationToken).ConfigureAwait(false);
+            : await AskModelAsync(role, context, modelLanguage == "en", cancellationToken).ConfigureAwait(false);
 
         return fromModel
             .Concat(scripted)

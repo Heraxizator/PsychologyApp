@@ -378,8 +378,8 @@ public sealed class DataBackupViewModel : BaseViewModel
 
     private async Task ExportSummaryAsync()
     {
-        bool english = UserPreferences.IsEnglish(_preferences.Load().Language);
-        string summary = await _specialistSummaryService.BuildSummaryAsync(english);
+        string language = UserPreferences.NormalizeLanguageKey(_preferences.Load().Language);
+        string summary = await _specialistSummaryService.BuildSummaryAsync(language);
         string fileName = SharedFileNames.SpecialistSummary(DateTime.Now);
         await ShareTemporaryFileAsync(fileName, summary, AppStrings.DataBackupSummaryTitle);
     }

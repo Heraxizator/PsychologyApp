@@ -85,7 +85,7 @@ public partial class TechniqueSessionViewModel
         try
         {
             IReadOnlyList<string> phrases = await _phraseSuggester!.SuggestAsync(
-                entry.Role, context, AppStrings.IsEnglish(AppStrings.Language), token);
+                entry.Role, context, AppStrings.Language, token);
             if (!token.IsCancellationRequested)
             {
                 await UiThread.RunAsync(() => entry.AssistSuggestions = phrases);

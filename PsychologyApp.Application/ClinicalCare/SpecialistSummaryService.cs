@@ -14,7 +14,7 @@ public sealed class SpecialistSummaryService(
 {
     private const int PeriodDays = 30;
 
-    public async Task<string> BuildSummaryAsync(bool english, CancellationToken cancellationToken = default)
+    public async Task<string> BuildSummaryAsync(string? language, CancellationToken cancellationToken = default)
     {
         DateTime nowUtc = DateTime.UtcNow;
         DateTime sinceUtc = nowUtc.AddDays(-PeriodDays);
@@ -35,67 +35,52 @@ public sealed class SpecialistSummaryService(
         RiskAssessmentDTO? latestRisk = await clinicalCareService.GetLatestRiskAssessmentAsync(cancellationToken).ConfigureAwait(false);
         SafetyPlanDTO safetyPlan = await clinicalCareService.GetSafetyPlanAsync(cancellationToken).ConfigureAwait(false);
 
+        SpecialistSummaryText text = SpecialistSummaryText.For(language);
         StringBuilder sb = new();
-        sb.AppendLine(english ? "Summary for a specialist" : "Сводка для специалиста");
-        sb.AppendLine(english
-            ? $"Period: last {PeriodDays} days, generated {nowUtc.ToLocalTime():d MMMM yyyy}"
-            : $"Период: последние {PeriodDays} дней, сформировано {nowUtc.ToLocalTime():d MMMM yyyy}");
+        sb.AppendLine(text.Title);
+        sb.AppendLine(string.Format(text.Period, PeriodDays, nowUtc.ToLocalTime()));
         sb.AppendLine();
 
-        sb.AppendLine(english ? "Practice" : "Практика");
-        sb.AppendLine(english
-            ? $"- {practiceCount} technique sessions in this period; current streak {streakDays} day(s)."
-            : $"- {practiceCount} завершённых практик за период; текущая серия {streakDays} дн. подряд.");
+        sb.AppendLine(text.PracticeHeader);
+        sb.AppendLine(string.Format(text.PracticeLine, practiceCount, streakDays));
         sb.AppendLine();
 
-        sb.AppendLine(english ? "Mood" : "Настроение");
-        if (moods.Count == 0)
-        {
-            sb.AppendLine(english ? "- No mood check-ins recorded." : "- Записей настроения не было.");
-        }
-        else
-        {
-            double avg = moods.Average(entry => entry.MoodLevel);
-            sb.AppendLine(english
-                ? $"- {moods.Count} check-in(s), average level {avg:F1} of 5 (1 = hard day, 5 = good day)."
-                : $"- {moods.Count} записей, средний уровень {avg:F1} из 5 (1 — тяжёлый день, 5 — хороший день).");
-        }
+        sb.AppendLine(text.MoodHeader);
+        sb.AppendLine(moods.Count == 0
+            ? text.NoMood
+            : string.Format(text.MoodLine, moods.Count, moods.Average(entry => entry.MoodLevel)));
         sb.AppendLine();
 
-        sb.AppendLine(english ? "Self-assessment tests" : "Самооценочные тесты");
+        sb.AppendLine(text.TestsHeader);
         if (latestPerTest.Count == 0)
         {
-            sb.AppendLine(english ? "- None completed in this period." : "- За этот период тестов не было.");
+            sb.AppendLine(text.NoTests);
         }
         else
         {
             foreach (TestResultDTO result in latestPerTest)
             {
                 string scoreText = result.Score is int score ? $"{score}" : "—";
-                sb.AppendLine(english
-                    ? $"- {result.TestId}: {scoreText}, \"{result.Summary}\" ({result.CompletedAt.ToLocalTime():d MMM yyyy})"
-                    : $"- {result.TestId}: {scoreText}, «{result.Summary}» ({result.CompletedAt.ToLocalTime():d MMM yyyy})");
+                sb.AppendLine(string.Format(text.TestLine, result.TestId, scoreText, result.Summary, result.CompletedAt.ToLocalTime()));
             }
         }
         sb.AppendLine();
 
-        sb.AppendLine(english ? "Risk check" : "Проверка безопасности");
+        sb.AppendLine(text.RiskHeader);
         sb.AppendLine(latestRisk is null
-            ? english ? "- No risk check on record." : "- Проверок риска не проводилось."
-            : english
-                ? $"- Last check: {DescribeRisk(latestRisk.RiskLevel, true)} ({latestRisk.AssessedAt.ToLocalTime():d MMM yyyy})."
-                : $"- Последняя проверка: {DescribeRisk(latestRisk.RiskLevel, false)} ({latestRisk.AssessedAt.ToLocalTime():d MMM yyyy}).");
+            ? text.NoRisk
+            : string.Format(text.LastRisk, DescribeRisk(latestRisk.RiskLevel, text), latestRisk.AssessedAt.ToLocalTime()));
         sb.AppendLine();
 
-        sb.AppendLine(english ? "Safety plan" : "План безопасности");
+        sb.AppendLine(text.SafetyHeader);
         sb.AppendLine(safetyPlan.IsEmpty
-            ? english ? "- Not filled in yet." : "- Ещё не заполнен."
-            : english
-                ? $"- Filled in: {safetyPlan.WarningSigns.Count} warning sign(s), {safetyPlan.CopingStrategies.Count} coping strateg(y/ies), {safetyPlan.Contacts.Count} contact(s)."
-                : $"- Заполнен: признаков — {safetyPlan.WarningSigns.Count}, стратегий — {safetyPlan.CopingStrategies.Count}, контактов — {safetyPlan.Contacts.Count}.");
+            ? text.PlanEmpty
+            : string.Format(text.PlanFilled, safetyPlan.WarningSigns.Count, safetyPlan.CopingStrategies.Count, safetyPlan.Contacts.Count));
         sb.AppendLine();
 
         // What the trauma conversations found: beliefs and triggers in the person's words, without details of the event.
+        // The trauma chat speaks only Russian and English, so its notes are worded in one of them.
+        bool english = !string.Equals(language, "ru", StringComparison.OrdinalIgnoreCase);
         IReadOnlyDictionary<string, string> memory = await chatRepository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
         TraumaNotes notes = TraumaNotes.Deserialize(memory.TryGetValue(ChatMemoryKeys.TraumaNotes, out string? stored) ? stored : null);
         if (!notes.IsEmpty)
@@ -114,17 +99,15 @@ public sealed class SpecialistSummaryService(
             sb.AppendLine();
         }
 
-        sb.AppendLine(english
-            ? "Generated automatically by the app from the person's own entries. Not a clinical diagnosis."
-            : "Сформировано автоматически на основе собственных записей человека в приложении. Не является клиническим диагнозом.");
+        sb.AppendLine(text.Footer);
 
         return sb.ToString();
     }
 
-    private static string DescribeRisk(RiskLevel level, bool english) => level switch
+    private static string DescribeRisk(RiskLevel level, SpecialistSummaryText text) => level switch
     {
-        RiskLevel.Red => english ? "high (red)" : "высокий (красный)",
-        RiskLevel.Amber => english ? "moderate (amber)" : "умеренный (жёлтый)",
-        _ => english ? "low (green)" : "низкий (зелёный)"
+        RiskLevel.Red => text.RiskHigh,
+        RiskLevel.Amber => text.RiskModerate,
+        _ => text.RiskLow
     };
 }
