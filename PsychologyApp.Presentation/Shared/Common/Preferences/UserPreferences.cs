@@ -235,6 +235,9 @@ public static partial class UserPreferences
         CultureInfo.CurrentUICulture = culture;
         CultureInfo.DefaultThreadCurrentCulture = culture;
         CultureInfo.DefaultThreadCurrentUICulture = culture;
+#if ANDROID
+        AndroidLocale.Apply(culture.Name);
+#endif
     }
 
     public static void ApplyAccentColor(string color)

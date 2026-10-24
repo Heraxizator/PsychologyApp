@@ -16,6 +16,8 @@ public class MainActivity : MauiAppCompatActivity
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
+        // The language may have been applied before this activity existed: its resources still carry the phone's locale.
+        Shared.Common.AndroidLocale.Apply(System.Globalization.CultureInfo.CurrentUICulture.Name);
         HandleReminderIntent(Intent);
     }
 
