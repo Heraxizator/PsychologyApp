@@ -1,3 +1,6 @@
+using System.Text.Json;
+using PsychologyApp.Application.Models.Tests;
+using PsychologyApp.Application.Serialization;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Common;
@@ -71,6 +74,12 @@ public sealed class TestsListLoader(
 
     private static string ResolveSummary(string? analyzerId, TestResultDTO latest)
     {
+        // The short Lüscher summary was saved as colour names in the language of that day; the codes are rebuilt in today's.
+        if (latest.TestId == TestIds.LuscherBrief && LuscherBriefNames(latest.DetailJson) is { } names)
+        {
+            return names;
+        }
+
         if (latest.Score is int score)
         {
             string? mapped = TestScoreLabelMapper.GetSummary(analyzerId, score);
@@ -81,6 +90,24 @@ public sealed class TestsListLoader(
         }
 
         return string.IsNullOrWhiteSpace(latest.Summary) ? "—" : latest.Summary;
+    }
+
+    private static string? LuscherBriefNames(string? detailJson)
+    {
+        if (string.IsNullOrWhiteSpace(detailJson))
+        {
+            return null;
+        }
+
+        try
+        {
+            LuscherBriefResultDetail? detail = JsonSerializer.Deserialize(detailJson, TestJsonSerializerContext.Default.LuscherBriefResultDetail);
+            return ColourStrings.BriefSummary(detail?.First?.Code, detail?.Second?.Code);
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
     }
 
     private async Task<IReadOnlyList<TestItem>> LoadCatalogItemsAsync(

@@ -1,3 +1,4 @@
+using PsychologyApp.Domain.Colour.Enums;
 ﻿using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Models.Tests;
 using PsychologyApp.Application.Tests;
@@ -67,7 +68,7 @@ public sealed class TestHistoryLoader(
             entries.Add(new TestHistoryEntryItem
             {
                 DateText = item.CompletedAt.ToLocalTime().ToString("g"),
-                SummaryText = ResolveHistorySummary(definition?.AnalyzerId, item),
+                SummaryText = ColourStrings.BriefSummary(briefDetail?.First?.Code, briefDetail?.Second?.Code) ?? ResolveHistorySummary(definition?.AnalyzerId, item),
                 ScoreText = item.Score is int score ? AppStrings.TestHistoryScore(score) : string.Empty,
                 TrendText = TestTrendComparer.ToLabel(trend),
                 TrendKind = trend,
@@ -80,9 +81,9 @@ public sealed class TestHistoryLoader(
                 LuscherSecondPassText = FormatColorPass(standardDetail?.Colors),
                 LuscherBkText = standardDetail is null ? string.Empty : AppStrings.TestsLuscherHistoryBk(standardDetail.Bk),
                 LuscherBriefFirstTitle = AppStrings.TestsFirstColor,
-                LuscherBriefFirstText = FormatBriefColor(briefDetail?.First),
+                LuscherBriefFirstText = FormatBriefColor(briefDetail?.First, ColourMeaningType.Wanted),
                 LuscherBriefSecondTitle = AppStrings.TestsSecondColor,
-                LuscherBriefSecondText = FormatBriefColor(briefDetail?.Second),
+                LuscherBriefSecondText = FormatBriefColor(briefDetail?.Second, ColourMeaningType.Unwanted),
                 DurationText = detail is null ? string.Empty : AppStrings.TestResultDuration(detail.DurationSeconds)
             });
         }
@@ -112,20 +113,18 @@ public sealed class TestHistoryLoader(
     private static string FormatColorPass(IReadOnlyList<LuscherStandardColorDetail>? colors) =>
         colors is null || colors.Count == 0
             ? string.Empty
-            : string.Join(" → ", colors.Select(color => color.Name ?? color.Code));
+            : string.Join(" → ", colors.Select(color => ColourStrings.NameOfCode(color.Code) ?? color.Name ?? color.Code));
 
-    private static string FormatBriefColor(LuscherBriefColorDetail? color)
+    // Names and meanings are taken from the stored colour code in today's language; the saved text was in the language of that day.
+    private static string FormatBriefColor(LuscherBriefColorDetail? color, ColourMeaningType meaningType)
     {
         if (color is null)
         {
             return string.Empty;
         }
 
-        if (string.IsNullOrWhiteSpace(color.Text))
-        {
-            return color.Name ?? string.Empty;
-        }
-
-        return $"{color.Name}: {color.Text}";
+        string name = ColourStrings.NameOfCode(color.Code) ?? color.Name ?? string.Empty;
+        string? text = ColourStrings.ExplanationOfCode(color.Code, meaningType) ?? color.Text;
+        return string.IsNullOrWhiteSpace(text) ? name : $"{name}: {text}";
     }
 }

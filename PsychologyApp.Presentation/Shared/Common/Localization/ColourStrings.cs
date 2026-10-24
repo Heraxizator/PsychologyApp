@@ -30,15 +30,38 @@ public static class ColourStrings
     // and its hex code for a name. Equals compares the colour codes.
     private static int IndexOf(ColourValue colour) => Array.FindIndex(Order, value => value.Equals(colour));
 
+    /// <summary>The name of a stored colour code ("#0000FF") in the interface language; null for an unknown code.</summary>
+    public static string? NameOfCode(string? code)
+    {
+        int index = IndexOfCode(code);
+        return index < 0 ? null : AppStrings.In(AppStrings.Language, $"LuscherColour{NameKeys[index]}");
+    }
+
     public static string GetColorName(ColourValue colour)
     {
         int index = IndexOf(colour);
         return index < 0 ? colour.ToString() : AppStrings.In(AppStrings.Language, $"LuscherColour{NameKeys[index]}");
     }
 
-    public static string GetExplanation(ColourValue colour, ColourMeaningType meaningType)
+    public static string GetExplanation(ColourValue colour, ColourMeaningType meaningType) =>
+        ExplanationAt(Math.Max(0, IndexOf(colour)), meaningType);
+
+    /// <summary>The meaning of a stored colour code in the interface language; null for an unknown code.</summary>
+    public static string? ExplanationOfCode(string? code, ColourMeaningType meaningType)
     {
-        int index = Math.Max(0, IndexOf(colour));
+        int index = IndexOfCode(code);
+        return index < 0 ? null : ExplanationAt(index, meaningType);
+    }
+
+    /// <summary>"Blue / Red" from a saved short Lüscher result, in the interface language; null when its codes are missing.</summary>
+    public static string? BriefSummary(string? firstCode, string? secondCode) =>
+        NameOfCode(firstCode) is { } first && NameOfCode(secondCode) is { } second ? $"{first} / {second}" : null;
+
+    private static int IndexOfCode(string? code) =>
+        Array.FindIndex(Order, value => string.Equals(value.Code, code, StringComparison.OrdinalIgnoreCase));
+
+    private static string ExplanationAt(int index, ColourMeaningType meaningType)
+    {
         string language = AppStrings.Language.ToLowerInvariant();
         if (language == "ru")
         {

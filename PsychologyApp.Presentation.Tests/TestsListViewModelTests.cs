@@ -22,6 +22,53 @@ public sealed class TestsListViewModelTests
     }
 
     [Fact]
+    public async Task A_short_luscher_result_reads_in_the_current_language()
+    {
+        // Saved in Chinese, the summary stayed "蓝色 / 红色" on the German list; the stored colour codes are named anew.
+        var progress = new Mock<IUserProgressService>();
+        var catalog = new FakeTestCatalogService().WithCatalog(new TestDefinition
+        {
+            TestId = "luscher_brief",
+            Title = "Lüscher",
+            Subtitle = "Sub",
+            Description = "Desc",
+            Comment = "Note",
+            Algorithm = ["Step"],
+            Kind = TestKind.Questionnaire,
+            Questions = [],
+            SingleAnswer = true
+        });
+        progress
+            .Setup(p => p.GetLatestTestResultsAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new Dictionary<string, TestResultDTO>(StringComparer.Ordinal)
+            {
+                ["luscher_brief"] = new TestResultDTO
+                {
+                    TestId = "luscher_brief",
+                    Summary = "蓝色 / 红色",
+                    DetailJson = "{\"first\":{\"code\":\"#0000FF\",\"name\":\"蓝色\"},\"second\":{\"code\":\"#FF0000\",\"name\":\"红色\"}}",
+                    CompletedAt = DateTime.UtcNow
+                }
+            });
+        progress
+            .Setup(p => p.GetTestResultCountsAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new Dictionary<string, int>(StringComparer.Ordinal));
+
+        AppStrings.LanguageOverride = "de";
+        TestsListViewModel viewModel = new(
+            new TestNavigationService(new Mock<INavigation>().Object),
+            TestDatabaseReady.CreateSignaled(),
+            TestRunTestHelpers.CreateTestsListLoader(progress.Object, catalog),
+            Options.Create(new AppSettings()),
+            NullLogger<TestsListViewModel>.Instance);
+        await viewModel.EnsureInitializedAsync();
+        string? summary = viewModel.TestItemCollection[0].LastResultSummary;
+        AppStrings.LanguageOverride = UserPreferences.DefaultLanguage;
+
+        Assert.Contains("Blau / Rot", summary);
+    }
+
+    [Fact]
     public async Task InitAsync_LoadsCatalogAndEnrichesLatestResult()
     {
         var navigation = new Mock<INavigation>();
