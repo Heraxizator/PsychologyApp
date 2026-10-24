@@ -90,7 +90,7 @@ public sealed class ArticleReaderViewModel : BaseViewModel
 
     private void Load()
     {
-        if (ArticleContent.Find(_articleId, AppStrings.IsEnglish(AppStrings.Language)) is not { } article)
+        if (ArticleContent.Find(_articleId, AppStrings.Language) is not { } article)
         {
             return;
         }

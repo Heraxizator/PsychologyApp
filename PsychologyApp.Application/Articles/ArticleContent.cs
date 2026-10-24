@@ -1,14 +1,27 @@
 namespace PsychologyApp.Application.Articles;
 
 /// <summary>
-/// The articles of the app, in Russian and English, matched one to one (tested). Psychoeducation and health copy: reviewed by a
-/// psychologist (and the "when to see a doctor" lists by a physician) before release.
+/// The articles of the app in every language, matched one to one with English (tested). Psychoeducation and health copy: reviewed by
+/// a psychologist (and the "when to see a doctor" lists by a physician) before release.
 /// </summary>
 public static partial class ArticleContent
 {
-    public static IReadOnlyList<Article> All(bool english) => english ? ArticlesEn : ArticlesRu;
+    /// <summary>The articles in a language by its key ("ru", "en", "fr"…); a language without its own gets the English ones.</summary>
+    public static IReadOnlyList<Article> All(string? language) => InLanguage(language, ArticlesRu, ArticlesEn, ArticlesFr, ArticlesDe, ArticlesEs, ArticlesPt, ArticlesZh);
 
-    public static Article? Find(string id, bool english) => All(english).FirstOrDefault(article => article.Id == id);
+    public static Article? Find(string id, string? language) => All(language).FirstOrDefault(article => article.Id == id);
+
+    private static T InLanguage<T>(string? language, T russian, T english, T french, T german, T spanish, T portuguese, T chinese) =>
+        language?.ToLowerInvariant() switch
+        {
+            "ru" => russian,
+            "fr" => french,
+            "de" => german,
+            "es" => spanish,
+            "pt" => portuguese,
+            "zh" => chinese,
+            _ => english
+        };
 
     private static ArticleBlock P(string text) => new(ArticleBlockKind.Paragraph, text);
 
@@ -74,7 +87,7 @@ public static class ArticleSearch
 {
     public const int MinQueryLength = 2;
 
-    public static IReadOnlyList<Article> Find(string? query, bool english)
+    public static IReadOnlyList<Article> Find(string? query, string? language)
     {
         string[] words = Normalize(query).Split(' ', StringSplitOptions.RemoveEmptyEntries);
         if (words.Sum(word => word.Length) < MinQueryLength)
@@ -82,7 +95,7 @@ public static class ArticleSearch
             return [];
         }
 
-        return ArticleContent.All(english)
+        return ArticleContent.All(language)
             .Select(article => (Article: article, Head: Normalize($"{article.Title} {article.Summary}"), Body: Normalize(BodyText(article))))
             .Where(entry => words.All(word => entry.Head.Contains(word, StringComparison.Ordinal) || entry.Body.Contains(word, StringComparison.Ordinal)))
             .OrderByDescending(entry => words.Count(word => Normalize(entry.Article.Title).Contains(word, StringComparison.Ordinal)))

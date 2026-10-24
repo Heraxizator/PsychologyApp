@@ -26,11 +26,27 @@ public static partial class ArticleContent
             [ArticleIds.EatingDisorders, ArticleIds.Bipolar, ArticleIds.Psychosis])
     ];
 
-    public static IReadOnlyList<ArticleSection> Sections(bool english) =>
+    /// <summary>The section titles of the other languages, in the order of <see cref="Layout"/>.</summary>
+    private static readonly string[] SectionsFr =
+        ["Anxiété et peur", "Pensées", "Énergie et humeur", "Émotions", "Traumatisme", "Relations", "Corps et aide", "Reconnaître et se faire aider"];
+
+    private static readonly string[] SectionsDe =
+        ["Angst und Furcht", "Gedanken", "Kraft und Stimmung", "Gefühle", "Trauma", "Beziehungen", "Körper und Hilfe", "Erkennen und Hilfe holen"];
+
+    private static readonly string[] SectionsEs =
+        ["Ansiedad y miedo", "Pensamientos", "Energía y ánimo", "Emociones", "Trauma", "Relaciones", "Cuerpo y ayuda", "Reconocer y pedir ayuda"];
+
+    private static readonly string[] SectionsPt =
+        ["Ansiedade e medo", "Pensamentos", "Energia e humor", "Emoções", "Trauma", "Relacionamentos", "Corpo e ajuda", "Reconhecer e buscar ajuda"];
+
+    private static readonly string[] SectionsZh =
+        ["焦虑与恐惧", "想法", "精力与情绪", "情绪感受", "创伤", "人际关系", "身体与求助", "识别与求助"];
+
+    public static IReadOnlyList<ArticleSection> Sections(string? language) =>
         Layout
-            .Select(section => new ArticleSection(
+            .Select((section, index) => new ArticleSection(
                 section.Key,
-                english ? section.English : section.Russian,
-                section.Ids.Select(id => Find(id, english)).OfType<Article>().ToList()))
+                InLanguage(language, section.Russian, section.English, SectionsFr[index], SectionsDe[index], SectionsEs[index], SectionsPt[index], SectionsZh[index]),
+                section.Ids.Select(id => Find(id, language)).OfType<Article>().ToList()))
             .ToList();
 }

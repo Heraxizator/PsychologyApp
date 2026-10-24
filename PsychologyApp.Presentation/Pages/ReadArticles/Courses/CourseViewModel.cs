@@ -59,7 +59,7 @@ public sealed class CourseViewModel : BaseViewModel
         PrimaryCommand = new AsyncCommand(StartOrContinueAsync);
         TakeTestCommand = new AsyncCommand(() => _course is { } course ? _navigation.GoToTestAsync(course.TestId) : Task.CompletedTask);
         ResetCommand = new AsyncCommand(ResetAsync);
-        _course = ArticleContent.FindCourse(courseId, AppStrings.IsEnglish(AppStrings.Language));
+        _course = ArticleContent.FindCourse(courseId, AppStrings.Language);
     }
 
     public ICommand BackCommand { get; }
@@ -207,7 +207,7 @@ public sealed class CourseViewModel : BaseViewModel
 
     protected override void RefreshLocalizedProperties()
     {
-        _course = ArticleContent.FindCourse(_courseId, AppStrings.IsEnglish(AppStrings.Language));
+        _course = ArticleContent.FindCourse(_courseId, AppStrings.Language);
         Notify(nameof(Title), nameof(Summary), nameof(MeasureTitle), nameof(MeasureHint), nameof(TakeTestText), nameof(ResetText));
         RefreshAsync().FireAndForget();
     }

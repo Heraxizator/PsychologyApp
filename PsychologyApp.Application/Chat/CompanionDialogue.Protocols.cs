@@ -73,7 +73,7 @@ public sealed partial class CompanionDialogue
 
         // In panic the fewer choices the better, and the body article is already offered with the somatic chip.
         if (!state.ArticleOffered && emotion != CompanionEmotion.Panic && CompanionProtocolContent.ArticleFor(emotion, analysis.IsFlashback) is { } articleId
-            && ArticleContent.Find(articleId, english) is { } article)
+            && ArticleContent.Find(articleId, english ? "en" : "ru") is { } article)
         {
             quick.Add(CompanionProtocolContent.ArticleChip(article, english));
             state = state with { ArticleOffered = true };

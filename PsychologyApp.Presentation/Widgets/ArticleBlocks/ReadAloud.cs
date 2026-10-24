@@ -28,7 +28,8 @@ public sealed class ReadAloud
         Changed?.Invoke();
         try
         {
-            string language = AppStrings.IsEnglish(AppStrings.Language) ? "en" : "ru";
+            // The articles are read in the interface language: each language has its own text now.
+            string language = AppLanguages.Normalize(AppStrings.Language);
             Locale? locale = (await TextToSpeech.Default.GetLocalesAsync())
                 .FirstOrDefault(candidate => candidate.Language.StartsWith(language, StringComparison.OrdinalIgnoreCase));
             SpeechOptions options = new() { Locale = locale };

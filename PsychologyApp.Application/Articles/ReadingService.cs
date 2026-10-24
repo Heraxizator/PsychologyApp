@@ -91,7 +91,7 @@ public sealed class ReadingService(IReadingRepository repository, ICrisisDetecto
                 }
 
                 outcome = CourseDayOutcome.Done;
-                int total = ArticleContent.FindCourse(courseId, english: false)?.Days.Count ?? int.MaxValue;
+                int total = ArticleContent.FindCourse(courseId, "ru")?.Days.Count ?? int.MaxValue;
                 List<CourseDayRecord> days = [.. progress.Days, new CourseDayRecord(day, Now(), words)];
                 CourseProgress updated = progress with { Days = days, FinishedUtc = days.Count >= total ? Now() : null };
                 return state with { Courses = [.. state.Courses.Where(course => course.CourseId != courseId), updated] };

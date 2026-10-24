@@ -9,7 +9,7 @@ public sealed class ArticleSpeechTests
     public void The_text_is_read_in_order_without_links()
     {
         // "Practice: Box breathing" read out between paragraphs would sound like the voice lost its place.
-        Article panic = ArticleContent.Find(ArticleIds.Panic, english: false)!;
+        Article panic = ArticleContent.Find(ArticleIds.Panic, "ru")!;
 
         IReadOnlyList<string> parts = ArticleSpeech.Parts(panic.Title, panic.Blocks);
 

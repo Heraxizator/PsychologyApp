@@ -74,11 +74,11 @@ public sealed class ForYouViewModel : BaseViewModel
             IReadOnlyDictionary<string, TestResultDTO> results = await _progress.GetLatestTestResultsAsync(ReadingRecommender.TestIds);
             IReadOnlyList<MoodEntryDTO> moods = await _progress.GetRecentMoodsAsync(MoodDays);
             IReadOnlyList<ReadingPick> picks = ReadingRecommender.Pick([.. results.Values], moods, state, DateTime.UtcNow);
-            bool english = AppStrings.IsEnglish(AppStrings.Language);
+            string language = AppStrings.Language;
             await UiThread.RunAsync(() =>
             {
-                Picks = [.. picks.Select(pick => Card(pick, state, english)).OfType<LibraryCardItem>()];
-                Saved = [.. state.Saved.Select(id => ArticleContent.Find(id, english)).OfType<Article>().Select(article => LibraryCards.Article(article, state, _navigation))];
+                Picks = [.. picks.Select(pick => Card(pick, state, language)).OfType<LibraryCardItem>()];
+                Saved = [.. state.Saved.Select(id => ArticleContent.Find(id, language)).OfType<Article>().Select(article => LibraryCards.Article(article, state, _navigation))];
                 _loaded = true;
                 Notify(nameof(HasPicks), nameof(HasSaved), nameof(IsEmpty));
             });
@@ -90,7 +90,7 @@ public sealed class ForYouViewModel : BaseViewModel
         }
     }
 
-    private LibraryCardItem? Card(ReadingPick pick, ReadingState state, bool english)
+    private LibraryCardItem? Card(ReadingPick pick, ReadingState state, string language)
     {
         string reason = pick.Reason switch
         {
@@ -101,8 +101,8 @@ public sealed class ForYouViewModel : BaseViewModel
         };
 
         return pick.IsCourse
-            ? ArticleContent.FindCourse(pick.Id, english) is { } course ? LibraryCards.Course(course, state, _navigation, reason) : null
-            : ArticleContent.Find(pick.Id, english) is { } article ? LibraryCards.Article(article, state, _navigation, reason) : null;
+            ? ArticleContent.FindCourse(pick.Id, language) is { } course ? LibraryCards.Course(course, state, _navigation, reason) : null
+            : ArticleContent.Find(pick.Id, language) is { } article ? LibraryCards.Article(article, state, _navigation, reason) : null;
     }
 
     private static string TestName(string? testId) => testId switch

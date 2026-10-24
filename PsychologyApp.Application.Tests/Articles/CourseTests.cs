@@ -41,11 +41,16 @@ public sealed class CourseTests
         return (new ReadingService(repository, new KeywordCrisisDetector(), clock), repository, clock);
     }
 
-    [Fact]
-    public void Russian_and_english_courses_match()
+    private static readonly string[] AllLanguages = ["ru", "en", "fr", "de", "es", "pt", "zh"];
+
+    public static TheoryData<string> Languages => new(AllLanguages);
+
+    [Theory]
+    [MemberData(nameof(Languages))]
+    public void Every_language_has_the_same_courses_as_english(string language)
     {
-        IReadOnlyList<Course> ru = ArticleContent.Courses(english: false);
-        IReadOnlyList<Course> en = ArticleContent.Courses(english: true);
+        IReadOnlyList<Course> ru = ArticleContent.Courses(language);
+        IReadOnlyList<Course> en = ArticleContent.Courses("en");
 
         Assert.Equal(ru.Select(course => (course.Id, course.TestId, course.Icon, course.Days.Count)), en.Select(course => (course.Id, course.TestId, course.Icon, course.Days.Count)));
         foreach ((CourseDay r, CourseDay e) in ru.SelectMany(course => course.Days).Zip(en.SelectMany(course => course.Days)))
@@ -60,7 +65,7 @@ public sealed class CourseTests
     [Fact]
     public void Every_day_has_reading_a_task_and_a_question()
     {
-        foreach (CourseDay day in ArticleContent.Courses(false).Concat(ArticleContent.Courses(true)).SelectMany(course => course.Days))
+        foreach (CourseDay day in AllLanguages.SelectMany(ArticleContent.Courses).SelectMany(course => course.Days))
         {
             Assert.False(string.IsNullOrWhiteSpace(day.Title));
             Assert.Contains(day.Blocks, block => block.Kind == ArticleBlockKind.Paragraph);
@@ -70,13 +75,12 @@ public sealed class CourseTests
     }
 
     [Theory]
-    [InlineData(false, "ru")]
-    [InlineData(true, "en")]
-    public async Task Course_links_name_practices_and_articles_as_they_are_called(bool english, string language)
+    [MemberData(nameof(Languages))]
+    public async Task Course_links_name_practices_and_articles_as_they_are_called(string language)
     {
         TechniqueCatalogService catalog = new(new BuiltInTechniqueCatalogProvider(() => language));
 
-        foreach (ArticleBlock block in ArticleContent.Courses(english).SelectMany(course => course.Days).SelectMany(day => day.Blocks))
+        foreach (ArticleBlock block in ArticleContent.Courses(language).SelectMany(course => course.Days).SelectMany(day => day.Blocks))
         {
             if (block.Kind == ArticleBlockKind.Practice)
             {
@@ -85,7 +89,7 @@ public sealed class CourseTests
             }
             else if (block.Kind == ArticleBlockKind.Article)
             {
-                Assert.Equal(ArticleContent.Find(block.ArticleId!, english)?.Title, block.Text);
+                Assert.Equal(ArticleContent.Find(block.ArticleId!, language)?.Title, block.Text);
             }
         }
     }
@@ -94,11 +98,11 @@ public sealed class CourseTests
     public void Courses_that_speak_of_self_harm_or_danger_lead_to_crisis_help()
     {
         // The mood course names thoughts of death, the trauma course an ongoing danger: both must give the way to help on day one.
-        foreach (bool english in new[] { false, true })
+        foreach (string language in AllLanguages)
         {
             foreach (string id in new[] { CourseIds.Mood, CourseIds.Trauma })
             {
-                Assert.Contains(ArticleContent.FindCourse(id, english)!.Days[0].Blocks, block => block.Kind == ArticleBlockKind.CrisisHelp);
+                Assert.Contains(ArticleContent.FindCourse(id, language)!.Days[0].Blocks, block => block.Kind == ArticleBlockKind.CrisisHelp);
             }
         }
     }
@@ -138,7 +142,7 @@ public sealed class CourseTests
     public async Task The_last_day_finishes_the_course()
     {
         (ReadingService service, _, Clock clock) = Create();
-        int days = ArticleContent.FindCourse(CourseIds.Trauma, false)!.Days.Count;
+        int days = ArticleContent.FindCourse(CourseIds.Trauma, "ru")!.Days.Count;
         for (int day = 1; day <= days; day++)
         {
             Assert.Equal(CourseDayOutcome.Done, await service.CompleteDayAsync(CourseIds.Trauma, day, null));

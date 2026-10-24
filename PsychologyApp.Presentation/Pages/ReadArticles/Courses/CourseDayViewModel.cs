@@ -124,7 +124,7 @@ public sealed class CourseDayViewModel : BaseViewModel
 
     private void Load()
     {
-        if (ArticleContent.FindCourse(_courseId, AppStrings.IsEnglish(AppStrings.Language)) is not { } course || _day < 1 || _day > course.Days.Count)
+        if (ArticleContent.FindCourse(_courseId, AppStrings.Language) is not { } course || _day < 1 || _day > course.Days.Count)
         {
             return;
         }

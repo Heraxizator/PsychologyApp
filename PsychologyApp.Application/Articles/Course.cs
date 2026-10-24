@@ -19,7 +19,8 @@ public static class CourseIds
 
 public static partial class ArticleContent
 {
-    public static IReadOnlyList<Course> Courses(bool english) => english ? CoursesEn : CoursesRu;
+    /// <summary>The courses in a language by its key; a language without its own gets the English ones.</summary>
+    public static IReadOnlyList<Course> Courses(string? language) => InLanguage(language, CoursesRu, CoursesEn, CoursesFr, CoursesDe, CoursesEs, CoursesPt, CoursesZh);
 
-    public static Course? FindCourse(string id, bool english) => Courses(english).FirstOrDefault(course => course.Id == id);
+    public static Course? FindCourse(string id, string? language) => Courses(language).FirstOrDefault(course => course.Id == id);
 }

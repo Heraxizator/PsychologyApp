@@ -124,14 +124,14 @@ public sealed class ArticlesViewModel : BaseViewModel
         }
     }
 
-    private bool English => AppStrings.IsEnglish(AppStrings.Language);
+    private static string Language => AppStrings.Language;
 
     /// <summary>The section chips: built once, and again only when the language changes (a tap just moves the selection).</summary>
     private void BuildFilters()
     {
         Filters.Clear();
         Filters.Add(new FilterChipTabItem { Key = AllKey, Title = AppStrings.ArticlesFilterAll, IsSelected = _selectedKey == AllKey });
-        foreach (ArticleSection section in ArticleContent.Sections(English))
+        foreach (ArticleSection section in ArticleContent.Sections(Language))
         {
             Filters.Add(new FilterChipTabItem { Key = section.Key, Title = section.Title, IsSelected = _selectedKey == section.Key });
         }
@@ -141,14 +141,14 @@ public sealed class ArticlesViewModel : BaseViewModel
     {
         if (IsSearching)
         {
-            IReadOnlyList<Article> found = ArticleSearch.Find(_query, English);
+            IReadOnlyList<Article> found = ArticleSearch.Find(_query, Language);
             Sections = found.Count == 0 ? [] : [new ArticleSectionItem(string.Empty, found.Select(Card))];
             EmptyText = found.Count == 0 ? AppStrings.ArticlesNothingFound : string.Empty;
             return;
         }
 
         EmptyText = string.Empty;
-        Sections = ArticleContent.Sections(English)
+        Sections = ArticleContent.Sections(Language)
             .Where(section => _selectedKey == AllKey || section.Key == _selectedKey)
             .Select(section => new ArticleSectionItem(section.Title, section.Articles.Select(Card)))
             .ToList();

@@ -60,7 +60,7 @@ public sealed class CoursesViewModel : BaseViewModel
     }
 
     private void Load() =>
-        Courses = [.. ArticleContent.Courses(AppStrings.IsEnglish(AppStrings.Language)).Select(course => LibraryCards.Course(course, _state, _navigation))];
+        Courses = [.. ArticleContent.Courses(AppStrings.Language).Select(course => LibraryCards.Course(course, _state, _navigation))];
 
     protected override void RefreshLocalizedProperties()
     {
