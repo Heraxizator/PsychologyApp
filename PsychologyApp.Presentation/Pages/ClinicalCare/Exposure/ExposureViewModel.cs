@@ -106,7 +106,8 @@ public sealed class ExposureViewModel : BaseViewModel
 
     public ICommand BackCommand { get; }
 
-    private static bool English => AppStrings.IsEnglish(AppStrings.Language);
+    // The examples are in the interface language; a language without its own gets the English ones.
+    private static string Language => AppStrings.Language;
 
     private DateTime Now => _time.GetUtcNow().UtcDateTime;
 
@@ -274,7 +275,7 @@ public sealed class ExposureViewModel : BaseViewModel
     private void OpenFormulation()
     {
         FearKinds.Clear();
-        foreach (ExposureKindContent content in ExposureContent.Kinds(English))
+        foreach (ExposureKindContent content in ExposureContent.Kinds(Language))
         {
             FearKind kind = content.Kind;
             FearKinds.Add(new ExposureChoiceItem
@@ -305,10 +306,10 @@ public sealed class ExposureViewModel : BaseViewModel
     private void SelectKind(FearKind kind)
     {
         _kind = kind;
-        ExposureKindContent content = ExposureContent.For(kind, English);
+        ExposureKindContent content = ExposureContent.For(kind, Language);
         for (int i = 0; i < FearKinds.Count; i++)
         {
-            FearKinds[i].IsSelected = ExposureContent.Kinds(English)[i].Kind == kind;
+            FearKinds[i].IsSelected = ExposureContent.Kinds(Language)[i].Kind == kind;
         }
 
         FearedSuggestions = content.FearedOutcomes;
@@ -364,7 +365,7 @@ public sealed class ExposureViewModel : BaseViewModel
         ExampleSteps.Clear();
         bool bodyAllowed = _plan?.Screening != ExposureScreeningResult.AllowedWithoutBodyExercises;
         FearKind kind = _plan?.Kind ?? _kind ?? FearKind.Other;
-        foreach (ExposureStepExample example in ExposureContent.For(kind, English).Steps.Where(example => bodyAllowed || !example.ProvokesBodySensations))
+        foreach (ExposureStepExample example in ExposureContent.For(kind, Language).Steps.Where(example => bodyAllowed || !example.ProvokesBodySensations))
         {
             ExposureStepRow? row = null;
             row = new ExposureStepRow
@@ -652,11 +653,11 @@ public sealed class ExposureViewModel : BaseViewModel
         BeliefBefore = "7";
         DroppedText = string.Empty;
         PredictionSuggestions = new[] { plan.FearedOutcome }
-            .Concat(ExposureContent.For(plan.Kind, English).FearedOutcomes)
+            .Concat(ExposureContent.For(plan.Kind, Language).FearedOutcomes)
             .Where(text => !string.IsNullOrWhiteSpace(text))
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .ToList();
-        DroppedSuggestions = plan.SafetyBehaviours.Count > 0 ? plan.SafetyBehaviours : ExposureContent.For(plan.Kind, English).SafetyBehaviours;
+        DroppedSuggestions = plan.SafetyBehaviours.Count > 0 ? plan.SafetyBehaviours : ExposureContent.For(plan.Kind, Language).SafetyBehaviours;
         Mode = ExposureMode.Before;
     }
 
@@ -705,7 +706,7 @@ public sealed class ExposureViewModel : BaseViewModel
         set => SetProperty(ref _learned, value);
     }
 
-    public IReadOnlyList<string> LessonSuggestions => ExposureContent.Lessons(English);
+    public IReadOnlyList<string> LessonSuggestions => ExposureContent.Lessons(Language);
 
     public bool? UsedSafety
     {

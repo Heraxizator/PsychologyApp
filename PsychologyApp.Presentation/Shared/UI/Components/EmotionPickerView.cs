@@ -37,7 +37,7 @@ public sealed class EmotionPickerView : ContentView
         _hint.Text = AppStrings.PracticeEmotionHint;
         _families.Children.Clear();
         _chips.Clear();
-        foreach (EmotionGroup group in EmotionPalette.For(AppStrings.IsEnglish(AppStrings.Language)))
+        foreach (EmotionGroup group in EmotionPalette.For(AppStrings.Language))
         {
             _families.Children.Add(CreateChip(group.Name, group.Family, isFamily: true, () => OnFamilyTapped(group)));
         }
@@ -60,7 +60,7 @@ public sealed class EmotionPickerView : ContentView
     private void ShowShades(EmotionFamily family)
     {
         _openFamily = family;
-        EmotionGroup? group = EmotionPalette.For(AppStrings.IsEnglish(AppStrings.Language)).FirstOrDefault(g => g.Family == family);
+        EmotionGroup? group = EmotionPalette.For(AppStrings.Language).FirstOrDefault(g => g.Family == family);
         _shades.Children.Clear();
         _chips.RemoveAll(c => !_families.Children.Contains(c.Chip));
         if (group is null)
