@@ -158,7 +158,7 @@ public sealed class TechniqueCardPlatformView : LinearLayout
 
         _chevron = Text(context, maxLines: 1);
         top.AddView(_chevron);
-        AddView(top);
+        AddView(top, new LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.WrapContent));
 
         _chevron.Text = Glyph("KeyboardArrowRight");
         ApplyAppearance();
@@ -235,6 +235,20 @@ public sealed class TechniqueCardPlatformView : LinearLayout
         _icon.Typeface = _fonts.GetTypeface(Microsoft.Maui.Font.OfSize("MaterialIcons", 24));
         _icon.SetTextSize(ComplexUnitType.Sp, 24);
         ApplyTileColours();
+    }
+
+    /// <summary>
+    /// The card always takes the whole width it is offered. MAUI measures it with an "at most" width and later stretches it without
+    /// measuring the rows again, so with short texts (in Chinese, say) the chevron and the author stayed in the middle of the card.
+    /// </summary>
+    protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
+    {
+        if (MeasureSpec.GetMode(widthMeasureSpec) == MeasureSpecMode.AtMost)
+        {
+            widthMeasureSpec = MeasureSpec.MakeMeasureSpec(MeasureSpec.GetSize(widthMeasureSpec), MeasureSpecMode.Exactly);
+        }
+
+        base.OnMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     protected override void OnAttachedToWindow()
