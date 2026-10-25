@@ -513,5 +513,270 @@
     "author": "León Tolstói",
     "text": "Si quieres ser feliz, sé feliz.",
     "theme": "happiness"
+  },
+  {
+    "author": "Confucio",
+    "text": "El verdadero conocimiento es conocer el alcance de la propia ignorancia.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Epicteto",
+    "text": "Solo las personas instruidas son libres.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "La mejor venganza es no parecerse al enemigo.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Lao Tse",
+    "text": "Sencillez, paciencia, compasión: estos son tus mayores tesoros.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Séneca",
+    "text": "Todo nuevo comienzo viene del final de otro comienzo.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Lao Tse",
+    "text": "Las grandes obras están hechas de pequeños actos.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Confucio",
+    "text": "Quien mueve una montaña empieza por llevarse piedras pequeñas.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Johann Wolfgang von Goethe",
+    "text": "No basta con saber, hay que aplicar.",
+    "theme": "motivation"
+  },
+  {
+    "author": "León Tolstói",
+    "text": "Los dos guerreros más poderosos son la paciencia y el tiempo.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Epicteto",
+    "text": "Si quieres mejorar, acepta que te tomen por tonto.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Proverbio japonés",
+    "text": "Cae siete veces, levántate ocho.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Viktor Frankl",
+    "text": "Al hombre se le puede arrebatar todo salvo una cosa: la última de las libertades humanas, elegir su actitud ante las circunstancias.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Khalil Gibran",
+    "text": "Tu dolor es la ruptura de la cáscara que encierra tu entendimiento.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Rumi",
+    "text": "No te aflijas. Todo lo que pierdes vuelve de otra forma.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Lao Tse",
+    "text": "¿Tienes la paciencia de esperar a que el barro se asiente y el agua se aclare?",
+    "theme": "calm"
+  },
+  {
+    "author": "Epicteto",
+    "text": "No podemos elegir las circunstancias externas, pero siempre podemos elegir cómo responder.",
+    "theme": "calm"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Al inspirar, calmo mi cuerpo y mi mente. Al espirar, sonrío.",
+    "theme": "calm"
+  },
+  {
+    "author": "Hermann Hesse",
+    "text": "Dentro de ti hay una quietud y un santuario al que puedes retirarte en cualquier momento y ser tú mismo.",
+    "theme": "calm"
+  },
+  {
+    "author": "Séneca",
+    "text": "Hay más cosas que nos asustan que cosas que nos aplastan.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "Si algo externo te angustia, no es la cosa en sí, sino tu juicio sobre ella, y eso puedes cambiarlo en cualquier momento.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Epicteto",
+    "text": "Solo hay un camino hacia la felicidad: dejar de preocuparse por lo que no depende de nosotros.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "El miedo nos mantiene centrados en el pasado o preocupados por el futuro.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Bebe tu té despacio y con respeto, como si fuera el eje alrededor del cual gira la Tierra.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Lao Tse",
+    "text": "Cuando suelto lo que soy, me convierto en lo que podría ser.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Jon Kabat-Zinn",
+    "text": "Dondequiera que vayas, ahí estás.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Ralph Waldo Emerson",
+    "text": "Adopta el ritmo de la naturaleza: su secreto es la paciencia.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Václav Havel",
+    "text": "La esperanza no es la convicción de que algo saldrá bien, sino la certeza de que tiene sentido, salga como salga.",
+    "theme": "hope"
+  },
+  {
+    "author": "Rumi",
+    "text": "Donde hay ruinas, hay esperanza de un tesoro.",
+    "theme": "hope"
+  },
+  {
+    "author": "Victor Hugo",
+    "text": "Incluso la noche más oscura terminará y saldrá el sol.",
+    "theme": "hope"
+  },
+  {
+    "author": "Helen Keller",
+    "text": "El optimismo es la fe que conduce al logro.",
+    "theme": "hope"
+  },
+  {
+    "author": "Inscripción de Delfos",
+    "text": "Conócete a ti mismo.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Carl Gustav Jung",
+    "text": "Tu visión se volverá clara solo cuando mires dentro de tu propio corazón.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Blaise Pascal",
+    "text": "El corazón tiene razones que la razón no entiende.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Michel de Montaigne",
+    "text": "La cosa más grande del mundo es saber pertenecerse a uno mismo.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Séneca",
+    "text": "Si quieres ser amado, ama.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Johann Wolfgang von Goethe",
+    "text": "Trata a las personas como si fueran lo que deberían ser y las ayudarás a convertirse en lo que pueden ser.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Antoine de Saint-Exupéry",
+    "text": "Amar no es mirarse el uno al otro, sino mirar juntos en la misma dirección.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "El regalo más valioso que podemos ofrecer a alguien es nuestra atención.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Dalái lama",
+    "text": "Sé amable siempre que sea posible. Siempre es posible.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Lao Tse",
+    "text": "El árbol que apenas se puede abrazar nació de un brote diminuto.",
+    "theme": "habits"
+  },
+  {
+    "author": "Robert Collier",
+    "text": "El éxito es la suma de pequeños esfuerzos repetidos día tras día.",
+    "theme": "habits"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "No actúes como si fueras a vivir diez mil años.",
+    "theme": "habits"
+  },
+  {
+    "author": "Séneca",
+    "text": "Aprovecha cada hora.",
+    "theme": "habits"
+  },
+  {
+    "author": "Epicteto",
+    "text": "No pidas que las cosas sucedan como quieres, sino quiere que sucedan como suceden, y te irá bien.",
+    "theme": "acceptance"
+  },
+  {
+    "author": "Marco Aurelio",
+    "text": "La pérdida no es otra cosa que cambio, y el cambio es el deleite de la naturaleza.",
+    "theme": "acceptance"
+  },
+  {
+    "author": "Séneca",
+    "text": "El tiempo cura lo que la razón no puede.",
+    "theme": "healing"
+  },
+  {
+    "author": "Maya Angelou",
+    "text": "Quizá no puedas controlar todo lo que te sucede, pero puedes decidir no dejarte disminuir por ello.",
+    "theme": "healing"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Ser hermoso significa ser tú mismo.",
+    "theme": "self-love"
+  },
+  {
+    "author": "Lucille Ball",
+    "text": "Ámate primero a ti mismo y todo lo demás se pondrá en su sitio.",
+    "theme": "self-love"
+  },
+  {
+    "author": "Lao Tse",
+    "text": "Conténtate con lo que tienes; alégrate de cómo son las cosas.",
+    "theme": "gratitude"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Al despertar esta mañana, sonrío. Veinticuatro horas nuevas me esperan.",
+    "theme": "gratitude"
+  },
+  {
+    "author": "Aristóteles",
+    "text": "La felicidad es el sentido y el propósito de la vida.",
+    "theme": "happiness"
+  },
+  {
+    "author": "León Tolstói",
+    "text": "La felicidad no depende de las cosas externas, sino de cómo las vemos.",
+    "theme": "happiness"
   }
 ]

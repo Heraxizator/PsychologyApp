@@ -513,5 +513,270 @@
     "author": "Leo Tolstoi",
     "text": "Wenn du glücklich sein willst, sei es.",
     "theme": "happiness"
+  },
+  {
+    "author": "Konfuzius",
+    "text": "Wahres Wissen heißt, das Ausmaß der eigenen Unwissenheit zu kennen.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Epiktet",
+    "text": "Nur die Gebildeten sind frei.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Die beste Rache ist, nicht zu werden wie dein Feind.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Laozi",
+    "text": "Einfachheit, Geduld, Mitgefühl: Das sind deine größten Schätze.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Seneca",
+    "text": "Jeder neue Anfang kommt vom Ende eines anderen Anfangs.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Laozi",
+    "text": "Große Taten bestehen aus kleinen Handlungen.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Konfuzius",
+    "text": "Wer einen Berg versetzen will, beginnt damit, kleine Steine wegzutragen.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Johann Wolfgang von Goethe",
+    "text": "Es ist nicht genug zu wissen, man muss auch anwenden.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Leo Tolstoi",
+    "text": "Die zwei mächtigsten Krieger sind Geduld und Zeit.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Epiktet",
+    "text": "Wenn du vorankommen willst, nimm in Kauf, für töricht gehalten zu werden.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Japanisches Sprichwort",
+    "text": "Siebenmal hinfallen, achtmal aufstehen.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Viktor Frankl",
+    "text": "Man kann einem Menschen alles nehmen, nur nicht die letzte menschliche Freiheit: seine Haltung zu den Umständen zu wählen.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Khalil Gibran",
+    "text": "Dein Schmerz ist das Zerbrechen der Schale, die dein Verstehen umschließt.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Rumi",
+    "text": "Sei nicht traurig. Alles, was du verlierst, kehrt in anderer Gestalt zurück.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Laozi",
+    "text": "Hast du die Geduld zu warten, bis sich der Schlamm setzt und das Wasser klar wird?",
+    "theme": "calm"
+  },
+  {
+    "author": "Epiktet",
+    "text": "Wir können die äußeren Umstände nicht wählen, aber immer, wie wir darauf antworten.",
+    "theme": "calm"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Einatmend beruhige ich Körper und Geist. Ausatmend lächle ich.",
+    "theme": "calm"
+  },
+  {
+    "author": "Hermann Hesse",
+    "text": "In dir gibt es eine Stille und ein Heiligtum, in das du dich jederzeit zurückziehen und du selbst sein kannst.",
+    "theme": "calm"
+  },
+  {
+    "author": "Seneca",
+    "text": "Es gibt mehr Dinge, die uns erschrecken, als solche, die uns erdrücken.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Wenn dich etwas Äußeres quält, ist es nicht die Sache selbst, sondern dein Urteil darüber, und das kannst du jederzeit aufheben.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Epiktet",
+    "text": "Es gibt nur einen Weg zum Glück: aufhören, sich um Dinge zu sorgen, die nicht in unserer Macht stehen.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Die Angst hält uns in der Vergangenheit fest oder lässt uns um die Zukunft bangen.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Trink deinen Tee langsam und andächtig, als wäre er die Achse, um die sich die Erde dreht.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Laozi",
+    "text": "Wenn ich loslasse, was ich bin, werde ich, was ich sein könnte.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Jon Kabat-Zinn",
+    "text": "Wohin du auch gehst, da bist du.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Ralph Waldo Emerson",
+    "text": "Nimm das Tempo der Natur an: Ihr Geheimnis ist die Geduld.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Václav Havel",
+    "text": "Hoffnung ist nicht die Überzeugung, dass etwas gut ausgeht, sondern die Gewissheit, dass etwas Sinn hat, egal wie es ausgeht.",
+    "theme": "hope"
+  },
+  {
+    "author": "Rumi",
+    "text": "Wo Ruinen sind, gibt es Hoffnung auf einen Schatz.",
+    "theme": "hope"
+  },
+  {
+    "author": "Victor Hugo",
+    "text": "Auch die dunkelste Nacht wird enden, und die Sonne wird aufgehen.",
+    "theme": "hope"
+  },
+  {
+    "author": "Helen Keller",
+    "text": "Optimismus ist der Glaube, der zum Erfolg führt.",
+    "theme": "hope"
+  },
+  {
+    "author": "Inschrift in Delphi",
+    "text": "Erkenne dich selbst.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Carl Gustav Jung",
+    "text": "Deine Sicht wird erst klar, wenn du in dein eigenes Herz schaust.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Blaise Pascal",
+    "text": "Das Herz hat seine Gründe, die der Verstand nicht kennt.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Michel de Montaigne",
+    "text": "Das Größte auf der Welt ist, zu wissen, wie man sich selbst gehört.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Seneca",
+    "text": "Wenn du geliebt werden willst, so liebe.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Johann Wolfgang von Goethe",
+    "text": "Behandle die Menschen so, als wären sie, was sie sein sollten, und du hilfst ihnen zu werden, was sie sein können.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Antoine de Saint-Exupéry",
+    "text": "Liebe besteht nicht darin, dass man einander ansieht, sondern dass man gemeinsam in dieselbe Richtung blickt.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Das kostbarste Geschenk, das wir jemandem machen können, ist unsere Aufmerksamkeit.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Dalai Lama",
+    "text": "Sei freundlich, wann immer es möglich ist. Es ist immer möglich.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Laozi",
+    "text": "Ein Baum, den man kaum umarmen kann, wächst aus einem winzigen Keim.",
+    "theme": "habits"
+  },
+  {
+    "author": "Robert Collier",
+    "text": "Erfolg ist die Summe kleiner Anstrengungen, die Tag für Tag wiederholt werden.",
+    "theme": "habits"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Handle nicht, als hättest du zehntausend Jahre zu leben.",
+    "theme": "habits"
+  },
+  {
+    "author": "Seneca",
+    "text": "Ergreife jede Stunde.",
+    "theme": "habits"
+  },
+  {
+    "author": "Epiktet",
+    "text": "Verlange nicht, dass die Dinge geschehen, wie du willst, sondern wolle, dass sie geschehen, wie sie geschehen, und es wird dir gut gehen.",
+    "theme": "acceptance"
+  },
+  {
+    "author": "Mark Aurel",
+    "text": "Verlust ist nichts anderes als Wandel, und der Wandel ist die Freude der Natur.",
+    "theme": "acceptance"
+  },
+  {
+    "author": "Seneca",
+    "text": "Die Zeit heilt, was die Vernunft nicht heilen kann.",
+    "theme": "healing"
+  },
+  {
+    "author": "Maya Angelou",
+    "text": "Du kannst nicht alles kontrollieren, was dir widerfährt, aber du kannst entscheiden, dich davon nicht kleinmachen zu lassen.",
+    "theme": "healing"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Schön sein heißt, du selbst zu sein.",
+    "theme": "self-love"
+  },
+  {
+    "author": "Lucille Ball",
+    "text": "Liebe zuerst dich selbst, dann fügt sich alles andere.",
+    "theme": "self-love"
+  },
+  {
+    "author": "Laozi",
+    "text": "Sei zufrieden mit dem, was du hast; freu dich daran, wie die Dinge sind.",
+    "theme": "gratitude"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Heute Morgen erwache ich und lächle. Vierundzwanzig ganz neue Stunden liegen vor mir.",
+    "theme": "gratitude"
+  },
+  {
+    "author": "Aristoteles",
+    "text": "Das Glück ist der Sinn und das Ziel des Lebens.",
+    "theme": "happiness"
+  },
+  {
+    "author": "Leo Tolstoi",
+    "text": "Glück hängt nicht von äußeren Dingen ab, sondern davon, wie wir sie sehen.",
+    "theme": "happiness"
   }
 ]

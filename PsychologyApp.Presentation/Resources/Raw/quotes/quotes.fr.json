@@ -513,5 +513,270 @@
     "author": "Léon Tolstoï",
     "text": "Si tu veux être heureux, sois-le.",
     "theme": "happiness"
+  },
+  {
+    "author": "Confucius",
+    "text": "La vraie connaissance, c'est connaître l'étendue de son ignorance.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Épictète",
+    "text": "Seuls ceux qui sont instruits sont libres.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Marc Aurèle",
+    "text": "La meilleure vengeance est de ne pas ressembler à son ennemi.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Lao Tseu",
+    "text": "Simplicité, patience, compassion : ce sont vos plus grands trésors.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Sénèque",
+    "text": "Tout nouveau commencement vient de la fin d'un autre commencement.",
+    "theme": "wisdom"
+  },
+  {
+    "author": "Lao Tseu",
+    "text": "Les grandes œuvres sont faites de petits actes.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Confucius",
+    "text": "Celui qui déplace une montagne commence par emporter de petites pierres.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Johann Wolfgang von Goethe",
+    "text": "Savoir ne suffit pas, il faut appliquer.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Léon Tolstoï",
+    "text": "Les deux guerriers les plus puissants sont la patience et le temps.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Épictète",
+    "text": "Si tu veux progresser, accepte de passer pour un sot.",
+    "theme": "motivation"
+  },
+  {
+    "author": "Proverbe japonais",
+    "text": "Tombe sept fois, relève-toi huit.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Viktor Frankl",
+    "text": "On peut tout enlever à un homme, sauf une chose : la dernière des libertés humaines, choisir son attitude face aux circonstances.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Khalil Gibran",
+    "text": "Votre douleur est l'éclatement de la coquille qui enferme votre compréhension.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Rûmî",
+    "text": "Ne t'afflige pas. Tout ce que tu perds revient sous une autre forme.",
+    "theme": "resilience"
+  },
+  {
+    "author": "Lao Tseu",
+    "text": "As-tu la patience d'attendre que la boue se dépose et que l'eau devienne claire ?",
+    "theme": "calm"
+  },
+  {
+    "author": "Épictète",
+    "text": "Nous ne choisissons pas les circonstances extérieures, mais nous pouvons toujours choisir notre réponse.",
+    "theme": "calm"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "En inspirant, je calme mon corps et mon esprit. En expirant, je souris.",
+    "theme": "calm"
+  },
+  {
+    "author": "Hermann Hesse",
+    "text": "Il y a en toi un calme et un refuge où tu peux te retirer à tout moment et être toi-même.",
+    "theme": "calm"
+  },
+  {
+    "author": "Sénèque",
+    "text": "Il y a plus de choses qui nous effraient que de choses qui nous écrasent.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Marc Aurèle",
+    "text": "Si une chose extérieure te tourmente, ce n'est pas elle qui te trouble, mais ton jugement sur elle, et tu peux l'effacer à l'instant.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Épictète",
+    "text": "Il n'y a qu'un chemin vers le bonheur : cesser de s'inquiéter des choses qui ne dépendent pas de nous.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "La peur nous garde tournés vers le passé ou inquiets pour l'avenir.",
+    "theme": "anxiety"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Bois ton thé lentement, avec respect, comme si c'était l'axe autour duquel tourne la Terre.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Lao Tseu",
+    "text": "Quand je lâche ce que je suis, je deviens ce que je pourrais être.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Jon Kabat-Zinn",
+    "text": "Où que tu ailles, tu y es.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Ralph Waldo Emerson",
+    "text": "Adopte le rythme de la nature : son secret est la patience.",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "Václav Havel",
+    "text": "L'espoir n'est pas la conviction que les choses tourneront bien, mais la certitude que cela a un sens, quoi qu'il arrive.",
+    "theme": "hope"
+  },
+  {
+    "author": "Rûmî",
+    "text": "Là où il y a des ruines, il y a l'espoir d'un trésor.",
+    "theme": "hope"
+  },
+  {
+    "author": "Victor Hugo",
+    "text": "Même la nuit la plus sombre prendra fin, et le soleil se lèvera.",
+    "theme": "hope"
+  },
+  {
+    "author": "Helen Keller",
+    "text": "L'optimisme est la foi qui mène à la réussite.",
+    "theme": "hope"
+  },
+  {
+    "author": "Inscription de Delphes",
+    "text": "Connais-toi toi-même.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Carl Gustav Jung",
+    "text": "Ta vision ne deviendra claire que lorsque tu regarderas dans ton propre cœur.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Blaise Pascal",
+    "text": "Le cœur a ses raisons que la raison ne connaît point.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Michel de Montaigne",
+    "text": "La plus grande chose du monde, c'est de savoir être à soi.",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "Sénèque",
+    "text": "Si tu veux être aimé, aime.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Johann Wolfgang von Goethe",
+    "text": "Traitez les gens comme s'ils étaient ce qu'ils devraient être, et vous les aiderez à devenir ce qu'ils peuvent être.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Antoine de Saint-Exupéry",
+    "text": "Aimer, ce n'est pas se regarder l'un l'autre, c'est regarder ensemble dans la même direction.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Le cadeau le plus précieux que l'on puisse offrir à quelqu'un, c'est notre attention.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Dalaï-lama",
+    "text": "Sois bienveillant chaque fois que c'est possible. C'est toujours possible.",
+    "theme": "relationships"
+  },
+  {
+    "author": "Lao Tseu",
+    "text": "L'arbre qu'on peut à peine embrasser est né d'une minuscule pousse.",
+    "theme": "habits"
+  },
+  {
+    "author": "Robert Collier",
+    "text": "Le succès est la somme de petits efforts répétés jour après jour.",
+    "theme": "habits"
+  },
+  {
+    "author": "Marc Aurèle",
+    "text": "N'agis pas comme si tu devais vivre dix mille ans.",
+    "theme": "habits"
+  },
+  {
+    "author": "Sénèque",
+    "text": "Saisis chaque heure.",
+    "theme": "habits"
+  },
+  {
+    "author": "Épictète",
+    "text": "N'exige pas que les choses arrivent comme tu le veux, mais veuille qu'elles arrivent comme elles arrivent, et tu seras serein.",
+    "theme": "acceptance"
+  },
+  {
+    "author": "Marc Aurèle",
+    "text": "La perte n'est rien d'autre que le changement, et le changement fait les délices de la nature.",
+    "theme": "acceptance"
+  },
+  {
+    "author": "Sénèque",
+    "text": "Le temps guérit ce que la raison ne peut guérir.",
+    "theme": "healing"
+  },
+  {
+    "author": "Maya Angelou",
+    "text": "Vous ne pouvez pas contrôler tout ce qui vous arrive, mais vous pouvez décider de ne pas en être diminué.",
+    "theme": "healing"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "Être beau, c'est être soi-même.",
+    "theme": "self-love"
+  },
+  {
+    "author": "Lucille Ball",
+    "text": "Aime-toi d'abord, et tout le reste se mettra en place.",
+    "theme": "self-love"
+  },
+  {
+    "author": "Lao Tseu",
+    "text": "Sois content de ce que tu as ; réjouis-toi de la manière dont les choses sont.",
+    "theme": "gratitude"
+  },
+  {
+    "author": "Thich Nhat Hanh",
+    "text": "En me réveillant ce matin, je souris. Vingt-quatre heures toutes neuves s'ouvrent devant moi.",
+    "theme": "gratitude"
+  },
+  {
+    "author": "Aristote",
+    "text": "Le bonheur est le sens et le but de la vie.",
+    "theme": "happiness"
+  },
+  {
+    "author": "Léon Tolstoï",
+    "text": "Le bonheur ne dépend pas des choses extérieures, mais de la façon dont nous les voyons.",
+    "theme": "happiness"
   }
 ]

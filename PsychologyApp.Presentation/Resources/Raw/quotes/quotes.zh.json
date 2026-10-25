@@ -513,5 +513,270 @@
     "author": "列夫·托尔斯泰",
     "text": "如果你想快乐，那就快乐吧。",
     "theme": "happiness"
+  },
+  {
+    "author": "孔子",
+    "text": "知之为知之，不知为不知，是知也。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "只有受过教育的人才是自由的。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "最好的报复，是不要变成和你的敌人一样的人。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "老子",
+    "text": "朴素、耐心、慈悲，这是你最大的三件珍宝。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "每一个新的开始，都来自另一个开始的结束。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "老子",
+    "text": "天下大事，必作于细。",
+    "theme": "motivation"
+  },
+  {
+    "author": "孔子",
+    "text": "移山的人，是从搬走小石头开始的。",
+    "theme": "motivation"
+  },
+  {
+    "author": "歌德",
+    "text": "仅仅知道是不够的，还必须去应用。",
+    "theme": "motivation"
+  },
+  {
+    "author": "列夫·托尔斯泰",
+    "text": "最强大的两个战士是耐心和时间。",
+    "theme": "motivation"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "如果你想进步，就要甘愿被人看作傻瓜。",
+    "theme": "motivation"
+  },
+  {
+    "author": "日本谚语",
+    "text": "七転び八起き：跌倒七次，第八次站起来。",
+    "theme": "resilience"
+  },
+  {
+    "author": "维克多·弗兰克尔",
+    "text": "人的一切都可以被夺走，唯独一样不能：人类最后的自由，即在任何境遇中选择自己态度的自由。",
+    "theme": "resilience"
+  },
+  {
+    "author": "纪伯伦",
+    "text": "你的痛苦，是包裹你领悟的外壳正在破裂。",
+    "theme": "resilience"
+  },
+  {
+    "author": "鲁米",
+    "text": "不要悲伤。你失去的一切，都会以另一种形式回来。",
+    "theme": "resilience"
+  },
+  {
+    "author": "老子",
+    "text": "你能耐心等待，直到泥沙沉淀、水变清澈吗？",
+    "theme": "calm"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "我们无法选择外在的境遇，但总能选择如何回应。",
+    "theme": "calm"
+  },
+  {
+    "author": "一行禅师",
+    "text": "吸气，我平静身心；呼气，我微笑。",
+    "theme": "calm"
+  },
+  {
+    "author": "赫尔曼·黑塞",
+    "text": "你的内心有一份宁静和一处圣所，你随时可以退回那里，做你自己。",
+    "theme": "calm"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "吓到我们的事，比真正压垮我们的事多得多。",
+    "theme": "anxiety"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "如果外界的事让你苦恼，困扰你的不是事情本身，而是你对它的判断，而这判断你随时可以收回。",
+    "theme": "anxiety"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "通往幸福只有一条路：不再为不在我们掌控之内的事情忧虑。",
+    "theme": "anxiety"
+  },
+  {
+    "author": "一行禅师",
+    "text": "恐惧让我们困在过去，或为未来担忧。",
+    "theme": "anxiety"
+  },
+  {
+    "author": "一行禅师",
+    "text": "慢慢地、恭敬地喝你的茶，仿佛它是地球旋转的轴心。",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "老子",
+    "text": "当我放下我是谁，我就成为我可能成为的样子。",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "乔·卡巴金",
+    "text": "无论你去哪里，你都在那里。",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "爱默生",
+    "text": "采用大自然的节奏，她的秘诀是耐心。",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "哈维尔",
+    "text": "希望不是坚信事情会顺利，而是确信事情有意义，无论结果如何。",
+    "theme": "hope"
+  },
+  {
+    "author": "鲁米",
+    "text": "有废墟的地方，就有发现宝藏的希望。",
+    "theme": "hope"
+  },
+  {
+    "author": "雨果",
+    "text": "即使最黑暗的夜晚也会结束，太阳终将升起。",
+    "theme": "hope"
+  },
+  {
+    "author": "海伦·凯勒",
+    "text": "乐观是通向成功的信念。",
+    "theme": "hope"
+  },
+  {
+    "author": "德尔斐神庙铭文",
+    "text": "认识你自己。",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "荣格",
+    "text": "只有当你审视自己的内心时，你的视野才会变得清晰。",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "帕斯卡",
+    "text": "心有其理，非理性所能知。",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "蒙田",
+    "text": "世界上最重要的事，是懂得做自己的主人。",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "若想被爱，先去爱人。",
+    "theme": "relationships"
+  },
+  {
+    "author": "歌德",
+    "text": "以人们应有的样子对待他们，你就能帮助他们成为他们能够成为的样子。",
+    "theme": "relationships"
+  },
+  {
+    "author": "圣埃克苏佩里",
+    "text": "爱不是彼此凝视，而是一起望向同一个方向。",
+    "theme": "relationships"
+  },
+  {
+    "author": "一行禅师",
+    "text": "我们能给予他人最珍贵的礼物，是我们的专注与陪伴。",
+    "theme": "relationships"
+  },
+  {
+    "author": "达赖喇嘛",
+    "text": "只要可能，就善待他人。而这总是可能的。",
+    "theme": "relationships"
+  },
+  {
+    "author": "老子",
+    "text": "合抱之木，生于毫末。",
+    "theme": "habits"
+  },
+  {
+    "author": "罗伯特·科利尔",
+    "text": "成功是日复一日小小努力的总和。",
+    "theme": "habits"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "不要像你还能活一万年那样行事。",
+    "theme": "habits"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "把握每一个小时。",
+    "theme": "habits"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "不要要求事情按你的意愿发生，而是希望它们如其所是地发生，你就会过得安然。",
+    "theme": "acceptance"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "失去不过是变化，而变化是自然的乐趣。",
+    "theme": "acceptance"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "时间能治愈理智无法治愈的伤。",
+    "theme": "healing"
+  },
+  {
+    "author": "玛雅·安吉罗",
+    "text": "你也许无法控制发生在你身上的一切，但你可以决定不被它们打倒。",
+    "theme": "healing"
+  },
+  {
+    "author": "一行禅师",
+    "text": "美，就是做你自己。",
+    "theme": "self-love"
+  },
+  {
+    "author": "露西尔·鲍尔",
+    "text": "先爱你自己，其他一切自会水到渠成。",
+    "theme": "self-love"
+  },
+  {
+    "author": "老子",
+    "text": "知足者富。满足于你所拥有的，欣喜于事物本来的样子。",
+    "theme": "gratitude"
+  },
+  {
+    "author": "一行禅师",
+    "text": "今早醒来，我微笑。崭新的二十四小时就在我面前。",
+    "theme": "gratitude"
+  },
+  {
+    "author": "亚里士多德",
+    "text": "幸福是生命的意义和目的。",
+    "theme": "happiness"
+  },
+  {
+    "author": "列夫·托尔斯泰",
+    "text": "幸福不取决于外在的事物，而取决于我们看待它们的方式。",
+    "theme": "happiness"
   }
 ]
