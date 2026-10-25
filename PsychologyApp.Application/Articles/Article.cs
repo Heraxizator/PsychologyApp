@@ -113,4 +113,7 @@ public static class ArticleIds
     public const string EatingDisorders = "eating-disorders";
     public const string Bipolar = "bipolar";
     public const string Psychosis = "psychosis";
+    public const string Emotions = "emotions";
+    public const string SelfEsteem = "self-esteem";
+    public const string Mindfulness = "mindfulness";
 }

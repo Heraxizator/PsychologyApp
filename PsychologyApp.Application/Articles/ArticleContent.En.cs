@@ -1035,6 +1035,84 @@ public static partial class ArticleContent
                 Warning("A doctor is needed, not a practice"),
                 P("If you notice this in yourself or someone close, see a psychiatrist as soon as possible. Don't argue with the person's beliefs: talk about how hard and frightening it is for them and help them get to a doctor. If there is danger to them or others, call your local emergency number."),
                 Crisis("I need help now")
+            ]),
+        new(
+            ArticleIds.Emotions,
+            "Emotions: how to notice and name them",
+            "What feelings are for, and why one precise word already makes them quieter",
+            "EmojiEmotions",
+            4,
+            [
+                P("Emotions are not obstacles to reason but quick signals about what is happening and what matters to us. They come before words, and we often feel them first in the body: tight shoulders, a lump in the throat, warmth in the chest."),
+                H("What feelings tell us"),
+                List(
+                    "Fear: there may be danger, take care",
+                    "Anger: a boundary was crossed or something is unfair",
+                    "Sadness: something was lost, you need time and support",
+                    "Shame and guilt: our values or relationships were touched",
+                    "Joy: something good and important is happening, worth reaching for"),
+                P("A signal is not always accurate: anxiety can sound where there is no danger. Even then the feeling is not \"wrong\"; it just needs checking rather than instant obedience."),
+                H("Naming it takes the edge off"),
+                P("Research shows that when a person finds a precise word for a feeling, its intensity drops. \"I feel bad\" says almost nothing, while \"I feel hurt and lonely\" already hints at what is needed, such as talking to someone close."),
+                H("How to learn it"),
+                List(
+                    "A few times a day, ask yourself: \"What am I feeling right now?\"",
+                    "Start with the body: where is the tension, warmth, heaviness",
+                    "Look for the precise word: not just \"angry\" but \"irritated\", \"hurt\", \"furious\"",
+                    "Notice that several feelings can come at once, and that is normal",
+                    "Note the emotion in the journal: over time, patterns will show"),
+                Practice(TechniqueId.BodyScan, "Where is it in the body?"),
+                P("A feeling that is noticed and named is easier to live through. There is no need to chase it away or be ashamed of it: it will come, peak and pass.")
+            ]),
+        new(
+            ArticleIds.SelfEsteem,
+            "Self-esteem",
+            "How we treat ourselves, why outside praise does not fix self-esteem, and what really helps",
+            "Favorite",
+            4,
+            [
+                P("Self-esteem is not an opinion about your achievements but how you treat yourself: with respect and warmth, or with nitpicking and doubt about your right to a place in the world."),
+                H("Signs of low self-esteem"),
+                List(
+                    "Successes feel like luck, mistakes like proof of worthlessness",
+                    "It is hard to say no, to ask, or to accept a compliment",
+                    "Constant comparison with others, never in your favour",
+                    "Fear of criticism and trying to please everyone",
+                    "Avoiding new things so as not to fail"),
+                H("What does not help"),
+                P("Chasing approval brings only brief relief: praise is forgotten, while the need for it grows. And repeating lines like \"I am the best\" sometimes makes people with low self-esteem feel worse: the inner voice starts to argue."),
+                H("What helps"),
+                List(
+                    "Notice critical thoughts and check them like any others",
+                    "Every evening, write down one thing that went well, however small",
+                    "Talk to yourself as you would to a friend in a hard moment",
+                    "Do what matters to you, not what will be approved",
+                    "Gradually try new things and say no in small matters"),
+                Practice(TechniqueId.ThoughtRecord, "Thought record"),
+                Practice(TechniqueId.SelfCompassion, "Kind words to yourself")
+            ]),
+        new(
+            ArticleIds.Mindfulness,
+            "Mindfulness: what it is",
+            "Not an empty mind or an escape from problems, but attention to what is happening now",
+            "SelfImprovement",
+            3,
+            [
+                P("Mindfulness is the skill of noticing what is happening right now — breathing, sounds, sensations in the body, thoughts and feelings — without rushing to judge them or to do something about them."),
+                P("It does not mean stopping thoughts. Thoughts will come; the task is to notice that you have drifted and gently bring attention back. Each return is the training itself."),
+                H("Try it in one minute"),
+                List(
+                    "Sit comfortably and feel the support: feet, chair, back",
+                    "Notice three sounds around you without judging them",
+                    "Follow a few breaths in and out",
+                    "If a thought pulls you away, note \"thinking\" and come back to the breath"),
+                Breathe("Try it now: just follow your breath"),
+                H("How it helps"),
+                P("Regular practice helps you get stuck in anxious thoughts less often and return to calm more easily. Mindfulness-based programmes have been studied for stress and anxiety, and in recurrent depression they lower the risk of a new episode. Regularity matters: five minutes a day is worth more than an hour once a month."),
+                Warning("If it makes things worse"),
+                P("After trauma, attending to the body with eyes closed sometimes brings up hard memories. Then keep your eyes open, shorten the practice to a minute and lean on what you see around you. If it stays hard, it is better to practise with a specialist."),
+                Practice(TechniqueId.Grounding, "5-4-3-2-1 grounding"),
+                Practice(TechniqueId.Breathing, "Box breathing")
             ])
     ];
 }

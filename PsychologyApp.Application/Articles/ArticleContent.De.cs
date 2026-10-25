@@ -1035,6 +1035,84 @@ public static partial class ArticleContent
                 Warning("Du brauchst eine Ärztin, keine Übung"),
                 P("Wenn du das bei dir oder einem Angehörigen bemerkst, wende dich so schnell wie möglich an einen Psychiater. Streite nicht über die Überzeugungen der Person: Sprich über das, was sie Schweres und Beängstigendes erlebt, und hilf ihr, zu einer Ärztin zu gehen. Wenn Gefahr für sie oder andere besteht, ruf die örtliche Notrufnummer an."),
                 Crisis("Ich brauche jetzt Hilfe")
+            ]),
+        new(
+            ArticleIds.Emotions,
+            "Gefühle: sie bemerken und benennen",
+            "Wozu Gefühle da sind und warum schon ein genaues Wort sie leiser macht",
+            "EmojiEmotions",
+            4,
+            [
+                P("Gefühle sind kein Hindernis für den Verstand, sondern schnelle Signale darüber, was gerade passiert und was uns wichtig ist. Sie kommen vor den Worten, und oft spüren wir sie zuerst im Körper: verspannte Schultern, ein Kloß im Hals, Wärme in der Brust."),
+                H("Was Gefühle uns sagen"),
+                List(
+                    "Angst: Es könnte Gefahr bestehen, sei vorsichtig",
+                    "Wut: Eine Grenze wurde überschritten oder etwas ist ungerecht",
+                    "Traurigkeit: Etwas ist verloren, du brauchst Zeit und Unterstützung",
+                    "Scham und Schuld: Unsere Werte oder Beziehungen sind berührt",
+                    "Freude: Etwas Gutes und Wichtiges passiert, es lohnt sich, danach zu greifen"),
+                P("Das Signal stimmt nicht immer: Angst kann auch dort auftauchen, wo keine Gefahr ist. Auch dann ist das Gefühl nicht „falsch“ – es will geprüft und nicht sofort befolgt werden."),
+                H("Benennen nimmt die Schärfe"),
+                P("Studien zeigen: Wenn man für ein Gefühl ein genaues Wort findet, lässt seine Stärke nach. „Mir geht es schlecht“ sagt fast nichts, „ich bin gekränkt und einsam“ zeigt schon, was nötig ist, etwa mit einem nahestehenden Menschen zu reden."),
+                H("Wie man es lernt"),
+                List(
+                    "Frag dich mehrmals am Tag: „Was fühle ich gerade?“",
+                    "Fang beim Körper an: Wo sind Anspannung, Wärme, Schwere?",
+                    "Such das genaue Wort: nicht nur „wütend“, sondern „gereizt“, „gekränkt“, „außer mir“",
+                    "Bemerke, dass mehrere Gefühle gleichzeitig da sein können, und das ist normal",
+                    "Trag das Gefühl ins Tagebuch ein: Mit der Zeit werden Muster sichtbar"),
+                Practice(TechniqueId.BodyScan, "Wo sitzt es im Körper?"),
+                P("Ein Gefühl, das bemerkt und benannt wird, lässt sich leichter durchleben. Du musst es nicht vertreiben oder dich dafür schämen: Es kommt, erreicht einen Höhepunkt und vergeht.")
+            ]),
+        new(
+            ArticleIds.SelfEsteem,
+            "Selbstwertgefühl",
+            "Wie wir mit uns umgehen, warum Lob von außen den Selbstwert nicht repariert und was wirklich hilft",
+            "Favorite",
+            4,
+            [
+                P("Selbstwert ist keine Meinung über deine Erfolge, sondern die Art, wie du mit dir umgehst: mit Respekt und Wärme oder mit Nörgelei und Zweifel an deinem Recht auf einen Platz in der Welt."),
+                H("Anzeichen für einen niedrigen Selbstwert"),
+                List(
+                    "Erfolge wirken wie Zufall, Fehler wie Beweise für Wertlosigkeit",
+                    "Es fällt schwer, Nein zu sagen, um etwas zu bitten oder ein Kompliment anzunehmen",
+                    "Ständiger Vergleich mit anderen, nie zu deinen Gunsten",
+                    "Angst vor Kritik und der Versuch, es allen recht zu machen",
+                    "Neues meiden, um nicht zu scheitern"),
+                H("Was nicht hilft"),
+                P("Die Jagd nach Anerkennung bringt nur kurz Erleichterung: Lob wird vergessen, das Bedürfnis danach wächst. Und Sätze wie „ich bin der Beste“ auswendig zu wiederholen, macht es Menschen mit geringem Selbstwert manchmal schlimmer: Die innere Stimme widerspricht."),
+                H("Was hilft"),
+                List(
+                    "Kritische Gedanken bemerken und wie alle anderen prüfen",
+                    "Jeden Abend eine Sache aufschreiben, die gelungen ist, auch eine kleine",
+                    "Mit dir sprechen wie mit einem Freund in einem schweren Moment",
+                    "Tun, was dir wichtig ist, nicht was gutgeheißen wird",
+                    "Nach und nach Neues ausprobieren und bei Kleinigkeiten Nein sagen"),
+                Practice(TechniqueId.ThoughtRecord, "Gedankenprotokoll"),
+                Practice(TechniqueId.SelfCompassion, "Freundliche Worte an dich selbst")
+            ]),
+        new(
+            ArticleIds.Mindfulness,
+            "Achtsamkeit: was sie ist",
+            "Kein leerer Kopf und keine Flucht vor Problemen, sondern Aufmerksamkeit für das, was jetzt geschieht",
+            "SelfImprovement",
+            3,
+            [
+                P("Achtsamkeit heißt, zu bemerken, was gerade geschieht – Atem, Geräusche, Empfindungen im Körper, Gedanken und Gefühle –, ohne vorschnell zu bewerten oder sofort etwas dagegen zu tun."),
+                P("Es bedeutet nicht, Gedanken anzuhalten. Gedanken werden kommen; es geht darum zu bemerken, dass du abgeschweift bist, und die Aufmerksamkeit sanft zurückzuholen. Jedes Zurückkommen ist das Training selbst."),
+                H("Probier es in einer Minute"),
+                List(
+                    "Setz dich bequem hin und spür den Halt: Füße, Stuhl, Rücken",
+                    "Bemerke drei Geräusche um dich herum, ohne sie zu bewerten",
+                    "Verfolge ein paar Atemzüge ein und aus",
+                    "Wenn ein Gedanke dich wegzieht, sag dir „Denken“ und kehr zum Atem zurück"),
+                Breathe("Probier es jetzt: Folge einfach deinem Atem"),
+                H("Wobei es hilft"),
+                P("Regelmäßiges Üben hilft, seltener in ängstlichen Gedanken festzuhängen und leichter zur Ruhe zurückzufinden. Achtsamkeitsprogramme wurden bei Stress und Angst untersucht, und bei wiederkehrender Depression senken sie das Risiko einer neuen Episode. Regelmäßigkeit zählt: fünf Minuten täglich bringen mehr als eine Stunde im Monat."),
+                Warning("Wenn es schlimmer wird"),
+                P("Nach einem Trauma kann Aufmerksamkeit für den Körper mit geschlossenen Augen schwere Erinnerungen hochholen. Dann halte die Augen offen, verkürze die Übung auf eine Minute und orientiere dich an dem, was du um dich herum siehst. Wenn es schwer bleibt, übe besser mit einer Fachperson."),
+                Practice(TechniqueId.Grounding, "Erdung 5-4-3-2-1"),
+                Practice(TechniqueId.Breathing, "Box-Atmung")
             ])
     ];
 }

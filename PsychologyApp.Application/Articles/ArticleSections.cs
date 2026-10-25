@@ -15,13 +15,13 @@ public static partial class ArticleContent
         ("energy", "Силы и настроение", "Energy and mood",
             [ArticleIds.Depression, ArticleIds.LowMood, ArticleIds.Burnout, ArticleIds.Sleep, ArticleIds.Loneliness]),
         ("feelings", "Чувства", "Feelings",
-            [ArticleIds.Anger, ArticleIds.SelfCriticism, ArticleIds.ShameAndGuilt, ArticleIds.Grief, ArticleIds.Numbing]),
+            [ArticleIds.Emotions, ArticleIds.Anger, ArticleIds.SelfCriticism, ArticleIds.SelfEsteem, ArticleIds.ShameAndGuilt, ArticleIds.Grief, ArticleIds.Numbing]),
         ("trauma", "Травма", "Trauma",
             [ArticleIds.TraumaStart, ArticleIds.TraumaReaction, ArticleIds.TraumaFlashbacks, ArticleIds.TraumaNightmares, ArticleIds.TraumaTreatment]),
         ("relationships", "Отношения", "Relationships",
             [ArticleIds.Boundaries, ArticleIds.Conflicts, ArticleIds.Narcissism, ArticleIds.EmotionalAbuse, ArticleIds.ParentStress, ArticleIds.HelpingLovedOne]),
         ("help", "Тело и помощь", "Body and help",
-            [ArticleIds.BodyAndStress, ArticleIds.ChronicPain, ArticleIds.Specialist, ArticleIds.SupportInCrisis]),
+            [ArticleIds.BodyAndStress, ArticleIds.Mindfulness, ArticleIds.ChronicPain, ArticleIds.Specialist, ArticleIds.SupportInCrisis]),
         ("recognise", "Распознать и обратиться", "Recognise and get help",
             [ArticleIds.EatingDisorders, ArticleIds.Bipolar, ArticleIds.Psychosis])
     ];

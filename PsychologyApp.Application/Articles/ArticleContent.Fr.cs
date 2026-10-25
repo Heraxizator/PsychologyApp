@@ -1035,6 +1035,84 @@ public static partial class ArticleContent
                 Warning("Il faut un médecin, pas une pratique"),
                 P("Si vous remarquez cela chez vous ou chez un proche, consultez un psychiatre au plus vite. Ne contestez pas les croyances de la personne : parlez de ce qu'elle vit de difficile et d'effrayant et aidez-la à aller chez un médecin. S'il y a un danger pour elle ou pour les autres, appelez le numéro d'urgence local."),
                 Crisis("J'ai besoin d'aide maintenant")
+            ]),
+        new(
+            ArticleIds.Emotions,
+            "Les émotions : les remarquer et les nommer",
+            "À quoi servent les émotions, et pourquoi un mot juste les apaise déjà",
+            "EmojiEmotions",
+            4,
+            [
+                P("Les émotions ne sont pas un obstacle à la raison, mais des signaux rapides sur ce qui se passe et ce qui compte pour nous. Elles arrivent avant les mots, et on les sent souvent d'abord dans le corps : épaules crispées, gorge serrée, chaleur dans la poitrine."),
+                H("Ce que disent les émotions"),
+                List(
+                    "La peur : il y a peut-être un danger, prudence",
+                    "La colère : une limite a été franchie ou quelque chose est injuste",
+                    "La tristesse : quelque chose est perdu, il faut du temps et du soutien",
+                    "La honte et la culpabilité : nos valeurs ou nos relations sont touchées",
+                    "La joie : quelque chose de bon et d'important arrive, cela vaut la peine d'y aller"),
+                P("Le signal n'est pas toujours exact : l'anxiété peut sonner là où il n'y a pas de danger. Même alors, l'émotion n'est pas « fausse » : elle demande à être vérifiée, pas obéie sur-le-champ."),
+                H("Nommer, c'est apaiser"),
+                P("Les recherches montrent que trouver le mot juste pour une émotion en diminue l'intensité. « Je me sens mal » ne dit presque rien, alors que « je me sens blessé et seul » indique déjà ce dont on a besoin, par exemple parler à un proche."),
+                H("Comment l'apprendre"),
+                List(
+                    "Plusieurs fois par jour, demandez-vous : « Qu'est-ce que je ressens maintenant ? »",
+                    "Commencez par le corps : où sont la tension, la chaleur, la lourdeur",
+                    "Cherchez le mot juste : pas seulement « en colère », mais « agacé », « blessé », « furieux »",
+                    "Remarquez que plusieurs émotions peuvent venir à la fois, et c'est normal",
+                    "Notez l'émotion dans le journal : avec le temps, des tendances apparaîtront"),
+                Practice(TechniqueId.BodyScan, "Où est-ce dans le corps ?"),
+                P("Une émotion remarquée et nommée se traverse plus facilement. Inutile de la chasser ou d'en avoir honte : elle vient, atteint un sommet et passe.")
+            ]),
+        new(
+            ArticleIds.SelfEsteem,
+            "L'estime de soi",
+            "Comment nous nous traitons, pourquoi les compliments ne réparent pas l'estime de soi, et ce qui aide vraiment",
+            "Favorite",
+            4,
+            [
+                P("L'estime de soi n'est pas un avis sur vos réussites, mais la façon dont vous vous traitez : avec respect et chaleur, ou avec reproches et doute sur votre droit d'avoir votre place."),
+                H("Les signes d'une faible estime de soi"),
+                List(
+                    "Les réussites semblent dues au hasard, les erreurs prouvent qu'on ne vaut rien",
+                    "Il est difficile de refuser, de demander ou d'accepter un compliment",
+                    "Comparaison constante avec les autres, jamais à votre avantage",
+                    "Peur de la critique et volonté de plaire à tout le monde",
+                    "Éviter la nouveauté pour ne pas échouer"),
+                H("Ce qui n'aide pas"),
+                P("Courir après l'approbation ne soulage qu'un temps : le compliment s'oublie, le besoin grandit. Et répéter des phrases comme « je suis le meilleur » aggrave parfois les choses chez ceux qui ont une faible estime de soi : la voix intérieure se met à contester."),
+                H("Ce qui aide"),
+                List(
+                    "Repérer les pensées critiques et les vérifier comme les autres",
+                    "Chaque soir, noter une chose réussie, même petite",
+                    "Se parler comme à un ami dans un moment difficile",
+                    "Faire ce qui compte pour vous, pas ce qui sera approuvé",
+                    "Essayer peu à peu des choses nouvelles et refuser de petites choses"),
+                Practice(TechniqueId.ThoughtRecord, "Journal des pensées"),
+                Practice(TechniqueId.SelfCompassion, "Des mots bienveillants pour soi")
+            ]),
+        new(
+            ArticleIds.Mindfulness,
+            "La pleine conscience : ce que c'est",
+            "Ni tête vide ni fuite des problèmes, mais attention à ce qui se passe maintenant",
+            "SelfImprovement",
+            3,
+            [
+                P("La pleine conscience, c'est savoir remarquer ce qui se passe maintenant — la respiration, les sons, les sensations du corps, les pensées et les émotions — sans se précipiter pour juger ou agir."),
+                P("Il ne s'agit pas d'arrêter les pensées. Elles viendront ; il s'agit de remarquer qu'on s'est égaré et de ramener doucement l'attention. Chaque retour est l'entraînement lui-même."),
+                H("Essayez en une minute"),
+                List(
+                    "Asseyez-vous confortablement et sentez vos appuis : pieds, chaise, dos",
+                    "Remarquez trois sons autour de vous sans les juger",
+                    "Suivez quelques inspirations et expirations",
+                    "Si une pensée vous emporte, notez « je pense » et revenez au souffle"),
+                Breathe("Essayez maintenant : suivez simplement votre souffle"),
+                H("En quoi cela aide"),
+                P("Une pratique régulière aide à moins rester coincé dans les pensées anxieuses et à revenir plus facilement au calme. Les programmes de pleine conscience ont été étudiés pour le stress et l'anxiété, et dans la dépression récurrente ils réduisent le risque d'un nouvel épisode. La régularité compte : cinq minutes par jour valent mieux qu'une heure par mois."),
+                Warning("Si cela empire"),
+                P("Après un traumatisme, l'attention au corps les yeux fermés fait parfois remonter des souvenirs difficiles. Gardez alors les yeux ouverts, réduisez la pratique à une minute et appuyez-vous sur ce que vous voyez autour de vous. Si cela reste difficile, mieux vaut pratiquer avec un spécialiste."),
+                Practice(TechniqueId.Grounding, "Ancrage 5-4-3-2-1"),
+                Practice(TechniqueId.Breathing, "Respiration carrée")
             ])
     ];
 }

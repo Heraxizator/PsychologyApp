@@ -1035,6 +1035,84 @@ public static partial class ArticleContent
                 Warning("Hace falta un médico, no una práctica"),
                 P("Si notas esto en ti o en un ser querido, acude a un psiquiatra lo antes posible. No discutas las creencias de la persona: habla de lo difícil y aterrador que está viviendo y ayúdale a ir al médico. Si hay peligro para ella o para otros, llama al número de emergencias local."),
                 Crisis("Necesito ayuda ahora")
+            ]),
+        new(
+            ArticleIds.Emotions,
+            "Las emociones: cómo notarlas y nombrarlas",
+            "Para qué sirven los sentimientos y por qué una palabra precisa ya los calma",
+            "EmojiEmotions",
+            4,
+            [
+                P("Las emociones no son un estorbo para la razón, sino señales rápidas de lo que ocurre y de lo que nos importa. Llegan antes que las palabras, y a menudo las sentimos primero en el cuerpo: hombros tensos, un nudo en la garganta, calor en el pecho."),
+                H("Lo que nos dicen los sentimientos"),
+                List(
+                    "El miedo: puede haber peligro, ten cuidado",
+                    "La ira: se ha cruzado un límite o algo es injusto",
+                    "La tristeza: algo se ha perdido, necesitas tiempo y apoyo",
+                    "La vergüenza y la culpa: se han tocado nuestros valores o relaciones",
+                    "La alegría: está pasando algo bueno e importante, vale la pena ir hacia ello"),
+                P("La señal no siempre es exacta: la ansiedad puede sonar donde no hay peligro. Aun así, el sentimiento no está «mal»: solo pide ser comprobado, no obedecido al instante."),
+                H("Nombrarlo le quita fuerza"),
+                P("Los estudios muestran que cuando encontramos una palabra precisa para un sentimiento, su intensidad baja. «Me siento mal» casi no dice nada, mientras que «me siento herido y solo» ya indica lo que hace falta, como hablar con alguien cercano."),
+                H("Cómo aprenderlo"),
+                List(
+                    "Varias veces al día, pregúntate: «¿Qué siento ahora mismo?»",
+                    "Empieza por el cuerpo: dónde hay tensión, calor, pesadez",
+                    "Busca la palabra exacta: no solo «enfadado», sino «irritado», «dolido», «furioso»",
+                    "Fíjate en que puede haber varios sentimientos a la vez, y es normal",
+                    "Anota la emoción en el diario: con el tiempo aparecerán patrones"),
+                Practice(TechniqueId.BodyScan, "¿Dónde está en el cuerpo?"),
+                P("Un sentimiento que se nota y se nombra es más fácil de atravesar. No hace falta echarlo ni avergonzarse: llega, alcanza su punto máximo y se va.")
+            ]),
+        new(
+            ArticleIds.SelfEsteem,
+            "La autoestima",
+            "Cómo nos tratamos, por qué los elogios de fuera no arreglan la autoestima y qué ayuda de verdad",
+            "Favorite",
+            4,
+            [
+                P("La autoestima no es una opinión sobre tus logros, sino cómo te tratas: con respeto y calidez, o con reproches y dudas sobre tu derecho a tener un lugar en el mundo."),
+                H("Señales de baja autoestima"),
+                List(
+                    "Los éxitos parecen casualidad y los errores, prueba de no valer nada",
+                    "Cuesta decir que no, pedir algo o aceptar un cumplido",
+                    "Comparación constante con los demás, nunca a tu favor",
+                    "Miedo a la crítica e intentos de agradar a todos",
+                    "Evitar lo nuevo para no fracasar"),
+                H("Lo que no ayuda"),
+                P("Buscar aprobación alivia poco tiempo: el elogio se olvida y la necesidad crece. Y repetir frases como «soy el mejor» a veces empeora las cosas en personas con baja autoestima: la voz interior empieza a discutir."),
+                H("Lo que ayuda"),
+                List(
+                    "Notar los pensamientos críticos y comprobarlos como cualquier otro",
+                    "Cada noche, anotar una cosa que salió bien, aunque sea pequeña",
+                    "Hablarte como le hablarías a un amigo en un mal momento",
+                    "Hacer lo que te importa, no lo que aprobarán",
+                    "Probar poco a poco cosas nuevas y decir que no en lo pequeño"),
+                Practice(TechniqueId.ThoughtRecord, "Registro de pensamientos"),
+                Practice(TechniqueId.SelfCompassion, "Palabras amables para ti")
+            ]),
+        new(
+            ArticleIds.Mindfulness,
+            "La atención plena: qué es",
+            "No es dejar la mente en blanco ni huir de los problemas, sino atender a lo que pasa ahora",
+            "SelfImprovement",
+            3,
+            [
+                P("La atención plena es la habilidad de notar lo que pasa ahora mismo —la respiración, los sonidos, las sensaciones del cuerpo, los pensamientos y sentimientos— sin apresurarse a juzgarlo ni a hacer algo al respecto."),
+                P("No significa detener los pensamientos. Vendrán; la tarea es notar que te has distraído y devolver la atención con suavidad. Cada regreso es el entrenamiento en sí."),
+                H("Pruébalo en un minuto"),
+                List(
+                    "Siéntate cómodo y siente el apoyo: pies, silla, espalda",
+                    "Nota tres sonidos a tu alrededor sin juzgarlos",
+                    "Sigue algunas inspiraciones y espiraciones",
+                    "Si un pensamiento te lleva, nota «pensando» y vuelve a la respiración"),
+                Breathe("Pruébalo ahora: solo sigue tu respiración"),
+                H("En qué ayuda"),
+                P("La práctica regular ayuda a quedarse atrapado menos a menudo en pensamientos ansiosos y a volver a la calma con más facilidad. Los programas basados en la atención plena se han estudiado en el estrés y la ansiedad, y en la depresión recurrente reducen el riesgo de un nuevo episodio. Importa la regularidad: cinco minutos al día valen más que una hora al mes."),
+                Warning("Si empeora"),
+                P("Después de un trauma, atender al cuerpo con los ojos cerrados a veces trae recuerdos difíciles. Entonces mantén los ojos abiertos, acorta la práctica a un minuto y apóyate en lo que ves a tu alrededor. Si sigue siendo difícil, es mejor practicar con un especialista."),
+                Practice(TechniqueId.Grounding, "Anclaje 5-4-3-2-1"),
+                Practice(TechniqueId.Breathing, "Respiración cuadrada")
             ])
     ];
 }
