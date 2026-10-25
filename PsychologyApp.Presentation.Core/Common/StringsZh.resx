@@ -1089,6 +1089,12 @@
   <data name="JournalSlotEvening" xml:space="preserve">
     <value>晚上</value>
   </data>
+  <data name="JournalEditorTitleMorning" xml:space="preserve">
+    <value>{0}，早上</value>
+  </data>
+  <data name="JournalEditorTitleEvening" xml:space="preserve">
+    <value>{0}，晚上</value>
+  </data>
   <data name="JournalExportLabel" xml:space="preserve">
     <value>导出 CSV</value>
   </data>

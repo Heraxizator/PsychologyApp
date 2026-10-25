@@ -128,7 +128,7 @@ public sealed class JournalViewModel : BaseViewModel
     public string SlotEveningLabel => AppStrings.JournalSlotEvening;
 
     public string DayHeaderText =>
-        $"{AppStrings.JournalEditorDayTitle(_editorDay)}, {(_editorSlot == JournalCheckInSlot.Evening ? SlotEveningLabel : SlotMorningLabel).ToLower(CultureInfo.CurrentCulture)}";
+        AppStrings.JournalEditorTitle(AppStrings.JournalEditorDayTitle(_editorDay), _editorSlot == JournalCheckInSlot.Evening);
 
     public string MoodSavedStatus =>
         HasMoodSelected ? AppStrings.TodayMoodSaved : string.Empty;

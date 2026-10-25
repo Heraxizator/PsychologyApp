@@ -467,6 +467,7 @@ public static partial class AppStrings
     }
     public static string JournalSlotMorning => R(nameof(JournalSlotMorning));
     public static string JournalSlotEvening => R(nameof(JournalSlotEvening));
+    public static string JournalEditorTitle(string day, bool evening) => F(evening ? "JournalEditorTitleEvening" : "JournalEditorTitleMorning", day);
     public static string JournalExportLabel => R(nameof(JournalExportLabel));
     public static string JournalExportTitle => R(nameof(JournalExportTitle));
     public static string JournalExportEmpty => R(nameof(JournalExportEmpty));
