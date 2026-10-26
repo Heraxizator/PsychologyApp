@@ -136,6 +136,7 @@
     <Compile Include="../PsychologyApp.Presentation/Shared/Common/Infrastructure/BestEffort.cs" Link="Linked/ViewModels/BestEffort.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/ManageJournal/JournalNoteFactors.cs" Link="Linked/Journal/JournalNoteFactors.cs" />
     <Compile Include="JournalNoteFactorsTests.cs" />
+    <Compile Include="JournalPromptsTests.cs" />
     <Compile Include="../PsychologyApp.Presentation/Shared/Common/TechniqueDefinitionMapper.cs" Link="Linked/ViewModels/TechniqueDefinitionMapper.cs" />
     <Compile Include="ViewModels\**\*.cs" />
     <Compile Include="AsyncCommandTests.cs" />

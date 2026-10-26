@@ -858,9 +858,6 @@
   <data name="JournalWeekEmpty" xml:space="preserve">
     <value>Not much this week yet — log a mood check-in</value>
   </data>
-  <data name="JournalNotePlaceholder" xml:space="preserve">
-    <value>What shaped this? (optional)</value>
-  </data>
   <data name="JournalNoteSectionTitle" xml:space="preserve">
     <value>Note</value>
   </data>
@@ -4224,5 +4221,68 @@
   </data>
   <data name="MenuFooterPrivacy" xml:space="preserve">
     <value>Everything you write stays on this phone</value>
+  </data>
+  <data name="JournalWeekCardTitle" xml:space="preserve">
+    <value>This week</value>
+  </data>
+  <data name="JournalWeekCardEmpty" xml:space="preserve">
+    <value>Check in morning and evening, and this is where you'll see how your week goes and what affects it.</value>
+  </data>
+  <data name="JournalWeekOpenOverview" xml:space="preserve">
+    <value>More in the overview</value>
+  </data>
+  <data name="JournalPromptTitle" xml:space="preserve">
+    <value>Question of the day</value>
+  </data>
+  <data name="JournalRecentTitle" xml:space="preserve">
+    <value>Recent entries</value>
+  </data>
+  <data name="JournalRecentAll" xml:space="preserve">
+    <value>All history</value>
+  </data>
+  <data name="JournalPrompt01" xml:space="preserve">
+    <value>What came easier today than you expected?</value>
+  </data>
+  <data name="JournalPrompt02" xml:space="preserve">
+    <value>What can you thank yourself for today?</value>
+  </data>
+  <data name="JournalPrompt03" xml:space="preserve">
+    <value>What is taking the most energy right now?</value>
+  </data>
+  <data name="JournalPrompt04" xml:space="preserve">
+    <value>What small moment today was pleasant?</value>
+  </data>
+  <data name="JournalPrompt05" xml:space="preserve">
+    <value>What helped when things got hard?</value>
+  </data>
+  <data name="JournalPrompt06" xml:space="preserve">
+    <value>What from this day would you like to remember?</value>
+  </data>
+  <data name="JournalPrompt07" xml:space="preserve">
+    <value>What does your body need now: rest, movement, food, sleep?</value>
+  </data>
+  <data name="JournalPrompt08" xml:space="preserve">
+    <value>Who or what supported you today?</value>
+  </data>
+  <data name="JournalPrompt09" xml:space="preserve">
+    <value>Which thought kept coming back today?</value>
+  </data>
+  <data name="JournalPrompt10" xml:space="preserve">
+    <value>What did you do for yourself today?</value>
+  </data>
+  <data name="JournalPrompt11" xml:space="preserve">
+    <value>What can you let go of until tomorrow?</value>
+  </data>
+  <data name="JournalPrompt12" xml:space="preserve">
+    <value>What did this day teach you?</value>
+  </data>
+  <data name="JournalPrompt13" xml:space="preserve">
+    <value>What would you like to tell yourself at the end of this day?</value>
+  </data>
+  <data name="JournalPrompt14" xml:space="preserve">
+    <value>What one step would make tomorrow a little easier?</value>
+  </data>
+  <data name="JournalPromptPlaceholder" xml:space="preserve">
+    <value>Your answer or any thoughts, if you like</value>
   </data>
 </root>

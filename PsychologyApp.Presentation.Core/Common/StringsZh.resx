@@ -858,9 +858,6 @@
   <data name="JournalWeekEmpty" xml:space="preserve">
     <value>本周记录还不多——记一下心情吧</value>
   </data>
-  <data name="JournalNotePlaceholder" xml:space="preserve">
-    <value>是什么影响了你？（可选）</value>
-  </data>
   <data name="JournalNoteSectionTitle" xml:space="preserve">
     <value>笔记</value>
   </data>
@@ -4224,5 +4221,68 @@
   </data>
   <data name="MenuFooterPrivacy" xml:space="preserve">
     <value>你写下的一切都只保存在这部手机上</value>
+  </data>
+  <data name="JournalWeekCardTitle" xml:space="preserve">
+    <value>本周</value>
+  </data>
+  <data name="JournalWeekCardEmpty" xml:space="preserve">
+    <value>早晚记录一下心情，这里就会显示你这一周过得怎样，以及什么在影响它。</value>
+  </data>
+  <data name="JournalWeekOpenOverview" xml:space="preserve">
+    <value>在概览中查看更多</value>
+  </data>
+  <data name="JournalPromptTitle" xml:space="preserve">
+    <value>今日一问</value>
+  </data>
+  <data name="JournalRecentTitle" xml:space="preserve">
+    <value>最近的记录</value>
+  </data>
+  <data name="JournalRecentAll" xml:space="preserve">
+    <value>全部记录</value>
+  </data>
+  <data name="JournalPrompt01" xml:space="preserve">
+    <value>今天有什么比预想的更容易？</value>
+  </data>
+  <data name="JournalPrompt02" xml:space="preserve">
+    <value>今天可以为什么感谢自己？</value>
+  </data>
+  <data name="JournalPrompt03" xml:space="preserve">
+    <value>现在什么最耗费你的精力？</value>
+  </data>
+  <data name="JournalPrompt04" xml:space="preserve">
+    <value>今天有哪个小小的时刻让你感到愉快？</value>
+  </data>
+  <data name="JournalPrompt05" xml:space="preserve">
+    <value>当事情变难时，是什么帮了你？</value>
+  </data>
+  <data name="JournalPrompt06" xml:space="preserve">
+    <value>这一天里，有什么是你想记住的？</value>
+  </data>
+  <data name="JournalPrompt07" xml:space="preserve">
+    <value>你的身体现在需要什么：休息、活动、食物还是睡眠？</value>
+  </data>
+  <data name="JournalPrompt08" xml:space="preserve">
+    <value>今天谁或什么给了你支持？</value>
+  </data>
+  <data name="JournalPrompt09" xml:space="preserve">
+    <value>今天哪个念头反复出现？</value>
+  </data>
+  <data name="JournalPrompt10" xml:space="preserve">
+    <value>今天你为自己做了什么？</value>
+  </data>
+  <data name="JournalPrompt11" xml:space="preserve">
+    <value>有什么可以先放下，等到明天？</value>
+  </data>
+  <data name="JournalPrompt12" xml:space="preserve">
+    <value>这一天教会了你什么？</value>
+  </data>
+  <data name="JournalPrompt13" xml:space="preserve">
+    <value>在这一天结束时，你想对自己说些什么？</value>
+  </data>
+  <data name="JournalPrompt14" xml:space="preserve">
+    <value>做哪一小步，能让明天轻松一点？</value>
+  </data>
+  <data name="JournalPromptPlaceholder" xml:space="preserve">
+    <value>写下你的回答或任何想法（可选）</value>
   </data>
 </root>

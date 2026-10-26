@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using PsychologyApp.Domain.UserProgress;
 using PsychologyApp.Presentation.Entities.Journal;
+using PsychologyApp.Presentation.Entities.Profile;
 using PsychologyApp.Presentation.Features.ManageJournal;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Lib.Navigation;
@@ -14,6 +15,8 @@ namespace PsychologyApp.Presentation.Pages.ManageJournal.Journal;
 
 public sealed class JournalViewModel : BaseViewModel
 {
+    private const int RecentNoteCount = 3;
+
     private readonly JournalMoodLoader _journalMoodLoader;
     private readonly JournalEditorContext _editorContext;
     private readonly IDialogService _dialogService;
@@ -120,11 +123,77 @@ public sealed class JournalViewModel : BaseViewModel
 
     public string PageTitle => AppStrings.JournalTitle;
     public string MoodQuestionHero => AppStrings.JournalHowNowQuestion;
-    public string NotePlaceholder => AppStrings.JournalNotePlaceholder;
+    /// <summary>Neutral, because the question of the day stands above the note; a second question in the field competed with it.</summary>
+    public string NotePlaceholder => AppStrings.JournalPromptPlaceholder;
     public string PracticeSuggestText => AppStrings.JournalTryShortPractice;
     public string OpenOverviewLabel => AppStrings.JournalOpenOverview;
     public string OpenTimelineLabel => AppStrings.JournalOpenTimeline;
     public string SlotMorningLabel => AppStrings.JournalSlotMorning;
+    public string WeekCardTitle => AppStrings.JournalWeekCardTitle;
+    public string WeekCardEmpty => AppStrings.JournalWeekCardEmpty;
+    public string WeekOpenOverviewText => AppStrings.JournalWeekOpenOverview;
+    public string CheckInsLabel => AppStrings.WeekMoodCheckInsLabel;
+    public string AverageLabel => AppStrings.WeekAvgMoodLabel;
+    public string StreakLabel => AppStrings.JournalStreakMetricLabel;
+    public string PromptTitle => AppStrings.JournalPromptTitle;
+    public string RecentTitle => AppStrings.JournalRecentTitle;
+    public string RecentAllText => AppStrings.JournalRecentAll;
+
+    /// <summary>The question of the day for the day being written about, so a past day keeps the question it had.</summary>
+    public string PromptText => AppStrings.JournalPrompt(JournalPrompts.For(_editorDay));
+
+    private JournalMoodStats? _weekStats;
+    public bool HasWeekStats => _weekStats?.HasStats == true;
+    public string WeekCheckIns => _weekStats?.CheckInCount.ToString(CultureInfo.CurrentCulture) ?? string.Empty;
+    public string WeekAverage => _weekStats?.AverageMoodDisplay ?? string.Empty;
+    public string WeekStreak => _weekStats?.MoodStreakDisplay ?? string.Empty;
+
+    private string _weekInsight = string.Empty;
+    /// <summary>What the week shows about practices and mood, when there is enough to say something.</summary>
+    public string WeekInsight
+    {
+        get => _weekInsight;
+        private set
+        {
+            if (SetProperty(ref _weekInsight, value))
+            {
+                OnPropertyChanged(nameof(HasWeekInsight));
+            }
+        }
+    }
+
+    public bool HasWeekInsight => WeekInsight.Length > 0;
+
+    private IReadOnlyList<MoodNoteItem> _recentNotes = [];
+    /// <summary>The last few notes of the week, newest first: what was written comes back without opening the history.</summary>
+    public IReadOnlyList<MoodNoteItem> RecentNotes
+    {
+        get => _recentNotes;
+        private set
+        {
+            if (SetProperty(ref _recentNotes, value))
+            {
+                OnPropertyChanged(nameof(HasRecentNotes));
+            }
+        }
+    }
+
+    public bool HasRecentNotes => RecentNotes.Count > 0;
+
+    private string _onThisDay = string.Empty;
+    public string OnThisDayText
+    {
+        get => _onThisDay;
+        private set
+        {
+            if (SetProperty(ref _onThisDay, value))
+            {
+                OnPropertyChanged(nameof(HasOnThisDay));
+            }
+        }
+    }
+
+    public bool HasOnThisDay => OnThisDayText.Length > 0;
     public string SlotEveningLabel => AppStrings.JournalSlotEvening;
 
     public string DayHeaderText =>
@@ -215,7 +284,17 @@ public sealed class JournalViewModel : BaseViewModel
             nameof(HasMoodSelected),
             nameof(ShowMoodQuestion),
             nameof(ShowNoteEditor),
-            nameof(CanGoNextWeek));
+            nameof(CanGoNextWeek),
+            nameof(WeekCardTitle),
+            nameof(WeekCardEmpty),
+            nameof(WeekOpenOverviewText),
+            nameof(CheckInsLabel),
+            nameof(AverageLabel),
+            nameof(StreakLabel),
+            nameof(PromptTitle),
+            nameof(PromptText),
+            nameof(RecentTitle),
+            nameof(RecentAllText));
         foreach (JournalActivityChip chip in ActivityChips)
         {
             chip.Label = JournalNoteFactors.GetLabel(chip.Key);
@@ -398,6 +477,12 @@ public sealed class JournalViewModel : BaseViewModel
             _suppressNoteAutosave = false;
         }
 
+        _weekStats = snapshot.Stats;
+        WeekInsight = snapshot.PracticeMoodInsight ?? string.Empty;
+        OnThisDayText = snapshot.OnThisDayLastYearText ?? string.Empty;
+        RecentNotes = [.. snapshot.TimelineEntries.Where(entry => entry.HasNote).Take(RecentNoteCount)];
+
+        Notify(nameof(HasWeekStats), nameof(WeekCheckIns), nameof(WeekAverage), nameof(WeekStreak), nameof(PromptText));
         OnPropertyChanged(nameof(DayHeaderText));
         OnPropertyChanged(nameof(ShowPracticeSuggest));
         OnPropertyChanged(nameof(ShowMoodQuestion));

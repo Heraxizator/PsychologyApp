@@ -7,6 +7,7 @@
              xmlns:mood="clr-namespace:PsychologyApp.Presentation.Widgets.MoodStrip"
              xmlns:journalStrip="clr-namespace:PsychologyApp.Presentation.Widgets.Journal"
              xmlns:journal="clr-namespace:PsychologyApp.Presentation.Entities.Journal"
+             xmlns:profile="clr-namespace:PsychologyApp.Presentation.Entities.Profile"
              xmlns:common="clr-namespace:PsychologyApp.Presentation.Common;assembly=PsychologyApp.Presentation.Core"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ManageJournal.Journal"
@@ -90,6 +91,11 @@
             <VerticalStackLayout
                 IsVisible="{Binding ShowNoteEditor}"
                 Spacing="{StaticResource CompactSpacing}">
+                <!-- A question to start from: an empty note is the hardest thing to fill. It changes daily and is never required. -->
+                <VerticalStackLayout Spacing="2" Margin="4,0">
+                    <Label Text="{Binding PromptTitle}" Style="{StaticResource CaptionStyle}" />
+                    <Label Text="{Binding PromptText}" Style="{StaticResource EmphasisBodyStyle}" />
+                </VerticalStackLayout>
                 <ui:TextEditorView
                     PlaceholderText="{Binding NotePlaceholder}"
                     BodyText="{Binding JournalNote, Mode=TwoWay}"
@@ -132,6 +138,77 @@
                     <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
                 </Label.Behaviors>
             </Label>
+
+            <!-- The week at a glance, the same figures as the overview; before there are any, what this place will show. -->
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <Label Text="{Binding WeekCardTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <Grid IsVisible="{Binding HasWeekStats}" ColumnDefinitions="*,*,*" ColumnSpacing="{StaticResource CompactSpacing}">
+                        <ui:MetricTileView Grid.Column="0" ValueText="{Binding WeekCheckIns}" LabelText="{Binding CheckInsLabel}" TapCommand="{Binding OpenOverviewCommand}" />
+                        <ui:MetricTileView Grid.Column="1" ValueText="{Binding WeekAverage}" LabelText="{Binding AverageLabel}" TapCommand="{Binding OpenOverviewCommand}" />
+                        <ui:MetricTileView Grid.Column="2" ValueText="{Binding WeekStreak}" LabelText="{Binding StreakLabel}" TapCommand="{Binding OpenOverviewCommand}" />
+                    </Grid>
+                    <Label IsVisible="{Binding HasWeekInsight}" Text="{Binding WeekInsight}" Style="{StaticResource BodyStyle}" />
+                    <Label Text="{Binding WeekCardEmpty}" Style="{StaticResource BodyStyle}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding HasWeekStats}" Value="True">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                    <Grid ColumnDefinitions="*,Auto" MinimumHeightRequest="44" SemanticProperties.Description="{Binding WeekOpenOverviewText}">
+                        <Grid.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </Grid.Behaviors>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenOverviewCommand}" />
+                        </Grid.GestureRecognizers>
+                        <Label Text="{Binding WeekOpenOverviewText}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource MediumFontFamily}" VerticalOptions="Center"
+                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                        <ui:MaterialIconView Grid.Column="1" IconName="ChevronRight" IconSize="22" VerticalOptions="Center"
+                                             IconColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <Border IsVisible="{Binding HasOnThisDay}" Style="{StaticResource BrandCardStyle}" Margin="0">
+                <Label Text="{Binding OnThisDayText}" Style="{StaticResource BodyStyle}" />
+            </Border>
+
+            <!-- What was written lately comes back here; the full history is one tap away. -->
+            <Border IsVisible="{Binding HasRecentNotes}" Style="{StaticResource BrandCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <Label Text="{Binding RecentTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding RecentNotes}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="profile:MoodNoteItem">
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" SemanticProperties.Description="{Binding NoteText}">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding OpenTimelineCommand, Source={RelativeSource AncestorType={x:Type vm:JournalViewModel}}, x:DataType=vm:JournalViewModel}" />
+                                    </Grid.GestureRecognizers>
+                                    <Label Text="{Binding MoodGlyph}" FontSize="24" VerticalOptions="Start" />
+                                    <VerticalStackLayout Grid.Column="1" Spacing="0">
+                                        <Label Text="{Binding DateText}" Style="{StaticResource CaptionStyle}" />
+                                        <Label Text="{Binding NoteText}" Style="{StaticResource BodyStyle}" MaxLines="2" LineBreakMode="TailTruncation" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <Grid ColumnDefinitions="*,Auto" MinimumHeightRequest="44" SemanticProperties.Description="{Binding RecentAllText}">
+                        <Grid.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </Grid.Behaviors>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenTimelineCommand}" />
+                        </Grid.GestureRecognizers>
+                        <Label Text="{Binding RecentAllText}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource MediumFontFamily}" VerticalOptions="Center"
+                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                        <ui:MaterialIconView Grid.Column="1" IconName="ChevronRight" IconSize="22" VerticalOptions="Center"
+                                             IconColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
         </VerticalStackLayout>
     </ScrollView>
 

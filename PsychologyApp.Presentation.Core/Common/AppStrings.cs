@@ -290,7 +290,6 @@ public static partial class AppStrings
     public static string JournalTodayTitle => R(nameof(JournalTodayTitle));
     public static string JournalEntriesTitle => R(nameof(JournalEntriesTitle));
     public static string JournalWeekEmpty => R(nameof(JournalWeekEmpty));
-    public static string JournalNotePlaceholder => R(nameof(JournalNotePlaceholder));
     public static string JournalNoteSectionTitle => R(nameof(JournalNoteSectionTitle));
     public static string JournalAddNoteLabel => R(nameof(JournalAddNoteLabel));
     public static string JournalShowHintsLabel => R(nameof(JournalShowHintsLabel));
@@ -454,6 +453,17 @@ public static partial class AppStrings
     public static string JournalStreakMetricLabel => R(nameof(JournalStreakMetricLabel));
     public static string JournalPeriodNavPrev => R(nameof(JournalPeriodNavPrev));
     public static string JournalPeriodNavNext => R(nameof(JournalPeriodNavNext));
+    public static string JournalWeekCardTitle => R(nameof(JournalWeekCardTitle));
+    public static string JournalWeekCardEmpty => R(nameof(JournalWeekCardEmpty));
+    public static string JournalWeekOpenOverview => R(nameof(JournalWeekOpenOverview));
+    public static string JournalPromptTitle => R(nameof(JournalPromptTitle));
+    public static string JournalRecentTitle => R(nameof(JournalRecentTitle));
+    public static string JournalRecentAll => R(nameof(JournalRecentAll));
+    public static string JournalPromptPlaceholder => R(nameof(JournalPromptPlaceholder));
+
+    /// <summary>Question <paramref name="number"/> (1..<see cref="PsychologyApp.Presentation.Features.ManageJournal.JournalPrompts.Count"/>) above the journal note.</summary>
+    public static string JournalPrompt(int number) => R($"JournalPrompt{number:00}");
+
     public static string JournalOnThisDayLastYear(int moodLevel, string? noteSnippet)
     {
         string mood = MoodLevelPill(moodLevel);
