@@ -876,9 +876,6 @@
   <data name="JournalMoreMenuLabel" xml:space="preserve">
     <value>Más</value>
   </data>
-  <data name="JournalSlotPickerTitle" xml:space="preserve">
-    <value>Momento del registro</value>
-  </data>
   <data name="JournalNoteSaveHint" xml:space="preserve">
     <value>El estado de ánimo se guarda al instante. Para la nota, usa el botón de abajo.</value>
   </data>
@@ -984,9 +981,6 @@
   <data name="JournalTimelineEmpty" xml:space="preserve">
     <value>Aún no hay registros — anota tu estado de ánimo en el diario para empezar una racha</value>
   </data>
-  <data name="JournalTryShortPractice" xml:space="preserve">
-    <value>Una práctica corta puede ayudar</value>
-  </data>
   <data name="JournalPromptBlockedShort" xml:space="preserve">
     <value>Lo que estorbó</value>
   </data>
@@ -1086,12 +1080,6 @@
   <data name="JournalSlotEvening" xml:space="preserve">
     <value>Noche</value>
   </data>
-  <data name="JournalEditorTitleMorning" xml:space="preserve">
-    <value>{0}, por la mañana</value>
-  </data>
-  <data name="JournalEditorTitleEvening" xml:space="preserve">
-    <value>{0}, por la noche</value>
-  </data>
   <data name="JournalExportLabel" xml:space="preserve">
     <value>Exportar CSV</value>
   </data>
@@ -1129,7 +1117,7 @@
     <value>Racha</value>
   </data>
   <data name="ProfileMoodTrendHint" xml:space="preserve">
-    <value>Registra aquí tu ánimo para ver la tendencia</value>
+    <value>Hacen falta al menos dos registros de ánimo para ver cómo cambia</value>
   </data>
   <data name="ChartFirstMeasurement" xml:space="preserve">
     <value>Primera medición</value>
@@ -4284,5 +4272,20 @@
   </data>
   <data name="JournalPromptPlaceholder" xml:space="preserve">
     <value>Tu respuesta o lo que quieras, si te apetece</value>
+  </data>
+  <data name="JournalLowMoodTitle" xml:space="preserve">
+    <value>Ahora mismo cuesta</value>
+  </data>
+  <data name="JournalLowMoodBody" xml:space="preserve">
+    <value>Puedes empezar por algo pequeño o pedir ayuda ya mismo.</value>
+  </data>
+  <data name="JournalLowMoodBreath" xml:space="preserve">
+    <value>Tres minutos de respiración</value>
+  </data>
+  <data name="JournalLowMoodAnchors" xml:space="preserve">
+    <value>Pensamientos en los que apoyarse</value>
+  </data>
+  <data name="JournalLowMoodHelp" xml:space="preserve">
+    <value>Necesito ayuda ahora</value>
   </data>
 </root>

@@ -20,7 +20,6 @@ public sealed class JournalViewModelFactory(
     JournalMoodLoader journalMoodLoader,
     JournalEditorContext editorContext,
     IDialogService dialogService,
-    IShellTabNavigator shellTabNavigator,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IJournalViewModelFactory
 {
     public JournalViewModel Create(ContentPage page) =>
@@ -28,7 +27,6 @@ public sealed class JournalViewModelFactory(
             journalMoodLoader,
             editorContext,
             dialogService,
-            shellTabNavigator,
             ResolveNavigation(navigationServiceFactory, page));
 }
 

@@ -2,6 +2,7 @@ using Moq;
 using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
+using PsychologyApp.Domain.UserProgress;
 using PsychologyApp.Presentation.Features.ManageJournal;
 using Xunit;
 
@@ -41,6 +42,46 @@ public sealed class JournalMoodLoaderTests
         Assert.Equal(2, snapshot.Stats.CheckInCount);
         Assert.Contains("4", snapshot.Stats.BestWorstLabel, StringComparison.Ordinal);
         Assert.Contains("3", snapshot.Stats.BestWorstLabel, StringComparison.Ordinal);
+    }
+
+    // "Best 4 · worst 4" after a single check-in told nothing and looked like a glitch.
+    [Fact]
+    public async Task The_best_and_worst_mood_show_only_when_they_differ()
+    {
+        Mock<IUserProgressService> progress = new();
+        progress
+            .Setup(p => p.GetMoodsAsync(It.IsAny<DateTime?>(), It.IsAny<DateTime?>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<MoodEntryDTO> { new() { MoodEntryId = 1, MoodLevel = 4, RecordedAt = DateTime.UtcNow } });
+        progress
+            .Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+
+        JournalMoodSnapshot snapshot = await new JournalMoodLoader(progress.Object, new KeywordCrisisDetector()).LoadAsync();
+
+        Assert.True(snapshot.Stats.HasStats);
+        Assert.Equal(string.Empty, snapshot.Stats.BestWorstLabel);
+    }
+
+    // Coming back to the journal after a crisis note must not turn the help-only card back into suggestions.
+    [Theory]
+    [InlineData("всем будет лучше без меня", true)]
+    [InlineData("Felt calmer", false)]
+    public async Task The_snapshot_says_whether_the_open_note_reads_like_a_crisis(string note, bool expected)
+    {
+        Mock<IUserProgressService> progress = new();
+        progress
+            .Setup(p => p.GetMoodsAsync(It.IsAny<DateTime?>(), It.IsAny<DateTime?>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<MoodEntryDTO> { new() { MoodEntryId = 1, MoodLevel = 2, Note = note, RecordedAt = DateTime.Now } });
+        progress
+            .Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+        JournalCheckInSlot slot = MoodCheckInSlotPolicy.IsMorningLocalHour(DateTime.Now.Hour) ? JournalCheckInSlot.Morning : JournalCheckInSlot.Evening;
+
+        JournalMoodSnapshot snapshot = await new JournalMoodLoader(progress.Object, new KeywordCrisisDetector())
+            .LoadAsync(editorDay: DateOnly.FromDateTime(DateTime.Today), editorSlot: slot);
+
+        Assert.Equal(note, snapshot.EditorNote);
+        Assert.Equal(expected, snapshot.EditorNoteLooksLikeCrisis);
     }
 
     [Fact]

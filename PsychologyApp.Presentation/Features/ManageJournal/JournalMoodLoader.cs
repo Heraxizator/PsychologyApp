@@ -37,6 +37,7 @@ public sealed record JournalMoodSnapshot(
     bool HasMorningEntry,
     bool HasEveningEntry,
     string? EditorNote,
+    bool EditorNoteLooksLikeCrisis,
     int SelectedMoodLevel,
     string EditorMoodDisplay,
     string MoodHistorySummary,
@@ -210,6 +211,7 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService, 
             morningEntry is not null,
             eveningEntry is not null,
             editorNote,
+            crisisDetector.IsCrisis(editorNote),
             selectedLevel,
             editorDisplay,
             historyEntries.Length == 0 ? string.Empty : string.Join(" · ", historyEntries),
@@ -455,7 +457,8 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService, 
             moods.OrderBy(entry => entry.RecordedAt).Select(entry => entry.MoodLevel).ToList());
         int best = moods.Max(entry => entry.MoodLevel);
         int worst = moods.Min(entry => entry.MoodLevel);
-        string bestWorst = AppStrings.JournalBestWorstPill(best, worst);
+        // "Best 4 · worst 4" says nothing: the pill shows only when the moods of the period differ.
+        string bestWorst = best == worst ? string.Empty : AppStrings.JournalBestWorstPill(best, worst);
 
         return new JournalMoodStats(
             moods.Count,

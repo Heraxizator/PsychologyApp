@@ -876,9 +876,6 @@
   <data name="JournalMoreMenuLabel" xml:space="preserve">
     <value>More</value>
   </data>
-  <data name="JournalSlotPickerTitle" xml:space="preserve">
-    <value>Check-in time</value>
-  </data>
   <data name="JournalNoteSaveHint" xml:space="preserve">
     <value>Mood saves instantly. Use the button below for the note.</value>
   </data>
@@ -984,9 +981,6 @@
   <data name="JournalTimelineEmpty" xml:space="preserve">
     <value>No check-ins yet — log a mood in the journal to start a streak</value>
   </data>
-  <data name="JournalTryShortPractice" xml:space="preserve">
-    <value>A short practice may help</value>
-  </data>
   <data name="JournalPromptBlockedShort" xml:space="preserve">
     <value>What blocked</value>
   </data>
@@ -1086,12 +1080,6 @@
   <data name="JournalSlotEvening" xml:space="preserve">
     <value>Evening</value>
   </data>
-  <data name="JournalEditorTitleMorning" xml:space="preserve">
-    <value>{0}, morning</value>
-  </data>
-  <data name="JournalEditorTitleEvening" xml:space="preserve">
-    <value>{0}, evening</value>
-  </data>
   <data name="JournalExportLabel" xml:space="preserve">
     <value>Export CSV</value>
   </data>
@@ -1129,7 +1117,7 @@
     <value>Streak</value>
   </data>
   <data name="ProfileMoodTrendHint" xml:space="preserve">
-    <value>Track mood here to see your trend</value>
+    <value>It takes at least two mood check-ins to see how your mood changes</value>
   </data>
   <data name="ChartFirstMeasurement" xml:space="preserve">
     <value>First measurement</value>
@@ -4284,5 +4272,20 @@
   </data>
   <data name="JournalPromptPlaceholder" xml:space="preserve">
     <value>Your answer or any thoughts, if you like</value>
+  </data>
+  <data name="JournalLowMoodTitle" xml:space="preserve">
+    <value>Things are hard right now</value>
+  </data>
+  <data name="JournalLowMoodBody" xml:space="preserve">
+    <value>You can start with something small, or ask for help straight away.</value>
+  </data>
+  <data name="JournalLowMoodBreath" xml:space="preserve">
+    <value>Three minutes of breathing</value>
+  </data>
+  <data name="JournalLowMoodAnchors" xml:space="preserve">
+    <value>Thoughts to lean on</value>
+  </data>
+  <data name="JournalLowMoodHelp" xml:space="preserve">
+    <value>I need help now</value>
   </data>
 </root>

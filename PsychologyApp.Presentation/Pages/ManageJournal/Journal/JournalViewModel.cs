@@ -1,6 +1,8 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
+using PsychologyApp.Domain.Practice;
 using PsychologyApp.Domain.UserProgress;
+using PsychologyApp.Presentation.Entities.FilterChip;
 using PsychologyApp.Presentation.Entities.Journal;
 using PsychologyApp.Presentation.Entities.Profile;
 using PsychologyApp.Presentation.Features.ManageJournal;
@@ -20,7 +22,6 @@ public sealed class JournalViewModel : BaseViewModel
     private readonly JournalMoodLoader _journalMoodLoader;
     private readonly JournalEditorContext _editorContext;
     private readonly IDialogService _dialogService;
-    private readonly IShellTabNavigator _shellTabNavigator;
     private readonly INavigationService _navigationService;
     private int _loadGeneration;
     private long? _editorEntryId;
@@ -34,18 +35,17 @@ public sealed class JournalViewModel : BaseViewModel
     private bool _suppressNoteAutosave;
     private bool _noteDirty;
     private string? _crisisOfferedForNote;
+    private bool _noteLooksLikeCrisis;
 
     public JournalViewModel(
         JournalMoodLoader journalMoodLoader,
         JournalEditorContext editorContext,
         IDialogService dialogService,
-        IShellTabNavigator shellTabNavigator,
         INavigationService navigationService)
     {
         _journalMoodLoader = journalMoodLoader;
         _editorContext = editorContext;
         _dialogService = dialogService;
-        _shellTabNavigator = shellTabNavigator;
         _navigationService = navigationService;
         BindNavigation(navigationService);
         ModuleName = AppStrings.JournalTitle;
@@ -60,9 +60,35 @@ public sealed class JournalViewModel : BaseViewModel
             await FlushPendingNoteSaveAsync();
             await navigationService.GoToJournalTimelineAsync();
         });
-        PickSlotCommand = new AsyncCommand(PickSlotAsync);
+        SelectSlotCommand = new Command<object?>(parameter =>
+        {
+            JournalCheckInSlot? slot = parameter switch
+            {
+                "morning" => JournalCheckInSlot.Morning,
+                "evening" => JournalCheckInSlot.Evening,
+                _ => null
+            };
+            if (slot is not null)
+            {
+                SelectSlotAsync(slot.Value).FireAndForget();
+            }
+        });
         FlushNoteCommand = new AsyncCommand(FlushPendingNoteSaveAsync);
-        OpenPracticeSuggestCommand = new Command(() => _shellTabNavigator.OpenPracticeTab());
+        OpenLowMoodBreathCommand = new AsyncCommand(async () =>
+        {
+            await FlushPendingNoteSaveAsync();
+            await navigationService.GoToTechniqueAsync(TechniqueId.CyclicSigh);
+        });
+        OpenLowMoodAnchorsCommand = new AsyncCommand(async () =>
+        {
+            await FlushPendingNoteSaveAsync();
+            await navigationService.GoToAnchorThoughtsAsync();
+        });
+        OpenLowMoodHelpCommand = new AsyncCommand(async () =>
+        {
+            await FlushPendingNoteSaveAsync();
+            await navigationService.GoToCrisisHubAsync();
+        });
         RecordMoodCommand = new AsyncCommand<object?>(async parameter =>
         {
             int level = parameter switch
@@ -111,6 +137,12 @@ public sealed class JournalViewModel : BaseViewModel
             SelectDayAsync(day.Value).FireAndForget();
         });
 
+        SlotFilters =
+        [
+            new FilterChipTabItem { Key = "morning", Title = AppStrings.JournalSlotMorning, IsSelected = _editorSlot == JournalCheckInSlot.Morning },
+            new FilterChipTabItem { Key = "evening", Title = AppStrings.JournalSlotEvening, IsSelected = _editorSlot == JournalCheckInSlot.Evening }
+        ];
+
         ActivityChips = new ObservableCollection<JournalActivityChip>(
             JournalNoteFactors.PrimaryKeys.Select(key => new JournalActivityChip
             {
@@ -125,7 +157,10 @@ public sealed class JournalViewModel : BaseViewModel
     public string MoodQuestionHero => AppStrings.JournalHowNowQuestion;
     /// <summary>Neutral, because the question of the day stands above the note; a second question in the field competed with it.</summary>
     public string NotePlaceholder => AppStrings.JournalPromptPlaceholder;
-    public string PracticeSuggestText => AppStrings.JournalTryShortPractice;
+    public string LowMoodTitle => AppStrings.JournalLowMoodTitle;
+    public string LowMoodBreathText => AppStrings.JournalLowMoodBreath;
+    public string LowMoodAnchorsText => AppStrings.JournalLowMoodAnchors;
+    public string LowMoodHelpText => AppStrings.JournalLowMoodHelp;
     public string OpenOverviewLabel => AppStrings.JournalOpenOverview;
     public string OpenTimelineLabel => AppStrings.JournalOpenTimeline;
     public string SlotMorningLabel => AppStrings.JournalSlotMorning;
@@ -196,8 +231,8 @@ public sealed class JournalViewModel : BaseViewModel
     public bool HasOnThisDay => OnThisDayText.Length > 0;
     public string SlotEveningLabel => AppStrings.JournalSlotEvening;
 
-    public string DayHeaderText =>
-        AppStrings.JournalEditorTitle(AppStrings.JournalEditorDayTitle(_editorDay), _editorSlot == JournalCheckInSlot.Evening);
+    /// <summary>Only the day: morning or evening is the chip below it, changed in one tap.</summary>
+    public string DayHeaderText => AppStrings.JournalEditorDayTitle(_editorDay);
 
     public string MoodSavedStatus =>
         HasMoodSelected ? AppStrings.TodayMoodSaved : string.Empty;
@@ -206,12 +241,15 @@ public sealed class JournalViewModel : BaseViewModel
         _weekStripEnd < DateOnly.FromDateTime(DateTime.Today);
 
     public ObservableCollection<JournalActivityChip> ActivityChips { get; }
+    public ObservableCollection<FilterChipTabItem> SlotFilters { get; }
 
     public ICommand OpenOverviewCommand { get; }
     public ICommand OpenTimelineCommand { get; }
-    public ICommand PickSlotCommand { get; }
+    public ICommand SelectSlotCommand { get; }
     public ICommand FlushNoteCommand { get; }
-    public ICommand OpenPracticeSuggestCommand { get; }
+    public ICommand OpenLowMoodBreathCommand { get; }
+    public ICommand OpenLowMoodAnchorsCommand { get; }
+    public ICommand OpenLowMoodHelpCommand { get; }
     public ICommand RecordMoodCommand { get; }
     public ICommand ToggleFactorCommand { get; }
     public ICommand SelectDayCommand { get; }
@@ -231,7 +269,7 @@ public sealed class JournalViewModel : BaseViewModel
         {
             if (SetProperty(ref _selectedMoodLevel, value))
             {
-                OnPropertyChanged(nameof(ShowPracticeSuggest));
+                NotifyLowMoodSupport();
                 OnPropertyChanged(nameof(HasMoodSelected));
                 OnPropertyChanged(nameof(ShowMoodQuestion));
                 OnPropertyChanged(nameof(ShowNoteEditor));
@@ -243,9 +281,15 @@ public sealed class JournalViewModel : BaseViewModel
     public bool HasMoodSelected => SelectedMoodLevel is >= 1 and <= 5;
     public bool ShowMoodQuestion => !HasMoodSelected;
     public bool ShowNoteEditor => HasMoodSelected;
-    public bool ShowPracticeSuggest =>
-        _editorDay == DateOnly.FromDateTime(DateTime.Today)
-        && SelectedMoodLevel is 1 or 2;
+    private JournalLowMoodSupportKind LowMoodSupport =>
+        JournalLowMoodSupport.For(_editorDay == DateOnly.FromDateTime(DateTime.Today), SelectedMoodLevel, _noteLooksLikeCrisis);
+
+    public bool ShowLowMoodSupport => LowMoodSupport != JournalLowMoodSupportKind.None;
+    public bool ShowLowMoodPractices => LowMoodSupport == JournalLowMoodSupportKind.PracticesAndHelp;
+
+    /// <summary>In a crisis the card suggests nothing: it says what the crisis prompt says and leads only to help.</summary>
+    public string LowMoodBody =>
+        LowMoodSupport == JournalLowMoodSupportKind.HelpOnly ? AppStrings.JournalCrisisPromptBody : AppStrings.JournalLowMoodBody;
 
     private string _journalNote = string.Empty;
     public string JournalNote
@@ -273,14 +317,17 @@ public sealed class JournalViewModel : BaseViewModel
             nameof(PageTitle),
             nameof(MoodQuestionHero),
             nameof(NotePlaceholder),
-            nameof(PracticeSuggestText),
+            nameof(LowMoodTitle),
+            nameof(LowMoodBody),
+            nameof(LowMoodBreathText),
+            nameof(LowMoodAnchorsText),
+            nameof(LowMoodHelpText),
             nameof(OpenOverviewLabel),
             nameof(OpenTimelineLabel),
             nameof(SlotMorningLabel),
             nameof(SlotEveningLabel),
             nameof(DayHeaderText),
             nameof(MoodSavedStatus),
-            nameof(ShowPracticeSuggest),
             nameof(HasMoodSelected),
             nameof(ShowMoodQuestion),
             nameof(ShowNoteEditor),
@@ -298,6 +345,11 @@ public sealed class JournalViewModel : BaseViewModel
         foreach (JournalActivityChip chip in ActivityChips)
         {
             chip.Label = JournalNoteFactors.GetLabel(chip.Key);
+        }
+
+        foreach (FilterChipTabItem filter in SlotFilters)
+        {
+            filter.Title = filter.Key == "morning" ? AppStrings.JournalSlotMorning : AppStrings.JournalSlotEvening;
         }
     }
 
@@ -324,22 +376,6 @@ public sealed class JournalViewModel : BaseViewModel
         await SaveMoodAsync(reload: false);
     }
 
-    private async Task PickSlotAsync()
-    {
-        string? picked = await _dialogService.PickOptionAsync(
-            AppStrings.JournalSlotPickerTitle,
-            [AppStrings.JournalSlotMorning, AppStrings.JournalSlotEvening],
-            AppStrings.Cancel);
-        if (picked == AppStrings.JournalSlotMorning)
-        {
-            await SelectSlotAsync(JournalCheckInSlot.Morning);
-        }
-        else if (picked == AppStrings.JournalSlotEvening)
-        {
-            await SelectSlotAsync(JournalCheckInSlot.Evening);
-        }
-    }
-
     private async Task SelectDayAsync(DateOnly day)
     {
         await FlushPendingNoteSaveAsync();
@@ -362,9 +398,21 @@ public sealed class JournalViewModel : BaseViewModel
 
         await FlushPendingNoteSaveAsync();
         _editorSlot = slot;
-        OnPropertyChanged(nameof(DayHeaderText));
+        SyncSlotFilters();
         await LoadAsync();
     }
+
+    private void SyncSlotFilters()
+    {
+        string key = _editorSlot == JournalCheckInSlot.Morning ? "morning" : "evening";
+        foreach (FilterChipTabItem filter in SlotFilters)
+        {
+            filter.IsSelected = filter.Key == key;
+        }
+    }
+
+    private void NotifyLowMoodSupport() =>
+        Notify(nameof(ShowLowMoodSupport), nameof(ShowLowMoodPractices), nameof(LowMoodBody));
 
     private void SyncActivityChips()
     {
@@ -466,6 +514,8 @@ public sealed class JournalViewModel : BaseViewModel
         _editorEntryId = snapshot.EditorEntryId;
         _editorDay = snapshot.EditorDay;
         _editorSlot = snapshot.EditorSlot;
+        SyncSlotFilters();
+        _noteLooksLikeCrisis = snapshot.EditorNoteLooksLikeCrisis;
         SelectedMoodLevel = snapshot.SelectedMoodLevel;
         _suppressNoteAutosave = true;
         try
@@ -484,7 +534,7 @@ public sealed class JournalViewModel : BaseViewModel
 
         Notify(nameof(HasWeekStats), nameof(WeekCheckIns), nameof(WeekAverage), nameof(WeekStreak), nameof(PromptText));
         OnPropertyChanged(nameof(DayHeaderText));
-        OnPropertyChanged(nameof(ShowPracticeSuggest));
+        NotifyLowMoodSupport();
         OnPropertyChanged(nameof(ShowMoodQuestion));
         OnPropertyChanged(nameof(ShowNoteEditor));
         OnPropertyChanged(nameof(MoodSavedStatus));
@@ -506,8 +556,9 @@ public sealed class JournalViewModel : BaseViewModel
             _editorDay,
             _editorSlot);
         _noteDirty = false;
+        _noteLooksLikeCrisis = looksLikeCrisis;
         OnPropertyChanged(nameof(MoodSavedStatus));
-        OnPropertyChanged(nameof(ShowPracticeSuggest));
+        NotifyLowMoodSupport();
         if (reload)
         {
             await LoadAsync();

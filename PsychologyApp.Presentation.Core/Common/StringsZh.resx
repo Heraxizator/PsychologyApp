@@ -876,9 +876,6 @@
   <data name="JournalMoreMenuLabel" xml:space="preserve">
     <value>更多</value>
   </data>
-  <data name="JournalSlotPickerTitle" xml:space="preserve">
-    <value>记录时间</value>
-  </data>
   <data name="JournalNoteSaveHint" xml:space="preserve">
     <value>心情会立即保存。笔记请使用下方按钮保存。</value>
   </data>
@@ -984,9 +981,6 @@
   <data name="JournalTimelineEmpty" xml:space="preserve">
     <value>还没有记录——在日记中记下心情，开始连续记录吧</value>
   </data>
-  <data name="JournalTryShortPractice" xml:space="preserve">
-    <value>一个简短的练习也许有帮助</value>
-  </data>
   <data name="JournalPromptBlockedShort" xml:space="preserve">
     <value>阻碍</value>
   </data>
@@ -1086,12 +1080,6 @@
   <data name="JournalSlotEvening" xml:space="preserve">
     <value>晚上</value>
   </data>
-  <data name="JournalEditorTitleMorning" xml:space="preserve">
-    <value>{0}，早上</value>
-  </data>
-  <data name="JournalEditorTitleEvening" xml:space="preserve">
-    <value>{0}，晚上</value>
-  </data>
   <data name="JournalExportLabel" xml:space="preserve">
     <value>导出 CSV</value>
   </data>
@@ -1129,7 +1117,7 @@
     <value>连续</value>
   </data>
   <data name="ProfileMoodTrendHint" xml:space="preserve">
-    <value>在这里记录心情，就能看到趋势</value>
+    <value>至少记录两次心情，才能看到它的变化</value>
   </data>
   <data name="ChartFirstMeasurement" xml:space="preserve">
     <value>第一次测量</value>
@@ -4284,5 +4272,20 @@
   </data>
   <data name="JournalPromptPlaceholder" xml:space="preserve">
     <value>写下你的回答或任何想法（可选）</value>
+  </data>
+  <data name="JournalLowMoodTitle" xml:space="preserve">
+    <value>此刻不太容易</value>
+  </data>
+  <data name="JournalLowMoodBody" xml:space="preserve">
+    <value>可以从一件小事开始，也可以直接寻求帮助。</value>
+  </data>
+  <data name="JournalLowMoodBreath" xml:space="preserve">
+    <value>三分钟呼吸练习</value>
+  </data>
+  <data name="JournalLowMoodAnchors" xml:space="preserve">
+    <value>可以依靠的想法</value>
+  </data>
+  <data name="JournalLowMoodHelp" xml:space="preserve">
+    <value>我现在需要帮助</value>
   </data>
 </root>

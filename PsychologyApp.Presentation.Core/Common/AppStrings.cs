@@ -296,7 +296,6 @@ public static partial class AppStrings
     public static string JournalHideHintsLabel => R(nameof(JournalHideHintsLabel));
     public static string JournalHowNowQuestion => R(nameof(JournalHowNowQuestion));
     public static string JournalMoreMenuLabel => R(nameof(JournalMoreMenuLabel));
-    public static string JournalSlotPickerTitle => R(nameof(JournalSlotPickerTitle));
     public static string JournalNoteSaveHint => R(nameof(JournalNoteSaveHint));
     public static string JournalSaveLabel => R(nameof(JournalSaveLabel));
     public static string JournalDeleteLabel => R(nameof(JournalDeleteLabel));
@@ -419,7 +418,6 @@ public static partial class AppStrings
         string.IsNullOrWhiteSpace(streak) || streak == MetricEmptyValue
             ? string.Empty
             : F("JournalTimelineStreakLine.1", streak);
-    public static string JournalTryShortPractice => R(nameof(JournalTryShortPractice));
     public static string JournalPromptBlockedShort => R(nameof(JournalPromptBlockedShort));
     public static string JournalPromptGratefulShort => R(nameof(JournalPromptGratefulShort));
     public static string JournalFactorSleep => R(nameof(JournalFactorSleep));
@@ -476,8 +474,12 @@ public static partial class AppStrings
         return F("JournalOnThisDayLastYear.2", mood, snippet);
     }
     public static string JournalSlotMorning => R(nameof(JournalSlotMorning));
+    public static string JournalLowMoodTitle => R(nameof(JournalLowMoodTitle));
+    public static string JournalLowMoodBody => R(nameof(JournalLowMoodBody));
+    public static string JournalLowMoodBreath => R(nameof(JournalLowMoodBreath));
+    public static string JournalLowMoodAnchors => R(nameof(JournalLowMoodAnchors));
+    public static string JournalLowMoodHelp => R(nameof(JournalLowMoodHelp));
     public static string JournalSlotEvening => R(nameof(JournalSlotEvening));
-    public static string JournalEditorTitle(string day, bool evening) => F(evening ? "JournalEditorTitleEvening" : "JournalEditorTitleMorning", day);
     public static string BalloonsFieldDescription => R(nameof(BalloonsFieldDescription));
     public static string BalloonsPopOne => R(nameof(BalloonsPopOne));
     public static string BalloonsStart => R(nameof(BalloonsStart));

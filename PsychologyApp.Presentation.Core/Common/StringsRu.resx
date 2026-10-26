@@ -520,10 +520,10 @@
     <value>Не удалось открыть приложение для отправки СМС</value>
   </data>
   <data name="ReviewEmailNotSupported" xml:space="preserve">
-    <value>Отправка email не поддерживается</value>
+    <value>Отправка письма не поддерживается</value>
   </data>
   <data name="ReviewEmailFailed" xml:space="preserve">
-    <value>Не удалось открыть приложение для отправки email</value>
+    <value>Не удалось открыть почтовое приложение</value>
   </data>
   <data name="ReviewShareTitle" xml:space="preserve">
     <value>Отзыв о приложении</value>
@@ -876,9 +876,6 @@
   <data name="JournalMoreMenuLabel" xml:space="preserve">
     <value>Ещё</value>
   </data>
-  <data name="JournalSlotPickerTitle" xml:space="preserve">
-    <value>Время check-in</value>
-  </data>
   <data name="JournalNoteSaveHint" xml:space="preserve">
     <value>Настроение сохраняется сразу. Заметку — кнопкой ниже.</value>
   </data>
@@ -982,10 +979,7 @@
     <value>Ничего не найдено</value>
   </data>
   <data name="JournalTimelineEmpty" xml:space="preserve">
-    <value>Ещё нет отметок — сделайте check-in в дневнике, чтобы начать серию</value>
-  </data>
-  <data name="JournalTryShortPractice" xml:space="preserve">
-    <value>Короткая практика может помочь</value>
+    <value>Ещё нет отметок — отметьте настроение в дневнике, чтобы начать серию</value>
   </data>
   <data name="JournalPromptBlockedShort" xml:space="preserve">
     <value>Что мешало</value>
@@ -1086,12 +1080,6 @@
   <data name="JournalSlotEvening" xml:space="preserve">
     <value>Вечер</value>
   </data>
-  <data name="JournalEditorTitleMorning" xml:space="preserve">
-    <value>{0}, утро</value>
-  </data>
-  <data name="JournalEditorTitleEvening" xml:space="preserve">
-    <value>{0}, вечер</value>
-  </data>
   <data name="JournalExportLabel" xml:space="preserve">
     <value>Экспорт CSV</value>
   </data>
@@ -1108,7 +1096,7 @@
     <value>В этот день уже две отметки — выберите Утро или Вечер</value>
   </data>
   <data name="MoodNotesEmpty" xml:space="preserve">
-    <value>Пока нет отметок настроения — сделайте check-in выше</value>
+    <value>Пока нет отметок настроения — отметьте его выше</value>
   </data>
   <data name="JournalNeedMoodToSave" xml:space="preserve">
     <value>Сначала выберите настроение</value>
@@ -1129,7 +1117,7 @@
     <value>Серия</value>
   </data>
   <data name="ProfileMoodTrendHint" xml:space="preserve">
-    <value>Отмечайте настроение здесь, чтобы увидеть динамику</value>
+    <value>Нужно хотя бы две отметки настроения, чтобы увидеть, как оно меняется</value>
   </data>
   <data name="ChartFirstMeasurement" xml:space="preserve">
     <value>Первое измерение</value>
@@ -1405,10 +1393,10 @@
     <value>Время</value>
   </data>
   <data name="SettingsMoodRemindersLabel" xml:space="preserve">
-    <value>Напоминать о check-in</value>
+    <value>Напоминать отметить настроение</value>
   </data>
   <data name="SettingsMoodReminderHourLabel" xml:space="preserve">
-    <value>Время check-in</value>
+    <value>Время отметки</value>
   </data>
   <data name="SettingsMoodReminderHourPickerTitle" xml:space="preserve">
     <value>Время</value>
@@ -1804,7 +1792,7 @@
     <value>Запись дневника</value>
   </data>
   <data name="JournalReminderToggle" xml:space="preserve">
-    <value>Напоминать о check-in</value>
+    <value>Напоминать отметить настроение</value>
   </data>
   <data name="JournalReminderHint" xml:space="preserve">
     <value>Время можно изменить в настройках</value>
@@ -2938,7 +2926,7 @@
     <value>Лучший {0} {1} · Худший {2} {3}</value>
   </data>
   <data name="JournalTimelineStreakLine.1" xml:space="preserve">
-    <value>Серия check-in: {0}</value>
+    <value>Дней подряд с отметкой: {0}</value>
   </data>
   <data name="JournalOnThisDayLastYear.1" xml:space="preserve">
     <value>Год назад: {0}</value>
@@ -4290,5 +4278,20 @@
   </data>
   <data name="JournalPromptPlaceholder" xml:space="preserve">
     <value>Ответ или любые мысли — по желанию</value>
+  </data>
+  <data name="JournalLowMoodTitle" xml:space="preserve">
+    <value>Сейчас непросто</value>
+  </data>
+  <data name="JournalLowMoodBody" xml:space="preserve">
+    <value>Можно начать с малого — или сразу попросить о помощи.</value>
+  </data>
+  <data name="JournalLowMoodBreath" xml:space="preserve">
+    <value>Три минуты дыхания</value>
+  </data>
+  <data name="JournalLowMoodAnchors" xml:space="preserve">
+    <value>Мысли, на которые можно опереться</value>
+  </data>
+  <data name="JournalLowMoodHelp" xml:space="preserve">
+    <value>Мне нужна помощь сейчас</value>
   </data>
 </root>

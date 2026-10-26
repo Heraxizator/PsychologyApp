@@ -876,9 +876,6 @@
   <data name="JournalMoreMenuLabel" xml:space="preserve">
     <value>Plus</value>
   </data>
-  <data name="JournalSlotPickerTitle" xml:space="preserve">
-    <value>Moment de la note</value>
-  </data>
   <data name="JournalNoteSaveHint" xml:space="preserve">
     <value>L'humeur est enregistrée tout de suite. Utilisez le bouton ci-dessous pour la note.</value>
   </data>
@@ -984,9 +981,6 @@
   <data name="JournalTimelineEmpty" xml:space="preserve">
     <value>Pas encore de notes — notez votre humeur dans le journal pour lancer une série</value>
   </data>
-  <data name="JournalTryShortPractice" xml:space="preserve">
-    <value>Une courte pratique peut aider</value>
-  </data>
   <data name="JournalPromptBlockedShort" xml:space="preserve">
     <value>Ce qui a gêné</value>
   </data>
@@ -1086,12 +1080,6 @@
   <data name="JournalSlotEvening" xml:space="preserve">
     <value>Soir</value>
   </data>
-  <data name="JournalEditorTitleMorning" xml:space="preserve">
-    <value>{0}, le matin</value>
-  </data>
-  <data name="JournalEditorTitleEvening" xml:space="preserve">
-    <value>{0}, le soir</value>
-  </data>
   <data name="JournalExportLabel" xml:space="preserve">
     <value>Exporter en CSV</value>
   </data>
@@ -1129,7 +1117,7 @@
     <value>Série</value>
   </data>
   <data name="ProfileMoodTrendHint" xml:space="preserve">
-    <value>Notez votre humeur ici pour voir la tendance</value>
+    <value>Il faut au moins deux notes d'humeur pour voir comment elle évolue</value>
   </data>
   <data name="ChartFirstMeasurement" xml:space="preserve">
     <value>Première mesure</value>
@@ -4284,5 +4272,20 @@
   </data>
   <data name="JournalPromptPlaceholder" xml:space="preserve">
     <value>Votre réponse ou vos pensées, si vous voulez</value>
+  </data>
+  <data name="JournalLowMoodTitle" xml:space="preserve">
+    <value>C'est difficile en ce moment</value>
+  </data>
+  <data name="JournalLowMoodBody" xml:space="preserve">
+    <value>Vous pouvez commencer par un petit pas, ou demander de l'aide tout de suite.</value>
+  </data>
+  <data name="JournalLowMoodBreath" xml:space="preserve">
+    <value>Trois minutes de respiration</value>
+  </data>
+  <data name="JournalLowMoodAnchors" xml:space="preserve">
+    <value>Des pensées sur lesquelles s'appuyer</value>
+  </data>
+  <data name="JournalLowMoodHelp" xml:space="preserve">
+    <value>J'ai besoin d'aide maintenant</value>
   </data>
 </root>

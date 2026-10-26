@@ -50,14 +50,13 @@
                 LineBreakMode="WordWrap"
                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                 FontFamily="{StaticResource SemiBoldFontFamily}"
-                SemanticProperties.Description="{Binding DayHeaderText}">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding PickSlotCommand}" />
-                </Label.GestureRecognizers>
-                <Label.Behaviors>
-                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
-                </Label.Behaviors>
-            </Label>
+                SemanticProperties.Description="{Binding DayHeaderText}" />
+
+            <!-- Morning and evening are two check-ins of one day; the chips show which one is open (it used to hide behind a tap on the title). -->
+            <ui:FilterChipTabBarView
+                HorizontalOptions="Center"
+                ItemsSource="{Binding SlotFilters}"
+                TapCommand="{Binding SelectSlotCommand}" />
 
             <Label
                 IsVisible="{Binding ShowMoodQuestion}"
@@ -122,22 +121,57 @@
                 </FlexLayout>
             </VerticalStackLayout>
 
-            <Label
-                IsVisible="{Binding ShowPracticeSuggest}"
-                Text="{Binding PracticeSuggestText}"
-                Style="{StaticResource CaptionStyle}"
-                HorizontalOptions="Fill"
-                HorizontalTextAlignment="Center"
-                LineBreakMode="WordWrap"
-                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
-                SemanticProperties.Description="{Binding PracticeSuggestText}">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding OpenPracticeSuggestCommand}" />
-                </Label.GestureRecognizers>
-                <Label.Behaviors>
-                    <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
-                </Label.Behaviors>
-            </Label>
+            <!-- After a low check-in today: something small to do and help one tap away. In a crisis only the help row stays. -->
+            <Border IsVisible="{Binding ShowLowMoodSupport}" Style="{StaticResource BrandCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <Label Text="{Binding LowMoodTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <Label Text="{Binding LowMoodBody}" Style="{StaticResource BodyStyle}" />
+                    <VerticalStackLayout IsVisible="{Binding ShowLowMoodPractices}" Spacing="0">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="44" SemanticProperties.Description="{Binding LowMoodBreathText}">
+                        <Grid.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </Grid.Behaviors>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenLowMoodBreathCommand}" />
+                        </Grid.GestureRecognizers>
+                        <ui:MaterialIconView IconName="SelfImprovement" IconSize="22" VerticalOptions="Center"
+                                             IconColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                        <Label Grid.Column="1" Text="{Binding LowMoodBreathText}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource MediumFontFamily}" VerticalOptions="Center"
+                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                        <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="22" VerticalOptions="Center"
+                                             IconColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                    </Grid>
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="44" SemanticProperties.Description="{Binding LowMoodAnchorsText}">
+                        <Grid.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </Grid.Behaviors>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenLowMoodAnchorsCommand}" />
+                        </Grid.GestureRecognizers>
+                        <ui:MaterialIconView IconName="Lightbulb" IconSize="22" VerticalOptions="Center"
+                                             IconColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                        <Label Grid.Column="1" Text="{Binding LowMoodAnchorsText}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource MediumFontFamily}" VerticalOptions="Center"
+                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                        <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="22" VerticalOptions="Center"
+                                             IconColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                    </Grid>
+                    </VerticalStackLayout>
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="44" SemanticProperties.Description="{Binding LowMoodHelpText}">
+                        <Grid.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </Grid.Behaviors>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenLowMoodHelpCommand}" />
+                        </Grid.GestureRecognizers>
+                        <ui:MaterialIconView IconName="SupportAgent" IconSize="22" VerticalOptions="Center"
+                                             IconColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                        <Label Grid.Column="1" Text="{Binding LowMoodHelpText}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource MediumFontFamily}" VerticalOptions="Center"
+                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                        <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="22" VerticalOptions="Center"
+                                             IconColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
 
             <!-- The week at a glance, the same figures as the overview; before there are any, what this place will show. -->
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
