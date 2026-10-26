@@ -55,11 +55,6 @@
     "theme": "motivation"
   },
   {
-    "author": "Nelson Mandela",
-    "text": "Sempre parece impossível até que seja feito.",
-    "theme": "motivation"
-  },
-  {
     "author": "Sêneca",
     "text": "Não é porque as coisas são difíceis que não ousamos; é porque não ousamos que elas são difíceis.",
     "theme": "motivation"
@@ -82,11 +77,6 @@
   {
     "author": "Epicteto",
     "text": "Primeiro diga a si mesmo o que quer ser; depois faça o que tem de fazer.",
-    "theme": "motivation"
-  },
-  {
-    "author": "Maya Angelou",
-    "text": "Nada vai funcionar a menos que você faça.",
     "theme": "motivation"
   },
   {
@@ -115,7 +105,7 @@
     "theme": "resilience"
   },
   {
-    "author": "Confúcio",
+    "author": "Oliver Goldsmith",
     "text": "Nossa maior glória não está em nunca cair, mas em levantar a cada queda.",
     "theme": "resilience"
   },
@@ -335,11 +325,6 @@
     "theme": "self-awareness"
   },
   {
-    "author": "Rumi",
-    "text": "Ontem eu era inteligente, então queria mudar o mundo. Hoje sou sábio, então estou mudando a mim mesmo.",
-    "theme": "self-awareness"
-  },
-  {
     "author": "Sêneca",
     "text": "Conviva com pessoas que possam torná-lo melhor.",
     "theme": "relationships"
@@ -380,7 +365,7 @@
     "theme": "relationships"
   },
   {
-    "author": "Aristóteles",
+    "author": "Will Durant",
     "text": "Somos o que fazemos repetidamente. A excelência, portanto, não é um ato, mas um hábito.",
     "theme": "habits"
   },
@@ -510,7 +495,7 @@
     "theme": "happiness"
   },
   {
-    "author": "Liev Tolstói",
+    "author": "Kozma Prutkov",
     "text": "Se quer ser feliz, seja.",
     "theme": "happiness"
   },
@@ -542,11 +527,6 @@
   {
     "author": "Lao Tsé",
     "text": "Grandes obras são feitas de pequenos atos.",
-    "theme": "motivation"
-  },
-  {
-    "author": "Confúcio",
-    "text": "Quem move uma montanha começa carregando pequenas pedras.",
     "theme": "motivation"
   },
   {
@@ -630,11 +610,6 @@
     "theme": "mindfulness"
   },
   {
-    "author": "Lao Tsé",
-    "text": "Quando abro mão do que sou, me torno o que poderia ser.",
-    "theme": "mindfulness"
-  },
-  {
     "author": "Jon Kabat-Zinn",
     "text": "Aonde quer que você vá, lá está você.",
     "theme": "mindfulness"
@@ -652,11 +627,6 @@
   {
     "author": "Rumi",
     "text": "Onde há ruínas, há esperança de um tesouro.",
-    "theme": "hope"
-  },
-  {
-    "author": "Victor Hugo",
-    "text": "Até a noite mais escura vai acabar, e o sol vai nascer.",
     "theme": "hope"
   },
   {
@@ -933,11 +903,6 @@
     "author": "Marco Aurélio",
     "text": "A primeira regra é manter o espírito tranquilo. A segunda é encarar as coisas e vê-las como são.",
     "theme": "wisdom"
-  },
-  {
-    "author": "Marco Aurélio",
-    "text": "Não é a morte que devemos temer, mas nunca começar a viver.",
-    "theme": "acceptance"
   },
   {
     "author": "Marco Aurélio",

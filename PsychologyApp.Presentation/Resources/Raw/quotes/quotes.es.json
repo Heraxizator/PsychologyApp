@@ -55,11 +55,6 @@
     "theme": "motivation"
   },
   {
-    "author": "Nelson Mandela",
-    "text": "Siempre parece imposible hasta que se hace.",
-    "theme": "motivation"
-  },
-  {
     "author": "Séneca",
     "text": "No es porque las cosas sean difíciles que no nos atrevemos; es porque no nos atrevemos que son difíciles.",
     "theme": "motivation"
@@ -82,11 +77,6 @@
   {
     "author": "Epicteto",
     "text": "Primero dite a ti mismo lo que quieres ser, y luego haz lo que tengas que hacer.",
-    "theme": "motivation"
-  },
-  {
-    "author": "Maya Angelou",
-    "text": "Nada funcionará a menos que tú lo hagas.",
     "theme": "motivation"
   },
   {
@@ -115,7 +105,7 @@
     "theme": "resilience"
   },
   {
-    "author": "Confucio",
+    "author": "Oliver Goldsmith",
     "text": "Nuestra mayor gloria no está en no caer nunca, sino en levantarnos cada vez que caemos.",
     "theme": "resilience"
   },
@@ -335,11 +325,6 @@
     "theme": "self-awareness"
   },
   {
-    "author": "Rumi",
-    "text": "Ayer era inteligente, así que quería cambiar el mundo. Hoy soy sabio, así que me estoy cambiando a mí mismo.",
-    "theme": "self-awareness"
-  },
-  {
     "author": "Séneca",
     "text": "Rodéate de personas que puedan mejorarte.",
     "theme": "relationships"
@@ -380,7 +365,7 @@
     "theme": "relationships"
   },
   {
-    "author": "Aristóteles",
+    "author": "Will Durant",
     "text": "Somos lo que hacemos repetidamente. La excelencia, entonces, no es un acto, sino un hábito.",
     "theme": "habits"
   },
@@ -510,7 +495,7 @@
     "theme": "happiness"
   },
   {
-    "author": "León Tolstói",
+    "author": "Kozmá Prutkov",
     "text": "Si quieres ser feliz, sé feliz.",
     "theme": "happiness"
   },
@@ -542,11 +527,6 @@
   {
     "author": "Lao Tse",
     "text": "Las grandes obras están hechas de pequeños actos.",
-    "theme": "motivation"
-  },
-  {
-    "author": "Confucio",
-    "text": "Quien mueve una montaña empieza por llevarse piedras pequeñas.",
     "theme": "motivation"
   },
   {
@@ -630,11 +610,6 @@
     "theme": "mindfulness"
   },
   {
-    "author": "Lao Tse",
-    "text": "Cuando suelto lo que soy, me convierto en lo que podría ser.",
-    "theme": "mindfulness"
-  },
-  {
     "author": "Jon Kabat-Zinn",
     "text": "Dondequiera que vayas, ahí estás.",
     "theme": "mindfulness"
@@ -652,11 +627,6 @@
   {
     "author": "Rumi",
     "text": "Donde hay ruinas, hay esperanza de un tesoro.",
-    "theme": "hope"
-  },
-  {
-    "author": "Victor Hugo",
-    "text": "Incluso la noche más oscura terminará y saldrá el sol.",
     "theme": "hope"
   },
   {
@@ -933,11 +903,6 @@
     "author": "Marco Aurelio",
     "text": "La primera regla es mantener el espíritu sereno. La segunda, mirar las cosas de frente y verlas como son.",
     "theme": "wisdom"
-  },
-  {
-    "author": "Marco Aurelio",
-    "text": "No es la muerte lo que debemos temer, sino no empezar nunca a vivir.",
-    "theme": "acceptance"
   },
   {
     "author": "Marco Aurelio",

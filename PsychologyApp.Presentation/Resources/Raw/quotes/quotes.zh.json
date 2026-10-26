@@ -55,11 +55,6 @@
     "theme": "motivation"
   },
   {
-    "author": "纳尔逊·曼德拉",
-    "text": "在事情办成之前，一切总看似不可能。",
-    "theme": "motivation"
-  },
-  {
     "author": "塞涅卡",
     "text": "不是因为事情难，我们才不敢做；而是因为我们不敢做，事情才变难。",
     "theme": "motivation"
@@ -82,11 +77,6 @@
   {
     "author": "爱比克泰德",
     "text": "先告诉自己你想成为什么样的人，然后去做你该做的事。",
-    "theme": "motivation"
-  },
-  {
-    "author": "玛雅·安吉罗",
-    "text": "除非你去做，否则什么都不会成功。",
     "theme": "motivation"
   },
   {
@@ -115,7 +105,7 @@
     "theme": "resilience"
   },
   {
-    "author": "孔子",
+    "author": "奥利弗·哥尔德斯密斯",
     "text": "我们最大的荣耀不在于从不跌倒，而在于每次跌倒后都能站起来。",
     "theme": "resilience"
   },
@@ -335,11 +325,6 @@
     "theme": "self-awareness"
   },
   {
-    "author": "鲁米",
-    "text": "昨天我很聪明，所以想改变世界；今天我有了智慧，所以我在改变自己。",
-    "theme": "self-awareness"
-  },
-  {
     "author": "塞涅卡",
     "text": "与能让你变得更好的人交往。",
     "theme": "relationships"
@@ -380,7 +365,7 @@
     "theme": "relationships"
   },
   {
-    "author": "亚里士多德",
+    "author": "威尔·杜兰特",
     "text": "我们反复做的事造就了我们。因此，卓越不是一种行为，而是一种习惯。",
     "theme": "habits"
   },
@@ -510,7 +495,7 @@
     "theme": "happiness"
   },
   {
-    "author": "列夫·托尔斯泰",
+    "author": "科兹马·普鲁特科夫",
     "text": "如果你想快乐，那就快乐吧。",
     "theme": "happiness"
   },
@@ -542,11 +527,6 @@
   {
     "author": "老子",
     "text": "天下大事，必作于细。",
-    "theme": "motivation"
-  },
-  {
-    "author": "孔子",
-    "text": "移山的人，是从搬走小石头开始的。",
     "theme": "motivation"
   },
   {
@@ -630,11 +610,6 @@
     "theme": "mindfulness"
   },
   {
-    "author": "老子",
-    "text": "当我放下我是谁，我就成为我可能成为的样子。",
-    "theme": "mindfulness"
-  },
-  {
     "author": "乔·卡巴金",
     "text": "无论你去哪里，你都在那里。",
     "theme": "mindfulness"
@@ -652,11 +627,6 @@
   {
     "author": "鲁米",
     "text": "有废墟的地方，就有发现宝藏的希望。",
-    "theme": "hope"
-  },
-  {
-    "author": "雨果",
-    "text": "即使最黑暗的夜晚也会结束，太阳终将升起。",
     "theme": "hope"
   },
   {
@@ -933,11 +903,6 @@
     "author": "马可·奥勒留",
     "text": "第一条规则是保持内心平静；第二条是直面事物，看清它们本来的样子。",
     "theme": "wisdom"
-  },
-  {
-    "author": "马可·奥勒留",
-    "text": "人不该害怕死亡，而该害怕从未开始生活。",
-    "theme": "acceptance"
   },
   {
     "author": "马可·奥勒留",

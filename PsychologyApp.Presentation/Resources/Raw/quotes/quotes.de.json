@@ -55,11 +55,6 @@
     "theme": "motivation"
   },
   {
-    "author": "Nelson Mandela",
-    "text": "Es scheint immer unmöglich, bis es getan ist.",
-    "theme": "motivation"
-  },
-  {
     "author": "Seneca",
     "text": "Nicht weil es schwer ist, wagen wir es nicht, sondern weil wir es nicht wagen, ist es schwer.",
     "theme": "motivation"
@@ -82,11 +77,6 @@
   {
     "author": "Epiktet",
     "text": "Sag dir zuerst, wer du sein willst, und dann tu, was du tun musst.",
-    "theme": "motivation"
-  },
-  {
-    "author": "Maya Angelou",
-    "text": "Nichts wird funktionieren, wenn du es nicht tust.",
     "theme": "motivation"
   },
   {
@@ -115,7 +105,7 @@
     "theme": "resilience"
   },
   {
-    "author": "Konfuzius",
+    "author": "Oliver Goldsmith",
     "text": "Unser größter Ruhm ist nicht, niemals zu fallen, sondern jedes Mal wieder aufzustehen.",
     "theme": "resilience"
   },
@@ -335,11 +325,6 @@
     "theme": "self-awareness"
   },
   {
-    "author": "Rumi",
-    "text": "Gestern war ich klug, also wollte ich die Welt verändern. Heute bin ich weise, also verändere ich mich selbst.",
-    "theme": "self-awareness"
-  },
-  {
     "author": "Seneca",
     "text": "Umgib dich mit Menschen, die dich besser machen.",
     "theme": "relationships"
@@ -380,7 +365,7 @@
     "theme": "relationships"
   },
   {
-    "author": "Aristoteles",
+    "author": "Will Durant",
     "text": "Wir sind, was wir wiederholt tun. Vortrefflichkeit ist daher keine Handlung, sondern eine Gewohnheit.",
     "theme": "habits"
   },
@@ -510,7 +495,7 @@
     "theme": "happiness"
   },
   {
-    "author": "Leo Tolstoi",
+    "author": "Kosma Prutkow",
     "text": "Wenn du glücklich sein willst, sei es.",
     "theme": "happiness"
   },
@@ -542,11 +527,6 @@
   {
     "author": "Laozi",
     "text": "Große Taten bestehen aus kleinen Handlungen.",
-    "theme": "motivation"
-  },
-  {
-    "author": "Konfuzius",
-    "text": "Wer einen Berg versetzen will, beginnt damit, kleine Steine wegzutragen.",
     "theme": "motivation"
   },
   {
@@ -630,11 +610,6 @@
     "theme": "mindfulness"
   },
   {
-    "author": "Laozi",
-    "text": "Wenn ich loslasse, was ich bin, werde ich, was ich sein könnte.",
-    "theme": "mindfulness"
-  },
-  {
     "author": "Jon Kabat-Zinn",
     "text": "Wohin du auch gehst, da bist du.",
     "theme": "mindfulness"
@@ -652,11 +627,6 @@
   {
     "author": "Rumi",
     "text": "Wo Ruinen sind, gibt es Hoffnung auf einen Schatz.",
-    "theme": "hope"
-  },
-  {
-    "author": "Victor Hugo",
-    "text": "Auch die dunkelste Nacht wird enden, und die Sonne wird aufgehen.",
     "theme": "hope"
   },
   {
@@ -933,11 +903,6 @@
     "author": "Mark Aurel",
     "text": "Die erste Regel ist, ruhig zu bleiben. Die zweite, den Dingen ins Gesicht zu sehen und sie zu erkennen, wie sie sind.",
     "theme": "wisdom"
-  },
-  {
-    "author": "Mark Aurel",
-    "text": "Nicht den Tod soll der Mensch fürchten, sondern niemals anzufangen zu leben.",
-    "theme": "acceptance"
   },
   {
     "author": "Mark Aurel",

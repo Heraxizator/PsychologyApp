@@ -55,11 +55,6 @@
     "theme": "motivation"
   },
   {
-    "author": "Nelson Mandela",
-    "text": "Cela semble toujours impossible, jusqu'à ce qu'on le fasse.",
-    "theme": "motivation"
-  },
-  {
     "author": "Sénèque",
     "text": "Ce n'est pas parce que les choses sont difficiles que nous n'osons pas, c'est parce que nous n'osons pas qu'elles sont difficiles.",
     "theme": "motivation"
@@ -82,11 +77,6 @@
   {
     "author": "Épictète",
     "text": "Dis-toi d'abord ce que tu veux être, puis fais ce que tu as à faire.",
-    "theme": "motivation"
-  },
-  {
-    "author": "Maya Angelou",
-    "text": "Rien ne fonctionnera si vous ne le faites pas.",
     "theme": "motivation"
   },
   {
@@ -115,7 +105,7 @@
     "theme": "resilience"
   },
   {
-    "author": "Confucius",
+    "author": "Oliver Goldsmith",
     "text": "Notre plus grande gloire n'est pas de ne jamais tomber, mais de nous relever à chaque chute.",
     "theme": "resilience"
   },
@@ -335,11 +325,6 @@
     "theme": "self-awareness"
   },
   {
-    "author": "Rûmî",
-    "text": "Hier j'étais intelligent, alors je voulais changer le monde. Aujourd'hui je suis sage, alors je me change moi-même.",
-    "theme": "self-awareness"
-  },
-  {
     "author": "Sénèque",
     "text": "Fréquente ceux qui peuvent te rendre meilleur.",
     "theme": "relationships"
@@ -380,7 +365,7 @@
     "theme": "relationships"
   },
   {
-    "author": "Aristote",
+    "author": "Will Durant",
     "text": "Nous sommes ce que nous faisons de manière répétée. L'excellence n'est donc pas un acte, mais une habitude.",
     "theme": "habits"
   },
@@ -510,7 +495,7 @@
     "theme": "happiness"
   },
   {
-    "author": "Léon Tolstoï",
+    "author": "Kozma Proutkov",
     "text": "Si tu veux être heureux, sois-le.",
     "theme": "happiness"
   },
@@ -542,11 +527,6 @@
   {
     "author": "Lao Tseu",
     "text": "Les grandes œuvres sont faites de petits actes.",
-    "theme": "motivation"
-  },
-  {
-    "author": "Confucius",
-    "text": "Celui qui déplace une montagne commence par emporter de petites pierres.",
     "theme": "motivation"
   },
   {
@@ -630,11 +610,6 @@
     "theme": "mindfulness"
   },
   {
-    "author": "Lao Tseu",
-    "text": "Quand je lâche ce que je suis, je deviens ce que je pourrais être.",
-    "theme": "mindfulness"
-  },
-  {
     "author": "Jon Kabat-Zinn",
     "text": "Où que tu ailles, tu y es.",
     "theme": "mindfulness"
@@ -652,11 +627,6 @@
   {
     "author": "Rûmî",
     "text": "Là où il y a des ruines, il y a l'espoir d'un trésor.",
-    "theme": "hope"
-  },
-  {
-    "author": "Victor Hugo",
-    "text": "Même la nuit la plus sombre prendra fin, et le soleil se lèvera.",
     "theme": "hope"
   },
   {
@@ -933,11 +903,6 @@
     "author": "Marc Aurèle",
     "text": "La première règle est de garder l'esprit tranquille. La seconde est de regarder les choses en face et de les voir telles qu'elles sont.",
     "theme": "wisdom"
-  },
-  {
-    "author": "Marc Aurèle",
-    "text": "Ce n'est pas la mort que l'homme doit craindre, mais de ne jamais commencer à vivre.",
-    "theme": "acceptance"
   },
   {
     "author": "Marc Aurèle",

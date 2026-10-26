@@ -8,7 +8,8 @@ namespace PsychologyApp.Presentation.Tests;
 
 public sealed class QuoteCatalogContentTests
 {
-    private const int MinimumCount = 1073;
+    // A floor, not the exact size: the catalogue is curated, and quotes that are unsafe, fabricated or repeated are taken out.
+    private const int MinimumCount = 500;
 
     [Theory]
     [InlineData("quotes/quotes.ru.json")]
@@ -53,8 +54,6 @@ public sealed class QuoteCatalogContentTests
         List<QuoteJsonEntry> en = await LoadAsync("quotes/quotes.en.json");
         List<QuoteJsonEntry> ru = await LoadAsync("quotes/quotes.ru.json");
 
-        Assert.Equal(1073, en.Count);
-        Assert.Equal(1073, ru.Count);
         Assert.Contains(en, e => e.Author == "John Chrysostom");
         Assert.Contains(en, e => e.Author == "Alexander Pushkin");
         Assert.Contains(ru, e => e.Author == "Иоанн Золотоуст");
@@ -103,6 +102,23 @@ public sealed class QuoteCatalogContentTests
         Assert.Equal(entries.Count, entries.Select(entry => entry.Text.Trim()).Distinct(StringComparer.Ordinal).Count());
         Assert.All(entries, entry => Assert.False(string.IsNullOrWhiteSpace(entry.Author)));
         Assert.All(FilterThemes, theme => Assert.True(entries.Count(entry => entry.Theme == theme) >= 5, $"{language}: too few quotes on {theme}."));
+    }
+
+    // People in crisis read these: a quote about dying, killing or welcoming death can push in the wrong direction, so none is allowed.
+    [Theory]
+    [InlineData("ru", @"\b(смерт\w*|умер(еть|ла|ли|ший)?|умира\w*|мёртв\w*|мертв\w*|гроб\w*|убива\w*|убить|убил\w*|самоуби\w*)\b")]
+    [InlineData("en", @"\b(death|die|dies|dying|dead|deadly|grave|suicide|kill|kills|killed|corpse)\b")]
+    [InlineData("fr", @"\b(mort|morte|morts|mourir|meurt|suicide|tuer)\b")]
+    [InlineData("de", @"\b(Tod|Todes|sterben|stirbt|tot|töten|Selbstmord|Suizid)\b")]
+    [InlineData("es", @"\b(muerte|morir|muerto|muerta|suicidio|matar)\b")]
+    [InlineData("pt", @"\b(morte|morrer|morto|morta|suicídio|matar)\b")]
+    [InlineData("zh", "死|自杀|杀")]
+    public async Task No_quote_speaks_of_death_or_killing(string language, string pattern)
+    {
+        List<QuoteJsonEntry> entries = await LoadAsync($"quotes/quotes.{language}.json");
+        System.Text.RegularExpressions.Regex words = new(pattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+        Assert.All(entries, entry => Assert.False(words.IsMatch(entry.Text), $"{language}: {entry.Text}"));
     }
 
     private static async Task<List<QuoteJsonEntry>> LoadAsync(string relativePath)

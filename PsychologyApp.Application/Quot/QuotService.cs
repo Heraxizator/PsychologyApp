@@ -152,12 +152,24 @@ public sealed class QuotService(
         }
 
         IReadOnlySet<string> favoriteTexts = await CollectFavoriteTextsForReseedAsync(cancellationToken).ConfigureAwait(false);
+
+        // A favourite the catalogue no longer has (a curated-out quote) keeps its own row: the person chose it, and reseeding the
+        // feed must not take it away.
+        Dictionary<string, global::PsychologyApp.Domain.Entities.Quot> favoriteRows = new(StringComparer.Ordinal);
+        foreach (string text in favoriteTexts)
+        {
+            if (await quotRepository.GetByTextAsync(text, cancellationToken).ConfigureAwait(false) is { } row)
+            {
+                favoriteRows[text] = row;
+            }
+        }
+
         await quotRepository.DeleteAllAsync(cancellationToken).ConfigureAwait(false);
         await AddRandomQuotesAsync(count, cancellationToken, loadExistingFromDatabase: false).ConfigureAwait(false);
 
         foreach (string text in favoriteTexts)
         {
-            await EnsureFavoriteByTextAsync(text, cancellationToken).ConfigureAwait(false);
+            await EnsureFavoriteByTextAsync(text, cancellationToken, favoriteRows.GetValueOrDefault(text)).ConfigureAwait(false);
         }
     }
 
@@ -375,7 +387,10 @@ public sealed class QuotService(
         return texts;
     }
 
-    private async Task EnsureFavoriteByTextAsync(string text, CancellationToken cancellationToken)
+    private async Task EnsureFavoriteByTextAsync(
+        string text,
+        CancellationToken cancellationToken,
+        global::PsychologyApp.Domain.Entities.Quot? previousRow = null)
     {
         if (string.IsNullOrWhiteSpace(text))
         {
@@ -389,6 +404,13 @@ public sealed class QuotService(
             int? catalogIndex = await catalogLookup.TryGetIndexByTextAsync(text, cancellationToken).ConfigureAwait(false);
             if (catalogIndex is null)
             {
+                if (previousRow is not null)
+                {
+                    await quotRepository.AddAsync(
+                        global::PsychologyApp.Domain.Entities.Quot.Create(previousRow.Title, previousRow.Text, previousRow.Theme, previousRow.IsReaded, isFavourite: true),
+                        cancellationToken).ConfigureAwait(false);
+                }
+
                 return;
             }
 
