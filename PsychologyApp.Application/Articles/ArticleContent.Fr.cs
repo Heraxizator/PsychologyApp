@@ -1113,6 +1113,98 @@ public static partial class ArticleContent
                 P("Après un traumatisme, l'attention au corps les yeux fermés fait parfois remonter des souvenirs difficiles. Gardez alors les yeux ouverts, réduisez la pratique à une minute et appuyez-vous sur ce que vous voyez autour de vous. Si cela reste difficile, mieux vaut pratiquer avec un spécialiste."),
                 Practice(TechniqueId.Grounding, "Ancrage 5-4-3-2-1"),
                 Practice(TechniqueId.Breathing, "Respiration carrée")
+            ]),
+        new(
+            ArticleIds.Uncertainty,
+            "L'incertitude et les décisions difficiles",
+            "Pourquoi ne pas savoir est si pénible, comment ne pas s'enliser dans les vérifications et comment décider quand il n'y a pas d'option parfaite",
+            "Balance",
+            4,
+            [
+                P("L'incertitude est l'une des choses les plus difficiles pour l'esprit. Quand l'issue est inconnue (résultats d'examens, travail, relation, déménagement), le cerveau cherche une réponse à tout prix et ne laisse aucun répit tant qu'il ne l'a pas trouvée."),
+                H("Pourquoi ne pas savoir est si pénible"),
+                P("Pour le cerveau, l'inconnu ressemble à un danger : mieux vaut savoir le pire qu'attendre. C'est pourquoi beaucoup préféreraient recevoir une mauvaise nouvelle tout de suite plutôt que de deviner une semaine de plus. Moins on tolère l'incertitude, plus on a d'anxiété et de ruminations."),
+                H("Ce qui entretient l'anxiété"),
+                List(
+                    "Les vérifications sans fin : relire les messages, chercher sur Internet, interroger des connaissances",
+                    "Essayer de penser à l'avance à toutes les possibilités",
+                    "Remettre une décision à plus tard jusqu'à être tout à fait sûr·e",
+                    "Demander aux autres de rassurer et de promettre que tout ira bien"),
+                P("Chaque vérification soulage une minute, mais apprend au cerveau qu'il ne peut pas faire face sans certitude complète. Avec le temps, l'incertitude devient de plus en plus difficile à supporter."),
+                H("Ce qui aide"),
+                List(
+                    "Remarquer la pensée « et si… » et la nommer : « c'est une tentative d'obtenir une garantie »",
+                    "Réduire les vérifications peu à peu plutôt que d'un coup",
+                    "S'entraîner sur de petites choses : choisir un plat sans lire tous les avis",
+                    "Distinguer ce sur quoi on peut agir de ce sur quoi on ne peut rien",
+                    "Réserver un court moment de la journée aux inquiétudes, et non toute la nuit"),
+                H("Comment prendre une décision"),
+                List(
+                    "Notez deux ou trois options et quelques arguments pour et contre chacune",
+                    "Demandez-vous : que conseillerais-je à un ami dans cette situation ?",
+                    "Fixez-vous une échéance et décidez avec ce que vous savez maintenant",
+                    "Rappelez-vous que la plupart des décisions peuvent être ajustées en chemin"),
+                P("Il n'y a généralement pas de décision parfaite. Il y en a une raisonnable, et cela suffit."),
+                Practice(TechniqueId.ThoughtRecord, "Journal des pensées"),
+                Practice(TechniqueId.BusyMind, "Occuper l'esprit")
+            ]),
+        new(
+            ArticleIds.JealousyAndEnvy,
+            "La jalousie et l'envie",
+            "En quoi elles diffèrent, ce qu'elles disent vraiment et comment les empêcher d'abîmer les relations",
+            "Compare",
+            4,
+            [
+                P("La jalousie et l'envie sont des émotions désagréables mais ordinaires. Presque tout le monde les ressent, et en elles-mêmes elles ne font pas de quelqu'un une mauvaise personne. Ce qui compte, c'est ce qui se passe ensuite."),
+                H("En quoi elles diffèrent"),
+                P("L'envie, c'est désirer ce qu'a un autre : réussite, apparence, relation. La jalousie, c'est la peur de perdre ce que l'on a déjà, le plus souvent une personne proche, à cause d'un tiers."),
+                H("Ce qu'elles disent"),
+                List(
+                    "L'envie indique ce que l'on désire pour soi",
+                    "La jalousie parle souvent de la peur d'être quitté·e ou d'un manque de confiance en soi",
+                    "Parfois, une expérience passée de trahison ou de rejet se cache derrière la jalousie",
+                    "Parfois, c'est un vrai problème dans la relation, dont il vaut la peine de parler"),
+                H("Ce qui aide"),
+                List(
+                    "Nommer l'émotion sans se faire honte : « je suis jaloux·se en ce moment »",
+                    "Séparer l'émotion des actes : ressentir est permis, contrôler l'autre ne l'est pas",
+                    "Vérifier ses pensées : quels faits ai-je, et qu'est-ce que j'imagine ?",
+                    "Parler de ses émotions plutôt qu'accuser : « je me sens inquiet·ète quand… »",
+                    "Transformer l'envie en objectif : qu'est-ce que je peux faire de cela pour moi ?"),
+                Warning("Quand la jalousie devient dangereuse"),
+                P("Vérifier un téléphone, interdire de voir ses amis, surveiller, menacer, exploser de colère : ce n'est plus une émotion mais du contrôle. Si cela arrive dans votre relation, lisez l'article sur la violence psychologique et cherchez du soutien. Si vous le voyez en vous, c'est une observation courageuse, et cela se travaille bien avec un spécialiste."),
+                Practice(TechniqueId.ThoughtRecord, "Journal des pensées"),
+                Practice(TechniqueId.SelfCompassion, "Des mots bienveillants pour soi")
+            ]),
+        new(
+            ArticleIds.Breakup,
+            "Une rupture",
+            "Pourquoi la fin d'une relation fait si mal, ce qui aide les premières semaines et quand il faut de l'aide",
+            "HeartBroken",
+            4,
+            [
+                P("Une rupture est l'une des pertes les plus douloureuses, même quand la décision était commune ou juste. Avec la personne s'en vont des habitudes, des projets et une partie de l'image que l'on a de soi."),
+                H("Pourquoi cela fait si mal"),
+                P("La douleur après une rupture ressemble au deuil : manque, colère, culpabilité, insomnie, pensées qui reviennent sans cesse au passé. Le cerveau s'était habitué à la proximité de cette personne, et s'en déshabituer prend du temps. Ce n'est pas une faiblesse, mais une réaction normale à une perte."),
+                H("Ce qui aide les premières semaines"),
+                List(
+                    "Se permettre d'avoir du chagrin sans se presser",
+                    "Garder une routine simple : sommeil, repas, mouvement",
+                    "S'appuyer sur des personnes à qui l'on peut dire comment on va",
+                    "Ranger ce qui rappelle sans cesse, au moins pour un temps",
+                    "Ramener dans sa vie ce que l'on remettait depuis longtemps : activités, rencontres, lieux"),
+                H("Ce qu'il vaut mieux éviter"),
+                List(
+                    "Consulter sans arrêt les pages de son ex",
+                    "Étouffer la douleur avec l'alcool",
+                    "Prendre de grandes décisions sous le coup de l'émotion les premiers jours",
+                    "Se reprocher tout à soi seul·e"),
+                P("Avec le temps, la douleur s'apaise. La fin d'une relation ne définit pas votre valeur et ne vous enlève pas la capacité d'aimer."),
+                Warning("Quand il faut de l'aide"),
+                P("Si des mois ont passé et que vivre reste très difficile, ou si des pensées de ne plus vouloir vivre sont apparues, ne restez pas seul·e avec cela : adressez-vous à un spécialiste ou à une ligne d'écoute."),
+                Crisis("J'ai besoin d'aide maintenant"),
+                Practice(TechniqueId.SelfCompassion, "Des mots bienveillants pour soi"),
+                Practice(TechniqueId.SmallStep, "Un petit pas")
             ])
     ];
 }

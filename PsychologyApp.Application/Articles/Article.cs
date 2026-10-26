@@ -116,4 +116,7 @@ public static class ArticleIds
     public const string Emotions = "emotions";
     public const string SelfEsteem = "self-esteem";
     public const string Mindfulness = "mindfulness";
+    public const string Uncertainty = "uncertainty";
+    public const string JealousyAndEnvy = "jealousy-envy";
+    public const string Breakup = "breakup";
 }

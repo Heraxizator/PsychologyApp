@@ -778,5 +778,255 @@
     "author": "列夫·托尔斯泰",
     "text": "幸福不取决于外在的事物，而取决于我们看待它们的方式。",
     "theme": "happiness"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "命运引导顺从的人，拖着抗拒的人走。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "人生如戏，重要的不是演了多久，而是演得多好。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "贫穷的不是拥有太少的人，而是渴望更多的人。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "如果一个人不知道自己要驶向哪个港口，那么任何风都不是顺风。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "没有人是偶然变得智慧的。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "烈火试真金，逆境试勇者。",
+    "theme": "resilience"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "哪里有人，哪里就有行善的机会。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "为未来忧虑的心是痛苦的。",
+    "theme": "habits"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "心灵有序的首要标志，是能够停下来，与自己相处。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "每晚问问自己：今天我克服了哪一个弱点？",
+    "theme": "calm"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "如果你真想摆脱困扰你的事，你需要的不是换个地方，而是成为另一个人。",
+    "theme": "motivation"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "一切残忍都源于软弱。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "说出我们感受到的，感受我们所说的；让言语与生活一致。",
+    "theme": "acceptance"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "不幸压垮不了任何人，除非他先接纳它，并认定它很严重。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "不加克制的愤怒，往往比引发它的伤害更伤人。",
+    "theme": "calm"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "整个未来都充满不确定：立刻去生活吧。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "直到开始不再依赖它们，我们才发现有多少东西其实是不必要的。",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "塞涅卡",
+    "text": "从大地通往星辰，没有容易的路。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "做生命中的每一件事，都当作是最后一件。",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "生活的艺术更像摔跤，而不是跳舞。",
+    "theme": "resilience"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "每当你要指责别人的过错时，先问问自己：我身上哪个过错和它最像？",
+    "theme": "empathy"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "不对的事，不要做；不真的话，不要说。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "宇宙即变化；我们的生活由我们的思想塑造。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "对人生中发生的任何事感到惊讶，是多么可笑又奇怪。",
+    "theme": "calm"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "当别人责备你或憎恨你时，看看他们的内心，看看他们是怎样的人。",
+    "theme": "relationships"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "得之不骄，失之不执。",
+    "theme": "acceptance"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "凝视生活之美。仰望星辰，看见自己与它们一同奔跑。",
+    "theme": "motivation"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "要像海边的礁石，任凭海浪不断拍打，它依然屹立，平息周围的怒涛。",
+    "theme": "resilience"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "不去看邻人说了什么、做了什么的人，能省去多少烦恼。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "别让心思更多地停留在你缺少的东西上，而要多想想你已经拥有的。",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "第一条规则是保持内心平静；第二条是直面事物，看清它们本来的样子。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "人不该害怕死亡，而该害怕从未开始生活。",
+    "theme": "acceptance"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "我们每个人都只活在当下这一瞬间；其余的，要么已经过去，要么尚不确定。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "马可·奥勒留",
+    "text": "如果有人能指出我的想法或做法不对，我乐意改正。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "先从小事练起，再去做大事。",
+    "theme": "habits"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "先认清自己是谁，再据此装点自己。",
+    "theme": "self-awareness"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "困难显示出一个人究竟是什么样的人。",
+    "theme": "resilience"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "你还要等多久，才肯要求自己做到最好？",
+    "theme": "habits"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "一个人不可能学会他自以为已经懂的东西。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "多数时候保持沉默；必要时才开口，而且要简短。",
+    "theme": "calm"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "困难越大，战胜它的荣耀就越大。",
+    "theme": "motivation"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "慎选与你交往的人：人总会不自觉地模仿身边人的习惯。",
+    "theme": "mindfulness"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "有些事在我们的掌控之中，有些则不在。",
+    "theme": "acceptance"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "船不该只靠一只小锚，人生也不该只寄托于一个希望。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "疾病阻碍的是身体，而不是你选择的能力，除非你自己愿意如此。",
+    "theme": "resilience"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "永远不要说“我失去了它”，而要说“我把它归还了”。",
+    "theme": "calm"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "如果有人说你坏话而且属实，就改正；如果是谎言，就一笑置之。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "把自己的不幸归咎于别人，是缺乏修养的表现。",
+    "theme": "wisdom"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "你想想，如果没有狮子、九头蛇、鹿和野猪，赫拉克勒斯会成为什么样的人？",
+    "theme": "resilience"
+  },
+  {
+    "author": "爱比克泰德",
+    "text": "侮辱你的不是辱骂或打你的人，而是你认为这些是侮辱的看法。",
+    "theme": "calm"
   }
 ]

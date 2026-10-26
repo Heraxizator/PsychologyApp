@@ -1113,6 +1113,98 @@ public static partial class ArticleContent
                 P("Después de un trauma, atender al cuerpo con los ojos cerrados a veces trae recuerdos difíciles. Entonces mantén los ojos abiertos, acorta la práctica a un minuto y apóyate en lo que ves a tu alrededor. Si sigue siendo difícil, es mejor practicar con un especialista."),
                 Practice(TechniqueId.Grounding, "Anclaje 5-4-3-2-1"),
                 Practice(TechniqueId.Breathing, "Respiración cuadrada")
+            ]),
+        new(
+            ArticleIds.Uncertainty,
+            "La incertidumbre y las decisiones difíciles",
+            "Por qué no saber cuesta tanto, cómo no atascarse en comprobaciones sin fin y cómo decidir cuando no hay una opción perfecta",
+            "Balance",
+            4,
+            [
+                P("La incertidumbre es una de las cosas más difíciles para la mente. Cuando el resultado es desconocido (análisis, trabajo, una relación, una mudanza), el cerebro busca una respuesta a toda costa y no da tregua hasta encontrarla."),
+                H("Por qué no saber cuesta tanto"),
+                P("Para el cerebro, lo desconocido se parece al peligro: mejor saber lo malo que esperar. Por eso muchas personas preferirían recibir ahora una mala noticia que seguir adivinando una semana más. Cuanto peor se tolera la incertidumbre, más ansiedad y rumiación aparecen."),
+                H("Qué mantiene la ansiedad"),
+                List(
+                    "Comprobar sin fin: releer mensajes, buscar en internet, preguntar a conocidos",
+                    "Intentar pensar de antemano en todas las posibilidades",
+                    "Aplazar una decisión hasta tener certeza total",
+                    "Pedir a otros que te tranquilicen y te prometan que todo irá bien"),
+                P("Cada comprobación alivia un minuto, pero enseña al cerebro que no puede arreglárselas sin certeza total. Con el tiempo, la incertidumbre se soporta cada vez peor."),
+                H("Qué ayuda"),
+                List(
+                    "Notar el pensamiento «¿y si…?» y nombrarlo: «es un intento de conseguir una garantía»",
+                    "Reducir las comprobaciones poco a poco, no de golpe",
+                    "Practicar con cosas pequeñas: elegir un plato sin leer todas las reseñas",
+                    "Separar lo que puedes influir de lo que no",
+                    "Reservar un rato corto del día para preocuparte, no toda la noche"),
+                H("Cómo tomar decisiones"),
+                List(
+                    "Escribe dos o tres opciones y un par de razones a favor y en contra de cada una",
+                    "Pregúntate: ¿qué le aconsejaría a un amigo en esta situación?",
+                    "Ponte un plazo y decide con lo que sabes ahora",
+                    "Recuerda que la mayoría de las decisiones se pueden ajustar por el camino"),
+                P("Normalmente no existe la decisión perfecta. Existe una razonable, y es suficiente."),
+                Practice(TechniqueId.ThoughtRecord, "Registro de pensamientos"),
+                Practice(TechniqueId.BusyMind, "Ocupar la mente")
+            ]),
+        new(
+            ArticleIds.JealousyAndEnvy,
+            "Los celos y la envidia",
+            "En qué se diferencian, qué dicen en realidad y cómo evitar que dañen las relaciones",
+            "Compare",
+            4,
+            [
+                P("Los celos y la envidia son emociones desagradables, pero corrientes. Casi todo el mundo las siente, y por sí mismas no hacen de nadie una mala persona. Lo que importa es lo que pasa después."),
+                H("En qué se diferencian"),
+                P("La envidia es desear lo que tiene otro: éxito, aspecto, una relación. Los celos son el miedo a perder lo que ya tienes, casi siempre a una persona cercana, por culpa de un tercero."),
+                H("Qué dicen"),
+                List(
+                    "La envidia apunta a lo que quieres para ti",
+                    "Los celos suelen hablar del miedo a ser abandonado o de inseguridad",
+                    "A veces detrás de los celos hay una experiencia pasada de traición o rechazo",
+                    "A veces es un problema real en la relación del que conviene hablar"),
+                H("Qué ayuda"),
+                List(
+                    "Nombrar la emoción sin avergonzarte: «ahora mismo siento celos»",
+                    "Separar la emoción de los actos: sentir está permitido, controlar al otro no",
+                    "Comprobar los pensamientos: ¿qué hechos tengo y qué estoy imaginando?",
+                    "Hablar de lo que sientes en lugar de acusar: «me inquieto cuando…»",
+                    "Convertir la envidia en una meta: ¿qué de esto puedo hacer por mí?"),
+                Warning("Cuándo los celos se vuelven peligrosos"),
+                P("Revisar el móvil, prohibir ver a los amigos, vigilar, amenazar y estallar de ira ya no es una emoción, sino control. Si esto pasa en tu relación, lee el artículo sobre el maltrato psicológico y busca apoyo. Si lo ves en ti, es una observación valiente, y con un especialista se trabaja bien."),
+                Practice(TechniqueId.ThoughtRecord, "Registro de pensamientos"),
+                Practice(TechniqueId.SelfCompassion, "Palabras amables para ti")
+            ]),
+        new(
+            ArticleIds.Breakup,
+            "Una ruptura",
+            "Por qué el final de una relación duele tanto, qué ayuda las primeras semanas y cuándo hace falta ayuda",
+            "HeartBroken",
+            4,
+            [
+                P("Una ruptura es una de las pérdidas más dolorosas, incluso cuando la decisión fue mutua o acertada. Con la persona se van costumbres, planes y parte de la imagen que tienes de ti."),
+                H("Por qué duele tanto"),
+                P("El dolor tras una ruptura se parece al duelo: añoranza, enfado, culpa, insomnio, pensamientos que vuelven una y otra vez al pasado. El cerebro se acostumbró a la cercanía de esa persona, y desacostumbrarse lleva tiempo. No es debilidad, sino una reacción normal a una pérdida."),
+                H("Qué ayuda las primeras semanas"),
+                List(
+                    "Permitirte vivir el duelo sin meterte prisa",
+                    "Mantener una rutina sencilla: sueño, comida, movimiento",
+                    "Apoyarte en personas a las que puedas contar cómo estás",
+                    "Guardar lo que te lo recuerda todo el tiempo, al menos por un tiempo",
+                    "Recuperar lo que llevabas tiempo aplazando: actividades, encuentros, lugares"),
+                H("Qué conviene evitar"),
+                List(
+                    "Revisar constantemente los perfiles de tu expareja",
+                    "Adormecer el dolor con alcohol",
+                    "Tomar grandes decisiones en caliente los primeros días",
+                    "Echarte toda la culpa"),
+                P("Con el tiempo, el dolor se vuelve más suave. El final de una relación no define tu valor ni te quita la capacidad de amar."),
+                Warning("Cuándo hace falta ayuda"),
+                P("Si han pasado meses y vivir sigue siendo muy difícil, o han aparecido pensamientos de no querer vivir, no te quedes a solas con ello: acude a un especialista o a una línea de ayuda."),
+                Crisis("Necesito ayuda ahora"),
+                Practice(TechniqueId.SelfCompassion, "Palabras amables para ti"),
+                Practice(TechniqueId.SmallStep, "Un pequeño paso")
             ])
     ];
 }

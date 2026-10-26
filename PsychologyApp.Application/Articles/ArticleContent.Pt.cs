@@ -1113,6 +1113,98 @@ public static partial class ArticleContent
                 P("Depois de um trauma, prestar atenção ao corpo de olhos fechados às vezes traz lembranças difíceis. Então mantenha os olhos abertos, encurte a prática para um minuto e apoie-se no que vê ao redor. Se continuar difícil, é melhor praticar com um especialista."),
                 Practice(TechniqueId.Grounding, "Ancoragem 5-4-3-2-1"),
                 Practice(TechniqueId.Breathing, "Respiração quadrada")
+            ]),
+        new(
+            ArticleIds.Uncertainty,
+            "A incerteza e as decisões difíceis",
+            "Por que não saber é tão difícil, como não ficar preso em verificações sem fim e como decidir quando não há opção perfeita",
+            "Balance",
+            4,
+            [
+                P("A incerteza é uma das coisas mais difíceis para a mente. Quando o desfecho é desconhecido (exames, trabalho, um relacionamento, uma mudança), o cérebro busca uma resposta a qualquer custo e não dá sossego até encontrá-la."),
+                H("Por que não saber é tão difícil"),
+                P("Para o cérebro, o desconhecido parece perigo: melhor saber o ruim do que esperar. Por isso muitas pessoas prefeririam receber agora uma notícia desagradável a continuar adivinhando por mais uma semana. Quanto pior alguém tolera a incerteza, mais ansiedade e ruminação tem."),
+                H("O que mantém a ansiedade"),
+                List(
+                    "Verificar sem parar: reler mensagens, pesquisar na internet, perguntar a conhecidos",
+                    "Tentar pensar em todas as possibilidades com antecedência",
+                    "Adiar uma decisão até ter certeza absoluta",
+                    "Pedir aos outros que tranquilizem e prometam que vai dar tudo certo"),
+                P("Cada verificação alivia por um minuto, mas ensina ao cérebro que ele não dá conta sem certeza total. Com o tempo, a incerteza fica cada vez mais difícil de suportar."),
+                H("O que ajuda"),
+                List(
+                    "Perceber o pensamento “e se…” e nomeá-lo: “é uma tentativa de conseguir uma garantia”",
+                    "Reduzir as verificações aos poucos, não de uma vez",
+                    "Treinar com coisas pequenas: escolher um prato sem ler todas as avaliações",
+                    "Separar o que você pode influenciar do que não pode",
+                    "Reservar um tempo curto do dia para se preocupar, não a noite inteira"),
+                H("Como tomar decisões"),
+                List(
+                    "Escreva duas ou três opções e alguns motivos a favor e contra cada uma",
+                    "Pergunte-se: o que eu aconselharia a um amigo nessa situação?",
+                    "Dê-se um prazo e decida com o que se sabe agora",
+                    "Lembre que a maioria das decisões pode ser ajustada no caminho"),
+                P("Geralmente não existe decisão perfeita. Existe uma razoável, e ela basta."),
+                Practice(TechniqueId.ThoughtRecord, "Registro de pensamentos"),
+                Practice(TechniqueId.BusyMind, "Ocupar a mente")
+            ]),
+        new(
+            ArticleIds.JealousyAndEnvy,
+            "Ciúme e inveja",
+            "Como se diferenciam, o que realmente dizem e como evitar que prejudiquem as relações",
+            "Compare",
+            4,
+            [
+                P("Ciúme e inveja são sentimentos desagradáveis, mas comuns. Quase todo mundo sente, e por si só eles não tornam ninguém uma pessoa ruim. O que importa é o que acontece depois."),
+                H("Como se diferenciam"),
+                P("Inveja é querer o que outra pessoa tem: sucesso, aparência, um relacionamento. Ciúme é o medo de perder o que você já tem, quase sempre uma pessoa próxima, por causa de um terceiro."),
+                H("O que eles dizem"),
+                List(
+                    "A inveja aponta o que você quer para si",
+                    "O ciúme muitas vezes fala do medo de ser deixado ou de insegurança",
+                    "Às vezes, por trás do ciúme há uma experiência passada de traição ou rejeição",
+                    "Às vezes é um problema real no relacionamento, sobre o qual vale conversar"),
+                H("O que ajuda"),
+                List(
+                    "Nomear o sentimento sem se envergonhar: “estou com ciúme agora”",
+                    "Separar o sentimento das ações: sentir é permitido, controlar o outro não",
+                    "Verificar os pensamentos: que fatos eu tenho e o que estou imaginando?",
+                    "Falar dos seus sentimentos em vez de acusar: “fico ansioso quando…”",
+                    "Transformar a inveja em meta: o que disso eu posso fazer por mim?"),
+                Warning("Quando o ciúme fica perigoso"),
+                P("Verificar o celular, proibir encontros com amigos, vigiar, ameaçar e ter explosões de raiva já não é sentimento, é controle. Se isso acontece no seu relacionamento, leia o artigo sobre abuso psicológico e procure apoio. Se você percebe isso em si, é uma observação corajosa, e com um especialista dá para trabalhar bem."),
+                Practice(TechniqueId.ThoughtRecord, "Registro de pensamentos"),
+                Practice(TechniqueId.SelfCompassion, "Palavras gentis para si")
+            ]),
+        new(
+            ArticleIds.Breakup,
+            "Um término",
+            "Por que o fim de um relacionamento dói tanto, o que ajuda nas primeiras semanas e quando é preciso ajuda",
+            "HeartBroken",
+            4,
+            [
+                P("Um término é uma das perdas mais dolorosas, mesmo quando a decisão foi conjunta ou certa. Junto com a pessoa vão embora hábitos, planos e parte da imagem que você tem de si."),
+                H("Por que dói tanto"),
+                P("A dor depois de um término parece luto: saudade, raiva, culpa, insônia, pensamentos que voltam sempre ao passado. O cérebro se acostumou à proximidade daquela pessoa, e desacostumar leva tempo. Não é fraqueza, mas uma reação normal a uma perda."),
+                H("O que ajuda nas primeiras semanas"),
+                List(
+                    "Permitir-se viver o luto sem se apressar",
+                    "Manter uma rotina simples: sono, comida, movimento",
+                    "Apoiar-se em pessoas a quem você pode contar como está",
+                    "Guardar o que lembra o tempo todo, pelo menos por um período",
+                    "Trazer de volta o que você vinha adiando: atividades, encontros, lugares"),
+                H("O que é melhor evitar"),
+                List(
+                    "Ficar olhando os perfis do ex o tempo todo",
+                    "Abafar a dor com álcool",
+                    "Tomar grandes decisões no calor da emoção nos primeiros dias",
+                    "Culpar só a si mesmo por tudo"),
+                P("Com o tempo, a dor fica mais baixa. O fim de um relacionamento não define o seu valor nem tira a sua capacidade de amar."),
+                Warning("Quando é preciso ajuda"),
+                P("Se meses se passaram e viver continua muito difícil, ou surgiram pensamentos de não querer viver, não fique sozinho com isso: procure um especialista ou uma linha de apoio."),
+                Crisis("Preciso de ajuda agora"),
+                Practice(TechniqueId.SelfCompassion, "Palavras gentis para si"),
+                Practice(TechniqueId.SmallStep, "Um pequeno passo")
             ])
     ];
 }

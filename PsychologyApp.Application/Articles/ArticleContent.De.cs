@@ -1113,6 +1113,98 @@ public static partial class ArticleContent
                 P("Nach einem Trauma kann Aufmerksamkeit für den Körper mit geschlossenen Augen schwere Erinnerungen hochholen. Dann halte die Augen offen, verkürze die Übung auf eine Minute und orientiere dich an dem, was du um dich herum siehst. Wenn es schwer bleibt, übe besser mit einer Fachperson."),
                 Practice(TechniqueId.Grounding, "Erdung 5-4-3-2-1"),
                 Practice(TechniqueId.Breathing, "Box-Atmung")
+            ]),
+        new(
+            ArticleIds.Uncertainty,
+            "Ungewissheit und schwere Entscheidungen",
+            "Warum Nichtwissen so schwer ist, wie du nicht in endlosem Überprüfen stecken bleibst und wie du entscheidest, wenn es keine perfekte Option gibt",
+            "Balance",
+            4,
+            [
+                P("Ungewissheit gehört zu den schwersten Dingen für die Psyche. Wenn der Ausgang unbekannt ist (Befunde, Arbeit, eine Beziehung, ein Umzug), sucht das Gehirn um jeden Preis nach einer Antwort und gibt keine Ruhe, bis es eine findet."),
+                H("Warum Nichtwissen so schwer ist"),
+                P("Für das Gehirn sieht das Unbekannte wie Gefahr aus: Lieber das Schlimme wissen als warten. Deshalb würden viele lieber jetzt eine unangenehme Nachricht bekommen, als noch eine Woche zu rätseln. Je schlechter jemand Ungewissheit aushält, desto mehr Angst und Grübeln hat er."),
+                H("Was die Angst aufrechterhält"),
+                List(
+                    "Endloses Überprüfen: Nachrichten erneut lesen, im Internet suchen, Bekannte fragen",
+                    "Versuchen, alle Möglichkeiten im Voraus durchzudenken",
+                    "Eine Entscheidung aufschieben, bis völlige Gewissheit da ist",
+                    "Andere bitten, dich zu beruhigen und zu versprechen, dass alles gut wird"),
+                P("Jede Überprüfung bringt für eine Minute Erleichterung, lehrt das Gehirn aber, dass es ohne völlige Gewissheit nicht geht. Mit der Zeit wird Ungewissheit immer schwerer auszuhalten."),
+                H("Was hilft"),
+                List(
+                    "Den Gedanken „Was, wenn …“ bemerken und benennen: „Das ist ein Versuch, eine Garantie zu bekommen“",
+                    "Das Überprüfen schrittweise reduzieren statt auf einmal",
+                    "An Kleinigkeiten üben: ein Gericht wählen, ohne alle Bewertungen zu lesen",
+                    "Trennen, was du beeinflussen kannst und was nicht",
+                    "Für Sorgen eine kurze Zeit am Tag einplanen, nicht die ganze Nacht"),
+                H("Wie du Entscheidungen triffst"),
+                List(
+                    "Schreib zwei oder drei Optionen auf und zu jeder ein paar Gründe dafür und dagegen",
+                    "Frag dich: Was würde ich einem Freund in dieser Lage raten?",
+                    "Setz dir eine Frist und entscheide mit dem, was jetzt bekannt ist",
+                    "Denk daran, dass sich die meisten Entscheidungen unterwegs anpassen lassen"),
+                P("Eine perfekte Entscheidung gibt es meistens nicht. Es gibt eine vernünftige, und die reicht."),
+                Practice(TechniqueId.ThoughtRecord, "Gedankenprotokoll"),
+                Practice(TechniqueId.BusyMind, "Den Kopf beschäftigen")
+            ]),
+        new(
+            ArticleIds.JealousyAndEnvy,
+            "Eifersucht und Neid",
+            "Wie sie sich unterscheiden, was sie wirklich sagen und wie du verhinderst, dass sie Beziehungen beschädigen",
+            "Compare",
+            4,
+            [
+                P("Eifersucht und Neid sind unangenehme, aber gewöhnliche Gefühle. Fast alle erleben sie, und an sich machen sie niemanden zu einem schlechten Menschen. Wichtig ist, was danach passiert."),
+                H("Wie sie sich unterscheiden"),
+                P("Neid heißt, sich zu wünschen, was ein anderer hat: Erfolg, Aussehen, eine Beziehung. Eifersucht ist die Angst, etwas zu verlieren, das man schon hat, meist einen nahen Menschen, wegen einer dritten Person."),
+                H("Was sie sagen"),
+                List(
+                    "Neid zeigt, was du dir für dich selbst wünschst",
+                    "Eifersucht spricht oft von der Angst, verlassen zu werden, oder von Selbstzweifeln",
+                    "Manchmal steckt hinter Eifersucht eine frühere Erfahrung von Betrug oder Zurückweisung",
+                    "Manchmal ist es ein echtes Problem in der Beziehung, über das es sich zu sprechen lohnt"),
+                H("Was hilft"),
+                List(
+                    "Das Gefühl benennen, ohne dich zu beschämen: „Ich bin gerade eifersüchtig“",
+                    "Gefühl und Handeln trennen: Fühlen ist erlaubt, den anderen zu kontrollieren nicht",
+                    "Die Gedanken prüfen: Welche Fakten habe ich, und was male ich mir aus?",
+                    "Über deine Gefühle sprechen statt anzuklagen: „Ich werde unruhig, wenn …“",
+                    "Neid in ein Ziel verwandeln: Was davon kann ich für mich tun?"),
+                Warning("Wann Eifersucht gefährlich wird"),
+                P("Das Handy kontrollieren, Treffen mit Freunden verbieten, überwachen, drohen und Wutausbrüche sind kein Gefühl mehr, sondern Kontrolle. Wenn das in deiner Beziehung passiert, lies den Artikel über emotionale Gewalt und such dir Unterstützung. Wenn du das an dir selbst siehst, ist das eine mutige Beobachtung, und mit einer Fachperson lässt sich gut daran arbeiten."),
+                Practice(TechniqueId.ThoughtRecord, "Gedankenprotokoll"),
+                Practice(TechniqueId.SelfCompassion, "Freundliche Worte an dich selbst")
+            ]),
+        new(
+            ArticleIds.Breakup,
+            "Eine Trennung",
+            "Warum das Ende einer Beziehung so wehtut, was in den ersten Wochen hilft und wann Hilfe nötig ist",
+            "HeartBroken",
+            4,
+            [
+                P("Eine Trennung ist einer der schmerzhaftesten Verluste, auch wenn die Entscheidung gemeinsam oder richtig war. Mit dem Menschen gehen Gewohnheiten, Pläne und ein Teil des eigenen Selbstbilds."),
+                H("Warum es so wehtut"),
+                P("Der Schmerz nach einer Trennung ähnelt der Trauer: Sehnsucht, Wut, Schuld, Schlaflosigkeit, Gedanken, die immer wieder zur Vergangenheit zurückkehren. Das Gehirn hat sich an die Nähe dieses Menschen gewöhnt, und das Entwöhnen braucht Zeit. Das ist keine Schwäche, sondern eine normale Reaktion auf einen Verlust."),
+                H("Was in den ersten Wochen hilft"),
+                List(
+                    "Dir erlauben zu trauern, ohne dich zu drängen",
+                    "Eine einfache Routine beibehalten: Schlaf, Essen, Bewegung",
+                    "Dich auf Menschen stützen, denen du sagen kannst, wie es dir geht",
+                    "Wegräumen, was ständig erinnert, zumindest für eine Weile",
+                    "Zurückholen, was du lange aufgeschoben hast: Hobbys, Treffen, Orte"),
+                H("Was du besser vermeidest"),
+                List(
+                    "Ständig die Profile der früheren Partnerin oder des früheren Partners anschauen",
+                    "Den Schmerz mit Alkohol betäuben",
+                    "In den ersten Tagen große Entscheidungen aus dem Gefühl heraus treffen",
+                    "Dir allein an allem die Schuld geben"),
+                P("Mit der Zeit wird der Schmerz leiser. Das Ende einer Beziehung bestimmt nicht deinen Wert und nimmt dir nicht die Fähigkeit zu lieben."),
+                Warning("Wann Hilfe nötig ist"),
+                P("Wenn Monate vergangen sind und das Leben noch immer sehr schwer ist oder Gedanken aufgetaucht sind, nicht mehr leben zu wollen, bleib damit nicht allein: Wende dich an eine Fachperson oder ein Krisentelefon."),
+                Crisis("Ich brauche jetzt Hilfe"),
+                Practice(TechniqueId.SelfCompassion, "Freundliche Worte an dich selbst"),
+                Practice(TechniqueId.SmallStep, "Ein kleiner Schritt")
             ])
     ];
 }

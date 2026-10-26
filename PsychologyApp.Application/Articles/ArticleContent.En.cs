@@ -1113,6 +1113,98 @@ public static partial class ArticleContent
                 P("After trauma, attending to the body with eyes closed sometimes brings up hard memories. Then keep your eyes open, shorten the practice to a minute and lean on what you see around you. If it stays hard, it is better to practise with a specialist."),
                 Practice(TechniqueId.Grounding, "5-4-3-2-1 grounding"),
                 Practice(TechniqueId.Breathing, "Box breathing")
+            ]),
+        new(
+            ArticleIds.Uncertainty,
+            "Uncertainty and hard decisions",
+            "Why not knowing is so hard, how not to get stuck in endless checking, and how to decide when there is no perfect option",
+            "Balance",
+            4,
+            [
+                P("Uncertainty is one of the hardest things for the mind. When the outcome is unknown (test results, work, a relationship, a move), the brain looks for an answer at any cost and gives no rest until it finds one."),
+                H("Why not knowing is so hard"),
+                P("To the brain, the unknown looks like danger: better to know the bad than to wait. That is why many people would rather get unpleasant news now than keep guessing for another week. The less a person tolerates uncertainty, the more anxiety and rumination they have."),
+                H("What keeps the anxiety going"),
+                List(
+                    "Endless checking: rereading messages, searching online, asking acquaintances",
+                    "Trying to think through every possibility in advance",
+                    "Putting off a decision until there is complete certainty",
+                    "Asking others to reassure you and promise everything will be fine"),
+                P("Each check brings relief for a minute but teaches the brain that it cannot cope without complete certainty. Over time, uncertainty becomes ever harder to bear."),
+                H("What helps"),
+                List(
+                    "Noticing the \"what if…\" thought and naming it: \"this is an attempt to get a guarantee\"",
+                    "Cutting down checking gradually rather than all at once",
+                    "Practising on small things: choosing a dish without reading every review",
+                    "Separating what you can influence from what you cannot",
+                    "Setting aside a short time for worrying in the day, not the whole night"),
+                H("How to make decisions"),
+                List(
+                    "Write down two or three options and a couple of reasons for and against each",
+                    "Ask yourself: what would I advise a friend in this situation?",
+                    "Give yourself a deadline and decide with what is known now",
+                    "Remember that most decisions can be adjusted along the way"),
+                P("There is usually no perfect decision. There is a reasonable one, and that is enough."),
+                Practice(TechniqueId.ThoughtRecord, "Thought record"),
+                Practice(TechniqueId.BusyMind, "Keep the mind busy")
+            ]),
+        new(
+            ArticleIds.JealousyAndEnvy,
+            "Jealousy and envy",
+            "How they differ, what they are really saying, and how not to let them damage relationships",
+            "Compare",
+            4,
+            [
+                P("Jealousy and envy are unpleasant but ordinary feelings. Almost everyone has them, and by themselves they do not make a person bad. What matters is what happens next."),
+                H("How they differ"),
+                P("Envy is wanting what someone else has: success, looks, a relationship. Jealousy is the fear of losing what you already have, most often a close person, because of a third person."),
+                H("What they are saying"),
+                List(
+                    "Envy hints at what you want for yourself",
+                    "Jealousy often speaks of a fear of being left or of self-doubt",
+                    "Sometimes past experience of betrayal or rejection lies behind jealousy",
+                    "Sometimes it is a real problem in the relationship that is worth talking about"),
+                H("What helps"),
+                List(
+                    "Naming the feeling without shaming yourself: \"I'm jealous right now\"",
+                    "Separating the feeling from actions: feeling is allowed, controlling the other person is not",
+                    "Checking the thoughts: what facts do I have, and what am I filling in?",
+                    "Talking about your feelings instead of accusing: \"I feel anxious when…\"",
+                    "Turning envy into a goal: what of this can I do for myself?"),
+                Warning("When jealousy becomes dangerous"),
+                P("Checking a phone, forbidding meetings with friends, tracking, threats and outbursts of anger are no longer a feeling but control. If this happens in your relationship, read the article on emotional abuse and seek support. If you see it in yourself, that is a brave observation, and it responds well to work with a specialist."),
+                Practice(TechniqueId.ThoughtRecord, "Thought record"),
+                Practice(TechniqueId.SelfCompassion, "Kind words to yourself")
+            ]),
+        new(
+            ArticleIds.Breakup,
+            "A breakup",
+            "Why the end of a relationship hurts so much, what helps in the first weeks and when help is needed",
+            "HeartBroken",
+            4,
+            [
+                P("A breakup is one of the most painful losses, even when the decision was mutual or right. Along with the person go habits, plans and part of how you see yourself."),
+                H("Why it hurts so much"),
+                P("The pain after a breakup is like grief: longing, anger, guilt, sleeplessness, thoughts that keep returning to the past. The brain got used to this person's closeness, and getting unused to it takes time. It is not weakness but a normal reaction to loss."),
+                H("What helps in the first weeks"),
+                List(
+                    "Letting yourself grieve without rushing yourself",
+                    "Keeping a simple routine: sleep, food, movement",
+                    "Leaning on people you can tell how you are",
+                    "Putting away things that constantly remind you, at least for a while",
+                    "Bringing back into your life what you long put off: activities, meetings, places"),
+                H("What is better avoided"),
+                List(
+                    "Constantly checking your former partner's pages",
+                    "Numbing the pain with alcohol",
+                    "Making big decisions in the first days on emotion",
+                    "Blaming only yourself for everything"),
+                P("Over time the pain grows quieter. The end of a relationship does not define your worth and does not take away your ability to love."),
+                Warning("When help is needed"),
+                P("If months have passed and life is still very hard, or thoughts of not wanting to live have appeared, don't stay alone with it: reach out to a specialist or a helpline."),
+                Crisis("I need help now"),
+                Practice(TechniqueId.SelfCompassion, "Kind words to yourself"),
+                Practice(TechniqueId.SmallStep, "One small step")
             ])
     ];
 }
