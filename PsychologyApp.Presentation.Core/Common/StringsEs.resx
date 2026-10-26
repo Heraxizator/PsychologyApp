@@ -4054,4 +4054,25 @@
   <data name="ProfileQuotesShowingAll" xml:space="preserve">
     <value>Mostrando {0} favoritos</value>
   </data>
+  <data name="BalloonsFieldDescription" xml:space="preserve">
+    <value>Campo de globos: toca los globos para reventarlos</value>
+  </data>
+  <data name="BalloonsPopOne" xml:space="preserve">
+    <value>Reventar un globo</value>
+  </data>
+  <data name="BalloonsStart" xml:space="preserve">
+    <value>Empezar</value>
+  </data>
+  <data name="BalloonsIntro" xml:space="preserve">
+    <value>20 globos. Reviéntalos con un toque y suelta el aire con cada uno.</value>
+  </data>
+  <data name="BalloonsCount" xml:space="preserve">
+    <value>Reventados: {0} de {1}</value>
+  </data>
+  <data name="BalloonsDone" xml:space="preserve">
+    <value>Ronda terminada: {0} de {1} reventados. Valora tu tensión abajo.</value>
+  </data>
+  <data name="BalloonsAgain" xml:space="preserve">
+    <value>Otra ronda</value>
+  </data>
 </root>

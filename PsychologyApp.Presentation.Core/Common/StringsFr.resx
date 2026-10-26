@@ -4054,4 +4054,25 @@
   <data name="ProfileQuotesShowingAll" xml:space="preserve">
     <value>{0} favoris affichés</value>
   </data>
+  <data name="BalloonsFieldDescription" xml:space="preserve">
+    <value>Champ de ballons : touchez les ballons pour les éclater</value>
+  </data>
+  <data name="BalloonsPopOne" xml:space="preserve">
+    <value>Éclater un ballon</value>
+  </data>
+  <data name="BalloonsStart" xml:space="preserve">
+    <value>Commencer</value>
+  </data>
+  <data name="BalloonsIntro" xml:space="preserve">
+    <value>20 ballons. Éclatez-les d'une touche et expirez à chaque éclatement.</value>
+  </data>
+  <data name="BalloonsCount" xml:space="preserve">
+    <value>Éclatés : {0} sur {1}</value>
+  </data>
+  <data name="BalloonsDone" xml:space="preserve">
+    <value>Manche terminée : {0} sur {1} éclatés. Évaluez votre tension ci-dessous.</value>
+  </data>
+  <data name="BalloonsAgain" xml:space="preserve">
+    <value>Une autre manche</value>
+  </data>
 </root>

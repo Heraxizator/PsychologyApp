@@ -4060,4 +4060,25 @@
   <data name="ProfileQuotesShowingAll" xml:space="preserve">
     <value>Показано {0} избранных</value>
   </data>
+  <data name="BalloonsFieldDescription" xml:space="preserve">
+    <value>Поле с шариками: касайтесь шариков, чтобы лопнуть их</value>
+  </data>
+  <data name="BalloonsPopOne" xml:space="preserve">
+    <value>Лопнуть шарик</value>
+  </data>
+  <data name="BalloonsStart" xml:space="preserve">
+    <value>Начать</value>
+  </data>
+  <data name="BalloonsIntro" xml:space="preserve">
+    <value>20 шариков. Лопайте их касанием, на каждый хлопок — выдох.</value>
+  </data>
+  <data name="BalloonsCount" xml:space="preserve">
+    <value>Лопнуто: {0} из {1}</value>
+  </data>
+  <data name="BalloonsDone" xml:space="preserve">
+    <value>Раунд окончен: лопнуто {0} из {1}. Оцените напряжение ниже.</value>
+  </data>
+  <data name="BalloonsAgain" xml:space="preserve">
+    <value>Ещё раунд</value>
+  </data>
 </root>

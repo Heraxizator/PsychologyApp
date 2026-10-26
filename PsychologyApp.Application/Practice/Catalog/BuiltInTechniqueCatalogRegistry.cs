@@ -42,7 +42,8 @@ internal static class BuiltInTechniqueCatalogRegistry
             [TechniqueId.SelfCompassion] = TechniqueCatalogContentRu.SelfCompassion,
             [TechniqueId.BodyScan] = TechniqueCatalogContentRu.BodyScan,
             [TechniqueId.Flashback] = TechniqueCatalogContentRu.Flashback,
-            [TechniqueId.Nightmare] = TechniqueCatalogContentRu.Nightmare
+            [TechniqueId.Nightmare] = TechniqueCatalogContentRu.Nightmare,
+            [TechniqueId.Balloons] = TechniqueCatalogContentRu.Balloons
         };
 
     private static IReadOnlyDictionary<TechniqueId, BuiltInTechniqueDefinition> English { get; } =
@@ -68,7 +69,8 @@ internal static class BuiltInTechniqueCatalogRegistry
             [TechniqueId.SelfCompassion] = TechniqueCatalogContentEn.SelfCompassion,
             [TechniqueId.BodyScan] = TechniqueCatalogContentEn.BodyScan,
             [TechniqueId.Flashback] = TechniqueCatalogContentEn.Flashback,
-            [TechniqueId.Nightmare] = TechniqueCatalogContentEn.Nightmare
+            [TechniqueId.Nightmare] = TechniqueCatalogContentEn.Nightmare,
+            [TechniqueId.Balloons] = TechniqueCatalogContentEn.Balloons
         };
 
     private static IReadOnlyDictionary<TechniqueId, BuiltInTechniqueDefinition> French { get; } =
@@ -94,7 +96,8 @@ internal static class BuiltInTechniqueCatalogRegistry
             [TechniqueId.SelfCompassion] = TechniqueCatalogContentFr.SelfCompassion,
             [TechniqueId.BodyScan] = TechniqueCatalogContentFr.BodyScan,
             [TechniqueId.Flashback] = TechniqueCatalogContentFr.Flashback,
-            [TechniqueId.Nightmare] = TechniqueCatalogContentFr.Nightmare
+            [TechniqueId.Nightmare] = TechniqueCatalogContentFr.Nightmare,
+            [TechniqueId.Balloons] = TechniqueCatalogContentFr.Balloons
         };
 
     private static IReadOnlyDictionary<TechniqueId, BuiltInTechniqueDefinition> German { get; } =
@@ -120,7 +123,8 @@ internal static class BuiltInTechniqueCatalogRegistry
             [TechniqueId.SelfCompassion] = TechniqueCatalogContentDe.SelfCompassion,
             [TechniqueId.BodyScan] = TechniqueCatalogContentDe.BodyScan,
             [TechniqueId.Flashback] = TechniqueCatalogContentDe.Flashback,
-            [TechniqueId.Nightmare] = TechniqueCatalogContentDe.Nightmare
+            [TechniqueId.Nightmare] = TechniqueCatalogContentDe.Nightmare,
+            [TechniqueId.Balloons] = TechniqueCatalogContentDe.Balloons
         };
 
     private static IReadOnlyDictionary<TechniqueId, BuiltInTechniqueDefinition> Spanish { get; } =
@@ -146,7 +150,8 @@ internal static class BuiltInTechniqueCatalogRegistry
             [TechniqueId.SelfCompassion] = TechniqueCatalogContentEs.SelfCompassion,
             [TechniqueId.BodyScan] = TechniqueCatalogContentEs.BodyScan,
             [TechniqueId.Flashback] = TechniqueCatalogContentEs.Flashback,
-            [TechniqueId.Nightmare] = TechniqueCatalogContentEs.Nightmare
+            [TechniqueId.Nightmare] = TechniqueCatalogContentEs.Nightmare,
+            [TechniqueId.Balloons] = TechniqueCatalogContentEs.Balloons
         };
 
     private static IReadOnlyDictionary<TechniqueId, BuiltInTechniqueDefinition> Portuguese { get; } =
@@ -172,7 +177,8 @@ internal static class BuiltInTechniqueCatalogRegistry
             [TechniqueId.SelfCompassion] = TechniqueCatalogContentPt.SelfCompassion,
             [TechniqueId.BodyScan] = TechniqueCatalogContentPt.BodyScan,
             [TechniqueId.Flashback] = TechniqueCatalogContentPt.Flashback,
-            [TechniqueId.Nightmare] = TechniqueCatalogContentPt.Nightmare
+            [TechniqueId.Nightmare] = TechniqueCatalogContentPt.Nightmare,
+            [TechniqueId.Balloons] = TechniqueCatalogContentPt.Balloons
         };
 
     private static IReadOnlyDictionary<TechniqueId, BuiltInTechniqueDefinition> Chinese { get; } =
@@ -198,6 +204,7 @@ internal static class BuiltInTechniqueCatalogRegistry
             [TechniqueId.SelfCompassion] = TechniqueCatalogContentZh.SelfCompassion,
             [TechniqueId.BodyScan] = TechniqueCatalogContentZh.BodyScan,
             [TechniqueId.Flashback] = TechniqueCatalogContentZh.Flashback,
-            [TechniqueId.Nightmare] = TechniqueCatalogContentZh.Nightmare
+            [TechniqueId.Nightmare] = TechniqueCatalogContentZh.Nightmare,
+            [TechniqueId.Balloons] = TechniqueCatalogContentZh.Balloons
         };
 }

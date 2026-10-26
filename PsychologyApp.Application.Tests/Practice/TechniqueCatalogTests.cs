@@ -33,10 +33,10 @@ public class TechniqueCatalogTests
     }
 
     [Fact]
-    public async Task GetAllAsync_contains_eighteen_builtin_techniques()
+    public async Task GetAllAsync_contains_every_builtin_technique()
     {
         IReadOnlyList<BuiltInTechniqueDefinition> all = await CreateCatalog().GetAllAsync();
-        Assert.Equal(21, all.Count);
+        Assert.Equal(Enum.GetValues<TechniqueId>().Length, all.Count);
     }
 
     [Fact]

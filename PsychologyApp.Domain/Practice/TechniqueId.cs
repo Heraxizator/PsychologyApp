@@ -28,7 +28,10 @@ public enum TechniqueId
     Flashback,
 
     /// <summary>Rewriting a recurring nightmare and rehearsing the new version (imagery rehearsal therapy).</summary>
-    Nightmare
+    Nightmare,
+
+    /// <summary>Popping balloons with taps: a short, bounded game to let acute tension out.</summary>
+    Balloons
 }
 
 public enum TechniqueUiKind

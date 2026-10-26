@@ -4,6 +4,7 @@ using PsychologyApp.Presentation.Features.RunTechniqueSession.Index;
 using PsychologyApp.Presentation.Features.RunTechniqueSession.DependencyInjection;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.BreathingImmersive;
+using PsychologyApp.Presentation.Widgets.BalloonPop;
 using PsychologyApp.Presentation.Widgets.BreathingPacer;
 using PsychologyApp.Presentation.Widgets.TechniqueBodies;
 using PsychologyApp.Presentation.Widgets.PracticeStages;
@@ -122,6 +123,10 @@ public partial class TechniqueSessionPage : ContentPage
         if (_techniqueId == TechniqueId.Breathing)
         {
             content.Children.Add(new BreathingPacerView { FullscreenCommand = new Command(OpenImmersiveBreathing) });
+        }
+        else if (_techniqueId == TechniqueId.Balloons)
+        {
+            content.Children.Add(new BalloonPopView());
         }
 
         content.Children.Add(body);

@@ -4054,4 +4054,25 @@
   <data name="ProfileQuotesShowingAll" xml:space="preserve">
     <value>Mostrando {0} favoritos</value>
   </data>
+  <data name="BalloonsFieldDescription" xml:space="preserve">
+    <value>Campo de balões: toque nos balões para estourá-los</value>
+  </data>
+  <data name="BalloonsPopOne" xml:space="preserve">
+    <value>Estourar um balão</value>
+  </data>
+  <data name="BalloonsStart" xml:space="preserve">
+    <value>Começar</value>
+  </data>
+  <data name="BalloonsIntro" xml:space="preserve">
+    <value>20 balões. Estoure com um toque e solte o ar a cada estouro.</value>
+  </data>
+  <data name="BalloonsCount" xml:space="preserve">
+    <value>Estourados: {0} de {1}</value>
+  </data>
+  <data name="BalloonsDone" xml:space="preserve">
+    <value>Rodada encerrada: {0} de {1} estourados. Avalie sua tensão abaixo.</value>
+  </data>
+  <data name="BalloonsAgain" xml:space="preserve">
+    <value>Mais uma rodada</value>
+  </data>
 </root>

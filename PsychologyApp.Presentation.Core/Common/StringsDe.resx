@@ -4054,4 +4054,25 @@
   <data name="ProfileQuotesShowingAll" xml:space="preserve">
     <value>{0} Favoriten</value>
   </data>
+  <data name="BalloonsFieldDescription" xml:space="preserve">
+    <value>Ballonfeld: Tippe auf die Ballons, um sie platzen zu lassen</value>
+  </data>
+  <data name="BalloonsPopOne" xml:space="preserve">
+    <value>Einen Ballon platzen lassen</value>
+  </data>
+  <data name="BalloonsStart" xml:space="preserve">
+    <value>Starten</value>
+  </data>
+  <data name="BalloonsIntro" xml:space="preserve">
+    <value>20 Ballons. Lass sie mit einem Tippen platzen und atme bei jedem aus.</value>
+  </data>
+  <data name="BalloonsCount" xml:space="preserve">
+    <value>Geplatzt: {0} von {1}</value>
+  </data>
+  <data name="BalloonsDone" xml:space="preserve">
+    <value>Runde vorbei: {0} von {1} geplatzt. Bewerte unten deine Anspannung.</value>
+  </data>
+  <data name="BalloonsAgain" xml:space="preserve">
+    <value>Noch eine Runde</value>
+  </data>
 </root>

@@ -4054,4 +4054,25 @@
   <data name="ProfileQuotesShowingAll" xml:space="preserve">
     <value>Showing {0} favorites</value>
   </data>
+  <data name="BalloonsFieldDescription" xml:space="preserve">
+    <value>Balloon field: tap the balloons to pop them</value>
+  </data>
+  <data name="BalloonsPopOne" xml:space="preserve">
+    <value>Pop a balloon</value>
+  </data>
+  <data name="BalloonsStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="BalloonsIntro" xml:space="preserve">
+    <value>20 balloons. Pop them with a tap, and breathe out with each pop.</value>
+  </data>
+  <data name="BalloonsCount" xml:space="preserve">
+    <value>Popped: {0} of {1}</value>
+  </data>
+  <data name="BalloonsDone" xml:space="preserve">
+    <value>Round over: {0} of {1} popped. Rate your tension below.</value>
+  </data>
+  <data name="BalloonsAgain" xml:space="preserve">
+    <value>Another round</value>
+  </data>
 </root>

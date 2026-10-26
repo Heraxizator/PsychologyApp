@@ -487,4 +487,27 @@ internal static class TechniqueCatalogContentEn
             "Start with an easier nightmare. Do not write out the frightening parts in detail: a couple of sentences is enough. Change the dream any way you like; the new version does not have to be realistic. Rehearse it during the day, not right before sleep, 10 to 20 minutes a day.",
             "Nightmare: someone is chasing me and I can't get away. Change: I notice it's a dream, turn around, and it's just a shadow; I calmly walk home. I rehearse it every day in the afternoon. After two weeks the nightmare comes less often."),
         null, null);
+
+    internal static readonly BuiltInTechniqueDefinition Balloons = new(
+        "Practice", "Pop the balloons",
+        [
+            "1. Rate your tension",
+            "2. Pop the balloons with a tap, without rushing",
+            "3. With each pop, breathe out slowly",
+            "4. Play the round to the end",
+            "5. Rate your tension after"
+        ],
+        "A short game moves attention from anxious thoughts to a simple action and sensations.",
+        TechniqueUiKind.Entry, "Technique #22", "26.10.2026", "Pop the balloons", "A short break to let tension out", "Hard moment", "Psyche", 3, "BubbleChart",
+        [
+            new TechniqueEntrySeed("Tension before", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notes", "What changed while you were popping balloons?", Suggestions: ["I feel lighter", "My mind took a break", "I wanted to smile", "My breathing evened out", "The irritation passed", "My hands relaxed", "Nothing changed", "I want another round"]),
+            new TechniqueEntrySeed("Tension after", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "When anxiety or irritation peaks, thoughts are hard to stop by willpower. A simple action that needs your eyes and hands switches the brain for a few minutes and lets tension ease. It is not a treatment but a way through an acute minute.",
+            "When irritation, tension or anxiety takes over and you need a short break. If the game only helps you avoid a problem that is worth solving, come back to it once you are calmer.",
+            "Don't hurry: you don't have to hit every balloon. Breathe out slowly with each pop. The round ends by itself; there is no endless game.",
+            "Tension 7/10 after an argument. A round of 20 balloons, a breath out with each pop. Tension 4/10, and I could calmly think about what to answer."),
+        null, null);
 }

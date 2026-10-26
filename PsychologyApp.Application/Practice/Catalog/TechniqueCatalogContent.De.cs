@@ -487,4 +487,27 @@ internal static class TechniqueCatalogContentDe
             "Beginne mit einem leichteren Albtraum. Schreib die beängstigenden Teile nicht ausführlich auf: Ein paar Sätze reichen. Verändere den Traum, wie du willst; die neue Version muss nicht realistisch sein. Übe sie tagsüber, nicht direkt vor dem Schlafen, 10 bis 20 Minuten am Tag.",
             "Albtraum: Jemand verfolgt mich und ich komme nicht weg. Änderung: Ich merke, dass es ein Traum ist, drehe mich um, und es ist nur ein Schatten; ich gehe ruhig nach Hause. Ich übe es jeden Nachmittag. Nach zwei Wochen kommt der Albtraum seltener."),
         null, null);
+
+    internal static readonly BuiltInTechniqueDefinition Balloons = new(
+        "Übung", "Ballons platzen lassen",
+        [
+            "1. Bewerte deine Anspannung",
+            "2. Lass die Ballons mit einem Tippen platzen, ohne Eile",
+            "3. Atme bei jedem Platzen langsam aus",
+            "4. Spiel die Runde zu Ende",
+            "5. Bewerte deine Anspannung danach"
+        ],
+        "Ein kurzes Spiel lenkt die Aufmerksamkeit von ängstlichen Gedanken auf eine einfache Handlung und Empfindungen.",
+        TechniqueUiKind.Entry, "Technik Nr. 22", "26.10.2026", "Ballons platzen lassen", "Eine kurze Pause, um Anspannung rauszulassen", "Schwerer Moment", "Psyche", 3, "BubbleChart",
+        [
+            new TechniqueEntrySeed("Anspannung vorher", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notizen", "Was hat sich verändert, während du Ballons platzen ließt?", Suggestions: ["Ich fühle mich leichter", "Meine Gedanken haben Pause gemacht", "Ich musste lächeln", "Mein Atem wurde ruhiger", "Der Ärger ist verflogen", "Meine Hände haben sich entspannt", "Nichts hat sich verändert", "Ich möchte noch eine Runde"]),
+            new TechniqueEntrySeed("Anspannung danach", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "Wenn Angst oder Ärger am stärksten sind, lassen sich Gedanken mit Willenskraft kaum stoppen. Eine einfache Handlung, die Augen und Hände braucht, lenkt das Gehirn für ein paar Minuten um und lässt die Anspannung sinken. Das ist keine Behandlung, sondern ein Weg durch eine akute Minute.",
+            "Wenn Ärger, Anspannung oder Angst überhandnehmen und du eine kurze Pause brauchst. Wenn das Spiel dir nur hilft, einem Problem auszuweichen, das sich zu lösen lohnt, komm darauf zurück, sobald du ruhiger bist.",
+            "Lass dir Zeit: Du musst nicht jeden Ballon treffen. Atme bei jedem Platzen langsam aus. Die Runde endet von selbst; es gibt kein endloses Spiel.",
+            "Anspannung 7/10 nach einem Streit. Eine Runde mit 20 Ballons, bei jedem Platzen ausatmen. Anspannung 4/10, und ich konnte in Ruhe überlegen, was ich antworte."),
+        null, null);
 }

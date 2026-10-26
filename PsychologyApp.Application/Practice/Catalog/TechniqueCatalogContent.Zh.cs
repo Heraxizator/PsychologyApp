@@ -487,4 +487,27 @@ internal static class TechniqueCatalogContentZh
             "从一个较轻的噩梦开始。不要详细写出可怕的部分：几句话就够了。随你喜欢去改变梦；新版本不必符合现实。白天排练，不要在临睡前，每天 10 到 20 分钟。",
             "噩梦：有人在追我，我逃不掉。改变：我意识到这是梦，转过身，那只是一个影子；我平静地走回家。我每天下午排练一次。两周后，这个噩梦出现得少了。"),
         null, null);
+
+    internal static readonly BuiltInTechniqueDefinition Balloons = new(
+        "练习", "戳气球",
+        [
+            "1. 评估紧张程度",
+            "2. 轻点气球让它爆开，不用着急",
+            "3. 每戳破一个，就慢慢呼一口气",
+            "4. 把这一轮玩完",
+            "5. 再次评估紧张程度"
+        ],
+        "一个简短的小游戏，把注意力从焦虑的念头转到简单的动作和感受上。",
+        TechniqueUiKind.Entry, "技巧 #22", "26.10.2026", "戳气球", "短暂休息，释放紧张", "艰难时刻", "心理", 3, "BubbleChart",
+        [
+            new TechniqueEntrySeed("之前的紧张程度", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("笔记", "戳气球的时候，有什么变化？", Suggestions: ["感觉轻松了", "脑子歇了一会儿", "想笑了", "呼吸变平稳了", "烦躁过去了", "手放松了", "没什么变化", "想再玩一轮"]),
+            new TechniqueEntrySeed("之后的紧张程度", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "当焦虑或烦躁达到顶点时，很难靠意志力让念头停下来。一个需要眼睛和双手配合的简单动作，能让大脑转换几分钟，让紧张缓解下来。这不是治疗，而是帮你度过难熬一刻的方法。",
+            "当烦躁、紧张或焦虑涌上来，需要短暂喘口气时。如果游戏只是帮你逃避一个值得解决的问题，等平静下来后再回到它。",
+            "不要着急，不必每个气球都戳中。每戳破一个，就慢慢呼气。一轮会自动结束，没有无尽的游戏。",
+            "吵架后紧张程度7/10。玩一轮20个气球，每戳破一个就呼一口气。紧张降到4/10，可以冷静地想想怎么回应了。"),
+        null, null);
 }

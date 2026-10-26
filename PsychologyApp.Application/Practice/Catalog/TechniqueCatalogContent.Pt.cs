@@ -487,4 +487,27 @@ internal static class TechniqueCatalogContentPt
             "Comece com um pesadelo mais leve. Não escreva as partes assustadoras em detalhes: umas duas frases bastam. Mude o sonho como quiser; a nova versão não precisa ser realista. Ensaie durante o dia, não logo antes de dormir, de 10 a 20 minutos por dia.",
             "Pesadelo: alguém me persegue e não consigo fugir. Mudança: percebo que é um sonho, me viro, e é só uma sombra; volto para casa com calma. Ensaio isso todo dia à tarde. Depois de duas semanas, o pesadelo aparece menos."),
         null, null);
+
+    internal static readonly BuiltInTechniqueDefinition Balloons = new(
+        "Prática", "Estoure os balões",
+        [
+            "1. Avalie sua tensão",
+            "2. Estoure os balões com um toque, sem pressa",
+            "3. A cada estouro, solte o ar devagar",
+            "4. Jogue a rodada até o fim",
+            "5. Avalie sua tensão depois"
+        ],
+        "Um jogo curto leva a atenção dos pensamentos ansiosos para uma ação simples e para as sensações.",
+        TechniqueUiKind.Entry, "Técnica nº 22", "26.10.2026", "Estoure os balões", "Uma pausa curta para soltar a tensão", "Momento difícil", "Psique", 3, "BubbleChart",
+        [
+            new TechniqueEntrySeed("Tensão antes", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notas", "O que mudou enquanto você estourava balões?", Suggestions: ["Me sinto mais leve", "Minha mente descansou", "Deu vontade de sorrir", "Minha respiração se acalmou", "A irritação passou", "Minhas mãos relaxaram", "Nada mudou", "Quero mais uma rodada"]),
+            new TechniqueEntrySeed("Tensão depois", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "Quando a ansiedade ou a irritação estão no auge, é difícil parar os pensamentos pela força de vontade. Uma ação simples, que pede atenção dos olhos e das mãos, muda o foco do cérebro por alguns minutos e deixa a tensão baixar. Não é um tratamento, mas um jeito de atravessar um minuto difícil.",
+            "Quando a irritação, a tensão ou a ansiedade tomam conta e você precisa de uma pausa curta. Se o jogo só ajudar a fugir de um problema que vale a pena resolver, volte a ele quando estiver mais calmo.",
+            "Sem pressa: não é preciso acertar todos os balões. Solte o ar devagar a cada estouro. A rodada termina sozinha; não existe jogo sem fim.",
+            "Tensão 7/10 depois de uma discussão. Uma rodada de 20 balões, uma expiração a cada estouro. Tensão 4/10, e consegui pensar com calma no que responder."),
+        null, null);
 }

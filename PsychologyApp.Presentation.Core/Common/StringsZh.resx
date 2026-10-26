@@ -4054,4 +4054,25 @@
   <data name="ProfileQuotesShowingAll" xml:space="preserve">
     <value>显示 {0} 条收藏</value>
   </data>
+  <data name="BalloonsFieldDescription" xml:space="preserve">
+    <value>气球区域：轻点气球让它爆开</value>
+  </data>
+  <data name="BalloonsPopOne" xml:space="preserve">
+    <value>戳破一个气球</value>
+  </data>
+  <data name="BalloonsStart" xml:space="preserve">
+    <value>开始</value>
+  </data>
+  <data name="BalloonsIntro" xml:space="preserve">
+    <value>20个气球。轻点戳破它们，每戳破一个就呼一口气。</value>
+  </data>
+  <data name="BalloonsCount" xml:space="preserve">
+    <value>已戳破：{0} / {1}</value>
+  </data>
+  <data name="BalloonsDone" xml:space="preserve">
+    <value>本轮结束：戳破了 {0} / {1}。请在下方评估紧张程度。</value>
+  </data>
+  <data name="BalloonsAgain" xml:space="preserve">
+    <value>再来一轮</value>
+  </data>
 </root>

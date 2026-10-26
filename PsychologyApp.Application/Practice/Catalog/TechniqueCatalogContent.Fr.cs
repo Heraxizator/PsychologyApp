@@ -487,4 +487,27 @@ internal static class TechniqueCatalogContentFr
             "Commencez par un cauchemar plus léger. N'écrivez pas en détail les passages effrayants : deux phrases suffisent. Changez le rêve comme vous le souhaitez ; la nouvelle version n'a pas besoin d'être réaliste. Répétez-la dans la journée, pas juste avant de dormir, 10 à 20 minutes par jour.",
             "Cauchemar : quelqu'un me poursuit et je n'arrive pas à m'enfuir. Changement : je remarque que c'est un rêve, je me retourne, et ce n'est qu'une ombre ; je rentre calmement chez moi. Je le répète chaque après-midi. Au bout de deux semaines, le cauchemar revient moins souvent."),
         null, null);
+
+    internal static readonly BuiltInTechniqueDefinition Balloons = new(
+        "Pratique", "Éclate les ballons",
+        [
+            "1. Évaluez votre tension",
+            "2. Éclatez les ballons d'une touche, sans vous presser",
+            "3. À chaque éclatement, expirez lentement",
+            "4. Allez jusqu'au bout de la manche",
+            "5. Évaluez votre tension après"
+        ],
+        "Un petit jeu détourne l'attention des pensées anxieuses vers un geste simple et les sensations.",
+        TechniqueUiKind.Entry, "Technique n° 22", "26.10.2026", "Éclate les ballons", "Une courte pause pour relâcher la tension", "Moment difficile", "Psyché", 3, "BubbleChart",
+        [
+            new TechniqueEntrySeed("Tension avant", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notes", "Qu'est-ce qui a changé pendant que vous éclatiez les ballons ?", Suggestions: ["Je me sens plus léger", "Mes pensées ont fait une pause", "J'ai eu envie de sourire", "Ma respiration s'est apaisée", "L'agacement est passé", "Mes mains se sont détendues", "Rien n'a changé", "J'ai envie d'une autre manche"]),
+            new TechniqueEntrySeed("Tension après", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "Quand l'anxiété ou l'agacement sont au plus haut, les pensées sont difficiles à arrêter par la volonté. Un geste simple qui demande les yeux et les mains change d'activité pour le cerveau quelques minutes et laisse la tension retomber. Ce n'est pas un traitement, mais un moyen de traverser une minute difficile.",
+            "Quand l'agacement, la tension ou l'anxiété prennent le dessus et qu'il faut une courte pause. Si le jeu sert seulement à éviter un problème qui mérite d'être réglé, revenez-y une fois plus calme.",
+            "Ne vous pressez pas : inutile de toucher chaque ballon. Expirez lentement à chaque éclatement. La manche se termine d'elle-même ; il n'y a pas de jeu sans fin.",
+            "Tension 7/10 après une dispute. Une manche de 20 ballons, une expiration à chaque éclatement. Tension 4/10, et j'ai pu réfléchir calmement à ma réponse."),
+        null, null);
 }

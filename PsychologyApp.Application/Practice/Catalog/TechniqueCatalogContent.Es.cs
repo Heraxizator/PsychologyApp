@@ -487,4 +487,27 @@ internal static class TechniqueCatalogContentEs
             "Empieza por una pesadilla más leve. No escribas con detalle las partes que dan miedo: con un par de frases basta. Cambia el sueño como quieras; la nueva versión no tiene que ser realista. Ensáyala durante el día, no justo antes de dormir, de 10 a 20 minutos al día.",
             "Pesadilla: alguien me persigue y no puedo escapar. Cambio: me doy cuenta de que es un sueño, me doy la vuelta y solo es una sombra; vuelvo a casa con calma. Lo ensayo cada tarde. Tras dos semanas, la pesadilla aparece menos."),
         null, null);
+
+    internal static readonly BuiltInTechniqueDefinition Balloons = new(
+        "Práctica", "Revienta los globos",
+        [
+            "1. Valora tu tensión",
+            "2. Revienta los globos con un toque, sin prisa",
+            "3. Con cada globo, suelta el aire despacio",
+            "4. Juega la ronda hasta el final",
+            "5. Valora tu tensión después"
+        ],
+        "Un juego breve lleva la atención de los pensamientos ansiosos a una acción sencilla y a las sensaciones.",
+        TechniqueUiKind.Entry, "Técnica n.º 22", "26.10.2026", "Revienta los globos", "Una pausa breve para soltar la tensión", "Momento difícil", "Psique", 3, "BubbleChart",
+        [
+            new TechniqueEntrySeed("Tensión antes", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notas", "¿Qué cambió mientras reventabas globos?", Suggestions: ["Me siento más ligero", "Mi mente descansó", "Me dieron ganas de sonreír", "Mi respiración se calmó", "La irritación pasó", "Mis manos se relajaron", "No cambió nada", "Quiero otra ronda"]),
+            new TechniqueEntrySeed("Tensión después", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "Cuando la ansiedad o la irritación están en su punto más alto, cuesta detener los pensamientos con fuerza de voluntad. Una acción sencilla que pide atención de ojos y manos cambia de foco al cerebro durante unos minutos y deja que la tensión baje. No es un tratamiento, sino una forma de atravesar un minuto difícil.",
+            "Cuando la irritación, la tensión o la ansiedad te desbordan y necesitas una pausa breve. Si el juego solo te ayuda a evitar un problema que vale la pena resolver, vuelve a él cuando estés más tranquilo.",
+            "Sin prisa: no hace falta acertar a cada globo. Suelta el aire despacio con cada uno. La ronda termina sola; no hay juego infinito.",
+            "Tensión 7/10 después de una discusión. Una ronda de 20 globos, una espiración con cada uno. Tensión 4/10, y pude pensar con calma qué responder."),
+        null, null);
 }

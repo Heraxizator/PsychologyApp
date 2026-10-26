@@ -468,6 +468,13 @@ public static partial class AppStrings
     public static string JournalSlotMorning => R(nameof(JournalSlotMorning));
     public static string JournalSlotEvening => R(nameof(JournalSlotEvening));
     public static string JournalEditorTitle(string day, bool evening) => F(evening ? "JournalEditorTitleEvening" : "JournalEditorTitleMorning", day);
+    public static string BalloonsFieldDescription => R(nameof(BalloonsFieldDescription));
+    public static string BalloonsPopOne => R(nameof(BalloonsPopOne));
+    public static string BalloonsStart => R(nameof(BalloonsStart));
+    public static string BalloonsIntro => R(nameof(BalloonsIntro));
+    public static string BalloonsAgain => R(nameof(BalloonsAgain));
+    public static string BalloonsCount(int popped, int total) => F(nameof(BalloonsCount), popped, total);
+    public static string BalloonsDone(int popped, int total) => F(nameof(BalloonsDone), popped, total);
     public static string JournalExportLabel => R(nameof(JournalExportLabel));
     public static string JournalExportTitle => R(nameof(JournalExportTitle));
     public static string JournalExportEmpty => R(nameof(JournalExportEmpty));
