@@ -31,6 +31,13 @@ public partial class BreathingPacerView : ContentView
         set => SetValue(IsCalmProperty, value);
     }
 
+    /// <summary>The rhythm to breathe with, for a practice that has its own (the cyclic sigh); set before the first start.</summary>
+    public BreathingPattern Pattern
+    {
+        get => _pattern;
+        set => _pattern = value;
+    }
+
     public static readonly BindableProperty IsImmersiveProperty = BindableProperty.Create(
         nameof(IsImmersive), typeof(bool), typeof(BreathingPacerView), false,
         propertyChanged: (bindable, _, newValue) => ((BreathingPacerView)bindable).ApplyImmersive((bool)newValue));
@@ -226,6 +233,7 @@ public partial class BreathingPacerView : ContentView
     private static string PhaseName(BreathPhaseKind kind) => kind switch
     {
         BreathPhaseKind.Inhale => AppStrings.BreathInhale,
+        BreathPhaseKind.TopUp => AppStrings.BreathTopUp,
         BreathPhaseKind.Exhale => AppStrings.BreathExhale,
         _ => AppStrings.BreathHold
     };

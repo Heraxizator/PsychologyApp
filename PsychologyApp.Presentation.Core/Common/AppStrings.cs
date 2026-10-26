@@ -475,6 +475,31 @@ public static partial class AppStrings
     public static string BalloonsAgain => R(nameof(BalloonsAgain));
     public static string BalloonsCount(int popped, int total) => F(nameof(BalloonsCount), popped, total);
     public static string BalloonsDone(int popped, int total) => F(nameof(BalloonsDone), popped, total);
+    public static string BreathTopUp => R(nameof(BreathTopUp));
+    public static string MuscleIntro => R(nameof(MuscleIntro));
+    public static string MuscleStart => R(nameof(MuscleStart));
+    public static string MuscleStop => R(nameof(MuscleStop));
+    public static string MuscleAgain => R(nameof(MuscleAgain));
+    public static string MuscleTense => R(nameof(MuscleTense));
+    public static string MuscleRelease => R(nameof(MuscleRelease));
+    public static string MuscleReleaseHint => R(nameof(MuscleReleaseHint));
+    public static string MuscleGroupHands => R(nameof(MuscleGroupHands));
+    public static string MuscleGroupShoulders => R(nameof(MuscleGroupShoulders));
+    public static string MuscleGroupFace => R(nameof(MuscleGroupFace));
+    public static string MuscleGroupBelly => R(nameof(MuscleGroupBelly));
+    public static string MuscleGroupLegs => R(nameof(MuscleGroupLegs));
+    public static string MuscleStep(int group, int total) => F(nameof(MuscleStep), group, total);
+    public static string MuscleDone => R(nameof(MuscleDone));
+    public static string BusyMindIntro => R(nameof(BusyMindIntro));
+    public static string BusyMindStart => R(nameof(BusyMindStart));
+    public static string BusyMindNext => R(nameof(BusyMindNext));
+    public static string BusyMindSkip => R(nameof(BusyMindSkip));
+    public static string BusyMindStep(int step, int total) => F(nameof(BusyMindStep), step, total);
+    public static string BusyMindDone => R(nameof(BusyMindDone));
+    public static string BusyMindAgain => R(nameof(BusyMindAgain));
+
+    /// <summary>Task <paramref name="number"/> (1..<see cref="PsychologyApp.Presentation.Core.Practice.BusyMindRound.TaskCount"/>) of "keep the mind busy".</summary>
+    public static string BusyMindTask(int number) => R($"BusyMindTask{number:00}");
     public static string JournalExportLabel => R(nameof(JournalExportLabel));
     public static string JournalExportTitle => R(nameof(JournalExportTitle));
     public static string JournalExportEmpty => R(nameof(JournalExportEmpty));

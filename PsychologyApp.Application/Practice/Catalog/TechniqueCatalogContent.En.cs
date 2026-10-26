@@ -510,4 +510,73 @@ internal static class TechniqueCatalogContentEn
             "Don't hurry: you don't have to hit every balloon. Breathe out slowly with each pop. The round ends by itself; there is no endless game.",
             "Tension 7/10 after an argument. A round of 20 balloons, a breath out with each pop. Tension 4/10, and I could calmly think about what to answer."),
         null, null);
+
+    internal static readonly BuiltInTechniqueDefinition CyclicSigh = new(
+        "Practice", "Cyclic sigh",
+        [
+            "1. Rate your tension",
+            "2. Breathe in through your nose, then take one more short breath in at the top",
+            "3. Breathe out slowly through your mouth, longer than you breathed in",
+            "4. Breathe with the circle for about three minutes",
+            "5. Rate your tension after"
+        ],
+        "A double breath in and a long breath out calm the body quickly, with no breath holding.",
+        TechniqueUiKind.Entry, "Technique #23", "26.10.2026", "Cyclic sigh", "A double breath in and a long breath out to calm the body", "Hard moment", "Psyche", 3, "Air",
+        [
+            new TechniqueEntrySeed("Tension before", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notes", "What changed after the breathing?", Suggestions: ["My body is calmer", "My shoulders dropped", "My heart slowed down", "My thoughts slowed down", "I felt a little dizzy", "Nothing changed", "I want to do it again"]),
+            new TechniqueEntrySeed("Tension after", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "The second short breath in opens the lungs more fully, and the long breath out applies the nervous system's brake: the heart slows and the body calms down. In a 2023 study, five minutes a day of this breathing improved mood more than mindfulness meditation. It is not a treatment but a quick way to bring tension down.",
+            "When anxiety, anger or tension takes over and you need to calm your body within a couple of minutes. It also suits the moment before a difficult conversation or before sleep.",
+            "Breathe gently, not as hard as you can: the second breath in is short, the breath out slow and without strain. If you feel dizzy, go back to normal breathing; it will pass. The circle stops by itself after three minutes.",
+            "Tension 6/10 before a phone call. Three minutes of a double breath in and a long breath out. Tension 3/10, and my voice was steadier."),
+        null, null);
+
+    internal static readonly BuiltInTechniqueDefinition MuscleRelax = new(
+        "Practice", "Tense and let go",
+        [
+            "1. Rate your tension",
+            "2. Tense a muscle group for five seconds, at about half strength",
+            "3. Let go and notice the relaxation for fifteen seconds",
+            "4. Go through five groups: hands, shoulders, face, belly, legs",
+            "5. Rate your tension after"
+        ],
+        "Tensing muscles first and then letting go makes it easier for the body to feel what relaxing is.",
+        TechniqueUiKind.Entry, "Technique #24", "26.10.2026", "Tense and let go", "A short muscle relaxation for a tight body", "Hard moment", "Psyche", 4, "SelfImprovement",
+        [
+            new TechniqueEntrySeed("Tension before", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notes", "Where in your body does it feel lighter?", Suggestions: ["My shoulders relaxed", "My jaw unclenched", "My hands got warmer", "Breathing got easier", "I feel sleepy", "Some tension is still there", "Nothing changed"]),
+            new TechniqueEntrySeed("Tension after", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "Progressive muscle relaxation is one of the best-studied ways to reduce anxiety and tension. Tensing a muscle and then letting it go creates a contrast that helps you notice relaxation and, over time, learn to bring it on. It is not a treatment but a skill that works better with practice.",
+            "When your body is tight from stress, when it is hard to sit still or to fall asleep. It suits the evening before sleep well.",
+            "Tense at about half strength, without pain. If a part of your body hurts or is injured, don't tense it; just notice it. While letting go, breathe calmly and don't rush to the next group.",
+            "Tension 7/10 in the evening after work, shoulders up by my ears. Five groups: hands, shoulders, face, belly, legs. Tension 4/10, my shoulders dropped."),
+        null, null);
+
+    internal static readonly BuiltInTechniqueDefinition BusyMind = new(
+        "Practice", "Keep the mind busy",
+        [
+            "1. Rate your tension",
+            "2. Take a task and do it in your head or out loud",
+            "3. If your thoughts drift back to the worry, gently return to the task",
+            "4. Do five tasks",
+            "5. Rate your tension after"
+        ],
+        "Simple tasks for the mind take attention away from thoughts that go round in circles.",
+        TechniqueUiKind.Entry, "Technique #25", "26.10.2026", "Keep the mind busy", "Simple tasks to break the circle of thoughts", "Hard moment", "Psyche", 3, "Extension",
+        [
+            new TechniqueEntrySeed("Tension before", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notes", "What changed while you were busy with the tasks?", Suggestions: ["My thoughts let go", "I feel calmer", "It was hard to focus", "I want to get something done", "The anxiety came back", "Nothing changed", "I want more tasks"]),
+            new TechniqueEntrySeed("Tension after", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "When thoughts go round in circles, stopping them by willpower is almost impossible. A task that occupies the mind (counting, remembering, listing) leaves no room for the loop for a while. It is a distraction skill from dialectical behaviour therapy: not a solution to the problem but a way through an acute minute.",
+            "When intrusive thoughts take over, before sleep, or after an argument when the conversation keeps going on in your head.",
+            "Do the tasks for real: the more attention they take, the better. If the problem really needs solving, come back to it once you are calmer.",
+            "After an argument the conversation keeps spinning in my head, tension 7/10. Five tasks: animals that live in water, counting down from 100 by 7, things of every colour around me. Tension 4/10."),
+        null, null);
 }

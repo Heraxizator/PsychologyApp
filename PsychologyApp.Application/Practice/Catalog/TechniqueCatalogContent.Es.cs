@@ -510,4 +510,73 @@ internal static class TechniqueCatalogContentEs
             "Sin prisa: no hace falta acertar a cada globo. Suelta el aire despacio con cada uno. La ronda termina sola; no hay juego infinito.",
             "Tensión 7/10 después de una discusión. Una ronda de 20 globos, una espiración con cada uno. Tensión 4/10, y pude pensar con calma qué responder."),
         null, null);
+
+    internal static readonly BuiltInTechniqueDefinition CyclicSigh = new(
+        "Práctica", "Suspiro cíclico",
+        [
+            "1. Valora tu tensión",
+            "2. Inhala por la nariz y, al final, añade otra inhalación corta",
+            "3. Exhala despacio por la boca, más tiempo del que inhalaste",
+            "4. Respira al ritmo del círculo unos tres minutos",
+            "5. Valora tu tensión después"
+        ],
+        "Una doble inhalación y una exhalación larga calman el cuerpo rápido, sin retener el aire.",
+        TechniqueUiKind.Entry, "Técnica n.º 23", "26.10.2026", "Suspiro cíclico", "Una doble inhalación y una exhalación larga para calmar el cuerpo", "Momento difícil", "Psique", 3, "Air",
+        [
+            new TechniqueEntrySeed("Tensión antes", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notas", "¿Qué cambió después de respirar?", Suggestions: ["Mi cuerpo está más tranquilo", "Mis hombros bajaron", "Mi corazón se calmó", "Mis pensamientos se calmaron", "Me mareé un poco", "No cambió nada", "Quiero repetirlo"]),
+            new TechniqueEntrySeed("Tensión después", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "La segunda inhalación corta abre más los pulmones, y la exhalación larga activa el freno del sistema nervioso: el corazón se ralentiza y el cuerpo se calma. En un estudio de 2023, cinco minutos al día de esta respiración mejoraban el ánimo más que la meditación de atención plena. No es un tratamiento, sino una forma rápida de bajar la tensión.",
+            "Cuando la ansiedad, el enfado o la tensión te desbordan y necesitas calmar el cuerpo en un par de minutos. También sirve antes de una conversación difícil o antes de dormir.",
+            "Respira con suavidad, sin forzar: la segunda inhalación es corta y la exhalación lenta y sin esfuerzo. Si te mareas, vuelve a respirar con normalidad; se pasará. El círculo termina solo a los tres minutos.",
+            "Tensión 6/10 antes de una llamada. Tres minutos de doble inhalación y exhalación larga. Tensión 3/10, y mi voz sonaba más tranquila."),
+        null, null);
+
+    internal static readonly BuiltInTechniqueDefinition MuscleRelax = new(
+        "Práctica", "Tensar y soltar",
+        [
+            "1. Valora tu tensión",
+            "2. Tensa un grupo de músculos cinco segundos, a media fuerza",
+            "3. Suelta y nota la relajación durante quince segundos",
+            "4. Recorre cinco grupos: manos, hombros, cara, abdomen, piernas",
+            "5. Valora tu tensión después"
+        ],
+        "Tensar primero los músculos y luego soltarlos ayuda al cuerpo a sentir qué es relajarse.",
+        TechniqueUiKind.Entry, "Técnica n.º 24", "26.10.2026", "Tensar y soltar", "Una relajación muscular breve para un cuerpo tenso", "Momento difícil", "Psique", 4, "SelfImprovement",
+        [
+            new TechniqueEntrySeed("Tensión antes", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notas", "¿En qué parte del cuerpo te sientes más ligero?", Suggestions: ["Se relajaron mis hombros", "Se aflojó mi mandíbula", "Se calentaron mis manos", "Respiro mejor", "Me dio sueño", "Todavía queda algo de tensión", "No cambió nada"]),
+            new TechniqueEntrySeed("Tensión después", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "La relajación muscular progresiva es una de las formas más estudiadas de reducir la ansiedad y la tensión. Tensar un músculo y luego soltarlo crea un contraste que ayuda a notar la relajación y, con el tiempo, a aprender a provocarla. No es un tratamiento, sino una habilidad que funciona mejor con la práctica.",
+            "Cuando el cuerpo está tenso por el estrés, cuando cuesta quedarse quieto o dormirse. Va bien por la noche antes de dormir.",
+            "Tensa a media fuerza, sin dolor. Si una parte del cuerpo duele o está lesionada, no la tenses: solo obsérvala. Al soltar, respira con calma y no te apresures a pasar al siguiente grupo.",
+            "Tensión 7/10 por la noche después del trabajo, con los hombros encogidos. Cinco grupos: manos, hombros, cara, abdomen, piernas. Tensión 4/10, los hombros bajaron."),
+        null, null);
+
+    internal static readonly BuiltInTechniqueDefinition BusyMind = new(
+        "Práctica", "Ocupar la mente",
+        [
+            "1. Valora tu tensión",
+            "2. Toma una tarea y hazla mentalmente o en voz alta",
+            "3. Si tus pensamientos vuelven a la preocupación, regresa con suavidad a la tarea",
+            "4. Haz cinco tareas",
+            "5. Valora tu tensión después"
+        ],
+        "Tareas sencillas para la mente apartan la atención de los pensamientos que dan vueltas.",
+        TechniqueUiKind.Entry, "Técnica n.º 25", "26.10.2026", "Ocupar la mente", "Tareas sencillas para romper el círculo de pensamientos", "Momento difícil", "Psique", 3, "Extension",
+        [
+            new TechniqueEntrySeed("Tensión antes", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notas", "¿Qué cambió mientras estabas ocupado con las tareas?", Suggestions: ["Los pensamientos me soltaron", "Estoy más tranquilo", "Me costó concentrarme", "Me dieron ganas de hacer algo", "La ansiedad volvió", "No cambió nada", "Quiero más tareas"]),
+            new TechniqueEntrySeed("Tensión después", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "Cuando los pensamientos dan vueltas, detenerlos con fuerza de voluntad es casi imposible. Una tarea que ocupa la mente (contar, recordar, enumerar) no deja espacio a la rumiación durante un rato. Es una habilidad de distracción de la terapia dialéctica conductual: no resuelve el problema, pero ayuda a pasar un momento difícil.",
+            "Cuando te invaden pensamientos intrusivos, antes de dormir o después de una discusión, cuando la conversación sigue en tu cabeza.",
+            "Haz las tareas en serio: cuanta más atención te pidan, mejor. Si el problema de verdad hay que resolverlo, vuelve a él cuando estés más tranquilo.",
+            "Después de una discusión, la conversación sigue dando vueltas en mi cabeza, tensión 7/10. Cinco tareas: animales que viven en el agua, contar hacia atrás desde 100 de 7 en 7, objetos de cada color a mi alrededor. Tensión 4/10."),
+        null, null);
 }

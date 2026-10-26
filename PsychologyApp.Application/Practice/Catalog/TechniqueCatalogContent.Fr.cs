@@ -510,4 +510,73 @@ internal static class TechniqueCatalogContentFr
             "Ne vous pressez pas : inutile de toucher chaque ballon. Expirez lentement à chaque éclatement. La manche se termine d'elle-même ; il n'y a pas de jeu sans fin.",
             "Tension 7/10 après une dispute. Une manche de 20 ballons, une expiration à chaque éclatement. Tension 4/10, et j'ai pu réfléchir calmement à ma réponse."),
         null, null);
+
+    internal static readonly BuiltInTechniqueDefinition CyclicSigh = new(
+        "Pratique", "Soupir cyclique",
+        [
+            "1. Évaluez votre tension",
+            "2. Inspirez par le nez, puis ajoutez une petite inspiration à la fin",
+            "3. Expirez lentement par la bouche, plus longtemps que l'inspiration",
+            "4. Respirez au rythme du cercle pendant environ trois minutes",
+            "5. Évaluez votre tension après"
+        ],
+        "Une double inspiration et une longue expiration apaisent vite le corps, sans retenir son souffle.",
+        TechniqueUiKind.Entry, "Technique n° 23", "26.10.2026", "Soupir cyclique", "Une double inspiration et une longue expiration pour apaiser le corps", "Moment difficile", "Psyché", 3, "Air",
+        [
+            new TechniqueEntrySeed("Tension avant", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notes", "Qu'est-ce qui a changé après la respiration ?", Suggestions: ["Mon corps est plus calme", "Mes épaules sont descendues", "Mon cœur a ralenti", "Mes pensées ont ralenti", "La tête m'a un peu tourné", "Rien n'a changé", "J'ai envie de recommencer"]),
+            new TechniqueEntrySeed("Tension après", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "La seconde petite inspiration ouvre davantage les poumons, et la longue expiration actionne le frein du système nerveux : le cœur ralentit, le corps s'apaise. Dans une étude de 2023, cinq minutes par jour de cette respiration amélioraient davantage l'humeur que la méditation de pleine conscience. Ce n'est pas un traitement, mais un moyen rapide de faire baisser la tension.",
+            "Quand l'anxiété, la colère ou la tension prend le dessus et qu'il faut apaiser le corps en quelques minutes. Convient aussi avant une conversation difficile ou avant de dormir.",
+            "Respirez doucement, sans forcer : la seconde inspiration est courte, l'expiration lente et sans effort. Si la tête vous tourne, revenez à une respiration normale ; cela passera. Le cercle s'arrête de lui-même après trois minutes.",
+            "Tension 6/10 avant un appel. Trois minutes de double inspiration et de longue expiration. Tension 3/10, ma voix était plus posée."),
+        null, null);
+
+    internal static readonly BuiltInTechniqueDefinition MuscleRelax = new(
+        "Pratique", "Contracter et relâcher",
+        [
+            "1. Évaluez votre tension",
+            "2. Contractez un groupe de muscles pendant cinq secondes, à moitié de votre force",
+            "3. Relâchez et observez la détente pendant quinze secondes",
+            "4. Passez par cinq groupes : mains, épaules, visage, ventre, jambes",
+            "5. Évaluez votre tension après"
+        ],
+        "Contracter d'abord les muscles puis les relâcher aide le corps à sentir ce qu'est la détente.",
+        TechniqueUiKind.Entry, "Technique n° 24", "26.10.2026", "Contracter et relâcher", "Une courte relaxation musculaire pour un corps crispé", "Moment difficile", "Psyché", 4, "SelfImprovement",
+        [
+            new TechniqueEntrySeed("Tension avant", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notes", "Où dans votre corps est-ce plus léger ?", Suggestions: ["Mes épaules se sont détendues", "Ma mâchoire s'est desserrée", "Mes mains se sont réchauffées", "Je respire plus facilement", "J'ai envie de dormir", "Il reste un peu de tension", "Rien n'a changé"]),
+            new TechniqueEntrySeed("Tension après", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "La relaxation musculaire progressive est l'un des moyens les mieux étudiés pour réduire l'anxiété et la tension. Contracter un muscle puis le relâcher crée un contraste qui aide à remarquer la détente et, avec le temps, à apprendre à la provoquer. Ce n'est pas un traitement mais une compétence qui fonctionne mieux avec la pratique.",
+            "Quand le corps est crispé par le stress, qu'il est difficile de rester assis ou de s'endormir. Convient bien le soir avant de dormir.",
+            "Contractez à moitié de votre force, sans douleur. Si une partie du corps est douloureuse ou blessée, ne la contractez pas, observez-la simplement. Pendant le relâchement, respirez calmement et ne vous pressez pas de passer au groupe suivant.",
+            "Tension 7/10 le soir après le travail, les épaules remontées. Cinq groupes : mains, épaules, visage, ventre, jambes. Tension 4/10, mes épaules sont descendues."),
+        null, null);
+
+    internal static readonly BuiltInTechniqueDefinition BusyMind = new(
+        "Pratique", "Occuper l'esprit",
+        [
+            "1. Évaluez votre tension",
+            "2. Prenez une tâche et faites-la dans votre tête ou à voix haute",
+            "3. Si vos pensées reviennent à l'inquiétude, revenez doucement à la tâche",
+            "4. Faites cinq tâches",
+            "5. Évaluez votre tension après"
+        ],
+        "Des tâches simples pour l'esprit détournent l'attention des pensées qui tournent en rond.",
+        TechniqueUiKind.Entry, "Technique n° 25", "26.10.2026", "Occuper l'esprit", "Des tâches simples pour briser le cercle des pensées", "Moment difficile", "Psyché", 3, "Extension",
+        [
+            new TechniqueEntrySeed("Tension avant", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notes", "Qu'est-ce qui a changé pendant que vous étiez occupé·e par les tâches ?", Suggestions: ["Mes pensées ont lâché prise", "Je suis plus calme", "J'ai eu du mal à me concentrer", "J'ai envie de passer à l'action", "L'anxiété est revenue", "Rien n'a changé", "Je veux d'autres tâches"]),
+            new TechniqueEntrySeed("Tension après", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "Quand les pensées tournent en rond, les arrêter par la volonté est presque impossible. Une tâche qui occupe l'esprit (compter, se souvenir, énumérer) ne laisse plus de place au ressassement pendant un moment. C'est une compétence de distraction issue de la thérapie comportementale dialectique : pas une solution au problème, mais un moyen de traverser une minute difficile.",
+            "Quand des pensées envahissantes prennent le dessus, avant de dormir, ou après une dispute quand la conversation continue dans la tête.",
+            "Faites les tâches pour de vrai : plus elles prennent d'attention, mieux c'est. Si le problème doit vraiment être résolu, revenez-y quand vous serez plus calme.",
+            "Après une dispute, la conversation tourne dans ma tête, tension 7/10. Cinq tâches : des animaux qui vivent dans l'eau, compter à rebours de 100 en retirant 7, des objets de chaque couleur autour de moi. Tension 4/10."),
+        null, null);
 }

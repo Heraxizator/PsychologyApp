@@ -3,6 +3,9 @@ namespace PsychologyApp.Presentation.Features.RunTechniqueSession;
 public enum BreathPhaseKind
 {
     Inhale,
+
+    /// <summary>The short second breath in at the top of the cyclic sigh.</summary>
+    TopUp,
     HoldFull,
     Exhale,
     HoldEmpty
@@ -22,6 +25,9 @@ public sealed class BreathingPattern
 {
     public const double SmallScale = 0.55;
     public const double LargeScale = 1.0;
+
+    /// <summary>Where the first breath in of the cyclic sigh stops, so the second one still visibly fills the circle.</summary>
+    public const double TopUpScale = 0.85;
 
     public BreathingPattern(IReadOnlyList<BreathPhase> phases, int cycles)
     {
@@ -54,6 +60,18 @@ public sealed class BreathingPattern
             new BreathPhase(BreathPhaseKind.Exhale, 6, LargeScale, SmallScale)
         ],
         6);
+
+    /// <summary>
+    /// The cyclic sigh: a breath in through the nose, a short second one on top, and a long breath out, twenty cycles (three minutes).
+    /// The out-breath is twice the in-breath; there is no hold, so it suits someone who is already short of breath.
+    /// </summary>
+    public static BreathingPattern CyclicSigh { get; } = new(
+        [
+            new BreathPhase(BreathPhaseKind.Inhale, 2, SmallScale, TopUpScale),
+            new BreathPhase(BreathPhaseKind.TopUp, 1, TopUpScale, LargeScale),
+            new BreathPhase(BreathPhaseKind.Exhale, 6, LargeScale, SmallScale)
+        ],
+        20);
 
     /// <summary>The position after <paramref name="elapsedSeconds"/> from the start (negative counts as zero).</summary>
     public BreathPosition At(double elapsedSeconds)

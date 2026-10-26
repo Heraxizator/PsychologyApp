@@ -4075,4 +4075,106 @@
   <data name="BalloonsAgain" xml:space="preserve">
     <value>再来一轮</value>
   </data>
+  <data name="BreathTopUp" xml:space="preserve">
+    <value>再吸一口</value>
+  </data>
+  <data name="MuscleIntro" xml:space="preserve">
+    <value>五组肌肉：每组绷紧 5 秒，放松 15 秒。用一半的力气，不要用到疼。</value>
+  </data>
+  <data name="MuscleStart" xml:space="preserve">
+    <value>开始</value>
+  </data>
+  <data name="MuscleStop" xml:space="preserve">
+    <value>停止</value>
+  </data>
+  <data name="MuscleAgain" xml:space="preserve">
+    <value>再来一次</value>
+  </data>
+  <data name="MuscleTense" xml:space="preserve">
+    <value>绷紧</value>
+  </data>
+  <data name="MuscleRelease" xml:space="preserve">
+    <value>放松</value>
+  </data>
+  <data name="MuscleReleaseHint" xml:space="preserve">
+    <value>放松，感受紧张慢慢离开</value>
+  </data>
+  <data name="MuscleGroupHands" xml:space="preserve">
+    <value>握紧拳头，绷紧手臂</value>
+  </data>
+  <data name="MuscleGroupShoulders" xml:space="preserve">
+    <value>把肩膀耸向耳朵</value>
+  </data>
+  <data name="MuscleGroupFace" xml:space="preserve">
+    <value>紧闭双眼，抿紧嘴唇</value>
+  </data>
+  <data name="MuscleGroupBelly" xml:space="preserve">
+    <value>收紧腹部</value>
+  </data>
+  <data name="MuscleGroupLegs" xml:space="preserve">
+    <value>把脚尖勾向自己，绷紧双腿</value>
+  </data>
+  <data name="MuscleStep" xml:space="preserve">
+    <value>第 {0} 组，共 {1} 组</value>
+  </data>
+  <data name="MuscleDone" xml:space="preserve">
+    <value>完成了。静静坐一会儿，然后在下面给紧张程度打分。</value>
+  </data>
+  <data name="BusyMindIntro" xml:space="preserve">
+    <value>五个小任务。在心里或大声完成每一个，不用着急。</value>
+  </data>
+  <data name="BusyMindStart" xml:space="preserve">
+    <value>开始</value>
+  </data>
+  <data name="BusyMindNext" xml:space="preserve">
+    <value>完成，下一个</value>
+  </data>
+  <data name="BusyMindSkip" xml:space="preserve">
+    <value>换一个任务</value>
+  </data>
+  <data name="BusyMindStep" xml:space="preserve">
+    <value>第 {0} 个任务，共 {1} 个</value>
+  </data>
+  <data name="BusyMindDone" xml:space="preserve">
+    <value>完成了。在下面给紧张程度打分。</value>
+  </data>
+  <data name="BusyMindAgain" xml:space="preserve">
+    <value>再来五个任务</value>
+  </data>
+  <data name="BusyMindTask01" xml:space="preserve">
+    <value>说出五种生活在水里的动物</value>
+  </data>
+  <data name="BusyMindTask02" xml:space="preserve">
+    <value>从 100 开始倒数，每次减 7</value>
+  </data>
+  <data name="BusyMindTask03" xml:space="preserve">
+    <value>在身边找出彩虹每种颜色的一样东西</value>
+  </data>
+  <data name="BusyMindTask04" xml:space="preserve">
+    <value>描述身边的一样东西，就像讲给从没见过它的人听</value>
+  </data>
+  <data name="BusyMindTask05" xml:space="preserve">
+    <value>说出十个你想去的城市</value>
+  </data>
+  <data name="BusyMindTask06" xml:space="preserve">
+    <value>在脑海里走遍你的家，说出每个房间里有什么</value>
+  </data>
+  <data name="BusyMindTask07" xml:space="preserve">
+    <value>想一道你会做的菜，列出所有步骤</value>
+  </data>
+  <data name="BusyMindTask08" xml:space="preserve">
+    <value>数一数身边有多少圆形的东西</value>
+  </data>
+  <data name="BusyMindTask09" xml:space="preserve">
+    <value>各说出两种运动、水果、职业和乐器</value>
+  </data>
+  <data name="BusyMindTask10" xml:space="preserve">
+    <value>倒着说出一年的十二个月</value>
+  </data>
+  <data name="BusyMindTask11" xml:space="preserve">
+    <value>回想去一个熟悉地方的路：每一个拐弯，以及沿途能看到什么</value>
+  </data>
+  <data name="BusyMindTask12" xml:space="preserve">
+    <value>给一家你想走进去的咖啡馆想五个名字</value>
+  </data>
 </root>

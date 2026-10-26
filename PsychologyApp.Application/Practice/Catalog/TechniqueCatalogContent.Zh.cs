@@ -510,4 +510,73 @@ internal static class TechniqueCatalogContentZh
             "不要着急，不必每个气球都戳中。每戳破一个，就慢慢呼气。一轮会自动结束，没有无尽的游戏。",
             "吵架后紧张程度7/10。玩一轮20个气球，每戳破一个就呼一口气。紧张降到4/10，可以冷静地想想怎么回应了。"),
         null, null);
+
+    internal static readonly BuiltInTechniqueDefinition CyclicSigh = new(
+        "练习", "循环叹息呼吸",
+        [
+            "1. 给紧张程度打分",
+            "2. 用鼻子吸气，吸满后再短短地补吸一口",
+            "3. 用嘴慢慢呼气，呼气比吸气更长",
+            "4. 跟着圆圈的节奏呼吸约三分钟",
+            "5. 再给紧张程度打分"
+        ],
+        "两次吸气加一次长呼气，能很快让身体平静，不需要屏气。",
+        TechniqueUiKind.Entry, "技巧 #23", "26.10.2026", "循环叹息呼吸", "两次吸气、一次长呼气，让身体平静下来", "艰难时刻", "心理", 3, "Air",
+        [
+            new TechniqueEntrySeed("之前的紧张程度", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("笔记", "呼吸之后，有什么变化？", Suggestions: ["身体平静了些", "肩膀放松下来了", "心跳慢下来了", "思绪慢下来了", "有点头晕", "没什么变化", "想再做一次"]),
+            new TechniqueEntrySeed("之后的紧张程度", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "第二次短促的吸气让肺部更充分地张开，而长长的呼气会踩下神经系统的“刹车”：心跳变慢，身体平静下来。2023 年的一项研究发现，每天五分钟这样的呼吸，对情绪的改善比正念冥想更明显。这不是治疗，而是快速降低紧张的方法。",
+            "当焦虑、愤怒或紧张涌上来，需要在几分钟内让身体平静时。也适合在艰难的谈话前或睡前使用。",
+            "轻松地呼吸，不要用尽全力：第二次吸气要短，呼气要慢、不要用力。如果感到头晕，就恢复正常呼吸，很快会过去。圆圈会在三分钟后自动停止。",
+            "打电话前紧张程度 6/10。三分钟两次吸气、一次长呼气。紧张程度 3/10，说话声音也更平稳了。"),
+        null, null);
+
+    internal static readonly BuiltInTechniqueDefinition MuscleRelax = new(
+        "练习", "绷紧再放松",
+        [
+            "1. 给紧张程度打分",
+            "2. 把一组肌肉绷紧五秒，大约用一半的力气",
+            "3. 放松，用十五秒感受放松的感觉",
+            "4. 依次做五组：双手、肩膀、面部、腹部、双腿",
+            "5. 再给紧张程度打分"
+        ],
+        "先绷紧肌肉再放松，身体更容易体会到什么是放松。",
+        TechniqueUiKind.Entry, "技巧 #24", "26.10.2026", "绷紧再放松", "给紧绷身体的简短肌肉放松", "艰难时刻", "心理", 4, "SelfImprovement",
+        [
+            new TechniqueEntrySeed("之前的紧张程度", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("笔记", "身体哪些地方变轻松了？", Suggestions: ["肩膀放松了", "下巴松开了", "手变暖了", "呼吸更顺畅了", "有点困了", "还有些地方紧", "没什么变化"]),
+            new TechniqueEntrySeed("之后的紧张程度", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "渐进式肌肉放松是研究最充分的缓解焦虑和紧张的方法之一。先绷紧肌肉再放松，这种对比能帮你察觉放松的感觉，并逐渐学会主动让自己放松。这不是治疗，而是一项越练越有效的技能。",
+            "当身体因压力而紧绷、坐不住或睡不着时。很适合在晚上睡前做。",
+            "大约用一半的力气，不要用到疼。如果身体某处疼痛或受过伤，不要绷紧它，只需留意它。放松时平静地呼吸，不要急着做下一组。",
+            "下班后的晚上紧张程度 7/10，肩膀耸到耳边。做了五组：双手、肩膀、面部、腹部、双腿。紧张程度 4/10，肩膀放下来了。"),
+        null, null);
+
+    internal static readonly BuiltInTechniqueDefinition BusyMind = new(
+        "练习", "让大脑忙起来",
+        [
+            "1. 给紧张程度打分",
+            "2. 选一个任务，在心里或大声完成它",
+            "3. 如果念头又回到担忧上，温和地回到任务",
+            "4. 完成五个任务",
+            "5. 再给紧张程度打分"
+        ],
+        "给大脑一些简单任务，能把注意力从反复打转的念头上移开。",
+        TechniqueUiKind.Entry, "技巧 #25", "26.10.2026", "让大脑忙起来", "用简单的小任务打断反复打转的念头", "艰难时刻", "心理", 3, "Extension",
+        [
+            new TechniqueEntrySeed("之前的紧张程度", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("笔记", "做任务的时候，有什么变化？", Suggestions: ["念头松开了", "平静了一些", "很难集中注意力", "想去做点事情", "焦虑又回来了", "没什么变化", "想要更多任务"]),
+            new TechniqueEntrySeed("之后的紧张程度", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "当念头反复打转时，靠意志力几乎停不下来。一个占用大脑的任务（数数、回忆、列举）会暂时不给反复思虑留下空间。这是辩证行为疗法中的分散注意力技能：它不能解决问题，但能帮你度过艰难的时刻。",
+            "当侵入性念头涌上来时、睡前，或者争吵后对话还在脑子里继续时。",
+            "认真完成任务：它们占用的注意力越多越好。如果问题确实需要解决，等平静下来再回头处理。",
+            "争吵后对话在脑子里不停打转，紧张程度 7/10。五个任务：生活在水里的动物、从 100 开始每次减 7 倒数、身边每种颜色的物品。紧张程度 4/10。"),
+        null, null);
 }

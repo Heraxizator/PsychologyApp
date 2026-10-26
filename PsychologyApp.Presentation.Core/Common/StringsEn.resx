@@ -4075,4 +4075,106 @@
   <data name="BalloonsAgain" xml:space="preserve">
     <value>Another round</value>
   </data>
+  <data name="BreathTopUp" xml:space="preserve">
+    <value>One more in</value>
+  </data>
+  <data name="MuscleIntro" xml:space="preserve">
+    <value>Five muscle groups: 5 seconds of tensing and 15 of letting go each. Tense at half strength, without pain.</value>
+  </data>
+  <data name="MuscleStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="MuscleStop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="MuscleAgain" xml:space="preserve">
+    <value>Again</value>
+  </data>
+  <data name="MuscleTense" xml:space="preserve">
+    <value>Tense</value>
+  </data>
+  <data name="MuscleRelease" xml:space="preserve">
+    <value>Let go</value>
+  </data>
+  <data name="MuscleReleaseHint" xml:space="preserve">
+    <value>Let go and feel the tension leaving</value>
+  </data>
+  <data name="MuscleGroupHands" xml:space="preserve">
+    <value>Make fists and tense your arms</value>
+  </data>
+  <data name="MuscleGroupShoulders" xml:space="preserve">
+    <value>Raise your shoulders towards your ears</value>
+  </data>
+  <data name="MuscleGroupFace" xml:space="preserve">
+    <value>Squeeze your eyes shut and press your lips together</value>
+  </data>
+  <data name="MuscleGroupBelly" xml:space="preserve">
+    <value>Pull in and tighten your belly</value>
+  </data>
+  <data name="MuscleGroupLegs" xml:space="preserve">
+    <value>Pull your toes towards you and tense your legs</value>
+  </data>
+  <data name="MuscleStep" xml:space="preserve">
+    <value>Group {0} of {1}</value>
+  </data>
+  <data name="MuscleDone" xml:space="preserve">
+    <value>Done. Sit quietly for a moment, then rate your tension below.</value>
+  </data>
+  <data name="BusyMindIntro" xml:space="preserve">
+    <value>Five short tasks. Do each one in your head or out loud, without rushing.</value>
+  </data>
+  <data name="BusyMindStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="BusyMindNext" xml:space="preserve">
+    <value>Done, next</value>
+  </data>
+  <data name="BusyMindSkip" xml:space="preserve">
+    <value>Another task</value>
+  </data>
+  <data name="BusyMindStep" xml:space="preserve">
+    <value>Task {0} of {1}</value>
+  </data>
+  <data name="BusyMindDone" xml:space="preserve">
+    <value>Done. Rate your tension below.</value>
+  </data>
+  <data name="BusyMindAgain" xml:space="preserve">
+    <value>Five more tasks</value>
+  </data>
+  <data name="BusyMindTask01" xml:space="preserve">
+    <value>Name five animals that live in water</value>
+  </data>
+  <data name="BusyMindTask02" xml:space="preserve">
+    <value>Count down from 100, taking away 7 each time</value>
+  </data>
+  <data name="BusyMindTask03" xml:space="preserve">
+    <value>Find one thing around you in each colour of the rainbow</value>
+  </data>
+  <data name="BusyMindTask04" xml:space="preserve">
+    <value>Describe something near you as if to someone who has never seen one</value>
+  </data>
+  <data name="BusyMindTask05" xml:space="preserve">
+    <value>Name ten cities you would like to visit</value>
+  </data>
+  <data name="BusyMindTask06" xml:space="preserve">
+    <value>Walk through your home in your mind and name what is in each room</value>
+  </data>
+  <data name="BusyMindTask07" xml:space="preserve">
+    <value>Think of a dish you can cook and list every step</value>
+  </data>
+  <data name="BusyMindTask08" xml:space="preserve">
+    <value>Count how many round things there are around you</value>
+  </data>
+  <data name="BusyMindTask09" xml:space="preserve">
+    <value>Name two each of sports, fruits, jobs and musical instruments</value>
+  </data>
+  <data name="BusyMindTask10" xml:space="preserve">
+    <value>Say the months of the year backwards</value>
+  </data>
+  <data name="BusyMindTask11" xml:space="preserve">
+    <value>Recall the way to a familiar place: every turn and what you see along the way</value>
+  </data>
+  <data name="BusyMindTask12" xml:space="preserve">
+    <value>Come up with five names for a café you would like to walk into</value>
+  </data>
 </root>

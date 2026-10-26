@@ -510,4 +510,73 @@ internal static class TechniqueCatalogContentPt
             "Sem pressa: não é preciso acertar todos os balões. Solte o ar devagar a cada estouro. A rodada termina sozinha; não existe jogo sem fim.",
             "Tensão 7/10 depois de uma discussão. Uma rodada de 20 balões, uma expiração a cada estouro. Tensão 4/10, e consegui pensar com calma no que responder."),
         null, null);
+
+    internal static readonly BuiltInTechniqueDefinition CyclicSigh = new(
+        "Prática", "Suspiro cíclico",
+        [
+            "1. Avalie sua tensão",
+            "2. Inspire pelo nariz e, no final, faça mais uma inspiração curta",
+            "3. Expire devagar pela boca, por mais tempo do que inspirou",
+            "4. Respire no ritmo do círculo por cerca de três minutos",
+            "5. Avalie sua tensão depois"
+        ],
+        "Uma inspiração dupla e uma expiração longa acalmam o corpo rápido, sem prender a respiração.",
+        TechniqueUiKind.Entry, "Técnica nº 23", "26.10.2026", "Suspiro cíclico", "Uma inspiração dupla e uma expiração longa para acalmar o corpo", "Momento difícil", "Psique", 3, "Air",
+        [
+            new TechniqueEntrySeed("Tensão antes", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notas", "O que mudou depois da respiração?", Suggestions: ["Meu corpo está mais calmo", "Meus ombros relaxaram", "Meu coração desacelerou", "Meus pensamentos desaceleraram", "Fiquei um pouco tonto", "Nada mudou", "Quero repetir"]),
+            new TechniqueEntrySeed("Tensão depois", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "A segunda inspiração curta abre mais os pulmões, e a expiração longa aciona o freio do sistema nervoso: o coração desacelera e o corpo se acalma. Num estudo de 2023, cinco minutos por dia dessa respiração melhoraram o humor mais do que a meditação de atenção plena. Não é um tratamento, mas um jeito rápido de baixar a tensão.",
+            "Quando a ansiedade, a raiva ou a tensão tomam conta e você precisa acalmar o corpo em poucos minutos. Também serve antes de uma conversa difícil ou antes de dormir.",
+            "Respire com suavidade, sem forçar: a segunda inspiração é curta, a expiração lenta e sem esforço. Se ficar tonto, volte à respiração normal; isso passa. O círculo termina sozinho depois de três minutos.",
+            "Tensão 6/10 antes de uma ligação. Três minutos de inspiração dupla e expiração longa. Tensão 3/10, e minha voz ficou mais firme."),
+        null, null);
+
+    internal static readonly BuiltInTechniqueDefinition MuscleRelax = new(
+        "Prática", "Contrair e soltar",
+        [
+            "1. Avalie sua tensão",
+            "2. Contraia um grupo de músculos por cinco segundos, com metade da força",
+            "3. Solte e perceba o relaxamento por quinze segundos",
+            "4. Passe por cinco grupos: mãos, ombros, rosto, barriga, pernas",
+            "5. Avalie sua tensão depois"
+        ],
+        "Contrair os músculos primeiro e depois soltar ajuda o corpo a sentir o que é relaxar.",
+        TechniqueUiKind.Entry, "Técnica nº 24", "26.10.2026", "Contrair e soltar", "Um relaxamento muscular curto para um corpo tenso", "Momento difícil", "Psique", 4, "SelfImprovement",
+        [
+            new TechniqueEntrySeed("Tensão antes", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notas", "Em que parte do corpo ficou mais leve?", Suggestions: ["Meus ombros relaxaram", "Minha mandíbula se soltou", "Minhas mãos esquentaram", "Ficou mais fácil respirar", "Deu sono", "Ainda sobrou alguma tensão", "Nada mudou"]),
+            new TechniqueEntrySeed("Tensão depois", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "O relaxamento muscular progressivo é um dos jeitos mais estudados de reduzir a ansiedade e a tensão. Contrair um músculo e depois soltá-lo cria um contraste que ajuda a perceber o relaxamento e, com o tempo, aprender a provocá-lo. Não é um tratamento, mas uma habilidade que funciona melhor com a prática.",
+            "Quando o corpo está tenso de estresse, quando é difícil ficar parado ou pegar no sono. Combina bem com a noite, antes de dormir.",
+            "Contraia com metade da força, sem dor. Se alguma parte do corpo dói ou está machucada, não a contraia; apenas observe. Ao soltar, respire com calma e não tenha pressa de passar ao próximo grupo.",
+            "Tensão 7/10 à noite depois do trabalho, ombros encolhidos. Cinco grupos: mãos, ombros, rosto, barriga, pernas. Tensão 4/10, os ombros relaxaram."),
+        null, null);
+
+    internal static readonly BuiltInTechniqueDefinition BusyMind = new(
+        "Prática", "Ocupar a mente",
+        [
+            "1. Avalie sua tensão",
+            "2. Pegue uma tarefa e faça mentalmente ou em voz alta",
+            "3. Se os pensamentos voltarem à preocupação, volte com calma à tarefa",
+            "4. Faça cinco tarefas",
+            "5. Avalie sua tensão depois"
+        ],
+        "Tarefas simples para a mente tiram a atenção dos pensamentos que andam em círculos.",
+        TechniqueUiKind.Entry, "Técnica nº 25", "26.10.2026", "Ocupar a mente", "Tarefas simples para quebrar o ciclo de pensamentos", "Momento difícil", "Psique", 3, "Extension",
+        [
+            new TechniqueEntrySeed("Tensão antes", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notas", "O que mudou enquanto você estava ocupado com as tarefas?", Suggestions: ["Os pensamentos me largaram", "Fiquei mais calmo", "Foi difícil me concentrar", "Deu vontade de fazer algo", "A ansiedade voltou", "Nada mudou", "Quero mais tarefas"]),
+            new TechniqueEntrySeed("Tensão depois", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "Quando os pensamentos andam em círculos, pará-los com força de vontade é quase impossível. Uma tarefa que ocupa a mente (contar, lembrar, listar) não deixa espaço para a ruminação por um tempo. É uma habilidade de distração da terapia comportamental dialética: não resolve o problema, mas ajuda a atravessar um momento difícil.",
+            "Quando pensamentos intrusivos tomam conta, antes de dormir ou depois de uma briga, quando a conversa continua na cabeça.",
+            "Faça as tarefas para valer: quanto mais atenção elas pedirem, melhor. Se o problema realmente precisa ser resolvido, volte a ele quando estiver mais calmo.",
+            "Depois de uma briga, a conversa fica girando na minha cabeça, tensão 7/10. Cinco tarefas: animais que vivem na água, contar de trás para frente a partir de 100 de 7 em 7, objetos de cada cor ao meu redor. Tensão 4/10."),
+        null, null);
 }

@@ -31,7 +31,16 @@ public enum TechniqueId
     Nightmare,
 
     /// <summary>Popping balloons with taps: a short, bounded game to let acute tension out.</summary>
-    Balloons
+    Balloons,
+
+    /// <summary>The cyclic sigh: a double breath in through the nose and a long breath out, paced for a few minutes.</summary>
+    CyclicSigh,
+
+    /// <summary>A short progressive muscle relaxation: tense and let go of five muscle groups in turn.</summary>
+    MuscleRelax,
+
+    /// <summary>"Keep the mind busy": short neutral tasks that take attention away from spinning thoughts.</summary>
+    BusyMind
 }
 
 public enum TechniqueUiKind

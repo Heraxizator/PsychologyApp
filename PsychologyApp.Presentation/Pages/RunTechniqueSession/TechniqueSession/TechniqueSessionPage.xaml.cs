@@ -6,6 +6,8 @@ using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.BreathingImmersive;
 using PsychologyApp.Presentation.Widgets.BalloonPop;
 using PsychologyApp.Presentation.Widgets.BreathingPacer;
+using PsychologyApp.Presentation.Widgets.BusyMind;
+using PsychologyApp.Presentation.Widgets.MuscleRelax;
 using PsychologyApp.Presentation.Widgets.TechniqueBodies;
 using PsychologyApp.Presentation.Widgets.PracticeStages;
 using PsychologyApp.Presentation.Shared.Common;
@@ -127,6 +129,18 @@ public partial class TechniqueSessionPage : ContentPage
         else if (_techniqueId == TechniqueId.Balloons)
         {
             content.Children.Add(new BalloonPopView());
+        }
+        else if (_techniqueId == TechniqueId.CyclicSigh)
+        {
+            content.Children.Add(new BreathingPacerView { Pattern = BreathingPattern.CyclicSigh });
+        }
+        else if (_techniqueId == TechniqueId.MuscleRelax)
+        {
+            content.Children.Add(new MuscleRelaxView());
+        }
+        else if (_techniqueId == TechniqueId.BusyMind)
+        {
+            content.Children.Add(new BusyMindView());
         }
 
         content.Children.Add(body);

@@ -4075,4 +4075,106 @@
   <data name="BalloonsAgain" xml:space="preserve">
     <value>Noch eine Runde</value>
   </data>
+  <data name="BreathTopUp" xml:space="preserve">
+    <value>Noch ein Atemzug</value>
+  </data>
+  <data name="MuscleIntro" xml:space="preserve">
+    <value>Fünf Muskelgruppen: je 5 Sekunden anspannen und 15 loslassen. Spanne mit halber Kraft an, ohne Schmerz.</value>
+  </data>
+  <data name="MuscleStart" xml:space="preserve">
+    <value>Starten</value>
+  </data>
+  <data name="MuscleStop" xml:space="preserve">
+    <value>Stoppen</value>
+  </data>
+  <data name="MuscleAgain" xml:space="preserve">
+    <value>Noch einmal</value>
+  </data>
+  <data name="MuscleTense" xml:space="preserve">
+    <value>Anspannen</value>
+  </data>
+  <data name="MuscleRelease" xml:space="preserve">
+    <value>Loslassen</value>
+  </data>
+  <data name="MuscleReleaseHint" xml:space="preserve">
+    <value>Lass los und spür, wie die Anspannung geht</value>
+  </data>
+  <data name="MuscleGroupHands" xml:space="preserve">
+    <value>Mach Fäuste und spann die Arme an</value>
+  </data>
+  <data name="MuscleGroupShoulders" xml:space="preserve">
+    <value>Zieh die Schultern zu den Ohren hoch</value>
+  </data>
+  <data name="MuscleGroupFace" xml:space="preserve">
+    <value>Kneif die Augen zu und press die Lippen zusammen</value>
+  </data>
+  <data name="MuscleGroupBelly" xml:space="preserve">
+    <value>Zieh den Bauch ein und spann ihn an</value>
+  </data>
+  <data name="MuscleGroupLegs" xml:space="preserve">
+    <value>Zieh die Zehen zu dir und spann die Beine an</value>
+  </data>
+  <data name="MuscleStep" xml:space="preserve">
+    <value>Gruppe {0} von {1}</value>
+  </data>
+  <data name="MuscleDone" xml:space="preserve">
+    <value>Fertig. Bleib einen Moment ruhig sitzen und bewerte dann unten deine Anspannung.</value>
+  </data>
+  <data name="BusyMindIntro" xml:space="preserve">
+    <value>Fünf kurze Aufgaben. Löse jede im Kopf oder laut, ohne Eile.</value>
+  </data>
+  <data name="BusyMindStart" xml:space="preserve">
+    <value>Starten</value>
+  </data>
+  <data name="BusyMindNext" xml:space="preserve">
+    <value>Erledigt, weiter</value>
+  </data>
+  <data name="BusyMindSkip" xml:space="preserve">
+    <value>Andere Aufgabe</value>
+  </data>
+  <data name="BusyMindStep" xml:space="preserve">
+    <value>Aufgabe {0} von {1}</value>
+  </data>
+  <data name="BusyMindDone" xml:space="preserve">
+    <value>Fertig. Bewerte unten deine Anspannung.</value>
+  </data>
+  <data name="BusyMindAgain" xml:space="preserve">
+    <value>Noch fünf Aufgaben</value>
+  </data>
+  <data name="BusyMindTask01" xml:space="preserve">
+    <value>Nenne fünf Tiere, die im Wasser leben</value>
+  </data>
+  <data name="BusyMindTask02" xml:space="preserve">
+    <value>Zähl von 100 rückwärts und zieh jedes Mal 7 ab</value>
+  </data>
+  <data name="BusyMindTask03" xml:space="preserve">
+    <value>Finde um dich herum je einen Gegenstand in jeder Regenbogenfarbe</value>
+  </data>
+  <data name="BusyMindTask04" xml:space="preserve">
+    <value>Beschreib einen Gegenstand in deiner Nähe so, als hätte dein Gegenüber noch nie einen gesehen</value>
+  </data>
+  <data name="BusyMindTask05" xml:space="preserve">
+    <value>Nenne zehn Städte, die du gern besuchen würdest</value>
+  </data>
+  <data name="BusyMindTask06" xml:space="preserve">
+    <value>Geh in Gedanken durch deine Wohnung und nenne, was in jedem Raum steht</value>
+  </data>
+  <data name="BusyMindTask07" xml:space="preserve">
+    <value>Denk an ein Gericht, das du kochen kannst, und zähl alle Schritte auf</value>
+  </data>
+  <data name="BusyMindTask08" xml:space="preserve">
+    <value>Zähl, wie viele runde Dinge um dich herum sind</value>
+  </data>
+  <data name="BusyMindTask09" xml:space="preserve">
+    <value>Nenne je zwei Sportarten, Früchte, Berufe und Musikinstrumente</value>
+  </data>
+  <data name="BusyMindTask10" xml:space="preserve">
+    <value>Sag die Monate des Jahres rückwärts auf</value>
+  </data>
+  <data name="BusyMindTask11" xml:space="preserve">
+    <value>Erinnere dich an den Weg zu einem vertrauten Ort: jede Abzweigung und was du unterwegs siehst</value>
+  </data>
+  <data name="BusyMindTask12" xml:space="preserve">
+    <value>Denk dir fünf Namen für ein Café aus, in das du gern gehen würdest</value>
+  </data>
 </root>

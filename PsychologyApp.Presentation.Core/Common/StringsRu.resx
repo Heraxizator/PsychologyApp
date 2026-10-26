@@ -4081,4 +4081,106 @@
   <data name="BalloonsAgain" xml:space="preserve">
     <value>Ещё раунд</value>
   </data>
+  <data name="BreathTopUp" xml:space="preserve">
+    <value>Ещё вдох</value>
+  </data>
+  <data name="MuscleIntro" xml:space="preserve">
+    <value>Пять групп мышц: по 5 секунд напряжения и 15 секунд расслабления. Напрягайте вполсилы, без боли.</value>
+  </data>
+  <data name="MuscleStart" xml:space="preserve">
+    <value>Начать</value>
+  </data>
+  <data name="MuscleStop" xml:space="preserve">
+    <value>Остановить</value>
+  </data>
+  <data name="MuscleAgain" xml:space="preserve">
+    <value>Ещё раз</value>
+  </data>
+  <data name="MuscleTense" xml:space="preserve">
+    <value>Напрягите</value>
+  </data>
+  <data name="MuscleRelease" xml:space="preserve">
+    <value>Отпустите</value>
+  </data>
+  <data name="MuscleReleaseHint" xml:space="preserve">
+    <value>Отпустите и почувствуйте, как уходит напряжение</value>
+  </data>
+  <data name="MuscleGroupHands" xml:space="preserve">
+    <value>Сожмите кулаки и напрягите руки</value>
+  </data>
+  <data name="MuscleGroupShoulders" xml:space="preserve">
+    <value>Поднимите плечи к ушам</value>
+  </data>
+  <data name="MuscleGroupFace" xml:space="preserve">
+    <value>Зажмурьтесь и сожмите губы</value>
+  </data>
+  <data name="MuscleGroupBelly" xml:space="preserve">
+    <value>Втяните и напрягите живот</value>
+  </data>
+  <data name="MuscleGroupLegs" xml:space="preserve">
+    <value>Потяните носки на себя и напрягите ноги</value>
+  </data>
+  <data name="MuscleStep" xml:space="preserve">
+    <value>Группа {0} из {1}</value>
+  </data>
+  <data name="MuscleDone" xml:space="preserve">
+    <value>Готово. Посидите немного спокойно, а потом оцените напряжение ниже.</value>
+  </data>
+  <data name="BusyMindIntro" xml:space="preserve">
+    <value>Пять коротких заданий. Выполняйте каждое в уме или вслух, не торопясь.</value>
+  </data>
+  <data name="BusyMindStart" xml:space="preserve">
+    <value>Начать</value>
+  </data>
+  <data name="BusyMindNext" xml:space="preserve">
+    <value>Готово, дальше</value>
+  </data>
+  <data name="BusyMindSkip" xml:space="preserve">
+    <value>Другое задание</value>
+  </data>
+  <data name="BusyMindStep" xml:space="preserve">
+    <value>Задание {0} из {1}</value>
+  </data>
+  <data name="BusyMindDone" xml:space="preserve">
+    <value>Готово. Оцените напряжение ниже.</value>
+  </data>
+  <data name="BusyMindAgain" xml:space="preserve">
+    <value>Ещё пять заданий</value>
+  </data>
+  <data name="BusyMindTask01" xml:space="preserve">
+    <value>Назовите пять животных, которые живут в воде</value>
+  </data>
+  <data name="BusyMindTask02" xml:space="preserve">
+    <value>Считайте назад от 100, каждый раз отнимая 7</value>
+  </data>
+  <data name="BusyMindTask03" xml:space="preserve">
+    <value>Найдите вокруг по одному предмету каждого цвета радуги</value>
+  </data>
+  <data name="BusyMindTask04" xml:space="preserve">
+    <value>Опишите предмет рядом так, будто рассказываете человеку, который никогда его не видел</value>
+  </data>
+  <data name="BusyMindTask05" xml:space="preserve">
+    <value>Назовите десять городов, в которых хотели бы побывать</value>
+  </data>
+  <data name="BusyMindTask06" xml:space="preserve">
+    <value>Мысленно пройдите по своему дому и назовите, что стоит в каждой комнате</value>
+  </data>
+  <data name="BusyMindTask07" xml:space="preserve">
+    <value>Вспомните блюдо, которое умеете готовить, и перечислите все шаги</value>
+  </data>
+  <data name="BusyMindTask08" xml:space="preserve">
+    <value>Посчитайте, сколько вокруг предметов круглой формы</value>
+  </data>
+  <data name="BusyMindTask09" xml:space="preserve">
+    <value>Назовите по два вида спорта, фрукта, профессии и музыкальных инструмента</value>
+  </data>
+  <data name="BusyMindTask10" xml:space="preserve">
+    <value>Назовите месяцы года в обратном порядке</value>
+  </data>
+  <data name="BusyMindTask11" xml:space="preserve">
+    <value>Вспомните дорогу до знакомого места: все повороты и что видно по пути</value>
+  </data>
+  <data name="BusyMindTask12" xml:space="preserve">
+    <value>Придумайте пять названий для кафе, в которое вам захотелось бы зайти</value>
+  </data>
 </root>

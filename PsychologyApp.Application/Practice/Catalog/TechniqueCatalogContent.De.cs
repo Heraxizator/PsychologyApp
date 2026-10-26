@@ -510,4 +510,73 @@ internal static class TechniqueCatalogContentDe
             "Lass dir Zeit: Du musst nicht jeden Ballon treffen. Atme bei jedem Platzen langsam aus. Die Runde endet von selbst; es gibt kein endloses Spiel.",
             "Anspannung 7/10 nach einem Streit. Eine Runde mit 20 Ballons, bei jedem Platzen ausatmen. Anspannung 4/10, und ich konnte in Ruhe überlegen, was ich antworte."),
         null, null);
+
+    internal static readonly BuiltInTechniqueDefinition CyclicSigh = new(
+        "Übung", "Zyklisches Seufzen",
+        [
+            "1. Bewerte deine Anspannung",
+            "2. Atme durch die Nase ein und hänge am Ende noch einen kurzen Atemzug an",
+            "3. Atme langsam durch den Mund aus, länger als du eingeatmet hast",
+            "4. Atme etwa drei Minuten im Rhythmus des Kreises",
+            "5. Bewerte deine Anspannung danach"
+        ],
+        "Doppelt einatmen und lange ausatmen beruhigt den Körper schnell, ohne den Atem anzuhalten.",
+        TechniqueUiKind.Entry, "Technik Nr. 23", "26.10.2026", "Zyklisches Seufzen", "Doppelt einatmen und lange ausatmen, um den Körper zu beruhigen", "Schwerer Moment", "Psyche", 3, "Air",
+        [
+            new TechniqueEntrySeed("Anspannung vorher", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notizen", "Was hat sich nach dem Atmen verändert?", Suggestions: ["Mein Körper ist ruhiger", "Meine Schultern sind gesunken", "Mein Herz schlägt langsamer", "Meine Gedanken sind langsamer geworden", "Mir war etwas schwindlig", "Nichts hat sich verändert", "Ich möchte es wiederholen"]),
+            new TechniqueEntrySeed("Anspannung danach", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "Der zweite kurze Atemzug öffnet die Lunge vollständiger, und das lange Ausatmen zieht die Bremse des Nervensystems: Das Herz wird langsamer, der Körper beruhigt sich. In einer Studie von 2023 verbesserten fünf Minuten dieser Atmung am Tag die Stimmung stärker als Achtsamkeitsmeditation. Es ist keine Behandlung, sondern ein schneller Weg, Anspannung zu senken.",
+            "Wenn Angst, Wut oder Anspannung überhandnehmen und du den Körper in ein paar Minuten beruhigen willst. Passt auch vor einem schwierigen Gespräch oder vor dem Schlafen.",
+            "Atme sanft, nicht mit voller Kraft: Der zweite Atemzug ist kurz, das Ausatmen langsam und ohne Druck. Wenn dir schwindlig wird, kehr zur normalen Atmung zurück; das geht vorbei. Der Kreis hört nach drei Minuten von selbst auf.",
+            "Anspannung 6/10 vor einem Anruf. Drei Minuten doppelt einatmen und lange ausatmen. Anspannung 3/10, meine Stimme war ruhiger."),
+        null, null);
+
+    internal static readonly BuiltInTechniqueDefinition MuscleRelax = new(
+        "Übung", "Anspannen und loslassen",
+        [
+            "1. Bewerte deine Anspannung",
+            "2. Spanne eine Muskelgruppe fünf Sekunden an, etwa mit halber Kraft",
+            "3. Lass los und spür fünfzehn Sekunden der Entspannung nach",
+            "4. Geh fünf Gruppen durch: Hände, Schultern, Gesicht, Bauch, Beine",
+            "5. Bewerte deine Anspannung danach"
+        ],
+        "Erst anspannen, dann loslassen: So spürt der Körper leichter, was Entspannung ist.",
+        TechniqueUiKind.Entry, "Technik Nr. 24", "26.10.2026", "Anspannen und loslassen", "Eine kurze Muskelentspannung für einen verspannten Körper", "Schwerer Moment", "Psyche", 4, "SelfImprovement",
+        [
+            new TechniqueEntrySeed("Anspannung vorher", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notizen", "Wo im Körper fühlt es sich leichter an?", Suggestions: ["Meine Schultern haben sich entspannt", "Mein Kiefer hat sich gelöst", "Meine Hände wurden wärmer", "Das Atmen fällt leichter", "Ich bin müde geworden", "Etwas Anspannung ist noch da", "Nichts hat sich verändert"]),
+            new TechniqueEntrySeed("Anspannung danach", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "Die progressive Muskelentspannung gehört zu den am besten erforschten Methoden gegen Angst und Anspannung. Wenn du einen Muskel erst anspannst und dann loslässt, hilft der Kontrast, Entspannung zu bemerken und mit der Zeit selbst herbeizuführen. Es ist keine Behandlung, sondern eine Fähigkeit, die mit Übung besser wirkt.",
+            "Wenn der Körper vom Stress verspannt ist, wenn es schwerfällt, still zu sitzen oder einzuschlafen. Passt gut abends vor dem Schlafen.",
+            "Spanne etwa mit halber Kraft an, ohne Schmerz. Wenn eine Stelle schmerzt oder verletzt ist, spann sie nicht an, sondern nimm sie nur wahr. Atme beim Loslassen ruhig und eile nicht zur nächsten Gruppe.",
+            "Anspannung 7/10 abends nach der Arbeit, die Schultern hochgezogen. Fünf Gruppen: Hände, Schultern, Gesicht, Bauch, Beine. Anspannung 4/10, die Schultern sind gesunken."),
+        null, null);
+
+    internal static readonly BuiltInTechniqueDefinition BusyMind = new(
+        "Übung", "Den Kopf beschäftigen",
+        [
+            "1. Bewerte deine Anspannung",
+            "2. Nimm eine Aufgabe und löse sie im Kopf oder laut",
+            "3. Wenn die Gedanken zur Sorge zurückwandern, kehr sanft zur Aufgabe zurück",
+            "4. Mach fünf Aufgaben",
+            "5. Bewerte deine Anspannung danach"
+        ],
+        "Einfache Aufgaben für den Kopf lenken die Aufmerksamkeit von kreisenden Gedanken ab.",
+        TechniqueUiKind.Entry, "Technik Nr. 25", "26.10.2026", "Den Kopf beschäftigen", "Einfache Aufgaben, um das Gedankenkarussell zu stoppen", "Schwerer Moment", "Psyche", 3, "Extension",
+        [
+            new TechniqueEntrySeed("Anspannung vorher", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityBefore),
+            new TechniqueEntrySeed("Notizen", "Was hat sich verändert, während du mit den Aufgaben beschäftigt warst?", Suggestions: ["Die Gedanken haben losgelassen", "Ich bin ruhiger", "Es fiel mir schwer, mich zu konzentrieren", "Ich möchte etwas erledigen", "Die Angst kam zurück", "Nichts hat sich verändert", "Ich möchte mehr Aufgaben"]),
+            new TechniqueEntrySeed("Anspannung danach", "", EntryFieldKind.Rating0To10, Role: EntryFieldRole.IntensityAfter)
+        ],
+        Theory(
+            "Wenn Gedanken im Kreis laufen, lassen sie sich mit Willenskraft kaum stoppen. Eine Aufgabe, die den Kopf beschäftigt (zählen, sich erinnern, aufzählen), lässt eine Weile keinen Platz für das Grübeln. Das ist eine Ablenkungsfertigkeit aus der Dialektisch-Behavioralen Therapie: keine Lösung des Problems, sondern ein Weg durch eine schwere Minute.",
+            "Wenn aufdrängende Gedanken überhandnehmen, vor dem Schlafen oder nach einem Streit, wenn das Gespräch im Kopf weiterläuft.",
+            "Mach die Aufgaben ernsthaft: Je mehr Aufmerksamkeit sie brauchen, desto besser. Wenn das Problem wirklich gelöst werden muss, kehr dazu zurück, wenn du ruhiger bist.",
+            "Nach einem Streit läuft das Gespräch im Kopf weiter, Anspannung 7/10. Fünf Aufgaben: Tiere, die im Wasser leben, von 100 in Siebenerschritten rückwärts zählen, Dinge in jeder Farbe um mich herum. Anspannung 4/10."),
+        null, null);
 }

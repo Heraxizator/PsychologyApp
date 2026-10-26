@@ -43,7 +43,10 @@ internal static class BuiltInTechniqueCatalogRegistry
             [TechniqueId.BodyScan] = TechniqueCatalogContentRu.BodyScan,
             [TechniqueId.Flashback] = TechniqueCatalogContentRu.Flashback,
             [TechniqueId.Nightmare] = TechniqueCatalogContentRu.Nightmare,
-            [TechniqueId.Balloons] = TechniqueCatalogContentRu.Balloons
+            [TechniqueId.Balloons] = TechniqueCatalogContentRu.Balloons,
+            [TechniqueId.CyclicSigh] = TechniqueCatalogContentRu.CyclicSigh,
+            [TechniqueId.MuscleRelax] = TechniqueCatalogContentRu.MuscleRelax,
+            [TechniqueId.BusyMind] = TechniqueCatalogContentRu.BusyMind
         };
 
     private static IReadOnlyDictionary<TechniqueId, BuiltInTechniqueDefinition> English { get; } =
@@ -70,7 +73,10 @@ internal static class BuiltInTechniqueCatalogRegistry
             [TechniqueId.BodyScan] = TechniqueCatalogContentEn.BodyScan,
             [TechniqueId.Flashback] = TechniqueCatalogContentEn.Flashback,
             [TechniqueId.Nightmare] = TechniqueCatalogContentEn.Nightmare,
-            [TechniqueId.Balloons] = TechniqueCatalogContentEn.Balloons
+            [TechniqueId.Balloons] = TechniqueCatalogContentEn.Balloons,
+            [TechniqueId.CyclicSigh] = TechniqueCatalogContentEn.CyclicSigh,
+            [TechniqueId.MuscleRelax] = TechniqueCatalogContentEn.MuscleRelax,
+            [TechniqueId.BusyMind] = TechniqueCatalogContentEn.BusyMind
         };
 
     private static IReadOnlyDictionary<TechniqueId, BuiltInTechniqueDefinition> French { get; } =
@@ -97,7 +103,10 @@ internal static class BuiltInTechniqueCatalogRegistry
             [TechniqueId.BodyScan] = TechniqueCatalogContentFr.BodyScan,
             [TechniqueId.Flashback] = TechniqueCatalogContentFr.Flashback,
             [TechniqueId.Nightmare] = TechniqueCatalogContentFr.Nightmare,
-            [TechniqueId.Balloons] = TechniqueCatalogContentFr.Balloons
+            [TechniqueId.Balloons] = TechniqueCatalogContentFr.Balloons,
+            [TechniqueId.CyclicSigh] = TechniqueCatalogContentFr.CyclicSigh,
+            [TechniqueId.MuscleRelax] = TechniqueCatalogContentFr.MuscleRelax,
+            [TechniqueId.BusyMind] = TechniqueCatalogContentFr.BusyMind
         };
 
     private static IReadOnlyDictionary<TechniqueId, BuiltInTechniqueDefinition> German { get; } =
@@ -124,7 +133,10 @@ internal static class BuiltInTechniqueCatalogRegistry
             [TechniqueId.BodyScan] = TechniqueCatalogContentDe.BodyScan,
             [TechniqueId.Flashback] = TechniqueCatalogContentDe.Flashback,
             [TechniqueId.Nightmare] = TechniqueCatalogContentDe.Nightmare,
-            [TechniqueId.Balloons] = TechniqueCatalogContentDe.Balloons
+            [TechniqueId.Balloons] = TechniqueCatalogContentDe.Balloons,
+            [TechniqueId.CyclicSigh] = TechniqueCatalogContentDe.CyclicSigh,
+            [TechniqueId.MuscleRelax] = TechniqueCatalogContentDe.MuscleRelax,
+            [TechniqueId.BusyMind] = TechniqueCatalogContentDe.BusyMind
         };
 
     private static IReadOnlyDictionary<TechniqueId, BuiltInTechniqueDefinition> Spanish { get; } =
@@ -151,7 +163,10 @@ internal static class BuiltInTechniqueCatalogRegistry
             [TechniqueId.BodyScan] = TechniqueCatalogContentEs.BodyScan,
             [TechniqueId.Flashback] = TechniqueCatalogContentEs.Flashback,
             [TechniqueId.Nightmare] = TechniqueCatalogContentEs.Nightmare,
-            [TechniqueId.Balloons] = TechniqueCatalogContentEs.Balloons
+            [TechniqueId.Balloons] = TechniqueCatalogContentEs.Balloons,
+            [TechniqueId.CyclicSigh] = TechniqueCatalogContentEs.CyclicSigh,
+            [TechniqueId.MuscleRelax] = TechniqueCatalogContentEs.MuscleRelax,
+            [TechniqueId.BusyMind] = TechniqueCatalogContentEs.BusyMind
         };
 
     private static IReadOnlyDictionary<TechniqueId, BuiltInTechniqueDefinition> Portuguese { get; } =
@@ -178,7 +193,10 @@ internal static class BuiltInTechniqueCatalogRegistry
             [TechniqueId.BodyScan] = TechniqueCatalogContentPt.BodyScan,
             [TechniqueId.Flashback] = TechniqueCatalogContentPt.Flashback,
             [TechniqueId.Nightmare] = TechniqueCatalogContentPt.Nightmare,
-            [TechniqueId.Balloons] = TechniqueCatalogContentPt.Balloons
+            [TechniqueId.Balloons] = TechniqueCatalogContentPt.Balloons,
+            [TechniqueId.CyclicSigh] = TechniqueCatalogContentPt.CyclicSigh,
+            [TechniqueId.MuscleRelax] = TechniqueCatalogContentPt.MuscleRelax,
+            [TechniqueId.BusyMind] = TechniqueCatalogContentPt.BusyMind
         };
 
     private static IReadOnlyDictionary<TechniqueId, BuiltInTechniqueDefinition> Chinese { get; } =
@@ -205,6 +223,9 @@ internal static class BuiltInTechniqueCatalogRegistry
             [TechniqueId.BodyScan] = TechniqueCatalogContentZh.BodyScan,
             [TechniqueId.Flashback] = TechniqueCatalogContentZh.Flashback,
             [TechniqueId.Nightmare] = TechniqueCatalogContentZh.Nightmare,
-            [TechniqueId.Balloons] = TechniqueCatalogContentZh.Balloons
+            [TechniqueId.Balloons] = TechniqueCatalogContentZh.Balloons,
+            [TechniqueId.CyclicSigh] = TechniqueCatalogContentZh.CyclicSigh,
+            [TechniqueId.MuscleRelax] = TechniqueCatalogContentZh.MuscleRelax,
+            [TechniqueId.BusyMind] = TechniqueCatalogContentZh.BusyMind
         };
 }
