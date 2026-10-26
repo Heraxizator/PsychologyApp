@@ -1,3 +1,4 @@
+using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Shared.Common.Diagnostics;
 using CommunityToolkit.Maui.Behaviors;
@@ -31,6 +32,9 @@ public partial class AppShell : Shell
     ];
 
     private readonly IPageFactory _pageFactory;
+    private readonly IUserProgressService _progress;
+    private readonly IDatabaseReadySignal _databaseReady;
+    private int _streakDays;
     private readonly IShellStartupCoordinator _startupCoordinator;
     private readonly IPracticeReminderCoordinator _practiceReminderCoordinator;
     private readonly IQuoteReminderCoordinator _quoteReminderCoordinator;
@@ -53,8 +57,12 @@ public partial class AppShell : Shell
         ILogger<AppShell> logger,
         IUserPreferencesStore preferences,
         Func<INavigationService> navigationServiceFactory,
-        PsychologyApp.Presentation.Features.ManageProfile.AppLockCoordinator appLock)
+        PsychologyApp.Presentation.Features.ManageProfile.AppLockCoordinator appLock,
+        IUserProgressService progress,
+        IDatabaseReadySignal databaseReady)
     {
+        _progress = progress;
+        _databaseReady = databaseReady;
         _navigationServiceFactory = navigationServiceFactory;
         _appLock = appLock;
         _preferences = preferences;
@@ -87,6 +95,8 @@ public partial class AppShell : Shell
     {
         ApplyTabBarChrome();
         ApplyStatusBarChrome(e.RequestedTheme == AppTheme.Dark);
+        // The menu tiles take their colours per theme.
+        BuildMenu();
     }
 
     private void OnShellNavigating(object? sender, ShellNavigatingEventArgs e)
@@ -404,28 +414,74 @@ public partial class AppShell : Shell
     /// </summary>
     private void BuildMenu()
     {
-        MenuTitle.Text = AppStrings.OnboardingAppName;
-        MenuLibraryTitle.Text = AppStrings.ShellTabLibraryShort;
-        BindableLayout.SetItemsSource(MenuProfile, new[]
+        bool dark = IsDarkRequestedTheme();
+        AppMenuEntry profile = MenuEntry("Person", AppStrings.ProfileTitle, AppMenuTone.Mine, navigation => navigation.GoToUserProfileAsync(), dark);
+        AppMenuEntry[] mine =
+        [
+            MenuEntry("Insights", AppStrings.InsightsTitle, AppMenuTone.Mine, navigation => navigation.GoToInsightsAsync(), dark),
+            MenuEntry("AccessibilityNew", AppStrings.BodyTitle, AppMenuTone.Mine, navigation => navigation.GoToBodyAsync(), dark)
+        ];
+        AppMenuEntry[] read =
+        [
+            MenuEntry("AutoAwesome", AppStrings.ArticlesForYou, AppMenuTone.Read, navigation => navigation.GoToForYouAsync(), dark),
+            MenuEntry("School", AppStrings.ArticlesCourses, AppMenuTone.Read, navigation => navigation.GoToCoursesAsync(), dark),
+            MenuEntry("Article", AppStrings.ShellTabArticlesShort, AppMenuTone.Read, navigation => navigation.GoToArticlesAsync(), dark)
+        ];
+        AppMenuEntry[] support =
+        [
+            MenuEntry("Anchor", AppStrings.AnchorThoughtsTitle, AppMenuTone.Support, navigation => navigation.GoToAnchorThoughtsAsync(), dark),
+            MenuEntry("FormatQuote", AppStrings.ShellTabMotivatorShort, AppMenuTone.Support, navigation => navigation.GoToQuotesAsync(), dark),
+            MenuEntry("Headphones", AppStrings.ShellTabMusicShort, AppMenuTone.Support, navigation => navigation.GoToPrayersAsync(), dark)
+        ];
+        AppMenuEntry[] app =
+        [
+            MenuEntry("HealthAndSafety", AppStrings.CrisisHubTitle, AppMenuTone.Help, navigation => navigation.GoToCrisisHubAsync(), dark),
+            MenuEntry("Settings", AppStrings.OptionsTitle, AppMenuTone.App, navigation => navigation.GoToOptionsAsync(), dark)
+        ];
+
+        MenuProfileCard.BindingContext = profile;
+        ShowProfileSubtitle();
+        MenuFooterPrivacy.Text = AppStrings.MenuFooterPrivacy;
+        MenuFooterVersion.Text = AppStrings.InfoAppVersion(AppInfo.Current.VersionString);
+        MenuMineTitle.Text = AppStrings.MenuGroupMine;
+        MenuReadTitle.Text = AppStrings.MenuGroupRead;
+        MenuSupportTitle.Text = AppStrings.MenuGroupSupport;
+        BindableLayout.SetItemsSource(MenuMine, mine);
+        BindableLayout.SetItemsSource(MenuRead, read);
+        BindableLayout.SetItemsSource(MenuSupport, support);
+        BindableLayout.SetItemsSource(MenuApp, app);
+    }
+
+    /// <summary>The days in a row with a practice when there are some, the general line otherwise; refreshed each time the menu opens.</summary>
+    private void ShowProfileSubtitle() =>
+        MenuProfileSubtitle.Text = _streakDays > 0 ? AppStrings.MenuProfileStreak(_streakDays) : AppStrings.MenuProfileSubtitle;
+
+    private async Task RefreshProfileStreakAsync()
+    {
+        try
         {
-            MenuEntry("Person", AppStrings.ProfileTitle, navigation => navigation.GoToUserProfileAsync()),
-            MenuEntry("Insights", AppStrings.InsightsTitle, navigation => navigation.GoToInsightsAsync()),
-            MenuEntry("AccessibilityNew", AppStrings.BodyTitle, navigation => navigation.GoToBodyAsync())
-        });
-        BindableLayout.SetItemsSource(MenuLibrary, new[]
+            await _databaseReady.WaitAsync();
+            int days = await _progress.GetStreakDaysAsync();
+            await UiThread.RunAsync(() =>
+            {
+                _streakDays = days;
+                ShowProfileSubtitle();
+            });
+        }
+        catch (Exception error)
         {
-            MenuEntry("AutoAwesome", AppStrings.ArticlesForYou, navigation => navigation.GoToForYouAsync()),
-            MenuEntry("School", AppStrings.ArticlesCourses, navigation => navigation.GoToCoursesAsync()),
-            MenuEntry("Article", AppStrings.ShellTabArticlesShort, navigation => navigation.GoToArticlesAsync()),
-            MenuEntry("Headphones", AppStrings.ShellTabMusicShort, navigation => navigation.GoToPrayersAsync()),
-            MenuEntry("FormatQuote", AppStrings.ShellTabMotivatorShort, navigation => navigation.GoToQuotesAsync()),
-            MenuEntry("Anchor", AppStrings.AnchorThoughtsTitle, navigation => navigation.GoToAnchorThoughtsAsync())
-        });
-        BindableLayout.SetItemsSource(MenuApp, new[]
+            // Without the count the card keeps its general line; the menu works the same.
+            BestEffort.Report(error);
+        }
+    }
+
+    protected override void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string? propertyName = null)
+    {
+        base.OnPropertyChanged(propertyName);
+        if (propertyName == nameof(FlyoutIsPresented) && FlyoutIsPresented)
         {
-            MenuEntry("HealthAndSafety", AppStrings.CrisisHubTitle, navigation => navigation.GoToCrisisHubAsync()),
-            MenuEntry("Settings", AppStrings.OptionsTitle, navigation => navigation.GoToOptionsAsync())
-        });
+            RefreshProfileStreakAsync().FireAndForget();
+        }
     }
 
     /// <summary>Back with the menu open closes the menu, as on any Android app; Shell left it to the system, which closed the app.</summary>
@@ -440,14 +496,15 @@ public partial class AppShell : Shell
         return base.OnBackButtonPressed();
     }
 
-    private AppMenuEntry MenuEntry(string icon, string title, Func<INavigationService, Task> open) =>
+    private AppMenuEntry MenuEntry(
+        string icon, string title, AppMenuTone tone, Func<INavigationService, Task> open, bool dark) =>
         new(icon, title, new AsyncCommand(async () =>
         {
             FlyoutIsPresented = false;
             INavigationService navigation = _navigationServiceFactory();
             await navigation.GoToRootAsync();
             await open(navigation);
-        }));
+        }), tone, dark);
 
     public void OpenPendingTechniqueIfNeeded()
     {

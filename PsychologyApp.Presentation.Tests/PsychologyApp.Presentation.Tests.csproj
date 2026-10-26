@@ -63,6 +63,7 @@
     <Compile Include="BalloonRoundTests.cs" />
     <Compile Include="CalmingPracticesTests.cs" />
     <Compile Include="AnchorThoughtsViewModelTests.cs" />
+    <Compile Include="AppMenuLookTests.cs" />
     <Compile Include="AlgorithmStepTests.cs" />
     <Compile Include="AppStringsResourceTests.cs" />
     <Compile Include="TestScoreLabelCompletenessTests.cs" />

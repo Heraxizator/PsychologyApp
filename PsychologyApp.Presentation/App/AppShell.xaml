@@ -24,17 +24,18 @@
             StatusBarStyle="{AppThemeBinding Light=DarkContent, Dark=LightContent}" />
     </Shell.Behaviors>
 
-    <!-- The menu behind the burger: the profile, the reading and listening sections, then help and the app's own pages. -->
+    <!-- The menu behind the burger: the profile as a card on top, my path, reading, support, then help (tinted) and the app's own pages. -->
     <Shell.FlyoutContent>
         <ScrollView VerticalScrollBarVisibility="Never">
             <VerticalStackLayout Padding="12,24,12,24" Spacing="4">
                 <VerticalStackLayout.Resources>
+                    <!-- A row: the icon on a tile of its group's colour. Help sits on that colour with a stronger label. -->
                     <DataTemplate x:Key="MenuEntryTemplate" x:DataType="app:AppMenuEntry">
                         <Border
-                            Padding="14,12"
+                            Padding="10,8"
                             StrokeThickness="0"
                             StrokeShape="RoundRectangle 16"
-                            BackgroundColor="Transparent"
+                            BackgroundColor="{Binding RowColor}"
                             SemanticProperties.Description="{Binding Title}">
                             <Border.Behaviors>
                                 <behaviors:PressFeedbackBehavior />
@@ -42,21 +43,69 @@
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Command}" />
                             </Border.GestureRecognizers>
-                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
-                                <ui:MaterialIconView IconName="{Binding Icon}" IconSize="24" VerticalOptions="Center" />
-                                <Label Grid.Column="1" Text="{Binding Title}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                                <Border WidthRequest="36" HeightRequest="36" StrokeThickness="0" StrokeShape="RoundRectangle 10" BackgroundColor="{Binding TileColor}" VerticalOptions="Center">
+                                    <ui:MaterialIconView IconName="{Binding Icon}" IconSize="20" IconColor="{Binding IconColor}" />
+                                </Border>
+                                <Label Grid.Column="1" Text="{Binding Title}" Style="{StaticResource BodyStyle}" VerticalOptions="Center">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsEmphasized}" Value="True">
+                                            <Setter Property="FontFamily" Value="{StaticResource SemiBoldFontFamily}" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
                             </Grid>
                         </Border>
                     </DataTemplate>
+                    <Style x:Key="MenuGroupTitleStyle" TargetType="Label" BasedOn="{StaticResource CaptionStyle}">
+                        <Setter Property="Margin" Value="12,12,12,4" />
+                    </Style>
                 </VerticalStackLayout.Resources>
 
-                <Label x:Name="MenuTitle" Style="{StaticResource SectionTitleStyle}" Margin="14,0,14,12" />
-                <VerticalStackLayout x:Name="MenuProfile" BindableLayout.ItemTemplate="{StaticResource MenuEntryTemplate}" />
-                <BoxView HeightRequest="1" Margin="14,8" Color="{AppThemeBinding Light={StaticResource BorderSubtleLight}, Dark={StaticResource BorderSubtleDark}}" />
-                <Label x:Name="MenuLibraryTitle" Style="{StaticResource CaptionStyle}" Margin="14,4,14,4" />
-                <VerticalStackLayout x:Name="MenuLibrary" BindableLayout.ItemTemplate="{StaticResource MenuEntryTemplate}" />
-                <BoxView HeightRequest="1" Margin="14,8" Color="{AppThemeBinding Light={StaticResource BorderSubtleLight}, Dark={StaticResource BorderSubtleDark}}" />
-                <VerticalStackLayout x:Name="MenuApp" BindableLayout.ItemTemplate="{StaticResource MenuEntryTemplate}" />
+                <!-- The profile as a card instead of the app's name: the first thing in the menu is the person's own page. -->
+                <Border
+                    x:Name="MenuProfileCard"
+                    x:DataType="app:AppMenuEntry"
+                    Padding="12"
+                    Margin="0,0,0,8"
+                    StrokeThickness="1"
+                    Stroke="{AppThemeBinding Light={StaticResource BorderSubtleLight}, Dark={StaticResource BorderSubtleDark}}"
+                    StrokeShape="RoundRectangle 18"
+                    SemanticProperties.Description="{Binding Title}">
+                    <Border.Behaviors>
+                        <behaviors:PressFeedbackBehavior />
+                    </Border.Behaviors>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Command}" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                        <Border WidthRequest="48" HeightRequest="48" StrokeThickness="0" StrokeShape="RoundRectangle 24" BackgroundColor="{Binding TileColor}" VerticalOptions="Center">
+                            <ui:MaterialIconView IconName="{Binding Icon}" IconSize="26" IconColor="{Binding IconColor}" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                            <Label Text="{Binding Title}" Style="{StaticResource SectionTitleStyle}" />
+                            <Label x:Name="MenuProfileSubtitle" Style="{StaticResource CaptionStyle}" />
+                        </VerticalStackLayout>
+                        <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="22" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <Label x:Name="MenuMineTitle" Style="{StaticResource MenuGroupTitleStyle}" />
+                <VerticalStackLayout x:Name="MenuMine" Spacing="2" BindableLayout.ItemTemplate="{StaticResource MenuEntryTemplate}" />
+                <!-- Support before reading: in a hard minute a thought to lean on is nearer than an article. -->
+                <Label x:Name="MenuSupportTitle" Style="{StaticResource MenuGroupTitleStyle}" />
+                <VerticalStackLayout x:Name="MenuSupport" Spacing="2" BindableLayout.ItemTemplate="{StaticResource MenuEntryTemplate}" />
+                <Label x:Name="MenuReadTitle" Style="{StaticResource MenuGroupTitleStyle}" />
+                <VerticalStackLayout x:Name="MenuRead" Spacing="2" BindableLayout.ItemTemplate="{StaticResource MenuEntryTemplate}" />
+                <BoxView HeightRequest="1" Margin="12,12" Color="{AppThemeBinding Light={StaticResource BorderSubtleLight}, Dark={StaticResource BorderSubtleDark}}" />
+                <VerticalStackLayout x:Name="MenuApp" Spacing="6" BindableLayout.ItemTemplate="{StaticResource MenuEntryTemplate}" />
+
+                <!-- A quiet reminder of the app's promise, and the version for a support request. -->
+                <HorizontalStackLayout Spacing="8" Margin="12,20,12,0">
+                    <ui:MaterialIconView IconName="Lock" IconSize="16" VerticalOptions="Start" Margin="0,2,0,0" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                    <Label x:Name="MenuFooterPrivacy" Style="{StaticResource CaptionStyle}" MaximumWidthRequest="230" />
+                </HorizontalStackLayout>
+                <Label x:Name="MenuFooterVersion" Style="{StaticResource CaptionStyle}" Margin="36,4,12,0" />
             </VerticalStackLayout>
         </ScrollView>
     </Shell.FlyoutContent>

@@ -4213,4 +4213,22 @@
   <data name="AnchorThemeHardTimes" xml:space="preserve">
     <value>Когда тяжело</value>
   </data>
+  <data name="MenuProfileSubtitle" xml:space="preserve">
+    <value>Практики, тесты и прогресс</value>
+  </data>
+  <data name="MenuGroupMine" xml:space="preserve">
+    <value>Мой путь</value>
+  </data>
+  <data name="MenuGroupRead" xml:space="preserve">
+    <value>Читать</value>
+  </data>
+  <data name="MenuGroupSupport" xml:space="preserve">
+    <value>Опора</value>
+  </data>
+  <data name="MenuProfileStreak" xml:space="preserve">
+    <value>Дней подряд с практикой: {0}</value>
+  </data>
+  <data name="MenuFooterPrivacy" xml:space="preserve">
+    <value>Всё, что вы пишете, хранится только на этом телефоне</value>
+  </data>
 </root>

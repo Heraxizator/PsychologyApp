@@ -4207,4 +4207,22 @@
   <data name="AnchorThemeHardTimes" xml:space="preserve">
     <value>艰难时刻</value>
   </data>
+  <data name="MenuProfileSubtitle" xml:space="preserve">
+    <value>练习、测试与进展</value>
+  </data>
+  <data name="MenuGroupMine" xml:space="preserve">
+    <value>我的旅程</value>
+  </data>
+  <data name="MenuGroupRead" xml:space="preserve">
+    <value>阅读</value>
+  </data>
+  <data name="MenuGroupSupport" xml:space="preserve">
+    <value>支撑</value>
+  </data>
+  <data name="MenuProfileStreak" xml:space="preserve">
+    <value>连续练习天数：{0}</value>
+  </data>
+  <data name="MenuFooterPrivacy" xml:space="preserve">
+    <value>你写下的一切都只保存在这部手机上</value>
+  </data>
 </root>

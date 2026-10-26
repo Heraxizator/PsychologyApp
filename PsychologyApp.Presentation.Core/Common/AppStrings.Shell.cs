@@ -15,6 +15,12 @@ public static partial class AppStrings
     public static string ShellTabMotivatorShort => R(nameof(ShellTabMotivatorShort));
     public static string ShellTabChatShort => R(nameof(ShellTabChatShort));
     public static string ShellTabLibraryShort => R(nameof(ShellTabLibraryShort));
+    public static string MenuProfileSubtitle => R(nameof(MenuProfileSubtitle));
+    public static string MenuGroupMine => R(nameof(MenuGroupMine));
+    public static string MenuGroupRead => R(nameof(MenuGroupRead));
+    public static string MenuGroupSupport => R(nameof(MenuGroupSupport));
+    public static string MenuProfileStreak(int days) => F(nameof(MenuProfileStreak), days);
+    public static string MenuFooterPrivacy => R(nameof(MenuFooterPrivacy));
     public static string ShellTabJournalShort => R(nameof(ShellTabJournalShort));
     public static string ForYouEmpty => R(nameof(ForYouEmpty));
     public static string ForYouTakeTest => R(nameof(ForYouTakeTest));

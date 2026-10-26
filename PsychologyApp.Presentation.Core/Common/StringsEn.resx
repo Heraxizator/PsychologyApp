@@ -4207,4 +4207,22 @@
   <data name="AnchorThemeHardTimes" xml:space="preserve">
     <value>Hard times</value>
   </data>
+  <data name="MenuProfileSubtitle" xml:space="preserve">
+    <value>Practices, tests and progress</value>
+  </data>
+  <data name="MenuGroupMine" xml:space="preserve">
+    <value>My path</value>
+  </data>
+  <data name="MenuGroupRead" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="MenuGroupSupport" xml:space="preserve">
+    <value>Support</value>
+  </data>
+  <data name="MenuProfileStreak" xml:space="preserve">
+    <value>Days in a row with a practice: {0}</value>
+  </data>
+  <data name="MenuFooterPrivacy" xml:space="preserve">
+    <value>Everything you write stays on this phone</value>
+  </data>
 </root>

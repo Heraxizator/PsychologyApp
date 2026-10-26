@@ -4207,4 +4207,22 @@
   <data name="AnchorThemeHardTimes" xml:space="preserve">
     <value>Wenn es schwer ist</value>
   </data>
+  <data name="MenuProfileSubtitle" xml:space="preserve">
+    <value>Übungen, Tests und Fortschritt</value>
+  </data>
+  <data name="MenuGroupMine" xml:space="preserve">
+    <value>Mein Weg</value>
+  </data>
+  <data name="MenuGroupRead" xml:space="preserve">
+    <value>Lesen</value>
+  </data>
+  <data name="MenuGroupSupport" xml:space="preserve">
+    <value>Halt</value>
+  </data>
+  <data name="MenuProfileStreak" xml:space="preserve">
+    <value>Tage in Folge mit einer Übung: {0}</value>
+  </data>
+  <data name="MenuFooterPrivacy" xml:space="preserve">
+    <value>Alles, was du schreibst, bleibt auf diesem Handy</value>
+  </data>
 </root>
