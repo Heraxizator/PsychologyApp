@@ -2188,7 +2188,7 @@
     <value>Настроение: {0} · риск: {1}</value>
   </data>
   <data name="ClinicalScorecardSummary" xml:space="preserve">
-    <value>За неделю: {0} практик, {1} отметок настроения · риск: {2}</value>
+    <value>За неделю: практик — {0}, отметок настроения — {1} · риск: {2}</value>
   </data>
   <data name="TherapyProgramWeekLabel" xml:space="preserve">
     <value>Неделя {0}</value>

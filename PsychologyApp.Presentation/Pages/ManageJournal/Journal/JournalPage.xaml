@@ -7,6 +7,7 @@
              xmlns:mood="clr-namespace:PsychologyApp.Presentation.Widgets.MoodStrip"
              xmlns:journalStrip="clr-namespace:PsychologyApp.Presentation.Widgets.Journal"
              xmlns:journal="clr-namespace:PsychologyApp.Presentation.Entities.Journal"
+             xmlns:filterChip="clr-namespace:PsychologyApp.Presentation.Entities.FilterChip"
              xmlns:profile="clr-namespace:PsychologyApp.Presentation.Entities.Profile"
              xmlns:common="clr-namespace:PsychologyApp.Presentation.Common;assembly=PsychologyApp.Presentation.Core"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
@@ -42,89 +43,109 @@
                 <behaviors:StaggerChildrenBehavior />
             </VerticalStackLayout.Behaviors>
 
-            <Label
-                Text="{Binding DayHeaderText}"
-                Style="{StaticResource CaptionStyle}"
-                HorizontalOptions="Fill"
-                HorizontalTextAlignment="Center"
-                LineBreakMode="WordWrap"
-                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
-                FontFamily="{StaticResource SemiBoldFontFamily}"
-                SemanticProperties.Description="{Binding DayHeaderText}" />
-
-            <!-- Morning and evening are two check-ins of one day; the chips show which one is open (it used to hide behind a tap on the title). -->
-            <ui:FilterChipTabBarView
-                HorizontalOptions="Center"
-                ItemsSource="{Binding SlotFilters}"
-                TapCommand="{Binding SelectSlotCommand}" />
-
-            <Label
-                IsVisible="{Binding ShowMoodQuestion}"
-                Text="{Binding MoodQuestionHero}"
-                Style="{StaticResource SectionTitleStyle}"
-                HorizontalOptions="Fill"
-                HorizontalTextAlignment="Center"
-                LineBreakMode="WordWrap" />
-
-            <mood:MoodStripView
-                UsePlainLayout="True"
-                HorizontalOptions="Fill"
-                QuestionText=""
-                RecordMoodCommand="{Binding RecordMoodCommand}"
-                SelectedMoodLevel="{Binding SelectedMoodLevel}"
-                TodayMoodDisplay="{Binding MoodSavedStatus}"
-                HasTodayMood="{Binding HasMoodSelected}"
-                MoodHistorySummary=""
-                HasMoodHistorySummary="False">
-                <mood:MoodStripView.Behaviors>
-                    <behaviors:RevealOnAppearingBehavior />
-                </mood:MoodStripView.Behaviors>
-            </mood:MoodStripView>
-
+            <!-- The week first, as a calendar: the card below is the check-in of the day chosen here. -->
             <journalStrip:JournalWeekStripView
                 CaptionText=""
                 ItemsSource="{Binding WeekDays}"
                 SelectDayCommand="{Binding SelectDayCommand}"
                 IsInteractive="True" />
 
-            <VerticalStackLayout
-                IsVisible="{Binding ShowNoteEditor}"
-                Spacing="{StaticResource CompactSpacing}">
-                <!-- A question to start from: an empty note is the hardest thing to fill. It changes daily and is never required. -->
-                <VerticalStackLayout Spacing="2" Margin="4,0">
-                    <Label Text="{Binding PromptTitle}" Style="{StaticResource CaptionStyle}" />
-                    <Label Text="{Binding PromptText}" Style="{StaticResource EmphasisBodyStyle}" />
-                </VerticalStackLayout>
-                <ui:TextEditorView
-                    PlaceholderText="{Binding NotePlaceholder}"
-                    BodyText="{Binding JournalNote, Mode=TwoWay}"
-                    UnfocusedCommand="{Binding FlushNoteCommand}" />
+            <!-- The check-in as a card, like the first card of the other tabs: the day and the slot on top, the question, the faces. -->
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <!-- Morning and evening are two check-ins of one day; the chips show which one is open. -->
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <Label
+                            Text="{Binding DayHeaderText}"
+                            Style="{StaticResource HeroCaptionStyle}"
+                            FontFamily="{StaticResource SemiBoldFontFamily}"
+                            VerticalOptions="Center"
+                            LineBreakMode="WordWrap" />
+                        <HorizontalStackLayout Grid.Column="1" Spacing="6" BindableLayout.ItemsSource="{Binding SlotFilters}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="filterChip:FilterChipTabItem">
+                                    <ui:FilterChipView
+                                        TitleText="{Binding Title}"
+                                        IsSelected="{Binding IsSelected}"
+                                        TapCommand="{Binding SelectSlotCommand, Source={RelativeSource AncestorType={x:Type vm:JournalViewModel}}, x:DataType=vm:JournalViewModel}"
+                                        CommandParameter="{Binding Key}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </HorizontalStackLayout>
+                    </Grid>
 
-                <FlexLayout
-                    Wrap="Wrap"
-                    Direction="Row"
-                    AlignItems="Start"
-                    JustifyContent="Start"
-                    BindableLayout.ItemsSource="{Binding ActivityChips}">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="journal:JournalActivityChip">
-                            <ui:FilterChipView
-                                Margin="0,0,8,8"
-                                FlexLayout.Shrink="0"
-                                FlexLayout.AlignSelf="Start"
-                                TitleText="{Binding Label}"
-                                IsSelected="{Binding IsActive}"
-                                TapCommand="{Binding ToggleFactorCommand, Source={RelativeSource AncestorType={x:Type vm:JournalViewModel}}, x:DataType=vm:JournalViewModel}"
-                                CommandParameter="{Binding .}" />
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </FlexLayout>
-            </VerticalStackLayout>
+                    <Label
+                        IsVisible="{Binding ShowMoodQuestion}"
+                        Text="{Binding MoodQuestionHero}"
+                        Style="{StaticResource SectionTitleStyle}"
+                        LineBreakMode="WordWrap" />
+
+                    <mood:MoodStripView
+                        UsePlainLayout="True"
+                        HorizontalOptions="Fill"
+                        QuestionText=""
+                        RecordMoodCommand="{Binding RecordMoodCommand}"
+                        SelectedMoodLevel="{Binding SelectedMoodLevel}"
+                        TodayMoodDisplay="{Binding MoodSavedStatus}"
+                        HasTodayMood="{Binding HasMoodSelected}"
+                        MoodHistorySummary=""
+                        HasMoodHistorySummary="False">
+                        <mood:MoodStripView.Behaviors>
+                            <behaviors:RevealOnAppearingBehavior />
+                        </mood:MoodStripView.Behaviors>
+                    </mood:MoodStripView>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- The note as a card with the question of the day on top: an empty note is the hardest thing to fill. The question
+                 changes daily and is never required. -->
+            <Border IsVisible="{Binding ShowNoteEditor}" Style="{StaticResource BrandCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border Style="{StaticResource IconTileStyle}" VerticalOptions="Start">
+                            <ui:MaterialIconView WidthRequest="28" HeightRequest="28" HorizontalOptions="Center" VerticalOptions="Center" IconName="Lightbulb" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                            <Label Text="{Binding PromptTitle}" Style="{StaticResource HeroCaptionStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" />
+                            <Label Text="{Binding PromptText}" Style="{StaticResource ListRowTitleStyle}" LineBreakMode="WordWrap" />
+                        </VerticalStackLayout>
+                    </Grid>
+                    <ui:TextEditorView
+                        PlaceholderText="{Binding NotePlaceholder}"
+                        BodyText="{Binding JournalNote, Mode=TwoWay}"
+                        UnfocusedCommand="{Binding FlushNoteCommand}" />
+
+                    <FlexLayout
+                        Wrap="Wrap"
+                        Direction="Row"
+                        AlignItems="Start"
+                        JustifyContent="Start"
+                        BindableLayout.ItemsSource="{Binding ActivityChips}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="journal:JournalActivityChip">
+                                <ui:FilterChipView
+                                    Margin="0,0,8,8"
+                                    FlexLayout.Shrink="0"
+                                    FlexLayout.AlignSelf="Start"
+                                    TitleText="{Binding Label}"
+                                    IsSelected="{Binding IsActive}"
+                                    TapCommand="{Binding ToggleFactorCommand, Source={RelativeSource AncestorType={x:Type vm:JournalViewModel}}, x:DataType=vm:JournalViewModel}"
+                                    CommandParameter="{Binding .}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </VerticalStackLayout>
+            </Border>
 
             <!-- After a low check-in today: something small to do and help one tap away. In a crisis only the help row stays. -->
             <Border IsVisible="{Binding ShowLowMoodSupport}" Style="{StaticResource BrandCardStyle}" Margin="0">
                 <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <Label Text="{Binding LowMoodTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border Style="{StaticResource IconTileStyle}">
+                            <ui:MaterialIconView WidthRequest="28" HeightRequest="28" HorizontalOptions="Center" VerticalOptions="Center" IconName="VolunteerActivism" />
+                        </Border>
+                        <Label Grid.Column="1" Text="{Binding LowMoodTitle}" Style="{StaticResource SectionTitleStyle}" VerticalOptions="Center" />
+                    </Grid>
                     <Label Text="{Binding LowMoodBody}" Style="{StaticResource BodyStyle}" />
                     <VerticalStackLayout IsVisible="{Binding ShowLowMoodPractices}" Spacing="0">
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="44" SemanticProperties.Description="{Binding LowMoodBreathText}">
@@ -148,7 +169,7 @@
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding OpenLowMoodAnchorsCommand}" />
                         </Grid.GestureRecognizers>
-                        <ui:MaterialIconView IconName="Lightbulb" IconSize="22" VerticalOptions="Center"
+                        <ui:MaterialIconView IconName="Anchor" IconSize="22" VerticalOptions="Center"
                                              IconColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
                         <Label Grid.Column="1" Text="{Binding LowMoodAnchorsText}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource MediumFontFamily}" VerticalOptions="Center"
                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
@@ -176,7 +197,12 @@
             <!-- The week at a glance, the same figures as the overview; before there are any, what this place will show. -->
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                 <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <Label Text="{Binding WeekCardTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border Style="{StaticResource IconTileStyle}">
+                            <ui:MaterialIconView WidthRequest="28" HeightRequest="28" HorizontalOptions="Center" VerticalOptions="Center" IconName="Insights" />
+                        </Border>
+                        <Label Grid.Column="1" Text="{Binding WeekCardTitle}" Style="{StaticResource SectionTitleStyle}" VerticalOptions="Center" />
+                    </Grid>
                     <Grid IsVisible="{Binding HasWeekStats}" ColumnDefinitions="*,*,*" ColumnSpacing="{StaticResource CompactSpacing}">
                         <ui:MetricTileView Grid.Column="0" ValueText="{Binding WeekCheckIns}" LabelText="{Binding CheckInsLabel}" TapCommand="{Binding OpenOverviewCommand}" />
                         <ui:MetricTileView Grid.Column="1" ValueText="{Binding WeekAverage}" LabelText="{Binding AverageLabel}" TapCommand="{Binding OpenOverviewCommand}" />
@@ -212,7 +238,12 @@
             <!-- What was written lately comes back here; the full history is one tap away. -->
             <Border IsVisible="{Binding HasRecentNotes}" Style="{StaticResource BrandCardStyle}" Margin="0">
                 <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <Label Text="{Binding RecentTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border Style="{StaticResource IconTileStyle}">
+                            <ui:MaterialIconView WidthRequest="28" HeightRequest="28" HorizontalOptions="Center" VerticalOptions="Center" IconName="History" />
+                        </Border>
+                        <Label Grid.Column="1" Text="{Binding RecentTitle}" Style="{StaticResource SectionTitleStyle}" VerticalOptions="Center" />
+                    </Grid>
                     <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding RecentNotes}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="profile:MoodNoteItem">
