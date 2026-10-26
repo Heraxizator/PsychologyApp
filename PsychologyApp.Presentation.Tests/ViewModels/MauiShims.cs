@@ -88,6 +88,8 @@ namespace Microsoft.Maui.ApplicationModel
 {
     public sealed class FeatureNotSupportedException : Exception;
 
+    public sealed class PermissionException : Exception;
+
     public static class MainThread
     {
         public static bool IsMainThread => true;
@@ -451,6 +453,8 @@ namespace Microsoft.Maui.Devices
     public sealed class HapticFeedback
     {
         public static HapticFeedback Default { get; } = new();
+
+        public bool IsSupported => false;
 
         public void Perform(HapticFeedbackType type)
         {

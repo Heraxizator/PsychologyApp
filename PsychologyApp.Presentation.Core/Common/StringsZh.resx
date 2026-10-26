@@ -4075,6 +4075,18 @@
   <data name="BalloonsAgain" xml:space="preserve">
     <value>再来一轮</value>
   </data>
+  <data name="AnchorThoughtsTitle" xml:space="preserve">
+    <value>支撑想法</value>
+  </data>
+  <data name="AnchorThoughtsIntro" xml:space="preserve">
+    <value>在艰难时刻可以依靠的简短想法。它们不是规则：每一条都可以用你自己的经历来检验。</value>
+  </data>
+  <data name="AnchorThoughtsReadMore" xml:space="preserve">
+    <value>了解更多：{0}</value>
+  </data>
+  <data name="AnchorThoughtsHelpNow" xml:space="preserve">
+    <value>我现在需要帮助</value>
+  </data>
   <data name="BreathTopUp" xml:space="preserve">
     <value>再吸一口</value>
   </data>
@@ -4176,5 +4188,23 @@
   </data>
   <data name="BusyMindTask12" xml:space="preserve">
     <value>给一家你想走进去的咖啡馆想五个名字</value>
+  </data>
+  <data name="AnchorThemeAll" xml:space="preserve">
+    <value>全部</value>
+  </data>
+  <data name="AnchorThemeOthersWords" xml:space="preserve">
+    <value>别人的话</value>
+  </data>
+  <data name="AnchorThemeMistakes" xml:space="preserve">
+    <value>犯错</value>
+  </data>
+  <data name="AnchorThemeThoughtsAndFeelings" xml:space="preserve">
+    <value>想法与情绪</value>
+  </data>
+  <data name="AnchorThemeRelationships" xml:space="preserve">
+    <value>关系</value>
+  </data>
+  <data name="AnchorThemeHardTimes" xml:space="preserve">
+    <value>艰难时刻</value>
   </data>
 </root>

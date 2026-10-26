@@ -48,6 +48,7 @@ public interface INavigationService
     Task GoToForYouAsync();
     Task GoToCoursesAsync();
     Task GoToArticlesAsync();
+    Task GoToAnchorThoughtsAsync();
     Task GoToBodyAsync();
     Task GoToInsightsAsync();
     Task GoToPracticeCompletionAsync(int streakDays, string? completedItemKey = null, long? sessionResultId = null);

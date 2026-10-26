@@ -209,6 +209,9 @@ public sealed class MauiNavigationService : INavigationService
     public Task GoToArticlesAsync() =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateArticlesPage(), true));
 
+    public Task GoToAnchorThoughtsAsync() =>
+        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateAnchorThoughtsPage(), true));
+
     public Task GoToBodyAsync() =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(_pageFactory.CreateBodyCheckPage(), true));
 

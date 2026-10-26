@@ -418,7 +418,8 @@ public partial class AppShell : Shell
             MenuEntry("School", AppStrings.ArticlesCourses, navigation => navigation.GoToCoursesAsync()),
             MenuEntry("Article", AppStrings.ShellTabArticlesShort, navigation => navigation.GoToArticlesAsync()),
             MenuEntry("Headphones", AppStrings.ShellTabMusicShort, navigation => navigation.GoToPrayersAsync()),
-            MenuEntry("FormatQuote", AppStrings.ShellTabMotivatorShort, navigation => navigation.GoToQuotesAsync())
+            MenuEntry("FormatQuote", AppStrings.ShellTabMotivatorShort, navigation => navigation.GoToQuotesAsync()),
+            MenuEntry("Anchor", AppStrings.AnchorThoughtsTitle, navigation => navigation.GoToAnchorThoughtsAsync())
         });
         BindableLayout.SetItemsSource(MenuApp, new[]
         {

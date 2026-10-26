@@ -62,6 +62,7 @@
     <Compile Include="TechniqueFlavorTests.cs" />
     <Compile Include="BalloonRoundTests.cs" />
     <Compile Include="CalmingPracticesTests.cs" />
+    <Compile Include="AnchorThoughtsViewModelTests.cs" />
     <Compile Include="AlgorithmStepTests.cs" />
     <Compile Include="AppStringsResourceTests.cs" />
     <Compile Include="TestScoreLabelCompletenessTests.cs" />
@@ -153,6 +154,8 @@
     <Compile Include="../PsychologyApp.Presentation/Pages/ManageQuotes/QuoteFeed/QuoteViewModel.Init.Load.cs" Link="Linked/Pages/ManageQuotes/QuoteFeed/QuoteViewModel.Init.Load.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/ManageQuotes/QuoteFeed/QuoteViewModel.Labels.cs" Link="Linked/Pages/ManageQuotes/QuoteFeed/QuoteViewModel.Labels.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/ManageQuotes/QuoteFeed/QuoteViewModel.Properties.cs" Link="Linked/Pages/ManageQuotes/QuoteFeed/QuoteViewModel.Properties.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/ReadArticles/AnchorThoughts/AnchorThoughtsViewModel.cs" Link="Linked/Pages/ReadArticles/AnchorThoughts/AnchorThoughtsViewModel.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Shared/Common/UiHaptics.cs" Link="Linked/Shared/Common/UiHaptics.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/LuscherTest/LuscherTestViewModel.cs" Link="Linked/Pages/RunTests/LuscherTest/LuscherTestViewModel.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/LuscherTest/LuscherTestViewModel.Init.cs" Link="Linked/Pages/RunTests/LuscherTest/LuscherTestViewModel.Init.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/RunTests/LuscherTest/LuscherTestViewModel.Labels.cs" Link="Linked/Pages/RunTests/LuscherTest/LuscherTestViewModel.Labels.cs" />

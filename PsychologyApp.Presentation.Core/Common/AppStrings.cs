@@ -709,6 +709,16 @@ public static partial class AppStrings
     public static string QuotesFeedFavorites => R(nameof(QuotesFeedFavorites));
     public static string QuotesFeedForYou => R(nameof(QuotesFeedForYou));
     public static string QuotesThemeAll => R(nameof(QuotesThemeAll));
+    public static string AnchorThoughtsTitle => R(nameof(AnchorThoughtsTitle));
+    public static string AnchorThoughtsIntro => R(nameof(AnchorThoughtsIntro));
+    public static string AnchorThoughtsReadMore(string articleTitle) => F(nameof(AnchorThoughtsReadMore), articleTitle);
+    public static string AnchorThoughtsHelpNow => R(nameof(AnchorThoughtsHelpNow));
+    public static string AnchorThemeAll => R(nameof(AnchorThemeAll));
+    public static string AnchorThemeOthersWords => R(nameof(AnchorThemeOthersWords));
+    public static string AnchorThemeMistakes => R(nameof(AnchorThemeMistakes));
+    public static string AnchorThemeThoughtsAndFeelings => R(nameof(AnchorThemeThoughtsAndFeelings));
+    public static string AnchorThemeRelationships => R(nameof(AnchorThemeRelationships));
+    public static string AnchorThemeHardTimes => R(nameof(AnchorThemeHardTimes));
     public static string QuotesDailyTitle => R(nameof(QuotesDailyTitle));
     public static string QuotesSearchPlaceholder => R(nameof(QuotesSearchPlaceholder));
     public static string QuotesSearchEmptyTitle => R(nameof(QuotesSearchEmptyTitle));

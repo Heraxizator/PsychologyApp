@@ -12,6 +12,7 @@ public static class ReadArticlesFeatureServiceCollectionExtensions
         services.AddFeatureSingleton<IArticleReaderViewModelFactory, ArticleReaderViewModelFactory>();
         services.AddFeatureSingleton<ICourseViewModelFactory, CourseViewModelFactory>();
         services.AddFeatureSingleton<ICourseDayViewModelFactory, CourseDayViewModelFactory>();
+        services.AddFeatureSingleton<IAnchorThoughtsViewModelFactory, AnchorThoughtsViewModelFactory>();
         services.AddFeatureSingleton<IReadArticlesPageFactory, ReadArticlesPageFactory>();
         return services;
     }

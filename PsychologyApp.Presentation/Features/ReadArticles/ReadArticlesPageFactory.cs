@@ -1,6 +1,7 @@
 using PsychologyApp.Application.Articles;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Presentation.App.Providers;
+using PsychologyApp.Presentation.Pages.ReadArticles.AnchorThoughts;
 using PsychologyApp.Presentation.Pages.ReadArticles.ArticleReader;
 using PsychologyApp.Presentation.Pages.ReadArticles.Articles;
 using PsychologyApp.Presentation.Pages.ReadArticles.Courses;
@@ -41,6 +42,11 @@ public interface ICourseDayViewModelFactory
     CourseDayViewModel Create(ContentPage page, string courseId, int day);
 }
 
+public interface IAnchorThoughtsViewModelFactory
+{
+    AnchorThoughtsViewModel Create(ContentPage page);
+}
+
 public interface IReadArticlesPageFactory
 {
     ArticlesPage CreateArticlesPage();
@@ -49,6 +55,7 @@ public interface IReadArticlesPageFactory
     ArticleReaderPage CreateArticleReaderPage(string articleId);
     CoursePage CreateCoursePage(string courseId);
     CourseDayPage CreateCourseDayPage(string courseId, int day);
+    AnchorThoughtsPage CreateAnchorThoughtsPage();
 }
 
 public sealed class ArticlesViewModelFactory(
@@ -112,13 +119,21 @@ public sealed class CourseDayViewModelFactory(
         new(ResolveNavigation(navigationServiceFactory, page), reading, dialogs, databaseReady, courseId, day);
 }
 
+public sealed class AnchorThoughtsViewModelFactory(
+    Func<NavigationContext, INavigationService> navigationServiceFactory)
+    : ViewModelFactoryBase, IAnchorThoughtsViewModelFactory
+{
+    public AnchorThoughtsViewModel Create(ContentPage page) => new(ResolveNavigation(navigationServiceFactory, page));
+}
+
 public sealed class ReadArticlesPageFactory(
     IArticlesViewModelFactory articlesViewModelFactory,
     IForYouViewModelFactory forYouViewModelFactory,
     ICoursesViewModelFactory coursesViewModelFactory,
     IArticleReaderViewModelFactory articleReaderViewModelFactory,
     ICourseViewModelFactory courseViewModelFactory,
-    ICourseDayViewModelFactory courseDayViewModelFactory) : IReadArticlesPageFactory
+    ICourseDayViewModelFactory courseDayViewModelFactory,
+    IAnchorThoughtsViewModelFactory anchorThoughtsViewModelFactory) : IReadArticlesPageFactory
 {
     public ArticlesPage CreateArticlesPage() => new(articlesViewModelFactory);
 
@@ -131,4 +146,6 @@ public sealed class ReadArticlesPageFactory(
     public CoursePage CreateCoursePage(string courseId) => new(courseViewModelFactory, courseId);
 
     public CourseDayPage CreateCourseDayPage(string courseId, int day) => new(courseDayViewModelFactory, courseId, day);
+
+    public AnchorThoughtsPage CreateAnchorThoughtsPage() => new(anchorThoughtsViewModelFactory);
 }

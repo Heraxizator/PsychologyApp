@@ -35,6 +35,7 @@ using PsychologyApp.Presentation.Pages.ClinicalCare.RiskCheck;
 using PsychologyApp.Presentation.Pages.ClinicalCare.SafetyPlan;
 using PsychologyApp.Presentation.Pages.ClinicalCare.Exposure;
 using PsychologyApp.Presentation.Pages.ClinicalCare.BodyCheck;
+using PsychologyApp.Presentation.Pages.ReadArticles.AnchorThoughts;
 using PsychologyApp.Presentation.Pages.ReadArticles.Articles;
 using PsychologyApp.Presentation.Pages.ReadArticles.ArticleReader;
 using PsychologyApp.Presentation.Pages.ReadArticles.Courses;
@@ -89,4 +90,5 @@ public interface IPageFactory
     ArticleReaderPage CreateArticleReaderPage(string articleId);
     CoursePage CreateCoursePage(string courseId);
     CourseDayPage CreateCourseDayPage(string courseId, int day);
+    AnchorThoughtsPage CreateAnchorThoughtsPage();
 }

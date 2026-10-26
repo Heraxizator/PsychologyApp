@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.ReadArticles.AnchorThoughts.AnchorThoughtsPage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ReadArticles.AnchorThoughts"
+             x:DataType="vm:AnchorThoughtsViewModel"
+             x:Name="page"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+
+    <!-- Opened over the tabs: the same back arrow and title as every other pushed page, instead of the system bar. -->
+    <Grid RowDefinitions="Auto,*">
+        <ui:NavigationBarSimpleView
+            Grid.Row="0"
+            Margin="20,0"
+            BackCommand="{Binding BackCommand}"
+            TitleText="{Binding PageTitle}" />
+
+        <CollectionView Grid.Row="1"
+            ItemsSource="{Binding Items}"
+            SelectionMode="None"
+            Margin="20,0"
+            VerticalScrollBarVisibility="Never">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.Header>
+                <VerticalStackLayout Padding="0,12,0,4" Spacing="{StaticResource ListItemSpacing}">
+                    <Label Text="{Binding IntroText}" Style="{StaticResource BodyStyle}" />
+                    <ui:FilterChipTabBarView ItemsSource="{Binding Filters}" TapCommand="{Binding SelectThemeCommand}" />
+                </VerticalStackLayout>
+            </CollectionView.Header>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:AnchorThoughtItem">
+                    <Border Style="{StaticResource QuoteListCardStyle}" Padding="16,12,8,4">
+                        <VerticalStackLayout Spacing="6">
+                            <Label
+                                Margin="0,0,8,0"
+                                Style="{StaticResource EmphasisBodyStyle}"
+                                FontFamily="{StaticResource SemiBoldFontFamily}"
+                                Text="{Binding Text}" />
+                            <Label
+                                Margin="0,0,8,0"
+                                Style="{StaticResource BodyStyle}"
+                                Text="{Binding Why}" />
+                            <Grid
+                                ColumnDefinitions="*,Auto"
+                                MinimumHeightRequest="44"
+                                SemanticProperties.Description="{Binding ReadMoreText}">
+                                <Grid.Behaviors>
+                                    <behaviors:PressFeedbackBehavior />
+                                </Grid.Behaviors>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OpenArticleCommand}" />
+                                </Grid.GestureRecognizers>
+                                <Label
+                                    VerticalOptions="Center"
+                                    Style="{StaticResource BodyStyle}"
+                                    FontFamily="{StaticResource MediumFontFamily}"
+                                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
+                                    Text="{Binding ReadMoreText}" />
+                                <ui:MaterialIconView
+                                    Grid.Column="1"
+                                    IconName="ChevronRight"
+                                    IconSize="22"
+                                    VerticalOptions="Center"
+                                    IconColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.Footer>
+                <ui:ButtonView
+                    BindingContext="{Binding BindingContext, Source={x:Reference page}, x:DataType=vm:AnchorThoughtsPage}"
+                    Margin="0,16,0,24"
+                    Variant="Secondary"
+                    BodyText="{Binding HelpNowText}"
+                    TapCommand="{Binding OpenCrisisHubCommand}" />
+            </CollectionView.Footer>
+        </CollectionView>
+    </Grid>
+</ContentPage>

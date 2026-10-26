@@ -4075,6 +4075,18 @@
   <data name="BalloonsAgain" xml:space="preserve">
     <value>Otra ronda</value>
   </data>
+  <data name="AnchorThoughtsTitle" xml:space="preserve">
+    <value>Pensamientos de apoyo</value>
+  </data>
+  <data name="AnchorThoughtsIntro" xml:space="preserve">
+    <value>Pensamientos cortos en los que apoyarte en un momento difícil. No son reglas: cada uno se puede comprobar con tu propia experiencia.</value>
+  </data>
+  <data name="AnchorThoughtsReadMore" xml:space="preserve">
+    <value>Leer más: {0}</value>
+  </data>
+  <data name="AnchorThoughtsHelpNow" xml:space="preserve">
+    <value>Necesito ayuda ahora</value>
+  </data>
   <data name="BreathTopUp" xml:space="preserve">
     <value>Un poco más</value>
   </data>
@@ -4176,5 +4188,23 @@
   </data>
   <data name="BusyMindTask12" xml:space="preserve">
     <value>Inventa cinco nombres para una cafetería en la que te gustaría entrar</value>
+  </data>
+  <data name="AnchorThemeAll" xml:space="preserve">
+    <value>Todas</value>
+  </data>
+  <data name="AnchorThemeOthersWords" xml:space="preserve">
+    <value>Palabras ajenas</value>
+  </data>
+  <data name="AnchorThemeMistakes" xml:space="preserve">
+    <value>Errores</value>
+  </data>
+  <data name="AnchorThemeThoughtsAndFeelings" xml:space="preserve">
+    <value>Pensamientos y emociones</value>
+  </data>
+  <data name="AnchorThemeRelationships" xml:space="preserve">
+    <value>Relaciones</value>
+  </data>
+  <data name="AnchorThemeHardTimes" xml:space="preserve">
+    <value>Cuando cuesta</value>
   </data>
 </root>
