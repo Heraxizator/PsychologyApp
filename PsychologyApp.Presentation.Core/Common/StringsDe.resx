@@ -964,7 +964,7 @@
     <value>Keine passenden Notizen</value>
   </data>
   <data name="JournalTimelineEmpty" xml:space="preserve">
-    <value>Noch keine Einträge — trag im Tagebuch deine Stimmung ein, um eine Serie zu beginnen</value>
+    <value>Noch keine Einträge — trag im Tagebuch deine Stimmung ein, dann erscheinen sie hier</value>
   </data>
   <data name="JournalPromptBlockedShort" xml:space="preserve">
     <value>Was im Weg war</value>

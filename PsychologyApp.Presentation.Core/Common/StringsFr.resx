@@ -964,7 +964,7 @@
     <value>Aucune note correspondante</value>
   </data>
   <data name="JournalTimelineEmpty" xml:space="preserve">
-    <value>Pas encore de notes — notez votre humeur dans le journal pour lancer une série</value>
+    <value>Pas encore de notes — notez votre humeur dans le journal et vos entrées apparaîtront ici</value>
   </data>
   <data name="JournalPromptBlockedShort" xml:space="preserve">
     <value>Ce qui a gêné</value>

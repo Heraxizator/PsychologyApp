@@ -964,7 +964,7 @@
     <value>No matching notes</value>
   </data>
   <data name="JournalTimelineEmpty" xml:space="preserve">
-    <value>No check-ins yet — log a mood in the journal to start a streak</value>
+    <value>No check-ins yet — log a mood in the journal and your entries will appear here</value>
   </data>
   <data name="JournalPromptBlockedShort" xml:space="preserve">
     <value>What blocked</value>

@@ -964,7 +964,7 @@
     <value>Ничего не найдено</value>
   </data>
   <data name="JournalTimelineEmpty" xml:space="preserve">
-    <value>Ещё нет отметок — отметьте настроение в дневнике, чтобы начать серию</value>
+    <value>Ещё нет отметок — отметьте настроение в дневнике, и записи появятся здесь</value>
   </data>
   <data name="JournalPromptBlockedShort" xml:space="preserve">
     <value>Что мешало</value>
@@ -1144,7 +1144,7 @@
     <value>Следующая практика</value>
   </data>
   <data name="PracticeNextReason" xml:space="preserve">
-    <value>Продолжим серию</value>
+    <value>Можно продолжить</value>
   </data>
   <data name="PracticeHistoryTitle" xml:space="preserve">
     <value>Недавние практики</value>

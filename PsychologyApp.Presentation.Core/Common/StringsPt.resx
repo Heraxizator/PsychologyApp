@@ -964,7 +964,7 @@
     <value>Nenhuma nota encontrada</value>
   </data>
   <data name="JournalTimelineEmpty" xml:space="preserve">
-    <value>Nenhum registro ainda — registre seu humor no diário para começar uma sequência</value>
+    <value>Nenhum registro ainda — registre seu humor no diário e eles aparecerão aqui</value>
   </data>
   <data name="JournalPromptBlockedShort" xml:space="preserve">
     <value>O que atrapalhou</value>

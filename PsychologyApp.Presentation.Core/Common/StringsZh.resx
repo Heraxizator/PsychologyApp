@@ -964,7 +964,7 @@
     <value>没有匹配的笔记</value>
   </data>
   <data name="JournalTimelineEmpty" xml:space="preserve">
-    <value>还没有记录——在日记中记下心情，开始连续记录吧</value>
+    <value>还没有记录——在日记中记下心情，记录就会出现在这里</value>
   </data>
   <data name="JournalPromptBlockedShort" xml:space="preserve">
     <value>阻碍</value>

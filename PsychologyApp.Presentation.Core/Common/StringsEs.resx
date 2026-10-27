@@ -964,7 +964,7 @@
     <value>No hay notas que coincidan</value>
   </data>
   <data name="JournalTimelineEmpty" xml:space="preserve">
-    <value>Aún no hay registros — anota tu estado de ánimo en el diario para empezar una racha</value>
+    <value>Aún no hay registros — anota tu estado de ánimo en el diario y aparecerán aquí</value>
   </data>
   <data name="JournalPromptBlockedShort" xml:space="preserve">
     <value>Lo que estorbó</value>
