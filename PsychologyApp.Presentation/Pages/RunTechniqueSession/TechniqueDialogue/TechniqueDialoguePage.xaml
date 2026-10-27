@@ -11,8 +11,7 @@
              Shell.NavBarIsVisible="False"
              SafeAreaEdges="All"
              Title="{Binding PageName}"
-             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}"
-             Background="{AppThemeBinding Light={StaticResource ChatBackdropLight}, Dark={StaticResource ChatBackdropDark}}">
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
 
     <ContentPage.Behaviors>
         <behaviors:PageAnalyticsBehavior />

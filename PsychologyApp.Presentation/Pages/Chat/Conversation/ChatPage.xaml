@@ -12,8 +12,7 @@
              Shell.NavBarIsVisible="False"
              Title="{Binding Title}"
              SafeAreaEdges="All"
-             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}"
-             Background="{AppThemeBinding Light={StaticResource ChatBackdropLight}, Dark={StaticResource ChatBackdropDark}}">
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
 
     <ContentPage.Behaviors>
         <behaviors:PageAnalyticsBehavior />
@@ -34,7 +33,7 @@
         <CollectionView
             x:Name="MessageList"
             Grid.Row="1"
-            Margin="12,0"
+            Margin="20,0"
             ItemsSource="{Binding Messages}"
             SelectionMode="None"
             Scrolled="OnMessageListScrolled"
@@ -42,16 +41,13 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:ChatBubble">
                     <VerticalStackLayout Margin="{Binding OuterMargin}" Spacing="8" BindingContextChanged="OnBubbleContextChanged">
-                        <Border
+                        <!-- The day as a quiet caption, like the dates elsewhere in the app; a grey pill stood out of the palette. -->
+                        <Label
                             IsVisible="{Binding HasDate}"
+                            Text="{Binding DateText}"
+                            Style="{StaticResource CaptionStyle}"
                             HorizontalOptions="Center"
-                            Margin="0,10,0,4"
-                            Padding="12,4"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 12"
-                            BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}">
-                            <Label Text="{Binding DateText}" Style="{StaticResource CaptionStyle}" FontSize="12" />
-                        </Border>
+                            Margin="0,10,0,4" />
 
                         <Border
                             HorizontalOptions="{Binding Alignment}"
@@ -99,7 +95,7 @@
             Grid.Row="1"
             Kind="Bubbles"
             VerticalOptions="Start"
-            Margin="12,12,12,0"
+            Margin="20,12,20,0"
             IsActive="{Binding IsLoading}" />
 
         <!-- Jump to the newest or the oldest message. Each appears only while there is somewhere to jump to. -->
@@ -163,7 +159,7 @@
             <!-- The tension question is a card of its own on the soft backdrop. -->
             <Border
                 IsVisible="{Binding IsRatingMode}"
-                Margin="12,8,12,0"
+                Margin="20,8,20,0"
                 Padding="0"
                 StrokeThickness="1"
                 StrokeShape="RoundRectangle 22"
@@ -179,7 +175,7 @@
                 IsVisible="{Binding ShowChips}"
                 Wrap="Wrap"
                 JustifyContent="Start"
-                Margin="12,10,12,0"
+                Margin="20,10,20,0"
                 BindableLayout.ItemsSource="{Binding QuickReplies}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="vm:QuickReplyItem">
@@ -221,7 +217,7 @@
 
             <ui:ChatInputBar
                 x:Name="InputBar"
-                Margin="12,8,12,12"
+                Margin="20,8,20,12"
                 Text="{Binding DraftText, Mode=TwoWay}"
                 Placeholder="{Binding Placeholder}"
                 SendCommand="{Binding SendCommand}"

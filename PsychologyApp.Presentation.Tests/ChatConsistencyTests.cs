@@ -27,10 +27,13 @@ public class ChatConsistencyTests
     [Theory]
     [InlineData("Pages", "Chat", "Conversation", "ChatPage.xaml")]
     [InlineData("Pages", "RunTechniqueSession", "TechniqueDialogue", "TechniqueDialoguePage.xaml")]
-    public void BothChatPagesHaveTheSameBackdropAndResizeForTheKeyboard(params string[] path)
+    // A conversation sits on the same flat page background as every other screen; its own blue wash made the chats look apart.
+    public void BothChatPagesHaveThePageBackgroundAndResizeForTheKeyboard(params string[] path)
     {
-        Assert.Contains("ChatBackdropLight", Read(path));
-        Assert.Contains("ChatBackdropDark", Read(path));
+        string xaml = Read(path);
+
+        Assert.Contains("BackgroundColor=\"{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}\"", xaml);
+        Assert.DoesNotContain(" Background=\"", xaml);
         Assert.Contains("KeyboardResize", Read([.. path[..^1], path[^1] + ".cs"]));
     }
 

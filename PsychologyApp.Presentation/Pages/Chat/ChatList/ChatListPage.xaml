@@ -6,6 +6,7 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.Chat.ChatList"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:avatar="clr-namespace:PsychologyApp.Presentation.Widgets.CompanionAvatar"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              x:DataType="vm:ChatListViewModel"
              Shell.NavBarIsVisible="True"
              Title="{Binding Title}"
@@ -15,6 +16,17 @@
         <behaviors:PageAnalyticsBehavior />
     </ContentPage.Behaviors>
 
+    <!-- A new chat is an icon in the bar, like the journal's overview and history: no other screen has a floating round button.
+         The glyph goes through a FontImageSource: the icon extension set straight on IconImageSource draws nothing in the Android toolbar. -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="{Binding NewChatText}" Command="{Binding NewChatCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="{mi:Material Icon=Edit}" Size="24"
+                                 Color="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Resources>
         <vm:ChatTileColorConverter x:Key="ChatTileColor" />
         <!-- The neutral colour sits in the style: a local TextColor would win over the improving / worsening triggers. -->
@@ -23,7 +35,7 @@
         </Style>
     </ContentPage.Resources>
 
-    <!-- One card per chat, as elsewhere in the app: the initial, the title and time, the last line; the new-chat button in the corner. -->
+    <!-- One card per chat, as elsewhere in the app: the state or the initial, the title and time, the last line. -->
     <Grid>
         <CollectionView
             IsVisible="{Binding IsChatAvailable}"
@@ -35,10 +47,6 @@
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
             </CollectionView.ItemsLayout>
-            <CollectionView.Footer>
-                <!-- Room under the last row, so the round button never covers it. -->
-                <BoxView HeightRequest="88" Color="Transparent" />
-            </CollectionView.Footer>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:ChatListItem">
                     <SwipeView BackgroundColor="Transparent">
@@ -301,33 +309,5 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- A new chat: one round button in the corner, under the thumb. -->
-        <Border
-            IsVisible="{Binding HasChats}"
-            HorizontalOptions="End"
-            VerticalOptions="End"
-            Margin="0,0,20,20"
-            WidthRequest="58"
-            HeightRequest="58"
-            StrokeThickness="0"
-            StrokeShape="RoundRectangle 29"
-            BackgroundColor="{DynamicResource PrimaryFill}"
-            SemanticProperties.Description="{Binding NewChatText}">
-            <Border.Shadow>
-                <Shadow Brush="#000000" Offset="0,4" Radius="10" Opacity="0.28" />
-            </Border.Shadow>
-            <Border.Behaviors>
-                <behaviors:PressFeedbackBehavior />
-            </Border.Behaviors>
-            <Border.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding NewChatCommand}" />
-            </Border.GestureRecognizers>
-            <ui:MaterialIconView
-                IconName="Edit"
-                IconSize="26"
-                IconColor="{DynamicResource OnPrimary}"
-                HorizontalOptions="Center"
-                VerticalOptions="Center" />
-        </Border>
     </Grid>
 </ContentPage>
