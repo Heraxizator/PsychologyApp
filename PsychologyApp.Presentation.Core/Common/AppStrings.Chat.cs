@@ -49,19 +49,13 @@ public static partial class AppStrings
     public static string ChatProfileTitle => R(nameof(ChatProfileTitle));
     public static string ChatProfileOfflineShort => R(nameof(ChatProfileOfflineShort));
     public static string ChatProfileOnPhone => R(nameof(ChatProfileOnPhone));
+    public static string ChatProfileTaglineShort => R(nameof(ChatProfileTaglineShort));
+    public static string ChatProfileDisclaimerShort => R(nameof(ChatProfileDisclaimerShort));
+    public static string ChatProfileSettings => R(nameof(ChatProfileSettings));
     public static string ChatProfileOpen => R(nameof(ChatProfileOpen));
     public static string ChatProfileNameTitle => R(nameof(ChatProfileNameTitle));
-    public static string ChatProfileNameEmpty => R(nameof(ChatProfileNameEmpty));
-    public static string ChatProfileNameEdit => R(nameof(ChatProfileNameEdit));
     public static string ChatProfileNamePromptTitle => R(nameof(ChatProfileNamePromptTitle));
     public static string ChatProfileNamePromptMessage => R(nameof(ChatProfileNamePromptMessage));
-    public static string ChatProfileTensionTitle => R(nameof(ChatProfileTensionTitle));
-    public static string ChatProfileTensionStart => R(nameof(ChatProfileTensionStart));
-    public static string ChatProfileTensionEnd => R(nameof(ChatProfileTensionEnd));
-    public static string ChatProfilePracticesTitle => R(nameof(ChatProfilePracticesTitle));
-    public static string ChatProfilePracticeBest => R(nameof(ChatProfilePracticeBest));
-    public static string ChatProfilePracticeStart => R(nameof(ChatProfilePracticeStart));
-    public static string ChatProfilePracticeDetail(int helped, int tried) => F(nameof(ChatProfilePracticeDetail), helped, tried);
     public static string ChatProfileForget => R(nameof(ChatProfileForget));
     public static string ChatProfileForgetTitle => R(nameof(ChatProfileForgetTitle));
     public static string ChatProfileForgetBody => R(nameof(ChatProfileForgetBody));
@@ -69,5 +63,4 @@ public static partial class AppStrings
     public static string ChatProfileDeleteAllTitle => R(nameof(ChatProfileDeleteAllTitle));
     public static string ChatProfileDeleteAllBody => R(nameof(ChatProfileDeleteAllBody));
     public static string ChatProfileConfirm => R(nameof(ChatProfileConfirm));
-    public static string ChatProfileLoadingText => R(nameof(ChatProfileLoadingText));
 }

@@ -1,9 +1,5 @@
-using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Windows.Input;
 using PsychologyApp.Application.Chat;
-using PsychologyApp.Application.Conversation;
-using PsychologyApp.Application.Conversation.Companion;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
@@ -11,34 +7,13 @@ using PsychologyApp.Presentation.Shared.ViewModels;
 
 namespace PsychologyApp.Presentation.Pages.Chat.Companion;
 
-/// <summary>One pair of bars: the tension at the start and at the end of a chat.</summary>
-public sealed record TensionBarItem(string Label, int Before, int After)
-{
-    private const double Base = 8;
-    private const double PerPoint = 9;
-
-    public double BeforeHeight => Base + (Before * PerPoint);
-    public double AfterHeight => Base + (After * PerPoint);
-    public string BeforeText => Before.ToString(CultureInfo.InvariantCulture);
-    public string AfterText => After.ToString(CultureInfo.InvariantCulture);
-    public bool Improved => After < Before;
-}
-
-public sealed record PracticeRowItem(string Title, string Detail, double HelpedFraction, bool IsBest, string StartText, ICommand StartCommand)
-{
-    public string BestText => AppStrings.ChatProfilePracticeBest;
-}
-
 /// <summary>
-/// The companion's profile: who it is, how it addresses the person, how their tension changed over time and what helped.
-/// Everything is computed from stored chats by <see cref="IChatService.GetProfileAsync"/>; nothing leaves the phone.
+/// The companion's card: who it is in one screen, a way to urgent help and to a new chat. How it addresses the person, forgetting
+/// and deleting are rare, so they sit behind "Chat settings". The profile is read from stored chats; nothing leaves the phone.
 /// </summary>
 public sealed class CompanionProfileViewModel : BaseViewModel
 {
-    private const string DateFormat = "dd.MM";
-
     private readonly IChatService _chat;
-    private readonly IChatLanguageProvider _language;
     private readonly IDialogService _dialogs;
 
     private CompanionProfile _profile = CompanionProfile.Empty;
@@ -47,22 +22,18 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     public CompanionProfileViewModel(
         IChatService chat,
         INavigationService navigationService,
-        IChatLanguageProvider language,
         IDialogService dialogs)
     {
         ModuleName = AppStrings.ChatsTitle;
         PageName = AppStrings.ChatProfileTitle;
         _chat = chat;
-        _language = language;
         _dialogs = dialogs;
 
         BindNavigation(navigationService);
         BackCommand = new AsyncCommand(GoBackAsync);
         NewChatCommand = new AsyncCommand(() => NavigationService!.GoToChatAsync(null));
-        EditNameCommand = new AsyncCommand(EditNameAsync);
-        ForgetCommand = new AsyncCommand(ForgetAsync);
-        DeleteAllCommand = new AsyncCommand(DeleteAllAsync);
         CrisisCommand = new AsyncCommand(() => NavigationService!.GoToCrisisHubAsync());
+        SettingsCommand = new AsyncCommand(OpenSettingsAsync);
     }
 
     /// <summary>Set by the page: shows a text prompt and returns the entered text, or null when cancelled.</summary>
@@ -70,29 +41,12 @@ public sealed class CompanionProfileViewModel : BaseViewModel
 
     public ICommand BackCommand { get; }
     public ICommand NewChatCommand { get; }
-    public ICommand EditNameCommand { get; }
-    public ICommand ForgetCommand { get; }
-    public ICommand DeleteAllCommand { get; }
     public ICommand CrisisCommand { get; }
+    public ICommand SettingsCommand { get; }
 
-    public RangeObservableCollection<TensionBarItem> TensionBars { get; } = [];
-    public RangeObservableCollection<PracticeRowItem> Practices { get; } = [];
-
-    public bool HasName => _profile.UserName is not null;
-    public string NameText => _profile.UserName ?? AppStrings.ChatProfileNameEmpty;
-
-    public string Tagline => ChatProfileContent.Tagline(_language.IsEnglish);
-    public string OfflineText => AppStrings.ChatProfileOfflineShort;
-    public string OnPhoneText => AppStrings.ChatProfileOnPhone;
-    public string CrisisText => AppStrings.CrisisHubTitle;
-    public string Disclaimer => ChatProfileContent.Disclaimer(_language.IsEnglish);
-
-    public bool HasTension => TensionBars.Count > 0;
-    public string TensionCaption => ChatProfileContent.TensionCaption(_profile, _language.IsEnglish);
-    public bool HasPractices => Practices.Count > 0;
     public bool HasHistory => _profile.HasHistory;
 
-    /// <summary>True until the first load has finished. The page shows a loading state instead of a flash of zeroes.</summary>
+    /// <summary>True until the first load has finished. The page shows a loading state instead of a flash of empty text.</summary>
     public bool IsLoading
     {
         get => _isLoading;
@@ -106,45 +60,48 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     }
 
     public bool HasLoaded => !IsLoading;
-    public string LoadingText => AppStrings.ChatProfileLoadingText;
 
     public string Title => AppStrings.ChatProfileTitle;
-    public string NameTitle => AppStrings.ChatProfileNameTitle;
-    public string NameEditText => AppStrings.ChatProfileNameEdit;
-    public string TensionTitle => AppStrings.ChatProfileTensionTitle;
-    public string TensionStartText => AppStrings.ChatProfileTensionStart;
-    public string TensionEndText => AppStrings.ChatProfileTensionEnd;
-    public string PracticesTitle => AppStrings.ChatProfilePracticesTitle;
+    public string Tagline => AppStrings.ChatProfileTaglineShort;
+    public string Disclaimer => AppStrings.ChatProfileDisclaimerShort;
+    public string OfflineText => AppStrings.ChatProfileOfflineShort;
+    public string OnPhoneText => AppStrings.ChatProfileOnPhone;
+    public string CrisisText => AppStrings.CrisisHubTitle;
     public string NewChatText => AppStrings.ChatNew;
-    public string ForgetText => AppStrings.ChatProfileForget;
-    public string DeleteAllText => AppStrings.ChatProfileDeleteAll;
+    public string SettingsText => AppStrings.ChatProfileSettings;
 
     /// <summary>Loads the profile. Safe to call on every appearing.</summary>
     public async Task RefreshAsync()
     {
-        CompanionProfile fresh = await _chat.GetProfileAsync();
-        _profile = fresh;
-
-        Fill(TensionBars, fresh.Tension.Select(t => new TensionBarItem(t.AtUtc.ToLocalTime().ToString(DateFormat, CultureInfo.InvariantCulture), t.Before, t.After)));
-        Fill(Practices, fresh.Practices.Select((p, i) => ToPracticeRow(p, isBest: i == 0 && p.Helped > 0)));
-
+        _profile = await _chat.GetProfileAsync();
         NotifyAll();
         IsLoading = false;
     }
 
     protected override void RefreshLocalizedProperties() => NotifyAll();
 
-    private PracticeRowItem ToPracticeRow(PracticeStat stat, bool isBest)
+    /// <summary>The rare actions in one sheet; deleting chats is offered only when there are some.</summary>
+    private async Task OpenSettingsAsync()
     {
-        TechniqueId technique = stat.Technique;
-        double fraction = stat.Tried == 0 ? 0 : Math.Clamp((double)stat.Helped / stat.Tried, 0, 1);
-        return new PracticeRowItem(
-            CompanionContent.TechniqueTitle(technique, _language.IsEnglish),
-            AppStrings.ChatProfilePracticeDetail(stat.Helped, Math.Max(stat.Tried, stat.Helped)),
-            fraction,
-            isBest,
-            AppStrings.ChatProfilePracticeStart,
-            new AsyncCommand(() => NavigationService!.GoToTechniqueAsync(technique)));
+        List<string> options = [AppStrings.ChatProfileNameTitle, AppStrings.ChatProfileForget];
+        if (HasHistory)
+        {
+            options.Add(AppStrings.ChatProfileDeleteAll);
+        }
+
+        string? picked = await _dialogs.PickOptionAsync(AppStrings.ChatProfileSettings, options, AppStrings.ChatCancel);
+        if (picked == AppStrings.ChatProfileNameTitle)
+        {
+            await EditNameAsync();
+        }
+        else if (picked == AppStrings.ChatProfileForget)
+        {
+            await ForgetAsync();
+        }
+        else if (picked == AppStrings.ChatProfileDeleteAll)
+        {
+            await DeleteAllAsync();
+        }
     }
 
     private async Task EditNameAsync()
@@ -194,12 +151,6 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     }
 
     private void NotifyAll() => Notify(
-        nameof(HasName), nameof(NameText), nameof(Tagline), nameof(Disclaimer),
-        nameof(HasTension), nameof(TensionCaption), nameof(HasPractices), nameof(HasHistory),
-        nameof(Title), nameof(NameTitle), nameof(NameEditText),
-        nameof(TensionTitle), nameof(TensionStartText), nameof(TensionEndText), nameof(PracticesTitle),
-        nameof(NewChatText), nameof(ForgetText), nameof(DeleteAllText), nameof(LoadingText),
-        nameof(OfflineText), nameof(OnPhoneText), nameof(CrisisText));
-
-    private static void Fill<T>(RangeObservableCollection<T> target, IEnumerable<T> items) => target.ReplaceAll(items);
+        nameof(HasHistory), nameof(Title), nameof(Tagline), nameof(Disclaimer), nameof(OfflineText), nameof(OnPhoneText),
+        nameof(CrisisText), nameof(NewChatText), nameof(SettingsText));
 }

@@ -30,8 +30,7 @@ public sealed class ChatViewModelFactory(
         new(chat, Resolve(navigation), language, dialogs, time);
 
     public CompanionProfileViewModel CreateProfile(INavigation navigation) =>
-        new(chat, Resolve(navigation), language, dialogs);
-
+        new(chat, Resolve(navigation), dialogs);
 
     private INavigationService Resolve(INavigation navigation) =>
         navigationServiceFactory(NavigationContext.From(navigation));

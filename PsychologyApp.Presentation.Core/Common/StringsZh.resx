@@ -129,35 +129,11 @@
   <data name="ChatProfileNameTitle" xml:space="preserve">
     <value>怎么称呼你</value>
   </data>
-  <data name="ChatProfileNameEmpty" xml:space="preserve">
-    <value>还没有名字</value>
-  </data>
-  <data name="ChatProfileNameEdit" xml:space="preserve">
-    <value>修改</value>
-  </data>
   <data name="ChatProfileNamePromptTitle" xml:space="preserve">
     <value>你的名字</value>
   </data>
   <data name="ChatProfileNamePromptMessage" xml:space="preserve">
     <value>我该怎么称呼你？留空即可删除名字。</value>
-  </data>
-  <data name="ChatProfileTensionTitle" xml:space="preserve">
-    <value>紧张程度的变化</value>
-  </data>
-  <data name="ChatProfileTensionStart" xml:space="preserve">
-    <value>开始时</value>
-  </data>
-  <data name="ChatProfileTensionEnd" xml:space="preserve">
-    <value>结束时</value>
-  </data>
-  <data name="ChatProfilePracticesTitle" xml:space="preserve">
-    <value>对你有帮助的</value>
-  </data>
-  <data name="ChatProfilePracticeBest" xml:space="preserve">
-    <value>最佳</value>
-  </data>
-  <data name="ChatProfilePracticeStart" xml:space="preserve">
-    <value>开始</value>
   </data>
   <data name="ChatProfileForget" xml:space="preserve">
     <value>忘记我的名字和偏好</value>
@@ -179,9 +155,6 @@
   </data>
   <data name="ChatProfileConfirm" xml:space="preserve">
     <value>是</value>
-  </data>
-  <data name="ChatProfileLoadingText" xml:space="preserve">
-    <value>正在统计…</value>
   </data>
   <data name="OptionsTitle" xml:space="preserve">
     <value>选项</value>
@@ -1985,9 +1958,6 @@
   </data>
   <data name="Ok" xml:space="preserve">
     <value>确定</value>
-  </data>
-  <data name="ChatProfilePracticeDetail" xml:space="preserve">
-    <value>{1} 次中有 {0} 次有帮助</value>
   </data>
   <data name="PracticeReminderTitleNamed" xml:space="preserve">
     <value>该做{0}了</value>
@@ -4167,5 +4137,14 @@
   </data>
   <data name="ChatProfileOnPhone" xml:space="preserve">
     <value>只存在手机上</value>
+  </data>
+  <data name="ChatProfileTaglineShort" xml:space="preserve">
+    <value>倾听，并帮你理清感受</value>
+  </data>
+  <data name="ChatProfileDisclaimerShort" xml:space="preserve">
+    <value>不是真人，也不是医生，不能代替专业人士。</value>
+  </data>
+  <data name="ChatProfileSettings" xml:space="preserve">
+    <value>聊天设置</value>
   </data>
 </root>

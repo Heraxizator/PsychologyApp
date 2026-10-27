@@ -129,35 +129,11 @@
   <data name="ChatProfileNameTitle" xml:space="preserve">
     <value>Как к вам обращаться</value>
   </data>
-  <data name="ChatProfileNameEmpty" xml:space="preserve">
-    <value>Имя не указано</value>
-  </data>
-  <data name="ChatProfileNameEdit" xml:space="preserve">
-    <value>Изменить</value>
-  </data>
   <data name="ChatProfileNamePromptTitle" xml:space="preserve">
     <value>Ваше имя</value>
   </data>
   <data name="ChatProfileNamePromptMessage" xml:space="preserve">
     <value>Как к вам обращаться? Оставьте пустым, чтобы убрать имя.</value>
-  </data>
-  <data name="ChatProfileTensionTitle" xml:space="preserve">
-    <value>Динамика напряжения</value>
-  </data>
-  <data name="ChatProfileTensionStart" xml:space="preserve">
-    <value>В начале</value>
-  </data>
-  <data name="ChatProfileTensionEnd" xml:space="preserve">
-    <value>В конце</value>
-  </data>
-  <data name="ChatProfilePracticesTitle" xml:space="preserve">
-    <value>Что вам помогает</value>
-  </data>
-  <data name="ChatProfilePracticeBest" xml:space="preserve">
-    <value>Лучшее</value>
-  </data>
-  <data name="ChatProfilePracticeStart" xml:space="preserve">
-    <value>Начать</value>
   </data>
   <data name="ChatProfileForget" xml:space="preserve">
     <value>Забыть моё имя и предпочтения</value>
@@ -179,9 +155,6 @@
   </data>
   <data name="ChatProfileConfirm" xml:space="preserve">
     <value>Да</value>
-  </data>
-  <data name="ChatProfileLoadingText" xml:space="preserve">
-    <value>Считаем вашу статистику…</value>
   </data>
   <data name="OptionsTitle" xml:space="preserve">
     <value>Параметры</value>
@@ -1991,9 +1964,6 @@
   </data>
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
-  </data>
-  <data name="ChatProfilePracticeDetail" xml:space="preserve">
-    <value>Помогла {0} из {1}</value>
   </data>
   <data name="PracticeReminderTitleNamed" xml:space="preserve">
     <value>Пора: {0}</value>
@@ -4173,5 +4143,14 @@
   </data>
   <data name="ChatProfileOnPhone" xml:space="preserve">
     <value>Только на телефоне</value>
+  </data>
+  <data name="ChatProfileTaglineShort" xml:space="preserve">
+    <value>Слушает и помогает разобраться в чувствах</value>
+  </data>
+  <data name="ChatProfileDisclaimerShort" xml:space="preserve">
+    <value>Не человек и не врач. Не заменяет специалиста.</value>
+  </data>
+  <data name="ChatProfileSettings" xml:space="preserve">
+    <value>Настройки чата</value>
   </data>
 </root>

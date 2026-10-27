@@ -129,35 +129,11 @@
   <data name="ChatProfileNameTitle" xml:space="preserve">
     <value>Como chamar você</value>
   </data>
-  <data name="ChatProfileNameEmpty" xml:space="preserve">
-    <value>Sem nome ainda</value>
-  </data>
-  <data name="ChatProfileNameEdit" xml:space="preserve">
-    <value>Alterar</value>
-  </data>
   <data name="ChatProfileNamePromptTitle" xml:space="preserve">
     <value>Seu nome</value>
   </data>
   <data name="ChatProfileNamePromptMessage" xml:space="preserve">
     <value>Como devo chamar você? Deixe vazio para remover o nome.</value>
-  </data>
-  <data name="ChatProfileTensionTitle" xml:space="preserve">
-    <value>A tensão ao longo do tempo</value>
-  </data>
-  <data name="ChatProfileTensionStart" xml:space="preserve">
-    <value>No início</value>
-  </data>
-  <data name="ChatProfileTensionEnd" xml:space="preserve">
-    <value>No fim</value>
-  </data>
-  <data name="ChatProfilePracticesTitle" xml:space="preserve">
-    <value>O que ajuda você</value>
-  </data>
-  <data name="ChatProfilePracticeBest" xml:space="preserve">
-    <value>Melhor</value>
-  </data>
-  <data name="ChatProfilePracticeStart" xml:space="preserve">
-    <value>Começar</value>
   </data>
   <data name="ChatProfileForget" xml:space="preserve">
     <value>Esquecer meu nome e minhas preferências</value>
@@ -179,9 +155,6 @@
   </data>
   <data name="ChatProfileConfirm" xml:space="preserve">
     <value>Sim</value>
-  </data>
-  <data name="ChatProfileLoadingText" xml:space="preserve">
-    <value>Calculando suas estatísticas…</value>
   </data>
   <data name="OptionsTitle" xml:space="preserve">
     <value>Opções</value>
@@ -1985,9 +1958,6 @@
   </data>
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
-  </data>
-  <data name="ChatProfilePracticeDetail" xml:space="preserve">
-    <value>Ajudou {0} de {1} vezes</value>
   </data>
   <data name="PracticeReminderTitleNamed" xml:space="preserve">
     <value>Hora de: {0}</value>
@@ -4167,5 +4137,14 @@
   </data>
   <data name="ChatProfileOnPhone" xml:space="preserve">
     <value>Só no celular</value>
+  </data>
+  <data name="ChatProfileTaglineShort" xml:space="preserve">
+    <value>Escuta e ajuda a entender o que você sente</value>
+  </data>
+  <data name="ChatProfileDisclaimerShort" xml:space="preserve">
+    <value>Não é uma pessoa nem um médico. Não substitui um profissional.</value>
+  </data>
+  <data name="ChatProfileSettings" xml:space="preserve">
+    <value>Ajustes do chat</value>
   </data>
 </root>

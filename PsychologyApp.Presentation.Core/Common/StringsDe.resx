@@ -129,35 +129,11 @@
   <data name="ChatProfileNameTitle" xml:space="preserve">
     <value>Wie du genannt werden möchtest</value>
   </data>
-  <data name="ChatProfileNameEmpty" xml:space="preserve">
-    <value>Noch kein Name</value>
-  </data>
-  <data name="ChatProfileNameEdit" xml:space="preserve">
-    <value>Ändern</value>
-  </data>
   <data name="ChatProfileNamePromptTitle" xml:space="preserve">
     <value>Dein Name</value>
   </data>
   <data name="ChatProfileNamePromptMessage" xml:space="preserve">
     <value>Wie soll ich dich nennen? Leer lassen, um den Namen zu entfernen.</value>
-  </data>
-  <data name="ChatProfileTensionTitle" xml:space="preserve">
-    <value>Anspannung im Verlauf</value>
-  </data>
-  <data name="ChatProfileTensionStart" xml:space="preserve">
-    <value>Am Anfang</value>
-  </data>
-  <data name="ChatProfileTensionEnd" xml:space="preserve">
-    <value>Am Ende</value>
-  </data>
-  <data name="ChatProfilePracticesTitle" xml:space="preserve">
-    <value>Was dir hilft</value>
-  </data>
-  <data name="ChatProfilePracticeBest" xml:space="preserve">
-    <value>Am besten</value>
-  </data>
-  <data name="ChatProfilePracticeStart" xml:space="preserve">
-    <value>Starten</value>
   </data>
   <data name="ChatProfileForget" xml:space="preserve">
     <value>Meinen Namen und meine Vorlieben vergessen</value>
@@ -179,9 +155,6 @@
   </data>
   <data name="ChatProfileConfirm" xml:space="preserve">
     <value>Ja</value>
-  </data>
-  <data name="ChatProfileLoadingText" xml:space="preserve">
-    <value>Deine Statistik wird berechnet…</value>
   </data>
   <data name="OptionsTitle" xml:space="preserve">
     <value>Optionen</value>
@@ -1985,9 +1958,6 @@
   </data>
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
-  </data>
-  <data name="ChatProfilePracticeDetail" xml:space="preserve">
-    <value>Hat {0} von {1} Mal geholfen</value>
   </data>
   <data name="PracticeReminderTitleNamed" xml:space="preserve">
     <value>Zeit für: {0}</value>
@@ -4167,5 +4137,14 @@
   </data>
   <data name="ChatProfileOnPhone" xml:space="preserve">
     <value>Bleibt auf dem Handy</value>
+  </data>
+  <data name="ChatProfileTaglineShort" xml:space="preserve">
+    <value>Hört zu und hilft, Gefühle zu sortieren</value>
+  </data>
+  <data name="ChatProfileDisclaimerShort" xml:space="preserve">
+    <value>Kein Mensch und kein Arzt. Ersetzt keine Fachperson.</value>
+  </data>
+  <data name="ChatProfileSettings" xml:space="preserve">
+    <value>Chat-Einstellungen</value>
   </data>
 </root>

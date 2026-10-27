@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Pages.Chat.Companion.CompanionProfilePage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
-             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.Chat.Companion"             xmlns:avatar="clr-namespace:PsychologyApp.Presentation.Widgets.CompanionAvatar"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.Chat.Companion"
+             xmlns:avatar="clr-namespace:PsychologyApp.Presentation.Widgets.CompanionAvatar"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:DataType="vm:CompanionProfileViewModel"
              Shell.NavBarIsVisible="False"
@@ -13,6 +14,7 @@
     <ContentPage.Behaviors>
         <behaviors:PageAnalyticsBehavior />
     </ContentPage.Behaviors>
+
     <Grid RowDefinitions="Auto,*" Margin="{StaticResource LayoutPageMarginThickness}">
 
         <!-- Kept outside the loading gate below: going back must always work, even while the page is still loading. -->
@@ -28,250 +30,95 @@
             Margin="20,20,20,0"
             IsActive="{Binding IsLoading}" />
 
-    <!-- Quiet on purpose: who this is, how it addresses you, what helped, what it is not. The counters, the streak, the trust meter
-         and the statistics of topics that stood here made a page about a helper read like a game score. -->
-    <ScrollView Grid.Row="1" IsVisible="{Binding HasLoaded}" VerticalScrollBarVisibility="Never">
-        <VerticalStackLayout
-            Spacing="{StaticResource LayoutSpacing}">
-            <VerticalStackLayout.Behaviors>
-                <behaviors:StaggerChildrenBehavior />
-            </VerticalStackLayout.Behaviors>
-
-            <!-- Face, name and one line about it, on the soft accent tint: warm without the loud gradient that stood here.
-                 That it works offline is said in the card about it below. -->
-            <Border
-                Style="{StaticResource BrandCardStyle}"
-                Margin="0"
-                BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
-                <VerticalStackLayout Spacing="10">
-                    <!-- The top margin leaves room for the breathing ring, which reaches past the face and was clipped by the card. -->
+        <!-- One card on one screen: who it is, what it is not, the way to help, a new chat. The rare actions sit behind
+             "Chat settings". The counters, charts and paragraphs that stood here made a page about a helper read like a report. -->
+        <ScrollView Grid.Row="1" IsVisible="{Binding HasLoaded}" VerticalScrollBarVisibility="Never">
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0,16,0,16" Padding="24,28" VerticalOptions="Center">
+                <VerticalStackLayout Spacing="14">
+                    <!-- The top margin leaves room for the breathing ring, which reaches past the face. -->
                     <avatar:CompanionAvatarView
-                        Margin="0,14,0,0"
-                        WidthRequest="88"
-                        HeightRequest="88"
-                        IconSize="40"
+                        Margin="0,22,0,0"
+                        WidthRequest="96"
+                        HeightRequest="96"
+                        IconSize="44"
                         HorizontalOptions="Center"
                         IsAlive="True"
                         SemanticProperties.Description="{Binding Title}" />
-                    <Label Text="{Binding Title}" Style="{StaticResource SectionTitleStyle}" HorizontalTextAlignment="Center" />
-                    <Label
-                        Text="{Binding Tagline}"
-                        Style="{StaticResource BodyStyle}"
-                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                        HorizontalTextAlignment="Center" />
-                </VerticalStackLayout>
-            </Border>
 
-            <!-- What it is, in three tiles instead of paragraphs; the last one leads to urgent help. -->
-            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="{StaticResource CompactSpacing}">
-                <Border Grid.Column="0" Style="{StaticResource BrandCardStyle}" Margin="0" Padding="8,16">
-                    <VerticalStackLayout Spacing="8">
-                        <Border Style="{StaticResource IconTileStyle}" HorizontalOptions="Center">
-                            <ui:MaterialIconView IconName="CloudOff" IconSize="22" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Border>
-                        <Label Text="{Binding OfflineText}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding Title}" Style="{StaticResource SectionTitleStyle}" HorizontalTextAlignment="Center" />
+                        <Label
+                            Text="{Binding Tagline}"
+                            Style="{StaticResource BodyStyle}"
+                            TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                            HorizontalTextAlignment="Center" />
                     </VerticalStackLayout>
-                </Border>
-                <Border Grid.Column="1" Style="{StaticResource BrandCardStyle}" Margin="0" Padding="8,16">
-                    <VerticalStackLayout Spacing="8">
-                        <Border Style="{StaticResource IconTileStyle}" HorizontalOptions="Center">
-                            <ui:MaterialIconView IconName="Lock" IconSize="22" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Border>
-                        <Label Text="{Binding OnPhoneText}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
-                    </VerticalStackLayout>
-                </Border>
-                <Border Grid.Column="2" Style="{StaticResource BrandCardStyle}" Margin="0" Padding="8,16" SemanticProperties.Description="{Binding CrisisText}">
-                    <Border.Behaviors>
-                        <behaviors:PressFeedbackBehavior />
-                    </Border.Behaviors>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding CrisisCommand}" />
-                    </Border.GestureRecognizers>
-                    <VerticalStackLayout Spacing="8">
-                        <!-- The warm colours of urgent help in the side menu (AppMenuLook, Help), so it reads as the same door. -->
-                        <Border
-                            Style="{StaticResource IconTileStyle}"
-                            HorizontalOptions="Center"
-                            BackgroundColor="{AppThemeBinding Light=#FBE0DC, Dark=#4A2420}">
-                            <ui:MaterialIconView
-                                IconName="HealthAndSafety"
-                                IconSize="22"
-                                IconColor="{AppThemeBinding Light=#B3261E, Dark=#F4B4AB}"
+
+                    <!-- Three facts as tiles; the last one opens urgent help. -->
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8" Margin="0,6,0,0">
+                        <VerticalStackLayout Grid.Column="0" Spacing="6">
+                            <Border Style="{StaticResource LargeIconTileStyle}" HorizontalOptions="Center">
+                                <ui:MaterialIconView IconName="CloudOff" IconSize="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Text="{Binding OfflineText}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="6">
+                            <Border Style="{StaticResource LargeIconTileStyle}" HorizontalOptions="Center">
+                                <ui:MaterialIconView IconName="Lock" IconSize="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Text="{Binding OnPhoneText}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="2" Spacing="6" SemanticProperties.Description="{Binding CrisisText}">
+                            <VerticalStackLayout.Behaviors>
+                                <behaviors:PressFeedbackBehavior />
+                            </VerticalStackLayout.Behaviors>
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CrisisCommand}" />
+                            </VerticalStackLayout.GestureRecognizers>
+                            <!-- The warm colours of urgent help in the side menu (AppMenuLook, Help), so it reads as the same door. -->
+                            <Border
+                                Style="{StaticResource LargeIconTileStyle}"
                                 HorizontalOptions="Center"
-                                VerticalOptions="Center" />
-                        </Border>
-                        <Label Text="{Binding CrisisText}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
-                    </VerticalStackLayout>
-                </Border>
-            </Grid>
+                                BackgroundColor="{AppThemeBinding Light=#FBE0DC, Dark=#4A2420}">
+                                <ui:MaterialIconView
+                                    IconName="HealthAndSafety"
+                                    IconSize="24"
+                                    IconColor="{AppThemeBinding Light=#B3261E, Dark=#F4B4AB}"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center" />
+                            </Border>
+                            <Label Text="{Binding CrisisText}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Grid>
 
-            <!-- How to address the person -->
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                    <VerticalStackLayout Grid.Column="0" Spacing="3" VerticalOptions="Center">
-                        <Label Text="{Binding NameTitle}" Style="{StaticResource CaptionStyle}" />
-                        <Label Text="{Binding NameText}" Style="{StaticResource ListRowTitleStyle}" />
-                    </VerticalStackLayout>
-                    <Border
-                        Grid.Column="1"
-                        Padding="14,9"
-                        StrokeThickness="1.2"
-                        Stroke="{DynamicResource Primary}"
-                        StrokeShape="RoundRectangle 16"
-                        BackgroundColor="Transparent"
-                        VerticalOptions="Center"
-                        SemanticProperties.Description="{Binding NameEditText}">
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding EditNameCommand}" />
-                        </Border.GestureRecognizers>
-                        <HorizontalStackLayout Spacing="6">
-                            <ui:MaterialIconView IconName="Edit" IconSize="16" IconColor="{DynamicResource Primary}" VerticalOptions="Center" />
-                            <Label Text="{Binding NameEditText}" FontFamily="{StaticResource MediumFontFamily}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
-                        </HorizontalStackLayout>
-                    </Border>
-                </Grid>
-            </Border>
+                    <!-- What it is not: the safety line stays on the card, in one sentence. -->
+                    <Label Text="{Binding Disclaimer}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
 
-            <!-- Tension over time, and what helps: only once there is something to show, not two cards of instructions. -->
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0" IsVisible="{Binding HasTension}">
-                <VerticalStackLayout Spacing="12">
-                    <Label Text="{Binding TensionTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <ui:ButtonView BodyText="{Binding NewChatText}" TapCommand="{Binding NewChatCommand}" Margin="0,6,0,0" />
 
-                    <VerticalStackLayout Spacing="8" IsVisible="{Binding HasTension}">
-                        <HorizontalStackLayout
-                            HorizontalOptions="Center"
-                            Spacing="14"
-                            BindableLayout.ItemsSource="{Binding TensionBars}">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="vm:TensionBarItem">
-                                    <VerticalStackLayout Spacing="4" WidthRequest="38">
-                                        <Grid HeightRequest="118" ColumnDefinitions="*,*" ColumnSpacing="3">
-                                            <VerticalStackLayout Grid.Column="0" VerticalOptions="End" Spacing="2">
-                                                <Label Text="{Binding BeforeText}" FontSize="12" HorizontalTextAlignment="Center" Style="{StaticResource CaptionStyle}" />
-                                                <Border
-                                                    StyleId="before"
-                                                    HeightRequest="{Binding BeforeHeight}"
-                                                    AnchorY="1"
-                                                    StrokeThickness="0"
-                                                    StrokeShape="RoundRectangle 5,5,2,2"
-                                                    BackgroundColor="{AppThemeBinding Light=#B7D9FF, Dark=#3A5F8F}"
-                                                    BindingContextChanged="OnBarContextChanged" />
-                                            </VerticalStackLayout>
-                                            <VerticalStackLayout Grid.Column="1" VerticalOptions="End" Spacing="2">
-                                                <Label Text="{Binding AfterText}" FontSize="12" HorizontalTextAlignment="Center" Style="{StaticResource CaptionStyle}" />
-                                                <Border
-                                                    StyleId="after"
-                                                    HeightRequest="{Binding AfterHeight}"
-                                                    AnchorY="1"
-                                                    StrokeThickness="0"
-                                                    StrokeShape="RoundRectangle 5,5,2,2"
-                                                    BackgroundColor="{DynamicResource Primary}"
-                                                    BindingContextChanged="OnBarContextChanged">
-                                                    <Border.Triggers>
-                                                        <DataTrigger TargetType="Border" Binding="{Binding Improved}" Value="True">
-                                                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Success}, Dark={StaticResource SuccessDark}}" />
-                                                        </DataTrigger>
-                                                    </Border.Triggers>
-                                                </Border>
-                                            </VerticalStackLayout>
-                                        </Grid>
-                                        <Label Text="{Binding Label}" FontSize="12" HorizontalTextAlignment="Center" Style="{StaticResource CaptionStyle}" />
-                                    </VerticalStackLayout>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </HorizontalStackLayout>
-
-                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="18">
-                            <HorizontalStackLayout Spacing="6">
-                                <Border WidthRequest="12" HeightRequest="12" StrokeThickness="0" StrokeShape="RoundRectangle 3" BackgroundColor="{AppThemeBinding Light=#B7D9FF, Dark=#3A5F8F}" VerticalOptions="Center" />
-                                <Label Text="{Binding TensionStartText}" Style="{StaticResource CaptionStyle}" />
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout Spacing="6">
-                                <Border WidthRequest="12" HeightRequest="12" StrokeThickness="0" StrokeShape="RoundRectangle 3" BackgroundColor="{AppThemeBinding Light={StaticResource Success}, Dark={StaticResource SuccessDark}}" VerticalOptions="Center" />
-                                <Label Text="{Binding TensionEndText}" Style="{StaticResource CaptionStyle}" />
-                            </HorizontalStackLayout>
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
-
-                    <Label Text="{Binding TensionCaption}" Style="{StaticResource BodyStyle}" />
-                </VerticalStackLayout>
-            </Border>
-
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0" IsVisible="{Binding HasPractices}">
-                <VerticalStackLayout Spacing="12">
-                    <Label Text="{Binding PracticesTitle}" Style="{StaticResource SectionTitleStyle}" />
-                    <VerticalStackLayout Spacing="14" BindableLayout.ItemsSource="{Binding Practices}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="vm:PracticeRowItem">
-                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" RowDefinitions="Auto,Auto,Auto" RowSpacing="4">
-                                    <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Spacing="8">
-                                        <Label Text="{Binding Title}" Style="{StaticResource ListRowTitleStyle}" VerticalOptions="Center" />
-                                        <Border
-                                            IsVisible="{Binding IsBest}"
-                                            Padding="8,2"
-                                            StrokeThickness="0"
-                                            StrokeShape="RoundRectangle 9"
-                                            BackgroundColor="{AppThemeBinding Light={StaticResource Success}, Dark={StaticResource SuccessDark}}"
-                                            VerticalOptions="Center">
-                                            <Label Text="{Binding BestText}" FontSize="12" TextColor="White" />
-                                        </Border>
-                                    </HorizontalStackLayout>
-                                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding Detail}" Style="{StaticResource CaptionStyle}" />
-                                    <ProgressBar Grid.Row="2" Grid.Column="0" Progress="{Binding HelpedFraction}" ProgressColor="{AppThemeBinding Light={StaticResource Success}, Dark={StaticResource SuccessDark}}" />
-                                    <Border
-                                        Grid.Row="0"
-                                        Grid.RowSpan="3"
-                                        Grid.Column="1"
-                                        Padding="14,8"
-                                        StrokeThickness="1.2"
-                                        Stroke="{DynamicResource Primary}"
-                                        StrokeShape="RoundRectangle 16"
-                                        BackgroundColor="Transparent"
-                                        VerticalOptions="Center">
-                                        <Border.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding StartCommand}" />
-                                        </Border.GestureRecognizers>
-                                        <Label Text="{Binding StartText}" FontFamily="{StaticResource MediumFontFamily}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
-                                    </Border>
-                                </Grid>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </VerticalStackLayout>
-                </VerticalStackLayout>
-            </Border>
-
-            <!-- What it is not, in one line: the safety text stays, the paragraphs around it are gone. -->
-            <Label Text="{Binding Disclaimer}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" Margin="12,0" />
-
-            <ui:ButtonView BodyText="{Binding NewChatText}" TapCommand="{Binding NewChatCommand}" />
-
-            <!-- Rare and irreversible: quiet rows behind a confirmation, not a stack of big buttons. -->
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="20,6">
-                <VerticalStackLayout>
-                    <Grid ColumnDefinitions="*,Auto" MinimumHeightRequest="48" SemanticProperties.Description="{Binding ForgetText}">
+                    <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="6" HorizontalOptions="Center" MinimumHeightRequest="44"
+                          SemanticProperties.Description="{Binding SettingsText}">
                         <Grid.Behaviors>
                             <behaviors:PressFeedbackBehavior />
                         </Grid.Behaviors>
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding ForgetCommand}" />
+                            <TapGestureRecognizer Command="{Binding SettingsCommand}" />
                         </Grid.GestureRecognizers>
-                        <Label Text="{Binding ForgetText}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
-                        <ui:MaterialIconView Grid.Column="1" IconName="ChevronRight" IconSize="22" VerticalOptions="Center" />
-                    </Grid>
-                    <Grid IsVisible="{Binding HasHistory}" ColumnDefinitions="*,Auto" MinimumHeightRequest="48" SemanticProperties.Description="{Binding DeleteAllText}">
-                        <Grid.Behaviors>
-                            <behaviors:PressFeedbackBehavior />
-                        </Grid.Behaviors>
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding DeleteAllCommand}" />
-                        </Grid.GestureRecognizers>
-                        <Label Text="{Binding DeleteAllText}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
-                        <ui:MaterialIconView Grid.Column="1" IconName="ChevronRight" IconSize="22" VerticalOptions="Center" />
+                        <ui:MaterialIconView
+                            IconName="Settings"
+                            IconSize="18"
+                            VerticalOptions="Center"
+                            IconColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                        <Label
+                            Grid.Column="1"
+                            Text="{Binding SettingsText}"
+                            Style="{StaticResource BodyStyle}"
+                            FontFamily="{StaticResource MediumFontFamily}"
+                            VerticalOptions="Center"
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
                     </Grid>
                 </VerticalStackLayout>
             </Border>
-            <BoxView HeightRequest="16" Color="Transparent" />
-        </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
     </Grid>
 </ContentPage>
