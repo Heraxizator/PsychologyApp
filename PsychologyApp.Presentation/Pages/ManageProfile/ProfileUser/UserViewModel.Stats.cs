@@ -16,10 +16,10 @@ public partial class UserViewModel
         set => SetProperty(ref _tests_completed_count, value);
     }
 
-    private string _streak_count = "0";
-    public string StreakCount
+    private string _active_days_count = "0";
+    public string ActiveDaysCount
     {
-        get => _streak_count;
-        set => SetProperty(ref _streak_count, value);
+        get => _active_days_count;
+        set => SetProperty(ref _active_days_count, value);
     }
 }

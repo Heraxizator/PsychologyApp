@@ -291,7 +291,8 @@ public sealed class ClinicalCareServiceTests
         public Task<long> CountTechniqueCompletionsAsync(CancellationToken cancellationToken = default) => Task.FromResult(0L);
         public Task<IReadOnlyList<CompletionDTO>> GetRecentTechniqueCompletionsAsync(int limit = 20, CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyList<CompletionDTO>>([]);
         public Task<int> GetStreakDaysAsync(CancellationToken cancellationToken = default) => Task.FromResult(0);
-        public Task<int> GetAtRiskStreakDaysAsync(CancellationToken cancellationToken = default) => Task.FromResult(0);
+        public Task<DateOnly?> GetLastActiveDayAsync(CancellationToken cancellationToken = default) => Task.FromResult<DateOnly?>(null);
+        public Task<int> GetActiveDaysThisWeekAsync(CancellationToken cancellationToken = default) => Task.FromResult(0);
         public Task<DateTime?> GetLastPracticeDateAsync(string itemKey, CancellationToken cancellationToken = default) => Task.FromResult<DateTime?>(null);
         public Task<IReadOnlyDictionary<string, DateTime>> GetLastPracticeDatesAsync(IReadOnlyList<string> itemKeys, CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyDictionary<string, DateTime>>(new Dictionary<string, DateTime>());
         public Task SaveSessionDraftAsync(string techniqueKey, string payloadJson, CancellationToken cancellationToken = default) => Task.CompletedTask;

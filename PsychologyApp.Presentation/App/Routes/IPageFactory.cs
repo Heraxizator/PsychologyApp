@@ -74,7 +74,7 @@ public interface IPageFactory
     TechniqueSessionPage CreateTechniqueSessionPage(TechniqueId techniqueId, INavigation hostNavigation);
     /// <summary>Opens the dialogue page for techniques that have a conversation scenario, otherwise the classic form session.</summary>
     ContentPage CreateTechniquePage(TechniqueId techniqueId, INavigation hostNavigation);
-    PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null, long? sessionResultId = null);
+    PracticeCompletionPage CreatePracticeCompletionPage(int activeDays, string? completedItemKey = null, long? sessionResultId = null);
     /// <param name="hostNavigation">The stack to push onto, or null for the Chat tab, which uses its own.</param>
     ChatListPage CreateChatListPage(INavigation? hostNavigation);
     ChatPage CreateChatPage(long? sessionId, INavigation hostNavigation, string? topic = null, string? opener = null);

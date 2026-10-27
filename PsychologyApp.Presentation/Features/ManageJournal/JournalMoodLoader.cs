@@ -12,7 +12,7 @@ namespace PsychologyApp.Presentation.Features.ManageJournal;
 public sealed record JournalMoodStats(
     int CheckInCount,
     string AverageMoodDisplay,
-    string MoodStreakDisplay,
+    string CheckInDaysDisplay,
     string MoodTrendLabel,
     string BestWorstLabel,
     bool HasStats);
@@ -179,7 +179,7 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService, 
                 return day >= rangeStart && day <= today;
             })
             .ToList();
-        JournalMoodStats stats = BuildStats(statsSource, today);
+        JournalMoodStats stats = BuildStats(statsSource, rangeStart, today);
         IReadOnlyList<JournalActivityInsight> activityInsights = JournalNoteFactors.Analyze(
             statsSource.Select(entry => (entry.Note, entry.MoodLevel)));
 
@@ -435,7 +435,7 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService, 
                 group.ToList()))
             .ToList();
 
-    private static JournalMoodStats BuildStats(IReadOnlyList<MoodEntryDTO> moods, DateOnly today)
+    private static JournalMoodStats BuildStats(IReadOnlyList<MoodEntryDTO> moods, DateOnly rangeStart, DateOnly today)
     {
         if (moods.Count == 0)
         {
@@ -452,7 +452,8 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService, 
         HashSet<DateOnly> daysWithMood = moods
             .Select(entry => DateOnly.FromDateTime(entry.RecordedAt.ToLocalTime()))
             .ToHashSet();
-        int streak = MoodStreakCalculator.Calculate(daysWithMood, today);
+        // Days with a check-in out of the days in the period, not days in a row: a missed day does not undo the others.
+        int periodDays = today.DayNumber - rangeStart.DayNumber + 1;
         JournalMoodTrend trend = JournalMoodTrendResolver.Resolve(
             moods.OrderBy(entry => entry.RecordedAt).Select(entry => entry.MoodLevel).ToList());
         int best = moods.Max(entry => entry.MoodLevel);
@@ -463,7 +464,7 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService, 
         return new JournalMoodStats(
             moods.Count,
             AppStrings.FormatAverageMood(average),
-            streak > 0 ? streak.ToString() : AppStrings.MetricEmptyValue,
+            AppStrings.JournalCheckInDays(daysWithMood.Count, periodDays),
             FormatMoodTrend(trend),
             bestWorst,
             true);

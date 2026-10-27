@@ -27,7 +27,6 @@ public static partial class AppStrings
     public static string OptionsFeedbackSubtitle => R(nameof(OptionsFeedbackSubtitle));
     public static string OptionsDonateTitle => R(nameof(OptionsDonateTitle));
     public static string OptionsDonateSubtitle => R(nameof(OptionsDonateSubtitle));
-    public static string ProfileOptionsCardSubtitle => R(nameof(ProfileOptionsCardSubtitle));
     public static string OptionsAliceTitle => R(nameof(OptionsAliceTitle));
     public static string OptionsAliceSubtitle => R(nameof(OptionsAliceSubtitle));
     public static string AliceDisclaimerHeader => R(nameof(AliceDisclaimerHeader));
@@ -229,14 +228,13 @@ public static partial class AppStrings
 
 
     public static string ProfileTestsCompleted => R(nameof(ProfileTestsCompleted));
-    public static string ProfileStreakDays => R(nameof(ProfileStreakDays));
-    public static string ProfileStreakHint => R(nameof(ProfileStreakHint));
-    public static string ProfileStreakCount(int days) => F(nameof(ProfileStreakCount), days);
+    public static string ProfileActiveDaysLabel => R(nameof(ProfileActiveDaysLabel));
+    public static string ProfileActiveDaysHint => R(nameof(ProfileActiveDaysHint));
+    public static string ProfileActiveDaysValue(int days) => F(nameof(ProfileActiveDaysValue), days);
 
     public static string TodayForYou => R(nameof(TodayForYou));
     public static string TodayRecommended => R(nameof(TodayRecommended));
     public static string TodayStartPractice => R(nameof(TodayStartPractice));
-    public static string StreakAtRiskBanner(int days) => F(nameof(StreakAtRiskBanner), days);
     public static string ComebackBanner => R(nameof(ComebackBanner));
     public static string ComebackBannerWithTechnique(string name) => F(nameof(ComebackBannerWithTechnique), name);
     public static string WeeklyInsightLine(int practiceCount, string moodTrend) =>
@@ -285,7 +283,6 @@ public static partial class AppStrings
     public static string ProfileMoodCheckInTitle => R(nameof(ProfileMoodCheckInTitle));
     public static string ProfileWeeklyInsightTitle => R(nameof(ProfileWeeklyInsightTitle));
     public static string JournalTitle => R(nameof(JournalTitle));
-    public static string OpenJournalLabel => R(nameof(OpenJournalLabel));
     public static string JournalCardSubtitle => R(nameof(JournalCardSubtitle));
     public static string JournalTodayTitle => R(nameof(JournalTodayTitle));
     public static string JournalEntriesTitle => R(nameof(JournalEntriesTitle));
@@ -319,7 +316,6 @@ public static partial class AppStrings
         int practiceDays,
         string averageOnPractice,
         string averageWithoutPractice) => F(nameof(JournalPracticeMoodCompareInsight), averageOnPractice, averageWithoutPractice, practiceDays);
-    public static string ProfileMoodCheckInBanner => R(nameof(ProfileMoodCheckInBanner));
     public static string JournalTryQuietQuote => R(nameof(JournalTryQuietQuote));
     public static string PracticeOpenJournalRow => R(nameof(PracticeOpenJournalRow));
     public static string JournalQuestionsSectionTitle => R(nameof(JournalQuestionsSectionTitle));
@@ -332,23 +328,10 @@ public static partial class AppStrings
     public static string JournalMonthTitle(DateOnly month) =>
         month.ToDateTime(TimeOnly.MinValue).ToString("MMMM yyyy", System.Globalization.CultureInfo.CurrentCulture);
     public static string JournalFactorCountPill(string label, int count) => F(nameof(JournalFactorCountPill), label, count);
-    public static string JournalOverviewInsightLine(
-        int checkIns,
-        string averageMood,
-        string trend,
-        string streak)
-    {
-        string baseLine = string.IsNullOrWhiteSpace(trend)
+    public static string JournalOverviewInsightLine(int checkIns, string averageMood, string trend) =>
+        string.IsNullOrWhiteSpace(trend)
             ? F("JournalOverviewInsightLine.1", checkIns, MoodCheckInWord(checkIns), averageMood, MoodCheckInWordEn(checkIns))
             : F("JournalOverviewInsightLine.2", checkIns, MoodCheckInWord(checkIns), averageMood, trend, MoodCheckInWordEn(checkIns));
-
-        if (string.IsNullOrWhiteSpace(streak) || streak == MetricEmptyValue)
-        {
-            return baseLine;
-        }
-
-        return F("JournalOverviewInsightLine.3", baseLine, streak);
-    }
 
     public static string JournalWeekInsightLine(int checkIns, string trend, string streak)
     {
@@ -414,10 +397,6 @@ public static partial class AppStrings
     public static string JournalBestWorstPill(int best, int worst) =>
         F("JournalBestWorstPill.1", MoodEmoji(best), best, MoodEmoji(worst), worst);
     public static string JournalTimelineEmpty => R(nameof(JournalTimelineEmpty));
-    public static string JournalTimelineStreakLine(string streak) =>
-        string.IsNullOrWhiteSpace(streak) || streak == MetricEmptyValue
-            ? string.Empty
-            : F("JournalTimelineStreakLine.1", streak);
     public static string JournalPromptBlockedShort => R(nameof(JournalPromptBlockedShort));
     public static string JournalPromptGratefulShort => R(nameof(JournalPromptGratefulShort));
     public static string JournalFactorSleep => R(nameof(JournalFactorSleep));
@@ -448,15 +427,11 @@ public static partial class AppStrings
     public static string JournalCalendarScaleYear => R(nameof(JournalCalendarScaleYear));
     public static string JournalCalendarSectionTitle => R(nameof(JournalCalendarSectionTitle));
     public static string JournalStatsSectionTitle => R(nameof(JournalStatsSectionTitle));
-    public static string JournalStreakMetricLabel => R(nameof(JournalStreakMetricLabel));
+    public static string JournalCheckInDaysLabel => R(nameof(JournalCheckInDaysLabel));
+    public static string JournalCheckInDays(int days, int periodDays) => F(nameof(JournalCheckInDays), days, periodDays);
     public static string JournalPeriodNavPrev => R(nameof(JournalPeriodNavPrev));
     public static string JournalPeriodNavNext => R(nameof(JournalPeriodNavNext));
-    public static string JournalWeekCardTitle => R(nameof(JournalWeekCardTitle));
-    public static string JournalWeekCardEmpty => R(nameof(JournalWeekCardEmpty));
-    public static string JournalWeekOpenOverview => R(nameof(JournalWeekOpenOverview));
     public static string JournalPromptTitle => R(nameof(JournalPromptTitle));
-    public static string JournalRecentTitle => R(nameof(JournalRecentTitle));
-    public static string JournalRecentAll => R(nameof(JournalRecentAll));
     public static string JournalPromptPlaceholder => R(nameof(JournalPromptPlaceholder));
 
     /// <summary>Question <paramref name="number"/> (1..<see cref="PsychologyApp.Presentation.Features.ManageJournal.JournalPrompts.Count"/>) above the journal note.</summary>
@@ -479,6 +454,11 @@ public static partial class AppStrings
     public static string JournalLowMoodBreath => R(nameof(JournalLowMoodBreath));
     public static string JournalLowMoodAnchors => R(nameof(JournalLowMoodAnchors));
     public static string JournalLowMoodHelp => R(nameof(JournalLowMoodHelp));
+    public static string JournalEmptyTitle => R(nameof(JournalEmptyTitle));
+    public static string JournalEmptyBody => R(nameof(JournalEmptyBody));
+    public static string JournalEmptyPrivacy => R(nameof(JournalEmptyPrivacy));
+    public static string JournalFactorsShow => R(nameof(JournalFactorsShow));
+    public static string JournalWeekSummary(int checkIns, string average) => F(nameof(JournalWeekSummary), checkIns, average);
     public static string JournalSlotEvening => R(nameof(JournalSlotEvening));
     public static string BalloonsFieldDescription => R(nameof(BalloonsFieldDescription));
     public static string BalloonsPopOne => R(nameof(BalloonsPopOne));
@@ -554,25 +534,7 @@ public static partial class AppStrings
     public static string PracticeLastNoteTitle => R(nameof(PracticeLastNoteTitle));
     public static string PracticeCompletedTitle => R(nameof(PracticeCompletedTitle));
     public static string PracticeCrisis => R(nameof(PracticeCrisis));
-    public static string PracticeCompletedBody(int streak) => F(nameof(PracticeCompletedBody), streak);
-    public static bool IsStreakMilestone(int streak) =>
-        streak is 3 or 7 or 14 or 30;
-    public static string PracticeMilestoneTitle(int streak) => streak switch
-    {
-        3 => R("PracticeMilestoneTitle.3"),
-        7 => R("PracticeMilestoneTitle.7"),
-        14 => R("PracticeMilestoneTitle.14"),
-        30 => R("PracticeMilestoneTitle.30"),
-        _ => PracticeCompletedTitle
-    };
-    public static string PracticeMilestoneBody(int streak) => streak switch
-    {
-        3 => R("PracticeMilestoneBody.3"),
-        7 => R("PracticeMilestoneBody.7"),
-        14 => R("PracticeMilestoneBody.14"),
-        30 => R("PracticeMilestoneBody.30"),
-        _ => PracticeCompletedBody(streak)
-    };
+    public static string PracticeCompletedBody => R(nameof(PracticeCompletedBody));
     public static bool IsLifetimeMilestone(long total) =>
         total is 10 or 25 or 50 or 100 or 250 or 500 or 1000;
     public static string PracticeLifetimeMilestoneTitle(long total) => total switch
@@ -595,7 +557,7 @@ public static partial class AppStrings
         250 => R("PracticeLifetimeMilestoneBody.250"),
         500 => R("PracticeLifetimeMilestoneBody.500"),
         1000 => R("PracticeLifetimeMilestoneBody.1000"),
-        _ => PracticeCompletedBody(0)
+        _ => PracticeCompletedBody
     };
     public static string PracticeMoodDelta(int before, int after) =>
         F("PracticeMoodDelta.1", MoodEmoji(before), before, MoodEmoji(after), after);
@@ -693,7 +655,6 @@ public static partial class AppStrings
 
     public static string ProfileTitle => R(nameof(ProfileTitle));
     public static string ProfileLoadingText => R(nameof(ProfileLoadingText));
-    public static string ProfileUserLabel => R(nameof(ProfileUserLabel));
     public static string ProfileTechniquesCompleted => R(nameof(ProfileTechniquesCompleted));
     public static string ProfileFollowers => R(nameof(ProfileFollowers));
     public static string ProfileRecommended => R(nameof(ProfileRecommended));
@@ -928,7 +889,6 @@ public static partial class AppStrings
     public static string OptionsCrisisTitle => R(nameof(OptionsCrisisTitle));
     public static string OptionsCrisisSubtitle => R(nameof(OptionsCrisisSubtitle));
 
-    public static string ClinicalScorecardTitle => R(nameof(ClinicalScorecardTitle));
     public static string PracticeHistorySeeAll => R(nameof(PracticeHistorySeeAll));
     public static string PracticeHistoryPageTitle => R(nameof(PracticeHistoryPageTitle));
     public static string ProfileRiskCheckLabel => R(nameof(ProfileRiskCheckLabel));
@@ -998,11 +958,6 @@ public static partial class AppStrings
     public static string MoodReminderTitle => R(nameof(MoodReminderTitle));
     public static string MoodReminderBody => R(nameof(MoodReminderBody));
 
-    public static string ClinicalScorecardEmpty => R(nameof(ClinicalScorecardEmpty));
-    public static string ClinicalScorecardSummary(int practices, int moods, string riskLabel) => F(nameof(ClinicalScorecardSummary), practices, moods, riskLabel);
-    public static string ClinicalRiskGreen => R(nameof(ClinicalRiskGreen));
-    public static string ClinicalRiskAmber => R(nameof(ClinicalRiskAmber));
-    public static string ClinicalRiskRed => R(nameof(ClinicalRiskRed));
 
     public static string LuscherCoStable => R(nameof(LuscherCoStable));
     public static string LuscherCoMildTension => R(nameof(LuscherCoMildTension));

@@ -15,11 +15,11 @@ public partial class PracticeCompletionPage : ContentPage
 
     public PracticeCompletionPage(
         IPracticeCompletionViewModelFactory factory,
-        int streakDays,
+        int activeDays,
         string? completedItemKey = null,
         long? sessionResultId = null)
     {
-        _viewModel = factory.Create(this, streakDays, completedItemKey, sessionResultId);
+        _viewModel = factory.Create(this, activeDays, completedItemKey, sessionResultId);
         BindingContext = _viewModel;
         InitializeComponent();
         _viewModel.PropertyChanged += OnViewModelPropertyChanged;

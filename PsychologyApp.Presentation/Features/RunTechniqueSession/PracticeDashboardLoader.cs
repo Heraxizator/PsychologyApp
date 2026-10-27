@@ -1,6 +1,7 @@
 using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Recommendations;
 using PsychologyApp.Application.UserProgress;
+using PsychologyApp.Domain.UserProgress;
 using PsychologyApp.Presentation.Models.Practice.Techniques;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
@@ -16,11 +17,10 @@ public sealed class PracticeDashboardLoader(
     public async Task<int> LoadStreakDaysAsync(CancellationToken cancellationToken = default) =>
         await userProgressService.GetStreakDaysAsync(cancellationToken);
 
-    public async Task<int> LoadAtRiskStreakDaysAsync(CancellationToken cancellationToken = default) =>
-        await userProgressService.GetAtRiskStreakDaysAsync(cancellationToken);
-
-    public async Task<DateTime?> LoadLastPracticeUtcAsync(CancellationToken cancellationToken = default) =>
-        await userProgressService.GetLastTechniqueCompletionDateAsync(cancellationToken);
+    public async Task<bool> LoadIsReturningAsync(CancellationToken cancellationToken = default) =>
+        ComebackPolicy.IsReturning(
+            await userProgressService.GetLastActiveDayAsync(cancellationToken),
+            DateOnly.FromDateTime(DateTime.Today));
 
     public async Task<bool> HasSessionDraftAsync(TechniqueId techniqueId, CancellationToken cancellationToken = default)
     {

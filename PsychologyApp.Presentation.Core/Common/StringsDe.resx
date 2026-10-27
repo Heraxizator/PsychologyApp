@@ -264,9 +264,6 @@
   <data name="OptionsDonateSubtitle" xml:space="preserve">
     <value>Hilf der App zu wachsen</value>
   </data>
-  <data name="ProfileOptionsCardSubtitle" xml:space="preserve">
-    <value>Einstellungen, Support, Alice KI</value>
-  </data>
   <data name="OptionsAliceTitle" xml:space="preserve">
     <value>Alice KI</value>
   </data>
@@ -798,12 +795,6 @@
   <data name="ProfileTestsCompleted" xml:space="preserve">
     <value>Tests gemacht</value>
   </data>
-  <data name="ProfileStreakDays" xml:space="preserve">
-    <value>Tage in Folge</value>
-  </data>
-  <data name="ProfileStreakHint" xml:space="preserve">
-    <value>Zählt Tage mit einer abgeschlossenen Übung</value>
-  </data>
   <data name="TodayForYou" xml:space="preserve">
     <value>Heute für dich</value>
   </data>
@@ -842,9 +833,6 @@
   </data>
   <data name="JournalTitle" xml:space="preserve">
     <value>Tagebuch</value>
-  </data>
-  <data name="OpenJournalLabel" xml:space="preserve">
-    <value>Wie fühlst du dich?</value>
   </data>
   <data name="JournalCardSubtitle" xml:space="preserve">
     <value>Stimmung, Notizen und Verlauf</value>
@@ -917,9 +905,6 @@
   </data>
   <data name="JournalOverviewInsightEmpty" xml:space="preserve">
     <value>Noch wenige Einträge — trag diese Woche deine Stimmung ein</value>
-  </data>
-  <data name="ProfileMoodCheckInBanner" xml:space="preserve">
-    <value>Heute noch keine Stimmung eingetragen</value>
   </data>
   <data name="JournalTryQuietQuote" xml:space="preserve">
     <value>Ein kurzes Zitat kann helfen</value>
@@ -1064,9 +1049,6 @@
   </data>
   <data name="JournalStatsSectionTitle" xml:space="preserve">
     <value>Zusammenfassung</value>
-  </data>
-  <data name="JournalStreakMetricLabel" xml:space="preserve">
-    <value>Serie</value>
   </data>
   <data name="JournalPeriodNavPrev" xml:space="preserve">
     <value>Zurück</value>
@@ -1316,9 +1298,6 @@
   </data>
   <data name="ProfileLoadingText" xml:space="preserve">
     <value>Profil wird geladen</value>
-  </data>
-  <data name="ProfileUserLabel" xml:space="preserve">
-    <value>Nutzer</value>
   </data>
   <data name="ProfileTechniquesCompleted" xml:space="preserve">
     <value>Übungen gemacht</value>
@@ -1749,9 +1728,6 @@
   <data name="OptionsCrisisSubtitle" xml:space="preserve">
     <value>Sicherheitsplan und Hilfetelefone</value>
   </data>
-  <data name="ClinicalScorecardTitle" xml:space="preserve">
-    <value>Wochenüberblick</value>
-  </data>
   <data name="PracticeHistorySeeAll" xml:space="preserve">
     <value>Alle</value>
   </data>
@@ -1802,18 +1778,6 @@
   </data>
   <data name="MoodReminderBody" xml:space="preserve">
     <value>Wie fühlst du dich heute? Trag es in dein Tagebuch ein.</value>
-  </data>
-  <data name="ClinicalScorecardEmpty" xml:space="preserve">
-    <value>Noch nicht genug Daten — Übungen und Stimmung erscheinen hier</value>
-  </data>
-  <data name="ClinicalRiskGreen" xml:space="preserve">
-    <value>niedrig</value>
-  </data>
-  <data name="ClinicalRiskAmber" xml:space="preserve">
-    <value>erhöht</value>
-  </data>
-  <data name="ClinicalRiskRed" xml:space="preserve">
-    <value>hoch</value>
   </data>
   <data name="LuscherCoStable" xml:space="preserve">
     <value>Keine unproduktive Anspannung; hohe emotionale Stabilität. Handlungen sind zielgerichtet und effizient. Die Grundstimmung ist optimistisch.</value>
@@ -2088,12 +2052,6 @@
   <data name="TechniqueStepProgress" xml:space="preserve">
     <value>Schritt {0} von {1}</value>
   </data>
-  <data name="ProfileStreakCount" xml:space="preserve">
-    <value>{0} Tage</value>
-  </data>
-  <data name="StreakAtRiskBanner" xml:space="preserve">
-    <value>Halte deine Serie von {0} Tagen — übe heute</value>
-  </data>
   <data name="ComebackBannerWithTechnique" xml:space="preserve">
     <value>Willkommen zurück — fang mit {0} an</value>
   </data>
@@ -2128,7 +2086,7 @@
     <value>{0} Messungen — der Verlauf bildet sich noch</value>
   </data>
   <data name="PracticeCompletedBody" xml:space="preserve">
-    <value>Gut gemacht! Serie: {0} Tage</value>
+    <value>Schön, dass du dir die Zeit genommen hast.</value>
   </data>
   <data name="PracticeHistoryEntry" xml:space="preserve">
     <value>{0}: {1}</value>
@@ -2180,9 +2138,6 @@
   </data>
   <data name="ProfileMoodTrendPreview" xml:space="preserve">
     <value>Stimmung: {0} · Risiko: {1}</value>
-  </data>
-  <data name="ClinicalScorecardSummary" xml:space="preserve">
-    <value>Diese Woche: {0} Übungen, {1} Stimmungseinträge · Risiko: {2}</value>
   </data>
   <data name="TherapyProgramWeekLabel" xml:space="preserve">
     <value>Woche {0}</value>
@@ -2261,30 +2216,6 @@
   </data>
   <data name="TodayRecommendationReason.mood" xml:space="preserve">
     <value>Hilft bei gedrückter Stimmung</value>
-  </data>
-  <data name="PracticeMilestoneTitle.3" xml:space="preserve">
-    <value>3 Tage am Stück!</value>
-  </data>
-  <data name="PracticeMilestoneTitle.7" xml:space="preserve">
-    <value>Eine ganze Woche!</value>
-  </data>
-  <data name="PracticeMilestoneTitle.14" xml:space="preserve">
-    <value>2 Wochen am Stück!</value>
-  </data>
-  <data name="PracticeMilestoneTitle.30" xml:space="preserve">
-    <value>Ein ganzer Monat!</value>
-  </data>
-  <data name="PracticeMilestoneBody.3" xml:space="preserve">
-    <value>Ein guter Anfang — bleib dran.</value>
-  </data>
-  <data name="PracticeMilestoneBody.7" xml:space="preserve">
-    <value>7 Tage am Stück — ein toller Rhythmus.</value>
-  </data>
-  <data name="PracticeMilestoneBody.14" xml:space="preserve">
-    <value>14 Tage — eine feste Gewohnheit.</value>
-  </data>
-  <data name="PracticeMilestoneBody.30" xml:space="preserve">
-    <value>30 Tage — eine beeindruckende Serie.</value>
   </data>
   <data name="PracticeLifetimeMilestoneTitle.10" xml:space="preserve">
     <value>10 Übungen geschafft!</value>
@@ -2904,9 +2835,6 @@
   <data name="JournalOverviewInsightLine.2" xml:space="preserve">
     <value>{0} {4} · Ø {2} · Stimmung {3}</value>
   </data>
-  <data name="JournalOverviewInsightLine.3" xml:space="preserve">
-    <value>{0} · Serie {1}</value>
-  </data>
   <data name="JournalWeekInsightLine.1" xml:space="preserve">
     <value>Stimmung {0}</value>
   </data>
@@ -2918,9 +2846,6 @@
   </data>
   <data name="JournalBestWorstPill.1" xml:space="preserve">
     <value>Bester {0} {1} · Schlechtester {2} {3}</value>
-  </data>
-  <data name="JournalTimelineStreakLine.1" xml:space="preserve">
-    <value>Eintragsserie: {0}</value>
   </data>
   <data name="JournalOnThisDayLastYear.1" xml:space="preserve">
     <value>Vor einem Jahr: {0}</value>
@@ -4204,29 +4129,11 @@
   <data name="MenuGroupSupport" xml:space="preserve">
     <value>Halt</value>
   </data>
-  <data name="MenuProfileStreak" xml:space="preserve">
-    <value>Tage in Folge mit einer Übung: {0}</value>
-  </data>
   <data name="MenuFooterPrivacy" xml:space="preserve">
     <value>Alles, was du schreibst, bleibt auf diesem Handy</value>
   </data>
-  <data name="JournalWeekCardTitle" xml:space="preserve">
-    <value>Diese Woche</value>
-  </data>
-  <data name="JournalWeekCardEmpty" xml:space="preserve">
-    <value>Halte morgens und abends deine Stimmung fest – hier siehst du dann, wie deine Woche verläuft und was sie beeinflusst.</value>
-  </data>
-  <data name="JournalWeekOpenOverview" xml:space="preserve">
-    <value>Mehr in der Übersicht</value>
-  </data>
   <data name="JournalPromptTitle" xml:space="preserve">
     <value>Frage des Tages</value>
-  </data>
-  <data name="JournalRecentTitle" xml:space="preserve">
-    <value>Letzte Einträge</value>
-  </data>
-  <data name="JournalRecentAll" xml:space="preserve">
-    <value>Gesamter Verlauf</value>
   </data>
   <data name="JournalPrompt01" xml:space="preserve">
     <value>Was ist dir heute leichter gefallen als erwartet?</value>
@@ -4287,5 +4194,35 @@
   </data>
   <data name="JournalLowMoodHelp" xml:space="preserve">
     <value>Ich brauche jetzt Hilfe</value>
+  </data>
+  <data name="JournalEmptyTitle" xml:space="preserve">
+    <value>Hier erscheint deine Woche</value>
+  </data>
+  <data name="JournalEmptyBody" xml:space="preserve">
+    <value>Halte morgens und abends deine Stimmung fest: In ein paar Tagen siehst du, was sie beeinflusst.</value>
+  </data>
+  <data name="JournalEmptyPrivacy" xml:space="preserve">
+    <value>Einträge bleiben nur auf diesem Handy</value>
+  </data>
+  <data name="JournalWeekSummary" xml:space="preserve">
+    <value>Einträge diese Woche: {0} · Schnitt {1}</value>
+  </data>
+  <data name="JournalFactorsShow" xml:space="preserve">
+    <value>+ Was hat mitgespielt</value>
+  </data>
+  <data name="ProfileActiveDaysLabel" xml:space="preserve">
+    <value>Tage diese Woche</value>
+  </data>
+  <data name="ProfileActiveDaysValue" xml:space="preserve">
+    <value>{0} von 7</value>
+  </data>
+  <data name="ProfileActiveDaysHint" xml:space="preserve">
+    <value>Tage mit einer Übung oder einem Stimmungseintrag in den letzten 7 Tagen</value>
+  </data>
+  <data name="JournalCheckInDaysLabel" xml:space="preserve">
+    <value>Tage mit Eintrag</value>
+  </data>
+  <data name="JournalCheckInDays" xml:space="preserve">
+    <value>{0} von {1}</value>
   </data>
 </root>

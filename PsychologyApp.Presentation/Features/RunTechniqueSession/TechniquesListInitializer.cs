@@ -1,6 +1,5 @@
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.Technique;
-using PsychologyApp.Domain.UserProgress;
 using PsychologyApp.Presentation.Entities.Technique;
 using PsychologyApp.Presentation.Features;
 using PsychologyApp.Presentation.Shared.Navigation;
@@ -9,8 +8,7 @@ namespace PsychologyApp.Presentation.Features.RunTechniqueSession;
 
 public sealed record TechniquesInitSnapshot(
     int StreakDays,
-    int AtRiskStreakDays,
-    int IdleDays,
+    bool IsReturning,
     TechniqueDashboardUiState UiState,
     IReadOnlyList<TechniqueItem> StaticItems,
     bool HasMoreCustomTechniques,
@@ -29,8 +27,7 @@ public sealed class TechniquesListInitializer
         int pageSize = CatalogListPolicy.CustomTechniquesPageSize;
 
         Task<int> streakTask = dashboardLoader.LoadStreakDaysAsync(cancellationToken);
-        Task<int> atRiskTask = dashboardLoader.LoadAtRiskStreakDaysAsync(cancellationToken);
-        Task<DateTime?> lastPracticeTask = dashboardLoader.LoadLastPracticeUtcAsync(cancellationToken);
+        Task<bool> returningTask = dashboardLoader.LoadIsReturningAsync(cancellationToken);
         Task<IReadOnlyList<TechniqueItem>> staticItemsTask =
             listBuilder.BuildStaticItemsAsync(navigation, cancellationToken);
         Task<IEnumerable<TechniqueDTO>> customTechniquesTask =
@@ -38,8 +35,7 @@ public sealed class TechniquesListInitializer
 
         await Task.WhenAll(
             streakTask,
-            atRiskTask,
-            lastPracticeTask,
+            returningTask,
             staticItemsTask,
             customTechniquesTask);
 
@@ -52,15 +48,9 @@ public sealed class TechniquesListInitializer
         TechniqueListLayout layout = listBuilder.BuildLayout(staticItems, customItems, myTechniquesLabel);
         TechniqueDashboardUiState uiState = TechniqueDashboardApplier.CreateUiState(layout);
 
-        DateTime? lastPracticeUtc = await lastPracticeTask;
-        int idleDays = StreakCalculator.CalculateIdleDays(
-            lastPracticeUtc is null ? null : DateOnly.FromDateTime(lastPracticeUtc.Value.ToLocalTime()),
-            DateOnly.FromDateTime(DateTime.Today));
-
         return new TechniquesInitSnapshot(
             await streakTask,
-            await atRiskTask,
-            idleDays,
+            await returningTask,
             uiState,
             staticItems,
             hasMoreCustomTechniques,

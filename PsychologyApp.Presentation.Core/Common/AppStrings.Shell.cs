@@ -19,7 +19,6 @@ public static partial class AppStrings
     public static string MenuGroupMine => R(nameof(MenuGroupMine));
     public static string MenuGroupRead => R(nameof(MenuGroupRead));
     public static string MenuGroupSupport => R(nameof(MenuGroupSupport));
-    public static string MenuProfileStreak(int days) => F(nameof(MenuProfileStreak), days);
     public static string MenuFooterPrivacy => R(nameof(MenuFooterPrivacy));
     public static string ShellTabJournalShort => R(nameof(ShellTabJournalShort));
     public static string ForYouEmpty => R(nameof(ForYouEmpty));

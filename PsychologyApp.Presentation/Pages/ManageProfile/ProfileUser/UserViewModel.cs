@@ -1,7 +1,6 @@
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using PsychologyApp.Application.ClinicalCare;
 using PsychologyApp.Application.Configuration;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
@@ -24,8 +23,6 @@ public partial class UserViewModel : BaseViewModel
     private readonly QuoteItemCommandsFactory _quoteCommandsFactory;
     private readonly ProfileScreenCoordinator _profileScreenCoordinator;
     private readonly LanguageContentReloader _languageContentReloader;
-    private readonly IClinicalCareService _clinicalCareService;
-    private readonly ProfileWeekDaysLoader _profileWeekDaysLoader;
     private readonly ILogger<UserViewModel> _logger;
     private readonly IOptions<AppSettings> _settings;
     private int _initGeneration;
@@ -60,8 +57,6 @@ public partial class UserViewModel : BaseViewModel
         QuoteItemCommandsFactory quoteCommandsFactory,
         ProfileScreenCoordinator profileScreenCoordinator,
         LanguageContentReloader languageContentReloader,
-        IClinicalCareService clinicalCareService,
-        ProfileWeekDaysLoader profileWeekDaysLoader,
         IUserPreferencesStore preferences)
     {
         _preferences = preferences;
@@ -75,8 +70,6 @@ public partial class UserViewModel : BaseViewModel
         _quoteCommandsFactory = quoteCommandsFactory;
         _profileScreenCoordinator = profileScreenCoordinator;
         _languageContentReloader = languageContentReloader;
-        _clinicalCareService = clinicalCareService;
-        _profileWeekDaysLoader = profileWeekDaysLoader;
         _logger = logger;
         _settings = settings;
 

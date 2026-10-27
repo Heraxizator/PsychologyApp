@@ -203,7 +203,6 @@
     <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.LoadMore.cs" Link="Linked/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.LoadMore.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Messenger.cs" Link="Linked/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Messenger.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Sections.cs" Link="Linked/Pages/RunTechniqueSession/Techniques/TechniquesViewModel.Sections.cs" />
-    <Compile Include="../PsychologyApp.Presentation/Pages/ManageProfile/ProfileUser/UserViewModel.Clinical.cs" Link="Linked/Pages/ManageProfile/ProfileUser/UserViewModel.Clinical.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/ManageProfile/ProfileUser/UserViewModel.Collections.cs" Link="Linked/Pages/ManageProfile/ProfileUser/UserViewModel.Collections.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/ManageProfile/ProfileUser/UserViewModel.Commands.cs" Link="Linked/Pages/ManageProfile/ProfileUser/UserViewModel.Commands.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/ManageProfile/ProfileUser/UserViewModel.cs" Link="Linked/Pages/ManageProfile/ProfileUser/UserViewModel.cs" />
@@ -212,7 +211,6 @@
     <Compile Include="../PsychologyApp.Presentation/Pages/ManageProfile/ProfileUser/UserViewModel.Refresh.cs" Link="Linked/Pages/ManageProfile/ProfileUser/UserViewModel.Refresh.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/ManageProfile/ProfileUser/UserViewModel.Stats.cs" Link="Linked/Pages/ManageProfile/ProfileUser/UserViewModel.Stats.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/Index/ProfileScreenCoordinator.cs" Link="Linked/Features/ManageProfile/Index/ProfileScreenCoordinator.cs" />
-    <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/ProfileWeekDaysLoader.cs" Link="Linked/Features/ManageProfile/ProfileWeekDaysLoader.cs" />
     <Compile Include="../PsychologyApp.Presentation/Shared/Common/Diagnostics/PerfTrace.cs" Link="Linked/Shared/Common/Diagnostics/PerfTrace.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/ProfilePracticeHistoryTapFactory.cs" Link="Linked/Features/ManageProfile/ProfilePracticeHistoryTapFactory.cs" />
     <Compile Include="Phase5LoaderTests.cs" />

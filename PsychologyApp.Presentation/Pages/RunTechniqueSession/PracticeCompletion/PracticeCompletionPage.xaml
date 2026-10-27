@@ -25,9 +25,9 @@
                 BodyText="{Binding BodyText}"
                 IconName="{Binding CelebrationIconName}"
                 IsMilestone="{Binding IsMilestone}"
-                StreakValueText="{Binding StreakValueText}"
-                StreakLabelText="{Binding StreakLabelText}"
-                HasStreak="{Binding HasStreak}"
+                StreakValueText="{Binding ActiveDaysValueText}"
+                StreakLabelText="{Binding ActiveDaysLabelText}"
+                HasStreak="{Binding HasActiveDays}"
                 PrimaryActionText="{Binding MorePracticeText}"
                 PrimaryCommand="{Binding MorePracticeCommand}" />
 

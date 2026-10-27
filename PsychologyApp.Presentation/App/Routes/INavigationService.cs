@@ -51,7 +51,7 @@ public interface INavigationService
     Task GoToAnchorThoughtsAsync();
     Task GoToBodyAsync();
     Task GoToInsightsAsync();
-    Task GoToPracticeCompletionAsync(int streakDays, string? completedItemKey = null, long? sessionResultId = null);
+    Task GoToPracticeCompletionAsync(int activeDays, string? completedItemKey = null, long? sessionResultId = null);
     Task ShowOnboardingAsync();
     Task GoToChatListAsync();
     /// <param name="opener">For a new chat: words the person picked to begin with, sent as their first message.</param>

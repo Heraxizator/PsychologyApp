@@ -5,7 +5,7 @@ namespace PsychologyApp.Presentation.Shared.Navigation;
 /// <summary>The group a menu row belongs to; each has its own tile colour, so the menu reads as groups instead of one blue column.</summary>
 public enum AppMenuTone
 {
-    /// <summary>The person's own pages: profile, what helps, the body.</summary>
+    /// <summary>The person's own pages: what helps, the body.</summary>
     Mine,
 
     /// <summary>Things to read: for you, courses, articles.</summary>

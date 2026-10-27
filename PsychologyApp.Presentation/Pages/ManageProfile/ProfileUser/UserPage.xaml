@@ -30,169 +30,36 @@
                     TitleText="{Binding PageTitle}"
                     BackCommand="{Binding Finish}" />
 
-                <Border
-                    Style="{StaticResource BrandCardStyle}"
-                    Margin="0"
-                    Padding="20"
-                    BackgroundColor="{DynamicResource Primary}">
+                <!-- The figures in a white card like the cards of the other tabs; the solid blue block was the loudest thing in the app. -->
+                <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                     <Border.Behaviors>
                         <behaviors:ListItemRevealBehavior RevealIndex="0" />
                     </Border.Behaviors>
-                    <VerticalStackLayout Spacing="{StaticResource SectionSpacing}">
-                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
-                            <Border
-                                Grid.Column="0"
-                                WidthRequest="64"
-                                HeightRequest="64"
-                                StrokeThickness="0"
-                                StrokeShape="RoundRectangle 32"
-                                BackgroundColor="#33FFFFFF"
-                                VerticalOptions="Center">
-                                <ui:MaterialIconView
-                                    IconName="Person"
-                                    IconSize="32"
-                                    IconColor="White"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center" />
-                            </Border>
-                            <Label
-                                Grid.Column="1"
-                                VerticalOptions="Center"
-                                Style="{StaticResource PageTitleStyle}"
-                                TextColor="White"
-                                Text="{Binding UserLabel}" />
+                    <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="{StaticResource CompactSpacing}">
+                            <ui:MetricTileView Grid.Column="0" ValueText="{Binding TechniquesCompletedCount}" LabelText="{Binding TechniquesCompletedLabel}" />
+                            <ui:MetricTileView Grid.Column="1" ValueText="{Binding TestsCompletedCount}" LabelText="{Binding TestsCompletedLabel}" TapCommand="{Binding OpenTestsListCommand}" />
+                            <ui:MetricTileView Grid.Column="2" ValueText="{Binding ActiveDaysCount}" LabelText="{Binding ActiveDaysLabel}" />
                         </Grid>
-
-                        <Border
-                            Padding="8,14"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 14"
-                            BackgroundColor="#26FFFFFF">
-                            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="4">
-                                <VerticalStackLayout Grid.Column="0" Spacing="2">
-                                    <Label
-                                        Text="{Binding TechniquesCompletedCount}"
-                                        Style="{StaticResource PageTitleStyle}"
-                                        TextColor="White"
-                                        HorizontalTextAlignment="Center" />
-                                    <Label
-                                        Text="{Binding TechniquesCompletedLabel}"
-                                        Style="{StaticResource CaptionStyle}"
-                                        TextColor="White"
-                                        Opacity="0.85"
-                                        HorizontalTextAlignment="Center" />
-                                </VerticalStackLayout>
-                                <VerticalStackLayout Grid.Column="1" Spacing="2">
-                                    <VerticalStackLayout.Behaviors>
-                                        <behaviors:PressFeedbackBehavior />
-                                    </VerticalStackLayout.Behaviors>
-                                    <VerticalStackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding OpenTestsListCommand}" />
-                                    </VerticalStackLayout.GestureRecognizers>
-                                    <Label
-                                        Text="{Binding TestsCompletedCount}"
-                                        Style="{StaticResource PageTitleStyle}"
-                                        TextColor="White"
-                                        HorizontalTextAlignment="Center" />
-                                    <Label
-                                        Text="{Binding TestsCompletedLabel}"
-                                        Style="{StaticResource CaptionStyle}"
-                                        TextColor="White"
-                                        Opacity="0.85"
-                                        HorizontalTextAlignment="Center" />
-                                </VerticalStackLayout>
-                                <VerticalStackLayout Grid.Column="2" Spacing="2">
-                                    <Label
-                                        Text="{Binding StreakCount}"
-                                        Style="{StaticResource PageTitleStyle}"
-                                        TextColor="White"
-                                        HorizontalTextAlignment="Center" />
-                                    <Label
-                                        Text="{Binding StreakLabel}"
-                                        Style="{StaticResource CaptionStyle}"
-                                        TextColor="White"
-                                        Opacity="0.85"
-                                        HorizontalTextAlignment="Center" />
-                                </VerticalStackLayout>
-                            </Grid>
-                        </Border>
-
-                        <VerticalStackLayout Spacing="2">
-                            <Label
-                                HorizontalTextAlignment="Center"
-                                Style="{StaticResource CaptionStyle}"
-                                TextColor="White"
-                                Opacity="0.85"
-                                Text="{Binding StreakHintText}" />
-                            <Label
-                                IsVisible="{Binding HasLastPractice}"
-                                HorizontalTextAlignment="Center"
-                                Style="{StaticResource CaptionStyle}"
-                                TextColor="White"
-                                FontFamily="{StaticResource SemiBoldFontFamily}"
-                                Text="{Binding LastPracticeDisplay}" />
-                        </VerticalStackLayout>
+                        <Label Text="{Binding ActiveDaysHintText}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+                        <Label
+                            IsVisible="{Binding HasLastPractice}"
+                            Text="{Binding LastPracticeDisplay}"
+                            Style="{StaticResource CaptionStyle}"
+                            HorizontalTextAlignment="Center" />
                     </VerticalStackLayout>
                 </Border>
 
+                <!-- The safety self-check stays one tap away; the week review that stood around it repeated the journal. -->
                 <ui:SettingsLinkCardView
-                    Title="{Binding OptionsLabel}"
-                    Subtitle="{Binding OptionsCardSubtitle}"
-                    IconName="Tune"
-                    TapCommand="{Binding OpenOptionsCommand}">
+                    Title="{Binding ProfileRiskCheckLabel}"
+                    Subtitle="{Binding ProfileRiskCheckSubtitle}"
+                    IconName="FactCheck"
+                    TapCommand="{Binding OpenRiskCheckCommand}">
                     <ui:SettingsLinkCardView.Behaviors>
                         <behaviors:ListItemRevealBehavior RevealIndex="1" />
                     </ui:SettingsLinkCardView.Behaviors>
                 </ui:SettingsLinkCardView>
-
-                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <ui:SectionHeaderView
-                        TitleText="{Binding ClinicalScorecardTitle}"
-                        SubtitleText="{Binding WeekRangeSubtitle}" />
-                    <Border
-                        IsVisible="{Binding ShowMoodCheckInBanner}"
-                        Style="{StaticResource BrandCardStyle}"
-                        Margin="0">
-                        <Border.Behaviors>
-                            <behaviors:ListItemRevealBehavior RevealIndex="2" />
-                            <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
-                        </Border.Behaviors>
-                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding OpenJournalCommand}" />
-                            </Grid.GestureRecognizers>
-                            <Label
-                                Grid.Column="0"
-                                Text="{Binding MoodCheckInBannerText}"
-                                Style="{StaticResource BodyStyle}"
-                                VerticalOptions="Center" />
-                            <Label
-                                Grid.Column="1"
-                                VerticalOptions="Center"
-                                TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                                Text="{mi:Material Icon=KeyboardArrowRight}" />
-                        </Grid>
-                    </Border>
-                    <profileHistory:ProfileWeekStoryView
-                        WeekDays="{Binding WeekDays}"
-                        SummaryText="{Binding WeekSummaryText}"
-                        EmptyText="{Binding ClinicalScorecardEmpty}"
-                        ShowEmpty="{Binding ShowClinicalScorecardEmpty}"
-                        TapCommand="{Binding OpenJournalCommand}">
-                        <profileHistory:ProfileWeekStoryView.Behaviors>
-                            <behaviors:ListItemRevealBehavior RevealIndex="3" />
-                        </profileHistory:ProfileWeekStoryView.Behaviors>
-                    </profileHistory:ProfileWeekStoryView>
-                    <ui:SettingsLinkCardView
-                        Title="{Binding ProfileRiskCheckLabel}"
-                        Subtitle="{Binding ProfileRiskCheckSubtitle}"
-                        IconName="FactCheck"
-                        TapCommand="{Binding OpenRiskCheckCommand}">
-                        <ui:SettingsLinkCardView.Behaviors>
-                            <behaviors:ListItemRevealBehavior RevealIndex="4" />
-                        </ui:SettingsLinkCardView.Behaviors>
-                    </ui:SettingsLinkCardView>
-                </VerticalStackLayout>
 
                 <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                     <ui:SectionHeaderView

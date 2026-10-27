@@ -9,7 +9,7 @@ namespace PsychologyApp.Presentation.Features.RunTechniqueSession.DependencyInje
 
 public interface IPracticeCompletionViewModelFactory
 {
-    PracticeCompletionViewModel Create(ContentPage page, int streakDays, string? completedItemKey = null, long? sessionResultId = null);
+    PracticeCompletionViewModel Create(ContentPage page, int activeDays, string? completedItemKey = null, long? sessionResultId = null);
 }
 
 public sealed class PracticeCompletionViewModelFactory(
@@ -21,7 +21,7 @@ public sealed class PracticeCompletionViewModelFactory(
 {
     public PracticeCompletionViewModel Create(
         ContentPage page,
-        int streakDays,
+        int activeDays,
         string? completedItemKey = null,
         long? sessionResultId = null) =>
         new(
@@ -29,7 +29,7 @@ public sealed class PracticeCompletionViewModelFactory(
             userProgressService,
             nextPracticeResolver,
             crisisDetector,
-            streakDays,
+            activeDays,
             completedItemKey,
             sessionResultId,
             techniqueCatalog);

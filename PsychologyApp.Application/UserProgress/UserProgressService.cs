@@ -104,10 +104,17 @@ public sealed class UserProgressService(IUserProgressRepository repository) : IU
         return StreakCalculator.CalculateFromCompletionDates(dates, DateOnly.FromDateTime(DateTime.Today));
     }
 
-    public async Task<int> GetAtRiskStreakDaysAsync(CancellationToken cancellationToken = default)
+    public async Task<DateOnly?> GetLastActiveDayAsync(CancellationToken cancellationToken = default)
     {
         IReadOnlyList<DateOnly> dates = await repository.GetCompletionDatesAsync(cancellationToken).ConfigureAwait(false);
-        return StreakCalculator.CalculateAtRiskDays(dates, DateOnly.FromDateTime(DateTime.Today));
+        return dates.Count == 0 ? null : dates.Max();
+    }
+
+    public async Task<int> GetActiveDaysThisWeekAsync(CancellationToken cancellationToken = default)
+    {
+        // Completions hold both practices and mood check-ins, which is what an active day means here.
+        IReadOnlyList<DateOnly> dates = await repository.GetCompletionDatesAsync(cancellationToken).ConfigureAwait(false);
+        return ActiveDaysCalculator.CountInLastWeek(dates, DateOnly.FromDateTime(DateTime.Today));
     }
 
     public Task<DateTime?> GetLastPracticeDateAsync(string itemKey, CancellationToken cancellationToken = default) =>

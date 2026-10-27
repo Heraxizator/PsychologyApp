@@ -8,29 +8,15 @@ public partial class TechniquesViewModel
 {
     public string TodayReasonText { get; private set; } = string.Empty;
 
-    public string StreakDisplay => AppStrings.ProfileStreakCount(StreakDays);
-    public bool HasStreak => StreakDays > 0;
-
-    private int _atRiskStreakDays;
-    public int AtRiskStreakDays
+    private bool _isReturning;
+    /// <summary>Back after three days or more without a practice or a check-in. There is no "keep your streak" nudge: a count to
+    /// lose is pressure, and pressure is the last thing a hard day needs.</summary>
+    public bool IsReturning
     {
-        get => _atRiskStreakDays;
+        get => _isReturning;
         private set
         {
-            if (SetProperty(ref _atRiskStreakDays, value))
-            {
-                NotifyEngagementNudge();
-            }
-        }
-    }
-
-    private int _idleDays;
-    public int IdleDays
-    {
-        get => _idleDays;
-        private set
-        {
-            if (SetProperty(ref _idleDays, value))
+            if (SetProperty(ref _isReturning, value))
             {
                 NotifyEngagementNudge();
             }
@@ -50,14 +36,11 @@ public partial class TechniquesViewModel
         }
     }
 
-    public bool ShowStreakAtRiskBanner => AtRiskStreakDays >= 1;
-    public bool ShowComebackBanner => !ShowStreakAtRiskBanner && IdleDays >= 3;
-    public bool ShowEngagementNudge => ShowStreakAtRiskBanner || ShowComebackBanner;
+    public bool ShowComebackBanner => IsReturning;
+    public bool ShowEngagementNudge => ShowComebackBanner;
 
-    public string EngagementNudgeText =>
-        ShowStreakAtRiskBanner
-            ? AppStrings.StreakAtRiskBanner(AtRiskStreakDays)
-            : AppStrings.ComebackBanner; // the card above already names the practice, so the line does not repeat it
+    // The card above already names the practice, so the line does not repeat it.
+    public string EngagementNudgeText => AppStrings.ComebackBanner;
 
     public string TodayActionText =>
         HasTodayDraft ? AppStrings.TechniqueContinueBadge : AppStrings.TodayStartPractice;
@@ -83,8 +66,6 @@ public partial class TechniquesViewModel
         {
             if (SetProperty(ref _streakDays, value))
             {
-                OnPropertyChanged(nameof(StreakDisplay));
-                OnPropertyChanged(nameof(HasStreak));
                 UpdateTodayRecommendation();
             }
         }
@@ -122,7 +103,6 @@ public partial class TechniquesViewModel
 
     private void NotifyEngagementNudge()
     {
-        OnPropertyChanged(nameof(ShowStreakAtRiskBanner));
         OnPropertyChanged(nameof(ShowComebackBanner));
         OnPropertyChanged(nameof(ShowEngagementNudge));
         OnPropertyChanged(nameof(EngagementNudgeText));

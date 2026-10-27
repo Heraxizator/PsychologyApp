@@ -19,7 +19,10 @@ public interface IUserProgressService
     Task<long> CountTechniqueCompletionsAsync(CancellationToken cancellationToken = default);
     Task<IReadOnlyList<CompletionDTO>> GetRecentTechniqueCompletionsAsync(int limit = 20, CancellationToken cancellationToken = default);
     Task<int> GetStreakDaysAsync(CancellationToken cancellationToken = default);
-    Task<int> GetAtRiskStreakDaysAsync(CancellationToken cancellationToken = default);
+    /// <summary>The last local day with a practice or a mood check-in; null before the first one.</summary>
+    Task<DateOnly?> GetLastActiveDayAsync(CancellationToken cancellationToken = default);
+    /// <summary>Days with a practice or a mood check-in among the last seven, today included.</summary>
+    Task<int> GetActiveDaysThisWeekAsync(CancellationToken cancellationToken = default);
     Task<DateTime?> GetLastPracticeDateAsync(string itemKey, CancellationToken cancellationToken = default);
     Task<IReadOnlyDictionary<string, DateTime>> GetLastPracticeDatesAsync(IReadOnlyList<string> itemKeys, CancellationToken cancellationToken = default);
 

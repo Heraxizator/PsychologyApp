@@ -11,7 +11,7 @@ public static class PracticeCompletionNavigator
         string? completedItemKey = null,
         long? sessionResultId = null)
     {
-        int streak = await progress.GetStreakDaysAsync();
-        await navigation.GoToPracticeCompletionAsync(streak, completedItemKey, sessionResultId);
+        int activeDays = await progress.GetActiveDaysThisWeekAsync();
+        await navigation.GoToPracticeCompletionAsync(activeDays, completedItemKey, sessionResultId);
     }
 }

@@ -3,6 +3,7 @@ using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Application.UserProgress;
 using PsychologyApp.Domain.UserProgress;
+using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Features.ManageJournal;
 using Xunit;
 
@@ -82,6 +83,30 @@ public sealed class JournalMoodLoaderTests
 
         Assert.Equal(note, snapshot.EditorNote);
         Assert.Equal(expected, snapshot.EditorNoteLooksLikeCrisis);
+    }
+
+    // Not a streak: two check-ins on one day are one day, and a gap between days does not undo the days before it.
+    [Fact]
+    public async Task The_period_counts_days_with_a_check_in_not_days_in_a_row()
+    {
+        // Midday, so the minute before stays on the same day whenever the test runs.
+        DateTime now = DateTime.Today.AddHours(12);
+        Mock<IUserProgressService> progress = new();
+        progress
+            .Setup(p => p.GetMoodsAsync(It.IsAny<DateTime?>(), It.IsAny<DateTime?>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<MoodEntryDTO>
+            {
+                new() { MoodEntryId = 3, MoodLevel = 4, RecordedAt = now.ToUniversalTime() },
+                new() { MoodEntryId = 2, MoodLevel = 3, RecordedAt = now.AddMinutes(-1).ToUniversalTime() },
+                new() { MoodEntryId = 1, MoodLevel = 2, RecordedAt = now.AddDays(-3).ToUniversalTime() }
+            });
+        progress
+            .Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+
+        JournalMoodSnapshot snapshot = await new JournalMoodLoader(progress.Object, new KeywordCrisisDetector()).LoadAsync(rangeDays: 7);
+
+        Assert.Equal(AppStrings.JournalCheckInDays(2, 7), snapshot.Stats.CheckInDaysDisplay);
     }
 
     [Fact]

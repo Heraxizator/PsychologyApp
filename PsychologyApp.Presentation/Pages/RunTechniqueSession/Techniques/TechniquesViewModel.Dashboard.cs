@@ -21,20 +21,17 @@ public partial class TechniquesViewModel
             await _databaseReadySignal.WaitAsync(cancellationToken);
 
             Task<int> streakTask = _dashboardLoader.LoadStreakDaysAsync(cancellationToken);
-            Task<int> atRiskTask = _dashboardLoader.LoadAtRiskStreakDaysAsync(cancellationToken);
-            Task<DateTime?> lastPracticeTask = _dashboardLoader.LoadLastPracticeUtcAsync(cancellationToken);
+            Task<bool> returningTask = _dashboardLoader.LoadIsReturningAsync(cancellationToken);
             Task<IReadOnlyList<TechniqueItem>> staticItemsTask =
                 _techniqueListBuilder.BuildStaticItemsAsync(_navigationService, cancellationToken);
 
             await Task.WhenAll(
                 streakTask,
-                atRiskTask,
-                lastPracticeTask,
+                returningTask,
                 staticItemsTask);
 
             int streakDays = await streakTask;
-            int atRiskDays = await atRiskTask;
-            DateTime? lastPracticeUtc = await lastPracticeTask;
+            bool returning = await returningTask;
             IReadOnlyList<TechniqueItem> staticItems = await staticItemsTask;
 
             TodayRecommendationResult recommendation = await _dashboardLoader.ResolveTodayRecommendationAsync(
@@ -47,9 +44,6 @@ public partial class TechniquesViewModel
                 cancellationToken);
 
             bool hasDraft = await _dashboardLoader.HasSessionDraftAsync(recommendation.TechniqueId, cancellationToken);
-            int idleDays = StreakCalculator.CalculateIdleDays(
-                lastPracticeUtc is null ? null : DateOnly.FromDateTime(lastPracticeUtc.Value.ToLocalTime()),
-                DateOnly.FromDateTime(DateTime.Today));
 
             PracticeClinicalDashboardSnapshot clinical =
                 await _clinicalDashboardEnricher.LoadAsync(cancellationToken);
@@ -57,8 +51,7 @@ public partial class TechniquesViewModel
             await UiThread.RunAsync(() =>
             {
                 StreakDays = streakDays;
-                AtRiskStreakDays = atRiskDays;
-                IdleDays = idleDays;
+                IsReturning = returning;
                 HasTodayDraft = hasDraft;
                 TherapyProgramBanner = clinical.TherapyProgramBanner;
                 ClinicalRiskBanner = clinical.ClinicalRiskBanner;

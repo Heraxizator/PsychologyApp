@@ -162,8 +162,8 @@ public sealed class PageRegistry(
             ? WithPressFeedback(techniquePageFactory.CreateTechniqueDialoguePage(techniqueId, hostNavigation))
             : CreateTechniqueSessionPage(techniqueId, hostNavigation);
 
-    public PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null, long? sessionResultId = null) =>
-        WithPressFeedback(techniquePageFactory.CreatePracticeCompletionPage(streakDays, completedItemKey, sessionResultId));
+    public PracticeCompletionPage CreatePracticeCompletionPage(int activeDays, string? completedItemKey = null, long? sessionResultId = null) =>
+        WithPressFeedback(techniquePageFactory.CreatePracticeCompletionPage(activeDays, completedItemKey, sessionResultId));
 
     public ChatListPage CreateChatListPage(INavigation? hostNavigation) =>
         WithPressFeedback(chatPageFactory.CreateChatListPage(hostNavigation));

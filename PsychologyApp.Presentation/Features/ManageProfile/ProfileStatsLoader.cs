@@ -7,7 +7,7 @@ public sealed class ProfileStatsSnapshot
 {
     public string TechniquesCompletedCount { get; init; } = "0";
     public string TestsCompletedCount { get; init; } = "0";
-    public string StreakCount { get; init; } = "0";
+    public string ActiveDaysCount { get; init; } = "0";
     public string LastPracticeDisplay { get; init; } = string.Empty;
 }
 
@@ -21,22 +21,21 @@ public sealed class ProfileStatsLoader(IUserProgressService userProgressService)
     {
         Task<long> techniquesTask = userProgressService.CountTechniqueCompletionsAsync(cancellationToken);
         Task<long> testsTask = userProgressService.CountTestResultsAsync(cancellationToken);
-        Task<int> streakTask = userProgressService.GetStreakDaysAsync(cancellationToken);
+        Task<int> activeDaysTask = userProgressService.GetActiveDaysThisWeekAsync(cancellationToken);
         Task<DateTime?> lastPracticeTask = userProgressService.GetLastTechniqueCompletionDateAsync(cancellationToken);
 
-        await Task.WhenAll(techniquesTask, testsTask, streakTask, lastPracticeTask);
+        await Task.WhenAll(techniquesTask, testsTask, activeDaysTask, lastPracticeTask);
 
         int techniques = (int)await techniquesTask;
         int tests = (int)await testsTask;
-        int streak = await streakTask;
+        int activeDays = await activeDaysTask;
         DateTime? lastPractice = await lastPracticeTask;
 
         return new ProfileStatsSnapshot
         {
             TechniquesCompletedCount = techniques.ToString(),
             TestsCompletedCount = tests.ToString(),
-            // A bare number: the label under it ("Day streak") already says what it counts.
-            StreakCount = streak.ToString(System.Globalization.CultureInfo.CurrentCulture),
+            ActiveDaysCount = AppStrings.ProfileActiveDaysValue(activeDays),
             LastPracticeDisplay = lastPractice is null
                 ? string.Empty
                 : AppStrings.ProfileLastPractice(lastPractice.Value.ToLocalTime().ToString("d"))

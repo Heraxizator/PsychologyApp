@@ -29,7 +29,7 @@ public sealed class TechniqueSessionCompletionServiceTests
     public async Task CompleteStandardSessionAsync_RecordsProgress_DeletesDraft_AndNavigates()
     {
         Mock<IUserProgressService> progress = new();
-        progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(3);
+        progress.Setup(p => p.GetActiveDaysThisWeekAsync(It.IsAny<CancellationToken>())).ReturnsAsync(3);
         progress.Setup(p => p.GetSessionDraftAsync("Paper", It.IsAny<CancellationToken>())).ReturnsAsync((string?)null);
         progress.Setup(p => p.RecordSessionOutcomeAsync(It.IsAny<SessionOutcomeRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(42L);
         Mock<INavigationService> navigation = new();
@@ -64,7 +64,7 @@ public sealed class TechniqueSessionCompletionServiceTests
     public async Task CompleteStandardSessionAsync_SkipsDraftDelete_WhenDisabled()
     {
         Mock<IUserProgressService> progress = new();
-        progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
+        progress.Setup(p => p.GetActiveDaysThisWeekAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
         progress.Setup(p => p.GetSessionDraftAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync((string?)null);
         progress.Setup(p => p.RecordSessionOutcomeAsync(It.IsAny<SessionOutcomeRequest>(), It.IsAny<CancellationToken>())).ReturnsAsync(7L);
         Mock<INavigationService> navigation = new();

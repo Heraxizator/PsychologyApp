@@ -16,7 +16,7 @@ public sealed class ListTechniqueSessionHelperTests
     public async Task CompleteAsync_DelegatesToSessionCompletionService()
     {
         Mock<IUserProgressService> progress = new();
-        progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(2);
+        progress.Setup(p => p.GetActiveDaysThisWeekAsync(It.IsAny<CancellationToken>())).ReturnsAsync(2);
         Mock<INavigationService> navigation = new();
         navigation.Setup(n => n.GoToPracticeCompletionAsync(It.IsAny<int>(), It.IsAny<string?>(), It.IsAny<long?>())).Returns(Task.CompletedTask);
 

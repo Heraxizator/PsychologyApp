@@ -32,9 +32,6 @@ public partial class AppShell : Shell
     ];
 
     private readonly IPageFactory _pageFactory;
-    private readonly IUserProgressService _progress;
-    private readonly IDatabaseReadySignal _databaseReady;
-    private int _streakDays;
     private readonly IShellStartupCoordinator _startupCoordinator;
     private readonly IPracticeReminderCoordinator _practiceReminderCoordinator;
     private readonly IQuoteReminderCoordinator _quoteReminderCoordinator;
@@ -57,12 +54,8 @@ public partial class AppShell : Shell
         ILogger<AppShell> logger,
         IUserPreferencesStore preferences,
         Func<INavigationService> navigationServiceFactory,
-        PsychologyApp.Presentation.Features.ManageProfile.AppLockCoordinator appLock,
-        IUserProgressService progress,
-        IDatabaseReadySignal databaseReady)
+        PsychologyApp.Presentation.Features.ManageProfile.AppLockCoordinator appLock)
     {
-        _progress = progress;
-        _databaseReady = databaseReady;
         _navigationServiceFactory = navigationServiceFactory;
         _appLock = appLock;
         _preferences = preferences;
@@ -440,7 +433,8 @@ public partial class AppShell : Shell
         ];
 
         MenuProfileCard.BindingContext = profile;
-        ShowProfileSubtitle();
+        // No streak here: a count that falls to zero after a hard day reads as a reproach in an app like this one.
+        MenuProfileSubtitle.Text = AppStrings.MenuProfileSubtitle;
         MenuFooterPrivacy.Text = AppStrings.MenuFooterPrivacy;
         MenuFooterVersion.Text = AppStrings.InfoAppVersion(AppInfo.Current.VersionString);
         MenuMineTitle.Text = AppStrings.MenuGroupMine;
@@ -450,38 +444,6 @@ public partial class AppShell : Shell
         BindableLayout.SetItemsSource(MenuRead, read);
         BindableLayout.SetItemsSource(MenuSupport, support);
         BindableLayout.SetItemsSource(MenuApp, app);
-    }
-
-    /// <summary>The days in a row with a practice when there are some, the general line otherwise; refreshed each time the menu opens.</summary>
-    private void ShowProfileSubtitle() =>
-        MenuProfileSubtitle.Text = _streakDays > 0 ? AppStrings.MenuProfileStreak(_streakDays) : AppStrings.MenuProfileSubtitle;
-
-    private async Task RefreshProfileStreakAsync()
-    {
-        try
-        {
-            await _databaseReady.WaitAsync();
-            int days = await _progress.GetStreakDaysAsync();
-            await UiThread.RunAsync(() =>
-            {
-                _streakDays = days;
-                ShowProfileSubtitle();
-            });
-        }
-        catch (Exception error)
-        {
-            // Without the count the card keeps its general line; the menu works the same.
-            BestEffort.Report(error);
-        }
-    }
-
-    protected override void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string? propertyName = null)
-    {
-        base.OnPropertyChanged(propertyName);
-        if (propertyName == nameof(FlyoutIsPresented) && FlyoutIsPresented)
-        {
-            RefreshProfileStreakAsync().FireAndForget();
-        }
     }
 
     /// <summary>Back with the menu open closes the menu, as on any Android app; Shell left it to the system, which closed the app.</summary>

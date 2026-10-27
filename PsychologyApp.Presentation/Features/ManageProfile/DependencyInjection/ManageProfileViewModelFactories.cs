@@ -44,8 +44,6 @@ public sealed class UserViewModelFactory(
     QuoteItemCommandsFactory quoteCommandsFactory,
     ProfileScreenCoordinator profileScreenCoordinator,
     LanguageContentReloader languageContentReloader,
-    IClinicalCareService clinicalCareService,
-    ProfileWeekDaysLoader profileWeekDaysLoader,
     IUserPreferencesStore userPreferencesStore,
     Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IUserViewModelFactory
 {
@@ -62,8 +60,6 @@ public sealed class UserViewModelFactory(
             quoteCommandsFactory,
             profileScreenCoordinator,
             languageContentReloader,
-            clinicalCareService,
-            profileWeekDaysLoader,
             userPreferencesStore);
 }
 

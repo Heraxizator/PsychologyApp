@@ -129,7 +129,7 @@ public sealed class JournalOverviewViewModel : BaseViewModel
     public string FactorsSectionTitle => AppStrings.JournalFactorsSectionTitle;
     public string WeekMoodCheckInsLabel => AppStrings.WeekMoodCheckInsLabel;
     public string WeekAvgMoodLabel => AppStrings.WeekAvgMoodLabel;
-    public string StreakMetricLabel => AppStrings.JournalStreakMetricLabel;
+    public string CheckInDaysLabel => AppStrings.JournalCheckInDaysLabel;
     public string PeriodNavPrevLabel => AppStrings.JournalPeriodNavPrev;
     public string PeriodNavNextLabel => AppStrings.JournalPeriodNavNext;
 
@@ -276,11 +276,11 @@ public sealed class JournalOverviewViewModel : BaseViewModel
         private set => SetProperty(ref _averageMoodDisplay, value);
     }
 
-    private string _moodStreakDisplay = AppStrings.MetricEmptyValue;
-    public string MoodStreakDisplay
+    private string _checkInDaysDisplay = AppStrings.MetricEmptyValue;
+    public string CheckInDaysDisplay
     {
-        get => _moodStreakDisplay;
-        private set => SetProperty(ref _moodStreakDisplay, value);
+        get => _checkInDaysDisplay;
+        private set => SetProperty(ref _checkInDaysDisplay, value);
     }
 
     private string _moodTrendLabel = string.Empty;
@@ -355,7 +355,7 @@ public sealed class JournalOverviewViewModel : BaseViewModel
             nameof(FactorsSectionTitle),
             nameof(WeekMoodCheckInsLabel),
             nameof(WeekAvgMoodLabel),
-            nameof(StreakMetricLabel),
+            nameof(CheckInDaysLabel),
             nameof(PeriodNavPrevLabel),
             nameof(PeriodNavNextLabel),
             nameof(PeriodTitle),
@@ -368,7 +368,7 @@ public sealed class JournalOverviewViewModel : BaseViewModel
             nameof(WeekRangeSubtitle),
             nameof(CheckInCountDisplay),
             nameof(AverageMoodDisplay),
-            nameof(MoodStreakDisplay),
+            nameof(CheckInDaysDisplay),
             nameof(MoodTrendLabel),
             nameof(BestWorstLabel),
             nameof(HasBestWorstPill),
@@ -512,15 +512,14 @@ public sealed class JournalOverviewViewModel : BaseViewModel
                     ? stats.CheckInCount.ToString()
                     : AppStrings.MetricEmptyValue;
                 AverageMoodDisplay = stats.AverageMoodDisplay;
-                MoodStreakDisplay = stats.MoodStreakDisplay;
+                CheckInDaysDisplay = stats.CheckInDaysDisplay;
                 MoodTrendLabel = stats.MoodTrendLabel;
                 BestWorstLabel = stats.BestWorstLabel;
                 OverviewInsightText = stats.HasStats
                     ? AppStrings.JournalOverviewInsightLine(
                         stats.CheckInCount,
                         stats.AverageMoodDisplay,
-                        stats.MoodTrendLabel,
-                        stats.MoodStreakDisplay)
+                        stats.MoodTrendLabel)
                     : AppStrings.JournalOverviewInsightEmpty;
                 PracticeMoodInsightText = snapshot.PracticeMoodInsight;
                 ActivityPills = snapshot.ActivityInsights

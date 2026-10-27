@@ -17,6 +17,18 @@ public sealed class TechniqueRecommendationServiceTests
     public void ResolveFromOnboardingConcern_MapsKnownConcerns(string concern, TechniqueId expected) =>
         Assert.Equal(expected, _service.ResolveFromOnboardingConcern(concern));
 
+    // "Just exploring" enrols in the stress programme; its first suggestion was a practice that rewrites a painful experience.
+    [Fact]
+    public void A_newcomer_in_the_stress_programme_starts_with_breathing()
+    {
+        TodayRecommendationDecision decision = _service.ResolveTodayTechnique(new TodayRecommendationContext(
+            OnboardingConcernKeys.Explore,
+            ActiveProgramType: TherapyProgramType.Stress,
+            ActiveProgramWeek: 1));
+
+        Assert.Equal(TechniqueId.Breathing, decision.TechniqueId);
+    }
+
     [Fact]
     public void ResolveTodayTechnique_UsesRecentTestWithinSevenDays()
     {

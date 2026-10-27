@@ -35,7 +35,6 @@ public partial class TechniquesViewModel
             nameof(HasTherapyProgramBanner),
             nameof(ClinicalRiskBanner),
             nameof(HasClinicalRiskBanner),
-            nameof(StreakDisplay),
             nameof(PracticeEmptyTitle),
             nameof(PracticeEmptyBody),
             nameof(LoadingText),

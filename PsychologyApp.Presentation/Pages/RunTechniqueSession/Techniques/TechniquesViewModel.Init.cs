@@ -79,8 +79,7 @@ public partial class TechniquesViewModel
             {
                 long applyStarted = System.Diagnostics.Stopwatch.GetTimestamp();
                 StreakDays = snapshot.StreakDays;
-                AtRiskStreakDays = snapshot.AtRiskStreakDays;
-                IdleDays = snapshot.IdleDays;
+                IsReturning = snapshot.IsReturning;
                 HasTodayDraft = hasDraft;
                 _todayTechniqueId = recommendation.TechniqueId;
                 TodayReasonText = recommendation.ReasonText;

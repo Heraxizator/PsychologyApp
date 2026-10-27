@@ -79,8 +79,10 @@
                         <TapGestureRecognizer Command="{Binding Command}" />
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
-                        <Border WidthRequest="48" HeightRequest="48" StrokeThickness="0" StrokeShape="RoundRectangle 24" BackgroundColor="{Binding TileColor}" VerticalOptions="Center">
-                            <ui:MaterialIconView IconName="{Binding Icon}" IconSize="26" IconColor="{Binding IconColor}" />
+                        <!-- The accent of the profile page, not the colour of the group below: the card is not part of "My path". -->
+                        <Border WidthRequest="48" HeightRequest="48" StrokeThickness="0" StrokeShape="RoundRectangle 24" VerticalOptions="Center"
+                                BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
+                            <ui:MaterialIconView IconName="{Binding Icon}" IconSize="26" IconColor="{DynamicResource Primary}" />
                         </Border>
                         <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
                             <Label Text="{Binding Title}" Style="{StaticResource SectionTitleStyle}" />

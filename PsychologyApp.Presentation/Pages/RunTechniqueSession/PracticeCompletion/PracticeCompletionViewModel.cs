@@ -30,7 +30,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         IUserProgressService userProgressService,
         NextPracticeResolver nextPracticeResolver,
         ICrisisDetector crisisDetector,
-        int streakDays,
+        int activeDays,
         string? completedItemKey = null,
         long? sessionResultId = null,
         ITechniqueCatalogService? techniqueCatalog = null)
@@ -42,7 +42,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         _crisisDetector = crisisDetector;
         _moodCheckIn = new PracticeMoodCheckIn(userProgressService);
         _sessionResultId = sessionResultId;
-        StreakDays = streakDays;
+        ActiveDays = activeDays;
         RecordMoodCommand = new AsyncCommand<object?>(async parameter =>
         {
             if (parameter is int moodLevel)
@@ -65,30 +65,21 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         LoadLifetimeCountAsync().FireAndForget();
     }
 
-    public int StreakDays { get; }
+    /// <summary>Days with a practice or a check-in among the last seven, as in the profile.</summary>
+    public int ActiveDays { get; }
 
+    // Only totals are celebrated: they only grow. Days in a row are not, since one missed day takes them back to zero.
     public bool IsLifetimeMilestone => _lifetimeCount is long total && AppStrings.IsLifetimeMilestone(total);
-    public bool IsMilestone => IsLifetimeMilestone || AppStrings.IsStreakMilestone(StreakDays);
+    public bool IsMilestone => IsLifetimeMilestone;
     public string CelebrationIconName => IsLifetimeMilestone
         ? LifetimeCelebrationIconName(_lifetimeCount!.Value)
-        : StreakDays switch
-        {
-            3 => MaterialIconNames.Whatshot,
-            7 => MaterialIconNames.AutoAwesome,
-            14 => MaterialIconNames.EmojiEvents,
-            30 => MaterialIconNames.WorkspacePremium,
-            _ => MaterialIconNames.CheckCircle
-        };
+        : MaterialIconNames.CheckCircle;
     public string TitleText => IsLifetimeMilestone
         ? AppStrings.PracticeLifetimeMilestoneTitle(_lifetimeCount!.Value)
-        : IsMilestone
-            ? AppStrings.PracticeMilestoneTitle(StreakDays)
-            : AppStrings.PracticeCompletedTitle;
+        : AppStrings.PracticeCompletedTitle;
     public string BodyText => IsLifetimeMilestone
         ? AppStrings.PracticeLifetimeMilestoneBody(_lifetimeCount!.Value)
-        : IsMilestone
-            ? AppStrings.PracticeMilestoneBody(StreakDays)
-            : AppStrings.PracticeCompletedBody(StreakDays);
+        : AppStrings.PracticeCompletedBody;
 
     private static string LifetimeCelebrationIconName(long total) => total switch
     {
@@ -100,9 +91,9 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
         500 or 1000 => MaterialIconNames.WorkspacePremium,
         _ => MaterialIconNames.CheckCircle
     };
-    public string StreakValueText => StreakDays > 0 ? AppStrings.ProfileStreakCount(StreakDays) : string.Empty;
-    public string StreakLabelText => AppStrings.ProfileStreakDays;
-    public bool HasStreak => StreakDays > 0;
+    public string ActiveDaysValueText => ActiveDays > 0 ? AppStrings.ProfileActiveDaysValue(ActiveDays) : string.Empty;
+    public string ActiveDaysLabelText => AppStrings.ProfileActiveDaysLabel;
+    public bool HasActiveDays => ActiveDays > 0;
     public string MorePracticeText => AppStrings.PracticeMoreButton;
     public string OpenJournalText => AppStrings.PracticeOpenJournalRow;
     public string GoHomeText => AppStrings.PracticeGoHomeButton;
@@ -259,9 +250,9 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
             nameof(CelebrationIconName),
             nameof(TitleText),
             nameof(BodyText),
-            nameof(StreakValueText),
-            nameof(StreakLabelText),
-            nameof(HasStreak),
+            nameof(ActiveDaysValueText),
+            nameof(ActiveDaysLabelText),
+            nameof(HasActiveDays),
             nameof(MorePracticeText),
             nameof(OpenJournalText),
             nameof(GoHomeText),

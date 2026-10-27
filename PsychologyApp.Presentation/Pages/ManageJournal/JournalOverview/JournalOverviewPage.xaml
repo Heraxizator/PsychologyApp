@@ -142,8 +142,8 @@
                             LabelText="{Binding WeekAvgMoodLabel}" />
                         <ui:MetricTileView
                             Grid.Column="2"
-                            ValueText="{Binding MoodStreakDisplay}"
-                            LabelText="{Binding StreakMetricLabel}" />
+                            ValueText="{Binding CheckInDaysDisplay}"
+                            LabelText="{Binding CheckInDaysLabel}" />
                     </Grid>
 
                     <Label

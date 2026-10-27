@@ -1,10 +1,8 @@
 using System.Collections.ObjectModel;
-using System.Globalization;
 using PsychologyApp.Domain.Practice;
 using PsychologyApp.Domain.UserProgress;
 using PsychologyApp.Presentation.Entities.FilterChip;
 using PsychologyApp.Presentation.Entities.Journal;
-using PsychologyApp.Presentation.Entities.Profile;
 using PsychologyApp.Presentation.Features.ManageJournal;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Lib.Navigation;
@@ -17,8 +15,6 @@ namespace PsychologyApp.Presentation.Pages.ManageJournal.Journal;
 
 public sealed class JournalViewModel : BaseViewModel
 {
-    private const int RecentNoteCount = 3;
-
     private readonly JournalMoodLoader _journalMoodLoader;
     private readonly JournalEditorContext _editorContext;
     private readonly IDialogService _dialogService;
@@ -36,6 +32,7 @@ public sealed class JournalViewModel : BaseViewModel
     private bool _noteDirty;
     private string? _crisisOfferedForNote;
     private bool _noteLooksLikeCrisis;
+    private bool _factorsOpened;
 
     public JournalViewModel(
         JournalMoodLoader journalMoodLoader,
@@ -74,6 +71,11 @@ public sealed class JournalViewModel : BaseViewModel
             }
         });
         FlushNoteCommand = new AsyncCommand(FlushPendingNoteSaveAsync);
+        ShowFactorsCommand = new Command(() =>
+        {
+            _factorsOpened = true;
+            NotifyFactors();
+        });
         OpenLowMoodBreathCommand = new AsyncCommand(async () =>
         {
             await FlushPendingNoteSaveAsync();
@@ -164,56 +166,35 @@ public sealed class JournalViewModel : BaseViewModel
     public string OpenOverviewLabel => AppStrings.JournalOpenOverview;
     public string OpenTimelineLabel => AppStrings.JournalOpenTimeline;
     public string SlotMorningLabel => AppStrings.JournalSlotMorning;
-    public string WeekCardTitle => AppStrings.JournalWeekCardTitle;
-    public string WeekCardEmpty => AppStrings.JournalWeekCardEmpty;
-    public string WeekOpenOverviewText => AppStrings.JournalWeekOpenOverview;
-    public string CheckInsLabel => AppStrings.WeekMoodCheckInsLabel;
-    public string AverageLabel => AppStrings.WeekAvgMoodLabel;
-    public string StreakLabel => AppStrings.JournalStreakMetricLabel;
     public string PromptTitle => AppStrings.JournalPromptTitle;
-    public string RecentTitle => AppStrings.JournalRecentTitle;
-    public string RecentAllText => AppStrings.JournalRecentAll;
+    public string EmptyTitle => AppStrings.JournalEmptyTitle;
+    public string EmptyBody => AppStrings.JournalEmptyBody;
+    public string EmptyPrivacy => AppStrings.JournalEmptyPrivacy;
+    public string FactorsShowText => AppStrings.JournalFactorsShow;
 
     /// <summary>The question of the day for the day being written about, so a past day keeps the question it had.</summary>
     public string PromptText => AppStrings.JournalPrompt(JournalPrompts.For(_editorDay));
 
     private JournalMoodStats? _weekStats;
     public bool HasWeekStats => _weekStats?.HasStats == true;
-    public string WeekCheckIns => _weekStats?.CheckInCount.ToString(CultureInfo.CurrentCulture) ?? string.Empty;
-    public string WeekAverage => _weekStats?.AverageMoodDisplay ?? string.Empty;
-    public string WeekStreak => _weekStats?.MoodStreakDisplay ?? string.Empty;
 
-    private string _weekInsight = string.Empty;
-    /// <summary>What the week shows about practices and mood, when there is enough to say something.</summary>
-    public string WeekInsight
-    {
-        get => _weekInsight;
-        private set
-        {
-            if (SetProperty(ref _weekInsight, value))
-            {
-                OnPropertyChanged(nameof(HasWeekInsight));
-            }
-        }
-    }
+    /// <summary>The week's figures in one quiet line under the strip; the overview has them in full.</summary>
+    public string WeekSummaryText => _weekStats is { HasStats: true } stats
+        ? AppStrings.JournalWeekSummary(stats.CheckInCount, stats.AverageMoodDisplay)
+        : string.Empty;
 
-    public bool HasWeekInsight => WeekInsight.Length > 0;
+    /// <summary>
+    /// Nothing this week and nothing chosen yet today: the page is a single welcome with the faces on it, not empty cards. The faces
+    /// stay on this screen, so the first check-in is still one tap.
+    /// </summary>
+    public bool ShowEmptyState =>
+        !HasWeekStats && !HasMoodSelected && _editorDay == DateOnly.FromDateTime(DateTime.Today);
 
-    private IReadOnlyList<MoodNoteItem> _recentNotes = [];
-    /// <summary>The last few notes of the week, newest first: what was written comes back without opening the history.</summary>
-    public IReadOnlyList<MoodNoteItem> RecentNotes
-    {
-        get => _recentNotes;
-        private set
-        {
-            if (SetProperty(ref _recentNotes, value))
-            {
-                OnPropertyChanged(nameof(HasRecentNotes));
-            }
-        }
-    }
+    public bool ShowWeek => !ShowEmptyState;
 
-    public bool HasRecentNotes => RecentNotes.Count > 0;
+    /// <summary>The factors fold away behind one link until they are wanted; a note that already has some shows them.</summary>
+    public bool ShowFactors => _factorsOpened || ActivityChips.Any(chip => chip.IsActive);
+    public bool ShowFactorsLink => !ShowFactors;
 
     private string _onThisDay = string.Empty;
     public string OnThisDayText
@@ -247,6 +228,7 @@ public sealed class JournalViewModel : BaseViewModel
     public ICommand OpenTimelineCommand { get; }
     public ICommand SelectSlotCommand { get; }
     public ICommand FlushNoteCommand { get; }
+    public ICommand ShowFactorsCommand { get; }
     public ICommand OpenLowMoodBreathCommand { get; }
     public ICommand OpenLowMoodAnchorsCommand { get; }
     public ICommand OpenLowMoodHelpCommand { get; }
@@ -274,6 +256,7 @@ public sealed class JournalViewModel : BaseViewModel
                 OnPropertyChanged(nameof(ShowMoodQuestion));
                 OnPropertyChanged(nameof(ShowNoteEditor));
                 OnPropertyChanged(nameof(MoodSavedStatus));
+                NotifyEmptyState();
             }
         }
     }
@@ -332,16 +315,13 @@ public sealed class JournalViewModel : BaseViewModel
             nameof(ShowMoodQuestion),
             nameof(ShowNoteEditor),
             nameof(CanGoNextWeek),
-            nameof(WeekCardTitle),
-            nameof(WeekCardEmpty),
-            nameof(WeekOpenOverviewText),
-            nameof(CheckInsLabel),
-            nameof(AverageLabel),
-            nameof(StreakLabel),
             nameof(PromptTitle),
             nameof(PromptText),
-            nameof(RecentTitle),
-            nameof(RecentAllText));
+            nameof(EmptyTitle),
+            nameof(EmptyBody),
+            nameof(EmptyPrivacy),
+            nameof(FactorsShowText),
+            nameof(WeekSummaryText));
         foreach (JournalActivityChip chip in ActivityChips)
         {
             chip.Label = JournalNoteFactors.GetLabel(chip.Key);
@@ -380,6 +360,7 @@ public sealed class JournalViewModel : BaseViewModel
     {
         await FlushPendingNoteSaveAsync();
         _editorDay = day;
+        _factorsOpened = false;
         DateOnly today = DateOnly.FromDateTime(DateTime.Today);
         if (_editorDay > _weekStripEnd || _editorDay < _weekStripEnd.AddDays(-6))
         {
@@ -398,6 +379,7 @@ public sealed class JournalViewModel : BaseViewModel
 
         await FlushPendingNoteSaveAsync();
         _editorSlot = slot;
+        _factorsOpened = false;
         SyncSlotFilters();
         await LoadAsync();
     }
@@ -411,6 +393,10 @@ public sealed class JournalViewModel : BaseViewModel
         }
     }
 
+    private void NotifyEmptyState() => Notify(nameof(ShowEmptyState), nameof(ShowWeek));
+
+    private void NotifyFactors() => Notify(nameof(ShowFactors), nameof(ShowFactorsLink));
+
     private void NotifyLowMoodSupport() =>
         Notify(nameof(ShowLowMoodSupport), nameof(ShowLowMoodPractices), nameof(LowMoodBody));
 
@@ -420,6 +406,8 @@ public sealed class JournalViewModel : BaseViewModel
         {
             chip.IsActive = JournalNoteFactors.HasFactor(JournalNote, chip.Key);
         }
+
+        NotifyFactors();
     }
 
     private void CancelNoteAutosave()
@@ -528,11 +516,10 @@ public sealed class JournalViewModel : BaseViewModel
         }
 
         _weekStats = snapshot.Stats;
-        WeekInsight = snapshot.PracticeMoodInsight ?? string.Empty;
         OnThisDayText = snapshot.OnThisDayLastYearText ?? string.Empty;
-        RecentNotes = [.. snapshot.TimelineEntries.Where(entry => entry.HasNote).Take(RecentNoteCount)];
 
-        Notify(nameof(HasWeekStats), nameof(WeekCheckIns), nameof(WeekAverage), nameof(WeekStreak), nameof(PromptText));
+        Notify(nameof(HasWeekStats), nameof(WeekSummaryText), nameof(PromptText));
+        NotifyEmptyState();
         OnPropertyChanged(nameof(DayHeaderText));
         NotifyLowMoodSupport();
         OnPropertyChanged(nameof(ShowMoodQuestion));

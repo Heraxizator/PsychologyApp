@@ -63,8 +63,6 @@ public sealed class UserViewModelTests
             TopViewModelTestHelpers.CreateQuoteCommandsFactory(quotService.Object),
             new ProfileScreenCoordinator(new UserProfileRefreshCoordinator()),
             TopViewModelTestHelpers.CreateLanguageReloader(quotService.Object, preferences.Object),
-            Mock.Of<IClinicalCareService>(),
-            new ProfileWeekDaysLoader(progress.Object),
             preferences.Object);
 
         Assert.Equal(4, viewModel.Techniques.Count);
@@ -106,8 +104,6 @@ public sealed class UserViewModelTests
             TopViewModelTestHelpers.CreateQuoteCommandsFactory(quotService.Object),
             new ProfileScreenCoordinator(new UserProfileRefreshCoordinator()),
             TopViewModelTestHelpers.CreateLanguageReloader(quotService.Object, preferences.Object),
-            Mock.Of<IClinicalCareService>(),
-            new ProfileWeekDaysLoader(progress.Object),
             preferences.Object);
 
         await viewModel.InitAsync();
@@ -142,7 +138,6 @@ public sealed class TechniquesViewModelTests
     {
         Mock<IUserProgressService> progress = new();
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
-        progress.Setup(p => p.GetAtRiskStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
         progress.Setup(p => p.GetLastTechniqueCompletionDateAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync((DateTime?)null);
         progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
@@ -185,7 +180,6 @@ public sealed class TechniquesViewModelTests
         progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
         progress.Setup(p => p.GetRecentSessionResultsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(2);
-        progress.Setup(p => p.GetAtRiskStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
         progress.Setup(p => p.GetLastTechniqueCompletionDateAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(DateTime.UtcNow);
         progress.Setup(p => p.GetMostRecentTestResultAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
@@ -237,7 +231,6 @@ public sealed class TechniquesViewModelTests
         progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
         progress.Setup(p => p.GetRecentSessionResultsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).ReturnsAsync([]);
         progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
-        progress.Setup(p => p.GetAtRiskStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
         progress.Setup(p => p.GetLastTechniqueCompletionDateAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync((DateTime?)null);
         progress.Setup(p => p.GetMostRecentTestResultAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))

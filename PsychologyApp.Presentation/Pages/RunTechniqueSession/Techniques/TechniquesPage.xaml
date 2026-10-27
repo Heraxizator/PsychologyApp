@@ -103,8 +103,6 @@
 
                     <today:TodayPracticeRowView
                         CaptionText="{Binding TodayForYouLabel}"
-                        StreakText="{Binding StreakDisplay}"
-                        HasStreak="{Binding HasStreak}"
                         IconName="{Binding TodayTechniqueItem.IconName}"
                         Title="{Binding TodayTechniqueItem.Title}"
                         Subtitle="{Binding TodayTechniqueItem.Subtitle}"

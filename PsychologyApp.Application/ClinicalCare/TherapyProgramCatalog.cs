@@ -36,7 +36,9 @@ public static class TherapyProgramCatalog
             (TherapyProgramType.Mood, 3) => [TechniqueId.Hack, TechniqueId.Comparison, TechniqueId.SmallStep],
             (TherapyProgramType.Mood, _) => [TechniqueId.SelfCompassion, TechniqueId.Observer, TechniqueId.Future],
 
-            (TherapyProgramType.Stress, 1) => [TechniqueId.Experience, TechniqueId.Breathing, TechniqueId.Grounding],
+            // Breathing first: this is also the programme of someone who only came to look around, and their first practice
+            // should not be rewriting a painful experience.
+            (TherapyProgramType.Stress, 1) => [TechniqueId.Breathing, TechniqueId.Grounding, TechniqueId.Experience],
             (TherapyProgramType.Stress, 2) => [TechniqueId.Check, TechniqueId.Hack, TechniqueId.Observer],
             (TherapyProgramType.Stress, 3) => [TechniqueId.Paper, TechniqueId.Anchor, TechniqueId.Breathing],
             _ => [TechniqueId.Grounding, TechniqueId.Experience, TechniqueId.SmallStep]

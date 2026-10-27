@@ -12,26 +12,6 @@ public sealed class StreakMilestoneCopyTests
     }
 
     [Theory]
-    [InlineData(3)]
-    [InlineData(7)]
-    [InlineData(14)]
-    [InlineData(30)]
-    public void IsStreakMilestone_RecognizesConfiguredDays(int streak)
-    {
-        Assert.True(AppStrings.IsStreakMilestone(streak));
-        Assert.NotEqual(AppStrings.PracticeCompletedTitle, AppStrings.PracticeMilestoneTitle(streak));
-        Assert.NotEqual(AppStrings.PracticeCompletedBody(streak), AppStrings.PracticeMilestoneBody(streak));
-    }
-
-    [Fact]
-    public void IsStreakMilestone_IgnoresOtherDays()
-    {
-        Assert.False(AppStrings.IsStreakMilestone(1));
-        Assert.False(AppStrings.IsStreakMilestone(8));
-        Assert.Equal(AppStrings.PracticeCompletedTitle, AppStrings.PracticeMilestoneTitle(5));
-    }
-
-    [Theory]
     [InlineData(10)]
     [InlineData(25)]
     [InlineData(50)]
@@ -43,7 +23,7 @@ public sealed class StreakMilestoneCopyTests
     {
         Assert.True(AppStrings.IsLifetimeMilestone(total));
         Assert.NotEqual(AppStrings.PracticeCompletedTitle, AppStrings.PracticeLifetimeMilestoneTitle(total));
-        Assert.NotEqual(AppStrings.PracticeCompletedBody(0), AppStrings.PracticeLifetimeMilestoneBody(total));
+        Assert.NotEqual(AppStrings.PracticeCompletedBody, AppStrings.PracticeLifetimeMilestoneBody(total));
     }
 
     [Fact]

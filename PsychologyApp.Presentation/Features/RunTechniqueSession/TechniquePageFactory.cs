@@ -21,7 +21,7 @@ public interface ITechniquePageFactory
     TechniqueSessionPage CreateTechniqueSessionPage(TechniqueId techniqueId, INavigation hostNavigation);
     TechniqueDialoguePage CreateTechniqueDialoguePage(TechniqueId techniqueId, INavigation hostNavigation);
     bool HasDialogue(TechniqueId techniqueId);
-    PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null, long? sessionResultId = null);
+    PracticeCompletionPage CreatePracticeCompletionPage(int activeDays, string? completedItemKey = null, long? sessionResultId = null);
 }
 
 public sealed class TechniquePageFactory(
@@ -53,6 +53,6 @@ public sealed class TechniquePageFactory(
 
     public bool HasDialogue(TechniqueId techniqueId) => conversationScenarioProvider.HasScenario(techniqueId);
 
-    public PracticeCompletionPage CreatePracticeCompletionPage(int streakDays, string? completedItemKey = null, long? sessionResultId = null) =>
-        new(practiceCompletionViewModelFactory, streakDays, completedItemKey, sessionResultId);
+    public PracticeCompletionPage CreatePracticeCompletionPage(int activeDays, string? completedItemKey = null, long? sessionResultId = null) =>
+        new(practiceCompletionViewModelFactory, activeDays, completedItemKey, sessionResultId);
 }

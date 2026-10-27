@@ -17,6 +17,20 @@
              Shell.NavBarIsVisible="True"
              Title="{Binding PageTitle}">
 
+    <!-- The colours of MoodPalette, for the drawing of a week on the empty page. -->
+    <ContentPage.Resources>
+        <Color x:Key="MoodFill1Light">#F2B8B0</Color>
+        <Color x:Key="MoodFill1Dark">#7A3B37</Color>
+        <Color x:Key="MoodFill2Light">#F6CFA3</Color>
+        <Color x:Key="MoodFill2Dark">#7A5A32</Color>
+        <Color x:Key="MoodFill3Light">#E6E2D3</Color>
+        <Color x:Key="MoodFill3Dark">#4A4A44</Color>
+        <Color x:Key="MoodFill4Light">#BFE3D6</Color>
+        <Color x:Key="MoodFill4Dark">#2F6B5C</Color>
+        <Color x:Key="MoodFill5Light">#8FD1BE</Color>
+        <Color x:Key="MoodFill5Dark">#1F6E5C</Color>
+    </ContentPage.Resources>
+
     <!-- The same bar as the other tabs: the title on the left, the overview and the history as icons. The glyph goes through a
          FontImageSource: the icon extension set straight on IconImageSource draws nothing in the Android toolbar. -->
     <ContentPage.ToolbarItems>
@@ -43,12 +57,93 @@
                 <behaviors:StaggerChildrenBehavior />
             </VerticalStackLayout.Behaviors>
 
-            <!-- The week first, as a calendar: the card below is the check-in of the day chosen here. -->
-            <journalStrip:JournalWeekStripView
-                CaptionText=""
-                ItemsSource="{Binding WeekDays}"
-                SelectDayCommand="{Binding SelectDayCommand}"
-                IsInteractive="True" />
+            <!-- Nothing this week yet: one welcome instead of empty cards, drawn like the empty chat list. The faces are on the card
+                 under it, so the first check-in is still one tap. -->
+            <VerticalStackLayout IsVisible="{Binding ShowEmptyState}" Spacing="16" Padding="12,8,12,0">
+                <Border
+                    WidthRequest="264"
+                    HorizontalOptions="Center"
+                    Padding="20,18"
+                    StrokeThickness="0"
+                    AutomationProperties.IsInAccessibleTree="False"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceElevatedLight}, Dark={StaticResource SurfaceElevatedDark}}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="20" />
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Spacing="16">
+                        <Grid ColumnDefinitions="*,*,*,*,*,*,*" HeightRequest="64">
+                            <Ellipse Grid.Column="0" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="End"
+                                     Margin="0,0,0,20"
+                                     Fill="{AppThemeBinding Light={StaticResource MoodFill3Light}, Dark={StaticResource MoodFill3Dark}}" />
+                            <Ellipse Grid.Column="1" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="End"
+                                     Margin="0,0,0,10"
+                                     Fill="{AppThemeBinding Light={StaticResource MoodFill2Light}, Dark={StaticResource MoodFill2Dark}}" />
+                            <Ellipse Grid.Column="2" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="End"
+                                     Margin="0,0,0,20"
+                                     Fill="{AppThemeBinding Light={StaticResource MoodFill3Light}, Dark={StaticResource MoodFill3Dark}}" />
+                            <Ellipse Grid.Column="3" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="End"
+                                     Margin="0,0,0,30"
+                                     Fill="{AppThemeBinding Light={StaticResource MoodFill4Light}, Dark={StaticResource MoodFill4Dark}}" />
+                            <Ellipse Grid.Column="4" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="End"
+                                     Margin="0,0,0,20"
+                                     Fill="{AppThemeBinding Light={StaticResource MoodFill3Light}, Dark={StaticResource MoodFill3Dark}}" />
+                            <Ellipse Grid.Column="5" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="End"
+                                     Margin="0,0,0,40"
+                                     Fill="{AppThemeBinding Light={StaticResource MoodFill5Light}, Dark={StaticResource MoodFill5Dark}}" />
+                            <Ellipse Grid.Column="6" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="End"
+                                     Margin="0,0,0,30"
+                                     Fill="{AppThemeBinding Light={StaticResource MoodFill4Light}, Dark={StaticResource MoodFill4Dark}}" />
+                        </Grid>
+                        <VerticalStackLayout Spacing="7">
+                            <BoxView WidthRequest="180" HeightRequest="8" CornerRadius="4" HorizontalOptions="Start" Color="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}" />
+                            <BoxView WidthRequest="120" HeightRequest="8" CornerRadius="4" HorizontalOptions="Start" Color="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}" />
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding EmptyTitle}" Style="{StaticResource PageTitleStyle}" HorizontalTextAlignment="Center" />
+                    <Label
+                        Text="{Binding EmptyBody}"
+                        Style="{StaticResource BodyStyle}"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                        HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+
+                <!-- A grid, not a horizontal stack: the sentence has to wrap on a narrow phone. -->
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" HorizontalOptions="Center" Padding="8,0">
+                    <ui:MaterialIconView
+                        IconName="Lock"
+                        IconSize="16"
+                        IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                        VerticalOptions="Start"
+                        Margin="0,2,0,0" />
+                    <Label Grid.Column="1" Text="{Binding EmptyPrivacy}" Style="{StaticResource CaptionStyle}" LineBreakMode="WordWrap" />
+                </Grid>
+            </VerticalStackLayout>
+
+            <!-- The week first, as a calendar: the card below is the check-in of the day chosen here. Its figures are one quiet line;
+                 the overview has them in full. -->
+            <!-- In a card like everything on the other tabs: seven loose tiles on the grey read as a different screen. -->
+            <Border IsVisible="{Binding ShowWeek}" Style="{StaticResource BrandCardStyle}" Margin="0" Padding="12,14">
+                <VerticalStackLayout Spacing="8">
+                    <journalStrip:JournalWeekStripView
+                        CaptionText=""
+                        ItemsSource="{Binding WeekDays}"
+                        SelectDayCommand="{Binding SelectDayCommand}"
+                        IsInteractive="True" />
+                    <Label
+                        IsVisible="{Binding HasWeekStats}"
+                        Margin="6,0"
+                        Text="{Binding WeekSummaryText}"
+                        Style="{StaticResource CaptionStyle}"
+                        SemanticProperties.Description="{Binding WeekSummaryText}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenOverviewCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </VerticalStackLayout>
+            </Border>
 
             <!-- The check-in as a card, like the first card of the other tabs: the day and the slot on top, the question, the faces. -->
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
@@ -86,14 +181,24 @@
                         QuestionText=""
                         RecordMoodCommand="{Binding RecordMoodCommand}"
                         SelectedMoodLevel="{Binding SelectedMoodLevel}"
-                        TodayMoodDisplay="{Binding MoodSavedStatus}"
-                        HasTodayMood="{Binding HasMoodSelected}"
+                        TodayMoodDisplay=""
+                        HasTodayMood="False"
                         MoodHistorySummary=""
                         HasMoodHistorySummary="False">
                         <mood:MoodStripView.Behaviors>
                             <behaviors:RevealOnAppearingBehavior />
                         </mood:MoodStripView.Behaviors>
                     </mood:MoodStripView>
+
+                    <!-- A quiet status: the chosen face already shows the answer; large blue text was the loudest thing on the page. -->
+                    <Grid IsVisible="{Binding HasMoodSelected}" ColumnDefinitions="Auto,*" ColumnSpacing="6">
+                        <ui:MaterialIconView
+                            IconName="CheckCircle"
+                            IconSize="16"
+                            VerticalOptions="Center"
+                            IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        <Label Grid.Column="1" Text="{Binding MoodSavedStatus}" Style="{StaticResource CaptionStyle}" VerticalOptions="Center" />
+                    </Grid>
                 </VerticalStackLayout>
             </Border>
 
@@ -115,7 +220,22 @@
                         BodyText="{Binding JournalNote, Mode=TwoWay}"
                         UnfocusedCommand="{Binding FlushNoteCommand}" />
 
+                    <Label
+                        IsVisible="{Binding ShowFactorsLink}"
+                        Text="{Binding FactorsShowText}"
+                        Style="{StaticResource BodyStyle}"
+                        FontFamily="{StaticResource MediumFontFamily}"
+                        MinimumHeightRequest="44"
+                        VerticalTextAlignment="Center"
+                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
+                        SemanticProperties.Description="{Binding FactorsShowText}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ShowFactorsCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+
                     <FlexLayout
+                        IsVisible="{Binding ShowFactors}"
                         Wrap="Wrap"
                         Direction="Row"
                         AlignItems="Start"
@@ -194,86 +314,12 @@
                 </VerticalStackLayout>
             </Border>
 
-            <!-- The week at a glance, the same figures as the overview; before there are any, what this place will show. -->
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                        <Border Style="{StaticResource IconTileStyle}">
-                            <ui:MaterialIconView WidthRequest="28" HeightRequest="28" HorizontalOptions="Center" VerticalOptions="Center" IconName="Insights" />
-                        </Border>
-                        <Label Grid.Column="1" Text="{Binding WeekCardTitle}" Style="{StaticResource SectionTitleStyle}" VerticalOptions="Center" />
-                    </Grid>
-                    <Grid IsVisible="{Binding HasWeekStats}" ColumnDefinitions="*,*,*" ColumnSpacing="{StaticResource CompactSpacing}">
-                        <ui:MetricTileView Grid.Column="0" ValueText="{Binding WeekCheckIns}" LabelText="{Binding CheckInsLabel}" TapCommand="{Binding OpenOverviewCommand}" />
-                        <ui:MetricTileView Grid.Column="1" ValueText="{Binding WeekAverage}" LabelText="{Binding AverageLabel}" TapCommand="{Binding OpenOverviewCommand}" />
-                        <ui:MetricTileView Grid.Column="2" ValueText="{Binding WeekStreak}" LabelText="{Binding StreakLabel}" TapCommand="{Binding OpenOverviewCommand}" />
-                    </Grid>
-                    <Label IsVisible="{Binding HasWeekInsight}" Text="{Binding WeekInsight}" Style="{StaticResource BodyStyle}" />
-                    <Label Text="{Binding WeekCardEmpty}" Style="{StaticResource BodyStyle}">
-                        <Label.Triggers>
-                            <DataTrigger TargetType="Label" Binding="{Binding HasWeekStats}" Value="True">
-                                <Setter Property="IsVisible" Value="False" />
-                            </DataTrigger>
-                        </Label.Triggers>
-                    </Label>
-                    <Grid ColumnDefinitions="*,Auto" MinimumHeightRequest="44" SemanticProperties.Description="{Binding WeekOpenOverviewText}">
-                        <Grid.Behaviors>
-                            <behaviors:PressFeedbackBehavior />
-                        </Grid.Behaviors>
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding OpenOverviewCommand}" />
-                        </Grid.GestureRecognizers>
-                        <Label Text="{Binding WeekOpenOverviewText}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource MediumFontFamily}" VerticalOptions="Center"
-                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
-                        <ui:MaterialIconView Grid.Column="1" IconName="ChevronRight" IconSize="22" VerticalOptions="Center"
-                                             IconColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
-                    </Grid>
-                </VerticalStackLayout>
-            </Border>
-
-            <Border IsVisible="{Binding HasOnThisDay}" Style="{StaticResource BrandCardStyle}" Margin="0">
-                <Label Text="{Binding OnThisDayText}" Style="{StaticResource BodyStyle}" />
-            </Border>
-
-            <!-- What was written lately comes back here; the full history is one tap away. -->
-            <Border IsVisible="{Binding HasRecentNotes}" Style="{StaticResource BrandCardStyle}" Margin="0">
-                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                        <Border Style="{StaticResource IconTileStyle}">
-                            <ui:MaterialIconView WidthRequest="28" HeightRequest="28" HorizontalOptions="Center" VerticalOptions="Center" IconName="History" />
-                        </Border>
-                        <Label Grid.Column="1" Text="{Binding RecentTitle}" Style="{StaticResource SectionTitleStyle}" VerticalOptions="Center" />
-                    </Grid>
-                    <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding RecentNotes}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="profile:MoodNoteItem">
-                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" SemanticProperties.Description="{Binding NoteText}">
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding OpenTimelineCommand, Source={RelativeSource AncestorType={x:Type vm:JournalViewModel}}, x:DataType=vm:JournalViewModel}" />
-                                    </Grid.GestureRecognizers>
-                                    <Label Text="{Binding MoodGlyph}" FontSize="24" VerticalOptions="Start" />
-                                    <VerticalStackLayout Grid.Column="1" Spacing="0">
-                                        <Label Text="{Binding DateText}" Style="{StaticResource CaptionStyle}" />
-                                        <Label Text="{Binding NoteText}" Style="{StaticResource BodyStyle}" MaxLines="2" LineBreakMode="TailTruncation" />
-                                    </VerticalStackLayout>
-                                </Grid>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </VerticalStackLayout>
-                    <Grid ColumnDefinitions="*,Auto" MinimumHeightRequest="44" SemanticProperties.Description="{Binding RecentAllText}">
-                        <Grid.Behaviors>
-                            <behaviors:PressFeedbackBehavior />
-                        </Grid.Behaviors>
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding OpenTimelineCommand}" />
-                        </Grid.GestureRecognizers>
-                        <Label Text="{Binding RecentAllText}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource MediumFontFamily}" VerticalOptions="Center"
-                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
-                        <ui:MaterialIconView Grid.Column="1" IconName="ChevronRight" IconSize="22" VerticalOptions="Center"
-                                             IconColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
-                    </Grid>
-                </VerticalStackLayout>
-            </Border>
+            <Label
+                IsVisible="{Binding HasOnThisDay}"
+                Text="{Binding OnThisDayText}"
+                Style="{StaticResource CaptionStyle}"
+                HorizontalTextAlignment="Center"
+                Margin="12,0" />
         </VerticalStackLayout>
     </ScrollView>
 

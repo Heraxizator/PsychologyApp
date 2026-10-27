@@ -7,15 +7,10 @@ public partial class UserViewModel
 {
     public string PageTitle => AppStrings.ProfileTitle;
     public string LoadingText => AppStrings.ProfileLoadingText;
-    public string JournalLabel => AppStrings.JournalTitle;
-    public string OpenJournalLabel => AppStrings.OpenJournalLabel;
-    public string OptionsLabel => AppStrings.OptionsTitle;
-    public string OptionsCardSubtitle => AppStrings.ProfileOptionsCardSubtitle;
-    public string UserLabel => AppStrings.ProfileUserLabel;
     public string TechniquesCompletedLabel => AppStrings.ProfileTechniquesCompleted;
     public string TestsCompletedLabel => AppStrings.ProfileTestsCompleted;
-    public string StreakLabel => AppStrings.ProfileStreakDays;
-    public string StreakHintText => AppStrings.ProfileStreakHint;
+    public string ActiveDaysLabel => AppStrings.ProfileActiveDaysLabel;
+    public string ActiveDaysHintText => AppStrings.ProfileActiveDaysHint;
     public string LastPracticeDisplay { get; private set; } = string.Empty;
     public bool HasLastPractice => !string.IsNullOrWhiteSpace(LastPracticeDisplay);
     public string RecommendedLabel => AppStrings.ProfileRecommended;
@@ -51,15 +46,10 @@ public partial class UserViewModel
         Notify(
             nameof(PageTitle),
             nameof(LoadingText),
-            nameof(JournalLabel),
-            nameof(OpenJournalLabel),
-            nameof(OptionsLabel),
-            nameof(OptionsCardSubtitle),
-            nameof(UserLabel),
             nameof(TechniquesCompletedLabel),
             nameof(TestsCompletedLabel),
-            nameof(StreakLabel),
-            nameof(StreakHintText),
+            nameof(ActiveDaysLabel),
+            nameof(ActiveDaysHintText),
             nameof(LastPracticeDisplay),
             nameof(HasLastPractice),
             nameof(RecommendedLabel),
@@ -84,17 +74,7 @@ public partial class UserViewModel
             nameof(ShowPracticeHistoryEmpty),
             nameof(PracticeHistoryActionText),
             nameof(ProfileRiskCheckLabel),
-            nameof(ProfileRiskCheckSubtitle),
-            nameof(ClinicalScorecardTitle),
-            nameof(ClinicalScorecardEmpty),
-            nameof(WeekRangeSubtitle),
-            nameof(WeekSummaryText),
-            nameof(WeekDays),
-            nameof(ShowMoodCheckInBanner),
-            nameof(MoodCheckInBannerText),
-            nameof(HasClinicalScorecard),
-            nameof(HasClinicalScorecardMetrics),
-            nameof(ShowClinicalScorecardEmpty));
+            nameof(ProfileRiskCheckSubtitle));
         InitTechniques();
 
         string currentLanguage = _preferences.PersistedLanguage;

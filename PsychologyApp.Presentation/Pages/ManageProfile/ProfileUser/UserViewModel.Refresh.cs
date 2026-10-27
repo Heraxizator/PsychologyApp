@@ -50,11 +50,9 @@ public partial class UserViewModel
                 return;
             }
 
-            await RefreshClinicalScorecardAsync(cancellationToken);
-
             TechniquesCompletedCount = result.Stats.TechniquesCompletedCount;
             TestsCompletedCount = result.Stats.TestsCompletedCount;
-            StreakCount = result.Stats.StreakCount;
+            ActiveDaysCount = result.Stats.ActiveDaysCount;
             LastPracticeDisplay = result.Stats.LastPracticeDisplay;
             OnPropertyChanged(nameof(LastPracticeDisplay));
             OnPropertyChanged(nameof(HasLastPractice));
