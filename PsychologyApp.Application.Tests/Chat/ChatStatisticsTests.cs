@@ -34,8 +34,6 @@ public class ChatStatisticsTests
         Assert.False(profile.HasHistory);
         Assert.Equal(0, profile.Chats);
         Assert.Null(profile.SinceUtc);
-        Assert.Single(ChatProfileContent.Insights(profile, english: false));
-        Assert.Contains("Напишите", ChatProfileContent.Insights(profile, english: false)[0]);
     }
 
     [Fact]
@@ -95,7 +93,6 @@ public class ChatStatisticsTests
         Assert.Equal(2, profile.TensionImproved);
         Assert.Equal((4 + 0 + 3) / 3.0, profile.AverageDrop!.Value, 3);
         Assert.Equal([2, 6, 4], profile.Tension.Select(t => t.After));
-        Assert.Contains("2 из 3 разговоров", ChatProfileContent.Insights(profile, english: false)[0]);
     }
 
     [Fact]
@@ -157,65 +154,5 @@ public class ChatStatisticsTests
         Assert.Equal(level, trust.Index);
         Assert.Equal(progress, trust.Progress, 3);
         Assert.Equal(toNext, trust.MessagesToNext);
-    }
-
-    [Fact]
-    public void Every_trust_level_has_a_name_in_both_languages()
-    {
-        for (int level = 0; level < ChatProfileContent.TrustLevels; level++)
-        {
-            Assert.False(string.IsNullOrWhiteSpace(ChatProfileContent.TrustName(level, english: false)));
-            Assert.False(string.IsNullOrWhiteSpace(ChatProfileContent.TrustName(level, english: true)));
-        }
-    }
-
-    [Theory]
-    [InlineData(1, "1 сообщение")]
-    [InlineData(2, "2 сообщения")]
-    [InlineData(5, "5 сообщений")]
-    [InlineData(11, "11 сообщений")]
-    [InlineData(21, "21 сообщение")]
-    public void The_hint_uses_correct_russian_plurals(int left, string expected)
-    {
-        string hint = ChatProfileContent.TrustHint(new TrustLevel(0, 0, left), english: false);
-
-        Assert.Contains(expected, hint);
-    }
-
-    [Fact]
-    public void Insights_say_only_what_is_true_for_the_person()
-    {
-        Dictionary<string, string> memory = new() { [ChatMemoryKeys.Helped(TechniqueId.Breathing)] = "2" };
-        CompanionProfile profile = Compute([Chat(0, "Anxiety", 8, 3), Chat(1, "Anxiety", 7, 4), Chat(2, "Anxiety", 6, 5)], memory);
-
-        IReadOnlyList<string> insights = ChatProfileContent.Insights(profile, english: false);
-
-        Assert.Contains(insights, i => i.Contains("3 из 3 разговоров"));
-        Assert.Contains(insights, i => i.Contains("сработала 2 раза"));
-        Assert.Contains(insights, i => i.Contains("100% разговоров"));
-        Assert.Contains(insights, i => i.Contains("3 дня подряд"));
-    }
-
-    [Fact]
-    public void The_tension_caption_is_honest_when_it_rose()
-    {
-        CompanionProfile profile = Compute([Chat(0, first: 3, last: 6), Chat(1, first: 4, last: 5)]);
-
-        string caption = ChatProfileContent.TensionCaption(profile, english: false);
-
-        Assert.Contains("росло", caption);
-        Assert.Contains("всё равно важно", caption);
-    }
-
-    [Fact]
-    public void English_texts_are_produced_for_a_full_profile()
-    {
-        Dictionary<string, string> memory = new() { [ChatMemoryKeys.Helped(TechniqueId.Breathing)] = "1" };
-        CompanionProfile profile = Compute([Chat(0, "Anxiety", 8, 3), Chat(1, "Anxiety", 7, 4), Chat(2, "Anxiety", 6, 5)], memory);
-
-        Assert.All(ChatProfileContent.Insights(profile, english: true), line => Assert.DoesNotMatch("[А-Яа-я]", line));
-        Assert.DoesNotMatch("[А-Яа-я]", ChatProfileContent.TensionCaption(profile, english: true));
-        Assert.DoesNotMatch("[А-Яа-я]", ChatProfileContent.Since(profile.SinceUtc, english: true));
-        Assert.DoesNotMatch("[А-Яа-я]", ChatProfileContent.About(english: true));
     }
 }

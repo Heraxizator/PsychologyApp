@@ -382,6 +382,7 @@ public sealed class ChatService(
     private void ApplyReply(ChatSessionDTO session, CompanionReply reply, DateTime now, string? firstText)
     {
         bool emotionWasUnknown = string.IsNullOrWhiteSpace(session.Emotion) || session.Emotion == nameof(CompanionEmotion.Unknown);
+        bool themeWasUnknown = string.IsNullOrWhiteSpace(session.Theme);
 
         session.StateJson = reply.State.Serialize();
         session.UpdatedAt = now;
@@ -403,6 +404,14 @@ public sealed class ChatService(
         {
             string source = firstText ?? reply.State.RecentTexts.FirstOrDefault() ?? session.Title;
             session.Title = CompanionDialogueContent.Title(reply.Emotion, reply.Theme, source, language.IsEnglish);
+        }
+        else if (themeWasUnknown && reply.Theme is { } laterTheme
+            && Enum.TryParse(session.Emotion, out CompanionEmotion named) && named != CompanionEmotion.Unknown
+            && session.Title == CompanionDialogueContent.Title(named, null, session.Title, language.IsEnglish))
+        {
+            // The chat was named by its feeling before its theme was heard ("Тревога"): the theme joins the title, so two
+            // such chats can be told apart. A title the person typed is theirs and stays.
+            session.Title = CompanionDialogueContent.Title(named, laterTheme, session.Title, language.IsEnglish);
         }
     }
 

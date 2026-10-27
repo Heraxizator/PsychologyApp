@@ -168,6 +168,27 @@ public sealed class ChatListViewModelTests
         Assert.Equal([2L], viewModel.Chats.Select(c => c.Id));
     }
 
+    // The "more" button is the visible way to the swipe's actions; deleting from it must still ask first.
+    [Fact]
+    public async Task TheMoreMenuRenamesAndDeletesWithTheSameQuestions()
+    {
+        _sessions = [Session(1, title: "Old")];
+        ChatListViewModel viewModel = Create();
+        await viewModel.RefreshAsync();
+        viewModel.PromptAsync = (_, _, _, _, _) => Task.FromResult<string?>("New name");
+        _chat.Setup(c => c.RenameAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+        _dialogs.Setup(d => d.AskAsync(It.IsAny<string?>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(false);
+
+        _dialogs.Setup(d => d.PickOptionAsync(It.IsAny<string>(), It.IsAny<IReadOnlyList<string>>(), It.IsAny<string>())).ReturnsAsync(AppStrings.ChatRename);
+        await VmTestHelpers.RunAsync(viewModel.Chats[0].MenuCommand);
+        _dialogs.Setup(d => d.PickOptionAsync(It.IsAny<string>(), It.IsAny<IReadOnlyList<string>>(), It.IsAny<string>())).ReturnsAsync(AppStrings.ChatDelete);
+        await VmTestHelpers.RunAsync(viewModel.Chats[0].MenuCommand);
+
+        _chat.Verify(c => c.RenameAsync(1, "New name", It.IsAny<CancellationToken>()), Times.Once);
+        _dialogs.Verify(d => d.AskAsync(It.IsAny<string?>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+        _chat.Verify(c => c.DeleteAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
+
     [Fact]
     public async Task RenamingUsesTheEnteredNameAndIgnoresACancelOrBlank()
     {

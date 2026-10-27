@@ -19,6 +19,7 @@ public static partial class AppStrings
 
     public static string ChatRename => R(nameof(ChatRename));
     public static string ChatDelete => R(nameof(ChatDelete));
+    public static string ChatMore => R(nameof(ChatMore));
     public static string ChatRenameTitle => R(nameof(ChatRenameTitle));
     public static string ChatRenameMessage => R(nameof(ChatRenameMessage));
     public static string ChatRenameAccept => R(nameof(ChatRenameAccept));

@@ -4147,4 +4147,7 @@
   <data name="ChatProfileSettings" xml:space="preserve">
     <value>聊天设置</value>
   </data>
+  <data name="ChatMore" xml:space="preserve">
+    <value>更多</value>
+  </data>
 </root>

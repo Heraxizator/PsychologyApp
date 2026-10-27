@@ -442,6 +442,25 @@ public class ChatServiceTests
     }
 
 
+    // Two chats both called "Тревога" could not be told apart in the list; the theme heard later tells them apart.
+    [Fact]
+    public async Task A_theme_heard_after_the_chat_was_named_joins_its_title_unless_the_person_renamed_it()
+    {
+        ChatService service = CreateService();
+        long id = (await service.StartNewChatAsync()).Session.Id;
+        ChatTurnResult first = await service.SendTextAsync(id, "Мне тревожно");
+        Assert.Equal("Тревога", first.Session.Title);
+
+        ChatTurnResult later = await service.SendTextAsync(id, "Всё из-за работы, начальник давит");
+        Assert.Equal("Тревога · работа", later.Session.Title);
+
+        long renamed = (await service.StartNewChatAsync()).Session.Id;
+        await service.SendTextAsync(renamed, "Мне тревожно");
+        await service.RenameAsync(renamed, "Мой разговор");
+        await service.SendTextAsync(renamed, "Всё из-за работы, начальник давит");
+        Assert.Equal("Мой разговор", (await service.GetChatAsync(renamed))!.Title);
+    }
+
     [Fact]
     public async Task A_manual_title_survives_later_taps_on_suggestion_chips()
     {

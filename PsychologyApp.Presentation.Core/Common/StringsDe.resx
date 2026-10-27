@@ -4147,4 +4147,7 @@
   <data name="ChatProfileSettings" xml:space="preserve">
     <value>Chat-Einstellungen</value>
   </data>
+  <data name="ChatMore" xml:space="preserve">
+    <value>Mehr</value>
+  </data>
 </root>

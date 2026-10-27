@@ -29,9 +29,10 @@
             </Ellipse.Fill>
         </Ellipse>
 
+        <!-- Speech bubbles, as on its tab: the head with a gear it had is the icon of the Tests tab. -->
         <ui:MaterialIconView
             x:Name="Icon"
-            IconName="Psychology"
+            IconName="Forum"
             IconColor="White"
             HorizontalOptions="Center"
             VerticalOptions="Center" />

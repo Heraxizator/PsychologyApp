@@ -37,6 +37,8 @@ public sealed class ChatListItem
     public required ICommand OpenCommand { get; init; }
     public required ICommand RenameCommand { get; init; }
     public required ICommand DeleteCommand { get; init; }
+    public required ICommand MenuCommand { get; init; }
+    public string MenuText => AppStrings.ChatMore;
 
     public string RenameText => AppStrings.ChatRename;
     public string DeleteText => AppStrings.ChatDelete;
@@ -173,8 +175,26 @@ public sealed class ChatListViewModel : BaseViewModel
             IsWorsening = first is { } f2 && last is { } l2 && l2 > f2,
             OpenCommand = new AsyncCommand(() => NavigationService!.GoToChatAsync(id)),
             RenameCommand = new AsyncCommand(() => RenameAsync(id, session.Title)),
-            DeleteCommand = new AsyncCommand(() => DeleteAsync(id))
+            DeleteCommand = new AsyncCommand(() => DeleteAsync(id)),
+            MenuCommand = new AsyncCommand(() => ShowMenuAsync(id, session.Title))
         };
+    }
+
+    /// <summary>
+    /// The row's actions behind a visible "more" button: a swipe alone hid renaming and deleting from anyone who did not
+    /// know to swipe. Each choice runs the same flow as the swipe, with its own question.
+    /// </summary>
+    private async Task ShowMenuAsync(long id, string title)
+    {
+        string? picked = await _dialogs.PickOptionAsync(title, [AppStrings.ChatRename, AppStrings.ChatDelete], AppStrings.ChatCancel);
+        if (picked == AppStrings.ChatRename)
+        {
+            await RenameAsync(id, title);
+        }
+        else if (picked == AppStrings.ChatDelete)
+        {
+            await DeleteAsync(id);
+        }
     }
 
     private async Task RenameAsync(long id, string current)

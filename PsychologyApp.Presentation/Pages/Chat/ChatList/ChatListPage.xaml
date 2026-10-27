@@ -6,6 +6,7 @@
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.Chat.ChatList"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:avatar="clr-namespace:PsychologyApp.Presentation.Widgets.CompanionAvatar"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              x:DataType="vm:ChatListViewModel"
              Shell.NavBarIsVisible="True"
              Title="{Binding Title}"
@@ -90,7 +91,7 @@
                                     </Grid>
                                 </Border>
                                 <VerticalStackLayout Grid.Column="1" Spacing="4">
-                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="4">
                                         <Label
                                             Grid.Column="0"
                                             Text="{Binding Title}"
@@ -102,6 +103,26 @@
                                             Text="{Binding TimeText}"
                                             Style="{StaticResource CaptionStyle}"
                                             VerticalOptions="Center" />
+                                        <!-- Rename and delete without knowing to swipe. A native button, so the tap is its own: a tap recognizer
+                                             here lost to the card's and opened the chat. A 44-point target, pulled into the card's padding so the
+                                             row does not grow. -->
+                                        <ImageButton
+                                            Grid.Column="2"
+                                            WidthRequest="44"
+                                            HeightRequest="44"
+                                            Margin="0,-12,-14,-12"
+                                            Padding="12"
+                                            BackgroundColor="Transparent"
+                                            Command="{Binding MenuCommand}"
+                                            SemanticProperties.Description="{Binding MenuText}">
+                                            <ImageButton.Source>
+                                                <FontImageSource
+                                                    FontFamily="MaterialIcons"
+                                                    Glyph="{mi:Material Icon=MoreVert}"
+                                                    Size="20"
+                                                    Color="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                            </ImageButton.Source>
+                                        </ImageButton>
                                     </Grid>
                                     <Label
                                         Text="{Binding Preview}"
