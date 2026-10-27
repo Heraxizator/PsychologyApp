@@ -16,6 +16,7 @@
     </ContentPage.Behaviors>
 
     <ContentPage.Resources>
+        <vm:ChatTileColorConverter x:Key="ChatTileColor" />
         <!-- The neutral colour sits in the style: a local TextColor would win over the improving / worsening triggers. -->
         <Style x:Key="ChatMoodTrendStyle" TargetType="Label" BasedOn="{StaticResource CaptionStyle}">
             <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}" />
@@ -29,14 +30,18 @@
             ItemsSource="{Binding Chats}"
             SelectionMode="None"
             VerticalScrollBarVisibility="Never"
-            Margin="12,8,12,0">
+            Margin="{StaticResource LayoutTabPageMarginThickness}">
+            <!-- The margins, gaps, card and tile of the test list, so the two tabs line up. -->
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />
+            </CollectionView.ItemsLayout>
             <CollectionView.Footer>
                 <!-- Room under the last row, so the round button never covers it. -->
                 <BoxView HeightRequest="88" Color="Transparent" />
             </CollectionView.Footer>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:ChatListItem">
-                    <SwipeView Margin="4,4,4,8" BackgroundColor="Transparent">
+                    <SwipeView BackgroundColor="Transparent">
                         <SwipeView.RightItems>
                             <SwipeItems Mode="Reveal">
                                 <SwipeItem
@@ -51,9 +56,7 @@
                         </SwipeView.RightItems>
 
                         <Border
-                            Style="{StaticResource BrandCardStyle}"
-                            Margin="0"
-                            Padding="14,12"
+                            Style="{StaticResource TestListCardStyle}"
                             BindingContextChanged="OnChatRowContextChanged">
                             <Border.Behaviors>
                                 <behaviors:PressFeedbackBehavior />
@@ -63,19 +66,28 @@
                             </Border.GestureRecognizers>
                             <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
                                 <Border
-                                    WidthRequest="44"
-                                    HeightRequest="44"
+                                    Style="{StaticResource IconTileStyle}"
                                     VerticalOptions="Start"
-                                    StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 14"
-                                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryTint}, Dark={StaticResource PrimaryTintDark}}">
-                                    <Label
-                                        Text="{Binding Initial}"
-                                        FontSize="19"
-                                        FontFamily="{StaticResource SemiBoldFontFamily}"
-                                        TextColor="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}"
-                                        HorizontalOptions="Center"
-                                        VerticalOptions="Center" />
+                                    BackgroundColor="{Binding Flavor, Converter={StaticResource ChatTileColor}, ConverterParameter=tile}">
+                                    <!-- The state the chat recognised, in the icon and colour of the tests about it; the letter until it is known.
+                                         In a grid: a border holds one child, and the second would replace the first. -->
+                                    <Grid>
+                                        <ui:MaterialIconView
+                                            IsVisible="{Binding HasIcon}"
+                                            IconName="{Binding IconName}"
+                                            IconSize="22"
+                                            IconColor="{Binding Flavor, Converter={StaticResource ChatTileColor}, ConverterParameter=icon}"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center" />
+                                        <Label
+                                            IsVisible="{Binding ShowInitial}"
+                                            Text="{Binding Initial}"
+                                            FontSize="19"
+                                            FontFamily="{StaticResource SemiBoldFontFamily}"
+                                            TextColor="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center" />
+                                    </Grid>
                                 </Border>
                                 <VerticalStackLayout Grid.Column="1" Spacing="4">
                                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">

@@ -52,7 +52,6 @@ public static class SharedPresentationServiceCollectionExtensions
 #endif
         services.AddSingleton<IDatabaseReadySignal, DatabaseReadySignal>();
         services.AddSingleton<LanguageContentReloader>();
-        services.AddSingleton<PsychologyApp.Presentation.Shared.Services.Progress.WeeklyInsightLoader>();
         services.AddSingleton<Func<NavigationContext, INavigationService>>(sp => context =>
             context.NavigationService ?? new MauiNavigationService(
                 context,

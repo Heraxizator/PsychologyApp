@@ -101,6 +101,7 @@ Some screens intentionally compose multiple slices:
 |--------------|------------|
 | ManageProfile | ManageJournal (journal factors read by «Что мне помогает»), ManageQuotes.Index (profile quotes), RunTechniqueSession.Index (featured techniques) |
 | RunTests | RunTechniqueSession.Index (test result technique recommendations) |
+| Chat | RunTechniqueSession (`TechniqueFlavor`, `FlavorTile`: chat tiles take the colour groups of the practices, as test cards do) |
 
 All other cross-feature imports are forbidden and enforced by architecture tests.
 

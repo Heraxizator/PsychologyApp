@@ -126,35 +126,11 @@
   <data name="ChatProfileOpen" xml:space="preserve">
     <value>打开 AI 心理师资料</value>
   </data>
-  <data name="ChatProfileOnline" xml:space="preserve">
-    <value>在线</value>
-  </data>
-  <data name="ChatProfileOffline" xml:space="preserve">
-    <value>离线可用</value>
-  </data>
-  <data name="ChatProfileStatChats" xml:space="preserve">
-    <value>对话</value>
-  </data>
-  <data name="ChatProfileStatMessages" xml:space="preserve">
-    <value>你的消息</value>
-  </data>
-  <data name="ChatProfileStatDays" xml:space="preserve">
-    <value>相伴天数</value>
-  </data>
-  <data name="ChatProfileStatStreak" xml:space="preserve">
-    <value>连续天数</value>
-  </data>
-  <data name="ChatProfileTrustTitle" xml:space="preserve">
-    <value>信任程度</value>
-  </data>
   <data name="ChatProfileNameTitle" xml:space="preserve">
     <value>怎么称呼你</value>
   </data>
   <data name="ChatProfileNameEmpty" xml:space="preserve">
     <value>还没有名字</value>
-  </data>
-  <data name="ChatProfileNameHint" xml:space="preserve">
-    <value>聊天时偶尔会用名字称呼你</value>
   </data>
   <data name="ChatProfileNameEdit" xml:space="preserve">
     <value>修改</value>
@@ -164,9 +140,6 @@
   </data>
   <data name="ChatProfileNamePromptMessage" xml:space="preserve">
     <value>我该怎么称呼你？留空即可删除名字。</value>
-  </data>
-  <data name="ChatProfileInsightsTitle" xml:space="preserve">
-    <value>你的对话显示了什么</value>
   </data>
   <data name="ChatProfileTensionTitle" xml:space="preserve">
     <value>紧张程度的变化</value>
@@ -180,26 +153,14 @@
   <data name="ChatProfilePracticesTitle" xml:space="preserve">
     <value>对你有帮助的</value>
   </data>
-  <data name="ChatProfilePracticesEmpty" xml:space="preserve">
-    <value>在对话中做一次练习，并评估练习前后的紧张程度，这里就会显示对你有帮助的方法。</value>
-  </data>
   <data name="ChatProfilePracticeBest" xml:space="preserve">
     <value>最佳</value>
   </data>
   <data name="ChatProfilePracticeStart" xml:space="preserve">
     <value>开始</value>
   </data>
-  <data name="ChatProfileEmotionsTitle" xml:space="preserve">
-    <value>你最常聊的话题</value>
-  </data>
   <data name="ChatProfileAboutTitle" xml:space="preserve">
     <value>关于 AI 心理师</value>
-  </data>
-  <data name="ChatProfileActionsTitle" xml:space="preserve">
-    <value>管理</value>
-  </data>
-  <data name="ChatProfileAllChats" xml:space="preserve">
-    <value>所有对话</value>
   </data>
   <data name="ChatProfileForget" xml:space="preserve">
     <value>忘记我的名字和偏好</value>
@@ -827,9 +788,6 @@
   </data>
   <data name="ProfileMoodCheckInTitle" xml:space="preserve">
     <value>你今天感觉怎么样？</value>
-  </data>
-  <data name="ProfileWeeklyInsightTitle" xml:space="preserve">
-    <value>本周</value>
   </data>
   <data name="JournalTitle" xml:space="preserve">
     <value>日记</value>
@@ -2055,14 +2013,8 @@
   <data name="ComebackBannerWithTechnique" xml:space="preserve">
     <value>欢迎回来——从{0}开始吧</value>
   </data>
-  <data name="WeeklyInsightMoodOnly" xml:space="preserve">
-    <value>本周：心情 {0}</value>
-  </data>
   <data name="TodayRecommendationReasonFromTest" xml:space="preserve">
     <value>根据最近的测试（{0}）</value>
-  </data>
-  <data name="WeeklyInsightStreakPart" xml:space="preserve">
-    <value>连续 {0}</value>
   </data>
   <data name="JournalPracticeMoodInsight" xml:space="preserve">
     <value>练习后（{0} 天）：平均心情 {1}</value>
@@ -2682,12 +2634,6 @@
   <data name="TodayRecommendationReasonContinueDraft.1" xml:space="preserve">
     <value>从上次停下的地方继续</value>
   </data>
-  <data name="WeeklyInsightTestImprovedPart.1" xml:space="preserve">
-    <value>测试 ↑</value>
-  </data>
-  <data name="WeeklyInsightTestWorsePart.1" xml:space="preserve">
-    <value>测试 ↓</value>
-  </data>
   <data name="HeckHessScore.1" xml:space="preserve">
     <value>0-24 - 神经质低</value>
   </data>
@@ -2816,12 +2762,6 @@
   </data>
   <data name="PracticeReminderBodyNamed.1" xml:space="preserve">
     <value>今天：{0}。花几分钟练习一下吧。</value>
-  </data>
-  <data name="WeeklyInsightLine.1" xml:space="preserve">
-    <value>本周：{0} {2}</value>
-  </data>
-  <data name="WeeklyInsightLine.2" xml:space="preserve">
-    <value>本周：{0} {3} · 心情 {2}</value>
   </data>
   <data name="TodayMoodLine.1" xml:space="preserve">
     <value>今天：{0} {1}/{2}</value>

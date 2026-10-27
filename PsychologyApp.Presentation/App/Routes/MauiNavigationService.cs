@@ -166,10 +166,23 @@ public sealed class MauiNavigationService : INavigationService
                 animated: false);
         });
 
+    /// <summary>
+    /// The finished practice leaves the stack once its result is shown: Back from the result used to land on the practice again,
+    /// and its "Finish" recorded the same session a second time.
+    /// </summary>
     public Task GoToPracticeCompletionAsync(int activeDays, string? completedItemKey = null, long? sessionResultId = null) =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(
-            PrepareSecondaryPage(_pageFactory.CreatePracticeCompletionPage(activeDays, completedItemKey, sessionResultId)),
-            true));
+        NavigationCoordinator.RunPushAsync(async () =>
+        {
+            INavigation navigation = ResolveNavigation();
+            Page? finishedPractice = navigation.NavigationStack.Count > 1 ? navigation.NavigationStack[^1] : null;
+            await navigation.PushAsync(
+                PrepareSecondaryPage(_pageFactory.CreatePracticeCompletionPage(activeDays, completedItemKey, sessionResultId)),
+                true);
+            if (finishedPractice is not null && navigation.NavigationStack.Contains(finishedPractice))
+            {
+                navigation.RemovePage(finishedPractice);
+            }
+        });
 
     public Task GoToTestsTabAsync() =>
         NavigationCoordinator.RunAsync(() =>

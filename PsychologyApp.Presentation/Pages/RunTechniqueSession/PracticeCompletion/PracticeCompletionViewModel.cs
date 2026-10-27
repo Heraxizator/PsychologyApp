@@ -453,7 +453,7 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
             return;
         }
 
-        await _navigationService.GoBackAsync();
+        // One step: the finished practice is no longer under this page (see GoToPracticeCompletionAsync).
         await _navigationService.GoBackAsync();
     }
 
@@ -464,7 +464,6 @@ public sealed class PracticeCompletionViewModel : BaseViewModel
             return;
         }
 
-        await _navigationService.GoBackAsync();
         await _navigationService.GoBackAsync();
         await _navigationService.GoToTechniqueAsync(_nextTechniqueId.Value);
     }

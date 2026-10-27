@@ -145,6 +145,7 @@
     <Compile Include="BaseViewModelPreferencesTests.cs" />
     <Compile Include="AppLanguagesTests.cs" />
     <Compile Include="TestCardLookTests.cs" />
+    <Compile Include="ChatCardLookTests.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/UserProfileRefreshCoordinator.cs" Link="Linked/Features/ManageProfile/UserProfileRefreshCoordinator.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/ProfilePracticeHistoryLoader.cs" Link="Linked/Features/ManageProfile/ProfilePracticeHistoryLoader.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/PracticeHistoryFormatter.cs" Link="Linked/Features/ManageProfile/PracticeHistoryFormatter.cs" />
@@ -225,7 +226,6 @@
     <Compile Include="../PsychologyApp.Presentation/Entities/Audio/Audio.cs" Link="Linked/Entities/Audio/Audio.cs" />
     <Compile Include="../PsychologyApp.Presentation/Entities/Quote/QuoteFeedMode.cs" Link="Linked/Entities/Quote/QuoteFeedMode.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/PlayMusic/MusicPlaylistPresenter.cs" Link="Linked/Features/PlayMusic/MusicPlaylistPresenter.cs" />
-    <Compile Include="../PsychologyApp.Presentation/Shared/Services/Progress/WeeklyInsightLoader.cs" Link="Linked/Shared/Services/Progress/WeeklyInsightLoader.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/ManageProfile/Index/ProfileFeaturedTechniquesBuilder.cs" Link="Linked/Features/ManageProfile/Index/ProfileFeaturedTechniquesBuilder.cs" />
     <Compile Include="../PsychologyApp.Presentation/Entities/FilterChip/FilterChipTabItem.cs" Link="Linked/Entities/FilterChip/FilterChipTabItem.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/ManageQuotes/Index/QuoteItemCommandsFactory.cs" Link="Linked/Features/ManageQuotes/Index/QuoteItemCommandsFactory.cs" />

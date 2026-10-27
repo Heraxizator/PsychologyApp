@@ -25,6 +25,7 @@ public sealed class FsdArchitectureTests
     {
         ["ManageProfile"] = ["ManageJournal", "ManageQuotes", "RunTechniqueSession"],
         ["RunTests"] = ["RunTechniqueSession"],
+        ["Chat"] = ["RunTechniqueSession"],
         ["RunTechniqueSession"] = ["Chat"],
     };
 
@@ -32,6 +33,7 @@ public sealed class FsdArchitectureTests
     {
         ["ManageProfile"] = ["ManageJournal", "ManageQuotes", "RunTechniqueSession"],
         ["RunTests"] = ["RunTechniqueSession"],
+        ["Chat"] = ["RunTechniqueSession"],
     };
     private static readonly string[] CanonicalPageSlices =
     [

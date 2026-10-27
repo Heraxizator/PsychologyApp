@@ -29,15 +29,8 @@ public sealed record PracticeRowItem(string Title, string Detail, double HelpedF
     public string BestText => AppStrings.ChatProfilePracticeBest;
 }
 
-public sealed record EmotionRowItem(string Name, string PercentText, double Share);
-
-public sealed record InsightItem(string Text);
-
-/// <summary>One segment of the trust meter: solid once passed, half-lit for the step under way, plain otherwise.</summary>
-public sealed record TrustStepItem(bool IsCompleted, bool IsCurrent);
-
 /// <summary>
-/// The companion's profile: face, level of trust, how the person's tension changed over time, what helped, what they talk about.
+/// The companion's profile: who it is, how it addresses the person, how their tension changed over time and what helped.
 /// Everything is computed from stored chats by <see cref="IChatService.GetProfileAsync"/>; nothing leaves the phone.
 /// </summary>
 public sealed class CompanionProfileViewModel : BaseViewModel
@@ -49,7 +42,6 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     private readonly IDialogService _dialogs;
 
     private CompanionProfile _profile = CompanionProfile.Empty;
-    private bool _loaded;
     private bool _isLoading = true;
 
     public CompanionProfileViewModel(
@@ -67,7 +59,6 @@ public sealed class CompanionProfileViewModel : BaseViewModel
         BindNavigation(navigationService);
         BackCommand = new AsyncCommand(GoBackAsync);
         NewChatCommand = new AsyncCommand(() => NavigationService!.GoToChatAsync(null));
-        AllChatsCommand = new AsyncCommand(() => NavigationService!.GoToChatListAsync());
         EditNameCommand = new AsyncCommand(EditNameAsync);
         ForgetCommand = new AsyncCommand(ForgetAsync);
         DeleteAllCommand = new AsyncCommand(DeleteAllAsync);
@@ -76,34 +67,18 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     /// <summary>Set by the page: shows a text prompt and returns the entered text, or null when cancelled.</summary>
     public Func<string, string, string, string, string, Task<string?>>? PromptAsync { get; set; }
 
-    /// <summary>Raised after the numbers were (re)loaded, so the page can play its count-up and bar animations.</summary>
-    public event EventHandler? ProfileLoaded;
-
     public ICommand BackCommand { get; }
     public ICommand NewChatCommand { get; }
-    public ICommand AllChatsCommand { get; }
     public ICommand EditNameCommand { get; }
     public ICommand ForgetCommand { get; }
     public ICommand DeleteAllCommand { get; }
 
     public RangeObservableCollection<TensionBarItem> TensionBars { get; } = [];
     public RangeObservableCollection<PracticeRowItem> Practices { get; } = [];
-    public RangeObservableCollection<EmotionRowItem> Emotions { get; } = [];
-    public RangeObservableCollection<InsightItem> Insights { get; } = [];
-    public RangeObservableCollection<TrustStepItem> TrustSteps { get; } = [];
-
-    public int Chats => _profile.Chats;
-    public int Messages => _profile.UserMessages;
-    public int Days => _profile.Days;
-    public int Streak => _profile.StreakDays;
-
-    public string TrustName => ChatProfileContent.TrustName(_profile.Trust.Index, _language.IsEnglish);
-    public string TrustHint => ChatProfileContent.TrustHint(_profile.Trust, _language.IsEnglish);
 
     public bool HasName => _profile.UserName is not null;
     public string NameText => _profile.UserName ?? AppStrings.ChatProfileNameEmpty;
 
-    public string Since => ChatProfileContent.Since(_profile.SinceUtc, _language.IsEnglish);
     public string Tagline => ChatProfileContent.Tagline(_language.IsEnglish);
     public string AboutBody => ChatProfileContent.About(_language.IsEnglish);
     public string PrivacyLine => ChatProfileContent.PrivacyLine(_language.IsEnglish);
@@ -112,8 +87,6 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     public bool HasTension => TensionBars.Count > 0;
     public string TensionCaption => ChatProfileContent.TensionCaption(_profile, _language.IsEnglish);
     public bool HasPractices => Practices.Count > 0;
-    public bool HasNoPractices => Practices.Count == 0 && _profile.HasHistory;
-    public bool HasEmotions => Emotions.Count > 0;
     public bool HasHistory => _profile.HasHistory;
 
     /// <summary>True until the first load has finished. The page shows a loading state instead of a flash of zeroes.</summary>
@@ -133,57 +106,28 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     public string LoadingText => AppStrings.ChatProfileLoadingText;
 
     public string Title => AppStrings.ChatProfileTitle;
-    public string OnlineText => AppStrings.ChatProfileOnline;
-    public string OfflineText => AppStrings.ChatProfileOffline;
-    public string StatChatsLabel => AppStrings.ChatProfileStatChats;
-    public string StatMessagesLabel => AppStrings.ChatProfileStatMessages;
-    public string StatDaysLabel => AppStrings.ChatProfileStatDays;
-    public string StatStreakLabel => AppStrings.ChatProfileStatStreak;
-    public string TrustTitle => AppStrings.ChatProfileTrustTitle;
     public string NameTitle => AppStrings.ChatProfileNameTitle;
-    public string NameHint => AppStrings.ChatProfileNameHint;
     public string NameEditText => AppStrings.ChatProfileNameEdit;
-    public string InsightsTitle => AppStrings.ChatProfileInsightsTitle;
     public string TensionTitle => AppStrings.ChatProfileTensionTitle;
     public string TensionStartText => AppStrings.ChatProfileTensionStart;
     public string TensionEndText => AppStrings.ChatProfileTensionEnd;
     public string PracticesTitle => AppStrings.ChatProfilePracticesTitle;
-    public string PracticesEmptyText => AppStrings.ChatProfilePracticesEmpty;
-    public string EmotionsTitle => AppStrings.ChatProfileEmotionsTitle;
     public string AboutTitle => AppStrings.ChatProfileAboutTitle;
-    public string ActionsTitle => AppStrings.ChatProfileActionsTitle;
     public string NewChatText => AppStrings.ChatNew;
-    public string AllChatsText => AppStrings.ChatProfileAllChats;
     public string ForgetText => AppStrings.ChatProfileForget;
     public string DeleteAllText => AppStrings.ChatProfileDeleteAll;
 
-    /// <summary>Loads the profile. Safe to call on every appearing: the page animates only when something changed.</summary>
+    /// <summary>Loads the profile. Safe to call on every appearing.</summary>
     public async Task RefreshAsync()
     {
         CompanionProfile fresh = await _chat.GetProfileAsync();
-        bool changed = !_loaded || !ReferenceEquals(fresh, _profile) && !SameNumbers(fresh, _profile);
         _profile = fresh;
 
         Fill(TensionBars, fresh.Tension.Select(t => new TensionBarItem(t.AtUtc.ToLocalTime().ToString(DateFormat, CultureInfo.InvariantCulture), t.Before, t.After)));
         Fill(Practices, fresh.Practices.Select((p, i) => ToPracticeRow(p, isBest: i == 0 && p.Helped > 0)));
-        Fill(Emotions, fresh.Emotions.Select(e => new EmotionRowItem(
-            Capitalize(CompanionContent.EmotionName(e.Emotion, _language.IsEnglish)),
-            $"{Math.Round(e.Share * 100):0}%",
-            e.Share)));
-        Fill(Insights, ChatProfileContent.Insights(fresh, _language.IsEnglish).Select(t => new InsightItem(t)));
-        // At the highest level there is no "in progress" step left to half-light; it reads as fully reached instead.
-        bool atMaxTrust = fresh.Trust.MessagesToNext == 0;
-        Fill(TrustSteps, Enumerable.Range(0, ChatProfileContent.TrustLevels).Select(i => new TrustStepItem(
-            IsCompleted: i < fresh.Trust.Index || (i == fresh.Trust.Index && atMaxTrust),
-            IsCurrent: i == fresh.Trust.Index && !atMaxTrust)));
 
         NotifyAll();
-        _loaded = true;
         IsLoading = false;
-        if (changed)
-        {
-            ProfileLoaded?.Invoke(this, EventArgs.Empty);
-        }
     }
 
     protected override void RefreshLocalizedProperties() => NotifyAll();
@@ -248,21 +192,11 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     }
 
     private void NotifyAll() => Notify(
-        nameof(Chats), nameof(Messages), nameof(Days), nameof(Streak),
-        nameof(TrustName), nameof(TrustHint),
-        nameof(HasName), nameof(NameText), nameof(Since), nameof(Tagline), nameof(AboutBody), nameof(PrivacyLine), nameof(Disclaimer),
-        nameof(HasTension), nameof(TensionCaption), nameof(HasPractices), nameof(HasNoPractices), nameof(HasEmotions), nameof(HasHistory),
-        nameof(Title), nameof(OnlineText), nameof(OfflineText), nameof(StatChatsLabel), nameof(StatMessagesLabel), nameof(StatDaysLabel),
-        nameof(StatStreakLabel), nameof(TrustTitle), nameof(NameTitle), nameof(NameHint), nameof(NameEditText), nameof(InsightsTitle),
-        nameof(TensionTitle), nameof(TensionStartText), nameof(TensionEndText), nameof(PracticesTitle), nameof(PracticesEmptyText),
-        nameof(EmotionsTitle), nameof(AboutTitle), nameof(ActionsTitle), nameof(NewChatText), nameof(AllChatsText), nameof(ForgetText),
-        nameof(DeleteAllText), nameof(LoadingText));
-
-    private static bool SameNumbers(CompanionProfile a, CompanionProfile b) =>
-        a.Chats == b.Chats && a.UserMessages == b.UserMessages && a.Days == b.Days && a.StreakDays == b.StreakDays
-        && a.Trust.Index == b.Trust.Index && a.PracticesHelped == b.PracticesHelped;
+        nameof(HasName), nameof(NameText), nameof(Tagline), nameof(AboutBody), nameof(PrivacyLine), nameof(Disclaimer),
+        nameof(HasTension), nameof(TensionCaption), nameof(HasPractices), nameof(HasHistory),
+        nameof(Title), nameof(NameTitle), nameof(NameEditText),
+        nameof(TensionTitle), nameof(TensionStartText), nameof(TensionEndText), nameof(PracticesTitle),
+        nameof(AboutTitle), nameof(NewChatText), nameof(ForgetText), nameof(DeleteAllText), nameof(LoadingText));
 
     private static void Fill<T>(RangeObservableCollection<T> target, IEnumerable<T> items) => target.ReplaceAll(items);
-
-    private static string Capitalize(string value) => value.Length == 0 ? value : char.ToUpperInvariant(value[0]) + value[1..];
 }

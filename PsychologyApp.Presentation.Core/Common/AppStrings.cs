@@ -237,21 +237,9 @@ public static partial class AppStrings
     public static string TodayStartPractice => R(nameof(TodayStartPractice));
     public static string ComebackBanner => R(nameof(ComebackBanner));
     public static string ComebackBannerWithTechnique(string name) => F(nameof(ComebackBannerWithTechnique), name);
-    public static string WeeklyInsightLine(int practiceCount, string moodTrend) =>
-        string.IsNullOrEmpty(moodTrend)
-            ? F("WeeklyInsightLine.1", practiceCount, PracticeCountWord(practiceCount), PracticeCountWordEn(practiceCount))
-            : F("WeeklyInsightLine.2", practiceCount, PracticeCountWord(practiceCount), moodTrend, PracticeCountWordEn(practiceCount));
-    public static string WeeklyInsightMoodOnly(string moodTrend) => F(nameof(WeeklyInsightMoodOnly), moodTrend);
     public static string MoodTrendUp => "↑";
     public static string MoodTrendFlat => "→";
     public static string MoodTrendDown => "↓";
-    private static string PracticeCountWord(int count) => count switch
-    {
-        1 => "практика",
-        >= 2 and <= 4 => "практики",
-        _ => "практик"
-    };
-    private static string PracticeCountWordEn(int count) => count == 1 ? "practice" : "practices";
     public static string OnboardingRemindersLabel => R(nameof(OnboardingRemindersLabel));
     public static string OnboardingReminderHourLabel => R(nameof(OnboardingReminderHourLabel));
     public static string TodayRecommendationReason(string concern) => concern switch
@@ -267,11 +255,6 @@ public static partial class AppStrings
     public static string TodayRecommendationReasonLowMood() =>
         R("TodayRecommendationReasonLowMood.1");
     public static string TodayRecommendationReasonContinueDraft() => R("TodayRecommendationReasonContinueDraft.1");
-    public static string WeeklyInsightStreakPart(int days) => F(nameof(WeeklyInsightStreakPart), days);
-    public static string WeeklyInsightTestImprovedPart() => R("WeeklyInsightTestImprovedPart.1");
-    public static string WeeklyInsightTestWorsePart() => R("WeeklyInsightTestWorsePart.1");
-    public static string WeeklyInsightWithExtra(string baseLine, string extra) =>
-        string.IsNullOrWhiteSpace(extra) ? baseLine : $"{baseLine} · {extra}";
     public static string TodayMoodQuestion => R(nameof(TodayMoodQuestion));
     public static string TodayMoodSaved => R(nameof(TodayMoodSaved));
     public static string TodayMoodLine(int level, int max) =>
@@ -281,7 +264,6 @@ public static partial class AppStrings
         $"{date}: {MoodEmoji(level)} {level}/{max}";
     public static string ProfileMoodTrendTitle => R(nameof(ProfileMoodTrendTitle));
     public static string ProfileMoodCheckInTitle => R(nameof(ProfileMoodCheckInTitle));
-    public static string ProfileWeeklyInsightTitle => R(nameof(ProfileWeeklyInsightTitle));
     public static string JournalTitle => R(nameof(JournalTitle));
     public static string JournalCardSubtitle => R(nameof(JournalCardSubtitle));
     public static string JournalTodayTitle => R(nameof(JournalTodayTitle));

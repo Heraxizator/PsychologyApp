@@ -126,35 +126,11 @@
   <data name="ChatProfileOpen" xml:space="preserve">
     <value>Открыть профиль ИИ-психолога</value>
   </data>
-  <data name="ChatProfileOnline" xml:space="preserve">
-    <value>На связи</value>
-  </data>
-  <data name="ChatProfileOffline" xml:space="preserve">
-    <value>Работает офлайн</value>
-  </data>
-  <data name="ChatProfileStatChats" xml:space="preserve">
-    <value>Разговоров</value>
-  </data>
-  <data name="ChatProfileStatMessages" xml:space="preserve">
-    <value>Ваших сообщений</value>
-  </data>
-  <data name="ChatProfileStatDays" xml:space="preserve">
-    <value>Дней вместе</value>
-  </data>
-  <data name="ChatProfileStatStreak" xml:space="preserve">
-    <value>Дней подряд</value>
-  </data>
-  <data name="ChatProfileTrustTitle" xml:space="preserve">
-    <value>Уровень доверия</value>
-  </data>
   <data name="ChatProfileNameTitle" xml:space="preserve">
     <value>Как к вам обращаться</value>
   </data>
   <data name="ChatProfileNameEmpty" xml:space="preserve">
     <value>Имя не указано</value>
-  </data>
-  <data name="ChatProfileNameHint" xml:space="preserve">
-    <value>Чат изредка будет обращаться к вам по имени</value>
   </data>
   <data name="ChatProfileNameEdit" xml:space="preserve">
     <value>Изменить</value>
@@ -164,9 +140,6 @@
   </data>
   <data name="ChatProfileNamePromptMessage" xml:space="preserve">
     <value>Как к вам обращаться? Оставьте пустым, чтобы убрать имя.</value>
-  </data>
-  <data name="ChatProfileInsightsTitle" xml:space="preserve">
-    <value>Что видно из ваших разговоров</value>
   </data>
   <data name="ChatProfileTensionTitle" xml:space="preserve">
     <value>Динамика напряжения</value>
@@ -180,26 +153,14 @@
   <data name="ChatProfilePracticesTitle" xml:space="preserve">
     <value>Что вам помогает</value>
   </data>
-  <data name="ChatProfilePracticesEmpty" xml:space="preserve">
-    <value>Пройдите практику из чата и оцените напряжение до и после, тогда здесь появится то, что вам помогает.</value>
-  </data>
   <data name="ChatProfilePracticeBest" xml:space="preserve">
     <value>Лучшее</value>
   </data>
   <data name="ChatProfilePracticeStart" xml:space="preserve">
     <value>Начать</value>
   </data>
-  <data name="ChatProfileEmotionsTitle" xml:space="preserve">
-    <value>О чём вы говорите чаще всего</value>
-  </data>
   <data name="ChatProfileAboutTitle" xml:space="preserve">
     <value>Об ИИ-психологе</value>
-  </data>
-  <data name="ChatProfileActionsTitle" xml:space="preserve">
-    <value>Управление</value>
-  </data>
-  <data name="ChatProfileAllChats" xml:space="preserve">
-    <value>Все чаты</value>
   </data>
   <data name="ChatProfileForget" xml:space="preserve">
     <value>Забыть моё имя и предпочтения</value>
@@ -827,9 +788,6 @@
   </data>
   <data name="ProfileMoodCheckInTitle" xml:space="preserve">
     <value>Как настроение сегодня?</value>
-  </data>
-  <data name="ProfileWeeklyInsightTitle" xml:space="preserve">
-    <value>На этой неделе</value>
   </data>
   <data name="JournalTitle" xml:space="preserve">
     <value>Дневник</value>
@@ -2061,14 +2019,8 @@
   <data name="ComebackBannerWithTechnique" xml:space="preserve">
     <value>С возвращением — начните с «{0}»</value>
   </data>
-  <data name="WeeklyInsightMoodOnly" xml:space="preserve">
-    <value>На этой неделе: настроение {0}</value>
-  </data>
   <data name="TodayRecommendationReasonFromTest" xml:space="preserve">
     <value>После недавнего теста ({0})</value>
-  </data>
-  <data name="WeeklyInsightStreakPart" xml:space="preserve">
-    <value>серия {0}</value>
   </data>
   <data name="JournalPracticeMoodInsight" xml:space="preserve">
     <value>После практик ({0} дн.): ср. настроение {1}</value>
@@ -2688,12 +2640,6 @@
   <data name="TodayRecommendationReasonContinueDraft.1" xml:space="preserve">
     <value>Продолжите с того места, где остановились</value>
   </data>
-  <data name="WeeklyInsightTestImprovedPart.1" xml:space="preserve">
-    <value>тест ↑</value>
-  </data>
-  <data name="WeeklyInsightTestWorsePart.1" xml:space="preserve">
-    <value>тест ↓</value>
-  </data>
   <data name="HeckHessScore.1" xml:space="preserve">
     <value>0-24 - невысокий уровень невротизации</value>
   </data>
@@ -2822,12 +2768,6 @@
   </data>
   <data name="PracticeReminderBodyNamed.1" xml:space="preserve">
     <value>Сегодня: {0}. Уделите несколько минут практике.</value>
-  </data>
-  <data name="WeeklyInsightLine.1" xml:space="preserve">
-    <value>На этой неделе: {0} {1}</value>
-  </data>
-  <data name="WeeklyInsightLine.2" xml:space="preserve">
-    <value>На этой неделе: {0} {1} · настроение {2}</value>
   </data>
   <data name="TodayMoodLine.1" xml:space="preserve">
     <value>Сегодня: {0} {1}/{2}</value>

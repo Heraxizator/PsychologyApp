@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using PsychologyApp.Application.Chat;
+using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
@@ -20,8 +21,15 @@ public sealed class ChatListItem
 
     public bool HasMood => MoodText.Length > 0;
 
-    /// <summary>First letter of the title, shown in the round avatar.</summary>
+    /// <summary>First letter of the title, shown in the round avatar while the chat has no recognised state.</summary>
     public string Initial => Title.Length > 0 && char.IsLetterOrDigit(Title[0]) ? char.ToUpperInvariant(Title[0]).ToString() : "•";
+
+    /// <summary>The icon of the recognised state, as on the test cards (<see cref="ChatCardLook"/>); empty while it is not known.</summary>
+    public string IconName { get; init; } = string.Empty;
+
+    public TechniqueFlavor Flavor { get; init; }
+    public bool HasIcon => IconName.Length > 0;
+    public bool ShowInitial => !HasIcon;
 
     public bool IsImproving { get; init; }
     public bool IsWorsening { get; init; }
@@ -34,7 +42,7 @@ public sealed class ChatListItem
     public string DeleteText => AppStrings.ChatDelete;
 
     /// <summary>Everything the row shows. Equal signatures mean the row does not need rebuilding.</summary>
-    public string Signature => $"{Id}|{Title}|{Preview}|{TimeText}|{MoodText}";
+    public string Signature => $"{Id}|{Title}|{Preview}|{TimeText}|{MoodText}|{IconName}";
 }
 
 /// <summary>The messenger's chat list: every conversation with its last message, time and how the tension moved.</summary>
@@ -150,9 +158,12 @@ public sealed class ChatListViewModel : BaseViewModel
         long id = session.Id;
         int? first = session.FirstIntensity;
         int? last = session.LastIntensity;
+        (string? icon, TechniqueFlavor flavor) = ChatCardLook.For(session.Emotion);
 
         return new ChatListItem
         {
+            IconName = icon ?? string.Empty,
+            Flavor = flavor,
             Id = id,
             Title = session.Title,
             Preview = Shorten(session.Preview),

@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Pages.Chat.Companion.CompanionProfilePage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
-             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.Chat.Companion"
              xmlns:avatar="clr-namespace:PsychologyApp.Presentation.Widgets.CompanionAvatar"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
@@ -18,7 +17,7 @@
 
     <Grid RowDefinitions="Auto,*" Margin="{StaticResource LayoutPageMarginThickness}">
 
-        <!-- Kept outside the loading gate below: going back must always work, even while the numbers are still loading. -->
+        <!-- Kept outside the loading gate below: going back must always work, even while the page is still loading. -->
         <ui:NavigationBarSimpleView
             Grid.Row="0"
             TitleText="{Binding Title}"
@@ -31,6 +30,8 @@
             Margin="20,20,20,0"
             IsActive="{Binding IsLoading}" />
 
+    <!-- Quiet on purpose: who this is, how it addresses you, what helped, what it is not. The counters, the streak, the trust meter
+         and the statistics of topics that stood here made a page about a helper read like a game score. -->
     <ScrollView Grid.Row="1" IsVisible="{Binding HasLoaded}" VerticalScrollBarVisibility="Never">
         <VerticalStackLayout
             Spacing="{StaticResource LayoutSpacing}">
@@ -38,184 +39,56 @@
                 <behaviors:StaggerChildrenBehavior />
             </VerticalStackLayout.Behaviors>
 
-            <!-- Face, name, status and the numbers -->
-            <Border
-                Margin="0"
-                Padding="20,24,20,20"
-                StrokeThickness="0"
-                StrokeShape="RoundRectangle 28">
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="{DynamicResource Primary}" Offset="0.0" />
-                        <GradientStop Color="#6E56FF" Offset="1.0" />
-                    </LinearGradientBrush>
-                </Border.Background>
-                <VerticalStackLayout Spacing="12">
+            <!-- Face, name and one line about it; that it works offline is said in the card about it below. -->
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="10">
+                    <!-- The top margin leaves room for the breathing ring, which reaches past the face and was clipped by the card. -->
                     <avatar:CompanionAvatarView
-                        WidthRequest="124"
-                        HeightRequest="124"
-                        IconSize="56"
+                        Margin="0,14,0,0"
+                        WidthRequest="88"
+                        HeightRequest="88"
+                        IconSize="40"
                         HorizontalOptions="Center"
                         IsAlive="True"
                         SemanticProperties.Description="{Binding Title}" />
-
-                    <Label
-                        Text="{Binding Title}"
-                        Style="{StaticResource PageTitleStyle}"
-                        TextColor="White"
-                        HorizontalTextAlignment="Center" />
+                    <Label Text="{Binding Title}" Style="{StaticResource SectionTitleStyle}" HorizontalTextAlignment="Center" />
                     <Label
                         Text="{Binding Tagline}"
                         Style="{StaticResource BodyStyle}"
-                        TextColor="White"
-                        Opacity="0.9"
+                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
                         HorizontalTextAlignment="Center" />
-
-                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
-                        <Border Padding="10,5" StrokeThickness="0" StrokeShape="RoundRectangle 14" BackgroundColor="#26FFFFFF">
-                            <HorizontalStackLayout Spacing="6">
-                                <Ellipse WidthRequest="8" HeightRequest="8" Fill="{StaticResource OnlineStatus}" VerticalOptions="Center" />
-                                <Label Text="{Binding OnlineText}" FontSize="12" TextColor="White" />
-                            </HorizontalStackLayout>
-                        </Border>
-                        <Border Padding="10,5" StrokeThickness="0" StrokeShape="RoundRectangle 14" BackgroundColor="#26FFFFFF">
-                            <HorizontalStackLayout Spacing="6">
-                                <ui:MaterialIconView IconName="CloudOff" IconSize="14" IconColor="White" VerticalOptions="Center" />
-                                <Label Text="{Binding OfflineText}" FontSize="12" TextColor="White" />
-                            </HorizontalStackLayout>
-                        </Border>
-                    </HorizontalStackLayout>
-
-                    <Label
-                        Text="{Binding Since}"
-                        Style="{StaticResource CaptionStyle}"
-                        TextColor="White"
-                        Opacity="0.85"
-                        HorizontalTextAlignment="Center" />
-
-                    <Border
-                        Margin="0,4,0,0"
-                        Padding="6,14"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 16"
-                        BackgroundColor="#26FFFFFF">
-                        <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="2">
-                            <VerticalStackLayout Grid.Column="0" Spacing="2">
-                                <Label x:Name="ChatsValue" Text="0" Style="{StaticResource PageTitleStyle}" TextColor="White" HorizontalTextAlignment="Center" />
-                                <Label Text="{Binding StatChatsLabel}" Style="{StaticResource CaptionStyle}" FontSize="12" TextColor="White" Opacity="0.85" HorizontalTextAlignment="Center" />
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Column="1" Spacing="2">
-                                <Label x:Name="MessagesValue" Text="0" Style="{StaticResource PageTitleStyle}" TextColor="White" HorizontalTextAlignment="Center" />
-                                <Label Text="{Binding StatMessagesLabel}" Style="{StaticResource CaptionStyle}" FontSize="12" TextColor="White" Opacity="0.85" HorizontalTextAlignment="Center" />
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Column="2" Spacing="2">
-                                <Label x:Name="DaysValue" Text="0" Style="{StaticResource PageTitleStyle}" TextColor="White" HorizontalTextAlignment="Center" />
-                                <Label Text="{Binding StatDaysLabel}" Style="{StaticResource CaptionStyle}" FontSize="12" TextColor="White" Opacity="0.85" HorizontalTextAlignment="Center" />
-                            </VerticalStackLayout>
-                            <VerticalStackLayout Grid.Column="3" Spacing="2">
-                                <Label x:Name="StreakValue" Text="0" Style="{StaticResource PageTitleStyle}" TextColor="White" HorizontalTextAlignment="Center" />
-                                <Label Text="{Binding StatStreakLabel}" Style="{StaticResource CaptionStyle}" FontSize="12" TextColor="White" Opacity="0.85" HorizontalTextAlignment="Center" />
-                            </VerticalStackLayout>
-                        </Grid>
-                    </Border>
                 </VerticalStackLayout>
             </Border>
 
-            <!-- Level of trust and how to address the person: two closely related facts about the relationship, one card. -->
+            <!-- How to address the person -->
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <VerticalStackLayout Spacing="12">
-                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                        <Label Grid.Column="0" Text="{Binding TrustTitle}" Style="{StaticResource SectionTitleStyle}" />
-                        <Label
-                            Grid.Column="1"
-                            Text="{Binding TrustName}"
-                            FontFamily="{StaticResource SemiBoldFontFamily}"
-                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
-                            VerticalOptions="Center" />
-                    </Grid>
-
-                    <!-- One meter, not two: each step is a segment, lit solid once passed and half-lit for the one under way. -->
-                    <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="6" BindableLayout.ItemsSource="{Binding TrustSteps}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="vm:TrustStepItem">
-                                <Border
-                                    HeightRequest="8"
-                                    StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 4"
-                                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}">
-                                    <Border.Triggers>
-                                        <DataTrigger TargetType="Border" Binding="{Binding IsCompleted}" Value="True">
-                                            <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Border" Binding="{Binding IsCurrent}" Value="True">
-                                            <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
-                                            <Setter Property="Opacity" Value="0.5" />
-                                        </DataTrigger>
-                                    </Border.Triggers>
-                                </Border>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </Grid>
-
-                    <Label Text="{Binding TrustHint}" Style="{StaticResource CaptionStyle}" />
-
-                    <BoxView HeightRequest="1" Color="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}" />
-
-                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-                        <VerticalStackLayout Grid.Column="0" Spacing="3" VerticalOptions="Center">
-                            <Label Text="{Binding NameTitle}" Style="{StaticResource CaptionStyle}" />
-                            <Label Text="{Binding NameText}" Style="{StaticResource ListRowTitleStyle}" FontSize="18" />
-                            <Label Text="{Binding NameHint}" Style="{StaticResource CaptionStyle}" FontSize="12" />
-                        </VerticalStackLayout>
-                        <Border
-                            Grid.Column="1"
-                            Padding="14,9"
-                            StrokeThickness="1.2"
-                            Stroke="{DynamicResource Primary}"
-                            StrokeShape="RoundRectangle 16"
-                            BackgroundColor="Transparent"
-                            VerticalOptions="Center"
-                            SemanticProperties.Description="{Binding NameEditText}">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding EditNameCommand}" />
-                            </Border.GestureRecognizers>
-                            <HorizontalStackLayout Spacing="6">
-                                <ui:MaterialIconView IconName="Edit" IconSize="16" IconColor="{DynamicResource Primary}" VerticalOptions="Center" />
-                                <Label Text="{Binding NameEditText}" FontFamily="{StaticResource MediumFontFamily}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
-                            </HorizontalStackLayout>
-                        </Border>
-                    </Grid>
-                </VerticalStackLayout>
-            </Border>
-
-            <!-- What the numbers say -->
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <VerticalStackLayout Spacing="12">
-                    <Label Text="{Binding InsightsTitle}" Style="{StaticResource SectionTitleStyle}" />
-                    <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding Insights}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="vm:InsightItem">
-                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                                    <Border
-                                        Grid.Column="0"
-                                        WidthRequest="32"
-                                        HeightRequest="32"
-                                        VerticalOptions="Start"
-                                        StrokeThickness="0"
-                                        StrokeShape="RoundRectangle 16"
-                                        BackgroundColor="{AppThemeBinding Light=#1A0085FF, Dark=#330085FF}">
-                                        <ui:MaterialIconView IconName="Lightbulb" IconSize="18" IconColor="{DynamicResource Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
-                                    </Border>
-                                    <Label Grid.Column="1" Text="{Binding Text}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
-                                </Grid>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <VerticalStackLayout Grid.Column="0" Spacing="3" VerticalOptions="Center">
+                        <Label Text="{Binding NameTitle}" Style="{StaticResource CaptionStyle}" />
+                        <Label Text="{Binding NameText}" Style="{StaticResource ListRowTitleStyle}" />
                     </VerticalStackLayout>
-                </VerticalStackLayout>
+                    <Border
+                        Grid.Column="1"
+                        Padding="14,9"
+                        StrokeThickness="1.2"
+                        Stroke="{DynamicResource Primary}"
+                        StrokeShape="RoundRectangle 16"
+                        BackgroundColor="Transparent"
+                        VerticalOptions="Center"
+                        SemanticProperties.Description="{Binding NameEditText}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding EditNameCommand}" />
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="6">
+                            <ui:MaterialIconView IconName="Edit" IconSize="16" IconColor="{DynamicResource Primary}" VerticalOptions="Center" />
+                            <Label Text="{Binding NameEditText}" FontFamily="{StaticResource MediumFontFamily}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </Grid>
             </Border>
 
-            <!-- Tension over time -->
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0" IsVisible="{Binding HasHistory}">
+            <!-- Tension over time, and what helps: only once there is something to show, not two cards of instructions. -->
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0" IsVisible="{Binding HasTension}">
                 <VerticalStackLayout Spacing="12">
                     <Label Text="{Binding TensionTitle}" Style="{StaticResource SectionTitleStyle}" />
 
@@ -279,12 +152,10 @@
                 </VerticalStackLayout>
             </Border>
 
-            <!-- What helps -->
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0" IsVisible="{Binding HasHistory}">
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0" IsVisible="{Binding HasPractices}">
                 <VerticalStackLayout Spacing="12">
                     <Label Text="{Binding PracticesTitle}" Style="{StaticResource SectionTitleStyle}" />
-                    <Label IsVisible="{Binding HasNoPractices}" Text="{Binding PracticesEmptyText}" Style="{StaticResource BodyStyle}" />
-                    <VerticalStackLayout Spacing="14" IsVisible="{Binding HasPractices}" BindableLayout.ItemsSource="{Binding Practices}">
+                    <VerticalStackLayout Spacing="14" BindableLayout.ItemsSource="{Binding Practices}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="vm:PracticeRowItem">
                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" RowDefinitions="Auto,Auto,Auto" RowSpacing="4">
@@ -324,27 +195,7 @@
                 </VerticalStackLayout>
             </Border>
 
-            <!-- What the person talks about -->
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0" IsVisible="{Binding HasEmotions}">
-                <VerticalStackLayout Spacing="12">
-                    <Label Text="{Binding EmotionsTitle}" Style="{StaticResource SectionTitleStyle}" />
-                    <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding Emotions}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="vm:EmotionRowItem">
-                                <VerticalStackLayout Spacing="4">
-                                    <Grid ColumnDefinitions="*,Auto">
-                                        <Label Grid.Column="0" Text="{Binding Name}" Style="{StaticResource BodyStyle}" />
-                                        <Label Grid.Column="1" Text="{Binding PercentText}" Style="{StaticResource CaptionStyle}" VerticalOptions="Center" />
-                                    </Grid>
-                                    <ProgressBar Progress="{Binding Share}" ProgressColor="{DynamicResource Primary}" />
-                                </VerticalStackLayout>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </VerticalStackLayout>
-                </VerticalStackLayout>
-            </Border>
-
-            <!-- About -->
+            <!-- What it is and what it is not: the safety text of the page, kept whole. -->
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                 <VerticalStackLayout Spacing="12">
                     <Label Text="{Binding AboutTitle}" Style="{StaticResource SectionTitleStyle}" />
@@ -354,12 +205,33 @@
                 </VerticalStackLayout>
             </Border>
 
-            <!-- Manage -->
-            <Label Text="{Binding ActionsTitle}" Style="{StaticResource SectionTitleStyle}" />
             <ui:ButtonView BodyText="{Binding NewChatText}" TapCommand="{Binding NewChatCommand}" />
-            <ui:ButtonView BodyText="{Binding AllChatsText}" TapCommand="{Binding AllChatsCommand}" Variant="Secondary" />
-            <ui:ButtonView BodyText="{Binding ForgetText}" TapCommand="{Binding ForgetCommand}" Variant="Secondary" />
-            <ui:ButtonView BodyText="{Binding DeleteAllText}" TapCommand="{Binding DeleteAllCommand}" Variant="Secondary" IsVisible="{Binding HasHistory}" />
+
+            <!-- Rare and irreversible: quiet rows behind a confirmation, not a stack of big buttons. -->
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="20,6">
+                <VerticalStackLayout>
+                    <Grid ColumnDefinitions="*,Auto" MinimumHeightRequest="48" SemanticProperties.Description="{Binding ForgetText}">
+                        <Grid.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </Grid.Behaviors>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ForgetCommand}" />
+                        </Grid.GestureRecognizers>
+                        <Label Text="{Binding ForgetText}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                        <ui:MaterialIconView Grid.Column="1" IconName="ChevronRight" IconSize="22" VerticalOptions="Center" />
+                    </Grid>
+                    <Grid IsVisible="{Binding HasHistory}" ColumnDefinitions="*,Auto" MinimumHeightRequest="48" SemanticProperties.Description="{Binding DeleteAllText}">
+                        <Grid.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </Grid.Behaviors>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding DeleteAllCommand}" />
+                        </Grid.GestureRecognizers>
+                        <Label Text="{Binding DeleteAllText}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                        <ui:MaterialIconView Grid.Column="1" IconName="ChevronRight" IconSize="22" VerticalOptions="Center" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
             <BoxView HeightRequest="16" Color="Transparent" />
         </VerticalStackLayout>
     </ScrollView>

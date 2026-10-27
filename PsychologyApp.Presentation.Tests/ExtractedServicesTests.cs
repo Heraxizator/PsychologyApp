@@ -12,7 +12,6 @@ using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Features.PlayMusic;
 using PsychologyApp.Presentation.Shared.Services.Preferences;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
-using PsychologyApp.Presentation.Shared.Services.Progress;
 using PsychologyApp.Presentation.Features.ManageProfile;
 using PsychologyApp.Presentation.Features.ManageProfile.Index;
 using PsychologyApp.Presentation.Features.ManageQuotes;
@@ -67,55 +66,6 @@ public sealed class PracticeDashboardLoaderTests
         TodayRecommendationResult result = await loader.ResolveTodayRecommendationAsync(navigation.Object);
 
         Assert.Equal(TechniqueId.SmallStep, result.TechniqueId);
-    }
-}
-
-public sealed class WeeklyInsightLoaderTests
-{
-    [Fact]
-    public async Task Load_HidesWhenNoWeekData()
-    {
-        Mock<IUserProgressService> progress = new();
-        progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync([]);
-        progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync([]);
-        progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(0);
-        progress.Setup(p => p.GetMostRecentTestResultAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync((TestResultDTO?)null);
-
-        WeeklyInsightLoader loader = new(progress.Object);
-        WeeklyInsightSnapshot insight = await loader.LoadAsync();
-
-        Assert.False(insight.HasInsight);
-    }
-
-    [Fact]
-    public async Task Load_ShowsPracticeCount_WhenCompletionsThisWeek()
-    {
-        Mock<IUserProgressService> progress = new();
-        progress.Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(
-            [
-                new CompletionDTO
-                {
-                    ItemKey = "Spin",
-                    PageName = "Spin",
-                    CompletedAt = DateTime.UtcNow
-                }
-            ]);
-        progress.Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync([]);
-        progress.Setup(p => p.GetStreakDaysAsync(It.IsAny<CancellationToken>())).ReturnsAsync(3);
-        progress.Setup(p => p.GetMostRecentTestResultAsync(It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync((TestResultDTO?)null);
-
-        WeeklyInsightLoader loader = new(progress.Object);
-        WeeklyInsightSnapshot insight = await loader.LoadAsync();
-
-        Assert.True(insight.HasInsight);
-        Assert.Contains("1", insight.DisplayText, StringComparison.Ordinal);
-        Assert.Contains("3", insight.DisplayText, StringComparison.Ordinal);
     }
 }
 

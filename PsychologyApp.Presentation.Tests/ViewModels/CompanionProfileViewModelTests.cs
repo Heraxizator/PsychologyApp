@@ -30,11 +30,10 @@ public sealed class CompanionProfileViewModelTests
         _dialogs.Setup(d => d.AskAsync(It.IsAny<string?>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(answer);
 
     [Fact]
-    public async Task TheNumbersAndTheNameAreShown()
+    public async Task TheNameAndTheHistoryAreShown()
     {
         CompanionProfileViewModel viewModel = await CreateAsync();
 
-        Assert.Equal((3, 12, 4, 2), (viewModel.Chats, viewModel.Messages, viewModel.Days, viewModel.Streak));
         Assert.True(viewModel.HasName);
         Assert.Equal("Sam", viewModel.NameText);
         Assert.True(viewModel.HasLoaded);
@@ -51,21 +50,6 @@ public sealed class CompanionProfileViewModelTests
         Assert.False(viewModel.HasName);
         Assert.Equal(AppStrings.ChatProfileNameEmpty, viewModel.NameText);
         Assert.False(viewModel.HasHistory);
-    }
-
-    [Fact]
-    public async Task ThePageAnimatesOnlyWhenTheNumbersChanged()
-    {
-        CompanionProfileViewModel viewModel = await CreateAsync();
-        int loaded = 0;
-        viewModel.ProfileLoaded += (_, _) => loaded++;
-
-        await viewModel.RefreshAsync();
-        Assert.Equal(0, loaded);
-
-        _profile = _profile with { Chats = 4 };
-        await viewModel.RefreshAsync();
-        Assert.Equal(1, loaded);
     }
 
     [Fact]
@@ -120,16 +104,13 @@ public sealed class CompanionProfileViewModelTests
     }
 
     [Fact]
-    public async Task TheNavigationButtonsGoWhereTheyPromise()
+    public async Task NewChatOpensAnEmptyConversation()
     {
         CompanionProfileViewModel viewModel = await CreateAsync();
         _navigation.Setup(n => n.GoToChatAsync(It.IsAny<long?>())).Returns(Task.CompletedTask);
-        _navigation.Setup(n => n.GoToChatListAsync()).Returns(Task.CompletedTask);
 
         await VmTestHelpers.RunAsync(viewModel.NewChatCommand);
-        await VmTestHelpers.RunAsync(viewModel.AllChatsCommand);
 
         _navigation.Verify(n => n.GoToChatAsync(null), Times.Once);
-        _navigation.Verify(n => n.GoToChatListAsync(), Times.Once);
     }
 }

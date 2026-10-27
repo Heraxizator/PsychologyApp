@@ -126,35 +126,11 @@
   <data name="ChatProfileOpen" xml:space="preserve">
     <value>Abrir el perfil del psicólogo IA</value>
   </data>
-  <data name="ChatProfileOnline" xml:space="preserve">
-    <value>En línea</value>
-  </data>
-  <data name="ChatProfileOffline" xml:space="preserve">
-    <value>Funciona sin conexión</value>
-  </data>
-  <data name="ChatProfileStatChats" xml:space="preserve">
-    <value>Chats</value>
-  </data>
-  <data name="ChatProfileStatMessages" xml:space="preserve">
-    <value>Tus mensajes</value>
-  </data>
-  <data name="ChatProfileStatDays" xml:space="preserve">
-    <value>Días juntos</value>
-  </data>
-  <data name="ChatProfileStatStreak" xml:space="preserve">
-    <value>Días seguidos</value>
-  </data>
-  <data name="ChatProfileTrustTitle" xml:space="preserve">
-    <value>Nivel de confianza</value>
-  </data>
   <data name="ChatProfileNameTitle" xml:space="preserve">
     <value>Cómo llamarte</value>
   </data>
   <data name="ChatProfileNameEmpty" xml:space="preserve">
     <value>Aún sin nombre</value>
-  </data>
-  <data name="ChatProfileNameHint" xml:space="preserve">
-    <value>El chat te llamará por tu nombre de vez en cuando</value>
   </data>
   <data name="ChatProfileNameEdit" xml:space="preserve">
     <value>Cambiar</value>
@@ -164,9 +140,6 @@
   </data>
   <data name="ChatProfileNamePromptMessage" xml:space="preserve">
     <value>¿Cómo quieres que te llame? Déjalo vacío para quitar el nombre.</value>
-  </data>
-  <data name="ChatProfileInsightsTitle" xml:space="preserve">
-    <value>Lo que muestran tus conversaciones</value>
   </data>
   <data name="ChatProfileTensionTitle" xml:space="preserve">
     <value>La tensión con el tiempo</value>
@@ -180,26 +153,14 @@
   <data name="ChatProfilePracticesTitle" xml:space="preserve">
     <value>Lo que te ayuda</value>
   </data>
-  <data name="ChatProfilePracticesEmpty" xml:space="preserve">
-    <value>Haz una práctica desde un chat y valora la tensión antes y después: aquí aparecerá lo que te ayuda.</value>
-  </data>
   <data name="ChatProfilePracticeBest" xml:space="preserve">
     <value>Lo mejor</value>
   </data>
   <data name="ChatProfilePracticeStart" xml:space="preserve">
     <value>Empezar</value>
   </data>
-  <data name="ChatProfileEmotionsTitle" xml:space="preserve">
-    <value>De lo que más hablas</value>
-  </data>
   <data name="ChatProfileAboutTitle" xml:space="preserve">
     <value>Sobre el psicólogo IA</value>
-  </data>
-  <data name="ChatProfileActionsTitle" xml:space="preserve">
-    <value>Gestionar</value>
-  </data>
-  <data name="ChatProfileAllChats" xml:space="preserve">
-    <value>Todos los chats</value>
   </data>
   <data name="ChatProfileForget" xml:space="preserve">
     <value>Olvidar mi nombre y mis preferencias</value>
@@ -827,9 +788,6 @@
   </data>
   <data name="ProfileMoodCheckInTitle" xml:space="preserve">
     <value>¿Cómo te sientes hoy?</value>
-  </data>
-  <data name="ProfileWeeklyInsightTitle" xml:space="preserve">
-    <value>Esta semana</value>
   </data>
   <data name="JournalTitle" xml:space="preserve">
     <value>Diario</value>
@@ -2055,14 +2013,8 @@
   <data name="ComebackBannerWithTechnique" xml:space="preserve">
     <value>Bienvenido de nuevo — empieza con {0}</value>
   </data>
-  <data name="WeeklyInsightMoodOnly" xml:space="preserve">
-    <value>Esta semana: ánimo {0}</value>
-  </data>
   <data name="TodayRecommendationReasonFromTest" xml:space="preserve">
     <value>Tras un test reciente ({0})</value>
-  </data>
-  <data name="WeeklyInsightStreakPart" xml:space="preserve">
-    <value>racha {0}</value>
   </data>
   <data name="JournalPracticeMoodInsight" xml:space="preserve">
     <value>Tras practicar ({0} días): ánimo medio {1}</value>
@@ -2682,12 +2634,6 @@
   <data name="TodayRecommendationReasonContinueDraft.1" xml:space="preserve">
     <value>Sigue donde lo dejaste</value>
   </data>
-  <data name="WeeklyInsightTestImprovedPart.1" xml:space="preserve">
-    <value>test ↑</value>
-  </data>
-  <data name="WeeklyInsightTestWorsePart.1" xml:space="preserve">
-    <value>test ↓</value>
-  </data>
   <data name="HeckHessScore.1" xml:space="preserve">
     <value>0-24 - neuroticismo bajo</value>
   </data>
@@ -2816,12 +2762,6 @@
   </data>
   <data name="PracticeReminderBodyNamed.1" xml:space="preserve">
     <value>Hoy: {0}. Tómate unos minutos para practicar.</value>
-  </data>
-  <data name="WeeklyInsightLine.1" xml:space="preserve">
-    <value>Esta semana: {0} {2}</value>
-  </data>
-  <data name="WeeklyInsightLine.2" xml:space="preserve">
-    <value>Esta semana: {0} {3} · ánimo {2}</value>
   </data>
   <data name="TodayMoodLine.1" xml:space="preserve">
     <value>Hoy: {0} {1}/{2}</value>
