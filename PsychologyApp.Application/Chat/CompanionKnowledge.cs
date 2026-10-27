@@ -102,13 +102,13 @@ public static class CompanionKnowledge
         if (price)
         {
             return english
-                ? "I don't know how the app is paid for: I'm the AI chat inside it. The project can be supported from the \"Support the project\" section in the menu."
-                : "Как устроена оплата, я не знаю: я ИИ-чат внутри приложения. Поддержать проект можно в разделе «Поддержать проект» в меню.";
+                ? "I don't know how the app is paid for: I'm the AI psychologist inside it. The project can be supported from the \"Support the project\" section in the menu."
+                : "Как устроена оплата, я не знаю: я ИИ-психолог внутри приложения. Поддержать проект можно в разделе «Поддержать проект» в меню.";
         }
 
         return english
-            ? "I'm the AI chat of this app, a self-help assistant. I work without internet, and what you write stays on your phone. What would you like to know?"
-            : "Я ИИ-чат этого приложения, помощник по самопомощи. Работаю без интернета, а всё, что вы пишете, остаётся на вашем телефоне. Что вы хотели бы узнать?";
+            ? "I'm the AI psychologist of this app, a self-help assistant. I work without internet, and what you write stays on your phone. What would you like to know?"
+            : "Я ИИ-психолог этого приложения, помощник по самопомощи. Работаю без интернета, а всё, что вы пишете, остаётся на вашем телефоне. Что вы хотели бы узнать?";
     }
 
     public static string ExplainFallback(bool english) => english

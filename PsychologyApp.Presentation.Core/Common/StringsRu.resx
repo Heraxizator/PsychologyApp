@@ -94,10 +94,10 @@
     <value>Новый чат</value>
   </data>
   <data name="ChatStatusIdle" xml:space="preserve">
-    <value>ИИ-чат · без интернета</value>
+    <value>ИИ-психолог · без интернета</value>
   </data>
   <data name="ChatStatusPractice" xml:space="preserve">
-    <value>ИИ-чат · практика</value>
+    <value>ИИ-психолог · практика</value>
   </data>
   <data name="ChatError" xml:space="preserve">
     <value>Не удалось отправить сообщение. Попробуйте ещё раз.</value>
@@ -115,16 +115,16 @@
     <value>Тест на стресс (PSS-10)</value>
   </data>
   <data name="ChatReminderTitle" xml:space="preserve">
-    <value>ИИ-чат на связи</value>
+    <value>ИИ-психолог на связи</value>
   </data>
   <data name="ChatReminderBody" xml:space="preserve">
     <value>Пару минут назад вы говорили о том, что вас беспокоит. Как сейчас дела?</value>
   </data>
   <data name="ChatProfileTitle" xml:space="preserve">
-    <value>ИИ-чат</value>
+    <value>ИИ-психолог</value>
   </data>
   <data name="ChatProfileOpen" xml:space="preserve">
-    <value>Открыть профиль ИИ-чата</value>
+    <value>Открыть профиль ИИ-психолога</value>
   </data>
   <data name="ChatProfileOnline" xml:space="preserve">
     <value>На связи</value>
@@ -193,7 +193,7 @@
     <value>О чём вы говорите чаще всего</value>
   </data>
   <data name="ChatProfileAboutTitle" xml:space="preserve">
-    <value>Об ИИ-чате</value>
+    <value>Об ИИ-психологе</value>
   </data>
   <data name="ChatProfileActionsTitle" xml:space="preserve">
     <value>Управление</value>
@@ -1213,7 +1213,7 @@
     <value>Опора в одном месте</value>
   </data>
   <data name="OnboardingOverviewSubtitle" xml:space="preserve">
-    <value>Практики, ИИ-чат, тесты и дневник — внизу экрана. Статьи, курсы, «Тело», молитвы и цитаты — в меню ☰</value>
+    <value>Практики, ИИ-психолог, тесты и дневник — внизу экрана. Статьи, курсы, «Тело», молитвы и цитаты — в меню ☰</value>
   </data>
   <data name="OnboardingOverviewLead" xml:space="preserve">
     <value>Главное — в нижней панели, остальное — в меню</value>
@@ -1579,7 +1579,7 @@
     <value>Удалить все данные?</value>
   </data>
   <data name="DataEraseConfirmBody" xml:space="preserve">
-    <value>С телефона будут удалены дневник настроения, практики и ответы в них, результаты тестов, разговоры с ИИ-чатом, план безопасности, записи «Тела» и настройки. Вернуть их можно только из резервной копии, если вы её сохранили.</value>
+    <value>С телефона будут удалены дневник настроения, практики и ответы в них, результаты тестов, разговоры с ИИ-психологом, план безопасности, записи «Тела» и настройки. Вернуть их можно только из резервной копии, если вы её сохранили.</value>
   </data>
   <data name="DataEraseConfirmAccept" xml:space="preserve">
     <value>Удалить всё</value>
@@ -3614,10 +3614,10 @@
     <value>Этот день ещё не открыт.</value>
   </data>
   <data name="ArticleChatCaption" xml:space="preserve">
-    <value>ИИ-чат</value>
+    <value>ИИ-психолог</value>
   </data>
   <data name="ShellTabChatShort" xml:space="preserve">
-    <value>ИИ-чат</value>
+    <value>ИИ-психолог</value>
   </data>
   <data name="ShellTabLibraryShort" xml:space="preserve">
     <value>Материалы</value>

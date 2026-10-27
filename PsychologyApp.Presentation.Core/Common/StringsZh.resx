@@ -94,10 +94,10 @@
     <value>新对话</value>
   </data>
   <data name="ChatStatusIdle" xml:space="preserve">
-    <value>AI 聊天 · 离线</value>
+    <value>AI 心理师 · 离线</value>
   </data>
   <data name="ChatStatusPractice" xml:space="preserve">
-    <value>AI 聊天 · 练习</value>
+    <value>AI 心理师 · 练习</value>
   </data>
   <data name="ChatError" xml:space="preserve">
     <value>消息发送失败，请重试。</value>
@@ -115,16 +115,16 @@
     <value>压力测试（PSS-10）</value>
   </data>
   <data name="ChatReminderTitle" xml:space="preserve">
-    <value>AI 聊天在这里</value>
+    <value>AI 心理师在这里</value>
   </data>
   <data name="ChatReminderBody" xml:space="preserve">
     <value>有一阵子没聊了。现在怎么样？</value>
   </data>
   <data name="ChatProfileTitle" xml:space="preserve">
-    <value>AI 聊天</value>
+    <value>AI 心理师</value>
   </data>
   <data name="ChatProfileOpen" xml:space="preserve">
-    <value>打开 AI 聊天资料</value>
+    <value>打开 AI 心理师资料</value>
   </data>
   <data name="ChatProfileOnline" xml:space="preserve">
     <value>在线</value>
@@ -193,7 +193,7 @@
     <value>你最常聊的话题</value>
   </data>
   <data name="ChatProfileAboutTitle" xml:space="preserve">
-    <value>关于 AI 聊天</value>
+    <value>关于 AI 心理师</value>
   </data>
   <data name="ChatProfileActionsTitle" xml:space="preserve">
     <value>管理</value>
@@ -1213,7 +1213,7 @@
     <value>支持都在一个地方</value>
   </data>
   <data name="OnboardingOverviewSubtitle" xml:space="preserve">
-    <value>练习、AI 聊天、测试和日记在屏幕底部。文章、课程、身体、祈祷和名言在菜单 ☰ 中</value>
+    <value>练习、AI 心理师、测试和日记在屏幕底部。文章、课程、身体、祈祷和名言在菜单 ☰ 中</value>
   </data>
   <data name="OnboardingOverviewLead" xml:space="preserve">
     <value>常用功能在标签栏，其余在菜单中</value>
@@ -1579,7 +1579,7 @@
     <value>删除所有数据？</value>
   </data>
   <data name="DataEraseConfirmBody" xml:space="preserve">
-    <value>心情日记、练习及你的回答、测试结果、与 AI 聊天的对话、安全计划、身体记录和设置都将从这部手机上删除。只有在你保存过备份的情况下，才能从备份中恢复。</value>
+    <value>心情日记、练习及你的回答、测试结果、与 AI 心理师的对话、安全计划、身体记录和设置都将从这部手机上删除。只有在你保存过备份的情况下，才能从备份中恢复。</value>
   </data>
   <data name="DataEraseConfirmAccept" xml:space="preserve">
     <value>全部删除</value>
@@ -3608,10 +3608,10 @@
     <value>这一天还没有开放。</value>
   </data>
   <data name="ArticleChatCaption" xml:space="preserve">
-    <value>AI 聊天</value>
+    <value>AI 心理师</value>
   </data>
   <data name="ShellTabChatShort" xml:space="preserve">
-    <value>AI 聊天</value>
+    <value>AI 心理师</value>
   </data>
   <data name="ShellTabLibraryShort" xml:space="preserve">
     <value>资料库</value>

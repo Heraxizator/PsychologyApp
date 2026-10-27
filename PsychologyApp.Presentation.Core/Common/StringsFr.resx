@@ -94,10 +94,10 @@
     <value>Nouvelle discussion</value>
   </data>
   <data name="ChatStatusIdle" xml:space="preserve">
-    <value>Chat IA · hors ligne</value>
+    <value>Psychologue IA · hors ligne</value>
   </data>
   <data name="ChatStatusPractice" xml:space="preserve">
-    <value>Chat IA · pratique</value>
+    <value>Psychologue IA · pratique</value>
   </data>
   <data name="ChatError" xml:space="preserve">
     <value>Le message n'a pas pu être envoyé. Veuillez réessayer.</value>
@@ -115,16 +115,16 @@
     <value>Test de stress (PSS-10)</value>
   </data>
   <data name="ChatReminderTitle" xml:space="preserve">
-    <value>Le chat IA est là</value>
+    <value>Le psychologue IA est là</value>
   </data>
   <data name="ChatReminderBody" xml:space="preserve">
     <value>Cela fait un petit moment. Comment ça va maintenant ?</value>
   </data>
   <data name="ChatProfileTitle" xml:space="preserve">
-    <value>Chat IA</value>
+    <value>Psychologue IA</value>
   </data>
   <data name="ChatProfileOpen" xml:space="preserve">
-    <value>Ouvrir le profil du chat IA</value>
+    <value>Ouvrir le profil du psychologue IA</value>
   </data>
   <data name="ChatProfileOnline" xml:space="preserve">
     <value>En ligne</value>
@@ -193,7 +193,7 @@
     <value>Ce dont vous parlez le plus</value>
   </data>
   <data name="ChatProfileAboutTitle" xml:space="preserve">
-    <value>À propos du chat IA</value>
+    <value>À propos du psychologue IA</value>
   </data>
   <data name="ChatProfileActionsTitle" xml:space="preserve">
     <value>Gérer</value>
@@ -1213,7 +1213,7 @@
     <value>Du soutien au même endroit</value>
   </data>
   <data name="OnboardingOverviewSubtitle" xml:space="preserve">
-    <value>Pratiques, chat IA, tests et journal en bas de l'écran. Articles, cours, Corps, prières et citations dans le menu ☰</value>
+    <value>Pratiques, psychologue IA, tests et journal en bas de l'écran. Articles, cours, Corps, prières et citations dans le menu ☰</value>
   </data>
   <data name="OnboardingOverviewLead" xml:space="preserve">
     <value>L'essentiel dans les onglets, le reste dans le menu</value>
@@ -1579,7 +1579,7 @@
     <value>Supprimer toutes les données ?</value>
   </data>
   <data name="DataEraseConfirmBody" xml:space="preserve">
-    <value>Le journal d'humeur, les pratiques et vos réponses, les résultats des tests, les conversations avec le chat IA, le plan de sécurité, les relevés Corps et les réglages seront supprimés de ce téléphone. Ils ne pourront être récupérés qu'à partir d'une sauvegarde, si vous en avez fait une.</value>
+    <value>Le journal d'humeur, les pratiques et vos réponses, les résultats des tests, les conversations avec le psychologue IA, le plan de sécurité, les relevés Corps et les réglages seront supprimés de ce téléphone. Ils ne pourront être récupérés qu'à partir d'une sauvegarde, si vous en avez fait une.</value>
   </data>
   <data name="DataEraseConfirmAccept" xml:space="preserve">
     <value>Tout supprimer</value>
@@ -3608,10 +3608,10 @@
     <value>Ce jour n'est pas encore ouvert.</value>
   </data>
   <data name="ArticleChatCaption" xml:space="preserve">
-    <value>Chat IA</value>
+    <value>Psychologue IA</value>
   </data>
   <data name="ShellTabChatShort" xml:space="preserve">
-    <value>Chat IA</value>
+    <value>Psychologue IA</value>
   </data>
   <data name="ShellTabLibraryShort" xml:space="preserve">
     <value>Bibliothèque</value>

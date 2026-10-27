@@ -39,8 +39,8 @@ public static class ChatProfileContent
 
     /// <summary>One calm paragraph instead of a list of abilities: the same companion also runs the practices, and what helped is kept on the phone.</summary>
     public static string About(bool english) => english
-        ? "The AI chat also leads the practices of the catalogue, in the same kind of conversation. What helped you is remembered on this phone and shown above."
-        : "ИИ-чат проводит и практики из каталога, в таком же разговоре. Что вам помогло, запоминается на этом телефоне и показано выше.";
+        ? "The AI psychologist also leads the practices of the catalogue, in the same kind of conversation. What helped you is remembered on this phone and shown above."
+        : "ИИ-психолог проводит и практики из каталога, в таком же разговоре. Что вам помогло, запоминается на этом телефоне и показано выше.";
 
     public static string Since(DateTime? sinceUtc, bool english)
     {

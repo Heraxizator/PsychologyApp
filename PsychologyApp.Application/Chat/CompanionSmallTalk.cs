@@ -108,8 +108,8 @@ public static class CompanionSmallTalk
         : ["Спасибо, что спросили. Я приложение и настроения у меня нет, но мне важно, как вы. Как вы?", "Я на связи и слушаю. Важнее, как вы сегодня?"]);
 
     public static string Name(bool english) => english
-        ? "I'm the AI chat of this app, a self-help assistant. What should I call you?"
-        : "Я ИИ-чат этого приложения, помощник по самопомощи. А как мне называть вас?";
+        ? "I'm the AI psychologist of this app, a self-help assistant. What should I call you?"
+        : "Я ИИ-психолог этого приложения, помощник по самопомощи. А как мне называть вас?";
 
     public static string Nice(string name, bool hasEmotion, bool english) => english
         ? $"Nice to meet you, {name}. {(hasEmotion ? "Shall we go on with what we were talking about?" : "How are you today?")}"

@@ -94,10 +94,10 @@
     <value>New chat</value>
   </data>
   <data name="ChatStatusIdle" xml:space="preserve">
-    <value>AI chat · offline</value>
+    <value>AI psychologist · offline</value>
   </data>
   <data name="ChatStatusPractice" xml:space="preserve">
-    <value>AI chat · practice</value>
+    <value>AI psychologist · practice</value>
   </data>
   <data name="ChatError" xml:space="preserve">
     <value>Could not send the message. Please try again.</value>
@@ -115,16 +115,16 @@
     <value>Stress test (PSS-10)</value>
   </data>
   <data name="ChatReminderTitle" xml:space="preserve">
-    <value>AI chat is here</value>
+    <value>AI psychologist is here</value>
   </data>
   <data name="ChatReminderBody" xml:space="preserve">
     <value>It's been a little while. How are things going now?</value>
   </data>
   <data name="ChatProfileTitle" xml:space="preserve">
-    <value>AI chat</value>
+    <value>AI psychologist</value>
   </data>
   <data name="ChatProfileOpen" xml:space="preserve">
-    <value>Open the AI chat profile</value>
+    <value>Open the AI psychologist profile</value>
   </data>
   <data name="ChatProfileOnline" xml:space="preserve">
     <value>Online</value>
@@ -193,7 +193,7 @@
     <value>What you talk about most</value>
   </data>
   <data name="ChatProfileAboutTitle" xml:space="preserve">
-    <value>About the AI chat</value>
+    <value>About the AI psychologist</value>
   </data>
   <data name="ChatProfileActionsTitle" xml:space="preserve">
     <value>Manage</value>
@@ -1213,7 +1213,7 @@
     <value>Support in one place</value>
   </data>
   <data name="OnboardingOverviewSubtitle" xml:space="preserve">
-    <value>Practices, AI chat, tests and the journal at the bottom of the screen. Articles, courses, Body, prayers and quotes in the menu ☰</value>
+    <value>Practices, AI psychologist, tests and the journal at the bottom of the screen. Articles, courses, Body, prayers and quotes in the menu ☰</value>
   </data>
   <data name="OnboardingOverviewLead" xml:space="preserve">
     <value>The essentials in the tab bar, the rest in the menu</value>
@@ -1579,7 +1579,7 @@
     <value>Delete all data?</value>
   </data>
   <data name="DataEraseConfirmBody" xml:space="preserve">
-    <value>The mood journal, practices and your answers in them, test results, conversations with the AI chat, the safety plan, Body check-ins and settings will be deleted from this phone. They can only be brought back from a backup, if you saved one.</value>
+    <value>The mood journal, practices and your answers in them, test results, conversations with the AI psychologist, the safety plan, Body check-ins and settings will be deleted from this phone. They can only be brought back from a backup, if you saved one.</value>
   </data>
   <data name="DataEraseConfirmAccept" xml:space="preserve">
     <value>Delete all</value>
@@ -3608,10 +3608,10 @@
     <value>This day is not open yet.</value>
   </data>
   <data name="ArticleChatCaption" xml:space="preserve">
-    <value>AI chat</value>
+    <value>AI psychologist</value>
   </data>
   <data name="ShellTabChatShort" xml:space="preserve">
-    <value>AI chat</value>
+    <value>AI psychologist</value>
   </data>
   <data name="ShellTabLibraryShort" xml:space="preserve">
     <value>Library</value>

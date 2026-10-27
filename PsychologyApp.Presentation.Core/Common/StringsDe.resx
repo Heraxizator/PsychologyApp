@@ -94,10 +94,10 @@
     <value>Neuer Chat</value>
   </data>
   <data name="ChatStatusIdle" xml:space="preserve">
-    <value>KI-Chat · offline</value>
+    <value>KI-Psychologe · offline</value>
   </data>
   <data name="ChatStatusPractice" xml:space="preserve">
-    <value>KI-Chat · Übung</value>
+    <value>KI-Psychologe · Übung</value>
   </data>
   <data name="ChatError" xml:space="preserve">
     <value>Die Nachricht konnte nicht gesendet werden. Bitte versuche es erneut.</value>
@@ -115,16 +115,16 @@
     <value>Stresstest (PSS-10)</value>
   </data>
   <data name="ChatReminderTitle" xml:space="preserve">
-    <value>Der KI-Chat ist da</value>
+    <value>Der KI-Psychologe ist da</value>
   </data>
   <data name="ChatReminderBody" xml:space="preserve">
     <value>Es ist eine Weile her. Wie geht es dir jetzt?</value>
   </data>
   <data name="ChatProfileTitle" xml:space="preserve">
-    <value>KI-Chat</value>
+    <value>KI-Psychologe</value>
   </data>
   <data name="ChatProfileOpen" xml:space="preserve">
-    <value>Profil des KI-Chats öffnen</value>
+    <value>Profil des KI-Psychologen öffnen</value>
   </data>
   <data name="ChatProfileOnline" xml:space="preserve">
     <value>Online</value>
@@ -193,7 +193,7 @@
     <value>Worüber du am meisten sprichst</value>
   </data>
   <data name="ChatProfileAboutTitle" xml:space="preserve">
-    <value>Über den KI-Chat</value>
+    <value>Über den KI-Psychologen</value>
   </data>
   <data name="ChatProfileActionsTitle" xml:space="preserve">
     <value>Verwalten</value>
@@ -1213,7 +1213,7 @@
     <value>Unterstützung an einem Ort</value>
   </data>
   <data name="OnboardingOverviewSubtitle" xml:space="preserve">
-    <value>Übungen, KI-Chat, Tests und Tagebuch unten auf dem Bildschirm. Artikel, Kurse, Körper, Gebete und Zitate im Menü ☰</value>
+    <value>Übungen, KI-Psychologe, Tests und Tagebuch unten auf dem Bildschirm. Artikel, Kurse, Körper, Gebete und Zitate im Menü ☰</value>
   </data>
   <data name="OnboardingOverviewLead" xml:space="preserve">
     <value>Das Wichtigste in den Tabs, der Rest im Menü</value>
@@ -1579,7 +1579,7 @@
     <value>Alle Daten löschen?</value>
   </data>
   <data name="DataEraseConfirmBody" xml:space="preserve">
-    <value>Das Stimmungstagebuch, die Übungen mit deinen Antworten, Testergebnisse, Gespräche mit dem KI-Chat, der Sicherheitsplan, Körper-Einträge und Einstellungen werden von diesem Handy gelöscht. Wiederherstellen lassen sie sich nur aus einer Sicherung, falls du eine gespeichert hast.</value>
+    <value>Das Stimmungstagebuch, die Übungen mit deinen Antworten, Testergebnisse, Gespräche mit dem KI-Psychologen, der Sicherheitsplan, Körper-Einträge und Einstellungen werden von diesem Handy gelöscht. Wiederherstellen lassen sie sich nur aus einer Sicherung, falls du eine gespeichert hast.</value>
   </data>
   <data name="DataEraseConfirmAccept" xml:space="preserve">
     <value>Alles löschen</value>
@@ -3608,10 +3608,10 @@
     <value>Dieser Tag ist noch nicht geöffnet.</value>
   </data>
   <data name="ArticleChatCaption" xml:space="preserve">
-    <value>KI-Chat</value>
+    <value>KI-Psychologe</value>
   </data>
   <data name="ShellTabChatShort" xml:space="preserve">
-    <value>KI-Chat</value>
+    <value>KI-Psychologe</value>
   </data>
   <data name="ShellTabLibraryShort" xml:space="preserve">
     <value>Bibliothek</value>
