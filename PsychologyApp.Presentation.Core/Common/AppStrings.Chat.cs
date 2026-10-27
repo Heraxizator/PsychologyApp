@@ -61,6 +61,7 @@ public static partial class AppStrings
     public static string ChatProfilePracticeStart => R(nameof(ChatProfilePracticeStart));
     public static string ChatProfilePracticeDetail(int helped, int tried) => F(nameof(ChatProfilePracticeDetail), helped, tried);
     public static string ChatProfileAboutTitle => R(nameof(ChatProfileAboutTitle));
+    public static string ChatProfileOpenersTitle => R(nameof(ChatProfileOpenersTitle));
     public static string ChatProfileForget => R(nameof(ChatProfileForget));
     public static string ChatProfileForgetTitle => R(nameof(ChatProfileForgetTitle));
     public static string ChatProfileForgetBody => R(nameof(ChatProfileForgetBody));

@@ -104,6 +104,22 @@ public sealed class CompanionProfileViewModelTests
     }
 
     [Fact]
+    public async Task EachFirstLineStartsAChatWithItsOwnWords()
+    {
+        CompanionProfileViewModel viewModel = await CreateAsync();
+        _navigation.Setup(n => n.GoToChatAsync(It.IsAny<long?>(), It.IsAny<string?>(), It.IsAny<string?>())).Returns(Task.CompletedTask);
+
+        foreach (ProfileOpener opener in viewModel.Openers)
+        {
+            await VmTestHelpers.RunAsync(opener.Command);
+            _navigation.Verify(n => n.GoToChatAsync(null, null, opener.Text), Times.Once);
+        }
+
+        Assert.NotEmpty(viewModel.Openers);
+        Assert.All(viewModel.Openers, opener => Assert.NotEmpty(opener.IconName));
+    }
+
+    [Fact]
     public async Task NewChatOpensAnEmptyConversation()
     {
         CompanionProfileViewModel viewModel = await CreateAsync();

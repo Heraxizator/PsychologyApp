@@ -4,6 +4,7 @@
              x:Class="PsychologyApp.Presentation.Pages.Chat.Companion.CompanionProfilePage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.Chat.Companion"
+             xmlns:chatList="clr-namespace:PsychologyApp.Presentation.Pages.Chat.ChatList"
              xmlns:avatar="clr-namespace:PsychologyApp.Presentation.Widgets.CompanionAvatar"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:DataType="vm:CompanionProfileViewModel"
@@ -14,6 +15,10 @@
     <ContentPage.Behaviors>
         <behaviors:PageAnalyticsBehavior />
     </ContentPage.Behaviors>
+
+    <ContentPage.Resources>
+        <chatList:ChatTileColorConverter x:Key="ChatTileColor" />
+    </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,*" Margin="{StaticResource LayoutPageMarginThickness}">
 
@@ -39,8 +44,12 @@
                 <behaviors:StaggerChildrenBehavior />
             </VerticalStackLayout.Behaviors>
 
-            <!-- Face, name and one line about it; that it works offline is said in the card about it below. -->
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+            <!-- Face, name and one line about it, on the soft accent tint: warm without the loud gradient that stood here.
+                 That it works offline is said in the card about it below. -->
+            <Border
+                Style="{StaticResource BrandCardStyle}"
+                Margin="0"
+                BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
                 <VerticalStackLayout Spacing="10">
                     <!-- The top margin leaves room for the breathing ring, which reaches past the face and was clipped by the card. -->
                     <avatar:CompanionAvatarView
@@ -57,6 +66,39 @@
                         Style="{StaticResource BodyStyle}"
                         TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
                         HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Something to do here, not only to read: each line opens a chat that starts with it. -->
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="20,16,20,8">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="{Binding OpenersTitle}" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,6" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Openers}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:ProfileOpener">
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="56" SemanticProperties.Description="{Binding Text}">
+                                    <Grid.Behaviors>
+                                        <behaviors:PressFeedbackBehavior />
+                                    </Grid.Behaviors>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Command}" />
+                                    </Grid.GestureRecognizers>
+                                    <Border
+                                        Style="{StaticResource IconTileStyle}"
+                                        BackgroundColor="{Binding Flavor, Converter={StaticResource ChatTileColor}, ConverterParameter=tile}">
+                                        <ui:MaterialIconView
+                                            IconName="{Binding IconName}"
+                                            IconSize="22"
+                                            IconColor="{Binding Flavor, Converter={StaticResource ChatTileColor}, ConverterParameter=icon}"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center" />
+                                    </Border>
+                                    <Label Grid.Column="1" Text="{Binding Text}" Style="{StaticResource ListRowTitleStyle}" VerticalOptions="Center" />
+                                    <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="22" VerticalOptions="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
                 </VerticalStackLayout>
             </Border>
 
@@ -200,8 +242,19 @@
                 <VerticalStackLayout Spacing="12">
                     <Label Text="{Binding AboutTitle}" Style="{StaticResource SectionTitleStyle}" />
                     <Label Text="{Binding AboutBody}" Style="{StaticResource BodyStyle}" />
-                    <Label Text="{Binding PrivacyLine}" Style="{StaticResource CaptionStyle}" />
-                    <Label Text="{Binding Disclaimer}" Style="{StaticResource CaptionStyle}" />
+                    <!-- The two promises as rows with an icon each, so they are seen and not skimmed as small print. -->
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border Style="{StaticResource IconTileStyle}" VerticalOptions="Start">
+                            <ui:MaterialIconView IconName="Lock" IconSize="22" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Grid.Column="1" Text="{Binding PrivacyLine}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                    </Grid>
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border Style="{StaticResource IconTileStyle}" VerticalOptions="Start">
+                            <ui:MaterialIconView IconName="HealthAndSafety" IconSize="22" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Grid.Column="1" Text="{Binding Disclaimer}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                    </Grid>
                 </VerticalStackLayout>
             </Border>
 

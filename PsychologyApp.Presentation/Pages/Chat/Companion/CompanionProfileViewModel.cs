@@ -4,6 +4,7 @@ using System.Windows.Input;
 using PsychologyApp.Application.Chat;
 using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Conversation.Companion;
+using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
@@ -28,6 +29,9 @@ public sealed record PracticeRowItem(string Title, string Detail, double HelpedF
 {
     public string BestText => AppStrings.ChatProfilePracticeBest;
 }
+
+/// <summary>A first line to start a conversation with, in the icon and colour of its state as on the chat list.</summary>
+public sealed record ProfileOpener(string Text, string IconName, TechniqueFlavor Flavor, ICommand Command);
 
 /// <summary>
 /// The companion's profile: who it is, how it addresses the person, how their tension changed over time and what helped.
@@ -75,6 +79,20 @@ public sealed class CompanionProfileViewModel : BaseViewModel
 
     public RangeObservableCollection<TensionBarItem> TensionBars { get; } = [];
     public RangeObservableCollection<PracticeRowItem> Practices { get; } = [];
+
+    /// <summary>
+    /// Something to do on the page, not only to read: each line opens a new chat and sends itself as the first message, the same
+    /// lines as on the empty chat list (the chat understands each of them from a first line, ChatOpenersTests).
+    /// </summary>
+    public IReadOnlyList<ProfileOpener> Openers =>
+    [
+        Opener(AppStrings.ChatOpenerAnxious, ChatCardLook.For("Anxiety")),
+        Opener(AppStrings.ChatOpenerSleep, ("Bedtime", TechniqueFlavor.Body)),
+        Opener(AppStrings.ChatOpenerSad, ChatCardLook.For("Sadness")),
+        Opener(AppStrings.ChatOpenerLonely, ChatCardLook.For("Loneliness"))
+    ];
+
+    public string OpenersTitle => AppStrings.ChatProfileOpenersTitle;
 
     public bool HasName => _profile.UserName is not null;
     public string NameText => _profile.UserName ?? AppStrings.ChatProfileNameEmpty;
@@ -131,6 +149,9 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     }
 
     protected override void RefreshLocalizedProperties() => NotifyAll();
+
+    private ProfileOpener Opener(string text, (string? Icon, TechniqueFlavor Flavor) look) =>
+        new(text, look.Icon ?? string.Empty, look.Flavor, new AsyncCommand(() => NavigationService!.GoToChatAsync(opener: text)));
 
     private PracticeRowItem ToPracticeRow(PracticeStat stat, bool isBest)
     {
@@ -196,7 +217,8 @@ public sealed class CompanionProfileViewModel : BaseViewModel
         nameof(HasTension), nameof(TensionCaption), nameof(HasPractices), nameof(HasHistory),
         nameof(Title), nameof(NameTitle), nameof(NameEditText),
         nameof(TensionTitle), nameof(TensionStartText), nameof(TensionEndText), nameof(PracticesTitle),
-        nameof(AboutTitle), nameof(NewChatText), nameof(ForgetText), nameof(DeleteAllText), nameof(LoadingText));
+        nameof(AboutTitle), nameof(NewChatText), nameof(ForgetText), nameof(DeleteAllText), nameof(LoadingText),
+        nameof(Openers), nameof(OpenersTitle));
 
     private static void Fill<T>(RangeObservableCollection<T> target, IEnumerable<T> items) => target.ReplaceAll(items);
 }

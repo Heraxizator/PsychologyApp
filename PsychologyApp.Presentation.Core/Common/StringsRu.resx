@@ -4171,4 +4171,7 @@
   <data name="JournalCheckInDays" xml:space="preserve">
     <value>{0} из {1}</value>
   </data>
+  <data name="ChatProfileOpenersTitle" xml:space="preserve">
+    <value>С чего начать</value>
+  </data>
 </root>
