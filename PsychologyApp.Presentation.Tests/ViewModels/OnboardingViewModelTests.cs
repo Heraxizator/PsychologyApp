@@ -125,11 +125,23 @@ public sealed class OnboardingViewModelTests
     }
 
     [Fact]
+    public async Task Just_looking_around_puts_no_one_on_a_programme()
+    {
+        OnboardingViewModel viewModel = Create();
+        await VmTestHelpers.RunAsync(viewModel.SelectExploreCommand);
+
+        await VmTestHelpers.RunAsync(viewModel.StartPracticeCommand);
+
+        _care.Verify(c => c.EnsureProgramAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
     public async Task AFailedProgramSeedDoesNotStopTheOnboardingFromCompleting()
     {
         _care.Setup(c => c.EnsureProgramAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ThrowsAsync(new InvalidOperationException("db"));
         OnboardingViewModel viewModel = Create();
         _care.Setup(c => c.EnsureProgramAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ThrowsAsync(new InvalidOperationException("db"));
+        await VmTestHelpers.RunAsync(viewModel.SelectAnxietyCommand);
 
         await VmTestHelpers.RunAsync(viewModel.SkipCommand);
 

@@ -18,13 +18,14 @@ public interface ITechniqueRecommendationService
 
 public sealed class TechniqueRecommendationService : ITechniqueRecommendationService
 {
+    // A newcomer gets the first entry that was never tried, so the list opens with the gentlest practices.
     private static readonly TechniqueId[] ExploreRotation =
     [
+        TechniqueId.Breathing,
+        TechniqueId.Grounding,
         TechniqueId.Spin,
         TechniqueId.Paper,
         TechniqueId.Experience,
-        TechniqueId.Breathing,
-        TechniqueId.Grounding,
         TechniqueId.SmallStep,
         TechniqueId.Future,
         TechniqueId.Hack,
@@ -45,9 +46,9 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
 
     private static readonly TechniqueId[] BodyPool =
     [
-        TechniqueId.Experience,
         TechniqueId.Grounding,
         TechniqueId.Breathing,
+        TechniqueId.Experience,
         TechniqueId.Check,
         TechniqueId.Hack,
         TechniqueId.Observer
@@ -76,10 +77,11 @@ public sealed class TechniqueRecommendationService : ITechniqueRecommendationSer
     public TechniqueId ResolveFromOnboardingConcern(string concern) => concern switch
     {
         OnboardingConcernKeys.Anxiety => TechniqueId.Spin,
-        OnboardingConcernKeys.Body => TechniqueId.Experience,
+        // Grounding: when the body signals stress, the first step is back to the senses, not into a painful experience.
+        OnboardingConcernKeys.Body => TechniqueId.Grounding,
         OnboardingConcernKeys.Mood => TechniqueId.SmallStep,
-        OnboardingConcernKeys.Explore => ExploreRotation[DateTime.UtcNow.DayOfYear % ExploreRotation.Length],
-        _ => ExploreRotation[DateTime.UtcNow.DayOfYear % ExploreRotation.Length]
+        // The very first practice is the gentlest, whatever the day: rotating by date could open with a painful memory.
+        _ => ExploreRotation[0]
     };
 
     public TodayRecommendationDecision ResolveTodayTechnique(TodayRecommendationContext context)

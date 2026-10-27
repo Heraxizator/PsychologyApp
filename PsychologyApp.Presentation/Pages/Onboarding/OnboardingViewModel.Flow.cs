@@ -61,6 +61,12 @@ public partial class OnboardingViewModel
             PracticeRemindersEnabled,
             _practiceReminderHour);
 
+        // Someone who only came to look around is not put on a four-week programme: it would choose their practices for them.
+        if (concern == OnboardingConcernKeys.Explore)
+        {
+            return;
+        }
+
         try
         {
             await _clinicalCareService.EnsureProgramAsync(concern);

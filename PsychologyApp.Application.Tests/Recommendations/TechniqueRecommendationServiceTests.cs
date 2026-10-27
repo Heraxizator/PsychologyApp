@@ -12,8 +12,9 @@ public sealed class TechniqueRecommendationServiceTests
 
     [Theory]
     [InlineData(OnboardingConcernKeys.Anxiety, TechniqueId.Spin)]
-    [InlineData(OnboardingConcernKeys.Body, TechniqueId.Experience)]
+    [InlineData(OnboardingConcernKeys.Body, TechniqueId.Grounding)]
     [InlineData(OnboardingConcernKeys.Mood, TechniqueId.SmallStep)]
+    [InlineData(OnboardingConcernKeys.Explore, TechniqueId.Breathing)]
     public void ResolveFromOnboardingConcern_MapsKnownConcerns(string concern, TechniqueId expected) =>
         Assert.Equal(expected, _service.ResolveFromOnboardingConcern(concern));
 
@@ -25,6 +26,14 @@ public sealed class TechniqueRecommendationServiceTests
             OnboardingConcernKeys.Explore,
             ActiveProgramType: TherapyProgramType.Stress,
             ActiveProgramWeek: 1));
+
+        Assert.Equal(TechniqueId.Breathing, decision.TechniqueId);
+    }
+
+    [Fact]
+    public void A_newcomer_who_is_just_exploring_starts_with_breathing()
+    {
+        TodayRecommendationDecision decision = _service.ResolveTodayTechnique(new TodayRecommendationContext(OnboardingConcernKeys.Explore));
 
         Assert.Equal(TechniqueId.Breathing, decision.TechniqueId);
     }

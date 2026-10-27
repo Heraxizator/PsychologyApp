@@ -14,7 +14,7 @@ public sealed class TodayRecommendationResolverTests
 {
     [Theory]
     [InlineData(OnboardingConcernKeys.Anxiety, TechniqueId.Spin)]
-    [InlineData(OnboardingConcernKeys.Body, TechniqueId.Experience)]
+    [InlineData(OnboardingConcernKeys.Body, TechniqueId.Grounding)]
     [InlineData(OnboardingConcernKeys.Mood, TechniqueId.SmallStep)]
     public async Task Resolve_MapsConcernToTechnique(string concern, TechniqueId expected)
     {
