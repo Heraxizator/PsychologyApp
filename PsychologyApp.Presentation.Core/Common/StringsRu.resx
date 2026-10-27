@@ -159,9 +159,6 @@
   <data name="ChatProfilePracticeStart" xml:space="preserve">
     <value>Начать</value>
   </data>
-  <data name="ChatProfileAboutTitle" xml:space="preserve">
-    <value>Об ИИ-психологе</value>
-  </data>
   <data name="ChatProfileForget" xml:space="preserve">
     <value>Забыть моё имя и предпочтения</value>
   </data>
@@ -4171,7 +4168,10 @@
   <data name="JournalCheckInDays" xml:space="preserve">
     <value>{0} из {1}</value>
   </data>
-  <data name="ChatProfileOpenersTitle" xml:space="preserve">
-    <value>С чего начать</value>
+  <data name="ChatProfileOfflineShort" xml:space="preserve">
+    <value>Без интернета</value>
+  </data>
+  <data name="ChatProfileOnPhone" xml:space="preserve">
+    <value>Только на телефоне</value>
   </data>
 </root>

@@ -159,9 +159,6 @@
   <data name="ChatProfilePracticeStart" xml:space="preserve">
     <value>Start</value>
   </data>
-  <data name="ChatProfileAboutTitle" xml:space="preserve">
-    <value>About the AI psychologist</value>
-  </data>
   <data name="ChatProfileForget" xml:space="preserve">
     <value>Forget my name and preferences</value>
   </data>
@@ -4165,7 +4162,10 @@
   <data name="JournalCheckInDays" xml:space="preserve">
     <value>{0} of {1}</value>
   </data>
-  <data name="ChatProfileOpenersTitle" xml:space="preserve">
-    <value>Where to start</value>
+  <data name="ChatProfileOfflineShort" xml:space="preserve">
+    <value>Offline</value>
+  </data>
+  <data name="ChatProfileOnPhone" xml:space="preserve">
+    <value>Stays on your phone</value>
   </data>
 </root>

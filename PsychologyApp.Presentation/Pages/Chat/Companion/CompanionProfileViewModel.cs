@@ -4,7 +4,6 @@ using System.Windows.Input;
 using PsychologyApp.Application.Chat;
 using PsychologyApp.Application.Conversation;
 using PsychologyApp.Application.Conversation.Companion;
-using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Shared.Services.Dialogs;
@@ -29,9 +28,6 @@ public sealed record PracticeRowItem(string Title, string Detail, double HelpedF
 {
     public string BestText => AppStrings.ChatProfilePracticeBest;
 }
-
-/// <summary>A first line to start a conversation with, in the icon and colour of its state as on the chat list.</summary>
-public sealed record ProfileOpener(string Text, string IconName, TechniqueFlavor Flavor, ICommand Command);
 
 /// <summary>
 /// The companion's profile: who it is, how it addresses the person, how their tension changed over time and what helped.
@@ -66,6 +62,7 @@ public sealed class CompanionProfileViewModel : BaseViewModel
         EditNameCommand = new AsyncCommand(EditNameAsync);
         ForgetCommand = new AsyncCommand(ForgetAsync);
         DeleteAllCommand = new AsyncCommand(DeleteAllAsync);
+        CrisisCommand = new AsyncCommand(() => NavigationService!.GoToCrisisHubAsync());
     }
 
     /// <summary>Set by the page: shows a text prompt and returns the entered text, or null when cancelled.</summary>
@@ -76,30 +73,18 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     public ICommand EditNameCommand { get; }
     public ICommand ForgetCommand { get; }
     public ICommand DeleteAllCommand { get; }
+    public ICommand CrisisCommand { get; }
 
     public RangeObservableCollection<TensionBarItem> TensionBars { get; } = [];
     public RangeObservableCollection<PracticeRowItem> Practices { get; } = [];
-
-    /// <summary>
-    /// Something to do on the page, not only to read: each line opens a new chat and sends itself as the first message, the same
-    /// lines as on the empty chat list (the chat understands each of them from a first line, ChatOpenersTests).
-    /// </summary>
-    public IReadOnlyList<ProfileOpener> Openers =>
-    [
-        Opener(AppStrings.ChatOpenerAnxious, ChatCardLook.For("Anxiety")),
-        Opener(AppStrings.ChatOpenerSleep, ("Bedtime", TechniqueFlavor.Body)),
-        Opener(AppStrings.ChatOpenerSad, ChatCardLook.For("Sadness")),
-        Opener(AppStrings.ChatOpenerLonely, ChatCardLook.For("Loneliness"))
-    ];
-
-    public string OpenersTitle => AppStrings.ChatProfileOpenersTitle;
 
     public bool HasName => _profile.UserName is not null;
     public string NameText => _profile.UserName ?? AppStrings.ChatProfileNameEmpty;
 
     public string Tagline => ChatProfileContent.Tagline(_language.IsEnglish);
-    public string AboutBody => ChatProfileContent.About(_language.IsEnglish);
-    public string PrivacyLine => ChatProfileContent.PrivacyLine(_language.IsEnglish);
+    public string OfflineText => AppStrings.ChatProfileOfflineShort;
+    public string OnPhoneText => AppStrings.ChatProfileOnPhone;
+    public string CrisisText => AppStrings.CrisisHubTitle;
     public string Disclaimer => ChatProfileContent.Disclaimer(_language.IsEnglish);
 
     public bool HasTension => TensionBars.Count > 0;
@@ -130,7 +115,6 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     public string TensionStartText => AppStrings.ChatProfileTensionStart;
     public string TensionEndText => AppStrings.ChatProfileTensionEnd;
     public string PracticesTitle => AppStrings.ChatProfilePracticesTitle;
-    public string AboutTitle => AppStrings.ChatProfileAboutTitle;
     public string NewChatText => AppStrings.ChatNew;
     public string ForgetText => AppStrings.ChatProfileForget;
     public string DeleteAllText => AppStrings.ChatProfileDeleteAll;
@@ -149,9 +133,6 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     }
 
     protected override void RefreshLocalizedProperties() => NotifyAll();
-
-    private ProfileOpener Opener(string text, (string? Icon, TechniqueFlavor Flavor) look) =>
-        new(text, look.Icon ?? string.Empty, look.Flavor, new AsyncCommand(() => NavigationService!.GoToChatAsync(opener: text)));
 
     private PracticeRowItem ToPracticeRow(PracticeStat stat, bool isBest)
     {
@@ -213,12 +194,12 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     }
 
     private void NotifyAll() => Notify(
-        nameof(HasName), nameof(NameText), nameof(Tagline), nameof(AboutBody), nameof(PrivacyLine), nameof(Disclaimer),
+        nameof(HasName), nameof(NameText), nameof(Tagline), nameof(Disclaimer),
         nameof(HasTension), nameof(TensionCaption), nameof(HasPractices), nameof(HasHistory),
         nameof(Title), nameof(NameTitle), nameof(NameEditText),
         nameof(TensionTitle), nameof(TensionStartText), nameof(TensionEndText), nameof(PracticesTitle),
-        nameof(AboutTitle), nameof(NewChatText), nameof(ForgetText), nameof(DeleteAllText), nameof(LoadingText),
-        nameof(Openers), nameof(OpenersTitle));
+        nameof(NewChatText), nameof(ForgetText), nameof(DeleteAllText), nameof(LoadingText),
+        nameof(OfflineText), nameof(OnPhoneText), nameof(CrisisText));
 
     private static void Fill<T>(RangeObservableCollection<T> target, IEnumerable<T> items) => target.ReplaceAll(items);
 }

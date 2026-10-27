@@ -47,6 +47,8 @@ public static partial class AppStrings
 
     // ----- companion profile -----
     public static string ChatProfileTitle => R(nameof(ChatProfileTitle));
+    public static string ChatProfileOfflineShort => R(nameof(ChatProfileOfflineShort));
+    public static string ChatProfileOnPhone => R(nameof(ChatProfileOnPhone));
     public static string ChatProfileOpen => R(nameof(ChatProfileOpen));
     public static string ChatProfileNameTitle => R(nameof(ChatProfileNameTitle));
     public static string ChatProfileNameEmpty => R(nameof(ChatProfileNameEmpty));
@@ -60,8 +62,6 @@ public static partial class AppStrings
     public static string ChatProfilePracticeBest => R(nameof(ChatProfilePracticeBest));
     public static string ChatProfilePracticeStart => R(nameof(ChatProfilePracticeStart));
     public static string ChatProfilePracticeDetail(int helped, int tried) => F(nameof(ChatProfilePracticeDetail), helped, tried);
-    public static string ChatProfileAboutTitle => R(nameof(ChatProfileAboutTitle));
-    public static string ChatProfileOpenersTitle => R(nameof(ChatProfileOpenersTitle));
     public static string ChatProfileForget => R(nameof(ChatProfileForget));
     public static string ChatProfileForgetTitle => R(nameof(ChatProfileForgetTitle));
     public static string ChatProfileForgetBody => R(nameof(ChatProfileForgetBody));

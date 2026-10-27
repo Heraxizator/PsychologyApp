@@ -3,9 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Pages.Chat.Companion.CompanionProfilePage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
-             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.Chat.Companion"
-             xmlns:chatList="clr-namespace:PsychologyApp.Presentation.Pages.Chat.ChatList"
-             xmlns:avatar="clr-namespace:PsychologyApp.Presentation.Widgets.CompanionAvatar"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.Chat.Companion"             xmlns:avatar="clr-namespace:PsychologyApp.Presentation.Widgets.CompanionAvatar"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:DataType="vm:CompanionProfileViewModel"
              Shell.NavBarIsVisible="False"
@@ -15,11 +13,6 @@
     <ContentPage.Behaviors>
         <behaviors:PageAnalyticsBehavior />
     </ContentPage.Behaviors>
-
-    <ContentPage.Resources>
-        <chatList:ChatTileColorConverter x:Key="ChatTileColor" />
-    </ContentPage.Resources>
-
     <Grid RowDefinitions="Auto,*" Margin="{StaticResource LayoutPageMarginThickness}">
 
         <!-- Kept outside the loading gate below: going back must always work, even while the page is still loading. -->
@@ -69,38 +62,48 @@
                 </VerticalStackLayout>
             </Border>
 
-            <!-- Something to do here, not only to read: each line opens a chat that starts with it. -->
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="20,16,20,8">
-                <VerticalStackLayout Spacing="4">
-                    <Label Text="{Binding OpenersTitle}" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,6" />
-                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Openers}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="vm:ProfileOpener">
-                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="56" SemanticProperties.Description="{Binding Text}">
-                                    <Grid.Behaviors>
-                                        <behaviors:PressFeedbackBehavior />
-                                    </Grid.Behaviors>
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Command}" />
-                                    </Grid.GestureRecognizers>
-                                    <Border
-                                        Style="{StaticResource IconTileStyle}"
-                                        BackgroundColor="{Binding Flavor, Converter={StaticResource ChatTileColor}, ConverterParameter=tile}">
-                                        <ui:MaterialIconView
-                                            IconName="{Binding IconName}"
-                                            IconSize="22"
-                                            IconColor="{Binding Flavor, Converter={StaticResource ChatTileColor}, ConverterParameter=icon}"
-                                            HorizontalOptions="Center"
-                                            VerticalOptions="Center" />
-                                    </Border>
-                                    <Label Grid.Column="1" Text="{Binding Text}" Style="{StaticResource ListRowTitleStyle}" VerticalOptions="Center" />
-                                    <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="22" VerticalOptions="Center" />
-                                </Grid>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
+            <!-- What it is, in three tiles instead of paragraphs; the last one leads to urgent help. -->
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="{StaticResource CompactSpacing}">
+                <Border Grid.Column="0" Style="{StaticResource BrandCardStyle}" Margin="0" Padding="8,16">
+                    <VerticalStackLayout Spacing="8">
+                        <Border Style="{StaticResource IconTileStyle}" HorizontalOptions="Center">
+                            <ui:MaterialIconView IconName="CloudOff" IconSize="22" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Text="{Binding OfflineText}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
                     </VerticalStackLayout>
-                </VerticalStackLayout>
-            </Border>
+                </Border>
+                <Border Grid.Column="1" Style="{StaticResource BrandCardStyle}" Margin="0" Padding="8,16">
+                    <VerticalStackLayout Spacing="8">
+                        <Border Style="{StaticResource IconTileStyle}" HorizontalOptions="Center">
+                            <ui:MaterialIconView IconName="Lock" IconSize="22" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Text="{Binding OnPhoneText}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="2" Style="{StaticResource BrandCardStyle}" Margin="0" Padding="8,16" SemanticProperties.Description="{Binding CrisisText}">
+                    <Border.Behaviors>
+                        <behaviors:PressFeedbackBehavior />
+                    </Border.Behaviors>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CrisisCommand}" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="8">
+                        <!-- The warm colours of urgent help in the side menu (AppMenuLook, Help), so it reads as the same door. -->
+                        <Border
+                            Style="{StaticResource IconTileStyle}"
+                            HorizontalOptions="Center"
+                            BackgroundColor="{AppThemeBinding Light=#FBE0DC, Dark=#4A2420}">
+                            <ui:MaterialIconView
+                                IconName="HealthAndSafety"
+                                IconSize="22"
+                                IconColor="{AppThemeBinding Light=#B3261E, Dark=#F4B4AB}"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                        </Border>
+                        <Label Text="{Binding CrisisText}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
 
             <!-- How to address the person -->
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
@@ -237,26 +240,8 @@
                 </VerticalStackLayout>
             </Border>
 
-            <!-- What it is and what it is not: the safety text of the page, kept whole. -->
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <VerticalStackLayout Spacing="12">
-                    <Label Text="{Binding AboutTitle}" Style="{StaticResource SectionTitleStyle}" />
-                    <Label Text="{Binding AboutBody}" Style="{StaticResource BodyStyle}" />
-                    <!-- The two promises as rows with an icon each, so they are seen and not skimmed as small print. -->
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                        <Border Style="{StaticResource IconTileStyle}" VerticalOptions="Start">
-                            <ui:MaterialIconView IconName="Lock" IconSize="22" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Border>
-                        <Label Grid.Column="1" Text="{Binding PrivacyLine}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
-                    </Grid>
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                        <Border Style="{StaticResource IconTileStyle}" VerticalOptions="Start">
-                            <ui:MaterialIconView IconName="HealthAndSafety" IconSize="22" HorizontalOptions="Center" VerticalOptions="Center" />
-                        </Border>
-                        <Label Grid.Column="1" Text="{Binding Disclaimer}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
-                    </Grid>
-                </VerticalStackLayout>
-            </Border>
+            <!-- What it is not, in one line: the safety text stays, the paragraphs around it are gone. -->
+            <Label Text="{Binding Disclaimer}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" Margin="12,0" />
 
             <ui:ButtonView BodyText="{Binding NewChatText}" TapCommand="{Binding NewChatCommand}" />
 

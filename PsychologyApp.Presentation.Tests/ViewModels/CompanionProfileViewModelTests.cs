@@ -104,19 +104,15 @@ public sealed class CompanionProfileViewModelTests
     }
 
     [Fact]
-    public async Task EachFirstLineStartsAChatWithItsOwnWords()
+    // The help tile is the page's way to urgent help; it must lead there, not just look like it.
+    public async Task TheHelpTileOpensUrgentHelp()
     {
         CompanionProfileViewModel viewModel = await CreateAsync();
-        _navigation.Setup(n => n.GoToChatAsync(It.IsAny<long?>(), It.IsAny<string?>(), It.IsAny<string?>())).Returns(Task.CompletedTask);
+        _navigation.Setup(n => n.GoToCrisisHubAsync()).Returns(Task.CompletedTask);
 
-        foreach (ProfileOpener opener in viewModel.Openers)
-        {
-            await VmTestHelpers.RunAsync(opener.Command);
-            _navigation.Verify(n => n.GoToChatAsync(null, null, opener.Text), Times.Once);
-        }
+        await VmTestHelpers.RunAsync(viewModel.CrisisCommand);
 
-        Assert.NotEmpty(viewModel.Openers);
-        Assert.All(viewModel.Openers, opener => Assert.NotEmpty(opener.IconName));
+        _navigation.Verify(n => n.GoToCrisisHubAsync(), Times.Once);
     }
 
     [Fact]

@@ -159,9 +159,6 @@
   <data name="ChatProfilePracticeStart" xml:space="preserve">
     <value>开始</value>
   </data>
-  <data name="ChatProfileAboutTitle" xml:space="preserve">
-    <value>关于 AI 心理师</value>
-  </data>
   <data name="ChatProfileForget" xml:space="preserve">
     <value>忘记我的名字和偏好</value>
   </data>
@@ -4165,7 +4162,10 @@
   <data name="JournalCheckInDays" xml:space="preserve">
     <value>{0}/{1}</value>
   </data>
-  <data name="ChatProfileOpenersTitle" xml:space="preserve">
-    <value>从哪里开始</value>
+  <data name="ChatProfileOfflineShort" xml:space="preserve">
+    <value>无需联网</value>
+  </data>
+  <data name="ChatProfileOnPhone" xml:space="preserve">
+    <value>只存在手机上</value>
   </data>
 </root>
