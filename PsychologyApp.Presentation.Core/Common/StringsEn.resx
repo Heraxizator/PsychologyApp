@@ -4138,9 +4138,6 @@
   <data name="MoodLevelName5" xml:space="preserve">
     <value>Great</value>
   </data>
-  <data name="JournalRecentTitle" xml:space="preserve">
-    <value>Recent entries</value>
-  </data>
   <data name="JournalPastDayPlaceholder" xml:space="preserve">
     <value>A note about the day, if you like</value>
   </data>
@@ -4221,5 +4218,8 @@
   </data>
   <data name="ChatEmotionProcrastination" xml:space="preserve">
     <value>Putting things off</value>
+  </data>
+  <data name="JournalSlotAdd" xml:space="preserve">
+    <value>Check in</value>
   </data>
 </root>

@@ -218,13 +218,13 @@ public sealed class JournalMoodLoaderTests
         Assert.Equal(expectedFromUtc, capturedFrom);
     }
 
-    // The list under the editor opens the check-in it shows: a wrong slot would open the other half of that day.
+    // The day card shows morning and evening side by side: a row with the other half's mood or note would misreport the day.
     [Fact]
-    public async Task Recent_entries_are_the_latest_three_without_the_open_one_and_know_their_slot()
+    public async Task The_day_card_shows_each_slot_with_its_own_mood_and_note()
     {
         Mock<IUserProgressService> progress = new();
-        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
-        DateTime At(int daysAgo, int hour) => today.AddDays(-daysAgo).ToDateTime(new TimeOnly(hour, 0)).ToUniversalTime();
+        DateOnly day = DateOnly.FromDateTime(DateTime.Today).AddDays(-1);
+        DateTime At(int hour) => day.ToDateTime(new TimeOnly(hour, 0)).ToUniversalTime();
         progress
             .Setup(p => p.GetMoodsAsync(
                 It.IsAny<DateTime?>(),
@@ -233,39 +233,30 @@ public sealed class JournalMoodLoaderTests
                 It.IsAny<CancellationToken>()))
             .ReturnsAsync(new List<MoodEntryDTO>
             {
-                new() { MoodEntryId = 5, MoodLevel = 3, RecordedAt = At(0, 20) },
-                new() { MoodEntryId = 4, MoodLevel = 2, RecordedAt = At(1, 8) },
-                new() { MoodEntryId = 3, MoodLevel = 4, RecordedAt = At(1, 20) },
-                new() { MoodEntryId = 2, MoodLevel = 5, RecordedAt = At(2, 20) },
-                new() { MoodEntryId = 1, MoodLevel = 1, RecordedAt = At(3, 20) }
+                new() { MoodEntryId = 2, MoodLevel = 2, Note = "Tired", RecordedAt = At(21) },
+                new() { MoodEntryId = 1, MoodLevel = 4, Note = null, RecordedAt = At(8) }
             });
         progress
             .Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync([]);
-
         JournalMoodLoader loader = new(progress.Object, new KeywordCrisisDetector());
-        JournalMoodSnapshot snapshot = await loader.LoadAsync(editorDay: today, editorSlot: JournalCheckInSlot.Evening);
 
-        Assert.Equal(5, snapshot.EditorEntryId);
-        Assert.Equal([3L, 4L, 2L], snapshot.RecentEntries.Select(r => r.Entry.MoodEntryId));
+        JournalMoodSnapshot snapshot = await loader.LoadAsync(editorDay: day, editorSlot: JournalCheckInSlot.Morning);
 
-        // The day a year back is loaded for its own line; it is not a recent entry.
+        Assert.Equal(new JournalSlotPreview(4, null), snapshot.Morning);
+        Assert.Equal(new JournalSlotPreview(2, "Tired"), snapshot.Evening);
+
+        // An evening alone leaves the morning row empty, to be filled.
         progress
             .Setup(p => p.GetMoodsAsync(
                 It.IsAny<DateTime?>(),
                 It.IsAny<DateTime?>(),
                 It.IsAny<int>(),
                 It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new List<MoodEntryDTO>
-            {
-                new() { MoodEntryId = 5, MoodLevel = 3, RecordedAt = At(0, 20) },
-                new() { MoodEntryId = 9, MoodLevel = 1, RecordedAt = today.AddYears(-1).ToDateTime(new TimeOnly(21, 0)).ToUniversalTime() }
-            });
-        JournalMoodSnapshot onlyLastYear = await loader.LoadAsync(editorDay: today, editorSlot: JournalCheckInSlot.Evening);
-        Assert.Empty(onlyLastYear.RecentEntries);
-        Assert.Equal(
-            [JournalCheckInSlot.Evening, JournalCheckInSlot.Morning, JournalCheckInSlot.Evening],
-            snapshot.RecentEntries.Select(r => r.Slot));
+            .ReturnsAsync(new List<MoodEntryDTO> { new() { MoodEntryId = 2, MoodLevel = 2, RecordedAt = At(21) } });
+        JournalMoodSnapshot eveningOnly = await loader.LoadAsync(editorDay: day, editorSlot: JournalCheckInSlot.Morning);
+        Assert.Null(eveningOnly.Morning);
+        Assert.Equal(2, eveningOnly.Evening?.MoodLevel);
     }
 
     // A quiet week hides the line that opens the overview: older check-ins decide whether the welcome offers it instead.

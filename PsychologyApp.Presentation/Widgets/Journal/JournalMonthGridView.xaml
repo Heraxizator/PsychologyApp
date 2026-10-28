@@ -15,6 +15,16 @@
             Text="{Binding CaptionText, Source={x:Reference Root}}"
             Style="{StaticResource CaptionStyle}"
             TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+        <!-- The days of the week over the columns, Monday first like the cells, so a date can be read without counting. -->
+        <Grid ColumnDefinitions="*,*,*,*,*,*,*" ColumnSpacing="4" AutomationProperties.IsInAccessibleTree="False">
+            <Label x:Name="Weekday0" Grid.Column="0" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+            <Label x:Name="Weekday1" Grid.Column="1" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+            <Label x:Name="Weekday2" Grid.Column="2" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+            <Label x:Name="Weekday3" Grid.Column="3" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+            <Label x:Name="Weekday4" Grid.Column="4" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+            <Label x:Name="Weekday5" Grid.Column="5" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+            <Label x:Name="Weekday6" Grid.Column="6" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+        </Grid>
         <CollectionView
             SelectionMode="None"
             ItemsSource="{Binding ItemsSource, Source={x:Reference Root}}">

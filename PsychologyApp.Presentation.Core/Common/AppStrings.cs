@@ -878,7 +878,8 @@ public static partial class AppStrings
 
     public static string JournalOverviewTitle => R(nameof(JournalOverviewTitle));
     public static string JournalTimelineTitle => R(nameof(JournalTimelineTitle));
-    public static string JournalRecentTitle => R(nameof(JournalRecentTitle));
+    /// <summary>Under a morning or evening without a check-in yet: a tap on the row opens it.</summary>
+    public static string JournalSlotAdd => R(nameof(JournalSlotAdd));
     public static string JournalEarlierWeeks => R(nameof(JournalEarlierWeeks));
     public static string JournalOpenOverview => R(nameof(JournalOpenOverview));
     public static string JournalOpenTimeline => R(nameof(JournalOpenTimeline));

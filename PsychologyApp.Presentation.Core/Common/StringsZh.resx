@@ -4138,9 +4138,6 @@
   <data name="MoodLevelName5" xml:space="preserve">
     <value>很好</value>
   </data>
-  <data name="JournalRecentTitle" xml:space="preserve">
-    <value>最近记录</value>
-  </data>
   <data name="JournalPastDayPlaceholder" xml:space="preserve">
     <value>关于这一天的记录（可选）</value>
   </data>
@@ -4221,5 +4218,8 @@
   </data>
   <data name="ChatEmotionProcrastination" xml:space="preserve">
     <value>拖延</value>
+  </data>
+  <data name="JournalSlotAdd" xml:space="preserve">
+    <value>记录</value>
   </data>
 </root>
