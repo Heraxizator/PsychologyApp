@@ -24,7 +24,8 @@ public sealed class JournalOverviewViewModel : BaseViewModel
     private DateOnly _weekStripEnd = DateOnly.FromDateTime(DateTime.Today);
     private DateOnly _monthCursor = new(DateTime.Today.Year, DateTime.Today.Month, 1);
     private int _yearCursor = DateTime.Today.Year;
-    private JournalCalendarScale _calendarScale = JournalCalendarScale.Week;
+    // The journal itself is the month calendar now; the overview keeps only the year, which nothing else shows.
+    private readonly JournalCalendarScale _calendarScale = JournalCalendarScale.Year;
 
     public JournalOverviewViewModel(
         JournalMoodLoader journalMoodLoader,
@@ -41,30 +42,6 @@ public sealed class JournalOverviewViewModel : BaseViewModel
         PrevPeriodCommand = new Command(() => ShiftPeriod(-1), () => true);
         NextPeriodCommand = new Command(() => ShiftPeriod(1), () => CanGoNextPeriod);
         ExportCommand = new AsyncCommand(ExportAsync);
-        SelectCalendarScaleCommand = new Command<object?>(parameter =>
-        {
-            JournalCalendarScale? scale = parameter switch
-            {
-                JournalCalendarScale value => value,
-                string key when key == "week" => JournalCalendarScale.Week,
-                string key when key == "month" => JournalCalendarScale.Month,
-                string key when key == "year" => JournalCalendarScale.Year,
-                FilterChipTabItem chip when chip.Key == "week" => JournalCalendarScale.Week,
-                FilterChipTabItem chip when chip.Key == "month" => JournalCalendarScale.Month,
-                FilterChipTabItem chip when chip.Key == "year" => JournalCalendarScale.Year,
-                _ => null
-            };
-
-            if (scale is null || scale == _calendarScale)
-            {
-                return;
-            }
-
-            _calendarScale = scale.Value;
-            SyncCalendarScaleFilters();
-            NotifyPeriodProperties();
-            LoadAsync().FireAndForget();
-        });
         SelectRangeCommand = new Command<object?>(parameter =>
         {
             int days = parameter switch
@@ -103,12 +80,6 @@ public sealed class JournalOverviewViewModel : BaseViewModel
             _journalScreenCoordinator.OpenEditorDayAsync(day.Value, _navigationService).FireAndForget();
         });
 
-        CalendarScaleFilters =
-        [
-            new FilterChipTabItem { Key = "week", Title = AppStrings.JournalCalendarScaleWeek, IsSelected = true },
-            new FilterChipTabItem { Key = "month", Title = AppStrings.JournalCalendarScaleMonth, IsSelected = false },
-            new FilterChipTabItem { Key = "year", Title = AppStrings.JournalCalendarScaleYear, IsSelected = false }
-        ];
         RangeFilters =
         [
             new FilterChipTabItem { Key = "7", Title = AppStrings.JournalFilter7Days, IsSelected = true },
@@ -171,12 +142,10 @@ public sealed class JournalOverviewViewModel : BaseViewModel
 
     public ICommand BackCommand { get; }
     public ICommand SelectRangeCommand { get; }
-    public ICommand SelectCalendarScaleCommand { get; }
     public ICommand SelectDayCommand { get; }
     public ICommand PrevPeriodCommand { get; }
     public ICommand NextPeriodCommand { get; }
     public ICommand ExportCommand { get; }
-    public ObservableCollection<FilterChipTabItem> CalendarScaleFilters { get; }
     public ObservableCollection<FilterChipTabItem> RangeFilters { get; }
 
     private IReadOnlyList<JournalDayChip> _weekDays = [];
@@ -378,16 +347,6 @@ public sealed class JournalOverviewViewModel : BaseViewModel
             nameof(HasFactorPills));
         (NextPeriodCommand as Command)?.ChangeCanExecute();
 
-        foreach (FilterChipTabItem filter in CalendarScaleFilters)
-        {
-            filter.Title = filter.Key switch
-            {
-                "month" => AppStrings.JournalCalendarScaleMonth,
-                "year" => AppStrings.JournalCalendarScaleYear,
-                _ => AppStrings.JournalCalendarScaleWeek
-            };
-        }
-
         foreach (FilterChipTabItem filter in RangeFilters)
         {
             filter.Title = filter.Key switch
@@ -430,20 +389,6 @@ public sealed class JournalOverviewViewModel : BaseViewModel
         OnPropertyChanged(nameof(IsMonthScale));
         OnPropertyChanged(nameof(IsYearScale));
         (NextPeriodCommand as Command)?.ChangeCanExecute();
-    }
-
-    private void SyncCalendarScaleFilters()
-    {
-        string key = _calendarScale switch
-        {
-            JournalCalendarScale.Month => "month",
-            JournalCalendarScale.Year => "year",
-            _ => "week"
-        };
-        foreach (FilterChipTabItem filter in CalendarScaleFilters)
-        {
-            filter.IsSelected = filter.Key == key;
-        }
     }
 
     private void SyncRangeFilters()

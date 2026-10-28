@@ -27,35 +27,71 @@
                 ExtensionText="{Binding ExportLabel}"
                 ExtensionCommand="{Binding ExportCommand}" />
 
-            <Border Style="{StaticResource HeroCardStyle}" Margin="0">
-                <Border.Behaviors>
-                    <behaviors:RevealOnAppearingBehavior />
-                </Border.Behaviors>
+            <!-- One row of periods drives everything below it: two rows of chips (a calendar scale and a range) made the page loud. -->
+            <ui:FilterChipTabBarView
+                ItemsSource="{Binding RangeFilters}"
+                TapCommand="{Binding SelectRangeCommand}" />
+
+            <!-- The period in words first; the journal already shows the numbers day by day. -->
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                 <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                     <Label
                         Text="{Binding WeekRangeSubtitle}"
-                        Style="{StaticResource CaptionStyle}"
-                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        Style="{StaticResource CaptionStyle}" />
                     <Label
                         Text="{Binding OverviewInsightText}"
-                        Style="{StaticResource BodyStyle}" />
+                        Style="{StaticResource SectionTitleStyle}"
+                        LineBreakMode="WordWrap" />
                     <Label
                         IsVisible="{Binding HasPracticeMoodInsight}"
                         Text="{Binding PracticeMoodInsightText}"
+                        Style="{StaticResource CaptionStyle}" />
+                    <Label
+                        IsVisible="{Binding HasFactorPills}"
+                        Text="{Binding FactorsSectionTitle}"
                         Style="{StaticResource CaptionStyle}"
-                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        Margin="0,6,0,0" />
+                    <FlexLayout
+                        IsVisible="{Binding HasFactorPills}"
+                        Wrap="Wrap"
+                        Direction="Row"
+                        AlignItems="Start"
+                        JustifyContent="Start"
+                        BindableLayout.ItemsSource="{Binding ActivityPills}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <Border
+                                    FlexLayout.Shrink="0"
+                                    Margin="0,0,8,8"
+                                    Padding="10,4"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource SurfaceElevatedDark}}">
+                                    <Label Text="{Binding .}" Style="{StaticResource CaptionStyle}" />
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
                 </VerticalStackLayout>
             </Border>
 
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <Border.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="0" />
-                </Border.Behaviors>
-                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <ui:FilterChipTabBarView
-                        ItemsSource="{Binding CalendarScaleFilters}"
-                        TapCommand="{Binding SelectCalendarScaleCommand}" />
+            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                <ui:SectionHeaderView TitleText="{Binding MoodTrendTitle}" />
+                <ui:EmptyStateView
+                    IsVisible="{Binding ShowMoodTrendHint}"
+                    BodyText="{Binding MoodTrendHint}"
+                    IconName="SelfImprovement" />
+                <moodTrend:MoodTrendChartView
+                    IsVisible="{Binding HasMoodTrendChart}"
+                    ChartPoints="{Binding MoodChartPoints}"
+                    Annotations="{Binding PracticeMarks}"
+                    Subtitle="{Binding MoodChartSubtitle}"
+                    Title="" />
+            </VerticalStackLayout>
 
+            <!-- The year: the one view of the mood nothing else in the journal has. -->
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource CompactSpacing}">
                         <Label
                             Grid.Column="0"
@@ -100,96 +136,12 @@
                         </Label>
                     </Grid>
 
-                    <journalStrip:JournalWeekStripView
-                        IsVisible="{Binding IsWeekScale}"
-                        CaptionText=""
-                        ItemsSource="{Binding WeekDays}"
-                        SelectDayCommand="{Binding SelectDayCommand}"
-                        IsInteractive="True" />
-                    <journalStrip:JournalMonthGridView
-                        IsVisible="{Binding IsMonthScale}"
-                        CaptionText=""
-                        ItemsSource="{Binding MonthCells}"
-                        SelectDayCommand="{Binding SelectDayCommand}" />
                     <journalStrip:JournalYearHeatmapView
-                        IsVisible="{Binding IsYearScale}"
                         CaptionText=""
                         ItemsSource="{Binding YearCells}"
                         SelectDayCommand="{Binding SelectDayCommand}" />
                 </VerticalStackLayout>
             </Border>
-
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                <Border.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="1" />
-                </Border.Behaviors>
-                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                    <ui:FilterChipTabBarView
-                        ItemsSource="{Binding RangeFilters}"
-                        TapCommand="{Binding SelectRangeCommand}" />
-
-                    <Grid
-                        IsVisible="{Binding HasMoodStats}"
-                        ColumnDefinitions="*,*,*"
-                        ColumnSpacing="{StaticResource CompactSpacing}">
-                        <ui:MetricTileView
-                            Grid.Column="0"
-                            ValueText="{Binding CheckInCountDisplay}"
-                            LabelText="{Binding WeekMoodCheckInsLabel}" />
-                        <ui:MetricTileView
-                            Grid.Column="1"
-                            ValueText="{Binding AverageMoodDisplay}"
-                            LabelText="{Binding WeekAvgMoodLabel}" />
-                        <ui:MetricTileView
-                            Grid.Column="2"
-                            ValueText="{Binding CheckInDaysDisplay}"
-                            LabelText="{Binding CheckInDaysLabel}" />
-                    </Grid>
-
-                    <Label
-                        IsVisible="{Binding HasBestWorstPill}"
-                        Text="{Binding BestWorstLabel}"
-                        Style="{StaticResource CaptionStyle}"
-                        HorizontalTextAlignment="Center"
-                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
-
-                    <FlexLayout
-                        IsVisible="{Binding HasFactorPills}"
-                        Wrap="Wrap"
-                        Direction="Row"
-                        AlignItems="Start"
-                        JustifyContent="Start"
-                        BindableLayout.ItemsSource="{Binding ActivityPills}">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="x:String">
-                                <Border Style="{StaticResource MetaPillStyle}" Margin="0,0,8,8">
-                                    <Label
-                                        Text="{Binding .}"
-                                        Style="{StaticResource CaptionStyle}"
-                                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
-                                        FontFamily="{StaticResource SemiBoldFontFamily}"
-                                        LineBreakMode="WordWrap"
-                                        MaxLines="2" />
-                                </Border>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </FlexLayout>
-                </VerticalStackLayout>
-            </Border>
-
-            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                <ui:SectionHeaderView TitleText="{Binding MoodTrendTitle}" />
-                <ui:EmptyStateView
-                    IsVisible="{Binding ShowMoodTrendHint}"
-                    BodyText="{Binding MoodTrendHint}"
-                    IconName="SelfImprovement" />
-                <moodTrend:MoodTrendChartView
-                    IsVisible="{Binding HasMoodTrendChart}"
-                    ChartPoints="{Binding MoodChartPoints}"
-                    Annotations="{Binding PracticeMarks}"
-                    Subtitle="{Binding MoodChartSubtitle}"
-                    Title="" />
-            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
