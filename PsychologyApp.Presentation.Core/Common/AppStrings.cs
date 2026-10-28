@@ -835,7 +835,6 @@ public static partial class AppStrings
     public static string SafetyPlanContactsTitle => R(nameof(SafetyPlanContactsTitle));
     public static string SafetyPlanContactNamePlaceholder => R(nameof(SafetyPlanContactNamePlaceholder));
     public static string SafetyPlanContactPhonePlaceholder => R(nameof(SafetyPlanContactPhonePlaceholder));
-    public static string SafetyPlanTapToRemoveHint => R(nameof(SafetyPlanTapToRemoveHint));
     public static string SafetyPlanCallAction => R(nameof(SafetyPlanCallAction));
 
     public static string RiskCheckTitle => R(nameof(RiskCheckTitle));

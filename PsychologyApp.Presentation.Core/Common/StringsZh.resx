@@ -1575,9 +1575,6 @@
   <data name="SafetyPlanContactPhonePlaceholder" xml:space="preserve">
     <value>电话</value>
   </data>
-  <data name="SafetyPlanTapToRemoveHint" xml:space="preserve">
-    <value>点击删除</value>
-  </data>
   <data name="SafetyPlanCallAction" xml:space="preserve">
     <value>拨打</value>
   </data>

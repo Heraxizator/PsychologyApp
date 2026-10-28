@@ -13,7 +13,7 @@ public sealed class SafetyPlanTextItem
 {
     public required string Text { get; init; }
     public required ICommand DeleteCommand { get; init; }
-    public string RemoveHint => AppStrings.SafetyPlanTapToRemoveHint;
+    public string RemoveText => AppStrings.Remove;
 }
 
 public sealed class SafetyPlanContactItem

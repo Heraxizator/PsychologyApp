@@ -3,11 +3,39 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Pages.ClinicalCare.SafetyPlan.SafetyPlanPage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ClinicalCare.SafetyPlan"
              x:DataType="vm:SafetyPlanViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
+
+    <ContentPage.Resources>
+        <!-- "+" in a soft circle: a 44-point target that adds what is typed beside it. -->
+        <Style x:Key="SafetyPlanAddStyle" TargetType="ImageButton">
+            <Setter Property="WidthRequest" Value="44" />
+            <Setter Property="HeightRequest" Value="44" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="CornerRadius" Value="22" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
+            <Setter Property="Source">
+                <FontImageSource FontFamily="MaterialIcons" Glyph="{mi:Material Icon=Add}" Size="24" Color="{DynamicResource Primary}" />
+            </Setter>
+        </Style>
+        <!-- A visible way to remove a line; the swipe it replaces was found by no one. -->
+        <Style x:Key="SafetyPlanRemoveStyle" TargetType="ImageButton">
+            <Setter Property="WidthRequest" Value="44" />
+            <Setter Property="HeightRequest" Value="44" />
+            <Setter Property="Padding" Value="12" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="Source">
+                <FontImageSource FontFamily="MaterialIcons" Glyph="{mi:Material Icon=Close}" Size="20"
+                                 Color="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
 
     <ScrollView>
         <VerticalStackLayout
@@ -23,167 +51,140 @@
 
             <Label Text="{Binding LeadText}" Style="{StaticResource BodyStyle}" />
 
-            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                <ui:SectionHeaderView TitleText="{Binding WarningSignsTitle}" />
-                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                    <ui:TextEntryView
-                        Grid.Column="0"
-                        BodyText="{Binding NewWarningSignText, Mode=TwoWay}"
-                        PlaceholderText="{Binding WarningSignsPlaceholder}" />
-                    <ui:ButtonView
-                        Grid.Column="1"
-                        BodyText="{Binding AddButtonText}"
-                        TapCommand="{Binding AddWarningSignCommand}" />
-                </Grid>
-                <CollectionView ItemsSource="{Binding WarningSigns}" SelectionMode="None" VerticalScrollBarVisibility="Never">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="vm:SafetyPlanTextItem">
-                            <SwipeView>
-                                <SwipeView.RightItems>
-                                    <SwipeItems Mode="Reveal">
-                                        <SwipeItem
-                                            Text="{Binding RemoveHint}"
-                                            BackgroundColor="{AppThemeBinding Light={StaticResource Danger}, Dark={StaticResource DangerDark}}"
-                                            Command="{Binding DeleteCommand}" />
-                                    </SwipeItems>
-                                </SwipeView.RightItems>
-                                <Border Style="{StaticResource ListCardItemStyle}" Margin="0" Padding="14,12">
-                                    <Label Text="{Binding Text}" Style="{StaticResource BodyStyle}" />
-                                </Border>
-                            </SwipeView>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </VerticalStackLayout>
+            <!-- Each part of the plan is a card: what is written, then a full-width field with a small "+". Four big blue "Add" buttons
+                 were the loudest thing on the page and cut the examples in the fields short. -->
+            <Border Style="{StaticResource TestListCardStyle}" Margin="4,0">
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <Label Text="{Binding WarningSignsTitle}" Style="{StaticResource ListRowTitleStyle}" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding WarningSigns}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:SafetyPlanTextItem">
+                                <Grid ColumnDefinitions="*,Auto" MinimumHeightRequest="44">
+                                    <Label Text="{Binding Text}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                                    <ImageButton
+                                        Grid.Column="1"
+                                        Style="{StaticResource SafetyPlanRemoveStyle}"
+                                        Command="{Binding DeleteCommand}"
+                                        SemanticProperties.Description="{Binding RemoveText}" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <ui:TextEntryView
+                            BodyText="{Binding NewWarningSignText, Mode=TwoWay}"
+                            PlaceholderText="{Binding WarningSignsPlaceholder}" />
+                        <ImageButton
+                            Grid.Column="1"
+                            Style="{StaticResource SafetyPlanAddStyle}"
+                            Command="{Binding AddWarningSignCommand}"
+                            SemanticProperties.Description="{Binding AddButtonText}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
 
-            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                <ui:SectionHeaderView TitleText="{Binding CopingTitle}" />
-                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                    <ui:TextEntryView
-                        Grid.Column="0"
-                        BodyText="{Binding NewCopingStrategyText, Mode=TwoWay}"
-                        PlaceholderText="{Binding CopingPlaceholder}" />
-                    <ui:ButtonView
-                        Grid.Column="1"
-                        BodyText="{Binding AddButtonText}"
-                        TapCommand="{Binding AddCopingStrategyCommand}" />
-                </Grid>
-                <CollectionView ItemsSource="{Binding CopingStrategies}" SelectionMode="None" VerticalScrollBarVisibility="Never">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="vm:SafetyPlanTextItem">
-                            <SwipeView>
-                                <SwipeView.RightItems>
-                                    <SwipeItems Mode="Reveal">
-                                        <SwipeItem
-                                            Text="{Binding RemoveHint}"
-                                            BackgroundColor="{AppThemeBinding Light={StaticResource Danger}, Dark={StaticResource DangerDark}}"
-                                            Command="{Binding DeleteCommand}" />
-                                    </SwipeItems>
-                                </SwipeView.RightItems>
-                                <Border Style="{StaticResource ListCardItemStyle}" Margin="0" Padding="14,12">
-                                    <Label Text="{Binding Text}" Style="{StaticResource BodyStyle}" />
-                                </Border>
-                            </SwipeView>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </VerticalStackLayout>
+            <Border Style="{StaticResource TestListCardStyle}" Margin="4,0">
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <Label Text="{Binding CopingTitle}" Style="{StaticResource ListRowTitleStyle}" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding CopingStrategies}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:SafetyPlanTextItem">
+                                <Grid ColumnDefinitions="*,Auto" MinimumHeightRequest="44">
+                                    <Label Text="{Binding Text}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                                    <ImageButton
+                                        Grid.Column="1"
+                                        Style="{StaticResource SafetyPlanRemoveStyle}"
+                                        Command="{Binding DeleteCommand}"
+                                        SemanticProperties.Description="{Binding RemoveText}" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <ui:TextEntryView
+                            BodyText="{Binding NewCopingStrategyText, Mode=TwoWay}"
+                            PlaceholderText="{Binding CopingPlaceholder}" />
+                        <ImageButton
+                            Grid.Column="1"
+                            Style="{StaticResource SafetyPlanAddStyle}"
+                            Command="{Binding AddCopingStrategyCommand}"
+                            SemanticProperties.Description="{Binding AddButtonText}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
 
-            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                <ui:SectionHeaderView TitleText="{Binding ReasonsTitle}" />
-                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                    <ui:TextEntryView
-                        Grid.Column="0"
-                        BodyText="{Binding NewReasonText, Mode=TwoWay}"
-                        PlaceholderText="{Binding ReasonsPlaceholder}" />
-                    <ui:ButtonView
-                        Grid.Column="1"
-                        BodyText="{Binding AddButtonText}"
-                        TapCommand="{Binding AddReasonCommand}" />
-                </Grid>
-                <CollectionView ItemsSource="{Binding Reasons}" SelectionMode="None" VerticalScrollBarVisibility="Never">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="vm:SafetyPlanTextItem">
-                            <SwipeView>
-                                <SwipeView.RightItems>
-                                    <SwipeItems Mode="Reveal">
-                                        <SwipeItem
-                                            Text="{Binding RemoveHint}"
-                                            BackgroundColor="{AppThemeBinding Light={StaticResource Danger}, Dark={StaticResource DangerDark}}"
-                                            Command="{Binding DeleteCommand}" />
-                                    </SwipeItems>
-                                </SwipeView.RightItems>
-                                <Border Style="{StaticResource ListCardItemStyle}" Margin="0" Padding="14,12">
-                                    <Label Text="{Binding Text}" Style="{StaticResource BodyStyle}" />
-                                </Border>
-                            </SwipeView>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </VerticalStackLayout>
+            <Border Style="{StaticResource TestListCardStyle}" Margin="4,0">
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <Label Text="{Binding ReasonsTitle}" Style="{StaticResource ListRowTitleStyle}" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Reasons}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:SafetyPlanTextItem">
+                                <Grid ColumnDefinitions="*,Auto" MinimumHeightRequest="44">
+                                    <Label Text="{Binding Text}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                                    <ImageButton
+                                        Grid.Column="1"
+                                        Style="{StaticResource SafetyPlanRemoveStyle}"
+                                        Command="{Binding DeleteCommand}"
+                                        SemanticProperties.Description="{Binding RemoveText}" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <ui:TextEntryView
+                            BodyText="{Binding NewReasonText, Mode=TwoWay}"
+                            PlaceholderText="{Binding ReasonsPlaceholder}" />
+                        <ImageButton
+                            Grid.Column="1"
+                            Style="{StaticResource SafetyPlanAddStyle}"
+                            Command="{Binding AddReasonCommand}"
+                            SemanticProperties.Description="{Binding AddButtonText}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
 
-            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                <ui:SectionHeaderView TitleText="{Binding ContactsTitle}" />
-                <Grid ColumnDefinitions="*,*,Auto" ColumnSpacing="8">
-                    <ui:TextEntryView
-                        Grid.Column="0"
-                        BodyText="{Binding NewContactName, Mode=TwoWay}"
-                        PlaceholderText="{Binding ContactNamePlaceholder}" />
-                    <ui:TextEntryView
-                        Grid.Column="1"
-                        BodyText="{Binding NewContactPhone, Mode=TwoWay}"
-                        PlaceholderText="{Binding ContactPhonePlaceholder}" />
-                    <ui:ButtonView
-                        Grid.Column="2"
-                        BodyText="{Binding AddButtonText}"
-                        TapCommand="{Binding AddContactCommand}" />
-                </Grid>
-                <CollectionView ItemsSource="{Binding Contacts}" SelectionMode="None" VerticalScrollBarVisibility="Never">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="vm:SafetyPlanContactItem">
-                            <SwipeView>
-                                <SwipeView.RightItems>
-                                    <SwipeItems Mode="Reveal">
-                                        <SwipeItem
-                                            Text="{Binding DeleteText}"
-                                            BackgroundColor="{AppThemeBinding Light={StaticResource Danger}, Dark={StaticResource DangerDark}}"
-                                            Command="{Binding DeleteCommand}" />
-                                    </SwipeItems>
-                                </SwipeView.RightItems>
-                                <Border Style="{StaticResource ListCardItemStyle}" Margin="0" Padding="14,12">
-                                    <Border.GestureRecognizers>
+            <Border Style="{StaticResource TestListCardStyle}" Margin="4,0">
+                <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                    <Label Text="{Binding ContactsTitle}" Style="{StaticResource ListRowTitleStyle}" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Contacts}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:SafetyPlanContactItem">
+                                <!-- A tap on the row calls; the cross removes the contact. -->
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="52" SemanticProperties.Description="{Binding CallText}">
+                                    <Grid.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding CallCommand}" />
-                                    </Border.GestureRecognizers>
-                                    <Grid ColumnDefinitions="*,Auto">
-                                        <VerticalStackLayout Grid.Column="0" Spacing="2">
-                                            <Label Text="{Binding Name}" Style="{StaticResource ListRowTitleStyle}" />
-                                            <Label Text="{Binding Phone}" Style="{StaticResource CaptionStyle}" />
-                                        </VerticalStackLayout>
-                                        <Label
-                                            Grid.Column="1"
-                                            Text="{Binding CallText}"
-                                            Style="{StaticResource CaptionStyle}"
-                                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
-                                            VerticalOptions="Center" />
-                                    </Grid>
-                                </Border>
-                            </SwipeView>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </VerticalStackLayout>
+                                    </Grid.GestureRecognizers>
+                                    <ui:MaterialIconView IconName="Phone" IconSize="20" VerticalOptions="Center"
+                                                         IconColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                        <Label Text="{Binding Name}" Style="{StaticResource BodyStyle}" />
+                                        <Label Text="{Binding Phone}" Style="{StaticResource CaptionStyle}" />
+                                    </VerticalStackLayout>
+                                    <ImageButton
+                                        Grid.Column="2"
+                                        Style="{StaticResource SafetyPlanRemoveStyle}"
+                                        Command="{Binding DeleteCommand}"
+                                        SemanticProperties.Description="{Binding DeleteText}" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <Grid ColumnDefinitions="*,*,Auto" ColumnSpacing="8">
+                        <ui:TextEntryView
+                            BodyText="{Binding NewContactName, Mode=TwoWay}"
+                            PlaceholderText="{Binding ContactNamePlaceholder}" />
+                        <ui:TextEntryView
+                            Grid.Column="1"
+                            BodyText="{Binding NewContactPhone, Mode=TwoWay}"
+                            PlaceholderText="{Binding ContactPhonePlaceholder}" />
+                        <ImageButton
+                            Grid.Column="2"
+                            Style="{StaticResource SafetyPlanAddStyle}"
+                            Command="{Binding AddContactCommand}"
+                            SemanticProperties.Description="{Binding AddButtonText}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

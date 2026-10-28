@@ -1575,9 +1575,6 @@
   <data name="SafetyPlanContactPhonePlaceholder" xml:space="preserve">
     <value>Phone</value>
   </data>
-  <data name="SafetyPlanTapToRemoveHint" xml:space="preserve">
-    <value>Tap to remove</value>
-  </data>
   <data name="SafetyPlanCallAction" xml:space="preserve">
     <value>Call</value>
   </data>
