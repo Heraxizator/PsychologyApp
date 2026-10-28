@@ -1,4 +1,5 @@
 using PsychologyApp.Application.Abstractions.Analytics;
+using PsychologyApp.Domain.Practice;
 using PsychologyApp.Presentation.Features.RunTechniqueSession;
 using PsychologyApp.Presentation.Features.RunTechniqueSession.Index;
 using PsychologyApp.Presentation.Features.RunTechniqueSession.DependencyInjection;
@@ -122,25 +123,19 @@ public partial class TechniqueSessionPage : ContentPage
 
         // Breathing gets a circle to breathe with above the usual notes form.
         VerticalStackLayout content = new() { Spacing = 8 };
-        if (_techniqueId == TechniqueId.Breathing)
+        View? exercise = _techniqueId switch
         {
-            content.Children.Add(new BreathingPacerView { FullscreenCommand = new Command(OpenImmersiveBreathing) });
-        }
-        else if (_techniqueId == TechniqueId.Balloons)
+            TechniqueId.Breathing => new BreathingPacerView { FullscreenCommand = new Command(OpenImmersiveBreathing) },
+            TechniqueId.Balloons => new BalloonPopView(),
+            TechniqueId.CyclicSigh => new BreathingPacerView { Pattern = BreathingPattern.CyclicSigh },
+            TechniqueId.MuscleRelax => new MuscleRelaxView(),
+            TechniqueId.BusyMind => new BusyMindView(),
+            _ => null
+        };
+        if (exercise is not null)
         {
-            content.Children.Add(new BalloonPopView());
-        }
-        else if (_techniqueId == TechniqueId.CyclicSigh)
-        {
-            content.Children.Add(new BreathingPacerView { Pattern = BreathingPattern.CyclicSigh });
-        }
-        else if (_techniqueId == TechniqueId.MuscleRelax)
-        {
-            content.Children.Add(new MuscleRelaxView());
-        }
-        else if (_techniqueId == TechniqueId.BusyMind)
-        {
-            content.Children.Add(new BusyMindView());
+            content.Children.Add(exercise);
+            ShowExerciseOnItsStep(exercise);
         }
 
         content.Children.Add(body);
@@ -159,6 +154,31 @@ public partial class TechniqueSessionPage : ContentPage
         {
             SessionShell.FooterContent = form.DetachNavigation();
         }
+    }
+
+    /// <summary>
+    /// The exercise belongs to the step of the practice itself, between the ratings: shown over "tension before" it came first on the
+    /// screen, and people started breathing before rating how they felt, which left nothing to compare the "after" with.
+    /// </summary>
+    private void ShowExerciseOnItsStep(View exercise)
+    {
+        if (BindingContext is not TechniqueSessionViewModel session)
+        {
+            return;
+        }
+
+        // The steps may arrive after the body is built (a saved draft is read first), so this follows them rather than looking once.
+        void Apply() => exercise.IsVisible = !session.IsWizardMode
+            || session.CurrentEntry?.Kind is not (EntryFieldKind.Rating0To10 or EntryFieldKind.RatingNeg10To10);
+        Apply();
+        session.PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName is nameof(TechniqueSessionViewModel.CurrentStepIndex) or nameof(TechniqueSessionViewModel.CurrentEntry)
+                or nameof(TechniqueSessionViewModel.IsWizardMode))
+            {
+                Apply();
+            }
+        };
     }
 
     // Through the coordinator, so a quick second tap does not stack a second full-screen pacer over the first.
