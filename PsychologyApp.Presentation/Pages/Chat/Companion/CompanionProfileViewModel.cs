@@ -8,8 +8,8 @@ using PsychologyApp.Presentation.Shared.ViewModels;
 namespace PsychologyApp.Presentation.Pages.Chat.Companion;
 
 /// <summary>
-/// The companion's card: who it is in one screen, a way to urgent help and to a new chat. How it addresses the person, forgetting
-/// and deleting are rare, so they sit behind "Chat settings". The profile is read from stored chats; nothing leaves the phone.
+/// The companion's page, laid out like the app's settings: who it is and what it is not, then its actions as rows (a new chat, how
+/// it addresses the person, urgent help, forgetting, deleting). The profile is read from stored chats; nothing leaves the phone.
 /// </summary>
 public sealed class CompanionProfileViewModel : BaseViewModel
 {
@@ -33,7 +33,9 @@ public sealed class CompanionProfileViewModel : BaseViewModel
         BackCommand = new AsyncCommand(GoBackAsync);
         NewChatCommand = new AsyncCommand(() => NavigationService!.GoToChatAsync(null));
         CrisisCommand = new AsyncCommand(() => NavigationService!.GoToCrisisHubAsync());
-        SettingsCommand = new AsyncCommand(OpenSettingsAsync);
+        EditNameCommand = new AsyncCommand(EditNameAsync);
+        ForgetCommand = new AsyncCommand(ForgetAsync);
+        DeleteAllCommand = new AsyncCommand(DeleteAllAsync);
     }
 
     /// <summary>Set by the page: shows a text prompt and returns the entered text, or null when cancelled.</summary>
@@ -42,7 +44,9 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     public ICommand BackCommand { get; }
     public ICommand NewChatCommand { get; }
     public ICommand CrisisCommand { get; }
-    public ICommand SettingsCommand { get; }
+    public ICommand EditNameCommand { get; }
+    public ICommand ForgetCommand { get; }
+    public ICommand DeleteAllCommand { get; }
 
     public bool HasHistory => _profile.HasHistory;
 
@@ -62,13 +66,17 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     public bool HasLoaded => !IsLoading;
 
     public string Title => AppStrings.ChatProfileTitle;
-    public string Tagline => AppStrings.ChatProfileTaglineShort;
     public string Disclaimer => AppStrings.ChatProfileDisclaimerShort;
-    public string OfflineText => AppStrings.ChatProfileOfflineShort;
-    public string OnPhoneText => AppStrings.ChatProfileOnPhone;
+    public string PrivacyText => AppStrings.ChatProfilePrivacyLine;
     public string CrisisText => AppStrings.CrisisHubTitle;
     public string NewChatText => AppStrings.ChatNew;
-    public string SettingsText => AppStrings.ChatProfileSettings;
+    public string NameTitle => AppStrings.ChatProfileNameTitle;
+    public string ForgetText => AppStrings.ChatProfileForget;
+    public string DeleteAllText => AppStrings.ChatProfileDeleteAll;
+
+    /// <summary>The name it uses, under its row, so the row says what is set without opening it.</summary>
+    public string UserName => _profile.UserName ?? string.Empty;
+    public bool HasUserName => UserName.Length > 0;
 
     /// <summary>Loads the profile. Safe to call on every appearing.</summary>
     public async Task RefreshAsync()
@@ -79,30 +87,6 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     }
 
     protected override void RefreshLocalizedProperties() => NotifyAll();
-
-    /// <summary>The rare actions in one sheet; deleting chats is offered only when there are some.</summary>
-    private async Task OpenSettingsAsync()
-    {
-        List<string> options = [AppStrings.ChatProfileNameTitle, AppStrings.ChatProfileForget];
-        if (HasHistory)
-        {
-            options.Add(AppStrings.ChatProfileDeleteAll);
-        }
-
-        string? picked = await _dialogs.PickOptionAsync(AppStrings.ChatProfileSettings, options, AppStrings.ChatCancel);
-        if (picked == AppStrings.ChatProfileNameTitle)
-        {
-            await EditNameAsync();
-        }
-        else if (picked == AppStrings.ChatProfileForget)
-        {
-            await ForgetAsync();
-        }
-        else if (picked == AppStrings.ChatProfileDeleteAll)
-        {
-            await DeleteAllAsync();
-        }
-    }
 
     private async Task EditNameAsync()
     {
@@ -151,6 +135,6 @@ public sealed class CompanionProfileViewModel : BaseViewModel
     }
 
     private void NotifyAll() => Notify(
-        nameof(HasHistory), nameof(Title), nameof(Tagline), nameof(Disclaimer), nameof(OfflineText), nameof(OnPhoneText),
-        nameof(CrisisText), nameof(NewChatText), nameof(SettingsText));
+        nameof(HasHistory), nameof(Title), nameof(Disclaimer), nameof(PrivacyText), nameof(CrisisText), nameof(NewChatText),
+        nameof(NameTitle), nameof(ForgetText), nameof(DeleteAllText), nameof(UserName), nameof(HasUserName));
 }

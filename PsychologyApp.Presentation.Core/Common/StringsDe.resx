@@ -4132,20 +4132,8 @@
   <data name="JournalCheckInDays" xml:space="preserve">
     <value>{0} von {1}</value>
   </data>
-  <data name="ChatProfileOfflineShort" xml:space="preserve">
-    <value>Offline</value>
-  </data>
-  <data name="ChatProfileOnPhone" xml:space="preserve">
-    <value>Bleibt auf dem Handy</value>
-  </data>
-  <data name="ChatProfileTaglineShort" xml:space="preserve">
-    <value>Hört zu und hilft, Gefühle zu sortieren</value>
-  </data>
   <data name="ChatProfileDisclaimerShort" xml:space="preserve">
     <value>Kein Mensch und kein Arzt. Ersetzt keine Fachperson.</value>
-  </data>
-  <data name="ChatProfileSettings" xml:space="preserve">
-    <value>Chat-Einstellungen</value>
   </data>
   <data name="ChatMore" xml:space="preserve">
     <value>Mehr</value>
@@ -4218,5 +4206,8 @@
   </data>
   <data name="ChatEmotionProcrastination" xml:space="preserve">
     <value>Aufschieben</value>
+  </data>
+  <data name="ChatProfilePrivacyLine" xml:space="preserve">
+    <value>Funktioniert offline, alles bleibt auf diesem Handy</value>
   </data>
 </root>

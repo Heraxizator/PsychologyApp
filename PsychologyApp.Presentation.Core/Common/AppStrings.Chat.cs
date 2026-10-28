@@ -48,13 +48,10 @@ public static partial class AppStrings
 
     // ----- companion profile -----
     public static string ChatProfileTitle => R(nameof(ChatProfileTitle));
-    public static string ChatProfileOfflineShort => R(nameof(ChatProfileOfflineShort));
-    public static string ChatProfileOnPhone => R(nameof(ChatProfileOnPhone));
-    public static string ChatProfileTaglineShort => R(nameof(ChatProfileTaglineShort));
     public static string ChatProfileDisclaimerShort => R(nameof(ChatProfileDisclaimerShort));
-    public static string ChatProfileSettings => R(nameof(ChatProfileSettings));
     public static string ChatProfileOpen => R(nameof(ChatProfileOpen));
     public static string ChatProfileNameTitle => R(nameof(ChatProfileNameTitle));
+    public static string ChatProfilePrivacyLine => R(nameof(ChatProfilePrivacyLine));
     public static string ChatProfileNamePromptTitle => R(nameof(ChatProfileNamePromptTitle));
     public static string ChatProfileNamePromptMessage => R(nameof(ChatProfileNamePromptMessage));
     public static string ChatProfileForget => R(nameof(ChatProfileForget));

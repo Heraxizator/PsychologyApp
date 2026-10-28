@@ -30,95 +30,60 @@
             Margin="20,20,20,0"
             IsActive="{Binding IsLoading}" />
 
-        <!-- One card on one screen: who it is, what it is not, the way to help, a new chat. The rare actions sit behind
-             "Chat settings". The counters, charts and paragraphs that stood here made a page about a helper read like a report. -->
+        <!-- Laid out like the app's settings: who it is and what it is not, then its actions as rows in the cards of the settings
+             screen. Nothing hides behind a sheet, and there is no slogan or tiles of text: the rows are the page. -->
         <ScrollView Grid.Row="1" IsVisible="{Binding HasLoaded}" VerticalScrollBarVisibility="Never">
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0,16,0,16" Padding="24,28" VerticalOptions="Center">
-                <VerticalStackLayout Spacing="14">
-                    <!-- The top margin leaves room for the breathing ring, which reaches past the face. -->
+            <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}" Padding="0,16,0,24">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14" Margin="4,0,4,8">
                     <avatar:CompanionAvatarView
-                        Margin="0,22,0,0"
-                        WidthRequest="96"
-                        HeightRequest="96"
-                        IconSize="44"
-                        HorizontalOptions="Center"
-                        IsAlive="True"
-                        SemanticProperties.Description="{Binding Title}" />
-
-                    <VerticalStackLayout Spacing="4">
-                        <Label Text="{Binding Title}" Style="{StaticResource SectionTitleStyle}" HorizontalTextAlignment="Center" />
-                        <Label
-                            Text="{Binding Tagline}"
-                            Style="{StaticResource BodyStyle}"
-                            TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                            HorizontalTextAlignment="Center" />
+                        WidthRequest="56"
+                        HeightRequest="56"
+                        IconSize="28"
+                        ShowStatus="False"
+                        VerticalOptions="Center"
+                        AutomationProperties.IsInAccessibleTree="False" />
+                    <!-- What it is not stays at the top, under its name, in one sentence. -->
+                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                        <Label Text="{Binding Title}" Style="{StaticResource SectionTitleStyle}" />
+                        <Label Text="{Binding Disclaimer}" Style="{StaticResource CaptionStyle}" LineBreakMode="WordWrap" />
                     </VerticalStackLayout>
+                </Grid>
 
-                    <!-- Three facts as tiles; the last one opens urgent help. -->
-                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8" Margin="0,6,0,0">
-                        <VerticalStackLayout Grid.Column="0" Spacing="6">
-                            <Border Style="{StaticResource LargeIconTileStyle}" HorizontalOptions="Center">
-                                <ui:MaterialIconView IconName="CloudOff" IconSize="24" HorizontalOptions="Center" VerticalOptions="Center" />
-                            </Border>
-                            <Label Text="{Binding OfflineText}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
-                        </VerticalStackLayout>
-                        <VerticalStackLayout Grid.Column="1" Spacing="6">
-                            <Border Style="{StaticResource LargeIconTileStyle}" HorizontalOptions="Center">
-                                <ui:MaterialIconView IconName="Lock" IconSize="24" HorizontalOptions="Center" VerticalOptions="Center" />
-                            </Border>
-                            <Label Text="{Binding OnPhoneText}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
-                        </VerticalStackLayout>
-                        <VerticalStackLayout Grid.Column="2" Spacing="6" SemanticProperties.Description="{Binding CrisisText}">
-                            <VerticalStackLayout.Behaviors>
-                                <behaviors:PressFeedbackBehavior />
-                            </VerticalStackLayout.Behaviors>
-                            <VerticalStackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding CrisisCommand}" />
-                            </VerticalStackLayout.GestureRecognizers>
-                            <!-- The warm colours of urgent help in the side menu (AppMenuLook, Help), so it reads as the same door. -->
-                            <Border
-                                Style="{StaticResource LargeIconTileStyle}"
-                                HorizontalOptions="Center"
-                                BackgroundColor="{AppThemeBinding Light=#FBE0DC, Dark=#4A2420}">
-                                <ui:MaterialIconView
-                                    IconName="HealthAndSafety"
-                                    IconSize="24"
-                                    IconColor="{AppThemeBinding Light=#B3261E, Dark=#F4B4AB}"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center" />
-                            </Border>
-                            <Label Text="{Binding CrisisText}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
-                        </VerticalStackLayout>
-                    </Grid>
+                <ui:SettingsLinkCardView Title="{Binding NewChatText}" IconName="AddComment" TapCommand="{Binding NewChatCommand}" />
+                <ui:SettingsLinkCardView
+                    Title="{Binding NameTitle}"
+                    IconName="Person"
+                    Subtitle="{Binding UserName}"
+                    TapCommand="{Binding EditNameCommand}" />
 
-                    <!-- What it is not: the safety line stays on the card, in one sentence. -->
-                    <Label Text="{Binding Disclaimer}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+                <ui:SettingsLinkCardView
+                    Margin="0,8,0,0"
+                    Title="{Binding CrisisText}"
+                    IconName="HealthAndSafety"
+                    TapCommand="{Binding CrisisCommand}" />
 
-                    <ui:ButtonView BodyText="{Binding NewChatText}" TapCommand="{Binding NewChatCommand}" Margin="0,6,0,0" />
+                <!-- The two that erase, apart from the rest; each still asks first. Deleting chats only when there are some. -->
+                <ui:SettingsLinkCardView
+                    Margin="0,8,0,0"
+                    Title="{Binding ForgetText}"
+                    IconName="PersonOff"
+                    TapCommand="{Binding ForgetCommand}" />
+                <ui:SettingsLinkCardView
+                    IsVisible="{Binding HasHistory}"
+                    Title="{Binding DeleteAllText}"
+                    IconName="DeleteOutline"
+                    TapCommand="{Binding DeleteAllCommand}" />
 
-                    <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="6" HorizontalOptions="Center" MinimumHeightRequest="44"
-                          SemanticProperties.Description="{Binding SettingsText}">
-                        <Grid.Behaviors>
-                            <behaviors:PressFeedbackBehavior />
-                        </Grid.Behaviors>
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SettingsCommand}" />
-                        </Grid.GestureRecognizers>
-                        <ui:MaterialIconView
-                            IconName="Settings"
-                            IconSize="18"
-                            VerticalOptions="Center"
-                            IconColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
-                        <Label
-                            Grid.Column="1"
-                            Text="{Binding SettingsText}"
-                            Style="{StaticResource BodyStyle}"
-                            FontFamily="{StaticResource MediumFontFamily}"
-                            VerticalOptions="Center"
-                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
-                    </Grid>
-                </VerticalStackLayout>
-            </Border>
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" Margin="4,8,4,0">
+                    <ui:MaterialIconView
+                        IconName="Lock"
+                        IconSize="16"
+                        IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                        VerticalOptions="Start"
+                        Margin="0,2,0,0" />
+                    <Label Grid.Column="1" Text="{Binding PrivacyText}" Style="{StaticResource CaptionStyle}" LineBreakMode="WordWrap" />
+                </Grid>
+            </VerticalStackLayout>
         </ScrollView>
     </Grid>
 </ContentPage>

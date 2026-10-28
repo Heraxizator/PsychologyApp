@@ -4132,20 +4132,8 @@
   <data name="JournalCheckInDays" xml:space="preserve">
     <value>{0}/{1}</value>
   </data>
-  <data name="ChatProfileOfflineShort" xml:space="preserve">
-    <value>无需联网</value>
-  </data>
-  <data name="ChatProfileOnPhone" xml:space="preserve">
-    <value>只存在手机上</value>
-  </data>
-  <data name="ChatProfileTaglineShort" xml:space="preserve">
-    <value>倾听，并帮你理清感受</value>
-  </data>
   <data name="ChatProfileDisclaimerShort" xml:space="preserve">
     <value>不是真人，也不是医生，不能代替专业人士。</value>
-  </data>
-  <data name="ChatProfileSettings" xml:space="preserve">
-    <value>聊天设置</value>
   </data>
   <data name="ChatMore" xml:space="preserve">
     <value>更多</value>
@@ -4218,5 +4206,8 @@
   </data>
   <data name="ChatEmotionProcrastination" xml:space="preserve">
     <value>拖延</value>
+  </data>
+  <data name="ChatProfilePrivacyLine" xml:space="preserve">
+    <value>无需联网，所有内容都保存在本机</value>
   </data>
 </root>

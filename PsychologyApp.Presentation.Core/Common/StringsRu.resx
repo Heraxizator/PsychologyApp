@@ -4138,20 +4138,8 @@
   <data name="JournalCheckInDays" xml:space="preserve">
     <value>{0} из {1}</value>
   </data>
-  <data name="ChatProfileOfflineShort" xml:space="preserve">
-    <value>Без интернета</value>
-  </data>
-  <data name="ChatProfileOnPhone" xml:space="preserve">
-    <value>Только на телефоне</value>
-  </data>
-  <data name="ChatProfileTaglineShort" xml:space="preserve">
-    <value>Слушает и помогает разобраться в чувствах</value>
-  </data>
   <data name="ChatProfileDisclaimerShort" xml:space="preserve">
     <value>Не человек и не врач. Не заменяет специалиста.</value>
-  </data>
-  <data name="ChatProfileSettings" xml:space="preserve">
-    <value>Настройки чата</value>
   </data>
   <data name="ChatMore" xml:space="preserve">
     <value>Ещё</value>
@@ -4224,5 +4212,8 @@
   </data>
   <data name="ChatEmotionProcrastination" xml:space="preserve">
     <value>Откладывание</value>
+  </data>
+  <data name="ChatProfilePrivacyLine" xml:space="preserve">
+    <value>Работает без интернета, всё остаётся на телефоне</value>
   </data>
 </root>
