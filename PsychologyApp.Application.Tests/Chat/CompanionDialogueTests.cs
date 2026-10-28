@@ -437,4 +437,19 @@ public class QuoteExtractorTests
 
         Assert.Equal("Сегодня был очень странный и долгий день на работе", quote);
     }
+
+    // The day starts the sentence; "Last time (today)" and "(a while ago)" in brackets read like a form.
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void The_returning_greeting_names_the_theme_without_a_day_in_brackets(bool english)
+    {
+        foreach (int daysAgo in new[] { 0, 1, 3, 5, 10, 40 })
+        {
+            string greeting = CompanionDialogueContent.ReturningGreeting("Тревога", daysAgo, 7, english);
+            Assert.DoesNotContain("(", greeting, StringComparison.Ordinal);
+            Assert.Contains("Тревога", greeting, StringComparison.Ordinal);
+            Assert.Contains("7/10", greeting, StringComparison.Ordinal);
+        }
+    }
 }

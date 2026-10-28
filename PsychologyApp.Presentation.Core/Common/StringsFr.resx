@@ -4135,14 +4135,11 @@
   <data name="ChatInfoStarted" xml:space="preserve">
     <value>Commencée le {0} · mise à jour {1}</value>
   </data>
-  <data name="ChatInfoOpen" xml:space="preserve">
-    <value>Ouvrir</value>
-  </data>
   <data name="ChatInfoRename" xml:space="preserve">
     <value>Nom</value>
   </data>
   <data name="ChatInfoDelete" xml:space="preserve">
-    <value>Supprimer</value>
+    <value>Supprimer la conversation</value>
   </data>
   <data name="ChatInfoSection" xml:space="preserve">
     <value>Dans cette conversation</value>
@@ -4158,9 +4155,6 @@
   </data>
   <data name="ChatInfoStep" xml:space="preserve">
     <value>Étape</value>
-  </data>
-  <data name="ChatInfoEmpty" xml:space="preserve">
-    <value>Au fil de la conversation, l'émotion, la tension et l'étape choisie apparaîtront ici.</value>
   </data>
   <data name="ChatInfoOnPhone" xml:space="preserve">
     <value>Cette conversation est gardée uniquement sur ce téléphone</value>
@@ -4212,5 +4206,8 @@
   </data>
   <data name="InsightsTestScoreOf" xml:space="preserve">
     <value>{0} sur {1}</value>
+  </data>
+  <data name="ChatStatusOffline" xml:space="preserve">
+    <value>hors ligne</value>
   </data>
 </root>

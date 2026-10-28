@@ -4135,14 +4135,11 @@
   <data name="ChatInfoStarted" xml:space="preserve">
     <value>开始于 {0} · 更新于 {1}</value>
   </data>
-  <data name="ChatInfoOpen" xml:space="preserve">
-    <value>打开</value>
-  </data>
   <data name="ChatInfoRename" xml:space="preserve">
     <value>名称</value>
   </data>
   <data name="ChatInfoDelete" xml:space="preserve">
-    <value>删除</value>
+    <value>删除对话</value>
   </data>
   <data name="ChatInfoSection" xml:space="preserve">
     <value>这次对话中</value>
@@ -4158,9 +4155,6 @@
   </data>
   <data name="ChatInfoStep" xml:space="preserve">
     <value>下一步</value>
-  </data>
-  <data name="ChatInfoEmpty" xml:space="preserve">
-    <value>随着对话进行，这里会显示情绪、紧张程度和你决定的下一步。</value>
   </data>
   <data name="ChatInfoOnPhone" xml:space="preserve">
     <value>这次对话只保存在这部手机上</value>
@@ -4212,5 +4206,8 @@
   </data>
   <data name="InsightsTestScoreOf" xml:space="preserve">
     <value>{0} / {1}</value>
+  </data>
+  <data name="ChatStatusOffline" xml:space="preserve">
+    <value>离线</value>
   </data>
 </root>

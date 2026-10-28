@@ -78,7 +78,7 @@ public sealed class ChatViewModel : BaseViewModel
         _language = language;
         _time = time;
         _sessionId = sessionId;
-        _title = AppStrings.ChatNew;
+        _title = AppStrings.ChatProfileTitle;
 
         BindNavigation(navigationService);
         BackCommand = new AsyncCommand(GoBackAsync);
@@ -102,7 +102,13 @@ public sealed class ChatViewModel : BaseViewModel
     public string Title
     {
         get => _title;
-        private set => SetProperty(ref _title, value);
+        private set
+        {
+            if (SetProperty(ref _title, value))
+            {
+                OnPropertyChanged(nameof(StatusText));
+            }
+        }
     }
 
     public string DraftText
@@ -160,7 +166,16 @@ public sealed class ChatViewModel : BaseViewModel
     public bool CanSend => !string.IsNullOrWhiteSpace(_draftText);
 
     /// <summary>Subtitle under the chat name: "typing..." while the companion answers, otherwise a privacy reminder.</summary>
-    public string StatusText => IsTyping ? AppStrings.DialogueTyping : AppStrings.ChatStatusIdle;
+    /// <summary>Under the companion's own name the status is only "offline"; under a chat's name it says whose chat it is.</summary>
+    public string StatusText => IsTyping
+        ? AppStrings.DialogueTyping
+        : Title == AppStrings.ChatProfileTitle ? AppStrings.ChatStatusOffline : AppStrings.ChatStatusIdle;
+
+    /// <summary>
+    /// A chat not named yet shows the companion's name: "New chat" said nothing about who is on the other side. The chat's own
+    /// name takes over once its feeling is heard or the person names it.
+    /// </summary>
+    private static string HeaderTitle(string title) => ChatService.HasDefaultTitle(title) ? AppStrings.ChatProfileTitle : title;
 
     public string OpenProfileText => AppStrings.ChatProfileOpen;
     public string Placeholder => AppStrings.ChatInputPlaceholder;
@@ -209,7 +224,7 @@ public sealed class ChatViewModel : BaseViewModel
 
         // The state changes only after everything has been read, so a failed load leaves nothing half-done.
         _sessionId = id;
-        Title = session.Title;
+        Title = HeaderTitle(session.Title);
         Messages.AddRange(history.Select(m => CreateBubble(m.Text, m.Role == ChatRole.User, m.CreatedAt, animate: false)).ToList());
 
         ChatMessageDTO? last = history.LastOrDefault();
@@ -236,7 +251,7 @@ public sealed class ChatViewModel : BaseViewModel
             ChatTurnResult? followUp = await Task.Run(() => _chat.CheckPracticeFollowUpAsync(id, _lifetime.Token));
             if (followUp is not null)
             {
-                Title = followUp.Session.Title;
+                Title = HeaderTitle(followUp.Session.Title);
                 await RevealAsync(followUp.NewMessages);
             }
 
@@ -324,7 +339,7 @@ public sealed class ChatViewModel : BaseViewModel
 
         // The service awaits without ConfigureAwait(false), so understanding the message would run on the UI thread.
         ChatTurnResult result = await Task.Run(send);
-        Title = result.Session.Title;
+        Title = HeaderTitle(result.Session.Title);
 
         // NewMessages[0] is the user's own message, which is already on screen.
         await RevealAsync(result.NewMessages.Skip(1).ToList());

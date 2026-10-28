@@ -498,5 +498,11 @@ public sealed class ChatService(
 
     private DateTime Now() => time.GetUtcNow().UtcDateTime;
 
-    private string DefaultTitle() => language.IsEnglish ? "New chat" : "Новый чат";
+    private string DefaultTitle() => language.IsEnglish ? EnglishDefaultTitle : RussianDefaultTitle;
+
+    private const string EnglishDefaultTitle = "New chat";
+    private const string RussianDefaultTitle = "Новый чат";
+
+    /// <summary>The name a chat has until its feeling or the person names it, in either language it was created in.</summary>
+    public static bool HasDefaultTitle(string title) => title is EnglishDefaultTitle or RussianDefaultTitle;
 }

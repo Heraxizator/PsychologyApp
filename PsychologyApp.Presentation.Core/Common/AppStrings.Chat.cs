@@ -35,6 +35,7 @@ public static partial class AppStrings
     public static string ChatHeroAllChats => R(nameof(ChatHeroAllChats));
     public static string ChatHeroNewChat => R(nameof(ChatHeroNewChat));
     public static string ChatStatusIdle => R(nameof(ChatStatusIdle));
+    public static string ChatStatusOffline => R(nameof(ChatStatusOffline));
     public static string ChatStatusPractice => R(nameof(ChatStatusPractice));
     public static string ChatError => R(nameof(ChatError));
     public static string ChatLoadingText => R(nameof(ChatLoadingText));

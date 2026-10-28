@@ -4141,14 +4141,11 @@
   <data name="ChatInfoStarted" xml:space="preserve">
     <value>Начат {0} · обновлён {1}</value>
   </data>
-  <data name="ChatInfoOpen" xml:space="preserve">
-    <value>Открыть</value>
-  </data>
   <data name="ChatInfoRename" xml:space="preserve">
     <value>Название</value>
   </data>
   <data name="ChatInfoDelete" xml:space="preserve">
-    <value>Удалить</value>
+    <value>Удалить разговор</value>
   </data>
   <data name="ChatInfoSection" xml:space="preserve">
     <value>В этом разговоре</value>
@@ -4164,9 +4161,6 @@
   </data>
   <data name="ChatInfoStep" xml:space="preserve">
     <value>Шаг</value>
-  </data>
-  <data name="ChatInfoEmpty" xml:space="preserve">
-    <value>Когда разговор продолжится, здесь появятся чувство, напряжение и шаг, о котором вы договорились.</value>
   </data>
   <data name="ChatInfoOnPhone" xml:space="preserve">
     <value>Разговор хранится только на этом телефоне</value>
@@ -4218,5 +4212,8 @@
   </data>
   <data name="InsightsTestScoreOf" xml:space="preserve">
     <value>{0} из {1}</value>
+  </data>
+  <data name="ChatStatusOffline" xml:space="preserve">
+    <value>без интернета</value>
   </data>
 </root>

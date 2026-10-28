@@ -5,7 +5,6 @@ public static partial class AppStrings
 {
     public static string ChatInfoTitle => R(nameof(ChatInfoTitle));
     public static string ChatInfoStarted(string started, string updated) => F(nameof(ChatInfoStarted), started, updated);
-    public static string ChatInfoOpen => R(nameof(ChatInfoOpen));
     public static string ChatInfoRename => R(nameof(ChatInfoRename));
     public static string ChatInfoDelete => R(nameof(ChatInfoDelete));
     public static string ChatInfoSection => R(nameof(ChatInfoSection));
@@ -13,7 +12,6 @@ public static partial class AppStrings
     public static string ChatInfoTension => R(nameof(ChatInfoTension));
     public static string ChatInfoPractice => R(nameof(ChatInfoPractice));
     public static string ChatInfoStep => R(nameof(ChatInfoStep));
-    public static string ChatInfoEmpty => R(nameof(ChatInfoEmpty));
     public static string ChatInfoOnPhone => R(nameof(ChatInfoOnPhone));
     public static string ChatInfoAboutCompanion => R(nameof(ChatInfoAboutCompanion));
 

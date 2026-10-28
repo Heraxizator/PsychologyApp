@@ -14,6 +14,17 @@
              SafeAreaEdges="All"
              BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
 
+    <ContentPage.Resources>
+        <!-- A ready answer: a soft tinted chip, as the chips elsewhere in the app; four outlined blue frames were the loudest thing
+             under the conversation. The base sits in the style, so the practice chip's fill in a trigger is not overridden. -->
+        <Style x:Key="ChatQuickReplyStyle" TargetType="Border">
+            <Setter Property="Padding" Value="14,8" />
+            <Setter Property="StrokeThickness" Value="0" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 18" />
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
+        </Style>
+    </ContentPage.Resources>
+
     <ContentPage.Behaviors>
         <behaviors:PageAnalyticsBehavior />
     </ContentPage.Behaviors>
@@ -184,15 +195,10 @@
                             Margin="0,0,8,8"
                             BindingContextChanged="OnChipContextChanged"
                             FlexLayout.Shrink="0"
-                            Padding="14,8"
-                            StrokeThickness="1.2"
-                            Stroke="{DynamicResource Primary}"
-                            StrokeShape="RoundRectangle 18"
-                            BackgroundColor="Transparent">
+                            Style="{StaticResource ChatQuickReplyStyle}">
                             <Border.Triggers>
                                 <DataTrigger TargetType="Border" Binding="{Binding IsPractice}" Value="True">
                                     <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryFill}" />
-                                    <Setter Property="Stroke" Value="{DynamicResource PrimaryFill}" />
                                 </DataTrigger>
                             </Border.Triggers>
                             <Border.GestureRecognizers>

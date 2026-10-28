@@ -11,8 +11,8 @@ using PsychologyApp.Presentation.Shared.ViewModels;
 namespace PsychologyApp.Presentation.Pages.Chat.ChatInfo;
 
 /// <summary>
-/// The page about one chat, as a messenger shows a chat's info: its face, name and dates, three actions, then what the chat held
-/// (<see cref="ChatInfoSummary"/>). Rows the chat never reached are left out. Everything is read from the stored chat on the phone.
+/// The page about one chat, laid out like the AI psychologist's page: its tile, name and dates, what the chat held
+/// (<see cref="ChatInfoSummary"/>), then its actions as rows. Rows the chat never reached are left out. Everything is read from the stored chat on the phone.
 /// </summary>
 public sealed class ChatInfoViewModel : BaseViewModel
 {
@@ -44,7 +44,6 @@ public sealed class ChatInfoViewModel : BaseViewModel
 
         BindNavigation(navigationService);
         BackCommand = new AsyncCommand(GoBackAsync);
-        OpenCommand = new AsyncCommand(GoBackAsync);
         RenameCommand = new AsyncCommand(RenameAsync);
         DeleteCommand = new AsyncCommand(DeleteAsync);
         PracticeCommand = new AsyncCommand(OpenPracticeAsync);
@@ -53,8 +52,6 @@ public sealed class ChatInfoViewModel : BaseViewModel
 
     public ICommand BackCommand { get; }
 
-    /// <summary>The info page is opened from the chat, so opening the chat goes back to it.</summary>
-    public ICommand OpenCommand { get; }
     public ICommand RenameCommand { get; }
     public ICommand DeleteCommand { get; }
     public ICommand PracticeCommand { get; }
@@ -87,7 +84,6 @@ public sealed class ChatInfoViewModel : BaseViewModel
     public string IconName => ChatCardLook.For(_summary.Emotion).Icon ?? "Forum";
     public TechniqueFlavor Flavor => ChatCardLook.For(_summary.Emotion).Flavor;
 
-    public string OpenText => AppStrings.ChatInfoOpen;
     public string RenameText => AppStrings.ChatInfoRename;
     public string DeleteText => AppStrings.ChatInfoDelete;
     public string SectionText => AppStrings.ChatInfoSection;
@@ -95,7 +91,6 @@ public sealed class ChatInfoViewModel : BaseViewModel
     public string TensionLabel => AppStrings.ChatInfoTension;
     public string PracticeLabel => AppStrings.ChatInfoPractice;
     public string StepLabel => AppStrings.ChatInfoStep;
-    public string EmptyText => AppStrings.ChatInfoEmpty;
     public string OnPhoneText => AppStrings.ChatInfoOnPhone;
     public string AboutCompanionText => AppStrings.ChatInfoAboutCompanion;
 
@@ -109,7 +104,6 @@ public sealed class ChatInfoViewModel : BaseViewModel
     public bool HasPractice => PracticeText is not null;
     public bool HasStep => StepText is not null;
     public bool HasSummary => !_summary.IsEmpty;
-    public bool IsSummaryEmpty => _summary.IsEmpty;
 
     /// <summary>Reloads the chat. Safe on every appearing: a rename from another page shows at once.</summary>
     public async Task RefreshAsync()
@@ -129,7 +123,7 @@ public sealed class ChatInfoViewModel : BaseViewModel
 
     private void NotifyAll() =>
         Notify(nameof(Title), nameof(DatesText), nameof(IconName), nameof(Flavor), nameof(FeelingText), nameof(TensionText), nameof(PracticeText),
-            nameof(StepText), nameof(HasFeeling), nameof(HasTension), nameof(HasPractice), nameof(HasStep), nameof(HasSummary), nameof(IsSummaryEmpty));
+            nameof(StepText), nameof(HasFeeling), nameof(HasTension), nameof(HasPractice), nameof(HasStep), nameof(HasSummary));
 
     private async Task RenameAsync()
     {
@@ -166,8 +160,8 @@ public sealed class ChatInfoViewModel : BaseViewModel
 
     protected override void RefreshLocalizedProperties()
     {
-        Notify(nameof(PageTitle), nameof(OpenText), nameof(RenameText), nameof(DeleteText), nameof(SectionText), nameof(FeelingLabel), nameof(TensionLabel),
-            nameof(PracticeLabel), nameof(StepLabel), nameof(EmptyText), nameof(OnPhoneText), nameof(AboutCompanionText));
+        Notify(nameof(PageTitle), nameof(RenameText), nameof(DeleteText), nameof(SectionText), nameof(FeelingLabel), nameof(TensionLabel),
+            nameof(PracticeLabel), nameof(StepLabel), nameof(OnPhoneText), nameof(AboutCompanionText));
         NotifyAll();
     }
 }

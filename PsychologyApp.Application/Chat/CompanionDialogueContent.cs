@@ -155,15 +155,32 @@ public static class CompanionDialogueContent
 
     // ----- returning to the app: memory of the previous chat -----
 
+    // The day leads the sentence: "Last time (today) …" read like a form being filled in.
     public static string ReturningGreeting(string previousTitle, int daysAgo, int? lastIntensity, bool english)
     {
-        string when = RelativeDay(daysAgo, english);
         string intensity = lastIntensity is { } value
             ? (english ? $" Back then the tension was {value}/10." : $" Напряжение тогда было {value}/10.")
             : string.Empty;
+        string talked = english
+            ? daysAgo switch
+            {
+                <= 0 => $"Earlier today we talked about “{previousTitle}”.",
+                1 => $"Yesterday we talked about “{previousTitle}”.",
+                <= 6 => $"{daysAgo} days ago we talked about “{previousTitle}”.",
+                <= 13 => $"Last week we talked about “{previousTitle}”.",
+                _ => $"Last time we talked about “{previousTitle}”."
+            }
+            : daysAgo switch
+            {
+                <= 0 => $"Сегодня вы уже говорили о теме «{previousTitle}».",
+                1 => $"Вчера вы говорили о теме «{previousTitle}».",
+                <= 6 => $"{daysAgo} {DaysWord(daysAgo)} назад вы говорили о теме «{previousTitle}».",
+                <= 13 => $"На прошлой неделе вы говорили о теме «{previousTitle}».",
+                _ => $"В прошлый раз вы говорили о теме «{previousTitle}»."
+            };
         return english
-            ? $"Welcome back. Last time ({when}) we talked about “{previousTitle}”.{intensity} How is it now?"
-            : $"Здравствуйте снова. В прошлый раз ({when}) вы говорили о теме «{previousTitle}».{intensity} Как это сейчас?";
+            ? $"Welcome back. {talked}{intensity} How is it now?"
+            : $"Здравствуйте снова. {talked}{intensity} Как это сейчас?";
     }
 
     public static IReadOnlyList<ChatQuickReply> CheckInReplies(bool english) =>
