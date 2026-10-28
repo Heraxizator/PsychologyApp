@@ -1,5 +1,7 @@
+using PsychologyApp.Presentation.Core.Charts;
 using PsychologyApp.Presentation.Shared.Common;
 using PsychologyApp.Presentation.Shared.Common.Infrastructure;
+using PsychologyApp.Presentation.Shared.UI.Components;
 using System.Windows.Input;
 
 namespace PsychologyApp.Presentation.Widgets.MoodStrip;
@@ -92,12 +94,22 @@ public partial class MoodStripView : ContentView
     protected override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
+        for (int level = 1; level <= 5; level++)
+        {
+            // The faces are drawn, so the reader needs the level in words.
+            if ((GetTemplateChild($"MoodChip{level}") ?? FindByName($"MoodChip{level}")) is Border chip)
+            {
+                SemanticProperties.SetDescription(chip, AppStrings.MoodLevelName(level));
+            }
+        }
+
         ApplySelection(SelectedMoodLevel);
     }
 
     /// <summary>
-    /// The chosen face gets the selected style and every other face the plain one. A style is swapped as a whole, so nothing is left behind on a
-    /// face that is no longer chosen (a trigger that set the background of a border did not always give it back).
+    /// The chosen face gets the selected style and its mood colour; every other face the plain style and grey, so one colour on the card
+    /// says the answer. A style is swapped as a whole, so nothing is left behind on a face that is no longer chosen (a trigger that set
+    /// the background of a border did not always give it back).
     /// </summary>
     private void ApplySelection(int selected)
     {
@@ -109,6 +121,22 @@ public partial class MoodStripView : ContentView
                 && AppResources.Find<Style>(key) is Style found)
             {
                 chip.Style = found;
+            }
+
+            if ((GetTemplateChild($"MoodTile{level}") ?? FindByName($"MoodTile{level}")) is Border tile)
+            {
+                bool chosen = level == selected;
+                tile.SetAppThemeColor(
+                    BackgroundColorProperty,
+                    Color.FromArgb(chosen ? MoodPalette.Fill(level, dark: false) : MoodPalette.NeutralFill(dark: false)),
+                    Color.FromArgb(chosen ? MoodPalette.Fill(level, dark: true) : MoodPalette.NeutralFill(dark: true)));
+                if (tile.Content is MaterialIconView face)
+                {
+                    face.SetAppThemeColor(
+                        MaterialIconView.IconColorProperty,
+                        Color.FromArgb(chosen ? MoodPalette.Icon(level, dark: false) : MoodPalette.NeutralIcon(dark: false)),
+                        Color.FromArgb(chosen ? MoodPalette.Icon(level, dark: true) : MoodPalette.NeutralIcon(dark: true)));
+                }
             }
         }
     }

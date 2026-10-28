@@ -21,9 +21,6 @@
   <data name="ChatInputPlaceholder" xml:space="preserve">
     <value>Nachricht schreiben…</value>
   </data>
-  <data name="ChatEmptyTitle" xml:space="preserve">
-    <value>Noch keine Gespräche</value>
-  </data>
   <data name="ChatEmptyBody" xml:space="preserve">
     <value>Erzähl mir, was los ist. Ich höre zu, helfe dir, es zu ordnen, und schlage eine Übung vor.</value>
   </data>
@@ -4039,9 +4036,6 @@
   <data name="MenuFooterPrivacy" xml:space="preserve">
     <value>Alles, was du schreibst, bleibt auf diesem Handy</value>
   </data>
-  <data name="JournalPromptTitle" xml:space="preserve">
-    <value>Frage des Tages</value>
-  </data>
   <data name="JournalPrompt01" xml:space="preserve">
     <value>Was ist dir heute leichter gefallen als erwartet?</value>
   </data>
@@ -4083,9 +4077,6 @@
   </data>
   <data name="JournalPrompt14" xml:space="preserve">
     <value>Welcher eine Schritt würde morgen ein wenig leichter machen?</value>
-  </data>
-  <data name="JournalPromptPlaceholder" xml:space="preserve">
-    <value>Deine Antwort oder andere Gedanken, wenn du magst</value>
   </data>
   <data name="JournalLowMoodTitle" xml:space="preserve">
     <value>Gerade ist es schwer</value>
@@ -4137,6 +4128,36 @@
   </data>
   <data name="ChatMore" xml:space="preserve">
     <value>Mehr</value>
+  </data>
+  <data name="MoodLevelName1" xml:space="preserve">
+    <value>Sehr schlecht</value>
+  </data>
+  <data name="MoodLevelName2" xml:space="preserve">
+    <value>Schlecht</value>
+  </data>
+  <data name="MoodLevelName3" xml:space="preserve">
+    <value>Geht so</value>
+  </data>
+  <data name="MoodLevelName4" xml:space="preserve">
+    <value>Gut</value>
+  </data>
+  <data name="MoodLevelName5" xml:space="preserve">
+    <value>Sehr gut</value>
+  </data>
+  <data name="JournalRecentTitle" xml:space="preserve">
+    <value>Letzte Einträge</value>
+  </data>
+  <data name="JournalPastDayPlaceholder" xml:space="preserve">
+    <value>Eine Notiz zum Tag, wenn du magst</value>
+  </data>
+  <data name="JournalEarlierWeeks" xml:space="preserve">
+    <value>Frühere Wochen</value>
+  </data>
+  <data name="ChatEmptyTitle" xml:space="preserve">
+    <value>Noch keine Gespräche</value>
+  </data>
+  <data name="ChatProfilePrivacyLine" xml:space="preserve">
+    <value>Funktioniert offline, alles bleibt auf diesem Handy</value>
   </data>
   <data name="ChatInfoTitle" xml:space="preserve">
     <value>Über dieses Gespräch</value>
@@ -4206,8 +4227,5 @@
   </data>
   <data name="ChatEmotionProcrastination" xml:space="preserve">
     <value>Aufschieben</value>
-  </data>
-  <data name="ChatProfilePrivacyLine" xml:space="preserve">
-    <value>Funktioniert offline, alles bleibt auf diesem Handy</value>
   </data>
 </root>

@@ -218,6 +218,81 @@ public sealed class JournalMoodLoaderTests
         Assert.Equal(expectedFromUtc, capturedFrom);
     }
 
+    // The list under the editor opens the check-in it shows: a wrong slot would open the other half of that day.
+    [Fact]
+    public async Task Recent_entries_are_the_latest_three_without_the_open_one_and_know_their_slot()
+    {
+        Mock<IUserProgressService> progress = new();
+        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+        DateTime At(int daysAgo, int hour) => today.AddDays(-daysAgo).ToDateTime(new TimeOnly(hour, 0)).ToUniversalTime();
+        progress
+            .Setup(p => p.GetMoodsAsync(
+                It.IsAny<DateTime?>(),
+                It.IsAny<DateTime?>(),
+                It.IsAny<int>(),
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<MoodEntryDTO>
+            {
+                new() { MoodEntryId = 5, MoodLevel = 3, RecordedAt = At(0, 20) },
+                new() { MoodEntryId = 4, MoodLevel = 2, RecordedAt = At(1, 8) },
+                new() { MoodEntryId = 3, MoodLevel = 4, RecordedAt = At(1, 20) },
+                new() { MoodEntryId = 2, MoodLevel = 5, RecordedAt = At(2, 20) },
+                new() { MoodEntryId = 1, MoodLevel = 1, RecordedAt = At(3, 20) }
+            });
+        progress
+            .Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+
+        JournalMoodLoader loader = new(progress.Object, new KeywordCrisisDetector());
+        JournalMoodSnapshot snapshot = await loader.LoadAsync(editorDay: today, editorSlot: JournalCheckInSlot.Evening);
+
+        Assert.Equal(5, snapshot.EditorEntryId);
+        Assert.Equal([3L, 4L, 2L], snapshot.RecentEntries.Select(r => r.Entry.MoodEntryId));
+
+        // The day a year back is loaded for its own line; it is not a recent entry.
+        progress
+            .Setup(p => p.GetMoodsAsync(
+                It.IsAny<DateTime?>(),
+                It.IsAny<DateTime?>(),
+                It.IsAny<int>(),
+                It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<MoodEntryDTO>
+            {
+                new() { MoodEntryId = 5, MoodLevel = 3, RecordedAt = At(0, 20) },
+                new() { MoodEntryId = 9, MoodLevel = 1, RecordedAt = today.AddYears(-1).ToDateTime(new TimeOnly(21, 0)).ToUniversalTime() }
+            });
+        JournalMoodSnapshot onlyLastYear = await loader.LoadAsync(editorDay: today, editorSlot: JournalCheckInSlot.Evening);
+        Assert.Empty(onlyLastYear.RecentEntries);
+        Assert.Equal(
+            [JournalCheckInSlot.Evening, JournalCheckInSlot.Morning, JournalCheckInSlot.Evening],
+            snapshot.RecentEntries.Select(r => r.Slot));
+    }
+
+    // A quiet week hides the line that opens the overview: older check-ins decide whether the welcome offers it instead.
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public async Task A_quiet_week_says_whether_there_are_earlier_check_ins(bool hasOlder)
+    {
+        Mock<IUserProgressService> progress = new();
+        progress
+            .Setup(p => p.GetMoodsAsync(It.IsAny<DateTime?>(), It.IsAny<DateTime?>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new List<MoodEntryDTO>());
+        progress
+            .Setup(p => p.GetRecentMoodsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(hasOlder
+                ? [new MoodEntryDTO { MoodEntryId = 1, MoodLevel = 3, RecordedAt = DateTime.UtcNow.AddDays(-30) }]
+                : []);
+        progress
+            .Setup(p => p.GetRecentTechniqueCompletionsAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+
+        JournalMoodSnapshot snapshot = await new JournalMoodLoader(progress.Object, new KeywordCrisisDetector()).LoadAsync();
+
+        Assert.False(snapshot.Stats.HasStats);
+        Assert.Equal(hasOlder, snapshot.HasEarlierEntries);
+    }
+
     [Fact]
     public async Task LoadAsync_LoadsEditorForSelectedDay()
     {
@@ -264,9 +339,9 @@ public sealed class JournalMoodLoaderTests
                 "Today",
                 [
                     new PsychologyApp.Presentation.Entities.Profile.MoodNoteItem(
-                        1, today, "d", "t", "Felt calmer", true, 4, "🙂 4/5", "🙂", true),
+                        1, today, "d", "t", "Felt calmer", true, 4, true),
                     new PsychologyApp.Presentation.Entities.Profile.MoodNoteItem(
-                        2, today, "d", "t", "Без заметки", false, 3, "😐 3/5", "😐", true)
+                        2, today, "d", "t", "Без заметки", false, 3, true)
                 ])
         };
 

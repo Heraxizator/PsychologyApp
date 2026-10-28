@@ -1,4 +1,6 @@
 using System.Windows.Input;
+using PsychologyApp.Presentation.Core.Charts;
+using PsychologyApp.Presentation.Shared.UI.Components;
 
 namespace PsychologyApp.Presentation.Widgets.Journal;
 
@@ -12,20 +14,11 @@ public partial class JournalEntryView : ContentView
     public static readonly BindableProperty DateTextProperty =
         BindableProperty.Create(nameof(DateText), typeof(string), typeof(JournalEntryView), string.Empty);
 
-    public static readonly BindableProperty TimeTextProperty =
-        BindableProperty.Create(nameof(TimeText), typeof(string), typeof(JournalEntryView), string.Empty);
-
     public static readonly BindableProperty NoteTextProperty =
         BindableProperty.Create(nameof(NoteText), typeof(string), typeof(JournalEntryView), string.Empty);
 
-    public static readonly BindableProperty HasNoteProperty =
-        BindableProperty.Create(nameof(HasNote), typeof(bool), typeof(JournalEntryView), true);
-
-    public static readonly BindableProperty MoodDisplayProperty =
-        BindableProperty.Create(nameof(MoodDisplay), typeof(string), typeof(JournalEntryView), string.Empty);
-
-    public static readonly BindableProperty MoodGlyphProperty =
-        BindableProperty.Create(nameof(MoodGlyph), typeof(string), typeof(JournalEntryView), "·");
+    public static readonly BindableProperty MoodLevelProperty =
+        BindableProperty.Create(nameof(MoodLevel), typeof(int), typeof(JournalEntryView), 0, propertyChanged: OnMoodLevelChanged);
 
     public static readonly BindableProperty TapCommandProperty =
         BindableProperty.Create(nameof(TapCommand), typeof(ICommand), typeof(JournalEntryView));
@@ -52,34 +45,28 @@ public partial class JournalEntryView : ContentView
         set => SetValue(DateTextProperty, value);
     }
 
-    public string TimeText
-    {
-        get => (string)GetValue(TimeTextProperty);
-        set => SetValue(TimeTextProperty, value);
-    }
-
     public string NoteText
     {
         get => (string)GetValue(NoteTextProperty);
         set => SetValue(NoteTextProperty, value);
     }
 
-    public bool HasNote
+    /// <summary>The mood drawn as its face on its colour, as on the check-in card.</summary>
+    public int MoodLevel
     {
-        get => (bool)GetValue(HasNoteProperty);
-        set => SetValue(HasNoteProperty, value);
+        get => (int)GetValue(MoodLevelProperty);
+        set => SetValue(MoodLevelProperty, value);
     }
 
-    public string MoodDisplay
+    private static void OnMoodLevelChanged(BindableObject bindable, object oldValue, object newValue)
     {
-        get => (string)GetValue(MoodDisplayProperty);
-        set => SetValue(MoodDisplayProperty, value);
-    }
-
-    public string MoodGlyph
-    {
-        get => (string)GetValue(MoodGlyphProperty);
-        set => SetValue(MoodGlyphProperty, value);
+        if (bindable is JournalEntryView view && newValue is int level and >= 1)
+        {
+            MoodTint.SetLevel(view.MoodTile, level);
+            view.MoodIcon.IconName = MoodPalette.IconName(level);
+            MoodTint.SetIconLevel(view.MoodIcon, level);
+            SemanticProperties.SetDescription(view.MoodTile, AppStrings.MoodLevelName(level));
+        }
     }
 
     public ICommand? TapCommand
@@ -114,11 +101,14 @@ public partial class JournalEntryView : ContentView
 
     public bool HasShareCommand => ShareCommand is not null;
 
+    public bool ShowChevron => !HasShareCommand;
+
     private static void OnShareChanged(BindableObject bindable, object oldValue, object newValue)
     {
         if (bindable is JournalEntryView view)
         {
             view.OnPropertyChanged(nameof(HasShareCommand));
+            view.OnPropertyChanged(nameof(ShowChevron));
         }
     }
 }

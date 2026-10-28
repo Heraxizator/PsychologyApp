@@ -8,6 +8,4 @@ public sealed record MoodNoteItem(
     string NoteText,
     bool HasNote,
     int MoodLevel,
-    string MoodDisplay,
-    string MoodGlyph,
     bool IsToday);

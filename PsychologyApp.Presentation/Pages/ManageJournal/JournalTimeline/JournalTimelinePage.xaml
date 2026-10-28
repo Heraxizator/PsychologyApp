@@ -52,14 +52,12 @@
                     </vm:JournalTimelineItemTemplateSelector.HeaderTemplate>
                     <vm:JournalTimelineItemTemplateSelector.EntryTemplate>
                         <DataTemplate x:DataType="profile:MoodNoteItem">
+                            <!-- The day is the header above; the entry says only its time. -->
                             <journalUi:JournalEntryView
                                 Margin="0,0,0,8"
-                                DateText="{Binding DateText}"
-                                TimeText="{Binding TimeText}"
+                                DateText="{Binding TimeText}"
                                 NoteText="{Binding NoteText}"
-                                HasNote="{Binding HasNote}"
-                                MoodDisplay="{Binding MoodDisplay}"
-                                MoodGlyph="{Binding MoodGlyph}"
+                                MoodLevel="{Binding MoodLevel}"
                                 TapCommand="{Binding SelectTimelineEntryCommand, Source={RelativeSource AncestorType={x:Type vm:JournalTimelineViewModel}}, x:DataType=vm:JournalTimelineViewModel}"
                                 CommandParameter="{Binding .}"
                                 ShareCommand="{Binding ShareEntryCommand, Source={RelativeSource AncestorType={x:Type vm:JournalTimelineViewModel}}, x:DataType=vm:JournalTimelineViewModel}"

@@ -36,6 +36,34 @@ public class ContrastTests(ITestOutputHelper output)
         Assert.True(ColorContrast.Ratio(MoodPalette.Text(dark), MoodPalette.Fill(null, dark)) >= ColorContrast.BodyTextMinimum);
     }
 
+    // The face is the only thing on a mood tile: it has to be as legible as text there.
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void TheFaceIsReadableOnItsMoodColour(bool dark)
+    {
+        foreach (int level in new[] { 1, 2, 3, 4, 5 })
+        {
+            double ratio = ColorContrast.Ratio(MoodPalette.Icon(level, dark), MoodPalette.Fill(level, dark));
+            Assert.True(ratio >= ColorContrast.BodyTextMinimum, $"mood {level}, dark={dark}: {ratio:F2}");
+        }
+
+        Assert.True(ColorContrast.Ratio(MoodPalette.NeutralIcon(dark), MoodPalette.NeutralFill(dark)) >= ColorContrast.BodyTextMinimum);
+    }
+
+    // The dot alone says a day had a check-in: it must stand out from the card as a graphic does (3:1).
+    [Theory]
+    [InlineData(false, "#FFFFFF")]
+    [InlineData(true, "#282828")]
+    public void TheWeekDotIsVisibleOnTheCard(bool dark, string card)
+    {
+        foreach (int level in new[] { 1, 2, 3, 4, 5 })
+        {
+            double ratio = ColorContrast.Ratio(MoodPalette.Dot(level, dark), card);
+            Assert.True(ratio >= ColorContrast.LargeTextMinimum, $"mood {level}, dark={dark}: {ratio:F2}");
+        }
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]

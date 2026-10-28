@@ -21,9 +21,6 @@
   <data name="ChatInputPlaceholder" xml:space="preserve">
     <value>Напишите сообщение…</value>
   </data>
-  <data name="ChatEmptyTitle" xml:space="preserve">
-    <value>Пока нет разговоров</value>
-  </data>
   <data name="ChatEmptyBody" xml:space="preserve">
     <value>Расскажите, что происходит. Я выслушаю, помогу разобраться и подскажу практику.</value>
   </data>
@@ -4045,9 +4042,6 @@
   <data name="MenuFooterPrivacy" xml:space="preserve">
     <value>Всё, что вы пишете, хранится только на этом телефоне</value>
   </data>
-  <data name="JournalPromptTitle" xml:space="preserve">
-    <value>Вопрос дня</value>
-  </data>
   <data name="JournalPrompt01" xml:space="preserve">
     <value>Что сегодня далось легче, чем ожидалось?</value>
   </data>
@@ -4089,9 +4083,6 @@
   </data>
   <data name="JournalPrompt14" xml:space="preserve">
     <value>Какой один шаг сделает завтра немного легче?</value>
-  </data>
-  <data name="JournalPromptPlaceholder" xml:space="preserve">
-    <value>Ответ или любые мысли — по желанию</value>
   </data>
   <data name="JournalLowMoodTitle" xml:space="preserve">
     <value>Сейчас непросто</value>
@@ -4143,6 +4134,36 @@
   </data>
   <data name="ChatMore" xml:space="preserve">
     <value>Ещё</value>
+  </data>
+  <data name="MoodLevelName1" xml:space="preserve">
+    <value>Очень плохо</value>
+  </data>
+  <data name="MoodLevelName2" xml:space="preserve">
+    <value>Плохо</value>
+  </data>
+  <data name="MoodLevelName3" xml:space="preserve">
+    <value>Нормально</value>
+  </data>
+  <data name="MoodLevelName4" xml:space="preserve">
+    <value>Хорошо</value>
+  </data>
+  <data name="MoodLevelName5" xml:space="preserve">
+    <value>Отлично</value>
+  </data>
+  <data name="JournalRecentTitle" xml:space="preserve">
+    <value>Последние записи</value>
+  </data>
+  <data name="JournalPastDayPlaceholder" xml:space="preserve">
+    <value>Заметка о дне — по желанию</value>
+  </data>
+  <data name="JournalEarlierWeeks" xml:space="preserve">
+    <value>Прошлые недели</value>
+  </data>
+  <data name="ChatEmptyTitle" xml:space="preserve">
+    <value>Пока нет разговоров</value>
+  </data>
+  <data name="ChatProfilePrivacyLine" xml:space="preserve">
+    <value>Работает без интернета, всё остаётся на телефоне</value>
   </data>
   <data name="ChatInfoTitle" xml:space="preserve">
     <value>О разговоре</value>
@@ -4212,8 +4233,5 @@
   </data>
   <data name="ChatEmotionProcrastination" xml:space="preserve">
     <value>Откладывание</value>
-  </data>
-  <data name="ChatProfilePrivacyLine" xml:space="preserve">
-    <value>Работает без интернета, всё остаётся на телефоне</value>
   </data>
 </root>

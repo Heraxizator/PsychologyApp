@@ -47,11 +47,23 @@ public sealed record JournalMoodSnapshot(
     string OnThisDayLastYearText,
     DateOnly WeekStripEnd,
     IReadOnlyList<JournalActivityInsight> ActivityInsights,
-    IReadOnlyList<TrendAnnotation> PracticeMarks);
+    IReadOnlyList<TrendAnnotation> PracticeMarks,
+    IReadOnlyList<JournalRecentEntry> RecentEntries,
+    bool HasEarlierEntries);
+
+/// <summary>A check-in under the journal's editor, with the slot it fills so a tap opens that very check-in.</summary>
+public sealed record JournalRecentEntry(MoodNoteItem Entry, JournalCheckInSlot Slot)
+{
+    /// <summary>"Yesterday · Morning": the day named as the editor names it, rather than the history's full date, and its slot.</summary>
+    public string Caption =>
+        AppStrings.JournalEditorDayTitle(Entry.Day) + " · "
+        + (Slot == JournalCheckInSlot.Morning ? AppStrings.JournalSlotMorning : AppStrings.JournalSlotEvening);
+}
 
 public sealed class JournalMoodLoader(IUserProgressService userProgressService, ICrisisDetector crisisDetector)
 {
     private const int TimelineLimit = 500;
+    private const int RecentEntryCount = 3;
     private const int MaxWeekLookbackDays = 84;
     private const int MaxMonthLookbackMonths = 12;
     private const int MaxYearLookbackYears = 2;
@@ -180,6 +192,10 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService, 
             })
             .ToList();
         JournalMoodStats stats = BuildStats(statsSource, rangeStart, today);
+
+        // A quiet week hides the week's line that leads to the overview; earlier check-ins are then the only reason to offer it.
+        bool hasEarlierEntries = stats.HasStats
+            || (await userProgressService.GetRecentMoodsAsync(1, cancellationToken))?.Count > 0;
         IReadOnlyList<JournalActivityInsight> activityInsights = JournalNoteFactors.Analyze(
             statsSource.Select(entry => (entry.Note, entry.MoodLevel)));
 
@@ -221,7 +237,9 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService, 
             onThisDay,
             stripEnd,
             activityInsights,
-            await LoadPracticeMarksAsync(points, cancellationToken));
+            await LoadPracticeMarksAsync(points, cancellationToken),
+            BuildRecentEntries(orderedNewestFirst, dayEntries, editorEntryId, stripStart < rangeStart ? stripStart : rangeStart),
+            hasEarlierEntries);
     }
 
     /// <summary>Saves the check-in. Returns true when the note reads like a crisis, so the screen can offer the help page.</summary>
@@ -492,6 +510,27 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService, 
                 group => group.Key,
                 group => group.OrderBy(entry => entry.RecordedAt).ToList());
 
+    /// <summary>
+    /// The latest check-ins of the shown week, newest first, without the one open in the editor: it is already on the screen. The
+    /// day a year back is loaded too, for its own line, and stays out.
+    /// </summary>
+    private static List<JournalRecentEntry> BuildRecentEntries(
+        IReadOnlyList<MoodEntryDTO> newestFirst,
+        IReadOnlyDictionary<DateOnly, List<MoodEntryDTO>> dayEntries,
+        long? editorEntryId,
+        DateOnly from) =>
+        newestFirst
+            .Where(entry => entry.MoodEntryId != editorEntryId && DateOnly.FromDateTime(entry.RecordedAt.ToLocalTime()) >= from)
+            .Take(RecentEntryCount)
+            .Select(entry =>
+            {
+                DateOnly day = DateOnly.FromDateTime(entry.RecordedAt.ToLocalTime());
+                (MoodEntryDTO? morning, _) = SplitDaySlots(dayEntries[day]);
+                JournalCheckInSlot slot = morning?.MoodEntryId == entry.MoodEntryId ? JournalCheckInSlot.Morning : JournalCheckInSlot.Evening;
+                return new JournalRecentEntry(ToTimelineItem(entry), slot);
+            })
+            .ToList();
+
     internal static (MoodEntryDTO? Morning, MoodEntryDTO? Evening) SplitDaySlots(
         IReadOnlyList<MoodEntryDTO> dayEntries)
     {
@@ -563,8 +602,6 @@ public sealed class JournalMoodLoader(IUserProgressService userProgressService, 
             formattedNote,
             hasNote,
             entry.MoodLevel,
-            AppStrings.MoodLevelPill(entry.MoodLevel),
-            AppStrings.MoodEmojiFor(entry.MoodLevel),
             local.Date == DateTime.Today);
     }
 }

@@ -4,6 +4,7 @@
              xmlns:journal="clr-namespace:PsychologyApp.Presentation.Entities.Journal;assembly=PsychologyApp.Presentation.Core"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:self="clr-namespace:PsychologyApp.Presentation.Widgets.Journal"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              x:DataType="self:JournalWeekStripView"
              x:Class="PsychologyApp.Presentation.Widgets.Journal.JournalWeekStripView"
              x:Name="Root">
@@ -29,7 +30,6 @@
                         WidthRequest="{Binding DayWidth, Source={x:Reference Root}, x:DataType=self:JournalWeekStripView}"
                         HeightRequest="60"
                         Padding="2"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
                         Stroke="Transparent"
                         StrokeThickness="2">
                         <Border.StrokeShape>
@@ -37,7 +37,6 @@
                         </Border.StrokeShape>
                         <Border.Triggers>
                             <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
-                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
                                 <Setter Property="Stroke" Value="{DynamicResource Primary}" />
                             </DataTrigger>
                         </Border.Triggers>
@@ -56,13 +55,29 @@
                                 FontSize="12"
                                 HorizontalTextAlignment="Center"
                                 LineBreakMode="NoWrap" />
-                            <!-- The emoji of a check-in, or the date of a day without one; the colour only reaches the date. -->
+                            <!-- The date always, and a dot in the colour of the day's mood under it (MoodTint.DotLevel): a filled day per check-in made the
+                                 week the loudest thing on the page. The chosen day is ringed. -->
                             <Label
-                                Text="{Binding MoodGlyph}"
+                                Text="{Binding DayNumber}"
                                 FontSize="16"
                                 FontFamily="{StaticResource MediumFontFamily}"
-                                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
                                 HorizontalTextAlignment="Center" />
+                            <Border
+                                WidthRequest="6"
+                                HeightRequest="6"
+                                Margin="0,2,0,0"
+                                HorizontalOptions="Center"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 3"
+                                Opacity="0"
+                                ui:MoodTint.DotLevel="{Binding MoodLevel}">
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding HasEntry}" Value="True">
+                                        <Setter Property="Opacity" Value="1" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+                            </Border>
                         </VerticalStackLayout>
                     </Border>
                 </DataTemplate>

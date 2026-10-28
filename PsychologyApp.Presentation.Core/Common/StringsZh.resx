@@ -21,9 +21,6 @@
   <data name="ChatInputPlaceholder" xml:space="preserve">
     <value>输入消息…</value>
   </data>
-  <data name="ChatEmptyTitle" xml:space="preserve">
-    <value>还没有对话</value>
-  </data>
   <data name="ChatEmptyBody" xml:space="preserve">
     <value>告诉我发生了什么。我会倾听，帮你理清思路，并推荐一个练习。</value>
   </data>
@@ -4039,9 +4036,6 @@
   <data name="MenuFooterPrivacy" xml:space="preserve">
     <value>你写下的一切都只保存在这部手机上</value>
   </data>
-  <data name="JournalPromptTitle" xml:space="preserve">
-    <value>今日一问</value>
-  </data>
   <data name="JournalPrompt01" xml:space="preserve">
     <value>今天有什么比预想的更容易？</value>
   </data>
@@ -4083,9 +4077,6 @@
   </data>
   <data name="JournalPrompt14" xml:space="preserve">
     <value>做哪一小步，能让明天轻松一点？</value>
-  </data>
-  <data name="JournalPromptPlaceholder" xml:space="preserve">
-    <value>写下你的回答或任何想法（可选）</value>
   </data>
   <data name="JournalLowMoodTitle" xml:space="preserve">
     <value>此刻不太容易</value>
@@ -4137,6 +4128,36 @@
   </data>
   <data name="ChatMore" xml:space="preserve">
     <value>更多</value>
+  </data>
+  <data name="MoodLevelName1" xml:space="preserve">
+    <value>很差</value>
+  </data>
+  <data name="MoodLevelName2" xml:space="preserve">
+    <value>较差</value>
+  </data>
+  <data name="MoodLevelName3" xml:space="preserve">
+    <value>一般</value>
+  </data>
+  <data name="MoodLevelName4" xml:space="preserve">
+    <value>较好</value>
+  </data>
+  <data name="MoodLevelName5" xml:space="preserve">
+    <value>很好</value>
+  </data>
+  <data name="JournalRecentTitle" xml:space="preserve">
+    <value>最近记录</value>
+  </data>
+  <data name="JournalPastDayPlaceholder" xml:space="preserve">
+    <value>关于这一天的记录（可选）</value>
+  </data>
+  <data name="JournalEarlierWeeks" xml:space="preserve">
+    <value>之前的几周</value>
+  </data>
+  <data name="ChatEmptyTitle" xml:space="preserve">
+    <value>还没有对话</value>
+  </data>
+  <data name="ChatProfilePrivacyLine" xml:space="preserve">
+    <value>无需联网，所有内容都保存在本机</value>
   </data>
   <data name="ChatInfoTitle" xml:space="preserve">
     <value>关于这次对话</value>
@@ -4206,8 +4227,5 @@
   </data>
   <data name="ChatEmotionProcrastination" xml:space="preserve">
     <value>拖延</value>
-  </data>
-  <data name="ChatProfilePrivacyLine" xml:space="preserve">
-    <value>无需联网，所有内容都保存在本机</value>
   </data>
 </root>

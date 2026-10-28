@@ -467,16 +467,15 @@
         <Setter Property="WidthRequest" Value="44" />
         <Setter Property="HeightRequest" Value="44" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="Stroke" Value="Transparent" />
         <Setter Property="StrokeThickness" Value="2" />
-        <Setter Property="StrokeShape" Value="RoundRectangle 22" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 16" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="HorizontalOptions" Value="Center" />
     </Style>
 
     <Style x:Key="MoodChipSelectedStyle" TargetType="Border" BasedOn="{StaticResource MoodChipStyle}">
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
         <Setter Property="Stroke" Value="{DynamicResource Primary}" />
     </Style>
 
@@ -503,13 +502,6 @@
         <Setter Property="HorizontalOptions" Value="Center" />
     </Style>
 
-    <Style x:Key="MoodChipEmojiStyle" TargetType="Label">
-        <Setter Property="FontSize" Value="22" />
-        <Setter Property="HorizontalTextAlignment" Value="Center" />
-        <Setter Property="VerticalTextAlignment" Value="Center" />
-        <Setter Property="VerticalOptions" Value="Center" />
-        <Setter Property="HorizontalOptions" Value="Center" />
-    </Style>
 
     <Style x:Key="InputEditorStyle" TargetType="Editor">
         <Setter Property="BackgroundColor" Value="Transparent" />

@@ -4,14 +4,10 @@
              xmlns:journal="clr-namespace:PsychologyApp.Presentation.Entities.Journal;assembly=PsychologyApp.Presentation.Core"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:self="clr-namespace:PsychologyApp.Presentation.Widgets.Journal"
-             xmlns:conv="clr-namespace:PsychologyApp.Presentation.Shared.UI.Converters"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              x:DataType="self:JournalMonthGridView"
              x:Class="PsychologyApp.Presentation.Widgets.Journal.JournalMonthGridView"
              x:Name="Root">
-
-    <ContentView.Resources>
-        <conv:MoodColorConverter x:Key="MoodColor" />
-    </ContentView.Resources>
 
     <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
         <Label
@@ -34,7 +30,7 @@
                     <Border
                         HeightRequest="44"
                         Padding="2"
-                        BackgroundColor="{Binding MoodLevel, Converter={StaticResource MoodColor}, ConverterParameter=fill}"
+                        ui:MoodTint.Level="{Binding MoodLevel}"
                         Stroke="Transparent"
                         StrokeThickness="2"
                         Opacity="1"
@@ -63,18 +59,14 @@
                         <Border.Behaviors>
                             <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
                         </Border.Behaviors>
-                        <VerticalStackLayout Spacing="0" VerticalOptions="Center" HorizontalOptions="Center">
-                            <Label
-                                Text="{Binding DayNumber}"
-                                Style="{StaticResource CaptionStyle}"
-                                TextColor="{Binding MoodLevel, Converter={StaticResource MoodColor}, ConverterParameter=text}"
-                                FontSize="12"
-                                HorizontalTextAlignment="Center" />
-                            <Label
-                                Text="{Binding MoodGlyph}"
-                                FontSize="14"
-                                HorizontalTextAlignment="Center" />
-                        </VerticalStackLayout>
+                        <!-- The date on the colour of the day's mood, as in the journal's week; an emoji under it only repeated the colour. -->
+                        <Label
+                            Text="{Binding DayNumber}"
+                            FontSize="15"
+                            FontFamily="{StaticResource MediumFontFamily}"
+                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                            HorizontalTextAlignment="Center"
+                            VerticalOptions="Center" />
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

@@ -1,5 +1,4 @@
 using System.Globalization;
-using PsychologyApp.Presentation.Common;
 using PsychologyApp.Presentation.Entities.Journal;
 
 namespace PsychologyApp.Presentation.Features.ManageJournal;
@@ -22,8 +21,8 @@ public static class JournalCalendarBuilder
             {
                 Date = date,
                 DayLabel = date.ToDateTime(TimeOnly.MinValue).ToString("ddd", labelCulture),
-                // A day with no check-in shows its date, so the strip reads as a calendar; a lone dot looked like debris.
-                MoodGlyph = hasEntry ? AppStrings.MoodEmojiFor(moodLevel) : date.Day.ToString(labelCulture),
+                // Every day shows its date, so the strip reads as a calendar; a check-in colours the day instead of replacing the date with an emoji.
+                DayNumber = date.Day.ToString(labelCulture),
                 MoodLevel = hasEntry ? moodLevel : null,
                 HasEntry = hasEntry,
                 IsSelected = selectedDay == date
@@ -56,9 +55,6 @@ public static class JournalCalendarBuilder
             {
                 Date = date,
                 DayNumber = day.ToString(CultureInfo.InvariantCulture),
-                MoodGlyph = hasEntry
-                    ? AppStrings.MoodEmojiFor(moodLevel)
-                    : (enabled ? "·" : string.Empty),
                 MoodLevel = hasEntry ? moodLevel : null,
                 HasEntry = hasEntry,
                 IsEnabled = enabled,
@@ -91,9 +87,6 @@ public static class JournalCalendarBuilder
             cells.Add(new JournalYearCell
             {
                 Date = date,
-                MoodGlyph = hasEntry
-                    ? AppStrings.MoodEmojiFor(moodLevel)
-                    : (enabled ? "·" : string.Empty),
                 MoodLevel = hasEntry ? moodLevel : null,
                 HasEntry = hasEntry,
                 IsEnabled = enabled,

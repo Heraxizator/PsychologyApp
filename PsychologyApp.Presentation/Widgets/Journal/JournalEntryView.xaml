@@ -4,6 +4,7 @@
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:self="clr-namespace:PsychologyApp.Presentation.Widgets.Journal"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              x:DataType="self:JournalEntryView"
              x:Class="PsychologyApp.Presentation.Widgets.Journal.JournalEntryView"
              x:Name="Root">
@@ -13,60 +14,47 @@
         <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
     </ContentView.Behaviors>
 
-    <Border Style="{StaticResource ListEntryCardStyle}">
+    <!-- The test card: its corners, padding and side inset, so a list of entries looks like the other lists. -->
+    <Border Style="{StaticResource TestListCardStyle}" Margin="4,0,4,8">
         <Border.GestureRecognizers>
             <TapGestureRecognizer
                 Command="{Binding TapCommand, Source={x:Reference Root}}"
                 CommandParameter="{Binding CommandParameter, Source={x:Reference Root}}" />
         </Border.GestureRecognizers>
         <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+            <!-- The face of the mood on its colour (MoodTint), the same as on the check-in card. -->
             <Border
+                x:Name="MoodTile"
                 Grid.Column="0"
                 Style="{StaticResource LargeIconTileStyle}">
-                <Label
-                    Text="{Binding MoodGlyph, Source={x:Reference Root}}"
-                    FontSize="24"
+                <ui:MaterialIconView
+                    x:Name="MoodIcon"
+                    IconName="SentimentNeutral"
+                    IconSize="28"
                     HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    HorizontalTextAlignment="Center"
-                    VerticalTextAlignment="Center" />
+                    VerticalOptions="Center" />
             </Border>
 
-            <VerticalStackLayout
-                Grid.Column="1"
-                Spacing="4"
-                VerticalOptions="Center">
-                <HorizontalStackLayout Spacing="8">
-                    <Label
-                        Text="{Binding DateText, Source={x:Reference Root}}"
-                        Style="{StaticResource CaptionStyle}" />
-                    <Label
-                        Text="{Binding TimeText, Source={x:Reference Root}}"
-                        Style="{StaticResource CaptionStyle}"
-                        TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
-                </HorizontalStackLayout>
+            <!-- The anatomy of the test and practice cards: a bold title (the day, or the time under a day header), the note in grey.
+                 "No note" is just as quiet as a note; the face says the rest. -->
+            <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                <Label
+                    Text="{Binding DateText, Source={x:Reference Root}}"
+                    Style="{StaticResource ListRowTitleStyle}" />
                 <Label
                     Text="{Binding NoteText, Source={x:Reference Root}}"
-                    Style="{StaticResource ListRowTitleStyle}"
-                    LineBreakMode="WordWrap">
-                    <Label.Triggers>
-                        <DataTrigger
-                            TargetType="Label"
-                            Binding="{Binding HasNote, Source={x:Reference Root}}"
-                            Value="False">
-                            <Setter
-                                Property="TextColor"
-                                Value="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
-                        </DataTrigger>
-                    </Label.Triggers>
-                </Label>
-                <Label
-                    Text="{Binding MoodDisplay, Source={x:Reference Root}}"
                     Style="{StaticResource CaptionStyle}"
-                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
-                    FontFamily="{StaticResource SemiBoldFontFamily}" />
+                    MaxLines="2"
+                    LineBreakMode="TailTruncation" />
             </VerticalStackLayout>
 
+            <!-- A card that opens something says so, as on the other tabs; the history's cards carry their share button there. -->
+            <Label
+                Grid.Column="2"
+                IsVisible="{Binding ShowChevron, Source={x:Reference Root}}"
+                VerticalOptions="Center"
+                TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                Text="{mi:Material Icon=KeyboardArrowRight}" />
             <Label
                 Grid.Column="2"
                 IsVisible="{Binding HasShareCommand, Source={x:Reference Root}}"

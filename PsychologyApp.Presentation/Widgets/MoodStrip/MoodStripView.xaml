@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:self="clr-namespace:PsychologyApp.Presentation.Widgets.MoodStrip"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
              x:Class="PsychologyApp.Presentation.Widgets.MoodStrip.MoodStripView"
              x:Name="Root"
              HorizontalOptions="Fill">
@@ -42,7 +43,8 @@
                         </Label.Triggers>
                     </Label>
 
-                    <!-- Equal columns so five chips always fit the page width. -->
+                    <!-- Equal columns so five chips always fit the page width. Each face is a flat icon, grey until chosen; the chosen one
+                         takes its mood colour and a ring (set from code, ApplySelection). -->
                     <Grid
                         x:Name="MoodRow"
                         ColumnDefinitions="*,*,*,*,*"
@@ -64,16 +66,9 @@
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{TemplateBinding RecordMoodCommand}" CommandParameter="1" />
                             </Border.GestureRecognizers>
-                            <Label Text="😞" Style="{StaticResource MoodChipEmojiStyle}">
-                                <Label.Triggers>
-                                    <DataTrigger
-                                        TargetType="Label"
-                                        Binding="{Binding UsePlainLayout, Source={RelativeSource Mode=TemplatedParent}}"
-                                        Value="True">
-                                        <Setter Property="FontSize" Value="26" />
-                                    </DataTrigger>
-                                </Label.Triggers>
-                            </Label>
+                            <Border x:Name="MoodTile1" Margin="3" StrokeThickness="0" StrokeShape="RoundRectangle 13" InputTransparent="True">
+                                <ui:MaterialIconView IconName="SentimentVeryDissatisfied" IconSize="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
                         </Border>
                         <Border
                             x:Name="MoodChip2"
@@ -91,16 +86,9 @@
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{TemplateBinding RecordMoodCommand}" CommandParameter="2" />
                             </Border.GestureRecognizers>
-                            <Label Text="😕" Style="{StaticResource MoodChipEmojiStyle}">
-                                <Label.Triggers>
-                                    <DataTrigger
-                                        TargetType="Label"
-                                        Binding="{Binding UsePlainLayout, Source={RelativeSource Mode=TemplatedParent}}"
-                                        Value="True">
-                                        <Setter Property="FontSize" Value="26" />
-                                    </DataTrigger>
-                                </Label.Triggers>
-                            </Label>
+                            <Border x:Name="MoodTile2" Margin="3" StrokeThickness="0" StrokeShape="RoundRectangle 13" InputTransparent="True">
+                                <ui:MaterialIconView IconName="SentimentDissatisfied" IconSize="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
                         </Border>
                         <Border
                             x:Name="MoodChip3"
@@ -118,16 +106,9 @@
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{TemplateBinding RecordMoodCommand}" CommandParameter="3" />
                             </Border.GestureRecognizers>
-                            <Label Text="😐" Style="{StaticResource MoodChipEmojiStyle}">
-                                <Label.Triggers>
-                                    <DataTrigger
-                                        TargetType="Label"
-                                        Binding="{Binding UsePlainLayout, Source={RelativeSource Mode=TemplatedParent}}"
-                                        Value="True">
-                                        <Setter Property="FontSize" Value="26" />
-                                    </DataTrigger>
-                                </Label.Triggers>
-                            </Label>
+                            <Border x:Name="MoodTile3" Margin="3" StrokeThickness="0" StrokeShape="RoundRectangle 13" InputTransparent="True">
+                                <ui:MaterialIconView IconName="SentimentNeutral" IconSize="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
                         </Border>
                         <Border
                             x:Name="MoodChip4"
@@ -145,16 +126,9 @@
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{TemplateBinding RecordMoodCommand}" CommandParameter="4" />
                             </Border.GestureRecognizers>
-                            <Label Text="🙂" Style="{StaticResource MoodChipEmojiStyle}">
-                                <Label.Triggers>
-                                    <DataTrigger
-                                        TargetType="Label"
-                                        Binding="{Binding UsePlainLayout, Source={RelativeSource Mode=TemplatedParent}}"
-                                        Value="True">
-                                        <Setter Property="FontSize" Value="26" />
-                                    </DataTrigger>
-                                </Label.Triggers>
-                            </Label>
+                            <Border x:Name="MoodTile4" Margin="3" StrokeThickness="0" StrokeShape="RoundRectangle 13" InputTransparent="True">
+                                <ui:MaterialIconView IconName="SentimentSatisfied" IconSize="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
                         </Border>
                         <Border
                             x:Name="MoodChip5"
@@ -172,16 +146,9 @@
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{TemplateBinding RecordMoodCommand}" CommandParameter="5" />
                             </Border.GestureRecognizers>
-                            <Label Text="😊" Style="{StaticResource MoodChipEmojiStyle}">
-                                <Label.Triggers>
-                                    <DataTrigger
-                                        TargetType="Label"
-                                        Binding="{Binding UsePlainLayout, Source={RelativeSource Mode=TemplatedParent}}"
-                                        Value="True">
-                                        <Setter Property="FontSize" Value="26" />
-                                    </DataTrigger>
-                                </Label.Triggers>
-                            </Label>
+                            <Border x:Name="MoodTile5" Margin="3" StrokeThickness="0" StrokeShape="RoundRectangle 13" InputTransparent="True">
+                                <ui:MaterialIconView IconName="SentimentVerySatisfied" IconSize="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
                         </Border>
                     </Grid>
 

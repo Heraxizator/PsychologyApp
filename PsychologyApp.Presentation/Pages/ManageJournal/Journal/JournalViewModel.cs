@@ -70,6 +70,17 @@ public sealed class JournalViewModel : BaseViewModel
                 SelectSlotAsync(slot.Value).FireAndForget();
             }
         });
+        OpenRecentEntryCommand = new AsyncCommand<object?>(async parameter =>
+        {
+            if (parameter is JournalRecentEntry recent)
+            {
+                // The open note is saved to its own check-in before the slot moves.
+                await FlushPendingNoteSaveAsync();
+                _editorSlot = recent.Slot;
+                SyncSlotFilters();
+                await SelectDayAsync(recent.Entry.Day);
+            }
+        });
         FlushNoteCommand = new AsyncCommand(FlushPendingNoteSaveAsync);
         ShowFactorsCommand = new Command(() =>
         {
@@ -158,22 +169,29 @@ public sealed class JournalViewModel : BaseViewModel
     public string PageTitle => AppStrings.JournalTitle;
     public string MoodQuestionHero => AppStrings.JournalHowNowQuestion;
     /// <summary>Neutral, because the question of the day stands above the note; a second question in the field competed with it.</summary>
-    public string NotePlaceholder => AppStrings.JournalPromptPlaceholder;
+    /// <summary>The question of the day as the field's hint, so the note card has no block of its own above the field.</summary>
+    public string NotePlaceholder => ShowPrompt ? PromptText : AppStrings.JournalPastDayPlaceholder;
     public string LowMoodTitle => AppStrings.JournalLowMoodTitle;
     public string LowMoodBreathText => AppStrings.JournalLowMoodBreath;
     public string LowMoodAnchorsText => AppStrings.JournalLowMoodAnchors;
     public string LowMoodHelpText => AppStrings.JournalLowMoodHelp;
     public string OpenOverviewLabel => AppStrings.JournalOpenOverview;
     public string OpenTimelineLabel => AppStrings.JournalOpenTimeline;
+    public string RecentTitle => AppStrings.JournalRecentTitle;
+    public string EarlierWeeksText => AppStrings.JournalEarlierWeeks;
     public string SlotMorningLabel => AppStrings.JournalSlotMorning;
-    public string PromptTitle => AppStrings.JournalPromptTitle;
     public string EmptyTitle => AppStrings.JournalEmptyTitle;
     public string EmptyBody => AppStrings.JournalEmptyBody;
     public string EmptyPrivacy => AppStrings.JournalEmptyPrivacy;
     public string FactorsShowText => AppStrings.JournalFactorsShow;
 
-    /// <summary>The question of the day for the day being written about, so a past day keeps the question it had.</summary>
     public string PromptText => AppStrings.JournalPrompt(JournalPrompts.For(_editorDay));
+
+    /// <summary>
+    /// Only today: most questions ask about today or now ("What was easier today?"), which reads wrong over Monday's note. A past
+    /// day gets a plain note.
+    /// </summary>
+    public bool ShowPrompt => !ShowDayHeader;
 
     private JournalMoodStats? _weekStats;
     public bool HasWeekStats => _weekStats?.HasStats == true;
@@ -191,6 +209,11 @@ public sealed class JournalViewModel : BaseViewModel
         !HasWeekStats && !HasMoodSelected && _editorDay == DateOnly.FromDateTime(DateTime.Today);
 
     public bool ShowWeek => !ShowEmptyState;
+
+    private bool _hasEarlierEntries;
+
+    /// <summary>The way to the overview on a quiet week, for someone with check-ins from before it; a newcomer has nothing to look back on.</summary>
+    public bool ShowEarlierWeeks => ShowEmptyState && _hasEarlierEntries;
 
     /// <summary>The factors fold away behind one link until they are wanted; a note that already has some shows them.</summary>
     public bool ShowFactors => _factorsOpened || ActivityChips.Any(chip => chip.IsActive);
@@ -212,8 +235,13 @@ public sealed class JournalViewModel : BaseViewModel
     public bool HasOnThisDay => OnThisDayText.Length > 0;
     public string SlotEveningLabel => AppStrings.JournalSlotEvening;
 
-    /// <summary>Only the day: morning or evening is the chip below it, changed in one tap.</summary>
+    /// <summary>Only the day: morning or evening is the chip beside it, changed in one tap.</summary>
     public string DayHeaderText => AppStrings.JournalEditorDayTitle(_editorDay);
+
+    /// <summary>
+    /// Named only for another day: today is the ringed day of the week above, and a blue "Today" over the question read as a link.
+    /// </summary>
+    public bool ShowDayHeader => _editorDay != DateOnly.FromDateTime(DateTime.Today);
 
     public string MoodSavedStatus =>
         HasMoodSelected ? AppStrings.TodayMoodSaved : string.Empty;
@@ -226,6 +254,26 @@ public sealed class JournalViewModel : BaseViewModel
 
     public ICommand OpenOverviewCommand { get; }
     public ICommand OpenTimelineCommand { get; }
+
+    /// <summary>Opens a check-in from the list under the editor in the editor itself: its day and its morning or evening.</summary>
+    public ICommand OpenRecentEntryCommand { get; }
+
+    private IReadOnlyList<JournalRecentEntry> _recentEntries = [];
+
+    /// <summary>The week's latest check-ins under the editor, so the page goes on as a list like the other tabs.</summary>
+    public IReadOnlyList<JournalRecentEntry> RecentEntries
+    {
+        get => _recentEntries;
+        private set
+        {
+            if (SetProperty(ref _recentEntries, value))
+            {
+                OnPropertyChanged(nameof(HasRecentEntries));
+            }
+        }
+    }
+
+    public bool HasRecentEntries => RecentEntries.Count > 0;
     public ICommand SelectSlotCommand { get; }
     public ICommand FlushNoteCommand { get; }
     public ICommand ShowFactorsCommand { get; }
@@ -253,7 +301,6 @@ public sealed class JournalViewModel : BaseViewModel
             {
                 NotifyLowMoodSupport();
                 OnPropertyChanged(nameof(HasMoodSelected));
-                OnPropertyChanged(nameof(ShowMoodQuestion));
                 OnPropertyChanged(nameof(ShowNoteEditor));
                 OnPropertyChanged(nameof(MoodSavedStatus));
                 NotifyEmptyState();
@@ -262,7 +309,6 @@ public sealed class JournalViewModel : BaseViewModel
     }
 
     public bool HasMoodSelected => SelectedMoodLevel is >= 1 and <= 5;
-    public bool ShowMoodQuestion => !HasMoodSelected;
     public bool ShowNoteEditor => HasMoodSelected;
     private JournalLowMoodSupportKind LowMoodSupport =>
         JournalLowMoodSupport.For(_editorDay == DateOnly.FromDateTime(DateTime.Today), SelectedMoodLevel, _noteLooksLikeCrisis);
@@ -307,15 +353,16 @@ public sealed class JournalViewModel : BaseViewModel
             nameof(LowMoodHelpText),
             nameof(OpenOverviewLabel),
             nameof(OpenTimelineLabel),
+            nameof(RecentTitle),
+            nameof(EarlierWeeksText),
             nameof(SlotMorningLabel),
             nameof(SlotEveningLabel),
             nameof(DayHeaderText),
+            nameof(ShowDayHeader),
             nameof(MoodSavedStatus),
             nameof(HasMoodSelected),
-            nameof(ShowMoodQuestion),
             nameof(ShowNoteEditor),
             nameof(CanGoNextWeek),
-            nameof(PromptTitle),
             nameof(PromptText),
             nameof(EmptyTitle),
             nameof(EmptyBody),
@@ -393,7 +440,7 @@ public sealed class JournalViewModel : BaseViewModel
         }
     }
 
-    private void NotifyEmptyState() => Notify(nameof(ShowEmptyState), nameof(ShowWeek));
+    private void NotifyEmptyState() => Notify(nameof(ShowEmptyState), nameof(ShowWeek), nameof(ShowEarlierWeeks));
 
     private void NotifyFactors() => Notify(nameof(ShowFactors), nameof(ShowFactorsLink));
 
@@ -478,7 +525,6 @@ public sealed class JournalViewModel : BaseViewModel
         bool sameDays = days.Count == _weekDays.Count
             && days.Zip(_weekDays).All(pair => pair.First.Date == pair.Second.Date
                 && pair.First.MoodLevel == pair.Second.MoodLevel
-                && pair.First.MoodGlyph == pair.Second.MoodGlyph
                 && pair.First.HasEntry == pair.Second.HasEntry
                 && pair.First.DayLabel == pair.Second.DayLabel);
         if (!sameDays)
@@ -517,12 +563,14 @@ public sealed class JournalViewModel : BaseViewModel
 
         _weekStats = snapshot.Stats;
         OnThisDayText = snapshot.OnThisDayLastYearText ?? string.Empty;
+        RecentEntries = snapshot.RecentEntries;
+        _hasEarlierEntries = snapshot.HasEarlierEntries;
 
-        Notify(nameof(HasWeekStats), nameof(WeekSummaryText), nameof(PromptText));
+        Notify(nameof(HasWeekStats), nameof(WeekSummaryText), nameof(PromptText), nameof(NotePlaceholder));
         NotifyEmptyState();
         OnPropertyChanged(nameof(DayHeaderText));
+        Notify(nameof(ShowDayHeader), nameof(ShowPrompt), nameof(NotePlaceholder));
         NotifyLowMoodSupport();
-        OnPropertyChanged(nameof(ShowMoodQuestion));
         OnPropertyChanged(nameof(ShowNoteEditor));
         OnPropertyChanged(nameof(MoodSavedStatus));
         OnPropertyChanged(nameof(CanGoNextWeek));

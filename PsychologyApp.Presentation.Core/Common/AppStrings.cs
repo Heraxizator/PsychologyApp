@@ -413,8 +413,7 @@ public static partial class AppStrings
     public static string JournalCheckInDays(int days, int periodDays) => F(nameof(JournalCheckInDays), days, periodDays);
     public static string JournalPeriodNavPrev => R(nameof(JournalPeriodNavPrev));
     public static string JournalPeriodNavNext => R(nameof(JournalPeriodNavNext));
-    public static string JournalPromptTitle => R(nameof(JournalPromptTitle));
-    public static string JournalPromptPlaceholder => R(nameof(JournalPromptPlaceholder));
+    public static string JournalPastDayPlaceholder => R(nameof(JournalPastDayPlaceholder));
 
     /// <summary>Question <paramref name="number"/> (1..<see cref="PsychologyApp.Presentation.Features.ManageJournal.JournalPrompts.Count"/>) above the journal note.</summary>
     public static string JournalPrompt(int number) => R($"JournalPrompt{number:00}");
@@ -491,6 +490,8 @@ public static partial class AppStrings
     public static string MetricEmptyValue => "—";
     public static string FormatAverageMood(double average) =>
         average <= 0 ? MetricEmptyValue : average.ToString("0.0");
+    /// <summary>The level in words, for screen readers: a drawn face says nothing to TalkBack.</summary>
+    public static string MoodLevelName(int level) => R($"MoodLevelName{Math.Clamp(level, 1, 5)}");
     public static string MoodLevelPill(int level, int max = 5) =>
         $"{MoodEmoji(level)} {level}/{max}";
     public static string ProfileMoodTrendHint => R(nameof(ProfileMoodTrendHint));
@@ -879,6 +880,8 @@ public static partial class AppStrings
 
     public static string JournalOverviewTitle => R(nameof(JournalOverviewTitle));
     public static string JournalTimelineTitle => R(nameof(JournalTimelineTitle));
+    public static string JournalRecentTitle => R(nameof(JournalRecentTitle));
+    public static string JournalEarlierWeeks => R(nameof(JournalEarlierWeeks));
     public static string JournalOpenOverview => R(nameof(JournalOpenOverview));
     public static string JournalOpenTimeline => R(nameof(JournalOpenTimeline));
     public static string JournalRecentDaysTitle => R(nameof(JournalRecentDaysTitle));

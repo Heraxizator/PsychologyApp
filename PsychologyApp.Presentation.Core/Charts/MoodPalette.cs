@@ -10,6 +10,11 @@ public static class MoodPalette
     private static readonly string[] LightFills = ["#F2B8B0", "#F6CFA3", "#E6E2D3", "#BFE3D6", "#8FD1BE"];
     private static readonly string[] DarkFills = ["#7A3B37", "#7A5A32", "#4A4A44", "#2F6B5C", "#1F6E5C"];
 
+    // The face on a tile is the deep shade of its own hue in the light theme and the pale one in the dark, as the test and
+    // practice icons are; plain black read as a different set.
+    private static readonly string[] LightIcons = ["#7A2E26", "#6E4410", "#4D4A3E", "#1E5C4C", "#0F4A3C"];
+    private static readonly string[] DarkIcons = ["#FBDDD8", "#FBE6CC", "#EAE7DC", "#D3EEE4", "#C8EDE1"];
+
     public const string LightText = "#262626";
     public const string DarkText = "#F2F2F2";
     public const string LightEmptyFill = "#FFFFFF";
@@ -28,4 +33,31 @@ public static class MoodPalette
     }
 
     public static string Text(bool dark) => dark ? DarkText : LightText;
+
+    // A day's dot in the week: the pastel fills vanish at six points on a white card, so a stronger shade of each hue.
+    private static readonly string[] LightDots = ["#D4614F", "#C77F2A", "#9A9380", "#3F9E80", "#23896C"];
+    private static readonly string[] DarkDots = ["#E8897B", "#EDB066", "#A8A28E", "#6CCBAB", "#3FB28F"];
+
+    public static string Dot(int level, bool dark) => (dark ? DarkDots : LightDots)[Math.Clamp(level, 1, 5) - 1];
+
+    /// <summary>A face not chosen: grey on a pale tile, so only the chosen one carries colour and the check-in stays calm.</summary>
+    public static string NeutralFill(bool dark) => dark ? "#333333" : "#F1F1F1";
+
+    public static string NeutralIcon(bool dark) => dark ? "#B5B5B5" : "#6B6B6B";
+
+    /// <summary>The colour of the face drawn on a tile of this level.</summary>
+    public static string Icon(int level, bool dark) => (dark ? DarkIcons : LightIcons)[Math.Clamp(level, 1, 5) - 1];
+
+    /// <summary>
+    /// The face of each level, drawn flat on its fill like the icons on the test and practice tiles; the phone's colour emoji were the one
+    /// thing on the journal drawn in another style.
+    /// </summary>
+    public static string IconName(int level) => Math.Clamp(level, 1, 5) switch
+    {
+        1 => "SentimentVeryDissatisfied",
+        2 => "SentimentDissatisfied",
+        3 => "SentimentNeutral",
+        4 => "SentimentSatisfied",
+        _ => "SentimentVerySatisfied"
+    };
 }
