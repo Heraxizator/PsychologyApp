@@ -268,16 +268,10 @@
     <value>Qu'est-ce qui vous préoccupe ?</value>
   </data>
   <data name="SettingsPrimaryConcernSection" xml:space="preserve">
-    <value>Personnalisation</value>
+    <value>Langue et objectif</value>
   </data>
   <data name="SettingsQuestionnaireAutoAdvanceLabel" xml:space="preserve">
     <value>Passer automatiquement à la question suivante</value>
-  </data>
-  <data name="SettingsApplyButton" xml:space="preserve">
-    <value>Appliquer</value>
-  </data>
-  <data name="SettingsPickerColors" xml:space="preserve">
-    <value>Couleurs</value>
   </data>
   <data name="SettingsPickerShapes" xml:space="preserve">
     <value>Formes</value>
@@ -287,12 +281,6 @@
   </data>
   <data name="SettingsPickerLanguages" xml:space="preserve">
     <value>Langues</value>
-  </data>
-  <data name="SettingsAppliedTitle" xml:space="preserve">
-    <value>Information</value>
-  </data>
-  <data name="SettingsAppliedMessage" xml:space="preserve">
-    <value>Réglages appliqués</value>
   </data>
   <data name="SettingsFormHelper" xml:space="preserve">
     <value>Arrondi des cartes et des champs de saisie</value>

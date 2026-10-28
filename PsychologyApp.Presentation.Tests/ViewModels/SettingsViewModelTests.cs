@@ -11,7 +11,6 @@ namespace PsychologyApp.Presentation.Tests.ViewModels;
 public sealed class SettingsViewModelTests
 {
     private readonly Mock<IUserPreferencesStore> _store = new();
-    private readonly Mock<IDialogService> _dialogs = new();
     private readonly Mock<INavigationService> _navigation = new();
     private readonly Mock<ILanguageContentReloader> _reloader = new();
     private readonly Mock<IPracticeReminderCoordinator> _practice = new();
@@ -34,14 +33,12 @@ public sealed class SettingsViewModelTests
         _quotes.Setup(c => c.SyncAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
         _mood.Setup(c => c.SyncAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
         _chat.Setup(c => c.SyncAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
-        _dialogs.Setup(d => d.ShowAsync(It.IsAny<string?>(), It.IsAny<string>())).Returns(Task.CompletedTask);
         _navigation.Setup(n => n.GoBackAsync()).Returns(Task.CompletedTask);
         _navigation.Setup(n => n.ShowOnboardingAsync()).Returns(Task.CompletedTask);
         Mock<IPracticeReminderScheduler> scheduler = new();
         scheduler.SetupGet(s => s.IsSupported).Returns(remindersSupported);
 
         return new SettingsViewModel(
-            _dialogs.Object,
             _navigation.Object,
             _store.Object,
             new PsychologyApp.Presentation.Features.ManageProfile.SettingsPreferencesPresenter(),
@@ -125,24 +122,9 @@ public sealed class SettingsViewModelTests
         Assert.Equal("light", _saved[0].Theme);
     }
 
+    // There is no "Apply": a change just made and not saved yet must survive going back, not be undone.
     [Fact]
-    public async Task ApplySavesAtOnceTellsThePersonAndGoesBack()
-    {
-        SettingsViewModel viewModel = Create();
-        viewModel.Color = "yellow";
-
-        await VmTestHelpers.RunAsync(viewModel.ApplyCommand);
-
-        Assert.Equal("yellow", Assert.Single(_saved).Color);
-        _dialogs.Verify(d => d.ShowAsync(It.IsAny<string?>(), It.IsAny<string>()), Times.Once);
-        _navigation.Verify(n => n.GoBackAsync(), Times.Once);
-
-        await Task.Delay(1000);
-        Assert.Single(_saved);
-    }
-
-    [Fact]
-    public async Task LeavingWithoutApplyingCancelsThePendingSaveAndRestoresTheSavedLook()
+    public async Task LeavingKeepsAChangeStillWaitingForItsSave()
     {
         SettingsViewModel viewModel = Create();
         viewModel.Theme = "dark";
@@ -150,8 +132,32 @@ public sealed class SettingsViewModelTests
         await VmTestHelpers.RunAsync(viewModel.Finish);
         await Task.Delay(1000);
 
+        Assert.Equal("dark", Assert.Single(_saved).Theme);
+        _navigation.Verify(n => n.GoBackAsync(), Times.Once);
+    }
+
+    // The accent is picked from its swatches: a tap chooses it, marks only that one and is kept like any other change.
+    [Fact]
+    public async Task TappingASwatchPicksTheAccentAndMarksIt()
+    {
+        SettingsViewModel viewModel = Create();
+
+        viewModel.SelectColorCommand.Execute("green");
+        await VmTestHelpers.WaitUntilAsync(() => _saved.Count == 1, 3000);
+
+        Assert.Equal("green", viewModel.Color);
+        Assert.Equal("green", Assert.Single(viewModel.ColorSwatches, swatch => swatch.IsSelected).Key);
+        Assert.Equal("green", _saved[0].Color);
+    }
+
+    [Fact]
+    public async Task LeavingWithNothingChangedSavesNothing()
+    {
+        SettingsViewModel viewModel = Create();
+
+        await VmTestHelpers.RunAsync(viewModel.Finish);
+
         Assert.Empty(_saved);
-        _store.Verify(s => s.ApplyAll(), Times.Once);
         _navigation.Verify(n => n.GoBackAsync(), Times.Once);
     }
 

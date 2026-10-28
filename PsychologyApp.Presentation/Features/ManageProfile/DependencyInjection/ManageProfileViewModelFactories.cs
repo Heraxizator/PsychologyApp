@@ -125,7 +125,6 @@ public interface ISettingsViewModelFactory
 }
 
 public sealed class SettingsViewModelFactory(
-    IDialogService dialogService,
     IUserPreferencesStore userPreferencesStore,
     SettingsPreferencesPresenter settingsPreferencesPresenter,
     LanguageContentReloader languageContentReloader,
@@ -138,7 +137,6 @@ public sealed class SettingsViewModelFactory(
 {
     public SettingsViewModel Create(ContentPage page) =>
         new(
-            dialogService,
             ResolveNavigation(navigationServiceFactory, page),
             userPreferencesStore,
             settingsPreferencesPresenter,

@@ -217,7 +217,7 @@
     <value>Einstellungen</value>
   </data>
   <data name="SettingsDesignSection" xml:space="preserve">
-    <value>Design</value>
+    <value>Darstellung</value>
   </data>
   <data name="SettingsFontSection" xml:space="preserve">
     <value>Schrift</value>
@@ -268,16 +268,10 @@
     <value>Was belastet dich?</value>
   </data>
   <data name="SettingsPrimaryConcernSection" xml:space="preserve">
-    <value>Personalisierung</value>
+    <value>Sprache und Ziel</value>
   </data>
   <data name="SettingsQuestionnaireAutoAdvanceLabel" xml:space="preserve">
     <value>Automatisch zur nächsten Frage</value>
-  </data>
-  <data name="SettingsApplyButton" xml:space="preserve">
-    <value>Übernehmen</value>
-  </data>
-  <data name="SettingsPickerColors" xml:space="preserve">
-    <value>Farben</value>
   </data>
   <data name="SettingsPickerShapes" xml:space="preserve">
     <value>Formen</value>
@@ -287,12 +281,6 @@
   </data>
   <data name="SettingsPickerLanguages" xml:space="preserve">
     <value>Sprachen</value>
-  </data>
-  <data name="SettingsAppliedTitle" xml:space="preserve">
-    <value>Information</value>
-  </data>
-  <data name="SettingsAppliedMessage" xml:space="preserve">
-    <value>Einstellungen übernommen</value>
   </data>
   <data name="SettingsFormHelper" xml:space="preserve">
     <value>Abrundung von Karten und Eingabefeldern</value>

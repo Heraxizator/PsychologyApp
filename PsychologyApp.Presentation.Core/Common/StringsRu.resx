@@ -217,7 +217,7 @@
     <value>Настройки</value>
   </data>
   <data name="SettingsDesignSection" xml:space="preserve">
-    <value>Дизайн</value>
+    <value>Оформление</value>
   </data>
   <data name="SettingsFontSection" xml:space="preserve">
     <value>Шрифт</value>
@@ -268,16 +268,10 @@
     <value>Что вас беспокоит?</value>
   </data>
   <data name="SettingsPrimaryConcernSection" xml:space="preserve">
-    <value>Персонализация</value>
+    <value>Язык и цель</value>
   </data>
   <data name="SettingsQuestionnaireAutoAdvanceLabel" xml:space="preserve">
     <value>Автопереход к следующему вопросу</value>
-  </data>
-  <data name="SettingsApplyButton" xml:space="preserve">
-    <value>Применить</value>
-  </data>
-  <data name="SettingsPickerColors" xml:space="preserve">
-    <value>Цвета</value>
   </data>
   <data name="SettingsPickerShapes" xml:space="preserve">
     <value>Формы</value>
@@ -287,12 +281,6 @@
   </data>
   <data name="SettingsPickerLanguages" xml:space="preserve">
     <value>Языки</value>
-  </data>
-  <data name="SettingsAppliedTitle" xml:space="preserve">
-    <value>Информация</value>
-  </data>
-  <data name="SettingsAppliedMessage" xml:space="preserve">
-    <value>Настройки применены</value>
   </data>
   <data name="SettingsFormHelper" xml:space="preserve">
     <value>Скругление углов карточек и полей ввода</value>

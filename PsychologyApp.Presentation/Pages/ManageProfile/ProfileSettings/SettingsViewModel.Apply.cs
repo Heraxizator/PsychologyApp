@@ -6,18 +6,19 @@ namespace PsychologyApp.Presentation.Pages.ManageProfile.ProfileSettings;
 
 public partial class SettingsViewModel
 {
-    private async Task RevertAndGoBackAsync()
+    /// <summary>
+    /// Every choice shows at once and is kept; leaving keeps a change still waiting for its save. Leaving used to undo it, so a theme
+    /// picked just before going back was lost, and the separate "Apply" button and its dialog only repeated what had happened.
+    /// </summary>
+    private async Task SaveAndGoBackAsync()
     {
+        bool pending = _autoSaveDebounceCts is not null;
         CancelPendingAutoSave();
-        _userPreferencesStore.ApplyAll();
-        await _navigationService.GoBackAsync();
-    }
+        if (pending)
+        {
+            await PersistSettingsAsync(CancellationToken.None);
+        }
 
-    private async Task ToEndAsync()
-    {
-        CancelPendingAutoSave();
-        await PersistSettingsAsync(CancellationToken.None);
-        await _dialogService.ShowAsync(AppStrings.SettingsAppliedTitle, AppStrings.SettingsAppliedMessage);
         await _navigationService.GoBackAsync();
     }
 

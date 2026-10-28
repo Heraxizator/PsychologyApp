@@ -217,7 +217,7 @@
     <value>Settings</value>
   </data>
   <data name="SettingsDesignSection" xml:space="preserve">
-    <value>Design</value>
+    <value>Appearance</value>
   </data>
   <data name="SettingsFontSection" xml:space="preserve">
     <value>Font</value>
@@ -268,16 +268,10 @@
     <value>What troubles you?</value>
   </data>
   <data name="SettingsPrimaryConcernSection" xml:space="preserve">
-    <value>Personalization</value>
+    <value>Language and goal</value>
   </data>
   <data name="SettingsQuestionnaireAutoAdvanceLabel" xml:space="preserve">
     <value>Auto-advance to the next question</value>
-  </data>
-  <data name="SettingsApplyButton" xml:space="preserve">
-    <value>Apply</value>
-  </data>
-  <data name="SettingsPickerColors" xml:space="preserve">
-    <value>Colors</value>
   </data>
   <data name="SettingsPickerShapes" xml:space="preserve">
     <value>Shapes</value>
@@ -287,12 +281,6 @@
   </data>
   <data name="SettingsPickerLanguages" xml:space="preserve">
     <value>Languages</value>
-  </data>
-  <data name="SettingsAppliedTitle" xml:space="preserve">
-    <value>Information</value>
-  </data>
-  <data name="SettingsAppliedMessage" xml:space="preserve">
-    <value>Settings applied</value>
   </data>
   <data name="SettingsFormHelper" xml:space="preserve">
     <value>Corner rounding for cards and input fields</value>

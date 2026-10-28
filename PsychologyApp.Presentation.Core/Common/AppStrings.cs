@@ -60,13 +60,9 @@ public static partial class AppStrings
     public static string SettingsPrimaryConcernPickerTitle => R(nameof(SettingsPrimaryConcernPickerTitle));
     public static string SettingsPrimaryConcernSection => R(nameof(SettingsPrimaryConcernSection));
     public static string SettingsQuestionnaireAutoAdvanceLabel => R(nameof(SettingsQuestionnaireAutoAdvanceLabel));
-    public static string SettingsApplyButton => R(nameof(SettingsApplyButton));
-    public static string SettingsPickerColors => R(nameof(SettingsPickerColors));
     public static string SettingsPickerShapes => R(nameof(SettingsPickerShapes));
     public static string SettingsPickerSizes => R(nameof(SettingsPickerSizes));
     public static string SettingsPickerLanguages => R(nameof(SettingsPickerLanguages));
-    public static string SettingsAppliedTitle => R(nameof(SettingsAppliedTitle));
-    public static string SettingsAppliedMessage => R(nameof(SettingsAppliedMessage));
     public static string SettingsFormHelper => R(nameof(SettingsFormHelper));
     public static string SettingsColorHelper => R(nameof(SettingsColorHelper));
     public static string SettingsReplayOnboarding => R(nameof(SettingsReplayOnboarding));

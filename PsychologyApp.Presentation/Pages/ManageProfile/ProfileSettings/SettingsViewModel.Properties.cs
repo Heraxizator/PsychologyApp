@@ -55,6 +55,7 @@ public partial class SettingsViewModel
 
             color = normalized;
             OnPropertyChanged(nameof(Color));
+            OnPropertyChanged(nameof(ColorSwatches));
             OnSettingsChanged();
         }
     }

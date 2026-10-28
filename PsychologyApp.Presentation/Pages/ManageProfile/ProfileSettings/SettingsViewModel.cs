@@ -12,7 +12,6 @@ namespace PsychologyApp.Presentation.Pages.ManageProfile.ProfileSettings;
 public partial class SettingsViewModel : BaseViewModel
 {
     private static readonly TimeSpan AutoSaveDebounceDelay = TimeSpan.FromMilliseconds(700);
-    private readonly IDialogService _dialogService;
     private readonly INavigationService _navigationService;
     private readonly IUserPreferencesStore _userPreferencesStore;
     private readonly SettingsPreferencesPresenter _presenter;
@@ -30,7 +29,6 @@ public partial class SettingsViewModel : BaseViewModel
 
 
     public SettingsViewModel(
-        IDialogService dialogService,
         INavigationService navigationService,
         IUserPreferencesStore userPreferencesStore,
         SettingsPreferencesPresenter presenter,
@@ -42,7 +40,6 @@ public partial class SettingsViewModel : BaseViewModel
         IPracticeReminderScheduler practiceReminderScheduler)
     {
         BindPreferences(userPreferencesStore);
-        _dialogService = dialogService;
         _navigationService = navigationService;
         _userPreferencesStore = userPreferencesStore;
         _presenter = presenter;
@@ -61,11 +58,9 @@ public partial class SettingsViewModel : BaseViewModel
         RefreshPickerDisplays();
         NotifyLocalizedLabelsChanged();
 
-        Finish = new AsyncCommand(RevertAndGoBackAsync);
-        ApplyCommand = new AsyncCommand(ToEndAsync);
+        Finish = new AsyncCommand(SaveAndGoBackAsync);
         ReplayOnboardingCommand = new AsyncCommand(ReplayOnboardingAsync);
     }
 
-    public ICommand ApplyCommand { get; }
     public ICommand ReplayOnboardingCommand { get; }
 }

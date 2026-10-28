@@ -31,13 +31,11 @@ public partial class SettingsViewModel
     public string PrimaryConcernLabel => AppStrings.SettingsPrimaryConcernLabel;
     public string PrimaryConcernPickerTitle => AppStrings.SettingsPrimaryConcernPickerTitle;
     public string QuestionnaireAutoAdvanceLabel => AppStrings.SettingsQuestionnaireAutoAdvanceLabel;
-    public string ApplyButtonText => AppStrings.SettingsApplyButton;
     public string ReplayOnboardingText => AppStrings.SettingsReplayOnboarding;
     public string FormHelperText => AppStrings.SettingsFormHelper;
     public string ColorHelperText => AppStrings.SettingsColorHelper;
     public string LanguagePickerTitle => AppStrings.SettingsPickerLanguages;
     public string ThemePickerTitle => AppStrings.SettingsThemeLabel;
-    public string ColorPickerTitle => AppStrings.SettingsPickerColors;
     public string FormPickerTitle => AppStrings.SettingsPickerShapes;
     public string SizePickerTitle => AppStrings.SettingsPickerSizes;
 }

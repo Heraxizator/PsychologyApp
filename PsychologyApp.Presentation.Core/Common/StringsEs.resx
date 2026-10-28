@@ -217,7 +217,7 @@
     <value>Ajustes</value>
   </data>
   <data name="SettingsDesignSection" xml:space="preserve">
-    <value>Diseño</value>
+    <value>Apariencia</value>
   </data>
   <data name="SettingsFontSection" xml:space="preserve">
     <value>Fuente</value>
@@ -268,16 +268,10 @@
     <value>¿Qué te preocupa?</value>
   </data>
   <data name="SettingsPrimaryConcernSection" xml:space="preserve">
-    <value>Personalización</value>
+    <value>Idioma y objetivo</value>
   </data>
   <data name="SettingsQuestionnaireAutoAdvanceLabel" xml:space="preserve">
     <value>Pasar automáticamente a la siguiente pregunta</value>
-  </data>
-  <data name="SettingsApplyButton" xml:space="preserve">
-    <value>Aplicar</value>
-  </data>
-  <data name="SettingsPickerColors" xml:space="preserve">
-    <value>Colores</value>
   </data>
   <data name="SettingsPickerShapes" xml:space="preserve">
     <value>Formas</value>
@@ -287,12 +281,6 @@
   </data>
   <data name="SettingsPickerLanguages" xml:space="preserve">
     <value>Idiomas</value>
-  </data>
-  <data name="SettingsAppliedTitle" xml:space="preserve">
-    <value>Información</value>
-  </data>
-  <data name="SettingsAppliedMessage" xml:space="preserve">
-    <value>Ajustes aplicados</value>
   </data>
   <data name="SettingsFormHelper" xml:space="preserve">
     <value>Redondeo de tarjetas y campos de texto</value>

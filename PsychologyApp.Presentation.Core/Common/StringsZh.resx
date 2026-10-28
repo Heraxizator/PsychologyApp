@@ -268,16 +268,10 @@
     <value>什么在困扰你？</value>
   </data>
   <data name="SettingsPrimaryConcernSection" xml:space="preserve">
-    <value>个性化</value>
+    <value>语言与目标</value>
   </data>
   <data name="SettingsQuestionnaireAutoAdvanceLabel" xml:space="preserve">
     <value>自动进入下一题</value>
-  </data>
-  <data name="SettingsApplyButton" xml:space="preserve">
-    <value>应用</value>
-  </data>
-  <data name="SettingsPickerColors" xml:space="preserve">
-    <value>颜色</value>
   </data>
   <data name="SettingsPickerShapes" xml:space="preserve">
     <value>形状</value>
@@ -287,12 +281,6 @@
   </data>
   <data name="SettingsPickerLanguages" xml:space="preserve">
     <value>语言</value>
-  </data>
-  <data name="SettingsAppliedTitle" xml:space="preserve">
-    <value>提示</value>
-  </data>
-  <data name="SettingsAppliedMessage" xml:space="preserve">
-    <value>设置已应用</value>
   </data>
   <data name="SettingsFormHelper" xml:space="preserve">
     <value>卡片和输入框的圆角</value>

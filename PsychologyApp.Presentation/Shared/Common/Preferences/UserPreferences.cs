@@ -333,6 +333,9 @@ public static partial class UserPreferences
     private static bool IsRoundedForm(string form) =>
         NormalizeFormKey(form) == "rounded";
 
+    /// <summary>The main colour of an accent, as its buttons get it.</summary>
+    public static Color AccentColor(string color) => ResolveAccentColors(color).primary;
+
     private static (Color primary, Color secondary, Color hover, Color tintLight, Color tintDark) ResolveAccentColors(string color) =>
         NormalizeColorKey(color) switch
         {
