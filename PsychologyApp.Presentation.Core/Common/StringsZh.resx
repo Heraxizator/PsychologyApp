@@ -783,9 +783,6 @@
   <data name="JournalHideHintsLabel" xml:space="preserve">
     <value>隐藏提示</value>
   </data>
-  <data name="JournalHowNowQuestion" xml:space="preserve">
-    <value>你现在怎么样？</value>
-  </data>
   <data name="JournalMoreMenuLabel" xml:space="preserve">
     <value>更多</value>
   </data>
@@ -848,12 +845,6 @@
   </data>
   <data name="JournalWeekNavNext" xml:space="preserve">
     <value>下一周</value>
-  </data>
-  <data name="JournalMonthNavPrev" xml:space="preserve">
-    <value>上个月</value>
-  </data>
-  <data name="JournalMonthNavNext" xml:space="preserve">
-    <value>下个月</value>
   </data>
   <data name="JournalFilter7Days" xml:space="preserve">
     <value>7 天</value>
@@ -2000,9 +1991,6 @@
   </data>
   <data name="TestHistoryEntry" xml:space="preserve">
     <value>{0}：{1}</value>
-  </data>
-  <data name="ProfileLastPractice" xml:space="preserve">
-    <value>上次练习：{0}</value>
   </data>
   <data name="TechniqueLastPractice" xml:space="preserve">
     <value>上次练习：{0}</value>
@@ -4102,9 +4090,6 @@
   <data name="ProfileActiveDaysValue" xml:space="preserve">
     <value>{0}/7</value>
   </data>
-  <data name="ProfileActiveDaysHint" xml:space="preserve">
-    <value>过去 7 天中做过练习或记录过心情的天数</value>
-  </data>
   <data name="JournalCheckInDaysLabel" xml:space="preserve">
     <value>记录天数</value>
   </data>
@@ -4224,5 +4209,8 @@
   </data>
   <data name="TestsPastResults" xml:space="preserve">
     <value>以往结果</value>
+  </data>
+  <data name="InsightsTestScoreOf" xml:space="preserve">
+    <value>{0} / {1}</value>
   </data>
 </root>

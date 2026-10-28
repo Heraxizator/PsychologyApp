@@ -16,8 +16,65 @@
              Shell.NavBarIsVisible="True"
              Title="{Binding PageTitle}">
 
-    <!-- The colours of MoodPalette, for the drawing of a week on the empty page. -->
     <ContentPage.Resources>
+        <!-- The saved line and the note of the open check-in, right under its faces: placed after both slots, a morning note sat
+             under the evening row. One template, shown in whichever slot is open. -->
+        <ControlTemplate x:Key="JournalNoteTemplate" x:DataType="vm:JournalViewModel">
+            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                <!-- A quiet status: the chosen face already shows the answer; large blue text was the loudest thing on the page. -->
+                <Grid IsVisible="{Binding HasMoodSelected}" ColumnDefinitions="Auto,*" ColumnSpacing="6">
+                    <ui:MaterialIconView
+                        IconName="CheckCircle"
+                        IconSize="16"
+                        VerticalOptions="Center"
+                        IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                    <Label Grid.Column="1" Text="{Binding MoodSavedStatus}" Style="{StaticResource CaptionStyle}" VerticalOptions="Center" />
+                </Grid>
+
+                <!-- The question of the day is the field's own hint (an empty note is the hardest thing to fill); it changes daily and
+                     is never required. -->
+                <VerticalStackLayout IsVisible="{Binding ShowNoteEditor}" Spacing="{StaticResource CompactSpacing}">
+                    <ui:TextEditorView
+                        PlaceholderText="{Binding NotePlaceholder}"
+                        BodyText="{Binding JournalNote, Mode=TwoWay}"
+                        UnfocusedCommand="{Binding FlushNoteCommand}" />
+
+                    <Label
+                        IsVisible="{Binding ShowFactorsLink}"
+                        Text="{Binding FactorsShowText}"
+                        Style="{StaticResource CaptionStyle}"
+                        MinimumHeightRequest="44"
+                        VerticalTextAlignment="Center"
+                        SemanticProperties.Description="{Binding FactorsShowText}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ShowFactorsCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <FlexLayout
+                        IsVisible="{Binding ShowFactors}"
+                        Wrap="Wrap"
+                        Direction="Row"
+                        AlignItems="Start"
+                        JustifyContent="Start"
+                        BindableLayout.ItemsSource="{Binding ActivityChips}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="journal:JournalActivityChip">
+                                <ui:FilterChipView
+                                    Margin="0,0,8,8"
+                                    FlexLayout.Shrink="0"
+                                    FlexLayout.AlignSelf="Start"
+                                    TitleText="{Binding Label}"
+                                    IsSelected="{Binding IsActive}"
+                                    TapCommand="{Binding ToggleFactorCommand, Source={RelativeSource AncestorType={x:Type vm:JournalViewModel}}, x:DataType=vm:JournalViewModel}"
+                                    CommandParameter="{Binding .}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ControlTemplate>
+        <!-- The colours of MoodPalette, for the drawing of a week on the empty page. -->
         <Color x:Key="MoodFill1Light">#F2B8B0</Color>
         <Color x:Key="MoodFill1Dark">#7A3B37</Color>
         <Color x:Key="MoodFill2Light">#F6CFA3</Color>
@@ -141,47 +198,16 @@
                 </Grid>
             </VerticalStackLayout>
 
-            <!-- The month in the middle, as a map of moods: each day on its mood colour, a tap opens that day in the card below. Its
-                 figures are one quiet line; the overview has them in full. -->
-            <Border IsVisible="{Binding ShowCalendar}" Style="{StaticResource TestListCardStyle}" Margin="4,0" Padding="12,10,12,14">
+            <!-- The last seven days, a dot of the mood under each date; a tap opens that day in the card below. The month is in the
+                 overview: here it took half the screen for a few marked days. Its figures are one quiet line. -->
+            <Border IsVisible="{Binding ShowCalendar}" Style="{StaticResource TestListCardStyle}" Margin="4,0" Padding="12,14">
                 <VerticalStackLayout Spacing="8">
-                    <Grid ColumnDefinitions="*,Auto,Auto">
-                        <Label Text="{Binding MonthTitle}" Style="{StaticResource SectionTitleStyle}" VerticalOptions="Center" Margin="6,0,0,0" />
-                        <Label
-                            Grid.Column="1"
-                            Style="{StaticResource IconActionStyle}"
-                            WidthRequest="44"
-                            VerticalOptions="Center"
-                            Text="{mi:Material Icon=KeyboardArrowLeft}"
-                            SemanticProperties.Description="{Binding MonthNavPrevLabel}">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding PrevMonthCommand}" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                        <Label
-                            Grid.Column="2"
-                            Style="{StaticResource IconActionStyle}"
-                            WidthRequest="44"
-                            VerticalOptions="Center"
-                            Opacity="0.35"
-                            IsEnabled="{Binding CanGoNextMonth}"
-                            Text="{mi:Material Icon=KeyboardArrowRight}"
-                            SemanticProperties.Description="{Binding MonthNavNextLabel}">
-                            <Label.Triggers>
-                                <DataTrigger TargetType="Label" Binding="{Binding CanGoNextMonth}" Value="True">
-                                    <Setter Property="Opacity" Value="1" />
-                                </DataTrigger>
-                            </Label.Triggers>
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding NextMonthCommand}" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </Grid>
-                    <journalStrip:JournalMonthGridView
+                    <journalStrip:JournalWeekStripView
                         CaptionText=""
-                        ItemsSource="{Binding MonthCells}"
-                        SelectDayCommand="{Binding SelectDayCommand}" />
-                    <!-- The chevron says the line opens something: it is the only way to the overview. -->
+                        ItemsSource="{Binding WeekDays}"
+                        SelectDayCommand="{Binding SelectDayCommand}"
+                        IsInteractive="True" />
+                    <!-- The chevron says the line opens something: it is the way to the overview and its month. -->
                     <Grid
                         IsVisible="{Binding HasWeekStats}"
                         ColumnDefinitions="*,Auto"
@@ -202,13 +228,13 @@
                 </VerticalStackLayout>
             </Border>
 
-            <!-- The chosen day: its morning and evening as two rows, then the check-in of the open one, its faces and its note. Colour
-                 is kept for the moods; the rest of the card is grey and text, so the journal stays calm. -->
+            <!-- The chosen day: morning and evening in order. The open one is its name and the faces right there; the other is a row
+                 with its face (or "+"), a tap opens it. One choice of the slot, not a row to pick it and a second block to answer it. -->
             <Border Style="{StaticResource TestListCardStyle}" Margin="4,0">
                 <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                     <Label Text="{Binding DayHeaderText}" Style="{StaticResource CaptionStyle}" Margin="8,0,0,0" />
-                    <VerticalStackLayout Spacing="4">
-                    <!-- Morning: its face on the mood colour, or a "+" while it is still to fill; a tap opens it below. -->
+
+                    <!-- Morning, closed: its face on the mood colour, or a "+" while it is still to fill. -->
                     <Grid
                         ColumnDefinitions="Auto,*"
                         ColumnSpacing="12"
@@ -217,7 +243,7 @@
                         SemanticProperties.Description="{Binding MorningDescription}">
                         <Grid.Triggers>
                             <DataTrigger TargetType="Grid" Binding="{Binding IsMorningSelected}" Value="True">
-                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource SurfaceElevatedDark}}" />
+                                <Setter Property="IsVisible" Value="False" />
                             </DataTrigger>
                         </Grid.Triggers>
                         <Grid.GestureRecognizers>
@@ -250,7 +276,26 @@
                             <Label Text="{Binding MorningSubtitle}" Style="{StaticResource CaptionStyle}" MaxLines="1" LineBreakMode="TailTruncation" />
                         </VerticalStackLayout>
                     </Grid>
-                    <!-- Evening: its face on the mood colour, or a "+" while it is still to fill; a tap opens it below. -->
+
+                    <!-- Morning, open: its name and the faces. -->
+                    <VerticalStackLayout IsVisible="{Binding IsMorningSelected}" Spacing="{StaticResource CompactSpacing}" Padding="8,4,8,0">
+                        <Label Text="{Binding SlotMorningLabel}" Style="{StaticResource ListRowTitleStyle}" />
+                        <mood:MoodStripView
+                            UsePlainLayout="True"
+                            HorizontalOptions="Fill"
+                            QuestionText=""
+                            RecordMoodCommand="{Binding RecordMoodCommand}"
+                            SelectedMoodLevel="{Binding SelectedMoodLevel}"
+                            TodayMoodDisplay=""
+                            HasTodayMood="False"
+                            MoodHistorySummary=""
+                            HasMoodHistorySummary="False" />
+                        <ContentView ControlTemplate="{StaticResource JournalNoteTemplate}" />
+                    </VerticalStackLayout>
+
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
+
+                    <!-- Evening, closed. -->
                     <Grid
                         ColumnDefinitions="Auto,*"
                         ColumnSpacing="12"
@@ -259,7 +304,7 @@
                         SemanticProperties.Description="{Binding EveningDescription}">
                         <Grid.Triggers>
                             <DataTrigger TargetType="Grid" Binding="{Binding IsEveningSelected}" Value="True">
-                                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource SurfaceElevatedDark}}" />
+                                <Setter Property="IsVisible" Value="False" />
                             </DataTrigger>
                         </Grid.Triggers>
                         <Grid.GestureRecognizers>
@@ -268,7 +313,6 @@
                         <Grid.Behaviors>
                             <behaviors:PressFeedbackBehavior />
                         </Grid.Behaviors>
-                        <!-- Two tiles rather than one that changes: an attached mood colour set once is not taken back when the slot empties. -->
                         <Border IsVisible="{Binding HasEvening}" Style="{StaticResource IconTileStyle}" ui:MoodTint.Level="{Binding EveningTileLevel}">
                             <ui:MaterialIconView
                                 IconName="{Binding EveningIcon}"
@@ -292,78 +336,23 @@
                             <Label Text="{Binding EveningSubtitle}" Style="{StaticResource CaptionStyle}" MaxLines="1" LineBreakMode="TailTruncation" />
                         </VerticalStackLayout>
                     </Grid>
+
+                    <!-- Evening, open. -->
+                    <VerticalStackLayout IsVisible="{Binding IsEveningSelected}" Spacing="{StaticResource CompactSpacing}" Padding="8,4,8,0">
+                        <Label Text="{Binding SlotEveningLabel}" Style="{StaticResource ListRowTitleStyle}" />
+                        <mood:MoodStripView
+                            UsePlainLayout="True"
+                            HorizontalOptions="Fill"
+                            QuestionText=""
+                            RecordMoodCommand="{Binding RecordMoodCommand}"
+                            SelectedMoodLevel="{Binding SelectedMoodLevel}"
+                            TodayMoodDisplay=""
+                            HasTodayMood="False"
+                            MoodHistorySummary=""
+                            HasMoodHistorySummary="False" />
+                        <ContentView ControlTemplate="{StaticResource JournalNoteTemplate}" />
                     </VerticalStackLayout>
 
-                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
-
-                    <Label Text="{Binding MoodQuestionHero}" Style="{StaticResource SectionTitleStyle}" LineBreakMode="WordWrap" />
-
-                    <mood:MoodStripView
-                        UsePlainLayout="True"
-                        HorizontalOptions="Fill"
-                        QuestionText=""
-                        RecordMoodCommand="{Binding RecordMoodCommand}"
-                        SelectedMoodLevel="{Binding SelectedMoodLevel}"
-                        TodayMoodDisplay=""
-                        HasTodayMood="False"
-                        MoodHistorySummary=""
-                        HasMoodHistorySummary="False">
-                        <mood:MoodStripView.Behaviors>
-                            <behaviors:RevealOnAppearingBehavior />
-                        </mood:MoodStripView.Behaviors>
-                    </mood:MoodStripView>
-
-                    <!-- A quiet status: the chosen face already shows the answer; large blue text was the loudest thing on the page. -->
-                    <Grid IsVisible="{Binding HasMoodSelected}" ColumnDefinitions="Auto,*" ColumnSpacing="6">
-                        <ui:MaterialIconView
-                            IconName="CheckCircle"
-                            IconSize="16"
-                            VerticalOptions="Center"
-                            IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
-                        <Label Grid.Column="1" Text="{Binding MoodSavedStatus}" Style="{StaticResource CaptionStyle}" VerticalOptions="Center" />
-                    </Grid>
-
-                    <!-- The question of the day is the field's own hint (an empty note is the hardest thing to fill); it changes daily and
-                         is never required. -->
-                    <VerticalStackLayout IsVisible="{Binding ShowNoteEditor}" Spacing="{StaticResource CompactSpacing}">
-                        <ui:TextEditorView
-                            PlaceholderText="{Binding NotePlaceholder}"
-                            BodyText="{Binding JournalNote, Mode=TwoWay}"
-                            UnfocusedCommand="{Binding FlushNoteCommand}" />
-
-                        <Label
-                            IsVisible="{Binding ShowFactorsLink}"
-                            Text="{Binding FactorsShowText}"
-                            Style="{StaticResource CaptionStyle}"
-                            MinimumHeightRequest="44"
-                            VerticalTextAlignment="Center"
-                            SemanticProperties.Description="{Binding FactorsShowText}">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ShowFactorsCommand}" />
-                            </Label.GestureRecognizers>
-                        </Label>
-
-                        <FlexLayout
-                            IsVisible="{Binding ShowFactors}"
-                            Wrap="Wrap"
-                            Direction="Row"
-                            AlignItems="Start"
-                            JustifyContent="Start"
-                            BindableLayout.ItemsSource="{Binding ActivityChips}">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="journal:JournalActivityChip">
-                                    <ui:FilterChipView
-                                        Margin="0,0,8,8"
-                                        FlexLayout.Shrink="0"
-                                        FlexLayout.AlignSelf="Start"
-                                        TitleText="{Binding Label}"
-                                        IsSelected="{Binding IsActive}"
-                                        TapCommand="{Binding ToggleFactorCommand, Source={RelativeSource AncestorType={x:Type vm:JournalViewModel}}, x:DataType=vm:JournalViewModel}"
-                                        CommandParameter="{Binding .}" />
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </FlexLayout>
-                    </VerticalStackLayout>
                 </VerticalStackLayout>
             </Border>
 

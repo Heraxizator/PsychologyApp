@@ -18,8 +18,6 @@ public sealed class ProfileStatsLoaderTests
         progress.Setup(p => p.CountTechniqueCompletionsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(3);
         progress.Setup(p => p.CountTestResultsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(2);
         progress.Setup(p => p.GetActiveDaysThisWeekAsync(It.IsAny<CancellationToken>())).ReturnsAsync(4);
-        progress.Setup(p => p.GetLastTechniqueCompletionDateAsync(It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new DateTime(2026, 6, 1, 0, 0, 0, DateTimeKind.Utc));
 
         ProfileStatsLoader loader = new(progress.Object);
         ProfileStatsSnapshot snapshot = await loader.LoadAsync();
@@ -28,6 +26,5 @@ public sealed class ProfileStatsLoaderTests
         Assert.Equal("2", snapshot.TestsCompletedCount);
         Assert.Contains("4", snapshot.ActiveDaysCount);
         Assert.Contains("7", snapshot.ActiveDaysCount);
-        Assert.False(string.IsNullOrWhiteSpace(snapshot.LastPracticeDisplay));
     }
 }

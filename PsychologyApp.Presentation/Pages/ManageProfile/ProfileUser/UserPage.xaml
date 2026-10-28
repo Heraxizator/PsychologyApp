@@ -30,7 +30,9 @@
                     TitleText="{Binding PageTitle}"
                     BackCommand="{Binding Finish}" />
 
-                <!-- The figures in a white card like the cards of the other tabs; the solid blue block was the loudest thing in the app. -->
+                <!-- The figures in a white card like the cards of the other tabs; the solid blue block was the loudest thing in the app. The
+                     line explaining the week and the date of the last practice under them are gone: the labels say it, and the recent
+                     practices below carry their dates. -->
                 <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                     <Border.Behaviors>
                         <behaviors:ListItemRevealBehavior RevealIndex="0" />
@@ -41,12 +43,6 @@
                             <ui:MetricTileView Grid.Column="1" ValueText="{Binding TestsCompletedCount}" LabelText="{Binding TestsCompletedLabel}" TapCommand="{Binding OpenTestsListCommand}" />
                             <ui:MetricTileView Grid.Column="2" ValueText="{Binding ActiveDaysCount}" LabelText="{Binding ActiveDaysLabel}" />
                         </Grid>
-                        <Label Text="{Binding ActiveDaysHintText}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
-                        <Label
-                            IsVisible="{Binding HasLastPractice}"
-                            Text="{Binding LastPracticeDisplay}"
-                            Style="{StaticResource CaptionStyle}"
-                            HorizontalTextAlignment="Center" />
                     </VerticalStackLayout>
                 </Border>
 

@@ -281,4 +281,19 @@ public sealed class UserProfileRefreshCoordinatorTests
 
         Assert.Null(snapshot);
     }
+
+    // The profile shows one row per practice: four runs of the same breathing exercise read as four practices.
+    [Fact]
+    public void Recent_practices_are_one_row_per_practice_newest_first_with_their_runs()
+    {
+        DateTime now = new(2026, 10, 28, 9, 0, 0, DateTimeKind.Utc);
+        SessionResultDTO Run(string key, int hoursAgo) => new() { ItemKey = key, CompletedAt = now.AddHours(-hoursAgo) };
+        List<SessionResultDTO> runs = [Run("box", 1), Run("ground", 2), Run("box", 3), Run("box", 30), Run("sigh", 40), Run("anchor", 50)];
+
+        IReadOnlyList<(SessionResultDTO Latest, int Runs)> rows = ProfilePracticeHistoryLoader.GroupByPractice(runs, practices: 3);
+
+        Assert.Equal(["box", "ground", "sigh"], rows.Select(r => r.Latest.ItemKey));
+        Assert.Equal([3, 1, 1], rows.Select(r => r.Runs));
+        Assert.Equal(now.AddHours(-1), rows[0].Latest.CompletedAt);
+    }
 }

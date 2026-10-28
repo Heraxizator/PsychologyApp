@@ -136,9 +136,9 @@
                         </Label>
                     </Grid>
 
-                    <journalStrip:JournalYearHeatmapView
+                    <journalStrip:JournalMonthGridView
                         CaptionText=""
-                        ItemsSource="{Binding YearCells}"
+                        ItemsSource="{Binding MonthCells}"
                         SelectDayCommand="{Binding SelectDayCommand}" />
                 </VerticalStackLayout>
             </Border>

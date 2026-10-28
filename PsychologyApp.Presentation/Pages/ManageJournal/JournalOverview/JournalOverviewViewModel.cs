@@ -24,8 +24,8 @@ public sealed class JournalOverviewViewModel : BaseViewModel
     private DateOnly _weekStripEnd = DateOnly.FromDateTime(DateTime.Today);
     private DateOnly _monthCursor = new(DateTime.Today.Year, DateTime.Today.Month, 1);
     private int _yearCursor = DateTime.Today.Year;
-    // The journal itself is the month calendar now; the overview keeps only the year, which nothing else shows.
-    private readonly JournalCalendarScale _calendarScale = JournalCalendarScale.Year;
+    // The journal shows the last seven days; the month, a tap from its week line, is here.
+    private readonly JournalCalendarScale _calendarScale = JournalCalendarScale.Month;
 
     public JournalOverviewViewModel(
         JournalMoodLoader journalMoodLoader,

@@ -164,9 +164,15 @@ public sealed class InsightsViewModel : BaseViewModel
 
     private InsightItem TestItem(TestProgress test, TestDefinition definition)
     {
+        // A bare "Result: 0" says nothing: the scale it is on and what it means, in the words the test list and history use.
+        string analyzerId = definition.AnalyzerId ?? definition.TestId;
+        string? meaning = TestScoreLabelMapper.GetSummary(analyzerId, test.Latest);
+        string score = TestScoreInterpreter.GetScoreRange(analyzerId) is { } range
+            ? AppStrings.InsightsTestScoreOf(test.Latest, range.Max)
+            : AppStrings.InsightsTestSingle(test.Latest);
         string detail = test.Results > 1
             ? $"{AppStrings.InsightsTestChange(test.First, test.Latest)} · {Trend(test.Trend)}"
-            : AppStrings.InsightsTestSingle(test.Latest);
+            : string.IsNullOrWhiteSpace(meaning) ? score : $"{score} · {meaning}";
         return new InsightItem(
             definition.Title,
             detail,

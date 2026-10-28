@@ -229,7 +229,6 @@ public static partial class AppStrings
 
     public static string ProfileTestsCompleted => R(nameof(ProfileTestsCompleted));
     public static string ProfileActiveDaysLabel => R(nameof(ProfileActiveDaysLabel));
-    public static string ProfileActiveDaysHint => R(nameof(ProfileActiveDaysHint));
     public static string ProfileActiveDaysValue(int days) => F(nameof(ProfileActiveDaysValue), days);
 
     public static string TodayForYou => R(nameof(TodayForYou));
@@ -273,7 +272,6 @@ public static partial class AppStrings
     public static string JournalAddNoteLabel => R(nameof(JournalAddNoteLabel));
     public static string JournalShowHintsLabel => R(nameof(JournalShowHintsLabel));
     public static string JournalHideHintsLabel => R(nameof(JournalHideHintsLabel));
-    public static string JournalHowNowQuestion => R(nameof(JournalHowNowQuestion));
     public static string JournalMoreMenuLabel => R(nameof(JournalMoreMenuLabel));
     public static string JournalNoteSaveHint => R(nameof(JournalNoteSaveHint));
     public static string JournalSaveLabel => R(nameof(JournalSaveLabel));
@@ -305,8 +303,6 @@ public static partial class AppStrings
     public static string JournalFactorsSummaryLine(string labels) => F(nameof(JournalFactorsSummaryLine), labels);
     public static string JournalWeekNavPrev => R(nameof(JournalWeekNavPrev));
     public static string JournalWeekNavNext => R(nameof(JournalWeekNavNext));
-    public static string JournalMonthNavPrev => R(nameof(JournalMonthNavPrev));
-    public static string JournalMonthNavNext => R(nameof(JournalMonthNavNext));
     public static string JournalMonthTitle(DateOnly month) =>
         month.ToDateTime(TimeOnly.MinValue).ToString("MMMM yyyy", System.Globalization.CultureInfo.CurrentCulture);
     public static string JournalFactorCountPill(string label, int count) => F(nameof(JournalFactorCountPill), label, count);
@@ -558,7 +554,6 @@ public static partial class AppStrings
     public static string TestHistoryEmpty => R(nameof(TestHistoryEmpty));
     public static string TestHistoryEntry(string date, string summary) => F(nameof(TestHistoryEntry), date, summary);
     public static string TestOpenHistory => R(nameof(TestOpenHistory));
-    public static string ProfileLastPractice(string date) => F(nameof(ProfileLastPractice), date);
 
     private static string MoodEmoji(int level) => level switch
     {

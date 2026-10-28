@@ -22,7 +22,7 @@ public sealed class JournalViewModel : BaseViewModel
     private int _loadGeneration;
     private long? _editorEntryId;
     private DateOnly _editorDay = DateOnly.FromDateTime(DateTime.Today);
-    private DateOnly _monthCursor = new(DateTime.Today.Year, DateTime.Today.Month, 1);
+    private DateOnly _weekStripEnd = DateOnly.FromDateTime(DateTime.Today);
     private JournalCheckInSlot _editorSlot =
         MoodCheckInSlotPolicy.IsMorningLocalHour(DateTime.Now.Hour)
             ? JournalCheckInSlot.Morning
@@ -76,8 +76,6 @@ public sealed class JournalViewModel : BaseViewModel
                 SelectSlotAsync(slot.Value).FireAndForget();
             }
         });
-        PrevMonthCommand = new Command(() => ShiftMonth(-1));
-        NextMonthCommand = new Command(() => ShiftMonth(1));
         FlushNoteCommand = new AsyncCommand(FlushPendingNoteSaveAsync);
         ShowFactorsCommand = new Command(() =>
         {
@@ -135,7 +133,7 @@ public sealed class JournalViewModel : BaseViewModel
             DateOnly? day = parameter switch
             {
                 DateOnly date => date,
-                JournalMonthCell { IsEnabled: true, Date: DateOnly cellDay } => cellDay,
+                JournalDayChip chip => chip.Date,
                 _ => null
             };
 
@@ -158,7 +156,6 @@ public sealed class JournalViewModel : BaseViewModel
     }
 
     public string PageTitle => AppStrings.JournalTitle;
-    public string MoodQuestionHero => AppStrings.JournalHowNowQuestion;
     /// <summary>The question of the day as the field's hint, so the note card has no block of its own above the field.</summary>
     public string NotePlaceholder => ShowPrompt ? PromptText : AppStrings.JournalPastDayPlaceholder;
     public string LowMoodTitle => AppStrings.JournalLowMoodTitle;
@@ -167,8 +164,6 @@ public sealed class JournalViewModel : BaseViewModel
     public string LowMoodHelpText => AppStrings.JournalLowMoodHelp;
     public string OpenOverviewLabel => AppStrings.JournalOpenOverview;
     public string OpenTimelineLabel => AppStrings.JournalOpenTimeline;
-    public string MonthNavPrevLabel => AppStrings.JournalMonthNavPrev;
-    public string MonthNavNextLabel => AppStrings.JournalMonthNavNext;
     public string EarlierWeeksText => AppStrings.JournalEarlierWeeks;
     public string SlotMorningLabel => AppStrings.JournalSlotMorning;
     public string EmptyTitle => AppStrings.JournalEmptyTitle;
@@ -201,7 +196,10 @@ public sealed class JournalViewModel : BaseViewModel
     public bool ShowEmptyState =>
         !HasWeekStats && !HasMoodSelected && _editorDay == DateOnly.FromDateTime(DateTime.Today);
 
-    /// <summary>The month as a map of moods, in the middle of the journal; the card under it is the day chosen here.</summary>
+    /// <summary>
+    /// The last seven days, a dot of the mood under each date; the card under it is the day chosen here. A whole month here took half
+    /// the screen for a few marked days; it is in the overview.
+    /// </summary>
     public bool ShowCalendar => !ShowEmptyState;
 
     private bool _hasEarlierEntries;
@@ -266,21 +264,11 @@ public sealed class JournalViewModel : BaseViewModel
     public string MoodSavedStatus =>
         HasMoodSelected ? AppStrings.TodayMoodSaved : string.Empty;
 
-    public bool CanGoNextMonth =>
-        _monthCursor < new DateOnly(DateTime.Today.Year, DateTime.Today.Month, 1);
-
-    private string _monthTitle = string.Empty;
-    public string MonthTitle
+    private IReadOnlyList<JournalDayChip> _weekDays = [];
+    public IReadOnlyList<JournalDayChip> WeekDays
     {
-        get => _monthTitle;
-        private set => SetProperty(ref _monthTitle, value);
-    }
-
-    private IReadOnlyList<JournalMonthCell> _monthCells = [];
-    public IReadOnlyList<JournalMonthCell> MonthCells
-    {
-        get => _monthCells;
-        private set => SetProperty(ref _monthCells, value);
+        get => _weekDays;
+        private set => SetProperty(ref _weekDays, value);
     }
 
     public ObservableCollection<JournalActivityChip> ActivityChips { get; }
@@ -288,8 +276,6 @@ public sealed class JournalViewModel : BaseViewModel
     public ICommand OpenOverviewCommand { get; }
     public ICommand OpenTimelineCommand { get; }
 
-    public ICommand PrevMonthCommand { get; }
-    public ICommand NextMonthCommand { get; }
     public ICommand SelectSlotCommand { get; }
     public ICommand FlushNoteCommand { get; }
     public ICommand ShowFactorsCommand { get; }
@@ -353,7 +339,6 @@ public sealed class JournalViewModel : BaseViewModel
     {
         Notify(
             nameof(PageTitle),
-            nameof(MoodQuestionHero),
             nameof(NotePlaceholder),
             nameof(LowMoodTitle),
             nameof(LowMoodBody),
@@ -362,8 +347,6 @@ public sealed class JournalViewModel : BaseViewModel
             nameof(LowMoodHelpText),
             nameof(OpenOverviewLabel),
             nameof(OpenTimelineLabel),
-            nameof(MonthNavPrevLabel),
-            nameof(MonthNavNextLabel),
             nameof(EarlierWeeksText),
             nameof(SlotMorningLabel),
             nameof(SlotEveningLabel),
@@ -396,7 +379,8 @@ public sealed class JournalViewModel : BaseViewModel
         DateOnly day = _editorContext.ConsumePendingEditorDay() ?? today;
         // The slot stays when the day does (a check-in of today the person was on); back to today it is the current one.
         JournalCheckInSlot slot = day == _editorDay || day != today ? _editorSlot : CurrentSlot();
-        _monthCursor = new DateOnly(day.Year, day.Month, 1);
+        // The week ends today unless the day asked for lies before it; then it ends on that day.
+        _weekStripEnd = day >= today.AddDays(-6) ? today : day;
         MoveEditor(day, slot);
         return LoadAsync();
     }
@@ -452,19 +436,6 @@ public sealed class JournalViewModel : BaseViewModel
     }
 
     /// <summary>Another month in the calendar; the open day stays open below until a day of that month is tapped.</summary>
-    private void ShiftMonth(int direction)
-    {
-        DateOnly next = JournalMoodLoader.ClampMonth(_monthCursor.AddMonths(direction), DateOnly.FromDateTime(DateTime.Today));
-        if (next == _monthCursor)
-        {
-            return;
-        }
-
-        _monthCursor = next;
-        OnPropertyChanged(nameof(CanGoNextMonth));
-        LoadAsync().FireAndForget();
-    }
-
     private void NotifySlots() =>
         Notify(nameof(IsMorningSelected), nameof(IsEveningSelected), nameof(HasMorning), nameof(HasEvening), nameof(IsMorningEmpty),
             nameof(IsEveningEmpty), nameof(MorningTileLevel), nameof(EveningTileLevel), nameof(MorningMoodLevel), nameof(EveningMoodLevel),
@@ -531,9 +502,9 @@ public sealed class JournalViewModel : BaseViewModel
                 rangeDays: 7,
                 filterDay: null,
                 editorDay: _editorDay,
-                monthCursor: _monthCursor,
+                weekStripEnd: _weekStripEnd,
                 editorSlot: _editorSlot,
-                calendarScale: JournalCalendarScale.Month);
+                calendarScale: JournalCalendarScale.Week);
             if (generation != Volatile.Read(ref _loadGeneration))
             {
                 return;
@@ -552,9 +523,8 @@ public sealed class JournalViewModel : BaseViewModel
     {
         CancelNoteAutosave();
         _noteDirty = false;
-        MonthCells = snapshot.MonthCells;
-        _monthCursor = snapshot.MonthCursor;
-        MonthTitle = snapshot.MonthTitle;
+        WeekDays = snapshot.WeekDays;
+        _weekStripEnd = snapshot.WeekStripEnd;
         _editorEntryId = snapshot.EditorEntryId;
         _editorDay = snapshot.EditorDay;
         _editorSlot = snapshot.EditorSlot;
@@ -585,7 +555,6 @@ public sealed class JournalViewModel : BaseViewModel
         NotifyLowMoodSupport();
         OnPropertyChanged(nameof(ShowNoteEditor));
         OnPropertyChanged(nameof(MoodSavedStatus));
-        OnPropertyChanged(nameof(CanGoNextMonth));
     }
 
     private async Task SaveMoodAsync(bool reload = true)

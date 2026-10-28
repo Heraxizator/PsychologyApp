@@ -10,9 +10,6 @@ public partial class UserViewModel
     public string TechniquesCompletedLabel => AppStrings.ProfileTechniquesCompleted;
     public string TestsCompletedLabel => AppStrings.ProfileTestsCompleted;
     public string ActiveDaysLabel => AppStrings.ProfileActiveDaysLabel;
-    public string ActiveDaysHintText => AppStrings.ProfileActiveDaysHint;
-    public string LastPracticeDisplay { get; private set; } = string.Empty;
-    public bool HasLastPractice => !string.IsNullOrWhiteSpace(LastPracticeDisplay);
     public string RecommendedLabel => AppStrings.ProfileRecommended;
     public string BestQuotesLabel => AppStrings.ProfileBestQuotes;
     public string QuotesEmptyText => AppStrings.ProfileQuotesEmpty;
@@ -49,9 +46,6 @@ public partial class UserViewModel
             nameof(TechniquesCompletedLabel),
             nameof(TestsCompletedLabel),
             nameof(ActiveDaysLabel),
-            nameof(ActiveDaysHintText),
-            nameof(LastPracticeDisplay),
-            nameof(HasLastPractice),
             nameof(RecommendedLabel),
             nameof(BestQuotesLabel),
             nameof(QuotesEmptyText),

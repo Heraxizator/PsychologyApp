@@ -11,6 +11,7 @@ public static partial class AppStrings
     public static string InsightsTestsTitle => R(nameof(InsightsTestsTitle));
     public static string InsightsTestChange(object arg0, object arg1) => F(nameof(InsightsTestChange), arg0, arg1);
     public static string InsightsTestSingle(object arg0) => F(nameof(InsightsTestSingle), arg0);
+    public static string InsightsTestScoreOf(int score, int max) => F(nameof(InsightsTestScoreOf), score, max);
     public static string InsightsTrendBetter => R(nameof(InsightsTrendBetter));
     public static string InsightsTrendWorse => R(nameof(InsightsTrendWorse));
     public static string InsightsTrendSame => R(nameof(InsightsTrendSame));

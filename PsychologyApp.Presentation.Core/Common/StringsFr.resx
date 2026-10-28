@@ -783,9 +783,6 @@
   <data name="JournalHideHintsLabel" xml:space="preserve">
     <value>Masquer les suggestions</value>
   </data>
-  <data name="JournalHowNowQuestion" xml:space="preserve">
-    <value>Comment allez-vous en ce moment ?</value>
-  </data>
   <data name="JournalMoreMenuLabel" xml:space="preserve">
     <value>Plus</value>
   </data>
@@ -848,12 +845,6 @@
   </data>
   <data name="JournalWeekNavNext" xml:space="preserve">
     <value>Semaine suivante</value>
-  </data>
-  <data name="JournalMonthNavPrev" xml:space="preserve">
-    <value>Mois précédent</value>
-  </data>
-  <data name="JournalMonthNavNext" xml:space="preserve">
-    <value>Mois suivant</value>
   </data>
   <data name="JournalFilter7Days" xml:space="preserve">
     <value>7 jours</value>
@@ -2000,9 +1991,6 @@
   </data>
   <data name="TestHistoryEntry" xml:space="preserve">
     <value>{0} : {1}</value>
-  </data>
-  <data name="ProfileLastPractice" xml:space="preserve">
-    <value>Dernière pratique : {0}</value>
   </data>
   <data name="TechniqueLastPractice" xml:space="preserve">
     <value>Dernière pratique : {0}</value>
@@ -4102,9 +4090,6 @@
   <data name="ProfileActiveDaysValue" xml:space="preserve">
     <value>{0} sur 7</value>
   </data>
-  <data name="ProfileActiveDaysHint" xml:space="preserve">
-    <value>Jours avec une pratique ou une note d'humeur ces 7 derniers jours</value>
-  </data>
   <data name="JournalCheckInDaysLabel" xml:space="preserve">
     <value>Jours notés</value>
   </data>
@@ -4224,5 +4209,8 @@
   </data>
   <data name="TestsPastResults" xml:space="preserve">
     <value>Résultats précédents</value>
+  </data>
+  <data name="InsightsTestScoreOf" xml:space="preserve">
+    <value>{0} sur {1}</value>
   </data>
 </root>

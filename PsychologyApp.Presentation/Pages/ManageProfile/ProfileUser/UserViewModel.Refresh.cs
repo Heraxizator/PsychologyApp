@@ -53,9 +53,6 @@ public partial class UserViewModel
             TechniquesCompletedCount = result.Stats.TechniquesCompletedCount;
             TestsCompletedCount = result.Stats.TestsCompletedCount;
             ActiveDaysCount = result.Stats.ActiveDaysCount;
-            LastPracticeDisplay = result.Stats.LastPracticeDisplay;
-            OnPropertyChanged(nameof(LastPracticeDisplay));
-            OnPropertyChanged(nameof(HasLastPractice));
 
             await UiThread.RunAsync(() =>
             {

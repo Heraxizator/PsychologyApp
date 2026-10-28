@@ -783,9 +783,6 @@
   <data name="JournalHideHintsLabel" xml:space="preserve">
     <value>Скрыть подсказки</value>
   </data>
-  <data name="JournalHowNowQuestion" xml:space="preserve">
-    <value>Как сейчас?</value>
-  </data>
   <data name="JournalMoreMenuLabel" xml:space="preserve">
     <value>Ещё</value>
   </data>
@@ -848,12 +845,6 @@
   </data>
   <data name="JournalWeekNavNext" xml:space="preserve">
     <value>Следующая неделя</value>
-  </data>
-  <data name="JournalMonthNavPrev" xml:space="preserve">
-    <value>Предыдущий месяц</value>
-  </data>
-  <data name="JournalMonthNavNext" xml:space="preserve">
-    <value>Следующий месяц</value>
   </data>
   <data name="JournalFilter7Days" xml:space="preserve">
     <value>7 дней</value>
@@ -2006,9 +1997,6 @@
   </data>
   <data name="TestHistoryEntry" xml:space="preserve">
     <value>{0}: {1}</value>
-  </data>
-  <data name="ProfileLastPractice" xml:space="preserve">
-    <value>Последняя практика: {0}</value>
   </data>
   <data name="TechniqueLastPractice" xml:space="preserve">
     <value>Последняя практика: {0}</value>
@@ -4108,9 +4096,6 @@
   <data name="ProfileActiveDaysValue" xml:space="preserve">
     <value>{0} из 7</value>
   </data>
-  <data name="ProfileActiveDaysHint" xml:space="preserve">
-    <value>Дни с практикой или отметкой настроения за последние 7 дней</value>
-  </data>
   <data name="JournalCheckInDaysLabel" xml:space="preserve">
     <value>Дней с отметкой</value>
   </data>
@@ -4230,5 +4215,8 @@
   </data>
   <data name="TestsPastResults" xml:space="preserve">
     <value>Прошлые результаты</value>
+  </data>
+  <data name="InsightsTestScoreOf" xml:space="preserve">
+    <value>{0} из {1}</value>
   </data>
 </root>
