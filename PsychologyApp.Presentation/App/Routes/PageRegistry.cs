@@ -174,6 +174,9 @@ public sealed class PageRegistry(
     public CompanionProfilePage CreateCompanionProfilePage(INavigation hostNavigation) =>
         WithPressFeedback(chatPageFactory.CreateCompanionProfilePage(hostNavigation));
 
+    public PsychologyApp.Presentation.Pages.Chat.ChatInfo.ChatInfoPage CreateChatInfoPage(long sessionId, INavigation hostNavigation) =>
+        WithPressFeedback(chatPageFactory.CreateChatInfoPage(sessionId, hostNavigation));
+
     public CrisisHubPage CreateCrisisHubPage() =>
         WithPressFeedback(clinicalCarePageFactory.CreateCrisisHubPage());
 

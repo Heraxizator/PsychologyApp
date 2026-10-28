@@ -1,4 +1,5 @@
 using PsychologyApp.Presentation.Features.Chat.DependencyInjection;
+using PsychologyApp.Presentation.Pages.Chat.ChatInfo;
 using PsychologyApp.Presentation.Pages.Chat.ChatList;
 using PsychologyApp.Presentation.Pages.Chat.Companion;
 using PsychologyApp.Presentation.Pages.Chat.Conversation;
@@ -13,6 +14,8 @@ public interface IChatPageFactory
     ChatPage CreateChatPage(long? sessionId, INavigation hostNavigation, string? topic = null, string? opener = null);
 
     CompanionProfilePage CreateCompanionProfilePage(INavigation hostNavigation);
+
+    ChatInfoPage CreateChatInfoPage(long sessionId, INavigation hostNavigation);
 }
 
 public sealed class ChatPageFactory(IChatViewModelFactory viewModelFactory) : IChatPageFactory
@@ -23,4 +26,6 @@ public sealed class ChatPageFactory(IChatViewModelFactory viewModelFactory) : IC
         new(viewModelFactory, sessionId, hostNavigation, topic, opener);
 
     public CompanionProfilePage CreateCompanionProfilePage(INavigation hostNavigation) => new(viewModelFactory, hostNavigation);
+
+    public ChatInfoPage CreateChatInfoPage(long sessionId, INavigation hostNavigation) => new(viewModelFactory, sessionId, hostNavigation);
 }

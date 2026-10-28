@@ -61,6 +61,7 @@
     <Compile Include="ContrastTests.cs" />
     <Compile Include="TechniqueFlavorTests.cs" />
     <Compile Include="BalloonRoundTests.cs" />
+    <Compile Include="ChatInfoSummaryTests.cs" />
     <Compile Include="CalmingPracticesTests.cs" />
     <Compile Include="AnchorThoughtsViewModelTests.cs" />
     <Compile Include="AppMenuLookTests.cs" />

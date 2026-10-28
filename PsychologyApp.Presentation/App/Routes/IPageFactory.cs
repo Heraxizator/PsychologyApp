@@ -79,6 +79,7 @@ public interface IPageFactory
     ChatListPage CreateChatListPage(INavigation? hostNavigation);
     ChatPage CreateChatPage(long? sessionId, INavigation hostNavigation, string? topic = null, string? opener = null);
     CompanionProfilePage CreateCompanionProfilePage(INavigation hostNavigation);
+    PsychologyApp.Presentation.Pages.Chat.ChatInfo.ChatInfoPage CreateChatInfoPage(long sessionId, INavigation hostNavigation);
     CrisisHubPage CreateCrisisHubPage();
     RiskCheckPage CreateRiskCheckPage(string source);
     SafetyPlanPage CreateSafetyPlanPage();

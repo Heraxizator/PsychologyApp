@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PsychologyApp.Presentation.Pages.Chat.ChatInfo.ChatInfoPage"
+             xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.Chat.ChatInfo"
+             xmlns:list="clr-namespace:PsychologyApp.Presentation.Pages.Chat.ChatList"
+             xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
+             x:DataType="vm:ChatInfoViewModel"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding PageTitle}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+
+    <ContentPage.Resources>
+        <list:ChatTileColorConverter x:Key="ChatTileColor" />
+
+        <!-- A round action under the header, as a messenger's chat info has them: a circle and a short word. -->
+        <Style x:Key="ChatInfoActionCircle" TargetType="Border">
+            <Setter Property="WidthRequest" Value="52" />
+            <Setter Property="HeightRequest" Value="52" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 26" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource Gray900}}" />
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource SurfaceElevatedLight}, Dark={StaticResource SurfaceDark}}" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.Behaviors>
+        <behaviors:PageAnalyticsBehavior />
+    </ContentPage.Behaviors>
+
+    <Grid RowDefinitions="Auto,*" Margin="{StaticResource LayoutPageMarginThickness}">
+        <ui:NavigationBarSimpleView Grid.Row="0" TitleText="{Binding PageTitle}" BackCommand="{Binding BackCommand}" />
+
+        <ScrollView Grid.Row="1" IsVisible="{Binding HasLoaded}" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}" Padding="0,16,0,24">
+
+                <!-- Who this chat is: its state's icon and colour (as in the chat list), its name and dates. -->
+                <VerticalStackLayout Spacing="6">
+                    <Border
+                        WidthRequest="72"
+                        HeightRequest="72"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 36"
+                        HorizontalOptions="Center"
+                        BackgroundColor="{Binding Flavor, Converter={StaticResource ChatTileColor}, ConverterParameter=tile}">
+                        <ui:MaterialIconView
+                            IconName="{Binding IconName}"
+                            IconSize="34"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            IconColor="{Binding Flavor, Converter={StaticResource ChatTileColor}, ConverterParameter=icon}" />
+                    </Border>
+                    <Label Text="{Binding Title}" Style="{StaticResource SectionTitleStyle}" HorizontalTextAlignment="Center" Margin="0,4,0,0" />
+                    <Label Text="{Binding DatesText}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+
+                <!-- Three actions. Open is the one filled circle; delete keeps the danger colour and still asks first. -->
+                <Grid ColumnDefinitions="*,*,*" Margin="24,4,24,4">
+                    <VerticalStackLayout Grid.Column="0" Spacing="6" SemanticProperties.Description="{Binding OpenText}">
+                        <VerticalStackLayout.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </VerticalStackLayout.Behaviors>
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenCommand}" />
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Border Style="{StaticResource ChatInfoActionCircle}" StrokeThickness="0" BackgroundColor="{DynamicResource Primary}">
+                            <ui:MaterialIconView IconName="ChatBubbleOutline" IconSize="22" IconColor="{StaticResource OnPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Text="{Binding OpenText}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1" Spacing="6" SemanticProperties.Description="{Binding RenameText}">
+                        <VerticalStackLayout.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </VerticalStackLayout.Behaviors>
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding RenameCommand}" />
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Border Style="{StaticResource ChatInfoActionCircle}">
+                            <ui:MaterialIconView IconName="Edit" IconSize="22" HorizontalOptions="Center" VerticalOptions="Center"
+                                                 IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        </Border>
+                        <Label Text="{Binding RenameText}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="2" Spacing="6" SemanticProperties.Description="{Binding DeleteText}">
+                        <VerticalStackLayout.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </VerticalStackLayout.Behaviors>
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding DeleteCommand}" />
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Border Style="{StaticResource ChatInfoActionCircle}">
+                            <ui:MaterialIconView IconName="DeleteOutline" IconSize="22" HorizontalOptions="Center" VerticalOptions="Center"
+                                                 IconColor="{AppThemeBinding Light={StaticResource Danger}, Dark={StaticResource DangerDark}}" />
+                        </Border>
+                        <Label Text="{Binding DeleteText}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center"
+                               TextColor="{AppThemeBinding Light={StaticResource Danger}, Dark={StaticResource DangerDark}}" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- What the chat held. Each row shows only once the chat reached it. -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding SectionText}" Style="{StaticResource CaptionStyle}" Margin="4,0,0,0" />
+                    <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                        <VerticalStackLayout Spacing="0">
+                            <Label Text="{Binding EmptyText}" Style="{StaticResource BodyStyle}" IsVisible="{Binding IsSummaryEmpty}" Margin="0,6"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="48" IsVisible="{Binding HasFeeling}">
+                                <ui:MaterialIconView IconName="SentimentNeutral" IconSize="20" VerticalOptions="Center"
+                                                     IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                <Label Grid.Column="1" Text="{Binding FeelingLabel}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                                <Label Grid.Column="2" Text="{Binding FeelingText}" Style="{StaticResource BodyStyle}" VerticalOptions="Center"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            </Grid>
+
+                            <BoxView Style="{StaticResource SettingRowDividerStyle}" IsVisible="{Binding HasTension}" />
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="48" IsVisible="{Binding HasTension}">
+                                <ui:MaterialIconView IconName="Speed" IconSize="20" VerticalOptions="Center"
+                                                     IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                <Label Grid.Column="1" Text="{Binding TensionLabel}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                                <Label Grid.Column="2" Text="{Binding TensionText}" Style="{StaticResource BodyStyle}" VerticalOptions="Center"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            </Grid>
+
+                            <BoxView Style="{StaticResource SettingRowDividerStyle}" IsVisible="{Binding HasPractice}" />
+                            <!-- The practice is a link: it opens the practice itself, to do it again. -->
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="48" IsVisible="{Binding HasPractice}"
+                                  SemanticProperties.Description="{Binding PracticeText}">
+                                <Grid.Behaviors>
+                                    <behaviors:PressFeedbackBehavior />
+                                </Grid.Behaviors>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding PracticeCommand}" />
+                                </Grid.GestureRecognizers>
+                                <ui:MaterialIconView IconName="SelfImprovement" IconSize="20" VerticalOptions="Center"
+                                                     IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                <Label Grid.Column="1" Text="{Binding PracticeLabel}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                                <HorizontalStackLayout Grid.Column="2" Spacing="2" VerticalOptions="Center">
+                                    <Label Text="{Binding PracticeText}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" LineBreakMode="TailTruncation" MaximumWidthRequest="180"
+                                           TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                                    <ui:MaterialIconView IconName="ChevronRight" IconSize="18" VerticalOptions="Center"
+                                                         IconColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                                </HorizontalStackLayout>
+                            </Grid>
+
+                            <BoxView Style="{StaticResource SettingRowDividerStyle}" IsVisible="{Binding HasStep}" />
+                            <!-- The step is the person's own words, so it may be long: it goes under its label, not beside it. -->
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" Padding="0,12" IsVisible="{Binding HasStep}">
+                                <ui:MaterialIconView IconName="OutlinedFlag" IconSize="20" VerticalOptions="Start"
+                                                     IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                    <Label Text="{Binding StepLabel}" Style="{StaticResource BodyStyle}" />
+                                    <Label Text="{Binding StepText}" Style="{StaticResource BodyStyle}"
+                                           TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                </VerticalStackLayout>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- The companion itself (its name for you, forgetting) is one row away, not on this chat's page. -->
+                <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="48" SemanticProperties.Description="{Binding AboutCompanionText}">
+                        <Grid.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </Grid.Behaviors>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AboutCompanionCommand}" />
+                        </Grid.GestureRecognizers>
+                        <ui:MaterialIconView IconName="Psychology" IconSize="20" VerticalOptions="Center"
+                                             IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        <Label Grid.Column="1" Text="{Binding AboutCompanionText}" Style="{StaticResource BodyStyle}" VerticalOptions="Center" />
+                        <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="18" VerticalOptions="Center"
+                                             IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                    </Grid>
+                </Border>
+
+                <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
+                    <ui:MaterialIconView IconName="Lock" IconSize="16" VerticalOptions="Center"
+                                         IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                    <Label Text="{Binding OnPhoneText}" Style="{StaticResource CaptionStyle}" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

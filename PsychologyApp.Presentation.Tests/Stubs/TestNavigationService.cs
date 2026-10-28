@@ -95,6 +95,7 @@ public class TestNavigationService(INavigation navigation) : INavigationService
     public Task GoToChatListAsync() => Task.CompletedTask;
     public Task GoToChatAsync(long? sessionId = null, string? topic = null, string? opener = null) => Task.CompletedTask;
     public Task GoToCompanionProfileAsync() => Task.CompletedTask;
+    public Task GoToChatInfoAsync(long sessionId) => Task.CompletedTask;
     public Task GoToCrisisHubAsync() => Task.CompletedTask;
 
     public Task GoToRiskCheckAsync(string source) => Task.CompletedTask;

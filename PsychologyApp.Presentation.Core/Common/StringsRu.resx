@@ -4156,4 +4156,73 @@
   <data name="ChatMore" xml:space="preserve">
     <value>Ещё</value>
   </data>
+  <data name="ChatInfoTitle" xml:space="preserve">
+    <value>О разговоре</value>
+  </data>
+  <data name="ChatInfoStarted" xml:space="preserve">
+    <value>Начат {0} · обновлён {1}</value>
+  </data>
+  <data name="ChatInfoOpen" xml:space="preserve">
+    <value>Открыть</value>
+  </data>
+  <data name="ChatInfoRename" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="ChatInfoDelete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="ChatInfoSection" xml:space="preserve">
+    <value>В этом разговоре</value>
+  </data>
+  <data name="ChatInfoFeeling" xml:space="preserve">
+    <value>Чувство</value>
+  </data>
+  <data name="ChatInfoTension" xml:space="preserve">
+    <value>Напряжение</value>
+  </data>
+  <data name="ChatInfoPractice" xml:space="preserve">
+    <value>Практика</value>
+  </data>
+  <data name="ChatInfoStep" xml:space="preserve">
+    <value>Шаг</value>
+  </data>
+  <data name="ChatInfoEmpty" xml:space="preserve">
+    <value>Когда разговор продолжится, здесь появятся чувство, напряжение и шаг, о котором вы договорились.</value>
+  </data>
+  <data name="ChatInfoOnPhone" xml:space="preserve">
+    <value>Разговор хранится только на этом телефоне</value>
+  </data>
+  <data name="ChatInfoAboutCompanion" xml:space="preserve">
+    <value>Об ИИ-психологе</value>
+  </data>
+  <data name="ChatEmotionPanic" xml:space="preserve">
+    <value>Паника</value>
+  </data>
+  <data name="ChatEmotionAnxiety" xml:space="preserve">
+    <value>Тревога</value>
+  </data>
+  <data name="ChatEmotionOverthinking" xml:space="preserve">
+    <value>Мысли по кругу</value>
+  </data>
+  <data name="ChatEmotionAnger" xml:space="preserve">
+    <value>Гнев</value>
+  </data>
+  <data name="ChatEmotionResentment" xml:space="preserve">
+    <value>Обида</value>
+  </data>
+  <data name="ChatEmotionGuilt" xml:space="preserve">
+    <value>Вина</value>
+  </data>
+  <data name="ChatEmotionSadness" xml:space="preserve">
+    <value>Грусть</value>
+  </data>
+  <data name="ChatEmotionExhaustion" xml:space="preserve">
+    <value>Усталость</value>
+  </data>
+  <data name="ChatEmotionLoneliness" xml:space="preserve">
+    <value>Одиночество</value>
+  </data>
+  <data name="ChatEmotionProcrastination" xml:space="preserve">
+    <value>Откладывание</value>
+  </data>
 </root>

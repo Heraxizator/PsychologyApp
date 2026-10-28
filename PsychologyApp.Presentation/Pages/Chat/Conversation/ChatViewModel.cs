@@ -82,7 +82,10 @@ public sealed class ChatViewModel : BaseViewModel
 
         BindNavigation(navigationService);
         BackCommand = new AsyncCommand(GoBackAsync);
-        OpenProfileCommand = new AsyncCommand(() => NavigationService!.GoToCompanionProfileAsync());
+        // The header of an open chat leads to that chat's page; before the chat exists there is only the companion to show.
+        OpenProfileCommand = new AsyncCommand(() => _sessionId is { } id
+            ? NavigationService!.GoToChatInfoAsync(id)
+            : NavigationService!.GoToCompanionProfileAsync());
         SendCommand = new Command(() => Run(SendDraftAsync));
         QuickReplyCommand = new Command<ChatQuickReply>(reply => Run(() => SendQuickReplyAsync(reply)));
     }

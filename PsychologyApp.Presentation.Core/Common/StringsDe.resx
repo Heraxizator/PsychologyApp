@@ -4150,4 +4150,73 @@
   <data name="ChatMore" xml:space="preserve">
     <value>Mehr</value>
   </data>
+  <data name="ChatInfoTitle" xml:space="preserve">
+    <value>Über dieses Gespräch</value>
+  </data>
+  <data name="ChatInfoStarted" xml:space="preserve">
+    <value>Begonnen {0} · aktualisiert {1}</value>
+  </data>
+  <data name="ChatInfoOpen" xml:space="preserve">
+    <value>Öffnen</value>
+  </data>
+  <data name="ChatInfoRename" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ChatInfoDelete" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="ChatInfoSection" xml:space="preserve">
+    <value>In diesem Gespräch</value>
+  </data>
+  <data name="ChatInfoFeeling" xml:space="preserve">
+    <value>Gefühl</value>
+  </data>
+  <data name="ChatInfoTension" xml:space="preserve">
+    <value>Anspannung</value>
+  </data>
+  <data name="ChatInfoPractice" xml:space="preserve">
+    <value>Übung</value>
+  </data>
+  <data name="ChatInfoStep" xml:space="preserve">
+    <value>Schritt</value>
+  </data>
+  <data name="ChatInfoEmpty" xml:space="preserve">
+    <value>Im Laufe des Gesprächs erscheinen hier das Gefühl, die Anspannung und der Schritt, den du beschlossen hast.</value>
+  </data>
+  <data name="ChatInfoOnPhone" xml:space="preserve">
+    <value>Dieses Gespräch bleibt nur auf diesem Handy</value>
+  </data>
+  <data name="ChatInfoAboutCompanion" xml:space="preserve">
+    <value>Über den KI-Psychologen</value>
+  </data>
+  <data name="ChatEmotionPanic" xml:space="preserve">
+    <value>Panik</value>
+  </data>
+  <data name="ChatEmotionAnxiety" xml:space="preserve">
+    <value>Angst</value>
+  </data>
+  <data name="ChatEmotionOverthinking" xml:space="preserve">
+    <value>Kreisende Gedanken</value>
+  </data>
+  <data name="ChatEmotionAnger" xml:space="preserve">
+    <value>Wut</value>
+  </data>
+  <data name="ChatEmotionResentment" xml:space="preserve">
+    <value>Kränkung</value>
+  </data>
+  <data name="ChatEmotionGuilt" xml:space="preserve">
+    <value>Schuld</value>
+  </data>
+  <data name="ChatEmotionSadness" xml:space="preserve">
+    <value>Traurigkeit</value>
+  </data>
+  <data name="ChatEmotionExhaustion" xml:space="preserve">
+    <value>Erschöpfung</value>
+  </data>
+  <data name="ChatEmotionLoneliness" xml:space="preserve">
+    <value>Einsamkeit</value>
+  </data>
+  <data name="ChatEmotionProcrastination" xml:space="preserve">
+    <value>Aufschieben</value>
+  </data>
 </root>

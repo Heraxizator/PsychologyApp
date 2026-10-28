@@ -4150,4 +4150,73 @@
   <data name="ChatMore" xml:space="preserve">
     <value>更多</value>
   </data>
+  <data name="ChatInfoTitle" xml:space="preserve">
+    <value>关于这次对话</value>
+  </data>
+  <data name="ChatInfoStarted" xml:space="preserve">
+    <value>开始于 {0} · 更新于 {1}</value>
+  </data>
+  <data name="ChatInfoOpen" xml:space="preserve">
+    <value>打开</value>
+  </data>
+  <data name="ChatInfoRename" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="ChatInfoDelete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="ChatInfoSection" xml:space="preserve">
+    <value>这次对话中</value>
+  </data>
+  <data name="ChatInfoFeeling" xml:space="preserve">
+    <value>情绪</value>
+  </data>
+  <data name="ChatInfoTension" xml:space="preserve">
+    <value>紧张程度</value>
+  </data>
+  <data name="ChatInfoPractice" xml:space="preserve">
+    <value>练习</value>
+  </data>
+  <data name="ChatInfoStep" xml:space="preserve">
+    <value>下一步</value>
+  </data>
+  <data name="ChatInfoEmpty" xml:space="preserve">
+    <value>随着对话进行，这里会显示情绪、紧张程度和你决定的下一步。</value>
+  </data>
+  <data name="ChatInfoOnPhone" xml:space="preserve">
+    <value>这次对话只保存在这部手机上</value>
+  </data>
+  <data name="ChatInfoAboutCompanion" xml:space="preserve">
+    <value>关于AI心理师</value>
+  </data>
+  <data name="ChatEmotionPanic" xml:space="preserve">
+    <value>惊恐</value>
+  </data>
+  <data name="ChatEmotionAnxiety" xml:space="preserve">
+    <value>焦虑</value>
+  </data>
+  <data name="ChatEmotionOverthinking" xml:space="preserve">
+    <value>念头打转</value>
+  </data>
+  <data name="ChatEmotionAnger" xml:space="preserve">
+    <value>愤怒</value>
+  </data>
+  <data name="ChatEmotionResentment" xml:space="preserve">
+    <value>委屈</value>
+  </data>
+  <data name="ChatEmotionGuilt" xml:space="preserve">
+    <value>内疚</value>
+  </data>
+  <data name="ChatEmotionSadness" xml:space="preserve">
+    <value>悲伤</value>
+  </data>
+  <data name="ChatEmotionExhaustion" xml:space="preserve">
+    <value>疲惫</value>
+  </data>
+  <data name="ChatEmotionLoneliness" xml:space="preserve">
+    <value>孤独</value>
+  </data>
+  <data name="ChatEmotionProcrastination" xml:space="preserve">
+    <value>拖延</value>
+  </data>
 </root>

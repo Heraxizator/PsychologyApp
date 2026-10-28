@@ -57,6 +57,9 @@ public interface INavigationService
     /// <param name="opener">For a new chat: words the person picked to begin with, sent as their first message.</param>
     Task GoToChatAsync(long? sessionId = null, string? topic = null, string? opener = null);
     Task GoToCompanionProfileAsync();
+
+    /// <summary>The page about one chat: what it held, renaming and deleting it.</summary>
+    Task GoToChatInfoAsync(long sessionId);
     Task GoToCrisisHubAsync();
     Task GoToRiskCheckAsync(string source);
     Task GoToSafetyPlanAsync();
