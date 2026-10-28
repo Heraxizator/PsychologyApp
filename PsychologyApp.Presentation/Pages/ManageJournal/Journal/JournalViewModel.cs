@@ -34,6 +34,12 @@ public sealed class JournalViewModel : BaseViewModel
     private bool _noteLooksLikeCrisis;
     private bool _factorsOpened;
 
+    /// <summary>
+    /// The day or slot changed and its check-in is still loading: the entry id, mood and note on screen belong to the one before, so a
+    /// face tapped or a note saved now would overwrite that other check-in. Nothing is saved until the snapshot of the new one arrives.
+    /// </summary>
+    private bool _editorStale;
+
     public JournalViewModel(
         JournalMoodLoader journalMoodLoader,
         JournalEditorContext editorContext,
@@ -102,7 +108,7 @@ public sealed class JournalViewModel : BaseViewModel
                 _ => 0
             };
 
-            if (level is >= 1 and <= 5)
+            if (level is >= 1 and <= 5 && !_editorStale)
             {
                 SelectedMoodLevel = level;
                 await SaveMoodAsync();
@@ -380,15 +386,36 @@ public sealed class JournalViewModel : BaseViewModel
         NotifySlots();
     }
 
+    /// <summary>
+    /// On every appearing. Without a day asked for by another page the journal opens on today and the current slot again: a past day
+    /// left open in the card read as today's check-in when the person came back, and the face tapped then went to that day.
+    /// </summary>
     public Task ReloadAsync()
     {
-        if (_editorContext.ConsumePendingEditorDay() is DateOnly pendingDay)
+        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+        DateOnly day = _editorContext.ConsumePendingEditorDay() ?? today;
+        // The slot stays when the day does (a check-in of today the person was on); back to today it is the current one.
+        JournalCheckInSlot slot = day == _editorDay || day != today ? _editorSlot : CurrentSlot();
+        _monthCursor = new DateOnly(day.Year, day.Month, 1);
+        MoveEditor(day, slot);
+        return LoadAsync();
+    }
+
+    private static JournalCheckInSlot CurrentSlot() =>
+        MoodCheckInSlotPolicy.IsMorningLocalHour(DateTime.Now.Hour) ? JournalCheckInSlot.Morning : JournalCheckInSlot.Evening;
+
+    /// <summary>Points the editor at another check-in; until it loads, the one on screen is not saved over it.</summary>
+    private void MoveEditor(DateOnly day, JournalCheckInSlot slot)
+    {
+        if (day == _editorDay && slot == _editorSlot)
         {
-            _editorDay = pendingDay;
-            _monthCursor = new DateOnly(pendingDay.Year, pendingDay.Month, 1);
+            return;
         }
 
-        return LoadAsync();
+        _editorDay = day;
+        _editorSlot = slot;
+        _editorStale = true;
+        CancelNoteAutosave();
     }
 
     public async Task FlushPendingNoteSaveAsync()
@@ -405,7 +432,7 @@ public sealed class JournalViewModel : BaseViewModel
     private async Task SelectDayAsync(DateOnly day)
     {
         await FlushPendingNoteSaveAsync();
-        _editorDay = day;
+        MoveEditor(day, _editorSlot);
         _factorsOpened = false;
         await LoadAsync();
     }
@@ -418,7 +445,7 @@ public sealed class JournalViewModel : BaseViewModel
         }
 
         await FlushPendingNoteSaveAsync();
-        _editorSlot = slot;
+        MoveEditor(_editorDay, slot);
         _factorsOpened = false;
         NotifySlots();
         await LoadAsync();
@@ -531,6 +558,7 @@ public sealed class JournalViewModel : BaseViewModel
         _editorEntryId = snapshot.EditorEntryId;
         _editorDay = snapshot.EditorDay;
         _editorSlot = snapshot.EditorSlot;
+        _editorStale = false;
         _morning = snapshot.Morning;
         _evening = snapshot.Evening;
         NotifySlots();
@@ -562,7 +590,7 @@ public sealed class JournalViewModel : BaseViewModel
 
     private async Task SaveMoodAsync(bool reload = true)
     {
-        if (SelectedMoodLevel is < 1 or > 5)
+        if (SelectedMoodLevel is < 1 or > 5 || _editorStale)
         {
             return;
         }
