@@ -1095,9 +1095,6 @@
   <data name="TechniqueNotTriedYet" xml:space="preserve">
     <value>Pas encore essayée</value>
   </data>
-  <data name="TestNeverTakenYet" xml:space="preserve">
-    <value>Pas encore passé</value>
-  </data>
   <data name="TestTryTechnique" xml:space="preserve">
     <value>Essayer une technique</value>
   </data>
@@ -4221,5 +4218,11 @@
   </data>
   <data name="JournalSlotAdd" xml:space="preserve">
     <value>Noter</value>
+  </data>
+  <data name="PickStarter" xml:space="preserve">
+    <value>Pour commencer</value>
+  </data>
+  <data name="QuotesThemesToggle" xml:space="preserve">
+    <value>Thèmes</value>
   </data>
 </root>

@@ -100,6 +100,7 @@ public sealed class TechniqueCardPlatformView : LinearLayout
     private readonly TextView _meta;
     private readonly TextView _date;
     private readonly TextView _author;
+    private readonly LinearLayout _status;
     private readonly GradientDrawable _surface = new();
     private readonly GradientDrawable _tileBackground = new();
     private ImageView? _picture;
@@ -132,17 +133,18 @@ public sealed class TechniqueCardPlatformView : LinearLayout
         // The tile sits at the top of the text, as on the test cards, rather than floating in the middle of a tall card.
         top.AddView(_tile, new LayoutParams(Px(TileDp), Px(TileDp)) { Gravity = GravityFlags.Top });
 
-        // Everything the card says is in one column with one left edge: title, subtitle, the length and group, then whether
-        // the person has tried it and the school. Full-width lines under the tile made the card tall and its text ragged.
+        // Everything the card says is in one column with one left edge: title, a one-line subtitle, the length and group in grey,
+        // and when the practice was last done, only once it was. Five lines with a blue one in each card made the list loud.
         LinearLayout texts = new(context) { Orientation = global::Android.Widget.Orientation.Vertical };
         _title = Text(context, maxLines: 2);
-        _subtitle = Text(context, maxLines: 2);
+        _subtitle = Text(context, maxLines: 1);
         _meta = Text(context, maxLines: 1);
         texts.AddView(_title);
         texts.AddView(_subtitle, Margins(top: 2));
-        texts.AddView(_meta, Margins(top: 8));
+        texts.AddView(_meta, Margins(top: 4));
 
-        LinearLayout status = new(context) { Orientation = global::Android.Widget.Orientation.Horizontal };
+        LinearLayout status = new(context) { Orientation = global::Android.Widget.Orientation.Horizontal, Visibility = ViewStates.Gone };
+        _status = status;
         _date = Text(context, maxLines: 1);
         _author = Text(context, maxLines: 1);
         _author.Gravity = GravityFlags.End;
@@ -170,7 +172,11 @@ public sealed class TechniqueCardPlatformView : LinearLayout
 
     public void SetMeta(string text) => _meta.Text = text;
 
-    public void SetDate(string text) => _date.Text = text;
+    public void SetDate(string text)
+    {
+        _date.Text = text;
+        _status.Visibility = string.IsNullOrWhiteSpace(text) ? ViewStates.Gone : ViewStates.Visible;
+    }
 
     public void SetAuthor(string text)
     {
@@ -228,7 +234,7 @@ public sealed class TechniqueCardPlatformView : LinearLayout
 
         Style(_title, semiBold, body, Number("BodyLineHeight", 1.45), dark ? "TextPrimaryDark" : "TextPrimaryLight");
         Style(_subtitle, bodyFamily, caption, Number("CaptionLineHeight", 1.35), dark ? "TextSecondaryDark" : "TextSecondaryLight");
-        Style(_meta, semiBold, caption, Number("CaptionLineHeight", 1.35), dark ? "PrimaryTextDark" : "PrimaryTextLight");
+        Style(_meta, bodyFamily, caption, Number("CaptionLineHeight", 1.35), dark ? "TextSecondaryDark" : "TextSecondaryLight");
         Style(_date, bodyFamily, caption, Number("CaptionLineHeight", 1.35), dark ? "TextSecondaryDark" : "TextSecondaryLight");
         Style(_author, bodyFamily, caption, Number("CaptionLineHeight", 1.35), dark ? "TextSecondaryDark" : "TextSecondaryLight");
         Style(_chevron, "MaterialIcons", 14, 1, dark ? "TextSecondaryDark" : "TextTertiaryLight");

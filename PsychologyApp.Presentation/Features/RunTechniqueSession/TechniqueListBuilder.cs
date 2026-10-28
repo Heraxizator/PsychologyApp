@@ -54,8 +54,9 @@ public sealed class TechniqueListBuilder(
             items.Add(new TechniqueItem
             {
                 Number = entry.Number,
+                // Only a practice already done says so: "Not tried yet" on nearly every card was noise.
                 Date = lastPracticeDate is null
-                    ? AppStrings.TechniqueNotTriedYet
+                    ? string.Empty
                     : AppStrings.TechniqueLastPractice(lastPracticeDate.Value.ToLocalTime().ToString("d")),
                 IconName = entry.Icon,
                 DurationText = durationText,

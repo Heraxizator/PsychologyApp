@@ -33,12 +33,10 @@ public class TestItem : INotifyPropertyChanged
             _lastResultSummary = value;
             OnPropertyChanged();
             OnPropertyChanged(nameof(HasLastResult));
-            OnPropertyChanged(nameof(ShowNeverTaken));
         }
     }
 
     public bool HasLastResult => !string.IsNullOrWhiteSpace(LastResultSummary);
-    public bool ShowNeverTaken => !HasLastResult;
 
     private bool _hasMultipleResults;
     public bool HasMultipleResults
@@ -58,7 +56,6 @@ public class TestItem : INotifyPropertyChanged
 
     public string HistoryLabel => AppStrings.TestOpenHistory;
     public string RetakeLabel => AppStrings.TestRetakeButton;
-    public string NeverTakenLabel => AppStrings.TestNeverTakenYet;
     public ICommand? OpenHistoryCommand { get; set; }
     public ICommand? RetakeCommand { get; set; }
 

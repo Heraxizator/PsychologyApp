@@ -50,14 +50,12 @@
                         <Label
                             Text="{TemplateBinding Subtitle}"
                             Style="{StaticResource CaptionStyle}"
-                            MaxLines="2"
+                            MaxLines="1"
                             LineBreakMode="TailTruncation" />
                         <Label
-                            Margin="0,6,0,0"
+                            Margin="0,2,0,0"
                             Text="{TemplateBinding MetaText}"
                             Style="{StaticResource CaptionStyle}"
-                            FontFamily="{StaticResource SemiBoldFontFamily}"
-                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                             MaxLines="1"
                             LineBreakMode="TailTruncation" />
                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">

@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Input;
 using PsychologyApp.Application.AnchorThoughts;
 using PsychologyApp.Application.Articles;
@@ -9,8 +10,49 @@ using PsychologyApp.Presentation.Shared.ViewModels;
 
 namespace PsychologyApp.Presentation.Pages.ReadArticles.AnchorThoughts;
 
-/// <summary>One anchor thought as shown: the thought, why it holds, and the link to the article that explains it.</summary>
-public sealed record AnchorThoughtItem(string Text, string Why, string ReadMoreText, ICommand OpenArticleCommand);
+/// <summary>
+/// One anchor thought as shown: the thought, and under it, once tapped, why it holds and the link to the article that explains it.
+/// Fifty thoughts each with its paragraph open read as a wall of text; the thought alone is what a hard minute needs first.
+/// </summary>
+public sealed class AnchorThoughtItem : INotifyPropertyChanged
+{
+    private bool _isExpanded;
+
+    public AnchorThoughtItem(string text, string why, string readMoreText, ICommand openArticleCommand)
+    {
+        Text = text;
+        Why = why;
+        ReadMoreText = readMoreText;
+        OpenArticleCommand = openArticleCommand;
+        ToggleCommand = new Command(() => IsExpanded = !IsExpanded);
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    public string Text { get; }
+    public string Why { get; }
+    public string ReadMoreText { get; }
+    public ICommand OpenArticleCommand { get; }
+    public ICommand ToggleCommand { get; }
+
+    public bool IsExpanded
+    {
+        get => _isExpanded;
+        private set
+        {
+            if (_isExpanded == value)
+            {
+                return;
+            }
+
+            _isExpanded = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsExpanded)));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ToggleIcon)));
+        }
+    }
+
+    public string ToggleIcon => IsExpanded ? "ExpandLess" : "ExpandMore";
+}
 
 /// <summary>
 /// The "Anchor thoughts" page of the menu: chips for one theme or all, and the thoughts as cards, each with its reason and an article.

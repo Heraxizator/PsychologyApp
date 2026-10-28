@@ -39,21 +39,12 @@
                         <Label
                             Text="{TemplateBinding Subtitle}"
                             Style="{StaticResource CaptionStyle}"
-                            MaxLines="4"
-                            LineBreakMode="WordWrap" />
+                            MaxLines="1"
+                            LineBreakMode="TailTruncation" />
                         <Label
                             IsVisible="{TemplateBinding HasMetaText}"
                             Text="{TemplateBinding MetaText}"
                             Style="{StaticResource CaptionStyle}"
-                            FontFamily="{StaticResource SemiBoldFontFamily}"
-                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
-                            MaxLines="2"
-                            LineBreakMode="WordWrap" />
-                        <Label
-                            IsVisible="{TemplateBinding ShowNeverTaken}"
-                            Text="{TemplateBinding NeverTakenLabel}"
-                            Style="{StaticResource CaptionStyle}"
-                            TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
                             MaxLines="1"
                             LineBreakMode="TailTruncation" />
                         <VerticalStackLayout Spacing="8" IsVisible="{TemplateBinding HasLastResult}">
@@ -61,7 +52,6 @@
                                 Text="{TemplateBinding LastResultText}"
                                 Style="{StaticResource CaptionStyle}"
                                 FontFamily="{StaticResource MediumFontFamily}"
-                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                                 MaxLines="2"
                                 LineBreakMode="WordWrap">
                                 <Label.GestureRecognizers>

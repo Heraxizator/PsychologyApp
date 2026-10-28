@@ -10,7 +10,7 @@ public partial class ProfileHistoryEntryView : ContentView
     }
 
     public static readonly BindableProperty DateTextProperty =
-        BindableProperty.Create(nameof(DateText), typeof(string), typeof(ProfileHistoryEntryView), string.Empty);
+        BindableProperty.Create(nameof(DateText), typeof(string), typeof(ProfileHistoryEntryView), string.Empty, propertyChanged: OnDetailChanged);
 
     public static readonly BindableProperty TechniqueNameProperty =
         BindableProperty.Create(nameof(TechniqueName), typeof(string), typeof(ProfileHistoryEntryView), string.Empty);
@@ -19,19 +19,34 @@ public partial class ProfileHistoryEntryView : ContentView
         BindableProperty.Create(nameof(IconName), typeof(string), typeof(ProfileHistoryEntryView), string.Empty);
 
     public static readonly BindableProperty DurationTextProperty =
-        BindableProperty.Create(nameof(DurationText), typeof(string), typeof(ProfileHistoryEntryView), string.Empty);
+        BindableProperty.Create(nameof(DurationText), typeof(string), typeof(ProfileHistoryEntryView), string.Empty, propertyChanged: OnDetailChanged);
 
     public static readonly BindableProperty HasDurationProperty =
-        BindableProperty.Create(nameof(HasDuration), typeof(bool), typeof(ProfileHistoryEntryView), false);
+        BindableProperty.Create(nameof(HasDuration), typeof(bool), typeof(ProfileHistoryEntryView), false, propertyChanged: OnDetailChanged);
 
     public static readonly BindableProperty TapCommandProperty =
         BindableProperty.Create(nameof(TapCommand), typeof(ICommand), typeof(ProfileHistoryEntryView), null);
 
     public static readonly BindableProperty SudsDeltaTextProperty =
-        BindableProperty.Create(nameof(SudsDeltaText), typeof(string), typeof(ProfileHistoryEntryView), string.Empty);
+        BindableProperty.Create(nameof(SudsDeltaText), typeof(string), typeof(ProfileHistoryEntryView), string.Empty, propertyChanged: OnDetailChanged);
 
     public static readonly BindableProperty HasSudsDeltaProperty =
-        BindableProperty.Create(nameof(HasSudsDelta), typeof(bool), typeof(ProfileHistoryEntryView), false);
+        BindableProperty.Create(nameof(HasSudsDelta), typeof(bool), typeof(ProfileHistoryEntryView), false, propertyChanged: OnDetailChanged);
+
+    /// <summary>
+    /// The date, the length and the tension before and after in one grey line: two blue pills on every entry made the history the
+    /// loudest thing in the profile.
+    /// </summary>
+    public string DetailText =>
+        string.Join(" · ", new[]
+        {
+            DateText,
+            HasDuration ? DurationText : string.Empty,
+            HasSudsDelta ? SudsDeltaText : string.Empty
+        }.Where(part => !string.IsNullOrWhiteSpace(part)));
+
+    private static void OnDetailChanged(BindableObject bindable, object oldValue, object newValue) =>
+        ((ProfileHistoryEntryView)bindable).OnPropertyChanged(nameof(DetailText));
 
     public string DateText
     {

@@ -65,7 +65,6 @@
                         <cleanUi:MusicListCardView
                             Title="{Binding Name}"
                             Subtitle="{Binding Description}"
-                            MetaText="{Binding Category}"
                             IsActive="{Binding IsActive}"
                             IsPlayingThis="{Binding IsPlayingThis}"
                             ShowOfflineBadge="{Binding IsCached}"

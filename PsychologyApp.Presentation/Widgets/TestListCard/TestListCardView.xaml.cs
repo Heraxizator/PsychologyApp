@@ -135,24 +135,6 @@ public partial class TestListCardView : ContentView
         set => SetValue(HasLastResultProperty, value);
     }
 
-    public static readonly BindableProperty ShowNeverTakenProperty =
-        BindableProperty.Create(nameof(ShowNeverTaken), typeof(bool), typeof(TestListCardView), false);
-
-    public bool ShowNeverTaken
-    {
-        get => (bool)GetValue(ShowNeverTakenProperty);
-        set => SetValue(ShowNeverTakenProperty, value);
-    }
-
-    public static readonly BindableProperty NeverTakenLabelProperty =
-        BindableProperty.Create(nameof(NeverTakenLabel), typeof(string), typeof(TestListCardView), string.Empty);
-
-    public string NeverTakenLabel
-    {
-        get => (string)GetValue(NeverTakenLabelProperty);
-        set => SetValue(NeverTakenLabelProperty, value);
-    }
-
     public static readonly BindableProperty TapCommandProperty =
         BindableProperty.Create(nameof(TapCommand), typeof(ICommand), typeof(TestListCardView), null);
 

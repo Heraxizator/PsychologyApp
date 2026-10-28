@@ -574,6 +574,8 @@ public static partial class AppStrings
     public static string TechniqueContinueBadge => R(nameof(TechniqueContinueBadge));
     public static string TechniqueLastPractice(string date) => F(nameof(TechniqueLastPractice), date);
     public static string TechniqueNotTriedYet => R(nameof(TechniqueNotTriedYet));
+    /// <summary>The button beside the quote search that shows the theme chips.</summary>
+    public static string QuotesThemesToggle => R(nameof(QuotesThemesToggle));
     public static string TechniqueDuration(int minutes) => F(nameof(TechniqueDuration), minutes);
     public static string TechniqueMetaLine(string duration, string theme) => F(nameof(TechniqueMetaLine), duration, theme);
 
@@ -585,7 +587,6 @@ public static partial class AppStrings
 
     public static string TestLastResult(string summary) => F(nameof(TestLastResult), summary);
     public static string TestLastResultDated(string summary, string date) => F(nameof(TestLastResultDated), date, summary);
-    public static string TestNeverTakenYet => R(nameof(TestNeverTakenYet));
     public static string TestCompletedAt(string date) => F(nameof(TestCompletedAt), date);
     public static string TestTryTechnique => R(nameof(TestTryTechnique));
     public static string TestResultImproved => R(nameof(TestResultImproved));

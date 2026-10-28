@@ -43,8 +43,6 @@
                         MetaText="{Binding MetaText}"
                         LastResultText="{Binding LastResultSummary}"
                         HasLastResult="{Binding HasLastResult}"
-                        ShowNeverTaken="{Binding ShowNeverTaken}"
-                        NeverTakenLabel="{Binding NeverTakenLabel}"
                         HasMultipleResults="{Binding HasMultipleResults}"
                         HistoryLabel="{Binding HistoryLabel}"
                         RetakeLabel="{Binding RetakeLabel}"

@@ -39,10 +39,16 @@
                 </VerticalStackLayout>
             </VerticalStackLayout>
 
-            <!-- Nothing yet: say how the page fills up, and offer the quickest way to start. -->
-            <VerticalStackLayout Spacing="12" IsVisible="{Binding IsEmpty}" Margin="4,24,4,0">
-                <ui:MaterialIconView IconName="AutoStories" IconSize="40" HorizontalOptions="Center" />
-                <Label Text="{Binding EmptyText}" Style="{StaticResource BodyStyle}" HorizontalTextAlignment="Center" />
+            <!-- Nothing yet: one quiet line on how the page fills up, then a way in right away rather than an empty page. -->
+            <VerticalStackLayout Spacing="{StaticResource ListItemSpacing}" IsVisible="{Binding IsEmpty}">
+                <Label Text="{Binding EmptyText}" Style="{StaticResource CaptionStyle}" Margin="4,0" />
+                <VerticalStackLayout Spacing="{StaticResource ListItemSpacing}" BindableLayout.ItemsSource="{Binding Starters}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="card:LibraryCardItem">
+                            <card:LibraryCardView />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
                 <ui:ButtonView BodyText="{Binding TakeTestText}" TapCommand="{Binding TakeTestCommand}" Variant="Secondary" />
             </VerticalStackLayout>
         </VerticalStackLayout>

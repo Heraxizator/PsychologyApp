@@ -26,6 +26,9 @@ public sealed class QuoteFeedCoordinator
 
     public QuoteFeedMode FeedMode => _feedMode;
 
+    /// <summary>A theme other than "all" is chosen, so its chips stay in sight to show it and to undo it.</summary>
+    public bool HasThemeSelected => _selectedThemeKey is not null;
+
     public void ResetKnownQuotes() => _knownQuoteTexts.Clear();
 
     public void SetFeedMode(QuoteFeedMode mode) => _feedMode = mode;

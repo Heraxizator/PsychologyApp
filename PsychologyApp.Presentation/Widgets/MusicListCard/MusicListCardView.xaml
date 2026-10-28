@@ -26,16 +26,17 @@
         <Border.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding TapCommand, Source={x:Reference Root}}" />
         </Border.GestureRecognizers>
-        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+            <!-- A round play button on the tint, as a player shows one; the square white tile read as an empty box. -->
             <Border
                 Grid.Column="0"
-                WidthRequest="52"
-                HeightRequest="52"
+                WidthRequest="44"
+                HeightRequest="44"
                 StrokeThickness="0"
-                BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
+                BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}"
                 VerticalOptions="Center">
                 <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="12" />
+                    <RoundRectangle CornerRadius="22" />
                 </Border.StrokeShape>
                 <Border.Triggers>
                     <DataTrigger
@@ -48,7 +49,7 @@
                 <Grid>
                     <ui:MaterialIconView
                         IconName="PlayArrow"
-                        IconSize="28"
+                        IconSize="24"
                         IconColor="{DynamicResource Primary}"
                         HorizontalOptions="Center"
                         VerticalOptions="Center">
@@ -70,7 +71,7 @@
                     </ui:MaterialIconView>
                     <ui:MaterialIconView
                         IconName="Pause"
-                        IconSize="28"
+                        IconSize="24"
                         IconColor="White"
                         IsVisible="False"
                         HorizontalOptions="Center"
@@ -99,22 +100,18 @@
                 <Label
                     Text="{Binding Subtitle, Source={x:Reference Root}}"
                     Style="{StaticResource CaptionStyle}"
-                    MaxLines="2"
-                    LineBreakMode="TailTruncation" />
-                <Label
-                    IsVisible="{Binding HasMetaText, Source={x:Reference Root}}"
-                    Text="{Binding MetaText, Source={x:Reference Root}}"
-                    Style="{StaticResource CaptionStyle}"
-                    FontFamily="{StaticResource SemiBoldFontFamily}"
-                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
                     MaxLines="1"
                     LineBreakMode="TailTruncation" />
-                <Label
-                    IsVisible="{Binding ShowOfflineBadge, Source={x:Reference Root}}"
-                    Text="{Binding OfflineBadgeText, Source={x:Reference Root}}"
-                    Style="{StaticResource CaptionStyle}"
-                    TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
             </VerticalStackLayout>
+            <!-- Saved for offline: a small grey mark instead of a blue line on every card; the chips above already name the group. -->
+            <ui:MaterialIconView
+                Grid.Column="2"
+                IsVisible="{Binding ShowOfflineBadge, Source={x:Reference Root}}"
+                SemanticProperties.Description="{Binding OfflineBadgeText, Source={x:Reference Root}}"
+                IconName="OfflinePin"
+                IconSize="18"
+                VerticalOptions="Center"
+                IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
         </Grid>
     </Border>
 </ContentView>

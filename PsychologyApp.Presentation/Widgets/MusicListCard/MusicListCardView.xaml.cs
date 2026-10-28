@@ -27,29 +27,6 @@ public partial class MusicListCardView : ContentView
         set => SetValue(SubtitleProperty, value);
     }
 
-    public static readonly BindableProperty MetaTextProperty =
-        BindableProperty.Create(
-            nameof(MetaText),
-            typeof(string),
-            typeof(MusicListCardView),
-            string.Empty,
-            propertyChanged: OnMetaTextChanged);
-
-    public string MetaText
-    {
-        get => (string)GetValue(MetaTextProperty);
-        set => SetValue(MetaTextProperty, value);
-    }
-
-    public bool HasMetaText => !string.IsNullOrWhiteSpace(MetaText);
-
-    private static void OnMetaTextChanged(BindableObject bindable, object oldValue, object newValue)
-    {
-        if (bindable is MusicListCardView view)
-        {
-            view.OnPropertyChanged(nameof(HasMetaText));
-        }
-    }
 
     public static readonly BindableProperty TapCommandProperty =
         BindableProperty.Create(nameof(TapCommand), typeof(ICommand), typeof(MusicListCardView), null);

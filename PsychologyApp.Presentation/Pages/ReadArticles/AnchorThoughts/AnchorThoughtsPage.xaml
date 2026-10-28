@@ -37,18 +37,33 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:AnchorThoughtItem">
-                    <Border Style="{StaticResource QuoteListCardStyle}" Padding="16,12,8,4">
+                    <Border Style="{StaticResource QuoteListCardStyle}" Padding="16,12,8,12">
                         <VerticalStackLayout Spacing="6">
+                            <!-- The thought alone; a tap opens why it holds and its article. -->
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" MinimumHeightRequest="44" SemanticProperties.Description="{Binding Text}">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ToggleCommand}" />
+                                </Grid.GestureRecognizers>
+                                <Label
+                                    Style="{StaticResource EmphasisBodyStyle}"
+                                    FontFamily="{StaticResource MediumFontFamily}"
+                                    VerticalOptions="Center"
+                                    Text="{Binding Text}" />
+                                <ui:MaterialIconView
+                                    Grid.Column="1"
+                                    IconName="{Binding ToggleIcon}"
+                                    IconSize="22"
+                                    VerticalOptions="Center"
+                                    IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            </Grid>
                             <Label
-                                Margin="0,0,8,0"
-                                Style="{StaticResource EmphasisBodyStyle}"
-                                FontFamily="{StaticResource SemiBoldFontFamily}"
-                                Text="{Binding Text}" />
-                            <Label
+                                IsVisible="{Binding IsExpanded}"
                                 Margin="0,0,8,0"
                                 Style="{StaticResource BodyStyle}"
+                                TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
                                 Text="{Binding Why}" />
                             <Grid
+                                IsVisible="{Binding IsExpanded}"
                                 ColumnDefinitions="*,Auto"
                                 MinimumHeightRequest="44"
                                 SemanticProperties.Description="{Binding ReadMoreText}">

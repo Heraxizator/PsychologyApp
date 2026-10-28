@@ -102,7 +102,18 @@ public partial class QuoteViewModel
 
     public bool IsFeedFiltersVisible => !IsSearching;
 
-    public bool IsThemeFiltersVisible => !IsSearching;
+    private bool _themesOpen;
+
+    /// <summary>Behind the button beside the search; kept open while a theme is chosen, so the choice stays visible.</summary>
+    public bool IsThemeFiltersVisible => !IsSearching && (_themesOpen || _feedCoordinator.HasThemeSelected);
+
+    public string ThemesToggleText => AppStrings.QuotesThemesToggle;
+
+    private void ToggleThemes()
+    {
+        _themesOpen = !_themesOpen;
+        OnPropertyChanged(nameof(IsThemeFiltersVisible));
+    }
 
     public string EmptyTitleText =>
         ShowAllReadEmpty ? AllReadTitle :

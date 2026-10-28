@@ -21,10 +21,9 @@
                 <VerticalStackLayout.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding Command}" />
                 </VerticalStackLayout.GestureRecognizers>
-                <Label Text="{Binding Title}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" />
+                <Label Text="{Binding Title}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource MediumFontFamily}" />
                 <Label Text="{Binding Detail}" IsVisible="{Binding HasDetail}" Style="{StaticResource CaptionStyle}" />
-                <Label Text="{Binding Note}" IsVisible="{Binding HasNote}" Style="{StaticResource CaptionStyle}"
-                       TextColor="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}" />
+                <Label Text="{Binding Note}" IsVisible="{Binding HasNote}" Style="{StaticResource CaptionStyle}" />
                 <ui:ButtonView IsVisible="{Binding HasAction}" Variant="Secondary" BodyText="{Binding ActionText}" TapCommand="{Binding Command}" Margin="0,6,0,0" />
             </VerticalStackLayout>
         </DataTemplate>
@@ -40,39 +39,59 @@
 
     <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never">
         <VerticalStackLayout Margin="{StaticResource LayoutTabPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
-            <Label Text="{Binding LeadText}" Style="{StaticResource BodyStyle}" />
-
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16">
+            <Label Text="{Binding LeadText}" Style="{StaticResource CaptionStyle}" Margin="4,0" />
+            <!-- A card only for what there is to show, each with its icon; the hints of the empty ones are quiet lines at the end, so
+                 a new person meets one short page instead of three cards that each say "nothing yet". -->
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16" IsVisible="{Binding HasPractices}">
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="{Binding PracticesTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Border Style="{StaticResource IconTileStyle}" WidthRequest="36" HeightRequest="36">
+                            <ui:MaterialIconView IconName="SelfImprovement" IconSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Grid.Column="1" Text="{Binding PracticesTitle}" Style="{StaticResource SectionTitleStyle}" VerticalOptions="Center" />
+                    </Grid>
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Practices}" BindableLayout.ItemTemplate="{StaticResource InsightTemplate}" />
-                    <Label Text="{Binding PracticesEmptyText}" IsVisible="{Binding ShowPracticesEmpty}" Style="{StaticResource CaptionStyle}" />
                 </VerticalStackLayout>
             </Border>
-
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16">
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16" IsVisible="{Binding HasTests}">
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="{Binding TestsTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Border Style="{StaticResource IconTileStyle}" WidthRequest="36" HeightRequest="36">
+                            <ui:MaterialIconView IconName="FactCheck" IconSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Grid.Column="1" Text="{Binding TestsTitle}" Style="{StaticResource SectionTitleStyle}" VerticalOptions="Center" />
+                    </Grid>
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Tests}" BindableLayout.ItemTemplate="{StaticResource InsightTemplate}" />
-                    <Label Text="{Binding TestsEmptyText}" IsVisible="{Binding ShowTestsEmpty}" Style="{StaticResource CaptionStyle}" />
                 </VerticalStackLayout>
             </Border>
-
-            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16">
+            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16" IsVisible="{Binding HasMoods}">
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="{Binding MoodTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Border Style="{StaticResource IconTileStyle}" WidthRequest="36" HeightRequest="36">
+                            <ui:MaterialIconView IconName="SentimentSatisfied" IconSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Grid.Column="1" Text="{Binding MoodTitle}" Style="{StaticResource SectionTitleStyle}" VerticalOptions="Center" />
+                    </Grid>
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Moods}" BindableLayout.ItemTemplate="{StaticResource InsightTemplate}" />
-                    <Label Text="{Binding MoodNote}" IsVisible="{Binding HasMoods}" Style="{StaticResource CaptionStyle}" />
-                    <Label Text="{Binding MoodEmptyText}" IsVisible="{Binding ShowMoodsEmpty}" Style="{StaticResource CaptionStyle}" />
+                    <Label Text="{Binding MoodNote}" Style="{StaticResource CaptionStyle}" />
                 </VerticalStackLayout>
             </Border>
-
             <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="18,16" IsVisible="{Binding HasBody}">
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="{Binding BodyTitle}" Style="{StaticResource SectionTitleStyle}" />
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Border Style="{StaticResource IconTileStyle}" WidthRequest="36" HeightRequest="36">
+                            <ui:MaterialIconView IconName="Accessibility" IconSize="20" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Grid.Column="1" Text="{Binding BodyTitle}" Style="{StaticResource SectionTitleStyle}" VerticalOptions="Center" />
+                    </Grid>
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding BodyPatterns}" BindableLayout.ItemTemplate="{StaticResource InsightTemplate}" />
                 </VerticalStackLayout>
             </Border>
+            <VerticalStackLayout Spacing="10" Margin="4,0">
+                <Label Text="{Binding PracticesEmptyText}" IsVisible="{Binding ShowPracticesEmpty}" Style="{StaticResource CaptionStyle}" />
+                <Label Text="{Binding TestsEmptyText}" IsVisible="{Binding ShowTestsEmpty}" Style="{StaticResource CaptionStyle}" />
+                <Label Text="{Binding MoodEmptyText}" IsVisible="{Binding ShowMoodsEmpty}" Style="{StaticResource CaptionStyle}" />
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
     </Grid>

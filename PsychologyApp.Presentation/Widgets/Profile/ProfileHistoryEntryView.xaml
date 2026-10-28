@@ -17,7 +17,7 @@
         <Border.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding TapCommand, Source={x:Reference Root}}" />
         </Border.GestureRecognizers>
-        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
             <Border
                 Grid.Column="0"
                 Style="{StaticResource LargeIconTileStyle}">
@@ -39,35 +39,10 @@
                     MaxLines="2"
                     LineBreakMode="TailTruncation" />
                 <Label
-                    Text="{Binding DateText, Source={x:Reference Root}}"
-                    Style="{StaticResource CaptionStyle}" />
-            </VerticalStackLayout>
-
-            <VerticalStackLayout
-                Grid.Column="2"
-                Spacing="6"
-                VerticalOptions="Center"
-                HorizontalOptions="End">
-                <Border
-                    Style="{StaticResource MetaPillStyle}"
-                    IsVisible="{Binding HasSudsDelta, Source={x:Reference Root}}"
-                    HorizontalOptions="End">
-                    <Label
-                        Text="{Binding SudsDeltaText, Source={x:Reference Root}}"
-                        Style="{StaticResource CaptionStyle}"
-                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
-                        FontFamily="{StaticResource SemiBoldFontFamily}" />
-                </Border>
-                <Border
-                    Style="{StaticResource MetaPillStyle}"
-                    IsVisible="{Binding HasDuration, Source={x:Reference Root}}"
-                    HorizontalOptions="End">
-                    <Label
-                        Text="{Binding DurationText, Source={x:Reference Root}}"
-                        Style="{StaticResource CaptionStyle}"
-                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
-                        FontFamily="{StaticResource SemiBoldFontFamily}" />
-                </Border>
+                    Text="{Binding DetailText, Source={x:Reference Root}}"
+                    Style="{StaticResource CaptionStyle}"
+                    MaxLines="2"
+                    LineBreakMode="TailTruncation" />
             </VerticalStackLayout>
         </Grid>
     </Border>

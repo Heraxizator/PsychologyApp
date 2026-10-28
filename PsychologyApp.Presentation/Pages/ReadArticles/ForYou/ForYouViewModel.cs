@@ -27,6 +27,7 @@ public sealed class ForYouViewModel : BaseViewModel
     private readonly IDatabaseReadySignal _databaseReady;
     private IReadOnlyList<LibraryCardItem> _picks = [];
     private IReadOnlyList<LibraryCardItem> _saved = [];
+    private IReadOnlyList<LibraryCardItem> _starters = [];
     private bool _loaded;
 
     public ForYouViewModel(INavigationService navigation, IReadingService reading, IUserProgressService progress, IDatabaseReadySignal databaseReady)
@@ -58,6 +59,16 @@ public sealed class ForYouViewModel : BaseViewModel
         private set => SetProperty(ref _saved, value);
     }
 
+    /// <summary>
+    /// With nothing to go on yet, a short way in instead of an empty page: what anxiety is, the anxiety course and the article on
+    /// sleep, the most common reasons to open the app.
+    /// </summary>
+    public IReadOnlyList<LibraryCardItem> Starters
+    {
+        get => _starters;
+        private set => SetProperty(ref _starters, value);
+    }
+
     public bool HasPicks => Picks.Count > 0;
     public bool HasSaved => Saved.Count > 0;
 
@@ -79,6 +90,7 @@ public sealed class ForYouViewModel : BaseViewModel
             {
                 Picks = [.. picks.Select(pick => Card(pick, state, language)).OfType<LibraryCardItem>()];
                 Saved = [.. state.Saved.Select(id => ArticleContent.Find(id, language)).OfType<Article>().Select(article => LibraryCards.Article(article, state, _navigation))];
+                Starters = HasPicks || HasSaved ? [] : StarterCards(state, language);
                 _loaded = true;
                 Notify(nameof(HasPicks), nameof(HasSaved), nameof(IsEmpty));
             });
@@ -103,6 +115,27 @@ public sealed class ForYouViewModel : BaseViewModel
         return pick.IsCourse
             ? ArticleContent.FindCourse(pick.Id, language) is { } course ? LibraryCards.Course(course, state, _navigation, reason) : null
             : ArticleContent.Find(pick.Id, language) is { } article ? LibraryCards.Article(article, state, _navigation, reason) : null;
+    }
+
+    private List<LibraryCardItem> StarterCards(ReadingState state, string language)
+    {
+        List<LibraryCardItem> cards = [];
+        if (ArticleContent.Find(ArticleIds.Anxiety, language) is { } anxiety)
+        {
+            cards.Add(LibraryCards.Article(anxiety, state, _navigation, AppStrings.PickStarter));
+        }
+
+        if (ArticleContent.FindCourse(CourseIds.Anxiety, language) is { } course)
+        {
+            cards.Add(LibraryCards.Course(course, state, _navigation, AppStrings.PickStarter));
+        }
+
+        if (ArticleContent.Find(ArticleIds.Sleep, language) is { } sleep)
+        {
+            cards.Add(LibraryCards.Article(sleep, state, _navigation, AppStrings.PickStarter));
+        }
+
+        return cards;
     }
 
     private static string TestName(string? testId) => testId switch

@@ -1095,9 +1095,6 @@
   <data name="TechniqueNotTriedYet" xml:space="preserve">
     <value>尚未尝试</value>
   </data>
-  <data name="TestNeverTakenYet" xml:space="preserve">
-    <value>尚未做过</value>
-  </data>
   <data name="TestTryTechnique" xml:space="preserve">
     <value>试试一个技巧</value>
   </data>
@@ -4221,5 +4218,11 @@
   </data>
   <data name="JournalSlotAdd" xml:space="preserve">
     <value>记录</value>
+  </data>
+  <data name="PickStarter" xml:space="preserve">
+    <value>从这里开始</value>
+  </data>
+  <data name="QuotesThemesToggle" xml:space="preserve">
+    <value>主题</value>
   </data>
 </root>

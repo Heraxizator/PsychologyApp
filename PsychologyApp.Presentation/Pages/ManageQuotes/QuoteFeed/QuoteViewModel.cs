@@ -32,6 +32,7 @@ public partial class QuoteViewModel : BaseViewModel
     public ICommand LoadMoreQuotesCommand { get; private set; } = default!;
     public ICommand SelectFeedCommand { get; private set; } = default!;
     public ICommand SelectThemeCommand { get; private set; } = default!;
+    public ICommand ToggleThemesCommand { get; private set; } = default!;
     public ICommand ShowFavoritesCommand { get; private set; } = default!;
     public ICommand ShowAgainCommand { get; private set; } = default!;
     public ICommand CancelSearchCommand { get; private set; } = default!;
@@ -91,6 +92,7 @@ public partial class QuoteViewModel : BaseViewModel
             LoadMoreQuotesCommand = new AsyncCommand(() => AddFreshQuotesAsync());
             SelectFeedCommand = new Command<string?>(key => SelectFeedAsync(key).FireAndForget());
             SelectThemeCommand = new Command<string?>(key => SelectThemeAsync(key).FireAndForget());
+            ToggleThemesCommand = new Command(ToggleThemes);
             ShowFavoritesCommand = new AsyncCommand(() => SwitchFeedAsync(QuoteFeedMode.Favorites));
             ShowAgainCommand = new AsyncCommand(ResetReadStateAsync);
             Reload = new AsyncCommand(() => RunInitAsync(seedNewQuote: false));

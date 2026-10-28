@@ -26,6 +26,8 @@ public static partial class AppStrings
     public static string PickContinueReading => R(nameof(PickContinueReading));
     public static string PickTest(object arg0) => F(nameof(PickTest), arg0);
     public static string PickMood => R(nameof(PickMood));
+    /// <summary>The reason on a card of "For you" before there is anything personal to pick from.</summary>
+    public static string PickStarter => R(nameof(PickStarter));
     public static string CourseCaption => R(nameof(CourseCaption));
     public static string CourseStart => R(nameof(CourseStart));
     public static string CourseContinue(object arg0) => F(nameof(CourseContinue), arg0);

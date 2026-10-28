@@ -37,10 +37,39 @@
                     Grid.Row="0"
                     Spacing="{StaticResource PracticeListItemSpacing}"
                     Margin="0,0,0,8">
-                    <ui:TextEntryView
-                        PlaceholderText="{Binding SearchPlaceholder}"
-                        BodyText="{Binding SearchQuery, Mode=TwoWay}"
-                        SemanticProperties.Description="{Binding SearchPlaceholder}" />
+                    <!-- The themes hide behind the button beside the search: two rows of chips over the list were the loudest part of it. -->
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <ui:TextEntryView
+                            PlaceholderText="{Binding SearchPlaceholder}"
+                            BodyText="{Binding SearchQuery, Mode=TwoWay}"
+                            SemanticProperties.Description="{Binding SearchPlaceholder}" />
+                        <Border
+                            Grid.Column="1"
+                            WidthRequest="48"
+                            HeightRequest="48"
+                            StrokeThickness="0"
+                            VerticalOptions="Center"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
+                            SemanticProperties.Description="{Binding ThemesToggleText}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding IsThemeFiltersVisible}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}" />
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleThemesCommand}" />
+                            </Border.GestureRecognizers>
+                            <ui:MaterialIconView
+                                IconName="Tune"
+                                IconSize="22"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        </Border>
+                    </Grid>
 
                     <ui:ProgressBarView
             BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}"
@@ -110,7 +139,6 @@
                             <quoteCard:QuoteCardView
                                 Text="{Binding Text}"
                                 Author="{Binding Author}"
-                                ThemeLabel="{Binding ThemeLabel}"
                                 IsFavourite="{Binding IsFavourite, Mode=TwoWay}"
                                 LikeCommand="{Binding LikeCommand}"
                                 CopyCommand="{Binding CopyCommand}"

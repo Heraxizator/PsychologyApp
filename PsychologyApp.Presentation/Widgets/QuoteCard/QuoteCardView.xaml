@@ -13,31 +13,26 @@
     </ContentView.Behaviors>
 
     <Border Style="{StaticResource QuoteListCardStyle}" Padding="16,8,8,8">
-        <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="4">
-            <!-- Top row: theme pill + favourite -->
-            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                <Border
+        <!-- The quote and its author; the theme pill on every card repeated the chip above the list. -->
+        <Grid RowDefinitions="Auto,Auto" RowSpacing="4" Padding="0,8,0,0">
+            <!-- Quote body -->
+            <Label
+                Grid.Row="0"
+                Margin="0,0,8,0"
+                HorizontalTextAlignment="Start"
+                Style="{StaticResource QuoteDisplayStyle}"
+                Text="{Binding Text, Source={x:Reference Root}}" />
+
+            <!-- Footer: author, then favourite, copy and share -->
+            <Grid Grid.Row="1" ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="0">
+                <Label
                     Grid.Column="0"
-                    Style="{StaticResource MetaPillStyle}"
-                    Padding="10,4"
-                    HorizontalOptions="Start"
-                    VerticalOptions="Center">
-                    <Border.Triggers>
-                        <DataTrigger
-                            Binding="{Binding ThemeLabel, Source={x:Reference Root}}"
-                            TargetType="Border"
-                            Value="">
-                            <Setter Property="IsVisible" Value="False" />
-                        </DataTrigger>
-                    </Border.Triggers>
-                    <Label
-                        Style="{StaticResource CaptionStyle}"
-                        TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
-                        FontFamily="{StaticResource SemiBoldFontFamily}"
-                        MaxLines="1"
-                        LineBreakMode="TailTruncation"
-                        Text="{Binding ThemeLabel, Source={x:Reference Root}}" />
-                </Border>
+                    VerticalOptions="Center"
+                    FontAttributes="Italic"
+                    Style="{StaticResource CaptionStyle}"
+                    MaxLines="2"
+                    LineBreakMode="TailTruncation"
+                    Text="{Binding AuthorLine, Source={x:Reference Root}}" />
                 <Border
                     x:Name="FavoriteActionBorder"
                     Grid.Column="1"
@@ -64,29 +59,9 @@
                         </ui:MaterialIconView.Triggers>
                     </ui:MaterialIconView>
                 </Border>
-            </Grid>
-
-            <!-- Quote body -->
-            <Label
-                Grid.Row="1"
-                Margin="0,0,8,0"
-                HorizontalTextAlignment="Start"
-                Style="{StaticResource QuoteDisplayStyle}"
-                Text="{Binding Text, Source={x:Reference Root}}" />
-
-            <!-- Footer: author + copy / share -->
-            <Grid Grid.Row="2" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="0">
-                <Label
-                    Grid.Column="0"
-                    VerticalOptions="Center"
-                    FontAttributes="Italic"
-                    Style="{StaticResource CaptionStyle}"
-                    MaxLines="2"
-                    LineBreakMode="TailTruncation"
-                    Text="{Binding AuthorLine, Source={x:Reference Root}}" />
                 <Border
                     x:Name="CopyActionBorder"
-                    Grid.Column="1"
+                    Grid.Column="2"
                     WidthRequest="44"
                     HeightRequest="44"
                     StrokeThickness="0"
@@ -102,7 +77,7 @@
                 </Border>
                 <Border
                     x:Name="ShareActionBorder"
-                    Grid.Column="2"
+                    Grid.Column="3"
                     WidthRequest="44"
                     HeightRequest="44"
                     StrokeThickness="0"

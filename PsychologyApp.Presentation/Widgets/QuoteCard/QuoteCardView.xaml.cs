@@ -85,15 +85,6 @@ public partial class QuoteCardView : ContentView
         private set => SetValue(AuthorLineProperty, value);
     }
 
-    public static readonly BindableProperty ThemeLabelProperty =
-        BindableProperty.Create(nameof(ThemeLabel), typeof(string), typeof(QuoteCardView), string.Empty);
-
-    public string ThemeLabel
-    {
-        get => (string)GetValue(ThemeLabelProperty);
-        set => SetValue(ThemeLabelProperty, value);
-    }
-
     public static readonly BindableProperty IsFavouriteProperty =
         BindableProperty.Create(
             nameof(IsFavourite),
