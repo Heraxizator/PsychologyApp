@@ -56,7 +56,8 @@ public static partial class AppStrings
             ? F("TestResultDuration.1", seconds)
             : F("TestResultDuration.2", seconds / 60, seconds % 60);
     public static string TestResultAnswersTitle => R(nameof(TestResultAnswersTitle));
-    public static string TestsIntroLead => R(nameof(TestsIntroLead));
+    /// <summary>Above the last results of a test on its intro.</summary>
+    public static string TestsPastResults => R(nameof(TestsPastResults));
     public static string TestsQuestionLead => R(nameof(TestsQuestionLead));
     public static string TestsMultiChoiceHint => R(nameof(TestsMultiChoiceHint));
     public static string TestsSingleChoiceHint => R(nameof(TestsSingleChoiceHint));

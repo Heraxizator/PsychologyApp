@@ -14,8 +14,6 @@ public partial class FindProblemViewModel
     public string QuestionCountText =>
         _questionCount is int count ? AppStrings.TestQuestionCount(count) : string.Empty;
 
-    public string IntroLeadText => AppStrings.TestsIntroLead;
-
     partial void OnConstructed() => LoadMetaAsync().FireAndForget();
 
     private async Task LoadMetaAsync()

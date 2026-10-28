@@ -34,51 +34,61 @@
 
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Margin="{StaticResource LayoutPageMarginThickness}" Spacing="{StaticResource LayoutSpacing}">
-                <Border Style="{StaticResource MoodStripStyle}">
-                    <Border.Behaviors>
-                        <behaviors:ListItemRevealBehavior RevealIndex="0" />
-                    </Border.Behaviors>
-                    <VerticalStackLayout Spacing="{StaticResource CompactSpacing}" HorizontalOptions="Center">
-                        <ui:MaterialIconView
-                            IconName="Insights"
-                            IconColor="{DynamicResource Primary}"
-                            WidthRequest="28"
-                            HeightRequest="28"
-                            HorizontalOptions="Center" />
-                        <Label
-                            Text="{Binding IntroLeadText}"
-                            Style="{StaticResource CaptionStyle}"
-                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
-                            HorizontalTextAlignment="Center"
-                            LineBreakMode="WordWrap" />
+                <!-- What the test is, how to answer and what it is not, in one card: three titled boxes and a banner read as a form. -->
+                <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0" Padding="18,16">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="{Binding DescriptionText}" Style="{StaticResource BodyStyle}" />
+                        <VerticalStackLayout Spacing="2" BindableLayout.ItemsSource="{Binding AlgorithmRows}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="models:AlgorithmRow">
+                                    <Label Text="{Binding Text}" Style="{StaticResource BodyStyle}" TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                            <ui:MaterialIconView IconName="InfoOutline" IconSize="16" VerticalOptions="Start" Margin="0,2,0,0" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                            <Label Grid.Column="1" Text="{Binding CommentText}" Style="{StaticResource CaptionStyle}" />
+                        </Grid>
                     </VerticalStackLayout>
                 </Border>
 
-                <ui:TextBoxView
-                    HeaderText="{Binding DescriptionHeader}"
-                    BodyText="{Binding DescriptionText}" />
-
-                <ui:AlgorithmBoxView TitleText="{Binding AlgorithmHeader}">
-                    <ui:AlgorithmBoxView.ItemsSource>
-                        <Binding Path="AlgorithmRows" />
-                    </ui:AlgorithmBoxView.ItemsSource>
-                    <ui:AlgorithmBoxView.ItemTemplate>
-                        <DataTemplate x:DataType="models:AlgorithmRow">
-                            <Label Text="{Binding Text}" Style="{StaticResource BodyStyle}" Margin="0,0,0,3">
-                                <Label.Behaviors>
-                                    <behaviors:ListItemRevealBehavior />
-                                </Label.Behaviors>
-                            </Label>
-                        </DataTemplate>
-                    </ui:AlgorithmBoxView.ItemTemplate>
-                </ui:AlgorithmBoxView>
-
-                <ui:TextBoxView
-                    HeaderText="{Binding NoteHeader}"
-                    BodyText="{Binding CommentText}" />
+                <VerticalStackLayout IsVisible="{Binding HasPastResults}" Spacing="8">
+                    <Label Text="{Binding PastResultsTitle}" Style="{StaticResource CaptionStyle}" Margin="4,0" />
+                    <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                        <VerticalStackLayout Spacing="0">
+                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding PastResults}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="models:TestHistoryEntryItem">
+                                        <VerticalStackLayout Spacing="2" Padding="0,8">
+                                            <Label Text="{Binding SummaryText}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource MediumFontFamily}" />
+                                            <Label Style="{StaticResource CaptionStyle}">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding DateText}" />
+                                                        <Span Text="  " />
+                                                        <Span Text="{Binding ScoreText}" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </VerticalStackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+                            <BoxView Style="{StaticResource SettingRowDividerStyle}" />
+                            <Grid ColumnDefinitions="*,Auto" MinimumHeightRequest="44" SemanticProperties.Description="{Binding OpenHistoryText}">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OpenHistoryCommand}" />
+                                </Grid.GestureRecognizers>
+                                <Label Text="{Binding OpenHistoryText}" Style="{StaticResource BodyStyle}" VerticalOptions="Center"
+                                       TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                                <ui:MaterialIconView Grid.Column="1" IconName="ChevronRight" IconSize="18" VerticalOptions="Center"
+                                                     IconColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>
-
         <ui:ButtonView
             Grid.Row="2"
             Margin="{StaticResource LayoutPageMarginThickness}"

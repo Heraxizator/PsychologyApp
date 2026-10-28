@@ -1911,9 +1911,6 @@
   <data name="TestResultAnswersTitle" xml:space="preserve">
     <value>Vos réponses</value>
   </data>
-  <data name="TestsIntroLead" xml:space="preserve">
-    <value>Quelques minutes pour une interprétation personnelle</value>
-  </data>
   <data name="TestsQuestionLead" xml:space="preserve">
     <value>Répondez sincèrement — il n'y a pas de bonne ou de mauvaise réponse</value>
   </data>
@@ -4224,5 +4221,8 @@
   </data>
   <data name="QuotesThemesToggle" xml:space="preserve">
     <value>Thèmes</value>
+  </data>
+  <data name="TestsPastResults" xml:space="preserve">
+    <value>Résultats précédents</value>
   </data>
 </root>

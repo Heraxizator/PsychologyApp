@@ -171,7 +171,9 @@ public sealed class FindProblemViewModelFactory(
     Func<NavigationContext, INavigationService> navigationServiceFactory,
     ITestCatalogService testCatalogService,
     FindProblemContentLoader contentLoader,
-    TestRunCoordinator testRunCoordinator) : ViewModelFactoryBase, IFindProblemViewModelFactory
+    TestRunCoordinator testRunCoordinator,
+    TestHistoryLoader historyLoader,
+    IUserProgressService userProgressService) : ViewModelFactoryBase, IFindProblemViewModelFactory
 {
     public FindProblemViewModel Create(
         ContentPage page,
@@ -189,5 +191,8 @@ public sealed class FindProblemViewModelFactory(
             algorithm,
             comment,
             startTest,
-            testId);
+            testId,
+            testId is null
+                ? null
+                : async () => (await historyLoader.LoadEntriesAsync(testId, string.Empty, userProgressService, testCatalogService)).Entries);
 }

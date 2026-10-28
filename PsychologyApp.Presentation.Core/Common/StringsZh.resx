@@ -1911,9 +1911,6 @@
   <data name="TestResultAnswersTitle" xml:space="preserve">
     <value>你的回答</value>
   </data>
-  <data name="TestsIntroLead" xml:space="preserve">
-    <value>花几分钟获得个人解读</value>
-  </data>
   <data name="TestsQuestionLead" xml:space="preserve">
     <value>请如实回答——答案没有对错之分</value>
   </data>
@@ -4224,5 +4221,8 @@
   </data>
   <data name="QuotesThemesToggle" xml:space="preserve">
     <value>主题</value>
+  </data>
+  <data name="TestsPastResults" xml:space="preserve">
+    <value>以往结果</value>
   </data>
 </root>

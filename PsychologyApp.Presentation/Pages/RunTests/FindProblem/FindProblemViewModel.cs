@@ -1,4 +1,5 @@
 using PsychologyApp.Presentation.Shared.Common;
+using PsychologyApp.Presentation.Shared.Common.Infrastructure;
 using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Features.RunTests;
@@ -20,7 +21,8 @@ public partial class FindProblemViewModel : BaseViewModel
     private readonly TestRunCoordinator _testRunCoordinator = null!;
     private readonly string? _testId;
     private readonly Func<Task> _startTestAsync = () => Task.CompletedTask;
-
+    private readonly Func<Task<IReadOnlyList<TestHistoryEntryItem>>>? _loadHistoryAsync;
+    private IReadOnlyList<TestHistoryEntryItem> _pastResults = [];
     public FindProblemViewModel() { }
 
     public FindProblemViewModel(
@@ -32,13 +34,15 @@ public partial class FindProblemViewModel : BaseViewModel
         List<string> algorithm,
         string? comment,
         Func<Task> startTest,
-        string? testId = null)
+        string? testId = null,
+        Func<Task<IReadOnlyList<TestHistoryEntryItem>>>? loadHistory = null)
     {
         _navigationService = navigationService;
         _testCatalogService = testCatalogService;
         _contentLoader = contentLoader;
         _testRunCoordinator = testRunCoordinator;
         _testId = testId;
+        _loadHistoryAsync = loadHistory;
         ModuleName = AppStrings.TestsDetectorTitle;
         PageName = AppStrings.TestsAboutPassageTitle;
 
@@ -52,7 +56,50 @@ public partial class FindProblemViewModel : BaseViewModel
 
         Continue = new AsyncCommand(ContinueAsync);
         BackCommand = new AsyncCommand(GoToRootAsync);
+        OpenHistoryCommand = new AsyncCommand(() => _navigationService.GoToTestHistoryAsync(_testId ?? string.Empty, PageName ?? string.Empty));
         OnConstructed();
+        LoadPastResultsAsync().FireAndForget();
+    }
+
+    public ICommand OpenHistoryCommand { get; private set; } = default!;
+
+    /// <summary>
+    /// The last three results of this test on the intro, newest first: before taking it again the person sees whether it changed, and
+    /// the history page is one tap away instead of being the only place to look.
+    /// </summary>
+    public IReadOnlyList<TestHistoryEntryItem> PastResults
+    {
+        get => _pastResults;
+        private set
+        {
+            if (SetProperty(ref _pastResults, value))
+            {
+                OnPropertyChanged(nameof(HasPastResults));
+            }
+        }
+    }
+
+    public bool HasPastResults => PastResults.Count > 0;
+    public string PastResultsTitle => AppStrings.TestsPastResults;
+    public string OpenHistoryText => AppStrings.TestOpenHistory;
+
+    private async Task LoadPastResultsAsync()
+    {
+        if (_loadHistoryAsync is null)
+        {
+            return;
+        }
+
+        try
+        {
+            IReadOnlyList<TestHistoryEntryItem> entries = await _loadHistoryAsync();
+            await UiThread.RunAsync(() => PastResults = [.. entries.Take(3)]);
+        }
+        catch (Exception loadError)
+        {
+            // The intro works without them; the history page reports its own failure.
+            BestEffort.Report(loadError);
+        }
     }
 
     partial void OnConstructed();
@@ -80,7 +127,8 @@ public partial class FindProblemViewModel : BaseViewModel
             nameof(AlgorithmHeader),
             nameof(NoteHeader),
             nameof(StartButtonText),
-            nameof(IntroLeadText));
+            nameof(PastResultsTitle),
+            nameof(OpenHistoryText));
 
         ReloadLocalizedTestContent();
     }
