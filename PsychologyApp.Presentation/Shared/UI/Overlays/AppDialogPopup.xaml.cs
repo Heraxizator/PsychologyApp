@@ -6,16 +6,21 @@ namespace PsychologyApp.Presentation.Shared.UI.Overlays;
 
 public partial class AppDialogPopup : Popup
 {
+    private readonly AppDialogInput? _input;
     private bool _isClosing;
 
-    public AppDialogPopup(string? title, string message, string accept, string? cancel, string? passwordPlaceholder = null)
+    public AppDialogPopup(string? title, string message, string accept, string? cancel, AppDialogInput? input = null)
     {
         InitializeComponent();
 
-        if (passwordPlaceholder is not null)
+        _input = input;
+        if (input is not null)
         {
-            PasswordEntry.IsVisible = true;
-            PasswordEntry.Placeholder = passwordPlaceholder;
+            InputEntry.IsVisible = true;
+            InputEntry.IsPassword = input.IsPassword;
+            InputEntry.Placeholder = input.Placeholder;
+            InputEntry.Text = input.InitialText;
+            InputEntry.MaxLength = input.MaxLength;
         }
 
         if (string.IsNullOrWhiteSpace(title))
@@ -47,13 +52,24 @@ public partial class AppDialogPopup : Popup
 
     public bool? DialogResult { get; private set; }
 
-    /// <summary>What was typed in the masked field; empty when the dialog has none.</summary>
-    public string InputText => PasswordEntry.Text ?? string.Empty;
+    /// <summary>What was typed in the field; empty when the dialog has none.</summary>
+    public string InputText => InputEntry.Text ?? string.Empty;
 
     public void MarkDismissedOutside() => DialogResult = false;
 
-    private void OnLoaded(object? sender, EventArgs e) =>
+    private void OnLoaded(object? sender, EventArgs e)
+    {
         UiAnimations.AnimateAlertPopInAsync(DialogCardHost).FireAndForget();
+        // A text to edit gets the keyboard at once, the cursor after the current text; a secret waits for a tap, as before.
+        if (_input is { IsPassword: false })
+        {
+            InputEntry.Focus();
+            InputEntry.CursorPosition = InputEntry.Text?.Length ?? 0;
+        }
+    }
+
+    private void OnEntryCompleted(object? sender, EventArgs e) =>
+        CloseWithResult(true).FireAndForget();
 
     private void OnAcceptTapped(object? sender, TappedEventArgs e) =>
         CloseWithResult(true).FireAndForget();

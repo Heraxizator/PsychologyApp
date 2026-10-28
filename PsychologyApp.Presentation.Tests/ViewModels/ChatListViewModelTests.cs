@@ -175,7 +175,7 @@ public sealed class ChatListViewModelTests
         _sessions = [Session(1, title: "Old")];
         ChatListViewModel viewModel = Create();
         await viewModel.RefreshAsync();
-        viewModel.PromptAsync = (_, _, _, _, _) => Task.FromResult<string?>("New name");
+        _dialogs.Setup(d => d.PromptTextAsync(It.IsAny<string?>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())).ReturnsAsync(() => "New name");
         _chat.Setup(c => c.RenameAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
         _dialogs.Setup(d => d.AskAsync(It.IsAny<string?>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(false);
 
@@ -196,7 +196,7 @@ public sealed class ChatListViewModelTests
         ChatListViewModel viewModel = Create();
         await viewModel.RefreshAsync();
         string? answer = "New name";
-        viewModel.PromptAsync = (_, _, _, _, _) => Task.FromResult<string?>(answer);
+        _dialogs.Setup(d => d.PromptTextAsync(It.IsAny<string?>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())).ReturnsAsync(() => answer);
         _chat.Setup(c => c.RenameAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
         await VmTestHelpers.RunAsync(viewModel.Chats[0].RenameCommand);

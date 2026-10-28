@@ -29,10 +29,10 @@
                         x:Name="MessageLabel"
                         Style="{StaticResource AppDialogMessageStyle}" />
                     <Entry
-                        x:Name="PasswordEntry"
+                        x:Name="InputEntry"
                         IsVisible="False"
-                        IsPassword="True"
                         ReturnType="Done"
+                        Completed="OnEntryCompleted"
                         Style="{StaticResource InputTextStyle}" />
                 </VerticalStackLayout>
 

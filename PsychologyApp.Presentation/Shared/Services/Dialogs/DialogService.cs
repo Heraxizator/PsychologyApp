@@ -56,6 +56,31 @@ public class DialogService(IPageHost pageHost) : IDialogService
         }
     }
 
+    public async Task<string?> PromptTextAsync(string? title, string message, string accept, string cancel, string initialText, int maxLength)
+    {
+        if (!TryEnter())
+        {
+            return null;
+        }
+
+        try
+        {
+            Page page = RequireActivePage();
+            var popup = new AppDialogPopup(title, message, accept, cancel, new AppDialogInput(string.Empty, IsPassword: false, initialText, maxLength));
+            IPopupResult popupResult = await page.ShowPopupAsync(popup, CreateDialogOptions(popup));
+            if (popupResult.WasDismissedByTappingOutsideOfPopup || popup.DialogResult != true)
+            {
+                return null;
+            }
+
+            return popup.InputText;
+        }
+        finally
+        {
+            Leave();
+        }
+    }
+
     public async Task<string?> PromptPasswordAsync(string? title, string message, string placeholder, string accept, string cancel)
     {
         if (!TryEnter())
@@ -66,7 +91,7 @@ public class DialogService(IPageHost pageHost) : IDialogService
         try
         {
             Page page = RequireActivePage();
-            var popup = new AppDialogPopup(title, message, accept, cancel, placeholder);
+            var popup = new AppDialogPopup(title, message, accept, cancel, new AppDialogInput(placeholder, IsPassword: true));
             IPopupResult popupResult = await page.ShowPopupAsync(popup, CreateDialogOptions(popup));
             if (popupResult.WasDismissedByTappingOutsideOfPopup || popup.DialogResult != true)
             {

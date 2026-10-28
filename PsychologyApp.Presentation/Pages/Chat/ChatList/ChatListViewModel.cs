@@ -77,9 +77,6 @@ public sealed class ChatListViewModel : BaseViewModel
         OpenCrisisHubCommand = new AsyncCommand(() => NavigationService!.GoToCrisisHubAsync());
     }
 
-    /// <summary>Set by the page: shows a text prompt and returns the entered text, or null when cancelled.</summary>
-    public Func<string, string, string, string, string, Task<string?>>? PromptAsync { get; set; }
-
     public RangeObservableCollection<ChatListItem> Chats { get; } = [];
 
     public ICommand NewChatCommand { get; }
@@ -199,17 +196,13 @@ public sealed class ChatListViewModel : BaseViewModel
 
     private async Task RenameAsync(long id, string current)
     {
-        if (PromptAsync is null)
-        {
-            return;
-        }
-
-        string? name = await PromptAsync(
+        string? name = await _dialogs.PromptTextAsync(
             AppStrings.ChatRenameTitle,
             AppStrings.ChatRenameMessage,
             AppStrings.ChatRenameAccept,
             AppStrings.ChatCancel,
-            current);
+            current,
+            maxLength: 60);
         if (string.IsNullOrWhiteSpace(name))
         {
             return;

@@ -51,9 +51,6 @@ public sealed class ChatInfoViewModel : BaseViewModel
         AboutCompanionCommand = new AsyncCommand(() => NavigationService!.GoToCompanionProfileAsync());
     }
 
-    /// <summary>Set by the page: shows a text prompt and returns the entered text, or null when cancelled.</summary>
-    public Func<string, string, string, string, string, Task<string?>>? PromptAsync { get; set; }
-
     public ICommand BackCommand { get; }
 
     /// <summary>The info page is opened from the chat, so opening the chat goes back to it.</summary>
@@ -136,12 +133,12 @@ public sealed class ChatInfoViewModel : BaseViewModel
 
     private async Task RenameAsync()
     {
-        if (PromptAsync is null || _session is null)
+        if (_session is null)
         {
             return;
         }
 
-        string? name = await PromptAsync(AppStrings.ChatRenameTitle, AppStrings.ChatRenameMessage, AppStrings.ChatRenameAccept, AppStrings.ChatCancel, _session.Title);
+        string? name = await _dialogs.PromptTextAsync(AppStrings.ChatRenameTitle, AppStrings.ChatRenameMessage, AppStrings.ChatRenameAccept, AppStrings.ChatCancel, _session.Title, maxLength: 30);
         if (string.IsNullOrWhiteSpace(name))
         {
             return;

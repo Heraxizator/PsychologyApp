@@ -11,8 +11,6 @@ public partial class CompanionProfilePage : ContentPage
     {
         InitializeComponent();
         _viewModel = viewModelFactory.CreateProfile(hostNavigation);
-        _viewModel.PromptAsync = (title, message, accept, cancel, initial) =>
-            DisplayPromptAsync(title, message, accept, cancel, initialValue: initial, maxLength: 30);
         BindingContext = _viewModel;
     }
 

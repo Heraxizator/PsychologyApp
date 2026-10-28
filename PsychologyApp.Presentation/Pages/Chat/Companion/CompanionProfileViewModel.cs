@@ -38,9 +38,6 @@ public sealed class CompanionProfileViewModel : BaseViewModel
         DeleteAllCommand = new AsyncCommand(DeleteAllAsync);
     }
 
-    /// <summary>Set by the page: shows a text prompt and returns the entered text, or null when cancelled.</summary>
-    public Func<string, string, string, string, string, Task<string?>>? PromptAsync { get; set; }
-
     public ICommand BackCommand { get; }
     public ICommand NewChatCommand { get; }
     public ICommand CrisisCommand { get; }
@@ -90,17 +87,13 @@ public sealed class CompanionProfileViewModel : BaseViewModel
 
     private async Task EditNameAsync()
     {
-        if (PromptAsync is null)
-        {
-            return;
-        }
-
-        string? name = await PromptAsync(
+        string? name = await _dialogs.PromptTextAsync(
             AppStrings.ChatProfileNamePromptTitle,
             AppStrings.ChatProfileNamePromptMessage,
             AppStrings.ChatRenameAccept,
             AppStrings.ChatCancel,
-            _profile.UserName ?? string.Empty);
+            _profile.UserName ?? string.Empty,
+            maxLength: 30);
         if (name is null)
         {
             return;

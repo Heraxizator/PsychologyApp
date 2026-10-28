@@ -93,7 +93,7 @@ public sealed class CompanionProfileViewModelTests
     {
         CompanionProfileViewModel viewModel = await CreateAsync();
         string? answer = "Alex";
-        viewModel.PromptAsync = (_, _, _, _, _) => Task.FromResult<string?>(answer);
+        _dialogs.Setup(d => d.PromptTextAsync(It.IsAny<string?>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>())).ReturnsAsync(() => answer);
         _chat.Setup(c => c.SetUserNameAsync(It.IsAny<string?>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
         await VmTestHelpers.RunAsync(viewModel.EditNameCommand);
