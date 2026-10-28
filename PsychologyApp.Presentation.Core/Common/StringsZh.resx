@@ -3997,9 +3997,6 @@
   <data name="AnchorThemeHardTimes" xml:space="preserve">
     <value>艰难时刻</value>
   </data>
-  <data name="MenuProfileSubtitle" xml:space="preserve">
-    <value>练习、测试与进展</value>
-  </data>
   <data name="MenuGroupMine" xml:space="preserve">
     <value>我的旅程</value>
   </data>

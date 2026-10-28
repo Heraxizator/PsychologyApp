@@ -434,7 +434,6 @@ public partial class AppShell : Shell
 
         MenuProfileCard.BindingContext = profile;
         // No streak here: a count that falls to zero after a hard day reads as a reproach in an app like this one.
-        MenuProfileSubtitle.Text = AppStrings.MenuProfileSubtitle;
         MenuFooterPrivacy.Text = AppStrings.MenuFooterPrivacy;
         MenuFooterVersion.Text = AppStrings.InfoAppVersion(AppInfo.Current.VersionString);
         MenuMineTitle.Text = AppStrings.MenuGroupMine;

@@ -3997,9 +3997,6 @@
   <data name="AnchorThemeHardTimes" xml:space="preserve">
     <value>Cuando cuesta</value>
   </data>
-  <data name="MenuProfileSubtitle" xml:space="preserve">
-    <value>Prácticas, tests y progreso</value>
-  </data>
   <data name="MenuGroupMine" xml:space="preserve">
     <value>Mi camino</value>
   </data>

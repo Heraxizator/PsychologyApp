@@ -4003,9 +4003,6 @@
   <data name="AnchorThemeHardTimes" xml:space="preserve">
     <value>Когда тяжело</value>
   </data>
-  <data name="MenuProfileSubtitle" xml:space="preserve">
-    <value>Практики, тесты и прогресс</value>
-  </data>
   <data name="MenuGroupMine" xml:space="preserve">
     <value>Мой путь</value>
   </data>

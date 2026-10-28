@@ -3997,9 +3997,6 @@
   <data name="AnchorThemeHardTimes" xml:space="preserve">
     <value>Quando está difícil</value>
   </data>
-  <data name="MenuProfileSubtitle" xml:space="preserve">
-    <value>Práticas, testes e progresso</value>
-  </data>
   <data name="MenuGroupMine" xml:space="preserve">
     <value>Meu caminho</value>
   </data>
