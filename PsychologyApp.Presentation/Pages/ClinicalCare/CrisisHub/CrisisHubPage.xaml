@@ -3,225 +3,185 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PsychologyApp.Presentation.Pages.ClinicalCare.CrisisHub.CrisisHubPage"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
-             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.ClinicalCare.CrisisHub"
              x:DataType="vm:CrisisHubViewModel"
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
+    <!-- One thing stands out: the call. Everything else is plain text and rows in cards, as on the settings screen, so a person in a
+         hard minute does not have to read through boxes, bars and badges to find it. Nothing on the way to help is left out. -->
     <ScrollView>
         <VerticalStackLayout
             Margin="{StaticResource LayoutPageMarginThickness}"
             Spacing="{StaticResource LayoutSpacing}">
-            <VerticalStackLayout.Behaviors>
-                <behaviors:StaggerChildrenBehavior />
-            </VerticalStackLayout.Behaviors>
 
             <ui:NavigationBarSimpleView
                 TitleText="{Binding PageTitle}"
                 BackCommand="{Binding BackCommand}" />
 
-            <Border Style="{StaticResource HeroCardStyle}">
-                <Border.Behaviors>
-                    <behaviors:RevealOnAppearingBehavior />
-                </Border.Behaviors>
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                    <Border
-                        Grid.Column="0"
-                        Style="{StaticResource HeroAccentBarStyle}" />
-                    <VerticalStackLayout
-                        Grid.Column="1"
-                        Spacing="{StaticResource CompactSpacing}">
-                        <Label Text="{Binding LeadText}" Style="{StaticResource BodyStyle}" />
-                        <Label Text="{Binding SpecialistHint}" Style="{StaticResource CaptionStyle}" />
-                    </VerticalStackLayout>
-                </Grid>
-            </Border>
+            <VerticalStackLayout Spacing="6">
+                <Label Text="{Binding LeadText}" Style="{StaticResource BodyStyle}" />
+                <Label Text="{Binding SpecialistHint}" Style="{StaticResource CaptionStyle}" />
+            </VerticalStackLayout>
 
-            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                <ui:SectionHeaderView TitleText="{Binding HotlineTitle}" />
-
-                <Border Style="{StaticResource HeroCardStyle}">
+            <VerticalStackLayout Spacing="10">
+                <!-- The emergency number as the one filled button on the page, in the fill of the app's main buttons (white text passes on it in both themes). -->
+                <Border
+                    BackgroundColor="{StaticResource PrimaryFill}"
+                    StrokeThickness="0"
+                    Padding="16,0"
+                    MinimumHeightRequest="56"
+                    SemanticProperties.Description="{Binding CallEmergencyText}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="16" />
+                    </Border.StrokeShape>
                     <Border.Behaviors>
-                        <behaviors:ListItemRevealBehavior RevealIndex="1" />
-                        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                        <behaviors:PressFeedbackBehavior />
                     </Border.Behaviors>
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding CallEmergencyCommand}" />
                     </Border.GestureRecognizers>
-                    <Grid ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="12">
-                        <Border
-                            Grid.Column="0"
-                            Style="{StaticResource HeroAccentBarStyle}" />
-                        <Border
-                            Grid.Column="1"
-                            Style="{StaticResource MetaPillStyle}"
-                            VerticalOptions="Center">
-                            <Label
-                                Text="{Binding EmergencyBadge}"
-                                Style="{StaticResource CaptionStyle}"
-                                FontFamily="{StaticResource SemiBoldFontFamily}"
-                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
-                        </Border>
-                        <Label
-                            Grid.Column="2"
-                            Text="{Binding CallEmergencyText}"
-                            Style="{StaticResource ListRowTitleStyle}"
-                            VerticalOptions="Center" />
-                        <Label
-                            Grid.Column="3"
-                            VerticalOptions="Center"
-                            TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                            Text="{mi:Material Icon=KeyboardArrowRight}" />
-                    </Grid>
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
+                        <ui:MaterialIconView IconName="Phone" IconSize="22" IconColor="White" VerticalOptions="Center" />
+                        <Label Text="{Binding CallEmergencyText}" Style="{StaticResource ListRowTitleStyle}" TextColor="White" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
                 </Border>
 
-                <Border Style="{StaticResource BrandCardStyle}" IsVisible="{Binding HasHotline}">
+                <!-- The helpline of the person's country, second and quieter. -->
+                <Border
+                    IsVisible="{Binding HasHotline}"
+                    Style="{StaticResource SettingsSectionCardStyle}"
+                    Margin="0"
+                    SemanticProperties.Description="{Binding CallHotlineText}">
                     <Border.Behaviors>
-                        <behaviors:ListItemRevealBehavior RevealIndex="2" />
-                        <behaviors:PressFeedbackBehavior AttachToAllTapTargets="True" />
+                        <behaviors:PressFeedbackBehavior />
                     </Border.Behaviors>
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding CallHotlineCommand}" />
                     </Border.GestureRecognizers>
-                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                        <Border
-                            Grid.Column="0"
-                            Style="{StaticResource IconTileStyle}">
-                            <ui:MaterialIconView
-                                IconName="Phone"
-                                IconSize="22"
-                                IconColor="{DynamicResource Primary}"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center" />
-                        </Border>
-                        <Label
-                            Grid.Column="1"
-                            Text="{Binding CallHotlineText}"
-                            Style="{StaticResource ListRowTitleStyle}"
-                            VerticalOptions="Center" />
-                        <Label
-                            Grid.Column="2"
-                            VerticalOptions="Center"
-                            TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                            Text="{mi:Material Icon=KeyboardArrowRight}" />
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="48">
+                        <ui:MaterialIconView IconName="SupportAgent" IconSize="20" VerticalOptions="Center"
+                                             IconColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                        <Label Grid.Column="1" Text="{Binding CallHotlineText}" Style="{StaticResource BodyStyle}" VerticalOptions="Center"
+                               FontFamily="{StaticResource MediumFontFamily}"
+                               TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                        <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="18" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
                     </Grid>
                 </Border>
 
-                <Label
-                    Text="{Binding HotlineIntl}"
-                    Style="{StaticResource CaptionStyle}" />
             </VerticalStackLayout>
 
-            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                <ui:SectionHeaderView TitleText="{Binding SafetyPlanTitle}" />
-                <Border Style="{StaticResource BrandCardStyle}">
-                    <Border.Behaviors>
-                        <behaviors:ListItemRevealBehavior RevealIndex="3" />
-                    </Border.Behaviors>
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                        <Border Grid.Column="0" Style="{StaticResource MetaPillStyle}" VerticalOptions="Start">
-                            <Label
-                                Text="{Binding SafetyPlanStepNumber1}"
-                                Style="{StaticResource CaptionStyle}"
-                                FontFamily="{StaticResource SemiBoldFontFamily}"
-                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
-                        </Border>
-                        <Label
-                            Grid.Column="1"
-                            Text="{Binding SafetyPlanStep1}"
-                            Style="{StaticResource BodyStyle}"
-                            VerticalOptions="Center" />
+            <!-- The three steps as one short list: three cards with number badges read as three separate things to do. -->
+            <VerticalStackLayout Spacing="8">
+                <Label Text="{Binding SafetyPlanTitle}" Style="{StaticResource CaptionStyle}" Margin="4,0" />
+                <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                    <VerticalStackLayout Spacing="0">
+                    <Grid ColumnDefinitions="28,*" ColumnSpacing="8" Padding="0,8">
+                        <Label Text="{Binding SafetyPlanStepNumber1}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource SemiBoldFontFamily}"
+                               TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        <Label Grid.Column="1" Text="{Binding SafetyPlanStep1}" Style="{StaticResource BodyStyle}" />
                     </Grid>
-                </Border>
-                <Border Style="{StaticResource BrandCardStyle}">
-                    <Border.Behaviors>
-                        <behaviors:ListItemRevealBehavior RevealIndex="4" />
-                    </Border.Behaviors>
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                        <Border Grid.Column="0" Style="{StaticResource MetaPillStyle}" VerticalOptions="Start">
-                            <Label
-                                Text="{Binding SafetyPlanStepNumber2}"
-                                Style="{StaticResource CaptionStyle}"
-                                FontFamily="{StaticResource SemiBoldFontFamily}"
-                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
-                        </Border>
-                        <Label
-                            Grid.Column="1"
-                            Text="{Binding SafetyPlanStep2}"
-                            Style="{StaticResource BodyStyle}"
-                            VerticalOptions="Center" />
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
+                    <Grid ColumnDefinitions="28,*" ColumnSpacing="8" Padding="0,8">
+                        <Label Text="{Binding SafetyPlanStepNumber2}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource SemiBoldFontFamily}"
+                               TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        <Label Grid.Column="1" Text="{Binding SafetyPlanStep2}" Style="{StaticResource BodyStyle}" />
                     </Grid>
-                </Border>
-                <Border Style="{StaticResource BrandCardStyle}">
-                    <Border.Behaviors>
-                        <behaviors:ListItemRevealBehavior RevealIndex="5" />
-                    </Border.Behaviors>
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                        <Border Grid.Column="0" Style="{StaticResource MetaPillStyle}" VerticalOptions="Start">
-                            <Label
-                                Text="{Binding SafetyPlanStepNumber3}"
-                                Style="{StaticResource CaptionStyle}"
-                                FontFamily="{StaticResource SemiBoldFontFamily}"
-                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
-                        </Border>
-                        <Label
-                            Grid.Column="1"
-                            Text="{Binding SafetyPlanStep3}"
-                            Style="{StaticResource BodyStyle}"
-                            VerticalOptions="Center" />
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
+                    <Grid ColumnDefinitions="28,*" ColumnSpacing="8" Padding="0,8">
+                        <Label Text="{Binding SafetyPlanStepNumber3}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource SemiBoldFontFamily}"
+                               TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        <Label Grid.Column="1" Text="{Binding SafetyPlanStep3}" Style="{StaticResource BodyStyle}" />
                     </Grid>
+                    </VerticalStackLayout>
                 </Border>
             </VerticalStackLayout>
 
-            <ui:SettingsLinkCardView
-                Title="{Binding SafetyPlanLinkTitle}"
-                Subtitle="{Binding SafetyPlanLinkSubtitle}"
-                IconName="Checklist"
-                TapCommand="{Binding OpenSafetyPlanCommand}">
-                <ui:SettingsLinkCardView.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="6" />
-                </ui:SettingsLinkCardView.Behaviors>
-            </ui:SettingsLinkCardView>
+            <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="0">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="52"
+                          SemanticProperties.Description="{Binding SafetyPlanLinkTitle}">
+                        <Grid.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </Grid.Behaviors>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenSafetyPlanCommand}" />
+                        </Grid.GestureRecognizers>
+                        <ui:MaterialIconView IconName="Checklist" IconSize="20" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                            <Label Text="{Binding SafetyPlanLinkTitle}" Style="{StaticResource BodyStyle}" />
+                            <Label Text="{Binding SafetyPlanLinkSubtitle}" Style="{StaticResource CaptionStyle}" />
+                        </VerticalStackLayout>
+                        <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="18" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                    </Grid>
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="52"
+                          SemanticProperties.Description="{Binding FlashbackTitle}">
+                        <Grid.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </Grid.Behaviors>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenFlashbackCommand}" />
+                        </Grid.GestureRecognizers>
+                        <ui:MaterialIconView IconName="MyLocation" IconSize="20" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                            <Label Text="{Binding FlashbackTitle}" Style="{StaticResource BodyStyle}" />
+                            <Label Text="{Binding FlashbackSubtitle}" Style="{StaticResource CaptionStyle}" />
+                        </VerticalStackLayout>
+                        <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="18" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                    </Grid>
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="52"
+                          SemanticProperties.Description="{Binding OpenHelplineText}">
+                        <Grid.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </Grid.Behaviors>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenHelplineCommand}" />
+                        </Grid.GestureRecognizers>
+                        <ui:MaterialIconView IconName="Public" IconSize="20" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                            <Label Text="{Binding OpenHelplineText}" Style="{StaticResource BodyStyle}" />
+                        </VerticalStackLayout>
+                        <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="18" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
 
-            <ui:SettingsLinkCardView
-                Title="{Binding FlashbackTitle}"
-                Subtitle="{Binding FlashbackSubtitle}"
-                IconName="MyLocation"
-                TapCommand="{Binding OpenFlashbackCommand}">
-                <ui:SettingsLinkCardView.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="6" />
-                </ui:SettingsLinkCardView.Behaviors>
-            </ui:SettingsLinkCardView>
-
-            <ui:SettingsLinkCardView
-                Title="{Binding OpenHelplineText}"
-                IconName="SupportAgent"
-                TapCommand="{Binding OpenHelplineCommand}">
-                <ui:SettingsLinkCardView.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="6" />
-                </ui:SettingsLinkCardView.Behaviors>
-            </ui:SettingsLinkCardView>
-
-            <ui:SettingsLinkCardView
-                Title="{Binding RecheckText}"
-                IconName="FactCheck"
-                TapCommand="{Binding RecheckCommand}">
-                <ui:SettingsLinkCardView.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="7" />
-                </ui:SettingsLinkCardView.Behaviors>
-            </ui:SettingsLinkCardView>
-
-            <ui:SettingsLinkCardView
-                IsVisible="{Binding ShowContinueSoft}"
-                Title="{Binding ContinueSoftText}"
-                IconName="SelfImprovement"
-                TapCommand="{Binding ContinueSoftCommand}">
-                <ui:SettingsLinkCardView.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="8" />
-                </ui:SettingsLinkCardView.Behaviors>
-            </ui:SettingsLinkCardView>
+            <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="0">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="52"
+                          SemanticProperties.Description="{Binding RecheckText}">
+                        <Grid.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </Grid.Behaviors>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding RecheckCommand}" />
+                        </Grid.GestureRecognizers>
+                        <ui:MaterialIconView IconName="FactCheck" IconSize="20" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                            <Label Text="{Binding RecheckText}" Style="{StaticResource BodyStyle}" />
+                        </VerticalStackLayout>
+                        <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="18" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                    </Grid>
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" IsVisible="{Binding ShowContinueSoft}" />
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="52" IsVisible="{Binding ShowContinueSoft}"
+                          SemanticProperties.Description="{Binding ContinueSoftText}">
+                        <Grid.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </Grid.Behaviors>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ContinueSoftCommand}" />
+                        </Grid.GestureRecognizers>
+                        <ui:MaterialIconView IconName="SelfImprovement" IconSize="20" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                            <Label Text="{Binding ContinueSoftText}" Style="{StaticResource BodyStyle}" />
+                        </VerticalStackLayout>
+                        <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="18" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

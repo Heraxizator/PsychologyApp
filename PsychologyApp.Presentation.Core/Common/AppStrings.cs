@@ -757,9 +757,7 @@ public static partial class AppStrings
     public static string CrisisHubSafetyPlanStepNumber1 => "1";
     public static string CrisisHubSafetyPlanStepNumber2 => "2";
     public static string CrisisHubSafetyPlanStepNumber3 => "3";
-    public static string CrisisHubHotlineTitle => R(nameof(CrisisHubHotlineTitle));
     public static string CrisisHubHotlineRuName => R(nameof(CrisisHubHotlineRuName));
-    public static string CrisisHubHotlineIntl => R(nameof(CrisisHubHotlineIntl));
     public static string CrisisHubCallHotline(string name, string number) => F(nameof(CrisisHubCallHotline), name, number);
     public static string CrisisHubCallEmergency(string number) => F(nameof(CrisisHubCallEmergency), number);
     public static string CrisisHubOpenHelpline => R(nameof(CrisisHubOpenHelpline));

@@ -1443,12 +1443,6 @@
   <data name="CrisisHubSafetyPlanStep3" xml:space="preserve">
     <value>Если есть угроза жизни — звоните в экстренные службы ({0}).</value>
   </data>
-  <data name="CrisisHubHotlineTitle" xml:space="preserve">
-    <value>Позвонить сейчас</value>
-  </data>
-  <data name="CrisisHubHotlineIntl" xml:space="preserve">
-    <value>Международно: findahelpline.com</value>
-  </data>
   <data name="CrisisHubCallHotline" xml:space="preserve">
     <value>{0} {1}</value>
   </data>

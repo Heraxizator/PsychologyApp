@@ -1443,12 +1443,6 @@
   <data name="CrisisHubSafetyPlanStep3" xml:space="preserve">
     <value>如有生命危险——请拨打急救电话（{0}）。</value>
   </data>
-  <data name="CrisisHubHotlineTitle" xml:space="preserve">
-    <value>立即拨打</value>
-  </data>
-  <data name="CrisisHubHotlineIntl" xml:space="preserve">
-    <value>国际：findahelpline.com</value>
-  </data>
   <data name="CrisisHubCallHotline" xml:space="preserve">
     <value>{0} {1}</value>
   </data>

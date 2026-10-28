@@ -1443,12 +1443,6 @@
   <data name="CrisisHubSafetyPlanStep3" xml:space="preserve">
     <value>If life is at risk — call emergency services ({0}).</value>
   </data>
-  <data name="CrisisHubHotlineTitle" xml:space="preserve">
-    <value>Call now</value>
-  </data>
-  <data name="CrisisHubHotlineIntl" xml:space="preserve">
-    <value>International: findahelpline.com</value>
-  </data>
   <data name="CrisisHubCallHotline" xml:space="preserve">
     <value>{0} {1}</value>
   </data>

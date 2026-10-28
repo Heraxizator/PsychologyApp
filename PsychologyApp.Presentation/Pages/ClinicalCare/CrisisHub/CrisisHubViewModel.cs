@@ -40,8 +40,6 @@ public sealed class CrisisHubViewModel : BaseViewModel
     public string SafetyPlanStepNumber1 => AppStrings.CrisisHubSafetyPlanStepNumber1;
     public string SafetyPlanStepNumber2 => AppStrings.CrisisHubSafetyPlanStepNumber2;
     public string SafetyPlanStepNumber3 => AppStrings.CrisisHubSafetyPlanStepNumber3;
-    public string HotlineTitle => AppStrings.CrisisHubHotlineTitle;
-    public string HotlineIntl => AppStrings.CrisisHubHotlineIntl;
     // The country is read once, when the screen opens; the line's name follows the interface language.
     private readonly string? _country = DeviceCountry.Code;
     private CrisisLines.Lines Lines => CrisisLines.For(_country);
@@ -49,7 +47,6 @@ public sealed class CrisisHubViewModel : BaseViewModel
     public bool HasHotline => Lines.HasLine;
     public string CallHotlineText => Lines.HasLine ? AppStrings.CrisisHubCallHotline(Lines.LineName!, Lines.LineDisplay!) : string.Empty;
     public string CallEmergencyText => AppStrings.CrisisHubCallEmergency(Lines.Emergency);
-    public string EmergencyBadge => Lines.Emergency;
     public string OpenHelplineText => AppStrings.CrisisHubOpenHelpline;
     public string RecheckText => AppStrings.CrisisHubRecheck;
     public string ContinueSoftText => AppStrings.CrisisHubContinueSoft;
@@ -97,11 +94,8 @@ public sealed class CrisisHubViewModel : BaseViewModel
             nameof(SafetyPlanStepNumber1),
             nameof(SafetyPlanStepNumber2),
             nameof(SafetyPlanStepNumber3),
-            nameof(HotlineTitle),
-            nameof(HotlineIntl),
             nameof(CallHotlineText),
             nameof(CallEmergencyText),
-            nameof(EmergencyBadge),
             nameof(OpenHelplineText),
             nameof(RecheckText),
             nameof(ContinueSoftText),

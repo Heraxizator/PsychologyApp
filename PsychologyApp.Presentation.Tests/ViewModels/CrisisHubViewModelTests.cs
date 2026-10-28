@@ -174,7 +174,7 @@ public sealed class CrisisHubViewModelTests
             {
                 AppStrings.LanguageOverride = language;
                 CrisisHubViewModel viewModel = await CreateAsync(red: true);
-                foreach (string text in new[] { viewModel.PageTitle, viewModel.LeadText, viewModel.HotlineIntl, viewModel.CallEmergencyText, viewModel.SpecialistHint })
+                foreach (string text in new[] { viewModel.PageTitle, viewModel.LeadText, viewModel.OpenHelplineText, viewModel.CallEmergencyText, viewModel.SpecialistHint })
                 {
                     Assert.False(string.IsNullOrWhiteSpace(text), language);
                 }
