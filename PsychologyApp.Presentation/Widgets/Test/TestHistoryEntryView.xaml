@@ -77,9 +77,12 @@
             </VerticalStackLayout>
 
             <VerticalStackLayout IsVisible="{Binding HasLuscherDetail, Source={x:Reference Root}}" Spacing="4">
+                <!-- "More", not the summary again: the colours stood twice under each other, once black and once blue. -->
                 <Label
-                    Text="{Binding SummaryText, Source={x:Reference Root}}"
+                    Text="{Binding MoreInfoText, Source={x:Reference Root}}"
                     Style="{StaticResource CaptionStyle}"
+                    MinimumHeightRequest="44"
+                    VerticalTextAlignment="Center"
                     TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ToggleLuscherDetailCommand, Source={x:Reference Root}}" />

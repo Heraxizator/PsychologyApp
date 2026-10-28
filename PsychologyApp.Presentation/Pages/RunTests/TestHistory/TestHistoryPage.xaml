@@ -36,7 +36,15 @@
                     ChartPoints="{Binding ChartPoints}"
                     DomainMin="{Binding ChartDomainMin}"
                     DomainMax="{Binding ChartDomainMax}"
-                    Subtitle="{Binding ChartSubtitle}" />
+                    Subtitle="{Binding ChartSubtitle}">
+                    <!-- A hidden header still kept its height on Android, which pushed the list to the middle of the screen. -->
+                    <testUi:TestScoreTrendChartView.Triggers>
+                        <DataTrigger TargetType="testUi:TestScoreTrendChartView" Binding="{Binding HasChart}" Value="False">
+                            <Setter Property="HeightRequest" Value="0" />
+                            <Setter Property="Margin" Value="0" />
+                        </DataTrigger>
+                    </testUi:TestScoreTrendChartView.Triggers>
+                </testUi:TestScoreTrendChartView>
             </CollectionView.Header>
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="{StaticResource ListItemSpacing}" />

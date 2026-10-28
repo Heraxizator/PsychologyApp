@@ -16,6 +16,8 @@ public partial class TestHistoryEntryView : ContentView
 
     public ICommand ToggleLuscherDetailCommand { get; }
 
+    public string MoreInfoText => AppStrings.TestsMoreInfo;
+
     public static readonly BindableProperty DateTextProperty =
         BindableProperty.Create(nameof(DateText), typeof(string), typeof(TestHistoryEntryView), string.Empty);
 
