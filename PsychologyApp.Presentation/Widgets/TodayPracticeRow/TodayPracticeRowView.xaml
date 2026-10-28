@@ -64,16 +64,17 @@
                             <Label
                                 Text="{TemplateBinding Subtitle}"
                                 Style="{StaticResource CaptionStyle}"
-                                MaxLines="2"
+                                MaxLines="1"
                                 LineBreakMode="TailTruncation" />
-                            <!-- Under the subtitle, on the same left edge as the title: alone under the tile it read as a loose line. -->
+                            <!-- Under the subtitle, on the same left edge as the title: alone under the tile it read as a loose line. One line each: four
+                                 lines made this row heavier than the catalog under it. -->
                             <Label
                                 IsVisible="{TemplateBinding HasHint}"
                                 Margin="0,4,0,0"
                                 Text="{TemplateBinding HintText}"
                                 Style="{StaticResource CaptionStyle}"
                                 TextColor="{AppThemeBinding Light={StaticResource TextTertiaryLight}, Dark={StaticResource TextSecondaryDark}}"
-                                MaxLines="2"
+                                MaxLines="1"
                                 LineBreakMode="TailTruncation" />
                         </VerticalStackLayout>
                         <Label

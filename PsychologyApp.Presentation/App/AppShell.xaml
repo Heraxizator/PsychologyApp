@@ -27,9 +27,17 @@
     <!-- The menu behind the burger: the profile as a card on top, my path, reading, support, then help (tinted) and the app's own pages. -->
     <Shell.FlyoutContent>
         <ScrollView VerticalScrollBarVisibility="Never">
-            <VerticalStackLayout Padding="12,24,12,24" Spacing="4">
+            <VerticalStackLayout Padding="12,24,12,56" Spacing="4">
                 <VerticalStackLayout.Resources>
-                    <!-- A row: the icon on a tile of its group's colour. Help sits on that colour with a stronger label. -->
+                    <!-- A row: a grey icon and its title, as in the settings; only help keeps its colour, so it is the one thing that stands
+                         out. A tile of its own colour on every row made the menu a box of sweets. The plain look is the style, so the
+                         trigger for help can change it (a value set on the element would win over the trigger). -->
+                    <Style x:Key="MenuTileStyle" TargetType="Border">
+                        <Setter Property="BackgroundColor" Value="Transparent" />
+                    </Style>
+                    <Style x:Key="MenuIconStyle" TargetType="ui:MaterialIconView">
+                        <Setter Property="IconColor" Value="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                    </Style>
                     <DataTemplate x:Key="MenuEntryTemplate" x:DataType="app:AppMenuEntry">
                         <Border
                             Padding="10,8"
@@ -44,8 +52,20 @@
                                 <TapGestureRecognizer Command="{Binding Command}" />
                             </Border.GestureRecognizers>
                             <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
-                                <Border WidthRequest="36" HeightRequest="36" StrokeThickness="0" StrokeShape="RoundRectangle 10" BackgroundColor="{Binding TileColor}" VerticalOptions="Center">
-                                    <ui:MaterialIconView IconName="{Binding Icon}" IconSize="20" IconColor="{Binding IconColor}" />
+                                <Border WidthRequest="36" HeightRequest="36" StrokeThickness="0" StrokeShape="RoundRectangle 10" VerticalOptions="Center"
+                                        Style="{StaticResource MenuTileStyle}">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsEmphasized}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="{Binding TileColor}" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <ui:MaterialIconView IconName="{Binding Icon}" IconSize="20" Style="{StaticResource MenuIconStyle}">
+                                        <ui:MaterialIconView.Triggers>
+                                            <DataTrigger TargetType="ui:MaterialIconView" Binding="{Binding IsEmphasized}" Value="True">
+                                                <Setter Property="IconColor" Value="{Binding IconColor}" />
+                                            </DataTrigger>
+                                        </ui:MaterialIconView.Triggers>
+                                    </ui:MaterialIconView>
                                 </Border>
                                 <Label Grid.Column="1" Text="{Binding Title}" Style="{StaticResource BodyStyle}" VerticalOptions="Center">
                                     <Label.Triggers>

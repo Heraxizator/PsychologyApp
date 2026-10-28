@@ -6,8 +6,8 @@
 
     <!--
         The same icon-tile language used everywhere else in the app (a Material icon on a tinted round tile), just on
-        the companion's own brand gradient instead of a flat tint, with a slow breathing ring behind it and an online
-        dot in the corner. Consistent, not another one-off avatar concept.
+        the companion's own brand gradient instead of a flat tint, with a slow breathing ring behind it. No "online" dot:
+        the companion works offline, and a green dot beside "offline" said the opposite. Consistent, not another one-off avatar concept.
     -->
     <Grid>
         <Ellipse x:Name="Halo" Opacity="0" Scale="1">
@@ -37,16 +37,5 @@
             HorizontalOptions="Center"
             VerticalOptions="Center" />
 
-        <Border
-            x:Name="StatusBadge"
-            WidthRequest="15"
-            HeightRequest="15"
-            Margin="0,0,-1,-1"
-            HorizontalOptions="End"
-            VerticalOptions="End"
-            StrokeThickness="2.4"
-            Stroke="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
-            BackgroundColor="{StaticResource OnlineStatus}"
-            StrokeShape="RoundRectangle 8" />
     </Grid>
 </ContentView>

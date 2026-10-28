@@ -39,7 +39,6 @@
                         WidthRequest="56"
                         HeightRequest="56"
                         IconSize="28"
-                        ShowStatus="False"
                         VerticalOptions="Center"
                         AutomationProperties.IsInAccessibleTree="False" />
                     <!-- What it is not stays at the top, under its name, in one sentence. -->

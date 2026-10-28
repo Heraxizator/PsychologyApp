@@ -26,7 +26,6 @@
     <Color x:Key="DangerSurfaceDark">#3B2423</Color>
     <Color x:Key="Success">#1E7A45</Color>
     <Color x:Key="SuccessDark">#4CAF7D</Color>
-    <Color x:Key="OnlineStatus">#34C759</Color>
 
     <Color x:Key="PageBackground">#F3F4F6</Color>
     <Color x:Key="PageBackgroundDark">#121212</Color>

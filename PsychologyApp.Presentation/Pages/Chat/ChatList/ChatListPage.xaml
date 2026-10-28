@@ -165,7 +165,6 @@
                 WidthRequest="72"
                 HeightRequest="72"
                 IconSize="32"
-                ShowStatus="False"
                 HorizontalOptions="Center"
                 AutomationProperties.IsInAccessibleTree="False" />
             <Label
@@ -200,7 +199,6 @@
                             WidthRequest="36"
                             HeightRequest="36"
                             IconSize="18"
-                            ShowStatus="False"
                             VerticalOptions="End" />
                         <Border
                             Grid.Column="1"

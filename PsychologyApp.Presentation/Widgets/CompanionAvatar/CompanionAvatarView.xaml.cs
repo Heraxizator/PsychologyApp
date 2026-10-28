@@ -24,13 +24,6 @@ public partial class CompanionAvatarView : ContentView
         false,
         propertyChanged: (bindable, _, _) => ((CompanionAvatarView)bindable).RestartBreathing());
 
-    public static readonly BindableProperty ShowStatusProperty = BindableProperty.Create(
-        nameof(ShowStatus),
-        typeof(bool),
-        typeof(CompanionAvatarView),
-        true,
-        propertyChanged: (bindable, _, newValue) => ((CompanionAvatarView)bindable).StatusBadge.IsVisible = (bool)newValue);
-
     public static readonly BindableProperty IconSizeProperty = BindableProperty.Create(
         nameof(IconSize),
         typeof(double),
@@ -64,11 +57,6 @@ public partial class CompanionAvatarView : ContentView
     }
 
     /// <summary>The small "online" dot in the corner.</summary>
-    public bool ShowStatus
-    {
-        get => (bool)GetValue(ShowStatusProperty);
-        set => SetValue(ShowStatusProperty, value);
-    }
 
     /// <summary>Size of the icon at the centre. Scale it with the avatar itself — the default fits a small header avatar.</summary>
     public double IconSize

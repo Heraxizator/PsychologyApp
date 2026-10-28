@@ -21,10 +21,11 @@
                 TitleText="{Binding PageTitle}"
                 BackCommand="{Binding BackCommand}" />
 
-            <Label Text="{Binding LeadText}" Style="{StaticResource BodyStyle}" />
+            <!-- Rows in cards like the settings, instead of a heavy card with a tile for every action. -->
+            <Label Text="{Binding LeadText}" Style="{StaticResource CaptionStyle}" Margin="4,0" />
 
-            <Border Style="{StaticResource BrandCardStyle}" IsVisible="{Binding IsAppLockOffered}">
-                <VerticalStackLayout Spacing="4">
+            <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0" IsVisible="{Binding IsAppLockOffered}">
+                <VerticalStackLayout Spacing="4" Padding="0,4">
                     <ui:SettingSwitchRowView
                         LabelText="{Binding AppLockLabel}"
                         IsToggled="{Binding AppLockEnabled}"
@@ -33,57 +34,92 @@
                 </VerticalStackLayout>
             </Border>
 
-            <ui:SettingsLinkCardView
-                Title="{Binding ExportTitle}"
-                Subtitle="{Binding ExportSubtitle}"
-                IconName="Download"
-                TapCommand="{Binding ExportBackupCommand}">
-                <ui:SettingsLinkCardView.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="1" />
-                </ui:SettingsLinkCardView.Behaviors>
-            </ui:SettingsLinkCardView>
+            <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0">
+                <VerticalStackLayout Spacing="0">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="52"
+                          SemanticProperties.Description="{Binding ExportTitle}">
+                        <Grid.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </Grid.Behaviors>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ExportBackupCommand}" />
+                        </Grid.GestureRecognizers>
+                        <ui:MaterialIconView IconName="Download" IconSize="20" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center" Padding="0,6">
+                            <Label Text="{Binding ExportTitle}" Style="{StaticResource BodyStyle}" />
+                            <Label Text="{Binding ExportSubtitle}" Style="{StaticResource CaptionStyle}" />
+                        </VerticalStackLayout>
+                        <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="18" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                    </Grid>
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="52"
+                          SemanticProperties.Description="{Binding ImportTitle}">
+                        <Grid.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </Grid.Behaviors>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ImportBackupCommand}" />
+                        </Grid.GestureRecognizers>
+                        <ui:MaterialIconView IconName="Upload" IconSize="20" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center" Padding="0,6">
+                            <Label Text="{Binding ImportTitle}" Style="{StaticResource BodyStyle}" />
+                            <Label Text="{Binding ImportSubtitle}" Style="{StaticResource CaptionStyle}" />
+                        </VerticalStackLayout>
+                        <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="18" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                    </Grid>
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="52"
+                          SemanticProperties.Description="{Binding SummaryTitle}">
+                        <Grid.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </Grid.Behaviors>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ExportSummaryCommand}" />
+                        </Grid.GestureRecognizers>
+                        <ui:MaterialIconView IconName="Summarize" IconSize="20" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center" Padding="0,6">
+                            <Label Text="{Binding SummaryTitle}" Style="{StaticResource BodyStyle}" />
+                            <Label Text="{Binding SummarySubtitle}" Style="{StaticResource CaptionStyle}" />
+                        </VerticalStackLayout>
+                        <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="18" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                    </Grid>
+                    <BoxView Style="{StaticResource SettingRowDividerStyle}" />
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="52"
+                          SemanticProperties.Description="{Binding ErrorLogTitle}">
+                        <Grid.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </Grid.Behaviors>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ShareErrorLogCommand}" />
+                        </Grid.GestureRecognizers>
+                        <ui:MaterialIconView IconName="ErrorOutline" IconSize="20" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center" Padding="0,6">
+                            <Label Text="{Binding ErrorLogTitle}" Style="{StaticResource BodyStyle}" />
+                            <Label Text="{Binding ErrorLogSubtitle}" Style="{StaticResource CaptionStyle}" />
+                        </VerticalStackLayout>
+                        <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="18" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
 
-            <ui:SettingsLinkCardView
-                Title="{Binding ImportTitle}"
-                Subtitle="{Binding ImportSubtitle}"
-                IconName="Upload"
-                TapCommand="{Binding ImportBackupCommand}">
-                <ui:SettingsLinkCardView.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="2" />
-                </ui:SettingsLinkCardView.Behaviors>
-            </ui:SettingsLinkCardView>
-
-            <ui:SettingsLinkCardView
-                Title="{Binding SummaryTitle}"
-                Subtitle="{Binding SummarySubtitle}"
-                IconName="Summarize"
-                TapCommand="{Binding ExportSummaryCommand}">
-                <ui:SettingsLinkCardView.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="3" />
-                </ui:SettingsLinkCardView.Behaviors>
-            </ui:SettingsLinkCardView>
-
-            <ui:SettingsLinkCardView
-                Title="{Binding ErrorLogTitle}"
-                Subtitle="{Binding ErrorLogSubtitle}"
-                IconName="ErrorOutline"
-                TapCommand="{Binding ShareErrorLogCommand}">
-                <ui:SettingsLinkCardView.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="4" />
-                </ui:SettingsLinkCardView.Behaviors>
-            </ui:SettingsLinkCardView>
-
-            <!-- Last and apart from the rest: the one action here that cannot be undone. -->
-            <ui:SettingsLinkCardView
-                Margin="0,16,0,0"
-                Title="{Binding EraseTitle}"
-                Subtitle="{Binding EraseSubtitle}"
-                IconName="DeleteForever"
-                TapCommand="{Binding EraseAllCommand}">
-                <ui:SettingsLinkCardView.Behaviors>
-                    <behaviors:ListItemRevealBehavior RevealIndex="5" />
-                </ui:SettingsLinkCardView.Behaviors>
-            </ui:SettingsLinkCardView>
+            <!-- Last and apart from the rest, in the danger colour: the one action here that cannot be undone. -->
+            <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0,8,0,0">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="52"
+                          SemanticProperties.Description="{Binding EraseTitle}">
+                        <Grid.Behaviors>
+                            <behaviors:PressFeedbackBehavior />
+                        </Grid.Behaviors>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding EraseAllCommand}" />
+                        </Grid.GestureRecognizers>
+                        <ui:MaterialIconView IconName="DeleteForever" IconSize="20" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource Danger}, Dark={StaticResource DangerDark}}" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center" Padding="0,6">
+                            <Label Text="{Binding EraseTitle}" Style="{StaticResource BodyStyle}" TextColor="{AppThemeBinding Light={StaticResource Danger}, Dark={StaticResource DangerDark}}" />
+                            <Label Text="{Binding EraseSubtitle}" Style="{StaticResource CaptionStyle}" />
+                        </VerticalStackLayout>
+                        <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="18" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                    </Grid>
+            </Border>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
