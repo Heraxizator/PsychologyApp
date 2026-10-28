@@ -2709,12 +2709,6 @@
   <data name="JournalDayEmptyHint.1" xml:space="preserve">
     <value>{0:d} 没有记录——你可以添加一条</value>
   </data>
-  <data name="JournalOverviewInsightLine.1" xml:space="preserve">
-    <value>{0} {3} · 平均 {2}</value>
-  </data>
-  <data name="JournalOverviewInsightLine.2" xml:space="preserve">
-    <value>{0} {4} · 平均 {2} · 心情 {3}</value>
-  </data>
   <data name="JournalWeekInsightLine.1" xml:space="preserve">
     <value>心情 {0}</value>
   </data>

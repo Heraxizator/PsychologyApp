@@ -274,12 +274,23 @@ public sealed class JournalOverviewViewModel : BaseViewModel
 
     public bool HasBestWorstPill => !string.IsNullOrWhiteSpace(BestWorstLabel);
 
-    private string _overviewInsightText = string.Empty;
-    public string OverviewInsightText
+    private bool _hasPeriodStats;
+
+    /// <summary>The figures as tiles; a period with too few check-ins says so in a line instead of three dashes.</summary>
+    public bool HasPeriodStats
     {
-        get => _overviewInsightText;
-        private set => SetProperty(ref _overviewInsightText, value);
+        get => _hasPeriodStats;
+        private set
+        {
+            if (SetProperty(ref _hasPeriodStats, value))
+            {
+                OnPropertyChanged(nameof(ShowPeriodEmpty));
+            }
+        }
     }
+
+    public bool ShowPeriodEmpty => !HasPeriodStats;
+    public string PeriodEmptyText => AppStrings.JournalOverviewInsightEmpty;
 
     private string _practiceMoodInsightText = string.Empty;
     public string PracticeMoodInsightText
@@ -341,7 +352,7 @@ public sealed class JournalOverviewViewModel : BaseViewModel
             nameof(MoodTrendLabel),
             nameof(BestWorstLabel),
             nameof(HasBestWorstPill),
-            nameof(OverviewInsightText),
+            nameof(PeriodEmptyText),
             nameof(PracticeMoodInsightText),
             nameof(HasPracticeMoodInsight),
             nameof(HasFactorPills));
@@ -460,12 +471,7 @@ public sealed class JournalOverviewViewModel : BaseViewModel
                 CheckInDaysDisplay = stats.CheckInDaysDisplay;
                 MoodTrendLabel = stats.MoodTrendLabel;
                 BestWorstLabel = stats.BestWorstLabel;
-                OverviewInsightText = stats.HasStats
-                    ? AppStrings.JournalOverviewInsightLine(
-                        stats.CheckInCount,
-                        stats.AverageMoodDisplay,
-                        stats.MoodTrendLabel)
-                    : AppStrings.JournalOverviewInsightEmpty;
+                HasPeriodStats = stats.HasStats;
                 PracticeMoodInsightText = snapshot.PracticeMoodInsight;
                 ActivityPills = snapshot.ActivityInsights
                     .Select(insight => insight.DisplayPill)

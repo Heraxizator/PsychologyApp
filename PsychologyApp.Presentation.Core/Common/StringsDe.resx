@@ -2709,12 +2709,6 @@
   <data name="JournalDayEmptyHint.1" xml:space="preserve">
     <value>Kein Eintrag für {0:d} — du kannst einen hinzufügen</value>
   </data>
-  <data name="JournalOverviewInsightLine.1" xml:space="preserve">
-    <value>{0} {3} · Ø {2}</value>
-  </data>
-  <data name="JournalOverviewInsightLine.2" xml:space="preserve">
-    <value>{0} {4} · Ø {2} · Stimmung {3}</value>
-  </data>
   <data name="JournalWeekInsightLine.1" xml:space="preserve">
     <value>Stimmung {0}</value>
   </data>

@@ -49,7 +49,8 @@ public static class TrendLineChartRenderer
 
         if (canvasPoints.Length > 1)
         {
-            DrawAreaFill(canvas, canvasPoints, plotBottom, primaryTint);
+            // A light wash under the line: the full tint made the area the heaviest thing on the screen, louder than the line.
+            DrawAreaFill(canvas, canvasPoints, plotBottom, primaryTint.WithAlpha(0.45f));
             DrawLine(canvas, canvasPoints, primary);
         }
 

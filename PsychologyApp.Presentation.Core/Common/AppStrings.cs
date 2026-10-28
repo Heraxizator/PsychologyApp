@@ -306,11 +306,6 @@ public static partial class AppStrings
     public static string JournalMonthTitle(DateOnly month) =>
         month.ToDateTime(TimeOnly.MinValue).ToString("MMMM yyyy", System.Globalization.CultureInfo.CurrentCulture);
     public static string JournalFactorCountPill(string label, int count) => F(nameof(JournalFactorCountPill), label, count);
-    public static string JournalOverviewInsightLine(int checkIns, string averageMood, string trend) =>
-        string.IsNullOrWhiteSpace(trend)
-            ? F("JournalOverviewInsightLine.1", checkIns, MoodCheckInWord(checkIns), averageMood, MoodCheckInWordEn(checkIns))
-            : F("JournalOverviewInsightLine.2", checkIns, MoodCheckInWord(checkIns), averageMood, trend, MoodCheckInWordEn(checkIns));
-
     public static string JournalWeekInsightLine(int checkIns, string trend, string streak)
     {
         if (checkIns <= 0)

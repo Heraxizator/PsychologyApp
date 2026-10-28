@@ -2709,12 +2709,6 @@
   <data name="JournalDayEmptyHint.1" xml:space="preserve">
     <value>Nenhum registro em {0:d} — você pode adicionar um</value>
   </data>
-  <data name="JournalOverviewInsightLine.1" xml:space="preserve">
-    <value>{0} {3} · média {2}</value>
-  </data>
-  <data name="JournalOverviewInsightLine.2" xml:space="preserve">
-    <value>{0} {4} · média {2} · humor {3}</value>
-  </data>
   <data name="JournalWeekInsightLine.1" xml:space="preserve">
     <value>humor {0}</value>
   </data>

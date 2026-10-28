@@ -21,27 +21,28 @@
                 <behaviors:StaggerChildrenBehavior />
             </VerticalStackLayout.Behaviors>
 
-            <ui:NavigationBarExtendedView
+            <!-- The export is rare: a quiet link at the end, not a blue word beside the title. -->
+            <ui:NavigationBarSimpleView
                 TitleText="{Binding PageTitle}"
-                BackCommand="{Binding BackCommand}"
-                ExtensionText="{Binding ExportLabel}"
-                ExtensionCommand="{Binding ExportCommand}" />
+                BackCommand="{Binding BackCommand}" />
 
             <!-- One row of periods drives everything below it: two rows of chips (a calendar scale and a range) made the page loud. -->
             <ui:FilterChipTabBarView
                 ItemsSource="{Binding RangeFilters}"
                 TapCommand="{Binding SelectRangeCommand}" />
 
-            <!-- The period in words first; the journal already shows the numbers day by day. -->
+            <!-- The period's figures as the profile shows its own: three tiles, so the trend arrow no longer wraps onto a line of its own. -->
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                 <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                     <Label
                         Text="{Binding WeekRangeSubtitle}"
                         Style="{StaticResource CaptionStyle}" />
-                    <Label
-                        Text="{Binding OverviewInsightText}"
-                        Style="{StaticResource SectionTitleStyle}"
-                        LineBreakMode="WordWrap" />
+                    <Label IsVisible="{Binding ShowPeriodEmpty}" Text="{Binding PeriodEmptyText}" Style="{StaticResource BodyStyle}" />
+                    <Grid IsVisible="{Binding HasPeriodStats}" ColumnDefinitions="*,*,*" ColumnSpacing="{StaticResource CompactSpacing}">
+                        <ui:MetricTileView Grid.Column="0" ValueText="{Binding CheckInCountDisplay}" LabelText="{Binding WeekMoodCheckInsLabel}" />
+                        <ui:MetricTileView Grid.Column="1" ValueText="{Binding AverageMoodDisplay}" LabelText="{Binding WeekAvgMoodLabel}" />
+                        <ui:MetricTileView Grid.Column="2" ValueText="{Binding CheckInDaysDisplay}" LabelText="{Binding CheckInDaysLabel}" />
+                    </Grid>
                     <Label
                         IsVisible="{Binding HasPracticeMoodInsight}"
                         Text="{Binding PracticeMoodInsightText}"
@@ -75,21 +76,7 @@
                 </VerticalStackLayout>
             </Border>
 
-            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                <ui:SectionHeaderView TitleText="{Binding MoodTrendTitle}" />
-                <ui:EmptyStateView
-                    IsVisible="{Binding ShowMoodTrendHint}"
-                    BodyText="{Binding MoodTrendHint}"
-                    IconName="SelfImprovement" />
-                <moodTrend:MoodTrendChartView
-                    IsVisible="{Binding HasMoodTrendChart}"
-                    ChartPoints="{Binding MoodChartPoints}"
-                    Annotations="{Binding PracticeMarks}"
-                    Subtitle="{Binding MoodChartSubtitle}"
-                    Title="" />
-            </VerticalStackLayout>
-
-            <!-- The year: the one view of the mood nothing else in the journal has. -->
+            <!-- The month, right under the figures: the journal's week line leads here for it, and at the bottom it was below the chart. -->
             <Border Style="{StaticResource BrandCardStyle}" Margin="0">
                 <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource CompactSpacing}">
@@ -142,6 +129,33 @@
                         SelectDayCommand="{Binding SelectDayCommand}" />
                 </VerticalStackLayout>
             </Border>
+
+            <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
+                <ui:SectionHeaderView TitleText="{Binding MoodTrendTitle}" />
+                <ui:EmptyStateView
+                    IsVisible="{Binding ShowMoodTrendHint}"
+                    BodyText="{Binding MoodTrendHint}"
+                    IconName="SelfImprovement" />
+                <moodTrend:MoodTrendChartView
+                    IsVisible="{Binding HasMoodTrendChart}"
+                    ChartPoints="{Binding MoodChartPoints}"
+                    Annotations="{Binding PracticeMarks}"
+                    Subtitle="{Binding MoodChartSubtitle}"
+                    Title="" />
+            </VerticalStackLayout>
+
+            <Label
+                Text="{Binding ExportLabel}"
+                Style="{StaticResource BodyStyle}"
+                HorizontalOptions="Center"
+                MinimumHeightRequest="44"
+                VerticalTextAlignment="Center"
+                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
+                SemanticProperties.Description="{Binding ExportLabel}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ExportCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
