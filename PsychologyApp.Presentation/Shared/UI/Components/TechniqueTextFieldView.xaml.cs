@@ -172,8 +172,11 @@ public partial class TechniqueTextFieldView : ContentView
         RefreshChipSelection();
     }
 
-    /// <summary>How many typical answers show at first; the rest wait behind a "More +N" chip so a long list does not push the page down.</summary>
-    private const int ChipsShownFirst = 8;
+    /// <summary>
+    /// How many typical answers show at first; the rest wait behind a "More +N" chip. Eight filled a screen of chips under one
+    /// question, louder than the question itself.
+    /// </summary>
+    private const int ChipsShownFirst = 4;
 
     private bool _chipsExpanded;
     private Border? _moreChip;

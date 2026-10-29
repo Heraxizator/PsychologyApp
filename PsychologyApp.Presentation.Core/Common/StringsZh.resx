@@ -1015,10 +1015,10 @@
     <value>简短笔记（可选）</value>
   </data>
   <data name="PracticePreSudsLabel" xml:space="preserve">
-    <value>练习前强度（0–10）</value>
+    <value>现在的紧张程度（0–10）</value>
   </data>
   <data name="PracticePostSudsLabel" xml:space="preserve">
-    <value>练习后强度（0–10）</value>
+    <value>练习后的紧张程度（0–10）</value>
   </data>
   <data name="PracticeSudsSectionTitle" xml:space="preserve">
     <value>强度有什么变化？</value>

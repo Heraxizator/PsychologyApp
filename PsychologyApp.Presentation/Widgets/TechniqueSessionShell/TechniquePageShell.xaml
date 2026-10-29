@@ -20,14 +20,14 @@
                 BackCommand="{Binding Source={x:Reference Root}, Path=BackCommand}"
                 ExtensionText="{Binding Source={x:Reference Root}, Path=TheoryText}"
                 ExtensionCommand="{Binding Source={x:Reference Root}, Path=TheoryCommand}" />
-            <!-- What the practice is for, on a banner in the colour of its group. -->
+            <!-- What the practice is for, on a card with a tile in the colour of its group. -->
             <Border
                 x:Name="Hero"
                 IsVisible="{Binding Source={x:Reference Root}, Path=HasHero}"
                 Margin="0"
-                Padding="16"
+                Padding="16,14"
                 StrokeThickness="0"
-                StrokeShape="RoundRectangle 20">
+                StrokeShape="{DynamicResource UiCornerRadiusCompactShape}">
                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
                     <Border
                         x:Name="HeroTile"
@@ -52,13 +52,16 @@
                     </VerticalStackLayout>
                 </Grid>
             </Border>
-            <!-- In a step-by-step practice the steps are on the cards below, so the algorithm folds to one line; a tap opens it. -->
+            <!-- In a step-by-step practice the steps are on the cards below, so the algorithm folds to one quiet line, not a card of its
+                 own; a tap opens it. -->
             <Border
                 x:Name="StepsSummary"
                 IsVisible="False"
-                Style="{StaticResource BrandCardStyle}"
-                Margin="0"
-                Padding="16,12">
+                Margin="4,0"
+                Padding="12,4"
+                MinimumHeightRequest="44"
+                StrokeThickness="0"
+                BackgroundColor="Transparent">
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnStepsSummaryTapped" />
                 </Border.GestureRecognizers>

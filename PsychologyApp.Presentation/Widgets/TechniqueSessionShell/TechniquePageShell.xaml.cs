@@ -178,7 +178,7 @@ public partial class TechniquePageShell : ContentView
     public static readonly BindableProperty HeroMetaProperty =
         BindableProperty.Create(nameof(HeroMeta), typeof(string), typeof(TechniquePageShell), string.Empty);
 
-    /// <summary>A <c>TechniqueFlavor</c> name: the group colours of the banner.</summary>
+    /// <summary>A <c>TechniqueFlavor</c> name: the group colours of the tile.</summary>
     public static readonly BindableProperty HeroFlavorProperty =
         BindableProperty.Create(nameof(HeroFlavor), typeof(string), typeof(TechniquePageShell), string.Empty, propertyChanged: (b, _, _) => ((TechniquePageShell)b).ApplyHero());
 
@@ -275,7 +275,10 @@ public partial class TechniquePageShell : ContentView
 
     private void OnThemeChanged(object? sender, AppThemeChangedEventArgs e) => Dispatcher.Dispatch(ApplyHero);
 
-    /// <summary>The banner takes the colours of the practice's group in the current theme; with no group it stays a plain card.</summary>
+    /// <summary>
+    /// A plain card, as the practice's own card in the list: only its tile and icon take the colours of its group. The gradient banner
+    /// it replaces was the loudest thing above the exercise.
+    /// </summary>
     private void ApplyHero()
     {
         OnPropertyChanged(nameof(HasHero));
@@ -283,13 +286,10 @@ public partial class TechniquePageShell : ContentView
         TechniqueFlavor flavor = TechniqueFlavors.Parse(HeroFlavor);
         HeroIconView.IconName = HeroIcon;
 
-        if (TechniqueFlavors.Banner(flavor, dark) is { } banner && TechniqueFlavors.Colors(flavor, dark) is { } colours)
+        if (TechniqueFlavors.Colors(flavor, dark) is { } colours)
         {
-            Hero.Background = new LinearGradientBrush(
-                [new GradientStop(Color.FromArgb(banner.Start), 0f), new GradientStop(Color.FromArgb(banner.End), 1f)],
-                new Point(0, 0),
-                new Point(1, 1));
-            HeroTile.BackgroundColor = Color.FromArgb(dark ? "#33FFFFFF" : "#99FFFFFF");
+            Hero.Background = new SolidColorBrush(Color.FromArgb(dark ? "#282828" : "#FFFFFF"));
+            HeroTile.BackgroundColor = Color.FromArgb(colours.Tile);
             HeroIconView.IconColor = Color.FromArgb(colours.Icon);
             StepsSummaryIcon.IconColor = Color.FromArgb(colours.Icon);
             Steps.BadgeTint = Color.FromArgb(colours.Tile);

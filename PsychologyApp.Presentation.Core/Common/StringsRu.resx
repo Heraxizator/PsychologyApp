@@ -1015,10 +1015,10 @@
     <value>Короткая заметка (необязательно)</value>
   </data>
   <data name="PracticePreSudsLabel" xml:space="preserve">
-    <value>Интенсивность до (0–10)</value>
+    <value>Напряжение сейчас (0–10)</value>
   </data>
   <data name="PracticePostSudsLabel" xml:space="preserve">
-    <value>Интенсивность после (0–10)</value>
+    <value>Напряжение после практики (0–10)</value>
   </data>
   <data name="PracticeSudsSectionTitle" xml:space="preserve">
     <value>Как изменилась интенсивность?</value>

@@ -1015,10 +1015,10 @@
     <value>Courte note (facultatif)</value>
   </data>
   <data name="PracticePreSudsLabel" xml:space="preserve">
-    <value>Intensité avant (0–10)</value>
+    <value>Tension maintenant (0–10)</value>
   </data>
   <data name="PracticePostSudsLabel" xml:space="preserve">
-    <value>Intensité après (0–10)</value>
+    <value>Tension après la pratique (0–10)</value>
   </data>
   <data name="PracticeSudsSectionTitle" xml:space="preserve">
     <value>Comment l'intensité a-t-elle changé ?</value>
