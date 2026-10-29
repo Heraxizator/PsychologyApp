@@ -9,7 +9,8 @@
              Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
-    <!-- Rows grouped in cards, as the phone's own settings: a card with an icon tile for every row made seven heavy blocks. -->
+    <!-- Rows grouped in cards, as the phone's own settings: a card with an icon tile for every row made seven heavy blocks. A row keeps a
+         subtitle only when it says what is inside (settings, urgent help), not when it repeats the title. -->
     <Grid
         Margin="{StaticResource LayoutPageMarginThickness}"
         RowDefinitions="Auto,*"
@@ -54,7 +55,6 @@
                             <ui:MaterialIconView IconName="Backup" IconSize="20" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
                             <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
                                 <Label Text="{Binding DataBackupTitle}" Style="{StaticResource BodyStyle}" />
-                                <Label Text="{Binding DataBackupSubtitle}" Style="{StaticResource CaptionStyle}" MaxLines="1" LineBreakMode="TailTruncation" />
                             </VerticalStackLayout>
                             <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="18" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
                         </Grid>
@@ -100,7 +100,6 @@
                             <ui:MaterialIconView IconName="Feedback" IconSize="20" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
                             <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
                                 <Label Text="{Binding FeedbackTitle}" Style="{StaticResource BodyStyle}" />
-                                <Label Text="{Binding FeedbackSubtitle}" Style="{StaticResource CaptionStyle}" MaxLines="1" LineBreakMode="TailTruncation" />
                             </VerticalStackLayout>
                             <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="18" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
                         </Grid>
@@ -116,7 +115,6 @@
                             <ui:MaterialIconView IconName="VolunteerActivism" IconSize="20" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
                             <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
                                 <Label Text="{Binding DonateTitle}" Style="{StaticResource BodyStyle}" />
-                                <Label Text="{Binding DonateSubtitle}" Style="{StaticResource CaptionStyle}" MaxLines="1" LineBreakMode="TailTruncation" />
                             </VerticalStackLayout>
                             <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="18" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
                         </Grid>
@@ -132,23 +130,6 @@
                             <ui:MaterialIconView IconName="Psychology" IconSize="20" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
                             <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
                                 <Label Text="{Binding AboutTitle}" Style="{StaticResource BodyStyle}" />
-                                <Label Text="{Binding AboutSubtitle}" Style="{StaticResource CaptionStyle}" MaxLines="1" LineBreakMode="TailTruncation" />
-                            </VerticalStackLayout>
-                            <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="18" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
-                        </Grid>
-                        <BoxView Style="{StaticResource SettingRowDividerStyle}" />
-                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12" MinimumHeightRequest="52"
-                              SemanticProperties.Description="{Binding AliceTitle}">
-                            <Grid.Behaviors>
-                                <behaviors:PressFeedbackBehavior />
-                            </Grid.Behaviors>
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding OpenAlicePageCommand}" />
-                            </Grid.GestureRecognizers>
-                            <ui:MaterialIconView IconName="SmartToy" IconSize="20" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
-                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
-                                <Label Text="{Binding AliceTitle}" Style="{StaticResource BodyStyle}" />
-                                <Label Text="{Binding AliceSubtitle}" Style="{StaticResource CaptionStyle}" MaxLines="1" LineBreakMode="TailTruncation" />
                             </VerticalStackLayout>
                             <ui:MaterialIconView Grid.Column="2" IconName="ChevronRight" IconSize="18" VerticalOptions="Center" IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
                         </Grid>

@@ -95,9 +95,6 @@ public sealed class MauiNavigationService : INavigationService
     public Task GoToDonateAsync() =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(PrepareSecondaryPage(_pageFactory.CreateDonatePage()), true));
 
-    public Task GoToAliceAsync() =>
-        NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(PrepareSecondaryPage(_pageFactory.CreateAlicePage()), true));
-
     public Task GoToFormAsync() =>
         NavigationCoordinator.RunPushAsync(() => ResolveNavigation().PushAsync(PrepareSecondaryPage(_pageFactory.CreateFormPage()), true));
 

@@ -177,41 +177,11 @@
   <data name="OptionsAboutTitle" xml:space="preserve">
     <value>À propos</value>
   </data>
-  <data name="OptionsAboutSubtitle" xml:space="preserve">
-    <value>Informations sur l'application</value>
-  </data>
   <data name="OptionsFeedbackTitle" xml:space="preserve">
     <value>Retour</value>
   </data>
-  <data name="OptionsFeedbackSubtitle" xml:space="preserve">
-    <value>Signaler un problème ou proposer une idée</value>
-  </data>
   <data name="OptionsDonateTitle" xml:space="preserve">
     <value>Soutenir le projet</value>
-  </data>
-  <data name="OptionsDonateSubtitle" xml:space="preserve">
-    <value>Aider l'application à grandir</value>
-  </data>
-  <data name="OptionsAliceTitle" xml:space="preserve">
-    <value>Alice IA</value>
-  </data>
-  <data name="OptionsAliceSubtitle" xml:space="preserve">
-    <value>Assistant vocal Yandex</value>
-  </data>
-  <data name="AliceDisclaimerHeader" xml:space="preserve">
-    <value>Important</value>
-  </data>
-  <data name="AliceDisclaimerBody" xml:space="preserve">
-    <value>Alice est un service externe de Yandex. Une connexion internet est nécessaire. Les réponses sont fournies à titre informatif et ne remplacent pas un professionnel.</value>
-  </data>
-  <data name="AliceOpenInBrowser" xml:space="preserve">
-    <value>Ouvrir dans le navigateur</value>
-  </data>
-  <data name="AliceOpenFailed" xml:space="preserve">
-    <value>Impossible d'ouvrir Alice</value>
-  </data>
-  <data name="AliceLoadingText" xml:space="preserve">
-    <value>Chargement d'Alice…</value>
   </data>
   <data name="SettingsTitle" xml:space="preserve">
     <value>Réglages</value>
@@ -339,9 +309,6 @@
   <data name="AuthorLabel" xml:space="preserve">
     <value>Auteur</value>
   </data>
-  <data name="MessageLabel" xml:space="preserve">
-    <value>Message</value>
-  </data>
   <data name="FormLabel" xml:space="preserve">
     <value>Vos notes</value>
   </data>
@@ -395,9 +362,6 @@
   </data>
   <data name="ReviewPage" xml:space="preserve">
     <value>Avis</value>
-  </data>
-  <data name="ReviewExplanationHeader" xml:space="preserve">
-    <value>Comment ça marche</value>
   </data>
   <data name="ReviewExplanation" xml:space="preserve">
     <value>Vous pouvez signaler un problème ou proposer des idées pour améliorer l'application. L'assistance recevra votre message.</value>
@@ -1441,7 +1405,7 @@
     <value>Pensez à consulter un psychologue ou un médecin. L'auto-assistance convient aux états légers à modérés.</value>
   </data>
   <data name="DataBackupTitle" xml:space="preserve">
-    <value>Données et sauvegarde</value>
+    <value>Données</value>
   </data>
   <data name="DataBackupLead" xml:space="preserve">
     <value>Toutes les données restent uniquement sur cet appareil. Faites une sauvegarde pour ne pas les perdre.</value>

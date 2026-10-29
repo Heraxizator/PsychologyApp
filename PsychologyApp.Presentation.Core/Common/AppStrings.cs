@@ -22,18 +22,8 @@ public static partial class AppStrings
     public static string OptionsSupportSection => R(nameof(OptionsSupportSection));
     public static string ProfileSettingsCardSubtitle => R(nameof(ProfileSettingsCardSubtitle));
     public static string OptionsAboutTitle => R(nameof(OptionsAboutTitle));
-    public static string OptionsAboutSubtitle => R(nameof(OptionsAboutSubtitle));
     public static string OptionsFeedbackTitle => R(nameof(OptionsFeedbackTitle));
-    public static string OptionsFeedbackSubtitle => R(nameof(OptionsFeedbackSubtitle));
     public static string OptionsDonateTitle => R(nameof(OptionsDonateTitle));
-    public static string OptionsDonateSubtitle => R(nameof(OptionsDonateSubtitle));
-    public static string OptionsAliceTitle => R(nameof(OptionsAliceTitle));
-    public static string OptionsAliceSubtitle => R(nameof(OptionsAliceSubtitle));
-    public static string AliceDisclaimerHeader => R(nameof(AliceDisclaimerHeader));
-    public static string AliceDisclaimerBody => R(nameof(AliceDisclaimerBody));
-    public static string AliceOpenInBrowser => R(nameof(AliceOpenInBrowser));
-    public static string AliceOpenFailed => R(nameof(AliceOpenFailed));
-    public static string AliceLoadingText => R(nameof(AliceLoadingText));
 
     public static string SettingsTitle => R(nameof(SettingsTitle));
     public static string SettingsDesignSection => R(nameof(SettingsDesignSection));
@@ -83,7 +73,6 @@ public static partial class AppStrings
     public static string DesignerSaveError => R(nameof(DesignerSaveError));
     public static string ThemeLabel => R(nameof(ThemeLabel));
     public static string AuthorLabel => R(nameof(AuthorLabel));
-    public static string MessageLabel => R(nameof(MessageLabel));
     public static string FormLabel => R(nameof(FormLabel));
     public static string ActionsListLabel => R(nameof(ActionsListLabel));
 
@@ -105,7 +94,6 @@ public static partial class AppStrings
 
     public static string ReviewTitle => R(nameof(ReviewTitle));
     public static string ReviewPage => R(nameof(ReviewPage));
-    public static string ReviewExplanationHeader => R(nameof(ReviewExplanationHeader));
     public static string ReviewExplanation => R(nameof(ReviewExplanation));
     // Without a configured address the message goes to the phone's share sheet, so the text must not promise that support receives it.
     public static string ReviewExplanationShare => R(nameof(ReviewExplanationShare));

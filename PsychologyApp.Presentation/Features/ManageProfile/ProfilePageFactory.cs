@@ -3,7 +3,6 @@ using PsychologyApp.Presentation.Pages.ManageProfile.ProfileSettings;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileDonate;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileInfo;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileOptions;
-using PsychologyApp.Presentation.Pages.ManageProfile.ProfileAlice;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileDataBackup;
 using PsychologyApp.Presentation.Shared.Navigation;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileUser;
@@ -18,7 +17,6 @@ public interface IProfilePageFactory
     OptionsPage CreateOptionsPage();
     InfoPage CreateInfoPage();
     DonatePage CreateDonatePage();
-    AlicePage CreateAlicePage();
     SettingsPage CreateSettingsPage();
     PracticeHistoryPage CreatePracticeHistoryPage();
     InsightsPage CreateInsightsPage();
@@ -31,7 +29,6 @@ public sealed class ProfilePageFactory(
     IOptionsViewModelFactory optionsViewModelFactory,
     IInfoViewModelFactory infoViewModelFactory,
     IDonateViewModelFactory donateViewModelFactory,
-    IAliceViewModelFactory aliceViewModelFactory,
     ISettingsViewModelFactory settingsViewModelFactory,
     IPracticeHistoryViewModelFactory practiceHistoryViewModelFactory,
     IInsightsViewModelFactory insightsViewModelFactory,
@@ -48,9 +45,6 @@ public sealed class ProfilePageFactory(
 
     public DonatePage CreateDonatePage() =>
         new(donateViewModelFactory);
-
-    public AlicePage CreateAlicePage() =>
-        new(aliceViewModelFactory);
 
     public SettingsPage CreateSettingsPage() =>
         new(pageViewModelActivator, settingsViewModelFactory);

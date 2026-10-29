@@ -75,7 +75,6 @@
     <Compile Include="TapGuardTests.cs" />
     <Compile Include="SafeAsyncTests.cs" />
     <Compile Include="AudioDownloadPolicyTests.cs" />
-    <Compile Include="AliceUrlPolicyTests.cs" />
     <Compile Include="SelfHarmCatalogGuardTests.cs" />
     <Compile Include="QuestionnaireScoreRangeTests.cs" />
     <!-- Plain C# (no MAUI types), so the double-tap guards are tested without a device. -->

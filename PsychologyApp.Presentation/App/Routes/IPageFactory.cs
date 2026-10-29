@@ -10,7 +10,6 @@ using PsychologyApp.Presentation.Pages.RunTests.FindProblem;
 using PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueTheory;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileSettings;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileDonate;
-using PsychologyApp.Presentation.Pages.ManageProfile.ProfileAlice;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileInfo;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileOptions;
 using PsychologyApp.Presentation.Pages.RunTests.TestHistory;
@@ -60,7 +59,6 @@ public interface IPageFactory
     OptionsPage CreateOptionsPage();
     InfoPage CreateInfoPage();
     DonatePage CreateDonatePage();
-    AlicePage CreateAlicePage();
     FormPage CreateFormPage();
     SettingsPage CreateSettingsPage();
     TheoryPage CreateTheoryPage(string content, TechniqueId? techniqueId = null);

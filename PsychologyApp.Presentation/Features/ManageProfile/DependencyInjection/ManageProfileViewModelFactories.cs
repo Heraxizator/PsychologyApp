@@ -3,7 +3,6 @@ using PsychologyApp.Presentation.Pages.ManageProfile.ProfileSettings;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileDonate;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileInfo;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileOptions;
-using PsychologyApp.Presentation.Pages.ManageProfile.ProfileAlice;
 using PsychologyApp.Presentation.Pages.ManageProfile.ProfileDataBackup;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -104,19 +103,6 @@ public sealed class DataBackupViewModelFactory(
 {
     public DataBackupViewModel Create(ContentPage page) =>
         new(ResolveNavigation(navigationServiceFactory, page), backupService, specialistSummaryService, toastService, userPreferencesStore, dialogService, eraser, appLock);
-}
-
-public interface IAliceViewModelFactory
-{
-    AliceViewModel Create(ContentPage page);
-}
-
-public sealed class AliceViewModelFactory(
-    IDialogService dialogService,
-    Func<NavigationContext, INavigationService> navigationServiceFactory) : ViewModelFactoryBase, IAliceViewModelFactory
-{
-    public AliceViewModel Create(ContentPage page) =>
-        new(dialogService, ResolveNavigation(navigationServiceFactory, page));
 }
 
 public interface ISettingsViewModelFactory

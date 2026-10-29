@@ -177,41 +177,11 @@
   <data name="OptionsAboutTitle" xml:space="preserve">
     <value>Über die App</value>
   </data>
-  <data name="OptionsAboutSubtitle" xml:space="preserve">
-    <value>App-Informationen</value>
-  </data>
   <data name="OptionsFeedbackTitle" xml:space="preserve">
     <value>Feedback</value>
   </data>
-  <data name="OptionsFeedbackSubtitle" xml:space="preserve">
-    <value>Ein Problem melden oder eine Idee vorschlagen</value>
-  </data>
   <data name="OptionsDonateTitle" xml:space="preserve">
     <value>Projekt unterstützen</value>
-  </data>
-  <data name="OptionsDonateSubtitle" xml:space="preserve">
-    <value>Hilf der App zu wachsen</value>
-  </data>
-  <data name="OptionsAliceTitle" xml:space="preserve">
-    <value>Alice KI</value>
-  </data>
-  <data name="OptionsAliceSubtitle" xml:space="preserve">
-    <value>Sprachassistent von Yandex</value>
-  </data>
-  <data name="AliceDisclaimerHeader" xml:space="preserve">
-    <value>Wichtig</value>
-  </data>
-  <data name="AliceDisclaimerBody" xml:space="preserve">
-    <value>Alice ist ein externer Dienst von Yandex. Eine Internetverbindung ist erforderlich. Die Antworten dienen nur der Information und ersetzen keine professionelle Hilfe.</value>
-  </data>
-  <data name="AliceOpenInBrowser" xml:space="preserve">
-    <value>Im Browser öffnen</value>
-  </data>
-  <data name="AliceOpenFailed" xml:space="preserve">
-    <value>Alice konnte nicht geöffnet werden</value>
-  </data>
-  <data name="AliceLoadingText" xml:space="preserve">
-    <value>Alice wird geladen…</value>
   </data>
   <data name="SettingsTitle" xml:space="preserve">
     <value>Einstellungen</value>
@@ -339,9 +309,6 @@
   <data name="AuthorLabel" xml:space="preserve">
     <value>Autor</value>
   </data>
-  <data name="MessageLabel" xml:space="preserve">
-    <value>Nachricht</value>
-  </data>
   <data name="FormLabel" xml:space="preserve">
     <value>Deine Notizen</value>
   </data>
@@ -395,9 +362,6 @@
   </data>
   <data name="ReviewPage" xml:space="preserve">
     <value>Rückmeldung</value>
-  </data>
-  <data name="ReviewExplanationHeader" xml:space="preserve">
-    <value>So funktioniert es</value>
   </data>
   <data name="ReviewExplanation" xml:space="preserve">
     <value>Du kannst ein Problem melden oder Ideen zur Verbesserung der App vorschlagen. Der Support erhält deine Nachricht.</value>
@@ -1441,7 +1405,7 @@
     <value>Bitte zieh eine Psychologin oder einen Arzt hinzu. Selbsthilfe eignet sich für leichte bis mittlere Zustände.</value>
   </data>
   <data name="DataBackupTitle" xml:space="preserve">
-    <value>Daten und Sicherung</value>
+    <value>Daten</value>
   </data>
   <data name="DataBackupLead" xml:space="preserve">
     <value>Alle Daten bleiben nur auf diesem Gerät. Erstelle eine Sicherung, damit sie nicht verloren gehen.</value>

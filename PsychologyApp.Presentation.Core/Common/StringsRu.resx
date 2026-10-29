@@ -177,41 +177,11 @@
   <data name="OptionsAboutTitle" xml:space="preserve">
     <value>О приложении</value>
   </data>
-  <data name="OptionsAboutSubtitle" xml:space="preserve">
-    <value>Информация о приложении</value>
-  </data>
   <data name="OptionsFeedbackTitle" xml:space="preserve">
     <value>Обратная связь</value>
   </data>
-  <data name="OptionsFeedbackSubtitle" xml:space="preserve">
-    <value>Сообщить о проблеме или предложить идею</value>
-  </data>
   <data name="OptionsDonateTitle" xml:space="preserve">
     <value>Поддержать проект</value>
-  </data>
-  <data name="OptionsDonateSubtitle" xml:space="preserve">
-    <value>Помочь развитию приложения</value>
-  </data>
-  <data name="OptionsAliceTitle" xml:space="preserve">
-    <value>Alice AI</value>
-  </data>
-  <data name="OptionsAliceSubtitle" xml:space="preserve">
-    <value>Голосовой собеседник от Яндекса</value>
-  </data>
-  <data name="AliceDisclaimerHeader" xml:space="preserve">
-    <value>Важно</value>
-  </data>
-  <data name="AliceDisclaimerBody" xml:space="preserve">
-    <value>Alice — внешний сервис Яндекса. Для работы нужен интернет. Ответы носят ознакомительный характер и не заменяют консультацию специалиста.</value>
-  </data>
-  <data name="AliceOpenInBrowser" xml:space="preserve">
-    <value>Открыть в браузере</value>
-  </data>
-  <data name="AliceOpenFailed" xml:space="preserve">
-    <value>Не удалось открыть Alice</value>
-  </data>
-  <data name="AliceLoadingText" xml:space="preserve">
-    <value>Загрузка Alice…</value>
   </data>
   <data name="SettingsTitle" xml:space="preserve">
     <value>Настройки</value>
@@ -339,9 +309,6 @@
   <data name="AuthorLabel" xml:space="preserve">
     <value>Автор</value>
   </data>
-  <data name="MessageLabel" xml:space="preserve">
-    <value>Сообщение</value>
-  </data>
   <data name="FormLabel" xml:space="preserve">
     <value>Ваши отметки</value>
   </data>
@@ -395,9 +362,6 @@
   </data>
   <data name="ReviewPage" xml:space="preserve">
     <value>Отзыв</value>
-  </data>
-  <data name="ReviewExplanationHeader" xml:space="preserve">
-    <value>Как это работает</value>
   </data>
   <data name="ReviewExplanation" xml:space="preserve">
     <value>Вы можете сообщить о проблеме или предложить свои идеи о том, как сделать приложение ещё лучше. Служба поддержки получит ваше сообщение.</value>
@@ -1441,7 +1405,7 @@
     <value>Рекомендуем обратиться к психологу или врачу. Самопомощь подходит для лёгких и умеренных состояний.</value>
   </data>
   <data name="DataBackupTitle" xml:space="preserve">
-    <value>Данные и резервная копия</value>
+    <value>Данные</value>
   </data>
   <data name="DataBackupLead" xml:space="preserve">
     <value>Все данные хранятся только на этом устройстве. Сделайте копию, чтобы не потерять их.</value>

@@ -177,41 +177,11 @@
   <data name="OptionsAboutTitle" xml:space="preserve">
     <value>关于</value>
   </data>
-  <data name="OptionsAboutSubtitle" xml:space="preserve">
-    <value>应用信息</value>
-  </data>
   <data name="OptionsFeedbackTitle" xml:space="preserve">
     <value>反馈</value>
   </data>
-  <data name="OptionsFeedbackSubtitle" xml:space="preserve">
-    <value>报告问题或提出建议</value>
-  </data>
   <data name="OptionsDonateTitle" xml:space="preserve">
     <value>支持项目</value>
-  </data>
-  <data name="OptionsDonateSubtitle" xml:space="preserve">
-    <value>帮助应用成长</value>
-  </data>
-  <data name="OptionsAliceTitle" xml:space="preserve">
-    <value>Alice AI</value>
-  </data>
-  <data name="OptionsAliceSubtitle" xml:space="preserve">
-    <value>Yandex 语音助手</value>
-  </data>
-  <data name="AliceDisclaimerHeader" xml:space="preserve">
-    <value>重要提示</value>
-  </data>
-  <data name="AliceDisclaimerBody" xml:space="preserve">
-    <value>Alice 是 Yandex 的外部服务，需要联网。回答仅供参考，不能代替专业帮助。</value>
-  </data>
-  <data name="AliceOpenInBrowser" xml:space="preserve">
-    <value>在浏览器中打开</value>
-  </data>
-  <data name="AliceOpenFailed" xml:space="preserve">
-    <value>无法打开 Alice</value>
-  </data>
-  <data name="AliceLoadingText" xml:space="preserve">
-    <value>正在加载 Alice…</value>
   </data>
   <data name="SettingsTitle" xml:space="preserve">
     <value>设置</value>
@@ -339,9 +309,6 @@
   <data name="AuthorLabel" xml:space="preserve">
     <value>作者</value>
   </data>
-  <data name="MessageLabel" xml:space="preserve">
-    <value>消息</value>
-  </data>
   <data name="FormLabel" xml:space="preserve">
     <value>你的笔记</value>
   </data>
@@ -395,9 +362,6 @@
   </data>
   <data name="ReviewPage" xml:space="preserve">
     <value>评价</value>
-  </data>
-  <data name="ReviewExplanationHeader" xml:space="preserve">
-    <value>使用方式</value>
   </data>
   <data name="ReviewExplanation" xml:space="preserve">
     <value>你可以报告问题或提出改进应用的建议。支持团队会收到你的消息。</value>
@@ -1441,7 +1405,7 @@
     <value>请考虑寻求心理咨询师或医生的帮助。自助方法适合轻度到中度的状态。</value>
   </data>
   <data name="DataBackupTitle" xml:space="preserve">
-    <value>数据与备份</value>
+    <value>数据</value>
   </data>
   <data name="DataBackupLead" xml:space="preserve">
     <value>所有数据只保存在这台设备上。请做好备份，以免丢失。</value>

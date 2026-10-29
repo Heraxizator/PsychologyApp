@@ -25,27 +25,20 @@
                     <behaviors:StaggerChildrenBehavior />
                 </VerticalStackLayout.Behaviors>
 
-                <ui:TextBoxView
-                    HeaderText="{Binding ExplanationHeader}"
-                    BodyText="{Binding ExplanationBody}">
-                    <ui:TextBoxView.Behaviors>
-                        <behaviors:ListItemRevealBehavior RevealIndex="1" />
-                    </ui:TextBoxView.Behaviors>
-                </ui:TextBoxView>
-
-                <Border Style="{StaticResource BrandCardStyle}" Margin="0">
-                    <Border.Behaviors>
-                        <behaviors:ListItemRevealBehavior RevealIndex="2" />
-                    </Border.Behaviors>
-                    <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
-                        <Label Text="{Binding FormSectionTitle}" Style="{StaticResource SectionTitleStyle}" />
-                        <ui:TextEditorView
-                            Variant="Plain"
-                            PlaceholderText="{Binding MessagePlaceholder}"
-                            BodyText="{Binding MessageText}"
-                            TitleText="{Binding MessageFieldLabel}" />
-                    </VerticalStackLayout>
-                </Border>
+                <!-- One field and a line on where it goes (an info sign, not a lock: in one mode the message is sent): an explanation card and a "Your notes" title above a message read as a form
+                     about something else. -->
+                <ui:TextEditorView
+                    PlaceholderText="{Binding MessagePlaceholder}"
+                    BodyText="{Binding MessageText}" />
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8" Margin="4,0">
+                    <ui:MaterialIconView
+                        IconName="InfoOutline"
+                        IconSize="16"
+                        VerticalOptions="Start"
+                        Margin="0,2,0,0"
+                        IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                    <Label Grid.Column="1" Text="{Binding ExplanationBody}" Style="{StaticResource CaptionStyle}" />
+                </Grid>
             </VerticalStackLayout>
         </ScrollView>
 
