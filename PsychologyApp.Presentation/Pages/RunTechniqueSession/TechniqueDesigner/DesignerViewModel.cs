@@ -63,6 +63,7 @@ public partial class DesignerViewModel : BaseViewModel
         _techniqueId = techniqueId;
 
         Path = "method.png";
+        ReadStepsFromActions();
 
         ModuleName = AppStrings.ShellTabPractice;
         PageName = AppStrings.PracticeConstructor;

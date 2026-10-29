@@ -444,9 +444,6 @@
   <data name="CleanerPlaybackError" xml:space="preserve">
     <value>无法播放音频。请检查网络连接。</value>
   </data>
-  <data name="CleanerOfflineBadge" xml:space="preserve">
-    <value>可离线收听</value>
-  </data>
   <data name="CleanerPlayNext" xml:space="preserve">
     <value>下一首</value>
   </data>
@@ -4144,7 +4141,13 @@
   <data name="ChatStatusOffline" xml:space="preserve">
     <value>离线</value>
   </data>
-  <data name="DesignerActionsPlaceholder" xml:space="preserve">
-    <value>每一步另起一行</value>
+  <data name="CleanerNeedsInternet" xml:space="preserve">
+    <value>需要联网</value>
+  </data>
+  <data name="DesignerStepPlaceholder" xml:space="preserve">
+    <value>这一步要做什么</value>
+  </data>
+  <data name="DesignerAddStep" xml:space="preserve">
+    <value>+ 添加一步</value>
   </data>
 </root>

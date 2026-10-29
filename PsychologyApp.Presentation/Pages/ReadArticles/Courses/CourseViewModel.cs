@@ -18,7 +18,6 @@ public sealed class CourseDayItem
     public required string Icon { get; init; }
     public required bool IsAvailable { get; init; }
     public required ICommand OpenCommand { get; init; }
-    public double Opacity => IsAvailable ? 1 : 0.6;
 }
 
 /// <summary>A course: what it is, the measure at the start and the end, and the days with their state (done, open, tomorrow, later).</summary>

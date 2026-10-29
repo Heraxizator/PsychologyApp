@@ -4,6 +4,7 @@
              x:Class="PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueDesigner.DesignerPage"
              xmlns:vm="clr-namespace:PsychologyApp.Presentation.Pages.RunTechniqueSession.TechniqueDesigner"
              xmlns:ui="clr-namespace:PsychologyApp.Presentation.Shared.UI.Components"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:behaviors="clr-namespace:PsychologyApp.Presentation.Shared.Common.Behaviors"
              x:DataType="vm:DesignerViewModel"
              Shell.NavBarIsVisible="False"
@@ -62,12 +63,43 @@
                     </Border.Behaviors>
                     <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                         <Label Text="{Binding AlgorithmSection}" Style="{StaticResource SectionTitleStyle}" />
-                        <!-- Several lines: each line becomes a step of the practice (CustomTechniqueSessionOperations splits on them), and a
-                             one-line field hid that. -->
-                        <ui:TextEditorView
-                            TitleText="{Binding ActionsFieldLabel}"
-                            PlaceholderText="{Binding ActionsPlaceholder}"
-                            BodyText="{Binding Actions, Mode=TwoWay}" />
+                        <!-- A field per step and "+ Add a step": the steps of the practice one by one, as it will show them. -->
+                        <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Steps}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="vm:DesignerStep">
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="4">
+                                        <ui:TextEntryView
+                                            PlaceholderText="{Binding ActionsPlaceholder, Source={RelativeSource AncestorType={x:Type vm:DesignerViewModel}}, x:DataType=vm:DesignerViewModel}"
+                                            BodyText="{Binding Text, Mode=TwoWay}" />
+                                        <ImageButton
+                                            Grid.Column="1"
+                                            WidthRequest="44"
+                                            HeightRequest="44"
+                                            Padding="12"
+                                            VerticalOptions="Center"
+                                            BackgroundColor="Transparent"
+                                            Command="{Binding RemoveCommand}"
+                                            SemanticProperties.Description="{Binding RemoveStepText, Source={RelativeSource AncestorType={x:Type vm:DesignerViewModel}}, x:DataType=vm:DesignerViewModel}">
+                                            <ImageButton.Source>
+                                                <FontImageSource FontFamily="MaterialIcons" Glyph="{mi:Material Icon=Close}" Size="20"
+                                                                 Color="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                            </ImageButton.Source>
+                                        </ImageButton>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                        <Label
+                            Text="{Binding AddStepText}"
+                            Style="{StaticResource BodyStyle}"
+                            MinimumHeightRequest="44"
+                            VerticalTextAlignment="Center"
+                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
+                            SemanticProperties.Description="{Binding AddStepText}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AddStepCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
                     </VerticalStackLayout>
                 </Border>
             </VerticalStackLayout>

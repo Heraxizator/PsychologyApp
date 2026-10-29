@@ -70,6 +70,7 @@ public partial class DesignerViewModel
             {
                 _algorithm_string = value;
                 OnPropertyChanged(nameof(Actions));
+                ReadStepsFromActions();
             }
         }
     }

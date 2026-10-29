@@ -44,7 +44,7 @@
                 <VerticalStackLayout Spacing="{StaticResource ListItemSpacing}" BindableLayout.ItemsSource="{Binding Days}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="vm:CourseDayItem">
-                            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="14,12" Opacity="{Binding Opacity}"
+                            <Border Style="{StaticResource BrandCardStyle}" Margin="0" Padding="14,12"
                                     SemanticProperties.Description="{Binding Title}">
                                 <Border.Behaviors>
                                     <behaviors:PressFeedbackBehavior />
@@ -53,7 +53,14 @@
                                     <TapGestureRecognizer Command="{Binding OpenCommand}" />
                                 </Border.GestureRecognizers>
                                 <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                                    <ui:MaterialIconView IconName="{Binding Icon}" IconSize="24" VerticalOptions="Center" />
+                                    <!-- A day still to come keeps its text at full strength and only greys its clock: the whole card faded read as broken. -->
+                                    <ui:MaterialIconView IconName="{Binding Icon}" IconSize="24" VerticalOptions="Center">
+                                        <ui:MaterialIconView.Triggers>
+                                            <DataTrigger TargetType="ui:MaterialIconView" Binding="{Binding IsAvailable}" Value="False">
+                                                <Setter Property="IconColor" Value="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                            </DataTrigger>
+                                        </ui:MaterialIconView.Triggers>
+                                    </ui:MaterialIconView>
                                     <VerticalStackLayout Grid.Column="1" Spacing="2">
                                         <Label Text="{Binding NumberText}" Style="{StaticResource CaptionStyle}" />
                                         <Label Text="{Binding Title}" Style="{StaticResource BodyStyle}" FontFamily="{StaticResource SemiBoldFontFamily}" />

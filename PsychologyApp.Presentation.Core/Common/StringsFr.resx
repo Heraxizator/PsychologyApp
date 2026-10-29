@@ -444,9 +444,6 @@
   <data name="CleanerPlaybackError" xml:space="preserve">
     <value>Impossible de lire l'audio. Vérifiez votre connexion internet.</value>
   </data>
-  <data name="CleanerOfflineBadge" xml:space="preserve">
-    <value>Disponible hors ligne</value>
-  </data>
   <data name="CleanerPlayNext" xml:space="preserve">
     <value>Suivante</value>
   </data>
@@ -4144,7 +4141,13 @@
   <data name="ChatStatusOffline" xml:space="preserve">
     <value>hors ligne</value>
   </data>
-  <data name="DesignerActionsPlaceholder" xml:space="preserve">
-    <value>Chaque étape sur une nouvelle ligne</value>
+  <data name="CleanerNeedsInternet" xml:space="preserve">
+    <value>Internet requis</value>
+  </data>
+  <data name="DesignerStepPlaceholder" xml:space="preserve">
+    <value>Que faire à cette étape</value>
+  </data>
+  <data name="DesignerAddStep" xml:space="preserve">
+    <value>+ Ajouter une étape</value>
   </data>
 </root>

@@ -31,8 +31,15 @@ public class Audio : INotifyPropertyChanged
     public bool IsCached
     {
         get => _isCached;
-        set => SetField(ref _isCached, value);
+        set
+        {
+            SetField(ref _isCached, value);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NeedsInternet)));
+        }
     }
+
+    /// <summary>Not saved on the phone yet: playing it downloads it once.</summary>
+    public bool NeedsInternet => !IsCached;
 
     public event PropertyChangedEventHandler? PropertyChanged;
 

@@ -103,15 +103,14 @@
                     MaxLines="1"
                     LineBreakMode="TailTruncation" />
             </VerticalStackLayout>
-            <!-- Saved for offline: a small grey mark instead of a blue line on every card; the chips above already name the group. -->
-            <ui:MaterialIconView
+            <!-- Only a prayer not on the phone yet is marked, in words: a grey tick on every row ("saved for offline") said nothing
+                 without a label, and the exception is the one worth knowing before going offline. -->
+            <Label
                 Grid.Column="2"
-                IsVisible="{Binding ShowOfflineBadge, Source={x:Reference Root}}"
-                SemanticProperties.Description="{Binding OfflineBadgeText, Source={x:Reference Root}}"
-                IconName="OfflinePin"
-                IconSize="18"
-                VerticalOptions="Center"
-                IconColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                IsVisible="{Binding NeedsInternet, Source={x:Reference Root}}"
+                Text="{Binding NeedsInternetText, Source={x:Reference Root}}"
+                Style="{StaticResource CaptionStyle}"
+                VerticalOptions="Center" />
         </Grid>
     </Border>
 </ContentView>

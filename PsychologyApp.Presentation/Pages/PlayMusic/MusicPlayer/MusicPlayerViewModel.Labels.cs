@@ -11,7 +11,7 @@ public partial class MusicPlayerViewModel
     public string NoPrayersFoundText => AppStrings.CleanerNoPrayersFound;
     public string CatalogEmptyText => AppStrings.CleanerCatalogEmpty;
     public string BufferingText => AppStrings.CleanerPreparingAudio;
-    public string OfflineBadgeText => AppStrings.CleanerOfflineBadge;
+    public string NeedsInternetText => AppStrings.CleanerNeedsInternet;
     public string LoadFailedText => AppStrings.LoadFailed;
     public string RetryText => AppStrings.RetryQuestion;
 
@@ -25,7 +25,7 @@ public partial class MusicPlayerViewModel
             nameof(CatalogEmptyText),
             nameof(ListEmptyBodyText),
             nameof(BufferingText),
-            nameof(OfflineBadgeText),
+            nameof(NeedsInternetText),
             nameof(ProgressDisplay));
 
         if (IsDone)

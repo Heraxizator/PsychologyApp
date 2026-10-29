@@ -14,7 +14,9 @@ public partial class DesignerViewModel
     public string AuthorFieldLabel => AppStrings.AuthorLabel;
     public string AlgorithmSection => AppStrings.TechniqueAlgorithm;
     public string ActionsFieldLabel => AppStrings.ActionsListLabel;
-    public string ActionsPlaceholder => AppStrings.DesignerActionsPlaceholder;
+    public string ActionsPlaceholder => AppStrings.DesignerStepPlaceholder;
+    public string AddStepText => AppStrings.DesignerAddStep;
+    public string RemoveStepText => AppStrings.Remove;
     public string SaveButtonText => IsSaving ? AppStrings.Saving : AppStrings.Save;
     public string LoadingText => AppStrings.PracticeLoadingText;
     public string FailedText => AppStrings.LoadFailed;
@@ -46,6 +48,8 @@ public partial class DesignerViewModel
             nameof(DescriptionPlaceholder),
             nameof(ThemePlaceholder),
             nameof(AuthorPlaceholder),
-            nameof(ActionsPlaceholder));
+            nameof(ActionsPlaceholder),
+            nameof(AddStepText),
+            nameof(RemoveStepText));
     }
 }

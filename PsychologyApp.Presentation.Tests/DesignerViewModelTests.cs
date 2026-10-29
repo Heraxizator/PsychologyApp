@@ -139,6 +139,31 @@ public sealed class DesignerViewModelTests
         Assert.Equal("Loaded", viewModel.Name);
     }
 
+    // Each step is a field of its own; what is saved is the filled steps one per line, the form the practice splits into its steps.
+    [Fact]
+    public void Steps_are_saved_one_per_line_and_a_loaded_practice_fills_them()
+    {
+        DesignerViewModel viewModel = CreateViewModel(
+            techniqueId: -1,
+            new Mock<ITechniqueService>().Object,
+            new Mock<ITechniqueMessenger>().Object,
+            new Mock<INavigationService>().Object,
+            Options.Create(new AppSettings()));
+
+        Assert.Single(viewModel.Steps);
+        viewModel.Steps[0].Text = "Breathe in";
+        viewModel.AddStepCommand.Execute(null);
+        viewModel.AddStepCommand.Execute(null);
+        viewModel.Steps[2].Text = "  Breathe out  ";
+        Assert.Equal("Breathe in\nBreathe out", viewModel.Actions);
+
+        viewModel.Steps[0].RemoveCommand.Execute(null);
+        Assert.Equal("Breathe out", viewModel.Actions);
+
+        viewModel.Actions = "One\nTwo";
+        Assert.Equal(["One", "Two"], viewModel.Steps.Select(step => step.Text));
+    }
+
     private static DesignerViewModel CreateViewModel(
         long techniqueId,
         ITechniqueService techniqueService,

@@ -327,6 +327,7 @@
     <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.Init.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.Init.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.Labels.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.Labels.cs" />
     <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.Save.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.Save.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.Steps.cs" Link="Linked/Pages/RunTechniqueSession/TechniqueDesigner/DesignerViewModel.Steps.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/TechniqueMessage.cs" Link="Linked/Features/RunTechniqueSession/TechniqueMessage.cs" />
     <Compile Include="../PsychologyApp.Presentation/Features/RunTechniqueSession/DesignerTechniqueOperations.cs" Link="Linked/Features/RunTechniqueSession/DesignerTechniqueOperations.cs" />
     <Compile Include="../PsychologyApp.Presentation/Shared/Common/Infrastructure/OperationCancellation.cs" Link="Linked/Shared/Common/Infrastructure/OperationCancellation.cs" />

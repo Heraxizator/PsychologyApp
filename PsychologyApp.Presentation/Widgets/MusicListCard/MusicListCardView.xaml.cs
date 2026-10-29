@@ -55,22 +55,22 @@ public partial class MusicListCardView : ContentView
         set => SetValue(IsPlayingThisProperty, value);
     }
 
-    public static readonly BindableProperty ShowOfflineBadgeProperty =
-        BindableProperty.Create(nameof(ShowOfflineBadge), typeof(bool), typeof(MusicListCardView), false);
+    public static readonly BindableProperty NeedsInternetProperty =
+        BindableProperty.Create(nameof(NeedsInternet), typeof(bool), typeof(MusicListCardView), false);
 
-    public bool ShowOfflineBadge
+    public bool NeedsInternet
     {
-        get => (bool)GetValue(ShowOfflineBadgeProperty);
-        set => SetValue(ShowOfflineBadgeProperty, value);
+        get => (bool)GetValue(NeedsInternetProperty);
+        set => SetValue(NeedsInternetProperty, value);
     }
 
-    public static readonly BindableProperty OfflineBadgeTextProperty =
-        BindableProperty.Create(nameof(OfflineBadgeText), typeof(string), typeof(MusicListCardView), string.Empty);
+    public static readonly BindableProperty NeedsInternetTextProperty =
+        BindableProperty.Create(nameof(NeedsInternetText), typeof(string), typeof(MusicListCardView), string.Empty);
 
-    public string OfflineBadgeText
+    public string NeedsInternetText
     {
-        get => (string)GetValue(OfflineBadgeTextProperty);
-        set => SetValue(OfflineBadgeTextProperty, value);
+        get => (string)GetValue(NeedsInternetTextProperty);
+        set => SetValue(NeedsInternetTextProperty, value);
     }
 
 }

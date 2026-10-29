@@ -444,9 +444,6 @@
   <data name="CleanerPlaybackError" xml:space="preserve">
     <value>Не удалось воспроизвести аудио. Проверьте подключение к интернету.</value>
   </data>
-  <data name="CleanerOfflineBadge" xml:space="preserve">
-    <value>Доступно офлайн</value>
-  </data>
   <data name="CleanerPlayNext" xml:space="preserve">
     <value>Далее</value>
   </data>
@@ -4150,7 +4147,13 @@
   <data name="ChatStatusOffline" xml:space="preserve">
     <value>без интернета</value>
   </data>
-  <data name="DesignerActionsPlaceholder" xml:space="preserve">
-    <value>Каждый шаг — с новой строки</value>
+  <data name="CleanerNeedsInternet" xml:space="preserve">
+    <value>нужен интернет</value>
+  </data>
+  <data name="DesignerStepPlaceholder" xml:space="preserve">
+    <value>Что сделать на этом шаге</value>
+  </data>
+  <data name="DesignerAddStep" xml:space="preserve">
+    <value>+ Добавить шаг</value>
   </data>
 </root>

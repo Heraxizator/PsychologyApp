@@ -125,7 +125,7 @@ public static partial class AppStrings
     public static string CleanerSearchingPrayers => R(nameof(CleanerSearchingPrayers));
     public static string CleanerPreparingAudio => R(nameof(CleanerPreparingAudio));
     public static string CleanerPlaybackError => R(nameof(CleanerPlaybackError));
-    public static string CleanerOfflineBadge => R(nameof(CleanerOfflineBadge));
+    public static string CleanerNeedsInternet => R(nameof(CleanerNeedsInternet));
     public static string CleanerPlayNext => R(nameof(CleanerPlayNext));
     public static string CleanerReplay => R(nameof(CleanerReplay));
     public static string CleanerMoreInfoBody => R(nameof(CleanerMoreInfoBody));
@@ -168,7 +168,8 @@ public static partial class AppStrings
     public static string DesignerDescriptionPlaceholder => R(nameof(DesignerDescriptionPlaceholder));
     public static string DesignerThemePlaceholder => R(nameof(DesignerThemePlaceholder));
     public static string DesignerAuthorPlaceholder => R(nameof(DesignerAuthorPlaceholder));
-    public static string DesignerActionsPlaceholder => R(nameof(DesignerActionsPlaceholder));
+    public static string DesignerStepPlaceholder => R(nameof(DesignerStepPlaceholder));
+    public static string DesignerAddStep => R(nameof(DesignerAddStep));
 
     public static string Add => R(nameof(Add));
     public static string Repeat => R(nameof(Repeat));
