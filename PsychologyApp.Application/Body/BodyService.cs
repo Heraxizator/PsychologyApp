@@ -57,7 +57,8 @@ public sealed class BodyService(IBodyRepository repository, ICrisisDetector cris
             _writeGate.Release();
         }
 
-        return new BodyCheckResult(entry, crisisDetector.IsCrisis(entry.Note));
+        // Storage limits must not hide a crisis signal at the end of the original note.
+        return new BodyCheckResult(entry, crisisDetector.IsCrisis(note));
     }
 
     public async Task DeleteAsync(string entryId, CancellationToken cancellationToken = default)

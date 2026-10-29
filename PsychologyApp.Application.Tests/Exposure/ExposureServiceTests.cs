@@ -108,15 +108,19 @@ public sealed class ExposureServiceTests
         Assert.Equal(["Rehearsing what I'll say"], reported.DroppedSafetyBehaviours);
     }
 
-    [Fact]
-    public async Task A_report_that_reads_as_a_crisis_is_flagged()
+    [Theory]
+    [InlineData(false, 0)]
+    [InlineData(false, ExposureService.MaxFreeText)]
+    [InlineData(true, ExposureService.MaxFreeText)]
+    public async Task A_report_that_reads_as_a_crisis_is_flagged(bool inWhatHappened, int prefixLength)
     {
         ExposureStep step = await LadderWithOneStepAsync();
         ExposureSession started = await _service.StartTaskAsync(step.Id, "They'll laugh", 70, []);
 
+        string crisis = new string('a', prefixLength) + " I want to kill myself";
         ExposureReportResult result = await _service.ReportTaskAsync(
             started.Id,
-            new ExposureReport("It went badly", PredictionOutcome.Happened, 90, 95, true, "I want to kill myself"));
+            new ExposureReport(inWhatHappened ? crisis : "It went badly", PredictionOutcome.Happened, 90, 95, true, inWhatHappened ? "lesson" : crisis));
 
         Assert.True(result.Crisis);
     }

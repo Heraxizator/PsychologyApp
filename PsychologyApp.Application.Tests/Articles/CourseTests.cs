@@ -126,13 +126,15 @@ public sealed class CourseTests
         Assert.Equal(CourseDayOutcome.Done, await service.CompleteDayAsync(CourseIds.Sleep, 2, null));
     }
 
-    [Fact]
-    public async Task An_answer_that_reads_as_a_crisis_does_not_close_the_day()
+    [Theory]
+    [InlineData(0)]
+    [InlineData(ReadingService.MaxReflection)]
+    public async Task An_answer_that_reads_as_a_crisis_does_not_close_the_day(int prefixLength)
     {
         (ReadingService service, MemoryRepository repository, _) = Create();
         await service.StartCourseAsync(CourseIds.Mood);
 
-        CourseDayOutcome outcome = await service.CompleteDayAsync(CourseIds.Mood, 1, "не хочу жить");
+        CourseDayOutcome outcome = await service.CompleteDayAsync(CourseIds.Mood, 1, new string('a', prefixLength) + " не хочу жить");
 
         Assert.Equal(CourseDayOutcome.Crisis, outcome);
         Assert.Empty(repository.State!.Course(CourseIds.Mood)!.Days);

@@ -6,6 +6,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ## [Unreleased]
 
+- Crisis detection now checks complete original notes in body check-ins, course reflections and exposure reports, so a signal after the storage length limit still leads to help. Added regression coverage for each affected field; not checked on a device.
+
 - Database operations now fail on queue timeout and respond to cancellation without bypassing unfinished predecessors, preserving exclusive saves and database recreation. Covered by timeout and cancellation regression tests; not checked on a device.
 
 - Database encryption now refuses access when its required key is unavailable or migration fails. The migration checkpoints WAL before taking its rollback copy, and leaves a busy database untouched. Regression coverage added for unavailable keys and committed WAL rows; not checked on a device.

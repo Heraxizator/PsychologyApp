@@ -139,6 +139,18 @@ public sealed class BodyCheckTests
     }
 
     [Fact]
+    public async Task Crisis_words_after_the_storage_limit_still_lead_to_help()
+    {
+        BodyService service = new(new MemoryRepository(), new KeywordCrisisDetector());
+        string note = new string('a', BodyService.MaxNote) + " не хочу жить";
+
+        BodyCheckResult result = await service.SaveAsync(BodyArea.Chest, BodySensation.Heavy, 6, [], note);
+
+        Assert.True(result.Crisis);
+        Assert.Equal(BodyService.MaxNote, result.Entry.Note!.Length);
+    }
+
+    [Fact]
     public async Task The_log_keeps_the_latest_check_ins_and_one_can_be_deleted()
     {
         MemoryRepository repository = new()

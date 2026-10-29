@@ -149,7 +149,8 @@ public sealed class ExposureService(IExposureRepository repository, ICrisisDetec
             Interrupted = false
         }, cancellationToken).ConfigureAwait(false);
 
-        return new ExposureReportResult(plan, crisisDetector.IsCrisis(happened) || crisisDetector.IsCrisis(learned));
+        // Check the original answers: storage truncation must not remove a crisis signal.
+        return new ExposureReportResult(plan, crisisDetector.IsCrisis(report.WhatHappened) || crisisDetector.IsCrisis(report.Learned));
     }
 
     public Task<ExposurePlan> InterruptTaskAsync(string sessionId, int? peakDistress, CancellationToken cancellationToken = default) =>

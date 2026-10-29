@@ -75,7 +75,8 @@ public sealed class ReadingService(IReadingRepository repository, ICrisisDetecto
             words = words[..MaxReflection];
         }
 
-        if (crisisDetector.IsCrisis(words))
+        // The full answer determines safety, even when only its beginning can be stored.
+        if (crisisDetector.IsCrisis(reflection))
         {
             return CourseDayOutcome.Crisis;
         }
