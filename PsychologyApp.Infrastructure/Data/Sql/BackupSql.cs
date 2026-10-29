@@ -54,9 +54,17 @@ internal static class BackupSql
         WHERE NOT EXISTS (SELECT 1 FROM ChatSessions WHERE Title = @Title AND CreatedAt = @CreatedAt);
         """;
 
+    internal const string UpdateChatSessionIfNewer = """
+        UPDATE ChatSessions SET UpdatedAt = @UpdatedAt, Emotion = @Emotion, Theme = @Theme,
+            FirstIntensity = @FirstIntensity, LastIntensity = @LastIntensity, StateJson = @StateJson
+        WHERE SessionId = @SessionId AND UpdatedAt < @UpdatedAt;
+        """;
+
     internal const string InsertChatMessage = """
         INSERT INTO ChatMessages (SessionId, Role, Text, CreatedAt, QuickRepliesJson)
-        VALUES (@SessionId, @Role, @Text, @CreatedAt, @QuickRepliesJson);
+        SELECT @SessionId, @Role, @Text, @CreatedAt, @QuickRepliesJson
+        WHERE (SELECT COUNT(*) FROM ChatMessages
+            WHERE SessionId = @SessionId AND Role = @Role AND Text = @Text AND CreatedAt = @CreatedAt) < @Occurrence;
         """;
 
     internal const string InsertChatMemoryIfMissing = """

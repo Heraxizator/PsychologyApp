@@ -8,6 +8,10 @@ using PsychologyApp.Application.DataBackup;
 using PsychologyApp.Application.Models;
 using PsychologyApp.Infrastructure.Data.Repositories.Base;
 using PsychologyApp.Infrastructure.Data.Sql;
+using PsychologyApp.Application.Body;
+using PsychologyApp.Infrastructure.Data.Repositories.UserProgress;
+using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 
 namespace PsychologyApp.Infrastructure.Data.Repositories.Backup;
 
@@ -103,18 +107,28 @@ public sealed class BackupRepository(IDbConnectionFactory connectionFactory, IOp
                 chat.Session.LastIntensity,
                 chat.Session.StateJson
             }).ConfigureAwait(false);
-            if (added == 0)
-            {
-                continue;
-            }
-
-            chats++;
+            chats += added;
             long sessionId = await connection.ExecuteScalarAsync<long>(DapperCommandFactory.Create(
-                "SELECT last_insert_rowid();", transaction: transaction, commandTimeout: CommandTimeoutSeconds, cancellationToken: cancellationToken)).ConfigureAwait(false);
+                "SELECT SessionId FROM ChatSessions WHERE Title = @Title AND CreatedAt = @CreatedAt ORDER BY SessionId LIMIT 1;",
+                new { chat.Session.Title, CreatedAt = SqliteTime.ToIso(chat.Session.CreatedAt) },
+                transaction, CommandTimeoutSeconds, cancellationToken)).ConfigureAwait(false);
+            await run(BackupSql.UpdateChatSessionIfNewer, new
+            {
+                SessionId = sessionId,
+                UpdatedAt = SqliteTime.ToIso(chat.Session.UpdatedAt == default ? chat.Session.CreatedAt : chat.Session.UpdatedAt),
+                chat.Session.Emotion, chat.Session.Theme, chat.Session.FirstIntensity,
+                chat.Session.LastIntensity, chat.Session.StateJson
+            }).ConfigureAwait(false);
+            // Preserve repeated identical messages while making repeated restores idempotent.
+            Dictionary<(ChatRole Role, string Text, DateTime CreatedAt), int> occurrences = new();
             foreach (ChatMessageDTO message in chat.Messages.OrderBy(m => m.Id))
             {
+                var key = (message.Role, message.Text, message.CreatedAt);
+                occurrences.TryGetValue(key, out int occurrence);
+                occurrences[key] = ++occurrence;
                 await run(BackupSql.InsertChatMessage, new
                 {
+                    Occurrence = occurrence,
                     SessionId = sessionId,
                     Role = (int)message.Role,
                     message.Text,
@@ -188,8 +202,52 @@ public sealed class BackupRepository(IDbConnectionFactory connectionFactory, IOp
             }).ConfigureAwait(false);
         }
 
+        // Documents belong to the same restore transaction as the rows.
+        async Task WriteDocument<T>(string key, T value, JsonTypeInfo<T> type) =>
+            await run("INSERT INTO AppMetadata (Key, Value) VALUES (@key, @value) ON CONFLICT(Key) DO UPDATE SET Value = excluded.Value;",
+                new { key, value = JsonSerializer.Serialize(value, type) }).ConfigureAwait(false);
+
+        async Task<T?> ReadDocument<T>(string key, JsonTypeInfo<T> type) where T : class
+        {
+            string? json = await connection.ExecuteScalarAsync<string?>(DapperCommandFactory.Create(
+                "SELECT Value FROM AppMetadata WHERE Key = @key;", new { key }, transaction,
+                CommandTimeoutSeconds, cancellationToken)).ConfigureAwait(false);
+            if (string.IsNullOrWhiteSpace(json)) return null;
+            try { return JsonSerializer.Deserialize(json, type); }
+            catch (JsonException)
+            {
+                await run("INSERT INTO AppMetadata (Key, Value) VALUES (@key, @value) ON CONFLICT(Key) DO UPDATE SET Value = excluded.Value;",
+                    new { key = key + ".unreadable", value = json }).ConfigureAwait(false);
+                return null;
+            }
+        }
+
+        bool safetyPlanImported = false;
+        if (backup.SafetyPlan is { IsEmpty: false } plan)
+        {
+            var local = await ReadDocument("SafetyPlan", BackupJsonContext.Default.SafetyPlanDTO);
+            bool localIsNewer = local is { IsEmpty: false }
+                && (plan.UpdatedAt is null || (local.UpdatedAt is { } localAt && localAt >= plan.UpdatedAt));
+            if (!localIsNewer)
+            {
+                await WriteDocument("SafetyPlan", plan, BackupJsonContext.Default.SafetyPlanDTO);
+                safetyPlanImported = true;
+            }
+        }
+        if (backup.ExposurePlan is { } exposure
+            && await ReadDocument(ExposureRepository.MetadataKey, ExposureJsonContext.Default.ExposurePlan) is null)
+            await WriteDocument(ExposureRepository.MetadataKey, exposure, ExposureJsonContext.Default.ExposurePlan);
+        if (backup.Reading is { IsEmpty: false } reading
+            && await ReadDocument(ReadingRepository.MetadataKey, ReadingJsonContext.Default.ReadingState) is not { IsEmpty: false })
+            await WriteDocument(ReadingRepository.MetadataKey, reading, ReadingJsonContext.Default.ReadingState);
+        if (backup.Body is { Entries.Count: > 0 } body)
+        {
+            var local = await ReadDocument(BodyRepository.MetadataKey, BodyJsonContext.Default.BodyLog);
+            await WriteDocument(BodyRepository.MetadataKey, BodyService.Merge(local, body), BodyJsonContext.Default.BodyLog);
+        }
+
         await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
-        return new BackupImportResult(moods, tests, completions, sessionResults, chats, SafetyPlanImported: false, techniques);
+        return new BackupImportResult(moods, tests, completions, sessionResults, chats, safetyPlanImported, techniques);
     }
 
     private async Task MergeFavouriteTextsAsync(

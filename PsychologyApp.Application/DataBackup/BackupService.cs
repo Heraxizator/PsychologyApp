@@ -2,7 +2,6 @@ using PsychologyApp.Application.Abstractions.Persistence;
 using PsychologyApp.Application.Body;
 using PsychologyApp.Application.Chat;
 using PsychologyApp.Application.Models;
-using PsychologyApp.Domain.Exposure;
 using System.Text.Json;
 
 namespace PsychologyApp.Application.DataBackup;
@@ -105,14 +104,9 @@ public sealed class BackupService(
         AppBackupDTO clean = Sanitize(backup);
         BackupImportResult result = await backupRepository.ImportAsync(clean, cancellationToken).ConfigureAwait(false);
 
-        bool safetyPlanImported = await ImportSafetyPlanAsync(clean.SafetyPlan, cancellationToken).ConfigureAwait(false);
-        await ImportExposurePlanAsync(clean.ExposurePlan, cancellationToken).ConfigureAwait(false);
-        await ImportReadingAsync(clean.Reading, cancellationToken).ConfigureAwait(false);
-        await ImportBodyAsync(clean.Body, cancellationToken).ConfigureAwait(false);
         int added = result.MoodEntries + result.TestResults + result.Completions + result.SessionResults + result.ChatSessions + result.Techniques;
         return result with
         {
-            SafetyPlanImported = safetyPlanImported,
             SkippedDuplicates = Math.Max(0, sourceRows - added)
         };
     }
@@ -185,61 +179,4 @@ public sealed class BackupService(
         Reading = backup.Reading,
         Body = BodyService.Sanitize(backup.Body)
     };
-
-    /// <summary>
-    /// The fear ladder is one document that only grows on the device: the backup's is taken only when there is none yet, so restoring
-    /// an old file never erases tasks done since.
-    /// </summary>
-    private async Task ImportExposurePlanAsync(ExposurePlan? fromBackup, CancellationToken cancellationToken)
-    {
-        if (fromBackup is null || await exposureRepository.GetAsync(cancellationToken).ConfigureAwait(false) is not null)
-        {
-            return;
-        }
-
-        await exposureRepository.SaveAsync(fromBackup, cancellationToken).ConfigureAwait(false);
-    }
-
-    /// <summary>Like the fear ladder: what was read and the courses only grow on the device, so the backup's is taken only when there is nothing yet.</summary>
-    private async Task ImportReadingAsync(PsychologyApp.Application.Articles.ReadingState? fromBackup, CancellationToken cancellationToken)
-    {
-        if (fromBackup is null || fromBackup.IsEmpty || await readingRepository.GetAsync(cancellationToken).ConfigureAwait(false) is { IsEmpty: false })
-        {
-            return;
-        }
-
-        await readingRepository.SaveAsync(fromBackup, cancellationToken).ConfigureAwait(false);
-    }
-
-    /// <summary>Body check-ins are joined by id with the ones on the device (see <see cref="BodyService.Merge"/>).</summary>
-    private async Task ImportBodyAsync(BodyLog? fromBackup, CancellationToken cancellationToken)
-    {
-        if (fromBackup is null || fromBackup.Entries.Count == 0)
-        {
-            return;
-        }
-
-        BodyLog? local = await bodyRepository.GetAsync(cancellationToken).ConfigureAwait(false);
-        await bodyRepository.SaveAsync(BodyService.Merge(local, fromBackup), cancellationToken).ConfigureAwait(false);
-    }
-
-    /// <summary>A safety plan is one document: take the backup's only if there is none yet or it is the newer edit.</summary>
-    private async Task<bool> ImportSafetyPlanAsync(SafetyPlanDTO? fromBackup, CancellationToken cancellationToken)
-    {
-        if (fromBackup is null || fromBackup.IsEmpty)
-        {
-            return false;
-        }
-
-        SafetyPlanDTO? local = await clinicalCareRepository.GetSafetyPlanAsync(cancellationToken).ConfigureAwait(false);
-        bool localIsNewer = local is { IsEmpty: false }
-            && (fromBackup.UpdatedAt is null || (local.UpdatedAt is { } localAt && localAt >= fromBackup.UpdatedAt));
-        if (localIsNewer)
-        {
-            return false;
-        }
-
-        await clinicalCareRepository.SaveSafetyPlanAsync(fromBackup, cancellationToken).ConfigureAwait(false);
-        return true;
-    }
 }

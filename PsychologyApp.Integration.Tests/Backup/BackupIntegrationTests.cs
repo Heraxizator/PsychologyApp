@@ -127,6 +127,46 @@ public sealed class BackupIntegrationTests : IAsyncLifetime
         Assert.Empty(await _target.GetRequiredService<IChatRepository>().GetSessionsAsync());
     }
 
+    [Fact]
+    public async Task Import_WhenDocumentWriteFails_RollsBackRows()
+    {
+        await using var connection = await _targetFactory.CreateOpenConnectionAsync();
+        await using var command = connection.CreateCommand();
+        command.CommandText = "CREATE TRIGGER FailSafetyPlan BEFORE INSERT ON AppMetadata WHEN NEW.Key = 'SafetyPlan' BEGIN SELECT RAISE(ABORT, 'injected failure'); END;";
+        await command.ExecuteNonQueryAsync();
+        AppBackupDTO backup = new()
+        {
+            MoodEntries = [new MoodEntryDTO { MoodLevel = 3, RecordedAt = LongAgo }],
+            SafetyPlan = new SafetyPlanDTO { WarningSigns = ["warning"] }
+        };
+        await Assert.ThrowsAnyAsync<Exception>(() => _target.GetRequiredService<IBackupService>().ImportAsync(
+            JsonSerializer.Serialize(backup, BackupJsonContext.Default.AppBackupDTO)));
+        Assert.Empty(await _target.GetRequiredService<IUserProgressService>().GetMoodsAsync());
+    }
+
+    [Fact]
+    public async Task Import_ContinuedChat_MergesMessagesAndKeepsNewestState()
+    {
+        IBackupService target = _target.GetRequiredService<IBackupService>();
+        string Snapshot(int count) => JsonSerializer.Serialize(new AppBackupDTO
+        {
+            ChatSessions = [new BackupChatSessionDTO
+            {
+                Session = new ChatSessionDTO { Title = "chat", CreatedAt = LongAgo, UpdatedAt = LongAgo.AddMinutes(count), StateJson = count.ToString() },
+                Messages = Enumerable.Range(1, count).Select(i => new ChatMessageDTO
+                { Id = i, Role = ChatRole.User, Text = "repeated message", CreatedAt = LongAgo }).ToList()
+            }]
+        }, BackupJsonContext.Default.AppBackupDTO);
+        await target.ImportAsync(Snapshot(1));
+        await target.ImportAsync(Snapshot(2));
+        await target.ImportAsync(Snapshot(2));
+        await target.ImportAsync(Snapshot(1));
+        IChatRepository chat = _target.GetRequiredService<IChatRepository>();
+        ChatSessionDTO session = Assert.Single(await chat.GetSessionsAsync());
+        Assert.Equal("2", session.StateJson);
+        Assert.Equal(2, (await chat.GetMessagesAsync(session.Id)).Count);
+    }
+
     [Theory]
     [InlineData("")]
     [InlineData("not json")]
