@@ -17,15 +17,15 @@
 
 <table>
 <tr>
-<td align="center" width="25%"><img src="store/screenshots/ru/01-chat.png" alt="ИИ-чат" width="190"><br><sub><b>Собеседник, который слышит</b></sub></td>
+<td align="center" width="25%"><img src="store/screenshots/ru/01-chat.png" alt="ИИ-психолог" width="190"><br><sub><b>Собеседник, который слышит</b></sub></td>
 <td align="center" width="25%"><img src="store/screenshots/ru/02-breathing.png" alt="Дыхание на весь экран" width="190"><br><sub><b>Дышите вместе с кругом</b></sub></td>
 <td align="center" width="25%"><img src="store/screenshots/ru/03-practices.png" alt="Каталог практик" width="190"><br><sub><b>Пара минут — и легче</b></sub></td>
-<td align="center" width="25%"><img src="store/screenshots/ru/04-what-helps.png" alt="Что мне помогает" width="190"><br><sub><b>Видно, что помогает именно вам</b></sub></td>
+<td align="center" width="25%"><img src="store/screenshots/ru/04-journal.png" alt="Дневник настроения" width="190"><br><sub><b>Настроение — в одно касание</b></sub></td>
 </tr>
 <tr>
-<td align="center"><img src="store/screenshots/ru/05-journal.png" alt="Дневник настроения" width="190"><br><sub><b>Настроение — в одно касание</b></sub></td>
-<td align="center"><img src="store/screenshots/ru/06-mood-trend.png" alt="График настроения" width="190"><br><sub><b>Как меняется настроение</b></sub></td>
-<td align="center"><img src="store/screenshots/ru/07-widget.png" alt="Виджет на главном экране" width="190"><br><sub><b>Отметка прямо с экрана</b></sub></td>
+<td align="center"><img src="store/screenshots/ru/05-month.png" alt="Обзор месяца" width="190"><br><sub><b>Месяц как на ладони</b></sub></td>
+<td align="center"><img src="store/screenshots/ru/06-what-helps.png" alt="Что мне помогает" width="190"><br><sub><b>Видно, что помогает именно вам</b></sub></td>
+<td align="center"><img src="store/screenshots/ru/07-anchors.png" alt="Опорные мысли" width="190"><br><sub><b>Мысли, на которые можно опереться</b></sub></td>
 <td align="center"><img src="store/screenshots/ru/08-tests.png" alt="Тесты" width="190"><br><sub><b>Тесты с понятным итогом</b></sub></td>
 </tr>
 </table>
