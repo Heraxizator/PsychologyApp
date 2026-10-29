@@ -42,9 +42,8 @@ public sealed class MauiDatabaseKeyProvider(ILogger<MauiDatabaseKeyProvider> log
         }
         catch (Exception ex) when (ex is not OperationCanceledException)
         {
-            // No secure storage on this device: the database stays as it was (unencrypted) instead of the app refusing to start.
-            logger.LogError(ex, "The database key could not be read or stored; the database is not encrypted");
-            return null;
+            logger.LogError(ex, "The database key could not be read or stored; database access was refused");
+            throw;
         }
         finally
         {

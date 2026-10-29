@@ -40,7 +40,7 @@ public static partial class SqliteEncryption
 
     /// <summary>
     /// Makes the file at <paramref name="path"/> encrypted with <paramref name="key"/>. Returns false (and leaves the
-    /// original, readable file in place) when the move could not be verified, so the app keeps working and tries again next start.
+    /// original, readable file in place) when the move could not be verified. Callers must refuse access until encryption succeeds.
     /// </summary>
     public static async Task<bool> EnsureEncryptedAsync(string path, string key, CancellationToken cancellationToken = default)
     {
@@ -62,7 +62,19 @@ public static partial class SqliteEncryption
             return true;
         }
 
-        File.Copy(path, plainCopy, overwrite: true);
+        // Fold committed WAL frames into the main file before taking the rollback copy.
+        // If another connection prevents this, abort without replacing files or deleting its WAL.
+        await using (SqliteConnection connection = Open(path))
+        {
+            await connection.OpenAsync(cancellationToken).ConfigureAwait(false);
+            string? mode = await connection.ExecuteScalarAsync<string>(new CommandDefinition(
+                "PRAGMA journal_mode=DELETE;", cancellationToken: cancellationToken)).ConfigureAwait(false);
+            if (!string.Equals(mode, "delete", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new InvalidOperationException("The database could not leave WAL mode for encryption.");
+            }
+            File.Copy(path, plainCopy, overwrite: true);
+        }
         try
         {
             IReadOnlyDictionary<string, long> before = await CountRowsAsync(path, null, cancellationToken).ConfigureAwait(false);

@@ -63,10 +63,13 @@ public sealed class SqliteConnectionFactory : IDbConnectionFactory
             }
 
             string? key = _keyProvider is null ? null : await _keyProvider.GetOrCreateKeyAsync(cancellationToken).ConfigureAwait(false);
+            if (_keyProvider is not null && (key is null || !SqliteEncryption.IsValidKey(key)))
+            {
+                throw new InvalidOperationException("The required database encryption key is unavailable.");
+            }
             if (key is not null && !await SqliteEncryption.EnsureEncryptedAsync(DatabasePath, key, cancellationToken).ConfigureAwait(false))
             {
-                // The move could not be verified and the original was put back: keep working unencrypted, try again next start.
-                key = null;
+                throw new InvalidOperationException("Database encryption could not be verified; access was refused.");
             }
 
             _key = key;

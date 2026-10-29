@@ -4,8 +4,8 @@ namespace PsychologyApp.Application.Abstractions.Persistence;
 public interface IDatabaseKeyProvider
 {
     /// <summary>
-    /// A 64-character hexadecimal key (32 random bytes), created on first use. Null means this platform cannot keep a key
-    /// and the database stays unencrypted.
+    /// A 64-character hexadecimal key (32 random bytes), created on first use. Null means the required key is unavailable:
+    /// callers must refuse database access and may retry later, never fall back to plaintext.
     /// </summary>
     Task<string?> GetOrCreateKeyAsync(CancellationToken cancellationToken = default);
 }

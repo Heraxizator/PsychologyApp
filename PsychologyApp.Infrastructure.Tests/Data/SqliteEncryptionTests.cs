@@ -7,6 +7,39 @@ namespace PsychologyApp.Infrastructure.Tests.Data;
 
 public sealed class SqliteEncryptionTests : IDisposable
 {
+    [Fact]
+    public async Task MissingRequiredKeyIsRetriedWithoutOpeningDatabase()
+    {
+        var provider = new MissingKeyProvider();
+        var factory = new SqliteConnectionFactory(provider);
+        await Assert.ThrowsAsync<InvalidOperationException>(() => factory.CreateOpenConnectionAsync());
+        await Assert.ThrowsAsync<InvalidOperationException>(() => factory.CreateOpenConnectionAsync());
+        Assert.Equal(2, provider.Calls);
+    }
+
+    private sealed class MissingKeyProvider : PsychologyApp.Application.Abstractions.Persistence.IDatabaseKeyProvider
+    {
+        public int Calls { get; private set; }
+        public Task<string?> GetOrCreateKeyAsync(CancellationToken cancellationToken = default)
+        {
+            Calls++;
+            return Task.FromResult<string?>(null);
+        }
+    }
+
+    [Fact]
+    public async Task BusyWalDatabaseIsNotReplacedOrItsCommittedRowsDiscarded()
+    {
+        await CreatePlainDatabaseAsync(wal: true);
+        await using SqliteConnection writer = new($"Data Source={_path};Pooling=False");
+        await writer.OpenAsync();
+        await writer.ExecuteAsync("PRAGMA journal_mode=WAL; PRAGMA wal_autocheckpoint=0; INSERT INTO Quots (Title, Text, Theme, IsReaded, IsFavourite) VALUES ('new', 'committed in WAL', 'x', 0, 0);");
+        Assert.True(new FileInfo(_path + "-wal").Length > 0);
+        await Assert.ThrowsAsync<SqliteException>(() => SqliteEncryption.EnsureEncryptedAsync(_path, Key));
+        Assert.Equal(2, await writer.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM Quots;"));
+        Assert.False(File.Exists(_path + ".plain.bak"));
+    }
+
     private static readonly string Key = new('a', 64);
     private static readonly string OtherKey = new('b', 64);
 
