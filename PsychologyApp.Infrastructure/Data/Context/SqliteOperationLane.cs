@@ -1,5 +1,4 @@
 using System.Data;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Microsoft.Data.Sqlite;
 using PsychologyApp.Application.Abstractions.Persistence;
@@ -15,7 +14,7 @@ namespace PsychologyApp.Infrastructure.Data.Context;
 /// </summary>
 internal static class SqliteOperationLane
 {
-    // A leaked connection must never stall the database forever; past this, the next operation proceeds unordered.
+    // Bound the caller wait, but never bypass an unfinished database operation.
     private static readonly TimeSpan MaxWaitForPrevious = TimeSpan.FromSeconds(10);
 
     private static readonly ConditionalWeakTable<IDbConnectionFactory, Lane> Lanes = new();
@@ -33,7 +32,7 @@ internal static class SqliteOperationLane
         (Task previous, TaskCompletionSource done) = LaneFor(factory).Reserve(read: false);
         try
         {
-            await WaitForAsync(previous).ConfigureAwait(false);
+            await previous.WaitAsync(MaxWaitForPrevious, cancellationToken).ConfigureAwait(false);
             await Task.Run(operation, cancellationToken).ConfigureAwait(false);
         }
         finally
@@ -48,7 +47,7 @@ internal static class SqliteOperationLane
         (Task previous, TaskCompletionSource done) = LaneFor(factory).Reserve(read: readOnly && factory.AllowsParallelReads);
         try
         {
-            await WaitForAsync(previous).ConfigureAwait(false);
+            await previous.WaitAsync(MaxWaitForPrevious, cancellationToken).ConfigureAwait(false);
             SqliteConnection connection = (SqliteConnection)await Task
                 .Run(() => factory.CreateOpenConnectionAsync(cancellationToken), cancellationToken)
                 .ConfigureAwait(false);
@@ -72,27 +71,6 @@ internal static class SqliteOperationLane
 
     private static Lane LaneFor(IDbConnectionFactory factory) => Lanes.GetValue(factory, static _ => new Lane());
 
-    private static async Task WaitForAsync(Task previous)
-    {
-        if (previous.IsCompleted)
-        {
-            return;
-        }
-
-        try
-        {
-            await previous.WaitAsync(MaxWaitForPrevious).ConfigureAwait(false);
-        }
-        catch (TimeoutException)
-        {
-            // Either a connection was never disposed or a method opened a second connection while holding the first
-            // (the slot is released only when the connection closes). Ordering is lost for this one operation: make it visible.
-            Trace.TraceWarning(
-                "SqliteOperationLane: the previous database operation held the lane for more than {0} s; continuing unordered.",
-                MaxWaitForPrevious.TotalSeconds);
-        }
-    }
-
     private sealed class Lane
     {
         private readonly Lock _sync = new();
@@ -111,7 +89,7 @@ internal static class SqliteOperationLane
                 if (read)
                 {
                     _readersSinceWriter.RemoveAll(static t => t.IsCompleted);
-                    _readersSinceWriter.Add(done.Task);
+                    _readersSinceWriter.Add(Task.WhenAll(_lastWriter, done.Task));
                     return (_lastWriter, done);
                 }
 
@@ -119,7 +97,8 @@ internal static class SqliteOperationLane
                     ? _lastWriter
                     : Task.WhenAll(_readersSinceWriter.Append(_lastWriter));
                 _readersSinceWriter.Clear();
-                _lastWriter = done.Task;
+                // A cancelled or timed-out slot still carries its unfinished predecessors.
+                _lastWriter = Task.WhenAll(previous, done.Task);
                 return (previous, done);
             }
         }

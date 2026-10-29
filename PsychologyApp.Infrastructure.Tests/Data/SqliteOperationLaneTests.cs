@@ -10,6 +10,37 @@ public sealed class SqliteOperationLaneTests : IAsyncLifetime
     private readonly SharedMemoryConnectionFactory _connectionFactory = new();
 
     [Fact]
+    public async Task Timed_out_operation_never_runs_and_does_not_release_its_predecessor()
+    {
+        await using SqliteConnection first = await OpenAsTask();
+        bool ran = false;
+        await Assert.ThrowsAsync<TimeoutException>(() => SqliteOperationLane.RunAsync(
+            _connectionFactory, () => { ran = true; return Task.CompletedTask; }, CancellationToken.None));
+        Assert.False(ran);
+        Task<SqliteConnection> third = OpenAsTask();
+        await Task.Delay(200);
+        Assert.False(third.IsCompleted);
+        await first.DisposeAsync();
+        await using SqliteConnection opened = await third.WaitAsync(TimeSpan.FromSeconds(5));
+    }
+
+    [Fact]
+    public async Task Cancelled_wait_does_not_allow_a_later_writer_to_overtake()
+    {
+        await using SqliteConnection first = await OpenAsTask();
+        using CancellationTokenSource cancellation = new();
+        Task waiting = SqliteOperationLane.RunAsync(_connectionFactory,
+            () => throw new InvalidOperationException("Must not run"), cancellation.Token);
+        cancellation.Cancel();
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => waiting.WaitAsync(TimeSpan.FromSeconds(2)));
+        Task<SqliteConnection> third = OpenAsTask();
+        await Task.Delay(200);
+        Assert.False(third.IsCompleted);
+        await first.DisposeAsync();
+        await using SqliteConnection opened = await third.WaitAsync(TimeSpan.FromSeconds(5));
+    }
+
+    [Fact]
     public async Task A_later_operation_waits_until_the_earlier_connection_is_disposed()
     {
         SqliteConnection first = await SqliteOperationLane.OpenAsync(_connectionFactory, CancellationToken.None);

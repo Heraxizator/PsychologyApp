@@ -6,6 +6,10 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ## [Unreleased]
 
+- Database operations now fail on queue timeout and respond to cancellation without bypassing unfinished predecessors, preserving exclusive saves and database recreation. Covered by timeout and cancellation regression tests; not checked on a device.
+
+- Database encryption now refuses access when its required key is unavailable or migration fails. The migration checkpoints WAL before taking its rollback copy, and leaves a busy database untouched. Regression coverage added for unavailable keys and committed WAL rows; not checked on a device.
+
 - Backup restore now commits rows and personal documents together, rolling everything back on failure. Restoring a newer copy of an existing chat merges missing messages without duplicates and keeps the newest conversation state. Verified by integration, application and infrastructure tests; not checked on a device.
 
 ### Added
