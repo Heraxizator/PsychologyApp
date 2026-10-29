@@ -19,14 +19,12 @@ public partial class MusicPlayerViewModel
             OnPropertyChanged(nameof(ActiveTrack));
             OnPropertyChanged(nameof(HasActiveTrack));
             OnPropertyChanged(nameof(ActiveTrackTitle));
-            OnPropertyChanged(nameof(ActiveTrackCategory));
             SyncActiveTrackFlags();
         }
     }
 
     public bool HasActiveTrack => ActiveTrack is not null;
     public string ActiveTrackTitle => ActiveTrack?.Name ?? string.Empty;
-    public string ActiveTrackCategory => ActiveTrack?.Category ?? string.Empty;
     public bool ShowBufferingOverlay => IsBuffering && HasActiveTrack;
 
     public bool IsPlaying

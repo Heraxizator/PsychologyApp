@@ -558,20 +558,17 @@
   <data name="CleanerCatalogEmpty" xml:space="preserve">
     <value>Noch keine Gebete im Katalog</value>
   </data>
-  <data name="CleanerNowPlaying" xml:space="preserve">
-    <value>Läuft gerade</value>
-  </data>
   <data name="DesignerNamePlaceholder" xml:space="preserve">
-    <value>Drehtechnik nach Slavinski</value>
+    <value>Zum Beispiel: Atmen vor einem Anruf</value>
   </data>
   <data name="DesignerDescriptionPlaceholder" xml:space="preserve">
-    <value>Methode zur sofortigen Neutralisierung…</value>
+    <value>Wofür sie ist, in einer Zeile</value>
   </data>
   <data name="DesignerThemePlaceholder" xml:space="preserve">
-    <value>Schwerer Moment</value>
+    <value>Zum Beispiel: Angst</value>
   </data>
   <data name="DesignerAuthorPlaceholder" xml:space="preserve">
-    <value>Zivorad Slavinski</value>
+    <value>Optional</value>
   </data>
   <data name="Add" xml:space="preserve">
     <value>Hinzufügen</value>
@@ -4146,5 +4143,8 @@
   </data>
   <data name="ChatStatusOffline" xml:space="preserve">
     <value>offline</value>
+  </data>
+  <data name="DesignerActionsPlaceholder" xml:space="preserve">
+    <value>Jeder Schritt in einer neuen Zeile</value>
   </data>
 </root>

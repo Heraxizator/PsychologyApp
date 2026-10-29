@@ -558,20 +558,17 @@
   <data name="CleanerCatalogEmpty" xml:space="preserve">
     <value>目录中还没有祈祷文</value>
   </data>
-  <data name="CleanerNowPlaying" xml:space="preserve">
-    <value>正在播放</value>
-  </data>
   <data name="DesignerNamePlaceholder" xml:space="preserve">
-    <value>Slavinski 旋转技巧</value>
+    <value>例如：打电话前的呼吸</value>
   </data>
   <data name="DesignerDescriptionPlaceholder" xml:space="preserve">
-    <value>即时化解的方法…</value>
+    <value>一句话说明用途</value>
   </data>
   <data name="DesignerThemePlaceholder" xml:space="preserve">
-    <value>艰难时刻</value>
+    <value>例如：焦虑</value>
   </data>
   <data name="DesignerAuthorPlaceholder" xml:space="preserve">
-    <value>Zivorad Slavinski</value>
+    <value>可选</value>
   </data>
   <data name="Add" xml:space="preserve">
     <value>添加</value>
@@ -4146,5 +4143,8 @@
   </data>
   <data name="ChatStatusOffline" xml:space="preserve">
     <value>离线</value>
+  </data>
+  <data name="DesignerActionsPlaceholder" xml:space="preserve">
+    <value>每一步另起一行</value>
   </data>
 </root>

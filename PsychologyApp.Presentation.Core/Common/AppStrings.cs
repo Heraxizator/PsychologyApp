@@ -163,12 +163,12 @@ public static partial class AppStrings
     public static string CleanerSearchPlaceholder => R(nameof(CleanerSearchPlaceholder));
     public static string CleanerNoPrayersFound => R(nameof(CleanerNoPrayersFound));
     public static string CleanerCatalogEmpty => R(nameof(CleanerCatalogEmpty));
-    public static string CleanerNowPlaying => R(nameof(CleanerNowPlaying));
 
     public static string DesignerNamePlaceholder => R(nameof(DesignerNamePlaceholder));
     public static string DesignerDescriptionPlaceholder => R(nameof(DesignerDescriptionPlaceholder));
     public static string DesignerThemePlaceholder => R(nameof(DesignerThemePlaceholder));
     public static string DesignerAuthorPlaceholder => R(nameof(DesignerAuthorPlaceholder));
+    public static string DesignerActionsPlaceholder => R(nameof(DesignerActionsPlaceholder));
 
     public static string Add => R(nameof(Add));
     public static string Repeat => R(nameof(Repeat));

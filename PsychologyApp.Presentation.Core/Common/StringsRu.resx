@@ -558,20 +558,17 @@
   <data name="CleanerCatalogEmpty" xml:space="preserve">
     <value>Пока нет молитв в каталоге</value>
   </data>
-  <data name="CleanerNowPlaying" xml:space="preserve">
-    <value>Сейчас играет</value>
-  </data>
   <data name="DesignerNamePlaceholder" xml:space="preserve">
-    <value>Крутилка Славинского</value>
+    <value>Например: дыхание перед звонком</value>
   </data>
   <data name="DesignerDescriptionPlaceholder" xml:space="preserve">
-    <value>Метод мгновенной нейтрализации...</value>
+    <value>Зачем она, одной строкой</value>
   </data>
   <data name="DesignerThemePlaceholder" xml:space="preserve">
-    <value>Тяжёлый момент</value>
+    <value>Например: тревога</value>
   </data>
   <data name="DesignerAuthorPlaceholder" xml:space="preserve">
-    <value>Живорад Славинский</value>
+    <value>Необязательно</value>
   </data>
   <data name="Add" xml:space="preserve">
     <value>Добавить</value>
@@ -4152,5 +4149,8 @@
   </data>
   <data name="ChatStatusOffline" xml:space="preserve">
     <value>без интернета</value>
+  </data>
+  <data name="DesignerActionsPlaceholder" xml:space="preserve">
+    <value>Каждый шаг — с новой строки</value>
   </data>
 </root>

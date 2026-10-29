@@ -62,9 +62,12 @@
                     </Border.Behaviors>
                     <VerticalStackLayout Spacing="{StaticResource CompactSpacing}">
                         <Label Text="{Binding AlgorithmSection}" Style="{StaticResource SectionTitleStyle}" />
-                        <ui:TextEntryView
+                        <!-- Several lines: each line becomes a step of the practice (CustomTechniqueSessionOperations splits on them), and a
+                             one-line field hid that. -->
+                        <ui:TextEditorView
                             TitleText="{Binding ActionsFieldLabel}"
-                            BodyText="{Binding Actions}" />
+                            PlaceholderText="{Binding ActionsPlaceholder}"
+                            BodyText="{Binding Actions, Mode=TwoWay}" />
                     </VerticalStackLayout>
                 </Border>
             </VerticalStackLayout>

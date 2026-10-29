@@ -101,37 +101,18 @@
                         MaximumTrackColor="{AppThemeBinding Light={StaticResource NeutralBorder}, Dark={StaticResource InputBorderDark}}"
                         ThumbColor="{DynamicResource Primary}" />
 
-                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="{StaticResource PlayerControlSpacing}">
-                        <Border
-                            Grid.Column="0"
-                            Style="{StaticResource IconTileStyle}">
-                            <ui:MaterialIconView
-                                IconName="MenuBook"
-                                IconSize="26"
-                                IconColor="{DynamicResource Primary}"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center" />
-                        </Border>
-
-                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
-                            <Label
-                                Text="{Binding NowPlayingLabel}"
-                                Style="{StaticResource CaptionStyle}"
-                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
-                            <Label
-                                Text="{Binding ActiveTrackTitle}"
-                                Style="{StaticResource ListRowTitleStyle}"
-                                MaxLines="1"
-                                LineBreakMode="TailTruncation" />
-                            <Label
-                                Text="{Binding ActiveTrackCategory}"
-                                Style="{StaticResource CaptionStyle}"
-                                MaxLines="1"
-                                LineBreakMode="TailTruncation" />
-                        </VerticalStackLayout>
+                    <!-- The prayer playing is the highlighted row of the list: the bar names it once, beside the controls, without a
+                         "Now playing" caption, a book tile and its group repeating the row. -->
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="{StaticResource PlayerControlSpacing}">
+                        <Label
+                            Text="{Binding ActiveTrackTitle}"
+                            Style="{StaticResource ListRowTitleStyle}"
+                            VerticalOptions="Center"
+                            MaxLines="1"
+                            LineBreakMode="TailTruncation" />
 
                         <audioUi:MusicTransportControlsView
-                            Grid.Column="2"
+                            Grid.Column="1"
                             PlayPreviousCommand="{Binding PlayPreviousCommand}"
                             TogglePlayPauseCommand="{Binding TogglePlayPauseCommand}"
                             PlayNextCommand="{Binding PlayNextCommand}"

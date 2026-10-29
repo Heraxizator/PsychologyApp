@@ -10,7 +10,6 @@ public partial class MusicPlayerViewModel
     public string LoadingText => AppStrings.CleanerSearchingPrayers;
     public string NoPrayersFoundText => AppStrings.CleanerNoPrayersFound;
     public string CatalogEmptyText => AppStrings.CleanerCatalogEmpty;
-    public string NowPlayingLabel => AppStrings.CleanerNowPlaying;
     public string BufferingText => AppStrings.CleanerPreparingAudio;
     public string OfflineBadgeText => AppStrings.CleanerOfflineBadge;
     public string LoadFailedText => AppStrings.LoadFailed;
@@ -25,11 +24,9 @@ public partial class MusicPlayerViewModel
             nameof(NoPrayersFoundText),
             nameof(CatalogEmptyText),
             nameof(ListEmptyBodyText),
-            nameof(NowPlayingLabel),
             nameof(BufferingText),
             nameof(OfflineBadgeText),
-            nameof(ProgressDisplay),
-            nameof(ActiveTrackCategory));
+            nameof(ProgressDisplay));
 
         if (IsDone)
         {

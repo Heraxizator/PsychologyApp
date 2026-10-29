@@ -8,16 +8,15 @@
              x:Class="PsychologyApp.Presentation.Widgets.DailyQuoteHero.DailyQuoteHeroView"
              x:Name="Root">
 
+    <!-- "Quote of the day" is the card's own caption, not a blue label above it that read as a section title. -->
     <VerticalStackLayout Spacing="6" Margin="{StaticResource CardBottomMargin}">
-        <Label
-            Text="{Binding CaptionText, Source={x:Reference Root}}"
-            Style="{StaticResource HeroCaptionStyle}" />
 
         <Border Style="{StaticResource HeroCardStyle}">
             <Border.Behaviors>
                 <behaviors:RevealOnAppearingBehavior />
             </Border.Behaviors>
             <VerticalStackLayout Spacing="10">
+                <Label Text="{Binding CaptionText, Source={x:Reference Root}}" Style="{StaticResource CaptionStyle}" />
                 <Label
                     HorizontalTextAlignment="Start"
                     Style="{StaticResource HeroQuoteStyle}"
