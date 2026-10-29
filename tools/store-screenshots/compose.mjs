@@ -34,8 +34,8 @@ const SLIDES = [
   },
   {
     raw: 'breathing.png', out: '02-breathing.png',
-    ru: { eyebrow: 'Дыхание', title: 'Дышите вместе *с кругом*', sub: 'Квадратное дыхание на весь экран, без лишнего' },
-    en: { eyebrow: 'Breathing', title: 'Breathe *with the circle*', sub: 'Full-screen box breathing, nothing else on screen' },
+    ru: { eyebrow: 'Дыхание', title: 'Дышите вместе *с кругом*', sub: 'Круг подсказывает, когда вдыхать, ждать и выдыхать' },
+    en: { eyebrow: 'Breathing', title: 'Breathe *with the circle*', sub: 'The circle shows when to breathe in, hold and breathe out' },
   },
   {
     raw: 'practices.png', out: '03-practices.png',
