@@ -14,13 +14,15 @@
 
     <Border Style="{StaticResource ListEntryCardStyle}">
         <VerticalStackLayout Spacing="6">
-            <Grid ColumnDefinitions="*,Auto">
-                <Label
-                    Grid.Column="0"
-                    Text="{Binding DateText, Source={x:Reference Root}}"
-                    Style="{StaticResource CaptionStyle}" />
+            <!-- The result first, in the row title's weight, the date under it: the date on top made every card look the same. -->
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                    <Label Text="{Binding SummaryText, Source={x:Reference Root}}" Style="{StaticResource ListRowTitleStyle}" />
+                    <Label Text="{Binding DateText, Source={x:Reference Root}}" Style="{StaticResource CaptionStyle}" />
+                </VerticalStackLayout>
                 <Border
                     Grid.Column="1"
+                    VerticalOptions="Start"
                     IsVisible="{Binding HasTrend, Source={x:Reference Root}}"
                     Padding="8,2"
                     StrokeThickness="0"
@@ -58,7 +60,6 @@
                 Style="{StaticResource CaptionStyle}"
                 FontFamily="{StaticResource MediumFontFamily}"
                 TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
-            <Label Text="{Binding SummaryText, Source={x:Reference Root}}" Style="{StaticResource BodyStyle}" />
 
             <VerticalStackLayout IsVisible="{Binding HasDetail, Source={x:Reference Root}}" Spacing="4">
                 <Label

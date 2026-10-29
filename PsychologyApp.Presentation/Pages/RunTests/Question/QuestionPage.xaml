@@ -23,9 +23,6 @@
             <ui:NavigationBarSimpleView
                 TitleText="{Binding PageTitle}"
                 BackCommand="{Binding BackCommand}" />
-            <testUi:TestFlowMetaStripView
-                DurationText="{Binding DurationText}"
-                QuestionCountText="{Binding QuestionCountText}" />
             <testUi:TestProgressHeaderView
                 Step="{Binding CurrentIndex}"
                 StepCount="{Binding TotalCount}"
@@ -38,45 +35,29 @@
 
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Spacing="{StaticResource LayoutSpacing}">
+                <!-- The question's own text, when it has one, on a card; the reminder that there are no wrong answers is a quiet line. The
+                     "Question 1" pill repeated the progress line, and a test whose questions are only their answers (Beck) showed an empty card. -->
+                <Label
+                    IsVisible="{Binding HasCurrentQuestion}"
+                    Text="{Binding QuestionLeadText}"
+                    Style="{StaticResource CaptionStyle}"
+                    LineBreakMode="WordWrap"
+                    Margin="4,0"
+                    SemanticProperties.Description="{Binding CurrentQuestionSemanticDescription}" />
                 <Border
                     x:Name="QuestionCard"
                     Style="{StaticResource BrandCardStyle}"
                     Margin="0"
-                    IsVisible="{Binding HasCurrentQuestion}"
-                    SemanticProperties.Description="{Binding CurrentQuestionSemanticDescription}">
+                    IsVisible="{Binding HasCurrentQuestionContext}">
                     <Border.Behaviors>
                         <behaviors:RevealOnAppearingBehavior />
                         <behaviors:StepChangeRevealBehavior Step="{Binding CurrentIndex}" />
                     </Border.Behaviors>
-                    <VerticalStackLayout Spacing="{StaticResource SectionSpacing}">
-                        <Label
-                            Text="{Binding QuestionLeadText}"
-                            Style="{StaticResource CaptionStyle}"
-                            TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}"
-                            LineBreakMode="WordWrap" />
-                        <Border
-                            Padding="10,4"
-                            HorizontalOptions="Start"
-                            StrokeThickness="0"
-                            BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="8" />
-                            </Border.StrokeShape>
-                            <Label Style="{StaticResource CaptionStyle}" TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" FontFamily="{StaticResource MediumFontFamily}">
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="{Binding QuestionPrefix}" />
-                                        <Span Text="{Binding CurrentQuestionNumber}" />
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                        </Border>
-                        <Label
-                            Text="{Binding CurrentQuestionContext}"
-                            Style="{StaticResource EmphasisBodyStyle}"
-                            HorizontalTextAlignment="Start"
-                            LineBreakMode="WordWrap" />
-                    </VerticalStackLayout>
+                    <Label
+                        Text="{Binding CurrentQuestionContext}"
+                        Style="{StaticResource EmphasisBodyStyle}"
+                        HorizontalTextAlignment="Start"
+                        LineBreakMode="WordWrap" />
                 </Border>
 
                 <VerticalStackLayout

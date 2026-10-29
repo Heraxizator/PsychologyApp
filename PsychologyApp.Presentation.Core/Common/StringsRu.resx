@@ -1758,9 +1758,6 @@
   <data name="TestsQuestionnaireTitle" xml:space="preserve">
     <value>Опросник</value>
   </data>
-  <data name="TestsQuestionPrefix" xml:space="preserve">
-    <value>Вопрос </value>
-  </data>
   <data name="TestsFinishButton" xml:space="preserve">
     <value>Завершить</value>
   </data>

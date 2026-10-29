@@ -5,7 +5,9 @@ namespace PsychologyApp.Presentation.Pages.RunTests.TestHistory;
 
 public partial class TestHistoryViewModel
 {
-    public string PageTitle => $"{AppStrings.TestHistoryTitle}: {_testTitle}";
+    /// <summary>"History" in the bar and the test under it: "History of results: K…" was cut off before the test's name.</summary>
+    public string PageTitle => AppStrings.TestHistoryTitle;
+    public string TestTitle => _testTitle;
     public string EmptyText => AppStrings.TestHistoryEmpty;
     public string LoadingText => AppStrings.TestsLoadingText;
     public string FailedText => AppStrings.LoadFailed;
@@ -16,6 +18,7 @@ public partial class TestHistoryViewModel
     {
         Notify(
             nameof(PageTitle),
+            nameof(TestTitle),
             nameof(EmptyText),
             nameof(LoadingText),
             nameof(FailedText),

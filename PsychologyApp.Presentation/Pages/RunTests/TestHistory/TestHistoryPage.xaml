@@ -16,10 +16,12 @@
     </ContentPage.Behaviors>
 
     <Grid Padding="{StaticResource LayoutPageMarginThickness}" RowDefinitions="Auto,*,Auto" RowSpacing="{StaticResource LayoutSpacing}">
-        <ui:NavigationBarSimpleView
-            Grid.Row="0"
-            TitleText="{Binding PageTitle}"
-            BackCommand="{Binding Finish}" />
+        <VerticalStackLayout Grid.Row="0" Spacing="4">
+            <ui:NavigationBarSimpleView
+                TitleText="{Binding PageTitle}"
+                BackCommand="{Binding Finish}" />
+            <Label Text="{Binding TestTitle}" Style="{StaticResource CaptionStyle}" HorizontalTextAlignment="Center" LineBreakMode="WordWrap" />
+        </VerticalStackLayout>
 
         <!-- Virtualised: up to 50 heavy result rows are only built as they scroll into view. -->
         <CollectionView

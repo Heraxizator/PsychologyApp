@@ -1752,9 +1752,6 @@
   <data name="TestsQuestionnaireTitle" xml:space="preserve">
     <value>问卷</value>
   </data>
-  <data name="TestsQuestionPrefix" xml:space="preserve">
-    <value>问题 </value>
-  </data>
   <data name="TestsFinishButton" xml:space="preserve">
     <value>完成</value>
   </data>

@@ -10,7 +10,6 @@ public static partial class AppStrings
     public static string TestsNoteHeader => R(nameof(TestsNoteHeader));
     public static string TestsStartButton => R(nameof(TestsStartButton));
     public static string TestsQuestionnaireTitle => R(nameof(TestsQuestionnaireTitle));
-    public static string TestsQuestionPrefix => R(nameof(TestsQuestionPrefix));
     public static string TestsFinishButton => R(nameof(TestsFinishButton));
     public static string TestsStandardTitle => R(nameof(TestsStandardTitle));
     public static string TestsBriefTitle => R(nameof(TestsBriefTitle));

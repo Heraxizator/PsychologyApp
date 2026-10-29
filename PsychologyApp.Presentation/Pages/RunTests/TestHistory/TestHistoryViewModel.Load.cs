@@ -23,7 +23,7 @@ public partial class TestHistoryViewModel
             await UiThread.RunAsync(() =>
             {
                 _testTitle = result.Title;
-                OnPropertyChanged(nameof(PageTitle));
+                OnPropertyChanged(nameof(TestTitle));
                 HistoryEntries.ReplaceRange(result.Entries);
 
                 ChartPoints = result.ChartPoints;

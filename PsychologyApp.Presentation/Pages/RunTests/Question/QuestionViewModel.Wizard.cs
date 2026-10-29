@@ -55,6 +55,8 @@ public partial class QuestionViewModel
 
     public bool HasCurrentQuestion => CurrentQuestion is not null;
 
+    public bool HasCurrentQuestionContext => !string.IsNullOrWhiteSpace(CurrentQuestionContext);
+
     public string StepLabel => _wizard.StepLabel(TotalCount);
 
     public string CurrentQuestionSemanticDescription =>
@@ -96,6 +98,7 @@ public partial class QuestionViewModel
             nameof(CurrentQuestionNumber),
             nameof(CurrentQuestionContext),
             nameof(HasCurrentQuestion),
+            nameof(HasCurrentQuestionContext),
             nameof(StepLabel),
             nameof(CurrentQuestionSemanticDescription),
             nameof(Progress),
