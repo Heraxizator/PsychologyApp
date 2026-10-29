@@ -6,9 +6,9 @@ public partial class FindProblemViewModel
 {
     private void InitAlgorithmRows(List<string> algorithmRows)
     {
-        foreach (string algorithmRow in algorithmRows)
+        for (int i = 0; i < algorithmRows.Count; i++)
         {
-            AlgorithmRows.Add(new AlgorithmRow { Text = algorithmRow });
+            AlgorithmRows.Add(AlgorithmRow.From(algorithmRows[i], i));
         }
     }
 

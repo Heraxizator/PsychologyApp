@@ -38,10 +38,28 @@
                 <Border Style="{StaticResource SettingsSectionCardStyle}" Margin="0" Padding="18,16">
                     <VerticalStackLayout Spacing="10">
                         <Label Text="{Binding DescriptionText}" Style="{StaticResource BodyStyle}" />
-                        <VerticalStackLayout Spacing="2" BindableLayout.ItemsSource="{Binding AlgorithmRows}">
+                        <!-- The steps of answering, each with its number in a circle: a block of grey numbered text read as small print. -->
+                        <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding AlgorithmRows}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="models:AlgorithmRow">
-                                    <Label Text="{Binding Text}" Style="{StaticResource BodyStyle}" TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" SemanticProperties.Description="{Binding Text}">
+                                        <Border
+                                            WidthRequest="26"
+                                            HeightRequest="26"
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 13"
+                                            VerticalOptions="Start"
+                                            BackgroundColor="{AppThemeBinding Light={DynamicResource PrimaryTint}, Dark={DynamicResource PrimaryTintDark}}">
+                                            <Label
+                                                Text="{Binding Number}"
+                                                FontSize="13"
+                                                FontFamily="{StaticResource SemiBoldFontFamily}"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center"
+                                                TextColor="{AppThemeBinding Light={DynamicResource PrimaryTextLight}, Dark={DynamicResource PrimaryTextDark}}" />
+                                        </Border>
+                                        <Label Grid.Column="1" Text="{Binding Body}" Style="{StaticResource BodyStyle}" />
+                                    </Grid>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>

@@ -1,6 +1,7 @@
 using System.Reflection;
 using Moq;
 using PsychologyApp.Presentation.Shared.ViewModels;
+using PsychologyApp.Presentation.Entities.Test;
 using PsychologyApp.Presentation.Features.RunTests;
 using PsychologyApp.Presentation.Pages.RunTests.FindProblem;
 using Xunit;
@@ -153,5 +154,19 @@ public sealed class FindProblemViewModelTests
             LastSession = session;
             return Task.CompletedTask;
         }
+    }
+
+    // The instruction texts number themselves; the number stands in its own circle and is not repeated in the step.
+    [Theory]
+    [InlineData("1. Read every statement", 0, "1", "Read every statement")]
+    [InlineData("3) Tick the one that fits", 2, "3", "Tick the one that fits")]
+    [InlineData("Answer quickly", 1, "2", "Answer quickly")]
+    public void A_step_is_split_into_its_number_and_its_text(string text, int index, string number, string body)
+    {
+        AlgorithmRow row = AlgorithmRow.From(text, index);
+
+        Assert.Equal(number, row.Number);
+        Assert.Equal(body, row.Body);
+        Assert.Equal(text, row.Text);
     }
 }
