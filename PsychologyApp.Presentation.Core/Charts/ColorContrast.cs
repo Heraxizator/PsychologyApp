@@ -27,6 +27,12 @@ public static class ColorContrast
     /// The accent colour itself when it is readable as text on the background; otherwise the nearest shade of it that is, found by moving it toward black
     /// (on a light background) or white (on a dark one) in steps of 5%. A yellow accent is lovely on a button and unreadable as a word on white.
     /// </summary>
+    /// <summary>
+    /// The accent as text in a theme. Light: against the grey page, so it holds on the white cards too. Dark: against the lighter
+    /// card surface (#282828), so it holds on the darker page too; measured on the page alone it fell short on the cards.
+    /// </summary>
+    public static string AccentText(string accent, bool dark) => Readable(accent, dark ? "#282828" : "#F3F4F6");
+
     public static string Readable(string accent, string background, double minimum = BodyTextMinimum)
     {
         if (Ratio(accent, background) >= minimum)

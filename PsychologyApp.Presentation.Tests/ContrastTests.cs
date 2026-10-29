@@ -346,4 +346,24 @@ public class ContrastTests(ITestOutputHelper output)
         Assert.True(ColorContrast.Ratio(colors["TextPrimaryLight"], colors["AnswerChipLight"]) >= ColorContrast.BodyTextMinimum);
         Assert.True(ColorContrast.Ratio(colors["TextPrimaryDark"], colors["AnswerChipDark"]) >= ColorContrast.BodyTextMinimum);
     }
+
+    // A setting's value is written in the accent: with the pale shade a green or yellow accent left "Light" and "Large" unreadable on
+    // the white card. The readable shade the app derives from each accent must hold on the card in both themes.
+    [Theory]
+    [InlineData("#0085FF")]
+    [InlineData("#E53935")]
+    [InlineData("#F7B548")]
+    [InlineData("#2E9E5B")]
+    public void A_setting_value_in_any_accent_is_readable_on_its_card(string accent)
+    {
+        foreach (string surface in new[] { "#FFFFFF", "#F3F4F6" })
+        {
+            Assert.True(ColorContrast.Ratio(ColorContrast.AccentText(accent, dark: false), surface) >= ColorContrast.BodyTextMinimum, surface);
+        }
+
+        foreach (string surface in new[] { "#282828", "#1E1E1E" })
+        {
+            Assert.True(ColorContrast.Ratio(ColorContrast.AccentText(accent, dark: true), surface) >= ColorContrast.BodyTextMinimum, surface);
+        }
+    }
 }
