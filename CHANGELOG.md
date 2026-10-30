@@ -8,6 +8,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 - Explicitly denied emotions no longer inherit the previous emotion or bring it back from recent messages; a newly recognized or selected emotion starts a fresh active state. Not checked on a device.
 
+- Short explicit emotion denials now reach the same context update as longer statements instead of being diverted to the unclear-message prompt. Not checked on a device.
+
 - Multiword emotion phrases now use the same short-range negation rules as single-word emotion terms. Not checked on a device.
 
 - Phrase recognition no longer skips across an internal negation, and recognizes common trailing negations such as “тревоги нет”. Not checked on a device.

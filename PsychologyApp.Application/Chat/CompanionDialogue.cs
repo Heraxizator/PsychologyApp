@@ -283,7 +283,8 @@ public sealed partial class CompanionDialogue(
             return Introduce(previous, given);
         }
 
-        if (act == Utterance.Statement && !previous.QuestionPending && IsUnclearShort(text, single))
+        bool deniesCurrentEmotion = single.NegatedEmotions.Contains(ParseEmotion(previous.Emotion));
+        if (act == Utterance.Statement && !previous.QuestionPending && IsUnclearShort(text, single) && !deniesCurrentEmotion)
         {
             return RespondToUnclear(previous);
         }
