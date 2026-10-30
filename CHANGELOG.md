@@ -16,6 +16,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 - The emotion guesser no longer proposes a feeling that the current message explicitly denies. Not checked on a device.
 
+- The local emotion guesser now shares the app's text normalization, so punctuation, apostrophes, “ё” and emoji cannot distort its word-count threshold or feature extraction. Not checked on a device.
+
 - Physical-symptom recognition now requires an active sensation and respects negation, so a bare body-part mention or a denied symptom does not escalate ordinary anxiety. Not checked on a device.
 
 - Advice replies now acknowledge the recognized feeling and situation first; messages about a loss or trauma follow the existing support path instead of generic advice and practice offers. Not checked on a device.

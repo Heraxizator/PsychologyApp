@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text.Json;
+using PsychologyApp.Application.Conversation;
 
 namespace PsychologyApp.Application.Conversation.Companion;
 
@@ -34,8 +35,6 @@ public sealed class EmotionGuesser : IEmotionGuesser
     private const double Smoothing = 0.1;
     private const int WordStemLength = 6;
     private const int PairStemLength = 5;
-
-    private static readonly char[] Separators = [' ', ',', '.', '!', '?', ';', ':', '-', '—', '"', '«', '»', '(', ')', '\n', '\t'];
 
     private static readonly Lazy<EmotionGuesser> BundledInstance = new(() => FromJson(ReadBundledTrainingSet()), LazyThreadSafetyMode.ExecutionAndPublication);
 
@@ -139,13 +138,14 @@ public sealed class EmotionGuesser : IEmotionGuesser
         return new EmotionGuess(best, first - second);
     }
 
-    private static int WordCount(string text) => text.Split(Separators, StringSplitOptions.RemoveEmptyEntries).Length;
+    private static int WordCount(string text) => UtteranceText.Normalize(text).Split(' ', StringSplitOptions.RemoveEmptyEntries).Length;
 
     private static IEnumerable<string> Features(string text)
     {
-        string[] words = text.ToLowerInvariant().Split(Separators, StringSplitOptions.RemoveEmptyEntries);
+        string normalized = UtteranceText.Normalize(text);
+        string[] words = normalized.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-        string padded = " " + string.Join(' ', words) + " ";
+        string padded = " " + normalized + " ";
         for (int n = 3; n <= 5; n++)
         {
             for (int i = 0; i + n <= padded.Length; i++)
