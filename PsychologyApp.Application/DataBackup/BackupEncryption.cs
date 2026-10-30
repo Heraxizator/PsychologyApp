@@ -152,7 +152,7 @@ public static class BackupEncryption
             throw new BackupFormatException("The encrypted backup is damaged.", ex);
         }
 
-        if (nonce.Length != NonceBytes || tag.Length != TagBytes || salt.Length < 8)
+        if (nonce.Length != NonceBytes || tag.Length != TagBytes || salt.Length != SaltBytes)
         {
             throw new BackupFormatException("The encrypted backup is damaged.");
         }
@@ -177,8 +177,18 @@ public static class BackupEncryption
         }
     }
 
-    private static byte[] DeriveKey(string passphrase, byte[] salt, int iterations) =>
-        Rfc2898DeriveBytes.Pbkdf2(Encoding.UTF8.GetBytes(passphrase.Normalize(NormalizationForm.FormKC)), salt, iterations, HashAlgorithmName.SHA256, KeyBytes);
+    private static byte[] DeriveKey(string passphrase, byte[] salt, int iterations)
+    {
+        byte[] password = Encoding.UTF8.GetBytes(passphrase.Normalize(NormalizationForm.FormKC));
+        try
+        {
+            return Rfc2898DeriveBytes.Pbkdf2(password, salt, iterations, HashAlgorithmName.SHA256, KeyBytes);
+        }
+        finally
+        {
+            CryptographicOperations.ZeroMemory(password);
+        }
+    }
 
     private static byte[] AssociatedData(int version) => Encoding.ASCII.GetBytes($"{FormatName}/{version}");
 }
