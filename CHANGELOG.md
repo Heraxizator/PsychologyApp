@@ -14,6 +14,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 - Crisis recognition includes common past-tense Russian descriptions of self-harm, such as “резал себя” and “царапала себя”. Not checked on a device.
 
+- The emotion guesser no longer proposes a feeling that the current message explicitly denies. Not checked on a device.
+
 - Physical-symptom recognition now requires an active sensation and respects negation, so a bare body-part mention or a denied symptom does not escalate ordinary anxiety. Not checked on a device.
 
 - Advice replies now acknowledge the recognized feeling and situation first; messages about a loss or trauma follow the existing support path instead of generic advice and practice offers. Not checked on a device.

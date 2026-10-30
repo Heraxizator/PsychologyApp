@@ -672,7 +672,9 @@ public sealed partial class CompanionDialogue(
         }
 
         // A proposal needs only enough words for the guesser to judge; the open choice waits for a real story or a second unclear message.
-        if (emotion == CompanionEmotion.Unknown && emotionGuesser?.Guess(text) is { } guess)
+        if (emotion == CompanionEmotion.Unknown
+            && emotionGuesser?.Guess(text) is { } guess
+            && !analysis.NegatedEmotions.Contains(guess.Emotion))
         {
             messages.Add(CompanionDialogueContent.GuessPrompt(guess.Emotion, english));
             return Reply(messages, EmotionReplies(guess.Emotion), state with { UnknownStreak = 0 }, emotion, theme);
