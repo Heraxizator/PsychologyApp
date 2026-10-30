@@ -6,18 +6,19 @@ namespace PsychologyApp.Infrastructure.Data.Context;
 
 public sealed class SqliteConnectionFactory : IDbConnectionFactory
 {
-    private readonly IDatabaseKeyProvider? _keyProvider;
+    private readonly IDatabaseKeyProvider _keyProvider;
     private readonly SemaphoreSlim _readyGate = new(1, 1);
     private string? _key;
     private bool _ready;
 
-    public SqliteConnectionFactory(IDatabaseKeyProvider? keyProvider = null)
+    public SqliteConnectionFactory(IDatabaseKeyProvider keyProvider, string? databasePath = null)
     {
-        _keyProvider = keyProvider;
+        _keyProvider = keyProvider ?? throw new ArgumentNullException(nameof(keyProvider));
+        DatabasePath = databasePath ?? SqlitePaths.GetDatabasePath();
         SqliteProvider.EnsureInitialized();
     }
 
-    public string DatabasePath { get; } = SqlitePaths.GetDatabasePath();
+    public string DatabasePath { get; }
 
     public bool AllowsParallelReads => true;
 
@@ -49,7 +50,7 @@ public sealed class SqliteConnectionFactory : IDbConnectionFactory
     /// <summary>Before the first connection: fetches the key and moves an unencrypted database from an older build over to it.</summary>
     private async Task<string?> GetReadyKeyAsync(CancellationToken cancellationToken)
     {
-        if (_ready)
+        if (Volatile.Read(ref _ready))
         {
             return _key;
         }
@@ -57,23 +58,34 @@ public sealed class SqliteConnectionFactory : IDbConnectionFactory
         await _readyGate.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
-            if (_ready)
+            if (Volatile.Read(ref _ready))
             {
                 return _key;
             }
 
-            string? key = _keyProvider is null ? null : await _keyProvider.GetOrCreateKeyAsync(cancellationToken).ConfigureAwait(false);
-            if (_keyProvider is not null && (key is null || !SqliteEncryption.IsValidKey(key)))
+            string? key = await _keyProvider.GetKeyAsync(cancellationToken).ConfigureAwait(false);
+            if (key is null)
+            {
+                if (!await SqliteEncryption.CanCreateKeyAsync(DatabasePath, cancellationToken).ConfigureAwait(false))
+                {
+                    throw new InvalidOperationException("The encrypted database key is unavailable; access was refused.");
+                }
+
+                key = await _keyProvider.CreateKeyAsync(cancellationToken).ConfigureAwait(false);
+            }
+
+            if (key is null || !SqliteEncryption.IsValidKey(key))
             {
                 throw new InvalidOperationException("The required database encryption key is unavailable.");
             }
-            if (key is not null && !await SqliteEncryption.EnsureEncryptedAsync(DatabasePath, key, cancellationToken).ConfigureAwait(false))
+
+            if (!await SqliteEncryption.EnsureEncryptedAsync(DatabasePath, key, cancellationToken).ConfigureAwait(false))
             {
                 throw new InvalidOperationException("Database encryption could not be verified; access was refused.");
             }
 
             _key = key;
-            _ready = true;
+            Volatile.Write(ref _ready, true);
             return key;
         }
         finally

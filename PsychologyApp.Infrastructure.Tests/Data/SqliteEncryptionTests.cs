@@ -11,7 +11,7 @@ public sealed class SqliteEncryptionTests : IDisposable
     public async Task MissingRequiredKeyIsRetriedWithoutOpeningDatabase()
     {
         var provider = new MissingKeyProvider();
-        var factory = new SqliteConnectionFactory(provider);
+        var factory = new SqliteConnectionFactory(provider, _path);
         await Assert.ThrowsAsync<InvalidOperationException>(() => factory.CreateOpenConnectionAsync());
         await Assert.ThrowsAsync<InvalidOperationException>(() => factory.CreateOpenConnectionAsync());
         Assert.Equal(2, provider.Calls);
@@ -20,11 +20,13 @@ public sealed class SqliteEncryptionTests : IDisposable
     private sealed class MissingKeyProvider : PsychologyApp.Application.Abstractions.Persistence.IDatabaseKeyProvider
     {
         public int Calls { get; private set; }
-        public Task<string?> GetOrCreateKeyAsync(CancellationToken cancellationToken = default)
+        public Task<string?> GetKeyAsync(CancellationToken cancellationToken = default)
         {
             Calls++;
             return Task.FromResult<string?>(null);
         }
+
+        public Task<string?> CreateKeyAsync(CancellationToken cancellationToken = default) => Task.FromResult<string?>(null);
     }
 
     [Fact]

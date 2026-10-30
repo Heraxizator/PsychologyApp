@@ -15,7 +15,7 @@ public static partial class SqliteEncryption
 
     public static bool IsValidKey(string key) => KeyPattern().IsMatch(key);
 
-    [GeneratedRegex("^[0-9a-fA-F]{64}$")]
+    [GeneratedRegex("\\A[0-9a-fA-F]{64}\\z")]
     private static partial Regex KeyPattern();
 
     /// <summary>Applies the key to an open connection; must be the first statement on it.</summary>
@@ -53,8 +53,14 @@ public static partial class SqliteEncryption
         string plainCopy = path + PlainCopySuffix;
         if (!await IsPlainAsync(path, cancellationToken).ConfigureAwait(false))
         {
-            // Already encrypted. A copy left behind by an interrupted move is removed once the key opens the file.
-            if (File.Exists(plainCopy) && await CanOpenWithKeyAsync(path, key, cancellationToken).ConfigureAwait(false))
+            // An existing encrypted database must open with this key; a missing or corrupted secure-store value must not be accepted.
+            if (!await CanOpenWithKeyAsync(path, key, cancellationToken).ConfigureAwait(false))
+            {
+                return false;
+            }
+
+            // A copy left behind by an interrupted move is removed only after the encrypted file opens with its key.
+            if (File.Exists(plainCopy))
             {
                 File.Delete(plainCopy);
             }
@@ -93,6 +99,21 @@ public static partial class SqliteEncryption
         {
             return false;
         }
+    }
+
+    /// <summary>
+    /// A replacement key is safe only before a database exists or while an existing database is still plaintext.
+    /// An encrypted or unreadable file may contain the user's only copy of their data and must not get a new key.
+    /// </summary>
+    public static async Task<bool> CanCreateKeyAsync(string path, CancellationToken cancellationToken = default)
+    {
+        SqliteProvider.EnsureInitialized();
+        if (!File.Exists(path) || new FileInfo(path).Length == 0)
+        {
+            return true;
+        }
+
+        return await IsPlainAsync(path, cancellationToken).ConfigureAwait(false);
     }
 
     private static bool RestorePlainCopy(string path, string plainCopy)

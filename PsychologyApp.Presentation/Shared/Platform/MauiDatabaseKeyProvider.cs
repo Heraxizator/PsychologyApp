@@ -15,7 +15,11 @@ public sealed class MauiDatabaseKeyProvider(ILogger<MauiDatabaseKeyProvider> log
     private readonly SemaphoreSlim _gate = new(1, 1);
     private string? _cached;
 
-    public async Task<string?> GetOrCreateKeyAsync(CancellationToken cancellationToken = default)
+    public Task<string?> GetKeyAsync(CancellationToken cancellationToken = default) => GetKeyCoreAsync(createIfMissing: false, cancellationToken);
+
+    public Task<string?> CreateKeyAsync(CancellationToken cancellationToken = default) => GetKeyCoreAsync(createIfMissing: true, cancellationToken);
+
+    private async Task<string?> GetKeyCoreAsync(bool createIfMissing, CancellationToken cancellationToken)
     {
         if (_cached is not null)
         {
@@ -31,9 +35,19 @@ public sealed class MauiDatabaseKeyProvider(ILogger<MauiDatabaseKeyProvider> log
             }
 
             string? stored = await SecureStorage.Default.GetAsync(StorageKey).ConfigureAwait(false);
-            if (stored is { Length: 64 } && stored.All(Uri.IsHexDigit))
+            if (stored is not null)
             {
-                return _cached = stored;
+                if (stored.Length == 64 && stored.All(Uri.IsHexDigit))
+                {
+                    return _cached = stored;
+                }
+
+                throw new InvalidOperationException("The stored database key is invalid; access was refused.");
+            }
+
+            if (!createIfMissing)
+            {
+                return null;
             }
 
             string created = Convert.ToHexString(RandomNumberGenerator.GetBytes(32)).ToLowerInvariant();
