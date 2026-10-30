@@ -361,6 +361,8 @@ namespace Microsoft.Maui.ApplicationModel.DataTransfer
         /// <summary>The text of every text share.</summary>
         public static List<string> SharedTexts { get; } = [];
 
+        public static Exception? FileShareError { get; set; }
+
         public Task RequestAsync(ShareTextRequest request)
         {
             SharedTexts.Add(request.Text ?? string.Empty);
@@ -369,6 +371,10 @@ namespace Microsoft.Maui.ApplicationModel.DataTransfer
 
         public Task RequestAsync(ShareFileRequest request)
         {
+            if (FileShareError is { } error)
+            {
+                return Task.FromException(error);
+            }
             Shared.Add((request.Title ?? string.Empty, Path.GetFileName(request.File!.FullPath), System.IO.File.ReadAllText(request.File.FullPath)));
             return Task.CompletedTask;
         }

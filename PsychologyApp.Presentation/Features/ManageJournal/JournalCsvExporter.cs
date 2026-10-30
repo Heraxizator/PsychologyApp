@@ -37,12 +37,30 @@ public static class JournalCsvExporter
     {
         string fileName = SharedFileNames.JournalExport(DateTime.Now);
         string path = Path.Combine(FileSystem.CacheDirectory, fileName);
-        await File.WriteAllTextAsync(path, BuildCsv(entries), Encoding.UTF8, cancellationToken);
-        await Share.Default.RequestAsync(new ShareFileRequest
+        try
         {
-            Title = AppStrings.JournalExportTitle,
-            File = new ShareFile(path)
-        });
+            await File.WriteAllTextAsync(path, BuildCsv(entries), Encoding.UTF8, cancellationToken);
+            await Share.Default.RequestAsync(new ShareFileRequest
+            {
+                Title = AppStrings.JournalExportTitle,
+                File = new ShareFile(path)
+            });
+        }
+        finally
+        {
+            // Journal notes must not remain in the cache after the share attempt.
+            try
+            {
+                File.Delete(path);
+            }
+            catch (IOException)
+            {
+                // The OS may still hold the shared file; personal-data erasure also removes it.
+            }
+            catch (UnauthorizedAccessException)
+            {
+            }
+        }
     }
 
     private static string Csv(string? value)

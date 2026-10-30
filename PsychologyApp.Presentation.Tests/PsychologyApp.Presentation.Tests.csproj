@@ -47,6 +47,8 @@
     <Compile Include="UiTokensTests.cs" />
     <Compile Include="StreakMilestoneCopyTests.cs" />
     <Compile Include="JournalHelpersTests.cs" />
+    <Compile Include="JournalCsvExporterTests.cs" />
+    <Compile Include="../PsychologyApp.Presentation/Features/ManageJournal/JournalCsvExporter.cs" Link="Linked/Journal/JournalCsvExporter.cs" />
     <Compile Include="TestScoreLabelMapperTests.cs" />
     <Compile Include="AppStringsErrorTests.cs" />
     <Compile Include="BreathingPatternTests.cs" />
