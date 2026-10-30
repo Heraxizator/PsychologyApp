@@ -14,6 +14,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 - Grief recognition respects negated death terms and requires a person after the ambiguous phrase “не стало”, so “не стало легче” is not read as bereavement. Not checked on a device.
 
+- An explicit correction that clears the current feeling no longer falls back into the grief response solely because the conversation previously acknowledged a loss. Not checked on a device.
+
 - Multiword emotion phrases now use the same short-range negation rules as single-word emotion terms. Not checked on a device.
 
 - Phrase recognition no longer skips across an internal negation, and recognizes common trailing negations such as “тревоги нет”. Not checked on a device.

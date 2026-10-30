@@ -665,7 +665,7 @@ public sealed partial class CompanionDialogue(
         // After a death there is nothing to measure and nothing to fix: no scale, no practice, just company, until a different feeling shows up.
         bool newTopic = analysis.Themes.Count > 0 && !analysis.HasLoss || analysis.Persons is { Count: > 0 } && !analysis.HasLoss && emotion == CompanionEmotion.Unknown;
         bool griefFeeling = emotion is CompanionEmotion.Sadness or CompanionEmotion.Loneliness or CompanionEmotion.Guilt || (emotion == CompanionEmotion.Unknown && !newTopic);
-        if (analysis.HasLoss || (state.GriefShared && griefFeeling))
+        if (analysis.HasLoss || (state.GriefShared && griefFeeling && !state.EmotionExplicitlyCleared))
         {
             return RespondToGrief(state with { GriefShared = true, Emotion = CompanionEmotion.Sadness.ToString() }, theme, newLoss: analysis.HasLoss && !previous.GriefShared);
         }
