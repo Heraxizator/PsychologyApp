@@ -90,7 +90,7 @@ public class CompanionKnowledgeTests
         CompanionReply advice = Say(d, new CompanionState { Turns = 2, Emotion = "Anxiety" }, "Что мне делать?");
 
         Assert.Equal(2, advice.Messages.Count);
-        Assert.Contains("выдох", advice.Messages[0]);
+        Assert.Contains(advice.Messages, message => message.Contains("выдох", StringComparison.OrdinalIgnoreCase));
         Assert.Contains(advice.QuickReplies, c => c.Payload == "practice");
 
         CompanionReply offer = d.Respond(advice.State, new CompanionInput.QuickReply(advice.QuickReplies.First(c => c.Payload == "practice")));

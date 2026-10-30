@@ -489,7 +489,6 @@ public sealed partial class CompanionDialogue(
         }
 
         messages.Add(CompanionKnowledge.WhatHelps(emotion, english));
-        messages.Add(CompanionKnowledge.AdviceOffer(english));
 
         return Reply(
             messages,

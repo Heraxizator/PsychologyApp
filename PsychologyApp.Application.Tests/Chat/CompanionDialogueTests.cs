@@ -272,7 +272,7 @@ public class CompanionDialogueTests
     }
 
     [Fact]
-    public void A_practice_is_offered_from_the_third_message_and_questions_never_repeat()
+    public void A_goal_is_clarified_before_practice_is_offered_and_questions_never_repeat()
     {
         CompanionDialogue d = Create();
         CompanionState state = new();
@@ -292,8 +292,15 @@ public class CompanionDialogueTests
             }
         }
 
-        Assert.True(reply.QuickReplies.Any(q => q.Kind == ChatQuickReplyKinds.Practice) || state.OfferedPrimary is not null);
-        Assert.Equal(state.AskedQuestions.Distinct().Count(), state.AskedQuestions.Count);
+        Assert.Contains(reply.QuickReplies, q => q.Payload?.StartsWith("goal:", StringComparison.Ordinal) == true);
+        Assert.True(reply.State.GoalAsked);
+
+        CompanionReply offer = d.Respond(
+            reply.State,
+            new CompanionInput.QuickReply(reply.QuickReplies.Last(q => q.Payload?.StartsWith("goal:", StringComparison.Ordinal) == true)));
+
+        Assert.Contains(offer.QuickReplies, q => q.Kind == ChatQuickReplyKinds.Practice);
+        Assert.Equal(offer.State.AskedQuestions.Distinct().Count(), offer.State.AskedQuestions.Count);
     }
 
     [Fact]

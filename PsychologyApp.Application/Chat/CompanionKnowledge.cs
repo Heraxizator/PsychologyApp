@@ -182,10 +182,6 @@ public static class CompanionKnowledge
             : "Часто помогает притормозить, назвать, что вы чувствуете, и выбрать один маленький шаг."
     };
 
-    public static string AdviceOffer(bool english) => english
-        ? "Shall I suggest a short practice for it?"
-        : "Предложить короткую практику для этого?";
-
     public static ChatQuickReply PracticeChip(bool english) => new(ChatQuickReplyKinds.Act, english ? "Yes, suggest one" : "Да, предложи", "practice");
 
     private static string Capitalize(string value) => value.Length == 0 ? value : char.ToUpperInvariant(value[0]) + value[1..];
