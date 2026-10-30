@@ -96,6 +96,19 @@ public class ChatServiceTests
             return Task.CompletedTask;
         }
 
+        public Task DeleteAllChatsAndMemoryExceptAsync(IReadOnlyCollection<string> retainedMemoryKeys, CancellationToken cancellationToken = default)
+        {
+            _sessions.Clear();
+            _messages.Clear();
+            HashSet<string> retained = [.. retainedMemoryKeys];
+            foreach (string key in _memory.Keys.Where(key => !retained.Contains(key)).ToList())
+            {
+                _memory.Remove(key);
+            }
+
+            return Task.CompletedTask;
+        }
+
         public async Task<IReadOnlyDictionary<string, string>> GetMemoryAsync(CancellationToken cancellationToken = default)
         {
             IReadOnlyDictionary<string, string> snapshot = new Dictionary<string, string>(_memory);

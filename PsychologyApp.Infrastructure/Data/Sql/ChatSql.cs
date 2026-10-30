@@ -86,4 +86,6 @@ internal static class ChatSql
     internal const string DeleteAllMessages = "DELETE FROM ChatMessages;";
 
     internal const string DeleteAllSessions = "DELETE FROM ChatSessions;";
+
+    internal const string DeleteMemoryExceptKeys = "DELETE FROM ChatMemory WHERE MemoryKey NOT IN @RetainedMemoryKeys;";
 }

@@ -198,6 +198,36 @@ public sealed class ChatRepositoryTests
         Assert.Empty(await _repository.GetMessagesAsync(id));
         Assert.Equal("Аня", (await _repository.GetMemoryAsync())["name"]);
     }
+
+    [Fact]
+    public async Task Deleting_all_chats_and_memory_keeps_only_the_selected_keys()
+    {
+        long id = await _repository.CreateSessionAsync("t", T0);
+        await _repository.AddMessageAsync(new ChatMessageDTO { SessionId = id, Role = ChatRole.User, Text = "Привет", CreatedAt = T0 });
+        await _repository.SetMemoryAsync("name", "Аня");
+        await _repository.SetMemoryAsync("helped:Grounding", "2");
+        await _repository.SetMemoryAsync("trauma_notes", "личные заметки");
+        await _repository.SetMemoryAsync("plan", "личный шаг");
+
+        await _repository.DeleteAllChatsAndMemoryExceptAsync(["name", "helped:Grounding"]);
+
+        Assert.Empty(await _repository.GetSessionsAsync());
+        Assert.Empty(await _repository.GetMessagesAsync(id));
+        Assert.Equal(
+            new Dictionary<string, string> { ["name"] = "Аня", ["helped:Grounding"] = "2" },
+            await _repository.GetMemoryAsync());
+    }
+
+    [Fact]
+    public async Task Deleting_all_chats_with_no_retained_memory_clears_the_memory_table()
+    {
+        await _repository.SetMemoryAsync("name", "Аня");
+        await _repository.SetMemoryAsync("helped:Grounding", "2");
+
+        await _repository.DeleteAllChatsAndMemoryExceptAsync([]);
+
+        Assert.Empty(await _repository.GetMemoryAsync());
+    }
     [Fact]
     public async Task SaveTurn_stores_memory_messages_and_session_together()
     {

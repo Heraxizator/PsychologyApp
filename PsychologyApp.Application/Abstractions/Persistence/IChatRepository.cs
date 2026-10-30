@@ -25,6 +25,9 @@ public interface IChatRepository
     /// <summary>Removes every chat and message. The memory is left to the caller (<see cref="Chat.ChatMemoryKeys.OutlivesChats"/>).</summary>
     Task DeleteAllSessionsAsync(CancellationToken cancellationToken = default);
 
+    /// <summary>Atomically removes all chats and every memory key not in <paramref name="retainedMemoryKeys"/>.</summary>
+    Task DeleteAllChatsAndMemoryExceptAsync(IReadOnlyCollection<string> retainedMemoryKeys, CancellationToken cancellationToken = default);
+
     /// <summary>Everything the companion remembers between chats, by key.</summary>
     Task<IReadOnlyDictionary<string, string>> GetMemoryAsync(CancellationToken cancellationToken = default);
 

@@ -312,12 +312,9 @@ public sealed class ChatService(
         await _memoryGate.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
-            await repository.DeleteAllSessionsAsync(cancellationToken).ConfigureAwait(false);
             IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
-            foreach (string key in memory.Keys.Where(key => !ChatMemoryKeys.OutlivesChats(key)).ToList())
-            {
-                await repository.DeleteMemoryAsync(key, cancellationToken).ConfigureAwait(false);
-            }
+            string[] retainedMemoryKeys = memory.Keys.Where(ChatMemoryKeys.OutlivesChats).ToArray();
+            await repository.DeleteAllChatsAndMemoryExceptAsync(retainedMemoryKeys, cancellationToken).ConfigureAwait(false);
         }
         finally
         {

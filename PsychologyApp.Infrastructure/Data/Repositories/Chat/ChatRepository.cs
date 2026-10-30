@@ -86,6 +86,35 @@ public sealed class ChatRepository(IDbConnectionFactory connectionFactory, IOpti
         await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
     }
 
+    public async Task DeleteAllChatsAndMemoryExceptAsync(
+        IReadOnlyCollection<string> retainedMemoryKeys,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(retainedMemoryKeys);
+        await using SqliteConnection connection = await OpenConnectionAsync(cancellationToken);
+        await using SqliteTransaction transaction = (SqliteTransaction)await connection.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
+            ChatSql.DeleteAllMessages,
+            transaction: transaction,
+            commandTimeout: CommandTimeoutSeconds,
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
+            ChatSql.DeleteAllSessions,
+            transaction: transaction,
+            commandTimeout: CommandTimeoutSeconds,
+            cancellationToken: cancellationToken)).ConfigureAwait(false);
+
+        string memorySql = retainedMemoryKeys.Count == 0 ? ChatSql.ClearMemory : ChatSql.DeleteMemoryExceptKeys;
+        await connection.ExecuteAsync(DapperCommandFactory.Create(
+            memorySql,
+            retainedMemoryKeys.Count == 0 ? null : new { RetainedMemoryKeys = retainedMemoryKeys },
+            transaction,
+            CommandTimeoutSeconds,
+            cancellationToken)).ConfigureAwait(false);
+
+        await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
+    }
+
     public async Task<IReadOnlyDictionary<string, string>> GetMemoryAsync(CancellationToken cancellationToken = default)
     {
         await using SqliteConnection connection = await OpenReadConnectionAsync(cancellationToken);
