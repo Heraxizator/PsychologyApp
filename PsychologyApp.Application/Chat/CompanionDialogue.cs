@@ -503,6 +503,7 @@ public sealed partial class CompanionDialogue(
         {
             RecentTexts = previous.WithText(text).RecentTexts,
             Emotion = emotion.ToString(),
+            EmotionExplicitlyCleared = emotion == CompanionEmotion.Unknown && state.EmotionExplicitlyCleared,
             Theme = analysis.Themes.Count > 0 ? analysis.Themes[0].ToString() : state.Theme,
             Person = analysis.Persons is { Count: > 0 } persons ? persons[0].ToString() : state.Person,
             Secondary = analysis.Secondary == CompanionEmotion.Unknown ? state.Secondary : analysis.Secondary.ToString(),
@@ -533,8 +534,9 @@ public sealed partial class CompanionDialogue(
         };
 
         // A message that names no feeling continues the one we know; only when nothing is known yet are the recent messages read together.
-        bool previousEmotionWasNegated = analysis.NegatedEmotions.Contains(ParseEmotion(previous.Emotion));
-        bool emotionWasCleared = previous.EmotionExplicitlyCleared || previousEmotionWasNegated;
+        CompanionEmotion previousEmotion = ParseEmotion(previous.Emotion);
+        bool previousEmotionWasNegated = analysis.NegatedEmotions.Contains(previousEmotion);
+        bool emotionWasCleared = (previous.EmotionExplicitlyCleared && previousEmotion == CompanionEmotion.Unknown) || previousEmotionWasNegated;
         if (analysis.Emotion == CompanionEmotion.Unknown && !emotionWasCleared && ParseEmotion(previous.Emotion) == CompanionEmotion.Unknown)
         {
             analysis = analyzer.Analyze(string.Join(' ', state.RecentTexts)) with { HasBodySymptoms = analysis.HasBodySymptoms, IsIntense = analysis.IsIntense, Persons = analysis.Persons };
@@ -769,7 +771,7 @@ public sealed partial class CompanionDialogue(
                 return RespondToRating(state, Math.Clamp(rating, 0, 10), emotion, theme);
 
             case ChatQuickReplyKinds.Emotion when Enum.TryParse(reply.Payload, out CompanionEmotion picked) && Enum.IsDefined(picked):
-                CompanionState pickedState = state with { Emotion = picked.ToString(), UnknownStreak = 0 };
+                CompanionState pickedState = state with { Emotion = picked.ToString(), EmotionExplicitlyCleared = false, UnknownStreak = 0 };
                 List<string> pickedMessages = [CompanionContent.Understood(picked, english)];
                 return pickedState.Turns >= 2
                     ? Offer(pickedState, pickedMessages, new SituationAnalysis(picked, 1, false, false, []), picked, theme, calming: false)

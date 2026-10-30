@@ -6,7 +6,7 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 ## [Unreleased]
 
-- Explicitly denied emotions no longer inherit the previous emotion or bring it back from recent messages. Not checked on a device.
+- Explicitly denied emotions no longer inherit the previous emotion or bring it back from recent messages; a newly recognized or selected emotion starts a fresh active state. Not checked on a device.
 
 - Multiword emotion phrases now use the same short-range negation rules as single-word emotion terms. Not checked on a device.
 
