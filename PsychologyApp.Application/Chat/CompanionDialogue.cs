@@ -559,9 +559,10 @@ public sealed partial class CompanionDialogue(
         CompanionEmotion previousEmotion = ParseEmotion(previous.Emotion);
         bool previousEmotionWasNegated = analysis.NegatedEmotions.Contains(previousEmotion);
         bool emotionWasCleared = (previous.EmotionExplicitlyCleared && previousEmotion == CompanionEmotion.Unknown) || previousEmotionWasNegated;
-        if (analysis.Emotion == CompanionEmotion.Unknown && !emotionWasCleared && previousEmotion == CompanionEmotion.Unknown)
+        if (analysis.Emotion == CompanionEmotion.Unknown && analysis.NegatedEmotions.Count == 0 && !emotionWasCleared && previousEmotion == CompanionEmotion.Unknown)
         {
-            analysis = analyzer.Analyze(string.Join(' ', state.RecentTexts)) with { HasBodySymptoms = analysis.HasBodySymptoms, IsIntense = analysis.IsIntense, Persons = analysis.Persons };
+            SituationAnalysis recent = analyzer.Analyze(string.Join(' ', state.RecentTexts));
+            analysis = analysis with { Emotion = recent.Emotion, Confidence = recent.Confidence, Secondary = recent.Secondary };
         }
 
         state = UpdateCurrentContext(state, analysis);

@@ -16,6 +16,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 - An explicit correction that clears the current feeling no longer falls back into the grief response solely because the conversation previously acknowledged a loss. Not checked on a device.
 
+- Recent chat text can fill in an unrecognized emotion without overwriting the current message’s topic, event, or explicit negations; a message that denies a feeling no longer triggers an old emotional guess. Not checked on a device.
+
 - Multiword emotion phrases now use the same short-range negation rules as single-word emotion terms. Not checked on a device.
 
 - Phrase recognition no longer skips across an internal negation, and recognizes common trailing negations such as “тревоги нет”. Not checked on a device.
