@@ -122,12 +122,14 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
             offsets[i] = offsets[i - 1] + tokens[i - 1].Length + 1;
         }
 
-        CompanionEmotion[] negatedEmotions = Emotions
-            .Where(pair => pair.Value.SelectMany(entry => entry.Terms)
-                .Where(term => !term.Replace('-', ' ').Split(' ', StringSplitOptions.RemoveEmptyEntries).Any(Negations.Contains))
-                .Any(term => HasNegatedMatch(term, tokens)))
-            .Select(pair => pair.Key)
-            .ToArray();
+        CompanionEmotion[] negatedEmotions = tokens.Any(Negations.Contains)
+            ? Emotions
+                .Where(pair => pair.Value.SelectMany(entry => entry.Terms)
+                    .Where(term => !term.Replace('-', ' ').Split(' ', StringSplitOptions.RemoveEmptyEntries).Any(Negations.Contains))
+                    .Any(term => HasNegatedMatch(term, tokens)))
+                .Select(pair => pair.Key)
+                .ToArray()
+            : [];
 
         Dictionary<CompanionEmotion, double> scores = [];
         Dictionary<CompanionEmotion, int> firstMention = [];
@@ -421,7 +423,7 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
                 continue;
             }
 
-            if (respectNegation && start > 0 && Negations.Contains(tokens[start - 1]))
+            if (respectNegation && IsNegated(tokens, start))
             {
                 continue;
             }
