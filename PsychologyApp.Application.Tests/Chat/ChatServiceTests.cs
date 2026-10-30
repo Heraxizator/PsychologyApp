@@ -253,6 +253,21 @@ public class ChatServiceTests
     }
 
     [Fact]
+    public async Task A_failed_chat_open_does_not_leave_an_empty_session_that_suppresses_the_next_greeting()
+    {
+        ChatService service = CreateService();
+        _progress.SetupSequence(p => p.GetLatestTestResultsAsync(It.IsAny<IReadOnlyList<string>>(), It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new InvalidOperationException("local data unavailable"))
+            .ReturnsAsync((IReadOnlyDictionary<string, TestResultDTO>)new Dictionary<string, TestResultDTO>());
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() => service.StartNewChatAsync());
+        ChatTurnResult retry = await service.StartNewChatAsync();
+
+        Assert.Single(retry.NewMessages);
+        Assert.Single(await service.GetMessagesAsync(retry.Session.Id));
+    }
+
+    [Fact]
     public async Task Starting_a_chat_twice_reuses_the_one_where_nothing_was_said()
     {
         ChatService service = CreateService();

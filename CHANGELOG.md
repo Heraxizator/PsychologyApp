@@ -18,6 +18,8 @@ This project follows a Keep a Changelog style and Semantic Versioning principles
 
 - Malformed quick-reply IDs no longer create undefined technique/emotion state or open an unknown article or questionnaire. Regression test added; not checked on a device.
 
+- A failed chat opening removes its incomplete session, so retrying generates and saves a fresh greeting. Regression test added; not checked on a device.
+
 - Journal CSV export removes its temporary file after sharing or failure. Risk assessments dated in the future no longer postpone the next check; red-risk routing stays available. Regression coverage added; not checked on a device.
 
 - Backup import rejects null required collections, rows, chat sessions and safety-plan contacts before writing any data, preventing damaged plans from breaking the safety screen. Null encoded fields in encrypted backups are reported as file-format errors. Regression tests added; not checked on a device.

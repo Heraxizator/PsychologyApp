@@ -122,26 +122,34 @@ public sealed class ChatService(
             !string.IsNullOrWhiteSpace(s.Emotion) && s.Emotion != nameof(CompanionEmotion.Unknown) && s.MessageCount >= 2);
 
         long id = await repository.CreateSessionAsync(DefaultTitle(), now, cancellationToken).ConfigureAwait(false);
-        ChatSessionDTO session = (await repository.GetSessionAsync(id, cancellationToken).ConfigureAwait(false))!;
-
-        CompanionDialogue dialogue = await DialogueAsync(cancellationToken, includeTodayMood: true).ConfigureAwait(false);
-        await _memoryGate.WaitAsync(cancellationToken).ConfigureAwait(false);
         try
         {
-            IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
-            CompanionState opening = WithMemory(new CompanionState(), memory);
-            // A chat on a topic starts with that topic: the step decided last time waits for an ordinary chat.
-            CompanionReply reply = topic is not null
-                ? dialogue.OpenTopic(opening, topic)
-                : dialogue.Open(opening with { OpenPlan = PlanToAskAbout(memory, now) }, previous);
-            session.StateJson = reply.State.Serialize();
-            IReadOnlyList<ChatMessageDTO> added = await StoreAsync(session, CompanionMessages(session, reply, now), [], cancellationToken).ConfigureAwait(false);
+            ChatSessionDTO session = (await repository.GetSessionAsync(id, cancellationToken).ConfigureAwait(false))!;
+            CompanionDialogue dialogue = await DialogueAsync(cancellationToken, includeTodayMood: true).ConfigureAwait(false);
+            await _memoryGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+            try
+            {
+                IReadOnlyDictionary<string, string> memory = await repository.GetMemoryAsync(cancellationToken).ConfigureAwait(false);
+                CompanionState opening = WithMemory(new CompanionState(), memory);
+                // A chat on a topic starts with that topic: the step decided last time waits for an ordinary chat.
+                CompanionReply reply = topic is not null
+                    ? dialogue.OpenTopic(opening, topic)
+                    : dialogue.Open(opening with { OpenPlan = PlanToAskAbout(memory, now) }, previous);
+                session.StateJson = reply.State.Serialize();
+                IReadOnlyList<ChatMessageDTO> added = await StoreAsync(session, CompanionMessages(session, reply, now), [], cancellationToken).ConfigureAwait(false);
 
-            return new ChatTurnResult(session, added, null);
+                return new ChatTurnResult(session, added, null);
+            }
+            finally
+            {
+                _memoryGate.Release();
+            }
         }
-        finally
+        catch
         {
-            _memoryGate.Release();
+            // Session creation precedes greeting generation. Do not leave a blank row that the next open would mistake for a valid chat.
+            await repository.DeleteSessionAsync(id, CancellationToken.None).ConfigureAwait(false);
+            throw;
         }
     }
 
