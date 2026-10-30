@@ -416,12 +416,14 @@ public sealed partial class CompanionDialogue(
             Utterance.SharesAchievement => Reply([CompanionSmallTalk.Congratulations(english, _random)], CompanionSmallTalk.GoodNewsReplies(english), state, emotion, theme),
             Utterance.AsksAboutApp => Reply([CompanionKnowledge.AboutApp(text, english)], [], state, emotion, theme),
             Utterance.AsksForEntertainment => Reply([CompanionSmallTalk.Entertain(text, english, _random)], CompanionSmallTalk.CapabilityReplies(english), state, emotion, theme),
-            Utterance.DeclinesPractice => Reply(
-                [CompanionDialogueContent.PracticesDeclinedReply(english)],
-                [CompanionActContent.Vent(english), CompanionActContent.Enough(english)],
-                state with { PracticesDeclined = true },
-                emotion,
-                theme),
+            Utterance.DeclinesPractice => HasUserContext(single)
+                ? RespondToStatement(previous with { PracticesDeclined = true }, text, single)
+                : Reply(
+                    [CompanionDialogueContent.PracticesDeclinedReply(english)],
+                    [CompanionActContent.Vent(english), CompanionActContent.Enough(english)],
+                    state with { PracticesDeclined = true },
+                    emotion,
+                    theme),
             Utterance.Postpones => Reply([CompanionDialogueContent.Postponed(english)], [CompanionActContent.Continue(english), CompanionActContent.Enough(english)], state, emotion, theme),
             Utterance.AsksForOther => RespondToAskForOther(state, emotion, theme),
             Utterance.AsksHowAreYou => Reply([CompanionSmallTalk.HowAreYou(english, _random)], [], state, emotion, theme),
@@ -439,10 +441,10 @@ public sealed partial class CompanionDialogue(
             Utterance.RefusesToTalk => Reply(
                 [CompanionActContent.Refuses(english)],
                 [CompanionActContent.BodyPractice(english), CompanionActContent.TalkOther(english), CompanionActContent.Enough(english)],
-                state,
+                HasUserContext(single) ? RememberMeaningfulContext(state, previous, text, single, emotion) : state,
                 emotion,
                 theme),
-            Utterance.AsksForAdvice => single.Event != CompanionEvent.None || single.Themes.Count > 0 || single.Persons is { Count: > 0 }
+            Utterance.AsksForAdvice => HasUserContext(single)
                 ? RespondToStatement(previous, text, single)
                 : Reply([CompanionActContent.Advice(english)], [], state, emotion, theme),
             Utterance.AsksAboutCompanion => Reply([CompanionActContent.AboutCompanion(english)], [], state, emotion, theme),
@@ -495,6 +497,12 @@ public sealed partial class CompanionDialogue(
             FirstQuote = state.FirstQuote ?? QuoteExtractor.Pick(text, analyzer, emotion)
         };
     }
+
+    private static bool HasUserContext(SituationAnalysis analysis) =>
+        analysis.Emotion != CompanionEmotion.Unknown
+        || analysis.Themes.Count > 0
+        || analysis.Event != CompanionEvent.None
+        || analysis.Persons is { Count: > 0 };
 
     /// <summary>A message this long that names no feeling is the person telling something the word lists did not catch: offer the choice of feelings
     /// right away instead of asking an open question that would make them tell it again (see docs/companion-understanding.md).</summary>
