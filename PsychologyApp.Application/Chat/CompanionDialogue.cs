@@ -533,12 +533,16 @@ public sealed partial class CompanionDialogue(
         };
 
         // A message that names no feeling continues the one we know; only when nothing is known yet are the recent messages read together.
-        if (analysis.Emotion == CompanionEmotion.Unknown && ParseEmotion(previous.Emotion) == CompanionEmotion.Unknown)
+        bool previousEmotionWasNegated = analysis.NegatedEmotions.Contains(ParseEmotion(previous.Emotion));
+        bool emotionWasCleared = previous.EmotionExplicitlyCleared || previousEmotionWasNegated;
+        if (analysis.Emotion == CompanionEmotion.Unknown && !emotionWasCleared && ParseEmotion(previous.Emotion) == CompanionEmotion.Unknown)
         {
             analysis = analyzer.Analyze(string.Join(' ', state.RecentTexts)) with { HasBodySymptoms = analysis.HasBodySymptoms, IsIntense = analysis.IsIntense, Persons = analysis.Persons };
         }
 
-        CompanionEmotion emotion = analysis.Emotion != CompanionEmotion.Unknown ? analysis.Emotion : ParseEmotion(state.Emotion);
+        CompanionEmotion emotion = analysis.Emotion != CompanionEmotion.Unknown
+            ? analysis.Emotion
+            : emotionWasCleared || analysis.NegatedEmotions.Contains(ParseEmotion(state.Emotion)) ? CompanionEmotion.Unknown : ParseEmotion(state.Emotion);
         CompanionTheme? theme = analysis.Themes.Count > 0 ? analysis.Themes[0] : ParseTheme(state.Theme);
         CompanionPerson? person = analysis.Persons is { Count: > 0 } persons ? persons[0] : ParsePerson(state.Person);
         string? quote = QuoteExtractor.Pick(text, analyzer, emotion);
@@ -546,6 +550,7 @@ public sealed partial class CompanionDialogue(
         state = state with
         {
             Emotion = emotion.ToString(),
+            EmotionExplicitlyCleared = emotion == CompanionEmotion.Unknown && emotionWasCleared,
             Theme = theme?.ToString(),
             Person = person?.ToString(),
             Secondary = analysis.Secondary.ToString(),

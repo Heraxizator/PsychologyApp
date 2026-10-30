@@ -122,6 +122,13 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
             offsets[i] = offsets[i - 1] + tokens[i - 1].Length + 1;
         }
 
+        CompanionEmotion[] negatedEmotions = Emotions
+            .Where(pair => pair.Value.SelectMany(entry => entry.Terms)
+                .Where(term => !term.Replace('-', ' ').Split(' ', StringSplitOptions.RemoveEmptyEntries).Any(Negations.Contains))
+                .Any(term => HasNegatedMatch(term, tokens)))
+            .Select(pair => pair.Key)
+            .ToArray();
+
         Dictionary<CompanionEmotion, double> scores = [];
         Dictionary<CompanionEmotion, int> firstMention = [];
         foreach ((CompanionEmotion emotion, Entry[] baseEntries) in Emotions)
@@ -204,13 +211,13 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
             .ToList();
         if (ranked.Count == 0 || ranked[0].Value < MinScore)
         {
-            return new SituationAnalysis(CompanionEmotion.Unknown, 0, hasBody, intense, themes, CompanionEmotion.Unknown, persons, hasLoss, DetectEvent(normalized, tokens, offsets, hasLoss)) { MentionsTrauma = mentionsTrauma };
+            return new SituationAnalysis(CompanionEmotion.Unknown, 0, hasBody, intense, themes, CompanionEmotion.Unknown, persons, hasLoss, DetectEvent(normalized, tokens, offsets, hasLoss)) { MentionsTrauma = mentionsTrauma, NegatedEmotions = negatedEmotions };
         }
 
         double top = ranked[0].Value;
         double second = ranked.Count > 1 ? ranked[1].Value : 0;
         CompanionEmotion secondary = ranked.Count > 1 && ranked[1].Value >= 2 && ranked[1].Value >= top * 0.6 ? ranked[1].Key : CompanionEmotion.Unknown;
-        return new SituationAnalysis(ranked[0].Key, top / (top + second + 1), hasBody, intense, themes, secondary, persons, hasLoss, DetectEvent(normalized, tokens, offsets, hasLoss)) { IsFlashback = isFlashback, MentionsTrauma = mentionsTrauma };
+        return new SituationAnalysis(ranked[0].Key, top / (top + second + 1), hasBody, intense, themes, secondary, persons, hasLoss, DetectEvent(normalized, tokens, offsets, hasLoss)) { IsFlashback = isFlashback, MentionsTrauma = mentionsTrauma, NegatedEmotions = negatedEmotions };
     }
 
     private const int PhraseWordGap = 3;
@@ -345,6 +352,58 @@ public sealed partial class LexiconSituationAnalyzer : ISituationAnalyzer
             }
 
             modifiers++;
+        }
+
+        return false;
+    }
+
+    private static bool HasNegatedMatch(string term, string[] tokens)
+    {
+        string[] words = term.Replace('-', ' ').Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        bool exact = words[0].StartsWith('=');
+        if (exact)
+        {
+            words[0] = words[0][1..];
+        }
+
+        for (int start = 0; start < tokens.Length; start++)
+        {
+            bool firstMatches = exact
+                ? tokens[start] == words[0]
+                : tokens[start].StartsWith(words[0], StringComparison.Ordinal) || (words.Length == 1 && IsNearPrefixMatch(tokens[start], words[0]));
+            if (!firstMatches || !IsNegated(tokens, start))
+            {
+                continue;
+            }
+
+            int cursor = start;
+            bool matched = true;
+            for (int word = 1; word < words.Length; word++)
+            {
+                int next = -1;
+                int limit = Math.Min(tokens.Length - 1, cursor + PhraseWordGap + 1);
+                for (int candidate = cursor + 1; candidate <= limit; candidate++)
+                {
+                    if (tokens[candidate].StartsWith(words[word], StringComparison.Ordinal))
+                    {
+                        next = candidate;
+                        break;
+                    }
+                }
+
+                if (next < 0)
+                {
+                    matched = false;
+                    break;
+                }
+
+                cursor = next;
+            }
+
+            if (matched)
+            {
+                return true;
+            }
         }
 
         return false;

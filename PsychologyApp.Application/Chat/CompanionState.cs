@@ -26,6 +26,9 @@ public sealed record CompanionState
     /// <summary>A <c>CompanionEmotion</c> name; "Unknown" until something is recognised.</summary>
     public string Emotion { get; init; } = "Unknown";
 
+    /// <summary>The person explicitly denied the previous emotion; recent text must not bring it back.</summary>
+    public bool EmotionExplicitlyCleared { get; init; }
+
     public string? Theme { get; init; }
     public int? FirstIntensity { get; init; }
     public int? LastIntensity { get; init; }
@@ -190,6 +193,7 @@ public sealed record CompanionState
             w.WriteNumber("turns", Turns);
             w.WriteNumber("greetings", Greetings);
             w.WriteString("emotion", Emotion);
+            w.WriteBoolean("emotionCleared", EmotionExplicitlyCleared);
             WriteOptional(w, "theme", Theme);
             WriteOptional(w, "first", FirstIntensity);
             WriteOptional(w, "last", LastIntensity);
@@ -264,6 +268,7 @@ public sealed record CompanionState
                 Turns = Int(r, "turns") ?? 0,
                 Greetings = Int(r, "greetings") ?? 0,
                 Emotion = EnumName<CompanionEmotion>(r, "emotion") ?? nameof(CompanionEmotion.Unknown),
+                EmotionExplicitlyCleared = Bool(r, "emotionCleared"),
                 Theme = EnumName<CompanionTheme>(r, "theme"),
                 FirstIntensity = Int(r, "first"),
                 LastIntensity = Int(r, "last"),

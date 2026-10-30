@@ -76,6 +76,9 @@ public sealed record SituationAnalysis(
     /// <summary>The words describe a flashback: a traumatic memory relived as if it were happening now.</summary>
     public bool IsFlashback { get; init; }
 
+    /// <summary>Emotions explicitly denied in the current message, so only those must not be carried forward.</summary>
+    public IReadOnlyList<CompanionEmotion> NegatedEmotions { get; init; } = [];
+
     /// <summary>The words mention a hard event: abuse, an assault, an accident, war.</summary>
     public bool MentionsTrauma { get; init; }
 
